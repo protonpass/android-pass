@@ -7,9 +7,9 @@ import me.proton.core.usersettings.data.db.OrganizationDatabase
 
 object AppDatabaseMigrations {
 
-    val MIGRATION_1_2 = object : Migration(0, 1) {
+    val MIGRATION_0_1 = object : Migration(0, 1) {
         override fun migrate(database: SupportSQLiteDatabase) {
-            PassDatabase.MIGRATION_1.migrate(database)
+            PassDatabase.MIGRATION_0.migrate(database)
             OrganizationDatabase.MIGRATION_0.migrate(database)
         }
     }

@@ -59,7 +59,7 @@ object Versions {
         const val androidGradlePlugin = "7.0.0"
         const val hiltAndroidGradlePlugin = Dagger.dagger
         const val kotlinGradlePlugin = Kotlin.kotlin
-        const val protonDetektPlugin = "0.2.1"
+        const val protonDetektPlugin = "0.4"
         const val jacocoGradlePlugin = "0.8.7"
     }
 
@@ -89,5 +89,6 @@ object Versions {
     object Test {
         const val junit = "4.13.2"
         const val test = "1.4.0-beta02"
+        const val mockk = "1.12.0"
     }
 }

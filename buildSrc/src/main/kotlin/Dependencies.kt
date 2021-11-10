@@ -16,6 +16,7 @@ object Dependencies {
     val composeLibs = mutableListOf<String>().apply {
         add(AndroidX.Activity.compose)
         add(AndroidX.Compose.foundation)
+        add(AndroidX.Compose.iconsExtended)
         add(AndroidX.Compose.material)
         add(AndroidX.Compose.runtime)
         add(AndroidX.Compose.ui)
@@ -64,6 +65,7 @@ object Dependencies {
         add(Core.utilKotlin)
         add(Gotev.cookieStore)
         add(JakeWharton.timber)
+        add(KotlinX.serializationJson)
         add(Material.material)
         add(Squareup.okhttp)
         add(Squareup.plumber)
@@ -79,8 +81,8 @@ object Dependencies {
     }
     // endregion
 
-    // region Drive Dagger
-    val driveDaggerLibs = mutableListOf<String>().apply {
+    // region Pass Dagger
+    val passDaggerLibs = mutableListOf<String>().apply {
         add(AndroidX.Paging.common)
         add(AndroidX.Work.runtimeKtx)
         add(Core.accountManager)
@@ -91,13 +93,13 @@ object Dependencies {
         add(Core.user)
         add(Core.utilKotlin)
     }
-    val driveDaggerAnnotationProcessors = mutableListOf<String>().apply {
+    val passDaggerAnnotationProcessors = mutableListOf<String>().apply {
         add(AndroidX.Room.compiler)
     }
     // endregion
 
-    // region Drive Data
-    val driveDataLibs = mutableListOf<String>().apply {
+    // region Pass Data
+    val passDataLibs = mutableListOf<String>().apply {
         add(AndroidX.Hilt.work)
         add(AndroidX.Lifecycle.liveDataKtx)
         add(AndroidX.Paging.common)
@@ -117,27 +119,29 @@ object Dependencies {
         add(KotlinX.serializationJson)
         add(Squareup.retrofit)
     }
-    val driveDataAnnotationProcessors = mutableListOf<String>().apply {
+    val passDataAnnotationProcessors = mutableListOf<String>().apply {
         add(AndroidX.Room.compiler)
     }
     // endregion
 
-    // region Drive Domain
-    val driveDomainLibs = mutableListOf<String>().apply {
+    // region Pass Domain
+    val passDomainLibs = mutableListOf<String>().apply {
         add(AndroidX.Paging.common)
+        add(Core.account)
         add(Core.accountManager)
         add(Core.crypto)
         add(Core.domain)
         add(Core.key)
+        add(Core.user)
         add(Core.utilKotlin)
         add(KotlinX.coroutinesCore)
-        add(KotlinX.serializationJson)
     }
     // endregion
 
-    // region Drive Presentation
-    val drivePresentationLibs = mutableListOf<String>().apply {
+    // region Pass Presentation
+    val passPresentationLibs = mutableListOf<String>().apply {
         addAll(composeLibs)
+        add(AndroidX.ConstraintLayout.constraintLayout)
         add(Core.accountManager)
         add(Core.auth)
         add(Core.domain)
@@ -148,37 +152,49 @@ object Dependencies {
         add(Core.utilKotlin)
     }
 
-    val drivePresentationDebugLibs = arrayListOf<String>().apply {
+    val passPresentationDebugLibs = arrayListOf<String>().apply {
         add(AndroidX.Compose.uiTestManifest)
     }
-    val drivePresentationAnnotationProcessors = arrayListOf<String>()
+    val passPresentationAnnotationProcessors = arrayListOf<String>()
     // endregion
 
-    val driveFilesListLibs = mutableListOf<String>().apply {
-        addAll(composeLibs)
-        add(AndroidX.Paging.compose)
-        add(AndroidX.Paging.runtime)
+    // region Autofill Service
+    val passAutofillServiceLibs = mutableListOf<String>().apply {
+        add(AndroidX.Autofill.autofill)
         add(Core.domain)
         add(Core.key)
         add(Core.user)
-        add(Core.key)
         add(Core.utilKotlin)
-        add(Dagger.hiltAndroid)
+        add(KotlinX.coroutinesCore)
     }
+    // endregion
 
-    val drivePreviewLibs = mutableListOf<String>().apply {
+    // region Autofill Sample
+    // region App
+    val passAutofillSampleLibs = mutableListOf<String>().apply {
+        add(Accompanist.animationNavigation)
+        add(Accompanist.insets)
+        add(Accompanist.pager)
+        add(Accompanist.systemUiController)
+        add(AndroidX.Activity.ktx)
+        add(AndroidX.Compose.foundationLayout)
         addAll(composeLibs)
-        add(Coil.compose)
-        add(Core.utilKotlin)
+        add(Material.material)
     }
+    // endregion
 
     // region Test
     val testLibs = mutableListOf<String>().apply {
+        add(Test.coroutines)
         add(Test.junit)
+        add(Test.kotlinReflect)
+        add(Test.mockk)
+        add(Test.mockkAgent)
     }
     val androidTestLibs = mutableListOf<String>().apply {
         add(Test.core)
         add(Test.coreKtx)
+        add(Test.mockkAndroid)
         add(Test.runner)
         add(Test.rules)
         add(AndroidX.Compose.uiTest)

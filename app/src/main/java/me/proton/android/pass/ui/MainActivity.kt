@@ -5,7 +5,11 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.runtime.*
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.flowWithLifecycle
@@ -16,19 +20,17 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.android.pass.BuildConfig
-import me.proton.android.pass.log.AppLogTag
+import me.proton.android.pass.log.PassKeyLogger
+import me.proton.android.pass.log.d
 import me.proton.android.pass.ui.launcher.AccountViewModel
 import me.proton.android.pass.ui.navigation.AppNavGraph
 import me.proton.android.pass.ui.theme.PasswordManagerTheme
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.util.kotlin.Logger
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
-    @Inject
-    lateinit var logger: Logger
 
     @Inject
     lateinit var keyStoreCrypto: KeyStoreCrypto
@@ -52,9 +54,12 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            PasswordManagerTheme {
+            ProtonTheme {
                 ProvideWindowInsets {
-                    AppNavGraph(keyStoreCrypto = keyStoreCrypto) { isOpen ->
+                    AppNavGraph(
+                        accountViewModel = accountViewModel,
+                        keyStoreCrypto = keyStoreCrypto,
+                    ) { isOpen ->
                         isDrawerOpen = isOpen
                     }
                 }
@@ -67,7 +72,7 @@ class MainActivity : ComponentActivity() {
         accountViewModel.state
             .flowWithLifecycle(lifecycle)
             .onEach { state ->
-                logger.d(AppLogTag.UI, "AccountViewModel state = $state")
+                PassKeyLogger.d("AccountViewModel state = $state")
                 when (state) {
                     is AccountViewModel.State.Processing -> Unit
                     is AccountViewModel.State.AccountReady -> Unit

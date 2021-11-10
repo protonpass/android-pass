@@ -54,9 +54,8 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.drivePresentationLibs)
-    implementation(project(":compose"))
-//    implementation(project(":drive:domain"))
+    implementation(Dependencies.passPresentationLibs)
+    api(project(":compose"))
     kapt(Dependencies.hiltAnnotationProcessors)
     testImplementation(Dependencies.testLibs)
     androidTestImplementation(Dependencies.androidTestLibs)

@@ -3,6 +3,7 @@ package me.proton.android.pass.db
 import android.content.Context
 import androidx.room.Database
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import me.proton.core.account.data.db.AccountConverters
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.entity.AccountEntity
@@ -82,11 +83,9 @@ abstract class AppDatabase:
     PassDatabase {
 
     companion object {
-        const val VERSION = 2
+        const val VERSION = 1
 
-        private val migrations = listOf(
-            AppDatabaseMigrations.MIGRATION_1_2
-        )
+        private val migrations = listOf<Migration>()
 
         fun buildDatabase(context: Context): AppDatabase =
             databaseBuilder<AppDatabase>(context, "db-passkey")

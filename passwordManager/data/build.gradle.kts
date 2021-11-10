@@ -37,9 +37,9 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.driveDataLibs)
-    kapt(Dependencies.driveDataAnnotationProcessors)
-//    implementation(project(":drive:domain"))
+    implementation(Dependencies.passDataLibs)
+    kapt(Dependencies.passDataAnnotationProcessors)
+    implementation(project(":passwordManager:domain"))
     testImplementation(Dependencies.testLibs)
 }
 

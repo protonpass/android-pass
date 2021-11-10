@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" project-jdk-name="Embedded JDK" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../../layout/compose-model-1631131095652.xml" value="0.9097472924187726" />
+        <entry key="../../../../../layout/compose-model-1631173037160.xml" value="0.18611111111111112" />
+        <entry key="../../../../../layout/compose-model-1631179284802.xml" value="0.12311872909698997" />
+        <entry key="../../../../../layout/compose-model-1631179367654.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1631181374872.xml" value="0.12311872909698997" />
+        <entry key="../../../../../layout/compose-model-1631193760512.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1631193771867.xml" value="0.18611111111111112" />
+        <entry key="../../../../../layout/compose-model-1631516329881.xml" value="0.9199832834529608" />
+        <entry key="../../../../../layout/compose-model-1631535010898.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1631615936027.xml" value="0.5076013513513513" />
+        <entry key="../../../../../layout/compose-model-1631621214680.xml" value="0.55" />
+        <entry key="../../../../../layout/compose-model-1631628867917.xml" value="0.387037037037037" />
+        <entry key="../../../../../layout/compose-model-1631650157249.xml" value="0.38425925925925924" />
+        <entry key="../../../../../layout/compose-model-1632132705571.xml" value="0.37037037037037035" />
+        <entry key="../../../../../layout/compose-model-1632146207825.xml" value="0.1638888888888889" />
+        <entry key="../../../../../layout/compose-model-1632215179884.xml" value="0.1638888888888889" />
+        <entry key="../../../../../layout/compose-model-1632219324714.xml" value="0.33983156599685704" />
+        <entry key="../../../../../layout/compose-model-1632219324747.xml" value="0.12332775919732442" />
+        <entry key="../../../../../layout/compose-model-1632222900960.xml" value="0.30532094594594594" />
+        <entry key="../../../../../layout/compose-model-1632300955170.xml" value="0.3712962962962963" />
+        <entry key="../../../../../layout/compose-model-1632304870770.xml" value="0.3712962962962963" />
+        <entry key="../../../../../layout/compose-model-1632305054478.xml" value="0.3685185185185185" />
+        <entry key="../../../../../layout/compose-model-1632309369171.xml" value="0.1" />
+        <entry key="../../../../../layout/compose-model-1632469003334.xml" value="0.36666666666666664" />
+        <entry key="../../../../../layout/compose-model-1632469373312.xml" value="0.36666666666666664" />
+        <entry key="../../../../../layout/custom_preview.xml" value="0.5104166666666666" />
+        <entry key="../../../Library/Android/sdk/platforms/android-30/data/res/layout/simple_list_item_1.xml" value="0.27447916666666666" />
+        <entry key="app/src/main/res/xml/autofill_service_configuration.xml" value="0.13703140830800406" />
+        <entry key="autofill/sample/src/main/res/layout/activity_login_result.xml" value="0.5854166666666667" />
+        <entry key="autofill/sample/src/main/res/layout/activity_sample_selection.xml" value="0.39266304347826086" />
+        <entry key="autofill/sample/src/main/res/layout/activity_simple_fragment_login.xml" value="0.5994791666666667" />
+        <entry key="autofill/sample/src/main/res/layout/activity_simple_login.xml" value="0.5854166666666667" />
+        <entry key="autofill/sample/src/main/res/layout/activity_webview_login.xml" value="0.7979166666666667" />
+        <entry key="autofill/sample/src/main/res/layout/content_simple_fragment_login.xml" value="0.5994791666666667" />
+        <entry key="autofill/sample/src/main/res/layout/fragment_first.xml" value="0.5994791666666667" />
+        <entry key="autofill/sample/src/main/res/layout/fragment_login_result.xml" value="0.5854166666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Embedded JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

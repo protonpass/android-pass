@@ -6,19 +6,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
-import me.proton.core.account.domain.entity.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.account.domain.entity.isDisabled
+import me.proton.core.account.domain.entity.isReady
+import me.proton.core.account.domain.entity.isStepNeeded
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountmanager.presentation.*
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.onAddAccountResult
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
 import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
@@ -96,6 +106,16 @@ class AccountViewModel @Inject constructor(
     fun addAccount() {
         authOrchestrator.startAddAccountWorkflow(AccountType.Internal, Product.Drive)
     }
+
+    suspend fun signOut(userId: UserId) = accountManager.disableAccount(userId)
+
+    suspend fun remove(userId: UserId) = accountManager.removeAccount(userId)
+
+    suspend fun setAsPrimary(userId: UserId) = accountManager.setAsPrimary(userId)
+
+    fun getPrimaryUserId() = accountManager.getPrimaryUserId()
+
+    fun signIn(username: String? = null) = authOrchestrator.startLoginWorkflow(AccountType.Internal, username)
 
     sealed class State {
         object PrimaryNeeded : State()

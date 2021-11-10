@@ -1,3 +1,29 @@
 <resources>
     <string name="app_name">Password Manager</string>
+
+    <!--  Actions  -->
+    <string name="action_delete">Delete</string>
+    <string name="action_add_secret">Add a secret</string>
+
+    <!--  Alerts  -->
+    <string name="alert_confirm_secret_deletion_title">Delete secret?</string>
+    <string name="alert_confirm_secret_deletion_message">Are you sure you want to delete \'%s\'?</string>
+
+    <string name="secret_type_username">User name</string>
+    <string name="secret_type_email">Email</string>
+    <string name="secret_type_password">Password</string>
+    <string name="secret_type_full_name">Full name</string>
+    <string name="secret_type_phone">Phone number</string>
+    <string name="secret_type_login">Login</string>
+    <string name="secret_type_other">Other</string>
+
+    <string name="item_secret_type_message">Type: %s</string>
+    <string name="item_secret_login_identity">Identity: %s</string>
+    <string name="item_secret_login_password">Password: %s</string>
+    <string name="action_authenticate">Authenticate</string>
+    <string name="autofill_list_secrets_empty_message">No compatible credentials found.</string>
+    <string name="autofill_save_user_label">User</string>
+    <string name="autofill_save_address_label">Address</string>
+    <string name="autofill_save_name_label">Save as</string>
+    <string name="error_autofill_save_credentials">The credentials could not be saved.</string>
 </resources>

@@ -20,6 +20,7 @@ out/
 # Gradle files
 .gradle/
 build/
+builds/
 
 # Built application files
 **/build/

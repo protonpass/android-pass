@@ -2,7 +2,7 @@ package me.proton.android.pass.ui.user
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.SavedStateHandle
-import me.proton.android.pass.ui.extension.require
+import me.proton.android.pass.extension.require
 import me.proton.android.pass.ui.home.HomeScreen
 import me.proton.core.domain.entity.UserId
 

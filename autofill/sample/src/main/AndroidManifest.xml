@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="me.proton.core.pass.autofill.sample" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/Theme.Autofill.Sample" >
+        <activity
+            android:name=".simple_fragment.SimpleFragmentLoginActivity"
+            android:exported="true"
+            android:label="@string/title_activity_simple_fragment_login"
+            android:theme="@style/Theme.Autofill.Sample.NoActionBar" />
+        <activity
+            android:name=".LoginResultActivity"
+            android:exported="true" />
+        <activity
+            android:name=".simple_compose.SimpleComposeLoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".simple_activity.SimpleLoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".webview.WebViewLoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SampleSelectionActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

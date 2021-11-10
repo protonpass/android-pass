@@ -64,7 +64,7 @@ fun NavigationDrawerSectionHeader(
                 vertical = DefaultSpacing,
                 horizontal = SectionHeaderHorizontalPadding,
             ),
-            style = MaterialTheme.typography.h1,
+            style = MaterialTheme.typography.h6,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )

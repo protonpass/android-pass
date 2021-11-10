@@ -1,6 +1,12 @@
 rootProject.name = "Password Manager"
 include(":app")
 include(":passwordManager")
+include(":passwordManager:dagger")
 include(":passwordManager:data")
+include(":passwordManager:domain")
 include(":passwordManager:presentation")
 include(":compose")
+include(":autofill")
+include(":autofill:service")
+include(":autofill:sample")
+include(":common-secret")

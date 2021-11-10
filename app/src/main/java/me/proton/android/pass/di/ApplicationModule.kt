@@ -4,11 +4,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.android.pass.log.PassKeyLogger
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.Product
 import me.proton.core.util.kotlin.Logger
-import me.proton.android.pass.log.PassKeyLogger
 import javax.inject.Singleton
 
 @Module
@@ -17,7 +17,8 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideLogger(): Logger = PassKeyLogger()
+    // Used in child modules
+    fun provideLogger(): Logger = PassKeyLogger
 
     @Provides
     @Singleton

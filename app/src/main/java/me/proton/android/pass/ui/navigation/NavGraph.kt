@@ -10,14 +10,16 @@ import androidx.navigation.compose.NamedNavArgument
 import androidx.navigation.compose.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
-import me.proton.android.pass.ui.launcher.LauncherScreen
 import me.proton.android.pass.ui.home.HomeScreen
+import me.proton.android.pass.ui.launcher.AccountViewModel
+import me.proton.android.pass.ui.launcher.LauncherScreen
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun AppNavGraph(
+    accountViewModel: AccountViewModel,
     keyStoreCrypto: KeyStoreCrypto,
     onDrawerStateChanged: (Boolean) -> Unit,
 ) {
@@ -27,7 +29,7 @@ fun AppNavGraph(
         startDestination = LauncherScreen.route
     ) {
         addLauncher(navController)
-        addHome(navController, onDrawerStateChanged)
+        addHome(navController, accountViewModel, onDrawerStateChanged)
     }
 }
 
@@ -49,6 +51,7 @@ fun NavGraphBuilder.addLauncher(navController: NavHostController) = composable(
 @ExperimentalAnimationApi
 fun NavGraphBuilder.addHome(
     navController: NavHostController,
+    accountViewModel: AccountViewModel,
     onDrawerStateChanged: (Boolean) -> Unit,
     route: String = HomeScreen.route,
     arguments: List<NamedNavArgument> = listOf(
@@ -65,9 +68,8 @@ fun NavGraphBuilder.addHome(
     )
     HomeScreen.view(
         userId,
+        navController,
         onDrawerStateChanged = onDrawerStateChanged,
-//        navigateToSigningOut = {
-//            navController.navigate(Screen.Dialogs.SignOut(userId))
-//        },
+        accountViewModel = accountViewModel,
     )
 }

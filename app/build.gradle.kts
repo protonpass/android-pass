@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
 }
 
 base {
@@ -101,6 +102,15 @@ android {
         resources.excludes.add("META-INF/AL2.0")
         resources.excludes.add("META-INF/LGPL2.1")
     }
+
+    kapt {
+        correctErrorTypes = true
+    }
+}
+
+kotlin.sourceSets.all {
+    languageSettings.useExperimentalAnnotation("kotlin.RequiresOptIn")
+    languageSettings.useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
 }
 
 tasks.create("publishGeneratedReleaseNotes") {
@@ -139,13 +149,16 @@ configurations.all {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
     implementation(Dependencies.appLibs)
+    implementation(project(":passwordManager:dagger"))
     implementation(project(":passwordManager:data"))
+    implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:presentation"))
+    implementation(project(":autofill:service"))
     debugImplementation(Dependencies.appDebug)
     kapt(Dependencies.appAnnotationProcessors)
     testImplementation(Dependencies.testLibs)
     androidTestImplementation(Dependencies.androidTestLibs)
 }
 
-//configureJacoco(flavor = "dev")
+configureJacoco(flavor = "dev")
 setAsHiltModule()

@@ -53,7 +53,7 @@ import me.proton.core.compose.theme.default
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.presentation.components.extensions.currentLocale
-import me.proton.core.passwordmanager.presentation.R
+import me.proton.core.pass.presentation.R
 import me.proton.core.user.domain.entity.User
 
 @Composable

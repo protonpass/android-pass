@@ -7,7 +7,7 @@ import me.proton.core.util.kotlin.LoggerLogTag
 import timber.log.Timber
 import java.util.*
 
-class PassKeyLogger: Logger {
+object PassKeyLogger: Logger {
     override fun v(tag: String, message: String) = Timber.tag(tag).v(message)
     override fun v(tag: String, e: Throwable, message: String) = Timber.tag(tag).v(e, message)
     override fun d(tag: String, message: String) = Timber.tag(tag).d(message)

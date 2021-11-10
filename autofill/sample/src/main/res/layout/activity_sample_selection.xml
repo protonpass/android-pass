@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    tools:context=".SampleSelectionActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/simpleActivityLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Activity Login" />
+
+            <Button
+                android:id="@+id/simpleFragmentLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Fragment Login" />
+
+            <Button
+                android:id="@+id/simpleComposeLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Compose Login" />
+
+            <Button
+                android:id="@+id/webviewLoginButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="WebView Login" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

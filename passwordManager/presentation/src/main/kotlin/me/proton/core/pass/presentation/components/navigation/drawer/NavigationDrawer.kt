@@ -20,10 +20,7 @@ package me.proton.core.pass.presentation.components.navigation.drawer
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DrawerState
@@ -34,9 +31,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.viewinterop.AndroidView
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.presentation.view.AccountPrimaryView
 import me.proton.core.compose.component.NavigationDrawerAppVersion
 import me.proton.core.compose.component.NavigationDrawerSectionHeader
 import me.proton.core.compose.theme.DefaultSpacing
@@ -45,10 +46,11 @@ import me.proton.core.compose.theme.SmallSpacing
 import me.proton.core.compose.component.NavigationDrawerListItem
 import me.proton.core.pass.presentation.components.user.PREVIEW_USER
 import me.proton.core.pass.presentation.components.user.UserSelector
-import me.proton.core.passwordmanager.presentation.R
+import me.proton.core.pass.presentation.R
 
 @Composable
 fun NavigationDrawer(
+    accountPrimaryView: AccountPrimaryView,
     drawerState: DrawerState,
     viewState: NavigationDrawerViewState,
     viewEvent: NavigationDrawerViewEvent,
@@ -60,7 +62,7 @@ fun NavigationDrawer(
             if (viewState.closeOnBackEnabled) {
                 { onClose ->
                     scope.launch {
-                        drawerState.close()
+                        if (drawerState.isOpen) drawerState.close()
                         onClose()
                     }
                 }
@@ -77,9 +79,12 @@ fun NavigationDrawer(
         ) {
             Column(modifier) {
                 if (viewState.currentUser != null) {
-                    UserSelector(viewState.currentUser, Modifier.padding(SmallSpacing)) {
-                        // Not implemented yet
-                    }
+                    AndroidView(
+                        factory = {
+                            accountPrimaryView
+                        },
+                        Modifier.fillMaxWidth().padding(horizontal = 20.dp)
+                    )
                 }
                 Column(
                     modifier = Modifier
@@ -180,6 +185,7 @@ fun NavigationDrawerListItem(
 fun PreviewDrawerWithUser() {
     ProtonNavigationDrawerTheme {
         NavigationDrawer(
+            accountPrimaryView = AccountPrimaryView(LocalContext.current),
             drawerState = DrawerState(DrawerValue.Open) { true },
             viewState = NavigationDrawerViewState(
                 R.string.title_app,
@@ -200,6 +206,7 @@ fun PreviewDrawerWithUser() {
 fun PreviewDrawerWithoutUser() {
     ProtonNavigationDrawerTheme {
         NavigationDrawer(
+            accountPrimaryView = AccountPrimaryView(LocalContext.current),
             drawerState = DrawerState(DrawerValue.Open) { true },
             viewState = NavigationDrawerViewState(R.string.title_app, "Version"),
             viewEvent = object : NavigationDrawerViewEvent {

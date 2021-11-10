@@ -17,6 +17,11 @@ object AndroidX {
         const val compose = "androidx.activity:activity-compose:$version"
     }
 
+    object Autofill {
+        private const val version = "1.1.0"
+        const val autofill = "androidx.autofill:autofill:$version"
+    }
+
     object Compose {
         private const val version = Versions.AndroidX.compose
         private const val versionConstraintLayout = Versions.AndroidX.constraintLayoutCompose
@@ -24,6 +29,7 @@ object AndroidX {
         const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:$versionConstraintLayout"
         const val foundation = "androidx.compose.foundation:foundation:$version"
         const val foundationLayout = "androidx.compose.foundation:foundation-layout:$version"
+        const val iconsExtended = "androidx.compose.material:material-icons-extended:$version"
         const val material = "androidx.compose.material:material:$version"
         const val runtime = "androidx.compose.runtime:runtime:$version"
         const val ui = "androidx.compose.ui:ui:$version"
@@ -31,6 +37,11 @@ object AndroidX {
         const val uiTest = "androidx.compose.ui:ui-test:$version"
         const val uiTestJUnit = "androidx.compose.ui:ui-test-junit4:$version"
         const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:$version"
+    }
+
+    object ConstraintLayout {
+        private const val version = "2.1.1"
+        const val constraintLayout = "androidx.constraintlayout:constraintlayout:$version"
     }
 
     object Hilt {
@@ -138,11 +149,18 @@ object Squareup {
 object Test {
     const val version = Versions.Test.test
 
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KotlinX.coroutines}"
     const val junit = "junit:junit:${Versions.Test.junit}"
     const val core = "androidx.test:core:$version"
     const val coreKtx = "androidx.test:core-ktx:$version"
     const val runner = "androidx.test:runner:$version"
     const val rules = "androidx.test:rules:$version"
+
+    const val mockk = "io.mockk:mockk:${Versions.Test.mockk}"
+    const val mockkAgent = "io.mockk:mockk-agent-jvm:${Versions.Test.mockk}"
+    const val mockkAndroid = "io.mockk:mockk-android:${Versions.Test.mockk}"
+
+    const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.Kotlin.kotlin}"
 }
 
 fun coreArtifact(name: String, version: String) = "me.proton.core:$name:$version"

@@ -6,8 +6,8 @@ import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.usecase.SetupAccountCheck
 import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.presentation.auth.PasswordManagerUserCheck.Companion.SCOPE_PASS
 import me.proton.core.pass.presentation.auth.PasswordManagerUserCheck.Companion.SCOPE_FULL
+import me.proton.core.pass.presentation.auth.PasswordManagerUserCheck.Companion.SCOPE_PASS
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 

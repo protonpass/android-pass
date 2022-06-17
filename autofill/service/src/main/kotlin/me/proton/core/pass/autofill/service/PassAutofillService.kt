@@ -109,7 +109,7 @@ class PassAutofillService: AutofillService() {
                 val extras = Bundle().apply { putByteArray(Constants.ARG_SEARCH_CREDENTIALS_INFO, searchCredentialsInfo.toByteArray()) }
                 putExtras(extras)
             },
-            PendingIntent.FLAG_CANCEL_CURRENT
+            PendingIntent.FLAG_MUTABLE // TODO: Check if we can use FLAG_IMMUTABLE
         )
 
         // Single Dataset to force user authentication

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +33,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.headline
+import me.proton.core.compose.theme.subheadline
 import me.proton.core.pass.autofill.sample.LoginResultActivity
 
 class SimpleComposeLoginActivity : AppCompatActivity() {
@@ -58,8 +60,8 @@ fun ExplicitAutofillTypesDemo(onLoginClicked: () -> Unit) {
         var nameState by remember { mutableStateOf("") }
         var emailState by remember { mutableStateOf("") }
         val autofill = LocalAutofill.current
-        val labelStyle = MaterialTheme.typography.subtitle1
-        val textStyle = MaterialTheme.typography.h6
+        val labelStyle = ProtonTheme.typography.subheadline
+        val textStyle = ProtonTheme.typography.headline
 
         Text("Email", style = labelStyle)
         Autofill(

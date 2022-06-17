@@ -27,7 +27,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -42,18 +41,17 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import me.proton.core.compose.theme.DefaultCornerRadius
-import me.proton.core.compose.theme.DefaultSpacing
-import me.proton.core.compose.theme.LargeSpacing
-import me.proton.core.compose.theme.LargerSpacing
+import me.proton.core.compose.theme.ProtonDimens.DefaultCornerRadius
+import me.proton.core.compose.theme.ProtonDimens.DefaultSpacing
+import me.proton.core.compose.theme.ProtonDimens.LargeSpacing
+import me.proton.core.compose.theme.ProtonDimens.LargerSpacing
+import me.proton.core.compose.theme.ProtonDimens.SmallSpacing
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.SmallCornerRadius
-import me.proton.core.compose.theme.SmallSpacing
 import me.proton.core.compose.theme.default
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.presentation.components.extensions.currentLocale
 import me.proton.core.pass.presentation.R
+import me.proton.core.pass.presentation.components.extensions.currentLocale
 import me.proton.core.user.domain.entity.User
 
 @Composable
@@ -68,7 +66,7 @@ fun UserSelector(
         modifier = modifier
             .clickable(onClick = onClick)
             .clip(RoundedCornerShape(DefaultCornerRadius))
-            .background(MaterialTheme.colors.surface)
+            .background(ProtonTheme.colors.backgroundSecondary)
             .padding(SmallSpacing)
             .semantics { contentDescription = userSelectorContentDescription }
     ) {
@@ -82,7 +80,7 @@ fun UserSelector(
             modifier = Modifier
                 .size(LargeSpacing)
                 .align(Alignment.CenterVertically),
-            painter = painterResource(R.drawable.ic_chevron_down),
+            painter = painterResource(R.drawable.ic_proton_chevron_down),
             colorFilter = ColorFilter.tint(Color.White),
             contentDescription = null,
         )
@@ -98,14 +96,14 @@ fun UserDetails(
         Box(
             modifier = Modifier
                 .size(LargerSpacing)
-                .clip(RoundedCornerShape(SmallCornerRadius))
-                .background(MaterialTheme.colors.primary)
+                .clip(RoundedCornerShape(DefaultCornerRadius))
+                .background(ProtonTheme.colors.backgroundSecondary)
         ) {
             Text(
                 modifier = Modifier.align(Alignment.Center),
                 text = user.firstLetter.uppercase(LocalContext.current.currentLocale),
-                style = MaterialTheme.typography.default(),
-                color = MaterialTheme.colors.onPrimary,
+                style = ProtonTheme.typography.default,
+                color = ProtonTheme.colors.textNorm,
             )
         }
 
@@ -115,14 +113,14 @@ fun UserDetails(
         ) {
             Text(
                 text = user.displayName ?: "",
-                style = MaterialTheme.typography.default(),
-                color = MaterialTheme.colors.onBackground,
+                style = ProtonTheme.typography.default,
+                color = ProtonTheme.colors.textNorm,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
             Text(
                 text = user.email ?: "",
-                style = MaterialTheme.typography.defaultSmallWeak(),
+                style = ProtonTheme.typography.defaultSmallWeak,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
             )
@@ -157,7 +155,7 @@ fun PreviewUserDetailsWithLongNameAndAddress() {
 @Preview
 @Composable
 fun PreviewUserSelector() {
-    ProtonTheme(darkTheme = true) {
+    ProtonTheme(isDark = true) {
         UserSelector(
             currentUser = PREVIEW_USER
         ) {

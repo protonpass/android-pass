@@ -1,0 +1,106 @@
+/*
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton Technologies AG and Proton Mail.
+ *
+ * Proton Mail is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Proton Mail is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Proton Mail. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package me.proton.android.pass.di
+
+import androidx.work.WorkManager
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.ElementsIntoSet
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import me.proton.core.eventmanager.data.EventManagerConfigProviderImpl
+import me.proton.core.eventmanager.data.EventManagerCoroutineScope
+import me.proton.core.eventmanager.data.EventManagerFactory
+import me.proton.core.eventmanager.data.EventManagerProviderImpl
+import me.proton.core.eventmanager.data.db.EventMetadataDatabase
+import me.proton.core.eventmanager.data.repository.EventMetadataRepositoryImpl
+import me.proton.core.eventmanager.data.work.EventWorkerManagerImpl
+import me.proton.core.eventmanager.domain.EventListener
+import me.proton.core.eventmanager.domain.EventManagerConfigProvider
+import me.proton.core.eventmanager.domain.EventManagerProvider
+import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
+import me.proton.core.eventmanager.domain.work.EventWorkerManager
+import me.proton.core.network.data.ApiProvider
+import me.proton.core.presentation.app.AppLifecycleProvider
+import me.proton.core.user.data.UserAddressEventListener
+import me.proton.core.user.data.UserEventListener
+import me.proton.core.usersettings.data.UserSettingsEventListener
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+@Suppress("LongParameterList")
+object EventManagerModule {
+
+    @Provides
+    @Singleton
+    @EventManagerCoroutineScope
+    fun provideEventManagerCoroutineScope(): CoroutineScope =
+        CoroutineScope(Dispatchers.Default + SupervisorJob())
+
+    @Provides
+    @Singleton
+    fun provideEventManagerConfigProvider(
+        eventMetadataRepository: EventMetadataRepository,
+    ): EventManagerConfigProvider = EventManagerConfigProviderImpl(eventMetadataRepository)
+
+    @Provides
+    @Singleton
+    @JvmSuppressWildcards
+    fun provideEventManagerProvider(
+        eventManagerFactory: EventManagerFactory,
+        eventManagerConfigProvider: EventManagerConfigProvider,
+        eventListeners: Set<EventListener<*, *>>,
+    ): EventManagerProvider = EventManagerProviderImpl(
+        eventManagerFactory,
+        eventManagerConfigProvider,
+        eventListeners
+    )
+
+    @Provides
+    @Singleton
+    fun provideEventMetadataRepository(
+        db: EventMetadataDatabase,
+        provider: ApiProvider,
+    ): EventMetadataRepository = EventMetadataRepositoryImpl(db, provider)
+
+    @Provides
+    @Singleton
+    fun provideEventWorkManager(
+        workManager: WorkManager,
+        appLifecycleProvider: AppLifecycleProvider,
+    ): EventWorkerManager = EventWorkerManagerImpl(workManager, appLifecycleProvider)
+
+    @Provides
+    @Singleton
+    @ElementsIntoSet
+    @JvmSuppressWildcards
+    fun provideEventListenerSet(
+        userEventListener: UserEventListener,
+        userAddressEventListener: UserAddressEventListener,
+        userSettingsEventListener: UserSettingsEventListener,
+    ): Set<EventListener<*, *>> = setOf(
+        userEventListener,
+        userAddressEventListener,
+        userSettingsEventListener,
+    )
+}

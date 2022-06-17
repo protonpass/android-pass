@@ -136,6 +136,7 @@ private fun makeUserAddress(email: String, displayName: String?, order: Int): Us
         canReceive = true,
         enabled = true,
         order = order,
-        keys = emptyList()
+        keys = emptyList(),
+        signedKeyList = null
     )
 }

@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton Technologies AG and Proton Mail.
+ *
+ * Proton Mail is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Proton Mail is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Proton Mail. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package me.proton.android.pass.di
 
 import dagger.Binds
@@ -18,7 +36,9 @@ import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.repository.HumanVerificationRepository
 import me.proton.core.humanverification.domain.repository.UserVerificationRepository
 import me.proton.core.humanverification.presentation.CaptchaApiHost
+import me.proton.core.humanverification.presentation.HumanVerificationApiHost
 import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
+import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
@@ -27,42 +47,47 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object HumanVerificationModule {
-    @Provides
-    @CaptchaApiHost
-    fun provideCaptchaApiHost(): String = BuildConfig.ENVIRONMENT
 
     @Provides
-    fun provideHumanVerificationOrchestrator(): HumanVerificationOrchestrator =
-        HumanVerificationOrchestrator()
+    @HumanVerificationApiHost
+    fun provideHumanVerificationApiHost(): String = "https://${BuildConfig.HUMAN_VERIFICATION_HOST}/"
+
+    @Provides
+    fun provideHumanVerificationVersion() = HumanVerificationVersion.HV2
+
+    @Provides
+    @CaptchaApiHost
+    fun provideCaptchaApiHost(): String = "api.${BuildConfig.HOST}"
+
+    @Provides
+    fun provideHumanVerificationOrchestrator(
+        humanVerificationVersion: HumanVerificationVersion
+    ): HumanVerificationOrchestrator = HumanVerificationOrchestrator(humanVerificationVersion)
 
     @Provides
     @Singleton
     fun provideHumanVerificationListener(
         humanVerificationRepository: HumanVerificationRepository
-    ): HumanVerificationListener =
-        HumanVerificationListenerImpl(humanVerificationRepository)
+    ): HumanVerificationListener = HumanVerificationListenerImpl(humanVerificationRepository)
 
     @Provides
     @Singleton
     fun provideHumanVerificationProvider(
         humanVerificationRepository: HumanVerificationRepository
-    ): HumanVerificationProvider =
-        HumanVerificationProviderImpl(humanVerificationRepository)
+    ): HumanVerificationProvider = HumanVerificationProviderImpl(humanVerificationRepository)
 
     @Provides
     @Singleton
     fun provideHumanVerificationRepository(
         db: HumanVerificationDatabase,
         keyStoreCrypto: KeyStoreCrypto
-    ): HumanVerificationRepository =
-        HumanVerificationRepositoryImpl(db, keyStoreCrypto)
+    ): HumanVerificationRepository = HumanVerificationRepositoryImpl(db, keyStoreCrypto)
 
     @Provides
     @Singleton
     fun provideUserVerificationRepository(
         apiProvider: ApiProvider
-    ): UserVerificationRepository =
-        UserVerificationRepositoryImpl(apiProvider)
+    ): UserVerificationRepository = UserVerificationRepositoryImpl(apiProvider)
 
     @Provides
     @Singleton
@@ -70,8 +95,11 @@ object HumanVerificationModule {
         humanVerificationProvider: HumanVerificationProvider,
         humanVerificationListener: HumanVerificationListener,
         humanVerificationRepository: HumanVerificationRepository
-    ): HumanVerificationManagerImpl =
-        HumanVerificationManagerImpl(humanVerificationProvider, humanVerificationListener, humanVerificationRepository)
+    ): HumanVerificationManagerImpl = HumanVerificationManagerImpl(
+        humanVerificationProvider,
+        humanVerificationListener,
+        humanVerificationRepository
+    )
 }
 
 @Module

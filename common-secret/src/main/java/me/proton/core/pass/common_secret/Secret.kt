@@ -1,8 +1,5 @@
 package me.proton.core.pass.common_secret
 
-import me.proton.core.pass.common_secret.SecretType
-import me.proton.core.pass.common_secret.SecretValue
-
 data class Secret(
     val id: String?,
     val userId: String,

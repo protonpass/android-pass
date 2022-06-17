@@ -6,9 +6,7 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE
 import android.view.autofill.AutofillManager
-import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
-import androidx.appcompat.view.ContextThemeWrapper
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -23,7 +21,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
@@ -40,18 +37,14 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.insets.systemBarsPadding
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import me.proton.android.pass.R
-import me.proton.android.pass.ui.launcher.AccountViewModel
-import me.proton.core.accountmanager.presentation.view.AccountPrimaryView
-import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.headline
+import me.proton.core.compose.theme.headlineSmall
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.common_secret.SecretType
 import me.proton.core.pass.common_secret.SecretValue
@@ -62,25 +55,21 @@ import java.util.UUID
 
 @ExperimentalMaterialApi
 object HomeScreen {
-    operator fun invoke(userId: UserId) = "home/${userId.id}"
-    const val route = "home/{userId}"
-    const val userId = "userId"
 
     @Composable
     fun view(
-        userId: UserId,
-        navController: NavHostController,
         modifier: Modifier = Modifier,
-        onDrawerStateChanged: (Boolean) -> Unit,
-        accountViewModel: AccountViewModel,
+        onDrawerStateChanged: (Boolean) -> Unit = {},
+        onSignIn: (UserId?) -> Unit = {},
+        onSignOut: (UserId) -> Unit = {},
+        onRemove: (UserId?) -> Unit = {},
+        onSwitch: (UserId) -> Unit = {},
         homeViewModel: HomeViewModel = hiltViewModel(),
     ) {
         val context = LocalContext.current
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             requestAutofillAccessIfNeeded(context = context)
         }
-
-        val accountPrimaryScope = rememberCoroutineScope()
 
         val homeScaffoldState = rememberHomeScaffoldState()
         val isDrawerOpen = with(homeScaffoldState.scaffoldState.drawerState) {
@@ -91,60 +80,40 @@ object HomeScreen {
         }
         val drawerGesturesEnabled by homeScaffoldState.drawerGesturesEnabled
 
-        val homeViewModel = remember { homeViewModel }
         val viewState by rememberFlowWithLifecycle(flow = homeViewModel.viewState)
             .collectAsState(initial = homeViewModel.initialViewState)
 
         val viewEvent = homeViewModel.viewEvent(
-            navigateToSigningOut = {
-               accountPrimaryScope.launch {
-                   val currentUserId = accountViewModel.getPrimaryUserId().firstOrNull()
-                   currentUserId?.let { accountViewModel.signOut(it) }
-               }
-            },
+            navigateToSigningOut = { onRemove(null) },
         )
-
-        val accountSwitcherViewModel: AccountSwitcherViewModel = hiltViewModel()
-        val accountPrimaryView = remember {
-            accountSwitcherViewModel.onAction().onEach {
-                when (it) {
-                    is AccountSwitcherViewModel.Action.Add -> accountViewModel.signIn()
-                    is AccountSwitcherViewModel.Action.SignIn -> accountViewModel.signIn(it.account.username)
-                    is AccountSwitcherViewModel.Action.SignOut -> accountViewModel.signOut(it.account.userId)
-                    is AccountSwitcherViewModel.Action.Remove -> accountViewModel.remove(it.account.userId)
-                    is AccountSwitcherViewModel.Action.SetPrimary -> accountViewModel.setAsPrimary(it.account.userId)
-                }
-            }.launchIn(accountPrimaryScope)
-            val themedContext = ContextThemeWrapper(context, R.style.ProtonTheme)
-            AccountPrimaryView(themedContext).also {
-                it.setViewModel(accountSwitcherViewModel)
-            }
-        }
 
         Scaffold(
             modifier = modifier.systemBarsPadding(),
             scaffoldState = homeScaffoldState.scaffoldState,
             drawerContent = {
                 NavigationDrawer(
-                    accountPrimaryView,
                     drawerState = homeScaffoldState.scaffoldState.drawerState,
                     viewState = viewState.navigationDrawerViewState,
                     viewEvent = viewEvent.navigationDrawerViewEvent,
                     modifier = Modifier
                         .statusBarsPadding()
                         .navigationBarsPadding(),
+                    onRemove = onRemove,
+                    onSignIn = onSignIn,
+                    onSignOut = onSignOut,
+                    onSwitch = onSwitch,
                 )
             },
             drawerGesturesEnabled = drawerGesturesEnabled,
             topBar = {
                 TopAppBar(title = {
-                    Text(stringResource(id = R.string.app_name), style = MaterialTheme.typography.h6)
+                    Text(stringResource(id = R.string.app_name), style = ProtonTheme.typography.headline)
                 })
             },
             floatingActionButton = {
                 FloatingActionButton(onClick = { /*TODO*/ }) {
                     Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus),
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_proton_plus),
                         contentDescription = stringResource(id = R.string.action_add_secret)
                     )
                 }
@@ -238,7 +207,7 @@ internal fun SecretRow(secret: Secret, onDeleteClicked: (Secret) -> Unit) {
         .fillMaxWidth()
     ) {
         Column(modifier = Modifier.weight(1f)) {
-            Text(text = secret.name, style = MaterialTheme.typography.h5)
+            Text(text = secret.name, style = ProtonTheme.typography.headlineSmall)
             when (val contents = secret.contents) {
                 is SecretValue.Login -> {
                     SecretRowContents(
@@ -259,7 +228,7 @@ internal fun SecretRow(secret: Secret, onDeleteClicked: (Secret) -> Unit) {
             }
             Text(
                 text = stringResource(id = R.string.item_secret_type_message, typeText),
-                style = MaterialTheme.typography.body2
+                style = ProtonTheme.typography.default
             )
         }
         IconButton(
@@ -278,7 +247,7 @@ internal fun SecretRowContents(secretValue: String, showContents: Boolean) {
     val contents = if (showContents)
         secretValue else
         "*******"
-    Text(text = contents, style = MaterialTheme.typography.body1)
+    Text(text = contents, style = ProtonTheme.typography.default)
 }
 
 @Stable

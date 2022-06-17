@@ -12,13 +12,45 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PasswordManager"
+        android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+            <meta-data
+                android:name="me.proton.android.pass.initializer.WorkManagerInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="me.proton.android.pass.initializer.AccountStateHandlerInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="me.proton.android.pass.initializer.StrictModeInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="me.proton.android.pass.initializer.LoggerInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="me.proton.android.pass.initializer.SentryInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="me.proton.android.pass.initializer.EventManagerInitializer"
+                android:value="androidx.startup" />
+            <meta-data
+                android:name="me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
         <activity
             android:name="me.proton.android.pass.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.PasswordManager.NoActionBar">
+            android:theme="@style/ProtonTheme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -55,7 +87,7 @@
         <activity
             android:name="me.proton.core.auth.presentation.ui.AddAccountActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/ProtonTheme.Drive.AddAccount"
+            android:theme="@style/ProtonTheme.AddAccount"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name="me.proton.core.auth.presentation.ui.LoginActivity"

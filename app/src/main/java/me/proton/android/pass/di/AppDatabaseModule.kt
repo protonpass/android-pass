@@ -9,6 +9,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.proton.android.pass.db.AppDatabase
 import me.proton.core.account.data.db.AccountDatabase
+import me.proton.core.challenge.data.db.ChallengeDatabase
+import me.proton.core.eventmanager.data.db.EventMetadataDatabase
+import me.proton.core.featureflag.data.db.FeatureFlagDatabase
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.key.data.db.KeySaltDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
@@ -57,4 +60,13 @@ abstract class AppDatabaseBindsModule {
 
     @Binds
     abstract fun provideOrganizationDatabase(db: AppDatabase): OrganizationDatabase
+
+    @Binds
+    abstract fun provideEventMetadataDatabase(db: AppDatabase): EventMetadataDatabase
+
+    @Binds
+    abstract fun provideChallengeDatabase(db: AppDatabase): ChallengeDatabase
+
+    @Binds
+    abstract fun provideFeatureFlagDatabase(db: AppDatabase): FeatureFlagDatabase
 }

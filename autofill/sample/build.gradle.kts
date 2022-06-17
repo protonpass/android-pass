@@ -6,7 +6,6 @@ plugins {
 
 android {
     compileSdk = Config.compileSdk
-    buildToolsVersion = Config.buildTools
 
     defaultConfig {
         applicationId = "me.proton.pass.core.autofill.sample"
@@ -65,16 +64,9 @@ android {
     }
 }
 
-configurations.all {
-    // androidx.test includes junit 4.12 so this will force that entire project uses same junit version
-    resolutionStrategy.force("junit:junit:${Versions.Test.junit}")
-}
-
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
     implementation(Dependencies.passAutofillSampleLibs)
-    implementation("androidx.appcompat:appcompat:1.3.1")
-    implementation("com.google.android.material:material:1.4.0")
     testImplementation(Dependencies.testLibs)
     androidTestImplementation(Dependencies.androidTestLibs)
 }

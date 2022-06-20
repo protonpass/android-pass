@@ -100,5 +100,6 @@ class AutofillSearchSecretViewModelTest {
         enabled = true,
         order = 0,
         keys = emptyList(),
+        signedKeyList = null,
     )
 }

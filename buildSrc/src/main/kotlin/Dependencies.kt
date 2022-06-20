@@ -16,6 +16,7 @@ object Dependencies {
     val composeLibs = mutableListOf<String>().apply {
         add(AndroidX.Activity.compose)
         add(AndroidX.Compose.foundation)
+        add(AndroidX.Compose.foundationLayout)
         add(AndroidX.Compose.iconsExtended)
         add(AndroidX.Compose.material)
         add(AndroidX.Compose.runtime)
@@ -24,6 +25,7 @@ object Dependencies {
     }
 
     val composeDebugLibs = mutableListOf<String>().apply {
+        add(AndroidX.Compose.uiTooling)
         add(AndroidX.Compose.uiTestManifest)
     }
     // endregion
@@ -37,6 +39,7 @@ object Dependencies {
         add(Accompanist.systemUiController)
         add(AndroidX.Activity.ktx)
         add(AndroidX.Compose.foundationLayout)
+        add(AndroidX.Core.splashscreen)
         add(AndroidX.Hilt.compiler)
         add(AndroidX.Hilt.navigationCompose)
         add(AndroidX.Hilt.work)
@@ -46,24 +49,31 @@ object Dependencies {
         add(AndroidX.Room.ktx)
         add(AndroidX.Work.runtimeKtx)
         addAll(composeLibs)
-        add(Core.account)
-        add(Core.accountManager)
-        add(Core.auth)
-        add(Core.country)
-        add(Core.crypto)
-        add(Core.data)
-        add(Core.dataRoom)
-        add(Core.domain)
-        add(Core.humanVerification)
-        add(Core.key)
-        add(Core.network)
-        add(Core.payment)
-        add(Core.plan)
-        add(Core.presentation)
-        add(Core.user)
-        add(Core.userSettings)
-        add(Core.utilKotlin)
-        add(Gotev.cookieStore)
+        add(Proton.Core.account)
+        add(Proton.Core.accountManager)
+        add(Proton.Core.accountManagerPresentationCompose)
+        add(Proton.Core.auth)
+        add(Proton.Core.challenge)
+        add(Proton.Core.country)
+        add(Proton.Core.crypto)
+        add(Proton.Core.cryptoValidator)
+        add(Proton.Core.data)
+        add(Proton.Core.dataRoom)
+        add(Proton.Core.domain)
+        add(Proton.Core.eventManager)
+        add(Proton.Core.featureFlag)
+        add(Proton.Core.humanVerification)
+        add(Proton.Core.key)
+        add(Proton.Core.network)
+        add(Proton.Core.payment)
+        add(Proton.Core.plan)
+        add(Proton.Core.presentation)
+        add(Proton.Core.presentationCompose)
+        add(Proton.Core.report)
+        add(Proton.Core.reportDagger)
+        add(Proton.Core.user)
+        add(Proton.Core.userSettings)
+        add(Proton.Core.utilKotlin)
         add(JakeWharton.timber)
         add(KotlinX.serializationJson)
         add(Material.material)
@@ -85,13 +95,13 @@ object Dependencies {
     val passDaggerLibs = mutableListOf<String>().apply {
         add(AndroidX.Paging.common)
         add(AndroidX.Work.runtimeKtx)
-        add(Core.accountManager)
-        add(Core.crypto)
-        add(Core.domain)
-        add(Core.key)
-        add(Core.network)
-        add(Core.user)
-        add(Core.utilKotlin)
+        add(Proton.Core.accountManager)
+        add(Proton.Core.crypto)
+        add(Proton.Core.domain)
+        add(Proton.Core.key)
+        add(Proton.Core.network)
+        add(Proton.Core.user)
+        add(Proton.Core.utilKotlin)
     }
     val passDaggerAnnotationProcessors = mutableListOf<String>().apply {
         add(AndroidX.Room.compiler)
@@ -101,22 +111,21 @@ object Dependencies {
     // region Pass Data
     val passDataLibs = mutableListOf<String>().apply {
         add(AndroidX.Hilt.work)
-        add(AndroidX.Lifecycle.liveDataKtx)
         add(AndroidX.Paging.common)
         add(AndroidX.Room.ktx)
         add(AndroidX.Work.runtimeKtx)
-        add(Core.account)
-        add(Core.accountManager)
-        add(Core.crypto)
-        add(Core.data)
-        add(Core.dataRoom)
-        add(Core.domain)
-        add(Core.key)
-        add(Core.network)
-        add(Core.user)
-        add(Core.utilKotlin)
         add(KotlinX.coroutinesCore)
         add(KotlinX.serializationJson)
+        add(Proton.Core.account)
+        add(Proton.Core.accountManager)
+        add(Proton.Core.crypto)
+        add(Proton.Core.data)
+        add(Proton.Core.dataRoom)
+        add(Proton.Core.domain)
+        add(Proton.Core.key)
+        add(Proton.Core.network)
+        add(Proton.Core.user)
+        add(Proton.Core.utilKotlin)
         add(Squareup.retrofit)
     }
     val passDataAnnotationProcessors = mutableListOf<String>().apply {
@@ -127,29 +136,30 @@ object Dependencies {
     // region Pass Domain
     val passDomainLibs = mutableListOf<String>().apply {
         add(AndroidX.Paging.common)
-        add(Core.account)
-        add(Core.accountManager)
-        add(Core.crypto)
-        add(Core.domain)
-        add(Core.key)
-        add(Core.user)
-        add(Core.utilKotlin)
         add(KotlinX.coroutinesCore)
+        add(Proton.Core.account)
+        add(Proton.Core.accountManager)
+        add(Proton.Core.crypto)
+        add(Proton.Core.domain)
+        add(Proton.Core.key)
+        add(Proton.Core.user)
+        add(Proton.Core.utilKotlin)
     }
     // endregion
 
     // region Pass Presentation
     val passPresentationLibs = mutableListOf<String>().apply {
         addAll(composeLibs)
-        add(AndroidX.ConstraintLayout.constraintLayout)
-        add(Core.accountManager)
-        add(Core.auth)
-        add(Core.domain)
-        add(Core.key)
-        add(Core.network)
-        add(Core.presentation)
-        add(Core.user)
-        add(Core.utilKotlin)
+        add(Proton.Core.accountManager)
+        add(Proton.Core.accountManagerPresentationCompose)
+        add(Proton.Core.auth)
+        add(Proton.Core.domain)
+        add(Proton.Core.key)
+        add(Proton.Core.network)
+        add(Proton.Core.presentation)
+        add(Proton.Core.presentationCompose)
+        add(Proton.Core.user)
+        add(Proton.Core.utilKotlin)
     }
 
     val passPresentationDebugLibs = arrayListOf<String>().apply {
@@ -161,11 +171,11 @@ object Dependencies {
     // region Autofill Service
     val passAutofillServiceLibs = mutableListOf<String>().apply {
         add(AndroidX.Autofill.autofill)
-        add(Core.domain)
-        add(Core.key)
-        add(Core.user)
-        add(Core.utilKotlin)
         add(KotlinX.coroutinesCore)
+        add(Proton.Core.domain)
+        add(Proton.Core.key)
+        add(Proton.Core.user)
+        add(Proton.Core.utilKotlin)
     }
     // endregion
 
@@ -180,25 +190,27 @@ object Dependencies {
         add(AndroidX.Compose.foundationLayout)
         addAll(composeLibs)
         add(Material.material)
+        add(Proton.Core.presentationCompose)
     }
     // endregion
 
     // region Test
     val testLibs = mutableListOf<String>().apply {
-        add(Test.coroutines)
-        add(Test.junit)
-        add(Test.kotlinReflect)
-        add(Test.mockk)
-        add(Test.mockkAgent)
+        add(KotlinX.coroutinesTest)
+        add(Junit.junit)
+        add(Mockk.mockk)
+        add(Proton.Core.testKotlin)
     }
     val androidTestLibs = mutableListOf<String>().apply {
-        add(Test.core)
-        add(Test.coreKtx)
-        add(Test.mockkAndroid)
-        add(Test.runner)
-        add(Test.rules)
         add(AndroidX.Compose.uiTest)
         add(AndroidX.Compose.uiTestJUnit)
+        add(AndroidX.Test.core)
+        add(AndroidX.Test.coreKtx)
+        add(AndroidX.Test.runner)
+        add(AndroidX.Test.rules)
+        add(AndroidX.Test.espresso)
+        add(Mockk.mockkAndroid)
+        add(Proton.Core.testAndroidInstrumented)
     }
     // endregion
 }

@@ -20,70 +20,81 @@ package me.proton.core.pass.presentation.components.navigation.drawer
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DrawerState
 import androidx.compose.material.DrawerValue
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.presentation.view.AccountPrimaryView
-import me.proton.core.compose.component.NavigationDrawerAppVersion
-import me.proton.core.compose.component.NavigationDrawerSectionHeader
-import me.proton.core.compose.theme.DefaultSpacing
-import me.proton.core.compose.theme.ProtonNavigationDrawerTheme
-import me.proton.core.compose.theme.SmallSpacing
-import me.proton.core.compose.component.NavigationDrawerListItem
-import me.proton.core.pass.presentation.components.user.PREVIEW_USER
-import me.proton.core.pass.presentation.components.user.UserSelector
+import me.proton.core.accountmanager.presentation.compose.AccountPrimaryItem
+import me.proton.core.accountmanager.presentation.compose.AccountPrimaryState
+import me.proton.core.accountmanager.presentation.compose.rememberAccountPrimaryState
+import me.proton.core.compose.theme.ProtonDimens.DefaultSpacing
+import me.proton.core.compose.theme.ProtonDimens.SmallSpacing
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.presentation.R
+import me.proton.core.pass.presentation.components.user.PREVIEW_USER
 
 @Composable
 fun NavigationDrawer(
-    accountPrimaryView: AccountPrimaryView,
     drawerState: DrawerState,
     viewState: NavigationDrawerViewState,
     viewEvent: NavigationDrawerViewEvent,
     modifier: Modifier = Modifier,
+    accountPrimaryState: AccountPrimaryState = rememberAccountPrimaryState(),
+    onSignIn: (UserId?) -> Unit = {},
+    onSignOut: (UserId) -> Unit = {},
+    onRemove: (UserId) -> Unit = {},
+    onSwitch: (UserId) -> Unit = {},
 ) {
-    MaterialTheme {
+    val sidebarColors = requireNotNull(ProtonTheme.colors.sidebarColors)
+    ProtonTheme(colors = sidebarColors) {
         val scope = rememberCoroutineScope()
-        val closeDrawerAction: (() -> Unit) -> Unit = remember(viewState.closeOnActionEnabled, drawerState) {
-            if (viewState.closeOnBackEnabled) {
-                { onClose ->
-                    scope.launch {
-                        if (drawerState.isOpen) drawerState.close()
-                        onClose()
+        val closeDrawerAction: (() -> Unit) -> Unit =
+            remember(viewState.closeOnActionEnabled, drawerState) {
+                if (viewState.closeOnBackEnabled) {
+                    { onClose ->
+                        scope.launch {
+                            if (drawerState.isOpen) drawerState.close()
+                            onClose()
+                        }
                     }
+                } else {
+                    { onClose -> onClose() }
                 }
-            } else {
-                { onClose -> onClose() }
             }
-        }
         BackHandler(enabled = viewState.closeOnBackEnabled && drawerState.isOpen) {
             scope.launch { drawerState.close() }
         }
         Surface(
             modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
+            color = ProtonTheme.colors.backgroundNorm
         ) {
             Column(modifier) {
                 if (viewState.currentUser != null) {
-                    AndroidView(
-                        factory = {
-                            accountPrimaryView
-                        },
-                        Modifier.fillMaxWidth().padding(horizontal = 20.dp)
+                    AccountPrimaryItem(
+                        modifier = Modifier
+                            .background(sidebarColors.backgroundNorm)
+                            .padding(all = SmallSpacing)
+                            .fillMaxWidth(),
+                        onRemove = onRemove,
+                        onSignIn = onSignIn,
+                        onSignOut = onSignOut,
+                        onSwitch = onSwitch,
+                        viewState = accountPrimaryState
                     )
                 }
                 Column(
@@ -183,9 +194,8 @@ fun NavigationDrawerListItem(
 @Preview(name = "Drawer opened")
 @Composable
 fun PreviewDrawerWithUser() {
-    ProtonNavigationDrawerTheme {
+    ProtonTheme {
         NavigationDrawer(
-            accountPrimaryView = AccountPrimaryView(LocalContext.current),
             drawerState = DrawerState(DrawerValue.Open) { true },
             viewState = NavigationDrawerViewState(
                 R.string.title_app,
@@ -204,9 +214,8 @@ fun PreviewDrawerWithUser() {
 @Preview(name = "Drawer opened")
 @Composable
 fun PreviewDrawerWithoutUser() {
-    ProtonNavigationDrawerTheme {
+    ProtonTheme {
         NavigationDrawer(
-            accountPrimaryView = AccountPrimaryView(LocalContext.current),
             drawerState = DrawerState(DrawerValue.Open) { true },
             viewState = NavigationDrawerViewState(R.string.title_app, "Version"),
             viewEvent = object : NavigationDrawerViewEvent {

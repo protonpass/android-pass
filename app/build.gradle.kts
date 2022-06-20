@@ -1,3 +1,24 @@
+/*
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton Technologies AG and Proton Mail.
+ *
+ * Proton Mail is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Proton Mail is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Proton Mail. If not, see <https://www.gnu.org/licenses/>.
+ */
+
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -16,9 +37,20 @@ tasks.register("getArchivesName"){
     }
 }
 
+val privateProperties = Properties().apply {
+    try {
+        load(FileInputStream("private.properties"))
+    } catch (exception: java.io.FileNotFoundException) {
+        // Provide empty properties to allow the app to be built without secrets
+        Properties()
+    }
+}
+
+val sentryDSN: String = privateProperties.getProperty("sentryDSN") ?: ""
+val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
+
 android {
     compileSdk = Config.compileSdk
-    buildToolsVersion = Config.buildTools
 
     defaultConfig {
         applicationId = Config.applicationId
@@ -27,11 +59,11 @@ android {
         versionCode = Config.versionCode
         versionName = Config.versionName
         testInstrumentationRunner = Config.testInstrumentationRunner
-        buildConfigField("String", "HOST", "\"protonmail.com\"")
-        buildConfigField("String", "BASE_URL", "\"https://drive.protonmail.com/api/\"")
-        buildConfigField("String", "ENVIRONMENT", "\"api.protonmail.com\"")
-        buildConfigField("String", "FLAVOR_DEVELOPMENT", "\"dev\"")
-        buildConfigField("String", "FLAVOR_PRODUCTION", "\"prod\"")
+
+        buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
+        buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
+        buildConfigField("String", "HUMAN_VERIFICATION_HOST", "verify.protonmail.com".toBuildConfigValue())
+
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments["room.schemaLocation"] = "$projectDir/schemas"
@@ -39,40 +71,69 @@ android {
         }
     }
 
-    sourceSets {
-        getByName("main").java.srcDirs("src/main/kotlin")
-        getByName("test").java.srcDirs("src/test/kotlin")
-        getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
+    signingConfigs {
+        /*register("release") {
+            storeFile = file("$rootDir/keystore/ProtonMail.keystore")
+            storePassword = "${privateProperties["keyStorePassword"]}"
+            keyAlias = "ProtonMail"
+            keyPassword = "${privateProperties["keyStoreKeyPassword"]}"
+        }*/
     }
 
     buildTypes {
         debug {
-            isMinifyEnabled = false
             isDebuggable = true
-            isTestCoverageEnabled = true
+            isTestCoverageEnabled = false
+            postprocessing {
+                isObfuscate = false
+                isOptimizeCode = false
+                isRemoveUnusedCode = false
+                isRemoveUnusedResources = false
+            }
         }
         release {
-            isMinifyEnabled = true
-            //isShrinkResources = true // should be replaced by useResourceShrinker
-            proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"),
-                "proguard-rules.pro"
-            )
+            isDebuggable = false
+            isTestCoverageEnabled = false
+            postprocessing {
+                isObfuscate = false
+                isOptimizeCode = true
+                isRemoveUnusedCode = true
+                isRemoveUnusedResources = true
+                file("proguard").listFiles()?.forEach { proguardFile(it) }
+            }
+            // signingConfig = signingConfigs["release"]
         }
     }
 
     flavorDimensions.add("default")
     productFlavors {
+        val gitHash = "git rev-parse --short HEAD".runCommand(workingDir = rootDir)
         create("dev") {
             applicationIdSuffix = ".dev"
-            val gitHash = "git rev-parse --short HEAD".runCommand(workingDir = rootDir)
-            versionNameSuffix = "-dev (${gitHash})"
+            versionNameSuffix = "-dev+$gitHash"
+            buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
             buildConfigField("String", "HOST", "\"proton.black\"")
-            buildConfigField("String", "BASE_URL", "\"https://drive.proton.black/api/\"")
-            buildConfigField("String", "ENVIRONMENT", "\"api.proton.black\"")
+            buildConfigField("String", "HUMAN_VERIFICATION_HOST", "\"verify.proton.black\"")
+        }
+        create("alpha") {
+            applicationIdSuffix = ".alpha"
+            versionNameSuffix = "-alpha.${Config.versionCode}+$gitHash"
+            buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
+            buildConfigField("String", "HOST", "\"protonmail.ch\"")
         }
         create("prod") {
+            buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
+            buildConfigField("String", "HOST", "\"protonmail.ch\"")
         }
+    }
+
+    sourceSets {
+        getByName("main").java.srcDirs("src/main/kotlin")
+        getByName("test").java.srcDirs("src/test/kotlin")
+        getByName("androidTest").java.srcDirs("src/androidTest/kotlin", "src/uiTest/kotlin")
+        getByName("androidTest").assets.srcDirs("src/uiTest/assets")
+        getByName("dev").res.srcDirs("src/dev/res")
+        getByName("alpha").res.srcDirs("src/alpha/res")
     }
 
     compileOptions {
@@ -139,15 +200,8 @@ tasks.create("printGeneratedChangelog") {
     }
 }
 
-configurations.all {
-    // androidx.test includes junit 4.12 so this will force that entire project uses same junit version
-    resolutionStrategy.force("junit:junit:${Versions.Test.junit}")
-    // TODO: Remove this once Core migrates to kotlin 1.5 and updated store version
-    resolutionStrategy.force("com.dropbox.mobile.store:store4:4.0.2-KT15")
-}
-
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
+    implementation(files("../proton-libs/gopenpgp/gopenpgp.aar"))
     implementation(Dependencies.appLibs)
     implementation(project(":passwordManager:dagger"))
     implementation(project(":passwordManager:data"))
@@ -162,3 +216,5 @@ dependencies {
 
 configureJacoco(flavor = "dev")
 setAsHiltModule()
+
+fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"

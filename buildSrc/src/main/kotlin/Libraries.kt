@@ -24,9 +24,7 @@ object AndroidX {
 
     object Compose {
         private const val version = Versions.AndroidX.compose
-        private const val versionConstraintLayout = Versions.AndroidX.constraintLayoutCompose
 
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout-compose:$versionConstraintLayout"
         const val foundation = "androidx.compose.foundation:foundation:$version"
         const val foundationLayout = "androidx.compose.foundation:foundation-layout:$version"
         const val iconsExtended = "androidx.compose.material:material-icons-extended:$version"
@@ -39,30 +37,23 @@ object AndroidX {
         const val uiTestManifest = "androidx.compose.ui:ui-test-manifest:$version"
     }
 
-    object ConstraintLayout {
-        private const val version = "2.1.1"
-        const val constraintLayout = "androidx.constraintlayout:constraintlayout:$version"
+    object Core {
+        const val annotation = "androidx.annotation:annotation:${Versions.AndroidX.annotation}"
+        const val splashscreen = "androidx.core:core-splashscreen:${Versions.AndroidX.splashscreen}"
     }
 
     object Hilt {
         private const val version = Versions.AndroidX.hilt
-        const val versionNavigationCompose = Versions.AndroidX.hiltNavigationCompose
 
         const val compiler = "androidx.hilt:hilt-compiler:$version"
-        const val navigationCompose = "androidx.hilt:hilt-navigation-compose:$versionNavigationCompose"
+        const val navigationCompose = "androidx.hilt:hilt-navigation-compose:$version"
         const val work = "androidx.hilt:hilt-work:$version"
-    }
-
-    object Lifecycle {
-        private const val version = Versions.AndroidX.lifecycle
-
-        const val liveDataKtx = "androidx.lifecycle:lifecycle-livedata-ktx:$version"
     }
 
     object Navigation {
         private const val version = Versions.AndroidX.navigation
 
-        const val compose = "androidx.navigation:navigation-compose:${Versions.AndroidX.navigationCompose}"
+        const val compose = "androidx.navigation:navigation-compose:$version"
     }
 
     object Paging {
@@ -80,6 +71,17 @@ object AndroidX {
         const val compiler = "androidx.room:room-compiler:$version"
     }
 
+    object Test {
+        private const val version = Versions.AndroidX.test
+
+        const val core = "androidx.test:core:$version"
+        const val coreKtx = "androidx.test:core-ktx:$version"
+        const val runner = "androidx.test:runner:$version"
+        const val rules = "androidx.test:rules:$version"
+        const val espresso = "androidx.test.espresso:espresso-core:${Versions.AndroidX.testEspresso}"
+        const val extJunit = "androidx.test.ext:junit:${Versions.AndroidX.testExtJunit}"
+    }
+
     object Work {
         private const val version = Versions.AndroidX.work
 
@@ -91,26 +93,6 @@ object Coil {
     val compose = "io.coil-kt:coil-compose:${Versions.Coil.compose}"
 }
 
-object Core {
-    val account = coreArtifact("account", Versions.Core.account)
-    val accountManager = coreArtifact("account-manager", Versions.Core.accountManager)
-    val auth = coreArtifact("auth", Versions.Core.auth)
-    val country = coreArtifact("country", Versions.Core.country)
-    val crypto = coreArtifact("crypto", Versions.Core.crypto)
-    val data = coreArtifact("data", Versions.Core.data)
-    val dataRoom = coreArtifact("data-room", Versions.Core.dataRoom)
-    val domain = coreArtifact("domain", Versions.Core.domain)
-    val humanVerification = coreArtifact("human-verification", Versions.Core.humanVerification)
-    val key = coreArtifact("key", Versions.Core.key)
-    val network = coreArtifact("network", Versions.Core.network)
-    val payment = coreArtifact("payment", Versions.Core.payment)
-    val plan = coreArtifact("plan", Versions.Core.plan)
-    val presentation = coreArtifact("presentation", Versions.Core.presentation)
-    val user = coreArtifact("user", Versions.Core.user)
-    val userSettings = coreArtifact("user-settings", Versions.Core.userSettings)
-    val utilKotlin = coreArtifact("util-kotlin", Versions.Core.utilKotlin)
-}
-
 object Dagger {
     private const val version = Versions.Dagger.dagger
 
@@ -118,12 +100,16 @@ object Dagger {
     const val hiltDaggerCompiler = "com.google.dagger:hilt-compiler:$version"
 }
 
-object Gotev {
-    const val cookieStore = "net.gotev:cookie-store:${Versions.Gotev.cookieStore}"
-}
-
 object JakeWharton {
     const val timber = "com.jakewharton.timber:timber:${Versions.JakeWharton.timber}"
+}
+
+object JavaX {
+    const val inject = "javax.inject:javax.inject:${Versions.JavaX.inject}"
+}
+
+object Junit {
+    const val junit = "junit:junit:${Versions.Junit.junit}"
 }
 
 object Kotlin {
@@ -132,11 +118,56 @@ object Kotlin {
 
 object KotlinX {
     const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.KotlinX.coroutines}"
+    const val coroutinesTest = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KotlinX.coroutines}"
     const val serializationJson = "org.jetbrains.kotlinx:kotlinx-serialization-json:${Versions.KotlinX.serializationJson}"
 }
 
 object Material {
     const val material = "com.google.android.material:material:${Versions.Android.material}"
+}
+
+object Mockk {
+    const val mockk = "io.mockk:mockk:${Versions.Mockk.mockk}"
+    const val mockkAndroid = "io.mockk:mockk-android:${Versions.Mockk.mockk}"
+}
+
+object Proton {
+
+    fun coreArtifact(name: String, version: String) = "me.proton.core:$name:$version"
+
+    object Core {
+        val account = coreArtifact("account", Versions.Proton.core)
+        val accountManager = coreArtifact("account-manager", Versions.Proton.core)
+        val accountManagerPresentationCompose = coreArtifact("account-manager-presentation-compose", Versions.Proton.core)
+        val auth = coreArtifact("auth", Versions.Proton.core)
+        val challenge = coreArtifact("challenge", Versions.Proton.core)
+        val country = coreArtifact("country", Versions.Proton.core)
+        val crypto = coreArtifact("crypto", Versions.Proton.core)
+        val cryptoValidator = coreArtifact("crypto-validator", Versions.Proton.core)
+        val data = coreArtifact("data", Versions.Proton.core)
+        val dataRoom = coreArtifact("data-room", Versions.Proton.core)
+        val domain = coreArtifact("domain", Versions.Proton.core)
+        val eventManager = coreArtifact("event-manager", Versions.Proton.core)
+        val featureFlag = coreArtifact("feature-flag", Versions.Proton.core)
+        val humanVerification = coreArtifact("human-verification", Versions.Proton.core)
+        val key = coreArtifact("key", Versions.Proton.core)
+        val network = coreArtifact("network", Versions.Proton.core)
+        val payment = coreArtifact("payment", Versions.Proton.core)
+        val plan = coreArtifact("plan", Versions.Proton.core)
+        val presentation = coreArtifact("presentation", Versions.Proton.core)
+        val presentationCompose = coreArtifact("presentation-compose", Versions.Proton.core)
+        val report = coreArtifact("report", Versions.Proton.core)
+        val reportDagger = coreArtifact("report-dagger", Versions.Proton.core)
+        val user = coreArtifact("user", Versions.Proton.core)
+        val userSettings = coreArtifact("user-settings", Versions.Proton.core)
+        val utilKotlin = coreArtifact("util-kotlin", Versions.Proton.core)
+        val testKotlin = coreArtifact("test-kotlin", Versions.Proton.core)
+        val testAndroid = coreArtifact("test-android", Versions.Proton.core)
+        val testAndroidInstrumented = coreArtifact(
+            "test-android-instrumented",
+            Versions.Proton.core
+        )
+    }
 }
 
 object Squareup {
@@ -146,21 +177,6 @@ object Squareup {
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.Squareup.retrofit}"
 }
 
-object Test {
-    const val version = Versions.Test.test
-
-    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.KotlinX.coroutines}"
-    const val junit = "junit:junit:${Versions.Test.junit}"
-    const val core = "androidx.test:core:$version"
-    const val coreKtx = "androidx.test:core-ktx:$version"
-    const val runner = "androidx.test:runner:$version"
-    const val rules = "androidx.test:rules:$version"
-
-    const val mockk = "io.mockk:mockk:${Versions.Test.mockk}"
-    const val mockkAgent = "io.mockk:mockk-agent-jvm:${Versions.Test.mockk}"
-    const val mockkAndroid = "io.mockk:mockk-android:${Versions.Test.mockk}"
-
-    const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.Kotlin.kotlin}"
+object Sentry {
+    const val sentry = "io.sentry:sentry-android:${Versions.Sentry.sentry}"
 }
-
-fun coreArtifact(name: String, version: String) = "me.proton.core:$name:$version"

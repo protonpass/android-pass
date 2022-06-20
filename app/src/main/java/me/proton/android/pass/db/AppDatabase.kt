@@ -10,9 +10,17 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.challenge.data.db.ChallengeConverters
+import me.proton.core.challenge.data.db.ChallengeDatabase
+import me.proton.core.challenge.data.entity.ChallengeFrameEntity
 import me.proton.core.crypto.android.keystore.CryptoConverters
 import me.proton.core.data.room.db.BaseDatabase
 import me.proton.core.data.room.db.CommonConverters
+import me.proton.core.eventmanager.data.db.EventManagerConverters
+import me.proton.core.eventmanager.data.db.EventMetadataDatabase
+import me.proton.core.eventmanager.data.entity.EventMetadataEntity
+import me.proton.core.featureflag.data.db.FeatureFlagDatabase
+import me.proton.core.featureflag.data.entity.FeatureFlagEntity
 import me.proton.core.humanverification.data.db.HumanVerificationConverters
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.humanverification.data.entity.HumanVerificationEntity
@@ -55,6 +63,9 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         UserSettingsEntity::class,
         OrganizationEntity::class,
         OrganizationKeysEntity::class,
+        EventMetadataEntity::class,
+        ChallengeFrameEntity::class,
+        FeatureFlagEntity::class,
         // Pass
         SecretEntity::class,
     ],
@@ -69,6 +80,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     CryptoConverters::class,
     HumanVerificationConverters::class,
     UserSettingsConverters::class,
+    EventManagerConverters::class,
+    ChallengeConverters::class,
 )
 abstract class AppDatabase:
     BaseDatabase(),
@@ -80,6 +93,9 @@ abstract class AppDatabase:
     PublicAddressDatabase,
     UserSettingsDatabase,
     OrganizationDatabase,
+    EventMetadataDatabase,
+    ChallengeDatabase,
+    FeatureFlagDatabase,
     PassDatabase {
 
     companion object {

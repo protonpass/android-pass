@@ -1,39 +1,41 @@
 package me.proton.android.pass.ui.launcher
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.presentation.components.common.DeferredCircularProgressIndicator
-import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
+import me.proton.android.pass.ui.home.HomeScreen
+import me.proton.android.pass.ui.launcher.LauncherViewModel.State.AccountNeeded
+import me.proton.android.pass.ui.launcher.LauncherViewModel.State.PrimaryExist
+import me.proton.android.pass.ui.launcher.LauncherViewModel.State.Processing
+import me.proton.android.pass.ui.launcher.LauncherViewModel.State.StepNeeded
+import me.proton.core.compose.component.ProtonCenteredProgress
 
+@ExperimentalMaterialApi
 object LauncherScreen {
     const val route = "auth"
 
     @Composable
     fun view(
-        navigateToHomeScreen: (userId: UserId) -> Unit
+        onDrawerStateChanged: (Boolean) -> Unit = {},
+        viewModel: LauncherViewModel = hiltViewModel(),
     ) {
-        val viewModel = hiltViewModel<LauncherViewModel>()
-        val viewState by rememberFlowWithLifecycle(viewModel.viewState())
-            .collectAsState(initial = LauncherViewModel.ViewState())
-        Launcher(viewState, navigateToHomeScreen)
-    }
-}
+        val state by viewModel.state.collectAsState(Processing)
 
-@Composable
-internal fun Launcher(
-    viewState: LauncherViewModel.ViewState,
-    navigateToHomeScreen: (userId: UserId) -> Unit
-) {
-    when (val state = viewState.primaryAccountState) {
-        is PrimaryAccountState.SignedIn -> navigateToHomeScreen(state.userId)
-        else -> LoadingLauncher()
+        when (state) {
+            AccountNeeded -> viewModel.addAccount()
+            PrimaryExist -> HomeScreen.view(
+                onDrawerStateChanged = onDrawerStateChanged,
+                onSignIn = { viewModel.signIn(it) },
+                onSignOut = { viewModel.signOut(it) },
+                onRemove = { viewModel.remove(it) },
+                onSwitch = { viewModel.switch(it) },
+            )
+            Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
+            StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
+        }
     }
-}
-
-@Composable
-internal fun LoadingLauncher() {
-    DeferredCircularProgressIndicator()
 }

@@ -2,7 +2,6 @@ package me.proton.android.pass.ui.home
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Immutable
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,10 +9,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
-import me.proton.android.pass.ui.user.UserViewModel
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.arch.mapSuccessValueOrNull
-import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.pass.common_secret.Secret
 import me.proton.core.pass.domain.usecases.DeleteSecret
 import me.proton.core.pass.domain.usecases.ObserveSecrets
@@ -28,10 +25,9 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     accountManager: AccountManager,
     userManager: UserManager,
-    savedStateHandle: SavedStateHandle,
     private val observeSecrets: ObserveSecrets,
     private val deleteSecret: DeleteSecret,
-): ViewModel(), UserViewModel by UserViewModel(savedStateHandle) {
+): ViewModel() {
 
     val initialViewState = getViewState(user = null, secrets = emptyList())
     private val getCurrentUserIdFlow = accountManager.getPrimaryUserId()

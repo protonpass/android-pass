@@ -15,11 +15,10 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-package me.proton.core.compose.component
+package me.proton.core.pass.presentation.components.navigation.drawer
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,7 +26,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonNavigationDrawerTheme
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionHint
 
 @Composable
@@ -42,7 +41,7 @@ fun NavigationDrawerAppVersion(
             .padding(AppVersionPadding),
         text = "$name $version",
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.captionHint(true),
+        style = ProtonTheme.typography.captionHint,
         maxLines = 1,
         overflow = TextOverflow.Ellipsis
     )
@@ -51,7 +50,7 @@ fun NavigationDrawerAppVersion(
 @Preview
 @Composable
 fun PreviewNavigationDrawerAppVersion() {
-    ProtonNavigationDrawerTheme {
+    ProtonTheme {
         NavigationDrawerAppVersion(name = "Name", version = "1.0.0")
     }
 }

@@ -5,13 +5,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.autofill.save.AutofillSaveSecretViewModel.State
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.autofill.service.Constants
 import me.proton.core.pass.autofill.service.entities.SecretSaveInfo
 import me.proton.core.presentation.utils.showToast
@@ -37,7 +37,7 @@ class AutofillSaveSecretActivity: ComponentActivity() {
                         finish()
                 }
                 else -> {
-                    MaterialTheme {
+                    ProtonTheme {
                         SaveCredentialsDialogContents(state, saveInfo) { address, saveInfo ->
                             saveSecret(address, saveInfo)
                         }

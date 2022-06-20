@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.proton.core.pass.autofill.sample" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="me.proton.core.pass.autofill.sample">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -8,12 +9,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/Theme.Autofill.Sample" >
+        android:theme="@style/ProtonTheme"
+        tools:replace="android:theme">
         <activity
             android:name=".simple_fragment.SimpleFragmentLoginActivity"
             android:exported="true"
-            android:label="@string/title_activity_simple_fragment_login"
-            android:theme="@style/Theme.Autofill.Sample.NoActionBar" />
+            android:label="@string/title_activity_simple_fragment_login" />
         <activity
             android:name=".LoginResultActivity"
             android:exported="true" />

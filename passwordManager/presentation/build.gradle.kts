@@ -6,7 +6,6 @@ plugins {
 
 android {
     compileSdk = Config.compileSdk
-    buildToolsVersion = Config.buildTools
 
     defaultConfig {
         minSdk = Config.minSdk
@@ -55,7 +54,6 @@ android {
 
 dependencies {
     implementation(Dependencies.passPresentationLibs)
-    api(project(":compose"))
     kapt(Dependencies.hiltAnnotationProcessors)
     testImplementation(Dependencies.testLibs)
     androidTestImplementation(Dependencies.androidTestLibs)

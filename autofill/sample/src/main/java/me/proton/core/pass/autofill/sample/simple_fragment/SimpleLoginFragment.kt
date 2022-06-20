@@ -28,7 +28,7 @@ class SimpleLoginFragment : Fragment() {
 
         binding?.loginButton?.setOnClickListener {
             val autofillManager = requireContext().getSystemService(AutofillManager::class.java)
-            parentFragmentManager.beginTransaction()
+            requireFragmentManager().beginTransaction()
                 .replace(R.id.fragmentContainer, LoginResultFragment())
                 // Needed to trigger save, it's either this or finishing the current activity
                 .runOnCommit { autofillManager.commit() }

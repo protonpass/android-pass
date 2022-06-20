@@ -61,7 +61,7 @@ class AutofillSaveSecretViewModelTest {
                     AccountState.Ready,
                     sessionId = null,
                     sessionState = null,
-                    AccountDetails(null)
+                    AccountDetails(null, null)
                 )))
 
         every { logger.e(any()) }.answers {  }
@@ -139,5 +139,6 @@ class AutofillSaveSecretViewModelTest {
         enabled = enabled,
         order = order,
         keys = keys,
+        signedKeyList = null,
     )
 }

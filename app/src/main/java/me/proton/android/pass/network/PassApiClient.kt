@@ -6,18 +6,17 @@ import me.proton.core.network.domain.ApiClient
 import java.util.*
 import javax.inject.Inject
 
-class PassApiClient @Inject constructor(): ApiClient {
-    // TODO: Change to AndroidPass when possible
-    override val appVersionHeader: String = "AndroidDrive_4.0.0"
+class PassApiClient @Inject constructor() : ApiClient {
+    override val appVersionHeader: String = "android-drive@${BuildConfig.VERSION_NAME}"
     override val enableDebugLogging: Boolean = true
     override val shouldUseDoh: Boolean = false
     override val userAgent: String = StringBuilder()
         .append("ProtonPass/${BuildConfig.VERSION_NAME}")
         .append("(")
-        .append("Android ${ Build.VERSION.RELEASE };")
-        .append("${ Build.MODEL };")
-        .append("${ Build.BRAND };")
-        .append("${ Build.DEVICE };")
+        .append("Android ${Build.VERSION.RELEASE};")
+        .append("${Build.MODEL};")
+        .append("${Build.BRAND};")
+        .append("${Build.DEVICE};")
         .append(Locale.getDefault().language)
         .append(")")
         .toString()

@@ -1,7 +1,7 @@
 object Versions {
 
     object Accompanist {
-        const val accompanist = "0.16.1"
+        const val accompanist = "0.24.7-alpha"
     }
 
     object Android {
@@ -9,58 +9,40 @@ object Versions {
     }
 
     object AndroidX {
-        const val activity = "1.3.0"
-        const val constraintLayoutCompose = "1.0.0-beta02"
-        const val compose = "1.0.1"
+        const val activity = "1.4.0"
+        const val annotation = "1.2.0"
+        const val appCompat = "1.6.0-alpha03"
+        const val arch = "2.1.0"
+        const val compose = "1.2.0-alpha08"
+        const val datastore = "1.0.0"
         const val hilt = "1.0.0"
-        const val hiltNavigationCompose = "1.0.0-alpha03"
-        const val lifecycle = "2.3.1"
-        const val navigation = "2.3.5"
-        const val navigationCompose = "2.4.0-alpha04"
-        const val paging = "3.0.0"
-        const val pagingCompose = "1.0.0-alpha12"
-        const val room = "2.3.0"
-        const val work = "2.5.0"
+        const val lifecycle = "2.4.2"
+        const val navigation = "2.4.2"
+        const val paging = "3.1.1"
+        const val pagingCompose = "1.0.0-alpha14"
+        const val room = "2.4.2"
+        const val splashscreen = "1.0.0-beta02"
+        const val test = "1.4.0"
+        const val testEspresso = "3.4.0"
+        const val testExtJunit = "1.1.3"
+        const val work = "2.7.1"
     }
 
     object Coil {
         const val compose = "1.3.2"
     }
 
-    object Core {
-        const val account = "1.5.2"
-        const val accountManager = "1.6"
-        const val auth = "1.6.1"
-        const val country = "0.1.6"
-        const val crypto = "1.6.1"
-        const val data = "1.3.1"
-        const val dataRoom = "1.3.1"
-        const val domain = "1.0.4"
-        const val humanVerification = "1.5.2"
-        const val key = "1.6.1"
-        const val network = "1.5.4"
-        const val payment = "0.2.4"
-        const val plan = "1.5.2"
-        const val presentation = "1.5.4"
-        const val user = "1.6"
-        const val userSettings = "1.6"
-        const val utilKotlin = "0.2.6"
-    }
-
     object Dagger {
-        const val dagger = "2.38.1"
-    }
-
-    object Gotev {
-        const val cookieStore = "1.3.5"
+        const val dagger = "2.41"
     }
 
     object Gradle {
-        const val androidGradlePlugin = "7.0.0"
+        const val androidGradlePlugin = "7.1.3"
+        const val benManesVersionsPlugin = "0.42.0"
         const val hiltAndroidGradlePlugin = Dagger.dagger
         const val kotlinGradlePlugin = Kotlin.kotlin
-        const val protonDetektPlugin = "0.4"
-        const val jacocoGradlePlugin = "0.8.7"
+        const val protonDetektPlugin = "1.0.0-alpha03"
+        const val jacocoGradlePlugin = "0.8.8"
     }
 
     object JaCoCo {
@@ -68,27 +50,40 @@ object Versions {
     }
 
     object JakeWharton {
-        const val timber = "4.7.1"
+        const val timber = "5.0.1"
+    }
+    object JavaX {
+        const val inject = "1"
+    }
+
+    object Junit {
+        const val junit = "4.13.2"
     }
 
     object Kotlin {
-        const val kotlin = "1.5.21"
+        const val kotlin = "1.6.20"
     }
 
     object KotlinX {
-        const val coroutines = "1.5.0"
-        const val serializationJson = "1.2.1"
+        const val coroutines = "1.6.1"
+        const val serializationJson = "1.3.2"
+    }
+
+    object Mockk {
+        const val mockk = "1.12.3"
+    }
+
+    object Proton {
+        const val core = "8.2.0"
     }
 
     object Squareup {
-        const val leakCanary = "2.7"
-        const val okhttp = "4.9.1"
+        const val leakCanary = "2.9.1"
+        const val okhttp = "4.9.3"
         const val retrofit = "2.9.0"
     }
 
-    object Test {
-        const val junit = "4.13.2"
-        const val test = "1.4.0-beta02"
-        const val mockk = "1.12.0"
+    object Sentry {
+        const val sentry = "5.7.3"
     }
 }

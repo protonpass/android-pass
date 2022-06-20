@@ -12,13 +12,13 @@ import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.autofill.service.AutofillSecretMapper
 import me.proton.core.pass.autofill.service.Constants
 import me.proton.core.pass.autofill.service.entities.SearchCredentialsInfo
@@ -42,7 +42,7 @@ class AutofillListSecretsActivity: ComponentActivity() {
         // TODO: Add actual authentication method (biometrics, password, pin code, pattern, etc.)
         setContent {
             val navController = rememberAnimatedNavController()
-            MaterialTheme {
+            ProtonTheme {
                 AnimatedNavHost(
                     navController,
                     startDestination = AutofillAuthenticationScreen.route,

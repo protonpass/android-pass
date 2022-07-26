@@ -1,8 +1,8 @@
 package me.proton.core.pass.domain.usecases
 
+import javax.inject.Inject
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.repository.UserAddressRepository
-import javax.inject.Inject
 
 class GetAddressesForUserId @Inject constructor(
     private val addressRepository: UserAddressRepository

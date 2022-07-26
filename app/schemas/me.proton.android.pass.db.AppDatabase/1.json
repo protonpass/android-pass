@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "1309dd4d74c35fafcc87d1ee66ca56ce",
+    "identityHash": "3429ef18c04529382b24b9749c9598d3",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -1750,12 +1750,538 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "shares",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `vault_id` TEXT NOT NULL, `share_type` INTEGER NOT NULL, `target_id` TEXT NOT NULL, `permission` INTEGER NOT NULL, `inviter_email` TEXT NOT NULL, `acceptance_signature` TEXT NOT NULL, `inviter_acceptance_signature` TEXT NOT NULL, `signing_key` TEXT NOT NULL, `signing_key_passphrase` TEXT, `content` TEXT, `content_format_version` INTEGER, `content_encrypted_address_signature` TEXT, `content_encrypted_vault_signature` TEXT, `content_signature_email` TEXT, `keystore_encrypted_content` BLOB, `keystore_encrypted_passphrase` BLOB, `name_key_id` TEXT, `expiration_time` INTEGER, `create_time` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "addressId",
+            "columnName": "address_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "vaultId",
+            "columnName": "vault_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "targetType",
+            "columnName": "share_type",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "targetId",
+            "columnName": "target_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "permission",
+            "columnName": "permission",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "inviterEmail",
+            "columnName": "inviter_email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "acceptanceSignature",
+            "columnName": "acceptance_signature",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "inviterAcceptanceSignature",
+            "columnName": "inviter_acceptance_signature",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "signingKey",
+            "columnName": "signing_key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "signingKeyPassphrase",
+            "columnName": "signing_key_passphrase",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contentFormatVersion",
+            "columnName": "content_format_version",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contentEncryptedAddressSignature",
+            "columnName": "content_encrypted_address_signature",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contentEncryptedVaultSignature",
+            "columnName": "content_encrypted_vault_signature",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contentSignatureEmail",
+            "columnName": "content_signature_email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "keystoreEncryptedContent",
+            "columnName": "keystore_encrypted_content",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "keystoreEncryptedPassphrase",
+            "columnName": "keystore_encrypted_passphrase",
+            "affinity": "BLOB",
+            "notNull": false
+          },
+          {
+            "fieldPath": "nameKeyId",
+            "columnName": "name_key_id",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "expirationTime",
+            "columnName": "expiration_time",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "create_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "AddressEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "address_id"
+            ],
+            "referencedColumns": [
+              "addressId"
+            ]
+          },
+          {
+            "table": "UserEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user_id"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "items",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `revision` INTEGER NOT NULL, `content_format_version` INTEGER NOT NULL, `rotation_id` TEXT NOT NULL, `content` TEXT NOT NULL, `user_signature` TEXT NOT NULL, `item_key_signature` TEXT NOT NULL, `state` INTEGER NOT NULL, `signature_email` TEXT NOT NULL, `create_time` INTEGER NOT NULL, `modify_time` INTEGER NOT NULL, `encrypted_title` TEXT NOT NULL, `encrypted_content` BLOB NOT NULL, PRIMARY KEY(`id`, `share_id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `shares`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "addressId",
+            "columnName": "address_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shareId",
+            "columnName": "share_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "revision",
+            "columnName": "revision",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contentFormatVersion",
+            "columnName": "content_format_version",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rotationId",
+            "columnName": "rotation_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "content",
+            "columnName": "content",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userSignature",
+            "columnName": "user_signature",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "itemKeySignature",
+            "columnName": "item_key_signature",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "signatureEmail",
+            "columnName": "signature_email",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "create_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "modifyTime",
+            "columnName": "modify_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "encryptedTitle",
+            "columnName": "encrypted_title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "encryptedContent",
+            "columnName": "encrypted_content",
+            "affinity": "BLOB",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id",
+            "share_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "AddressEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "address_id"
+            ],
+            "referencedColumns": [
+              "addressId"
+            ]
+          },
+          {
+            "table": "UserEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user_id"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          },
+          {
+            "table": "shares",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "share_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "vault_keys",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `rotation` INTEGER NOT NULL, `key` TEXT NOT NULL, `key_passphrase` TEXT, `key_signature` TEXT NOT NULL, `create_time` INTEGER NOT NULL, `encrypted_passphrase` BLOB, PRIMARY KEY(`id`, `share_id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `shares`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "rotationId",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "addressId",
+            "columnName": "address_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shareId",
+            "columnName": "share_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rotation",
+            "columnName": "rotation",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "key",
+            "columnName": "key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "keyPassphrase",
+            "columnName": "key_passphrase",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "keySignature",
+            "columnName": "key_signature",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "create_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "encryptedKeyPassphrase",
+            "columnName": "encrypted_passphrase",
+            "affinity": "BLOB",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id",
+            "share_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "AddressEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "address_id"
+            ],
+            "referencedColumns": [
+              "addressId"
+            ]
+          },
+          {
+            "table": "UserEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user_id"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          },
+          {
+            "table": "shares",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "share_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "item_keys",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `key` TEXT NOT NULL, `key_passphrase` TEXT, `key_signature` TEXT NOT NULL, `create_time` INTEGER NOT NULL, `encrypted_passphrase` BLOB, PRIMARY KEY(`id`, `share_id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `shares`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "rotationId",
+            "columnName": "id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userId",
+            "columnName": "user_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "addressId",
+            "columnName": "address_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shareId",
+            "columnName": "share_id",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "key",
+            "columnName": "key",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "keyPassphrase",
+            "columnName": "key_passphrase",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "keySignature",
+            "columnName": "key_signature",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createTime",
+            "columnName": "create_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "encryptedKeyPassphrase",
+            "columnName": "encrypted_passphrase",
+            "affinity": "BLOB",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id",
+            "share_id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "AddressEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "address_id"
+            ],
+            "referencedColumns": [
+              "addressId"
+            ]
+          },
+          {
+            "table": "UserEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "user_id"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          },
+          {
+            "table": "shares",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "share_id"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1309dd4d74c35fafcc87d1ee66ca56ce')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3429ef18c04529382b24b9749c9598d3')"
     ]
   }
 }

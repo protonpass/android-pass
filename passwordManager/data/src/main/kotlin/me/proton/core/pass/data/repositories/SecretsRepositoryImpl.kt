@@ -1,5 +1,6 @@
 package me.proton.core.pass.data.repositories
 
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.crypto.common.context.CryptoContext
@@ -7,22 +8,21 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.decryptText
 import me.proton.core.key.domain.encryptText
 import me.proton.core.key.domain.useKeys
+import me.proton.core.pass.common_secret.Secret
 import me.proton.core.pass.data.db.datasources.SecretsDatabaseDataSource
 import me.proton.core.pass.data.db.entities.SecretEntity
 import me.proton.core.pass.data.extensions.toEntity
 import me.proton.core.pass.data.extensions.toSecret
-import me.proton.core.pass.common_secret.Secret
 import me.proton.core.pass.domain.repositories.SecretsRepository
 import me.proton.core.user.domain.UserAddressManager
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
-import javax.inject.Inject
 
 class SecretsRepositoryImpl @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val dataSource: SecretsDatabaseDataSource,
     private val addressManager: UserAddressManager,
-): SecretsRepository {
+) : SecretsRepository {
 
     override suspend fun saveSecret(secret: Secret, userAddress: UserAddress) {
         val encryptedSecretEntity = encrypt(secret, userAddress)

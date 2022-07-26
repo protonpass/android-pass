@@ -23,6 +23,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
@@ -57,7 +58,6 @@ import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.report.presentation.entity.BugReportInput
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
-import javax.inject.Inject
 
 @HiltViewModel
 class LauncherViewModel @Inject constructor(

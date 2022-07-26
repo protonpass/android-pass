@@ -24,6 +24,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.ElementsIntoSet
+import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -44,7 +45,6 @@ import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.user.data.UserAddressEventListener
 import me.proton.core.user.data.UserEventListener
 import me.proton.core.usersettings.data.UserSettingsEventListener
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

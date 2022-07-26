@@ -30,7 +30,11 @@ import me.proton.core.key.data.entity.KeySaltEntity
 import me.proton.core.key.data.entity.PublicAddressEntity
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
 import me.proton.core.pass.data.db.PassDatabase
+import me.proton.core.pass.data.db.entities.ItemEntity
+import me.proton.core.pass.data.db.entities.ItemKeyEntity
 import me.proton.core.pass.data.db.entities.SecretEntity
+import me.proton.core.pass.data.db.entities.ShareEntity
+import me.proton.core.pass.data.db.entities.VaultKeyEntity
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserConverters
 import me.proton.core.user.data.db.UserDatabase
@@ -68,6 +72,10 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         FeatureFlagEntity::class,
         // Pass
         SecretEntity::class,
+        ShareEntity::class,
+        ItemEntity::class,
+        VaultKeyEntity::class,
+        ItemKeyEntity::class,
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -83,7 +91,7 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     EventManagerConverters::class,
     ChallengeConverters::class,
 )
-abstract class AppDatabase:
+abstract class AppDatabase :
     BaseDatabase(),
     AccountDatabase,
     UserDatabase,
@@ -109,5 +117,4 @@ abstract class AppDatabase:
                 .fallbackToDestructiveMigration()
                 .build()
     }
-
 }

@@ -13,12 +13,12 @@ class SecretsDatabaseDataSource(
     suspend fun searchWithName(addressId: String?, name: String): List<SecretEntity> =
         if (addressId != null)
             database.secretsDao().searchWithName(addressId, name)
-            else database.secretsDao().searchWithName(name)
+        else database.secretsDao().searchWithName(name)
 
     suspend fun searchWithUri(addressId: String?, uri: String): List<SecretEntity> =
         if (addressId != null)
             database.secretsDao().searchWithUri(addressId, uri)
-            else database.secretsDao().searchWithUri(uri)
+        else database.secretsDao().searchWithUri(uri)
 
     fun getAllSecretsForUser(userId: String): Flow<List<SecretEntity>> =
         database.secretsDao().observeAllForUser(userId)

@@ -3,4 +3,4 @@
 	url = ../../../proton/mobile/android/proton-libs
 [submodule "passwordManager/data/contents-proto-definition"]
 	path = passwordManager/data/contents-proto-definition
-	url = ../../../proton/clients/pass/contents-proto-definition
+	url = git@gitlab.protontech.ch:proton/clients/pass/contents-proto-definition.git

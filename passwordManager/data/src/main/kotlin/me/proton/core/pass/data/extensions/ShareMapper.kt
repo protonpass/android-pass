@@ -1,0 +1,19 @@
+package me.proton.core.pass.data.extensions
+
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.pass.domain.Share
+import me.proton.core.pass.domain.ShareType
+import proton_key_vault_v1.VaultV1
+
+fun Share.name(cryptoContext: CryptoContext): String {
+    if (content == null) return "---"
+    val decryptedContents = content!!.decrypt(cryptoContext.keyStoreCrypto)
+    return when (shareType) {
+        ShareType.Vault -> {
+            val decoded = VaultV1.Vault.parseFrom(decryptedContents.array)
+            decoded.name
+        }
+        else -> "Not supported"
+    }
+}

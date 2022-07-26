@@ -18,7 +18,7 @@ import me.proton.core.presentation.utils.showToast
 import me.proton.core.user.domain.entity.UserAddress
 
 @AndroidEntryPoint
-class AutofillSaveSecretActivity: ComponentActivity() {
+class AutofillSaveSecretActivity : ComponentActivity() {
 
     private val viewModel: AutofillSaveSecretViewModel by viewModels()
 
@@ -33,8 +33,8 @@ class AutofillSaveSecretActivity: ComponentActivity() {
             when (state) {
                 is State.Success -> LaunchedEffect(Unit) { finish() }
                 is State.Failure -> LaunchedEffect(Unit) {
-                        showToast(getString(R.string.error_autofill_save_credentials))
-                        finish()
+                    showToast(getString(R.string.error_autofill_save_credentials))
+                    finish()
                 }
                 else -> {
                     ProtonTheme {
@@ -53,5 +53,4 @@ class AutofillSaveSecretActivity: ComponentActivity() {
     private fun saveSecret(address: UserAddress, secretSaveInfo: SecretSaveInfo) {
         viewModel.save(address, secretSaveInfo)
     }
-
 }

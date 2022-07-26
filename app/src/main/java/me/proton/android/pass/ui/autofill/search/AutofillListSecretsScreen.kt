@@ -41,7 +41,6 @@ object AutofillListSecretsScreen {
         }
     }
 
-
     @Composable
     fun ListSecretsDialogContents(
         results: List<ListSecretItem>,

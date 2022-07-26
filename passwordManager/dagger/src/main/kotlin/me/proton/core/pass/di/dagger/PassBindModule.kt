@@ -13,5 +13,4 @@ abstract class PassBindModule {
 
     @Binds
     abstract fun bindSecretsRepository(repository: SecretsRepositoryImpl): SecretsRepository
-
 }

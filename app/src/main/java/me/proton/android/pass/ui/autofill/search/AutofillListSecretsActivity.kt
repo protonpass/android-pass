@@ -28,7 +28,7 @@ import me.proton.core.pass.common_secret.Secret
 
 @RequiresApi(Build.VERSION_CODES.O)
 @AndroidEntryPoint
-class AutofillListSecretsActivity: ComponentActivity() {
+class AutofillListSecretsActivity : ComponentActivity() {
 
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,15 +62,16 @@ class AutofillListSecretsActivity: ComponentActivity() {
                             packageName = info.appPackageName,
                             onSelectedCredentials = {
                                 replyToAutofillService(it, info)
-                            })
+                            }
+                        )
                     }
                 }
             }
         }
     }
 
-    private fun getSearchCredentialsInfo(intent: Intent): SearchCredentialsInfo?
-        = intent.getByteArrayExtra(Constants.ARG_SEARCH_CREDENTIALS_INFO)
+    private fun getSearchCredentialsInfo(intent: Intent): SearchCredentialsInfo? =
+        intent.getByteArrayExtra(Constants.ARG_SEARCH_CREDENTIALS_INFO)
             ?.let { SearchCredentialsInfo.CREATOR.fromByteArray(it) }
 
     private fun replyToAutofillService(
@@ -102,4 +103,3 @@ class AutofillListSecretsActivity: ComponentActivity() {
         finish()
     }
 }
-

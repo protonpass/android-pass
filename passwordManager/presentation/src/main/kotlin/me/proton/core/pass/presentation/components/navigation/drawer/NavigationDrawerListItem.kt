@@ -49,6 +49,14 @@ fun NavigationDrawerListItem(
 
 @Composable
 fun NavigationDrawerListItem(
+    @DrawableRes icon: Int,
+    title: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) = NavigationDrawerListItem(painterResource(icon), title, modifier, onClick)
+
+@Composable
+fun NavigationDrawerListItem(
     icon: Painter,
     title: String,
     modifier: Modifier = Modifier,

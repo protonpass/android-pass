@@ -25,6 +25,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.io.File
+import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -55,11 +57,17 @@ import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.pass.data.local.*
+import me.proton.core.pass.data.remote.*
+import me.proton.core.pass.data.repositories.ItemRepositoryImpl
+import me.proton.core.pass.data.repositories.ShareRepositoryImpl
+import me.proton.core.pass.data.repositories.VaultKeyRepositoryImpl
+import me.proton.core.pass.domain.repositories.ItemRepository
+import me.proton.core.pass.domain.repositories.ShareRepository
+import me.proton.core.pass.domain.repositories.VaultKeyRepository
 import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.Cache
 import okhttp3.OkHttpClient
-import java.io.File
-import javax.inject.Singleton
 
 private const val TEN_MEGABYTES = 10L * 1024L * 1024L
 
@@ -91,9 +99,8 @@ object NetworkModule {
     ): NetworkPrefs = NetworkPrefs(context)
 
     @Provides
-    fun provideNetworkRequestOverrider(
-        @ApplicationContext context: Context
-    ): NetworkRequestOverrider = NetworkRequestOverriderImpl(OkHttpClient(), context)
+    fun provideNetworkRequestOverrider(): NetworkRequestOverrider =
+        NetworkRequestOverriderImpl(OkHttpClient())
 
     @Provides
     @Singleton
@@ -189,4 +196,34 @@ abstract class NetworkBindModule {
     @Binds
     abstract fun bindApiClient(apiClient: PassApiClient): ApiClient
 
+    @Binds
+    abstract fun bindRemoteShareDataSource(remoteShareDataSource: RemoteShareDataSourceImpl): RemoteShareDataSource
+
+    @Binds
+    abstract fun bindLocalShareDataSource(localShareDataSource: LocalShareDataSourceImpl): LocalShareDataSource
+
+    @Binds
+    abstract fun bindShareRepository(shareRepositoryImpl: ShareRepositoryImpl): ShareRepository
+
+    @Binds
+    abstract fun bindVaultKeyRepository(vaultKeyRepositoryImpl: VaultKeyRepositoryImpl): VaultKeyRepository
+
+    @Binds
+    abstract fun bindRemoteVaultKeyDataSource(
+        remoteVaultItemKeyDataSourceImpl: RemoteVaultItemKeyDataSourceImpl
+    ): RemoteVaultItemKeyDataSource
+
+    @Binds
+    abstract fun bindLocalVaultKeyDataSource(
+        localVaultItemKeyDataSourceImpl: LocalVaultItemKeyDataSourceImpl
+    ): LocalVaultItemKeyDataSource
+
+    @Binds
+    abstract fun bindItemRepository(itemRepositoryImpl: ItemRepositoryImpl): ItemRepository
+
+    @Binds
+    abstract fun bindRemoteItemDataSource(remoteItemDataSourceImpl: RemoteItemDataSourceImpl): RemoteItemDataSource
+
+    @Binds
+    abstract fun bindLocalItemDataSource(localItemDataSourceImpl: LocalItemDataSourceImpl): LocalItemDataSource
 }

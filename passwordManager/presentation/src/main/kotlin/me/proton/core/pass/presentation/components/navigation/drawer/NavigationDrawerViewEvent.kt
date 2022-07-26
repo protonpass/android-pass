@@ -17,7 +17,15 @@
  */
 package me.proton.core.pass.presentation.components.navigation.drawer
 
+import me.proton.core.pass.presentation.components.model.ShareUiModel
+
+sealed class ShareClickEvent {
+    object AllShares : ShareClickEvent()
+    data class Share(val share: ShareUiModel) : ShareClickEvent()
+}
+
 interface NavigationDrawerViewEvent {
+    val onShareSelected: (ShareClickEvent) -> Unit
     val onSettings: () -> Unit
     val onBugReport: () -> Unit
     val onSignOut: () -> Unit

@@ -29,6 +29,5 @@ object AutofillAuthenticationScreen {
                 Text(stringResource(R.string.action_authenticate))
             }
         }
-
     }
 }

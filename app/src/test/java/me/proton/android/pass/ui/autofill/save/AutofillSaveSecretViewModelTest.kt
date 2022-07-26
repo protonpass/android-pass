@@ -62,9 +62,11 @@ class AutofillSaveSecretViewModelTest {
                     sessionId = null,
                     sessionState = null,
                     AccountDetails(null, null)
-                )))
+                )
+            )
+        )
 
-        every { logger.e(any()) }.answers {  }
+        every { logger.e(any()) }.answers { }
         coEvery { observeAccounts() }.answers { accountsFlow.asStateFlow() }
         coEvery { getAddressesForUserId(any()) }.answers {
             val userId = firstArg<UserId>()
@@ -100,7 +102,7 @@ class AutofillSaveSecretViewModelTest {
 
         viewModel.save(address, secretInfo)
 
-        coVerify { addSecret(any(),any(), any(), any(), any(), any()) }
+        coVerify { addSecret(any(), any(), any(), any(), any(), any()) }
         Assert.assertTrue(viewModel.state.value is State.Success)
     }
 
@@ -108,7 +110,7 @@ class AutofillSaveSecretViewModelTest {
     fun `Exceptions are handled in save`() = runBlockingTest {
         val address = makeUserAddress()
         val secretInfo = makeSecretInfo()
-        coEvery { addSecret(any(),any(), any(), any(), any(), any()) }
+        coEvery { addSecret(any(), any(), any(), any(), any(), any()) }
             .throws(IllegalStateException("Some exception"))
 
         viewModel.save(address, secretInfo)

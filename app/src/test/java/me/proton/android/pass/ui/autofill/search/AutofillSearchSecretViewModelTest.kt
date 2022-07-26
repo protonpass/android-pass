@@ -45,7 +45,7 @@ class AutofillSearchSecretViewModelTest {
         getAddressById = mockk()
         logger = mockk()
 
-        every { logger.e(any()) }.answers {  }
+        every { logger.e(any()) }.answers { }
 
         viewModel = AutofillSearchSecretViewModel(searchSecretWithUri, getAddressById)
     }

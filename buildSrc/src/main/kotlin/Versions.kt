@@ -43,6 +43,12 @@ object Versions {
         const val kotlinGradlePlugin = Kotlin.kotlin
         const val protonDetektPlugin = "1.0.0-alpha03"
         const val jacocoGradlePlugin = "0.8.8"
+        const val protobufPlugin = "0.8.19"
+    }
+
+    object Protobuf {
+        const val protocArtifact = "3.0.0"
+        const val javaliteArtifact = "3.0.0"
     }
 
     object JaCoCo {

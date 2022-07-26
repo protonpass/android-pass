@@ -22,11 +22,11 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.presentation.entity.SecureEndpoint
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

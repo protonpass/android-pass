@@ -159,7 +159,6 @@ fun PreviewUserSelector() {
         UserSelector(
             currentUser = PREVIEW_USER
         ) {
-
         }
     }
 }

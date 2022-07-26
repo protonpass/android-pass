@@ -20,32 +20,51 @@ package me.proton.core.pass.presentation.components.navigation.drawer
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DrawerState
 import androidx.compose.material.DrawerValue
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.presentation.compose.AccountPrimaryItem
 import me.proton.core.accountmanager.presentation.compose.AccountPrimaryState
 import me.proton.core.accountmanager.presentation.compose.rememberAccountPrimaryState
 import me.proton.core.compose.theme.ProtonDimens.DefaultSpacing
+import me.proton.core.compose.theme.ProtonDimens.ListItemHeight
+import me.proton.core.compose.theme.ProtonDimens.ListItemTextStartPadding
+import me.proton.core.compose.theme.ProtonDimens.MediumSpacing
 import me.proton.core.compose.theme.ProtonDimens.SmallSpacing
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.presentation.R
+import me.proton.core.pass.presentation.components.model.ShareUiModel
 import me.proton.core.pass.presentation.components.user.PREVIEW_USER
 
 @Composable
@@ -55,6 +74,7 @@ fun NavigationDrawer(
     viewEvent: NavigationDrawerViewEvent,
     modifier: Modifier = Modifier,
     accountPrimaryState: AccountPrimaryState = rememberAccountPrimaryState(),
+    shares: List<ShareUiModel> = emptyList(),
     onSignIn: (UserId?) -> Unit = {},
     onSignOut: (UserId) -> Unit = {},
     onRemove: (UserId) -> Unit = {},
@@ -101,24 +121,14 @@ fun NavigationDrawer(
                     modifier = Modifier
                         .padding(top = DefaultSpacing)
                         .verticalScroll(rememberScrollState())
-                        .weight(1f),
+                        .weight(1f, fill = false),
                     verticalArrangement = Arrangement.Top
                 ) {
-
+                    SharesList(closeDrawerAction, viewEvent, shares)
                     NavigationDrawerSectionHeader(title = R.string.navigation_more_section_header)
-
                     SettingsListItem(closeDrawerAction, viewEvent)
-
                     ReportBugListItem(closeDrawerAction, viewEvent)
-
                     SignOutListItem(closeDrawerAction, viewEvent)
-
-                    if (viewState.currentUser != null) {
-                        NavigationDrawerSectionHeader(
-                            title = stringResource(R.string.navigation_storage_section_header),
-                            modifier = Modifier.padding(bottom = SmallSpacing)
-                        )
-                    }
 
                     NavigationDrawerAppVersion(
                         name = stringResource(id = viewState.appNameResId),
@@ -127,6 +137,74 @@ fun NavigationDrawer(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun SharesList(
+    closeDrawerAction: (() -> Unit) -> Unit,
+    viewEvent: NavigationDrawerViewEvent,
+    shares: List<ShareUiModel>,
+    modifier: Modifier = Modifier,
+) {
+    val title = stringResource(R.string.navigation_my_vaults)
+    Column {
+        Row {
+            Row(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .height(ListItemHeight)
+                    .clickable(onClick = {
+                        closeDrawerAction { viewEvent.onShareSelected(ShareClickEvent.AllShares) }
+                    })
+                    .padding(
+                        top = SmallSpacing,
+                        bottom = SmallSpacing,
+                        start = DefaultSpacing,
+                        end = MediumSpacing
+                    )
+                    .semantics(mergeDescendants = true) {
+                        contentDescription = title
+                    },
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(painter = painterResource(R.drawable.ic_vault), contentDescription = null)
+                Text(
+                    text = title,
+                    modifier = Modifier.padding(start = ListItemTextStartPadding),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Icon(painterResource(R.drawable.ic_proton_chevron_down), "", tint = Color.White)
+            }
+        }
+
+        shares.map {
+            ShareItem(
+                closeDrawerAction = closeDrawerAction,
+                share = it,
+                viewEvent = viewEvent,
+                modifier = modifier.padding(PaddingValues(start = 22.dp))
+            )
+        }
+    }
+}
+
+@Composable
+private fun ShareItem(
+    closeDrawerAction: (() -> Unit) -> Unit,
+    share: ShareUiModel,
+    viewEvent: NavigationDrawerViewEvent,
+    modifier: Modifier = Modifier,
+) {
+    NavigationDrawerListItem(
+        title = share.name,
+        icon = R.drawable.ic_vault,
+        closeDrawerAction = closeDrawerAction,
+        modifier = modifier,
+    ) {
+        viewEvent.onShareSelected(ShareClickEvent.Share(share))
     }
 }
 
@@ -190,6 +268,18 @@ fun NavigationDrawerListItem(
         closeDrawerAction(onClick)
     }
 }
+@Composable
+fun NavigationDrawerListItem(
+    @DrawableRes icon: Int,
+    title: String,
+    closeDrawerAction: (() -> Unit) -> Unit,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+) {
+    NavigationDrawerListItem(icon, title, modifier) {
+        closeDrawerAction(onClick)
+    }
+}
 
 @Preview(name = "Drawer opened")
 @Composable
@@ -206,6 +296,7 @@ fun PreviewDrawerWithUser() {
                 override val onSettings = {}
                 override val onSignOut = {}
                 override val onBugReport = {}
+                override val onShareSelected = { _: ShareClickEvent -> }
             }
         )
     }
@@ -222,6 +313,7 @@ fun PreviewDrawerWithoutUser() {
                 override val onSettings = {}
                 override val onSignOut = {}
                 override val onBugReport = {}
+                override val onShareSelected = { _: ShareClickEvent -> }
             }
         )
     }

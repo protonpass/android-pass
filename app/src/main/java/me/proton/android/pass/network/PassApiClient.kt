@@ -1,13 +1,13 @@
 package me.proton.android.pass.network
 
 import android.os.Build
-import me.proton.android.pass.BuildConfig
-import me.proton.core.network.domain.ApiClient
 import java.util.*
 import javax.inject.Inject
+import me.proton.android.pass.BuildConfig
+import me.proton.core.network.domain.ApiClient
 
 class PassApiClient @Inject constructor() : ApiClient {
-    override val appVersionHeader: String = "android-drive@${BuildConfig.VERSION_NAME}"
+    override val appVersionHeader: String = "android-pass@${BuildConfig.VERSION_NAME}"
     override val enableDebugLogging: Boolean = true
     override val shouldUseDoh: Boolean = false
     override val userAgent: String = StringBuilder()

@@ -22,6 +22,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.usersettings.data.db.OrganizationDatabase
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
@@ -29,7 +30,6 @@ import me.proton.core.usersettings.data.repository.OrganizationRepositoryImpl
 import me.proton.core.usersettings.data.repository.UserSettingsRepositoryImpl
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

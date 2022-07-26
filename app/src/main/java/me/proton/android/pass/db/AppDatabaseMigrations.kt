@@ -13,5 +13,4 @@ object AppDatabaseMigrations {
             OrganizationDatabase.MIGRATION_0.migrate(database)
         }
     }
-
 }

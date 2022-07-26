@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import me.proton.android.pass.BuildConfig
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.humanverification.data.HumanVerificationListenerImpl
@@ -42,7 +43,6 @@ import me.proton.core.humanverification.presentation.utils.HumanVerificationVers
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

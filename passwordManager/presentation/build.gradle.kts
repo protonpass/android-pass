@@ -54,6 +54,7 @@ android {
 
 dependencies {
     implementation(Dependencies.passPresentationLibs)
+    implementation(project(":passwordManager:domain"))
     kapt(Dependencies.hiltAnnotationProcessors)
     testImplementation(Dependencies.testLibs)
     androidTestImplementation(Dependencies.androidTestLibs)

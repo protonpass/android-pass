@@ -23,6 +23,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -50,7 +51,6 @@ import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.UserRepository
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

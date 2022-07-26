@@ -25,6 +25,7 @@
     <string name="title_sort_by">Sort by</string>
     <string name="title_starred">Starred</string>
     <string name="title_trash">Trash</string>
+    <string name="title_all_shares">All vaults</string>
 
     <string name="title_empty_files">Nothing to see here</string>
     <string name="description_empty_files">This folder is empty</string>
@@ -37,6 +38,7 @@
 
     <string name="content_description_more_options">Show more options for a file</string>
 
+    <string name="navigation_my_vaults">My vaults</string>
     <string name="navigation_more_section_header">More</string>
     <string name="navigation_storage_section_header">Storage</string>
 
@@ -50,4 +52,6 @@
     <string name="storage_total_usage">Total usage</string>
     <string name="storage_details_format"><![CDATA[%1$s of %2$s used]]></string>
     <string name="user_select_other_account_content_description">Select another account</string>
+
+    <string name="action_create">Create</string>
 </resources>

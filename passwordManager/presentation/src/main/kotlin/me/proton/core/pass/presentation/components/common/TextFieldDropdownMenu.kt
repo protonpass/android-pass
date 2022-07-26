@@ -74,7 +74,7 @@ fun TextFieldDropdownMenu(
         DropdownMenu(
             expanded = isExpanded,
             onDismissRequest = { isExpanded = false },
-            modifier = Modifier.width(with(LocalDensity.current){ textfieldSize.width.toDp() })
+            modifier = Modifier.width(with(LocalDensity.current) { textfieldSize.width.toDp() })
         ) {
             values.forEachIndexed { index, value ->
                 DropdownMenuItem(onClick = {

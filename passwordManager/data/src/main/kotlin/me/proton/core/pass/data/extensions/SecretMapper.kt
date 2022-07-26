@@ -1,5 +1,6 @@
 package me.proton.core.pass.data.extensions
 
+import java.util.*
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.proton.core.pass.common_secret.Secret
@@ -8,7 +9,6 @@ import me.proton.core.pass.common_secret.SecretValue
 import me.proton.core.pass.data.db.entities.LoginSecretContents
 import me.proton.core.pass.data.db.entities.SecretEntity
 import me.proton.core.util.kotlin.serialize
-import java.util.*
 
 fun Secret.toEntity(): SecretEntity {
     val secretContents: String = when (contents) {

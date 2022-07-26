@@ -25,6 +25,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.db.KeySaltDatabase
@@ -50,7 +51,6 @@ import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

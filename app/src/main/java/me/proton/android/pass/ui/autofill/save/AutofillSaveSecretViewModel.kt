@@ -3,6 +3,7 @@ package me.proton.android.pass.ui.autofill.save
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassKeyLogger
@@ -14,14 +15,13 @@ import me.proton.core.pass.domain.usecases.AddSecret
 import me.proton.core.pass.domain.usecases.GetAddressesForUserId
 import me.proton.core.pass.domain.usecases.ObserveAccounts
 import me.proton.core.user.domain.entity.UserAddress
-import javax.inject.Inject
 
 @HiltViewModel
 class AutofillSaveSecretViewModel @Inject constructor(
     private val addSecret: AddSecret,
     private val getAddressesForUserId: GetAddressesForUserId,
     observeAccounts: ObserveAccounts,
-): ViewModel() {
+) : ViewModel() {
 
     private val accountsWithAddresses = observeAccounts()
         .map { accounts ->
@@ -35,7 +35,7 @@ class AutofillSaveSecretViewModel @Inject constructor(
         observeCurrentUserAddresses()
     }
 
-    private fun observeCurrentUserAddresses()  = viewModelScope.launch {
+    private fun observeCurrentUserAddresses() = viewModelScope.launch {
         accountsWithAddresses.collect { accounts ->
             mutableState.tryEmit(State.Ready(accounts))
         }
@@ -62,10 +62,10 @@ class AutofillSaveSecretViewModel @Inject constructor(
     }.launchIn(viewModelScope)
 
     sealed class State {
-        object Loading: State()
-        data class Ready(val accounts: List<AccountWithAddresses>): State()
-        object Success: State()
-        data class Failure(val message: String?): State()
+        object Loading : State()
+        data class Ready(val accounts: List<AccountWithAddresses>) : State()
+        object Success : State()
+        data class Failure(val message: String?) : State()
     }
 
     data class AccountWithAddresses(
@@ -77,6 +77,6 @@ class AutofillSaveSecretViewModel @Inject constructor(
         val userId: UserId,
         val username: String,
     ) {
-        constructor(account: Account): this(account.userId, account.username)
+        constructor(account: Account) : this(account.userId, account.username)
     }
 }

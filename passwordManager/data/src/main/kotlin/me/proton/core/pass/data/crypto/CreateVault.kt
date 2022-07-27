@@ -1,30 +1,25 @@
 package me.proton.core.pass.data.crypto
 
-import javax.inject.Inject
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
-import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.pgp.dataPacket
-import me.proton.core.crypto.common.pgp.keyPacket
+import me.proton.core.crypto.common.pgp.*
 import me.proton.core.key.domain.encryptData
 import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.PrivateKey
-import me.proton.core.key.domain.entity.key.PrivateKeyRing
-import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.key.domain.entity.key.PublicKeyRing
-import me.proton.core.key.domain.entity.keyholder.KeyHolderContext
 import me.proton.core.key.domain.getEncryptedPackets
-import me.proton.core.key.domain.publicKey
 import me.proton.core.key.domain.signData
 import me.proton.core.key.domain.useKeys
 import me.proton.core.pass.domain.key.ItemKey
+import me.proton.core.pass.domain.key.SigningKey
 import me.proton.core.pass.domain.key.VaultKey
+import me.proton.core.pass.domain.key.usePrivateKey
 import me.proton.core.pass.domain.repositories.VaultItemKeyList
 import me.proton.core.user.domain.entity.UserAddress
 import proton_key_vault_v1.VaultV1
+import javax.inject.Inject
 
 @Serializable
 data class CreateVaultRequest(
@@ -74,12 +69,16 @@ class CreateVault @Inject constructor(
         const val CONTENT_FORMAT_VERSION = 1
     }
 
-    fun createVaultRequest(vaultMetadata: VaultV1.Vault, userAddress: UserAddress): Pair<CreateVaultRequest, VaultItemKeyList> {
+    fun createVaultRequest(
+        vaultMetadata: VaultV1.Vault,
+        userAddress: UserAddress
+    ): Pair<CreateVaultRequest, VaultItemKeyList> {
         // Generate signing key
-        val (signingKeyPassphrase, lockedSigningKey, signingKeyPublicKey) = generateKeyWithPassphrase(
+        val (signingKeyPassphrase, lockedSigningKey) = generateKeyWithPassphrase(
             "VaultSigningKey",
             "vault_signing@proton"
         )
+        val signingKey = SigningKey(ArmoredKey.Private(lockedSigningKey.key, lockedSigningKey))
         val (signingKeyEncryptedPassphrase, signingKeyPassphraseKeyPacket, signingKeySignature) = userAddress.useKeys(
             cryptoContext
         ) {
@@ -88,12 +87,15 @@ class CreateVault @Inject constructor(
 
             val keyFingerprint = Utils.getPrimaryV5Fingerprint(cryptoContext, lockedSigningKey.key)
             val keySignature = signData(keyFingerprint.encodeToByteArray())
-
-            Triple(packets.dataPacket(), packets.keyPacket(), keySignature)
+            PacketsAndSignature(
+                dataPacket = packets.dataPacket(),
+                keyPacket = packets.keyPacket(),
+                signature = keySignature
+            )
         }
 
         // Generate vault key
-        val (vaultKeyPassphrase, lockedVaultKey, vaultKeyPublicKey) = generateKeyWithPassphrase(
+        val (vaultKeyPassphrase, lockedVaultKey) = generateKeyWithPassphrase(
             "VaultKey",
             "vault@proton"
         )
@@ -105,27 +107,32 @@ class CreateVault @Inject constructor(
             val packets = getEncryptedPackets(encryptedPassphrase)
 
             val keyFingerprint = Utils.getPrimaryV5Fingerprint(cryptoContext, lockedVaultKey.key)
-            val keySignature = KeyHolderContext(
-                cryptoContext,
-                PrivateKeyRing(cryptoContext, listOf(lockedSigningKey)),
-                PublicKeyRing(listOf(signingKeyPublicKey))
-            ).use {
-                it.signData(keyFingerprint.encodeToByteArray())
+            val keySignature = signingKey.usePrivateKey(cryptoContext) {
+                signData(keyFingerprint.encodeToByteArray())
             }
 
-            Triple(packets.dataPacket(), packets.keyPacket(), keySignature)
+            PacketsAndSignature(
+                dataPacket = packets.dataPacket(),
+                keyPacket = packets.keyPacket(),
+                signature = keySignature
+            )
         }
-        val vaultKeyKeyHolder = KeyHolderContext(
-            cryptoContext,
-            PrivateKeyRing(cryptoContext, listOf(lockedVaultKey)),
-            PublicKeyRing(listOf(vaultKeyPublicKey))
+        val vaultKey = VaultKey(
+            "TEMP_ROTATION_ID",
+            1,
+            ArmoredKey.Private(lockedVaultKey.key, lockedVaultKey),
+            lockedVaultKey.passphrase
         )
 
         val serializedMetadata = vaultMetadata.toByteArray()
-        val encryptedName = vaultKeyKeyHolder.encryptData(serializedMetadata)
-        val nameVaultKeySignature = vaultKeyKeyHolder.signData(serializedMetadata)
-        val vaultKeyPassphraseKeyPacketSignature =
-            vaultKeyKeyHolder.signData(vaultKeyPassphraseKeyPacket)
+        val encryptedName =
+            vaultKey.usePrivateKey(cryptoContext) { encryptData(serializedMetadata) }
+
+        val (nameVaultKeySignature, vaultKeyPassphraseKeyPacketSignature) = vaultKey.usePrivateKey(
+            cryptoContext
+        ) {
+            Pair(signData(serializedMetadata), signData(vaultKeyPassphraseKeyPacket))
+        }
 
         // Generate item key
         val (itemKeyPassphrase, lockedItemKey) = generateKeyWithPassphrase(
@@ -133,30 +140,36 @@ class CreateVault @Inject constructor(
             "item@proton"
         )
 
-        val (itemKeyEncryptedPassphrase, itemKeyPassphraseKeyPacket, itemKeySignature) = vaultKeyKeyHolder.use {
-            val encryptedPassphrase = it.encryptData(itemKeyPassphrase)
-            val packets = it.getEncryptedPackets(encryptedPassphrase)
+        val (itemKeyEncryptedPassphrase, itemKeyPassphraseKeyPacket, itemKeySignature) = vaultKey.usePrivateKey(
+            cryptoContext
+        ) {
+            val encryptedPassphrase = encryptData(itemKeyPassphrase)
+            val packets = getEncryptedPackets(encryptedPassphrase)
 
             val keyFingerprint = Utils.getPrimaryV5Fingerprint(cryptoContext, lockedItemKey.key)
-            val keySignature = KeyHolderContext(
-                cryptoContext,
-                PrivateKeyRing(cryptoContext, listOf(lockedSigningKey)),
-                PublicKeyRing(listOf(signingKeyPublicKey))
-            ).use { signingKeyContext ->
-                signingKeyContext.signData(keyFingerprint.encodeToByteArray())
+            val keySignature = signingKey.usePrivateKey(cryptoContext) {
+                signData(keyFingerprint.encodeToByteArray())
             }
 
-            Triple(packets.dataPacket(), packets.keyPacket(), keySignature)
+            PacketsAndSignature(
+                dataPacket = packets.dataPacket(),
+                keyPacket = packets.keyPacket(),
+                signature = keySignature
+            )
         }
 
         val nameAddressSignature = userAddress.useKeys(cryptoContext) {
             signData(serializedMetadata)
         }
 
-        val encryptedNameAddressSignature =
-            vaultKeyKeyHolder.encryptData(nameAddressSignature.encodeToByteArray())
-        val encryptedNameVaultSignature =
-            vaultKeyKeyHolder.encryptData(nameVaultKeySignature.encodeToByteArray())
+        val (encryptedNameAddressSignature, encryptedNameVaultSignature) = vaultKey.usePrivateKey(
+            cryptoContext
+        ) {
+            Pair(
+                encryptData(nameAddressSignature.encodeToByteArray()),
+                encryptData(nameVaultKeySignature.encodeToByteArray())
+            )
+        }
 
         val b64 = ({ input: ByteArray -> cryptoContext.pgpCrypto.getBase64Encoded(input) })
         val unarmor = ({ input: Armored -> cryptoContext.pgpCrypto.getUnarmored(input) })
@@ -189,14 +202,7 @@ class CreateVault @Inject constructor(
             itemKeyPassphraseKeyPacket = b64(itemKeyPassphraseKeyPacket),
             itemKeySignature = b64(unarmor(itemKeySignature)),
         ) to VaultItemKeyList(
-            vaultKeyList = listOf(
-                VaultKey(
-                    rotationId = "TEMP_ROTATION_ID",
-                    rotation = 1,
-                    key = ArmoredKey.Private(lockedVaultKey.key, lockedVaultKey),
-                    encryptedKeyPassphrase = PlainByteArray(vaultKeyPassphrase).encrypt(cryptoContext.keyStoreCrypto)
-                )
-            ),
+            vaultKeyList = listOf(vaultKey),
             itemKeyList = listOf(
                 ItemKey(
                     rotationId = "TEMP_ROTATION_ID",
@@ -210,23 +216,33 @@ class CreateVault @Inject constructor(
     private fun generateKeyWithPassphrase(
         username: String,
         domain: String
-    ): Triple<ByteArray, PrivateKey, PublicKey> {
+    ): GeneratedKey {
         val passphrase = Utils.generatePassphrase()
         val key = cryptoContext.pgpCrypto.generateNewPrivateKey(
             username,
             domain,
             passphrase.encodeToByteArray()
         )
-        val encryptedPassphrase = PlainByteArray(passphrase.encodeToByteArray()).encrypt(cryptoContext.keyStoreCrypto)
-        val privateKey = PrivateKey(
-            key,
-            isPrimary = true,
-            passphrase = encryptedPassphrase
-        )
-        return Triple(
+        val encryptedPassphrase =
+            PlainByteArray(passphrase.encodeToByteArray()).encrypt(cryptoContext.keyStoreCrypto)
+        return GeneratedKey(
             passphrase.encodeToByteArray(),
-            privateKey,
-            privateKey.publicKey(cryptoContext)
+            PrivateKey(
+                key,
+                isPrimary = true,
+                passphrase = encryptedPassphrase
+            )
         )
     }
+
+    internal data class GeneratedKey(
+        val passphrase: ByteArray,
+        val privateKey: PrivateKey,
+    )
+
+    internal data class PacketsAndSignature(
+        val dataPacket: Unarmored,
+        val keyPacket: Unarmored,
+        val signature: Signature
+    )
 }

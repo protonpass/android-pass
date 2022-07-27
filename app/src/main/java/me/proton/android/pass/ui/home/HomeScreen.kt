@@ -6,41 +6,17 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE
 import android.view.autofill.AutofillManager
+import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.rememberScaffoldState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -50,9 +26,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
+import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
 import me.proton.core.compose.theme.headline
@@ -97,71 +75,95 @@ object HomeScreen {
             navigateToSigningOut = { onRemove(null) },
         )
         val coroutineScope = rememberCoroutineScope()
+        val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
 
-        Scaffold(
-            modifier = modifier.systemBarsPadding(),
-            scaffoldState = homeScaffoldState.scaffoldState,
-            drawerContent = {
-                NavigationDrawer(
-                    drawerState = homeScaffoldState.scaffoldState.drawerState,
-                    viewState = viewState.navigationDrawerViewState,
-                    viewEvent = viewEvent.navigationDrawerViewEvent,
-                    shares = viewState.shares,
-                    modifier = Modifier
-                        .statusBarsPadding()
-                        .navigationBarsPadding(),
-                    onRemove = onRemove,
-                    onSignIn = onSignIn,
-                    onSignOut = onSignOut,
-                    onSwitch = onSwitch,
-                )
-            },
-            drawerGesturesEnabled = drawerGesturesEnabled,
-            topBar = {
-                TopAppBar(
-                    elevation = 0.dp,
-                    backgroundColor = Color.White,
-                    title = {
-                        val title = when (val topBarTitle = viewState.topBarTitle) {
-                            is HomeViewModel.TopBarTitle.AllShares -> stringResource(id = R.string.title_all_shares)
-                            is HomeViewModel.TopBarTitle.ShareName -> topBarTitle.name
-                        }
-                        Text(title, style = ProtonTheme.typography.headline)
-                    },
-                    navigationIcon = {
-                        Icon(
-                            Icons.Default.Menu,
-                            modifier = Modifier.clickable(onClick = {
-                                val drawerState = homeScaffoldState.scaffoldState.drawerState
-                                coroutineScope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() }
-                            }),
-                            contentDescription = null,
-                        )
-                    },
-                    actions = {
-                        IconButton(onClick = {}) {
+        ProtonModalBottomSheetLayout(
+            sheetState = bottomSheetState,
+            sheetContent = {
+                BottomSheetContents()
+            }
+        ) {
+            Scaffold(
+                modifier = modifier.systemBarsPadding(),
+                scaffoldState = homeScaffoldState.scaffoldState,
+                drawerContent = {
+                    NavigationDrawer(
+                        drawerState = homeScaffoldState.scaffoldState.drawerState,
+                        viewState = viewState.navigationDrawerViewState,
+                        viewEvent = viewEvent.navigationDrawerViewEvent,
+                        shares = viewState.shares,
+                        modifier = Modifier
+                            .statusBarsPadding()
+                            .navigationBarsPadding(),
+                        onRemove = onRemove,
+                        onSignIn = onSignIn,
+                        onSignOut = onSignOut,
+                        onSwitch = onSwitch,
+                    )
+                },
+                drawerGesturesEnabled = drawerGesturesEnabled,
+                topBar = {
+                    TopAppBar(
+                        elevation = 0.dp,
+                        backgroundColor = Color.White,
+                        title = {
+                            val title = when (val topBarTitle = viewState.topBarTitle) {
+                                is HomeViewModel.TopBarTitle.AllShares -> stringResource(id = R.string.title_all_shares)
+                                is HomeViewModel.TopBarTitle.ShareName -> topBarTitle.name
+                            }
+                            Text(title, style = ProtonTheme.typography.headline)
+                        },
+                        navigationIcon = {
                             Icon(
-                                painterResource(R.drawable.ic_proton_plus),
-                                contentDescription = stringResource(R.string.action_create)
+                                Icons.Default.Menu,
+                                modifier = Modifier.clickable(onClick = {
+                                    val drawerState = homeScaffoldState.scaffoldState.drawerState
+                                    coroutineScope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() }
+                                }),
+                                contentDescription = null,
                             )
+                        },
+                        actions = {
+                            IconButton(onClick = {}) {
+                                Icon(
+                                    painterResource(R.drawable.ic_proton_magnifier),
+                                    contentDescription = stringResource(R.string.action_search),
+                                    tint = ProtonTheme.colors.iconNorm
+                                )
+                            }
+                            IconButton(onClick = {
+                                coroutineScope.launch {
+                                    if (bottomSheetState.isVisible) {
+                                        bottomSheetState.hide()
+                                    } else {
+                                        bottomSheetState.show()
+                                    }
+                                }
+                            }) {
+                                Icon(
+                                    painterResource(R.drawable.ic_proton_plus),
+                                    contentDescription = stringResource(R.string.action_create),
+                                    tint = ProtonTheme.colors.iconNorm
+                                )
+                            }
                         }
-                    }
-                )
-            },
-        ) { contentPadding ->
-            Box {
-                val itemToDelete = remember { mutableStateOf<ItemUiModel?>(null) }
-                Home(
-                    viewState.items,
-                    modifier = Modifier.padding(contentPadding),
-                    onDeleteItemClicked = { item ->
-                        itemToDelete.value = item
-                    }
-                )
-                ConfirmSecretDeletionDialog(
-                    itemState = itemToDelete,
-                    onConfirm = { homeViewModel.deleteItem(it) }
-                )
+                    )
+                },
+            ) { contentPadding ->
+                Box {
+                    val itemToDelete = remember { mutableStateOf<ItemUiModel?>(null) }
+                    Home(
+                        viewState.items,
+                        modifier = Modifier.padding(contentPadding),
+                        onDeleteItemClicked = { item ->
+                            itemToDelete.value = item
+                        }
+                    )
+                    ConfirmSecretDeletionDialog(
+                        itemState = itemToDelete,
+                        onConfirm = { homeViewModel.deleteItem(it) }
+                    )
+                }
             }
         }
     }
@@ -314,6 +316,40 @@ private fun requestAutofillAccessIfNeeded(context: Context) {
     }
 }
 
+@Composable
+private fun BottomSheetContents() {
+    Column {
+        Text(
+            text = stringResource(R.string.title_new),
+            fontSize = 16.sp,
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+        )
+        Divider(modifier = Modifier.fillMaxWidth())
+        BottomSheetItem(R.drawable.ic_proton_key, R.string.action_login, onItemClick = {})
+        BottomSheetItem(R.drawable.ic_proton_alias, R.string.action_alias, onItemClick = {})
+        BottomSheetItem(R.drawable.ic_proton_note, R.string.action_note, onItemClick = {})
+        BottomSheetItem(R.drawable.ic_proton_arrows_rotate, R.string.action_password, onItemClick = {})
+    }
+}
+
+@Composable
+private fun BottomSheetItem(
+    @DrawableRes icon: Int,
+    @StringRes title: Int,
+    onItemClick: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { onItemClick() })
+            .padding(horizontal = 16.dp, vertical = 12.dp)
+    ) {
+        Icon(painter = painterResource(icon), contentDescription = stringResource(title))
+        Spacer(modifier = Modifier.width(20.dp))
+        Text(text = stringResource(title), fontSize = 16.sp)
+    }
+}
 // @Preview(showBackground = true)
 // @Composable
 // private fun Preview_Home() {

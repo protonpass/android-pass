@@ -22,6 +22,13 @@
     <string name="item_type_login_format">Login: %s</string>
     <string name="item_type_note_format">Note: %s</string>
 
+    <!-- BottomSheet -->
+    <string name="title_new">New</string>
+    <string name="action_login">Login</string>
+    <string name="action_alias">Alias</string>
+    <string name="action_note">Note</string>
+    <string name="action_password">Password</string>
+
     <string name="item_secret_type_message">Type: %s</string>
     <string name="item_secret_login_identity">Identity: %s</string>
     <string name="item_secret_login_password">Password: %s</string>

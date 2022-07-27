@@ -115,7 +115,7 @@ class HomeViewModel @Inject constructor(
             object : NavigationDrawerViewEvent {
                 override val onSettings = {}
                 override val onSignOut = navigateToSigningOut
-                override val onBugReport = {}
+                override val onHelp = {}
                 override val onShareSelected: (ShareClickEvent) -> Unit = { share ->
                     when (share) {
                         is ShareClickEvent.AllShares -> {

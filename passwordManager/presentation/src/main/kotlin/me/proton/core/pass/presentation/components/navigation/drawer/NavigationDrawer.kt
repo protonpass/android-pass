@@ -20,25 +20,12 @@ package me.proton.core.pass.presentation.components.navigation.drawer
 import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.DrawerState
-import androidx.compose.material.DrawerValue
-import androidx.compose.material.Icon
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -125,9 +112,8 @@ fun NavigationDrawer(
                     verticalArrangement = Arrangement.Top
                 ) {
                     SharesList(closeDrawerAction, viewEvent, shares)
-                    NavigationDrawerSectionHeader(title = R.string.navigation_more_section_header)
                     SettingsListItem(closeDrawerAction, viewEvent)
-                    ReportBugListItem(closeDrawerAction, viewEvent)
+                    HelpListItem(closeDrawerAction, viewEvent)
                     SignOutListItem(closeDrawerAction, viewEvent)
 
                     NavigationDrawerAppVersion(
@@ -168,7 +154,7 @@ private fun SharesList(
                     },
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(painter = painterResource(R.drawable.ic_vault), contentDescription = null)
+                Icon(painterResource(R.drawable.ic_proton_vault), contentDescription = null, tint = ProtonTheme.colors.iconWeak)
                 Text(
                     text = title,
                     modifier = Modifier.padding(start = ListItemTextStartPadding),
@@ -200,7 +186,7 @@ private fun ShareItem(
 ) {
     NavigationDrawerListItem(
         title = share.name,
-        icon = R.drawable.ic_vault,
+        icon = R.drawable.ic_proton_vault,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,
     ) {
@@ -225,18 +211,18 @@ private fun SettingsListItem(
 }
 
 @Composable
-private fun ReportBugListItem(
+private fun HelpListItem(
     closeDrawerAction: (() -> Unit) -> Unit,
     viewEvent: NavigationDrawerViewEvent,
     modifier: Modifier = Modifier,
 ) {
     NavigationDrawerListItem(
-        title = R.string.navigation_item_bug_report,
-        icon = R.drawable.ic_bug,
+        title = R.string.navigation_item_help,
+        icon = R.drawable.ic_proton_question_circle,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,
     ) {
-        viewEvent.onBugReport()
+        viewEvent.onHelp()
     }
 }
 
@@ -295,7 +281,7 @@ fun PreviewDrawerWithUser() {
             viewEvent = object : NavigationDrawerViewEvent {
                 override val onSettings = {}
                 override val onSignOut = {}
-                override val onBugReport = {}
+                override val onHelp = {}
                 override val onShareSelected = { _: ShareClickEvent -> }
             }
         )
@@ -312,7 +298,7 @@ fun PreviewDrawerWithoutUser() {
             viewEvent = object : NavigationDrawerViewEvent {
                 override val onSettings = {}
                 override val onSignOut = {}
-                override val onBugReport = {}
+                override val onHelp = {}
                 override val onShareSelected = { _: ShareClickEvent -> }
             }
         )

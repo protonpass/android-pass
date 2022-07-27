@@ -46,12 +46,14 @@
     <string name="navigation_item_trash">@string/title_trash</string>
     <string name="navigation_item_offline">@string/title_offline_available</string>
     <string name="navigation_item_settings">@string/title_settings</string>
-    <string name="navigation_item_bug_report">Report a bug</string>
+    <string name="navigation_item_help">Help</string>
     <string name="navigation_item_sign_out">@string/title_sign_out</string>
 
     <string name="storage_total_usage">Total usage</string>
     <string name="storage_details_format"><![CDATA[%1$s of %2$s used]]></string>
     <string name="user_select_other_account_content_description">Select another account</string>
 
+    <!-- TopBar -->
     <string name="action_create">Create</string>
+    <string name="action_search">Search</string>
 </resources>

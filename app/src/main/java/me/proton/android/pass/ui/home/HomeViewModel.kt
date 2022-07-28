@@ -5,16 +5,7 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
@@ -22,16 +13,9 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.pass.data.extensions.name
-import me.proton.core.pass.domain.Item
-import me.proton.core.pass.domain.ItemContents
-import me.proton.core.pass.domain.Share
-import me.proton.core.pass.domain.ShareSelection
+import me.proton.core.pass.domain.*
 import me.proton.core.pass.domain.entity.NewVault
-import me.proton.core.pass.domain.usecases.CreateItem
-import me.proton.core.pass.domain.usecases.CreateVault
-import me.proton.core.pass.domain.usecases.DeleteItem
-import me.proton.core.pass.domain.usecases.ObserveItems
-import me.proton.core.pass.domain.usecases.ObserveShares
+import me.proton.core.pass.domain.usecases.*
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.components.model.ShareUiModel
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerViewEvent
@@ -39,6 +23,7 @@ import me.proton.core.pass.presentation.components.navigation.drawer.NavigationD
 import me.proton.core.pass.presentation.components.navigation.drawer.ShareClickEvent
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
+import javax.inject.Inject
 
 @ExperimentalMaterialApi
 @HiltViewModel
@@ -57,7 +42,8 @@ class HomeViewModel @Inject constructor(
         user = null,
         shares = emptyList(),
         items = emptyList(),
-        shareSelection = ShareSelectionState(ShareSelection.AllShares, TopBarTitle.AllShares)
+        shareSelection = ShareSelectionState(ShareSelection.AllShares, TopBarTitle.AllShares),
+
     )
 
     private val shareSelectionState: MutableStateFlow<ShareSelectionState> =
@@ -104,7 +90,11 @@ class HomeViewModel @Inject constructor(
             ),
             shares,
             items,
-            topBarTitle = shareSelection.title
+            topBarTitle = shareSelection.title,
+            selectedShare = when(val selection = shareSelection.selection) {
+                is ShareSelection.Share -> selection.shareId
+                else -> null
+            }
         )
     }
 
@@ -186,7 +176,8 @@ class HomeViewModel @Inject constructor(
         val navigationDrawerViewState: NavigationDrawerViewState,
         val shares: List<ShareUiModel>,
         val items: List<ItemUiModel>,
-        val topBarTitle: TopBarTitle
+        val topBarTitle: TopBarTitle,
+        val selectedShare: ShareId? = null
     )
 
     data class ShareSelectionState(

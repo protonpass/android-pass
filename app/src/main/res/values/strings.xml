@@ -28,6 +28,22 @@
     <string name="action_alias">Alias</string>
     <string name="action_note">Note</string>
     <string name="action_password">Password</string>
+    <string name="action_save">Save</string>
+
+    <!-- Create Login -->
+    <string name="title_create_login">Create login</string>
+    <string name="field_title_title">Title</string>
+    <string name="field_title_hint">Login name</string>
+    <string name="field_username_title">Username</string>
+    <string name="field_username_hint">Add username</string>
+    <string name="field_password_title">Enter or create your password</string>
+    <string name="field_password_hint">Add password</string>
+    <string name="field_website_address_title">Website address</string>
+    <string name="field_website_address_hint">https://</string>
+    <string name="field_note_title">Note</string>
+    <string name="field_note_hint">Add note</string>
+    <string name="button_generate_password">Generate Password</string>
+    <string name="field_required_indicator">Required</string>
 
     <string name="item_secret_type_message">Type: %s</string>
     <string name="item_secret_login_identity">Identity: %s</string>

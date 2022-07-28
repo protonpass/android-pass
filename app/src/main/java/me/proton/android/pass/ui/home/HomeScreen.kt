@@ -19,39 +19,47 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
+import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
+import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
-import me.proton.core.compose.theme.headline
 import me.proton.core.compose.theme.headlineSmall
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.domain.ItemType
+import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawer
+
+interface HomeScreenNavigation {
+    val toCreateItem: (ShareId) -> Unit
+}
 
 @ExperimentalMaterialApi
 object HomeScreen {
 
     @Composable
-    fun view(
+    fun View(
         modifier: Modifier = Modifier,
         onDrawerStateChanged: (Boolean) -> Unit = {},
         onSignIn: (UserId?) -> Unit = {},
         onSignOut: (UserId) -> Unit = {},
         onRemove: (UserId?) -> Unit = {},
         onSwitch: (UserId) -> Unit = {},
+        navigation: HomeScreenNavigation,
         homeViewModel: HomeViewModel = hiltViewModel(),
     ) {
         val context = LocalContext.current
@@ -80,11 +88,16 @@ object HomeScreen {
         ProtonModalBottomSheetLayout(
             sheetState = bottomSheetState,
             sheetContent = {
-                BottomSheetContents()
+                BottomSheetContents(
+                    scope = coroutineScope,
+                    state = bottomSheetState,
+                    navigation = navigation,
+                    shareId = viewState.selectedShare,
+                )
             }
         ) {
             Scaffold(
-                modifier = modifier.systemBarsPadding(),
+                modifier = modifier,
                 scaffoldState = homeScaffoldState.scaffoldState,
                 drawerContent = {
                     NavigationDrawer(
@@ -103,15 +116,13 @@ object HomeScreen {
                 },
                 drawerGesturesEnabled = drawerGesturesEnabled,
                 topBar = {
-                    TopAppBar(
-                        elevation = 0.dp,
-                        backgroundColor = Color.White,
+                    ProtonTopAppBar(
                         title = {
                             val title = when (val topBarTitle = viewState.topBarTitle) {
                                 is HomeViewModel.TopBarTitle.AllShares -> stringResource(id = R.string.title_all_shares)
                                 is HomeViewModel.TopBarTitle.ShareName -> topBarTitle.name
                             }
-                            Text(title, style = ProtonTheme.typography.headline)
+                            TopBarTitleView(title = title)
                         },
                         navigationIcon = {
                             Icon(
@@ -316,8 +327,14 @@ private fun requestAutofillAccessIfNeeded(context: Context) {
     }
 }
 
+@ExperimentalMaterialApi
 @Composable
-private fun BottomSheetContents() {
+private fun BottomSheetContents(
+    scope: CoroutineScope,
+    state: ModalBottomSheetState,
+    shareId: ShareId?,
+    navigation: HomeScreenNavigation
+) {
     Column {
         Text(
             text = stringResource(R.string.title_new),
@@ -325,10 +342,25 @@ private fun BottomSheetContents() {
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
         )
         Divider(modifier = Modifier.fillMaxWidth())
-        BottomSheetItem(R.drawable.ic_proton_key, R.string.action_login, onItemClick = {})
-        BottomSheetItem(R.drawable.ic_proton_alias, R.string.action_alias, onItemClick = {})
-        BottomSheetItem(R.drawable.ic_proton_note, R.string.action_note, onItemClick = {})
-        BottomSheetItem(R.drawable.ic_proton_arrows_rotate, R.string.action_password, onItemClick = {})
+        BottomSheetItem(R.drawable.ic_proton_key, R.string.action_login, onItemClick = {
+            scope.launch {
+                state.hide()
+                if (shareId != null) {
+                    navigation.toCreateItem(shareId)
+                } else {
+                    // TODO: Show Snackbar saying to select one?
+                }
+            }
+        })
+        BottomSheetItem(R.drawable.ic_proton_alias, R.string.action_alias, onItemClick = {
+            scope.launch { state.hide() }
+        })
+        BottomSheetItem(R.drawable.ic_proton_note, R.string.action_note, onItemClick = {
+            scope.launch { state.hide() }
+        })
+        BottomSheetItem(R.drawable.ic_proton_arrows_rotate, R.string.action_password, onItemClick = {
+            scope.launch { state.hide() }
+        })
     }
 }
 
@@ -346,8 +378,13 @@ private fun BottomSheetItem(
             .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
         Icon(painter = painterResource(icon), contentDescription = stringResource(title))
-        Spacer(modifier = Modifier.width(20.dp))
-        Text(text = stringResource(title), fontSize = 16.sp)
+        Text(
+            text = stringResource(title),
+            fontSize = 16.sp,
+            modifier = Modifier.padding(start = 20.dp),
+            fontWeight = FontWeight.W400,
+            color = ProtonTheme.colors.textNorm,
+        )
     }
 }
 // @Preview(showBackground = true)

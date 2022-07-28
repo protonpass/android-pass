@@ -5,19 +5,22 @@ import android.view.WindowManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.ui.launcher.LauncherViewModel
 import me.proton.android.pass.ui.navigation.AppNavGraph
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -27,6 +30,9 @@ class MainActivity : AppCompatActivity() {
 
     private val launcherViewModel: LauncherViewModel by viewModels()
 
+    @ExperimentalMaterialApi
+    @ExperimentalAnimationApi
+    @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         applySecureFlag()
         installSplashScreen()

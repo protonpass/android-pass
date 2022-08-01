@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.create.item
+package me.proton.android.pass.ui.create.login
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,6 +9,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,6 +28,7 @@ import me.proton.core.compose.component.ProtonOutlinedButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemId
+import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 import me.proton.core.pass.presentation.generatePassword
 
@@ -54,7 +56,7 @@ internal data class ScreenState(
 fun CreateLoginView(
     onUpClick: () -> Unit,
     onSuccess: (ItemId) -> Unit,
-    shareId: String,
+    shareId: ShareId,
     viewModel: CreateItemViewModel = hiltViewModel()
 ) {
     val viewState by rememberFlowWithLifecycle(viewModel.loadingState).collectAsState(viewModel.initialViewState)
@@ -72,6 +74,7 @@ fun CreateLoginView(
         note = TextState(note, setNote),
     )
 
+    val keyboardController = LocalSoftwareKeyboardController.current
     Scaffold(
         topBar = {
             ProtonTopAppBar(
@@ -80,7 +83,8 @@ fun CreateLoginView(
                 actions = {
                     IconButton(
                         onClick = {
-                          viewModel.createItem(shareId, screenState.toModel())
+                            keyboardController?.hide()
+                            viewModel.createItem(shareId, screenState.toModel())
                         },
                         modifier = Modifier.padding(end = 10.dp)
                     ) {
@@ -106,7 +110,6 @@ fun CreateLoginView(
         }
     }
 }
-
 
 @Composable
 private fun CreateLoginItemScreen(

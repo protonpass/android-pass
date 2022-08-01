@@ -8,11 +8,13 @@ import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
-import me.proton.android.pass.ui.create.item.CreateLoginView
+import me.proton.android.pass.ui.create.login.CreateLoginView
+import me.proton.android.pass.ui.detail.ItemDetailScreen
 import me.proton.android.pass.ui.home.HomeScreenNavigation
 import me.proton.android.pass.ui.launcher.LauncherScreen
 import me.proton.android.pass.ui.launcher.LauncherViewModel
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 
 @ExperimentalAnimationApi
@@ -38,17 +40,30 @@ fun AppNavGraph(
                     override val toCreateItem = { shareId: ShareId ->
                         navController.navigate(NavItem.CreateLogin.createNavRoute(shareId))
                     }
+                    override val toItemDetail = { args: Pair<ShareId, ItemId> ->
+                        navController.navigate(NavItem.ViewItem.createNavRoute(args.first, args.second))
+                    }
                 }
             )
         }
+
         composable(NavItem.CreateLogin) {
+            val shareId = ShareId(it.findArg(NavArg.ShareId))
             CreateLoginView(
                 onUpClick = onUpClick,
-                shareId = it.findArg(NavArg.ShareId),
+                shareId = shareId,
                 onSuccess = { itemId ->
-                    // TODO: Navigate to a item detail view
-                    onUpClick()
+                    navController.navigate(NavItem.ViewItem.createNavRoute(shareId, itemId)) {
+                        popUpTo(NavItem.Launcher.route)
+                    }
                 }
+            )
+        }
+        composable(NavItem.ViewItem) {
+            ItemDetailScreen(
+                onUpClick = onUpClick,
+                shareId = it.findArg(NavArg.ShareId),
+                itemId = it.findArg(NavArg.ItemId)
             )
         }
     }

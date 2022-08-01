@@ -27,6 +27,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.PopupProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -35,17 +36,19 @@ import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
-import me.proton.core.compose.theme.headlineSmall
 import me.proton.core.domain.entity.UserId
+import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawer
 
+internal typealias OnItemClick = (Pair<ShareId, ItemId>) -> Unit
+
 interface HomeScreenNavigation {
     val toCreateItem: (ShareId) -> Unit
+    val toItemDetail: (Pair<ShareId, ItemId>) -> Unit
 }
 
 @ExperimentalMaterialApi
@@ -164,8 +167,9 @@ object HomeScreen {
                 Box {
                     val itemToDelete = remember { mutableStateOf<ItemUiModel?>(null) }
                     Home(
-                        viewState.items,
+                        itemsList = viewState.items,
                         modifier = Modifier.padding(contentPadding),
+                        onItemClick = { navigation.toItemDetail(it) },
                         onDeleteItemClicked = { item ->
                             itemToDelete.value = item
                         }
@@ -214,12 +218,13 @@ private fun ConfirmSecretDeletionDialog(
 internal fun Home(
     itemsList: List<ItemUiModel>,
     modifier: Modifier = Modifier,
+    onItemClick: OnItemClick,
     onDeleteItemClicked: (ItemUiModel) -> Unit,
 ) {
     if (itemsList.isNotEmpty()) {
-        LazyColumn(modifier = modifier, contentPadding = PaddingValues(bottom = 32.dp)) {
+        LazyColumn(modifier = modifier) {
             items(itemsList) { item ->
-                ItemRow(item = item, onDeleteClicked = onDeleteItemClicked)
+                ItemRow(item = item, onItemClicked = onItemClick, onDeleteClicked = onDeleteItemClicked)
             }
         }
     } else {
@@ -233,66 +238,125 @@ internal fun Home(
 }
 
 @Composable
-internal fun ItemRow(item: ItemUiModel, onDeleteClicked: (ItemUiModel) -> Unit) {
-    val typeText = stringResource(
-        when (item.itemType) {
-            is ItemType.Login -> R.string.item_type_login
-            is ItemType.Note -> R.string.item_type_note
-        }
-    )
-    Row(
-        modifier = Modifier
-            .padding(20.dp)
-            .fillMaxWidth()
-    ) {
-        Column(modifier = Modifier.weight(1f)) {
-            Text(text = item.name, style = ProtonTheme.typography.headlineSmall)
-            when (val contents = item.itemType) {
-                is ItemType.Login -> {
-                    ItemRowContents(
-                        secretValue = stringResource(
-                            id = R.string.item_type_login_format, contents.username
-                        ),
-                        showContents = true
-                    )
-                    ItemRowContents(
-                        secretValue = stringResource(
-                            id = R.string.item_secret_login_password, "**********"
-                        ),
-                        showContents = false
-                    )
-                }
-                is ItemType.Note -> {
-                    ItemRowContents(
-                        secretValue = stringResource(
-                            id = R.string.item_type_note_format, item.name
-                        ),
-                        showContents = true
-                    )
-                }
-            }
-            Text(
-                text = stringResource(id = R.string.item_secret_type_message, typeText),
-                style = ProtonTheme.typography.default
-            )
-        }
-        IconButton(
-            onClick = { onDeleteClicked(item) },
-        ) {
-            Icon(
-                ImageVector.vectorResource(R.drawable.ic_baseline_delete_24),
-                contentDescription = stringResource(id = R.string.action_delete)
-            )
-        }
+internal fun ItemRow(
+    item: ItemUiModel,
+    onItemClicked: OnItemClick,
+    onDeleteClicked: (ItemUiModel) -> Unit
+) {
+    when (val itemType = item.itemType) {
+        is ItemType.Login -> LoginRow(item, itemType, onItemClicked, onDeleteClicked)
+        is ItemType.Note -> NoteRow(item, itemType, onItemClicked, onDeleteClicked)
     }
 }
 
 @Composable
-internal fun ItemRowContents(secretValue: String, showContents: Boolean) {
-    val contents = if (showContents)
-        secretValue else
-        "*******"
-    Text(text = contents, style = ProtonTheme.typography.default)
+internal fun LoginRow(
+    item: ItemUiModel,
+    itemType: ItemType.Login,
+    onItemClicked: OnItemClick,
+    onDeleteClicked: (ItemUiModel) -> Unit
+) {
+    ItemRow(
+        icon = R.drawable.ic_proton_key,
+        title = item.name,
+        subtitle = itemType.username,
+        onItemClicked = { onItemClicked(Pair(item.shareId, item.id)) },
+        onDeleteClicked = {
+            onDeleteClicked(item)
+        }
+    )
+}
+
+@Composable
+internal fun NoteRow(
+    item: ItemUiModel,
+    itemType: ItemType.Note,
+    onItemClicked: OnItemClick,
+    onDeleteClicked: (ItemUiModel) -> Unit
+) {
+    ItemRow(
+        icon = R.drawable.ic_proton_note,
+        title = item.name,
+        subtitle = itemType.text.take(10),
+        onItemClicked = { onItemClicked(Pair(item.shareId, item.id)) },
+        onDeleteClicked = {
+            onDeleteClicked(item)
+        }
+    )
+}
+
+@Composable
+internal fun ItemRow(
+    @DrawableRes icon: Int,
+    title: String,
+    subtitle: String,
+    onItemClicked: () -> Unit,
+    onDeleteClicked: () -> Unit,
+) {
+    var expanded by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier
+            .clickable { onItemClicked() }
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp, vertical = 12.dp),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Icon(
+                painter = painterResource(icon),
+                contentDescription = null,
+                tint = ProtonTheme.colors.iconNorm,
+            )
+            Text(
+                text = title,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.W400,
+                color = ProtonTheme.colors.textNorm,
+                modifier = Modifier.padding(start = 20.dp)
+            )
+            Spacer(Modifier.weight(1f))
+            Box {
+                IconButton(
+                    onClick = { expanded = true },
+                    modifier = Modifier.then(Modifier.size(24.dp))
+                ) {
+                    Icon(
+                        ImageVector.vectorResource(R.drawable.ic_three_dots_vertical_24),
+                        contentDescription = stringResource(id = R.string.action_delete),
+                    )
+                }
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                    properties = PopupProperties()
+                ) {
+                    DropdownMenuItem(onClick = {
+                        /* TODO: onEditClicked */
+                        expanded = false
+                    }) {
+                        Text(text = stringResource(id = R.string.action_edit))
+                    }
+                    DropdownMenuItem(onClick = {
+                        onDeleteClicked()
+                        expanded = false
+                    }) {
+                        Text(text = stringResource(id = R.string.action_delete))
+                    }
+                }
+            }
+        }
+        Row(modifier = Modifier.padding(start = 44.dp, end = 20.dp)) {
+            Text(
+                text = subtitle,
+                color = ProtonTheme.colors.textWeak,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.W400,
+            )
+        }
+    }
 }
 
 @Stable
@@ -387,30 +451,3 @@ private fun BottomSheetItem(
         )
     }
 }
-// @Preview(showBackground = true)
-// @Composable
-// private fun Preview_Home() {
-//    val secrets = listOf(
-//        Secret(
-//            UUID.randomUUID().toString(),
-//            "user_1",
-//            "address_1",
-//            "Login secret",
-//            SecretType.Login,
-//            false,
-//            SecretValue.Login("Username", "Password"),
-//            listOf("me.proton.android.pass")
-//        ),
-//        Secret(
-//            UUID.randomUUID().toString(),
-//            "user_1",
-//            "address_1",
-//            "Full name secret",
-//            SecretType.FullName,
-//            false,
-//            SecretValue.Single("Jorge Martín Espinosa"),
-//            listOf("me.proton.android.pass")
-//        )
-//    )
-//    Home(secrets = secrets, onDeleteSecretClicked = {})
-// }

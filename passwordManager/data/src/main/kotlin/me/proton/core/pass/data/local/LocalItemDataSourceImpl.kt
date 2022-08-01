@@ -24,6 +24,9 @@ class LocalItemDataSourceImpl @Inject constructor(
     override fun observeItems(userId: UserId): Flow<List<ItemEntity>> =
         database.itemsDao().observeAllForAddress(userId.id)
 
+    override suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity? =
+        database.itemsDao().getById(shareId.id, itemId.id)
+
     override suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean =
         database.itemsDao().delete(shareId.id, itemId.id) > 0
 

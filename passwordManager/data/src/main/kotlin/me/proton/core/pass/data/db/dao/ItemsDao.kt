@@ -27,6 +27,15 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ID} = :itemId
+        """
+    )
+    abstract suspend fun getById(shareId: String, itemId: String): ItemEntity?
+
+    @Query(
+        """
         DELETE FROM ${ItemEntity.TABLE} 
         WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
           AND ${ItemEntity.Columns.ID} = :itemId

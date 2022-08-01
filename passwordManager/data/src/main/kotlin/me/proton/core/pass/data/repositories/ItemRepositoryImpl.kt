@@ -18,12 +18,7 @@ import me.proton.core.pass.data.extensions.itemType
 import me.proton.core.pass.data.local.LocalItemDataSource
 import me.proton.core.pass.data.remote.RemoteItemDataSource
 import me.proton.core.pass.data.responses.ItemRevision
-import me.proton.core.pass.domain.Item
-import me.proton.core.pass.domain.ItemContents
-import me.proton.core.pass.domain.ItemId
-import me.proton.core.pass.domain.Share
-import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.domain.ShareSelection
+import me.proton.core.pass.domain.*
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.repositories.ItemRepository
@@ -72,6 +67,17 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Item {
+        val item = localItemDataSource.getById(shareId, itemId)
+        requireNotNull(item)
+        return entityToDomain(item)
+    }
+
+    override suspend fun deleteItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
+        localItemDataSource.delete(shareId, itemId)
+        remoteItemDataSource.delete(userId, shareId, itemId)
+    }
+
     private suspend fun refreshItemsIfNeeded(
         userAddress: UserAddress,
         shareSelection: ShareSelection
@@ -113,11 +119,6 @@ class ItemRepositoryImpl @Inject constructor(
             localItemDataSource.upsertItem(entity)
             entityToDomain(entity)
         }
-    }
-
-    override suspend fun deleteItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
-        localItemDataSource.delete(shareId, itemId)
-        remoteItemDataSource.delete(userId, shareId, itemId)
     }
 
     private fun itemResponseToEntity(

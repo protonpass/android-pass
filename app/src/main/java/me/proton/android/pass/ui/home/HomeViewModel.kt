@@ -5,6 +5,7 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.proton.android.pass.BuildConfig
@@ -23,7 +24,6 @@ import me.proton.core.pass.presentation.components.navigation.drawer.NavigationD
 import me.proton.core.pass.presentation.components.navigation.drawer.ShareClickEvent
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
-import javax.inject.Inject
 
 @ExperimentalMaterialApi
 @HiltViewModel
@@ -91,7 +91,7 @@ class HomeViewModel @Inject constructor(
             shares,
             items,
             topBarTitle = shareSelection.title,
-            selectedShare = when(val selection = shareSelection.selection) {
+            selectedShare = when (val selection = shareSelection.selection) {
                 is ShareSelection.Share -> selection.shareId
                 else -> null
             }

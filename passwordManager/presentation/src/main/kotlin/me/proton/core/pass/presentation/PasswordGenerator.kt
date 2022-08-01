@@ -9,9 +9,9 @@ sealed class PasswordGenerationOptions(
         private const val SYMBOLS = ".?_-+*/"
     }
 
-    object OnlyLetters: PasswordGenerationOptions(LETTERS)
-    object LettersAndNumbers: PasswordGenerationOptions(LETTERS + NUMBERS)
-    object LettersNumbersSymbols: PasswordGenerationOptions(LETTERS + NUMBERS + SYMBOLS)
+    object OnlyLetters : PasswordGenerationOptions(LETTERS)
+    object LettersAndNumbers : PasswordGenerationOptions(LETTERS + NUMBERS)
+    object LettersNumbersSymbols : PasswordGenerationOptions(LETTERS + NUMBERS + SYMBOLS)
 }
 
 fun generatePassword(

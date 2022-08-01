@@ -10,6 +10,7 @@ interface LocalItemDataSource {
     suspend fun upsertItem(item: ItemEntity)
     fun observeItemsForShare(userId: UserId, shareId: ShareId): Flow<List<ItemEntity>>
     fun observeItems(userId: UserId): Flow<List<ItemEntity>>
+    suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity?
     suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean
     suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean
 }

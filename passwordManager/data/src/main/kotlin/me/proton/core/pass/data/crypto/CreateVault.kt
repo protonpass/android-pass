@@ -1,5 +1,6 @@
 package me.proton.core.pass.data.crypto
 
+import javax.inject.Inject
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.context.CryptoContext
@@ -19,7 +20,6 @@ import me.proton.core.pass.domain.key.usePrivateKey
 import me.proton.core.pass.domain.repositories.VaultItemKeyList
 import me.proton.core.user.domain.entity.UserAddress
 import proton_key_vault_v1.VaultV1
-import javax.inject.Inject
 
 @Serializable
 data class CreateVaultRequest(

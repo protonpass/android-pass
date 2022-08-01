@@ -1,5 +1,6 @@
 package me.proton.core.pass.data.repositories
 
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.crypto.common.context.CryptoContext
@@ -31,7 +32,6 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton_key_vault_v1.VaultV1
-import javax.inject.Inject
 
 class ShareRepositoryImpl @Inject constructor(
     private val database: PassDatabase,

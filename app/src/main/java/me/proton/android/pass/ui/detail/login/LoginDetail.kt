@@ -1,5 +1,6 @@
 package me.proton.android.pass.ui.detail.login
 
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
@@ -8,10 +9,14 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ClipboardManager
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -33,19 +38,57 @@ fun LoginDetail(
     viewModel.setItem(item)
 
     val model by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(initial = viewModel.initialViewState)
-    LoginContentView(model = model, modifier = modifier)
+
+    val localContext = LocalContext.current
+    val clipboard = LocalClipboardManager.current
+
+    val copiedToClipboardSuffix = stringResource(R.string.field_copied_to_clipboard)
+    val storeToClipboard = (
+        { contents: String?, fieldName: String ->
+            if (contents != null) {
+                val message = "$fieldName $copiedToClipboardSuffix"
+                clipboard.setText(AnnotatedString(contents))
+                Toast
+                    .makeText(localContext, message, Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+        )
+
+    val passwordFieldName = stringResource(R.string.field_password)
+    LaunchedEffect(viewModel) {
+        viewModel.copyToClipboardFlow.collect { storeToClipboard(it, passwordFieldName) }
+    }
+
+    LoginContentView(
+        model = model,
+        onTogglePasswordClick = { viewModel.togglePassword() },
+        onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },
+        storeToClipboard = storeToClipboard,
+        modifier = modifier
+    )
 }
 
 @Composable
 internal fun LoginContentView(
     model: LoginDetailViewModel.LoginUiModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onTogglePasswordClick: () -> Unit,
+    onCopyPasswordClick: () -> Unit,
+    storeToClipboard: (contents: String?, fieldName: String) -> Unit,
 ) {
     Column {
         Column(modifier = modifier.padding(horizontal = 16.dp)) {
-            UsernameRow(model)
+            UsernameRow(
+                model = model,
+                storeToClipboard = storeToClipboard,
+            )
             WebsiteRow(model)
-            PasswordRow(model)
+            PasswordRow(
+                model = model,
+                onTogglePasswordClick = onTogglePasswordClick,
+                onCopyPasswordClick = onCopyPasswordClick,
+            )
             NoteRow(model)
         }
         Divider(
@@ -57,14 +100,15 @@ internal fun LoginContentView(
 
 @Composable
 internal fun UsernameRow(
-    model: LoginDetailViewModel.LoginUiModel
+    model: LoginDetailViewModel.LoginUiModel,
+    storeToClipboard: (contents: String?, fieldName: String) -> Unit
 ) {
-    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+    val usernameFieldName = stringResource(R.string.field_username)
     Section(
         title = R.string.field_username_title,
         content = model.username,
         icon = R.drawable.ic_proton_squares,
-        onIconClick = { clipboardManager.setText(AnnotatedString(model.username)) }
+        onIconClick = { storeToClipboard(model.username, usernameFieldName) }
     )
 }
 
@@ -79,24 +123,27 @@ internal fun WebsiteRow(
         )
     }
 }
-
 @Composable
 internal fun PasswordRow(
-    model: LoginDetailViewModel.LoginUiModel
+    model: LoginDetailViewModel.LoginUiModel,
+    onTogglePasswordClick: () -> Unit,
+    onCopyPasswordClick: () -> Unit
 ) {
-    var valueHidden by remember { mutableStateOf(true) }
-    val actionContent = when (valueHidden) {
-        true -> stringResource(R.string.action_reveal_password)
-        false -> stringResource(R.string.action_conceal_password)
+    val actionContent = when (model.password) {
+        is LoginDetailViewModel.PasswordState.Concealed -> stringResource(R.string.action_reveal_password)
+        is LoginDetailViewModel.PasswordState.Revealed -> stringResource(R.string.action_conceal_password)
     }
 
-    val clipboardManager: ClipboardManager = LocalClipboardManager.current
+    val sectionContent = when (val password = model.password) {
+        is LoginDetailViewModel.PasswordState.Concealed -> "⬤".repeat(12)
+        is LoginDetailViewModel.PasswordState.Revealed -> password.clearText
+    }
+
     Section(
         title = R.string.field_detail_password_title,
-        content = model.password,
+        content = sectionContent,
         icon = R.drawable.ic_proton_squares,
-        hideValue = valueHidden,
-        onIconClick = { clipboardManager.setText(AnnotatedString(model.password)) },
+        onIconClick = { onCopyPasswordClick() },
         viewBelow = {
             Text(
                 text = actionContent,
@@ -105,12 +152,11 @@ internal fun PasswordRow(
                 color = ProtonTheme.colors.brandNorm,
                 modifier = Modifier
                     .padding(top = 8.dp)
-                    .clickable { valueHidden = !valueHidden }
+                    .clickable { onTogglePasswordClick() }
             )
         }
     )
 }
-
 @Composable
 internal fun NoteRow(
     model: LoginDetailViewModel.LoginUiModel
@@ -126,9 +172,9 @@ internal fun NoteRow(
 @Composable
 internal fun Section(
     @StringRes title: Int,
-    content: String,
     @DrawableRes icon: Int? = null,
-    hideValue: Boolean = false,
+    content: String,
+    contentTextColor: Color = ProtonTheme.colors.textNorm,
     onIconClick: (() -> Unit)? = null,
     viewBelow: @Composable (() -> Unit)? = null,
 ) {
@@ -140,19 +186,11 @@ internal fun Section(
                 fontWeight = FontWeight.W400,
                 color = ProtonTheme.colors.textNorm
             )
-            if (hideValue) {
-                Text(
-                    text = "⬤".repeat(12),
-                    fontSize = 14.sp,
-                    color = ProtonTheme.colors.textNorm
-                )
-            } else {
-                Text(
-                    text = content,
-                    fontSize = 14.sp,
-                    color = ProtonTheme.colors.textWeak
-                )
-            }
+            Text(
+                text = content,
+                color = contentTextColor,
+                fontSize = 14.sp,
+            )
 
             if (viewBelow != null) {
                 viewBelow()

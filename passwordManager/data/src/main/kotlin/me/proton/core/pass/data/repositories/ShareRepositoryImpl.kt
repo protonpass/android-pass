@@ -31,7 +31,7 @@ import me.proton.core.pass.domain.repositories.VaultKeyRepository
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
-import proton_key_vault_v1.VaultV1
+import proton_pass_vault_v1.VaultV1
 
 class ShareRepositoryImpl @Inject constructor(
     private val database: PassDatabase,

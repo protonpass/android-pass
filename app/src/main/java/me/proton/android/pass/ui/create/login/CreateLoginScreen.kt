@@ -45,8 +45,10 @@ internal data class ScreenState(
     fun toModel(): CreateItemViewModel.CreateItemUiModel =
         CreateItemViewModel.CreateItemUiModel(
             title = title.value,
+            note = note.value,
             username = username.value,
-            password = password.value
+            password = password.value,
+            urls = listOf(websiteAddress.value)
         )
 }
 

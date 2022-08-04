@@ -13,28 +13,25 @@ import me.proton.android.pass.ui.launcher.LauncherViewModel.State.*
 import me.proton.core.compose.component.ProtonCenteredProgress
 
 @ExperimentalMaterialApi
-object LauncherScreen {
+@Composable
+fun LauncherScreen(
+    onDrawerStateChanged: (Boolean) -> Unit = {},
+    homeScreenNavigation: HomeScreenNavigation,
+    viewModel: LauncherViewModel = hiltViewModel(),
+) {
+    val state by viewModel.state.collectAsState(Processing)
 
-    @Composable
-    fun View(
-        onDrawerStateChanged: (Boolean) -> Unit = {},
-        homeScreenNavigation: HomeScreenNavigation,
-        viewModel: LauncherViewModel = hiltViewModel(),
-    ) {
-        val state by viewModel.state.collectAsState(Processing)
-
-        when (state) {
-            AccountNeeded -> viewModel.addAccount()
-            PrimaryExist -> HomeScreen.View(
-                onDrawerStateChanged = onDrawerStateChanged,
-                onSignIn = { viewModel.signIn(it) },
-                onSignOut = { viewModel.signOut(it) },
-                onRemove = { viewModel.remove(it) },
-                onSwitch = { viewModel.switch(it) },
-                navigation = homeScreenNavigation,
-            )
-            Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
-            StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
-        }
+    when (state) {
+        AccountNeeded -> viewModel.addAccount()
+        PrimaryExist -> HomeScreen(
+            onDrawerStateChanged = onDrawerStateChanged,
+            onSignIn = { viewModel.signIn(it) },
+            onSignOut = { viewModel.signOut(it) },
+            onRemove = { viewModel.remove(it) },
+            onSwitch = { viewModel.switch(it) },
+            navigation = homeScreenNavigation,
+        )
+        Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
+        StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
     }
 }

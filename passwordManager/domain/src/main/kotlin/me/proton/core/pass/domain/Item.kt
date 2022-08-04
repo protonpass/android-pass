@@ -10,5 +10,6 @@ data class Item(
     val shareId: ShareId,
     val itemType: ItemType,
     val title: EncryptedString,
+    val note: EncryptedString,
     val content: EncryptedByteArray,
 )

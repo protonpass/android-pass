@@ -33,7 +33,7 @@ fun AppNavGraph(
     ) {
         val onUpClick: () -> Unit = { navController.popBackStack() }
         composable(NavItem.Launcher) {
-            LauncherScreen.View(
+            LauncherScreen(
                 onDrawerStateChanged = onDrawerStateChanged,
                 viewModel = launcherViewModel,
                 homeScreenNavigation = object : HomeScreenNavigation {

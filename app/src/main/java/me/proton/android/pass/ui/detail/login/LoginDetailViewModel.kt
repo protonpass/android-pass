@@ -71,8 +71,8 @@ class LoginDetailViewModel @Inject constructor(
             title = item.title.decrypt(cryptoContext.keyStoreCrypto),
             username = itemContents.username,
             password = password,
-            websites = emptyList(),
-            note = ""
+            websites = itemContents.websites,
+            note = item.note.decrypt(cryptoContext.keyStoreCrypto)
         )
     }
 

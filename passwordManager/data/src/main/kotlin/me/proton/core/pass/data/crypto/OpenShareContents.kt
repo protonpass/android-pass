@@ -14,7 +14,7 @@ import me.proton.core.key.domain.getBase64Decoded
 import me.proton.core.key.domain.getEncryptedPackets
 import me.proton.core.key.domain.publicKey
 import me.proton.core.pass.data.responses.ShareResponse
-import proton_key_vault_v1.VaultV1
+import proton_pass_vault_v1.VaultV1
 
 class OpenShareContents @Inject constructor(
     val cryptoContext: CryptoContext

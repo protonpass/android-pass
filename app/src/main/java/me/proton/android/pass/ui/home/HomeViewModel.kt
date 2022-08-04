@@ -12,11 +12,14 @@ import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.pass.data.extensions.name
-import me.proton.core.pass.domain.*
-import me.proton.core.pass.domain.entity.NewVault
-import me.proton.core.pass.domain.usecases.*
+import me.proton.core.pass.domain.Item
+import me.proton.core.pass.domain.Share
+import me.proton.core.pass.domain.ShareId
+import me.proton.core.pass.domain.ShareSelection
+import me.proton.core.pass.domain.usecases.DeleteItem
+import me.proton.core.pass.domain.usecases.ObserveItems
+import me.proton.core.pass.domain.usecases.ObserveShares
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.components.model.ShareUiModel
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerViewEvent
@@ -32,10 +35,8 @@ class HomeViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager,
     private val deleteItem: DeleteItem,
-    private val createVault: CreateVault,
     private val observeShares: ObserveShares,
     private val observeItems: ObserveItems,
-    private val createItem: CreateItem,
 ) : ViewModel() {
 
     val initialViewState = getViewState(
@@ -43,7 +44,6 @@ class HomeViewModel @Inject constructor(
         shares = emptyList(),
         items = emptyList(),
         shareSelection = ShareSelectionState(ShareSelection.AllShares, TopBarTitle.AllShares),
-
     )
 
     private val shareSelectionState: MutableStateFlow<ShareSelectionState> =
@@ -56,15 +56,19 @@ class HomeViewModel @Inject constructor(
 
     private val listShares = getCurrentUserIdFlow
         .filterNotNull()
-        .flatMapLatest { observeShares(it.userId).map { it.map { shareToShareUiModel(it) } } }
+        .flatMapLatest { user ->
+            observeShares(user.userId).map { shares ->
+                shares.map { shareToShareUiModel(it) }
+            }
+        }
         .distinctUntilChanged()
 
     private val listItems = getCurrentUserIdFlow
         .filterNotNull()
         .combine(shareSelectionState) { user, shareSelection -> user to shareSelection }
         .flatMapLatest { v ->
-            observeItems(v.first.userId, v.second.selection).map {
-                it.map { itemToItemUiModel(it) }
+            observeItems(v.first.userId, v.second.selection).map { items ->
+                items.map { itemToItemUiModel(it) }
             }
         }
 
@@ -121,31 +125,6 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
-    }
-
-    fun createVault() = viewModelScope.launch {
-        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        if (userId != null) {
-            createVault.invoke(
-                userId,
-                NewVault(
-                    name = "SomeVault".encrypt(cryptoContext.keyStoreCrypto),
-                    description = "Vault created from Android".encrypt(cryptoContext.keyStoreCrypto)
-                )
-            )
-        }
-    }
-
-    fun createItem() = viewModelScope.launch {
-        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        if (userId != null) {
-            val shares = requireNotNull(observeShares(userId).firstOrNull())
-            createItem.invoke(
-                userId,
-                shares[0],
-                ItemContents.Login("fromandroid", "someuser", "somepassword")
-            )
-        }
     }
 
     fun deleteItem(item: ItemUiModel?) = viewModelScope.launch {

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3429ef18c04529382b24b9749c9598d3",
+    "identityHash": "87709425749d99904bf7fb73c2d813e5",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -1922,7 +1922,7 @@
       },
       {
         "tableName": "items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `revision` INTEGER NOT NULL, `content_format_version` INTEGER NOT NULL, `rotation_id` TEXT NOT NULL, `content` TEXT NOT NULL, `user_signature` TEXT NOT NULL, `item_key_signature` TEXT NOT NULL, `state` INTEGER NOT NULL, `signature_email` TEXT NOT NULL, `create_time` INTEGER NOT NULL, `modify_time` INTEGER NOT NULL, `encrypted_title` TEXT NOT NULL, `encrypted_content` BLOB NOT NULL, PRIMARY KEY(`id`, `share_id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `shares`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `revision` INTEGER NOT NULL, `content_format_version` INTEGER NOT NULL, `rotation_id` TEXT NOT NULL, `content` TEXT NOT NULL, `user_signature` TEXT NOT NULL, `item_key_signature` TEXT NOT NULL, `state` INTEGER NOT NULL, `signature_email` TEXT NOT NULL, `create_time` INTEGER NOT NULL, `modify_time` INTEGER NOT NULL, `encrypted_title` TEXT NOT NULL, `encrypted_note` TEXT NOT NULL, `encrypted_content` BLOB NOT NULL, PRIMARY KEY(`id`, `share_id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `shares`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -2011,6 +2011,12 @@
           {
             "fieldPath": "encryptedTitle",
             "columnName": "encrypted_title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "encryptedNote",
+            "columnName": "encrypted_note",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -2281,7 +2287,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3429ef18c04529382b24b9749c9598d3')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '87709425749d99904bf7fb73c2d813e5')"
     ]
   }
 }

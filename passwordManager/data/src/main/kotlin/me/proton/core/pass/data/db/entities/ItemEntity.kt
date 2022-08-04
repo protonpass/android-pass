@@ -65,6 +65,8 @@ data class ItemEntity(
     // Keystore Encrypted contents
     @ColumnInfo(name = Columns.ENCRYPTED_TITLE)
     val encryptedTitle: EncryptedString,
+    @ColumnInfo(name = Columns.ENCRYPTED_NOTE)
+    val encryptedNote: EncryptedString,
     @ColumnInfo(name = Columns.ENCRYPTED_CONTENT)
     val encryptedContent: EncryptedByteArray
 ) {
@@ -85,6 +87,7 @@ data class ItemEntity(
         const val MODIFY_TIME = "modify_time"
         const val ENCRYPTED_TITLE = "encrypted_title"
         const val ENCRYPTED_CONTENT = "encrypted_content"
+        const val ENCRYPTED_NOTE = "encrypted_note"
     }
 
     companion object {

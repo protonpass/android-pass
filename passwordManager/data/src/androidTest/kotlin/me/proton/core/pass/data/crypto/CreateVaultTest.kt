@@ -26,7 +26,7 @@ import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyData
 import me.proton.core.user.domain.entity.UserAddress
 import org.junit.Test
-import proton_key_vault_v1.VaultV1
+import proton_pass_vault_v1.VaultV1
 
 class CreateVaultTest {
     private val cryptoContext: CryptoContext = AndroidCryptoContext(

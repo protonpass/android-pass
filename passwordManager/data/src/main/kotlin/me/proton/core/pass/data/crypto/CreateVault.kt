@@ -19,7 +19,7 @@ import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.key.usePrivateKey
 import me.proton.core.pass.domain.repositories.VaultItemKeyList
 import me.proton.core.user.domain.entity.UserAddress
-import proton_key_vault_v1.VaultV1
+import proton_pass_vault_v1.VaultV1
 
 @Serializable
 data class CreateVaultRequest(

@@ -4,7 +4,7 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareType
-import proton_key_vault_v1.VaultV1
+import proton_pass_vault_v1.VaultV1
 
 fun Share.name(cryptoContext: CryptoContext): String {
     if (content == null) return "---"

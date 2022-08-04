@@ -147,6 +147,7 @@ class ItemRepositoryImpl @Inject constructor(
             modifyTime = itemRevision.modifyTime,
             encryptedContent = item.content,
             encryptedTitle = item.title,
+            encryptedNote = item.note
         )
     }
 
@@ -156,6 +157,7 @@ class ItemRepositoryImpl @Inject constructor(
             shareId = ShareId(entity.shareId),
             itemType = entity.itemType(cryptoContext),
             title = entity.encryptedTitle,
+            note = entity.encryptedNote,
             content = entity.encryptedContent
         )
 }

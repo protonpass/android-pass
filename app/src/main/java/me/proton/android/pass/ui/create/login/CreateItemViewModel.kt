@@ -36,12 +36,16 @@ class CreateItemViewModel @Inject constructor(
     data class CreateItemUiModel(
         val title: String,
         val username: String,
-        val password: String
+        val password: String,
+        val note: String,
+        val urls: List<String>,
     ) {
         fun toItemContents(): ItemContents = ItemContents.Login(
             title = title,
+            note = note,
             username = username,
-            password = password
+            password = password,
+            urls = urls,
         )
     }
 

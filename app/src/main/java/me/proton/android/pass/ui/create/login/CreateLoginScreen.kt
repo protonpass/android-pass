@@ -1,5 +1,6 @@
 package me.proton.android.pass.ui.create.login
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -34,24 +35,6 @@ import me.proton.core.pass.presentation.generatePassword
 
 internal typealias OnTextChange = (String) -> Unit
 
-internal data class TextState(val value: String, val onChange: OnTextChange)
-internal data class ScreenState(
-    val title: TextState,
-    val username: TextState,
-    val password: TextState,
-    val websiteAddress: TextState,
-    val note: TextState
-) {
-    fun toModel(): CreateItemViewModel.CreateItemUiModel =
-        CreateItemViewModel.CreateItemUiModel(
-            title = title.value,
-            note = note.value,
-            username = username.value,
-            password = password.value,
-            urls = listOf(websiteAddress.value)
-        )
-}
-
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
@@ -59,39 +42,83 @@ fun CreateLoginView(
     onUpClick: () -> Unit,
     onSuccess: (ItemId) -> Unit,
     shareId: ShareId,
-    viewModel: CreateItemViewModel = hiltViewModel()
+    viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
-    val viewState by rememberFlowWithLifecycle(viewModel.loadingState).collectAsState(viewModel.initialViewState)
-    val (title, setTitle) = rememberSaveable { mutableStateOf("") }
-    val (username, setUsername) = rememberSaveable { mutableStateOf("") }
-    val (password, setPassword) = rememberSaveable { mutableStateOf("") }
-    val (websiteAddress, setWebsiteAddress) = rememberSaveable { mutableStateOf("") }
-    val (note, setNote) = rememberSaveable { mutableStateOf("") }
-
-    val screenState = ScreenState(
-        title = TextState(title, setTitle),
-        username = TextState(username, setUsername),
-        password = TextState(password, setPassword),
-        websiteAddress = TextState(websiteAddress, setWebsiteAddress),
-        note = TextState(note, setNote),
+    val viewState by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(viewModel.initialViewState)
+    LoginView(
+        viewState = viewState,
+        topBarTitle = R.string.title_create_login,
+        topBarActionName = R.string.action_save,
+        onUpClick = onUpClick,
+        onSuccess = onSuccess,
+        onSubmit = { viewModel.createItem(shareId) },
+        onTitleChange = { viewModel.onTitleChange(it) },
+        onUsernameChange = { viewModel.onUsernameChange(it) },
+        onPasswordChange = { viewModel.onPasswordChange(it) },
+        onWebsiteChange = { viewModel.onWebsiteChange(it) },
+        onNoteChange = { viewModel.onNoteChange(it) }
     )
+}
 
+@ExperimentalMaterialApi
+@ExperimentalComposeUiApi
+@Composable
+fun UpdateLoginView(
+    onUpClick: () -> Unit,
+    onSuccess: (ItemId) -> Unit,
+    shareId: ShareId,
+    itemId: ItemId,
+    viewModel: UpdateLoginViewModel = hiltViewModel()
+) {
+    viewModel.setItem(shareId, itemId)
+
+    val viewState by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(viewModel.initialViewState)
+    LoginView(
+        viewState = viewState,
+        topBarTitle = R.string.title_edit_login,
+        topBarActionName = R.string.action_save,
+        onUpClick = onUpClick,
+        onSuccess = onSuccess,
+        onSubmit = { viewModel.updateItem(shareId) },
+        onTitleChange = { viewModel.onTitleChange(it) },
+        onUsernameChange = { viewModel.onUsernameChange(it) },
+        onPasswordChange = { viewModel.onPasswordChange(it) },
+        onWebsiteChange = { viewModel.onWebsiteChange(it) },
+        onNoteChange = { viewModel.onNoteChange(it) }
+    )
+}
+
+@ExperimentalComposeUiApi
+@Composable
+private fun LoginView(
+    @StringRes topBarTitle: Int,
+    @StringRes topBarActionName: Int,
+    viewState: BaseLoginViewModel.ViewState,
+    onUpClick: () -> Unit,
+    onSuccess: (ItemId) -> Unit,
+    onSubmit: () -> Unit,
+    onTitleChange: OnTextChange,
+    onUsernameChange: OnTextChange,
+    onPasswordChange: OnTextChange,
+    onWebsiteChange: OnTextChange,
+    onNoteChange: OnTextChange
+) {
     val keyboardController = LocalSoftwareKeyboardController.current
     Scaffold(
         topBar = {
             ProtonTopAppBar(
-                title = { TopBarTitleView(R.string.title_create_login) },
+                title = { TopBarTitleView(topBarTitle) },
                 navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
                 actions = {
                     IconButton(
                         onClick = {
                             keyboardController?.hide()
-                            viewModel.createItem(shareId, screenState.toModel())
+                            onSubmit()
                         },
                         modifier = Modifier.padding(end = 10.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.action_save),
+                            text = stringResource(topBarActionName),
                             color = ProtonTheme.colors.brandNorm,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.W500
@@ -101,14 +128,19 @@ fun CreateLoginView(
             )
         }
     ) { padding ->
-        when (val state = viewState) {
-            is CreateItemViewModel.State.Idle -> CreateLoginItemScreen(
-                screenState = screenState,
-                modifier = Modifier.padding(padding)
+        when (val state = viewState.state) {
+            is BaseLoginViewModel.State.Idle -> CreateLoginItemScreen(
+                state = viewState.modelState,
+                modifier = Modifier.padding(padding),
+                onTitleChange = onTitleChange,
+                onUsernameChange = onUsernameChange,
+                onPasswordChange = onPasswordChange,
+                onWebsiteChange = onWebsiteChange,
+                onNoteChange = onNoteChange,
             )
-            is CreateItemViewModel.State.Loading -> DeferredCircularProgressIndicator(Modifier.padding(padding).fillMaxSize())
-            is CreateItemViewModel.State.Error -> Text(text = "something went boom")
-            is CreateItemViewModel.State.Success -> onSuccess(state.itemId)
+            is BaseLoginViewModel.State.Loading -> DeferredCircularProgressIndicator(Modifier.padding(padding).fillMaxSize())
+            is BaseLoginViewModel.State.Error -> Text(text = "something went boom")
+            is BaseLoginViewModel.State.Success -> onSuccess(state.itemId)
         }
     }
 }
@@ -116,7 +148,12 @@ fun CreateLoginView(
 @Composable
 private fun CreateLoginItemScreen(
     modifier: Modifier = Modifier,
-    screenState: ScreenState,
+    state: BaseLoginViewModel.ModelState,
+    onTitleChange: OnTextChange,
+    onUsernameChange: OnTextChange,
+    onPasswordChange: OnTextChange,
+    onWebsiteChange: OnTextChange,
+    onNoteChange: OnTextChange
 ) {
     Column(
         modifier = modifier
@@ -125,13 +162,13 @@ private fun CreateLoginItemScreen(
             .padding(16.dp)
     ) {
 
-        TitleInput(value = screenState.title.value, onChange = screenState.title.onChange)
-        UsernameInput(value = screenState.username.value, onChange = screenState.username.onChange, onGenerateAliasClick = {})
-        PasswordInput(value = screenState.password.value, onChange = screenState.password.onChange)
+        TitleInput(value = state.title, onChange = onTitleChange)
+        UsernameInput(value = state.username, onChange = onUsernameChange, onGenerateAliasClick = {})
+        PasswordInput(value = state.password, onChange = onPasswordChange)
         Spacer(modifier = Modifier.height(20.dp))
-        GeneratePasswordButton(onPasswordGenerated = { screenState.password.onChange(it) })
-        WebsiteAddressInput(value = screenState.websiteAddress.value, onChange = screenState.websiteAddress.onChange)
-        NoteInput(value = screenState.note.value, onChange = screenState.note.onChange)
+        GeneratePasswordButton(onPasswordGenerated = { onPasswordChange(it) })
+        WebsiteAddressInput(value = state.websiteAddress, onChange = onWebsiteChange)
+        NoteInput(value = state.note, onChange = onNoteChange)
     }
 }
 

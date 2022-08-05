@@ -6,7 +6,10 @@ import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
-import me.proton.core.crypto.common.pgp.*
+import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.Unarmored
+import me.proton.core.crypto.common.pgp.dataPacket
+import me.proton.core.crypto.common.pgp.keyPacket
 import me.proton.core.key.domain.encryptData
 import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.PrivateKey
@@ -62,8 +65,8 @@ data class CreateVaultRequest(
 )
 
 class CreateVault @Inject constructor(
-    val cryptoContext: CryptoContext
-) {
+    private val cryptoContext: CryptoContext
+) : BaseCryptoOperation(cryptoContext) {
 
     companion object {
         const val CONTENT_FORMAT_VERSION = 1
@@ -170,9 +173,6 @@ class CreateVault @Inject constructor(
                 encryptData(nameVaultKeySignature.encodeToByteArray())
             )
         }
-
-        val b64 = ({ input: ByteArray -> cryptoContext.pgpCrypto.getBase64Encoded(input) })
-        val unarmor = ({ input: Armored -> cryptoContext.pgpCrypto.getUnarmored(input) })
 
         return CreateVaultRequest(
             addressId = userAddress.addressId.id,

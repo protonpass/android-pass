@@ -36,11 +36,7 @@ import me.proton.core.auth.data.MissingScopeListenerImpl
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.humanverification.data.utils.NetworkRequestOverriderImpl
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
-import me.proton.core.network.data.ApiManagerFactory
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.NetworkManager
-import me.proton.core.network.data.NetworkPrefs
-import me.proton.core.network.data.ProtonCookieStore
+import me.proton.core.network.data.*
 import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ClientVersionValidatorImpl
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
@@ -60,9 +56,11 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.pass.data.local.*
 import me.proton.core.pass.data.remote.*
 import me.proton.core.pass.data.repositories.ItemRepositoryImpl
+import me.proton.core.pass.data.repositories.KeyPacketRepositoryImpl
 import me.proton.core.pass.data.repositories.ShareRepositoryImpl
 import me.proton.core.pass.data.repositories.VaultKeyRepositoryImpl
 import me.proton.core.pass.domain.repositories.ItemRepository
+import me.proton.core.pass.domain.repositories.KeyPacketRepository
 import me.proton.core.pass.domain.repositories.ShareRepository
 import me.proton.core.pass.domain.repositories.VaultKeyRepository
 import me.proton.core.util.kotlin.takeIfNotBlank
@@ -226,4 +224,12 @@ abstract class NetworkBindModule {
 
     @Binds
     abstract fun bindLocalItemDataSource(localItemDataSourceImpl: LocalItemDataSourceImpl): LocalItemDataSource
+
+    @Binds
+    abstract fun bindKeyPacketRepository(keyPacketRepository: KeyPacketRepositoryImpl): KeyPacketRepository
+
+    @Binds
+    abstract fun bindRemoteKeyPacketDataSource(
+        remoteKeyPacketDataSource: RemoteKeyPacketDataSourceImpl
+    ): RemoteKeyPacketDataSource
 }

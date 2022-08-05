@@ -22,7 +22,7 @@ import proton_pass_item_v1.ItemV1
 
 class OpenItem @Inject constructor(
     private val cryptoContext: CryptoContext
-) {
+) : BaseCryptoOperation(cryptoContext) {
     fun openItem(
         response: ItemRevision,
         share: Share,
@@ -68,6 +68,7 @@ class OpenItem @Inject constructor(
         val reencryptedContents = PlainByteArray(decryptedContents).encrypt(cryptoContext.keyStoreCrypto)
         return Item(
             id = ItemId(response.itemId),
+            revision = response.revision,
             shareId = shareId,
             title = decoded.metadata.name.encrypt(cryptoContext.keyStoreCrypto),
             note = decoded.metadata.note.encrypt(cryptoContext.keyStoreCrypto),

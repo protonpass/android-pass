@@ -9,6 +9,7 @@ import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import me.proton.android.pass.ui.create.login.CreateLoginView
+import me.proton.android.pass.ui.create.login.UpdateLoginView
 import me.proton.android.pass.ui.detail.ItemDetailScreen
 import me.proton.android.pass.ui.home.HomeScreenNavigation
 import me.proton.android.pass.ui.launcher.LauncherScreen
@@ -40,8 +41,11 @@ fun AppNavGraph(
                     override val toCreateItem = { shareId: ShareId ->
                         navController.navigate(NavItem.CreateLogin.createNavRoute(shareId))
                     }
-                    override val toItemDetail = { args: Pair<ShareId, ItemId> ->
-                        navController.navigate(NavItem.ViewItem.createNavRoute(args.first, args.second))
+                    override val toItemDetail = { shareId: ShareId, itemId: ItemId ->
+                        navController.navigate(NavItem.ViewItem.createNavRoute(shareId, itemId))
+                    }
+                    override val toEditItem = { shareId: ShareId, itemId: ItemId ->
+                        navController.navigate(NavItem.EditLogin.createNavRoute(shareId, itemId))
                     }
                 }
             )
@@ -53,6 +57,20 @@ fun AppNavGraph(
                 onUpClick = onUpClick,
                 shareId = shareId,
                 onSuccess = { itemId ->
+                    navController.navigate(NavItem.ViewItem.createNavRoute(shareId, itemId)) {
+                        popUpTo(NavItem.Launcher.route)
+                    }
+                }
+            )
+        }
+        composable(NavItem.EditLogin) {
+            val shareId = ShareId(it.findArg(NavArg.ShareId))
+            val itemId = ItemId(it.findArg(NavArg.ItemId))
+            UpdateLoginView(
+                onUpClick = onUpClick,
+                shareId = shareId,
+                itemId = itemId,
+                onSuccess = {
                     navController.navigate(NavItem.ViewItem.createNavRoute(shareId, itemId)) {
                         popUpTo(NavItem.Launcher.route)
                     }

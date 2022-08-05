@@ -12,6 +12,7 @@ import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
 import me.proton.core.pass.data.crypto.CreateItem
 import me.proton.core.pass.data.crypto.OpenItem
+import me.proton.core.pass.data.crypto.UpdateItem
 import me.proton.core.pass.data.db.PassDatabase
 import me.proton.core.pass.data.db.entities.ItemEntity
 import me.proton.core.pass.data.extensions.itemType
@@ -22,6 +23,7 @@ import me.proton.core.pass.domain.*
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.repositories.ItemRepository
+import me.proton.core.pass.domain.repositories.KeyPacketRepository
 import me.proton.core.pass.domain.repositories.ShareRepository
 import me.proton.core.pass.domain.repositories.VaultKeyRepository
 import me.proton.core.user.domain.entity.UserAddress
@@ -36,8 +38,10 @@ class ItemRepositoryImpl @Inject constructor(
     private val vaultKeyRepository: VaultKeyRepository,
     private val shareRepository: ShareRepository,
     private val createItem: CreateItem,
+    private val updateItem: UpdateItem,
     private val localItemDataSource: LocalItemDataSource,
     private val remoteItemDataSource: RemoteItemDataSource,
+    private val keyPacketRepository: KeyPacketRepository,
     private val openItem: OpenItem,
 ) : ItemRepository {
     override suspend fun createItem(
@@ -49,6 +53,27 @@ class ItemRepositoryImpl @Inject constructor(
         val (vaultKey, itemKey) = vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
         val body = createItem.createItem(vaultKey, itemKey, userAddress, contents)
         val itemResponse = remoteItemDataSource.createItem(userId, share.id, body)
+
+        val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
+        val entity = itemResponseToEntity(userAddress, itemResponse, share, userPublicKeys, listOf(vaultKey), listOf(itemKey))
+        localItemDataSource.upsertItem(entity)
+        return entityToDomain(entity)
+    }
+
+    override suspend fun updateItem(
+        userId: UserId,
+        share: Share,
+        item: Item,
+        contents: ItemContents
+    ): Item {
+        val keyPacket = keyPacketRepository.getLatestKeyPacketForItem(userId, share.id, item.id)
+
+        val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
+        val vaultKey = vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
+        val itemKey = vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
+
+        val body = updateItem.updateItem(vaultKey, itemKey, keyPacket, userAddress, contents, item.revision)
+        val itemResponse = remoteItemDataSource.updateItem(userId, share.id, item.id, body)
 
         val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
         val entity = itemResponseToEntity(userAddress, itemResponse, share, userPublicKeys, listOf(vaultKey), listOf(itemKey))
@@ -154,6 +179,7 @@ class ItemRepositoryImpl @Inject constructor(
     private fun entityToDomain(entity: ItemEntity): Item =
         Item(
             id = ItemId(entity.id),
+            revision = entity.revision,
             shareId = ShareId(entity.shareId),
             itemType = entity.itemType(cryptoContext),
             title = entity.encryptedTitle,

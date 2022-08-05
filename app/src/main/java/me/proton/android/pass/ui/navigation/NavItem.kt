@@ -22,11 +22,11 @@ sealed class NavItem(
     object CreateLogin : NavItem("createLogin", listOf(NavArg.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
     }
-    object ViewItem : NavItem("viewItem", listOf(NavArg.ShareId, NavArg.ItemId)) {
+    object EditLogin : NavItem("editLogin", listOf(NavArg.ShareId, NavArg.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
     }
-    object EditLogin : NavItem("editLogin", listOf(NavArg.ItemId)) {
-        fun createNavRoute(itemId: String?) = "$baseRoute/$itemId"
+    object ViewItem : NavItem("viewItem", listOf(NavArg.ShareId, NavArg.ItemId)) {
+        fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
     }
 }
 

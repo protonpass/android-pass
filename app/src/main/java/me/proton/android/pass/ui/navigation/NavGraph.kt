@@ -1,6 +1,8 @@
 package me.proton.android.pass.ui.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -30,7 +32,11 @@ fun AppNavGraph(
     val navController = rememberAnimatedNavController(keyStoreCrypto)
     AnimatedNavHost(
         navController = navController,
-        startDestination = NavItem.Launcher.route
+        startDestination = NavItem.Launcher.route,
+        enterTransition = { slideInHorizontally(initialOffsetX = { 1000 })},
+        exitTransition = { slideOutHorizontally(targetOffsetX  = { -1000 })},
+        popEnterTransition = { slideInHorizontally(initialOffsetX  = { -1000 }) },
+        popExitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) },
     ) {
         val onUpClick: () -> Unit = { navController.popBackStack() }
         composable(NavItem.Launcher) {

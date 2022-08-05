@@ -3,31 +3,24 @@ package me.proton.core.pass.data.api
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.pass.data.crypto.CreateItemRequest
 import me.proton.core.pass.data.crypto.CreateVaultRequest
-import me.proton.core.pass.data.responses.CreateItemResponse
-import me.proton.core.pass.data.responses.CreateVaultResponse
-import me.proton.core.pass.data.responses.GetItemsResponse
-import me.proton.core.pass.data.responses.GetShareResponse
-import me.proton.core.pass.data.responses.GetSharesResponse
-import me.proton.core.pass.data.responses.GetVaultKeysResponse
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
-import retrofit2.http.Query
+import me.proton.core.pass.data.crypto.UpdateItemRequest
+import me.proton.core.pass.data.responses.*
+import retrofit2.http.*
+
+internal const val PREFIX = "pass/v1"
 
 interface PasswordManagerApi : BaseRetrofitApi {
-    @POST("pass/v1/vault")
+    @POST("$PREFIX/vault")
     suspend fun createVault(@Body request: CreateVaultRequest): CreateVaultResponse
 
-    @GET("pass/v1/share")
+    @GET("$PREFIX/share")
     suspend fun getShares(): GetSharesResponse
 
-    @GET("pass/v1/share/{shareId}")
+    @GET("$PREFIX/share/{shareId}")
     suspend fun getShare(@Path("shareId") shareId: String): GetShareResponse
 
     // Vault Keys
-    @GET("pass/v1/share/{shareId}/key/vault")
+    @GET("$PREFIX/share/{shareId}/key/vault")
     suspend fun getVaultKeys(
         @Path("shareId") shareId: String,
         @Query("Page") page: Int,
@@ -35,19 +28,30 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): GetVaultKeysResponse
 
     // Item
-    @GET("pass/v1/share/{shareId}/item")
+    @GET("$PREFIX/share/{shareId}/item")
     suspend fun getItems(
         @Path("shareId") shareId: String,
         @Query("Page") page: Int,
         @Query("PageSize") pageSize: Int
     ): GetItemsResponse
 
-    @POST("pass/v1/share/{shareId}/item")
+    @POST("$PREFIX/share/{shareId}/item")
     suspend fun createItem(
         @Path("shareId") shareId: String,
         @Body request: CreateItemRequest
     ): CreateItemResponse
 
-    @DELETE("pass/v1/share/{shareId}/item/{itemId}")
+    @PUT("$PREFIX/share/{shareId}/item/{itemId}")
+    suspend fun updateItem(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Body request: UpdateItemRequest
+    ): CreateItemResponse
+
+    @DELETE("$PREFIX/share/{shareId}/item/{itemId}")
     suspend fun deleteItem(@Path("shareId") shareId: String, @Path("itemId") itemId: String)
+
+    // KeyPacket
+    @GET("$PREFIX/share/{shareId}/item/{itemId}/keypacket")
+    suspend fun getLatestKeyPacket(@Path("shareId") shareId: String, @Path("itemId") itemId: String): GetKeyPacketResponse
 }

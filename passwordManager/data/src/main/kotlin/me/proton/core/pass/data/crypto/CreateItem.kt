@@ -4,7 +4,6 @@ import javax.inject.Inject
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.dataPacket
 import me.proton.core.crypto.common.pgp.keyPacket
@@ -12,13 +11,13 @@ import me.proton.core.key.domain.decryptSessionKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.signData
 import me.proton.core.key.domain.useKeys
+import me.proton.core.pass.data.extensions.serializeToProto
 import me.proton.core.pass.domain.ItemContents
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.key.publicKey
 import me.proton.core.pass.domain.key.usePrivateKey
 import me.proton.core.user.domain.entity.UserAddress
-import proton_pass_item_v1.ItemV1
 
 @Serializable
 data class CreateItemRequest(
@@ -41,8 +40,9 @@ data class CreateItemRequest(
 )
 
 class CreateItem @Inject constructor(
-    val cryptoContext: CryptoContext
-) {
+    private val cryptoContext: CryptoContext
+) : BaseCryptoOperation(cryptoContext) {
+
     companion object {
         const val CONTENT_FORMAT_VERSION = 1
     }
@@ -53,7 +53,7 @@ class CreateItem @Inject constructor(
         userAddress: UserAddress,
         itemContents: ItemContents
     ): CreateItemRequest {
-        val serializedItem = serializeItem(itemContents)
+        val serializedItem = itemContents.serializeToProto()
         val vaultKeyPublicKey = vaultKey.publicKey(cryptoContext)
 
         val (encryptedContents, vaultKeyPacket) = encryptContent(serializedItem, vaultKeyPublicKey)
@@ -83,9 +83,6 @@ class CreateItem @Inject constructor(
         )
     }
 
-    private fun b64(data: ByteArray) = cryptoContext.pgpCrypto.getBase64Encoded(data)
-    private fun unarmor(data: Armored) = cryptoContext.pgpCrypto.getUnarmored(data)
-
     private fun encryptContent(
         serializedItem: ByteArray,
         vaultPublicKey: PublicKey
@@ -93,38 +90,5 @@ class CreateItem @Inject constructor(
         val encrypted = cryptoContext.pgpCrypto.encryptData(serializedItem, vaultPublicKey.key)
         val packets = cryptoContext.pgpCrypto.getEncryptedPackets(encrypted)
         return Pair(packets.dataPacket(), packets.keyPacket())
-    }
-
-    private fun serializeItem(contents: ItemContents): ByteArray {
-        val builder = ItemV1.Item.newBuilder()
-            .setMetadata(
-                ItemV1.Metadata.newBuilder()
-                    .setName(contents.title)
-                    .setNote(contents.note)
-                    .build()
-            )
-        val contentBuilder = ItemV1.Content.newBuilder()
-        val content = when (contents) {
-            is ItemContents.Login -> {
-                contentBuilder.setLogin(
-                    ItemV1.ItemLogin.newBuilder()
-                        .setUsername(contents.username)
-                        .setPassword(contents.password)
-                        .addAllUrls(contents.urls)
-                        .build()
-                )
-            }
-            is ItemContents.Note -> contentBuilder.setNote(
-                ItemV1.ItemNote.newBuilder().build()
-            )
-            is ItemContents.Alias -> contentBuilder.setAlias(
-                ItemV1.ItemAlias.newBuilder().build()
-            )
-        }.build()
-
-        return builder
-            .setContent(content)
-            .build()
-            .toByteArray()
     }
 }

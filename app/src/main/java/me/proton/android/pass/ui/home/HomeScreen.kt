@@ -33,11 +33,12 @@ import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecy
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawer
 
-internal typealias OnItemClick = (Pair<ShareId, ItemId>) -> Unit
+internal typealias OnItemClick = (ShareId, ItemId) -> Unit
 
 interface HomeScreenNavigation {
     val toCreateItem: (ShareId) -> Unit
-    val toItemDetail: (Pair<ShareId, ItemId>) -> Unit
+    val toItemDetail: (ShareId, ItemId) -> Unit
+    val toEditItem: (ShareId, ItemId) -> Unit
 }
 
 @ExperimentalMaterialApi
@@ -119,10 +120,9 @@ fun HomeScreen(
                 Home(
                     items = viewState.items,
                     modifier = Modifier.padding(contentPadding),
-                    onItemClick = { navigation.toItemDetail(it) },
-                    onDeleteItemClicked = { item ->
-                        itemToDelete.value = item
-                    }
+                    onItemClick = { shareId, itemId -> navigation.toItemDetail(shareId, itemId) },
+                    onEditItemClick = { shareId, itemId -> navigation.toEditItem(shareId, itemId) },
+                    onDeleteItemClicked = { item -> itemToDelete.value = item }
                 )
                 ConfirmItemDeletionDialog(
                     itemState = itemToDelete,
@@ -240,6 +240,7 @@ internal fun Home(
     items: List<ItemUiModel>,
     modifier: Modifier = Modifier,
     onItemClick: OnItemClick,
+    onEditItemClick: OnItemClick,
     onDeleteItemClicked: (ItemUiModel) -> Unit,
 ) {
     if (items.isNotEmpty()) {
@@ -247,6 +248,7 @@ internal fun Home(
             items = items,
             modifier = modifier,
             onItemClick = onItemClick,
+            onEditItemClick = onEditItemClick,
             onDeleteItemClicked = onDeleteItemClicked
         )
     } else {

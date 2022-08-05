@@ -35,6 +35,7 @@
 
     <!-- Create Login -->
     <string name="title_create_login">Create login</string>
+    <string name="title_edit_login">Edit login</string>
     <string name="field_title_title">Title</string>
     <string name="field_title_hint">Login name</string>
     <string name="field_username_title">Username</string>

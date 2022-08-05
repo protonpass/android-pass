@@ -33,9 +33,9 @@ fun AppNavGraph(
     AnimatedNavHost(
         navController = navController,
         startDestination = NavItem.Launcher.route,
-        enterTransition = { slideInHorizontally(initialOffsetX = { 1000 })},
-        exitTransition = { slideOutHorizontally(targetOffsetX  = { -1000 })},
-        popEnterTransition = { slideInHorizontally(initialOffsetX  = { -1000 }) },
+        enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }) },
+        exitTransition = { slideOutHorizontally(targetOffsetX = { -1000 }) },
+        popEnterTransition = { slideInHorizontally(initialOffsetX = { -1000 }) },
         popExitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) },
     ) {
         val onUpClick: () -> Unit = { navController.popBackStack() }

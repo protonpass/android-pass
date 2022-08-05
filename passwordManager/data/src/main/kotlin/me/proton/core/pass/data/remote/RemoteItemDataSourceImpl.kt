@@ -5,6 +5,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.pass.data.api.PasswordManagerApi
 import me.proton.core.pass.data.crypto.CreateItemRequest
+import me.proton.core.pass.data.crypto.UpdateItemRequest
 import me.proton.core.pass.data.responses.ItemRevision
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
@@ -16,6 +17,16 @@ class RemoteItemDataSourceImpl @Inject constructor(
     override suspend fun createItem(userId: UserId, shareId: ShareId, body: CreateItemRequest): ItemRevision =
         api.get<PasswordManagerApi>(userId).invoke {
             createItem(shareId.id, body)
+        }.valueOrThrow.item
+
+    override suspend fun updateItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        body: UpdateItemRequest
+    ): ItemRevision =
+        api.get<PasswordManagerApi>(userId).invoke {
+            updateItem(shareId.id, itemId.id, body)
         }.valueOrThrow.item
 
     override suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision> =

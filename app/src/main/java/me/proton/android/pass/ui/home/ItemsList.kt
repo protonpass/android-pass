@@ -27,11 +27,17 @@ fun ItemsList(
     items: List<ItemUiModel>,
     modifier: Modifier = Modifier,
     onItemClick: OnItemClick,
+    onEditItemClick: OnItemClick,
     onDeleteItemClicked: (ItemUiModel) -> Unit,
 ) {
     LazyColumn(modifier = modifier) {
         items(items) { item ->
-            ItemRow(item = item, onItemClicked = onItemClick, onDeleteClicked = onDeleteItemClicked)
+            ItemRow(
+                item = item,
+                onItemClicked = onItemClick,
+                onEditClicked = onEditItemClick,
+                onDeleteClicked = onDeleteItemClicked
+            )
         }
     }
 }
@@ -40,11 +46,30 @@ fun ItemsList(
 internal fun ItemRow(
     item: ItemUiModel,
     onItemClicked: OnItemClick,
+    onEditClicked: OnItemClick,
     onDeleteClicked: (ItemUiModel) -> Unit
 ) {
     when (val itemType = item.itemType) {
-        is ItemType.Login -> LoginRow(item, itemType, onItemClicked, onDeleteClicked)
-        is ItemType.Note -> NoteRow(item, itemType, onItemClicked, onDeleteClicked)
+        is ItemType.Login -> LoginRow(
+            item = item,
+            itemType = itemType,
+            onItemClicked = onItemClicked,
+            onEditClicked = onEditClicked,
+            onDeleteClicked = onDeleteClicked
+        )
+        is ItemType.Note -> NoteRow(
+            item = item,
+            itemType = itemType,
+            onItemClicked = onItemClicked,
+            onEditClicked = onEditClicked,
+            onDeleteClicked = onDeleteClicked
+        )
+        is ItemType.Alias -> AliasRow(
+            item = item,
+            onItemClicked = onItemClicked,
+            onEditClicked = onEditClicked,
+            onDeleteClicked = onDeleteClicked
+        )
     }
 }
 
@@ -53,16 +78,16 @@ internal fun LoginRow(
     item: ItemUiModel,
     itemType: ItemType.Login,
     onItemClicked: OnItemClick,
+    onEditClicked: OnItemClick,
     onDeleteClicked: (ItemUiModel) -> Unit
 ) {
     ItemRow(
         icon = R.drawable.ic_proton_key,
         title = item.name,
         subtitle = itemType.username,
-        onItemClicked = { onItemClicked(Pair(item.shareId, item.id)) },
-        onDeleteClicked = {
-            onDeleteClicked(item)
-        }
+        onItemClicked = { onItemClicked(item.shareId, item.id) },
+        onEditClicked = { onEditClicked(item.shareId, item.id) },
+        onDeleteClicked = { onDeleteClicked(item) }
     )
 }
 
@@ -71,16 +96,33 @@ internal fun NoteRow(
     item: ItemUiModel,
     itemType: ItemType.Note,
     onItemClicked: OnItemClick,
+    onEditClicked: OnItemClick,
     onDeleteClicked: (ItemUiModel) -> Unit
 ) {
     ItemRow(
         icon = R.drawable.ic_proton_note,
         title = item.name,
         subtitle = itemType.text.take(10),
-        onItemClicked = { onItemClicked(Pair(item.shareId, item.id)) },
-        onDeleteClicked = {
-            onDeleteClicked(item)
-        }
+        onItemClicked = { onItemClicked(item.shareId, item.id) },
+        onEditClicked = { onEditClicked(item.shareId, item.id) },
+        onDeleteClicked = { onDeleteClicked(item) }
+    )
+}
+
+@Composable
+internal fun AliasRow(
+    item: ItemUiModel,
+    onItemClicked: OnItemClick,
+    onEditClicked: OnItemClick,
+    onDeleteClicked: (ItemUiModel) -> Unit
+) {
+    ItemRow(
+        icon = R.drawable.ic_proton_alias,
+        title = item.name,
+        subtitle = "", // TODO: Extract alias
+        onItemClicked = { onItemClicked(item.shareId, item.id) },
+        onEditClicked = { onEditClicked(item.shareId, item.id) },
+        onDeleteClicked = { onDeleteClicked(item) }
     )
 }
 
@@ -90,6 +132,7 @@ internal fun ItemRow(
     title: String,
     subtitle: String,
     onItemClicked: () -> Unit,
+    onEditClicked: () -> Unit,
     onDeleteClicked: () -> Unit,
 ) {
     var expanded by remember { mutableStateOf(false) }
@@ -133,7 +176,7 @@ internal fun ItemRow(
                     properties = PopupProperties()
                 ) {
                     DropdownMenuItem(onClick = {
-                        /* TODO: onEditClicked */
+                        onEditClicked()
                         expanded = false
                     }) {
                         Text(text = stringResource(id = R.string.action_edit))

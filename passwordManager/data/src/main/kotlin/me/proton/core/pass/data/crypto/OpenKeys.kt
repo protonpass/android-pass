@@ -12,17 +12,14 @@ import me.proton.core.key.domain.getArmored
 import me.proton.core.key.domain.getBase64Decoded
 import me.proton.core.key.domain.useKeys
 import me.proton.core.pass.data.remote.VaultItemKeyResponseList
-import me.proton.core.pass.domain.key.ItemKey
-import me.proton.core.pass.domain.key.SigningKey
-import me.proton.core.pass.domain.key.VaultKey
-import me.proton.core.pass.domain.key.publicKey
-import me.proton.core.pass.domain.key.usePrivateKey
+import me.proton.core.pass.domain.key.*
 import me.proton.core.pass.domain.repositories.VaultItemKeyList
 import me.proton.core.user.domain.entity.UserAddress
 
 class OpenKeys @Inject constructor(
     private val cryptoContext: CryptoContext
-) {
+) : BaseCryptoOperation(cryptoContext) {
+
     fun openKeys(
         keys: VaultItemKeyResponseList,
         signingKey: SigningKey,
@@ -83,7 +80,7 @@ class OpenKeys @Inject constructor(
     private fun validateKey(signingKey: PublicKey, key: String, keySignature: String): Boolean {
         val fingerprint = Utils.getPrimaryV5Fingerprint(cryptoContext, key)
         val armoredSignature = cryptoContext.pgpCrypto.getArmored(
-            cryptoContext.pgpCrypto.getBase64Decoded(keySignature),
+            b64Decode(keySignature),
             PGPHeader.Signature
         )
         return cryptoContext.pgpCrypto.verifyData(

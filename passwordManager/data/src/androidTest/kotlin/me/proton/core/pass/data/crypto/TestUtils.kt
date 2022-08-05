@@ -2,10 +2,15 @@ package me.proton.core.pass.data.crypto
 
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.pass.domain.key.ItemKey
+import me.proton.core.pass.domain.key.VaultKey
+import me.proton.core.test.android.instrumented.utils.StringUtils
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
@@ -28,6 +33,47 @@ object TestUtils {
             keys = listOf(createUserAddressKey(cryptoContext, addressId, key, passphrase)),
             signedKeyList = null,
             order = 1
+        )
+    }
+
+    fun createVaultKey(cryptoContext: CryptoContext): VaultKey {
+        val passphrase = StringUtils.randomString()
+        val encodedPassphrase = passphrase.encodeToByteArray()
+        val key = cryptoContext.pgpCrypto.generateNewPrivateKey("TestVault", "test@vault", encodedPassphrase)
+        val encryptedPassphrase = cryptoContext.keyStoreCrypto.encrypt(PlainByteArray(encodedPassphrase))
+
+        return VaultKey(
+            rotationId = StringUtils.randomString(),
+            rotation = 1,
+            key = ArmoredKey.Private(
+                armored = key,
+                key = PrivateKey(
+                    key = key,
+                    isPrimary = true,
+                    passphrase = encryptedPassphrase
+                )
+            ),
+            encryptedKeyPassphrase = encryptedPassphrase
+        )
+    }
+
+    fun createItemKeyForVaultKey(cryptoContext: CryptoContext, vaultKey: VaultKey): ItemKey {
+        val passphrase = StringUtils.randomString()
+        val encodedPassphrase = passphrase.encodeToByteArray()
+        val key = cryptoContext.pgpCrypto.generateNewPrivateKey("TestItem", "test@item", encodedPassphrase)
+        val encryptedPassphrase = cryptoContext.keyStoreCrypto.encrypt(PlainByteArray(encodedPassphrase))
+
+        return ItemKey(
+            rotationId = vaultKey.rotationId,
+            key = ArmoredKey.Private(
+                armored = key,
+                key = PrivateKey(
+                    key = key,
+                    isPrimary = true,
+                    passphrase = encryptedPassphrase
+                )
+            ),
+            encryptedKeyPassphrase = encryptedPassphrase
         )
     }
 

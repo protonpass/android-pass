@@ -1,15 +1,19 @@
 package me.proton.android.pass.ui.create.login
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -17,13 +21,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.android.pass.R
-import me.proton.android.pass.ui.shared.CrossBackIcon
-import me.proton.android.pass.ui.shared.ProtonFormInput
-import me.proton.android.pass.ui.shared.TopBarTitleView
+import me.proton.android.pass.ui.shared.*
 import me.proton.core.compose.component.DeferredCircularProgressIndicator
 import me.proton.core.compose.component.ProtonOutlinedButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
@@ -35,6 +38,12 @@ import me.proton.core.pass.presentation.generatePassword
 
 internal typealias OnTextChange = (String) -> Unit
 
+internal interface OnWebsiteChange {
+    val onWebsiteValueChanged: (String, Int) -> Unit
+    val onAddWebsite: () -> Unit
+    val onRemoveWebsite: (Int) -> Unit
+}
+
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
@@ -45,6 +54,11 @@ fun CreateLoginView(
     viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
     val viewState by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(viewModel.initialViewState)
+    val onWebsiteChange = object : OnWebsiteChange {
+        override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int -> viewModel.onWebsiteChange(value, idx) }
+        override val onAddWebsite: () -> Unit = { viewModel.onAddWebsite() }
+        override val onRemoveWebsite: (Int) -> Unit = { idx: Int -> viewModel.onRemoveWebsite(idx) }
+    }
     LoginView(
         viewState = viewState,
         topBarTitle = R.string.title_create_login,
@@ -55,7 +69,7 @@ fun CreateLoginView(
         onTitleChange = { viewModel.onTitleChange(it) },
         onUsernameChange = { viewModel.onUsernameChange(it) },
         onPasswordChange = { viewModel.onPasswordChange(it) },
-        onWebsiteChange = { viewModel.onWebsiteChange(it) },
+        onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) }
     )
 }
@@ -73,6 +87,11 @@ fun UpdateLoginView(
     viewModel.setItem(shareId, itemId)
 
     val viewState by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(viewModel.initialViewState)
+    val onWebsiteChange = object : OnWebsiteChange {
+        override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int -> viewModel.onWebsiteChange(value, idx) }
+        override val onAddWebsite: () -> Unit = { viewModel.onAddWebsite() }
+        override val onRemoveWebsite: (Int) -> Unit = { idx: Int -> viewModel.onRemoveWebsite(idx) }
+    }
     LoginView(
         viewState = viewState,
         topBarTitle = R.string.title_edit_login,
@@ -83,7 +102,7 @@ fun UpdateLoginView(
         onTitleChange = { viewModel.onTitleChange(it) },
         onUsernameChange = { viewModel.onUsernameChange(it) },
         onPasswordChange = { viewModel.onPasswordChange(it) },
-        onWebsiteChange = { viewModel.onWebsiteChange(it) },
+        onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) }
     )
 }
@@ -100,7 +119,7 @@ private fun LoginView(
     onTitleChange: OnTextChange,
     onUsernameChange: OnTextChange,
     onPasswordChange: OnTextChange,
-    onWebsiteChange: OnTextChange,
+    onWebsiteChange: OnWebsiteChange,
     onNoteChange: OnTextChange
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -138,7 +157,11 @@ private fun LoginView(
                 onWebsiteChange = onWebsiteChange,
                 onNoteChange = onNoteChange,
             )
-            is BaseLoginViewModel.State.Loading -> DeferredCircularProgressIndicator(Modifier.padding(padding).fillMaxSize())
+            is BaseLoginViewModel.State.Loading -> DeferredCircularProgressIndicator(
+                Modifier
+                    .padding(padding)
+                    .fillMaxSize()
+            )
             is BaseLoginViewModel.State.Error -> Text(text = "something went boom")
             is BaseLoginViewModel.State.Success -> onSuccess(state.itemId)
         }
@@ -152,7 +175,7 @@ private fun CreateLoginItemScreen(
     onTitleChange: OnTextChange,
     onUsernameChange: OnTextChange,
     onPasswordChange: OnTextChange,
-    onWebsiteChange: OnTextChange,
+    onWebsiteChange: OnWebsiteChange,
     onNoteChange: OnTextChange
 ) {
     Column(
@@ -167,8 +190,66 @@ private fun CreateLoginItemScreen(
         PasswordInput(value = state.password, onChange = onPasswordChange)
         Spacer(modifier = Modifier.height(20.dp))
         GeneratePasswordButton(onPasswordGenerated = { onPasswordChange(it) })
-        WebsiteAddressInput(value = state.websiteAddress, onChange = onWebsiteChange)
+        WebsitesSection(websites = state.websiteAddresses, onWebsitesChange = onWebsiteChange)
         NoteInput(value = state.note, onChange = onNoteChange)
+    }
+}
+
+@Composable
+private fun WebsitesSection(
+    websites: List<String>,
+    onWebsitesChange: OnWebsiteChange
+) {
+
+    ProtonTextTitle(R.string.field_website_address_title, modifier = Modifier.padding(vertical = 8.dp))
+
+    // Only show the remove button if there is more than 1 website
+    val shouldShowRemoveButton = websites.size > 1
+    Column(
+        modifier = Modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(ProtonTheme.colors.backgroundSecondary)
+    ) {
+        websites.forEachIndexed { idx, value ->
+            ProtonTextField(
+                value = value,
+                onChange = { onWebsitesChange.onWebsiteValueChanged(it, idx) },
+                placeholder = R.string.field_website_address_hint,
+                trailingIcon = {
+                    if (shouldShowRemoveButton) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_proton_minus_circle),
+                            contentDescription = null,
+                            tint = ProtonTheme.colors.iconNorm,
+                            modifier = Modifier.clickable { onWebsitesChange.onRemoveWebsite(idx) }
+                        )
+                    }
+                },
+            )
+        }
+
+        TextField(
+            readOnly = true,
+            enabled = false,
+            value = stringResource(R.string.field_website_add_another),
+            onValueChange = {},
+            trailingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.ic_proton_plus),
+                    contentDescription = null,
+                    tint = ProtonTheme.colors.iconNorm,
+                )
+            },
+            modifier = Modifier.fillMaxWidth().clickable { onWebsitesChange.onAddWebsite() },
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = ProtonTheme.colors.brandNorm,
+                disabledTextColor = ProtonTheme.colors.brandNorm,
+                backgroundColor = ProtonTheme.colors.backgroundSecondary,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+                disabledIndicatorColor = Color.Transparent,
+            )
+        )
     }
 }
 
@@ -257,17 +338,6 @@ private fun GeneratePasswordButton(
 }
 
 @Composable
-private fun WebsiteAddressInput(value: String, onChange: (String) -> Unit) {
-    ProtonFormInput(
-        title = R.string.field_website_address_title,
-        placeholder = R.string.field_website_address_hint,
-        value = value,
-        onChange = onChange,
-        modifier = Modifier.padding(top = 8.dp)
-    )
-}
-
-@Composable
 private fun NoteInput(value: String, onChange: (String) -> Unit) {
     ProtonFormInput(
         title = R.string.field_note_title,
@@ -277,5 +347,21 @@ private fun NoteInput(value: String, onChange: (String) -> Unit) {
         modifier = Modifier.padding(top = 28.dp),
         singleLine = false,
         moveToNextOnEnter = false,
+    )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun Preview_WebsitesSection() {
+    WebsitesSection(
+        websites = listOf("A", "B"),
+        onWebsitesChange = object : OnWebsiteChange {
+            override val onWebsiteValueChanged: (String, Int) -> Unit
+                get() = TODO("Not yet implemented")
+            override val onAddWebsite: () -> Unit
+                get() = TODO("Not yet implemented")
+            override val onRemoveWebsite: (Int) -> Unit
+                get() = TODO("Not yet implemented")
+        }
     )
 }

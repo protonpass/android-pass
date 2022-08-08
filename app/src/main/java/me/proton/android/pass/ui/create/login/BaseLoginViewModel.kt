@@ -15,7 +15,7 @@ abstract class BaseLoginViewModel : ViewModel() {
             title = "",
             username = "",
             password = "",
-            websiteAddress = "",
+            websiteAddresses = listOf(""),
             note = ""
         )
     )
@@ -36,9 +36,26 @@ abstract class BaseLoginViewModel : ViewModel() {
             viewState.value.copy(modelState = viewState.value.modelState.copy(password = value))
     }
 
-    fun onWebsiteChange(value: String) = viewModelScope.launch {
+    fun onWebsiteChange(value: String, index: Int) = viewModelScope.launch {
+        val addresses = viewState.value.modelState.websiteAddresses.toMutableList()
+        addresses[index] = value
+
+        viewState.value = viewState.value.copy(modelState = viewState.value.modelState.copy(websiteAddresses = addresses))
+    }
+
+    fun onAddWebsite() = viewModelScope.launch {
+        val addresses = viewState.value.modelState.websiteAddresses.toMutableList()
+        addresses.add("")
+
         viewState.value =
-            viewState.value.copy(modelState = viewState.value.modelState.copy(websiteAddress = value))
+            viewState.value.copy(modelState = viewState.value.modelState.copy(websiteAddresses = addresses))
+    }
+
+    fun onRemoveWebsite(index: Int) = viewModelScope.launch {
+        val addresses = viewState.value.modelState.websiteAddresses.toMutableList()
+        addresses.removeAt(index)
+
+        viewState.value = viewState.value.copy(modelState = viewState.value.modelState.copy(websiteAddresses = addresses))
     }
 
     fun onNoteChange(value: String) = viewModelScope.launch {
@@ -50,17 +67,19 @@ abstract class BaseLoginViewModel : ViewModel() {
         val title: String,
         val username: String,
         val password: String,
-        val websiteAddress: String,
+        val websiteAddresses: List<String>,
         val note: String
     ) {
-        fun toItemContents(): ItemContents =
-            ItemContents.Login(
+        fun toItemContents(): ItemContents {
+            val addresses = websiteAddresses.filter { it.isNotEmpty() }
+            return ItemContents.Login(
                 title = title,
                 note = note,
                 username = username,
                 password = password,
-                urls = listOf(websiteAddress)
+                urls = addresses
             )
+        }
     }
 
     data class ViewState(

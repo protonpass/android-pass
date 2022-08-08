@@ -33,14 +33,19 @@ class UpdateLoginViewModel @Inject constructor(
                 val itemContents = retrievedItem.itemType as ItemType.Login
                 _item = retrievedItem
 
-                val website = itemContents.websites.firstOrNull() ?: ""
+                val websites = if (itemContents.websites.isEmpty()) {
+                    listOf("")
+                } else {
+                    itemContents.websites
+                }
+
                 viewState.value = ViewState(
                     state = State.Idle,
                     modelState = ModelState(
                         title = retrievedItem.title.decrypt(cryptoContext.keyStoreCrypto),
                         username = itemContents.username,
                         password = itemContents.password.decrypt(cryptoContext.keyStoreCrypto),
-                        websiteAddress = website,
+                        websiteAddresses = websites,
                         note = retrievedItem.note.decrypt(cryptoContext.keyStoreCrypto)
                     )
                 )
@@ -49,10 +54,9 @@ class UpdateLoginViewModel @Inject constructor(
     }
 
     fun updateItem(shareId: ShareId) = viewModelScope.launch {
+        requireNotNull(_item)
         viewState.value = viewState.value.copy(state = State.Loading)
         accountManager.getPrimaryUserId().first { userId -> userId != null }?.let { userId ->
-            requireNotNull(_item)
-
             val share = getShare.invoke(userId, shareId)
             requireNotNull(share)
             val itemContents = viewState.value.modelState.toItemContents()

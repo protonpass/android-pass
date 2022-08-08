@@ -21,7 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -347,21 +346,5 @@ private fun NoteInput(value: String, onChange: (String) -> Unit) {
         modifier = Modifier.padding(top = 28.dp),
         singleLine = false,
         moveToNextOnEnter = false,
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun Preview_WebsitesSection() {
-    WebsitesSection(
-        websites = listOf("A", "B"),
-        onWebsitesChange = object : OnWebsiteChange {
-            override val onWebsiteValueChanged: (String, Int) -> Unit
-                get() = TODO("Not yet implemented")
-            override val onAddWebsite: () -> Unit
-                get() = TODO("Not yet implemented")
-            override val onRemoveWebsite: (Int) -> Unit
-                get() = TODO("Not yet implemented")
-        }
     )
 }

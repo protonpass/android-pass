@@ -12,6 +12,8 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import me.proton.android.pass.ui.create.login.CreateLoginView
 import me.proton.android.pass.ui.create.login.UpdateLoginView
+import me.proton.android.pass.ui.create.note.CreateNoteView
+import me.proton.android.pass.ui.create.note.UpdateNoteView
 import me.proton.android.pass.ui.detail.ItemDetailScreen
 import me.proton.android.pass.ui.home.HomeScreenNavigation
 import me.proton.android.pass.ui.launcher.LauncherScreen
@@ -44,14 +46,26 @@ fun AppNavGraph(
                 onDrawerStateChanged = onDrawerStateChanged,
                 viewModel = launcherViewModel,
                 homeScreenNavigation = object : HomeScreenNavigation {
-                    override val toCreateItem = { shareId: ShareId ->
+                    override val toCreateLogin = { shareId: ShareId ->
                         navController.navigate(NavItem.CreateLogin.createNavRoute(shareId))
+                    }
+                    override val toEditLogin = { shareId: ShareId, itemId: ItemId ->
+                        navController.navigate(NavItem.EditLogin.createNavRoute(shareId, itemId))
                     }
                     override val toItemDetail = { shareId: ShareId, itemId: ItemId ->
                         navController.navigate(NavItem.ViewItem.createNavRoute(shareId, itemId))
                     }
-                    override val toEditItem = { shareId: ShareId, itemId: ItemId ->
-                        navController.navigate(NavItem.EditLogin.createNavRoute(shareId, itemId))
+                    override val toCreateNote = { shareId: ShareId ->
+                        navController.navigate(NavItem.CreateNote.createNavRoute(shareId))
+                    }
+                    override val toEditNote = { shareId: ShareId, itemId: ItemId ->
+                        navController.navigate(NavItem.EditNote.createNavRoute(shareId, itemId))
+                    }
+                    override val toCreateAlias = { shareId: ShareId ->
+                        /* TODO */
+                    }
+                    override val toEditAlias = { shareId: ShareId, itemId: ItemId ->
+                        /* TODO */
                     }
                 }
             )
@@ -73,6 +87,32 @@ fun AppNavGraph(
             val shareId = ShareId(it.findArg(NavArg.ShareId))
             val itemId = ItemId(it.findArg(NavArg.ItemId))
             UpdateLoginView(
+                onUpClick = onUpClick,
+                shareId = shareId,
+                itemId = itemId,
+                onSuccess = {
+                    navController.navigate(NavItem.ViewItem.createNavRoute(shareId, itemId)) {
+                        popUpTo(NavItem.Launcher.route)
+                    }
+                }
+            )
+        }
+        composable(NavItem.CreateNote) {
+            val shareId = ShareId(it.findArg(NavArg.ShareId))
+            CreateNoteView(
+                onUpClick = onUpClick,
+                shareId = shareId,
+                onSuccess = { itemId ->
+                    navController.navigate(NavItem.ViewItem.createNavRoute(shareId, itemId)) {
+                        popUpTo(NavItem.Launcher.route)
+                    }
+                }
+            )
+        }
+        composable(NavItem.EditNote) {
+            val shareId = ShareId(it.findArg(NavArg.ShareId))
+            val itemId = ItemId(it.findArg(NavArg.ItemId))
+            UpdateNoteView(
                 onUpClick = onUpClick,
                 shareId = shareId,
                 itemId = itemId,

@@ -62,14 +62,16 @@ fun ProtonFormInput(
 
 @Composable
 fun ProtonTextTitle(
-    @StringRes title: Int
+    @StringRes title: Int,
+    modifier: Modifier = Modifier,
 ) {
     Text(
         text = stringResource(title),
         color = ProtonTheme.colors.textNorm,
         style = ProtonTheme.typography.caption,
         fontWeight = FontWeight.W500,
-        fontSize = 12.sp
+        fontSize = 12.sp,
+        modifier = modifier,
     )
 }
 
@@ -84,7 +86,11 @@ fun ProtonTextField(
     moveToNextOnEnter: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
-    val maxLines = if (singleLine) { 1 } else { Integer.MAX_VALUE }
+    val maxLines = if (singleLine) {
+        1
+    } else {
+        Integer.MAX_VALUE
+    }
     val focusManager = LocalFocusManager.current
     val goToNextField = (
         {
@@ -110,7 +116,11 @@ fun ProtonTextField(
         shape = RoundedCornerShape(8.dp),
         singleLine = singleLine,
         maxLines = maxLines,
-        keyboardActions = KeyboardActions(onNext = { goToNextField() }, onDone = { goToNextField() }, onSend = { goToNextField() }),
+        keyboardActions = KeyboardActions(
+            onNext = { goToNextField() },
+            onDone = { goToNextField() },
+            onSend = { goToNextField() }
+        ),
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = ProtonTheme.colors.backgroundSecondary,
             focusedIndicatorColor = Color.Transparent,

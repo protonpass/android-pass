@@ -27,7 +27,7 @@ fun ItemsList(
     items: List<ItemUiModel>,
     modifier: Modifier = Modifier,
     onItemClick: OnItemClick,
-    onEditItemClick: OnItemClick,
+    navigation: HomeScreenNavigation,
     onDeleteItemClicked: (ItemUiModel) -> Unit,
 ) {
     LazyColumn(modifier = modifier) {
@@ -35,7 +35,7 @@ fun ItemsList(
             ItemRow(
                 item = item,
                 onItemClicked = onItemClick,
-                onEditClicked = onEditItemClick,
+                navigation = navigation,
                 onDeleteClicked = onDeleteItemClicked
             )
         }
@@ -45,29 +45,29 @@ fun ItemsList(
 @Composable
 internal fun ItemRow(
     item: ItemUiModel,
+    navigation: HomeScreenNavigation,
     onItemClicked: OnItemClick,
-    onEditClicked: OnItemClick,
     onDeleteClicked: (ItemUiModel) -> Unit
 ) {
     when (val itemType = item.itemType) {
         is ItemType.Login -> LoginRow(
             item = item,
             itemType = itemType,
+            navigation = navigation,
             onItemClicked = onItemClicked,
-            onEditClicked = onEditClicked,
             onDeleteClicked = onDeleteClicked
         )
         is ItemType.Note -> NoteRow(
             item = item,
             itemType = itemType,
+            navigation = navigation,
             onItemClicked = onItemClicked,
-            onEditClicked = onEditClicked,
             onDeleteClicked = onDeleteClicked
         )
         is ItemType.Alias -> AliasRow(
             item = item,
+            navigation = navigation,
             onItemClicked = onItemClicked,
-            onEditClicked = onEditClicked,
             onDeleteClicked = onDeleteClicked
         )
     }
@@ -77,8 +77,8 @@ internal fun ItemRow(
 internal fun LoginRow(
     item: ItemUiModel,
     itemType: ItemType.Login,
+    navigation: HomeScreenNavigation,
     onItemClicked: OnItemClick,
-    onEditClicked: OnItemClick,
     onDeleteClicked: (ItemUiModel) -> Unit
 ) {
     ItemRow(
@@ -86,7 +86,7 @@ internal fun LoginRow(
         title = item.name,
         subtitle = itemType.username,
         onItemClicked = { onItemClicked(item.shareId, item.id) },
-        onEditClicked = { onEditClicked(item.shareId, item.id) },
+        onEditClicked = { navigation.toEditLogin(item.shareId, item.id) },
         onDeleteClicked = { onDeleteClicked(item) }
     )
 }
@@ -95,8 +95,8 @@ internal fun LoginRow(
 internal fun NoteRow(
     item: ItemUiModel,
     itemType: ItemType.Note,
+    navigation: HomeScreenNavigation,
     onItemClicked: OnItemClick,
-    onEditClicked: OnItemClick,
     onDeleteClicked: (ItemUiModel) -> Unit
 ) {
     ItemRow(
@@ -104,7 +104,7 @@ internal fun NoteRow(
         title = item.name,
         subtitle = itemType.text.take(10),
         onItemClicked = { onItemClicked(item.shareId, item.id) },
-        onEditClicked = { onEditClicked(item.shareId, item.id) },
+        onEditClicked = { navigation.toEditNote(item.shareId, item.id) },
         onDeleteClicked = { onDeleteClicked(item) }
     )
 }
@@ -112,8 +112,8 @@ internal fun NoteRow(
 @Composable
 internal fun AliasRow(
     item: ItemUiModel,
+    navigation: HomeScreenNavigation,
     onItemClicked: OnItemClick,
-    onEditClicked: OnItemClick,
     onDeleteClicked: (ItemUiModel) -> Unit
 ) {
     ItemRow(
@@ -121,7 +121,7 @@ internal fun AliasRow(
         title = item.name,
         subtitle = "", // TODO: Extract alias
         onItemClicked = { onItemClicked(item.shareId, item.id) },
-        onEditClicked = { onEditClicked(item.shareId, item.id) },
+        onEditClicked = { navigation.toEditAlias(item.shareId, item.id) },
         onDeleteClicked = { onDeleteClicked(item) }
     )
 }

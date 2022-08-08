@@ -36,9 +36,16 @@ import me.proton.core.pass.presentation.components.navigation.drawer.NavigationD
 internal typealias OnItemClick = (ShareId, ItemId) -> Unit
 
 interface HomeScreenNavigation {
-    val toCreateItem: (ShareId) -> Unit
+    val toCreateLogin: (ShareId) -> Unit
+    val toEditLogin: (ShareId, ItemId) -> Unit
+
+    val toCreateNote: (ShareId) -> Unit
+    val toEditNote: (ShareId, ItemId) -> Unit
+
+    val toCreateAlias: (ShareId) -> Unit
+    val toEditAlias: (ShareId, ItemId) -> Unit
+
     val toItemDetail: (ShareId, ItemId) -> Unit
-    val toEditItem: (ShareId, ItemId) -> Unit
 }
 
 @ExperimentalMaterialApi
@@ -121,7 +128,7 @@ fun HomeScreen(
                     items = viewState.items,
                     modifier = Modifier.padding(contentPadding),
                     onItemClick = { shareId, itemId -> navigation.toItemDetail(shareId, itemId) },
-                    onEditItemClick = { shareId, itemId -> navigation.toEditItem(shareId, itemId) },
+                    navigation = navigation,
                     onDeleteItemClicked = { item -> itemToDelete.value = item }
                 )
                 ConfirmItemDeletionDialog(
@@ -240,7 +247,7 @@ internal fun Home(
     items: List<ItemUiModel>,
     modifier: Modifier = Modifier,
     onItemClick: OnItemClick,
-    onEditItemClick: OnItemClick,
+    navigation: HomeScreenNavigation,
     onDeleteItemClicked: (ItemUiModel) -> Unit,
 ) {
     if (items.isNotEmpty()) {
@@ -248,7 +255,7 @@ internal fun Home(
             items = items,
             modifier = modifier,
             onItemClick = onItemClick,
-            onEditItemClick = onEditItemClick,
+            navigation = navigation,
             onDeleteItemClicked = onDeleteItemClicked
         )
     } else {

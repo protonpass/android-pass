@@ -83,7 +83,7 @@ internal fun LoginContentView(
                 model = model,
                 storeToClipboard = storeToClipboard,
             )
-            WebsiteRow(model)
+            WebsiteSection(model)
             PasswordRow(
                 model = model,
                 onTogglePasswordClick = onTogglePasswordClick,
@@ -113,14 +113,22 @@ internal fun UsernameRow(
 }
 
 @Composable
-internal fun WebsiteRow(
+internal fun WebsiteSection(
     model: LoginDetailViewModel.LoginUiModel
 ) {
-    if (model.websites.isNotEmpty()) {
-        Section(
-            title = R.string.field_website_address_title,
-            content = model.websites[0],
-        )
+    if (model.websites.isEmpty()) return
+
+    Row(modifier = Modifier.padding(vertical = 12.dp)) {
+        Column(modifier = Modifier.weight(1f)) {
+            SectionTitle(title = R.string.field_website_address_title)
+            model.websites.forEach {
+                Text(
+                    text = it,
+                    color = ProtonTheme.colors.textNorm,
+                    fontSize = 14.sp,
+                )
+            }
+        }
     }
 }
 @Composable
@@ -180,12 +188,7 @@ internal fun Section(
 ) {
     Row(modifier = Modifier.padding(vertical = 12.dp)) {
         Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = stringResource(title),
-                fontSize = 16.sp,
-                fontWeight = FontWeight.W400,
-                color = ProtonTheme.colors.textNorm
-            )
+            SectionTitle(title)
             Text(
                 text = content,
                 color = contentTextColor,
@@ -205,4 +208,16 @@ internal fun Section(
             }
         }
     }
+}
+
+@Composable
+internal fun SectionTitle(
+    @StringRes title: Int
+) {
+    Text(
+        text = stringResource(title),
+        fontSize = 16.sp,
+        fontWeight = FontWeight.W400,
+        color = ProtonTheme.colors.textNorm
+    )
 }

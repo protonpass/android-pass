@@ -55,6 +55,10 @@
     <string name="field_username">Username</string>
     <string name="field_password">Password</string>
 
+    <!-- Create Note -->
+    <string name="title_create_note">Create note</string>
+    <string name="title_edit_note">Edit note</string>
+
     <string name="item_secret_type_message">Type: %s</string>
     <string name="item_secret_login_identity">Identity: %s</string>
     <string name="item_secret_login_password">Password: %s</string>

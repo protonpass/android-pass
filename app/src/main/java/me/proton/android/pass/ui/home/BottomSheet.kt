@@ -41,7 +41,7 @@ fun BottomSheetContents(
             scope.launch {
                 state.hide()
                 if (shareId != null) {
-                    navigation.toCreateItem(shareId)
+                    navigation.toCreateLogin(shareId)
                 } else {
                     // TODO: Show Snackbar saying to select one?
                 }
@@ -51,7 +51,14 @@ fun BottomSheetContents(
             scope.launch { state.hide() }
         })
         BottomSheetItem(R.drawable.ic_proton_note, R.string.action_note, onItemClick = {
-            scope.launch { state.hide() }
+            scope.launch {
+                state.hide()
+                if (shareId != null) {
+                    navigation.toCreateNote(shareId)
+                } else {
+                    // TODO: Show Snackbar saying to select one?
+                }
+            }
         })
         BottomSheetItem(R.drawable.ic_proton_arrows_rotate, R.string.action_password, onItemClick = {
             scope.launch { state.hide() }

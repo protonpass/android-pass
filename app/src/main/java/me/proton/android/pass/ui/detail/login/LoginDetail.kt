@@ -165,6 +165,7 @@ internal fun PasswordRow(
         }
     )
 }
+
 @Composable
 internal fun NoteRow(
     model: LoginDetailViewModel.LoginUiModel

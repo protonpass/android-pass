@@ -13,7 +13,12 @@ import me.proton.core.key.domain.getBase64Decoded
 import me.proton.core.key.domain.verifyData
 import me.proton.core.pass.data.extensions.fromParsed
 import me.proton.core.pass.data.responses.ItemRevision
-import me.proton.core.pass.domain.*
+import me.proton.core.pass.domain.Item
+import me.proton.core.pass.domain.ItemId
+import me.proton.core.pass.domain.ItemType
+import me.proton.core.pass.domain.Share
+import me.proton.core.pass.domain.ShareId
+import me.proton.core.pass.domain.ShareType
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.key.publicKey

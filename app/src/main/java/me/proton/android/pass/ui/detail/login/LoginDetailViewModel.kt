@@ -21,7 +21,9 @@ class LoginDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val itemFlow: MutableStateFlow<Item?> = MutableStateFlow(null)
-    private val passwordState: MutableStateFlow<PasswordState> = MutableStateFlow(PasswordState.Concealed("".encrypt(cryptoContext.keyStoreCrypto)))
+    private val passwordState: MutableStateFlow<PasswordState> = MutableStateFlow(
+        PasswordState.Concealed("".encrypt(cryptoContext.keyStoreCrypto))
+    )
 
     val copyToClipboardFlow: MutableSharedFlow<String?> = MutableSharedFlow()
     val initialViewState = getInitialState()
@@ -43,7 +45,8 @@ class LoginDetailViewModel @Inject constructor(
             val itemType = item.itemType as ItemType.Login
             val text = when (val password = passwordState.value) {
                 is PasswordState.Revealed -> password.clearText
-                is PasswordState.Concealed -> itemType.password.decrypt(cryptoContext.keyStoreCrypto)
+                is PasswordState.Concealed ->
+                    itemType.password.decrypt(cryptoContext.keyStoreCrypto)
             }
             copyToClipboardFlow.emit(text)
         }
@@ -55,7 +58,10 @@ class LoginDetailViewModel @Inject constructor(
 
         when (passwordState.value) {
             is PasswordState.Concealed -> {
-                passwordState.value = PasswordState.Revealed(itemType.password, itemType.password.decrypt(cryptoContext.keyStoreCrypto))
+                passwordState.value = PasswordState.Revealed(
+                    encrypted = itemType.password,
+                    clearText = itemType.password.decrypt(cryptoContext.keyStoreCrypto)
+                )
             }
             is PasswordState.Revealed -> {
                 passwordState.value = PasswordState.Concealed(itemType.password)
@@ -95,6 +101,9 @@ class LoginDetailViewModel @Inject constructor(
 
     sealed class PasswordState(open val encrypted: EncryptedString) {
         data class Concealed(override val encrypted: EncryptedString) : PasswordState(encrypted)
-        data class Revealed(override val encrypted: EncryptedString, val clearText: String) : PasswordState(encrypted)
+        data class Revealed(
+            override val encrypted: EncryptedString,
+            val clearText: String
+        ) : PasswordState(encrypted)
     }
 }

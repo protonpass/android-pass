@@ -2,7 +2,7 @@ package me.proton.android.pass.log
 
 import android.os.Build
 import android.os.LocaleList
-import java.util.*
+import java.util.Locale
 import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.LoggerLogTag
 import timber.log.Timber

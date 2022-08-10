@@ -36,7 +36,11 @@ import me.proton.core.auth.data.MissingScopeListenerImpl
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.humanverification.data.utils.NetworkRequestOverriderImpl
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
-import me.proton.core.network.data.*
+import me.proton.core.network.data.ApiManagerFactory
+import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.NetworkManager
+import me.proton.core.network.data.NetworkPrefs
+import me.proton.core.network.data.ProtonCookieStore
 import me.proton.core.network.data.client.ClientIdProviderImpl
 import me.proton.core.network.data.client.ClientVersionValidatorImpl
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
@@ -53,8 +57,20 @@ import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
-import me.proton.core.pass.data.local.*
-import me.proton.core.pass.data.remote.*
+import me.proton.core.pass.data.local.LocalItemDataSource
+import me.proton.core.pass.data.local.LocalItemDataSourceImpl
+import me.proton.core.pass.data.local.LocalShareDataSource
+import me.proton.core.pass.data.local.LocalShareDataSourceImpl
+import me.proton.core.pass.data.local.LocalVaultItemKeyDataSource
+import me.proton.core.pass.data.local.LocalVaultItemKeyDataSourceImpl
+import me.proton.core.pass.data.remote.RemoteItemDataSource
+import me.proton.core.pass.data.remote.RemoteItemDataSourceImpl
+import me.proton.core.pass.data.remote.RemoteKeyPacketDataSource
+import me.proton.core.pass.data.remote.RemoteKeyPacketDataSourceImpl
+import me.proton.core.pass.data.remote.RemoteShareDataSource
+import me.proton.core.pass.data.remote.RemoteShareDataSourceImpl
+import me.proton.core.pass.data.remote.RemoteVaultItemKeyDataSource
+import me.proton.core.pass.data.remote.RemoteVaultItemKeyDataSourceImpl
 import me.proton.core.pass.data.repositories.ItemRepositoryImpl
 import me.proton.core.pass.data.repositories.KeyPacketRepositoryImpl
 import me.proton.core.pass.data.repositories.ShareRepositoryImpl
@@ -195,16 +211,24 @@ abstract class NetworkBindModule {
     abstract fun bindApiClient(apiClient: PassApiClient): ApiClient
 
     @Binds
-    abstract fun bindRemoteShareDataSource(remoteShareDataSource: RemoteShareDataSourceImpl): RemoteShareDataSource
+    abstract fun bindRemoteShareDataSource(
+        remoteShareDataSource: RemoteShareDataSourceImpl
+    ): RemoteShareDataSource
 
     @Binds
-    abstract fun bindLocalShareDataSource(localShareDataSource: LocalShareDataSourceImpl): LocalShareDataSource
+    abstract fun bindLocalShareDataSource(
+        localShareDataSource: LocalShareDataSourceImpl
+    ): LocalShareDataSource
 
     @Binds
-    abstract fun bindShareRepository(shareRepositoryImpl: ShareRepositoryImpl): ShareRepository
+    abstract fun bindShareRepository(
+        shareRepositoryImpl: ShareRepositoryImpl
+    ): ShareRepository
 
     @Binds
-    abstract fun bindVaultKeyRepository(vaultKeyRepositoryImpl: VaultKeyRepositoryImpl): VaultKeyRepository
+    abstract fun bindVaultKeyRepository(
+        vaultKeyRepositoryImpl: VaultKeyRepositoryImpl
+    ): VaultKeyRepository
 
     @Binds
     abstract fun bindRemoteVaultKeyDataSource(
@@ -220,13 +244,19 @@ abstract class NetworkBindModule {
     abstract fun bindItemRepository(itemRepositoryImpl: ItemRepositoryImpl): ItemRepository
 
     @Binds
-    abstract fun bindRemoteItemDataSource(remoteItemDataSourceImpl: RemoteItemDataSourceImpl): RemoteItemDataSource
+    abstract fun bindRemoteItemDataSource(
+        remoteItemDataSourceImpl: RemoteItemDataSourceImpl
+    ): RemoteItemDataSource
 
     @Binds
-    abstract fun bindLocalItemDataSource(localItemDataSourceImpl: LocalItemDataSourceImpl): LocalItemDataSource
+    abstract fun bindLocalItemDataSource(
+        localItemDataSourceImpl: LocalItemDataSourceImpl
+    ): LocalItemDataSource
 
     @Binds
-    abstract fun bindKeyPacketRepository(keyPacketRepository: KeyPacketRepositoryImpl): KeyPacketRepository
+    abstract fun bindKeyPacketRepository(
+        keyPacketRepository: KeyPacketRepositoryImpl
+    ): KeyPacketRepository
 
     @Binds
     abstract fun bindRemoteKeyPacketDataSource(

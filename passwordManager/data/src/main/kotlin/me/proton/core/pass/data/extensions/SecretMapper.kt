@@ -1,6 +1,6 @@
 package me.proton.core.pass.data.extensions
 
-import java.util.*
+import java.util.UUID
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.proton.core.pass.common_secret.Secret

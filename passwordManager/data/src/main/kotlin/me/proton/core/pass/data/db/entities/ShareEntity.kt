@@ -97,6 +97,6 @@ data class ShareEntity(
     }
 
     companion object {
-        const val TABLE = "shares"
+        const val TABLE = "ShareEntity"
     }
 }

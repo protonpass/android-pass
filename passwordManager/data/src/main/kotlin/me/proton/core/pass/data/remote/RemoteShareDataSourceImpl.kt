@@ -4,7 +4,7 @@ import javax.inject.Inject
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.pass.data.api.PasswordManagerApi
-import me.proton.core.pass.data.crypto.CreateVaultRequest
+import me.proton.core.pass.data.requests.CreateVaultRequest
 import me.proton.core.pass.data.responses.ShareResponse
 import me.proton.core.pass.domain.ShareId
 

@@ -1,9 +1,10 @@
 package me.proton.core.pass.data.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
-import me.proton.core.pass.data.crypto.CreateItemRequest
-import me.proton.core.pass.data.crypto.CreateVaultRequest
-import me.proton.core.pass.data.crypto.UpdateItemRequest
+import me.proton.core.pass.data.requests.CreateItemRequest
+import me.proton.core.pass.data.requests.CreateVaultRequest
+import me.proton.core.pass.data.requests.TrashItemsRequest
+import me.proton.core.pass.data.requests.UpdateItemRequest
 import me.proton.core.pass.data.responses.*
 import retrofit2.http.*
 
@@ -48,8 +49,11 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: UpdateItemRequest
     ): CreateItemResponse
 
-    @DELETE("$PREFIX/share/{shareId}/item/{itemId}")
-    suspend fun deleteItem(@Path("shareId") shareId: String, @Path("itemId") itemId: String)
+    @POST("$PREFIX/share/{shareId}/item/trash")
+    suspend fun trashItems(@Path("shareId") shareId: String, @Body request: TrashItemsRequest): TrashItemsResponse
+
+    @HTTP(method = "DELETE", path = "$PREFIX/share/{shareId}/item", hasBody = true)
+    suspend fun deleteItems(@Path("shareId") shareId: String, @Body request: TrashItemsRequest)
 
     // KeyPacket
     @GET("$PREFIX/share/{shareId}/item/{itemId}/keypacket")

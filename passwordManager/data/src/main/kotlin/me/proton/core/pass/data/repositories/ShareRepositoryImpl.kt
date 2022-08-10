@@ -13,13 +13,13 @@ import me.proton.core.key.domain.publicKey
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
 import me.proton.core.pass.data.crypto.CreateVault
-import me.proton.core.pass.data.crypto.CreateVaultRequest
 import me.proton.core.pass.data.crypto.OpenShare
 import me.proton.core.pass.data.crypto.Utils
 import me.proton.core.pass.data.db.PassDatabase
 import me.proton.core.pass.data.db.entities.ShareEntity
 import me.proton.core.pass.data.local.LocalShareDataSource
 import me.proton.core.pass.data.remote.RemoteShareDataSource
+import me.proton.core.pass.data.requests.CreateVaultRequest
 import me.proton.core.pass.data.responses.ShareResponse
 import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareId

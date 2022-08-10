@@ -19,6 +19,7 @@ sealed class NavItem(
     }
 
     object Launcher : NavItem("auth")
+    object Trash : NavItem("trash")
     object CreateLogin : NavItem("createLogin", listOf(NavArg.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
     }

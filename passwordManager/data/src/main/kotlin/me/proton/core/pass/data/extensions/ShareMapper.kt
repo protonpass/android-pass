@@ -6,7 +6,7 @@ import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareType
 import proton_pass_vault_v1.VaultV1
 
-fun Share.name(cryptoContext: CryptoContext): String {
+fun Share.shareName(cryptoContext: CryptoContext): String {
     if (content == null) return "---"
     val decryptedContents = content!!.decrypt(cryptoContext.keyStoreCrypto)
     return when (shareType) {

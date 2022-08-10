@@ -18,30 +18,21 @@
 
 package me.proton.android.pass.ui.launcher
 
+import androidx.activity.result.ActivityResultCaller
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
 import me.proton.core.account.domain.entity.isReady
 import me.proton.core.account.domain.entity.isStepNeeded
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.presentation.observe
-import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
-import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
-import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
-import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
-import me.proton.core.accountmanager.presentation.onSessionForceLogout
-import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
+import me.proton.core.accountmanager.presentation.*
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.observe
 import me.proton.core.auth.presentation.onAddAccountResult
@@ -53,6 +44,7 @@ import me.proton.core.humanverification.presentation.HumanVerificationOrchestrat
 import me.proton.core.humanverification.presentation.observe
 import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
 import me.proton.core.network.domain.scopes.MissingScopeListener
+import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerSection
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.report.presentation.entity.BugReportInput
@@ -74,6 +66,9 @@ class LauncherViewModel @Inject constructor(
     private val missingScopeListener: MissingScopeListener,
 ) : ViewModel() {
 
+    val initialSection = NavigationDrawerSection.Items
+    val sectionStateFlow: MutableStateFlow<NavigationDrawerSection> = MutableStateFlow(initialSection)
+
     val state: StateFlow<State> = accountManager.getAccounts()
         .map { accounts ->
             when {
@@ -90,7 +85,7 @@ class LauncherViewModel @Inject constructor(
         )
 
     fun register(context: AppCompatActivity) {
-        authOrchestrator.register(context)
+        authOrchestrator.register(context as ActivityResultCaller)
         hvOrchestrator.register(context)
         plansOrchestrator.register(context)
         reportOrchestrator.register(context)
@@ -162,6 +157,10 @@ class LauncherViewModel @Inject constructor(
         getPrimaryUserIdOrNull()?.let {
             userSettingsOrchestrator.startPasswordManagementWorkflow(it)
         }
+    }
+
+    fun onDrawerSectionSelected(section: NavigationDrawerSection) = viewModelScope.launch {
+        sectionStateFlow.value = section
     }
 
     private suspend fun getAccountOrNull(it: UserId) = accountManager.getAccount(it).firstOrNull()

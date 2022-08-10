@@ -1,8 +1,6 @@
 package me.proton.core.pass.data.crypto
 
 import javax.inject.Inject
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
@@ -16,6 +14,7 @@ import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.getEncryptedPackets
 import me.proton.core.key.domain.signData
 import me.proton.core.key.domain.useKeys
+import me.proton.core.pass.data.requests.CreateVaultRequest
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.SigningKey
 import me.proton.core.pass.domain.key.VaultKey
@@ -23,46 +22,6 @@ import me.proton.core.pass.domain.key.usePrivateKey
 import me.proton.core.pass.domain.repositories.VaultItemKeyList
 import me.proton.core.user.domain.entity.UserAddress
 import proton_pass_vault_v1.VaultV1
-
-@Serializable
-data class CreateVaultRequest(
-    @SerialName("AddressID")
-    val addressId: String,
-    @SerialName("Content")
-    val content: String,
-    @SerialName("ContentFormatVersion")
-    val contentFormatVersion: Int,
-    @SerialName("ContentEncryptedAddressSignature")
-    val contentEncryptedAddressSignature: String,
-    @SerialName("ContentEncryptedVaultSignature")
-    val contentEncryptedVaultSignature: String,
-    @SerialName("VaultKey")
-    val vaultKey: String,
-    @SerialName("VaultKeyPassphrase")
-    val vaultKeyPassphrase: String,
-    @SerialName("VaultKeySignature")
-    val vaultKeySignature: String,
-    @SerialName("KeyPacket")
-    val keyPacket: String,
-    @SerialName("KeyPacketSignature")
-    val keyPacketSignature: String,
-    @SerialName("SigningKey")
-    val signingKey: String,
-    @SerialName("SigningKeyPassphrase")
-    val signingKeyPassphrase: String,
-    @SerialName("SigningKeyPassphraseKeyPacket")
-    val signingKeyPassphraseKeyPacket: String,
-    @SerialName("AcceptanceSignature")
-    val acceptanceSignature: String,
-    @SerialName("ItemKey")
-    val itemKey: String,
-    @SerialName("ItemKeyPassphrase")
-    val itemKeyPassphrase: String,
-    @SerialName("ItemKeyPassphraseKeyPacket")
-    val itemKeyPassphraseKeyPacket: String,
-    @SerialName("ItemKeySignature")
-    val itemKeySignature: String,
-)
 
 class CreateVault @Inject constructor(
     private val cryptoContext: CryptoContext

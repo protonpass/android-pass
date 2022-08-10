@@ -12,18 +12,20 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
         SELECT * FROM ${ItemEntity.TABLE} 
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.STATE} = :itemState
         """
     )
-    abstract fun observeAllForAddress(userId: String): Flow<List<ItemEntity>>
+    abstract fun observeAllForAddress(userId: String, itemState: Int): Flow<List<ItemEntity>>
 
     @Query(
         """
         SELECT * FROM ${ItemEntity.TABLE} 
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.STATE} = :itemState
         """
     )
-    abstract fun observeAllForShare(userId: String, shareId: String): Flow<List<ItemEntity>>
+    abstract fun observerAllForShare(userId: String, shareId: String, itemState: Int): Flow<List<ItemEntity>>
 
     @Query(
         """
@@ -33,6 +35,25 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract suspend fun getById(shareId: String, itemId: String): ItemEntity?
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.STATE} = :state
+        """
+    )
+    abstract suspend fun getItemsWithState(userId: String, state: Int): List<ItemEntity>
+
+    @Query(
+        """
+        UPDATE ${ItemEntity.TABLE}
+        SET ${ItemEntity.Columns.STATE} = :state
+        WHERE ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.ID} = :itemId
+        """
+    )
+    abstract suspend fun setItemState(shareId: String, itemId: String, state: Int)
 
     @Query(
         """

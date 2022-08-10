@@ -21,51 +21,45 @@ import androidx.activity.compose.BackHandler
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.DrawerState
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.presentation.compose.AccountPrimaryItem
 import me.proton.core.accountmanager.presentation.compose.AccountPrimaryState
 import me.proton.core.accountmanager.presentation.compose.rememberAccountPrimaryState
 import me.proton.core.compose.theme.ProtonDimens.DefaultSpacing
-import me.proton.core.compose.theme.ProtonDimens.ListItemHeight
-import me.proton.core.compose.theme.ProtonDimens.ListItemTextStartPadding
-import me.proton.core.compose.theme.ProtonDimens.MediumSpacing
 import me.proton.core.compose.theme.ProtonDimens.SmallSpacing
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.presentation.R
-import me.proton.core.pass.presentation.components.model.ShareUiModel
-import me.proton.core.pass.presentation.components.user.PREVIEW_USER
+
+enum class NavigationDrawerSection { Items, Settings, Trash, Help }
+
+interface NavDrawerNavigation {
+    val selectedSection: NavigationDrawerSection
+    val onDrawerStateChanged: (Boolean) -> Unit
+    val onSignIn: (UserId?) -> Unit
+    val onSignOut: (UserId) -> Unit
+    val onRemove: (UserId?) -> Unit
+    val onSwitch: (UserId) -> Unit
+    val onSectionSelected: (NavigationDrawerSection) -> Unit
+}
 
 @Composable
 fun NavigationDrawer(
     drawerState: DrawerState,
     viewState: NavigationDrawerViewState,
-    viewEvent: NavigationDrawerViewEvent,
     modifier: Modifier = Modifier,
     accountPrimaryState: AccountPrimaryState = rememberAccountPrimaryState(),
-    shares: List<ShareUiModel> = emptyList(),
-    onSignIn: (UserId?) -> Unit = {},
-    onSignOut: (UserId) -> Unit = {},
-    onRemove: (UserId) -> Unit = {},
-    onSwitch: (UserId) -> Unit = {},
+    navigation: NavDrawerNavigation
 ) {
     val sidebarColors = requireNotNull(ProtonTheme.colors.sidebarColors)
     ProtonTheme(colors = sidebarColors) {
@@ -97,10 +91,10 @@ fun NavigationDrawer(
                             .background(sidebarColors.backgroundNorm)
                             .padding(all = SmallSpacing)
                             .fillMaxWidth(),
-                        onRemove = onRemove,
-                        onSignIn = onSignIn,
-                        onSignOut = onSignOut,
-                        onSwitch = onSwitch,
+                        onRemove = { navigation.onRemove(it) },
+                        onSignIn = { navigation.onSignIn(it) },
+                        onSignOut = { navigation.onSignOut(it) },
+                        onSwitch = { navigation.onSwitch(it) },
                         viewState = accountPrimaryState
                     )
                 }
@@ -111,10 +105,11 @@ fun NavigationDrawer(
                         .weight(1f, fill = false),
                     verticalArrangement = Arrangement.Top
                 ) {
-                    SharesList(closeDrawerAction, viewEvent, shares)
-                    SettingsListItem(closeDrawerAction, viewEvent)
-                    HelpListItem(closeDrawerAction, viewEvent)
-                    SignOutListItem(closeDrawerAction, viewEvent)
+                    ItemsListItem(navigation, closeDrawerAction)
+                    SettingsListItem(navigation, closeDrawerAction)
+                    TrashListItem(navigation, closeDrawerAction)
+                    HelpListItem(navigation, closeDrawerAction)
+                    SignOutListItem(navigation, closeDrawerAction)
 
                     NavigationDrawerAppVersion(
                         name = stringResource(id = viewState.appNameResId),
@@ -126,6 +121,7 @@ fun NavigationDrawer(
     }
 }
 
+/*
 @Composable
 private fun SharesList(
     closeDrawerAction: (() -> Unit) -> Unit,
@@ -193,43 +189,80 @@ private fun ShareItem(
         viewEvent.onShareSelected(ShareClickEvent.Share(share))
     }
 }
+*/
+
+@Composable
+private fun ItemsListItem(
+    navigation: NavDrawerNavigation,
+    closeDrawerAction: (() -> Unit) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    NavigationDrawerListItem(
+        title = R.string.navigation_item_items,
+        icon = R.drawable.ic_proton_key,
+        isSelected = navigation.selectedSection == NavigationDrawerSection.Items,
+        closeDrawerAction = closeDrawerAction,
+        modifier = modifier,
+    ) {
+        navigation.onSectionSelected(NavigationDrawerSection.Items)
+    }
+}
 
 @Composable
 private fun SettingsListItem(
+    navigation: NavDrawerNavigation,
     closeDrawerAction: (() -> Unit) -> Unit,
-    viewEvent: NavigationDrawerViewEvent,
     modifier: Modifier = Modifier,
 ) {
     NavigationDrawerListItem(
         title = R.string.navigation_item_settings,
         icon = R.drawable.ic_settings,
+        isSelected = navigation.selectedSection == NavigationDrawerSection.Settings,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,
     ) {
-        viewEvent.onSettings()
+        navigation.onSectionSelected(NavigationDrawerSection.Settings)
+    }
+}
+
+@Composable
+private fun TrashListItem(
+    navigation: NavDrawerNavigation,
+    closeDrawerAction: (() -> Unit) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    NavigationDrawerListItem(
+        title = R.string.navigation_item_trash,
+        icon = R.drawable.ic_proton_trash,
+        isSelected = navigation.selectedSection == NavigationDrawerSection.Trash,
+        closeDrawerAction = closeDrawerAction,
+        modifier = modifier,
+    ) {
+        navigation.onSectionSelected(NavigationDrawerSection.Trash)
     }
 }
 
 @Composable
 private fun HelpListItem(
+    navigation: NavDrawerNavigation,
     closeDrawerAction: (() -> Unit) -> Unit,
-    viewEvent: NavigationDrawerViewEvent,
     modifier: Modifier = Modifier,
 ) {
     NavigationDrawerListItem(
         title = R.string.navigation_item_help,
         icon = R.drawable.ic_proton_question_circle,
+        isSelected = navigation.selectedSection == NavigationDrawerSection.Help,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,
     ) {
-        viewEvent.onHelp()
+        navigation.onSectionSelected(NavigationDrawerSection.Help)
     }
 }
 
 @Composable
 private fun SignOutListItem(
+    navigation: NavDrawerNavigation,
     closeDrawerAction: (() -> Unit) -> Unit,
-    viewEvent: NavigationDrawerViewEvent,
     modifier: Modifier = Modifier,
 ) {
     NavigationDrawerListItem(
@@ -237,8 +270,9 @@ private fun SignOutListItem(
         title = R.string.navigation_item_sign_out,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,
+        isSelected = false,
     ) {
-        viewEvent.onSignOut()
+        navigation.onSignOut
     }
 }
 
@@ -248,59 +282,10 @@ fun NavigationDrawerListItem(
     @StringRes title: Int,
     closeDrawerAction: (() -> Unit) -> Unit,
     modifier: Modifier = Modifier,
+    isSelected: Boolean,
     onClick: () -> Unit,
 ) {
-    NavigationDrawerListItem(icon, title, modifier) {
+    NavigationDrawerListItem(icon, title, modifier, isSelected) {
         closeDrawerAction(onClick)
-    }
-}
-@Composable
-fun NavigationDrawerListItem(
-    @DrawableRes icon: Int,
-    title: String,
-    closeDrawerAction: (() -> Unit) -> Unit,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-) {
-    NavigationDrawerListItem(icon, title, modifier) {
-        closeDrawerAction(onClick)
-    }
-}
-
-@Preview(name = "Drawer opened")
-@Composable
-fun PreviewDrawerWithUser() {
-    ProtonTheme {
-        NavigationDrawer(
-            drawerState = DrawerState(DrawerValue.Open) { true },
-            viewState = NavigationDrawerViewState(
-                R.string.title_app,
-                "Version",
-                currentUser = PREVIEW_USER
-            ),
-            viewEvent = object : NavigationDrawerViewEvent {
-                override val onSettings = {}
-                override val onSignOut = {}
-                override val onHelp = {}
-                override val onShareSelected = { _: ShareClickEvent -> }
-            }
-        )
-    }
-}
-
-@Preview(name = "Drawer opened")
-@Composable
-fun PreviewDrawerWithoutUser() {
-    ProtonTheme {
-        NavigationDrawer(
-            drawerState = DrawerState(DrawerValue.Open) { true },
-            viewState = NavigationDrawerViewState(R.string.title_app, "Version"),
-            viewEvent = object : NavigationDrawerViewEvent {
-                override val onSettings = {}
-                override val onSignOut = {}
-                override val onHelp = {}
-                override val onShareSelected = { _: ShareClickEvent -> }
-            }
-        )
     }
 }

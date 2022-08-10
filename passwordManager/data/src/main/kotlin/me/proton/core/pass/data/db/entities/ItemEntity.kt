@@ -91,6 +91,6 @@ data class ItemEntity(
     }
 
     companion object {
-        const val TABLE = "items"
+        const val TABLE = "ItemEntity"
     }
 }

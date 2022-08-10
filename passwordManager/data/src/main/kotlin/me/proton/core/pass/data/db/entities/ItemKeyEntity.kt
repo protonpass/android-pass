@@ -66,6 +66,6 @@ data class ItemKeyEntity(
     }
 
     companion object {
-        const val TABLE = "item_keys"
+        const val TABLE = "ItemKeyEntity"
     }
 }

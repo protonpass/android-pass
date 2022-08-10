@@ -1,6 +1,9 @@
 package me.proton.core.pass.data.repositories
 
 import javax.inject.Inject
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -18,6 +21,8 @@ import me.proton.core.pass.data.db.entities.ItemEntity
 import me.proton.core.pass.data.extensions.itemType
 import me.proton.core.pass.data.local.LocalItemDataSource
 import me.proton.core.pass.data.remote.RemoteItemDataSource
+import me.proton.core.pass.data.requests.TrashItemRevision
+import me.proton.core.pass.data.requests.TrashItemsRequest
 import me.proton.core.pass.data.responses.ItemRevision
 import me.proton.core.pass.domain.*
 import me.proton.core.pass.domain.key.ItemKey
@@ -44,6 +49,11 @@ class ItemRepositoryImpl @Inject constructor(
     private val keyPacketRepository: KeyPacketRepository,
     private val openItem: OpenItem,
 ) : ItemRepository {
+
+    companion object {
+        const val MAX_TRASH_ITEMS_PER_REQUEST = 50
+    }
+
     override suspend fun createItem(
         userId: UserId,
         share: Share,
@@ -81,10 +91,10 @@ class ItemRepositoryImpl @Inject constructor(
         return entityToDomain(entity)
     }
 
-    override fun observeItems(userId: UserId, shareSelection: ShareSelection): Flow<List<Item>> {
+    override fun observeItems(userId: UserId, shareSelection: ShareSelection, itemState: ItemState): Flow<List<Item>> {
         return when (shareSelection) {
-            is ShareSelection.Share -> localItemDataSource.observeItemsForShare(userId, shareSelection.shareId)
-            is ShareSelection.AllShares -> localItemDataSource.observeItems(userId)
+            is ShareSelection.Share -> localItemDataSource.observeItemsForShare(userId, shareSelection.shareId, itemState)
+            is ShareSelection.AllShares -> localItemDataSource.observeItems(userId, itemState)
         }.map { items ->
             val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
             refreshItemsIfNeeded(userAddress, shareSelection)
@@ -98,9 +108,55 @@ class ItemRepositoryImpl @Inject constructor(
         return entityToDomain(item)
     }
 
+    override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
+        val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
+        if (item.state == ItemState.Trashed.value) return
+
+        val body = TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
+        val response = remoteItemDataSource.sendToTrash(userId, shareId, body)
+
+        database.inTransaction {
+            response.items.find { it.itemId == item.id }?.let {
+                val updatedItem = item.copy(
+                    revision = it.revision,
+                    state = ItemState.Trashed.value
+                )
+                localItemDataSource.upsertItem(updatedItem)
+            }
+        }
+    }
+
+    override suspend fun restoreItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
+        /* TODO: Implement */
+    }
+
+    override suspend fun clearTrash(userId: UserId) {
+        val trashedItems = localItemDataSource.getTrashedItems(userId)
+        val trashedPerShare = trashedItems.groupBy { it.shareId }
+        coroutineScope {
+            trashedPerShare.map { entry ->
+                async {
+                    val shareId = ShareId(entry.key)
+                    val shareItems = entry.value
+                    shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).forEach { items ->
+                        val body = TrashItemsRequest(items.map { TrashItemRevision(it.id, it.revision) })
+                        remoteItemDataSource.delete(userId, shareId, body)
+                        database.inTransaction {
+                            items.forEach { item -> localItemDataSource.delete(shareId, ItemId(item.id)) }
+                        }
+                    }
+                }
+            }.awaitAll()
+        }
+    }
+
     override suspend fun deleteItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
+        val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
+        if (item.state != ItemState.Trashed.value) return
+
+        val body = TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
+        remoteItemDataSource.delete(userId, shareId, body)
         localItemDataSource.delete(shareId, itemId)
-        remoteItemDataSource.delete(userId, shareId, itemId)
     }
 
     private suspend fun refreshItemsIfNeeded(

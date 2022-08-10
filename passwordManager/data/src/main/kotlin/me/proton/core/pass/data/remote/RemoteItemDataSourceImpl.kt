@@ -4,9 +4,11 @@ import javax.inject.Inject
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.pass.data.api.PasswordManagerApi
-import me.proton.core.pass.data.crypto.CreateItemRequest
-import me.proton.core.pass.data.crypto.UpdateItemRequest
+import me.proton.core.pass.data.requests.CreateItemRequest
+import me.proton.core.pass.data.requests.TrashItemsRequest
+import me.proton.core.pass.data.requests.UpdateItemRequest
 import me.proton.core.pass.data.responses.ItemRevision
+import me.proton.core.pass.data.responses.TrashItemsResponse
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 
@@ -45,8 +47,13 @@ class RemoteItemDataSourceImpl @Inject constructor(
             items
         }.valueOrThrow
 
-    override suspend fun delete(userId: UserId, shareId: ShareId, itemId: ItemId) =
+    override suspend fun sendToTrash(userId: UserId, shareId: ShareId, body: TrashItemsRequest): TrashItemsResponse =
         api.get<PasswordManagerApi>(userId).invoke {
-            deleteItem(shareId.id, itemId.id)
+            trashItems(shareId.id, body)
+        }.valueOrThrow
+
+    override suspend fun delete(userId: UserId, shareId: ShareId, body: TrashItemsRequest) =
+        api.get<PasswordManagerApi>(userId).invoke {
+            deleteItems(shareId.id, body)
         }.valueOrThrow
 }

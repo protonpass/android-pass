@@ -1,6 +1,5 @@
-package me.proton.android.pass.ui.home
+package me.proton.android.pass.ui.trash
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,26 +12,26 @@ import me.proton.android.pass.R
 import me.proton.android.pass.extension.toUiModel
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.domain.ItemState
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.ShareSelection
+import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.usecases.ObserveItems
 import me.proton.core.pass.domain.usecases.ObserveShares
-import me.proton.core.pass.domain.usecases.TrashItem
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerViewState
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 
-@ExperimentalMaterialApi
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class TrashScreenViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val accountManager: AccountManager,
     private val userManager: UserManager,
-    private val trashItem: TrashItem,
-    private val observeShares: ObserveShares,
     private val observeItems: ObserveItems,
+    private val observeShares: ObserveShares,
+    private val itemRepository: ItemRepository,
 ) : ViewModel() {
 
     val initialViewState = getViewState(
@@ -55,11 +54,10 @@ class HomeViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val listItems = listShares
+    private val listItems = getCurrentUserIdFlow
         .filterNotNull()
-        .combine(getCurrentUserIdFlow.filterNotNull()) { share, user -> share to user }
-        .flatMapLatest { v ->
-            observeItems(v.second.userId, ShareSelection.Share(v.first), ItemState.Active).map { items ->
+        .flatMapLatest { user ->
+            observeItems(user.userId, ShareSelection.AllShares, ItemState.Trashed).map { items ->
                 items.map { it.toUiModel(cryptoContext) }
             }
         }
@@ -86,13 +84,27 @@ class HomeViewModel @Inject constructor(
             selectedShare = shareId,
         )
 
-    fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch {
-        if (item == null) return@launch
-
-        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        if (userId != null) {
-            trashItem.invoke(userId, item.shareId, item.id)
+    fun restoreItem(item: ItemUiModel) = viewModelScope.launch {
+        withUserId {
+            itemRepository.restoreItem(it, item.shareId, item.id)
         }
+    }
+
+    fun deleteItem(item: ItemUiModel) = viewModelScope.launch {
+        withUserId {
+            itemRepository.deleteItem(it, item.shareId, item.id)
+        }
+    }
+
+    fun clearTrash() = viewModelScope.launch {
+        withUserId {
+            itemRepository.clearTrash(it)
+        }
+    }
+
+    suspend fun withUserId(block: suspend (UserId) -> Unit) {
+        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
+        userId?.let { block(it) }
     }
 
     @Immutable

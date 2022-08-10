@@ -6,9 +6,9 @@ import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.repositories.ItemRepository
 
-class DeleteItem @Inject constructor(
+class TrashItem @Inject constructor(
     private val itemsRepository: ItemRepository
 ) {
     suspend operator fun invoke(userId: UserId, shareId: ShareId, itemId: ItemId) =
-        itemsRepository.deleteItem(userId, shareId, itemId)
+        itemsRepository.trashItem(userId, shareId, itemId)
 }

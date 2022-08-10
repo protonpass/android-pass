@@ -1,12 +1,15 @@
 package me.proton.android.pass.ui.home
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -22,21 +25,24 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 
+data class ItemExtraAction(
+    val onSelect: (ItemUiModel) -> Unit,
+    @StringRes val title: Int
+)
+
 @Composable
 fun ItemsList(
     items: List<ItemUiModel>,
     modifier: Modifier = Modifier,
-    onItemClick: OnItemClick,
-    navigation: HomeScreenNavigation,
-    onDeleteItemClicked: (ItemUiModel) -> Unit,
+    itemActions: List<ItemExtraAction> = emptyList(),
+    onItemClick: OnItemClick? = null,
 ) {
     LazyColumn(modifier = modifier) {
         items(items) { item ->
             ItemRow(
                 item = item,
                 onItemClicked = onItemClick,
-                navigation = navigation,
-                onDeleteClicked = onDeleteItemClicked
+                itemActions = itemActions,
             )
         }
     }
@@ -45,30 +51,26 @@ fun ItemsList(
 @Composable
 internal fun ItemRow(
     item: ItemUiModel,
-    navigation: HomeScreenNavigation,
-    onItemClicked: OnItemClick,
-    onDeleteClicked: (ItemUiModel) -> Unit
+    itemActions: List<ItemExtraAction> = emptyList(),
+    onItemClicked: OnItemClick? = null,
 ) {
     when (val itemType = item.itemType) {
         is ItemType.Login -> LoginRow(
             item = item,
             itemType = itemType,
-            navigation = navigation,
             onItemClicked = onItemClicked,
-            onDeleteClicked = onDeleteClicked
+            itemActions = itemActions,
         )
         is ItemType.Note -> NoteRow(
             item = item,
             itemType = itemType,
-            navigation = navigation,
             onItemClicked = onItemClicked,
-            onDeleteClicked = onDeleteClicked
+            itemActions = itemActions,
         )
         is ItemType.Alias -> AliasRow(
             item = item,
-            navigation = navigation,
             onItemClicked = onItemClicked,
-            onDeleteClicked = onDeleteClicked
+            itemActions = itemActions,
         )
     }
 }
@@ -77,17 +79,16 @@ internal fun ItemRow(
 internal fun LoginRow(
     item: ItemUiModel,
     itemType: ItemType.Login,
-    navigation: HomeScreenNavigation,
-    onItemClicked: OnItemClick,
-    onDeleteClicked: (ItemUiModel) -> Unit
+    itemActions: List<ItemExtraAction> = emptyList(),
+    onItemClicked: OnItemClick? = null,
 ) {
     ItemRow(
         icon = R.drawable.ic_proton_key,
         title = item.name,
         subtitle = itemType.username,
-        onItemClicked = { onItemClicked(item.shareId, item.id) },
-        onEditClicked = { navigation.toEditLogin(item.shareId, item.id) },
-        onDeleteClicked = { onDeleteClicked(item) }
+        itemActions = itemActions,
+        item = item,
+        onItemClicked = { onItemClicked?.invoke(item.shareId, item.id) },
     )
 }
 
@@ -95,34 +96,32 @@ internal fun LoginRow(
 internal fun NoteRow(
     item: ItemUiModel,
     itemType: ItemType.Note,
-    navigation: HomeScreenNavigation,
-    onItemClicked: OnItemClick,
-    onDeleteClicked: (ItemUiModel) -> Unit
+    itemActions: List<ItemExtraAction> = emptyList(),
+    onItemClicked: OnItemClick? = null,
 ) {
     ItemRow(
         icon = R.drawable.ic_proton_note,
         title = item.name,
         subtitle = itemType.text.take(10),
-        onItemClicked = { onItemClicked(item.shareId, item.id) },
-        onEditClicked = { navigation.toEditNote(item.shareId, item.id) },
-        onDeleteClicked = { onDeleteClicked(item) }
+        itemActions = itemActions,
+        item = item,
+        onItemClicked = { onItemClicked?.invoke(item.shareId, item.id) },
     )
 }
 
 @Composable
 internal fun AliasRow(
     item: ItemUiModel,
-    navigation: HomeScreenNavigation,
-    onItemClicked: OnItemClick,
-    onDeleteClicked: (ItemUiModel) -> Unit
+    itemActions: List<ItemExtraAction> = emptyList(),
+    onItemClicked: OnItemClick? = null,
 ) {
     ItemRow(
         icon = R.drawable.ic_proton_alias,
         title = item.name,
         subtitle = "", // TODO: Extract alias
-        onItemClicked = { onItemClicked(item.shareId, item.id) },
-        onEditClicked = { navigation.toEditAlias(item.shareId, item.id) },
-        onDeleteClicked = { onDeleteClicked(item) }
+        item = item,
+        itemActions = itemActions,
+        onItemClicked = { onItemClicked?.invoke(item.shareId, item.id) },
     )
 }
 
@@ -131,11 +130,11 @@ internal fun ItemRow(
     @DrawableRes icon: Int,
     title: String,
     subtitle: String,
+    item: ItemUiModel,
+    itemActions: List<ItemExtraAction> = emptyList(),
     onItemClicked: () -> Unit,
-    onEditClicked: () -> Unit,
-    onDeleteClicked: () -> Unit,
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    val (expanded, setExpanded) = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -160,35 +159,13 @@ internal fun ItemRow(
                 modifier = Modifier.padding(start = 20.dp)
             )
             Spacer(Modifier.weight(1f))
-            Box {
-                IconButton(
-                    onClick = { expanded = true },
-                    modifier = Modifier.then(Modifier.size(24.dp))
-                ) {
-                    Icon(
-                        ImageVector.vectorResource(R.drawable.ic_three_dots_vertical_24),
-                        contentDescription = stringResource(id = R.string.action_delete),
-                    )
-                }
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
-                    properties = PopupProperties()
-                ) {
-                    DropdownMenuItem(onClick = {
-                        onEditClicked()
-                        expanded = false
-                    }) {
-                        Text(text = stringResource(id = R.string.action_edit))
-                    }
-                    DropdownMenuItem(onClick = {
-                        onDeleteClicked()
-                        expanded = false
-                    }) {
-                        Text(text = stringResource(id = R.string.action_delete))
-                    }
-                }
-            }
+
+            ItemRowExtraOptions(
+                expanded = expanded,
+                setExpanded = setExpanded,
+                actions = itemActions,
+                item = item,
+            )
         }
         Row(modifier = Modifier.padding(start = 44.dp, end = 20.dp)) {
             Text(
@@ -197,6 +174,42 @@ internal fun ItemRow(
                 fontSize = 14.sp,
                 fontWeight = FontWeight.W400,
             )
+        }
+    }
+}
+
+@Composable
+private fun ItemRowExtraOptions(
+    expanded: Boolean,
+    setExpanded: (Boolean) -> Unit,
+    actions: List<ItemExtraAction>,
+    item: ItemUiModel,
+) {
+    if (actions.isEmpty()) return
+
+    Box {
+        IconButton(
+            onClick = { setExpanded(true) },
+            modifier = Modifier.then(Modifier.size(24.dp))
+        ) {
+            Icon(
+                ImageVector.vectorResource(R.drawable.ic_three_dots_vertical_24),
+                contentDescription = stringResource(id = R.string.action_delete),
+            )
+        }
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { setExpanded(false) },
+            properties = PopupProperties()
+        ) {
+            actions.forEach {
+                DropdownMenuItem(onClick = {
+                    it.onSelect(item)
+                    setExpanded(false)
+                }) {
+                    Text(text = stringResource(id = it.title))
+                }
+            }
         }
     }
 }

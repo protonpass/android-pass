@@ -1,7 +1,7 @@
 package me.proton.core.pass.data.remote
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.data.crypto.CreateVaultRequest
+import me.proton.core.pass.data.requests.CreateVaultRequest
 import me.proton.core.pass.data.responses.ShareResponse
 import me.proton.core.pass.domain.ShareId
 

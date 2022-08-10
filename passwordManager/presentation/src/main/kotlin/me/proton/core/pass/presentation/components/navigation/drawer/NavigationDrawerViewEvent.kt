@@ -23,10 +23,3 @@ sealed class ShareClickEvent {
     object AllShares : ShareClickEvent()
     data class Share(val share: ShareUiModel) : ShareClickEvent()
 }
-
-interface NavigationDrawerViewEvent {
-    val onShareSelected: (ShareClickEvent) -> Unit
-    val onSettings: () -> Unit
-    val onHelp: () -> Unit
-    val onSignOut: () -> Unit
-}

@@ -69,6 +69,6 @@ data class VaultKeyEntity(
     }
 
     companion object {
-        const val TABLE = "vault_keys"
+        const val TABLE = "VaultKeyEntity"
     }
 }

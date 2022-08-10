@@ -150,23 +150,9 @@ private fun NavGraphBuilder.crudNavigation(
 @ExperimentalAnimationApi
 private fun NavGraphBuilder.composable(
     navItem: NavItem,
-    content: @Composable (NavBackStackEntry) -> Unit
-) {
-    composable(
-        route = navItem.route,
-        arguments = navItem.args
-    ) {
-        content(it)
-    }
-}
-
-@ExperimentalAnimationApi
-private fun NavGraphBuilder.composable(
-    navItem: NavItem,
-    content: @Composable (NavBackStackEntry) -> Unit,
     animate: Boolean = true,
+    content: @Composable (NavBackStackEntry) -> Unit,
 ) {
-
     composable(
         route = navItem.route,
         arguments = navItem.args,

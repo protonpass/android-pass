@@ -145,7 +145,7 @@ private fun HomeTopBar(
             if (isSearchMode) {
                 HomeSearchBar()
             } else {
-                TopBarTitleView(title = stringResource(id = R.string.title_all_shares))
+                TopBarTitleView(title = stringResource(id = R.string.title_items))
             }
         },
         navigationIcon = {

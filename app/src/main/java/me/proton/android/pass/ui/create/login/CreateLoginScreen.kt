@@ -3,13 +3,28 @@ package me.proton.android.pass.ui.create.login
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,7 +40,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.android.pass.R
-import me.proton.android.pass.ui.shared.*
+import me.proton.android.pass.ui.shared.CrossBackIcon
+import me.proton.android.pass.ui.shared.ProtonFormInput
+import me.proton.android.pass.ui.shared.ProtonTextField
+import me.proton.android.pass.ui.shared.ProtonTextTitle
+import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.DeferredCircularProgressIndicator
 import me.proton.core.compose.component.ProtonOutlinedButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
@@ -185,7 +204,11 @@ private fun CreateLoginItemScreen(
     ) {
 
         TitleInput(value = state.title, onChange = onTitleChange)
-        UsernameInput(value = state.username, onChange = onUsernameChange, onGenerateAliasClick = {})
+        UsernameInput(
+            value = state.username,
+            onChange = onUsernameChange,
+            onGenerateAliasClick = {}
+        )
         PasswordInput(value = state.password, onChange = onPasswordChange)
         Spacer(modifier = Modifier.height(20.dp))
         GeneratePasswordButton(onPasswordGenerated = { onPasswordChange(it) })
@@ -200,7 +223,10 @@ private fun WebsitesSection(
     onWebsitesChange: OnWebsiteChange
 ) {
 
-    ProtonTextTitle(R.string.field_website_address_title, modifier = Modifier.padding(vertical = 8.dp))
+    ProtonTextTitle(
+        title = R.string.field_website_address_title,
+        modifier = Modifier.padding(vertical = 8.dp)
+    )
 
     // Only show the remove button if there is more than 1 website
     val shouldShowRemoveButton = websites.size > 1

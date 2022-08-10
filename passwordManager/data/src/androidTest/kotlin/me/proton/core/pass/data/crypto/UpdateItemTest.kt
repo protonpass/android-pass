@@ -12,7 +12,11 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.SessionKey
-import me.proton.core.key.domain.*
+import me.proton.core.key.domain.decryptData
+import me.proton.core.key.domain.getArmored
+import me.proton.core.key.domain.getBase64Decoded
+import me.proton.core.key.domain.useKeys
+import me.proton.core.key.domain.verifyData
 import me.proton.core.pass.domain.ItemContents
 import me.proton.core.pass.domain.KeyPacket
 import me.proton.core.pass.domain.key.ItemKey

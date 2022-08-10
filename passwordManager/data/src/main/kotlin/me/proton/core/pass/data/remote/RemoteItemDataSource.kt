@@ -1,9 +1,11 @@
 package me.proton.core.pass.data.remote
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.data.crypto.CreateItemRequest
-import me.proton.core.pass.data.crypto.UpdateItemRequest
+import me.proton.core.pass.data.requests.CreateItemRequest
+import me.proton.core.pass.data.requests.TrashItemsRequest
+import me.proton.core.pass.data.requests.UpdateItemRequest
 import me.proton.core.pass.data.responses.ItemRevision
+import me.proton.core.pass.data.responses.TrashItemsResponse
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 
@@ -16,5 +18,6 @@ interface RemoteItemDataSource {
         body: UpdateItemRequest
     ): ItemRevision
     suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision>
-    suspend fun delete(userId: UserId, shareId: ShareId, itemId: ItemId)
+    suspend fun sendToTrash(userId: UserId, shareId: ShareId, body: TrashItemsRequest): TrashItemsResponse
+    suspend fun delete(userId: UserId, shareId: ShareId, body: TrashItemsRequest)
 }

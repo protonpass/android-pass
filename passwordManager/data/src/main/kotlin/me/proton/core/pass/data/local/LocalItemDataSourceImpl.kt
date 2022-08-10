@@ -6,6 +6,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.data.db.PassDatabase
 import me.proton.core.pass.data.db.entities.ItemEntity
 import me.proton.core.pass.domain.ItemId
+import me.proton.core.pass.domain.ItemState
 import me.proton.core.pass.domain.ShareId
 
 class LocalItemDataSourceImpl @Inject constructor(
@@ -17,15 +18,22 @@ class LocalItemDataSourceImpl @Inject constructor(
 
     override fun observeItemsForShare(
         userId: UserId,
-        shareId: ShareId
+        shareId: ShareId,
+        itemState: ItemState
     ): Flow<List<ItemEntity>> =
-        database.itemsDao().observeAllForShare(userId.id, shareId.id)
+        database.itemsDao().observerAllForShare(userId.id, shareId.id, itemState.value)
 
-    override fun observeItems(userId: UserId): Flow<List<ItemEntity>> =
-        database.itemsDao().observeAllForAddress(userId.id)
+    override fun observeItems(userId: UserId, itemState: ItemState): Flow<List<ItemEntity>> =
+        database.itemsDao().observeAllForAddress(userId.id, itemState.value)
 
     override suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity? =
         database.itemsDao().getById(shareId.id, itemId.id)
+
+    override suspend fun setItemState(shareId: ShareId, itemId: ItemId, itemState: ItemState) =
+        database.itemsDao().setItemState(shareId.id, itemId.id, itemState.value)
+
+    override suspend fun getTrashedItems(userId: UserId): List<ItemEntity> =
+        database.itemsDao().getItemsWithState(userId.id, ItemState.Trashed.value)
 
     override suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean =
         database.itemsDao().delete(shareId.id, itemId.id) > 0

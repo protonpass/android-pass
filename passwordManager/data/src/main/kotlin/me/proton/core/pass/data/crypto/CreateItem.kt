@@ -1,8 +1,6 @@
 package me.proton.core.pass.data.crypto
 
 import javax.inject.Inject
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.dataPacket
@@ -12,32 +10,13 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.signData
 import me.proton.core.key.domain.useKeys
 import me.proton.core.pass.data.extensions.serializeToProto
+import me.proton.core.pass.data.requests.CreateItemRequest
 import me.proton.core.pass.domain.ItemContents
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.key.publicKey
 import me.proton.core.pass.domain.key.usePrivateKey
 import me.proton.core.user.domain.entity.UserAddress
-
-@Serializable
-data class CreateItemRequest(
-    @SerialName("RotationID")
-    val rotationId: String,
-    @SerialName("Labels")
-    val labels: List<String>,
-    @SerialName("VaultKeyPacket")
-    val vaultKeyPacket: String,
-    @SerialName("VaultKeyPacketSignature")
-    val vaultKeyPacketSignature: String,
-    @SerialName("ContentFormatVersion")
-    val contentFormatVersion: Int,
-    @SerialName("Content")
-    val content: String,
-    @SerialName("UserSignature")
-    val userSignature: String,
-    @SerialName("ItemKeySignature")
-    val itemKeySignature: String,
-)
 
 class CreateItem @Inject constructor(
     private val cryptoContext: CryptoContext

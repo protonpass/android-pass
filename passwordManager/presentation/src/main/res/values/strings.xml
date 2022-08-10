@@ -46,6 +46,7 @@
     <string name="navigation_item_trash">@string/title_trash</string>
     <string name="navigation_item_offline">@string/title_offline_available</string>
     <string name="navigation_item_settings">@string/title_settings</string>
+    <string name="navigation_item_items">Items</string>
     <string name="navigation_item_help">Help</string>
     <string name="navigation_item_sign_out">@string/title_sign_out</string>
 
@@ -56,4 +57,5 @@
     <!-- TopBar -->
     <string name="action_create">Create</string>
     <string name="action_search">Search</string>
+    <string name="action_empty_trash">Empty trash</string>
 </resources>

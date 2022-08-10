@@ -22,15 +22,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
+import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.domain.ItemId
+import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 import me.proton.core.pass.presentation.components.model.ItemUiModel
+import me.proton.core.pass.presentation.components.navigation.drawer.NavDrawerNavigation
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawer
 
 internal typealias OnItemClick = (ShareId, ItemId) -> Unit
@@ -52,11 +54,7 @@ interface HomeScreenNavigation {
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onDrawerStateChanged: (Boolean) -> Unit = {},
-    onSignIn: (UserId?) -> Unit = {},
-    onSignOut: (UserId) -> Unit = {},
-    onRemove: (UserId?) -> Unit = {},
-    onSwitch: (UserId) -> Unit = {},
+    navDrawerNavigation: NavDrawerNavigation,
     navigation: HomeScreenNavigation,
     homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
@@ -70,16 +68,13 @@ fun HomeScreen(
         isOpen && !isAnimationRunning || isClosed && isAnimationRunning
     }
     LaunchedEffect(isDrawerOpen) {
-        onDrawerStateChanged(isDrawerOpen)
+        navDrawerNavigation.onDrawerStateChanged(isDrawerOpen)
     }
     val drawerGesturesEnabled by homeScaffoldState.drawerGesturesEnabled
 
     val viewState by rememberFlowWithLifecycle(flow = homeViewModel.viewState)
         .collectAsState(initial = homeViewModel.initialViewState)
 
-    val viewEvent = homeViewModel.viewEvent(
-        navigateToSigningOut = { onRemove(null) },
-    )
     val coroutineScope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
 
@@ -101,21 +96,15 @@ fun HomeScreen(
                 NavigationDrawer(
                     drawerState = homeScaffoldState.scaffoldState.drawerState,
                     viewState = viewState.navigationDrawerViewState,
-                    viewEvent = viewEvent.navigationDrawerViewEvent,
-                    shares = viewState.shares,
+                    navigation = navDrawerNavigation,
                     modifier = Modifier
                         .statusBarsPadding()
                         .navigationBarsPadding(),
-                    onRemove = onRemove,
-                    onSignIn = onSignIn,
-                    onSignOut = onSignOut,
-                    onSwitch = onSwitch,
                 )
             },
             drawerGesturesEnabled = drawerGesturesEnabled,
             topBar = {
                 HomeTopBar(
-                    viewState = viewState,
                     homeScaffoldState = homeScaffoldState,
                     bottomSheetState = bottomSheetState,
                     coroutineScope = coroutineScope
@@ -133,7 +122,9 @@ fun HomeScreen(
                 )
                 ConfirmItemDeletionDialog(
                     itemState = itemToDelete,
-                    onConfirm = { homeViewModel.deleteItem(it) }
+                    title = R.string.alert_confirm_item_send_to_trash_title,
+                    message = R.string.alert_confirm_item_send_to_trash_message,
+                    onConfirm = { homeViewModel.sendItemToTrash(it) }
                 )
             }
         }
@@ -143,7 +134,6 @@ fun HomeScreen(
 @ExperimentalMaterialApi
 @Composable
 private fun HomeTopBar(
-    viewState: HomeViewModel.ViewState,
     homeScaffoldState: HomeScaffoldState,
     bottomSheetState: ModalBottomSheetState,
     coroutineScope: CoroutineScope,
@@ -155,7 +145,7 @@ private fun HomeTopBar(
             if (isSearchMode) {
                 HomeSearchBar()
             } else {
-                HomeTopBarTitle(viewState)
+                TopBarTitleView(title = stringResource(id = R.string.title_all_shares))
             }
         },
         navigationIcon = {
@@ -202,48 +192,8 @@ private fun HomeSearchBar() {
     Text(text = "TODO: Search :)")
 }
 
-@ExperimentalMaterialApi
 @Composable
-private fun HomeTopBarTitle(viewState: HomeViewModel.ViewState) {
-    val title = when (val topBarTitle = viewState.topBarTitle) {
-        is HomeViewModel.TopBarTitle.AllShares -> stringResource(id = R.string.title_all_shares)
-        is HomeViewModel.TopBarTitle.ShareName -> topBarTitle.name
-    }
-    TopBarTitleView(title = title)
-}
-
-@Composable
-private fun ConfirmItemDeletionDialog(
-    itemState: MutableState<ItemUiModel?>,
-    onConfirm: (ItemUiModel?) -> Unit,
-) {
-    val item = itemState.value
-    if (item != null) {
-        AlertDialog(
-            onDismissRequest = { itemState.value = null },
-            title = { Text(stringResource(R.string.alert_confirm_secret_deletion_title)) },
-            text = {
-                Text(stringResource(R.string.alert_confirm_secret_deletion_message, item.name))
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    onConfirm(item)
-                    itemState.value = null
-                }) {
-                    Text(text = stringResource(id = R.string.presentation_alert_ok))
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { itemState.value = null }) {
-                    Text(text = stringResource(id = R.string.presentation_alert_cancel))
-                }
-            }
-        )
-    }
-}
-
-@Composable
-internal fun Home(
+private fun Home(
     items: List<ItemUiModel>,
     modifier: Modifier = Modifier,
     onItemClick: OnItemClick,
@@ -255,16 +205,35 @@ internal fun Home(
             items = items,
             modifier = modifier,
             onItemClick = onItemClick,
-            navigation = navigation,
-            onDeleteItemClicked = onDeleteItemClicked
+            itemActions = listOf(
+                ItemExtraAction(
+                    onSelect = { goToEdit(navigation, it) },
+                    title = R.string.action_edit
+                ),
+                ItemExtraAction(
+                    onSelect = { onDeleteItemClicked(it) },
+                    title = R.string.action_delete
+                ),
+            )
         )
     } else {
         Box(modifier = Modifier.fillMaxSize()) {
             Text(
-                "You don't have any saved credentials.",
+                text = stringResource(R.string.message_no_saved_credentials),
                 modifier = Modifier.align(Alignment.Center)
             )
         }
+    }
+}
+
+internal fun goToEdit(
+    navigation: HomeScreenNavigation,
+    item: ItemUiModel
+) {
+    when (item.itemType) {
+        is ItemType.Login -> navigation.toEditLogin(item.shareId, item.id)
+        is ItemType.Note -> navigation.toEditNote(item.shareId, item.id)
+        is ItemType.Alias -> navigation.toEditAlias(item.shareId, item.id)
     }
 }
 

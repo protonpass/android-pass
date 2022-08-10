@@ -19,6 +19,7 @@ package me.proton.core.pass.presentation.components.navigation.drawer
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,29 +46,36 @@ fun NavigationDrawerListItem(
     @DrawableRes icon: Int,
     @StringRes title: Int,
     modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
     onClick: () -> Unit,
-) = NavigationDrawerListItem(painterResource(icon), stringResource(title), modifier, onClick)
-
-@Composable
-fun NavigationDrawerListItem(
-    @DrawableRes icon: Int,
-    title: String,
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-) = NavigationDrawerListItem(painterResource(icon), title, modifier, onClick)
+) = NavigationDrawerListItem(
+    icon = painterResource(icon),
+    title = stringResource(title),
+    modifier = modifier,
+    isSelected = isSelected,
+    onClick = onClick
+)
 
 @Composable
 fun NavigationDrawerListItem(
     icon: Painter,
     title: String,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    isSelected: Boolean = false,
+    onClick: () -> Unit
 ) {
+    val backgroundColor = if (isSelected) {
+        ProtonTheme.colors.interactionWeakPressed
+    } else {
+        ProtonTheme.colors.backgroundNorm
+    }
+
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(ListItemHeight)
             .clickable(onClick = onClick)
+            .background(backgroundColor)
             .padding(horizontal = DefaultSpacing, vertical = SmallSpacing)
             .semantics(mergeDescendants = true) {
                 contentDescription = title

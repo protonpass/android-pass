@@ -4,7 +4,11 @@ import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -43,17 +47,15 @@ fun LoginDetail(
     val clipboard = LocalClipboardManager.current
 
     val copiedToClipboardSuffix = stringResource(R.string.field_copied_to_clipboard)
-    val storeToClipboard = (
-        { contents: String?, fieldName: String ->
-            if (contents != null) {
-                val message = "$fieldName $copiedToClipboardSuffix"
-                clipboard.setText(AnnotatedString(contents))
-                Toast
-                    .makeText(localContext, message, Toast.LENGTH_SHORT)
-                    .show()
-            }
+    val storeToClipboard = { contents: String?, fieldName: String ->
+        if (contents != null) {
+            val message = "$fieldName $copiedToClipboardSuffix"
+            clipboard.setText(AnnotatedString(contents))
+            Toast
+                .makeText(localContext, message, Toast.LENGTH_SHORT)
+                .show()
         }
-        )
+    }
 
     val passwordFieldName = stringResource(R.string.field_password)
     LaunchedEffect(viewModel) {
@@ -131,6 +133,7 @@ internal fun WebsiteSection(
         }
     }
 }
+
 @Composable
 internal fun PasswordRow(
     model: LoginDetailViewModel.LoginUiModel,

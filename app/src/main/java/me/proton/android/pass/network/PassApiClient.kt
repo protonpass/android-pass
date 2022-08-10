@@ -1,7 +1,7 @@
 package me.proton.android.pass.network
 
 import android.os.Build
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 import me.proton.android.pass.BuildConfig
 import me.proton.core.network.domain.ApiClient

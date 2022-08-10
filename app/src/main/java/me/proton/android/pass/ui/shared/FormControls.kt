@@ -92,13 +92,10 @@ fun ProtonTextField(
         Integer.MAX_VALUE
     }
     val focusManager = LocalFocusManager.current
-    val goToNextField = (
-        {
-            if (moveToNextOnEnter) {
-                focusManager.moveFocus(FocusDirection.Down)
-            }
-        }
-        )
+    val goToNextField = {
+        if (moveToNextOnEnter) focusManager.moveFocus(FocusDirection.Down)
+    }
+
     TextField(
         value = value,
         onValueChange = {

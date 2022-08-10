@@ -5,8 +5,21 @@ import me.proton.core.pass.data.requests.CreateItemRequest
 import me.proton.core.pass.data.requests.CreateVaultRequest
 import me.proton.core.pass.data.requests.TrashItemsRequest
 import me.proton.core.pass.data.requests.UpdateItemRequest
-import me.proton.core.pass.data.responses.*
-import retrofit2.http.*
+import me.proton.core.pass.data.responses.CreateItemResponse
+import me.proton.core.pass.data.responses.CreateVaultResponse
+import me.proton.core.pass.data.responses.GetItemsResponse
+import me.proton.core.pass.data.responses.GetKeyPacketResponse
+import me.proton.core.pass.data.responses.GetShareResponse
+import me.proton.core.pass.data.responses.GetSharesResponse
+import me.proton.core.pass.data.responses.GetVaultKeysResponse
+import me.proton.core.pass.data.responses.TrashItemsResponse
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.HTTP
+import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 internal const val PREFIX = "pass/v1"
 

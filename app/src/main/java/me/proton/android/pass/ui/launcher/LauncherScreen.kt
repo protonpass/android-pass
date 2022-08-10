@@ -10,7 +10,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.android.pass.ui.help.HelpScreen
 import me.proton.android.pass.ui.home.HomeScreen
 import me.proton.android.pass.ui.home.HomeScreenNavigation
-import me.proton.android.pass.ui.launcher.LauncherViewModel.State.*
 import me.proton.android.pass.ui.settings.SettingsScreen
 import me.proton.android.pass.ui.trash.TrashScreen
 import me.proton.core.compose.component.ProtonCenteredProgress
@@ -25,7 +24,7 @@ fun LauncherScreen(
     homeScreenNavigation: HomeScreenNavigation,
     viewModel: LauncherViewModel = hiltViewModel(),
 ) {
-    val state by viewModel.state.collectAsState(Processing)
+    val state by viewModel.state.collectAsState(LauncherViewModel.State.Processing)
     val section by viewModel.sectionStateFlow.collectAsState(viewModel.initialSection)
 
     val events = object : NavDrawerNavigation {
@@ -40,8 +39,8 @@ fun LauncherScreen(
     }
 
     when (state) {
-        AccountNeeded -> viewModel.addAccount()
-        PrimaryExist -> when (section) {
+        LauncherViewModel.State.AccountNeeded -> viewModel.addAccount()
+        LauncherViewModel.State.PrimaryExist -> when (section) {
             NavigationDrawerSection.Items -> HomeScreen(
                 navDrawerNavigation = events,
                 navigation = homeScreenNavigation,
@@ -59,7 +58,7 @@ fun LauncherScreen(
                 navigation = homeScreenNavigation,
             )
         }
-        Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
-        StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
+        LauncherViewModel.State.Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
+        LauncherViewModel.State.StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
     }
 }

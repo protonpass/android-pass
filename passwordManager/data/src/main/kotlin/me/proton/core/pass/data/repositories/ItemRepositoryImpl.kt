@@ -24,7 +24,13 @@ import me.proton.core.pass.data.remote.RemoteItemDataSource
 import me.proton.core.pass.data.requests.TrashItemRevision
 import me.proton.core.pass.data.requests.TrashItemsRequest
 import me.proton.core.pass.data.responses.ItemRevision
-import me.proton.core.pass.domain.*
+import me.proton.core.pass.domain.Item
+import me.proton.core.pass.domain.ItemContents
+import me.proton.core.pass.domain.ItemId
+import me.proton.core.pass.domain.ItemState
+import me.proton.core.pass.domain.Share
+import me.proton.core.pass.domain.ShareId
+import me.proton.core.pass.domain.ShareSelection
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.repositories.ItemRepository

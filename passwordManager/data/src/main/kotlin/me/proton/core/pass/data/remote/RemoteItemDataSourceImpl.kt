@@ -4,6 +4,7 @@ import javax.inject.Inject
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.pass.data.api.PasswordManagerApi
+import me.proton.core.pass.data.requests.CreateAliasRequest
 import me.proton.core.pass.data.requests.CreateItemRequest
 import me.proton.core.pass.data.requests.TrashItemsRequest
 import me.proton.core.pass.data.requests.UpdateItemRequest
@@ -19,6 +20,11 @@ class RemoteItemDataSourceImpl @Inject constructor(
     override suspend fun createItem(userId: UserId, shareId: ShareId, body: CreateItemRequest): ItemRevision =
         api.get<PasswordManagerApi>(userId).invoke {
             createItem(shareId.id, body)
+        }.valueOrThrow.item
+
+    override suspend fun createAlias(userId: UserId, shareId: ShareId, body: CreateAliasRequest): ItemRevision =
+        api.get<PasswordManagerApi>(userId).invoke {
+            createAlias(shareId.id, body)
         }.valueOrThrow.item
 
     override suspend fun updateItem(

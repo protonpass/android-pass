@@ -13,6 +13,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         SELECT * FROM ${ItemEntity.TABLE} 
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.STATE} = :itemState
+        ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
         """
     )
     abstract fun observeAllForAddress(userId: String, itemState: Int): Flow<List<ItemEntity>>
@@ -23,6 +24,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_ID} = :shareId
           AND ${ItemEntity.Columns.STATE} = :itemState
+        ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
         """
     )
     abstract fun observerAllForShare(userId: String, shareId: String, itemState: Int): Flow<List<ItemEntity>>
@@ -41,6 +43,7 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         SELECT * FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.STATE} = :state
+        ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
         """
     )
     abstract suspend fun getItemsWithState(userId: String, state: Int): List<ItemEntity>

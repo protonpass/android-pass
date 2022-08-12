@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -52,7 +51,7 @@ fun ItemsList(
             ItemRow(
                 item = item,
                 onItemClicked = onItemClick,
-                itemActions = itemActions,
+                itemActions = itemActions
             )
         }
     }
@@ -64,23 +63,48 @@ internal fun ItemRow(
     itemActions: List<ItemExtraAction> = emptyList(),
     onItemClicked: OnItemClick? = null,
 ) {
+    val (expanded, setExpanded) = remember { mutableStateOf(false) }
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onItemClicked?.invoke(item.shareId, item.id) }
+            .padding(end = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        ItemRowContents(
+            item = item,
+            modifier = Modifier.weight(1f)
+        )
+        ItemRowExtraOptions(
+            expanded = expanded,
+            setExpanded = setExpanded,
+            actions = itemActions,
+            item = item,
+        )
+    }
+}
+
+@Composable
+internal fun ItemRowContents(
+    item: ItemUiModel,
+    modifier: Modifier = Modifier
+) {
     when (val itemType = item.itemType) {
         is ItemType.Login -> LoginRow(
             item = item,
             itemType = itemType,
-            onItemClicked = onItemClicked,
-            itemActions = itemActions,
+            modifier = modifier,
         )
         is ItemType.Note -> NoteRow(
             item = item,
             itemType = itemType,
-            onItemClicked = onItemClicked,
-            itemActions = itemActions,
+            modifier = modifier,
         )
         is ItemType.Alias -> AliasRow(
             item = item,
-            onItemClicked = onItemClicked,
-            itemActions = itemActions,
+            itemType = itemType,
+            modifier = modifier,
         )
     }
 }
@@ -89,16 +113,13 @@ internal fun ItemRow(
 internal fun LoginRow(
     item: ItemUiModel,
     itemType: ItemType.Login,
-    itemActions: List<ItemExtraAction> = emptyList(),
-    onItemClicked: OnItemClick? = null,
+    modifier: Modifier = Modifier
 ) {
     ItemRow(
         icon = R.drawable.ic_proton_key,
         title = item.name,
         subtitle = itemType.username,
-        itemActions = itemActions,
-        item = item,
-        onItemClicked = { onItemClicked?.invoke(item.shareId, item.id) },
+        modifier = modifier,
     )
 }
 
@@ -106,32 +127,27 @@ internal fun LoginRow(
 internal fun NoteRow(
     item: ItemUiModel,
     itemType: ItemType.Note,
-    itemActions: List<ItemExtraAction> = emptyList(),
-    onItemClicked: OnItemClick? = null,
+    modifier: Modifier = Modifier
 ) {
     ItemRow(
         icon = R.drawable.ic_proton_note,
         title = item.name,
         subtitle = itemType.text.take(10),
-        itemActions = itemActions,
-        item = item,
-        onItemClicked = { onItemClicked?.invoke(item.shareId, item.id) },
+        modifier = modifier,
     )
 }
 
 @Composable
 internal fun AliasRow(
     item: ItemUiModel,
-    itemActions: List<ItemExtraAction> = emptyList(),
-    onItemClicked: OnItemClick? = null,
+    itemType: ItemType.Alias,
+    modifier: Modifier = Modifier
 ) {
     ItemRow(
         icon = R.drawable.ic_proton_alias,
         title = item.name,
-        subtitle = "", // TODO: Extract alias
-        item = item,
-        itemActions = itemActions,
-        onItemClicked = { onItemClicked?.invoke(item.shareId, item.id) },
+        subtitle = itemType.aliasEmail,
+        modifier = modifier,
     )
 }
 
@@ -140,22 +156,13 @@ internal fun ItemRow(
     @DrawableRes icon: Int,
     title: String,
     subtitle: String,
-    item: ItemUiModel,
-    itemActions: List<ItemExtraAction> = emptyList(),
-    onItemClicked: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    val (expanded, setExpanded) = remember { mutableStateOf(false) }
-
     Column(
-        modifier = Modifier
-            .clickable { onItemClicked() }
-            .fillMaxWidth()
+        modifier = modifier
             .padding(horizontal = 20.dp, vertical = 12.dp),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        Row {
             Icon(
                 painter = painterResource(icon),
                 contentDescription = null,
@@ -166,15 +173,8 @@ internal fun ItemRow(
                 fontSize = 16.sp,
                 fontWeight = FontWeight.W400,
                 color = ProtonTheme.colors.textNorm,
-                modifier = Modifier.padding(start = 20.dp)
-            )
-            Spacer(Modifier.weight(1f))
-
-            ItemRowExtraOptions(
-                expanded = expanded,
-                setExpanded = setExpanded,
-                actions = itemActions,
-                item = item,
+                modifier = Modifier.padding(start = 20.dp),
+                maxLines = 1,
             )
         }
         Row(modifier = Modifier.padding(start = 44.dp, end = 20.dp)) {
@@ -183,6 +183,7 @@ internal fun ItemRow(
                 color = ProtonTheme.colors.textWeak,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.W400,
+                maxLines = 1,
             )
         }
     }

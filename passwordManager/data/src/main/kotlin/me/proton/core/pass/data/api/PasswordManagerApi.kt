@@ -1,12 +1,15 @@
 package me.proton.core.pass.data.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.pass.data.requests.CreateAliasRequest
 import me.proton.core.pass.data.requests.CreateItemRequest
 import me.proton.core.pass.data.requests.CreateVaultRequest
 import me.proton.core.pass.data.requests.TrashItemsRequest
 import me.proton.core.pass.data.requests.UpdateItemRequest
+import me.proton.core.pass.data.responses.AliasDetailsResponse
 import me.proton.core.pass.data.responses.CreateItemResponse
 import me.proton.core.pass.data.responses.CreateVaultResponse
+import me.proton.core.pass.data.responses.GetAliasOptionsResponse
 import me.proton.core.pass.data.responses.GetItemsResponse
 import me.proton.core.pass.data.responses.GetKeyPacketResponse
 import me.proton.core.pass.data.responses.GetShareResponse
@@ -55,6 +58,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: CreateItemRequest
     ): CreateItemResponse
 
+    @POST("$PREFIX/share/{shareId}/alias/custom")
+    suspend fun createAlias(
+        @Path("shareId") shareId: String,
+        @Body request: CreateAliasRequest
+    ): CreateItemResponse
+
     @PUT("$PREFIX/share/{shareId}/item/{itemId}")
     suspend fun updateItem(
         @Path("shareId") shareId: String,
@@ -71,4 +80,11 @@ interface PasswordManagerApi : BaseRetrofitApi {
     // KeyPacket
     @GET("$PREFIX/share/{shareId}/item/{itemId}/keypacket")
     suspend fun getLatestKeyPacket(@Path("shareId") shareId: String, @Path("itemId") itemId: String): GetKeyPacketResponse
+
+    // Alias
+    @GET("$PREFIX/share/{shareId}/alias/options")
+    suspend fun getAliasOptions(@Path("shareId") shareId: String): GetAliasOptionsResponse
+
+    @GET("$PREFIX/share/{shareId}/alias/{itemId}")
+    suspend fun getAliasDetails(@Path("shareId") shareId: String, @Path("itemId") itemId: String): AliasDetailsResponse
 }

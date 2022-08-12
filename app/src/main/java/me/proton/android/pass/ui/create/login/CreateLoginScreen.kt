@@ -41,11 +41,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.CrossBackIcon
+import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.android.pass.ui.shared.ProtonFormInput
 import me.proton.android.pass.ui.shared.ProtonTextField
 import me.proton.android.pass.ui.shared.ProtonTextTitle
 import me.proton.android.pass.ui.shared.TopBarTitleView
-import me.proton.core.compose.component.DeferredCircularProgressIndicator
 import me.proton.core.compose.component.ProtonOutlinedButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
@@ -53,6 +53,8 @@ import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 import me.proton.core.pass.presentation.generatePassword
+
+private const val DEFAULT_PASSWORD_LENGTH = 16
 
 internal typealias OnTextChange = (String) -> Unit
 
@@ -165,23 +167,22 @@ private fun LoginView(
             )
         }
     ) { padding ->
+        if (viewState.state == BaseLoginViewModel.State.Loading) {
+            LoadingDialog()
+        }
+        CreateLoginItemScreen(
+            state = viewState.modelState,
+            modifier = Modifier.padding(padding),
+            onTitleChange = onTitleChange,
+            onUsernameChange = onUsernameChange,
+            onPasswordChange = onPasswordChange,
+            onWebsiteChange = onWebsiteChange,
+            onNoteChange = onNoteChange,
+        )
         when (val state = viewState.state) {
-            is BaseLoginViewModel.State.Idle -> CreateLoginItemScreen(
-                state = viewState.modelState,
-                modifier = Modifier.padding(padding),
-                onTitleChange = onTitleChange,
-                onUsernameChange = onUsernameChange,
-                onPasswordChange = onPasswordChange,
-                onWebsiteChange = onWebsiteChange,
-                onNoteChange = onNoteChange,
-            )
-            is BaseLoginViewModel.State.Loading -> DeferredCircularProgressIndicator(
-                Modifier
-                    .padding(padding)
-                    .fillMaxSize()
-            )
             is BaseLoginViewModel.State.Error -> Text(text = "something went boom")
             is BaseLoginViewModel.State.Success -> onSuccess(state.itemId)
+            else -> {}
         }
     }
 }
@@ -222,7 +223,6 @@ private fun WebsitesSection(
     websites: List<String>,
     onWebsitesChange: OnWebsiteChange
 ) {
-
     ProtonTextTitle(
         title = R.string.field_website_address_title,
         modifier = Modifier.padding(vertical = 8.dp)
@@ -265,7 +265,9 @@ private fun WebsitesSection(
                     tint = ProtonTheme.colors.iconNorm,
                 )
             },
-            modifier = Modifier.fillMaxWidth().clickable { onWebsitesChange.onAddWebsite() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onWebsitesChange.onAddWebsite() },
             colors = TextFieldDefaults.textFieldColors(
                 textColor = ProtonTheme.colors.brandNorm,
                 disabledTextColor = ProtonTheme.colors.brandNorm,
@@ -348,7 +350,7 @@ private fun PasswordInput(
 private fun GeneratePasswordButton(
     onPasswordGenerated: (String) -> Unit
 ) {
-    ProtonOutlinedButton(onClick = { onPasswordGenerated(generatePassword(12)) }) {
+    ProtonOutlinedButton(onClick = { onPasswordGenerated(generatePassword(DEFAULT_PASSWORD_LENGTH)) }) {
         Text(
             text = stringResource(R.string.button_generate_password),
             color = ProtonTheme.colors.brandNorm,

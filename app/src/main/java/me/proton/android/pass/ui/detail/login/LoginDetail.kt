@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -49,8 +50,8 @@ fun LoginDetail(
     val copiedToClipboardSuffix = stringResource(R.string.field_copied_to_clipboard)
     val storeToClipboard = { contents: String?, fieldName: String ->
         if (contents != null) {
-            val message = "$fieldName $copiedToClipboardSuffix"
             clipboard.setText(AnnotatedString(contents))
+            val message = "$fieldName $copiedToClipboardSuffix"
             Toast
                 .makeText(localContext, message, Toast.LENGTH_SHORT)
                 .show()
@@ -186,7 +187,7 @@ internal fun Section(
     @StringRes title: Int,
     @DrawableRes icon: Int? = null,
     content: String,
-    contentTextColor: Color = ProtonTheme.colors.textNorm,
+    contentTextColor: Color = ProtonTheme.colors.textWeak,
     onIconClick: (() -> Unit)? = null,
     viewBelow: @Composable (() -> Unit)? = null,
 ) {
@@ -206,7 +207,7 @@ internal fun Section(
         if (icon != null) {
             IconButton(
                 onClick = { onIconClick?.invoke() },
-                modifier = Modifier.then(Modifier.size(24.dp))
+                modifier = Modifier.then(Modifier.size(24.dp).align(Alignment.CenterVertically))
             ) {
                 Icon(painter = painterResource(icon), contentDescription = null)
             }

@@ -26,6 +26,12 @@ sealed class NavItem(
     object EditLogin : NavItem("editLogin", listOf(NavArg.ShareId, NavArg.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
     }
+    object CreateAlias : NavItem("createAlias", listOf(NavArg.ShareId)) {
+        fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
+    }
+    object EditAlias : NavItem("editAlias", listOf(NavArg.ShareId, NavArg.ItemId)) {
+        fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+    }
     object CreateNote : NavItem("createNote", listOf(NavArg.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
     }

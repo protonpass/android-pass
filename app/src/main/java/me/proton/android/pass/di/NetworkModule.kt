@@ -63,6 +63,8 @@ import me.proton.core.pass.data.local.LocalShareDataSource
 import me.proton.core.pass.data.local.LocalShareDataSourceImpl
 import me.proton.core.pass.data.local.LocalVaultItemKeyDataSource
 import me.proton.core.pass.data.local.LocalVaultItemKeyDataSourceImpl
+import me.proton.core.pass.data.remote.RemoteAliasDataSource
+import me.proton.core.pass.data.remote.RemoteAliasDataSourceImpl
 import me.proton.core.pass.data.remote.RemoteItemDataSource
 import me.proton.core.pass.data.remote.RemoteItemDataSourceImpl
 import me.proton.core.pass.data.remote.RemoteKeyPacketDataSource
@@ -71,10 +73,12 @@ import me.proton.core.pass.data.remote.RemoteShareDataSource
 import me.proton.core.pass.data.remote.RemoteShareDataSourceImpl
 import me.proton.core.pass.data.remote.RemoteVaultItemKeyDataSource
 import me.proton.core.pass.data.remote.RemoteVaultItemKeyDataSourceImpl
+import me.proton.core.pass.data.repositories.AliasRepositoryImpl
 import me.proton.core.pass.data.repositories.ItemRepositoryImpl
 import me.proton.core.pass.data.repositories.KeyPacketRepositoryImpl
 import me.proton.core.pass.data.repositories.ShareRepositoryImpl
 import me.proton.core.pass.data.repositories.VaultKeyRepositoryImpl
+import me.proton.core.pass.domain.repositories.AliasRepository
 import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.repositories.KeyPacketRepository
 import me.proton.core.pass.domain.repositories.ShareRepository
@@ -262,4 +266,14 @@ abstract class NetworkBindModule {
     abstract fun bindRemoteKeyPacketDataSource(
         remoteKeyPacketDataSource: RemoteKeyPacketDataSourceImpl
     ): RemoteKeyPacketDataSource
+    @Binds
+
+    abstract fun bindAliasRepository(
+        aliasRepository: AliasRepositoryImpl
+    ): AliasRepository
+
+    @Binds
+    abstract fun bindRemoteAliasDataSource(
+        remoteAliasDataSource: RemoteAliasDataSourceImpl
+    ): RemoteAliasDataSource
 }

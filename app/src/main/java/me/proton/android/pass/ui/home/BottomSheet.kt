@@ -52,7 +52,14 @@ fun BottomSheetContents(
             }
         })
         BottomSheetItem(R.drawable.ic_proton_alias, R.string.action_alias, onItemClick = {
-            scope.launch { state.hide() }
+            scope.launch {
+                state.hide()
+                if (shareId != null) {
+                    navigation.toCreateAlias(shareId)
+                } else {
+                    // TODO: Show Snackbar saying to select one?
+                }
+            }
         })
         BottomSheetItem(R.drawable.ic_proton_note, R.string.action_note, onItemClick = {
             scope.launch {

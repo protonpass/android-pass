@@ -2,6 +2,7 @@ package me.proton.android.pass.ui.create.login
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -28,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -230,15 +232,22 @@ private fun WebsitesSection(
 
     // Only show the remove button if there is more than 1 website
     val shouldShowRemoveButton = websites.size > 1
+    var isFocused: Boolean by rememberSaveable { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
             .background(ProtonTheme.colors.backgroundSecondary)
+            .border(
+                width = if (isFocused) 1.dp else 0.dp,
+                shape = RoundedCornerShape(8.dp),
+                color = if (isFocused) ProtonTheme.colors.brandNorm else Color.Transparent
+            )
     ) {
         websites.forEachIndexed { idx, value ->
             ProtonTextField(
                 value = value,
                 onChange = { onWebsitesChange.onWebsiteValueChanged(it, idx) },
+                onFocusChange = { isFocused = it },
                 placeholder = R.string.field_website_address_hint,
                 trailingIcon = {
                     if (shouldShowRemoveButton) {
@@ -265,7 +274,9 @@ private fun WebsitesSection(
                     tint = ProtonTheme.colors.iconNorm,
                 )
             },
-            modifier = Modifier.fillMaxWidth().clickable { onWebsitesChange.onAddWebsite() },
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable { onWebsitesChange.onAddWebsite() },
             colors = TextFieldDefaults.textFieldColors(
                 textColor = ProtonTheme.colors.brandNorm,
                 disabledTextColor = ProtonTheme.colors.brandNorm,

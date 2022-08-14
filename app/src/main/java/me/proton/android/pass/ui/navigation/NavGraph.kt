@@ -11,10 +11,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
+import me.proton.android.pass.R
 import me.proton.android.pass.ui.create.login.CreateLoginView
 import me.proton.android.pass.ui.create.login.UpdateLoginView
 import me.proton.android.pass.ui.create.note.CreateNoteView
 import me.proton.android.pass.ui.create.note.UpdateNoteView
+import me.proton.android.pass.ui.create.password.CreatePasswordView
 import me.proton.android.pass.ui.detail.ItemDetailScreen
 import me.proton.android.pass.ui.home.HomeScreenNavigation
 import me.proton.android.pass.ui.launcher.LauncherScreen
@@ -73,6 +75,9 @@ private fun NavGraphBuilder.mainScreenNavigation(
                 }
                 override val toEditAlias = { shareId: ShareId, itemId: ItemId ->
                     /* TODO */
+                }
+                override val toCreatePassword = { shareId: ShareId ->
+                    navController.navigate(NavItem.CreatePassword.createNavRoute(shareId))
                 }
             }
         )
@@ -143,6 +148,13 @@ private fun NavGraphBuilder.crudNavigation(
             onUpClick = onUpClick,
             shareId = it.findArg(NavArg.ShareId),
             itemId = it.findArg(NavArg.ItemId)
+        )
+    }
+    composable(NavItem.CreatePassword) {
+        CreatePasswordView(
+            topBarTitle = R.string.title_create_password,
+            onUpClick = onUpClick,
+            onConfirm = {}
         )
     }
 }

@@ -35,6 +35,9 @@ sealed class NavItem(
     object ViewItem : NavItem("viewItem", listOf(NavArg.ShareId, NavArg.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
     }
+    object CreatePassword : NavItem("createPassword", listOf(NavArg.ShareId)) {
+        fun createNavRoute(shareId: ShareId) = "${CreatePassword.baseRoute}/${shareId.id}"
+    }
 }
 
 enum class NavArg(val key: String, val navType: NavType<*>) {

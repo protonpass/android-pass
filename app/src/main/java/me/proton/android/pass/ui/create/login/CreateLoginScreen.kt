@@ -53,7 +53,6 @@ import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.DeferredCircularProgressIndicator
 import me.proton.core.compose.component.ProtonOutlinedButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import me.proton.core.compose.theme.ProtonColors
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId

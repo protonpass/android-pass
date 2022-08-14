@@ -77,4 +77,7 @@
     <string name="autofill_save_address_label">Address</string>
     <string name="autofill_save_name_label">Save as</string>
     <string name="error_autofill_save_credentials">The credentials could not be saved.</string>
+
+    <!--  Create password  -->
+    <string name="title_create_password">Generate password</string>
 </resources>

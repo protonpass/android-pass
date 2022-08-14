@@ -80,4 +80,7 @@
 
     <!--  Create password  -->
     <string name="title_create_password">Generate password</string>
+    <string name="special_characters">Special characters</string>
+    <string name="character_count">%s characters</string>
+    <string name="generate_password_confirm">Confirm</string>
 </resources>

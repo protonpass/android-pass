@@ -1,6 +1,7 @@
 package me.proton.android.pass.ui.create.login
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -10,16 +11,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -29,7 +33,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
@@ -50,6 +53,7 @@ import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.DeferredCircularProgressIndicator
 import me.proton.core.compose.component.ProtonOutlinedButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.ProtonColors
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
@@ -243,6 +247,9 @@ private fun WebsitesSection(
                 color = if (isFocused) ProtonTheme.colors.brandNorm else Color.Transparent
             )
     ) {
+        val shouldShowAddWebsiteButton =
+            (websites.count() == 1 && websites.last().isNotEmpty()) || websites.count() > 1
+
         websites.forEachIndexed { idx, value ->
             ProtonTextField(
                 value = value,
@@ -260,32 +267,39 @@ private fun WebsitesSection(
                     }
                 },
             )
+            if (shouldShowAddWebsiteButton) {
+                Divider()
+            }
         }
 
-        TextField(
-            readOnly = true,
-            enabled = false,
-            value = stringResource(R.string.field_website_add_another),
-            onValueChange = {},
-            trailingIcon = {
+        AnimatedVisibility(shouldShowAddWebsiteButton) {
+            val ableToAddNewWebsite = websites.last().isNotEmpty()
+            Button(
+                modifier = Modifier.fillMaxWidth(),
+                enabled = ableToAddNewWebsite,
+                elevation = ButtonDefaults.elevation(
+                    defaultElevation = 0.dp,
+                    pressedElevation = 0.dp,
+                    disabledElevation = 0.dp
+                ),
+                contentPadding = PaddingValues(16.dp),
+                onClick = { onWebsitesChange.onAddWebsite() },
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = Color.Transparent,
+                    disabledBackgroundColor = Color.Transparent,
+                    contentColor = ProtonTheme.colors.brandNorm,
+                    disabledContentColor = ProtonTheme.colors.interactionDisabled
+                )
+            ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_proton_plus),
                     contentDescription = null,
-                    tint = ProtonTheme.colors.iconNorm,
                 )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { onWebsitesChange.onAddWebsite() },
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = ProtonTheme.colors.brandNorm,
-                disabledTextColor = ProtonTheme.colors.brandNorm,
-                backgroundColor = ProtonTheme.colors.backgroundSecondary,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-            )
-        )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(stringResource(R.string.field_website_add_another))
+                Spacer(modifier = Modifier.fillMaxWidth())
+            }
+        }
     }
 }
 

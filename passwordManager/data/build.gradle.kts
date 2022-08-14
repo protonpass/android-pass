@@ -1,5 +1,6 @@
 // Necessary imports for the protobuf section to work
 import com.google.protobuf.gradle.*
+import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     id("com.android.library")
@@ -71,13 +72,14 @@ dependencies {
 }
 
 protobuf {
+    val archSuffix = if (Os.isFamily(Os.FAMILY_MAC)) ":osx-x86_64" else ""
     protoc {
-        artifact = "com.google.protobuf:protoc:${Versions.Protobuf.protocArtifact}"
+        artifact = "com.google.protobuf:protoc:${Versions.Protobuf.protocArtifact}$archSuffix"
     }
     plugins {
         id("javalite") {
             artifact =
-                "com.google.protobuf:protoc-gen-javalite:${Versions.Protobuf.javaliteArtifact}"
+                "com.google.protobuf:protoc-gen-javalite:${Versions.Protobuf.javaliteArtifact}$archSuffix"
         }
     }
     generateProtoTasks {

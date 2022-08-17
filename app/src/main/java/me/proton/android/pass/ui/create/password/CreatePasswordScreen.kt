@@ -85,7 +85,9 @@ private fun CreatePasswordViewContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             PasswordText(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier
+                    .weight(1f)
+                    .height(72.dp),
                 password = password
             )
             Spacer(modifier = Modifier.size(8.dp))
@@ -108,7 +110,10 @@ private fun CreatePasswordViewContent(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(stringResource(R.string.character_count, length))
+            Text(
+                modifier = Modifier.width(112.dp),
+                text = stringResource(R.string.character_count, length)
+            )
             Spacer(modifier = Modifier.width(8.dp))
             Slider(
                 value = length.toFloat(),
@@ -161,10 +166,14 @@ private fun PasswordText(
         }
         .reduceOrNull { acc, next -> acc.plus(next) } ?: AnnotatedString("")
 
-    Text(
+    Box(
         modifier = modifier,
-        text = annotatedString,
-        fontWeight = FontWeight.Bold,
-        style = MaterialTheme.typography.h6
-    )
+        contentAlignment = Alignment.CenterStart
+    ) {
+        Text(
+            text = annotatedString,
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.h6,
+        )
+    }
 }

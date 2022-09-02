@@ -69,6 +69,8 @@ interface HomeScreenNavigation {
     val toEditAlias: (ShareId, ItemId) -> Unit
 
     val toItemDetail: (ShareId, ItemId) -> Unit
+
+    val toCreatePassword: (ShareId) -> Unit
 }
 
 @ExperimentalMaterialApi

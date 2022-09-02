@@ -17,6 +17,7 @@ import me.proton.android.pass.ui.create.login.CreateLoginView
 import me.proton.android.pass.ui.create.login.UpdateLoginView
 import me.proton.android.pass.ui.create.note.CreateNoteView
 import me.proton.android.pass.ui.create.note.UpdateNoteView
+import me.proton.android.pass.ui.create.password.CreatePasswordView
 import me.proton.android.pass.ui.detail.ItemDetailScreen
 import me.proton.android.pass.ui.home.HomeScreenNavigation
 import me.proton.android.pass.ui.launcher.LauncherScreen
@@ -77,6 +78,9 @@ private fun NavGraphBuilder.mainScreenNavigation(
                 }
                 override val toEditAlias = { shareId: ShareId, itemId: ItemId ->
                     navController.navigate(NavItem.EditAlias.createNavRoute(shareId, itemId))
+                }
+                override val toCreatePassword = { shareId: ShareId ->
+                    navController.navigate(NavItem.CreatePassword.createNavRoute(shareId))
                 }
             }
         )
@@ -168,6 +172,12 @@ private fun NavGraphBuilder.crudNavigation(
             }
         )
     }
+    composable(NavItem.CreatePassword) {
+        CreatePasswordView(
+            onUpClick = onUpClick,
+            onConfirm = {}
+        )
+    }
     composable(NavItem.ViewItem) {
         ItemDetailScreen(
             onUpClick = onUpClick,
@@ -207,9 +217,12 @@ private fun navigateToEdit(
         is ItemType.Login -> NavItem.EditLogin.createNavRoute(shareId, itemId)
         is ItemType.Note -> NavItem.EditNote.createNavRoute(shareId, itemId)
         is ItemType.Alias -> NavItem.EditAlias.createNavRoute(shareId, itemId)
+        is ItemType.Password -> null // Edit password does not exist yet
     }
 
-    navController.navigate(route)
+    if (route != null) {
+        navController.navigate(route)
+    }
 }
 
 private inline fun <reified T> NavBackStackEntry.findArg(arg: NavArg): T {

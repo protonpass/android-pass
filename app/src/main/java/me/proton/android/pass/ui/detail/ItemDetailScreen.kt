@@ -210,6 +210,7 @@ private fun extractTopBarContent(viewState: ItemDetailViewModel.State): TopBarCo
             itemTypeName = when (viewState.model.item.itemType) {
                 is ItemType.Login -> stringResource(R.string.item_type_login)
                 is ItemType.Note -> stringResource(R.string.item_type_note)
+                is ItemType.Password -> stringResource(R.string.item_type_password)
                 is ItemType.Alias -> stringResource(R.string.item_type_alias)
             }.lowercase()
         )

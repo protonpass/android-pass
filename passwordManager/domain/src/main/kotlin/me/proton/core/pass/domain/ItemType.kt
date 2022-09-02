@@ -12,4 +12,5 @@ sealed class ItemType {
     ) : ItemType()
     data class Note(val text: String) : ItemType()
     data class Alias(val aliasEmail: String) : ItemType()
+    object Password : ItemType()
 }

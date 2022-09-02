@@ -15,13 +15,22 @@ import me.proton.android.pass.R
 fun ArrowBackIcon(
     onUpClick: () -> Unit
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-    IconButton(onClick = {
-        keyboardController?.hide()
-        onUpClick()
-    }) {
+    NavigationIcon(onUpClick = onUpClick) {
         Icon(
             imageVector = Icons.Default.ArrowBack,
+            contentDescription = null
+        )
+    }
+}
+
+@ExperimentalComposeUiApi
+@Composable
+fun ChevronBackIcon(
+    onUpClick: () -> Unit
+) {
+    NavigationIcon(onUpClick = onUpClick) {
+        Icon(
+            painter = painterResource(R.drawable.ic_proton_chevron_left),
             contentDescription = null
         )
     }
@@ -32,14 +41,25 @@ fun ArrowBackIcon(
 fun CrossBackIcon(
     onUpClick: () -> Unit
 ) {
+    NavigationIcon(onUpClick = onUpClick) {
+        Icon(
+            painter = painterResource(R.drawable.ic_proton_close),
+            contentDescription = null
+        )
+    }
+}
+
+@ExperimentalComposeUiApi
+@Composable
+private fun NavigationIcon(
+    onUpClick: () -> Unit,
+    icon: @Composable () -> Unit
+) {
     val keyboardController = LocalSoftwareKeyboardController.current
     IconButton(onClick = {
         keyboardController?.hide()
         onUpClick()
     }) {
-        Icon(
-            painter = painterResource(R.drawable.ic_proton_close),
-            contentDescription = null
-        )
+        icon()
     }
 }

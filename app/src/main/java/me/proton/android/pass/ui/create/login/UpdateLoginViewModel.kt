@@ -26,30 +26,30 @@ class UpdateLoginViewModel @Inject constructor(
     private var _item: Item? = null
 
     fun setItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
-        if (_item == null) {
-            viewState.value = viewState.value.copy(state = State.Loading)
-            accountManager.getPrimaryUserId().first { userId -> userId != null }?.let { userId ->
-                val retrievedItem = itemRepository.getById(userId, shareId, itemId)
-                val itemContents = retrievedItem.itemType as ItemType.Login
-                _item = retrievedItem
+        if (_item != null) return@launch
 
-                val websites = if (itemContents.websites.isEmpty()) {
-                    listOf("")
-                } else {
-                    itemContents.websites
-                }
+        viewState.value = viewState.value.copy(state = State.Loading)
+        accountManager.getPrimaryUserId().first { userId -> userId != null }?.let { userId ->
+            val retrievedItem = itemRepository.getById(userId, shareId, itemId)
+            val itemContents = retrievedItem.itemType as ItemType.Login
+            _item = retrievedItem
 
-                viewState.value = ViewState(
-                    state = State.Idle,
-                    modelState = ModelState(
-                        title = retrievedItem.title.decrypt(cryptoContext.keyStoreCrypto),
-                        username = itemContents.username,
-                        password = itemContents.password.decrypt(cryptoContext.keyStoreCrypto),
-                        websiteAddresses = websites,
-                        note = retrievedItem.note.decrypt(cryptoContext.keyStoreCrypto)
-                    )
-                )
+            val websites = if (itemContents.websites.isEmpty()) {
+                listOf("")
+            } else {
+                itemContents.websites
             }
+
+            viewState.value = ViewState(
+                state = State.Idle,
+                modelState = ModelState(
+                    title = retrievedItem.title.decrypt(cryptoContext.keyStoreCrypto),
+                    username = itemContents.username,
+                    password = itemContents.password.decrypt(cryptoContext.keyStoreCrypto),
+                    websiteAddresses = websites,
+                    note = retrievedItem.note.decrypt(cryptoContext.keyStoreCrypto)
+                )
+            )
         }
     }
 

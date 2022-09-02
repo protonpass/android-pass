@@ -6,7 +6,7 @@ sealed class PasswordGenerationOptions(
     companion object {
         private const val LETTERS = "abcdefhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         private const val NUMBERS = "0123456789"
-        private const val SYMBOLS = ".?_-+*/"
+        private const val SYMBOLS = "!#$%&()*+.:;<=>?@[]^"
     }
 
     object OnlyLetters : PasswordGenerationOptions(LETTERS)

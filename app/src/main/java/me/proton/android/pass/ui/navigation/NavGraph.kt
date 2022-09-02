@@ -11,7 +11,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
-import me.proton.android.pass.R
+import me.proton.android.pass.ui.create.alias.CreateAliasView
+import me.proton.android.pass.ui.create.alias.UpdateAliasView
 import me.proton.android.pass.ui.create.login.CreateLoginView
 import me.proton.android.pass.ui.create.login.UpdateLoginView
 import me.proton.android.pass.ui.create.note.CreateNoteView
@@ -23,6 +24,7 @@ import me.proton.android.pass.ui.launcher.LauncherScreen
 import me.proton.android.pass.ui.launcher.LauncherViewModel
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.pass.domain.ItemId
+import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
 
 @ExperimentalAnimationApi
@@ -72,9 +74,10 @@ private fun NavGraphBuilder.mainScreenNavigation(
                     navController.navigate(NavItem.EditNote.createNavRoute(shareId, itemId))
                 }
                 override val toCreateAlias = { shareId: ShareId ->
+                    navController.navigate(NavItem.CreateAlias.createNavRoute(shareId))
                 }
                 override val toEditAlias = { shareId: ShareId, itemId: ItemId ->
-                    /* TODO */
+                    navController.navigate(NavItem.EditAlias.createNavRoute(shareId, itemId))
                 }
                 override val toCreatePassword = { shareId: ShareId ->
                     navController.navigate(NavItem.CreatePassword.createNavRoute(shareId))
@@ -143,18 +146,45 @@ private fun NavGraphBuilder.crudNavigation(
             }
         )
     }
-    composable(NavItem.ViewItem) {
-        ItemDetailScreen(
+    composable(NavItem.CreateAlias) {
+        val shareId = ShareId(it.findArg(NavArg.ShareId))
+        CreateAliasView(
             onUpClick = onUpClick,
-            shareId = it.findArg(NavArg.ShareId),
-            itemId = it.findArg(NavArg.ItemId)
+            shareId = shareId,
+            onSuccess = { itemId ->
+                navController.navigate(NavItem.ViewItem.createNavRoute(shareId, itemId)) {
+                    popUpTo(NavItem.Launcher.route)
+                }
+            }
+        )
+    }
+    composable(NavItem.EditAlias) {
+        val shareId = ShareId(it.findArg(NavArg.ShareId))
+        val itemId = ItemId(it.findArg(NavArg.ItemId))
+        UpdateAliasView(
+            onUpClick = onUpClick,
+            shareId = shareId,
+            itemId = itemId,
+            onSuccess = {
+                navController.navigate(NavItem.ViewItem.createNavRoute(shareId, itemId)) {
+                    popUpTo(NavItem.Launcher.route)
+                }
+            }
         )
     }
     composable(NavItem.CreatePassword) {
         CreatePasswordView(
-            topBarTitle = R.string.title_create_password,
             onUpClick = onUpClick,
             onConfirm = {}
+        )
+    }
+    composable(NavItem.ViewItem) {
+        ItemDetailScreen(
+            onUpClick = onUpClick,
+            shareId = it.findArg(NavArg.ShareId),
+            itemId = it.findArg(NavArg.ItemId),
+            onEditClick = { shareId, itemId, itemType -> navigateToEdit(navController, shareId, itemId, itemType) },
+            onMovedToTrash = { onUpClick() } // TODO: Discover why does it flash and displays a blank screen
         )
     }
 }
@@ -174,6 +204,24 @@ private fun NavGraphBuilder.composable(
         popExitTransition = { if (animate) slideOutHorizontally(targetOffsetX = { 1000 }) else null },
     ) {
         content(it)
+    }
+}
+
+private fun navigateToEdit(
+    navController: NavHostController,
+    shareId: ShareId,
+    itemId: ItemId,
+    itemType: ItemType
+) {
+    val route = when (itemType) {
+        is ItemType.Login -> NavItem.EditLogin.createNavRoute(shareId, itemId)
+        is ItemType.Note -> NavItem.EditNote.createNavRoute(shareId, itemId)
+        is ItemType.Alias -> NavItem.EditAlias.createNavRoute(shareId, itemId)
+        is ItemType.Password -> null // Edit password does not exist yet
+    }
+
+    if (route != null) {
+        navController.navigate(route)
     }
 }
 

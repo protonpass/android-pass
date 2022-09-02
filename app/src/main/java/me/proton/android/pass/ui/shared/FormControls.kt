@@ -92,6 +92,7 @@ fun ProtonTextField(
     singleLine: Boolean = true,
     moveToNextOnEnter: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    editable: Boolean = true,
 ) {
     val maxLines = if (singleLine) {
         1
@@ -140,7 +141,8 @@ fun ProtonTextField(
             backgroundColor = ProtonTheme.colors.backgroundSecondary,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
-        )
+        ),
+        readOnly = !editable
     )
 }
 

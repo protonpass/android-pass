@@ -11,6 +11,6 @@ sealed class ItemType {
         val websites: List<String>
     ) : ItemType()
     data class Note(val text: String) : ItemType()
-    object Alias : ItemType()
+    data class Alias(val aliasEmail: String) : ItemType()
     object Password : ItemType()
 }

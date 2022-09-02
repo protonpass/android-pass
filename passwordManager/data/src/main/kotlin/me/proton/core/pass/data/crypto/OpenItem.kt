@@ -78,7 +78,7 @@ class OpenItem @Inject constructor(
             title = decoded.metadata.name.encrypt(cryptoContext.keyStoreCrypto),
             note = decoded.metadata.note.encrypt(cryptoContext.keyStoreCrypto),
             content = reencryptedContents,
-            itemType = ItemType.fromParsed(cryptoContext, decoded)
+            itemType = ItemType.fromParsed(cryptoContext, decoded, aliasEmail = response.aliasEmail)
         )
     }
 }

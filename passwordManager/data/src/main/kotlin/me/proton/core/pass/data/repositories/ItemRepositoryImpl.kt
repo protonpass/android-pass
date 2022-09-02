@@ -21,6 +21,7 @@ import me.proton.core.pass.data.db.entities.ItemEntity
 import me.proton.core.pass.data.extensions.itemType
 import me.proton.core.pass.data.local.LocalItemDataSource
 import me.proton.core.pass.data.remote.RemoteItemDataSource
+import me.proton.core.pass.data.requests.CreateAliasRequest
 import me.proton.core.pass.data.requests.TrashItemRevision
 import me.proton.core.pass.data.requests.TrashItemsRequest
 import me.proton.core.pass.data.responses.ItemRevision
@@ -31,6 +32,7 @@ import me.proton.core.pass.domain.ItemState
 import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.ShareSelection
+import me.proton.core.pass.domain.entity.NewAlias
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.repositories.ItemRepository
@@ -44,7 +46,7 @@ import me.proton.core.user.domain.repository.UserAddressRepository
 class ItemRepositoryImpl @Inject constructor(
     private val database: PassDatabase,
     private val cryptoContext: CryptoContext,
-    private val userAddressRepository: UserAddressRepository,
+    override val userAddressRepository: UserAddressRepository,
     private val keyRepository: PublicAddressRepository,
     private val vaultKeyRepository: VaultKeyRepository,
     private val shareRepository: ShareRepository,
@@ -54,7 +56,7 @@ class ItemRepositoryImpl @Inject constructor(
     private val remoteItemDataSource: RemoteItemDataSource,
     private val keyPacketRepository: KeyPacketRepository,
     private val openItem: OpenItem,
-) : ItemRepository {
+) : BaseRepository(userAddressRepository), ItemRepository {
 
     companion object {
         const val MAX_TRASH_ITEMS_PER_REQUEST = 50
@@ -65,15 +67,36 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         contents: ItemContents
     ): Item {
-        val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-        val (vaultKey, itemKey) = vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
-        val body = createItem.createItem(vaultKey, itemKey, userAddress, contents)
-        val itemResponse = remoteItemDataSource.createItem(userId, share.id, body)
+        return withUserAddress(userId) { userAddress ->
+            val (vaultKey, itemKey) = vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
+            val body = createItem.createItem(vaultKey, itemKey, userAddress, contents)
+            val itemResponse = remoteItemDataSource.createItem(userId, share.id, body)
 
-        val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
-        val entity = itemResponseToEntity(userAddress, itemResponse, share, userPublicKeys, listOf(vaultKey), listOf(itemKey))
-        localItemDataSource.upsertItem(entity)
-        return entityToDomain(entity)
+            val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
+            val entity = itemResponseToEntity(userAddress, itemResponse, share, userPublicKeys, listOf(vaultKey), listOf(itemKey))
+            localItemDataSource.upsertItem(entity)
+            entityToDomain(entity)
+        }
+    }
+
+    override suspend fun createAlias(userId: UserId, share: Share, newAlias: NewAlias): Item {
+        return withUserAddress(userId) { userAddress ->
+            val (vaultKey, itemKey) = vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
+            val itemContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
+            val body = createItem.createItem(vaultKey, itemKey, userAddress, itemContents)
+            val requestBody = CreateAliasRequest(
+                prefix = newAlias.prefix,
+                signedSuffix = newAlias.suffix.signedSuffix,
+                mailboxes = listOf(newAlias.mailbox.id),
+                item = body
+            )
+
+            val itemResponse = remoteItemDataSource.createAlias(userId, share.id, requestBody)
+            val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
+            val entity = itemResponseToEntity(userAddress, itemResponse, share, userPublicKeys, listOf(vaultKey), listOf(itemKey))
+            localItemDataSource.upsertItem(entity)
+            entityToDomain(entity)
+        }
     }
 
     override suspend fun updateItem(
@@ -84,17 +107,18 @@ class ItemRepositoryImpl @Inject constructor(
     ): Item {
         val keyPacket = keyPacketRepository.getLatestKeyPacketForItem(userId, share.id, item.id)
 
-        val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-        val vaultKey = vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
-        val itemKey = vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
+        return withUserAddress(userId) { userAddress ->
+            val vaultKey = vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
+            val itemKey = vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
 
-        val body = updateItem.updateItem(vaultKey, itemKey, keyPacket, userAddress, contents, item.revision)
-        val itemResponse = remoteItemDataSource.updateItem(userId, share.id, item.id, body)
+            val body = updateItem.updateItem(vaultKey, itemKey, keyPacket, userAddress, contents, item.revision)
+            val itemResponse = remoteItemDataSource.updateItem(userId, share.id, item.id, body)
 
-        val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
-        val entity = itemResponseToEntity(userAddress, itemResponse, share, userPublicKeys, listOf(vaultKey), listOf(itemKey))
-        localItemDataSource.upsertItem(entity)
-        return entityToDomain(entity)
+            val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
+            val entity = itemResponseToEntity(userAddress, itemResponse, share, userPublicKeys, listOf(vaultKey), listOf(itemKey))
+            localItemDataSource.upsertItem(entity)
+            entityToDomain(entity)
+        }
     }
 
     override fun observeItems(userId: UserId, shareSelection: ShareSelection, itemState: ItemState): Flow<List<Item>> {
@@ -234,7 +258,8 @@ class ItemRepositoryImpl @Inject constructor(
             modifyTime = itemRevision.modifyTime,
             encryptedContent = item.content,
             encryptedTitle = item.title,
-            encryptedNote = item.note
+            encryptedNote = item.note,
+            aliasEmail = itemRevision.aliasEmail
         )
     }
 

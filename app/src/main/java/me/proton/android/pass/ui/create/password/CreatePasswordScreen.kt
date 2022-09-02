@@ -1,7 +1,15 @@
 package me.proton.android.pass.ui.create.password
 
-import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -13,8 +21,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -24,6 +30,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ArrowBackIcon
 import me.proton.android.pass.ui.shared.TopBarTitleView
@@ -34,48 +41,46 @@ import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecy
 
 internal typealias OnConfirm = (String) -> Unit
 
-@OptIn(ExperimentalComposeUiApi::class)
+@ExperimentalComposeUiApi
 @Composable
 fun CreatePasswordView(
-    @StringRes topBarTitle: Int,
     onUpClick: () -> Unit,
-    onConfirm: OnConfirm
+    onConfirm: OnConfirm,
+    viewModel: CreatePasswordViewModel = hiltViewModel()
 ) {
+    val state by rememberFlowWithLifecycle(viewModel.state).collectAsState(initial = viewModel.initialState)
+
     Scaffold(
         topBar = {
             ProtonTopAppBar(
-                title = { TopBarTitleView(topBarTitle) },
+                title = { TopBarTitleView(R.string.title_create_password) },
                 navigationIcon = { ArrowBackIcon(onUpClick = onUpClick) },
                 actions = {},
             )
         }) { padding ->
-        val viewModel by remember { mutableStateOf(CreatePasswordViewModel()) }
-        CreatePasswordViewContent(
-            modifier = Modifier.padding(padding),
-            onUpClick = onUpClick,
-            onConfirm = onConfirm,
-            viewModel = viewModel,
-        )
+
+        Box(modifier = Modifier.padding(padding)) {
+            CreatePasswordViewContent(
+                state = state,
+                onConfirm = onConfirm,
+                onLengthChange = { viewModel.onLengthChange(it) },
+                onRegenerateClick = { viewModel.regenerate() },
+                onSpecialCharactersChange = { viewModel.onHasSpecialCharactersChange(it) }
+            )
+        }
     }
 }
 
 @Composable
 private fun CreatePasswordViewContent(
-    modifier: Modifier,
-    onUpClick: () -> Unit,
+    state: CreatePasswordViewModel.ViewState,
     onConfirm: OnConfirm,
-    viewModel: CreatePasswordViewModel,
+    onSpecialCharactersChange: (Boolean) -> Unit,
+    onLengthChange: (Int) -> Unit,
+    onRegenerateClick: () -> Unit,
 ) {
-    val password by rememberFlowWithLifecycle(viewModel.password)
-        .collectAsState("")
 
-    val length by rememberFlowWithLifecycle(viewModel.length)
-        .collectAsState(CreatePasswordViewModel.defaultLength)
-
-    val hasSpecialCharacters by rememberFlowWithLifecycle(viewModel.hasSpecialCharacters)
-        .collectAsState(true)
-
-    Column(modifier = modifier) {
+    Column {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -88,11 +93,11 @@ private fun CreatePasswordViewContent(
                 modifier = Modifier
                     .weight(1f)
                     .height(72.dp),
-                password = password
+                password = state.password
             )
             Spacer(modifier = Modifier.size(8.dp))
             IconButton(
-                onClick = { viewModel.regenerate() }
+                onClick = { onRegenerateClick() }
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_proton_arrows_rotate),
@@ -112,13 +117,13 @@ private fun CreatePasswordViewContent(
         ) {
             Text(
                 modifier = Modifier.width(112.dp),
-                text = stringResource(R.string.character_count, length)
+                text = stringResource(R.string.character_count, state.length)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Slider(
-                value = length.toFloat(),
-                valueRange = CreatePasswordViewModel.lengthRange,
-                onValueChange = { viewModel.onLengthChange(it.toInt()) }
+                value = state.length.toFloat(),
+                valueRange = CreatePasswordViewModel.LENGTH_RANGE,
+                onValueChange = { onLengthChange(it.toInt()) }
             )
         }
 
@@ -131,8 +136,8 @@ private fun CreatePasswordViewContent(
         ) {
             Text(stringResource(R.string.special_characters))
             Switch(
-                checked = hasSpecialCharacters,
-                onCheckedChange = { viewModel.onHasSpecialCharactersChange(it) }
+                checked = state.hasSpecialCharacters,
+                onCheckedChange = { onSpecialCharactersChange(it) }
             )
         }
 
@@ -143,7 +148,7 @@ private fun CreatePasswordViewContent(
                 .fillMaxWidth()
                 .padding(16.dp)
                 .height(48.dp),
-            onClick = { onConfirm(password) }
+            onClick = { onConfirm(state.password) }
         ) {
             Text(stringResource(R.string.generate_password_confirm))
         }

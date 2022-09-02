@@ -1,11 +1,7 @@
 package me.proton.android.pass.ui.create.password
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.launch
 
 enum class CharacterSet(val value: String) {
     Alphabet("abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ"),
@@ -15,45 +11,42 @@ enum class CharacterSet(val value: String) {
 
 class CreatePasswordViewModel : ViewModel() {
     companion object {
-        const val defaultLength = 16
-        val lengthRange = (4.toFloat()..64.toFloat())
-    }
+        const val DEFAULT_LENGTH = 16
+        val LENGTH_RANGE = (4.toFloat()..64.toFloat())
 
-    val password = MutableStateFlow("")
-    val length = MutableStateFlow(defaultLength)
-    val hasSpecialCharacters = MutableStateFlow(true)
-
-    init {
-        regenerate()
-        viewModelScope.launch {
-            launch {
-                hasSpecialCharacters
-                    .distinctUntilChanged { old, new -> old == new }
-                    .collectLatest {
-                        regenerate()
-                    }
+        private fun generatePassword(length: Int, hasSpecialCharacters: Boolean): String {
+            var allowedCharacters = CharacterSet.Alphabet.value + CharacterSet.Digit.value
+            if (hasSpecialCharacters) {
+                allowedCharacters += CharacterSet.Special.value
             }
 
-            launch {
-                length
-                    .distinctUntilChanged { old, new -> old == new }
-                    .collectLatest { regenerate() }
-            }
+            return (0 until length)
+                .map { allowedCharacters.random() }
+                .joinToString("")
         }
     }
 
-    fun onLengthChange(value: Int) { length.value = value }
+    val initialState = ViewState()
+    val state: MutableStateFlow<ViewState> = MutableStateFlow(initialState)
 
-    fun onHasSpecialCharactersChange(value: Boolean) { hasSpecialCharacters.value = value }
+    fun onLengthChange(value: Int) {
+        val password = generatePassword(value, state.value.hasSpecialCharacters)
+        state.value = state.value.copy(length = value, password = password)
+    }
+
+    fun onHasSpecialCharactersChange(value: Boolean) {
+        val password = generatePassword(state.value.length, value)
+        state.value = state.value.copy(hasSpecialCharacters = value, password = password)
+    }
 
     fun regenerate() {
-        var allowedCharacters = CharacterSet.Alphabet.value + CharacterSet.Digit.value
-        if (hasSpecialCharacters.value) {
-            allowedCharacters += CharacterSet.Special.value
-        }
-
-        password.value = (0 until length.value)
-            .map { allowedCharacters.random() }
-            .joinToString("")
+        val password = generatePassword(state.value.length, state.value.hasSpecialCharacters)
+        state.value = state.value.copy(password = password)
     }
+
+    data class ViewState(
+        val password: String = generatePassword(DEFAULT_LENGTH, true),
+        val length: Int = DEFAULT_LENGTH,
+        val hasSpecialCharacters: Boolean = true
+    )
 }

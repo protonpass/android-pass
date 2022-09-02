@@ -24,6 +24,7 @@ import me.proton.core.key.domain.getEncryptedPackets
 import me.proton.core.key.domain.publicKey
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyData
+import me.proton.core.pass.data.requests.CreateVaultRequest
 import me.proton.core.user.domain.entity.UserAddress
 import org.junit.Test
 import proton_pass_vault_v1.VaultV1

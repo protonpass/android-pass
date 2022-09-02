@@ -14,12 +14,14 @@ import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.repositories.ItemRepository
+import me.proton.core.pass.domain.usecases.TrashItem
 
 @HiltViewModel
 class ItemDetailViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository
+    private val itemRepository: ItemRepository,
+    private val trashItem: TrashItem
 ) : ViewModel() {
 
     val initialState = State.Loading
@@ -37,10 +39,22 @@ class ItemDetailViewModel @Inject constructor(
         }
     }
 
+    fun sendItemToTrash(item: Item?) = viewModelScope.launch {
+        if (item == null) return@launch
+
+        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
+        if (userId != null) {
+            state.value = State.Loading
+            trashItem.invoke(userId, item.shareId, item.id)
+            state.value = State.ItemSentToTrash
+        }
+    }
+
     sealed class State {
         object Loading : State()
         data class Content(val model: FullItemUiModel) : State()
         data class Error(val message: String) : State()
+        object ItemSentToTrash : State()
     }
 
     data class FullItemUiModel(

@@ -8,7 +8,11 @@ import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemType
 import proton_pass_item_v1.ItemV1
 
-fun ItemType.Companion.fromParsed(cryptoContext: CryptoContext, parsed: ItemV1.Item): ItemType {
+fun ItemType.Companion.fromParsed(
+    cryptoContext: CryptoContext,
+    parsed: ItemV1.Item,
+    aliasEmail: String? = null
+): ItemType {
     return when (parsed.content.contentCase) {
         ItemV1.Content.ContentCase.LOGIN -> ItemType.Login(
             username = parsed.content.login.username,
@@ -16,7 +20,10 @@ fun ItemType.Companion.fromParsed(cryptoContext: CryptoContext, parsed: ItemV1.I
             websites = parsed.content.login.urlsList,
         )
         ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)
-        ItemV1.Content.ContentCase.ALIAS -> ItemType.Alias
+        ItemV1.Content.ContentCase.ALIAS -> {
+            requireNotNull(aliasEmail)
+            ItemType.Alias(aliasEmail = aliasEmail)
+        }
         else -> throw Exception("Unknown ItemType")
     }
 }
@@ -27,5 +34,5 @@ fun Item.itemName(cryptoContext: CryptoContext): String =
 fun ItemEntity.itemType(cryptoContext: CryptoContext): ItemType {
     val decrypted = encryptedContent.decrypt(cryptoContext.keyStoreCrypto)
     val parsed = ItemV1.Item.parseFrom(decrypted.array)
-    return ItemType.fromParsed(cryptoContext, parsed)
+    return ItemType.fromParsed(cryptoContext, parsed, aliasEmail)
 }

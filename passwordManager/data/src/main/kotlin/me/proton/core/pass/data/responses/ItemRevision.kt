@@ -47,6 +47,8 @@ data class ItemRevision(
     val state: Int,
     @SerialName("SignatureEmail")
     val signatureEmail: String,
+    @SerialName("AliasEmail")
+    val aliasEmail: String?,
     @SerialName("Labels")
     val labels: List<String>,
     @SerialName("CreateTime")

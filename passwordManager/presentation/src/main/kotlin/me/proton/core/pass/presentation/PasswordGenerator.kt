@@ -14,7 +14,7 @@ object PasswordGenerator {
         object LettersAndNumbers : Option(setOf(CharacterSet.LETTERS, CharacterSet.NUMBERS))
         object LettersNumbersSymbols : Option(setOf(CharacterSet.LETTERS, CharacterSet.NUMBERS, CharacterSet.SYMBOLS))
 
-        val dictionary = characterSets.map { it.value }.joinToString { "" }
+        val dictionary = characterSets.joinToString("") { it.value }
     }
 
     fun generatePassword(

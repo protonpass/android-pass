@@ -57,9 +57,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
-import me.proton.core.pass.presentation.generatePassword
-
-private const val DEFAULT_PASSWORD_LENGTH = 16
+import me.proton.core.pass.presentation.PasswordGenerator
 
 internal typealias OnTextChange = (String) -> Unit
 
@@ -372,7 +370,7 @@ private fun PasswordInput(
 private fun GeneratePasswordButton(
     onPasswordGenerated: (String) -> Unit
 ) {
-    ProtonOutlinedButton(onClick = { onPasswordGenerated(generatePassword(DEFAULT_PASSWORD_LENGTH)) }) {
+    ProtonOutlinedButton(onClick = { onPasswordGenerated(PasswordGenerator.generatePassword()) }) {
         Text(
             text = stringResource(R.string.button_generate_password),
             color = ProtonTheme.colors.brandNorm,

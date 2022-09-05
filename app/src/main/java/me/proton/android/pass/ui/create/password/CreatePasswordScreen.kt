@@ -37,6 +37,7 @@ import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.pass.presentation.PasswordGenerator
 import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 
 internal typealias OnConfirm = (String) -> Unit
@@ -163,8 +164,8 @@ private fun PasswordText(
     val annotatedString = password
         .map {
             val color = when {
-                CharacterSet.Digit.value.contains(it) -> ProtonTheme.colors.notificationError
-                CharacterSet.Special.value.contains(it) -> ProtonTheme.colors.notificationSuccess
+                PasswordGenerator.CharacterSet.NUMBERS.value.contains(it) -> ProtonTheme.colors.notificationError
+                PasswordGenerator.CharacterSet.SYMBOLS.value.contains(it) -> ProtonTheme.colors.notificationSuccess
                 else -> ProtonTheme.colors.textNorm
             }
             AnnotatedString(it.toString(), SpanStyle(color))

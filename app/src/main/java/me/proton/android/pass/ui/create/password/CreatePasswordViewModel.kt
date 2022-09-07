@@ -2,27 +2,19 @@ package me.proton.android.pass.ui.create.password
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-
-enum class CharacterSet(val value: String) {
-    Alphabet("abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ"),
-    Digit("0123456789"),
-    Special("!#\$%&()*+.:;<=>?@[]^")
-}
+import me.proton.core.pass.presentation.PasswordGenerator
 
 class CreatePasswordViewModel : ViewModel() {
     companion object {
-        const val DEFAULT_LENGTH = 16
+        private const val DEFAULT_LENGTH = PasswordGenerator.DEFAULT_LENGTH
         val LENGTH_RANGE = (4.toFloat()..64.toFloat())
 
         private fun generatePassword(length: Int, hasSpecialCharacters: Boolean): String {
-            var allowedCharacters = CharacterSet.Alphabet.value + CharacterSet.Digit.value
-            if (hasSpecialCharacters) {
-                allowedCharacters += CharacterSet.Special.value
+            val option = when {
+                hasSpecialCharacters -> PasswordGenerator.Option.LettersNumbersSymbols
+                else -> PasswordGenerator.Option.LettersAndNumbers
             }
-
-            return (0 until length)
-                .map { allowedCharacters.random() }
-                .joinToString("")
+            return PasswordGenerator.generatePassword(length, option)
         }
     }
 

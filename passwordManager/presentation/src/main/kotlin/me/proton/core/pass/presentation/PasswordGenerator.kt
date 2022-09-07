@@ -1,27 +1,26 @@
 package me.proton.core.pass.presentation
 
-sealed class PasswordGenerationOptions(
-    val dictionary: String
-) {
-    companion object {
-        private const val LETTERS = "abcdefhijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        private const val NUMBERS = "0123456789"
-        private const val SYMBOLS = "!#$%&()*+.:;<=>?@[]^"
+object PasswordGenerator {
+    const val DEFAULT_LENGTH = 16
+
+    enum class CharacterSet(val value: String) {
+        LETTERS("abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ"),
+        NUMBERS("0123456789"),
+        SYMBOLS("!#\$%&()*+.:;<=>?@[]^")
     }
 
-    object OnlyLetters : PasswordGenerationOptions(LETTERS)
-    object LettersAndNumbers : PasswordGenerationOptions(LETTERS + NUMBERS)
-    object LettersNumbersSymbols : PasswordGenerationOptions(LETTERS + NUMBERS + SYMBOLS)
-}
+    sealed class Option(characterSets: Set<CharacterSet>) {
+        object Letters : Option(setOf(CharacterSet.LETTERS))
+        object LettersAndNumbers : Option(setOf(CharacterSet.LETTERS, CharacterSet.NUMBERS))
+        object LettersNumbersSymbols : Option(setOf(CharacterSet.LETTERS, CharacterSet.NUMBERS, CharacterSet.SYMBOLS))
 
-fun generatePassword(
-    length: Int,
-    options: PasswordGenerationOptions = PasswordGenerationOptions.LettersAndNumbers
-): String {
-    val dictionary = options.dictionary
-    var res = ""
-    while (res.length < length) {
-        res += dictionary.random()
+        val dictionary = characterSets.joinToString("") { it.value }
     }
-    return res
+
+    fun generatePassword(
+        length: Int = DEFAULT_LENGTH,
+        option: Option = Option.LettersNumbersSymbols
+    ) = (0 until length)
+        .map { option.dictionary.random() }
+        .joinToString("")
 }

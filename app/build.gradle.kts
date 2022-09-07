@@ -112,7 +112,7 @@ android {
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev+$gitHash"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
-            buildConfigField("String", "HOST", "\"bain.proton.black\"")
+            buildConfigField("String", "HOST", "\"proton.black\"")
             buildConfigField("String", "HUMAN_VERIFICATION_HOST", "\"verify.proton.black\"")
         }
         create("alpha") {

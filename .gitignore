@@ -104,3 +104,7 @@ private.properties
 # Git Toolbox plugin
 .idea/git_toolbox_prj.xml
 
+# Gradle profiler
+gradle-user-home/
+profile-out*/
+

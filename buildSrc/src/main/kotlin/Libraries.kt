@@ -114,6 +114,7 @@ object Junit {
 
 object Kotlin {
     private const val version = Versions.Kotlin.kotlin
+    const val test = "org.jetbrains.kotlin:kotlin-test:$version"
 }
 
 object KotlinX {
@@ -153,14 +154,15 @@ object Proton {
         val key = coreArtifact("key", Versions.Proton.core)
         val network = coreArtifact("network", Versions.Proton.core)
         val payment = coreArtifact("payment", Versions.Proton.core)
+        val paymentIap = coreArtifact("payment-iap", Versions.Proton.core)
         val plan = coreArtifact("plan", Versions.Proton.core)
         val presentation = coreArtifact("presentation", Versions.Proton.core)
         val presentationCompose = coreArtifact("presentation-compose", Versions.Proton.core)
         val report = coreArtifact("report", Versions.Proton.core)
-        val reportDagger = coreArtifact("report-dagger", Versions.Proton.core)
         val user = coreArtifact("user", Versions.Proton.core)
         val userSettings = coreArtifact("user-settings", Versions.Proton.core)
         val utilKotlin = coreArtifact("util-kotlin", Versions.Proton.core)
+        val utilAndroidDagger = coreArtifact("util-android-dagger", Versions.Proton.core)
         val testKotlin = coreArtifact("test-kotlin", Versions.Proton.core)
         val testAndroid = coreArtifact("test-android", Versions.Proton.core)
         val testAndroidInstrumented = coreArtifact(

@@ -66,13 +66,14 @@ object Dependencies {
         add(Proton.Core.key)
         add(Proton.Core.network)
         add(Proton.Core.payment)
+        // add(Proton.Core.paymentIap)
         add(Proton.Core.plan)
         add(Proton.Core.presentation)
         add(Proton.Core.presentationCompose)
         add(Proton.Core.report)
-        add(Proton.Core.reportDagger)
         add(Proton.Core.user)
         add(Proton.Core.userSettings)
+        add(Proton.Core.utilAndroidDagger)
         add(Proton.Core.utilKotlin)
         add(JakeWharton.timber)
         add(KotlinX.serializationJson)
@@ -101,6 +102,7 @@ object Dependencies {
         add(Proton.Core.key)
         add(Proton.Core.network)
         add(Proton.Core.user)
+        add(Proton.Core.utilAndroidDagger)
         add(Proton.Core.utilKotlin)
     }
     val passDaggerAnnotationProcessors = mutableListOf<String>().apply {
@@ -196,6 +198,7 @@ object Dependencies {
 
     // region Test
     val testLibs = mutableListOf<String>().apply {
+        add(Kotlin.test)
         add(KotlinX.coroutinesTest)
         add(Junit.junit)
         add(Mockk.mockk)
@@ -209,6 +212,7 @@ object Dependencies {
         add(AndroidX.Test.runner)
         add(AndroidX.Test.rules)
         add(AndroidX.Test.espresso)
+        add(Kotlin.test)
         add(Mockk.mockkAndroid)
         add(Proton.Core.testAndroidInstrumented)
     }

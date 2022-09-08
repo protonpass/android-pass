@@ -45,16 +45,9 @@ import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
 import me.proton.core.accountmanager.presentation.onSessionForceLogout
 import me.proton.core.accountmanager.presentation.onSessionSecondFactorNeeded
 import me.proton.core.auth.presentation.AuthOrchestrator
-import me.proton.core.auth.presentation.observe
 import me.proton.core.auth.presentation.onAddAccountResult
-import me.proton.core.auth.presentation.onConfirmPasswordNeeded
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator
-import me.proton.core.humanverification.presentation.observe
-import me.proton.core.humanverification.presentation.onHumanVerificationNeeded
-import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerSection
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.report.presentation.ReportOrchestrator
@@ -68,13 +61,10 @@ class LauncherViewModel @Inject constructor(
     private val requiredAccountType: AccountType,
     private val accountManager: AccountManager,
     private val userManager: UserManager,
-    private val humanVerificationManager: HumanVerificationManager,
     private val authOrchestrator: AuthOrchestrator,
-    private val hvOrchestrator: HumanVerificationOrchestrator,
     private val plansOrchestrator: PlansOrchestrator,
     private val reportOrchestrator: ReportOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
-    private val missingScopeListener: MissingScopeListener,
 ) : ViewModel() {
 
     val initialSection = NavigationDrawerSection.Items
@@ -97,7 +87,6 @@ class LauncherViewModel @Inject constructor(
 
     fun register(context: AppCompatActivity) {
         authOrchestrator.register(context as ActivityResultCaller)
-        hvOrchestrator.register(context)
         plansOrchestrator.register(context)
         reportOrchestrator.register(context)
         userSettingsOrchestrator.register(context)
@@ -117,12 +106,6 @@ class LauncherViewModel @Inject constructor(
             .onSessionSecondFactorNeeded { authOrchestrator.startSecondFactorWorkflow(it) }
             .onAccountTwoPassModeNeeded { authOrchestrator.startTwoPassModeWorkflow(it) }
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
-
-        humanVerificationManager.observe(context.lifecycle, Lifecycle.State.RESUMED)
-            .onHumanVerificationNeeded { hvOrchestrator.startHumanVerificationWorkflow(it) }
-
-        missingScopeListener.observe(context.lifecycle, Lifecycle.State.RESUMED)
-            .onConfirmPasswordNeeded { authOrchestrator.startConfirmPasswordWorkflow(it) }
     }
 
     fun addAccount() = viewModelScope.launch {

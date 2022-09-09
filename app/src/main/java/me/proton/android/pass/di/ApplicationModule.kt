@@ -12,6 +12,7 @@ import javax.inject.Singleton
 import me.proton.android.pass.log.PassKeyLogger
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.presentation.app.AppLifecycleObserver
 import me.proton.core.presentation.app.AppLifecycleProvider
@@ -32,6 +33,11 @@ object ApplicationModule {
         Product.Drive
 
     @Provides
+    @Singleton
+    fun provideAppStore() =
+        AppStore.GooglePlay
+
+    @Provides
     @ClientSecret
     fun provideClientSecret(): String = ""
 
@@ -42,18 +48,7 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideAppLifecycleObserver(): AppLifecycleObserver = AppLifecycleObserver()
-
-    @Provides
-    @Singleton
     fun provideWorkManager(
         @ApplicationContext context: Context,
     ): WorkManager = WorkManager.getInstance(context)
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class ApplicationBindsModule {
-    @Binds
-    abstract fun provideAppLifecycleStateProvider(observer: AppLifecycleObserver): AppLifecycleProvider
 }

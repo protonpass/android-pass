@@ -36,12 +36,6 @@ import me.proton.core.plan.domain.repository.PlansRepository
 object PlansModule {
 
     @Provides
-    @Singleton
-    fun providePlansRepository(
-        apiProvider: ApiProvider,
-    ): PlansRepository = PlansRepositoryImpl(apiProvider)
-
-    @Provides
     @SupportSignupPaidPlans
     fun provideSupportSignupPaidPlans() = true
 

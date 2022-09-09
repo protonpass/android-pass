@@ -24,3 +24,11 @@ include(":autofill")
 include(":autofill:service")
 include(":autofill:sample")
 include(":common-secret")
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}

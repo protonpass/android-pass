@@ -30,13 +30,6 @@ buildscript {
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
 plugins {
     id("me.proton.core.gradle-plugins.detekt") version Versions.Gradle.protonDetektPlugin
     id("com.github.ben-manes.versions") version Versions.Gradle.benManesVersionsPlugin

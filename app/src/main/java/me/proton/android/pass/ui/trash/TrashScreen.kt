@@ -35,8 +35,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.home.HomeScreenNavigation
-import me.proton.android.pass.ui.home.ItemExtraAction
-import me.proton.android.pass.ui.home.ItemsList
+import me.proton.android.pass.ui.home.goToEdit
+import me.proton.android.pass.ui.shared.ItemAction
+import me.proton.android.pass.ui.shared.ItemsList
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
@@ -179,14 +180,18 @@ internal fun Trash(
             items = items,
             modifier = modifier,
             itemActions = listOf(
-                ItemExtraAction(
+                ItemAction(
                     onSelect = { onRestoreClicked(it) },
-                    title = R.string.action_restore
+                    title = R.string.action_restore,
+                    icon = R.drawable.ic_proton_eraser,
+                    textColor = ProtonTheme.colors.textNorm
                 ),
-                ItemExtraAction(
+                ItemAction(
                     onSelect = { onDeleteItemClicked(it) },
-                    title = R.string.action_delete
-                ),
+                    title = R.string.action_delete,
+                    icon = R.drawable.ic_proton_trash,
+                    textColor = ProtonTheme.colors.notificationError,
+                )
             )
         )
     } else {

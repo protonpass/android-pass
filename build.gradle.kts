@@ -43,6 +43,14 @@ plugins {
     id("com.osacky.doctor") version Versions.Gradle.doctorPlugin
 }
 
+val isCI = System.getenv().containsKey("CI")
+
+doctor {
+    javaHome {
+        ensureJavaHomeMatches.set(isCI)
+    }
+}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }

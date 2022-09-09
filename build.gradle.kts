@@ -40,6 +40,7 @@ allprojects {
 plugins {
     id("me.proton.core.gradle-plugins.detekt") version Versions.Gradle.protonDetektPlugin
     id("com.github.ben-manes.versions") version Versions.Gradle.benManesVersionsPlugin
+    id("com.osacky.doctor") version Versions.Gradle.doctorPlugin
 }
 
 tasks.register("clean", Delete::class) {

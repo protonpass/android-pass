@@ -36,6 +36,8 @@ import me.proton.android.pass.ui.detail.alias.AliasDetail
 import me.proton.android.pass.ui.detail.login.LoginDetail
 import me.proton.android.pass.ui.detail.note.NoteDetail
 import me.proton.android.pass.ui.shared.ChevronBackIcon
+import me.proton.android.pass.ui.shared.DropDownAction
+import me.proton.android.pass.ui.shared.ItemDropdownMenu
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
@@ -118,15 +120,18 @@ private fun ItemDetailTopBar(
                 )
             }
 
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { setExpanded(false) },
-                properties = PopupProperties(),
-                modifier = Modifier
-                    .background(color = ProtonTheme.colors.backgroundNorm)
+            ItemDropdownMenu(
+                Modifier,
+                expanded,
+                {
+                    setExpanded(false)
+                }
             ) {
                 DropDownAction(
-                    title = stringResource(R.string.action_edit_placeholder, topBarContent.itemTypeName),
+                    title = stringResource(
+                        R.string.action_edit_placeholder,
+                        topBarContent.itemTypeName
+                    ),
                     icon = R.drawable.ic_proton_eraser
                 ) {
                     setExpanded(false)

@@ -26,11 +26,6 @@
     <string name="secret_type_phone">Phone number</string>
     <string name="secret_type_other">Other</string>
 
-    <string name="item_type_login">Login</string>
-    <string name="item_type_note">Note</string>
-    <string name="item_type_password">Password</string>
-    <string name="item_type_alias">Alias</string>
-
     <string name="item_type_login_format">Login: %s</string>
     <string name="item_type_note_format">Note: %s</string>
 

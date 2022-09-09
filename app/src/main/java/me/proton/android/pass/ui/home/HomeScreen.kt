@@ -44,6 +44,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
+import me.proton.android.pass.ui.shared.ItemAction
+import me.proton.android.pass.ui.shared.ItemsList
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
@@ -229,14 +231,18 @@ private fun Home(
             modifier = modifier,
             onItemClick = onItemClick,
             itemActions = listOf(
-                ItemExtraAction(
+                ItemAction(
                     onSelect = { goToEdit(navigation, it) },
-                    title = R.string.action_edit
+                    title = R.string.action_edit_placeholder,
+                    icon = R.drawable.ic_proton_eraser,
+                    textColor = ProtonTheme.colors.textNorm
                 ),
-                ItemExtraAction(
+                ItemAction(
                     onSelect = { onDeleteItemClicked(it) },
-                    title = R.string.action_delete
-                ),
+                    title = R.string.action_move_to_trash,
+                    icon = R.drawable.ic_proton_trash,
+                    textColor = ProtonTheme.colors.notificationError,
+                )
             )
         )
     } else {

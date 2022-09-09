@@ -154,26 +154,6 @@ private fun ItemDetailTopBar(
 }
 
 @Composable
-private fun DropDownAction(
-    title: String,
-    textColor: Color = ProtonTheme.colors.textNorm,
-    @DrawableRes icon: Int,
-    onClick: () -> Unit
-) {
-    DropdownMenuItem(onClick = onClick) {
-        Row {
-            Text(
-                text = title,
-                color = textColor,
-                fontWeight = FontWeight.W400
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Icon(painterResource(icon), contentDescription = null, modifier = Modifier.padding(start = 16.dp))
-        }
-    }
-}
-
-@Composable
 private fun ItemDetailContent(
     viewState: ItemDetailViewModel.State,
     modifier: Modifier = Modifier

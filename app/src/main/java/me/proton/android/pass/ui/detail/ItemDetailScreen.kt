@@ -36,6 +36,8 @@ import me.proton.android.pass.ui.detail.alias.AliasDetail
 import me.proton.android.pass.ui.detail.login.LoginDetail
 import me.proton.android.pass.ui.detail.note.NoteDetail
 import me.proton.android.pass.ui.shared.ChevronBackIcon
+import me.proton.android.pass.ui.shared.DropDownAction
+import me.proton.android.pass.ui.shared.ItemDropdownMenu
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
@@ -118,15 +120,18 @@ private fun ItemDetailTopBar(
                 )
             }
 
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { setExpanded(false) },
-                properties = PopupProperties(),
-                modifier = Modifier
-                    .background(color = ProtonTheme.colors.backgroundNorm)
+            ItemDropdownMenu(
+                Modifier,
+                expanded,
+                {
+                    setExpanded(false)
+                }
             ) {
                 DropDownAction(
-                    title = stringResource(R.string.action_edit_placeholder, topBarContent.itemTypeName),
+                    title = stringResource(
+                        R.string.action_edit_placeholder,
+                        topBarContent.itemTypeName
+                    ),
                     icon = R.drawable.ic_proton_eraser
                 ) {
                     setExpanded(false)
@@ -151,26 +156,6 @@ private fun ItemDetailTopBar(
             }
         }
     )
-}
-
-@Composable
-private fun DropDownAction(
-    title: String,
-    textColor: Color = ProtonTheme.colors.textNorm,
-    @DrawableRes icon: Int,
-    onClick: () -> Unit
-) {
-    DropdownMenuItem(onClick = onClick) {
-        Row {
-            Text(
-                text = title,
-                color = textColor,
-                fontWeight = FontWeight.W400
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Icon(painterResource(icon), contentDescription = null, modifier = Modifier.padding(start = 16.dp))
-        }
-    }
 }
 
 @Composable
@@ -207,12 +192,7 @@ private fun extractTopBarContent(viewState: ItemDetailViewModel.State): TopBarCo
     when (viewState) {
         is ItemDetailViewModel.State.Content -> TopBarContent(
             title = viewState.model.name,
-            itemTypeName = when (viewState.model.item.itemType) {
-                is ItemType.Login -> stringResource(R.string.item_type_login)
-                is ItemType.Note -> stringResource(R.string.item_type_note)
-                is ItemType.Password -> stringResource(R.string.item_type_password)
-                is ItemType.Alias -> stringResource(R.string.item_type_alias)
-            }.lowercase()
+            itemTypeName = stringResource(viewState.model.item.itemType.toStringRes()).lowercase()
         )
         else -> TopBarContent(title = "", itemTypeName = "")
     }

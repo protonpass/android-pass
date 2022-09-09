@@ -39,6 +39,7 @@ object Versions {
     object Gradle {
         const val androidGradlePlugin = "7.1.3"
         const val benManesVersionsPlugin = "0.42.0"
+        const val doctorPlugin = "0.8.1"
         const val hiltAndroidGradlePlugin = Dagger.dagger
         const val kotlinGradlePlugin = Kotlin.kotlin
         const val protonDetektPlugin = "1.0.0-alpha03"

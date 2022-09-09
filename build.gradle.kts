@@ -47,7 +47,7 @@ val isCI = System.getenv().containsKey("CI")
 
 doctor {
     javaHome {
-        ensureJavaHomeMatches.set(isCI)
+        ensureJavaHomeMatches.set(!isCI)
     }
 }
 

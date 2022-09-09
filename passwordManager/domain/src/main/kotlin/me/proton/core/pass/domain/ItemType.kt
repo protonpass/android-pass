@@ -1,5 +1,6 @@
 package me.proton.core.pass.domain
 
+import androidx.annotation.StringRes
 import me.proton.core.crypto.common.keystore.EncryptedString
 
 sealed class ItemType {
@@ -13,4 +14,11 @@ sealed class ItemType {
     data class Note(val text: String) : ItemType()
     data class Alias(val aliasEmail: String) : ItemType()
     object Password : ItemType()
+
+    @StringRes fun toStringRes(): Int = when (this) {
+        is Login -> R.string.item_type_login
+        is Note -> R.string.item_type_note
+        is Password -> R.string.item_type_password
+        is Alias -> R.string.item_type_alias
+    }
 }

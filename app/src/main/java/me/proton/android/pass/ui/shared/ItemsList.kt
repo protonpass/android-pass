@@ -220,6 +220,7 @@ private fun ItemRowActions(
                         it.title,
                         stringResource(item.itemType.toStringRes()).lowercase()
                     ),
+                    textColor = it.textColor,
                     icon = it.icon
                 ) { it.onSelect(item) }
             }

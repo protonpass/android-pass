@@ -1,4 +1,4 @@
-package me.proton.core.pass.autofill.sample.simple_compose
+package me.proton.core.pass.autofill.sample.simplecompose
 
 import android.content.Intent
 import android.os.Bundle

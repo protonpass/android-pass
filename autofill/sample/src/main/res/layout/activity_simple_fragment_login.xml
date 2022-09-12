@@ -5,6 +5,6 @@
     android:id="@+id/fragmentContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".simple_fragment.SimpleFragmentLoginActivity">
+    tools:context=".simplefragment.SimpleFragmentLoginActivity">
 
 </FrameLayout>

@@ -71,3 +71,9 @@ fun isNonStable(version: String): Boolean {
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()
 }
+
+subprojects {
+    tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
+        baseline.set(file("${rootProject.projectDir}/detekt-baseline.xml"))
+    }
+}

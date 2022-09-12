@@ -33,7 +33,7 @@ class ItemDetailViewModel @Inject constructor(
             state.value = State.Content(
                 FullItemUiModel(
                     name = item.title.decrypt(cryptoContext.keyStoreCrypto),
-                    item = item,
+                    item = item
                 )
             )
         }

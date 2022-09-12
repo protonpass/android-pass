@@ -36,7 +36,7 @@ fun createNavController(context: Context) =
 @ExperimentalAnimationApi
 private fun NavControllerSaver(
     context: Context,
-    keyStoreCrypto: KeyStoreCrypto,
+    keyStoreCrypto: KeyStoreCrypto
 ): Saver<NavHostController, *> = Saver<NavHostController, Bundle>(
     save = { keyStoreCrypto.encrypt(it.saveState()) },
     restore = { createNavController(context).apply { restoreState(keyStoreCrypto.decrypt(it)) } }

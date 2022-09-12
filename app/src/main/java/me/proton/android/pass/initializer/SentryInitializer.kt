@@ -38,7 +38,7 @@ class SentryInitializer : Initializer<Unit> {
             context.applicationContext,
             SentryInitializerEntryPoint::class.java
         ).observer().start()
-        */
+         */
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()

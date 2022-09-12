@@ -9,6 +9,6 @@ class GetAddressesForUserId @Inject constructor(
 ) {
     suspend operator fun invoke(
         userId: UserId,
-        refresh: Boolean = false,
+        refresh: Boolean = false
     ) = addressRepository.getAddresses(userId, refresh)
 }

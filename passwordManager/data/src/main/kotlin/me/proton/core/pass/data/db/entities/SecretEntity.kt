@@ -41,7 +41,7 @@ data class SecretEntity(
     @ColumnInfo(name = Columns.CONTENTS)
     val contents: String,
     @ColumnInfo(name = Columns.ASSOCIATED_URIS)
-    val associatedUris: String,
+    val associatedUris: String
 ) {
     object Columns {
         const val ID = "id"

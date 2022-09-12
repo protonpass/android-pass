@@ -10,5 +10,5 @@ fun Item.toUiModel(cryptoContext: CryptoContext): ItemUiModel =
         id = id,
         shareId = shareId,
         name = itemName(cryptoContext),
-        itemType = itemType,
+        itemType = itemType
     )

@@ -34,12 +34,12 @@ import me.proton.core.pass.domain.ShareId
 fun AppNavGraph(
     keyStoreCrypto: KeyStoreCrypto,
     launcherViewModel: LauncherViewModel,
-    onDrawerStateChanged: (Boolean) -> Unit,
+    onDrawerStateChanged: (Boolean) -> Unit
 ) {
     val navController = rememberAnimatedNavController(keyStoreCrypto)
     AnimatedNavHost(
         navController = navController,
-        startDestination = NavItem.Launcher.route,
+        startDestination = NavItem.Launcher.route
     ) {
         mainScreenNavigation(navController, launcherViewModel, onDrawerStateChanged)
         crudNavigation(navController)
@@ -51,7 +51,7 @@ fun AppNavGraph(
 private fun NavGraphBuilder.mainScreenNavigation(
     navController: NavHostController,
     launcherViewModel: LauncherViewModel,
-    onDrawerStateChanged: (Boolean) -> Unit,
+    onDrawerStateChanged: (Boolean) -> Unit
 ) {
     composable(NavItem.Launcher) {
         LauncherScreen(
@@ -91,7 +91,7 @@ private fun NavGraphBuilder.mainScreenNavigation(
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 private fun NavGraphBuilder.crudNavigation(
-    navController: NavHostController,
+    navController: NavHostController
 ) {
     val onUpClick: () -> Unit = { navController.popBackStack() }
     composable(NavItem.CreateLogin) {
@@ -193,7 +193,7 @@ private fun NavGraphBuilder.crudNavigation(
 private fun NavGraphBuilder.composable(
     navItem: NavItem,
     animate: Boolean = true,
-    content: @Composable (NavBackStackEntry) -> Unit,
+    content: @Composable (NavBackStackEntry) -> Unit
 ) {
     composable(
         route = navItem.route,
@@ -201,7 +201,7 @@ private fun NavGraphBuilder.composable(
         enterTransition = { if (animate) slideInHorizontally(initialOffsetX = { 1000 }) else null },
         exitTransition = { if (animate) slideOutHorizontally(targetOffsetX = { -1000 }) else null },
         popEnterTransition = { if (animate) slideInHorizontally(initialOffsetX = { -1000 }) else null },
-        popExitTransition = { if (animate) slideOutHorizontally(targetOffsetX = { 1000 }) else null },
+        popExitTransition = { if (animate) slideOutHorizontally(targetOffsetX = { 1000 }) else null }
     ) {
         content(it)
     }

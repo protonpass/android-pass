@@ -30,7 +30,7 @@ fun TextFieldDropdownMenu(
     modifier: Modifier = Modifier,
     label: @Composable () -> Unit,
     values: List<String>,
-    onSelected: (Int) -> Unit,
+    onSelected: (Int) -> Unit
 ) {
     val firstValue = values.firstOrNull()
     var selectedIndex by rememberSaveable { mutableStateOf(firstValue?.let { 0 }) }
@@ -65,7 +65,7 @@ fun TextFieldDropdownMenu(
             interactionSource = textfieldClickDetector,
             trailingIcon = {
                 IconButton(
-                    onClick = { isExpanded = !isExpanded },
+                    onClick = { isExpanded = !isExpanded }
                 ) {
                     Icon(icon, "drop down")
                 }

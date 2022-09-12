@@ -40,7 +40,7 @@ fun ProtonFormInput(
     trailingIcon: @Composable (() -> Unit)? = null,
     singleLine: Boolean = true,
     moveToNextOnEnter: Boolean = true,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
+    visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     Column(modifier = modifier) {
         ProtonTextTitle(title)
@@ -52,7 +52,7 @@ fun ProtonFormInput(
             singleLine = singleLine,
             visualTransformation = visualTransformation,
             moveToNextOnEnter = moveToNextOnEnter,
-            modifier = Modifier.padding(top = 8.dp),
+            modifier = Modifier.padding(top = 8.dp)
         )
         if (required) {
             Text(
@@ -69,7 +69,7 @@ fun ProtonFormInput(
 @Composable
 fun ProtonTextTitle(
     @StringRes title: Int,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Text(
         text = stringResource(title),
@@ -77,7 +77,7 @@ fun ProtonTextTitle(
         style = ProtonTheme.typography.caption,
         fontWeight = FontWeight.W500,
         fontSize = 12.sp,
-        modifier = modifier,
+        modifier = modifier
     )
 }
 
@@ -92,7 +92,7 @@ fun ProtonTextField(
     singleLine: Boolean = true,
     moveToNextOnEnter: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    editable: Boolean = true,
+    editable: Boolean = true
 ) {
     val maxLines = if (singleLine) {
         1

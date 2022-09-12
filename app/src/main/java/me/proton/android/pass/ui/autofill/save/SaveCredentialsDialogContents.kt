@@ -39,7 +39,7 @@ import me.proton.core.user.domain.entity.UserAddress
 fun SaveCredentialsDialogContents(
     state: AutofillSaveSecretViewModel.State,
     saveInfo: SecretSaveInfo,
-    onSubmit: (UserAddress, SecretSaveInfo) -> Unit,
+    onSubmit: (UserAddress, SecretSaveInfo) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -90,7 +90,7 @@ fun SaveCredentialsDialogContents(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 6.dp),
-            singleLine = true,
+            singleLine = true
         )
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -126,9 +126,9 @@ private fun Preview_SaveCredentialsDialog() {
                 listOf(
                     makeUserAddress("a@b.com", "User A", 0),
                     makeUserAddress("a@b.com", "User B", 1),
-                    makeUserAddress("a@b.com", null, 2),
+                    makeUserAddress("a@b.com", null, 2)
                 )
-            ),
+            )
         )
     )
     SaveCredentialsDialogContents(state, saveInfo) { _, _ -> }

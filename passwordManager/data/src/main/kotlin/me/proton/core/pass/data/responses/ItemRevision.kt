@@ -54,5 +54,5 @@ data class ItemRevision(
     @SerialName("CreateTime")
     val createTime: Long,
     @SerialName("ModifyTime")
-    val modifyTime: Long,
+    val modifyTime: Long
 )

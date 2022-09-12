@@ -119,7 +119,7 @@ private fun AliasView(
     onSubmit: () -> Unit,
     viewModel: BaseAliasViewModel,
     onSuccess: (ItemId) -> Unit,
-    canEdit: Boolean,
+    canEdit: Boolean
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
@@ -231,7 +231,7 @@ private fun CreateAliasScreen(
             state = state,
             onChange = onAliasChange,
             onSuffixClick = onSuffixClick,
-            canEdit = canEdit,
+            canEdit = canEdit
         )
         Spacer(Modifier.padding(vertical = 8.dp))
         MailboxSection(
@@ -266,7 +266,7 @@ private fun NoteInput(value: String, onChange: (String) -> Unit) {
         onChange = onChange,
         modifier = Modifier.padding(top = 28.dp),
         singleLine = false,
-        moveToNextOnEnter = false,
+        moveToNextOnEnter = false
     )
 }
 
@@ -287,7 +287,7 @@ private fun AliasSection(
     AliasSelector(
         state = state,
         modifier = Modifier.padding(top = 8.dp),
-        onClick = onSuffixClick,
+        onClick = onSuffixClick
     )
     if (state.aliasToBeCreated != null) {
         Row(modifier = Modifier.padding(top = 4.dp)) {
@@ -315,7 +315,7 @@ private fun MailboxSection(
     MailboxSelector(
         state = state,
         modifier = Modifier.padding(top = 8.dp),
-        onClick = onMailboxClick,
+        onClick = onMailboxClick
     )
 }
 
@@ -370,7 +370,7 @@ private fun Selector(
             Icon(
                 painter = painterResource(R.drawable.ic_proton_chevron_right),
                 contentDescription = null,
-                tint = ProtonTheme.colors.iconNorm,
+                tint = ProtonTheme.colors.iconNorm
             )
         },
         shape = RoundedCornerShape(8.dp),
@@ -383,7 +383,7 @@ private fun Selector(
             backgroundColor = ProtonTheme.colors.backgroundSecondary,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            disabledIndicatorColor = Color.Transparent,
+            disabledIndicatorColor = Color.Transparent
         )
     )
 }

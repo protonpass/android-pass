@@ -9,7 +9,7 @@ import me.proton.core.pass.data.responses.ShareResponse
 import me.proton.core.pass.domain.ShareId
 
 class RemoteShareDataSourceImpl @Inject constructor(
-    private val api: ApiProvider,
+    private val api: ApiProvider
 ) : RemoteShareDataSource {
     override suspend fun createVault(
         userId: UserId,

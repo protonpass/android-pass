@@ -35,10 +35,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.home.HomeScreenNavigation
-import me.proton.android.pass.ui.home.goToEdit
+import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.ItemAction
 import me.proton.android.pass.ui.shared.ItemsList
-import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
@@ -75,7 +74,7 @@ fun TrashScreen(
             NavigationDrawer(
                 drawerState = scaffoldState.scaffoldState.drawerState,
                 viewState = viewState.navigationDrawerViewState,
-                navigation = navDrawerNavigation,
+                navigation = navDrawerNavigation
             )
         },
         drawerGesturesEnabled = drawerGesturesEnabled,
@@ -83,7 +82,7 @@ fun TrashScreen(
             TrashTopBar(
                 coroutineScope = coroutineScope,
                 scaffoldState = scaffoldState.scaffoldState,
-                onClearTrashClick = { showClearTrashDialog = true },
+                onClearTrashClick = { showClearTrashDialog = true }
             )
         }
     ) { contentPadding ->
@@ -153,7 +152,7 @@ private fun TrashTopBar(
                     val drawerState = scaffoldState.drawerState
                     coroutineScope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() }
                 }),
-                contentDescription = null,
+                contentDescription = null
             )
         },
         actions = {
@@ -173,7 +172,7 @@ internal fun Trash(
     items: List<ItemUiModel>,
     modifier: Modifier = Modifier,
     onRestoreClicked: (ItemUiModel) -> Unit,
-    onDeleteItemClicked: (ItemUiModel) -> Unit,
+    onDeleteItemClicked: (ItemUiModel) -> Unit
 ) {
     if (items.isNotEmpty()) {
         ItemsList(
@@ -190,7 +189,7 @@ internal fun Trash(
                     onSelect = { onDeleteItemClicked(it) },
                     title = R.string.action_delete,
                     icon = R.drawable.ic_proton_trash,
-                    textColor = ProtonTheme.colors.notificationError,
+                    textColor = ProtonTheme.colors.notificationError
                 )
             )
         )
@@ -208,17 +207,17 @@ internal fun Trash(
 @ExperimentalMaterialApi
 data class TrashScaffoldState(
     val scaffoldState: ScaffoldState,
-    val drawerGesturesEnabled: MutableState<Boolean>,
+    val drawerGesturesEnabled: MutableState<Boolean>
 )
 
 @Composable
 @ExperimentalMaterialApi
 fun rememberTrashScaffoldState(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
-    drawerGesturesEnabled: MutableState<Boolean> = mutableStateOf(true),
+    drawerGesturesEnabled: MutableState<Boolean> = mutableStateOf(true)
 ): TrashScaffoldState = remember {
     TrashScaffoldState(
         scaffoldState,
-        drawerGesturesEnabled,
+        drawerGesturesEnabled
     )
 }

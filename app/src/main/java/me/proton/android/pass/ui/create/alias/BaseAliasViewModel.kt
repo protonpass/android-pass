@@ -79,12 +79,12 @@ abstract class BaseAliasViewModel(
         val aliasOptions: AliasOptions = AliasOptions(emptyList(), emptyList()),
         val selectedSuffix: AliasSuffix? = null,
         val selectedMailbox: AliasMailbox? = null,
-        val aliasToBeCreated: String? = null,
+        val aliasToBeCreated: String? = null
     ) {
         fun toItemContents(): ItemContents {
             return ItemContents.Alias(
                 title = title,
-                note = note,
+                note = note
             )
         }
     }

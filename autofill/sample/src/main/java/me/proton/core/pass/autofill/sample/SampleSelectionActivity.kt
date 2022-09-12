@@ -36,7 +36,7 @@ class SampleSelectionActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun <T: Activity> openActivity(clazz: Class<T>) {
+    private fun <T : Activity> openActivity(clazz: Class<T>) {
         startActivity(Intent(this, clazz))
     }
 }

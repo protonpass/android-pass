@@ -23,6 +23,6 @@ fun TopBarTitleView(
         text = title,
         fontWeight = FontWeight.W500,
         fontSize = 16.sp,
-        color = ProtonTheme.colors.textNorm,
+        color = ProtonTheme.colors.textNorm
     )
 }

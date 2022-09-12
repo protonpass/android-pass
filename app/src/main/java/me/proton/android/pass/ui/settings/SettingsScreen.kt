@@ -59,7 +59,7 @@ fun SettingsScreen(
             NavigationDrawer(
                 drawerState = scaffoldState.scaffoldState.drawerState,
                 viewState = viewState.navigationDrawerViewState,
-                navigation = navDrawerNavigation,
+                navigation = navDrawerNavigation
             )
         },
         drawerGesturesEnabled = drawerGesturesEnabled,
@@ -79,7 +79,7 @@ fun SettingsScreen(
                                 }
                             }
                         }),
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 }
             )
@@ -95,17 +95,17 @@ fun SettingsScreen(
 @ExperimentalMaterialApi
 data class SettingsScaffoldState(
     val scaffoldState: ScaffoldState,
-    val drawerGesturesEnabled: MutableState<Boolean>,
+    val drawerGesturesEnabled: MutableState<Boolean>
 )
 
 @Composable
 @ExperimentalMaterialApi
 fun rememberSettingsScaffoldState(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
-    drawerGesturesEnabled: MutableState<Boolean> = mutableStateOf(true),
+    drawerGesturesEnabled: MutableState<Boolean> = mutableStateOf(true)
 ): SettingsScaffoldState = remember {
     SettingsScaffoldState(
         scaffoldState,
-        drawerGesturesEnabled,
+        drawerGesturesEnabled
     )
 }

@@ -37,7 +37,7 @@ class AssistNodeTraversalTest {
         val rootNode = makeNode(
             autofillId = newAutofillFieldId(),
             autofillHints = listOf(View.AUTOFILL_HINT_EMAIL_ADDRESS),
-            isImportantForAutofill = true,
+            isImportantForAutofill = true
         )
 
         val result = AssistNodeTraversal().traverse(rootNode)
@@ -50,7 +50,7 @@ class AssistNodeTraversalTest {
         val rootNode = makeNode(
             autofillId = newAutofillFieldId(),
             inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
-            isImportantForAutofill = true,
+            isImportantForAutofill = true
         )
 
         val result = AssistNodeTraversal().traverse(rootNode)
@@ -63,25 +63,25 @@ class AssistNodeTraversalTest {
         val rootNode = makeNode(
             autofillId = newAutofillFieldId(),
             htmlAttributes = listOf("type" to "text"),
-            isImportantForAutofill = true,
+            isImportantForAutofill = true
         )
 
         val result = AssistNodeTraversal().traverse(rootNode)
 
         Assert.assertEquals(SecretType.Other, result.firstOrNull()?.type)
     }
-    
+
     @Test
     fun autofillHintsParsingReturnsKnownSecretType() {
         val traversal = AssistNodeTraversal()
-        
+
         val phoneType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_PHONE)
         val usernameType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_USERNAME)
         val emailType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_EMAIL_ADDRESS)
         val passwordType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_PASSWORD)
         val nameType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_NAME)
         val creditCardType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_CREDIT_CARD_NUMBER)
-        
+
         Assert.assertEquals(SecretType.Phone, phoneType)
         Assert.assertEquals(SecretType.Username, usernameType)
         Assert.assertEquals(SecretType.Email, emailType)
@@ -151,7 +151,7 @@ class AssistNodeTraversalTest {
         inputType: Int = 0,
         autofillHints: List<String> = emptyList(),
         htmlAttributes: List<Pair<String, String>> = emptyList(),
-        children: List<AutofillNode> = emptyList(),
+        children: List<AutofillNode> = emptyList()
     ) =
         AutofillNode(
             id = autofillId,

@@ -159,7 +159,7 @@ class CreateVault @Inject constructor(
             itemKey = lockedItemKey.key,
             itemKeyPassphrase = b64(itemKeyEncryptedPassphrase),
             itemKeyPassphraseKeyPacket = b64(itemKeyPassphraseKeyPacket),
-            itemKeySignature = b64(unarmor(itemKeySignature)),
+            itemKeySignature = b64(unarmor(itemKeySignature))
         ) to VaultItemKeyList(
             vaultKeyList = listOf(vaultKey),
             itemKeyList = listOf(
@@ -196,7 +196,7 @@ class CreateVault @Inject constructor(
 
     internal data class GeneratedKey(
         val passphrase: ByteArray,
-        val privateKey: PrivateKey,
+        val privateKey: PrivateKey
     )
 
     internal data class PacketsAndSignature(

@@ -180,7 +180,7 @@ private fun LoginView(
             onUsernameChange = onUsernameChange,
             onPasswordChange = onPasswordChange,
             onWebsiteChange = onWebsiteChange,
-            onNoteChange = onNoteChange,
+            onNoteChange = onNoteChange
         )
         when (val state = viewState.state) {
             is BaseLoginViewModel.State.Error -> Text(text = "something went boom")
@@ -262,7 +262,7 @@ private fun WebsitesSection(
                             modifier = Modifier.clickable { onWebsitesChange.onRemoveWebsite(idx) }
                         )
                     }
-                },
+                }
             )
             if (shouldShowAddWebsiteButton) {
                 Divider()
@@ -290,7 +290,7 @@ private fun WebsitesSection(
             ) {
                 Icon(
                     painter = painterResource(R.drawable.ic_proton_plus),
-                    contentDescription = null,
+                    contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(stringResource(R.string.field_website_add_another))
@@ -338,7 +338,7 @@ private fun UsernameInput(
 @Composable
 private fun PasswordInput(
     value: String,
-    onChange: (String) -> Unit,
+    onChange: (String) -> Unit
 ) {
     var isVisible: Boolean by rememberSaveable { mutableStateOf(false) }
 
@@ -393,6 +393,6 @@ private fun NoteInput(value: String, onChange: (String) -> Unit) {
         onChange = onChange,
         modifier = Modifier.padding(top = 28.dp),
         singleLine = false,
-        moveToNextOnEnter = false,
+        moveToNextOnEnter = false
     )
 }

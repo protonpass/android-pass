@@ -78,7 +78,7 @@ fun ExplicitAutofillTypesDemo(onLoginClicked: () -> Unit) {
                                 cancelAutofillForNode(autofillNode)
                             }
                         }
-                },
+                    },
                 value = nameState,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
@@ -106,7 +106,7 @@ fun ExplicitAutofillTypesDemo(onLoginClicked: () -> Unit) {
                                 cancelAutofillForNode(autofillNode)
                             }
                         }
-                },
+                    },
                 value = emailState,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,

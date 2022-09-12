@@ -24,5 +24,5 @@ data class PartialShareResponse(
     @SerialName("Permission")
     val permission: Int,
     @SerialName("AcceptanceSignature")
-    val acceptanceSignature: String?,
+    val acceptanceSignature: String?
 )

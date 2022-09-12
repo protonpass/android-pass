@@ -33,7 +33,7 @@ import me.proton.core.compose.theme.captionHint
 fun NavigationDrawerAppVersion(
     name: String,
     version: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Text(
         modifier = modifier

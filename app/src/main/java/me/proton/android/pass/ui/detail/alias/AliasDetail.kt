@@ -48,7 +48,7 @@ fun AliasDetail(
 
 @Composable
 fun AliasContentView(
-    model: AliasDetailViewModel.AliasUiModel,
+    model: AliasDetailViewModel.AliasUiModel
 ) {
     val copiedToClipboardMessage = "${stringResource(R.string.field_alias_title)} ${stringResource(R.string.field_copied_to_clipboard)}"
     val clipboardManager = LocalClipboardManager.current
@@ -72,7 +72,7 @@ fun AliasContentView(
                 Text(
                     text = it,
                     color = ProtonTheme.colors.textWeak,
-                    fontSize = 14.sp,
+                    fontSize = 14.sp
                 )
             }
         }
@@ -81,7 +81,7 @@ fun AliasContentView(
     if (model.note.isNotEmpty()) {
         Section(
             title = R.string.field_note_title,
-            content = model.note,
+            content = model.note
         )
     }
 }

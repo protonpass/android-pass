@@ -199,14 +199,14 @@ private fun ShareItem(
 private fun ItemsListItem(
     navigation: NavDrawerNavigation,
     closeDrawerAction: (() -> Unit) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavigationDrawerListItem(
         title = R.string.navigation_item_items,
         icon = R.drawable.ic_proton_key,
         isSelected = navigation.selectedSection == NavigationDrawerSection.Items,
         closeDrawerAction = closeDrawerAction,
-        modifier = modifier,
+        modifier = modifier
     ) {
         navigation.onSectionSelected(NavigationDrawerSection.Items)
     }
@@ -216,14 +216,14 @@ private fun ItemsListItem(
 private fun SettingsListItem(
     navigation: NavDrawerNavigation,
     closeDrawerAction: (() -> Unit) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavigationDrawerListItem(
         title = R.string.navigation_item_settings,
         icon = R.drawable.ic_settings,
         isSelected = navigation.selectedSection == NavigationDrawerSection.Settings,
         closeDrawerAction = closeDrawerAction,
-        modifier = modifier,
+        modifier = modifier
     ) {
         navigation.onSectionSelected(NavigationDrawerSection.Settings)
     }
@@ -233,14 +233,14 @@ private fun SettingsListItem(
 private fun TrashListItem(
     navigation: NavDrawerNavigation,
     closeDrawerAction: (() -> Unit) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavigationDrawerListItem(
         title = R.string.navigation_item_trash,
         icon = R.drawable.ic_proton_trash,
         isSelected = navigation.selectedSection == NavigationDrawerSection.Trash,
         closeDrawerAction = closeDrawerAction,
-        modifier = modifier,
+        modifier = modifier
     ) {
         navigation.onSectionSelected(NavigationDrawerSection.Trash)
     }
@@ -250,14 +250,14 @@ private fun TrashListItem(
 private fun HelpListItem(
     navigation: NavDrawerNavigation,
     closeDrawerAction: (() -> Unit) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavigationDrawerListItem(
         title = R.string.navigation_item_help,
         icon = R.drawable.ic_proton_question_circle,
         isSelected = navigation.selectedSection == NavigationDrawerSection.Help,
         closeDrawerAction = closeDrawerAction,
-        modifier = modifier,
+        modifier = modifier
     ) {
         navigation.onSectionSelected(NavigationDrawerSection.Help)
     }
@@ -267,14 +267,14 @@ private fun HelpListItem(
 private fun SignOutListItem(
     navigation: NavDrawerNavigation,
     closeDrawerAction: (() -> Unit) -> Unit,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     NavigationDrawerListItem(
         icon = R.drawable.ic_sign_out,
         title = R.string.navigation_item_sign_out,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,
-        isSelected = false,
+        isSelected = false
     ) {
         navigation.onSignOut
     }
@@ -287,7 +287,7 @@ fun NavigationDrawerListItem(
     closeDrawerAction: (() -> Unit) -> Unit,
     modifier: Modifier = Modifier,
     isSelected: Boolean,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     NavigationDrawerListItem(icon, title, modifier, isSelected) {
         closeDrawerAction(onClick)

@@ -15,8 +15,9 @@ class SimpleLoginFragment : Fragment() {
     private var binding: FragmentSimpleLoginBinding? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentSimpleLoginBinding.inflate(inflater, container, false)
         return binding!!.root

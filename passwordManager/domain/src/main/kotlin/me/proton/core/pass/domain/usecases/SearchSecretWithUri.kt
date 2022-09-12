@@ -9,12 +9,12 @@ import me.proton.core.user.domain.repository.UserAddressRepository
 
 class SearchSecretWithUri @Inject constructor(
     private val secretsRepository: SecretsRepository,
-    private val userAddressRepository: UserAddressRepository,
+    private val userAddressRepository: UserAddressRepository
 ) {
     suspend operator fun invoke(
         uri: String,
         userId: SessionUserId? = null,
-        addressId: AddressId? = null,
+        addressId: AddressId? = null
     ): List<Secret> {
         val address = if (userId != null && addressId != null)
             userAddressRepository.getAddress(userId, addressId) else null

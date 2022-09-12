@@ -55,7 +55,7 @@ class ItemRepositoryImpl @Inject constructor(
     private val localItemDataSource: LocalItemDataSource,
     private val remoteItemDataSource: RemoteItemDataSource,
     private val keyPacketRepository: KeyPacketRepository,
-    private val openItem: OpenItem,
+    private val openItem: OpenItem
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
     companion object {

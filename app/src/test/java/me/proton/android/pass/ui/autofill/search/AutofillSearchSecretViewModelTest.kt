@@ -87,7 +87,7 @@ class AutofillSearchSecretViewModelTest {
         SecretType.Other,
         false,
         SecretValue.Single("some secret"),
-        associatedUris = emptyList(),
+        associatedUris = emptyList()
     )
 
     private fun makeAddress(addressId: String) = UserAddress(
@@ -100,6 +100,6 @@ class AutofillSearchSecretViewModelTest {
         enabled = true,
         order = 0,
         keys = emptyList(),
-        signedKeyList = null,
+        signedKeyList = null
     )
 }

@@ -8,8 +8,8 @@ import kotlin.random.Random
 fun newAutofillFieldId() = FakeAutofillFieldId()
 
 /** Used for testing purposes */
-class FakeAutofillFieldId(val id: Int = Random.nextInt()): AutofillFieldId {
-    constructor(parcel: Parcel): this(parcel.readInt())
+class FakeAutofillFieldId(val id: Int = Random.nextInt()) : AutofillFieldId {
+    constructor(parcel: Parcel) : this(parcel.readInt())
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)

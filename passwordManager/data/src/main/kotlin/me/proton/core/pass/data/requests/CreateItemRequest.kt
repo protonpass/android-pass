@@ -20,5 +20,5 @@ data class CreateItemRequest(
     @SerialName("UserSignature")
     val userSignature: String,
     @SerialName("ItemKeySignature")
-    val itemKeySignature: String,
+    val itemKeySignature: String
 )

@@ -7,7 +7,7 @@ import me.proton.core.pass.common_secret.Secret
 import me.proton.core.pass.domain.repositories.SecretsRepository
 
 class ObserveSecrets @Inject constructor(
-    private val repository: SecretsRepository,
+    private val repository: SecretsRepository
 ) {
     // TODO: allow pagination
     operator fun invoke(userId: UserId): Flow<List<Secret>> {

@@ -33,6 +33,16 @@ buildscript {
 plugins {
     id("me.proton.core.gradle-plugins.detekt") version Versions.Gradle.protonDetektPlugin
     id("com.github.ben-manes.versions") version Versions.Gradle.benManesVersionsPlugin
+    id("com.osacky.doctor") version Versions.Gradle.doctorPlugin
+}
+
+val isCI = System.getenv().containsKey("CI")
+
+doctor {
+    javaHome {
+        ensureJavaHomeIsSet.set(!isCI)
+        ensureJavaHomeMatches.set(!isCI)
+    }
 }
 
 tasks.register("clean", Delete::class) {

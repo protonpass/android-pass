@@ -1,4 +1,4 @@
-package me.proton.core.pass.common_secret
+package me.proton.core.pass.commonsecret
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

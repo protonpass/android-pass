@@ -8,7 +8,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.decryptText
 import me.proton.core.key.domain.encryptText
 import me.proton.core.key.domain.useKeys
-import me.proton.core.pass.common_secret.Secret
+import me.proton.core.pass.commonsecret.Secret
 import me.proton.core.pass.data.db.datasources.SecretsDatabaseDataSource
 import me.proton.core.pass.data.db.entities.SecretEntity
 import me.proton.core.pass.data.extensions.toEntity

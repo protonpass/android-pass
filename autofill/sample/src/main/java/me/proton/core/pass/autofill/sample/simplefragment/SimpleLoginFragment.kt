@@ -1,4 +1,4 @@
-package me.proton.core.pass.autofill.sample.simple_fragment
+package me.proton.core.pass.autofill.sample.simplefragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

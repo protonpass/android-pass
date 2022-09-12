@@ -17,5 +17,5 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<manifest package="me.proton.core.pass.common_secret" />
+<manifest package="me.proton.core.pass.commonsecret" />
 

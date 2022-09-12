@@ -24,7 +24,7 @@ import me.proton.core.pass.autofill.service.Constants
 import me.proton.core.pass.autofill.service.entities.SearchCredentialsInfo
 import me.proton.core.pass.autofill.service.entities.asAndroid
 import me.proton.core.pass.autofill.service.util.fromByteArray
-import me.proton.core.pass.common_secret.Secret
+import me.proton.core.pass.commonsecret.Secret
 
 @RequiresApi(Build.VERSION_CODES.O)
 @AndroidEntryPoint

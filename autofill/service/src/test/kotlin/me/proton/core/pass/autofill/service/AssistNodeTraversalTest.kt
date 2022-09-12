@@ -5,7 +5,7 @@ import android.view.View
 import me.proton.core.pass.autofill.service.entities.AutofillFieldId
 import me.proton.core.pass.autofill.service.entities.AutofillNode
 import me.proton.core.pass.autofill.service.utils.newAutofillFieldId
-import me.proton.core.pass.common_secret.SecretType
+import me.proton.core.pass.commonsecret.SecretType
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

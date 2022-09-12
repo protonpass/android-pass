@@ -28,9 +28,9 @@ import me.proton.android.pass.R
 import me.proton.android.pass.ui.autofill.search.AutofillListSecretsScreen.SecretItem
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.caption
-import me.proton.core.pass.common_secret.Secret
-import me.proton.core.pass.common_secret.SecretType
-import me.proton.core.pass.common_secret.SecretValue
+import me.proton.core.pass.commonsecret.Secret
+import me.proton.core.pass.commonsecret.SecretType
+import me.proton.core.pass.commonsecret.SecretValue
 
 object AutofillListSecretsScreen {
     const val route = "autofill/secrets"

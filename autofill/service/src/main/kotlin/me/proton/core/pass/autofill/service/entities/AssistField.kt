@@ -3,7 +3,7 @@ package me.proton.core.pass.autofill.service.entities
 import android.os.Parcel
 import android.os.Parcelable
 import android.view.autofill.AutofillValue
-import me.proton.core.pass.common_secret.SecretType
+import me.proton.core.pass.commonsecret.SecretType
 
 // TODO: use Parcelize here once https://github.com/JetBrains/kotlin/pull/4575 is merged
 data class AssistField(

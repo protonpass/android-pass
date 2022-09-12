@@ -3,9 +3,9 @@ package me.proton.core.pass.data.extensions
 import java.util.UUID
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import me.proton.core.pass.common_secret.Secret
-import me.proton.core.pass.common_secret.SecretType
-import me.proton.core.pass.common_secret.SecretValue
+import me.proton.core.pass.commonsecret.Secret
+import me.proton.core.pass.commonsecret.SecretType
+import me.proton.core.pass.commonsecret.SecretValue
 import me.proton.core.pass.data.db.entities.LoginSecretContents
 import me.proton.core.pass.data.db.entities.SecretEntity
 import me.proton.core.util.kotlin.serialize

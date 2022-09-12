@@ -5,9 +5,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import me.proton.core.pass.autofill.sample.databinding.ActivitySampleSelectionBinding
-import me.proton.core.pass.autofill.sample.simple_activity.SimpleLoginActivity
-import me.proton.core.pass.autofill.sample.simple_compose.SimpleComposeLoginActivity
-import me.proton.core.pass.autofill.sample.simple_fragment.SimpleFragmentLoginActivity
+import me.proton.core.pass.autofill.sample.simpleactivity.SimpleLoginActivity
+import me.proton.core.pass.autofill.sample.simplecompose.SimpleComposeLoginActivity
+import me.proton.core.pass.autofill.sample.simplefragment.SimpleFragmentLoginActivity
 import me.proton.core.pass.autofill.sample.webview.WebViewLoginActivity
 
 class SampleSelectionActivity : AppCompatActivity() {

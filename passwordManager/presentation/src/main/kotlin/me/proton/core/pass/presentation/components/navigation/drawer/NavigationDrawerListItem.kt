@@ -47,7 +47,7 @@ fun NavigationDrawerListItem(
     @StringRes title: Int,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) = NavigationDrawerListItem(
     icon = painterResource(icon),
     title = stringResource(title),

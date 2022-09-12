@@ -15,7 +15,7 @@ import me.proton.core.key.domain.publicKey
 data class ItemKey(
     val rotationId: String,
     val key: ArmoredKey,
-    val encryptedKeyPassphrase: EncryptedByteArray?,
+    val encryptedKeyPassphrase: EncryptedByteArray?
 ) : KeyHolderPrivateKey {
     override val privateKey: PrivateKey
         get() = when (key) {

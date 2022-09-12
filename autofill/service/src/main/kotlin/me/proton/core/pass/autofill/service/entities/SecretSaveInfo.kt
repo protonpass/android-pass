@@ -11,4 +11,4 @@ data class SecretSaveInfo(
     val appPackageName: String,
     val secretType: SecretType,
     val secretValue: SecretValue
-): Parcelable
+) : Parcelable

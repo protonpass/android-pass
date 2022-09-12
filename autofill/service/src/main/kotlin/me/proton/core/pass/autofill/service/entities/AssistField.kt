@@ -11,12 +11,13 @@ data class AssistField(
     val type: SecretType?,
     val value: AutofillValue?,
     val text: String?
-): Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readParcelable(AndroidAutofillFieldId::class.java.classLoader)!!,
         parcel.readParcelable(SecretType::class.java.classLoader),
         parcel.readParcelable(AutofillValue::class.java.classLoader),
-        parcel.readString()) {
+        parcel.readString()
+    ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

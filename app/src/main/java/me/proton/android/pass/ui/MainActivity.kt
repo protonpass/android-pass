@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
                 ProvideWindowInsets {
                     AppNavGraph(
                         keyStoreCrypto = keyStoreCrypto,
-                        launcherViewModel = launcherViewModel,
+                        launcherViewModel = launcherViewModel
                     ) { isOpen ->
                         isDrawerOpen = isOpen
                     }

@@ -12,8 +12,9 @@ class LoginResultFragment : Fragment() {
     private var binding: FragmentLoginResultBinding? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentLoginResultBinding.inflate(inflater, container, false)
         return binding!!.root

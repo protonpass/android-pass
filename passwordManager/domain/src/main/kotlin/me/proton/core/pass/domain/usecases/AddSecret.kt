@@ -12,7 +12,7 @@ import me.proton.core.user.domain.repository.UserAddressRepository
 
 class AddSecret @Inject constructor(
     private val secretsRepository: SecretsRepository,
-    private val userAddressRepository: UserAddressRepository,
+    private val userAddressRepository: UserAddressRepository
 ) {
     suspend operator fun invoke(
         userId: SessionUserId,
@@ -31,7 +31,7 @@ class AddSecret @Inject constructor(
             type = type,
             isUploaded = false,
             contents = contents,
-            associatedUris = listOf(associatedUri),
+            associatedUris = listOf(associatedUri)
         )
         val address = requireNotNull(userAddressRepository.getAddress(userId, addressId))
         secretsRepository.saveSecret(secret, address)

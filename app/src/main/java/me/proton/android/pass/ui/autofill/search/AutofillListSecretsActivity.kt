@@ -76,7 +76,7 @@ class AutofillListSecretsActivity : ComponentActivity() {
 
     private fun replyToAutofillService(
         secret: Secret,
-        searchCredentialsInfo: SearchCredentialsInfo,
+        searchCredentialsInfo: SearchCredentialsInfo
     ) {
         val listItemId = android.R.layout.simple_list_item_1
 

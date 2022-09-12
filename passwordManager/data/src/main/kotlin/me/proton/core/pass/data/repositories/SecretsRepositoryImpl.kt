@@ -21,7 +21,7 @@ import me.proton.core.user.domain.entity.UserAddress
 class SecretsRepositoryImpl @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val dataSource: SecretsDatabaseDataSource,
-    private val addressManager: UserAddressManager,
+    private val addressManager: UserAddressManager
 ) : SecretsRepository {
 
     override suspend fun saveSecret(secret: Secret, userAddress: UserAddress) {
@@ -58,7 +58,7 @@ class SecretsRepositoryImpl @Inject constructor(
     }
 
     private suspend fun getAssociatedUserAddress(
-        secretEntity: SecretEntity,
+        secretEntity: SecretEntity
     ): UserAddress? =
         addressManager.getAddress(UserId(secretEntity.userId), AddressId(secretEntity.addressId))
 

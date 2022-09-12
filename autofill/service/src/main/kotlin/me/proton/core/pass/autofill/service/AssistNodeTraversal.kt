@@ -59,7 +59,7 @@ class AssistNodeTraversal {
     private fun nodeHasValidInputType(node: AutofillNode): Boolean {
         val inputType = node.inputType
         val hasMultilineFlag = inputType hasFlag InputType.TYPE_TEXT_FLAG_MULTI_LINE ||
-                inputType hasFlag InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE
+            inputType hasFlag InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE
         val hasAutoCorrectFlag = inputType hasFlag InputType.TYPE_TEXT_FLAG_AUTO_CORRECT
         // InputType.TYPE_TEXT_FLAG_CAP_SENTENCES might also be considered in the future
         return inputType != 0 && !hasMultilineFlag && !hasAutoCorrectFlag

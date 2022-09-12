@@ -21,7 +21,7 @@ import me.proton.core.user.domain.entity.AddressId
 @HiltViewModel
 class AutofillSearchSecretViewModel @Inject constructor(
     private val searchSecretWithUri: SearchSecretWithUri,
-    private val getAddressById: GetAddressById,
+    private val getAddressById: GetAddressById
 ) : ViewModel() {
 
     private val mutableState = MutableStateFlow<State>(State.Searching)
@@ -55,5 +55,5 @@ class AutofillSearchSecretViewModel @Inject constructor(
 
 data class ListSecretItem(
     val secret: Secret,
-    val address: String,
+    val address: String
 )

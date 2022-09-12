@@ -123,7 +123,7 @@ private fun NoteView(
                 state = viewState.modelState,
                 modifier = Modifier.padding(padding),
                 onTitleChange = onTitleChange,
-                onNoteChange = onNoteChange,
+                onNoteChange = onNoteChange
             )
             is BaseNoteViewModel.State.Loading -> DeferredCircularProgressIndicator(
                 Modifier
@@ -176,6 +176,6 @@ private fun NoteInput(value: String, onChange: (String) -> Unit) {
         onChange = onChange,
         modifier = Modifier.padding(top = 28.dp),
         singleLine = false,
-        moveToNextOnEnter = false,
+        moveToNextOnEnter = false
     )
 }

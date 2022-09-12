@@ -71,7 +71,7 @@ class AutofillSecretMapperTest {
         )
         val assistFields = listOf(
             AssistField(newAutofillFieldId(), SecretType.Email, null, null),
-            AssistField(newAutofillFieldId(), SecretType.Password, null, null),
+            AssistField(newAutofillFieldId(), SecretType.Password, null, null)
         )
 
         val mappings = AutofillSecretMapper().mapSecretsToFields(secret, assistFields)
@@ -99,7 +99,7 @@ class AutofillSecretMapperTest {
         )
         val assistFields = listOf(
             AssistField(newAutofillFieldId(), SecretType.Username, null, null),
-            AssistField(newAutofillFieldId(), SecretType.Password, null, null),
+            AssistField(newAutofillFieldId(), SecretType.Password, null, null)
         )
 
         val mappings = AutofillSecretMapper().mapSecretsToFields(secret, assistFields)
@@ -133,7 +133,7 @@ class AutofillSecretMapperTest {
         val assistFields = listOf(
             AssistField(newAutofillFieldId(), SecretType.Email, null, null),
             compatibleField,
-            AssistField(newAutofillFieldId(), SecretType.Password, null, null),
+            AssistField(newAutofillFieldId(), SecretType.Password, null, null)
         )
 
         val mappings = AutofillSecretMapper().mapSecretsToFields(secret, assistFields)

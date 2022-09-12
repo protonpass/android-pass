@@ -42,12 +42,12 @@ class ShareRepositoryImpl @Inject constructor(
     private val vaultKeyRepository: VaultKeyRepository,
     private val cryptoContext: CryptoContext,
     private val openShare: OpenShare,
-    private val createVault: CreateVault,
+    private val createVault: CreateVault
 ) : ShareRepository {
 
     override suspend fun createVault(
         userId: SessionUserId,
-        vault: NewVault,
+        vault: NewVault
     ): Share {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
         val (request, _) = createVaultRequest(vault, userAddress)
@@ -152,21 +152,21 @@ class ShareRepositoryImpl @Inject constructor(
 
     private suspend fun shareResponseToEntity(
         userAddress: UserAddress,
-        shareResponse: ShareResponse,
+        shareResponse: ShareResponse
     ): ShareEntity {
         val inviterKeys = keyRepository.getPublicAddress(userAddress.userId, shareResponse.inviterEmail, source = Source.LocalIfAvailable)
         val inviterPublicKeys = inviterKeys.keys.publicKeyRing().keys
         return openShare.responseToEntity(
             shareResponse,
             userAddress,
-            inviterPublicKeys,
+            inviterPublicKeys
         )
     }
 
     private suspend fun shareEntityToShare(
         userAddress: UserAddress,
         inviterKeys: List<PublicKey>,
-        entity: ShareEntity,
+        entity: ShareEntity
     ): Share {
         val signingKey = SigningKey(Utils.readKey(entity.signingKey, isPrimary = true))
         val vaultKeys = vaultKeyRepository.getVaultKeys(userAddress, ShareId(entity.id), signingKey)
@@ -187,6 +187,6 @@ class ShareRepositoryImpl @Inject constructor(
 
     internal data class ShareResponseEntity(
         val response: ShareResponse,
-        val entity: ShareEntity,
+        val entity: ShareEntity
     )
 }

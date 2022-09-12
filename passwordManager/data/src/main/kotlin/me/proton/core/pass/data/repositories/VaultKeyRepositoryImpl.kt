@@ -23,7 +23,7 @@ import me.proton.core.user.domain.entity.UserAddress
 class VaultKeyRepositoryImpl @Inject constructor(
     private val localDataSource: LocalVaultItemKeyDataSource,
     private val remoteDataSource: RemoteVaultItemKeyDataSource,
-    private val openKeys: OpenKeys,
+    private val openKeys: OpenKeys
 ) : VaultKeyRepository {
 
     override suspend fun getVaultKeys(
@@ -53,7 +53,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
-        keyId: String,
+        keyId: String
     ): ItemKey {
         val key = localDataSource.getItemKeyById(userAddress, shareId, keyId)
         if (key != null) {
@@ -95,7 +95,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
         vaultKey: VaultKey,
         keyPassphrase: String?,
         keySignature: String,
-        createTime: Long,
+        createTime: Long
     ) {
         val entity = VaultKeyEntity(
             rotationId = vaultKey.rotationId,
@@ -107,7 +107,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
             keyPassphrase = keyPassphrase,
             keySignature = keySignature,
             createTime = createTime,
-            encryptedKeyPassphrase = vaultKey.encryptedKeyPassphrase,
+            encryptedKeyPassphrase = vaultKey.encryptedKeyPassphrase
         )
         localDataSource.storeKeys(
             userAddress, shareId,
@@ -124,7 +124,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
         itemKey: ItemKey,
         keyPassphrase: String?,
         keySignature: String,
-        createTime: Long,
+        createTime: Long
     ) {
         val entity = ItemKeyEntity(
             rotationId = itemKey.rotationId,
@@ -135,7 +135,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
             keyPassphrase = keyPassphrase,
             keySignature = keySignature,
             createTime = createTime,
-            encryptedKeyPassphrase = itemKey.encryptedKeyPassphrase,
+            encryptedKeyPassphrase = itemKey.encryptedKeyPassphrase
         )
         localDataSource.storeKeys(
             userAddress, shareId,
@@ -196,7 +196,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
                 keyPassphrase = it.keyPassphrase,
                 keySignature = it.keySignature,
                 createTime = it.createTime,
-                encryptedKeyPassphrase = encryptedVaultKeyPassphrases[it.rotationId],
+                encryptedKeyPassphrase = encryptedVaultKeyPassphrases[it.rotationId]
             )
         }
         val itemKeys = list.itemKeys.map {
@@ -209,7 +209,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
                 keyPassphrase = it.keyPassphrase,
                 keySignature = it.keySignature,
                 createTime = it.createTime,
-                encryptedKeyPassphrase = encryptedItemKeyPassphrases[it.rotationId],
+                encryptedKeyPassphrase = encryptedItemKeyPassphrases[it.rotationId]
             )
         }
 

@@ -38,13 +38,13 @@ import me.proton.core.compose.theme.headline
 @Composable
 fun NavigationDrawerSectionHeader(
     @StringRes title: Int,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) = NavigationDrawerSectionHeader(stringResource(title), modifier)
 
 @Composable
 fun NavigationDrawerSectionHeader(
     title: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
@@ -53,7 +53,7 @@ fun NavigationDrawerSectionHeader(
                 heading()
             }
             .padding(top = DefaultSpacing)
-            .fillMaxWidth(),
+            .fillMaxWidth()
     ) {
 
         Divider()
@@ -62,11 +62,11 @@ fun NavigationDrawerSectionHeader(
             text = title,
             modifier = Modifier.padding(
                 vertical = DefaultSpacing,
-                horizontal = SectionHeaderHorizontalPadding,
+                horizontal = SectionHeaderHorizontalPadding
             ),
             style = ProtonTheme.typography.headline,
             maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
+            overflow = TextOverflow.Ellipsis
         )
     }
 }

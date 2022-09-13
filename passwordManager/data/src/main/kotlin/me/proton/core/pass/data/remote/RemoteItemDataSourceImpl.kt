@@ -14,7 +14,7 @@ import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 
 class RemoteItemDataSourceImpl @Inject constructor(
-    private val api: ApiProvider,
+    private val api: ApiProvider
 ) : BaseRemoteDataSourceImpl(), RemoteItemDataSource {
 
     override suspend fun createItem(userId: UserId, shareId: ShareId, body: CreateItemRequest): ItemRevision =

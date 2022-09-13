@@ -16,6 +16,7 @@ abstract class SecretsDao : BaseDao<SecretEntity>() {
         """
     )
     abstract suspend fun searchWithName(addressId: String, query: String): List<SecretEntity>
+
     @Query(
         """
         SELECT * FROM ${SecretEntity.TABLE} 
@@ -32,6 +33,7 @@ abstract class SecretsDao : BaseDao<SecretEntity>() {
         """
     )
     abstract suspend fun searchWithUri(addressId: String, uri: String): List<SecretEntity>
+
     @Query(
         """
         SELECT * FROM ${SecretEntity.TABLE} 

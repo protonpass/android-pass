@@ -22,7 +22,7 @@ import me.proton.core.pass.presentation.components.navigation.drawer.NavigationD
 fun LauncherScreen(
     onDrawerStateChanged: (Boolean) -> Unit = {},
     homeScreenNavigation: HomeScreenNavigation,
-    viewModel: LauncherViewModel = hiltViewModel(),
+    viewModel: LauncherViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState(LauncherViewModel.State.Processing)
     val section by viewModel.sectionStateFlow.collectAsState(viewModel.initialSection)
@@ -43,19 +43,19 @@ fun LauncherScreen(
         LauncherViewModel.State.PrimaryExist -> when (section) {
             NavigationDrawerSection.Items -> HomeScreen(
                 navDrawerNavigation = events,
-                navigation = homeScreenNavigation,
+                navigation = homeScreenNavigation
             )
             NavigationDrawerSection.Settings -> SettingsScreen(
                 navDrawerNavigation = events,
-                navigation = homeScreenNavigation,
+                navigation = homeScreenNavigation
             )
             NavigationDrawerSection.Trash -> TrashScreen(
                 navDrawerNavigation = events,
-                navigation = homeScreenNavigation,
+                navigation = homeScreenNavigation
             )
             NavigationDrawerSection.Help -> HelpScreen(
                 navDrawerNavigation = events,
-                navigation = homeScreenNavigation,
+                navigation = homeScreenNavigation
             )
         }
         LauncherViewModel.State.Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())

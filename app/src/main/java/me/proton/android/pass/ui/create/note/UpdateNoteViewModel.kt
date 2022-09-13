@@ -19,7 +19,7 @@ class UpdateNoteViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
-    private val getShare: GetShareById,
+    private val getShare: GetShareById
 ) : BaseNoteViewModel() {
 
     private var _item: Item? = null

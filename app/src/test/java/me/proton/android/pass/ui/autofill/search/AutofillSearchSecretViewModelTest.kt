@@ -11,9 +11,9 @@ import kotlinx.coroutines.test.setMain
 import me.proton.android.pass.log.e
 import me.proton.android.pass.ui.autofill.search.AutofillSearchSecretViewModel.State
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.common_secret.Secret
-import me.proton.core.pass.common_secret.SecretType
-import me.proton.core.pass.common_secret.SecretValue
+import me.proton.core.pass.commonsecret.Secret
+import me.proton.core.pass.commonsecret.SecretType
+import me.proton.core.pass.commonsecret.SecretValue
 import me.proton.core.pass.domain.usecases.GetAddressById
 import me.proton.core.pass.domain.usecases.SearchSecretWithUri
 import me.proton.core.user.domain.entity.AddressId
@@ -87,7 +87,7 @@ class AutofillSearchSecretViewModelTest {
         SecretType.Other,
         false,
         SecretValue.Single("some secret"),
-        associatedUris = emptyList(),
+        associatedUris = emptyList()
     )
 
     private fun makeAddress(addressId: String) = UserAddress(
@@ -100,6 +100,6 @@ class AutofillSearchSecretViewModelTest {
         enabled = true,
         order = 0,
         keys = emptyList(),
-        signedKeyList = null,
+        signedKeyList = null
     )
 }

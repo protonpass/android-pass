@@ -15,7 +15,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun DeferredCircularProgressIndicator(
-    deferDuration: Long = 500, // milliseconds
+    deferDuration: Long = 500 // milliseconds
 ) {
     var showProgress by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {

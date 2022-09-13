@@ -16,7 +16,7 @@ data class VaultKeyList(
     @SerialName("VaultKeys")
     val vaultKeys: List<VaultKeyData>,
     @SerialName("ItemKeys")
-    val itemKeys: List<ItemKeyData>,
+    val itemKeys: List<ItemKeyData>
 )
 
 @Serializable
@@ -32,7 +32,7 @@ data class VaultKeyData(
     @SerialName("KeySignature")
     val keySignature: String,
     @SerialName("CreateTime")
-    val createTime: Long,
+    val createTime: Long
 )
 
 @Serializable
@@ -46,5 +46,5 @@ data class ItemKeyData(
     @SerialName("KeySignature")
     val keySignature: String,
     @SerialName("CreateTime")
-    val createTime: Long,
+    val createTime: Long
 )

@@ -37,13 +37,13 @@ class TrashScreenViewModel @Inject constructor(
     private val userManager: UserManager,
     private val observeItems: ObserveItems,
     private val observeShares: ObserveShares,
-    private val itemRepository: ItemRepository,
+    private val itemRepository: ItemRepository
 ) : ViewModel() {
 
     val initialViewState = getViewState(
         user = null,
         items = emptyList(),
-        shareId = null,
+        shareId = null
     )
 
     private val getCurrentUserIdFlow = accountManager.getPrimaryUserId()
@@ -78,7 +78,7 @@ class TrashScreenViewModel @Inject constructor(
     private fun getViewState(
         user: User?,
         shareId: ShareId?,
-        items: List<ItemUiModel>,
+        items: List<ItemUiModel>
     ): ViewState =
         ViewState(
             navigationDrawerViewState = NavigationDrawerViewState(
@@ -87,7 +87,7 @@ class TrashScreenViewModel @Inject constructor(
                 currentUser = user
             ),
             items,
-            selectedShare = shareId,
+            selectedShare = shareId
         )
 
     fun restoreItem(item: ItemUiModel) = viewModelScope.launch {

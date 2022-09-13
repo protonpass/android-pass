@@ -58,7 +58,7 @@ import me.proton.core.user.domain.entity.User
 fun UserSelector(
     currentUser: User,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     val userSelectorContentDescription =
         stringResource(R.string.user_select_other_account_content_description)
@@ -73,7 +73,7 @@ fun UserSelector(
 
         UserDetails(
             currentUser,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.weight(1f)
         )
 
         Image(
@@ -82,7 +82,7 @@ fun UserSelector(
                 .align(Alignment.CenterVertically),
             painter = painterResource(R.drawable.ic_proton_chevron_down),
             colorFilter = ColorFilter.tint(Color.White),
-            contentDescription = null,
+            contentDescription = null
         )
     }
 }
@@ -90,7 +90,7 @@ fun UserSelector(
 @Composable
 fun UserDetails(
     user: User,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier) {
         Box(
@@ -103,7 +103,7 @@ fun UserDetails(
                 modifier = Modifier.align(Alignment.Center),
                 text = user.firstLetter.uppercase(LocalContext.current.currentLocale),
                 style = ProtonTheme.typography.default,
-                color = ProtonTheme.colors.textNorm,
+                color = ProtonTheme.colors.textNorm
             )
         }
 
@@ -116,13 +116,13 @@ fun UserDetails(
                 style = ProtonTheme.typography.default,
                 color = ProtonTheme.colors.textNorm,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
             Text(
                 text = user.email ?: "",
                 style = ProtonTheme.typography.defaultSmallWeak,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -181,5 +181,5 @@ internal val PREVIEW_USER = User(
     services = 0,
     subscribed = 0,
     delinquent = null,
-    keys = emptyList(),
+    keys = emptyList()
 )

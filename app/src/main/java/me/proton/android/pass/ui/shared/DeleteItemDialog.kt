@@ -15,7 +15,7 @@ fun ConfirmItemDeletionDialog(
     itemState: MutableState<ItemUiModel?>,
     @StringRes title: Int,
     @StringRes message: Int,
-    onConfirm: (ItemUiModel) -> Unit,
+    onConfirm: (ItemUiModel) -> Unit
 ) {
     val item = itemState.value ?: return
 

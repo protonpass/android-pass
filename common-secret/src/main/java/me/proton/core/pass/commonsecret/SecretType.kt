@@ -1,10 +1,10 @@
-package me.proton.core.pass.common_secret
+package me.proton.core.pass.commonsecret
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-enum class SecretType(val value: Int): Parcelable {
+enum class SecretType(val value: Int) : Parcelable {
     Email(1),
     Username(2),
     Password(3),

@@ -1,4 +1,4 @@
-package me.proton.core.pass.autofill.sample.simple_activity
+package me.proton.core.pass.autofill.sample.simpleactivity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

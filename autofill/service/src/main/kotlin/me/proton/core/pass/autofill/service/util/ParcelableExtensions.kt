@@ -5,13 +5,13 @@ import android.os.Parcelable
 
 fun Parcelable.toByteArray(): ByteArray {
     val parcelable = this
-    return with (Parcel.obtain()) {
+    return with(Parcel.obtain()) {
         parcelable.writeToParcel(this, 0)
         marshall().also { recycle() }
     }
 }
 
-inline fun <reified T: Parcelable, reified C: Parcelable.Creator<T>> C.fromByteArray(
+inline fun <reified T : Parcelable, reified C : Parcelable.Creator<T>> C.fromByteArray(
     byteArray: ByteArray
 ): T {
     return with(Parcel.obtain()) {

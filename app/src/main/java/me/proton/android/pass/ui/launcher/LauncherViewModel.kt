@@ -64,7 +64,7 @@ class LauncherViewModel @Inject constructor(
     private val authOrchestrator: AuthOrchestrator,
     private val plansOrchestrator: PlansOrchestrator,
     private val reportOrchestrator: ReportOrchestrator,
-    private val userSettingsOrchestrator: UserSettingsOrchestrator,
+    private val userSettingsOrchestrator: UserSettingsOrchestrator
 ) : ViewModel() {
 
     val initialSection = NavigationDrawerSection.Items

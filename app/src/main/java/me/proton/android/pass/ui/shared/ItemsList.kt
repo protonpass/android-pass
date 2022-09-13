@@ -37,7 +37,7 @@ data class ItemAction(
     val onSelect: (ItemUiModel) -> Unit,
     @StringRes val title: Int,
     @DrawableRes val icon: Int,
-    val textColor: Color,
+    val textColor: Color
 )
 
 @Composable
@@ -45,7 +45,7 @@ fun ItemsList(
     items: List<ItemUiModel>,
     modifier: Modifier = Modifier,
     itemActions: List<ItemAction> = emptyList(),
-    onItemClick: OnItemClick? = null,
+    onItemClick: OnItemClick? = null
 ) {
     LazyColumn(modifier = modifier) {
         items(items) { item ->
@@ -62,7 +62,7 @@ fun ItemsList(
 internal fun ItemRow(
     item: ItemUiModel,
     itemActions: List<ItemAction> = emptyList(),
-    onItemClicked: OnItemClick? = null,
+    onItemClicked: OnItemClick? = null
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
 
@@ -81,7 +81,7 @@ internal fun ItemRow(
             expanded = expanded,
             setExpanded = setExpanded,
             actions = itemActions,
-            item = item,
+            item = item
         )
     }
 }
@@ -95,17 +95,17 @@ internal fun ItemRowContents(
         is ItemType.Login -> LoginRow(
             item = item,
             itemType = itemType,
-            modifier = modifier,
+            modifier = modifier
         )
         is ItemType.Note -> NoteRow(
             item = item,
             itemType = itemType,
-            modifier = modifier,
+            modifier = modifier
         )
         is ItemType.Alias -> AliasRow(
             item = item,
             itemType = itemType,
-            modifier = modifier,
+            modifier = modifier
         )
     }
 }
@@ -120,7 +120,7 @@ internal fun LoginRow(
         icon = R.drawable.ic_proton_key,
         title = item.name,
         subtitle = itemType.username,
-        modifier = modifier,
+        modifier = modifier
     )
 }
 
@@ -134,7 +134,7 @@ internal fun NoteRow(
         icon = R.drawable.ic_proton_note,
         title = item.name,
         subtitle = itemType.text.take(10),
-        modifier = modifier,
+        modifier = modifier
     )
 }
 
@@ -148,7 +148,7 @@ internal fun AliasRow(
         icon = R.drawable.ic_proton_alias,
         title = item.name,
         subtitle = itemType.aliasEmail,
-        modifier = modifier,
+        modifier = modifier
     )
 }
 
@@ -157,17 +157,17 @@ internal fun ItemRow(
     @DrawableRes icon: Int,
     title: String,
     subtitle: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
-            .padding(horizontal = 20.dp, vertical = 12.dp),
+            .padding(horizontal = 20.dp, vertical = 12.dp)
     ) {
         Row {
             Icon(
                 painter = painterResource(icon),
                 contentDescription = null,
-                tint = ProtonTheme.colors.iconNorm,
+                tint = ProtonTheme.colors.iconNorm
             )
             Text(
                 text = title,
@@ -175,7 +175,7 @@ internal fun ItemRow(
                 fontWeight = FontWeight.W400,
                 color = ProtonTheme.colors.textNorm,
                 modifier = Modifier.padding(start = 20.dp),
-                maxLines = 1,
+                maxLines = 1
             )
         }
         Row(modifier = Modifier.padding(start = 44.dp, end = 20.dp)) {
@@ -184,7 +184,7 @@ internal fun ItemRow(
                 color = ProtonTheme.colors.textWeak,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.W400,
-                maxLines = 1,
+                maxLines = 1
             )
         }
     }
@@ -195,7 +195,7 @@ private fun ItemRowActions(
     expanded: Boolean,
     setExpanded: (Boolean) -> Unit,
     actions: List<ItemAction>,
-    item: ItemUiModel,
+    item: ItemUiModel
 ) {
     if (actions.isEmpty()) return
 
@@ -206,14 +206,15 @@ private fun ItemRowActions(
         ) {
             Icon(
                 ImageVector.vectorResource(R.drawable.ic_three_dots_vertical_24),
-                contentDescription = stringResource(id = R.string.action_delete),
+                contentDescription = stringResource(id = R.string.action_delete)
             )
         }
 
         ItemDropdownMenu(
             modifier = Modifier,
             expanded = expanded,
-            setExpanded = { setExpanded(false) }) {
+            setExpanded = { setExpanded(false) }
+        ) {
             actions.forEach {
                 DropDownAction(
                     title = stringResource(

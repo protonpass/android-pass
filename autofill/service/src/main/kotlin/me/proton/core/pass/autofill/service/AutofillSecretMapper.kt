@@ -2,9 +2,9 @@ package me.proton.core.pass.autofill.service
 
 import me.proton.core.pass.autofill.service.entities.AssistField
 import me.proton.core.pass.autofill.service.entities.DatasetMapping
-import me.proton.core.pass.common_secret.SecretType
-import me.proton.core.pass.common_secret.SecretValue
-import me.proton.core.pass.common_secret.Secret
+import me.proton.core.pass.commonsecret.SecretType
+import me.proton.core.pass.commonsecret.SecretValue
+import me.proton.core.pass.commonsecret.Secret
 
 class AutofillSecretMapper {
 

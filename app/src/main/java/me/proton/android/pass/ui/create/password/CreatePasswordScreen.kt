@@ -56,9 +56,10 @@ fun CreatePasswordView(
             ProtonTopAppBar(
                 title = { TopBarTitleView(R.string.title_create_password) },
                 navigationIcon = { ArrowBackIcon(onUpClick = onUpClick) },
-                actions = {},
+                actions = {}
             )
-        }) { padding ->
+        }
+    ) { padding ->
 
         Box(modifier = Modifier.padding(padding)) {
             CreatePasswordViewContent(
@@ -78,7 +79,7 @@ private fun CreatePasswordViewContent(
     onConfirm: OnConfirm,
     onSpecialCharactersChange: (Boolean) -> Unit,
     onLengthChange: (Int) -> Unit,
-    onRegenerateClick: () -> Unit,
+    onRegenerateClick: () -> Unit
 ) {
 
     Column {
@@ -179,7 +180,7 @@ private fun PasswordText(
         Text(
             text = annotatedString,
             fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.h6,
+            style = MaterialTheme.typography.h6
         )
     }
 }

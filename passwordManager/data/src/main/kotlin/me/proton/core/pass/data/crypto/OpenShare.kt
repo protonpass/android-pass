@@ -62,7 +62,7 @@ class OpenShare @Inject constructor(
         userAddress: UserAddress,
         inviterKeys: List<PublicKey>,
         keystoreEncryptedContent: EncryptedByteArray? = null,
-        keystoreEncryptedPassphrase: EncryptedByteArray? = null,
+        keystoreEncryptedPassphrase: EncryptedByteArray? = null
     ): ShareEntity {
         verifyAcceptanceSignature(response.acceptanceSignature, response.inviterAcceptanceSignature, response.signingKey, userAddress, inviterKeys)
 
@@ -89,7 +89,7 @@ class OpenShare @Inject constructor(
             createTime = response.createTime,
 
             keystoreEncryptedContent = keystoreEncryptedContent,
-            keystoreEncryptedPassphrase = keystoreEncryptedPassphrase,
+            keystoreEncryptedPassphrase = keystoreEncryptedPassphrase
         )
     }
 
@@ -185,7 +185,7 @@ class OpenShare @Inject constructor(
     private fun readSigningKey(
         signingKey: Armored,
         signingKeyPassphrase: String?,
-        userAddress: UserAddress,
+        userAddress: UserAddress
     ): ArmoredKey {
         if (signingKeyPassphrase == null) {
             return ArmoredKey.Public(

@@ -1,4 +1,4 @@
-package me.proton.core.pass.autofill.sample.simple_compose
+package me.proton.core.pass.autofill.sample.simplecompose
 
 import android.content.Intent
 import android.os.Bundle
@@ -78,7 +78,7 @@ fun ExplicitAutofillTypesDemo(onLoginClicked: () -> Unit) {
                                 cancelAutofillForNode(autofillNode)
                             }
                         }
-                },
+                    },
                 value = nameState,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,
@@ -106,7 +106,7 @@ fun ExplicitAutofillTypesDemo(onLoginClicked: () -> Unit) {
                                 cancelAutofillForNode(autofillNode)
                             }
                         }
-                },
+                    },
                 value = emailState,
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Text,

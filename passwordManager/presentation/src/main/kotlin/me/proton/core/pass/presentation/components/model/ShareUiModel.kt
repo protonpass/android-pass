@@ -4,5 +4,5 @@ import me.proton.core.pass.domain.ShareId
 
 data class ShareUiModel(
     val id: ShareId,
-    val name: String,
+    val name: String
 )

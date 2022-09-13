@@ -6,10 +6,10 @@ import android.view.autofill.AutofillId
 import kotlinx.parcelize.Parcelize
 
 /** Used for testing purposes */
-interface AutofillFieldId: Parcelable
+interface AutofillFieldId : Parcelable
 
 /** Wrapper class holding an actual `AutofillId` */
-data class AndroidAutofillFieldId(val autofillId: AutofillId): AutofillFieldId {
+data class AndroidAutofillFieldId(val autofillId: AutofillId) : AutofillFieldId {
     constructor(parcel: Parcel) : this(parcel.readParcelable(AutofillId::class.java.classLoader)!!) {
     }
 

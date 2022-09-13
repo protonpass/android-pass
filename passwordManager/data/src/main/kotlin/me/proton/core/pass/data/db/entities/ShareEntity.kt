@@ -69,7 +69,7 @@ data class ShareEntity(
     @ColumnInfo(name = Columns.EXPIRATION_TIME)
     val expirationTime: Long?,
     @ColumnInfo(name = Columns.CREATE_TIME)
-    val createTime: Long,
+    val createTime: Long
 ) {
     object Columns {
         const val ID = "id"

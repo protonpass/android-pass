@@ -34,7 +34,7 @@ fun NoteDetail(
 @Composable
 internal fun NoteContentView(
     model: NoteDetailViewModel.NoteUiModel,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     Column {
         Column(modifier = modifier.padding(horizontal = 16.dp)) {
@@ -54,7 +54,7 @@ internal fun NoteRow(
     if (model.note.isNotEmpty()) {
         Section(
             title = R.string.field_note_title,
-            content = model.note,
+            content = model.note
         )
     }
 }

@@ -35,7 +35,7 @@ abstract class BaseNoteViewModel : ViewModel() {
         fun toItemContents(): ItemContents {
             return ItemContents.Note(
                 title = title,
-                note = note,
+                note = note
             )
         }
     }

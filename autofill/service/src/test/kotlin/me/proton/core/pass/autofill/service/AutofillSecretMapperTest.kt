@@ -2,9 +2,9 @@ package me.proton.core.pass.autofill.service
 
 import me.proton.core.pass.autofill.service.entities.AssistField
 import me.proton.core.pass.autofill.service.utils.newAutofillFieldId
-import me.proton.core.pass.common_secret.SecretType
-import me.proton.core.pass.common_secret.SecretValue
-import me.proton.core.pass.common_secret.Secret
+import me.proton.core.pass.commonsecret.SecretType
+import me.proton.core.pass.commonsecret.SecretValue
+import me.proton.core.pass.commonsecret.Secret
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -71,7 +71,7 @@ class AutofillSecretMapperTest {
         )
         val assistFields = listOf(
             AssistField(newAutofillFieldId(), SecretType.Email, null, null),
-            AssistField(newAutofillFieldId(), SecretType.Password, null, null),
+            AssistField(newAutofillFieldId(), SecretType.Password, null, null)
         )
 
         val mappings = AutofillSecretMapper().mapSecretsToFields(secret, assistFields)
@@ -99,7 +99,7 @@ class AutofillSecretMapperTest {
         )
         val assistFields = listOf(
             AssistField(newAutofillFieldId(), SecretType.Username, null, null),
-            AssistField(newAutofillFieldId(), SecretType.Password, null, null),
+            AssistField(newAutofillFieldId(), SecretType.Password, null, null)
         )
 
         val mappings = AutofillSecretMapper().mapSecretsToFields(secret, assistFields)
@@ -133,7 +133,7 @@ class AutofillSecretMapperTest {
         val assistFields = listOf(
             AssistField(newAutofillFieldId(), SecretType.Email, null, null),
             compatibleField,
-            AssistField(newAutofillFieldId(), SecretType.Password, null, null),
+            AssistField(newAutofillFieldId(), SecretType.Password, null, null)
         )
 
         val mappings = AutofillSecretMapper().mapSecretsToFields(secret, assistFields)

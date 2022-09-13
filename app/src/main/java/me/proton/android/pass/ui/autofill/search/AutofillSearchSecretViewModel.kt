@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.android.pass.log.PassKeyLogger
 import me.proton.android.pass.log.e
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.common_secret.Secret
+import me.proton.core.pass.commonsecret.Secret
 import me.proton.core.pass.domain.usecases.GetAddressById
 import me.proton.core.pass.domain.usecases.SearchSecretWithUri
 import me.proton.core.user.domain.entity.AddressId
@@ -21,7 +21,7 @@ import me.proton.core.user.domain.entity.AddressId
 @HiltViewModel
 class AutofillSearchSecretViewModel @Inject constructor(
     private val searchSecretWithUri: SearchSecretWithUri,
-    private val getAddressById: GetAddressById,
+    private val getAddressById: GetAddressById
 ) : ViewModel() {
 
     private val mutableState = MutableStateFlow<State>(State.Searching)
@@ -55,5 +55,5 @@ class AutofillSearchSecretViewModel @Inject constructor(
 
 data class ListSecretItem(
     val secret: Secret,
-    val address: String,
+    val address: String
 )

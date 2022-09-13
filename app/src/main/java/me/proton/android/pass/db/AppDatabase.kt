@@ -74,7 +74,7 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         ShareEntity::class,
         ItemEntity::class,
         VaultKeyEntity::class,
-        ItemKeyEntity::class,
+        ItemKeyEntity::class
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -88,7 +88,7 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     HumanVerificationConverters::class,
     UserSettingsConverters::class,
     EventManagerConverters::class,
-    ChallengeConverters::class,
+    ChallengeConverters::class
 )
 abstract class AppDatabase :
     BaseDatabase(),

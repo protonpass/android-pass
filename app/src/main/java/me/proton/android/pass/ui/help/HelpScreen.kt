@@ -59,7 +59,7 @@ fun HelpScreen(
             NavigationDrawer(
                 drawerState = scaffoldState.scaffoldState.drawerState,
                 viewState = viewState.navigationDrawerViewState,
-                navigation = navDrawerNavigation,
+                navigation = navDrawerNavigation
             )
         },
         drawerGesturesEnabled = drawerGesturesEnabled,
@@ -73,7 +73,7 @@ fun HelpScreen(
                             val drawerState = scaffoldState.scaffoldState.drawerState
                             coroutineScope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() }
                         }),
-                        contentDescription = null,
+                        contentDescription = null
                     )
                 }
             )
@@ -89,17 +89,17 @@ fun HelpScreen(
 @ExperimentalMaterialApi
 data class HelpScaffoldState(
     val scaffoldState: ScaffoldState,
-    val drawerGesturesEnabled: MutableState<Boolean>,
+    val drawerGesturesEnabled: MutableState<Boolean>
 )
 
 @Composable
 @ExperimentalMaterialApi
 fun rememberHelpScaffoldState(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
-    drawerGesturesEnabled: MutableState<Boolean> = mutableStateOf(true),
+    drawerGesturesEnabled: MutableState<Boolean> = mutableStateOf(true)
 ): HelpScaffoldState = remember {
     HelpScaffoldState(
         scaffoldState,
-        drawerGesturesEnabled,
+        drawerGesturesEnabled
     )
 }

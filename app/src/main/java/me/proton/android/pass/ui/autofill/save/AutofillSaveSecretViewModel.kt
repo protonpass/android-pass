@@ -26,7 +26,7 @@ import me.proton.core.user.domain.entity.UserAddress
 class AutofillSaveSecretViewModel @Inject constructor(
     private val addSecret: AddSecret,
     private val getAddressesForUserId: GetAddressesForUserId,
-    observeAccounts: ObserveAccounts,
+    observeAccounts: ObserveAccounts
 ) : ViewModel() {
 
     private val accountsWithAddresses = observeAccounts()
@@ -76,12 +76,12 @@ class AutofillSaveSecretViewModel @Inject constructor(
 
     data class AccountWithAddresses(
         val account: AccountData,
-        val addresses: List<UserAddress>,
+        val addresses: List<UserAddress>
     )
 
     data class AccountData(
         val userId: UserId,
-        val username: String,
+        val username: String
     ) {
         constructor(account: Account) : this(account.userId, account.username)
     }

@@ -41,7 +41,7 @@ import kotlin.coroutines.coroutineContext
 import kotlin.reflect.KClass
 
 @AndroidEntryPoint
-class PassAutofillService: AutofillService() {
+class PassAutofillService : AutofillService() {
 
     companion object {
         const val TAG = "PassAutofillService"
@@ -104,7 +104,7 @@ class PassAutofillService: AutofillService() {
                 val searchCredentialsInfo = SearchCredentialsInfo(
                     appPackageName,
                     applicationName,
-                    assistFields,
+                    assistFields
                 )
                 val extras = Bundle().apply { putByteArray(Constants.ARG_SEARCH_CREDENTIALS_INFO, searchCredentialsInfo.toByteArray()) }
                 putExtras(extras)
@@ -151,7 +151,7 @@ class PassAutofillService: AutofillService() {
     private fun addInlineSuggestion(
         builder: Dataset.Builder,
         spec: InlinePresentationSpec,
-        pendingIntent: PendingIntent,
+        pendingIntent: PendingIntent
     ) {
         if (!UiVersions.getVersions(spec.style).contains(UiVersions.INLINE_UI_VERSION_1)) return
         val content = InlineSuggestionUi.newContentBuilder(pendingIntent)
@@ -221,8 +221,8 @@ class PassAutofillService: AutofillService() {
         val intent = Intent(this, saveActivityClass.java)
         intent.putExtra(Constants.ARG_SAVE_CREDENTIALS_SECRET, secretSaveInfo)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-                Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+            Intent.FLAG_ACTIVITY_CLEAR_TASK or
+            Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
         startActivity(intent)
     }
 }

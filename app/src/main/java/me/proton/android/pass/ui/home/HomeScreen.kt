@@ -81,7 +81,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     navDrawerNavigation: NavDrawerNavigation,
     navigation: HomeScreenNavigation,
-    homeViewModel: HomeViewModel = hiltViewModel(),
+    homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -110,7 +110,7 @@ fun HomeScreen(
                 scope = coroutineScope,
                 state = bottomSheetState,
                 navigation = navigation,
-                shareId = viewState.selectedShare,
+                shareId = viewState.selectedShare
             )
         }
     ) {
@@ -124,7 +124,7 @@ fun HomeScreen(
                     navigation = navDrawerNavigation,
                     modifier = Modifier
                         .statusBarsPadding()
-                        .navigationBarsPadding(),
+                        .navigationBarsPadding()
                 )
             },
             drawerGesturesEnabled = drawerGesturesEnabled,
@@ -161,7 +161,7 @@ fun HomeScreen(
 private fun HomeTopBar(
     homeScaffoldState: HomeScaffoldState,
     bottomSheetState: ModalBottomSheetState,
-    coroutineScope: CoroutineScope,
+    coroutineScope: CoroutineScope
 ) {
     val (isSearchMode, setIsSearchMode) = remember { mutableStateOf(false) }
 
@@ -180,7 +180,7 @@ private fun HomeTopBar(
                     val drawerState = homeScaffoldState.scaffoldState.drawerState
                     coroutineScope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() }
                 }),
-                contentDescription = null,
+                contentDescription = null
             )
         },
         actions = {
@@ -223,7 +223,7 @@ private fun Home(
     modifier: Modifier = Modifier,
     onItemClick: OnItemClick,
     navigation: HomeScreenNavigation,
-    onDeleteItemClicked: (ItemUiModel) -> Unit,
+    onDeleteItemClicked: (ItemUiModel) -> Unit
 ) {
     if (items.isNotEmpty()) {
         ItemsList(
@@ -241,7 +241,7 @@ private fun Home(
                     onSelect = { onDeleteItemClicked(it) },
                     title = R.string.action_move_to_trash,
                     icon = R.drawable.ic_proton_trash,
-                    textColor = ProtonTheme.colors.notificationError,
+                    textColor = ProtonTheme.colors.notificationError
                 )
             )
         )
@@ -270,18 +270,18 @@ internal fun goToEdit(
 @ExperimentalMaterialApi
 data class HomeScaffoldState(
     val scaffoldState: ScaffoldState,
-    val drawerGesturesEnabled: MutableState<Boolean>,
+    val drawerGesturesEnabled: MutableState<Boolean>
 )
 
 @Composable
 @ExperimentalMaterialApi
 fun rememberHomeScaffoldState(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
-    drawerGesturesEnabled: MutableState<Boolean> = mutableStateOf(true),
+    drawerGesturesEnabled: MutableState<Boolean> = mutableStateOf(true)
 ): HomeScaffoldState = remember {
     HomeScaffoldState(
         scaffoldState,
-        drawerGesturesEnabled,
+        drawerGesturesEnabled
     )
 }
 

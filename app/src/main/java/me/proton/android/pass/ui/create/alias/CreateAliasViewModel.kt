@@ -34,7 +34,8 @@ class CreateAliasViewModel @Inject constructor(
                     aliasOptions = aliasOptions,
                     selectedSuffix = aliasOptions.suffixes.first(),
                     selectedMailbox = aliasOptions.mailboxes.first()
-                ))
+                )
+            )
         }
     }
 

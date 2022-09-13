@@ -28,7 +28,7 @@ import me.proton.core.user.data.entity.UserEntity
             parentColumns = [ShareEntity.Columns.ID],
             childColumns = [VaultKeyEntity.Columns.SHARE_ID],
             onDelete = ForeignKey.CASCADE
-        ),
+        )
     ]
 )
 data class VaultKeyEntity(
@@ -53,7 +53,7 @@ data class VaultKeyEntity(
 
     // Keystore Encrypted contents
     @ColumnInfo(name = Columns.ENCRYPTED_KEY_PASSPHRASE)
-    val encryptedKeyPassphrase: EncryptedByteArray?,
+    val encryptedKeyPassphrase: EncryptedByteArray?
 ) {
     object Columns {
         const val ID = "id"

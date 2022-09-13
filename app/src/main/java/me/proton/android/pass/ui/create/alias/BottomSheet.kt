@@ -32,7 +32,7 @@ fun BottomSheetContents(
     modelState: BaseAliasViewModel.ModelState,
     contentType: AliasBottomSheetContent,
     onSuffixSelect: (AliasSuffix) -> Unit,
-    onMailboxSelect: (AliasMailbox) -> Unit,
+    onMailboxSelect: (AliasMailbox) -> Unit
 ) {
 
     Column {
@@ -99,7 +99,7 @@ private fun BottomSheetItem(
             fontSize = 16.sp,
             modifier = Modifier.padding(start = 20.dp),
             fontWeight = FontWeight.W400,
-            color = ProtonTheme.colors.textNorm,
+            color = ProtonTheme.colors.textNorm
         )
     }
 }

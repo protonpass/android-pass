@@ -16,7 +16,7 @@ import me.proton.core.pass.domain.key.usePrivateKey
 import me.proton.core.user.domain.entity.UserAddress
 
 class UpdateItem @Inject constructor(
-    private val cryptoContext: CryptoContext,
+    private val cryptoContext: CryptoContext
 ) : BaseCryptoOperation(cryptoContext) {
 
     companion object {

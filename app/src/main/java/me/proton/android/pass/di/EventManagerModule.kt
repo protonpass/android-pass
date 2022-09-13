@@ -41,10 +41,10 @@ object EventManagerModule {
     fun provideEventListenerSet(
         userEventListener: UserEventListener,
         userAddressEventListener: UserAddressEventListener,
-        userSettingsEventListener: UserSettingsEventListener,
+        userSettingsEventListener: UserSettingsEventListener
     ): Set<EventListener<*, *>> = setOf(
         userEventListener,
         userAddressEventListener,
-        userSettingsEventListener,
+        userSettingsEventListener
     )
 }

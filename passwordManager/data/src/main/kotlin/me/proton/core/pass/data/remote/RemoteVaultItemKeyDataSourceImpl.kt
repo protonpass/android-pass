@@ -9,7 +9,7 @@ import me.proton.core.pass.data.responses.VaultKeyData
 import me.proton.core.pass.domain.ShareId
 
 class RemoteVaultItemKeyDataSourceImpl @Inject constructor(
-    private val api: ApiProvider,
+    private val api: ApiProvider
 ) : BaseRemoteDataSourceImpl(), RemoteVaultItemKeyDataSource {
     override suspend fun getKeys(userId: UserId, shareId: ShareId): VaultItemKeyResponseList =
         api.get<PasswordManagerApi>(userId).invoke {

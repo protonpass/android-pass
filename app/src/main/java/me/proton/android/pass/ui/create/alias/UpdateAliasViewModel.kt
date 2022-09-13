@@ -22,7 +22,7 @@ class UpdateAliasViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val itemRepository: ItemRepository,
     private val accountManager: AccountManager,
-    private val aliasRepository: AliasRepository,
+    private val aliasRepository: AliasRepository
 ) : BaseAliasViewModel(accountManager) {
 
     private var _item: Item? = null

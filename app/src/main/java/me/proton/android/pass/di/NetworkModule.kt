@@ -26,14 +26,40 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.network.PassApiClient
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
-import me.proton.core.network.data.di.*
+import me.proton.core.network.data.di.AlternativeApiPins
+import me.proton.core.network.data.di.BaseProtonApiUrl
+import me.proton.core.network.data.di.CertificatePins
+import me.proton.core.network.data.di.Constants
+import me.proton.core.network.data.di.DohProviderUrls
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.serverconnection.DohAlternativesListener
-import me.proton.core.pass.data.local.*
-import me.proton.core.pass.data.remote.*
-import me.proton.core.pass.data.repositories.*
-import me.proton.core.pass.domain.repositories.*
+import me.proton.core.pass.data.local.LocalItemDataSource
+import me.proton.core.pass.data.local.LocalItemDataSourceImpl
+import me.proton.core.pass.data.local.LocalShareDataSource
+import me.proton.core.pass.data.local.LocalShareDataSourceImpl
+import me.proton.core.pass.data.local.LocalVaultItemKeyDataSource
+import me.proton.core.pass.data.local.LocalVaultItemKeyDataSourceImpl
+import me.proton.core.pass.data.remote.RemoteAliasDataSource
+import me.proton.core.pass.data.remote.RemoteAliasDataSourceImpl
+import me.proton.core.pass.data.remote.RemoteItemDataSource
+import me.proton.core.pass.data.remote.RemoteItemDataSourceImpl
+import me.proton.core.pass.data.remote.RemoteKeyPacketDataSource
+import me.proton.core.pass.data.remote.RemoteKeyPacketDataSourceImpl
+import me.proton.core.pass.data.remote.RemoteShareDataSource
+import me.proton.core.pass.data.remote.RemoteShareDataSourceImpl
+import me.proton.core.pass.data.remote.RemoteVaultItemKeyDataSource
+import me.proton.core.pass.data.remote.RemoteVaultItemKeyDataSourceImpl
+import me.proton.core.pass.data.repositories.AliasRepositoryImpl
+import me.proton.core.pass.data.repositories.ItemRepositoryImpl
+import me.proton.core.pass.data.repositories.KeyPacketRepositoryImpl
+import me.proton.core.pass.data.repositories.ShareRepositoryImpl
+import me.proton.core.pass.data.repositories.VaultKeyRepositoryImpl
+import me.proton.core.pass.domain.repositories.AliasRepository
+import me.proton.core.pass.domain.repositories.ItemRepository
+import me.proton.core.pass.domain.repositories.KeyPacketRepository
+import me.proton.core.pass.domain.repositories.ShareRepository
+import me.proton.core.pass.domain.repositories.VaultKeyRepository
 import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -136,8 +162,8 @@ abstract class NetworkBindModule {
     abstract fun bindRemoteKeyPacketDataSource(
         remoteKeyPacketDataSource: RemoteKeyPacketDataSourceImpl
     ): RemoteKeyPacketDataSource
-    @Binds
 
+    @Binds
     abstract fun bindAliasRepository(
         aliasRepository: AliasRepositoryImpl
     ): AliasRepository

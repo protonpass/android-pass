@@ -30,7 +30,7 @@ interface VaultKeyRepository {
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
-        keyId: String,
+        keyId: String
     ): ItemKey
 
     suspend fun getLatestVaultKey(
@@ -53,7 +53,7 @@ interface VaultKeyRepository {
         vaultKey: VaultKey,
         keyPassphrase: String?,
         keySignature: String,
-        createTime: Long,
+        createTime: Long
     )
 
     suspend fun storeItemKey(
@@ -62,6 +62,6 @@ interface VaultKeyRepository {
         itemKey: ItemKey,
         keyPassphrase: String?,
         keySignature: String,
-        createTime: Long,
+        createTime: Long
     )
 }

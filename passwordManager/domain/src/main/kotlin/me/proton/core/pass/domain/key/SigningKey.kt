@@ -12,7 +12,7 @@ import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
 import me.proton.core.key.domain.publicKey
 
 data class SigningKey(
-    val key: ArmoredKey,
+    val key: ArmoredKey
 ) : KeyHolderPrivateKey {
     override val keyId: KeyId
         get() = KeyId("SigningKey")

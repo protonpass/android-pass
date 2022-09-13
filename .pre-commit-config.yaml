@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: detekt
+        name: detekt check
+        description: Runs `detekt` on modified .kt files.
+        language: script
+        entry: ./scripts/detekt.sh
+        files: \.kt(s?)

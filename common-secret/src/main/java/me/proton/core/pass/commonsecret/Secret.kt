@@ -1,4 +1,4 @@
-package me.proton.core.pass.common_secret
+package me.proton.core.pass.commonsecret
 
 data class Secret(
     val id: String?,

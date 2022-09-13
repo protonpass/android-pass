@@ -16,7 +16,7 @@ data class VaultKey(
     val rotationId: String,
     val rotation: Long,
     val key: ArmoredKey,
-    val encryptedKeyPassphrase: EncryptedByteArray?,
+    val encryptedKeyPassphrase: EncryptedByteArray?
 ) : KeyHolderPrivateKey {
     override val privateKey: PrivateKey
         get() = when (key) {

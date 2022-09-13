@@ -10,7 +10,7 @@ import me.proton.core.pass.domain.entity.NewVault
 interface ShareRepository {
     suspend fun createVault(
         userId: SessionUserId,
-        vault: NewVault,
+        vault: NewVault
     ): Share
 
     suspend fun refreshShares(userId: UserId)

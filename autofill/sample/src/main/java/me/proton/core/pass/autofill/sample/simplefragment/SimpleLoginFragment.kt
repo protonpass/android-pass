@@ -1,4 +1,4 @@
-package me.proton.core.pass.autofill.sample.simple_fragment
+package me.proton.core.pass.autofill.sample.simplefragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,8 +15,9 @@ class SimpleLoginFragment : Fragment() {
     private var binding: FragmentSimpleLoginBinding? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentSimpleLoginBinding.inflate(inflater, container, false)
         return binding!!.root

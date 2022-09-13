@@ -17,8 +17,8 @@ import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.autofill.service.entities.SecretSaveInfo
-import me.proton.core.pass.common_secret.SecretType
-import me.proton.core.pass.common_secret.SecretValue
+import me.proton.core.pass.commonsecret.SecretType
+import me.proton.core.pass.commonsecret.SecretValue
 import me.proton.core.pass.domain.usecases.AddSecret
 import me.proton.core.pass.domain.usecases.GetAddressesForUserId
 import me.proton.core.pass.domain.usecases.ObserveAccounts
@@ -82,7 +82,7 @@ class AutofillSaveSecretViewModelTest {
         viewModel = AutofillSaveSecretViewModel(
             addSecret,
             getAddressesForUserId,
-            observeAccounts,
+            observeAccounts
         )
     }
 
@@ -120,7 +120,7 @@ class AutofillSaveSecretViewModelTest {
         "Some secret",
         "some.package.name",
         SecretType.Email,
-        SecretValue.Single("jorge.martin@proton.me"),
+        SecretValue.Single("jorge.martin@proton.me")
     )
 
     private fun makeUserAddress(
@@ -131,7 +131,7 @@ class AutofillSaveSecretViewModelTest {
         canReceive: Boolean = true,
         enabled: Boolean = true,
         order: Int = 0,
-        keys: List<UserAddressKey> = emptyList(),
+        keys: List<UserAddressKey> = emptyList()
     ) = UserAddress(
         userId,
         addressId,
@@ -141,6 +141,6 @@ class AutofillSaveSecretViewModelTest {
         enabled = enabled,
         order = order,
         keys = keys,
-        signedKeyList = null,
+        signedKeyList = null
     )
 }

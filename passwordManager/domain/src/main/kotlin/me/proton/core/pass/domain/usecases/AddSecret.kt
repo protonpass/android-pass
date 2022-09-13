@@ -3,16 +3,16 @@ package me.proton.core.pass.domain.usecases
 import java.util.UUID
 import javax.inject.Inject
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.pass.common_secret.Secret
-import me.proton.core.pass.common_secret.SecretType
-import me.proton.core.pass.common_secret.SecretValue
+import me.proton.core.pass.commonsecret.Secret
+import me.proton.core.pass.commonsecret.SecretType
+import me.proton.core.pass.commonsecret.SecretValue
 import me.proton.core.pass.domain.repositories.SecretsRepository
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.repository.UserAddressRepository
 
 class AddSecret @Inject constructor(
     private val secretsRepository: SecretsRepository,
-    private val userAddressRepository: UserAddressRepository,
+    private val userAddressRepository: UserAddressRepository
 ) {
     suspend operator fun invoke(
         userId: SessionUserId,
@@ -31,7 +31,7 @@ class AddSecret @Inject constructor(
             type = type,
             isUploaded = false,
             contents = contents,
-            associatedUris = listOf(associatedUri),
+            associatedUris = listOf(associatedUri)
         )
         val address = requireNotNull(userAddressRepository.getAddress(userId, addressId))
         secretsRepository.saveSecret(secret, address)

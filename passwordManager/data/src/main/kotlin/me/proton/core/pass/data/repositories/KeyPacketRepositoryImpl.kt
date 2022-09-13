@@ -21,7 +21,7 @@ class KeyPacketRepositoryImpl @Inject constructor(
     private val userAddressRepository: UserAddressRepository,
     private val shareRepository: ShareRepository,
     private val keyRepository: VaultKeyRepository,
-    private val remoteKeyPacketDataSource: RemoteKeyPacketDataSource,
+    private val remoteKeyPacketDataSource: RemoteKeyPacketDataSource
 ) : KeyPacketRepository {
 
     override suspend fun getLatestKeyPacketForItem(
@@ -60,7 +60,7 @@ class KeyPacketRepositoryImpl @Inject constructor(
 
         return KeyPacket(
             rotationId = data.rotationId,
-            keyPacket = decodedKeyPacket,
+            keyPacket = decodedKeyPacket
         )
     }
 }

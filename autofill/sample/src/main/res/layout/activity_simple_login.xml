@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".simple_compose.SimpleLoginActivity">
+    tools:context=".simplecompose.SimpleLoginActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

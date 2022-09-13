@@ -28,9 +28,9 @@ import me.proton.android.pass.R
 import me.proton.android.pass.ui.autofill.search.AutofillListSecretsScreen.SecretItem
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.caption
-import me.proton.core.pass.common_secret.Secret
-import me.proton.core.pass.common_secret.SecretType
-import me.proton.core.pass.common_secret.SecretValue
+import me.proton.core.pass.commonsecret.Secret
+import me.proton.core.pass.commonsecret.SecretType
+import me.proton.core.pass.commonsecret.SecretValue
 
 object AutofillListSecretsScreen {
     const val route = "autofill/secrets"
@@ -39,7 +39,7 @@ object AutofillListSecretsScreen {
     fun view(
         viewModel: AutofillSearchSecretViewModel = hiltViewModel(),
         packageName: String,
-        onSelectedCredentials: (Secret) -> Unit,
+        onSelectedCredentials: (Secret) -> Unit
     ) {
         val viewModel = remember { viewModel }
         val state by viewModel.state.collectAsState()
@@ -54,7 +54,7 @@ object AutofillListSecretsScreen {
     @Composable
     fun ListSecretsDialogContents(
         results: List<ListSecretItem>,
-        onSelectedCredentials: (Secret) -> Unit,
+        onSelectedCredentials: (Secret) -> Unit
     ) {
         if (results.isEmpty()) {
             Text(stringResource(R.string.autofill_list_secrets_empty_message))
@@ -99,7 +99,7 @@ private fun Preview_SecretItem() {
         type = SecretType.Email,
         isUploaded = false,
         contents = SecretValue.Single("Contents"),
-        associatedUris = emptyList(),
+        associatedUris = emptyList()
     )
     val item = ListSecretItem(secret, "address@proton.me")
     SecretItem(item)

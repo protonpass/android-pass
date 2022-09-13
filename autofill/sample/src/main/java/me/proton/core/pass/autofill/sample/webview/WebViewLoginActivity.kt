@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import me.proton.core.pass.autofill.sample.databinding.ActivityWebviewLoginBinding
 
-class WebViewLoginActivity: AppCompatActivity() {
+class WebViewLoginActivity : AppCompatActivity() {
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {

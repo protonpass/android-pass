@@ -14,5 +14,5 @@ data class TrashItemRevision(
     @SerialName("ItemID")
     val itemId: String,
     @SerialName("Revision")
-    val revision: Long,
+    val revision: Long
 )

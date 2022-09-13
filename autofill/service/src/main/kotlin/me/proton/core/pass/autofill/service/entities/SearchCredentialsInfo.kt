@@ -8,12 +8,13 @@ import kotlinx.parcelize.Parcelize
 data class SearchCredentialsInfo(
     val appPackageName: String,
     val appName: String,
-    val assistFields: List<AssistField>,
-): Parcelable {
+    val assistFields: List<AssistField>
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.createTypedArrayList(AssistField.CREATOR)!!) {
+        parcel.createTypedArrayList(AssistField.CREATOR)!!
+    ) {
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {

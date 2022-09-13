@@ -38,13 +38,13 @@ class HomeViewModel @Inject constructor(
     private val userManager: UserManager,
     private val trashItem: TrashItem,
     private val observeShares: ObserveShares,
-    private val observeItems: ObserveItems,
+    private val observeItems: ObserveItems
 ) : ViewModel() {
 
     val initialViewState = getViewState(
         user = null,
         items = emptyList(),
-        shareId = null,
+        shareId = null
     )
 
     private val getCurrentUserIdFlow = accountManager.getPrimaryUserId()
@@ -80,7 +80,7 @@ class HomeViewModel @Inject constructor(
     private fun getViewState(
         user: User?,
         shareId: ShareId?,
-        items: List<ItemUiModel>,
+        items: List<ItemUiModel>
     ): ViewState =
         ViewState(
             navigationDrawerViewState = NavigationDrawerViewState(
@@ -89,7 +89,7 @@ class HomeViewModel @Inject constructor(
                 currentUser = user
             ),
             items,
-            selectedShare = shareId,
+            selectedShare = shareId
         )
 
     fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch {

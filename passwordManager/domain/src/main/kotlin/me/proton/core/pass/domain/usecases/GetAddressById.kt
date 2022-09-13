@@ -6,7 +6,7 @@ import me.proton.core.user.domain.UserAddressManager
 import me.proton.core.user.domain.entity.AddressId
 
 class GetAddressById @Inject constructor(
-    private val addressManager: UserAddressManager,
+    private val addressManager: UserAddressManager
 ) {
     suspend operator fun invoke(userId: UserId, addressId: AddressId) =
         addressManager.getAddress(userId, addressId)

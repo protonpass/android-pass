@@ -78,19 +78,19 @@ internal fun LoginContentView(
     modifier: Modifier = Modifier,
     onTogglePasswordClick: () -> Unit,
     onCopyPasswordClick: () -> Unit,
-    storeToClipboard: (contents: String?, fieldName: String) -> Unit,
+    storeToClipboard: (contents: String?, fieldName: String) -> Unit
 ) {
     Column {
         Column(modifier = modifier.padding(horizontal = 16.dp)) {
             UsernameRow(
                 model = model,
-                storeToClipboard = storeToClipboard,
+                storeToClipboard = storeToClipboard
             )
             WebsiteSection(model)
             PasswordRow(
                 model = model,
                 onTogglePasswordClick = onTogglePasswordClick,
-                onCopyPasswordClick = onCopyPasswordClick,
+                onCopyPasswordClick = onCopyPasswordClick
             )
             NoteRow(model)
         }
@@ -128,7 +128,7 @@ internal fun WebsiteSection(
                 Text(
                     text = it,
                     color = ProtonTheme.colors.textNorm,
-                    fontSize = 14.sp,
+                    fontSize = 14.sp
                 )
             }
         }
@@ -177,7 +177,7 @@ internal fun NoteRow(
     if (model.note.isNotEmpty()) {
         Section(
             title = R.string.field_note_title,
-            content = model.note,
+            content = model.note
         )
     }
 }
@@ -189,7 +189,7 @@ internal fun Section(
     content: String,
     contentTextColor: Color = ProtonTheme.colors.textWeak,
     onIconClick: (() -> Unit)? = null,
-    viewBelow: @Composable (() -> Unit)? = null,
+    viewBelow: @Composable (() -> Unit)? = null
 ) {
     Row(modifier = Modifier.padding(vertical = 12.dp)) {
         Column(modifier = Modifier.weight(1f)) {
@@ -197,7 +197,7 @@ internal fun Section(
             Text(
                 text = content,
                 color = contentTextColor,
-                fontSize = 14.sp,
+                fontSize = 14.sp
             )
 
             if (viewBelow != null) {

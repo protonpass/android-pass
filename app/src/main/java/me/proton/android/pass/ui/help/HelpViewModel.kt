@@ -18,11 +18,11 @@ import me.proton.core.user.domain.entity.User
 @HiltViewModel
 class HelpViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val userManager: UserManager,
+    private val userManager: UserManager
 ) : ViewModel() {
 
     val initialViewState = getViewState(
-        user = null,
+        user = null
     )
 
     private val getCurrentUserIdFlow = accountManager.getPrimaryUserId()
@@ -33,18 +33,18 @@ class HelpViewModel @Inject constructor(
     val state = getCurrentUserIdFlow.map { getViewState(it) }
 
     private fun getViewState(
-        user: User?,
+        user: User?
     ): ViewState =
         ViewState(
             navigationDrawerViewState = NavigationDrawerViewState(
                 R.string.app_name,
                 BuildConfig.VERSION_NAME,
                 currentUser = user
-            ),
+            )
         )
 
     @Immutable
     data class ViewState(
-        val navigationDrawerViewState: NavigationDrawerViewState,
+        val navigationDrawerViewState: NavigationDrawerViewState
     )
 }

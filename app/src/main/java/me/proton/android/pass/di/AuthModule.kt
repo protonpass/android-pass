@@ -42,7 +42,7 @@ object AuthModule {
     fun provideUserCheck(
         @ApplicationContext context: Context,
         accountManager: AccountManager,
-        userManager: UserManager,
+        userManager: UserManager
     ): PostLoginAccountSetup.UserCheck = DefaultUserCheck(
         context,
         accountManager,

@@ -40,5 +40,5 @@ data class CreateVaultRequest(
     @SerialName("ItemKeyPassphraseKeyPacket")
     val itemKeyPassphraseKeyPacket: String,
     @SerialName("ItemKeySignature")
-    val itemKeySignature: String,
+    val itemKeySignature: String
 )

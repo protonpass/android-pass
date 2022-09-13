@@ -12,17 +12,17 @@
         android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
         <activity
-            android:name=".simple_fragment.SimpleFragmentLoginActivity"
+            android:name=".simplefragment.SimpleFragmentLoginActivity"
             android:exported="true"
             android:label="@string/title_activity_simple_fragment_login" />
         <activity
             android:name=".LoginResultActivity"
             android:exported="true" />
         <activity
-            android:name=".simple_compose.SimpleComposeLoginActivity"
+            android:name=".simplecompose.SimpleComposeLoginActivity"
             android:exported="true" />
         <activity
-            android:name=".simple_activity.SimpleLoginActivity"
+            android:name=".simpleactivity.SimpleLoginActivity"
             android:exported="true" />
         <activity
             android:name=".webview.WebViewLoginActivity"

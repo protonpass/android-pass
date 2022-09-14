@@ -57,13 +57,15 @@ interface NavDrawerNavigation {
     val onSectionSelected: (NavigationDrawerSection) -> Unit
 }
 
+@Suppress("LongParameterList")
 @Composable
 fun NavigationDrawer(
     drawerState: DrawerState,
     viewState: NavigationDrawerViewState,
     modifier: Modifier = Modifier,
     accountPrimaryState: AccountPrimaryState = rememberAccountPrimaryState(),
-    navigation: NavDrawerNavigation
+    navigation: NavDrawerNavigation,
+    onSignOutClick: () -> Unit = {}
 ) {
     val sidebarColors = requireNotNull(ProtonTheme.colors.sidebarColors)
     ProtonTheme(colors = sidebarColors) {
@@ -113,7 +115,7 @@ fun NavigationDrawer(
                     SettingsListItem(navigation, closeDrawerAction)
                     TrashListItem(navigation, closeDrawerAction)
                     HelpListItem(navigation, closeDrawerAction)
-                    SignOutListItem(navigation, closeDrawerAction)
+                    SignOutListItem(closeDrawerAction) { onSignOutClick() }
 
                     NavigationDrawerAppVersion(
                         name = stringResource(id = viewState.appNameResId),
@@ -154,7 +156,11 @@ private fun SharesList(
                     },
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(painterResource(R.drawable.ic_proton_vault), contentDescription = null, tint = ProtonTheme.colors.iconWeak)
+                Icon(
+                    painterResource(R.drawable.ic_proton_vault),
+                    contentDescription = null,
+                    tint = ProtonTheme.colors.iconWeak
+                )
                 Text(
                     text = title,
                     modifier = Modifier.padding(start = ListItemTextStartPadding),
@@ -265,21 +271,21 @@ private fun HelpListItem(
 
 @Composable
 private fun SignOutListItem(
-    navigation: NavDrawerNavigation,
     closeDrawerAction: (() -> Unit) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
     NavigationDrawerListItem(
         icon = R.drawable.ic_sign_out,
         title = R.string.navigation_item_sign_out,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,
-        isSelected = false
-    ) {
-        navigation.onSignOut
-    }
+        isSelected = false,
+        onClick = onClick
+    )
 }
 
+@Suppress("LongParameterList")
 @Composable
 fun NavigationDrawerListItem(
     @DrawableRes icon: Int,

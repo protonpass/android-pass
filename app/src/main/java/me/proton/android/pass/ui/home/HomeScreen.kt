@@ -44,6 +44,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
+import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.android.pass.ui.shared.ItemAction
 import me.proton.android.pass.ui.shared.ItemsList
 import me.proton.android.pass.ui.shared.TopBarTitleView
@@ -88,15 +89,6 @@ fun HomeScreen(
         requestAutofillAccessIfNeeded(context = context)
     }
 
-    val homeScaffoldState = rememberHomeScaffoldState()
-    val isDrawerOpen = with(homeScaffoldState.scaffoldState.drawerState) {
-        isOpen && !isAnimationRunning || isClosed && isAnimationRunning
-    }
-    LaunchedEffect(isDrawerOpen) {
-        navDrawerNavigation.onDrawerStateChanged(isDrawerOpen)
-    }
-    val drawerGesturesEnabled by homeScaffoldState.drawerGesturesEnabled
-
     val viewState by rememberFlowWithLifecycle(flow = homeViewModel.viewState)
         .collectAsState(initial = homeViewModel.initialViewState)
 
@@ -114,44 +106,82 @@ fun HomeScreen(
             )
         }
     ) {
-        Scaffold(
+        HomeScreenContents(
+            viewState = viewState,
+            bottomSheetState = bottomSheetState,
+            navDrawerNavigation = navDrawerNavigation,
+            navigation = navigation,
+            coroutineScope = coroutineScope,
+            homeViewModel = homeViewModel,
             modifier = modifier,
-            scaffoldState = homeScaffoldState.scaffoldState,
-            drawerContent = {
-                NavigationDrawer(
-                    drawerState = homeScaffoldState.scaffoldState.drawerState,
-                    viewState = viewState.navigationDrawerViewState,
-                    navigation = navDrawerNavigation,
-                    modifier = Modifier
-                        .statusBarsPadding()
-                        .navigationBarsPadding()
-                )
-            },
-            drawerGesturesEnabled = drawerGesturesEnabled,
-            topBar = {
-                HomeTopBar(
-                    homeScaffoldState = homeScaffoldState,
-                    bottomSheetState = bottomSheetState,
-                    coroutineScope = coroutineScope
-                )
-            }
-        ) { contentPadding ->
-            Box {
-                val itemToDelete = remember { mutableStateOf<ItemUiModel?>(null) }
-                Home(
-                    items = viewState.items,
-                    modifier = Modifier.padding(contentPadding),
-                    onItemClick = { shareId, itemId -> navigation.toItemDetail(shareId, itemId) },
-                    navigation = navigation,
-                    onDeleteItemClicked = { item -> itemToDelete.value = item }
-                )
-                ConfirmItemDeletionDialog(
-                    itemState = itemToDelete,
-                    title = R.string.alert_confirm_item_send_to_trash_title,
-                    message = R.string.alert_confirm_item_send_to_trash_message,
-                    onConfirm = { homeViewModel.sendItemToTrash(it) }
-                )
-            }
+        )
+    }
+}
+
+@Suppress("LongParameterList")
+@ExperimentalMaterialApi
+@Composable
+private fun HomeScreenContents(
+    viewState: HomeViewModel.ViewState,
+    bottomSheetState: ModalBottomSheetState,
+    navDrawerNavigation: NavDrawerNavigation,
+    navigation: HomeScreenNavigation,
+    coroutineScope: CoroutineScope,
+    homeViewModel: HomeViewModel,
+    modifier: Modifier,
+) {
+    val confirmSignOutDialogState = remember { mutableStateOf<Boolean?>(null) }
+    val homeScaffoldState = rememberHomeScaffoldState()
+    val isDrawerOpen = with(homeScaffoldState.scaffoldState.drawerState) {
+        isOpen && !isAnimationRunning || isClosed && isAnimationRunning
+    }
+    LaunchedEffect(isDrawerOpen) {
+        navDrawerNavigation.onDrawerStateChanged(isDrawerOpen)
+    }
+    val drawerGesturesEnabled by homeScaffoldState.drawerGesturesEnabled
+
+    Scaffold(
+        modifier = modifier,
+        scaffoldState = homeScaffoldState.scaffoldState,
+        drawerContent = {
+            NavigationDrawer(
+                drawerState = homeScaffoldState.scaffoldState.drawerState,
+                viewState = viewState.navigationDrawerViewState,
+                navigation = navDrawerNavigation,
+                onSignOutClick = { confirmSignOutDialogState.value = true },
+                modifier = Modifier
+                    .statusBarsPadding()
+                    .navigationBarsPadding()
+            )
+        },
+        drawerGesturesEnabled = drawerGesturesEnabled,
+        topBar = {
+            HomeTopBar(
+                homeScaffoldState = homeScaffoldState,
+                bottomSheetState = bottomSheetState,
+                coroutineScope = coroutineScope
+            )
+        }
+    ) { contentPadding ->
+        Box {
+            val itemToDelete = remember { mutableStateOf<ItemUiModel?>(null) }
+            Home(
+                items = viewState.items,
+                modifier = Modifier.padding(contentPadding),
+                onItemClick = { shareId, itemId -> navigation.toItemDetail(shareId, itemId) },
+                navigation = navigation,
+                onDeleteItemClicked = { item -> itemToDelete.value = item }
+            )
+            ConfirmSignOutDialog(
+                showState = confirmSignOutDialogState,
+                onConfirm = { navDrawerNavigation.onRemove(null) }
+            )
+            ConfirmItemDeletionDialog(
+                itemState = itemToDelete,
+                title = R.string.alert_confirm_item_send_to_trash_title,
+                message = R.string.alert_confirm_item_send_to_trash_message,
+                onConfirm = { homeViewModel.sendItemToTrash(it) }
+            )
         }
     }
 }

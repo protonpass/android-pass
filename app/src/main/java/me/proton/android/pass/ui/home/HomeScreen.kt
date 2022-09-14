@@ -92,14 +92,12 @@ fun HomeScreen(
     val viewState by rememberFlowWithLifecycle(flow = homeViewModel.viewState)
         .collectAsState(initial = homeViewModel.initialViewState)
 
-    val coroutineScope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
 
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             BottomSheetContents(
-                scope = coroutineScope,
                 state = bottomSheetState,
                 navigation = navigation,
                 shareId = viewState.selectedShare
@@ -111,7 +109,6 @@ fun HomeScreen(
             bottomSheetState = bottomSheetState,
             navDrawerNavigation = navDrawerNavigation,
             navigation = navigation,
-            coroutineScope = coroutineScope,
             sendItemToTrash = { homeViewModel.sendItemToTrash(it) },
             modifier = modifier,
         )
@@ -126,10 +123,10 @@ private fun HomeScreenContents(
     bottomSheetState: ModalBottomSheetState,
     navDrawerNavigation: NavDrawerNavigation,
     navigation: HomeScreenNavigation,
-    coroutineScope: CoroutineScope,
     sendItemToTrash: (ItemUiModel) -> Unit,
     modifier: Modifier,
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val confirmSignOutDialogState = remember { mutableStateOf<Boolean?>(null) }
     val homeScaffoldState = rememberHomeScaffoldState()
     val isDrawerOpen = with(homeScaffoldState.scaffoldState.drawerState) {

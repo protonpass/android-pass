@@ -13,6 +13,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -20,7 +21,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.core.compose.theme.ProtonTheme
@@ -29,11 +29,11 @@ import me.proton.core.pass.domain.ShareId
 @ExperimentalMaterialApi
 @Composable
 fun BottomSheetContents(
-    scope: CoroutineScope,
     state: ModalBottomSheetState,
     shareId: ShareId?,
     navigation: HomeScreenNavigation
 ) {
+    val scope = rememberCoroutineScope()
     Column {
         Text(
             text = stringResource(R.string.title_new),
@@ -46,8 +46,6 @@ fun BottomSheetContents(
                 state.hide()
                 if (shareId != null) {
                     navigation.toCreateLogin(shareId)
-                } else {
-                    // TODO: Show Snackbar saying to select one?
                 }
             }
         })
@@ -56,8 +54,6 @@ fun BottomSheetContents(
                 state.hide()
                 if (shareId != null) {
                     navigation.toCreateAlias(shareId)
-                } else {
-                    // TODO: Show Snackbar saying to select one?
                 }
             }
         })
@@ -66,8 +62,6 @@ fun BottomSheetContents(
                 state.hide()
                 if (shareId != null) {
                     navigation.toCreateNote(shareId)
-                } else {
-                    // TODO: Show Snackbar saying to select one?
                 }
             }
         })
@@ -76,8 +70,6 @@ fun BottomSheetContents(
                 state.hide()
                 if (shareId != null) {
                     navigation.toCreatePassword(shareId)
-                } else {
-                    // TODO: Show Snackbar saying to select one?
                 }
             }
         })

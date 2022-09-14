@@ -18,6 +18,8 @@
     <string name="alert_confirm_item_deletion_message">Are you sure you want to permanently delete \'%s\'?</string>
     <string name="alert_confirm_clear_trash_title">Clear trash?</string>
     <string name="alert_confirm_clear_trash_message">Are you sure you want to clear the trash? All your trashed items will be deleted permanently</string>
+    <string name="alert_confirm_sign_out_title">Sign out?</string>
+    <string name="alert_confirm_sign_out_message">Are you sure you want to sign out?</string>
 
     <string name="secret_type_username">User name</string>
     <string name="secret_type_email">Email</string>

@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.home.HomeScreenNavigation
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
+import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.android.pass.ui.shared.ItemAction
 import me.proton.android.pass.ui.shared.ItemsList
 import me.proton.android.pass.ui.shared.TopBarTitleView
@@ -68,13 +69,16 @@ fun TrashScreen(
     var showClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
+    val confirmSignOutDialogState = remember { mutableStateOf<Boolean?>(null) }
+
     Scaffold(
         scaffoldState = scaffoldState.scaffoldState,
         drawerContent = {
             NavigationDrawer(
                 drawerState = scaffoldState.scaffoldState.drawerState,
                 viewState = viewState.navigationDrawerViewState,
-                navigation = navDrawerNavigation
+                navigation = navDrawerNavigation,
+                onSignOutClick = { confirmSignOutDialogState.value = true }
             )
         },
         drawerGesturesEnabled = drawerGesturesEnabled,
@@ -92,6 +96,10 @@ fun TrashScreen(
                 items = viewState.items,
                 onRestoreClicked = { viewModel.restoreItem(it) },
                 onDeleteItemClicked = { itemToDelete.value = it }
+            )
+            ConfirmSignOutDialog(
+                showState = confirmSignOutDialogState,
+                onConfirm = { navDrawerNavigation.onRemove(null) }
             )
             ConfirmClearTrashDialog(
                 show = showClearTrashDialog,

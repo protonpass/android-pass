@@ -8,7 +8,7 @@ echo "Input files: $detektInput"
 OUTPUT=$(detekt --input "$detektInput" 2>&1)
 EXIT_CODE=$?
 if [ $EXIT_CODE -ne 0 ]; then
-  echo $OUTPUT
+  echo "${OUTPUT}"
   echo "***********************************************"
   echo "                 Detekt failed                 "
   echo " Please fix the above issues before committing "

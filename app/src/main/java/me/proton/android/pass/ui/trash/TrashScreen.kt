@@ -55,6 +55,7 @@ fun TrashScreen(
     navigation: HomeScreenNavigation,
     viewModel: TrashScreenViewModel = hiltViewModel()
 ) {
+    val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberTrashScaffoldState()
     val isDrawerOpen = with(scaffoldState.scaffoldState.drawerState) {
         isOpen && !isAnimationRunning || isClosed && isAnimationRunning
@@ -65,11 +66,8 @@ fun TrashScreen(
     val drawerGesturesEnabled by scaffoldState.drawerGesturesEnabled
     val viewState by rememberFlowWithLifecycle(flow = viewModel.viewState)
         .collectAsState(initial = viewModel.initialViewState)
-
     var showClearTrashDialog by rememberSaveable { mutableStateOf(false) }
-    val coroutineScope = rememberCoroutineScope()
-
-    val confirmSignOutDialogState = remember { mutableStateOf<Boolean?>(null) }
+    var confirmSignOutDialogState by remember { mutableStateOf<Boolean?>(null) }
 
     Scaffold(
         scaffoldState = scaffoldState.scaffoldState,
@@ -78,7 +76,7 @@ fun TrashScreen(
                 drawerState = scaffoldState.scaffoldState.drawerState,
                 viewState = viewState.navigationDrawerViewState,
                 navigation = navDrawerNavigation,
-                onSignOutClick = { confirmSignOutDialogState.value = true }
+                onSignOutClick = { confirmSignOutDialogState = true }
             )
         },
         drawerGesturesEnabled = drawerGesturesEnabled,
@@ -91,14 +89,15 @@ fun TrashScreen(
         }
     ) { contentPadding ->
         Box(modifier = modifier.padding(contentPadding)) {
-            val itemToDelete = remember { mutableStateOf<ItemUiModel?>(null) }
+            var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
             Trash(
                 items = viewState.items,
                 onRestoreClicked = { viewModel.restoreItem(it) },
-                onDeleteItemClicked = { itemToDelete.value = it }
+                onDeleteItemClicked = { itemToDelete = it }
             )
             ConfirmSignOutDialog(
-                showState = confirmSignOutDialogState,
+                state = confirmSignOutDialogState,
+                onDismiss = { confirmSignOutDialogState = null },
                 onConfirm = { navDrawerNavigation.onRemove(null) }
             )
             ConfirmClearTrashDialog(
@@ -107,7 +106,8 @@ fun TrashScreen(
                 onConfirm = { viewModel.clearTrash() }
             )
             ConfirmItemDeletionDialog(
-                itemState = itemToDelete,
+                state = itemToDelete,
+                onDismiss = { itemToDelete = null },
                 title = R.string.alert_confirm_item_deletion_title,
                 message = R.string.alert_confirm_item_deletion_message,
                 onConfirm = { viewModel.deleteItem(it) }

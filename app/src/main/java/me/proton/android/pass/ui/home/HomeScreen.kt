@@ -34,6 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -127,7 +128,7 @@ private fun HomeScreenContents(
     modifier: Modifier,
 ) {
     val coroutineScope = rememberCoroutineScope()
-    val confirmSignOutDialogState = remember { mutableStateOf<Boolean?>(null) }
+    var confirmSignOutDialogState by remember { mutableStateOf<Boolean?>(null) }
     val homeScaffoldState = rememberHomeScaffoldState()
     val isDrawerOpen = with(homeScaffoldState.scaffoldState.drawerState) {
         isOpen && !isAnimationRunning || isClosed && isAnimationRunning
@@ -145,7 +146,7 @@ private fun HomeScreenContents(
                 drawerState = homeScaffoldState.scaffoldState.drawerState,
                 viewState = viewState.navigationDrawerViewState,
                 navigation = navDrawerNavigation,
-                onSignOutClick = { confirmSignOutDialogState.value = true },
+                onSignOutClick = { confirmSignOutDialogState = true },
                 modifier = Modifier
                     .statusBarsPadding()
                     .navigationBarsPadding()
@@ -161,20 +162,22 @@ private fun HomeScreenContents(
         }
     ) { contentPadding ->
         Box {
-            val itemToDelete = remember { mutableStateOf<ItemUiModel?>(null) }
+            var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
             Home(
                 items = viewState.items,
                 modifier = Modifier.padding(contentPadding),
                 onItemClick = { shareId, itemId -> navigation.toItemDetail(shareId, itemId) },
                 navigation = navigation,
-                onDeleteItemClicked = { item -> itemToDelete.value = item }
+                onDeleteItemClicked = { itemToDelete = it }
             )
             ConfirmSignOutDialog(
-                showState = confirmSignOutDialogState,
+                state = confirmSignOutDialogState,
+                onDismiss = { confirmSignOutDialogState = null},
                 onConfirm = { navDrawerNavigation.onRemove(null) }
             )
             ConfirmItemDeletionDialog(
-                itemState = itemToDelete,
+                state = itemToDelete,
+                onDismiss = { itemToDelete = null },
                 title = R.string.alert_confirm_item_send_to_trash_title,
                 message = R.string.alert_confirm_item_send_to_trash_message,
                 onConfirm = sendItemToTrash

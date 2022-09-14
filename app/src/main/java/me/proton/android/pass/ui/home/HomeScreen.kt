@@ -112,7 +112,7 @@ fun HomeScreen(
             navDrawerNavigation = navDrawerNavigation,
             navigation = navigation,
             coroutineScope = coroutineScope,
-            homeViewModel = homeViewModel,
+            sendItemToTrash = { homeViewModel.sendItemToTrash(it) },
             modifier = modifier,
         )
     }
@@ -127,7 +127,7 @@ private fun HomeScreenContents(
     navDrawerNavigation: NavDrawerNavigation,
     navigation: HomeScreenNavigation,
     coroutineScope: CoroutineScope,
-    homeViewModel: HomeViewModel,
+    sendItemToTrash: (ItemUiModel) -> Unit,
     modifier: Modifier,
 ) {
     val confirmSignOutDialogState = remember { mutableStateOf<Boolean?>(null) }
@@ -180,7 +180,7 @@ private fun HomeScreenContents(
                 itemState = itemToDelete,
                 title = R.string.alert_confirm_item_send_to_trash_title,
                 message = R.string.alert_confirm_item_send_to_trash_message,
-                onConfirm = { homeViewModel.sendItemToTrash(it) }
+                onConfirm = sendItemToTrash
             )
         }
     }

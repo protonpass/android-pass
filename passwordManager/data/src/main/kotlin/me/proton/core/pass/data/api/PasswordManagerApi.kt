@@ -26,6 +26,7 @@ import retrofit2.http.Query
 
 internal const val PREFIX = "pass/v1"
 
+@Suppress("TooManyFunctions")
 interface PasswordManagerApi : BaseRetrofitApi {
     @POST("$PREFIX/vault")
     suspend fun createVault(@Body request: CreateVaultRequest): CreateVaultResponse
@@ -72,19 +73,34 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): CreateItemResponse
 
     @POST("$PREFIX/share/{shareId}/item/trash")
-    suspend fun trashItems(@Path("shareId") shareId: String, @Body request: TrashItemsRequest): TrashItemsResponse
+    suspend fun trashItems(
+        @Path("shareId") shareId: String,
+        @Body request: TrashItemsRequest
+    ): TrashItemsResponse
 
     @HTTP(method = "DELETE", path = "$PREFIX/share/{shareId}/item", hasBody = true)
     suspend fun deleteItems(@Path("shareId") shareId: String, @Body request: TrashItemsRequest)
 
+    @POST("$PREFIX/share/{shareId}/item/untrash")
+    suspend fun untrashItems(
+        @Path("shareId") shareId: String,
+        @Body request: TrashItemsRequest
+    ): TrashItemsResponse
+
     // KeyPacket
     @GET("$PREFIX/share/{shareId}/item/{itemId}/keypacket")
-    suspend fun getLatestKeyPacket(@Path("shareId") shareId: String, @Path("itemId") itemId: String): GetKeyPacketResponse
+    suspend fun getLatestKeyPacket(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String
+    ): GetKeyPacketResponse
 
     // Alias
     @GET("$PREFIX/share/{shareId}/alias/options")
     suspend fun getAliasOptions(@Path("shareId") shareId: String): GetAliasOptionsResponse
 
     @GET("$PREFIX/share/{shareId}/alias/{itemId}")
-    suspend fun getAliasDetails(@Path("shareId") shareId: String, @Path("itemId") itemId: String): AliasDetailsResponse
+    suspend fun getAliasDetails(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String
+    ): AliasDetailsResponse
 }

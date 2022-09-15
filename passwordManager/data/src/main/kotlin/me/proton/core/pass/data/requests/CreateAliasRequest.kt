@@ -9,7 +9,7 @@ data class CreateAliasRequest(
     val prefix: String,
     @SerialName("SignedSuffix")
     val signedSuffix: String,
-    @SerialName("Mailboxes")
+    @SerialName("MailboxIDs")
     val mailboxes: List<Int>,
     @SerialName("Item")
     val item: CreateItemRequest

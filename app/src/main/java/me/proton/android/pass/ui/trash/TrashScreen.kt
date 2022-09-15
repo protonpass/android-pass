@@ -39,6 +39,7 @@ import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.android.pass.ui.shared.ItemAction
 import me.proton.android.pass.ui.shared.ItemsList
+import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
@@ -64,8 +65,10 @@ fun TrashScreen(
         navDrawerNavigation.onDrawerStateChanged(isDrawerOpen)
     }
     val drawerGesturesEnabled by scaffoldState.drawerGesturesEnabled
-    val viewState by rememberFlowWithLifecycle(flow = viewModel.viewState)
-        .collectAsState(initial = viewModel.initialViewState)
+    val navDrawerState by rememberFlowWithLifecycle(flow = viewModel.navDrawerState)
+        .collectAsState(initial = viewModel.initialNavDrawerState)
+    val uiState by rememberFlowWithLifecycle(flow = viewModel.uiState)
+        .collectAsState(initial = TrashScreenViewModel.State.Loading)
     var showClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     var confirmSignOutDialogState by remember { mutableStateOf<Boolean?>(null) }
 
@@ -74,7 +77,7 @@ fun TrashScreen(
         drawerContent = {
             NavigationDrawer(
                 drawerState = scaffoldState.scaffoldState.drawerState,
-                viewState = viewState.navigationDrawerViewState,
+                viewState = navDrawerState,
                 navigation = navDrawerNavigation,
                 onSignOutClick = { confirmSignOutDialogState = true }
             )
@@ -90,8 +93,16 @@ fun TrashScreen(
     ) { contentPadding ->
         Box(modifier = modifier.padding(contentPadding)) {
             var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
+            if (uiState is TrashScreenViewModel.State.Loading) {
+                LoadingDialog()
+            }
+
+            val items = when (val state = uiState) {
+                is TrashScreenViewModel.State.Content -> state.items
+                else -> emptyList()
+            }
             Trash(
-                items = viewState.items,
+                items = items,
                 onRestoreClicked = { viewModel.restoreItem(it) },
                 onDeleteItemClicked = { itemToDelete = it }
             )

@@ -92,7 +92,7 @@ class TrashScreenViewModel @Inject constructor(
 
     fun restoreItem(item: ItemUiModel) = viewModelScope.launch {
         withUserId {
-            itemRepository.restoreItem(it, item.shareId, item.id)
+            itemRepository.untrashItem(it, item.shareId, item.id)
         }
     }
 

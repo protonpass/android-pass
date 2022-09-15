@@ -21,5 +21,6 @@ interface RemoteItemDataSource {
     ): ItemRevision
     suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision>
     suspend fun sendToTrash(userId: UserId, shareId: ShareId, body: TrashItemsRequest): TrashItemsResponse
+    suspend fun untrash(userId: UserId, shareId: ShareId, body: TrashItemsRequest): TrashItemsResponse
     suspend fun delete(userId: UserId, shareId: ShareId, body: TrashItemsRequest)
 }

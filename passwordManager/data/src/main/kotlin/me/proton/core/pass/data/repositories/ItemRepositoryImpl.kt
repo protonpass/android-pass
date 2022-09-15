@@ -1,6 +1,5 @@
 package me.proton.core.pass.data.repositories
 
-import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -42,7 +41,9 @@ import me.proton.core.pass.domain.repositories.VaultKeyRepository
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
+import javax.inject.Inject
 
+@Suppress("LongParameterList", "TooManyFunctions")
 class ItemRepositoryImpl @Inject constructor(
     private val database: PassDatabase,
     private val cryptoContext: CryptoContext,
@@ -68,12 +69,20 @@ class ItemRepositoryImpl @Inject constructor(
         contents: ItemContents
     ): Item {
         return withUserAddress(userId) { userAddress ->
-            val (vaultKey, itemKey) = vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
+            val (vaultKey, itemKey) =
+                vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
             val body = createItem.createItem(vaultKey, itemKey, userAddress, contents)
             val itemResponse = remoteItemDataSource.createItem(userId, share.id, body)
 
             val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
-            val entity = itemResponseToEntity(userAddress, itemResponse, share, userPublicKeys, listOf(vaultKey), listOf(itemKey))
+            val entity = itemResponseToEntity(
+                userAddress,
+                itemResponse,
+                share,
+                userPublicKeys,
+                listOf(vaultKey),
+                listOf(itemKey)
+            )
             localItemDataSource.upsertItem(entity)
             entityToDomain(entity)
         }
@@ -81,7 +90,8 @@ class ItemRepositoryImpl @Inject constructor(
 
     override suspend fun createAlias(userId: UserId, share: Share, newAlias: NewAlias): Item {
         return withUserAddress(userId) { userAddress ->
-            val (vaultKey, itemKey) = vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
+            val (vaultKey, itemKey) =
+                vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
             val itemContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
             val body = createItem.createItem(vaultKey, itemKey, userAddress, itemContents)
             val requestBody = CreateAliasRequest(
@@ -93,7 +103,14 @@ class ItemRepositoryImpl @Inject constructor(
 
             val itemResponse = remoteItemDataSource.createAlias(userId, share.id, requestBody)
             val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
-            val entity = itemResponseToEntity(userAddress, itemResponse, share, userPublicKeys, listOf(vaultKey), listOf(itemKey))
+            val entity = itemResponseToEntity(
+                userAddress,
+                itemResponse,
+                share,
+                userPublicKeys,
+                listOf(vaultKey),
+                listOf(itemKey)
+            )
             localItemDataSource.upsertItem(entity)
             entityToDomain(entity)
         }
@@ -108,22 +125,46 @@ class ItemRepositoryImpl @Inject constructor(
         val keyPacket = keyPacketRepository.getLatestKeyPacketForItem(userId, share.id, item.id)
 
         return withUserAddress(userId) { userAddress ->
-            val vaultKey = vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
-            val itemKey = vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
+            val vaultKey =
+                vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
+            val itemKey =
+                vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
 
-            val body = updateItem.updateItem(vaultKey, itemKey, keyPacket, userAddress, contents, item.revision)
+            val body = updateItem.updateItem(
+                vaultKey,
+                itemKey,
+                keyPacket,
+                userAddress,
+                contents,
+                item.revision
+            )
             val itemResponse = remoteItemDataSource.updateItem(userId, share.id, item.id, body)
 
             val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
-            val entity = itemResponseToEntity(userAddress, itemResponse, share, userPublicKeys, listOf(vaultKey), listOf(itemKey))
+            val entity = itemResponseToEntity(
+                userAddress,
+                itemResponse,
+                share,
+                userPublicKeys,
+                listOf(vaultKey),
+                listOf(itemKey)
+            )
             localItemDataSource.upsertItem(entity)
             entityToDomain(entity)
         }
     }
 
-    override fun observeItems(userId: UserId, shareSelection: ShareSelection, itemState: ItemState): Flow<List<Item>> {
+    override fun observeItems(
+        userId: UserId,
+        shareSelection: ShareSelection,
+        itemState: ItemState
+    ): Flow<List<Item>> {
         return when (shareSelection) {
-            is ShareSelection.Share -> localItemDataSource.observeItemsForShare(userId, shareSelection.shareId, itemState)
+            is ShareSelection.Share -> localItemDataSource.observeItemsForShare(
+                userId,
+                shareSelection.shareId,
+                itemState
+            )
             is ShareSelection.AllShares -> localItemDataSource.observeItems(userId, itemState)
         }.map { items ->
             val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
@@ -156,8 +197,22 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun restoreItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
-        /* TODO: Implement */
+    override suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
+        val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
+        if (item.state == ItemState.Active.value) return
+
+        val body = TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
+        val response = remoteItemDataSource.untrash(userId, shareId, body)
+
+        database.inTransaction {
+            response.items.find { it.itemId == item.id }?.let {
+                val updatedItem = item.copy(
+                    revision = it.revision,
+                    state = ItemState.Active.value
+                )
+                localItemDataSource.upsertItem(updatedItem)
+            }
+        }
     }
 
     override suspend fun clearTrash(userId: UserId) {
@@ -217,16 +272,20 @@ class ItemRepositoryImpl @Inject constructor(
             .map { it.signatureEmail }
             .distinct()
             .associateWith {
-                val publicAddress = keyRepository.getPublicAddress(userAddress.userId, it, source = Source.LocalIfAvailable)
+                val publicAddress =
+                    keyRepository.getPublicAddress(userAddress.userId, it, source = Source.LocalIfAvailable)
                 publicAddress.keys.publicKeyRing().keys
             }
 
         return items.map { item ->
             val verifyKeys = requireNotNull(userKeys[item.signatureEmail])
-            val vaultKey = vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, item.rotationId)
-            val itemKey = vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, item.rotationId)
+            val vaultKey =
+                vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, item.rotationId)
+            val itemKey =
+                vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, item.rotationId)
 
-            val entity = itemResponseToEntity(userAddress, item, share, verifyKeys, listOf(vaultKey), listOf(itemKey))
+            val entity =
+                itemResponseToEntity(userAddress, item, share, verifyKeys, listOf(vaultKey), listOf(itemKey))
             localItemDataSource.upsertItem(entity)
             entityToDomain(entity)
         }

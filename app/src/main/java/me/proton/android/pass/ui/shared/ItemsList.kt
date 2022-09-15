@@ -223,7 +223,10 @@ private fun ItemRowActions(
                     ),
                     textColor = it.textColor,
                     icon = it.icon
-                ) { it.onSelect(item) }
+                ) {
+                    setExpanded(false)
+                    it.onSelect(item)
+                }
             }
         }
     }

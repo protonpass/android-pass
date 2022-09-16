@@ -34,7 +34,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
-import me.proton.android.pass.ui.home.HomeScreenNavigation
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.android.pass.ui.shared.ItemAction
@@ -53,7 +52,6 @@ import me.proton.core.pass.presentation.components.navigation.drawer.NavigationD
 fun TrashScreen(
     modifier: Modifier = Modifier,
     navDrawerNavigation: NavDrawerNavigation,
-    navigation: HomeScreenNavigation,
     viewModel: TrashScreenViewModel = hiltViewModel()
 ) {
     val coroutineScope = rememberCoroutineScope()

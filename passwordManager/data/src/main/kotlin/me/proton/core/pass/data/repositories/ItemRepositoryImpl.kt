@@ -12,6 +12,7 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.extension.publicKeyRing
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
+import me.proton.core.network.domain.ApiException
 import me.proton.core.pass.data.crypto.CreateItem
 import me.proton.core.pass.data.crypto.OpenItem
 import me.proton.core.pass.data.crypto.UpdateItem
@@ -198,20 +199,27 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     override suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
-        val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-        if (item.state == ItemState.Active.value) return
+        // Optimistically update the local database
+        val originalItem = database.inTransaction {
+            val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
+            if (item.state == ItemState.Active.value) return@inTransaction null
+            val updatedItem = item.copy(
+                state = ItemState.Active.value
+            )
+            localItemDataSource.upsertItem(updatedItem)
+            item
+        } ?: return
 
-        val body = TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
-        val response = remoteItemDataSource.untrash(userId, shareId, body)
-
-        database.inTransaction {
-            response.items.find { it.itemId == item.id }?.let {
-                val updatedItem = item.copy(
-                    revision = it.revision,
-                    state = ItemState.Active.value
-                )
-                localItemDataSource.upsertItem(updatedItem)
-            }
+        // Perform the network request
+        try {
+            val body = TrashItemsRequest(listOf(TrashItemRevision(
+                itemId = originalItem.id,
+                revision = originalItem.revision
+            )))
+            remoteItemDataSource.untrash(userId, shareId, body)
+        } catch (e: ApiException) {
+            // In case of an exception, restore the old version
+            localItemDataSource.upsertItem(originalItem)
         }
     }
 

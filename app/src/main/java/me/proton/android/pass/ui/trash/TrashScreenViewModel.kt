@@ -1,6 +1,5 @@
 package me.proton.android.pass.ui.trash
 
-import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +22,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.domain.ItemState
-import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.ShareSelection
 import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.usecases.ObserveItems
@@ -31,6 +29,7 @@ import me.proton.core.pass.domain.usecases.ObserveShares
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerViewState
 import me.proton.core.user.domain.UserManager
+import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 
 @Suppress("LongParameterList")
@@ -85,18 +84,19 @@ class TrashScreenViewModel @Inject constructor(
             initialValue = initialNavDrawerState
         )
 
-    val uiState: StateFlow<State> = combine(
+    val uiState: StateFlow<TrashUiState> = combine(
         listShares,
         listItems,
     ) { shareId, items ->
-        State.Content(
+        CoreLogger.i("uiState", "ShareId: ${shareId} | Items: ${items}")
+        TrashUiState.Content(
             items,
             selectedShare = shareId
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = State.Loading
+        initialValue = TrashUiState.Loading
     )
 
     fun restoreItem(item: ItemUiModel) = viewModelScope.launch {
@@ -120,22 +120,5 @@ class TrashScreenViewModel @Inject constructor(
     private suspend fun withUserId(block: suspend (UserId) -> Unit) {
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
         userId?.let { block(it) }
-    }
-
-    @Immutable
-    internal sealed class RequestState {
-        object Loading: RequestState()
-        object Success: RequestState()
-        object Error: RequestState()
-    }
-
-    @Immutable
-    sealed class State {
-        object Loading: State()
-        data class Content(
-            val items: List<ItemUiModel>,
-            val selectedShare: ShareId? = null
-        ): State()
-        data class Error(val message: String): State()
     }
 }

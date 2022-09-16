@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -67,23 +66,6 @@ class TrashScreenViewModel @Inject constructor(
             }
         }
 
-    private val restoreItemState: MutableStateFlow<RequestState> = MutableStateFlow(RequestState.Success)
-    private val deleteItemState: MutableStateFlow<RequestState> = MutableStateFlow(RequestState.Success)
-    private val clearTrashState: MutableStateFlow<RequestState> = MutableStateFlow(RequestState.Success)
-    private val requestState: Flow<RequestState> = combine(
-        restoreItemState,
-        deleteItemState,
-        clearTrashState
-    ) { restore, delete, clearTrash ->
-        if (restore is RequestState.Loading || delete is RequestState.Loading || clearTrash is RequestState.Loading) {
-            RequestState.Loading
-        } else if (restore is RequestState.Error || delete is RequestState.Error || clearTrash is RequestState.Error) {
-            RequestState.Error
-        } else {
-            RequestState.Success
-        }
-    }
-
     val initialNavDrawerState = NavigationDrawerViewState(
         R.string.app_name,
         BuildConfig.VERSION_NAME,
@@ -106,16 +88,11 @@ class TrashScreenViewModel @Inject constructor(
     val uiState: StateFlow<State> = combine(
         listShares,
         listItems,
-        requestState
-    ) { shareId, items, request ->
-        when (request) {
-            is RequestState.Loading -> State.Loading
-            is RequestState.Error -> State.Error("Error in request")
-            is RequestState.Success -> State.Content(
-                items,
-                selectedShare = shareId
-            )
-        }
+    ) { shareId, items ->
+        State.Content(
+            items,
+            selectedShare = shareId
+        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -124,25 +101,19 @@ class TrashScreenViewModel @Inject constructor(
 
     fun restoreItem(item: ItemUiModel) = viewModelScope.launch {
         withUserId {
-            restoreItemState.value = RequestState.Loading
             itemRepository.untrashItem(it, item.shareId, item.id)
-            restoreItemState.value = RequestState.Success
         }
     }
 
     fun deleteItem(item: ItemUiModel) = viewModelScope.launch {
         withUserId {
-            deleteItemState.value = RequestState.Loading
             itemRepository.deleteItem(it, item.shareId, item.id)
-            deleteItemState.value = RequestState.Success
         }
     }
 
     fun clearTrash() = viewModelScope.launch {
         withUserId {
-            clearTrashState.value = RequestState.Loading
             itemRepository.clearTrash(it)
-            clearTrashState.value = RequestState.Success
         }
     }
 

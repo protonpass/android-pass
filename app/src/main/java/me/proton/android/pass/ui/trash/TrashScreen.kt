@@ -66,7 +66,7 @@ fun TrashScreen(
     val navDrawerState by rememberFlowWithLifecycle(flow = viewModel.navDrawerState)
         .collectAsState(initial = viewModel.initialNavDrawerState)
     val uiState by rememberFlowWithLifecycle(flow = viewModel.uiState)
-        .collectAsState(initial = TrashScreenViewModel.State.Loading)
+        .collectAsState(initial = TrashUiState.Loading)
     var showClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     var confirmSignOutDialogState by remember { mutableStateOf<Boolean?>(null) }
 
@@ -91,19 +91,19 @@ fun TrashScreen(
     ) { contentPadding ->
         Box(modifier = modifier.padding(contentPadding)) {
             var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
-            if (uiState is TrashScreenViewModel.State.Loading) {
-                LoadingDialog()
+
+            when (val state = uiState) {
+                is TrashUiState.Loading -> LoadingDialog()
+                is TrashUiState.Content -> {
+                    Trash(
+                        items = state.items,
+                        onRestoreClicked = { viewModel.restoreItem(it) },
+                        onDeleteItemClicked = { itemToDelete = it }
+                    )
+                }
+                is TrashUiState.Error -> Text("Something went boom: ${state.message}")
             }
 
-            val items = when (val state = uiState) {
-                is TrashScreenViewModel.State.Content -> state.items
-                else -> emptyList()
-            }
-            Trash(
-                items = items,
-                onRestoreClicked = { viewModel.restoreItem(it) },
-                onDeleteItemClicked = { itemToDelete = it }
-            )
             ConfirmSignOutDialog(
                 state = confirmSignOutDialogState,
                 onDismiss = { confirmSignOutDialogState = null },

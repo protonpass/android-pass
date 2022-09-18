@@ -13,8 +13,8 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import me.proton.android.pass.ui.create.alias.CreateAliasView
 import me.proton.android.pass.ui.create.alias.UpdateAliasView
-import me.proton.android.pass.ui.create.login.CreateLoginView
-import me.proton.android.pass.ui.create.login.UpdateLoginView
+import me.proton.android.pass.ui.create.login.CreateLogin
+import me.proton.android.pass.ui.create.login.UpdateLogin
 import me.proton.android.pass.ui.create.note.CreateNoteView
 import me.proton.android.pass.ui.create.note.UpdateNoteView
 import me.proton.android.pass.ui.create.password.CreatePasswordView
@@ -96,7 +96,7 @@ private fun NavGraphBuilder.crudNavigation(
     val onUpClick: () -> Unit = { navController.popBackStack() }
     composable(NavItem.CreateLogin) {
         val shareId = ShareId(it.findArg(NavArg.ShareId))
-        CreateLoginView(
+        CreateLogin(
             onUpClick = onUpClick,
             shareId = shareId,
             onSuccess = { itemId ->
@@ -109,7 +109,7 @@ private fun NavGraphBuilder.crudNavigation(
     composable(NavItem.EditLogin) {
         val shareId = ShareId(it.findArg(NavArg.ShareId))
         val itemId = ItemId(it.findArg(NavArg.ItemId))
-        UpdateLoginView(
+        UpdateLogin(
             onUpClick = onUpClick,
             shareId = shareId,
             itemId = itemId,

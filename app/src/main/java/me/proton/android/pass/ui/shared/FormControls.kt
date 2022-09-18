@@ -40,7 +40,8 @@ fun ProtonFormInput(
     trailingIcon: @Composable (() -> Unit)? = null,
     singleLine: Boolean = true,
     moveToNextOnEnter: Boolean = true,
-    visualTransformation: VisualTransformation = VisualTransformation.None
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    isError: Boolean = false
 ) {
     Column(modifier = modifier) {
         ProtonTextTitle(title)
@@ -52,7 +53,8 @@ fun ProtonFormInput(
             singleLine = singleLine,
             visualTransformation = visualTransformation,
             moveToNextOnEnter = moveToNextOnEnter,
-            modifier = Modifier.padding(top = 8.dp)
+            modifier = Modifier.padding(top = 8.dp),
+            isError = isError
         )
         if (required) {
             Text(
@@ -92,7 +94,8 @@ fun ProtonTextField(
     singleLine: Boolean = true,
     moveToNextOnEnter: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    editable: Boolean = true
+    editable: Boolean = true,
+    isError: Boolean = false
 ) {
     val maxLines = if (singleLine) {
         1
@@ -142,7 +145,8 @@ fun ProtonTextField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent
         ),
-        readOnly = !editable
+        readOnly = !editable,
+        isError = isError
     )
 }
 

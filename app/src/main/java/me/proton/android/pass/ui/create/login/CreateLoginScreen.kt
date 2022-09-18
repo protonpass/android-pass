@@ -6,12 +6,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,6 +25,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,21 +46,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.android.pass.R
+import me.proton.android.pass.ui.create.login.LoginItemValidationErrors.BlankTitle
 import me.proton.android.pass.ui.shared.CrossBackIcon
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.android.pass.ui.shared.ProtonFormInput
 import me.proton.android.pass.ui.shared.ProtonTextField
 import me.proton.android.pass.ui.shared.ProtonTextTitle
 import me.proton.android.pass.ui.shared.TopBarTitleView
+import me.proton.android.pass.ui.shared.uievents.IsLoadingState
 import me.proton.core.compose.component.ProtonOutlinedButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 import me.proton.core.pass.presentation.PasswordGenerator
-
-internal typealias OnTextChange = (String) -> Unit
 
 internal interface OnWebsiteChange {
     val onWebsiteValueChanged: (String, Int) -> Unit
@@ -70,20 +70,22 @@ internal interface OnWebsiteChange {
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
-fun CreateLoginView(
+fun CreateLogin(
     onUpClick: () -> Unit,
     onSuccess: (ItemId) -> Unit,
     shareId: ShareId,
-    viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
-    val viewState by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(viewModel.initialViewState)
+    val viewModel = hiltViewModel<CreateLoginViewModel>()
+    val uiState by viewModel.loginUiState.collectAsState()
     val onWebsiteChange = object : OnWebsiteChange {
-        override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int -> viewModel.onWebsiteChange(value, idx) }
+        override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int ->
+            viewModel.onWebsiteChange(value, idx)
+        }
         override val onAddWebsite: () -> Unit = { viewModel.onAddWebsite() }
         override val onRemoveWebsite: (Int) -> Unit = { idx: Int -> viewModel.onRemoveWebsite(idx) }
     }
-    LoginView(
-        viewState = viewState,
+    LoginContent(
+        uiState = uiState,
         topBarTitle = R.string.title_create_login,
         topBarActionName = R.string.action_save,
         onUpClick = onUpClick,
@@ -100,7 +102,7 @@ fun CreateLoginView(
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
-fun UpdateLoginView(
+fun UpdateLogin(
     onUpClick: () -> Unit,
     onSuccess: (ItemId) -> Unit,
     shareId: ShareId,
@@ -109,14 +111,16 @@ fun UpdateLoginView(
 ) {
     viewModel.setItem(shareId, itemId)
 
-    val viewState by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(viewModel.initialViewState)
+    val uiState by viewModel.loginUiState.collectAsState()
     val onWebsiteChange = object : OnWebsiteChange {
-        override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int -> viewModel.onWebsiteChange(value, idx) }
+        override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int ->
+            viewModel.onWebsiteChange(value, idx)
+        }
         override val onAddWebsite: () -> Unit = { viewModel.onAddWebsite() }
         override val onRemoveWebsite: (Int) -> Unit = { idx: Int -> viewModel.onRemoveWebsite(idx) }
     }
-    LoginView(
-        viewState = viewState,
+    LoginContent(
+        uiState = uiState,
         topBarTitle = R.string.title_edit_login,
         topBarActionName = R.string.action_save,
         onUpClick = onUpClick,
@@ -132,18 +136,18 @@ fun UpdateLoginView(
 
 @ExperimentalComposeUiApi
 @Composable
-private fun LoginView(
+private fun LoginContent(
     @StringRes topBarTitle: Int,
     @StringRes topBarActionName: Int,
-    viewState: BaseLoginViewModel.ViewState,
+    uiState: CreateUpdateLoginUiState,
     onUpClick: () -> Unit,
     onSuccess: (ItemId) -> Unit,
     onSubmit: () -> Unit,
-    onTitleChange: OnTextChange,
-    onUsernameChange: OnTextChange,
-    onPasswordChange: OnTextChange,
+    onTitleChange: (String) -> Unit,
+    onUsernameChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
     onWebsiteChange: OnWebsiteChange,
-    onNoteChange: OnTextChange
+    onNoteChange: (String) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     Scaffold(
@@ -170,35 +174,38 @@ private fun LoginView(
             )
         }
     ) { padding ->
-        if (viewState.state == BaseLoginViewModel.State.Loading) {
+        if (uiState.isLoadingState == IsLoadingState.Loading) {
             LoadingDialog()
         }
-        CreateLoginItemScreen(
-            state = viewState.modelState,
+        LoginItemForm(
+            loginItem = uiState.loginItem,
             modifier = Modifier.padding(padding),
             onTitleChange = onTitleChange,
+            onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             onUsernameChange = onUsernameChange,
             onPasswordChange = onPasswordChange,
             onWebsiteChange = onWebsiteChange,
             onNoteChange = onNoteChange
         )
-        when (val state = viewState.state) {
-            is BaseLoginViewModel.State.Error -> Text(text = "something went boom")
-            is BaseLoginViewModel.State.Success -> onSuccess(state.itemId)
-            else -> {}
+        LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {
+            val isItemSaved = uiState.isItemSaved
+            if (isItemSaved is ItemSavedState.Success) {
+                onSuccess(isItemSaved.itemId)
+            }
         }
     }
 }
 
 @Composable
-private fun CreateLoginItemScreen(
+private fun LoginItemForm(
     modifier: Modifier = Modifier,
-    state: BaseLoginViewModel.ModelState,
-    onTitleChange: OnTextChange,
-    onUsernameChange: OnTextChange,
-    onPasswordChange: OnTextChange,
+    loginItem: LoginItem,
+    onTitleChange: (String) -> Unit,
+    onTitleRequiredError: Boolean,
+    onUsernameChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
     onWebsiteChange: OnWebsiteChange,
-    onNoteChange: OnTextChange
+    onNoteChange: (String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -207,17 +214,21 @@ private fun CreateLoginItemScreen(
             .padding(16.dp)
     ) {
 
-        TitleInput(value = state.title, onChange = onTitleChange)
+        TitleInput(
+            value = loginItem.title,
+            onChange = onTitleChange,
+            onTitleRequiredError = onTitleRequiredError
+        )
         UsernameInput(
-            value = state.username,
+            value = loginItem.username,
             onChange = onUsernameChange,
             onGenerateAliasClick = {}
         )
-        PasswordInput(value = state.password, onChange = onPasswordChange)
+        PasswordInput(value = loginItem.password, onChange = onPasswordChange)
         Spacer(modifier = Modifier.height(20.dp))
         GeneratePasswordButton(onPasswordGenerated = { onPasswordChange(it) })
-        WebsitesSection(websites = state.websiteAddresses, onWebsitesChange = onWebsiteChange)
-        NoteInput(value = state.note, onChange = onNoteChange)
+        WebsitesSection(websites = loginItem.websiteAddresses, onWebsitesChange = onWebsiteChange)
+        NoteInput(value = loginItem.note, onChange = onNoteChange)
     }
 }
 
@@ -301,14 +312,15 @@ private fun WebsitesSection(
 }
 
 @Composable
-private fun TitleInput(value: String, onChange: (String) -> Unit) {
+private fun TitleInput(value: String, onChange: (String) -> Unit, onTitleRequiredError: Boolean) {
     ProtonFormInput(
         title = R.string.field_title_title,
         placeholder = R.string.field_title_hint,
         value = value,
         onChange = onChange,
         required = true,
-        modifier = Modifier.padding(top = 8.dp)
+        modifier = Modifier.padding(top = 8.dp),
+        isError = onTitleRequiredError
     )
 }
 

@@ -13,12 +13,12 @@ import me.proton.core.pass.domain.ItemId
 
 abstract class BaseLoginViewModel : ViewModel() {
 
-    internal val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
-    internal val isLoadingState: MutableStateFlow<IsLoadingState> =
+    protected val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
+    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
-    internal val isItemSavedState: MutableStateFlow<ItemSavedState> =
+    protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
-    internal val loginItemValidationErrorsState: MutableStateFlow<List<LoginItemValidationErrors>> =
+    protected val loginItemValidationErrorsState: MutableStateFlow<List<LoginItemValidationErrors>> =
         MutableStateFlow(emptyList())
 
     val loginUiState: StateFlow<CreateUpdateLoginUiState> = combine(

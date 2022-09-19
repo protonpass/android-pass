@@ -211,6 +211,7 @@ dependencies {
     debugImplementation(Dependencies.appDebug)
     kapt(Dependencies.appAnnotationProcessors)
     testImplementation(Dependencies.testLibs)
+    testImplementation(project(":passwordManager:test"))
     androidTestImplementation(Dependencies.androidTestLibs)
 }
 

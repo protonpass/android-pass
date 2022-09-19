@@ -61,7 +61,7 @@ class TrashScreenViewModel @Inject constructor(
         )
 
     val uiState: StateFlow<TrashUiState> = observeTrashedItems()
-        .map { items -> items.map { it.toUiModel(cryptoContext) }}
+        .map { items -> items.map { it.toUiModel(cryptoContext) } }
         .map { TrashUiState.Content(it) }
         .stateIn(
             scope = viewModelScope,

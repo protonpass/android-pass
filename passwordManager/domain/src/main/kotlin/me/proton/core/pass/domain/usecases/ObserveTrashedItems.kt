@@ -21,7 +21,7 @@ class ObserveTrashedItems @Inject constructor(
         .flatMapLatest { userManager.observeUser(it) }
         .distinctUntilChanged()
 
-    operator fun invoke() : Flow<List<Item>> = getCurrentUserIdFlow
+    operator fun invoke(): Flow<List<Item>> = getCurrentUserIdFlow
         .filterNotNull()
         .flatMapLatest { user ->
             observeItems(user.userId, ShareSelection.AllShares, ItemState.Trashed)

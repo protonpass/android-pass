@@ -73,7 +73,7 @@ internal interface OnWebsiteChange {
 fun CreateLogin(
     onUpClick: () -> Unit,
     onSuccess: (ItemId) -> Unit,
-    shareId: ShareId,
+    shareId: ShareId
 ) {
     val viewModel = hiltViewModel<CreateLoginViewModel>()
     val uiState by viewModel.loginUiState.collectAsState()

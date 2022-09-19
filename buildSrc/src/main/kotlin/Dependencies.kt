@@ -198,6 +198,8 @@ object Dependencies {
 
     // region Test
     val testLibs = mutableListOf<String>().apply {
+        add(CashApp.turbine)
+        add(Google.truth)
         add(Kotlin.test)
         add(KotlinX.coroutinesTest)
         add(Junit.junit)

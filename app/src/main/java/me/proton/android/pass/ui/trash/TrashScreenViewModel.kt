@@ -54,7 +54,8 @@ class TrashScreenViewModel @Inject constructor(
                 BuildConfig.VERSION_NAME,
                 currentUser = user
             )
-        }.stateIn(
+        }
+        .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = initialNavDrawerState

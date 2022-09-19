@@ -1,0 +1,16 @@
+package me.proton.core.pass.di.dagger
+
+import dagger.Binds
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
+import me.proton.core.pass.domain.usecases.CreateItem
+import me.proton.core.pass.domain.usecases.CreateItemImpl
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class DomainModule {
+
+    @Binds
+    abstract fun bindCreateItem(createItemImpl: CreateItemImpl): CreateItem
+}

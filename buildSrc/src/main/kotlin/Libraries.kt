@@ -89,6 +89,10 @@ object AndroidX {
     }
 }
 
+object CashApp {
+    const val turbine = "app.cash.turbine:turbine:0.10.0"
+}
+
 object Coil {
     val compose = "io.coil-kt:coil-compose:${Versions.Coil.compose}"
 }
@@ -98,6 +102,10 @@ object Dagger {
 
     const val hiltAndroid = "com.google.dagger:hilt-android:$version"
     const val hiltDaggerCompiler = "com.google.dagger:hilt-compiler:$version"
+}
+
+object Google {
+    const val truth = "com.google.truth:truth:1.1.3"
 }
 
 object JakeWharton {

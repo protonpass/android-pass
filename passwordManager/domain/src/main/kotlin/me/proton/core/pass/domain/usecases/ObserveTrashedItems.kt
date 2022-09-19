@@ -14,7 +14,7 @@ import javax.inject.Inject
 class ObserveTrashedItems @Inject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager,
-    private val observeItems: ObserveItems,
+    private val observeItems: ObserveItems
 ) {
     private val getCurrentUserIdFlow = accountManager.getPrimaryUserId()
         .filterNotNull()

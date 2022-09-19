@@ -50,7 +50,7 @@ fun LauncherScreen(
                 navigation = homeScreenNavigation
             )
             NavigationDrawerSection.Trash -> TrashScreen(
-                navDrawerNavigation = events,
+                navDrawerNavigation = events
             )
             NavigationDrawerSection.Help -> HelpScreen(
                 navDrawerNavigation = events,

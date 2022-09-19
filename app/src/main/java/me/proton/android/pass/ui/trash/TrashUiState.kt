@@ -5,9 +5,10 @@ import me.proton.core.pass.presentation.components.model.ItemUiModel
 
 @Immutable
 sealed class TrashUiState {
-    object Loading: TrashUiState()
+    object Loading : TrashUiState()
     data class Content(
         val items: List<ItemUiModel>,
-    ): TrashUiState()
-    data class Error(val message: String): TrashUiState()
+    ) : TrashUiState()
+
+    data class Error(val message: String) : TrashUiState()
 }

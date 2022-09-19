@@ -3,6 +3,7 @@ package me.proton.core.pass.data.crypto
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.Armored
 
+@Suppress("UnnecessaryAbstractClass")
 abstract class BaseCryptoOperation constructor(
     private val cryptoContext: CryptoContext
 ) {

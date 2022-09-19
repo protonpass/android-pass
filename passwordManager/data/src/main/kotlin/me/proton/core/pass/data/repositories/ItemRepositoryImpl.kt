@@ -60,10 +60,6 @@ class ItemRepositoryImpl @Inject constructor(
     private val openItem: OpenItem
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
-    companion object {
-        const val MAX_TRASH_ITEMS_PER_REQUEST = 50
-    }
-
     override suspend fun createItem(
         userId: UserId,
         share: Share,
@@ -127,9 +123,19 @@ class ItemRepositoryImpl @Inject constructor(
 
         return withUserAddress(userId) { userAddress ->
             val vaultKey =
-                vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
+                vaultKeyRepository.getVaultKeyById(
+                    userAddress,
+                    share.id,
+                    share.signingKey,
+                    keyPacket.rotationId
+                )
             val itemKey =
-                vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, keyPacket.rotationId)
+                vaultKeyRepository.getItemKeyById(
+                    userAddress,
+                    share.id,
+                    share.signingKey,
+                    keyPacket.rotationId
+                )
 
             val body = updateItem.updateItem(
                 vaultKey,
@@ -184,7 +190,8 @@ class ItemRepositoryImpl @Inject constructor(
         val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
         if (item.state == ItemState.Trashed.value) return
 
-        val body = TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
+        val body =
+            TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
         val response = remoteItemDataSource.sendToTrash(userId, shareId, body)
 
         database.inTransaction {
@@ -198,6 +205,7 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
+    @Suppress("SwallowedException")
     override suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
         // Optimistically update the local database
         val originalItem = database.inTransaction {
@@ -212,10 +220,14 @@ class ItemRepositoryImpl @Inject constructor(
 
         // Perform the network request
         try {
-            val body = TrashItemsRequest(listOf(TrashItemRevision(
-                itemId = originalItem.id,
-                revision = originalItem.revision
-            )))
+            val body = TrashItemsRequest(
+                listOf(
+                    TrashItemRevision(
+                        itemId = originalItem.id,
+                        revision = originalItem.revision
+                    )
+                )
+            )
             remoteItemDataSource.untrash(userId, shareId, body)
         } catch (e: ApiException) {
             // In case of an exception, restore the old version
@@ -232,10 +244,16 @@ class ItemRepositoryImpl @Inject constructor(
                     val shareId = ShareId(entry.key)
                     val shareItems = entry.value
                     shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).forEach { items ->
-                        val body = TrashItemsRequest(items.map { TrashItemRevision(it.id, it.revision) })
+                        val body =
+                            TrashItemsRequest(items.map { TrashItemRevision(it.id, it.revision) })
                         remoteItemDataSource.delete(userId, shareId, body)
                         database.inTransaction {
-                            items.forEach { item -> localItemDataSource.delete(shareId, ItemId(item.id)) }
+                            items.forEach { item ->
+                                localItemDataSource.delete(
+                                    shareId,
+                                    ItemId(item.id)
+                                )
+                            }
                         }
                     }
                 }
@@ -247,7 +265,8 @@ class ItemRepositoryImpl @Inject constructor(
         val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
         if (item.state != ItemState.Trashed.value) return
 
-        val body = TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
+        val body =
+            TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
         remoteItemDataSource.delete(userId, shareId, body)
         localItemDataSource.delete(shareId, itemId)
     }
@@ -259,7 +278,12 @@ class ItemRepositoryImpl @Inject constructor(
         val shareIds = when (shareSelection) {
             is ShareSelection.AllShares -> shareRepository.observeShares(userAddress.userId).first()
             is ShareSelection.Share -> {
-                val share = requireNotNull(shareRepository.getById(userAddress.userId, shareSelection.shareId))
+                val share = requireNotNull(
+                    shareRepository.getById(
+                        userAddress.userId,
+                        shareSelection.shareId
+                    )
+                )
                 listOf(share)
             }
         }
@@ -281,19 +305,40 @@ class ItemRepositoryImpl @Inject constructor(
             .distinct()
             .associateWith {
                 val publicAddress =
-                    keyRepository.getPublicAddress(userAddress.userId, it, source = Source.LocalIfAvailable)
+                    keyRepository.getPublicAddress(
+                        userAddress.userId,
+                        it,
+                        source = Source.LocalIfAvailable
+                    )
                 publicAddress.keys.publicKeyRing().keys
             }
 
         return items.map { item ->
             val verifyKeys = requireNotNull(userKeys[item.signatureEmail])
             val vaultKey =
-                vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, item.rotationId)
+                vaultKeyRepository.getVaultKeyById(
+                    userAddress,
+                    share.id,
+                    share.signingKey,
+                    item.rotationId
+                )
             val itemKey =
-                vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, item.rotationId)
+                vaultKeyRepository.getItemKeyById(
+                    userAddress,
+                    share.id,
+                    share.signingKey,
+                    item.rotationId
+                )
 
             val entity =
-                itemResponseToEntity(userAddress, item, share, verifyKeys, listOf(vaultKey), listOf(itemKey))
+                itemResponseToEntity(
+                    userAddress,
+                    item,
+                    share,
+                    verifyKeys,
+                    listOf(vaultKey),
+                    listOf(itemKey)
+                )
             localItemDataSource.upsertItem(entity)
             entityToDomain(entity)
         }
@@ -340,4 +385,8 @@ class ItemRepositoryImpl @Inject constructor(
             note = entity.encryptedNote,
             content = entity.encryptedContent
         )
+
+    companion object {
+        const val MAX_TRASH_ITEMS_PER_REQUEST = 50
+    }
 }

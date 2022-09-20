@@ -1,5 +1,9 @@
 // Necessary imports for the protobuf section to work
-import com.google.protobuf.gradle.*
+import com.google.protobuf.gradle.generateProtoTasks
+import com.google.protobuf.gradle.id
+import com.google.protobuf.gradle.plugins
+import com.google.protobuf.gradle.protobuf
+import com.google.protobuf.gradle.protoc
 import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
@@ -61,7 +65,7 @@ android {
 }
 
 dependencies {
-    implementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
+    compileOnly(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
     implementation(Dependencies.passDataLibs)
     kapt(Dependencies.passDataAnnotationProcessors)
     implementation(project(":passwordManager:domain"))

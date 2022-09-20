@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -eu
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:scripts/ci::g')
+
+KEYSTORE_DIR="${REPO_ROOT}/keystore"
+
+mkdir -p "${KEYSTORE_DIR}"
+echo "${RELEASE_KEYSTORE_B64}" | base64 -d > "${KEYSTORE_DIR}/ProtonMail.keystore"
+echo "${RELEASE_KEYSTORE_PRIVATE_PROPERTIES_B64}" | base64 -d > "${REPO_ROOT}/private.properties"

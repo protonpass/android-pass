@@ -11,13 +11,13 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
-import me.proton.android.pass.ui.create.alias.CreateAliasView
-import me.proton.android.pass.ui.create.alias.UpdateAliasView
+import me.proton.android.pass.ui.create.alias.CreateAlias
+import me.proton.android.pass.ui.create.alias.UpdateAlias
 import me.proton.android.pass.ui.create.login.CreateLogin
 import me.proton.android.pass.ui.create.login.UpdateLogin
-import me.proton.android.pass.ui.create.note.CreateNoteView
-import me.proton.android.pass.ui.create.note.UpdateNoteView
-import me.proton.android.pass.ui.create.password.CreatePasswordView
+import me.proton.android.pass.ui.create.note.CreateNote
+import me.proton.android.pass.ui.create.note.UpdateNote
+import me.proton.android.pass.ui.create.password.CreatePassword
 import me.proton.android.pass.ui.detail.ItemDetailScreen
 import me.proton.android.pass.ui.home.HomeScreenNavigation
 import me.proton.android.pass.ui.launcher.LauncherScreen
@@ -122,7 +122,7 @@ private fun NavGraphBuilder.crudNavigation(
     }
     composable(NavItem.CreateNote) {
         val shareId = ShareId(it.findArg(NavArg.ShareId))
-        CreateNoteView(
+        CreateNote(
             onUpClick = onUpClick,
             shareId = shareId,
             onSuccess = { itemId ->
@@ -135,7 +135,7 @@ private fun NavGraphBuilder.crudNavigation(
     composable(NavItem.EditNote) {
         val shareId = ShareId(it.findArg(NavArg.ShareId))
         val itemId = ItemId(it.findArg(NavArg.ItemId))
-        UpdateNoteView(
+        UpdateNote(
             onUpClick = onUpClick,
             shareId = shareId,
             itemId = itemId,
@@ -148,7 +148,7 @@ private fun NavGraphBuilder.crudNavigation(
     }
     composable(NavItem.CreateAlias) {
         val shareId = ShareId(it.findArg(NavArg.ShareId))
-        CreateAliasView(
+        CreateAlias(
             onUpClick = onUpClick,
             shareId = shareId,
             onSuccess = { itemId ->
@@ -161,7 +161,7 @@ private fun NavGraphBuilder.crudNavigation(
     composable(NavItem.EditAlias) {
         val shareId = ShareId(it.findArg(NavArg.ShareId))
         val itemId = ItemId(it.findArg(NavArg.ItemId))
-        UpdateAliasView(
+        UpdateAlias(
             onUpClick = onUpClick,
             shareId = shareId,
             itemId = itemId,
@@ -173,7 +173,7 @@ private fun NavGraphBuilder.crudNavigation(
         )
     }
     composable(NavItem.CreatePassword) {
-        CreatePasswordView(
+        CreatePassword(
             onUpClick = onUpClick,
             onConfirm = {}
         )

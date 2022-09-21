@@ -3,52 +3,50 @@ package me.proton.android.pass.ui.create.note
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.pass.domain.ItemContents
-import me.proton.core.pass.domain.ItemId
+import me.proton.android.pass.ui.shared.uievents.IsLoadingState
+import me.proton.android.pass.ui.shared.uievents.ItemSavedState
 
 abstract class BaseNoteViewModel : ViewModel() {
 
-    val initialViewState = ViewState(
-        state = State.Idle,
-        modelState = ModelState(
-            title = "",
-            note = ""
+    protected val noteItemState: MutableStateFlow<NoteItem> = MutableStateFlow(NoteItem.Empty)
+    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
+    protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
+        MutableStateFlow(ItemSavedState.Unknown)
+    protected val noteItemValidationErrorsState: MutableStateFlow<Set<NoteItemValidationErrors>> =
+        MutableStateFlow(emptySet())
+
+    val noteUiState: StateFlow<CreateUpdateNoteUiState> = combine(
+        noteItemState,
+        isLoadingState,
+        isItemSavedState,
+        noteItemValidationErrorsState
+    ) { noteItem, isLoading, isItemSaved, noteItemValidationErrors ->
+        CreateUpdateNoteUiState(
+            noteItem = noteItem,
+            errorList = noteItemValidationErrors,
+            isLoadingState = isLoading,
+            isItemSaved = isItemSaved
         )
-    )
-    val viewState: MutableStateFlow<ViewState> = MutableStateFlow(initialViewState)
+    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = CreateUpdateNoteUiState.Initial
+        )
 
     fun onTitleChange(value: String) = viewModelScope.launch {
-        viewState.value =
-            viewState.value.copy(modelState = viewState.value.modelState.copy(title = value))
+        noteItemState.value = noteItemState.value.copy(title = value)
+        noteItemValidationErrorsState.value = noteItemValidationErrorsState.value.toMutableSet()
+            .apply { remove(NoteItemValidationErrors.BlankTitle) }
     }
 
     fun onNoteChange(value: String) = viewModelScope.launch {
-        viewState.value =
-            viewState.value.copy(modelState = viewState.value.modelState.copy(note = value))
-    }
-
-    data class ModelState(
-        val title: String,
-        val note: String
-    ) {
-        fun toItemContents(): ItemContents {
-            return ItemContents.Note(
-                title = title,
-                note = note
-            )
-        }
-    }
-
-    data class ViewState(
-        val state: State,
-        val modelState: ModelState
-    )
-
-    sealed class State {
-        object Loading : State()
-        object Idle : State()
-        data class Error(val message: String) : State()
-        data class Success(val itemId: ItemId) : State()
+        noteItemState.value = noteItemState.value.copy(note = value)
     }
 }

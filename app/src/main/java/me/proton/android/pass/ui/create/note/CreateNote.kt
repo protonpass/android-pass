@@ -9,7 +9,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.android.pass.R
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -20,9 +19,9 @@ internal fun CreateNote(
     shareId: ShareId
 ) {
     val viewModel: CreateNoteViewModel = hiltViewModel()
-    val viewState by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(viewModel.initialViewState)
+    val noteUiState by viewModel.noteUiState.collectAsState()
     NoteContent(
-        viewState = viewState,
+        uiState = noteUiState,
         topBarTitle = R.string.title_create_note,
         topBarActionName = R.string.action_save,
         onUpClick = onUpClick,

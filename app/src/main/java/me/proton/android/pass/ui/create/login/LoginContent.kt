@@ -18,6 +18,7 @@ import me.proton.android.pass.ui.shared.CrossBackIcon
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.android.pass.ui.shared.uievents.IsLoadingState
+import me.proton.android.pass.ui.shared.uievents.ItemSavedState
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemId

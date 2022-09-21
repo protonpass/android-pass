@@ -29,7 +29,7 @@ enum class AliasBottomSheetContent {
 @ExperimentalMaterialApi
 @Composable
 fun BottomSheetContents(
-    modelState: BaseAliasViewModel.ModelState,
+    modelState: AliasItem,
     contentType: AliasBottomSheetContent,
     onSuffixSelect: (AliasSuffix) -> Unit,
     onMailboxSelect: (AliasMailbox) -> Unit

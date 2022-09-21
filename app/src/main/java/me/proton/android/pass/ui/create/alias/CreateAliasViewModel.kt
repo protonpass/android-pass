@@ -2,14 +2,16 @@ package me.proton.android.pass.ui.create.alias
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.launch
+import me.proton.android.pass.ui.shared.uievents.IsLoadingState
+import me.proton.android.pass.ui.shared.uievents.ItemSavedState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.pass.domain.AliasOptions
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.entity.NewAlias
 import me.proton.core.pass.domain.repositories.AliasRepository
 import me.proton.core.pass.domain.usecases.CreateAlias
+import javax.inject.Inject
 
 @HiltViewModel
 class CreateAliasViewModel @Inject constructor(
@@ -22,40 +24,43 @@ class CreateAliasViewModel @Inject constructor(
 
     fun onStart(shareId: ShareId) = viewModelScope.launch {
         if (_aliasOptions != null) return@launch
-
-        viewState.value = viewState.value.copy(state = State.Loading)
+        isLoadingState.value = IsLoadingState.Loading
         withUserId { userId ->
             val aliasOptions = aliasRepository.getAliasOptions(userId, shareId)
             _aliasOptions = aliasOptions
 
-            viewState.value = viewState.value.copy(
-                state = State.Idle,
-                modelState = viewState.value.modelState.copy(
-                    aliasOptions = aliasOptions,
-                    selectedSuffix = aliasOptions.suffixes.first(),
-                    selectedMailbox = aliasOptions.mailboxes.first()
-                )
+            isLoadingState.value = IsLoadingState.NotLoading
+            aliasItemState.value = aliasItemState.value.copy(
+                aliasOptions = aliasOptions,
+                selectedSuffix = aliasOptions.suffixes.first(),
+                selectedMailbox = aliasOptions.mailboxes.first()
             )
         }
     }
 
     fun createAlias(shareId: ShareId) = viewModelScope.launch {
-        val modelState = viewState.value.modelState
-        if (modelState.selectedMailbox == null || modelState.selectedSuffix == null || modelState.alias.isBlank()) return@launch
+        val aliasItem = aliasItemState.value
+        if (aliasItem.selectedMailbox == null || aliasItem.selectedSuffix == null) return@launch
 
-        viewState.value = viewState.value.copy(state = State.Loading)
-        withUserId { userId ->
-            val item = createAlias(
-                userId, shareId,
-                NewAlias(
-                    title = modelState.title,
-                    note = modelState.note,
-                    prefix = modelState.alias,
-                    suffix = modelState.selectedSuffix,
-                    mailbox = modelState.selectedMailbox
+        val aliasItemValidationErrors = aliasItem.validate()
+        if (aliasItemValidationErrors.isNotEmpty()) {
+            aliasItemValidationErrorsState.value = aliasItemValidationErrors
+        } else {
+            isLoadingState.value = IsLoadingState.Loading
+            withUserId { userId ->
+                val item = createAlias(
+                    userId, shareId,
+                    NewAlias(
+                        title = aliasItem.title,
+                        note = aliasItem.note,
+                        prefix = aliasItem.alias,
+                        suffix = aliasItem.selectedSuffix,
+                        mailbox = aliasItem.selectedMailbox
+                    )
                 )
-            )
-            viewState.value = viewState.value.copy(state = State.Success(item.id))
+                isLoadingState.value = IsLoadingState.NotLoading
+                isItemSavedState.value = ItemSavedState.Success(item.id)
+            }
         }
     }
 }

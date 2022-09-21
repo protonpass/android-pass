@@ -5,7 +5,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 internal fun MailboxSelector(
-    state: BaseAliasViewModel.ModelState,
+    state: AliasItem,
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {

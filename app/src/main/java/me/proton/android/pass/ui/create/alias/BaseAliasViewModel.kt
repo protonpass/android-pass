@@ -3,61 +3,85 @@ package me.proton.android.pass.ui.create.alias
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.android.pass.ui.shared.uievents.IsLoadingState
+import me.proton.android.pass.ui.shared.uievents.ItemSavedState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.domain.AliasMailbox
-import me.proton.core.pass.domain.AliasOptions
 import me.proton.core.pass.domain.AliasSuffix
-import me.proton.core.pass.domain.ItemContents
-import me.proton.core.pass.domain.ItemId
 
 abstract class BaseAliasViewModel(
     private val accountManager: AccountManager
 ) : ViewModel() {
 
-    val initialViewState = ViewState()
-    val viewState: MutableStateFlow<ViewState> = MutableStateFlow(initialViewState)
+    protected val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(AliasItem.Empty)
+    protected val isLoadingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
+    protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
+        MutableStateFlow(ItemSavedState.Unknown)
+    protected val aliasItemValidationErrorsState: MutableStateFlow<Set<AliasItemValidationErrors>> =
+        MutableStateFlow(emptySet())
+
+    val aliasUiState: StateFlow<CreateUpdateAliasUiState> = combine(
+        aliasItemState,
+        isLoadingState,
+        isItemSavedState,
+        aliasItemValidationErrorsState
+    ) { aliasItem, isLoading, isItemSaved, aliasItemValidationErrors ->
+        CreateUpdateAliasUiState(
+            aliasItem = aliasItem,
+            errorList = aliasItemValidationErrors,
+            isLoadingState = isLoading,
+            isItemSaved = isItemSaved
+        )
+    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = CreateUpdateAliasUiState.Initial
+        )
 
     fun onTitleChange(value: String) = viewModelScope.launch {
-        viewState.value =
-            viewState.value.copy(modelState = viewState.value.modelState.copy(title = value))
+        aliasItemState.value = aliasItemState.value.copy(title = value)
+        aliasItemValidationErrorsState.value = aliasItemValidationErrorsState.value.toMutableSet()
+            .apply { remove(AliasItemValidationErrors.BlankTitle) }
     }
 
     fun onAliasChange(value: String) = viewModelScope.launch {
         if (value.contains(" ") || value.contains("\n")) return@launch
-        viewState.value = viewState.value.copy(
-            modelState = viewState.value.modelState.copy(
+        aliasItemState.value = aliasItemState.value.copy(
+            alias = value,
+            aliasToBeCreated = getAliasToBeCreated(
                 alias = value,
-                aliasToBeCreated = getAliasToBeCreated(
-                    alias = value,
-                    suffix = viewState.value.modelState.selectedSuffix
-                )
+                suffix = aliasItemState.value.selectedSuffix
             )
         )
+        aliasItemValidationErrorsState.value = aliasItemValidationErrorsState.value.toMutableSet()
+            .apply { remove(AliasItemValidationErrors.BlankAlias) }
     }
 
     fun onNoteChange(value: String) = viewModelScope.launch {
-        viewState.value =
-            viewState.value.copy(modelState = viewState.value.modelState.copy(note = value))
+        aliasItemState.value = aliasItemState.value.copy(note = value)
     }
 
     fun onSuffixChange(suffix: AliasSuffix) = viewModelScope.launch {
-        viewState.value = viewState.value.copy(
-            modelState = viewState.value.modelState.copy(
-                selectedSuffix = suffix,
-                aliasToBeCreated = getAliasToBeCreated(
-                    alias = viewState.value.modelState.alias,
-                    suffix = suffix
-                )
+        aliasItemState.value = aliasItemState.value.copy(
+            selectedSuffix = suffix,
+            aliasToBeCreated = getAliasToBeCreated(
+                alias = aliasItemState.value.alias,
+                suffix = suffix
             )
         )
     }
 
     fun onMailboxChange(mailbox: AliasMailbox) = viewModelScope.launch {
-        viewState.value =
-            viewState.value.copy(modelState = viewState.value.modelState.copy(selectedMailbox = mailbox))
+        aliasItemState.value = aliasItemState.value.copy(selectedMailbox = mailbox)
     }
 
     protected suspend fun withUserId(block: suspend (UserId) -> Unit) {
@@ -70,34 +94,5 @@ abstract class BaseAliasViewModel(
             return "$alias${suffix.suffix}"
         }
         return null
-    }
-
-    data class ModelState(
-        val title: String = "",
-        val alias: String = "",
-        val note: String = "",
-        val aliasOptions: AliasOptions = AliasOptions(emptyList(), emptyList()),
-        val selectedSuffix: AliasSuffix? = null,
-        val selectedMailbox: AliasMailbox? = null,
-        val aliasToBeCreated: String? = null
-    ) {
-        fun toItemContents(): ItemContents {
-            return ItemContents.Alias(
-                title = title,
-                note = note
-            )
-        }
-    }
-
-    data class ViewState(
-        val state: State = State.Idle,
-        val modelState: ModelState = ModelState()
-    )
-
-    sealed class State {
-        object Loading : State()
-        object Idle : State()
-        data class Error(val message: String) : State()
-        data class Success(val itemId: ItemId) : State()
     }
 }

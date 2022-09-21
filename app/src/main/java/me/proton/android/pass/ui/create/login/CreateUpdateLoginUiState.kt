@@ -2,11 +2,12 @@ package me.proton.android.pass.ui.create.login
 
 import androidx.compose.runtime.Immutable
 import me.proton.android.pass.ui.shared.uievents.IsLoadingState
+import me.proton.android.pass.ui.shared.uievents.ItemSavedState
 
 @Immutable
 data class CreateUpdateLoginUiState(
     val loginItem: LoginItem,
-    val errorList: List<LoginItemValidationErrors>,
+    val errorList: Set<LoginItemValidationErrors>,
     val isLoadingState: IsLoadingState,
     val isItemSaved: ItemSavedState
 ) {
@@ -14,7 +15,7 @@ data class CreateUpdateLoginUiState(
         val Initial = CreateUpdateLoginUiState(
             isLoadingState = IsLoadingState.NotLoading,
             loginItem = LoginItem.Empty,
-            errorList = emptyList(),
+            errorList = emptySet(),
             isItemSaved = ItemSavedState.Unknown
         )
     }

@@ -1,110 +1,86 @@
 package me.proton.android.pass.ui.home
 
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
 import me.proton.android.pass.extension.toUiModel
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.pass.domain.ItemState
-import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.domain.ShareSelection
-import me.proton.core.pass.domain.usecases.ObserveItems
-import me.proton.core.pass.domain.usecases.ObserveShares
+import me.proton.core.pass.domain.usecases.ObserveActiveItems
+import me.proton.core.pass.domain.usecases.ObserveActiveShare
+import me.proton.core.pass.domain.usecases.ObserveCurrentUser
 import me.proton.core.pass.domain.usecases.TrashItem
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerViewState
-import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.User
+import javax.inject.Inject
 
 @ExperimentalMaterialApi
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
-    private val accountManager: AccountManager,
-    private val userManager: UserManager,
     private val trashItem: TrashItem,
-    private val observeShares: ObserveShares,
-    private val observeItems: ObserveItems
+    observeCurrentUser: ObserveCurrentUser,
+    observeActiveShare: ObserveActiveShare,
+    observeActiveItems: ObserveActiveItems
 ) : ViewModel() {
 
-    val initialViewState = getViewState(
-        user = null,
-        items = emptyList(),
-        shareId = null
+    private val currentUserFlow = observeCurrentUser().filterNotNull()
+
+    val initialNavDrawerState = NavigationDrawerViewState(
+        R.string.app_name,
+        BuildConfig.VERSION_NAME,
+        currentUser = null
     )
 
-    private val getCurrentUserIdFlow = accountManager.getPrimaryUserId()
-        .filterNotNull()
-        .flatMapLatest { userManager.observeUser(it) }
-        .distinctUntilChanged()
-
-    private val listShares = getCurrentUserIdFlow
-        .filterNotNull()
-        .flatMapLatest { user ->
-            observeShares(user.userId).map { shares ->
-                shares.firstOrNull()?.id
-            }
-        }
-        .distinctUntilChanged()
-
-    private val listItems = listShares
-        .filterNotNull()
-        .combine(getCurrentUserIdFlow.filterNotNull()) { share, user -> share to user }
-        .flatMapLatest { v ->
-            observeItems(v.second.userId, ShareSelection.Share(v.first), ItemState.Active).map { items ->
-                items.map { it.toUiModel(cryptoContext) }
-            }
-        }
-
-    val viewState: Flow<ViewState> = combine(
-        getCurrentUserIdFlow,
-        listShares,
-        listItems,
-        ::getViewState
-    )
-
-    private fun getViewState(
-        user: User?,
-        shareId: ShareId?,
-        items: List<ItemUiModel>
-    ): ViewState =
-        ViewState(
-            navigationDrawerViewState = NavigationDrawerViewState(
+    val navDrawerState: StateFlow<NavigationDrawerViewState> = currentUserFlow
+        .mapLatest { user ->
+            NavigationDrawerViewState(
                 R.string.app_name,
                 BuildConfig.VERSION_NAME,
                 currentUser = user
-            ),
+            )
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = initialNavDrawerState
+        )
+
+
+    private val listItems: Flow<List<ItemUiModel>> = observeActiveItems()
+        .mapLatest { items -> items.map { it.toUiModel(cryptoContext) } }
+
+    val viewState: Flow<HomeUiState> = combine(
+        observeActiveShare(),
+        listItems
+    ) { shareId, items ->
+        HomeUiState.Content(
             items,
             selectedShare = shareId
         )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = HomeUiState.Loading
+    )
 
     fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch {
         if (item == null) return@launch
 
-        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
+        val userId = currentUserFlow.firstOrNull()?.userId
         if (userId != null) {
             trashItem.invoke(userId, item.shareId, item.id)
         }
     }
-
-    @Immutable
-    data class ViewState(
-        val navigationDrawerViewState: NavigationDrawerViewState,
-        val items: List<ItemUiModel>,
-        val selectedShare: ShareId? = null
-    )
 }

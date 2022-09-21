@@ -48,6 +48,7 @@ import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.android.pass.ui.shared.ItemAction
 import me.proton.android.pass.ui.shared.ItemsList
+import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
@@ -59,6 +60,7 @@ import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecy
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.components.navigation.drawer.NavDrawerNavigation
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawer
+import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerViewState
 
 internal typealias OnItemClick = (ShareId, ItemId) -> Unit
 
@@ -83,17 +85,24 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     navDrawerNavigation: NavDrawerNavigation,
     navigation: HomeScreenNavigation,
-    homeViewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         requestAutofillAccessIfNeeded(context = context)
     }
 
-    val viewState by rememberFlowWithLifecycle(flow = homeViewModel.viewState)
-        .collectAsState(initial = homeViewModel.initialViewState)
-
+    val uiState by rememberFlowWithLifecycle(flow = viewModel.viewState)
+        .collectAsState(initial = HomeUiState.Loading)
+    val navDrawerState by rememberFlowWithLifecycle(flow = viewModel.navDrawerState)
+        .collectAsState(initial = viewModel.initialNavDrawerState)
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+
+    val selectedShare = if (uiState is HomeUiState.Content) {
+        (uiState as HomeUiState.Content).selectedShare
+    } else {
+        null
+    }
 
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
@@ -101,16 +110,17 @@ fun HomeScreen(
             BottomSheetContents(
                 state = bottomSheetState,
                 navigation = navigation,
-                shareId = viewState.selectedShare
+                shareId = selectedShare
             )
         }
     ) {
         HomeScreenContents(
-            viewState = viewState,
+            uiState = uiState,
             bottomSheetState = bottomSheetState,
             navDrawerNavigation = navDrawerNavigation,
+            navDrawerState = navDrawerState,
             navigation = navigation,
-            sendItemToTrash = { homeViewModel.sendItemToTrash(it) },
+            sendItemToTrash = { viewModel.sendItemToTrash(it) },
             modifier = modifier
         )
     }
@@ -120,9 +130,10 @@ fun HomeScreen(
 @ExperimentalMaterialApi
 @Composable
 private fun HomeScreenContents(
-    viewState: HomeViewModel.ViewState,
+    uiState: HomeUiState,
     bottomSheetState: ModalBottomSheetState,
     navDrawerNavigation: NavDrawerNavigation,
+    navDrawerState: NavigationDrawerViewState,
     navigation: HomeScreenNavigation,
     sendItemToTrash: (ItemUiModel) -> Unit,
     modifier: Modifier
@@ -144,7 +155,7 @@ private fun HomeScreenContents(
         drawerContent = {
             NavigationDrawer(
                 drawerState = homeScaffoldState.scaffoldState.drawerState,
-                viewState = viewState.navigationDrawerViewState,
+                viewState = navDrawerState,
                 navigation = navDrawerNavigation,
                 onSignOutClick = { confirmSignOutDialogState = true },
                 modifier = Modifier
@@ -162,26 +173,32 @@ private fun HomeScreenContents(
         }
     ) { contentPadding ->
         Box {
-            var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
-            Home(
-                items = viewState.items,
-                modifier = Modifier.padding(contentPadding),
-                onItemClick = { shareId, itemId -> navigation.toItemDetail(shareId, itemId) },
-                navigation = navigation,
-                onDeleteItemClicked = { itemToDelete = it }
-            )
-            ConfirmSignOutDialog(
-                state = confirmSignOutDialogState,
-                onDismiss = { confirmSignOutDialogState = null },
-                onConfirm = { navDrawerNavigation.onRemove(null) }
-            )
-            ConfirmItemDeletionDialog(
-                state = itemToDelete,
-                onDismiss = { itemToDelete = null },
-                title = R.string.alert_confirm_item_send_to_trash_title,
-                message = R.string.alert_confirm_item_send_to_trash_message,
-                onConfirm = sendItemToTrash
-            )
+            when (uiState) {
+                is HomeUiState.Loading -> LoadingDialog()
+                is HomeUiState.Content -> {
+                    var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
+                    Home(
+                        items = uiState.items,
+                        modifier = Modifier.padding(contentPadding),
+                        onItemClick = { shareId, itemId -> navigation.toItemDetail(shareId, itemId) },
+                        navigation = navigation,
+                        onDeleteItemClicked = { itemToDelete = it }
+                    )
+                    ConfirmSignOutDialog(
+                        state = confirmSignOutDialogState,
+                        onDismiss = { confirmSignOutDialogState = null },
+                        onConfirm = { navDrawerNavigation.onRemove(null) }
+                    )
+                    ConfirmItemDeletionDialog(
+                        state = itemToDelete,
+                        onDismiss = { itemToDelete = null },
+                        title = R.string.alert_confirm_item_send_to_trash_title,
+                        message = R.string.alert_confirm_item_send_to_trash_message,
+                        onConfirm = sendItemToTrash
+                    )
+                }
+                is HomeUiState.Error -> Text("Something went boom: ${uiState.message}")
+            }
         }
     }
 }

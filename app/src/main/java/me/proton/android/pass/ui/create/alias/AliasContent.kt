@@ -9,6 +9,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -21,25 +22,35 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
+import me.proton.android.pass.ui.create.alias.AliasItemValidationErrors.BlankAlias
+import me.proton.android.pass.ui.create.alias.AliasItemValidationErrors.BlankTitle
 import me.proton.android.pass.ui.shared.CrossBackIcon
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
+import me.proton.android.pass.ui.shared.uievents.IsLoadingState
+import me.proton.android.pass.ui.shared.uievents.ItemSavedState
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.pass.domain.AliasMailbox
+import me.proton.core.pass.domain.AliasSuffix
 import me.proton.core.pass.domain.ItemId
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
 internal fun AliasContent(
-    viewState: BaseAliasViewModel.ViewState,
+    uiState: CreateUpdateAliasUiState,
     @StringRes topBarTitle: Int,
+    canEdit: Boolean,
     onUpClick: () -> Unit,
     onSubmit: () -> Unit,
-    viewModel: BaseAliasViewModel,
     onSuccess: (ItemId) -> Unit,
-    canEdit: Boolean
+    onSuffixChange: (AliasSuffix) -> Unit,
+    onMailboxChange: (AliasMailbox) -> Unit,
+    onTitleChange: (String) -> Unit,
+    onNoteChange: (String) -> Unit,
+    onAliasChange: (String) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
@@ -54,18 +65,18 @@ internal fun AliasContent(
         sheetState = bottomSheetState,
         sheetContent = {
             BottomSheetContents(
-                modelState = viewState.modelState,
+                modelState = uiState.aliasItem,
                 contentType = bottomSheetContentType,
                 onSuffixSelect = { suffix ->
                     scope.launch {
                         bottomSheetState.hide()
-                        viewModel.onSuffixChange(suffix)
+                        onSuffixChange(suffix)
                     }
                 },
                 onMailboxSelect = { mailbox ->
                     scope.launch {
                         bottomSheetState.hide()
-                        viewModel.onMailboxChange(mailbox)
+                        onMailboxChange(mailbox)
                     }
                 }
             )
@@ -95,13 +106,15 @@ internal fun AliasContent(
                 )
             }
         ) { padding ->
-            if (viewState.state == BaseAliasViewModel.State.Loading) {
+            if (uiState.isLoadingState == IsLoadingState.Loading) {
                 LoadingDialog()
             }
             CreateAliasForm(
-                state = viewState.modelState,
+                state = uiState.aliasItem,
                 canEdit = canEdit,
                 modifier = Modifier.padding(padding),
+                onTitleRequiredError = uiState.errorList.contains(BlankTitle),
+                onAliasRequiredError = uiState.errorList.contains(BlankAlias),
                 onSuffixClick = {
                     scope.launch {
                         if (canEdit) {
@@ -118,14 +131,15 @@ internal fun AliasContent(
                         }
                     }
                 },
-                onTitleChange = { viewModel.onTitleChange(it) },
-                onNoteChange = { viewModel.onNoteChange(it) },
-                onAliasChange = { viewModel.onAliasChange(it) }
+                onTitleChange = { onTitleChange(it) },
+                onNoteChange = { onNoteChange(it) },
+                onAliasChange = { onAliasChange(it) }
             )
-            when (val state = viewState.state) {
-                is BaseAliasViewModel.State.Error -> Text(text = "something went boom")
-                is BaseAliasViewModel.State.Success -> onSuccess(state.itemId)
-                else -> {}
+            LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {
+                val isItemSaved = uiState.isItemSaved
+                if (isItemSaved is ItemSavedState.Success) {
+                    onSuccess(isItemSaved.itemId)
+                }
             }
         }
     }

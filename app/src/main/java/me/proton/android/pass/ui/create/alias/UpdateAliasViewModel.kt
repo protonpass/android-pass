@@ -2,8 +2,8 @@ package me.proton.android.pass.ui.create.alias
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.launch
+import me.proton.android.pass.ui.shared.uievents.IsLoadingState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
@@ -16,6 +16,7 @@ import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.repositories.AliasRepository
 import me.proton.core.pass.domain.repositories.ItemRepository
+import javax.inject.Inject
 
 @HiltViewModel
 class UpdateAliasViewModel @Inject constructor(
@@ -30,7 +31,7 @@ class UpdateAliasViewModel @Inject constructor(
     fun onStart(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         if (_item != null) return@launch
 
-        viewState.value = viewState.value.copy(state = State.Loading)
+        isLoadingState.value = IsLoadingState.Loading
         withUserId { userId ->
             val retrievedItem = itemRepository.getById(userId, shareId, itemId)
             _item = retrievedItem
@@ -49,17 +50,15 @@ class UpdateAliasViewModel @Inject constructor(
                 prefix += parts[idx]
             }
 
-            viewState.value = viewState.value.copy(
-                state = State.Idle,
-                modelState = viewState.value.modelState.copy(
-                    title = retrievedItem.title.decrypt(cryptoContext.keyStoreCrypto),
-                    note = retrievedItem.note.decrypt(cryptoContext.keyStoreCrypto),
-                    alias = prefix,
-                    aliasOptions = AliasOptions(emptyList(), emptyList()),
-                    selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
-                    selectedMailbox = AliasMailbox(1, mailboxes.first()),
-                    aliasToBeCreated = email
-                )
+            isLoadingState.value = IsLoadingState.NotLoading
+            aliasItemState.value = aliasItemState.value.copy(
+                title = retrievedItem.title.decrypt(cryptoContext.keyStoreCrypto),
+                note = retrievedItem.note.decrypt(cryptoContext.keyStoreCrypto),
+                alias = prefix,
+                aliasOptions = AliasOptions(emptyList(), emptyList()),
+                selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
+                selectedMailbox = AliasMailbox(1, mailboxes.first()),
+                aliasToBeCreated = email
             )
         }
     }

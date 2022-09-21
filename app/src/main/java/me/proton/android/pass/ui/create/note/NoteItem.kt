@@ -1,7 +1,9 @@
 package me.proton.android.pass.ui.create.note
 
+import androidx.compose.runtime.Immutable
 import me.proton.core.pass.domain.ItemContents
 
+@Immutable
 data class NoteItem(
     val title: String,
     val note: String

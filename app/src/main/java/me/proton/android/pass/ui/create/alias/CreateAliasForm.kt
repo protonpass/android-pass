@@ -15,8 +15,10 @@ import me.proton.android.pass.ui.shared.form.TitleInput
 @Composable
 internal fun CreateAliasForm(
     modifier: Modifier = Modifier,
-    state: BaseAliasViewModel.ModelState,
+    state: AliasItem,
     canEdit: Boolean,
+    onTitleRequiredError: Boolean,
+    onAliasRequiredError: Boolean,
     onTitleChange: (String) -> Unit,
     onAliasChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
@@ -29,13 +31,18 @@ internal fun CreateAliasForm(
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
-        TitleInput(value = state.title, onChange = onTitleChange, onTitleRequiredError = false)
+        TitleInput(
+            value = state.title,
+            onChange = onTitleChange,
+            onTitleRequiredError = onTitleRequiredError
+        )
         Spacer(Modifier.padding(vertical = 8.dp))
         AliasSection(
             state = state,
             onChange = onAliasChange,
             onSuffixClick = onSuffixClick,
-            canEdit = canEdit
+            canEdit = canEdit,
+            onAliasRequiredError = onAliasRequiredError
         )
         Spacer(Modifier.padding(vertical = 8.dp))
         MailboxSection(

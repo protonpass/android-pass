@@ -41,6 +41,7 @@ fun ProtonFormInput(
     singleLine: Boolean = true,
     moveToNextOnEnter: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    editable: Boolean = true,
     isError: Boolean = false,
     errorMessage: String = ""
 ) {
@@ -55,6 +56,7 @@ fun ProtonFormInput(
             visualTransformation = visualTransformation,
             moveToNextOnEnter = moveToNextOnEnter,
             modifier = Modifier.padding(top = 8.dp),
+            editable = editable,
             isError = isError
         )
         if (isError) {

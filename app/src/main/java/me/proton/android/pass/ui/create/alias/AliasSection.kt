@@ -9,23 +9,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.android.pass.R
-import me.proton.android.pass.ui.shared.ProtonTextField
-import me.proton.android.pass.ui.shared.ProtonTextTitle
 import me.proton.core.compose.theme.ProtonTheme
 
 @Composable
 internal fun AliasSection(
-    state: BaseAliasViewModel.ModelState,
+    state: AliasItem,
     canEdit: Boolean,
+    onAliasRequiredError: Boolean,
     onChange: (String) -> Unit,
     onSuffixClick: () -> Unit
 ) {
-    ProtonTextTitle(R.string.field_alias_title)
-    ProtonTextField(
+    AliasInput(
         value = state.alias,
         onChange = onChange,
-        modifier = Modifier.padding(top = 8.dp),
-        editable = canEdit
+        editable = canEdit,
+        onAliasRequiredError = onAliasRequiredError
     )
     AliasSelector(
         state = state,

@@ -47,6 +47,7 @@
     <string name="title_create_login">Create login</string>
     <string name="title_edit_login">Edit login</string>
     <string name="field_title_title">Title</string>
+    <string name="field_title_is_blank">Invalid title</string>
     <string name="field_title_hint">Name</string>
     <string name="field_username_title">Username</string>
     <string name="field_username_hint">Add username</string>

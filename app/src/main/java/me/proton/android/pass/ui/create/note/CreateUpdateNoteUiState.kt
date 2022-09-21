@@ -1,20 +1,20 @@
-package me.proton.android.pass.ui.create.login
+package me.proton.android.pass.ui.create.note
 
 import androidx.compose.runtime.Immutable
 import me.proton.android.pass.ui.shared.uievents.IsLoadingState
 import me.proton.android.pass.ui.shared.uievents.ItemSavedState
 
 @Immutable
-data class CreateUpdateLoginUiState(
-    val loginItem: LoginItem,
-    val errorList: Set<LoginItemValidationErrors>,
+data class CreateUpdateNoteUiState(
+    val noteItem: NoteItem,
+    val errorList: Set<NoteItemValidationErrors>,
     val isLoadingState: IsLoadingState,
     val isItemSaved: ItemSavedState
 ) {
     companion object {
-        val Initial = CreateUpdateLoginUiState(
+        val Initial = CreateUpdateNoteUiState(
             isLoadingState = IsLoadingState.NotLoading,
-            loginItem = LoginItem.Empty,
+            noteItem = NoteItem.Empty,
             errorList = emptySet(),
             isItemSaved = ItemSavedState.Unknown
         )

@@ -14,7 +14,8 @@ import me.proton.android.pass.ui.shared.form.TitleInput
 @Composable
 internal fun CreateNoteItemForm(
     modifier: Modifier = Modifier,
-    state: BaseNoteViewModel.ModelState,
+    state: NoteItem,
+    onTitleRequiredError: Boolean,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit
 ) {
@@ -25,7 +26,7 @@ internal fun CreateNoteItemForm(
             .padding(16.dp)
     ) {
 
-        TitleInput(value = state.title, onChange = onTitleChange, onTitleRequiredError = false)
+        TitleInput(value = state.title, onChange = onTitleChange, onTitleRequiredError = onTitleRequiredError)
         NoteInput(value = state.note, onChange = onNoteChange)
     }
 }

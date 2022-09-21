@@ -9,7 +9,7 @@ import me.proton.android.pass.ui.shared.ProtonTextTitle
 
 @Composable
 internal fun MailboxSection(
-    state: BaseAliasViewModel.ModelState,
+    state: AliasItem,
     onMailboxClick: () -> Unit
 ) {
     ProtonTextTitle(R.string.field_mailboxes_title)

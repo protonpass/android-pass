@@ -1,12 +1,12 @@
 package me.proton.android.pass.ui.create.note
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -14,9 +14,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.proton.android.pass.ui.create.note.NoteItemValidationErrors.BlankTitle
 import me.proton.android.pass.ui.shared.CrossBackIcon
+import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
-import me.proton.core.compose.component.DeferredCircularProgressIndicator
+import me.proton.android.pass.ui.shared.uievents.IsLoadingState
+import me.proton.android.pass.ui.shared.uievents.ItemSavedState
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemId
@@ -26,7 +29,7 @@ import me.proton.core.pass.domain.ItemId
 internal fun NoteContent(
     @StringRes topBarTitle: Int,
     @StringRes topBarActionName: Int,
-    viewState: BaseNoteViewModel.ViewState,
+    uiState: CreateUpdateNoteUiState,
     onUpClick: () -> Unit,
     onSuccess: (ItemId) -> Unit,
     onSubmit: () -> Unit,
@@ -58,20 +61,21 @@ internal fun NoteContent(
             )
         }
     ) { padding ->
-        when (val state = viewState.state) {
-            is BaseNoteViewModel.State.Idle -> CreateNoteItemForm(
-                state = viewState.modelState,
-                modifier = Modifier.padding(padding),
-                onTitleChange = onTitleChange,
-                onNoteChange = onNoteChange
-            )
-            is BaseNoteViewModel.State.Loading -> DeferredCircularProgressIndicator(
-                Modifier
-                    .padding(padding)
-                    .fillMaxSize()
-            )
-            is BaseNoteViewModel.State.Error -> Text(text = "something went boom")
-            is BaseNoteViewModel.State.Success -> onSuccess(state.itemId)
+        if (uiState.isLoadingState == IsLoadingState.Loading) {
+            LoadingDialog()
+        }
+        CreateNoteItemForm(
+            state = uiState.noteItem,
+            modifier = Modifier.padding(padding),
+            onTitleRequiredError = uiState.errorList.contains(BlankTitle),
+            onTitleChange = onTitleChange,
+            onNoteChange = onNoteChange
+        )
+        LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {
+            val isItemSaved = uiState.isItemSaved
+            if (isItemSaved is ItemSavedState.Success) {
+                onSuccess(isItemSaved.itemId)
+            }
         }
     }
 }

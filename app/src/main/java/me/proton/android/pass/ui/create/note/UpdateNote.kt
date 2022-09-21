@@ -9,7 +9,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.android.pass.R
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -18,14 +17,13 @@ internal fun UpdateNote(
     onUpClick: () -> Unit,
     onSuccess: (ItemId) -> Unit,
     shareId: ShareId,
-    itemId: ItemId,
-    viewModel: UpdateNoteViewModel = hiltViewModel()
+    itemId: ItemId
 ) {
+    val viewModel: UpdateNoteViewModel = hiltViewModel()
     viewModel.setItem(shareId, itemId)
-
-    val viewState by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(viewModel.initialViewState)
+    val noteUiState by viewModel.noteUiState.collectAsState()
     NoteContent(
-        viewState = viewState,
+        uiState = noteUiState,
         topBarTitle = R.string.title_edit_note,
         topBarActionName = R.string.action_save,
         onUpClick = onUpClick,

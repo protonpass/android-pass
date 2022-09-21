@@ -12,10 +12,10 @@ data class LoginItem(
     val note: String
 ) {
 
-    fun validate(): List<LoginItemValidationErrors> {
-        val mutableList = mutableListOf<LoginItemValidationErrors>()
-        if (title.isBlank()) mutableList.add(LoginItemValidationErrors.BlankTitle)
-        return mutableList.toList()
+    fun validate(): Set<LoginItemValidationErrors> {
+        val mutableSet = mutableSetOf<LoginItemValidationErrors>()
+        if (title.isBlank()) mutableSet.add(LoginItemValidationErrors.BlankTitle)
+        return mutableSet.toSet()
     }
 
     fun toItemContents(): ItemContents {

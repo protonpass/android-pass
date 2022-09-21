@@ -6,6 +6,7 @@ import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.ui.MainDispatcherRule
 import me.proton.android.pass.ui.create.login.CreateUpdateLoginUiState.Companion.Initial
 import me.proton.android.pass.ui.shared.uievents.IsLoadingState
+import me.proton.android.pass.ui.shared.uievents.ItemSavedState
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.test.core.TestAccountManager
@@ -43,7 +44,7 @@ internal class CreateLoginViewModelTest {
 
             createLoginViewModel.loginUiState.test {
                 assertThat(awaitItem())
-                    .isEqualTo(Initial.copy(errorList = listOf(LoginItemValidationErrors.BlankTitle)))
+                    .isEqualTo(Initial.copy(errorList = setOf(LoginItemValidationErrors.BlankTitle)))
             }
         }
 

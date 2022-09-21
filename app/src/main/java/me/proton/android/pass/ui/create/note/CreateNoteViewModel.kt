@@ -2,13 +2,15 @@ package me.proton.android.pass.ui.create.note
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import me.proton.android.pass.ui.shared.uievents.IsLoadingState
+import me.proton.android.pass.ui.shared.uievents.ItemSavedState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.usecases.GetShareById
+import javax.inject.Inject
 
 @HiltViewModel
 class CreateNoteViewModel @Inject constructor(
@@ -18,13 +20,20 @@ class CreateNoteViewModel @Inject constructor(
 ) : BaseNoteViewModel() {
 
     fun createNote(shareId: ShareId) = viewModelScope.launch {
-        viewState.value = viewState.value.copy(state = State.Loading)
-        accountManager.getPrimaryUserId().first { userId -> userId != null }?.let { userId ->
-            val share = getShare.invoke(userId, shareId)
-            requireNotNull(share)
-            val itemContents = viewState.value.modelState.toItemContents()
-            val createdItem = itemRepository.createItem(userId, share, itemContents)
-            viewState.value = viewState.value.copy(state = State.Success(createdItem.id))
+        val noteItem = noteItemState.value
+        val noteItemValidationErrors = noteItem.validate()
+        if (noteItemValidationErrors.isNotEmpty()) {
+            noteItemValidationErrorsState.value = noteItemValidationErrors
+        } else {
+            isLoadingState.value = IsLoadingState.Loading
+            accountManager.getPrimaryUserId().first { userId -> userId != null }?.let { userId ->
+                val share = getShare.invoke(userId, shareId)
+                requireNotNull(share)
+                val itemContents = noteItem.toItemContents()
+                val createdItem = itemRepository.createItem(userId, share, itemContents)
+                isLoadingState.value = IsLoadingState.NotLoading
+                isItemSavedState.value = ItemSavedState.Success(createdItem.id)
+            }
         }
     }
 }

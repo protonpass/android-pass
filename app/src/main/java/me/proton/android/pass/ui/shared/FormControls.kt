@@ -7,8 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -41,7 +41,8 @@ fun ProtonFormInput(
     singleLine: Boolean = true,
     moveToNextOnEnter: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
-    isError: Boolean = false
+    isError: Boolean = false,
+    errorMessage: String = ""
 ) {
     Column(modifier = modifier) {
         ProtonTextTitle(title)
@@ -56,7 +57,15 @@ fun ProtonFormInput(
             modifier = Modifier.padding(top = 8.dp),
             isError = isError
         )
-        if (required) {
+        if (isError) {
+            Text(
+                text = errorMessage,
+                modifier = Modifier.padding(top = 4.dp),
+                fontSize = 12.sp,
+                style = ProtonTheme.typography.caption,
+                color = ProtonTheme.colors.notificationError
+            )
+        } else if (required) {
             Text(
                 text = stringResource(R.string.field_required_indicator),
                 modifier = Modifier.padding(top = 4.dp),
@@ -108,7 +117,7 @@ fun ProtonTextField(
     }
     var isFocused: Boolean by rememberSaveable { mutableStateOf(false) }
 
-    TextField(
+    OutlinedTextField(
         value = value,
         onValueChange = {
             if (singleLine && it.contains("\n")) {

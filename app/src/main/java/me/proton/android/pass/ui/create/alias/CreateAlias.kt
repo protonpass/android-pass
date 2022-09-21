@@ -10,7 +10,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.android.pass.R
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -21,21 +20,23 @@ internal fun CreateAlias(
     onSuccess: (ItemId) -> Unit
 ) {
     val viewModel: CreateAliasViewModel = hiltViewModel()
-    val viewState by rememberFlowWithLifecycle(viewModel.viewState)
-        .collectAsState(viewModel.initialViewState)
+    val viewState by viewModel.aliasUiState.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.onStart(shareId)
     }
 
     AliasContent(
-        viewState = viewState,
+        uiState = viewState,
         topBarTitle = R.string.title_create_alias,
+        canEdit = true,
         onUpClick = onUpClick,
         onSuccess = onSuccess,
         onSubmit = { viewModel.createAlias(shareId) },
-        viewModel = viewModel,
-        canEdit = true
+        onSuffixChange = { viewModel.onSuffixChange(it) },
+        onMailboxChange = { viewModel.onMailboxChange(it) },
+        onTitleChange = { viewModel.onTitleChange(it) },
+        onNoteChange = { viewModel.onNoteChange(it) },
+        onAliasChange = { viewModel.onAliasChange(it) }
     )
 }
-

@@ -6,4 +6,5 @@ repos:
         description: Runs `detekt` on modified .kt files.
         language: script
         entry: ./scripts/detekt.sh
-        files: \.kt(s?)
+        files: \.kt
+        exclude: (buildSrc/.*)

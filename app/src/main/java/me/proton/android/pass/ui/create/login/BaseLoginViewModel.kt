@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.android.pass.ui.shared.uievents.IsLoadingState
-import me.proton.core.pass.domain.ItemId
+import me.proton.android.pass.ui.shared.uievents.ItemSavedState
 
 abstract class BaseLoginViewModel : ViewModel() {
 
@@ -18,8 +18,8 @@ abstract class BaseLoginViewModel : ViewModel() {
         MutableStateFlow(IsLoadingState.NotLoading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
-    protected val loginItemValidationErrorsState: MutableStateFlow<List<LoginItemValidationErrors>> =
-        MutableStateFlow(emptyList())
+    protected val loginItemValidationErrorsState: MutableStateFlow<Set<LoginItemValidationErrors>> =
+        MutableStateFlow(emptySet())
 
     val loginUiState: StateFlow<CreateUpdateLoginUiState> = combine(
         loginItemState,
@@ -42,6 +42,8 @@ abstract class BaseLoginViewModel : ViewModel() {
 
     fun onTitleChange(value: String) = viewModelScope.launch {
         loginItemState.value = loginItemState.value.copy(title = value)
+        loginItemValidationErrorsState.value = loginItemValidationErrorsState.value.toMutableSet()
+            .apply { remove(LoginItemValidationErrors.BlankTitle) }
     }
 
     fun onUsernameChange(value: String) = viewModelScope.launch {
@@ -75,7 +77,3 @@ abstract class BaseLoginViewModel : ViewModel() {
     }
 }
 
-sealed interface ItemSavedState {
-    object Unknown : ItemSavedState
-    data class Success(val itemId: ItemId) : ItemSavedState
-}

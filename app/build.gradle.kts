@@ -114,16 +114,19 @@ android {
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
             buildConfigField("String", "HOST", "\"proton.black\"")
             buildConfigField("String", "HUMAN_VERIFICATION_HOST", "\"verify.proton.black\"")
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
         }
         create("alpha") {
             applicationIdSuffix = ".alpha"
             versionNameSuffix = "-alpha.${Config.versionCode}+$gitHash"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
             buildConfigField("String", "HOST", "\"protonmail.ch\"")
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "false")
         }
         create("prod") {
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
             buildConfigField("String", "HOST", "\"protonmail.ch\"")
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "false")
         }
     }
 

@@ -19,12 +19,12 @@ import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.ui.launcher.LauncherViewModel
 import me.proton.android.pass.ui.navigation.AppNavGraph
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun applySecureFlag() {
-        if (!BuildConfig.DEBUG) {
+        if (!BuildConfig.ALLOW_SCREENSHOTS) {
             // Release builds should secure window so that content is protected
             window.setFlags(
                 WindowManager.LayoutParams.FLAG_SECURE,

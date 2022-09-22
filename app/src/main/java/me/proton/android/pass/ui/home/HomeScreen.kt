@@ -1,12 +1,5 @@
 package me.proton.android.pass.ui.home
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
-import android.provider.Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE
-import android.view.autofill.AutofillManager
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,7 +30,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -87,11 +79,7 @@ fun HomeScreen(
     navigation: HomeScreenNavigation,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        requestAutofillAccessIfNeeded(context = context)
-    }
-
+    RequestAutofillIfSupported()
     val uiState by rememberFlowWithLifecycle(flow = viewModel.viewState)
         .collectAsState(initial = HomeUiState.Loading)
     val navDrawerState by rememberFlowWithLifecycle(flow = viewModel.navDrawerState)
@@ -332,9 +320,18 @@ fun rememberHomeScaffoldState(
     )
 }
 
+@Composable
+private fun RequestAutofillIfSupported() {
+//    if (Build.VERSION.SDK_INT >= 9000) {
+//        val context = LocalContext.current
+//        RequestAutofillAccessIfNeeded(context = context)
+//    }
+}
+
+/*
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-private fun requestAutofillAccessIfNeeded(context: Context) {
+private fun RequestAutofillAccessIfNeeded(context: Context) {
     val autofillManager = context.getSystemService(AutofillManager::class.java)
     if (!autofillManager.hasEnabledAutofillServices()) {
         LaunchedEffect(true) {
@@ -344,3 +341,4 @@ private fun requestAutofillAccessIfNeeded(context: Context) {
         }
     }
 }
+*/

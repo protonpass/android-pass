@@ -24,7 +24,8 @@ class SearchItemsImpl @Inject constructor(
 
     private fun filterItems(items: List<Item>, query: String): List<Item> =
         if (query.isNotEmpty()) {
-            items.filter { it.matchesQuery(query) }
+            val lowercaseQuery = query.lowercase()
+            items.filter { it.matchesQuery(lowercaseQuery) }
         } else {
             items
         }
@@ -35,9 +36,13 @@ class SearchItemsImpl @Inject constructor(
         queryState.value = query
     }
 
+    override fun clearSearch() {
+        queryState.value = ""
+    }
+
     private fun isItemMatch(item: Item, query: String): Boolean {
         val decryptedTitle = item.title.decrypt(crypto)
-        if (decryptedTitle.contains(query)) return true
+        if (decryptedTitle.lowercase().contains(query)) return true
 
         return when (val itemType = item.itemType) {
             is ItemType.Alias -> isAliasMatch(itemType, query)
@@ -48,13 +53,13 @@ class SearchItemsImpl @Inject constructor(
     }
 
     private fun isAliasMatch(itemType: ItemType.Alias, query: String): Boolean =
-        itemType.aliasEmail.contains(query)
+        itemType.aliasEmail.lowercase().contains(query)
 
     private fun isLoginMatch(itemType: ItemType.Login, query: String): Boolean =
-        itemType.username.contains(query)
+        itemType.username.lowercase().contains(query)
 
     private fun isNoteMatch(itemType: ItemType.Note, query: String): Boolean =
-        itemType.text.contains(query)
+        itemType.text.lowercase().contains(query)
 
     private fun Item.matchesQuery(query: String): Boolean =
         isItemMatch(this, query)

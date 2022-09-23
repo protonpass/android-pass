@@ -15,11 +15,12 @@ if (includeCoreLibsHelper.exists()) {
 }
 
 include(":app")
-include(":passwordManager")
 include(":passwordManager:dagger")
 include(":passwordManager:data")
 include(":passwordManager:domain")
 include(":passwordManager:presentation")
+include(":passwordManager:search:api")
+include(":passwordManager:search:implementation")
 include(":passwordManager:test")
 include(":autofill")
 include(":autofill:service")

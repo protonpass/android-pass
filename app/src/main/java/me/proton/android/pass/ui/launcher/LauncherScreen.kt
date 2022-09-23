@@ -5,6 +5,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.android.pass.ui.help.HelpScreen
@@ -17,7 +18,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.presentation.components.navigation.drawer.NavDrawerNavigation
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerSection
 
-@ExperimentalMaterialApi
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun LauncherScreen(
     onDrawerStateChanged: (Boolean) -> Unit = {},

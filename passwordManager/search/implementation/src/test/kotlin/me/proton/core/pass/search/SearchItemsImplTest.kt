@@ -84,4 +84,44 @@ internal class SearchItemsImplTest {
             }
         }
 
+    @Test
+    fun `clearing the search emits all the values`() =
+        runTest {
+            val item1 = TestItem.random(title = "abc")
+            val item2 = TestItem.random(title = "def")
+            observeActiveItems.sendItemList(listOf(item1, item2))
+            search.updateQuery("")
+
+            search.observeResults().test {
+                val allItems = awaitItem()
+                assertThat(allItems.size).isEqualTo(2)
+
+                search.updateQuery("ghi")
+                val noItems = awaitItem()
+                assertThat(noItems).isEmpty()
+
+                search.clearSearch()
+                val allItemsAgain = awaitItem()
+                assertThat(allItemsAgain.size).isEqualTo(2)
+                assertThat(allItemsAgain[0]).isEqualTo(item1)
+                assertThat(allItemsAgain[1]).isEqualTo(item2)
+            }
+        }
+
+    @Test
+    fun `search is case insensitive`() =
+        runTest {
+            val item1 = TestItem.random(title = "ABc")
+            val item2 = TestItem.random(title = "aBc")
+            observeActiveItems.sendItemList(listOf(item1, item2))
+            search.updateQuery("ab")
+
+            search.observeResults().test {
+                val filteredItems = awaitItem()
+                assertThat(filteredItems.size).isEqualTo(2)
+                assertThat(filteredItems[0]).isEqualTo(item1)
+                assertThat(filteredItems[1]).isEqualTo(item2)
+            }
+        }
+
 }

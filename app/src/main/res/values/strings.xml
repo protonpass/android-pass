@@ -31,6 +31,9 @@
     <string name="item_type_login_format">Login: %s</string>
     <string name="item_type_note_format">Note: %s</string>
 
+    <!-- Home -->
+    <string name="placeholder_item_search">Login, alias or note</string>
+
     <!-- Messages -->
     <string name="message_no_saved_credentials">You don\'t have any saved credentials.</string>
     <string name="message_no_trashed_credentials">You don\'t have any trashed credentials.</string>

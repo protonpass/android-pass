@@ -1,21 +1,17 @@
 package me.proton.android.pass.ui.home
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material.DrawerState
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -26,24 +22,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.android.pass.ui.shared.ItemAction
 import me.proton.android.pass.ui.shared.ItemsList
 import me.proton.android.pass.ui.shared.LoadingDialog
-import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ItemType
@@ -72,6 +63,7 @@ interface HomeScreenNavigation {
 }
 
 @ExperimentalMaterialApi
+@ExperimentalComposeUiApi
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -108,6 +100,8 @@ fun HomeScreen(
             navDrawerNavigation = navDrawerNavigation,
             navDrawerState = navDrawerState,
             navigation = navigation,
+            onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
+            onStopSearching = { viewModel.onStopSearching() },
             sendItemToTrash = { viewModel.sendItemToTrash(it) },
             modifier = modifier
         )
@@ -115,6 +109,7 @@ fun HomeScreen(
 }
 
 @Suppress("LongParameterList")
+@ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
 private fun HomeScreenContents(
@@ -123,10 +118,11 @@ private fun HomeScreenContents(
     navDrawerNavigation: NavDrawerNavigation,
     navDrawerState: NavigationDrawerViewState,
     navigation: HomeScreenNavigation,
+    onSearchQueryChange: (String) -> Unit,
+    onStopSearching: () -> Unit,
     sendItemToTrash: (ItemUiModel) -> Unit,
     modifier: Modifier
 ) {
-    val coroutineScope = rememberCoroutineScope()
     var confirmSignOutDialogState by remember { mutableStateOf<Boolean?>(null) }
     val homeScaffoldState = rememberHomeScaffoldState()
     val isDrawerOpen = with(homeScaffoldState.scaffoldState.drawerState) {
@@ -153,10 +149,14 @@ private fun HomeScreenContents(
         },
         drawerGesturesEnabled = drawerGesturesEnabled,
         topBar = {
+            val searchQuery = (uiState as? HomeUiState.Content)?.searchQuery.orEmpty()
+
             HomeTopBar(
-                homeScaffoldState = homeScaffoldState,
+                drawerState = homeScaffoldState.scaffoldState.drawerState,
                 bottomSheetState = bottomSheetState,
-                coroutineScope = coroutineScope
+                searchQuery = searchQuery,
+                onSearchQueryChange = onSearchQueryChange,
+                onStopSearching = onStopSearching
             )
         }
     ) { contentPadding ->
@@ -191,65 +191,34 @@ private fun HomeScreenContents(
     }
 }
 
+@ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
 private fun HomeTopBar(
-    homeScaffoldState: HomeScaffoldState,
+    drawerState: DrawerState,
     bottomSheetState: ModalBottomSheetState,
-    coroutineScope: CoroutineScope
+    searchQuery: String,
+    onSearchQueryChange: (String) -> Unit,
+    onStopSearching: () -> Unit
 ) {
     val (isSearchMode, setIsSearchMode) = remember { mutableStateOf(false) }
 
-    ProtonTopAppBar(
-        title = {
-            if (isSearchMode) {
-                HomeSearchBar()
-            } else {
-                TopBarTitleView(title = stringResource(id = R.string.title_items))
+    if (isSearchMode) {
+        SearchHomeTopBar(
+            searchQuery = searchQuery,
+            onSearchQueryChange = onSearchQueryChange,
+            onStopSearch = {
+                setIsSearchMode(false)
+                onStopSearching()
             }
-        },
-        navigationIcon = {
-            Icon(
-                Icons.Default.Menu,
-                modifier = Modifier.clickable(onClick = {
-                    val drawerState = homeScaffoldState.scaffoldState.drawerState
-                    coroutineScope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() }
-                }),
-                contentDescription = null
-            )
-        },
-        actions = {
-            IconButton(onClick = {
-                setIsSearchMode(true)
-            }) {
-                Icon(
-                    painterResource(R.drawable.ic_proton_magnifier),
-                    contentDescription = stringResource(R.string.action_search),
-                    tint = ProtonTheme.colors.iconNorm
-                )
-            }
-            IconButton(onClick = {
-                coroutineScope.launch {
-                    if (bottomSheetState.isVisible) {
-                        bottomSheetState.hide()
-                    } else {
-                        bottomSheetState.show()
-                    }
-                }
-            }) {
-                Icon(
-                    painterResource(R.drawable.ic_proton_plus),
-                    contentDescription = stringResource(R.string.action_create),
-                    tint = ProtonTheme.colors.iconNorm
-                )
-            }
-        }
-    )
-}
-
-@Composable
-private fun HomeSearchBar() {
-    Text(text = "TODO: Search :)")
+        )
+    } else {
+        IdleHomeTopBar(
+            drawerState = drawerState,
+            bottomSheetState = bottomSheetState,
+            startSearchMode = { setIsSearchMode(true) }
+        )
+    }
 }
 
 @Composable

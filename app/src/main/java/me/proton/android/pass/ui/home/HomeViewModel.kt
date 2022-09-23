@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -17,12 +18,12 @@ import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
 import me.proton.android.pass.extension.toUiModel
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.pass.domain.usecases.ObserveActiveItems
 import me.proton.core.pass.domain.usecases.ObserveActiveShare
 import me.proton.core.pass.domain.usecases.ObserveCurrentUser
 import me.proton.core.pass.domain.usecases.TrashItem
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerViewState
+import me.proton.core.pass.search.SearchItems
 import javax.inject.Inject
 
 @ExperimentalMaterialApi
@@ -30,9 +31,9 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val trashItem: TrashItem,
+    private val searchItems: SearchItems,
     observeCurrentUser: ObserveCurrentUser,
-    observeActiveShare: ObserveActiveShare,
-    observeActiveItems: ObserveActiveItems
+    observeActiveShare: ObserveActiveShare
 ) : ViewModel() {
 
     private val currentUserFlow = observeCurrentUser().filterNotNull()
@@ -58,22 +59,38 @@ class HomeViewModel @Inject constructor(
         )
 
 
-    private val listItems: Flow<List<ItemUiModel>> = observeActiveItems()
+    private val listItems: Flow<List<ItemUiModel>> = searchItems.observeResults()
         .mapLatest { items -> items.map { it.toUiModel(cryptoContext) } }
+
+    private val searchQuery: MutableStateFlow<String> = MutableStateFlow("")
 
     val viewState: Flow<HomeUiState> = combine(
         observeActiveShare(),
-        listItems
-    ) { shareId, items ->
+        listItems,
+        searchQuery
+    ) { shareId, items, searchQuery ->
         HomeUiState.Content(
             items,
-            selectedShare = shareId
+            selectedShare = shareId,
+            searchQuery = searchQuery
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = HomeUiState.Loading
     )
+
+    fun onSearchQueryChange(query: String) = viewModelScope.launch {
+        if (query.contains("\n")) return@launch
+
+        searchQuery.value = query
+        searchItems.updateQuery(query)
+    }
+
+    fun onStopSearching() = viewModelScope.launch {
+        searchItems.clearSearch()
+        searchQuery.value = ""
+    }
 
     fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch {
         if (item == null) return@launch

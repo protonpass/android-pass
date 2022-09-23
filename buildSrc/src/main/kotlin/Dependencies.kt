@@ -219,6 +219,12 @@ object Dependencies {
         add(Proton.Core.testAndroidInstrumented)
     }
     // endregion
+
+    // region Search
+    val searchLibs = mutableListOf<String>().apply {
+        add(Proton.Core.crypto)
+    }
+    // endregion
 }
 
 // util functions for adding the different type dependencies from build.gradle file

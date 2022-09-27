@@ -14,15 +14,12 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.android.pass.BuildConfig
-import me.proton.android.pass.R
 import me.proton.android.pass.extension.toUiModel
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.pass.domain.usecases.ObserveActiveShare
 import me.proton.core.pass.domain.usecases.ObserveCurrentUser
 import me.proton.core.pass.domain.usecases.TrashItem
 import me.proton.core.pass.presentation.components.model.ItemUiModel
-import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerViewState
 import me.proton.core.pass.search.SearchItems
 import javax.inject.Inject
 
@@ -38,40 +35,18 @@ class HomeViewModel @Inject constructor(
 
     private val currentUserFlow = observeCurrentUser().filterNotNull()
 
-    val initialNavDrawerState = NavigationDrawerViewState(
-        R.string.app_name,
-        BuildConfig.VERSION_NAME,
-        currentUser = null
-    )
-
-    val navDrawerState: StateFlow<NavigationDrawerViewState> = currentUserFlow
-        .mapLatest { user ->
-            NavigationDrawerViewState(
-                R.string.app_name,
-                BuildConfig.VERSION_NAME,
-                currentUser = user
-            )
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = initialNavDrawerState
-        )
-
-
     private val listItems: Flow<List<ItemUiModel>> = searchItems.observeResults()
         .mapLatest { items -> items.map { it.toUiModel(cryptoContext) } }
 
     private val searchQuery: MutableStateFlow<String> = MutableStateFlow("")
 
-    val viewState: Flow<HomeUiState> = combine(
+    val homeUiState: StateFlow<HomeUiState> = combine(
         observeActiveShare(),
         listItems,
         searchQuery
     ) { shareId, items, searchQuery ->
         HomeUiState.Content(
-            items,
-            selectedShare = shareId,
+            items, shareId,
             searchQuery = searchQuery
         )
     }.stateIn(

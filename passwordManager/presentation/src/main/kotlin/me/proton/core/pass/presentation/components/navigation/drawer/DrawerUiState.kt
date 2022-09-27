@@ -21,11 +21,14 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
 import me.proton.core.user.domain.entity.User
 
+enum class NavigationDrawerSection { Items, Settings, Trash, Help }
+
 @Immutable
-data class NavigationDrawerViewState(
+data class DrawerUiState(
     @StringRes val appNameResId: Int,
     val appVersion: String,
     val closeOnBackEnabled: Boolean = true,
     val closeOnActionEnabled: Boolean = true,
-    val currentUser: User? = null
+    val currentUser: User? = null,
+    val selectedSection: NavigationDrawerSection? = null
 )

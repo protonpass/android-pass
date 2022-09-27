@@ -44,6 +44,9 @@ class SearchItemsImpl @Inject constructor(
         val decryptedTitle = item.title.decrypt(crypto)
         if (decryptedTitle.lowercase().contains(query)) return true
 
+        val decryptedNote = item.note.decrypt(crypto)
+        if (decryptedNote.lowercase().contains(query)) return true
+
         return when (val itemType = item.itemType) {
             is ItemType.Alias -> isAliasMatch(itemType, query)
             is ItemType.Login -> isLoginMatch(itemType, query)
@@ -55,8 +58,14 @@ class SearchItemsImpl @Inject constructor(
     private fun isAliasMatch(itemType: ItemType.Alias, query: String): Boolean =
         itemType.aliasEmail.lowercase().contains(query)
 
-    private fun isLoginMatch(itemType: ItemType.Login, query: String): Boolean =
-        itemType.username.lowercase().contains(query)
+    private fun isLoginMatch(itemType: ItemType.Login, query: String): Boolean {
+        if (itemType.username.lowercase().contains(query)) return true
+
+        val anyWebsiteMatches = itemType.websites.any { it.lowercase().contains(query) }
+        if (anyWebsiteMatches) return true
+
+        return false
+    }
 
     private fun isNoteMatch(itemType: ItemType.Note, query: String): Boolean =
         itemType.text.lowercase().contains(query)

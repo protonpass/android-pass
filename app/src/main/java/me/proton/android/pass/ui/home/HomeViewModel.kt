@@ -39,16 +39,15 @@ class HomeViewModel @Inject constructor(
         .mapLatest { items -> items.map { it.toUiModel(cryptoContext) } }
 
     private val searchQuery: MutableStateFlow<String> = MutableStateFlow("")
+    private val inSearchMode: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     val homeUiState: StateFlow<HomeUiState> = combine(
         observeActiveShare(),
         listItems,
-        searchQuery
-    ) { shareId, items, searchQuery ->
-        HomeUiState.Content(
-            items, shareId,
-            searchQuery = searchQuery
-        )
+        searchQuery,
+        inSearchMode
+    ) { shareId, items, searchQuery, inSearchMode ->
+        HomeUiState.Content(items, shareId, searchQuery, inSearchMode)
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -65,6 +64,13 @@ class HomeViewModel @Inject constructor(
     fun onStopSearching() = viewModelScope.launch {
         searchItems.clearSearch()
         searchQuery.value = ""
+        inSearchMode.value = false
+    }
+
+    fun onEnterSearch() = viewModelScope.launch {
+        searchItems.clearSearch()
+        searchQuery.value = ""
+        inSearchMode.value = true
     }
 
     fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch {

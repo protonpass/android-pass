@@ -12,13 +12,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.DialogNavigator
 import com.google.accompanist.navigation.animation.AnimatedComposeNavigator
+import me.proton.core.crypto.android.keystore.AndroidKeyStoreCrypto
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 
 @ExperimentalAnimationApi
 @Composable
-fun rememberAnimatedNavController(keyStoreCrypto: KeyStoreCrypto): NavHostController {
+fun rememberAnimatedNavController(): NavHostController {
     val context = LocalContext.current
-    return rememberSaveable(saver = NavControllerSaver(context, keyStoreCrypto)) {
+    return rememberSaveable(saver = NavControllerSaver(context, AndroidKeyStoreCrypto.default)) {
         createNavController(context)
     }
 }

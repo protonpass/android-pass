@@ -2,12 +2,8 @@ package me.proton.android.pass.ui.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.DrawerState
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
@@ -15,22 +11,20 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
-import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.android.pass.ui.shared.ItemAction
 import me.proton.android.pass.ui.shared.ItemsList
 import me.proton.android.pass.ui.shared.LoadingDialog
@@ -39,71 +33,46 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 import me.proton.core.pass.presentation.components.model.ItemUiModel
-import me.proton.core.pass.presentation.components.navigation.drawer.NavDrawerNavigation
-import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawer
-import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerViewState
 
 internal typealias OnItemClick = (ShareId, ItemId) -> Unit
-
-interface HomeScreenNavigation {
-    val toCreateLogin: (ShareId) -> Unit
-    val toEditLogin: (ShareId, ItemId) -> Unit
-
-    val toCreateNote: (ShareId) -> Unit
-    val toEditNote: (ShareId, ItemId) -> Unit
-
-    val toCreateAlias: (ShareId) -> Unit
-    val toEditAlias: (ShareId, ItemId) -> Unit
-
-    val toItemDetail: (ShareId, ItemId) -> Unit
-
-    val toCreatePassword: (ShareId) -> Unit
-}
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navDrawerNavigation: NavDrawerNavigation,
-    navigation: HomeScreenNavigation,
-    viewModel: HomeViewModel = hiltViewModel()
+    homeScreenNavigation: HomeScreenNavigation,
+    onDrawerIconClick: () -> Unit
 ) {
-    RequestAutofillIfSupported()
-    val uiState by rememberFlowWithLifecycle(flow = viewModel.viewState)
-        .collectAsState(initial = HomeUiState.Loading)
-    val navDrawerState by rememberFlowWithLifecycle(flow = viewModel.navDrawerState)
-        .collectAsState(initial = viewModel.initialNavDrawerState)
+    val viewModel = hiltViewModel<HomeViewModel>()
+    val uiState by viewModel.homeUiState.collectAsState()
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val coroutineScope = rememberCoroutineScope()
 
+    RequestAutofillIfSupported()
     val selectedShare = if (uiState is HomeUiState.Content) {
         (uiState as HomeUiState.Content).selectedShare
-    } else {
-        null
-    }
-
+    } else null
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             BottomSheetContents(
                 state = bottomSheetState,
-                navigation = navigation,
+                navigation = homeScreenNavigation,
                 shareId = selectedShare
             )
         }
     ) {
-        HomeScreenContents(
+        HomeContent(
+            modifier = modifier,
             uiState = uiState,
-            bottomSheetState = bottomSheetState,
-            navDrawerNavigation = navDrawerNavigation,
-            navDrawerState = navDrawerState,
-            navigation = navigation,
+            homeScreenNavigation = homeScreenNavigation,
             onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
             onStopSearching = { viewModel.onStopSearching() },
             sendItemToTrash = { viewModel.sendItemToTrash(it) },
-            modifier = modifier
+            onDrawerIconClick = onDrawerIconClick,
+            onAddItemClick = { coroutineScope.launch { bottomSheetState.show() } }
         )
     }
 }
@@ -112,51 +81,30 @@ fun HomeScreen(
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
-private fun HomeScreenContents(
+private fun HomeContent(
+    modifier: Modifier = Modifier,
     uiState: HomeUiState,
-    bottomSheetState: ModalBottomSheetState,
-    navDrawerNavigation: NavDrawerNavigation,
-    navDrawerState: NavigationDrawerViewState,
-    navigation: HomeScreenNavigation,
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
+    homeScreenNavigation: HomeScreenNavigation,
     onSearchQueryChange: (String) -> Unit,
     onStopSearching: () -> Unit,
     sendItemToTrash: (ItemUiModel) -> Unit,
-    modifier: Modifier
+    onDrawerIconClick: () -> Unit,
+    onAddItemClick: (ShareId?) -> Unit
 ) {
-    var confirmSignOutDialogState by remember { mutableStateOf<Boolean?>(null) }
-    val homeScaffoldState = rememberHomeScaffoldState()
-    val isDrawerOpen = with(homeScaffoldState.scaffoldState.drawerState) {
-        isOpen && !isAnimationRunning || isClosed && isAnimationRunning
-    }
-    LaunchedEffect(isDrawerOpen) {
-        navDrawerNavigation.onDrawerStateChanged(isDrawerOpen)
-    }
-    val drawerGesturesEnabled by homeScaffoldState.drawerGesturesEnabled
 
+    val selectedShare = if (uiState is HomeUiState.Content) uiState.selectedShare else null
     Scaffold(
         modifier = modifier,
-        scaffoldState = homeScaffoldState.scaffoldState,
-        drawerContent = {
-            NavigationDrawer(
-                drawerState = homeScaffoldState.scaffoldState.drawerState,
-                viewState = navDrawerState,
-                navigation = navDrawerNavigation,
-                onSignOutClick = { confirmSignOutDialogState = true },
-                modifier = Modifier
-                    .statusBarsPadding()
-                    .navigationBarsPadding()
-            )
-        },
-        drawerGesturesEnabled = drawerGesturesEnabled,
+        scaffoldState = scaffoldState,
         topBar = {
             val searchQuery = (uiState as? HomeUiState.Content)?.searchQuery.orEmpty()
-
             HomeTopBar(
-                drawerState = homeScaffoldState.scaffoldState.drawerState,
-                bottomSheetState = bottomSheetState,
                 searchQuery = searchQuery,
                 onSearchQueryChange = onSearchQueryChange,
-                onStopSearching = onStopSearching
+                onStopSearching = onStopSearching,
+                onDrawerIconClick = onDrawerIconClick,
+                onAddItemClick = { onAddItemClick(selectedShare) }
             )
         }
     ) { contentPadding ->
@@ -168,14 +116,11 @@ private fun HomeScreenContents(
                     Home(
                         items = uiState.items,
                         modifier = Modifier.padding(contentPadding),
-                        onItemClick = { shareId, itemId -> navigation.toItemDetail(shareId, itemId) },
-                        navigation = navigation,
+                        onItemClick = { shareId, itemId ->
+                            homeScreenNavigation.toItemDetail(shareId, itemId)
+                        },
+                        navigation = homeScreenNavigation,
                         onDeleteItemClicked = { itemToDelete = it }
-                    )
-                    ConfirmSignOutDialog(
-                        state = confirmSignOutDialogState,
-                        onDismiss = { confirmSignOutDialogState = null },
-                        onConfirm = { navDrawerNavigation.onRemove(null) }
                     )
                     ConfirmItemDeletionDialog(
                         state = itemToDelete,
@@ -195,11 +140,11 @@ private fun HomeScreenContents(
 @ExperimentalMaterialApi
 @Composable
 private fun HomeTopBar(
-    drawerState: DrawerState,
-    bottomSheetState: ModalBottomSheetState,
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
-    onStopSearching: () -> Unit
+    onStopSearching: () -> Unit,
+    onDrawerIconClick: () -> Unit,
+    onAddItemClick: () -> Unit
 ) {
     val (isSearchMode, setIsSearchMode) = remember { mutableStateOf(false) }
 
@@ -214,9 +159,9 @@ private fun HomeTopBar(
         )
     } else {
         IdleHomeTopBar(
-            drawerState = drawerState,
-            bottomSheetState = bottomSheetState,
-            startSearchMode = { setIsSearchMode(true) }
+            startSearchMode = { setIsSearchMode(true) },
+            onDrawerIconClick = onDrawerIconClick,
+            onAddItemClick = onAddItemClick
         )
     }
 }
@@ -268,25 +213,6 @@ internal fun goToEdit(
         is ItemType.Note -> navigation.toEditNote(item.shareId, item.id)
         is ItemType.Alias -> navigation.toEditAlias(item.shareId, item.id)
     }
-}
-
-@Stable
-@ExperimentalMaterialApi
-data class HomeScaffoldState(
-    val scaffoldState: ScaffoldState,
-    val drawerGesturesEnabled: MutableState<Boolean>
-)
-
-@Composable
-@ExperimentalMaterialApi
-fun rememberHomeScaffoldState(
-    scaffoldState: ScaffoldState = rememberScaffoldState(),
-    drawerGesturesEnabled: MutableState<Boolean> = mutableStateOf(true)
-): HomeScaffoldState = remember {
-    HomeScaffoldState(
-        scaffoldState,
-        drawerGesturesEnabled
-    )
 }
 
 @Composable

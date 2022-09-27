@@ -7,49 +7,69 @@ import me.proton.core.pass.domain.ShareId
 
 sealed class NavItem(
     val baseRoute: String,
-    val navArgs: List<NavArg> = emptyList()
+    private val navArgIds: List<NavArgId> = emptyList(),
+    val isTopLevel: Boolean = false
 ) {
     val route = run {
-        val argKeys = navArgs.map { "{${it.key}}" }
+        val argKeys = navArgIds.map { "{${it.key}}" }
         listOf(baseRoute).plus(argKeys).joinToString("/")
     }
 
-    val args = navArgs.map {
+    val args = navArgIds.map {
         navArgument(it.key) { type = it.navType }
     }
 
-    object Launcher : NavItem("auth")
-    object Trash : NavItem("trash")
-    object CreateLogin : NavItem("createLogin", listOf(NavArg.ShareId)) {
+    object Home : NavItem("home", isTopLevel = true)
+
+    object Settings : NavItem("settings", isTopLevel = true)
+
+    object Trash : NavItem("trash", isTopLevel = true)
+
+    object Help : NavItem("help", isTopLevel = true)
+
+    object CreateLogin : NavItem("createLogin", listOf(NavArgId.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
     }
-    object EditLogin : NavItem("editLogin", listOf(NavArg.ShareId, NavArg.ItemId)) {
-        fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+
+    object EditLogin : NavItem("editLogin", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
+        fun createNavRoute(shareId: ShareId, itemId: ItemId) =
+            "$baseRoute/${shareId.id}/${itemId.id}"
     }
-    object CreateAlias : NavItem("createAlias", listOf(NavArg.ShareId)) {
+
+    object CreateAlias : NavItem("createAlias", listOf(NavArgId.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
     }
-    object EditAlias : NavItem("editAlias", listOf(NavArg.ShareId, NavArg.ItemId)) {
-        fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+
+    object EditAlias : NavItem("editAlias", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
+        fun createNavRoute(shareId: ShareId, itemId: ItemId) =
+            "$baseRoute/${shareId.id}/${itemId.id}"
     }
-    object CreateNote : NavItem("createNote", listOf(NavArg.ShareId)) {
+
+    object CreateNote : NavItem("createNote", listOf(NavArgId.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
     }
-    object EditNote : NavItem("editNote", listOf(NavArg.ShareId, NavArg.ItemId)) {
-        fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+
+    object EditNote : NavItem("editNote", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
+        fun createNavRoute(shareId: ShareId, itemId: ItemId) =
+            "$baseRoute/${shareId.id}/${itemId.id}"
     }
-    object CreatePassword : NavItem("createPassword", listOf(NavArg.ShareId)) {
+
+    object CreatePassword : NavItem("createPassword", listOf(NavArgId.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "${CreatePassword.baseRoute}/${shareId.id}"
     }
-    object EditPassword : NavItem("editPassword", listOf(NavArg.ShareId, NavArg.ItemId)) {
-        fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+
+    object EditPassword : NavItem("editPassword", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
+        fun createNavRoute(shareId: ShareId, itemId: ItemId) =
+            "$baseRoute/${shareId.id}/${itemId.id}"
     }
-    object ViewItem : NavItem("viewItem", listOf(NavArg.ShareId, NavArg.ItemId)) {
-        fun createNavRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
+
+    object ViewItem : NavItem("viewItem", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
+        fun createNavRoute(shareId: ShareId, itemId: ItemId) =
+            "$baseRoute/${shareId.id}/${itemId.id}"
     }
 }
 
-enum class NavArg(val key: String, val navType: NavType<*>) {
+enum class NavArgId(val key: String, val navType: NavType<*>) {
     ItemId("itemId", NavType.StringType),
     ShareId("shareId", NavType.StringType),
 }

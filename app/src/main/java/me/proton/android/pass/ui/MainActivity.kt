@@ -2,41 +2,30 @@ package me.proton.android.pass.ui
 
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
-import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.ui.launcher.LauncherViewModel
-import me.proton.android.pass.ui.navigation.AppNavGraph
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import javax.inject.Inject
+import me.proton.android.pass.ui.launcher.LauncherViewModel.State.AccountNeeded
+import me.proton.android.pass.ui.launcher.LauncherViewModel.State.PrimaryExist
+import me.proton.android.pass.ui.launcher.LauncherViewModel.State.Processing
+import me.proton.android.pass.ui.launcher.LauncherViewModel.State.StepNeeded
+import me.proton.core.compose.component.ProtonCenteredProgress
+import me.proton.core.pass.presentation.components.navigation.AuthNavigation
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var keyStoreCrypto: KeyStoreCrypto
+class MainActivity : ComponentActivity() {
 
     private val launcherViewModel: LauncherViewModel by viewModels()
 
-    @ExperimentalMaterialApi
-    @ExperimentalAnimationApi
-    @ExperimentalComposeUiApi
     override fun onCreate(savedInstanceState: Bundle?) {
         applySecureFlag()
         installSplashScreen()
@@ -48,23 +37,19 @@ class MainActivity : AppCompatActivity() {
         launcherViewModel.register(this)
 
         setContent {
-            val systemUiController = rememberSystemUiController()
-            var isDrawerOpen by remember { mutableStateOf(false) }
-            LaunchedEffect(isDrawerOpen) {
-                systemUiController.setStatusBarColor(
-                    color = Color.Transparent,
-                    darkIcons = !isDrawerOpen
-                )
-            }
-
-            ProtonTheme {
-                ProvideWindowInsets {
-                    AppNavGraph(
-                        keyStoreCrypto = keyStoreCrypto,
-                        launcherViewModel = launcherViewModel
-                    ) { isOpen ->
-                        isDrawerOpen = isOpen
-                    }
+            val state by launcherViewModel.state.collectAsState(Processing)
+            when (state) {
+                AccountNeeded -> launcherViewModel.addAccount()
+                Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
+                StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
+                PrimaryExist -> {
+                    val authNavigation = AuthNavigation(
+                        onSignIn = { launcherViewModel.signIn(it) },
+                        onSignOut = { launcherViewModel.signOut(it) },
+                        onRemove = { launcherViewModel.remove(it) },
+                        onSwitch = { launcherViewModel.switch(it) }
+                    )
+                    PassApp(authNavigation = authNavigation)
                 }
             }
         }

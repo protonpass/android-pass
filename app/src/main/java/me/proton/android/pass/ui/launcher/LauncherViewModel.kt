@@ -18,14 +18,12 @@
 
 package me.proton.android.pass.ui.launcher
 
+import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultCaller
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
@@ -48,12 +46,12 @@ import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.onAddAccountResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerSection
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.report.presentation.entity.BugReportInput
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
+import javax.inject.Inject
 
 @HiltViewModel
 class LauncherViewModel @Inject constructor(
@@ -66,9 +64,6 @@ class LauncherViewModel @Inject constructor(
     private val reportOrchestrator: ReportOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator
 ) : ViewModel() {
-
-    val initialSection = NavigationDrawerSection.Items
-    val sectionStateFlow: MutableStateFlow<NavigationDrawerSection> = MutableStateFlow(initialSection)
 
     val state: StateFlow<State> = accountManager.getAccounts()
         .map { accounts ->
@@ -85,7 +80,7 @@ class LauncherViewModel @Inject constructor(
             initialValue = State.Processing
         )
 
-    fun register(context: AppCompatActivity) {
+    fun register(context: ComponentActivity) {
         authOrchestrator.register(context as ActivityResultCaller)
         plansOrchestrator.register(context)
         reportOrchestrator.register(context)
@@ -151,10 +146,6 @@ class LauncherViewModel @Inject constructor(
         getPrimaryUserIdOrNull()?.let {
             userSettingsOrchestrator.startPasswordManagementWorkflow(it)
         }
-    }
-
-    fun onDrawerSectionSelected(section: NavigationDrawerSection) = viewModelScope.launch {
-        sectionStateFlow.value = section
     }
 
     private suspend fun getAccountOrNull(it: UserId) = accountManager.getAccount(it).firstOrNull()

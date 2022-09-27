@@ -25,7 +25,11 @@ fun NavGraphBuilder.updateNoteGraph(nav: AppNavigator) {
             shareId = shareId,
             itemId = itemId,
             onSuccess = {
-                nav.navigate(NavItem.ViewItem, NavItem.ViewItem.createNavRoute(shareId, itemId))
+                nav.navigate(
+                    destination = NavItem.ViewItem,
+                    route = NavItem.ViewItem.createNavRoute(shareId, itemId),
+                    backDestination = NavItem.Home
+                )
             }
         )
     }

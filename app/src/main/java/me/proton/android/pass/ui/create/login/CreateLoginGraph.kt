@@ -22,7 +22,11 @@ fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
             onUpClick = { nav.onBackClick() },
             shareId = shareId,
             onSuccess = { itemId ->
-                nav.navigate(NavItem.ViewItem, NavItem.ViewItem.createNavRoute(shareId, itemId))
+                nav.navigate(
+                    destination = NavItem.ViewItem,
+                    route = NavItem.ViewItem.createNavRoute(shareId, itemId),
+                    backDestination = NavItem.Home
+                )
             }
         )
     }

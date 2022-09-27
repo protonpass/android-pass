@@ -1,5 +1,6 @@
 package me.proton.android.pass.ui.home
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
@@ -69,6 +71,7 @@ fun HomeScreen(
             uiState = uiState,
             homeScreenNavigation = homeScreenNavigation,
             onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
+            onEnterSearch = { viewModel.onEnterSearch() },
             onStopSearching = { viewModel.onStopSearching() },
             sendItemToTrash = { viewModel.sendItemToTrash(it) },
             onDrawerIconClick = onDrawerIconClick,
@@ -87,6 +90,7 @@ private fun HomeContent(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     homeScreenNavigation: HomeScreenNavigation,
     onSearchQueryChange: (String) -> Unit,
+    onEnterSearch: () -> Unit,
     onStopSearching: () -> Unit,
     sendItemToTrash: (ItemUiModel) -> Unit,
     onDrawerIconClick: () -> Unit,
@@ -94,14 +98,23 @@ private fun HomeContent(
 ) {
 
     val selectedShare = if (uiState is HomeUiState.Content) uiState.selectedShare else null
+    val backHandlerEnabled = (uiState as? HomeUiState.Content)?.inSearchMode ?: false
+    BackHandler(enabled = backHandlerEnabled) {
+        onStopSearching()
+    }
+
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
         topBar = {
             val searchQuery = (uiState as? HomeUiState.Content)?.searchQuery.orEmpty()
+            val inSearchMode = (uiState as? HomeUiState.Content)?.inSearchMode ?: false
+
             HomeTopBar(
                 searchQuery = searchQuery,
+                inSearchMode = inSearchMode,
                 onSearchQueryChange = onSearchQueryChange,
+                onEnterSearch = onEnterSearch,
                 onStopSearching = onStopSearching,
                 onDrawerIconClick = onDrawerIconClick,
                 onAddItemClick = { onAddItemClick(selectedShare) }
@@ -113,10 +126,12 @@ private fun HomeContent(
                 is HomeUiState.Loading -> LoadingDialog()
                 is HomeUiState.Content -> {
                     var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
+                    val keyboardController = LocalSoftwareKeyboardController.current
                     Home(
                         items = uiState.items,
                         modifier = Modifier.padding(contentPadding),
                         onItemClick = { shareId, itemId ->
+                            keyboardController?.hide()
                             homeScreenNavigation.toItemDetail(shareId, itemId)
                         },
                         navigation = homeScreenNavigation,
@@ -141,25 +156,24 @@ private fun HomeContent(
 @Composable
 private fun HomeTopBar(
     searchQuery: String,
+    inSearchMode: Boolean,
     onSearchQueryChange: (String) -> Unit,
+    onEnterSearch: () -> Unit,
     onStopSearching: () -> Unit,
     onDrawerIconClick: () -> Unit,
     onAddItemClick: () -> Unit
 ) {
-    val (isSearchMode, setIsSearchMode) = remember { mutableStateOf(false) }
-
-    if (isSearchMode) {
+    if (inSearchMode) {
         SearchHomeTopBar(
             searchQuery = searchQuery,
             onSearchQueryChange = onSearchQueryChange,
             onStopSearch = {
-                setIsSearchMode(false)
                 onStopSearching()
             }
         )
     } else {
         IdleHomeTopBar(
-            startSearchMode = { setIsSearchMode(true) },
+            startSearchMode = { onEnterSearch() },
             onDrawerIconClick = onDrawerIconClick,
             onAddItemClick = onAddItemClick
         )

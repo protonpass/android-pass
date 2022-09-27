@@ -8,7 +8,8 @@ sealed class HomeUiState {
     data class Content(
         val items: List<ItemUiModel>,
         val selectedShare: ShareId? = null,
-        val searchQuery: String
+        val searchQuery: String,
+        val inSearchMode: Boolean
     ) : HomeUiState()
     data class Error(val message: String) : HomeUiState()
 }

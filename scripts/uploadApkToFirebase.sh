@@ -26,7 +26,7 @@ fi
 
 echo "Generating release notes"
 
-git log --pretty=format:'%s' --since="1 day ago" > "${RELEASE_NOTES_PATH}"
+/bin/bash $REPO_ROOT/scripts/ci/generateReleaseNotes.sh > "${RELEASE_NOTES_PATH}"
 
 echo "Uploading APK: ${APK_PATH}"
 

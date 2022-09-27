@@ -3,16 +3,17 @@ package me.proton.android.pass.ui.detail.alias
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.pass.domain.AliasMailbox
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.repositories.AliasRepository
+import javax.inject.Inject
 
 @HiltViewModel
 class AliasDetailViewModel @Inject constructor(
@@ -53,7 +54,7 @@ class AliasDetailViewModel @Inject constructor(
     data class AliasUiModel(
         val title: String,
         val alias: String,
-        val mailboxes: List<String>,
+        val mailboxes: List<AliasMailbox>,
         val note: String
     )
 }

@@ -50,7 +50,9 @@ fun AliasDetail(
 fun AliasContentView(
     model: AliasDetailViewModel.AliasUiModel
 ) {
-    val copiedToClipboardMessage = "${stringResource(R.string.field_alias_title)} ${stringResource(R.string.field_copied_to_clipboard)}"
+    val title = stringResource(R.string.field_alias_title)
+    val content = stringResource(R.string.field_copied_to_clipboard)
+    val copiedToClipboardMessage = "$title $content"
     val clipboardManager = LocalClipboardManager.current
     val localContext = LocalContext.current
     Section(
@@ -70,7 +72,7 @@ fun AliasContentView(
             SectionTitle(R.string.field_mailboxes_title)
             model.mailboxes.forEach {
                 Text(
-                    text = it,
+                    text = it.email,
                     color = ProtonTheme.colors.textWeak,
                     fontSize = 14.sp
                 )

@@ -16,14 +16,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,11 +29,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
-import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.android.pass.ui.shared.ItemAction
 import me.proton.android.pass.ui.shared.ItemsList
 import me.proton.android.pass.ui.shared.LoadingDialog
@@ -44,47 +39,23 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 import me.proton.core.pass.presentation.components.model.ItemUiModel
-import me.proton.core.pass.presentation.components.navigation.drawer.NavDrawerNavigation
-import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawer
 
 @ExperimentalMaterialApi
 @Composable
 fun TrashScreen(
     modifier: Modifier = Modifier,
-    navDrawerNavigation: NavDrawerNavigation,
-    viewModel: TrashScreenViewModel = hiltViewModel()
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
+    onDrawerIconClick: () -> Unit
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberTrashScaffoldState()
-    val isDrawerOpen = with(scaffoldState.scaffoldState.drawerState) {
-        isOpen && !isAnimationRunning || isClosed && isAnimationRunning
-    }
-    LaunchedEffect(isDrawerOpen) {
-        navDrawerNavigation.onDrawerStateChanged(isDrawerOpen)
-    }
-    val drawerGesturesEnabled by scaffoldState.drawerGesturesEnabled
-    val navDrawerState by rememberFlowWithLifecycle(flow = viewModel.navDrawerState)
-        .collectAsState(initial = viewModel.initialNavDrawerState)
+    val viewModel: TrashScreenViewModel = hiltViewModel()
     val uiState by rememberFlowWithLifecycle(flow = viewModel.uiState)
         .collectAsState(initial = TrashUiState.Loading)
     var showClearTrashDialog by rememberSaveable { mutableStateOf(false) }
-    var confirmSignOutDialogState by remember { mutableStateOf<Boolean?>(null) }
-
     Scaffold(
-        scaffoldState = scaffoldState.scaffoldState,
-        drawerContent = {
-            NavigationDrawer(
-                drawerState = scaffoldState.scaffoldState.drawerState,
-                viewState = navDrawerState,
-                navigation = navDrawerNavigation,
-                onSignOutClick = { confirmSignOutDialogState = true }
-            )
-        },
-        drawerGesturesEnabled = drawerGesturesEnabled,
+        scaffoldState = scaffoldState,
         topBar = {
             TrashTopBar(
-                coroutineScope = coroutineScope,
-                scaffoldState = scaffoldState.scaffoldState,
+                onDrawerIconClick = onDrawerIconClick,
                 onClearTrashClick = { showClearTrashDialog = true }
             )
         }
@@ -104,11 +75,6 @@ fun TrashScreen(
                 is TrashUiState.Error -> Text("Something went boom: ${state.message}")
             }
 
-            ConfirmSignOutDialog(
-                state = confirmSignOutDialogState,
-                onDismiss = { confirmSignOutDialogState = null },
-                onConfirm = { navDrawerNavigation.onRemove(null) }
-            )
             ConfirmClearTrashDialog(
                 show = showClearTrashDialog,
                 onDismiss = { showClearTrashDialog = false },
@@ -156,8 +122,7 @@ private fun ConfirmClearTrashDialog(
 @ExperimentalMaterialApi
 @Composable
 private fun TrashTopBar(
-    scaffoldState: ScaffoldState,
-    coroutineScope: CoroutineScope,
+    onDrawerIconClick: () -> Unit,
     onClearTrashClick: () -> Unit
 ) {
     ProtonTopAppBar(
@@ -165,10 +130,7 @@ private fun TrashTopBar(
         navigationIcon = {
             Icon(
                 Icons.Default.Menu,
-                modifier = Modifier.clickable(onClick = {
-                    val drawerState = scaffoldState.drawerState
-                    coroutineScope.launch { if (drawerState.isClosed) drawerState.open() else drawerState.close() }
-                }),
+                modifier = Modifier.clickable { onDrawerIconClick() },
                 contentDescription = null
             )
         },

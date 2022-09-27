@@ -18,7 +18,7 @@ class AppNavigator(
     private val navController: NavHostController
 ) {
 
-    fun navigate(destination: NavItem, route: String? = null) {
+    fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
         if (destination.isTopLevel) {
             navController.navigate(route ?: destination.route) {
                 popUpTo(navController.graph.findStartDestination().id) {
@@ -28,7 +28,11 @@ class AppNavigator(
                 restoreState = true
             }
         } else {
-            navController.navigate(route ?: destination.route)
+            navController.navigate(route ?: destination.route) {
+                if (backDestination != null) {
+                    popUpTo(backDestination.route)
+                }
+            }
         }
     }
 

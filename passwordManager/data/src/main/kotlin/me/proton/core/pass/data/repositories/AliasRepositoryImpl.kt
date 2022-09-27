@@ -1,13 +1,14 @@
 package me.proton.core.pass.data.repositories
 
-import javax.inject.Inject
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.data.extensions.toDomain
 import me.proton.core.pass.data.remote.RemoteAliasDataSource
+import me.proton.core.pass.domain.AliasMailbox
 import me.proton.core.pass.domain.AliasOptions
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.repositories.AliasRepository
+import javax.inject.Inject
 
 class AliasRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteAliasDataSource
@@ -18,8 +19,8 @@ class AliasRepositoryImpl @Inject constructor(
         return response.toDomain()
     }
 
-    override suspend fun getAliasMailboxes(userId: UserId, shareId: ShareId, itemId: ItemId): List<String> {
+    override suspend fun getAliasMailboxes(userId: UserId, shareId: ShareId, itemId: ItemId): List<AliasMailbox> {
         val response = remoteDataSource.getAliasDetails(userId, shareId, itemId)
-        return response.mailboxes
+        return response.mailboxes.map { AliasMailbox(id = it.id, email = it.email) }
     }
 }

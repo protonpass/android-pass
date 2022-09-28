@@ -65,7 +65,6 @@ android {
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
     implementation(Dependencies.passAutofillSampleLibs)
     testImplementation(Dependencies.testLibs)
     androidTestImplementation(Dependencies.androidTestLibs)

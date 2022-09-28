@@ -1,15 +1,8 @@
 package me.proton.core.pass.data.crypto
 
-import kotlin.random.Random
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.key.domain.decryptData
@@ -19,27 +12,21 @@ import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyData
 import me.proton.core.pass.domain.ItemContents
 import me.proton.core.pass.domain.KeyPacket
-import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.key.publicKey
 import me.proton.core.pass.domain.key.usePrivateKey
+import me.proton.core.pass.test.crypto.TestKeyStoreCrypto
 import me.proton.core.test.android.instrumented.utils.StringUtils
 import org.junit.Test
 import proton_pass_item_v1.ItemV1
+import kotlin.random.Random
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class UpdateItemTest {
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
-        keyStoreCrypto = object : KeyStoreCrypto {
-            override fun isUsingKeyStore(): Boolean = false
-            override fun encrypt(value: String): EncryptedString = value
-            override fun decrypt(value: EncryptedString): String = value
-            override fun encrypt(value: PlainByteArray): EncryptedByteArray =
-                EncryptedByteArray(value.array.copyOf())
-
-            override fun decrypt(value: EncryptedByteArray): PlainByteArray =
-                PlainByteArray(value.array.copyOf())
-        },
+        keyStoreCrypto = TestKeyStoreCrypto,
         pgpCrypto = GOpenPGPCrypto(),
     )
 
@@ -47,7 +34,7 @@ class UpdateItemTest {
     fun canUpdateItem() {
         val userAddress = TestUtils.createUserAddress(cryptoContext)
         val instance = UpdateItem(cryptoContext)
-        val (vaultKey, itemKey) = generateKeys()
+        val (vaultKey, itemKey) = TestUtils.createVaultKeyItemKey(cryptoContext)
         val lastRevision = Random.nextLong()
 
         val (sessionKey, keyPacket) = generateKeyPacketForVaultKey(vaultKey)
@@ -86,11 +73,5 @@ class UpdateItemTest {
                 keyPacket = keyPacket
             )
         )
-    }
-
-    private fun generateKeys(): Pair<VaultKey, ItemKey> {
-        val vaultKey = TestUtils.createVaultKey(cryptoContext)
-        val itemKey = TestUtils.createItemKeyForVaultKey(cryptoContext, vaultKey)
-        return Pair(vaultKey, itemKey)
     }
 }

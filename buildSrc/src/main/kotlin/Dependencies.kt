@@ -78,6 +78,7 @@ object Dependencies {
         add(JakeWharton.timber)
         add(KotlinX.serializationJson)
         add(Material.material)
+        add(Sentry.sentry)
         add(Squareup.okhttp)
         add(Squareup.plumber)
     }

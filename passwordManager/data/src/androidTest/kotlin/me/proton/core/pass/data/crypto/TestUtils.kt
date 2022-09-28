@@ -1,8 +1,8 @@
 package me.proton.core.pass.data.crypto
 
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.ArmoredKey
@@ -34,6 +34,12 @@ object TestUtils {
             signedKeyList = null,
             order = 1
         )
+    }
+
+    fun createVaultKeyItemKey(cryptoContext: CryptoContext): Pair<VaultKey, ItemKey> {
+        val vaultKey = createVaultKey(cryptoContext)
+        val itemKey = createItemKeyForVaultKey(cryptoContext, vaultKey)
+        return Pair(vaultKey, itemKey)
     }
 
     fun createVaultKey(cryptoContext: CryptoContext): VaultKey {
@@ -108,7 +114,7 @@ object TestUtils {
             KeyId("asda"),
             PrivateKey(
                 userPrivateKey,
-                passphrase = EncryptedByteArray(keyPassphrase),
+                passphrase = PlainByteArray(keyPassphrase).encrypt(cryptoContext.keyStoreCrypto),
                 isPrimary = true
             ),
         )

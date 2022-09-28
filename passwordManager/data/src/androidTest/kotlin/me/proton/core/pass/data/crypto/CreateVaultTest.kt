@@ -1,14 +1,10 @@
 package me.proton.core.pass.data.crypto
 
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.dataPacket
 import me.proton.core.crypto.common.pgp.keyPacket
@@ -25,22 +21,16 @@ import me.proton.core.key.domain.publicKey
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyData
 import me.proton.core.pass.data.requests.CreateVaultRequest
+import me.proton.core.pass.test.crypto.TestKeyStoreCrypto
 import me.proton.core.user.domain.entity.UserAddress
 import org.junit.Test
 import proton_pass_vault_v1.VaultV1
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class CreateVaultTest {
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
-        keyStoreCrypto = object : KeyStoreCrypto {
-            override fun isUsingKeyStore(): Boolean = false
-            override fun encrypt(value: String): EncryptedString = value
-            override fun decrypt(value: EncryptedString): String = value
-            override fun encrypt(value: PlainByteArray): EncryptedByteArray =
-                EncryptedByteArray(value.array.copyOf())
-
-            override fun decrypt(value: EncryptedByteArray): PlainByteArray =
-                PlainByteArray(value.array.copyOf())
-        },
+        keyStoreCrypto = TestKeyStoreCrypto,
         pgpCrypto = GOpenPGPCrypto(),
     )
 
@@ -128,8 +118,7 @@ class CreateVaultTest {
     ) {
         val crypto = cryptoContext.pgpCrypto
 
-        val decodedPassphraseKeyPacket =
-            crypto.getBase64Decoded(request.itemKeyPassphraseKeyPacket)
+        val decodedPassphraseKeyPacket = crypto.getBase64Decoded(request.itemKeyPassphraseKeyPacket)
         val decodedPassphrase = crypto.getBase64Decoded(request.itemKeyPassphrase)
 
         val vaultKeyContext = KeyHolderContext(
@@ -184,7 +173,7 @@ class CreateVaultTest {
             isActive = true,
             canEncrypt = true,
             canVerify = true,
-            passphrase = EncryptedByteArray(passphrase),
+            passphrase = PlainByteArray(passphrase).encrypt(cryptoContext.keyStoreCrypto),
         )
     }
 }

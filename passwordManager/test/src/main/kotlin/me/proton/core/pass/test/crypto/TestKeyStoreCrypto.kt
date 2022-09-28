@@ -41,7 +41,7 @@ object TestKeyStoreCrypto : KeyStoreCrypto {
         }
 
         val newByteArray = ByteArray(value.array.size - ENCRYPTED_TRAIL.size)
-        for (i in 0..value.array.size - ENCRYPTED_TRAIL.size) {
+        for (i in 0 until value.array.size - ENCRYPTED_TRAIL.size) {
             newByteArray[i] = value.array[i]
         }
         return PlainByteArray(newByteArray)

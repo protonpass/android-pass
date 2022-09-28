@@ -1,14 +1,10 @@
 package me.proton.core.pass.data.crypto
 
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
@@ -17,9 +13,71 @@ import me.proton.core.pass.domain.SharePermissionFlag
 import me.proton.core.pass.domain.flags
 import me.proton.core.pass.domain.hasFlag
 import me.proton.core.pass.domain.key.VaultKey
+import me.proton.core.pass.test.crypto.TestKeyStoreCrypto
 import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 class OpenShareTest {
+
+    private val cryptoContext: CryptoContext = AndroidCryptoContext(
+        keyStoreCrypto = TestKeyStoreCrypto,
+        pgpCrypto = GOpenPGPCrypto(),
+    )
+
+    @Test
+    fun testCanOpenCreateVaultResponse() {
+        val userAddress = TestUtils.createUserAddress(
+            cryptoContext,
+            key = USER_PRIVATE_KEY,
+            passphrase = USER_PASSPHRASE.encodeToByteArray()
+        )
+        val userPublicKey = PublicKey(
+            cryptoContext.pgpCrypto.getPublicKey(USER_PRIVATE_KEY),
+            isPrimary = true,
+            isActive = true,
+            canEncrypt = true,
+            canVerify = true
+        )
+        val instance = OpenShare(cryptoContext)
+        val vaultKey = getVaultKey()
+        val share = instance.open(
+            createVaultResponse, userAddress, listOf(userPublicKey),
+            listOf(
+                VaultKey(
+                    rotationId = createVaultResponse.contentRotationId!!,
+                    rotation = 1,
+                    key = ArmoredKey.Private(vaultKey.key, vaultKey),
+                    encryptedKeyPassphrase = vaultKey.passphrase
+                )
+            )
+        )
+
+        assertEquals(share.vaultId.id, createVaultResponse.vaultId)
+        assertEquals(share.targetId, createVaultResponse.targetId)
+        assertTrue(share.permission.hasFlag(SharePermissionFlag.Admin))
+
+        val flags = share.permission.flags()
+        assertEquals(1, flags.size)
+    }
+
+    @Test
+    fun testCanOpenShareContents() {
+        val instance = OpenShareContents(cryptoContext)
+        val contents = instance.openVaultShareContents(createVaultResponse, getVaultKey())
+
+        assertEquals(VAULT_NAME, contents.name)
+        assertEquals(VAULT_DESCRIPTION, contents.description)
+    }
+
+    private fun getVaultKey(): PrivateKey = PrivateKey(
+        key = VAULT_KEY,
+        isPrimary = true,
+        isActive = true,
+        canEncrypt = true,
+        canVerify = true,
+        passphrase = PlainByteArray(VAULT_KEY_PASSPHRASE.encodeToByteArray()).encrypt(cryptoContext.keyStoreCrypto)
+    )
 
     companion object {
         const val USER_PASSPHRASE = "Dv7qCcYdgknWI0U0R3GsnjGUB4xo3LeK"
@@ -108,6 +166,7 @@ class OpenShareTest {
             -----END PGP PRIVATE KEY BLOCK-----
         """.trimIndent()
 
+        @Suppress("MaxLineLength", "UnderscoresInNumericLiterals")
         val createVaultResponse = ShareResponse(
             shareId = "ziWi-ZOb28XR4sCGFCEpqQbd1FITVWYfTfKYUmV_wKKR3GsveN4HZCh9er5dhelYylEp-fhjBbUPDMHGU699fw==",
             vaultId = "l8vWAXHBQmv0u7OVtPbcqMa4iwQaBqowINSQjPrxAr-Da8fVPKUkUcqAq30_BCxj1X0nW70HQRmAa-rIvzmKUA==",
@@ -132,72 +191,4 @@ class OpenShareTest {
         const val VAULT_NAME = "SomeName"
         const val VAULT_DESCRIPTION = "Vault created from the Rust CLI"
     }
-
-    private val cryptoContext: CryptoContext = AndroidCryptoContext(
-        keyStoreCrypto = object : KeyStoreCrypto {
-            override fun isUsingKeyStore(): Boolean = false
-            override fun encrypt(value: String): EncryptedString = value
-            override fun decrypt(value: EncryptedString): String = value
-            override fun encrypt(value: PlainByteArray): EncryptedByteArray =
-                EncryptedByteArray(value.array.copyOf())
-
-            override fun decrypt(value: EncryptedByteArray): PlainByteArray =
-                PlainByteArray(value.array.copyOf())
-        },
-        pgpCrypto = GOpenPGPCrypto(),
-    )
-
-    @Test
-    fun testCanOpenCreateVaultResponse() {
-        val userAddress = TestUtils.createUserAddress(
-            cryptoContext,
-            key = USER_PRIVATE_KEY,
-            passphrase = USER_PASSPHRASE.encodeToByteArray()
-        )
-        val userPublicKey = PublicKey(
-            cryptoContext.pgpCrypto.getPublicKey(USER_PRIVATE_KEY),
-            isPrimary = true,
-            isActive = true,
-            canEncrypt = true,
-            canVerify = true
-        )
-        val instance = OpenShare(cryptoContext)
-        val vaultKey = getVaultKey()
-        val share = instance.open(
-            createVaultResponse, userAddress, listOf(userPublicKey),
-            listOf(
-                VaultKey(
-                    rotationId = createVaultResponse.contentRotationId!!,
-                    rotation = 1,
-                    key = ArmoredKey.Private(vaultKey.key, vaultKey),
-                    encryptedKeyPassphrase = vaultKey.passphrase
-                )
-            )
-        )
-
-        assertEquals(share.vaultId.id, createVaultResponse.vaultId)
-        assertEquals(share.targetId, createVaultResponse.targetId)
-        assertTrue(share.permission.hasFlag(SharePermissionFlag.Admin))
-
-        val flags = share.permission.flags()
-        assertEquals(1, flags.size)
-    }
-
-    @Test
-    fun testCanOpenShareContents() {
-        val instance = OpenShareContents(cryptoContext)
-        val contents = instance.openVaultShareContents(createVaultResponse, getVaultKey())
-
-        assertEquals(VAULT_NAME, contents.name)
-        assertEquals(VAULT_DESCRIPTION, contents.description)
-    }
-
-    private fun getVaultKey(): PrivateKey = PrivateKey(
-        key = VAULT_KEY,
-        isPrimary = true,
-        isActive = true,
-        canEncrypt = true,
-        canVerify = true,
-        passphrase = EncryptedByteArray(VAULT_KEY_PASSPHRASE.encodeToByteArray())
-    )
 }

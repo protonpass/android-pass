@@ -71,7 +71,8 @@ dependencies {
     implementation(project(":passwordManager:domain"))
     implementation("com.google.protobuf:protobuf-lite:${Versions.Protobuf.javaliteArtifact}")
 
-    testImplementation(Dependencies.testLibs)
+    androidTestImplementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
+    androidTestImplementation(project(":passwordManager:test"))
     androidTestImplementation(Dependencies.androidTestLibs)
 }
 

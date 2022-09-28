@@ -5,6 +5,8 @@ plugins {
 
 android {
     compileSdk = Config.compileSdk
+    buildFeatures.buildConfig = false
+
 
     defaultConfig {
         minSdk = 27

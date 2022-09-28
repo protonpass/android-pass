@@ -206,6 +206,7 @@ tasks.create("printGeneratedChangelog") {
 dependencies {
     implementation(files("../proton-libs/gopenpgp/gopenpgp.aar"))
     implementation(Dependencies.appLibs)
+    implementation(project(":passwordManager:autofill:implementation"))
     implementation(project(":passwordManager:dagger"))
     implementation(project(":passwordManager:data"))
     implementation(project(":passwordManager:domain"))

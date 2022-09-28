@@ -44,7 +44,6 @@ class SimpleComposeLoginActivity : AppCompatActivity() {
 
         setContent {
             ExplicitAutofillTypesDemo(onLoginClicked = {
-                // TODO: (14/09/21) autofill save doesn't work in Compose yet
                 val intent = Intent(this, LoginResultActivity::class.java)
                 startActivity(intent)
                 finish()

@@ -20,32 +20,20 @@ package me.proton.android.pass.initializer
 
 import android.content.Context
 import androidx.startup.Initializer
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
+import io.sentry.Sentry
+import io.sentry.SentryOptions
+import me.proton.android.pass.BuildConfig
 
 class SentryInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {
-        /*
         Sentry.init { options: SentryOptions ->
-            options.dsn = BuildConfig.SENTRY_DSN
+            options.dsn = BuildConfig.SENTRY_DSN.takeIf { !BuildConfig.DEBUG }.orEmpty()
             options.release = BuildConfig.VERSION_NAME
-            options.environment = BuildConfig.HOST
+            options.environment = BuildConfig.FLAVOR
+            options.isEnableAutoSessionTracking = false
         }
-
-        EntryPointAccessors.fromApplication(
-            context.applicationContext,
-            SentryInitializerEntryPoint::class.java
-        ).observer().start()
-         */
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
-
-    @EntryPoint
-    @InstallIn(SingletonComponent::class)
-    interface SentryInitializerEntryPoint {
-        // fun observer(): SentryUserObserver
-    }
 }

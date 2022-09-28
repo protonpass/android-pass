@@ -91,6 +91,6 @@ object Versions {
     }
 
     object Sentry {
-        const val sentry = "5.7.3"
+        const val sentry = "6.4.2"
     }
 }

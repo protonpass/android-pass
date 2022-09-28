@@ -46,7 +46,7 @@ val privateProperties = Properties().apply {
     }
 }
 
-val sentryDSN: String = privateProperties.getProperty("sentryDSN") ?: ""
+val sentryDSN: String = privateProperties.getProperty("SENTRY_DSN") ?: ""
 val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 
 android {

@@ -116,6 +116,11 @@
             android:name="me.proton.core.payment.presentation.ui.PaymentTokenApprovalActivity"
             android:windowSoftInputMode="adjustResize" />
         <!-- /Core-Auth activities -->
+
+        <meta-data
+            android:name="io.sentry.auto-init"
+            android:value="false" />
+
     </application>
 
 </manifest>

@@ -15,6 +15,8 @@ if (includeCoreLibsHelper.exists()) {
 }
 
 include(":app")
+include(":passwordManager:autofill:demo")
+include(":passwordManager:autofill:implementation")
 include(":passwordManager:dagger")
 include(":passwordManager:data")
 include(":passwordManager:domain")
@@ -24,7 +26,6 @@ include(":passwordManager:search:implementation")
 include(":passwordManager:test")
 include(":autofill")
 include(":autofill:service")
-include(":autofill:sample")
 include(":common-secret")
 
 dependencyResolutionManagement {

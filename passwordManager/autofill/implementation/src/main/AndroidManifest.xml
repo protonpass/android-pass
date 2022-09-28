@@ -17,15 +17,16 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 
-<manifest package="me.proton.core.pass.autofill.service"
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    package="me.proton.core.pass.autofill.service"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
 
     <application>
         <service
-            android:name="me.proton.core.pass.autofill.service.PassAutofillService"
+            android:name="me.proton.core.pass.autofill.ProtonPassAutofillService"
             android:label="Pass Autofill"
             android:permission="android.permission.BIND_AUTOFILL_SERVICE"
             android:exported="true">
@@ -37,6 +38,6 @@
             </intent-filter>
         </service>
     </application>
-    -->
+
 </manifest>
 

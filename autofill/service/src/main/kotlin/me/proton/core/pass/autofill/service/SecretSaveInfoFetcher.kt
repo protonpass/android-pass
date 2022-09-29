@@ -2,8 +2,8 @@ package me.proton.core.pass.autofill.service
 
 import me.proton.core.pass.autofill.service.entities.AssistField
 import me.proton.core.pass.autofill.service.entities.SecretSaveInfo
-import me.proton.core.pass.commonsecret.SecretType
-import me.proton.core.pass.commonsecret.SecretValue
+import me.proton.core.pass.domain.entity.commonsecret.SecretType
+import me.proton.core.pass.domain.entity.commonsecret.SecretValue
 
 class SecretSaveInfoFetcher {
 

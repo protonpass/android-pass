@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.dp
 import me.proton.android.pass.R
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.autofill.service.entities.SecretSaveInfo
-import me.proton.core.pass.commonsecret.SecretType
-import me.proton.core.pass.commonsecret.SecretValue
+import me.proton.core.pass.domain.entity.commonsecret.SecretType
+import me.proton.core.pass.domain.entity.commonsecret.SecretValue
 import me.proton.core.pass.presentation.components.common.TextFieldDropdownMenu
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress

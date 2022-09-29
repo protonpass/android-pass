@@ -2,13 +2,16 @@ package me.proton.core.pass.autofill.service
 
 import me.proton.core.pass.autofill.service.entities.AssistField
 import me.proton.core.pass.autofill.service.entities.DatasetMapping
-import me.proton.core.pass.commonsecret.SecretType
-import me.proton.core.pass.commonsecret.SecretValue
-import me.proton.core.pass.commonsecret.Secret
+import me.proton.core.pass.domain.entity.commonsecret.Secret
+import me.proton.core.pass.domain.entity.commonsecret.SecretType
+import me.proton.core.pass.domain.entity.commonsecret.SecretValue
 
 class AutofillSecretMapper {
 
-    fun mapSecretsToFields(secret: Secret, assistFields: List<AssistField>): List<DatasetMapping> {
+    fun mapSecretsToFields(
+        secret: Secret,
+        assistFields: List<AssistField>
+    ): List<DatasetMapping> {
         val secretValue = secret.contents
         val validFields = assistFields.filter { it.type != null }
         return if (secretValue is SecretValue.Login) {

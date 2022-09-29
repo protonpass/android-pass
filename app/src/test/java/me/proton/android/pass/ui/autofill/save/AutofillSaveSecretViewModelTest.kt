@@ -17,8 +17,8 @@ import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.autofill.service.entities.SecretSaveInfo
-import me.proton.core.pass.commonsecret.SecretType
-import me.proton.core.pass.commonsecret.SecretValue
+import me.proton.core.pass.domain.entity.commonsecret.SecretType
+import me.proton.core.pass.domain.entity.commonsecret.SecretValue
 import me.proton.core.pass.domain.usecases.AddSecret
 import me.proton.core.pass.domain.usecases.GetAddressesForUserId
 import me.proton.core.pass.domain.usecases.ObserveAccounts

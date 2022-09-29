@@ -1,14 +1,14 @@
 package me.proton.core.pass.domain.usecases
 
-import java.util.UUID
-import javax.inject.Inject
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.pass.commonsecret.Secret
-import me.proton.core.pass.commonsecret.SecretType
-import me.proton.core.pass.commonsecret.SecretValue
+import me.proton.core.pass.domain.entity.commonsecret.Secret
+import me.proton.core.pass.domain.entity.commonsecret.SecretType
+import me.proton.core.pass.domain.entity.commonsecret.SecretValue
 import me.proton.core.pass.domain.repositories.SecretsRepository
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.repository.UserAddressRepository
+import java.util.UUID
+import javax.inject.Inject
 
 class AddSecret @Inject constructor(
     private val secretsRepository: SecretsRepository,

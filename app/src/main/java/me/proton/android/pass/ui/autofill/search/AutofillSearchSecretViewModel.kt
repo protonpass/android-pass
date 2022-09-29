@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.android.pass.log.PassKeyLogger
 import me.proton.android.pass.log.e
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.commonsecret.Secret
+import me.proton.core.pass.domain.entity.commonsecret.Secret
 import me.proton.core.pass.domain.usecases.GetAddressById
 import me.proton.core.pass.domain.usecases.SearchSecretWithUri
 import me.proton.core.user.domain.entity.AddressId

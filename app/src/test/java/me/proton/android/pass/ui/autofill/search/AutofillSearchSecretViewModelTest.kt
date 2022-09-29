@@ -11,9 +11,9 @@ import kotlinx.coroutines.test.setMain
 import me.proton.android.pass.log.e
 import me.proton.android.pass.ui.autofill.search.AutofillSearchSecretViewModel.State
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.commonsecret.Secret
-import me.proton.core.pass.commonsecret.SecretType
-import me.proton.core.pass.commonsecret.SecretValue
+import me.proton.core.pass.domain.entity.commonsecret.Secret
+import me.proton.core.pass.domain.entity.commonsecret.SecretType
+import me.proton.core.pass.domain.entity.commonsecret.SecretValue
 import me.proton.core.pass.domain.usecases.GetAddressById
 import me.proton.core.pass.domain.usecases.SearchSecretWithUri
 import me.proton.core.user.domain.entity.AddressId

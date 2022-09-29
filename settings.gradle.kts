@@ -24,9 +24,7 @@ include(":passwordManager:presentation")
 include(":passwordManager:search:api")
 include(":passwordManager:search:implementation")
 include(":passwordManager:test")
-include(":autofill")
 include(":autofill:service")
-include(":common-secret")
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)

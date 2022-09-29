@@ -3,7 +3,7 @@ package me.proton.core.pass.autofill.service.entities
 import android.os.Parcel
 import android.os.Parcelable
 import android.view.autofill.AutofillValue
-import me.proton.core.pass.commonsecret.SecretType
+import me.proton.core.pass.domain.entity.commonsecret.SecretType
 
 // TODO: use Parcelize here once https://github.com/JetBrains/kotlin/pull/4575 is merged
 data class AssistField(
@@ -17,8 +17,7 @@ data class AssistField(
         parcel.readParcelable(SecretType::class.java.classLoader),
         parcel.readParcelable(AutofillValue::class.java.classLoader),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeParcelable(id, flags)

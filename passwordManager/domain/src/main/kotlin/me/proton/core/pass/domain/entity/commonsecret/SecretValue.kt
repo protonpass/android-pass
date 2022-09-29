@@ -1,4 +1,4 @@
-package me.proton.core.pass.commonsecret
+package me.proton.core.pass.domain.entity.commonsecret
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

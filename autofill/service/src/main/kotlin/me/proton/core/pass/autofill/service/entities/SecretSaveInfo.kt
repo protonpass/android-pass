@@ -2,8 +2,8 @@ package me.proton.core.pass.autofill.service.entities
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import me.proton.core.pass.commonsecret.SecretType
-import me.proton.core.pass.commonsecret.SecretValue
+import me.proton.core.pass.domain.entity.commonsecret.SecretType
+import me.proton.core.pass.domain.entity.commonsecret.SecretValue
 
 @Parcelize
 data class SecretSaveInfo(

@@ -51,8 +51,7 @@ android {
 
 dependencies {
     implementation(Dependencies.passAutofillServiceLibs)
-//    implementation(project(":passwordManager:domain"))
-    implementation(project(":common-secret"))
+    implementation(project(":passwordManager:domain"))
     testImplementation(Dependencies.testLibs)
     androidTestImplementation(Dependencies.androidTestLibs)
 }

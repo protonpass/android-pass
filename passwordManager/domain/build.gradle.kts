@@ -38,7 +38,6 @@ android {
 
 dependencies {
     implementation(Dependencies.passDomainLibs)
-    api(project(":common-secret"))
 }
 
 setAsHiltModule()

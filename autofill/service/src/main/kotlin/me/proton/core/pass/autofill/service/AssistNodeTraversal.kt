@@ -7,7 +7,7 @@ import android.view.View
 import me.proton.core.pass.autofill.service.entities.AndroidAutofillFieldId
 import me.proton.core.pass.autofill.service.entities.AssistField
 import me.proton.core.pass.autofill.service.entities.AutofillNode
-import me.proton.core.pass.commonsecret.SecretType
+import me.proton.core.pass.domain.entity.commonsecret.SecretType
 
 class AssistNodeTraversal {
 

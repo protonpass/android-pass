@@ -3,7 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("kotlin-parcelize")
-    kotlin("plugin.serialization") version Versions.Gradle.kotlinGradlePlugin
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -38,6 +38,6 @@ android {
 
 dependencies {
     api(project(":passwordManager:domain"))
-}
 
-setAsHiltModule()
+    implementation(libs.kotlinx.coroutines.core)
+}

@@ -3,7 +3,8 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("kotlin-parcelize")
-    kotlin("plugin.serialization") version Versions.Gradle.kotlinGradlePlugin
+    kotlin("plugin.serialization")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -37,7 +38,16 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.passDomainLibs)
-}
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.core.account)
+    implementation(libs.core.accountManager)
+    implementation(libs.core.crypto)
+    implementation(libs.core.domain)
+    implementation(libs.core.key)
+    implementation(libs.core.user)
+    implementation(libs.core.utilKotlin)
 
-setAsHiltModule()
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
+}

@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.shared
+package me.proton.core.pass.presentation.components.common.item
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -27,11 +27,16 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.proton.android.pass.R
-import me.proton.android.pass.ui.home.OnItemClick
+import me.proton.android.pass.ui.shared.DropDownAction
+import me.proton.android.pass.ui.shared.ItemDropdownMenu
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemType
+import me.proton.core.pass.presentation.R
 import me.proton.core.pass.presentation.components.model.ItemUiModel
+
+typealias OnItemClick = (ItemUiModel) -> Unit
+
+private const val NOTE_MAX_CHARACTERS = 10
 
 data class ItemAction(
     val onSelect: (ItemUiModel) -> Unit,
@@ -69,7 +74,7 @@ internal fun ItemRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onItemClicked?.invoke(item.shareId, item.id) }
+            .clickable { onItemClicked?.invoke(item) }
             .padding(end = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -133,7 +138,7 @@ internal fun NoteRow(
     ItemRow(
         icon = R.drawable.ic_proton_note,
         title = item.name,
-        subtitle = itemType.text.take(10),
+        subtitle = itemType.text.take(NOTE_MAX_CHARACTERS),
         modifier = modifier
     )
 }

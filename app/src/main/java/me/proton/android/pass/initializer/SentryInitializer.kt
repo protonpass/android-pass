@@ -31,7 +31,6 @@ class SentryInitializer : Initializer<Unit> {
             options.dsn = BuildConfig.SENTRY_DSN.takeIf { !BuildConfig.DEBUG }.orEmpty()
             options.release = BuildConfig.VERSION_NAME
             options.environment = BuildConfig.FLAVOR
-            options.isEnableAutoSessionTracking = false
         }
     }
 

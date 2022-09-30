@@ -270,6 +270,8 @@ dependencies {
     implementation(project(":passwordManager:search:implementation"))
     implementation(project(":autofill:service"))
 
+    debugImplementation(libs.leakCanary)
+
     kapt(libs.androidx.room.compiler)
 
     implementation(libs.dagger.hilt.android)

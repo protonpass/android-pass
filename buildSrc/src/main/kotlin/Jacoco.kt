@@ -1,11 +1,14 @@
+
 import groovy.xml.slurpersupport.Node
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.Exec
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.withType
 import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.register
+import org.gradle.kotlin.dsl.withType
 import org.gradle.testing.jacoco.plugins.JacocoPluginExtension
 import org.gradle.testing.jacoco.plugins.JacocoTaskExtension
 import org.gradle.testing.jacoco.tasks.JacocoReport
@@ -17,7 +20,8 @@ fun Project.configureJacoco(flavor: String = "", srcFolder: String = "kotlin") {
     apply(plugin = "jacoco")
 
     configure<JacocoPluginExtension> {
-        toolVersion = Versions.JaCoCo.tool
+        val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+        toolVersion = catalog.findVersion("jacoco").get().requiredVersion
     }
 
     val taskName = if (flavor.isEmpty()) {
@@ -61,7 +65,8 @@ fun Project.configureJacoco(flavor: String = "", srcFolder: String = "kotlin") {
 
     tasks.register("coverageReport") {
         dependsOn("jacocoTestReport")
-        val reportFile = project.file("$buildDir/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
+        val reportFile =
+            project.file("$buildDir/reports/jacoco/jacocoTestReport/jacocoTestReport.xml")
         inputs.file(reportFile)
 
         doLast {

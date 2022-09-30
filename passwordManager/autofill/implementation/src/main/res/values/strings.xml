@@ -1,0 +1,5 @@
+<resources>
+    <string name="error_cant_find_matching_fields">No matching displayed fields found</string>
+    <string name="autofill_authenticate_prompt">Authenticate in Proton Pass</string>
+    <string name="error_credentials_not_found">No matching credentials found</string>
+</resources>

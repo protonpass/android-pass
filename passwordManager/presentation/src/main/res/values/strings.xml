@@ -59,5 +59,6 @@
     <!-- TopBar -->
     <string name="action_create">Create</string>
     <string name="action_search">Search</string>
+    <string name="action_delete">Delete</string>
     <string name="action_empty_trash">Empty trash</string>
 </resources>

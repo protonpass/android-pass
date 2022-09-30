@@ -10,8 +10,9 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
-    kotlin("plugin.serialization") version Versions.Gradle.kotlinGradlePlugin
-    id("com.google.protobuf") version Versions.Gradle.protobufPlugin
+    kotlin("plugin.serialization")
+    id("com.google.protobuf")
+    id("dagger.hilt.android.plugin")
 }
 
 // Necessary hack for the Protobuf plugin until they support AGP 7.x
@@ -66,25 +67,55 @@ android {
 
 dependencies {
     compileOnly(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
-    implementation(Dependencies.passDataLibs)
-    kapt(Dependencies.passDataAnnotationProcessors)
+    implementation(libs.androidx.hilt.work)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.core.account)
+    implementation(libs.core.accountManager)
+    implementation(libs.core.crypto)
+    implementation(libs.core.data)
+    implementation(libs.core.dataRoom)
+    implementation(libs.core.domain)
+    implementation(libs.core.key)
+    implementation(libs.core.network)
+    implementation(libs.core.user)
+    implementation(libs.core.utilKotlin)
+    implementation(libs.retrofit)
+    kapt(libs.androidx.room.compiler)
+    implementation(libs.google.protobuf.lite)
+
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
+
     implementation(project(":passwordManager:domain"))
-    implementation("com.google.protobuf:protobuf-lite:${Versions.Protobuf.javaliteArtifact}")
 
     androidTestImplementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(project(":passwordManager:test"))
-    androidTestImplementation(Dependencies.androidTestLibs)
+
+    androidTestImplementation(libs.androidx.compose.ui.test)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.core.ktx)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.kotlinTest)
+    androidTestImplementation(libs.core.test.android.instrumented)
 }
 
 protobuf {
     val archSuffix = if (Os.isFamily(Os.FAMILY_MAC)) ":osx-x86_64" else ""
+    val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
     protoc {
-        artifact = "com.google.protobuf:protoc:${Versions.Protobuf.protocArtifact}$archSuffix"
+        artifact = "${catalog.findLibrary("google.protobuf.protoc").get().get()}$archSuffix"
     }
     plugins {
         id("javalite") {
             artifact =
-                "com.google.protobuf:protoc-gen-javalite:${Versions.Protobuf.javaliteArtifact}$archSuffix"
+                "${catalog.findLibrary("google.protobuf.protocGenJavalite").get().get()}$archSuffix"
         }
     }
     generateProtoTasks {
@@ -95,6 +126,3 @@ protobuf {
         }
     }
 }
-
-//configureJacoco()
-setAsHiltModule()

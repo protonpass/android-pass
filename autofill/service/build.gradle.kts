@@ -4,7 +4,7 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
-    kotlin("plugin.serialization") version Versions.Gradle.kotlinGradlePlugin
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -50,10 +50,33 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.passAutofillServiceLibs)
     implementation(project(":passwordManager:domain"))
-    testImplementation(Dependencies.testLibs)
-    androidTestImplementation(Dependencies.androidTestLibs)
-}
 
-setAsHiltModule()
+    implementation(libs.androidx.autofill)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.core.domain)
+    implementation(libs.core.key)
+    implementation(libs.core.user)
+    implementation(libs.core.utilKotlin)
+
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
+
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.junit)
+    testImplementation(libs.core.test.kotlin)
+
+    androidTestImplementation(libs.androidx.compose.ui.test)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.core.ktx)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.kotlinTest)
+    androidTestImplementation(libs.core.test.android.instrumented)
+}

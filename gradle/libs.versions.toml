@@ -26,7 +26,7 @@ turbine = "0.10.0"
 # Coil
 coil = "1.3.2"
 # Core
-core = "9.0.1"
+core = "9.0.2"
 # Dagger
 dagger = "2.41"
 # Google

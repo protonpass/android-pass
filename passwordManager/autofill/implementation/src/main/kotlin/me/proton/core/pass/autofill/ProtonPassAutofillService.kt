@@ -10,11 +10,12 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProtonPassAutofillService : AutofillService() {
-    override fun onFillRequest(request: FillRequest, cancellationSignal: CancellationSignal, callback: FillCallback) {
 
+    override fun onFillRequest(request: FillRequest, cancellationSignal: CancellationSignal, callback: FillCallback) {
+        AutoFillHandler.handleAutofill(this, request, cancellationSignal, callback)
     }
 
     override fun onSaveRequest(request: SaveRequest, callback: SaveCallback) {
-
+        callback.onSuccess()
     }
 }

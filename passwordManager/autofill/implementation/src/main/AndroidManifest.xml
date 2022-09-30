@@ -25,6 +25,9 @@
         tools:ignore="QueryAllPackagesPermission" />
 
     <application>
+
+        <activity android:name="me.proton.core.pass.autofill.ui.autofill.AutofillActivity" />
+
         <service
             android:name="me.proton.core.pass.autofill.ProtonPassAutofillService"
             android:label="Pass Autofill"

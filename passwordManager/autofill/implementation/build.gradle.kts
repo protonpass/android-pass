@@ -3,6 +3,7 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -34,11 +35,46 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
+    }
+
+    hilt {
+        enableAggregatingTask = true
+    }
 }
 
 dependencies {
-    testImplementation(project(":passwordManager:test"))
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.foundationLayout)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.uiTooling)
+    implementation(libs.accompanist.navigation.animation)
+    implementation(libs.androidx.autofill)
+    implementation(libs.androidx.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.work)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.core.domain)
+    implementation(libs.core.key)
+    implementation(libs.core.presentation.compose)
+    implementation(libs.core.user)
+    implementation(libs.core.utilKotlin)
+    implementation(project(":passwordManager:data"))
+    implementation(project(":passwordManager:domain"))
+    implementation(project(":passwordManager:presentation"))
+    implementation(project(":passwordManager:search:api"))
 
+    testImplementation(project(":passwordManager:test"))
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)

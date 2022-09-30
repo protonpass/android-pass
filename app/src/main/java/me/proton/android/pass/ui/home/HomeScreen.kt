@@ -1,5 +1,9 @@
 package me.proton.android.pass.ui.home
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE
+import android.view.autofill.AutofillManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +16,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,23 +26,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
-import me.proton.android.pass.ui.shared.ItemAction
-import me.proton.android.pass.ui.shared.ItemsList
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
+import me.proton.core.pass.presentation.components.common.item.ItemAction
+import me.proton.core.pass.presentation.components.common.item.ItemsList
 import me.proton.core.pass.presentation.components.model.ItemUiModel
-
-internal typealias OnItemClick = (ShareId, ItemId) -> Unit
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -130,9 +133,9 @@ private fun HomeContent(
                     Home(
                         items = uiState.items,
                         modifier = Modifier.padding(contentPadding),
-                        onItemClick = { shareId, itemId ->
+                        onItemClick = { item ->
                             keyboardController?.hide()
-                            homeScreenNavigation.toItemDetail(shareId, itemId)
+                            homeScreenNavigation.toItemDetail(item.shareId, item.id)
                         },
                         navigation = homeScreenNavigation,
                         onDeleteItemClicked = { itemToDelete = it }
@@ -184,7 +187,7 @@ private fun HomeTopBar(
 private fun Home(
     items: List<ItemUiModel>,
     modifier: Modifier = Modifier,
-    onItemClick: OnItemClick,
+    onItemClick: (ItemUiModel) -> Unit,
     navigation: HomeScreenNavigation,
     onDeleteItemClicked: (ItemUiModel) -> Unit
 ) {
@@ -231,18 +234,13 @@ internal fun goToEdit(
 
 @Composable
 private fun RequestAutofillIfSupported() {
-//    if (Build.VERSION.SDK_INT >= 9000) {
-//        val context = LocalContext.current
-//        RequestAutofillAccessIfNeeded(context = context)
-//    }
-}
-
-/*
-@RequiresApi(Build.VERSION_CODES.O)
-@Composable
-private fun RequestAutofillAccessIfNeeded(context: Context) {
+    val context = LocalContext.current
     val autofillManager = context.getSystemService(AutofillManager::class.java)
-    if (!autofillManager.hasEnabledAutofillServices()) {
+
+    // We are only requesting Autofill if the user does not have any autofill provider selected
+    // We should investigate a way for inviting the user to select our app even if they have another one,
+    // probably in an onboarding process or similar flow
+    if (!autofillManager.isEnabled) {
         LaunchedEffect(true) {
             val intent = Intent(ACTION_REQUEST_SET_AUTOFILL_SERVICE)
             intent.data = Uri.parse("package:${context.packageName}")
@@ -250,4 +248,3 @@ private fun RequestAutofillAccessIfNeeded(context: Context) {
         }
     }
 }
-*/

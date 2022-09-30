@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -42,7 +43,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.AndroidX.compose
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 
     packagingOptions {
@@ -53,13 +54,48 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.passPresentationLibs)
-    implementation(project(":passwordManager:domain"))
-    kapt(Dependencies.hiltAnnotationProcessors)
-    testImplementation(Dependencies.testLibs)
-    androidTestImplementation(Dependencies.androidTestLibs)
-    debugImplementation(Dependencies.composeDebugLibs)
-}
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.foundationLayout)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.uiTooling)
+    implementation(libs.core.accountManager)
+    implementation(libs.core.accountManager.presentation.compose)
+    implementation(libs.core.auth)
+    implementation(libs.core.domain)
+    implementation(libs.core.key)
+    implementation(libs.core.network)
+    implementation(libs.core.presentation)
+    implementation(libs.core.presentation.compose)
+    implementation(libs.core.user)
+    implementation(libs.core.utilKotlin)
 
-//configureJacoco()
-setAsHiltModule()
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
+
+    implementation(project(":passwordManager:domain"))
+
+    debugImplementation(libs.androidx.compose.uiTooling)
+    debugImplementation(libs.androidx.compose.uiTestManifest)
+
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.junit)
+    testImplementation(libs.core.test.kotlin)
+
+    androidTestImplementation(libs.androidx.compose.ui.test)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.core.ktx)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.kotlinTest)
+    androidTestImplementation(libs.core.test.android.instrumented)
+}

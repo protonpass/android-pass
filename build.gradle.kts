@@ -18,22 +18,16 @@
 
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
-buildscript {
-    repositories {
-        google()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:${Versions.Gradle.androidGradlePlugin}")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.Gradle.kotlinGradlePlugin}")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.Gradle.hiltAndroidGradlePlugin}")
-        classpath("org.jacoco:org.jacoco.core:${Versions.Gradle.jacocoGradlePlugin}")
-    }
-}
-
 plugins {
-    id("me.proton.core.gradle-plugins.detekt") version Versions.Gradle.protonDetektPlugin
-    id("com.github.ben-manes.versions") version Versions.Gradle.benManesVersionsPlugin
-    id("com.osacky.doctor") version Versions.Gradle.doctorPlugin
+    alias(libs.plugins.gradlePlugin.proton.detekt)
+    alias(libs.plugins.gradlePlugin.versions)
+    alias(libs.plugins.gradlePlugin.doctor)
+    alias(libs.plugins.gradlePlugin.application) apply false
+    alias(libs.plugins.gradlePlugin.library) apply false
+    alias(libs.plugins.gradlePlugin.kotlin.jvm) apply false
+    alias(libs.plugins.gradlePlugin.kotlin.serialization) apply false
+    alias(libs.plugins.gradlePlugin.hilt) apply false
+    alias(libs.plugins.gradlePlugin.protobuf) apply false
 }
 
 val isCI = System.getenv().containsKey("CI")

@@ -33,3 +33,11 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}

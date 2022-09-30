@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -35,10 +36,22 @@ android {
 }
 
 dependencies {
-    implementation(Dependencies.passDaggerLibs)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.core.accountManager)
+    implementation(libs.core.crypto)
+    implementation(libs.core.domain)
+    implementation(libs.core.key)
+    implementation(libs.core.network)
+    implementation(libs.core.user)
+    implementation(libs.core.utilAndroidDagger)
+    implementation(libs.core.utilKotlin)
+
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
+    
+    kapt(libs.androidx.room.compiler)
+
     implementation(project(":passwordManager:data"))
     implementation(project(":passwordManager:domain"))
-    kapt(Dependencies.passDaggerAnnotationProcessors)
 }
-
-setAsHiltModule()

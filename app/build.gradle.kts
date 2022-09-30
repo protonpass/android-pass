@@ -31,7 +31,7 @@ base {
     archivesName.set(Config.archivesBaseName)
 }
 
-tasks.register("getArchivesName"){
+tasks.register("getArchivesName") {
     doLast {
         println("[ARCHIVES_NAME]${Config.archivesBaseName}")
     }
@@ -62,7 +62,11 @@ android {
 
         buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
         buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
-        buildConfigField("String", "HUMAN_VERIFICATION_HOST", "verify.protonmail.com".toBuildConfigValue())
+        buildConfigField(
+            "String",
+            "HUMAN_VERIFICATION_HOST",
+            "verify.protonmail.com".toBuildConfigValue()
+        )
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -154,7 +158,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Versions.AndroidX.compose
+        kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 
     hilt {
@@ -205,7 +209,59 @@ tasks.create("printGeneratedChangelog") {
 
 dependencies {
     implementation(files("../proton-libs/gopenpgp/gopenpgp.aar"))
-    implementation(Dependencies.appLibs)
+    implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.insets)
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.systemUiController)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.compose.foundationLayout)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.work)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.foundationLayout)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.uiTooling)
+    implementation(libs.core.account)
+    implementation(libs.core.accountManager)
+    implementation(libs.core.accountManager.presentation.compose)
+    implementation(libs.core.auth)
+    implementation(libs.core.challenge)
+    implementation(libs.core.country)
+    implementation(libs.core.crypto)
+    implementation(libs.core.cryptoValidator)
+    implementation(libs.core.data)
+    implementation(libs.core.dataRoom)
+    implementation(libs.core.domain)
+    implementation(libs.core.eventManager)
+    implementation(libs.core.featureFlag)
+    implementation(libs.core.humanVerification)
+    implementation(libs.core.key)
+    implementation(libs.core.network)
+    implementation(libs.core.payment)
+    implementation(libs.core.plan)
+    implementation(libs.core.presentation)
+    implementation(libs.core.presentation.compose)
+    implementation(libs.core.report)
+    implementation(libs.core.user)
+    implementation(libs.core.userSettings)
+    implementation(libs.core.utilAndroidDagger)
+    implementation(libs.core.utilKotlin)
+    implementation(libs.timber)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.material)
+    implementation(libs.sentry)
+    implementation(libs.okhttp)
+    implementation(libs.plumber)
+
     implementation(project(":passwordManager:autofill:implementation"))
     implementation(project(":passwordManager:dagger"))
     implementation(project(":passwordManager:data"))
@@ -213,14 +269,33 @@ dependencies {
     implementation(project(":passwordManager:presentation"))
     implementation(project(":passwordManager:search:implementation"))
     implementation(project(":autofill:service"))
-    debugImplementation(Dependencies.appDebug)
-    kapt(Dependencies.appAnnotationProcessors)
-    testImplementation(Dependencies.testLibs)
+
+    kapt(libs.androidx.room.compiler)
+
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
+
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.junit)
+    testImplementation(libs.core.test.kotlin)
+    testImplementation(libs.mockk)
     testImplementation(project(":passwordManager:test"))
-    androidTestImplementation(Dependencies.androidTestLibs)
+
+    androidTestImplementation(libs.androidx.compose.ui.test)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit)
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.core.ktx)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.kotlinTest)
+    androidTestImplementation(libs.core.test.android.instrumented)
 }
 
 configureJacoco(flavor = "dev")
-setAsHiltModule()
 
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"

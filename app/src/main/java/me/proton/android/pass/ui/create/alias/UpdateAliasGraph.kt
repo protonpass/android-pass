@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.create.alias
+package me.proton.core.pass.presentation.create.alias
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi

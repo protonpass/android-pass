@@ -46,46 +46,6 @@
     <string name="action_password">Password</string>
     <string name="action_save">Save</string>
 
-    <!-- Create Login -->
-    <string name="title_create_login">Create login</string>
-    <string name="title_edit_login">Edit login</string>
-    <string name="field_title_title">Title</string>
-    <string name="field_title_is_blank">Invalid title</string>
-    <string name="field_title_hint">Name</string>
-    <string name="field_username_title">Username</string>
-    <string name="field_username_hint">Add username</string>
-    <string name="field_password_title">Password</string>
-    <string name="field_password_hint">Add password</string>
-    <string name="field_website_address_title">Website addresses</string>
-    <string name="field_website_address_hint">https://</string>
-    <string name="field_website_add_another">Add another website</string>
-    <string name="field_note_title">Note</string>
-    <string name="field_note_hint">Add note</string>
-    <string name="button_generate_password">Generate Password</string>
-    <string name="field_required_indicator">Required</string>
-
-    <string name="field_detail_password_title">Password</string>
-    <string name="field_copied_to_clipboard">copied to the clipboard</string>
-    <string name="field_username">Username</string>
-    <string name="field_password">Password</string>
-
-    <!-- Create Note -->
-    <string name="title_create_note">Create note</string>
-    <string name="title_edit_note">Edit note</string>
-
-    <!-- Create Alias -->
-    <string name="title_create_alias">Create alias</string>
-    <string name="title_edit_alias">Edit alias</string>
-    <string name="field_alias_title">Alias</string>
-    <string name="field_alias_is_blank">Invalid alias</string>
-    <string name="field_alias_hint">Alias username</string>
-    <string name="field_mailbox_title">Mailbox</string>
-    <string name="field_mailboxes_title">Mailboxes</string>
-    <string name="alias_you_are_about_to_create_alias">You\'re about to create alias</string>
-
-    <string name="alias_bottomsheet_suffix_title">Suffix</string>
-    <string name="alias_bottomsheet_mailbox_title">Mailbox</string>
-
 
     <string name="item_secret_type_message">Type: %s</string>
     <string name="item_secret_login_identity">Identity: %s</string>
@@ -97,9 +57,5 @@
     <string name="autofill_save_name_label">Save as</string>
     <string name="error_autofill_save_credentials">The credentials could not be saved.</string>
 
-    <!--  Create password  -->
-    <string name="title_create_password">Generate password</string>
-    <string name="special_characters">Special characters</string>
-    <string name="character_count">%s characters</string>
-    <string name="generate_password_confirm">Confirm</string>
+
 </resources>

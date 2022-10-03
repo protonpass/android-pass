@@ -112,6 +112,7 @@ internal fun ItemRowContents(
             itemType = itemType,
             modifier = modifier
         )
+        ItemType.Password -> {}
     }
 }
 

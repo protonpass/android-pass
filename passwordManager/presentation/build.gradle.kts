@@ -38,6 +38,10 @@ android {
         jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
+    hilt {
+        enableAggregatingTask = true
+    }
+
     buildFeatures {
         compose = true
     }
@@ -62,6 +66,8 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uiTooling)
+    implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.work)
     implementation(libs.core.accountManager)
     implementation(libs.core.accountManager.presentation.compose)
     implementation(libs.core.auth)
@@ -88,6 +94,7 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.core.test.kotlin)
+    testImplementation(project(":passwordManager:test"))
 
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)

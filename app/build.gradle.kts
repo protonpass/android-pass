@@ -216,7 +216,6 @@ dependencies {
     implementation(libs.androidx.activity.ktx)
     implementation(libs.androidx.compose.foundationLayout)
     implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.navigation.compose)

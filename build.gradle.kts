@@ -28,6 +28,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.kotlin.serialization) apply false
     alias(libs.plugins.gradlePlugin.hilt) apply false
     alias(libs.plugins.gradlePlugin.protobuf) apply false
+    alias(libs.plugins.gradlePlugin.sentry) apply false
 }
 
 val isCI = System.getenv().containsKey("CI")

@@ -46,10 +46,11 @@ tasks.register("clean", Delete::class) {
 setupDependenciesPlugin()
 
 kotlinCompilerArgs(
+    "-opt-in=kotlin.RequiresOptIn",
     // Enables experimental Coroutines (runBlockingTest).
-    "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+    "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
     // Enables experimental Time (Turbine).
-    "-Xopt-in=kotlin.time.ExperimentalTime"
+    "-opt-in=kotlin.time.ExperimentalTime"
 )
 
 fun Project.kotlinCompilerArgs(vararg extraCompilerArgs: String) {

@@ -43,7 +43,7 @@ jacoco = "0.8.7"
 timber = "5.0.1"
 # Kotlin
 kotlin = "1.6.20"
-coroutines = "1.6.2"
+coroutines = "1.6.4"
 serializationJson = "1.3.2"
 # Sentry
 sentry = "6.4.2"

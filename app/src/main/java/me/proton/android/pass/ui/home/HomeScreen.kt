@@ -229,6 +229,7 @@ internal fun goToEdit(
         is ItemType.Login -> navigation.toEditLogin(item.shareId, item.id)
         is ItemType.Note -> navigation.toEditNote(item.shareId, item.id)
         is ItemType.Alias -> navigation.toEditAlias(item.shareId, item.id)
+        ItemType.Password -> {}
     }
 }
 

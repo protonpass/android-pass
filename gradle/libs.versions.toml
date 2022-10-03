@@ -35,6 +35,7 @@ gradlePlugin-android = "7.1.3"
 gradlePlugin-doctor = "0.8.1"
 gradlePlugin-protobuf = "0.8.19"
 gradlePlugin-proton-detekt = "1.0.0-alpha03"
+gradlePlugin-sentry = "3.1.6"
 gradlePlugin-versions = "0.42.0"
 # Jacoco
 jacoco = "0.8.7"
@@ -64,6 +65,7 @@ gradlePlugin-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serializ
 gradlePlugin-library = { id = "com.android.library", version.ref = "gradlePlugin-android" }
 gradlePlugin-protobuf = { id = "com.google.protobuf", version.ref = "gradlePlugin-protobuf" }
 gradlePlugin-proton-detekt = { id = "me.proton.core.gradle-plugins.detekt", version.ref = "gradlePlugin-proton-detekt" }
+gradlePlugin-sentry = { id = "io.sentry.android.gradle", version.ref = "gradlePlugin-sentry" }
 gradlePlugin-test = { id = "com.android.test", version.ref = "gradlePlugin-android" }
 gradlePlugin-versions = { id = "com.github.ben-manes.versions", version.ref = "gradlePlugin-versions" }
 

@@ -25,6 +25,7 @@ plugins {
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
+    id("io.sentry.android.gradle")
 }
 
 base {

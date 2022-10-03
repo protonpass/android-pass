@@ -2,7 +2,7 @@
 # Accompanist
 accompanist = "0.24.7-alpha"
 # Android
-material = "1.4.0"
+material = "1.6.1"
 # AndroidX
 androidx-activity = "1.4.0"
 androidx-annotation = "1.5.0"

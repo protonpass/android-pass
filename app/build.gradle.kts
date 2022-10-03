@@ -176,11 +176,6 @@ android {
     }
 }
 
-kotlin.sourceSets.all {
-    languageSettings.useExperimentalAnnotation("kotlin.RequiresOptIn")
-    languageSettings.useExperimentalAnnotation("kotlinx.coroutines.ExperimentalCoroutinesApi")
-}
-
 tasks.create("publishGeneratedReleaseNotes") {
     doLast {
         val releaseNotesDir = File("${project.projectDir}/src/main/play/release-notes/en-US")

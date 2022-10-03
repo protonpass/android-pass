@@ -158,6 +158,7 @@ private fun ItemDetailContent(
         is ItemDetailViewModel.State.Content -> ItemDetail(viewState.model.item, modifier)
         is ItemDetailViewModel.State.Loading -> {}
         is ItemDetailViewModel.State.Error -> {}
+        ItemDetailViewModel.State.ItemSentToTrash -> {}
     }
 }
 
@@ -170,6 +171,7 @@ private fun ItemDetail(
         is ItemType.Login -> LoginDetail(item, modifier)
         is ItemType.Note -> NoteDetail(item, modifier)
         is ItemType.Alias -> AliasDetail(item, modifier)
+        ItemType.Password -> {}
     }
 }
 

@@ -108,12 +108,12 @@ private fun ConfirmClearTrashDialog(
                 onConfirm()
                 onDismiss()
             }) {
-                Text(text = stringResource(id = R.string.presentation_alert_ok))
+                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_ok))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = R.string.presentation_alert_cancel))
+                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_cancel))
             }
         }
     )
@@ -126,7 +126,7 @@ private fun TrashTopBar(
     onClearTrashClick: () -> Unit
 ) {
     ProtonTopAppBar(
-        title = { TopBarTitleView(title = stringResource(id = R.string.title_trash)) },
+        title = { TopBarTitleView(title = stringResource(id = me.proton.core.pass.presentation.R.string.title_trash)) },
         navigationIcon = {
             Icon(
                 Icons.Default.Menu,
@@ -137,8 +137,8 @@ private fun TrashTopBar(
         actions = {
             IconButton(onClick = { onClearTrashClick() }) {
                 Icon(
-                    painterResource(R.drawable.ic_proton_trash),
-                    contentDescription = stringResource(R.string.action_empty_trash),
+                    painterResource(me.proton.core.presentation.R.drawable.ic_proton_trash),
+                    contentDescription = stringResource(me.proton.core.pass.presentation.R.string.action_empty_trash),
                     tint = ProtonTheme.colors.iconNorm
                 )
             }
@@ -161,13 +161,13 @@ internal fun Trash(
                 ItemAction(
                     onSelect = { onRestoreClicked(it) },
                     title = R.string.action_restore,
-                    icon = R.drawable.ic_proton_eraser,
+                    icon = me.proton.core.presentation.R.drawable.ic_proton_eraser,
                     textColor = ProtonTheme.colors.textNorm
                 ),
                 ItemAction(
                     onSelect = { onDeleteItemClicked(it) },
                     title = R.string.action_delete,
-                    icon = R.drawable.ic_proton_trash,
+                    icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
                     textColor = ProtonTheme.colors.notificationError
                 )
             )

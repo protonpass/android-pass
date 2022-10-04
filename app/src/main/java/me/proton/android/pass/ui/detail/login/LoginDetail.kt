@@ -47,7 +47,7 @@ fun LoginDetail(
     val localContext = LocalContext.current
     val clipboard = LocalClipboardManager.current
 
-    val copiedToClipboardSuffix = stringResource(R.string.field_copied_to_clipboard)
+    val copiedToClipboardSuffix = stringResource(me.proton.core.pass.presentation.R.string.field_copied_to_clipboard)
     val storeToClipboard = { contents: String?, fieldName: String ->
         if (contents != null) {
             clipboard.setText(AnnotatedString(contents))
@@ -58,7 +58,7 @@ fun LoginDetail(
         }
     }
 
-    val passwordFieldName = stringResource(R.string.field_password)
+    val passwordFieldName = stringResource(me.proton.core.pass.presentation.R.string.field_password)
     LaunchedEffect(viewModel) {
         viewModel.copyToClipboardFlow.collect { storeToClipboard(it, passwordFieldName) }
     }
@@ -106,11 +106,11 @@ internal fun UsernameRow(
     model: LoginDetailViewModel.LoginUiModel,
     storeToClipboard: (contents: String?, fieldName: String) -> Unit
 ) {
-    val usernameFieldName = stringResource(R.string.field_username)
+    val usernameFieldName = stringResource(me.proton.core.pass.presentation.R.string.field_username)
     Section(
-        title = R.string.field_username_title,
+        title = me.proton.core.pass.presentation.R.string.field_username_title,
         content = model.username,
-        icon = R.drawable.ic_proton_squares,
+        icon = me.proton.core.presentation.R.drawable.ic_proton_squares,
         onIconClick = { storeToClipboard(model.username, usernameFieldName) }
     )
 }
@@ -123,7 +123,7 @@ internal fun WebsiteSection(
 
     Row(modifier = Modifier.padding(vertical = 12.dp)) {
         Column(modifier = Modifier.weight(1f)) {
-            SectionTitle(title = R.string.field_website_address_title)
+            SectionTitle(title = me.proton.core.pass.presentation.R.string.field_website_address_title)
             model.websites.forEach {
                 Text(
                     text = it,
@@ -152,9 +152,9 @@ internal fun PasswordRow(
     }
 
     Section(
-        title = R.string.field_detail_password_title,
+        title = me.proton.core.pass.presentation.R.string.field_detail_password_title,
         content = sectionContent,
-        icon = R.drawable.ic_proton_squares,
+        icon = me.proton.core.presentation.R.drawable.ic_proton_squares,
         onIconClick = { onCopyPasswordClick() },
         viewBelow = {
             Text(
@@ -176,7 +176,7 @@ internal fun NoteRow(
 ) {
     if (model.note.isNotEmpty()) {
         Section(
-            title = R.string.field_note_title,
+            title = me.proton.core.pass.presentation.R.string.field_note_title,
             content = model.note
         )
     }

@@ -14,7 +14,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 
@@ -29,7 +28,11 @@ fun SettingsScreen(
         scaffoldState = scaffoldState,
         topBar = {
             ProtonTopAppBar(
-                title = { TopBarTitleView(title = stringResource(id = R.string.title_settings)) },
+                title = {
+                    TopBarTitleView(
+                        title = stringResource(id = me.proton.core.pass.presentation.R.string.title_settings)
+                    )
+                },
                 navigationIcon = {
                     Icon(
                         Icons.Default.Menu,

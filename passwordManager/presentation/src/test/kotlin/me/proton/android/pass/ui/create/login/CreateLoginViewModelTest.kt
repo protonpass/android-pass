@@ -8,13 +8,16 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.create.login.CreateLoginViewModel
 import me.proton.core.pass.presentation.create.login.CreateUpdateLoginUiState.Companion.Initial
+import me.proton.core.pass.presentation.create.login.InitialCreateLoginContents
 import me.proton.core.pass.presentation.create.login.LoginItem
 import me.proton.core.pass.presentation.create.login.LoginItemValidationErrors
 import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
+import me.proton.core.pass.test.TestUtils
 import me.proton.core.pass.test.core.TestAccountManager
 import me.proton.core.pass.test.domain.TestItem
 import me.proton.core.pass.test.domain.usecases.TestCreateItem
+import me.proton.core.pass.test.domain.usecases.TestObserveActiveShare
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,15 +29,18 @@ internal class CreateLoginViewModelTest {
 
     private lateinit var accountManager: TestAccountManager
     private lateinit var createItem: TestCreateItem
+    private lateinit var observeActiveShare: TestObserveActiveShare
     private lateinit var createLoginViewModel: CreateLoginViewModel
 
     @Before
     fun setUp() {
         accountManager = TestAccountManager()
         createItem = TestCreateItem()
+        observeActiveShare = TestObserveActiveShare()
         createLoginViewModel = CreateLoginViewModel(
             accountManager = accountManager,
-            createItem = createItem
+            createItem = createItem,
+            observeActiveShare = observeActiveShare
         )
     }
 
@@ -78,6 +84,31 @@ internal class CreateLoginViewModelTest {
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.NotLoading,
                         isItemSaved = ItemSavedState.Success(item.id)
+                    )
+                )
+        }
+    }
+
+    @Test
+    fun `setting initial data emits the proper contents`() = runTest {
+        val initialContents = InitialCreateLoginContents(
+            title = TestUtils.randomString(),
+            username = TestUtils.randomString(),
+            password = TestUtils.randomString(),
+            url = TestUtils.randomString()
+        )
+        createLoginViewModel.setInitialContents(initialContents)
+
+        createLoginViewModel.loginUiState.test {
+            assertThat(awaitItem())
+                .isEqualTo(
+                    Initial.copy(
+                        loginItem = LoginItem.Empty.copy(
+                            title = initialContents.title!!,
+                            username = initialContents.username!!,
+                            password = initialContents.password!!,
+                            websiteAddresses = listOf(initialContents.url!!)
+                        )
                     )
                 )
         }

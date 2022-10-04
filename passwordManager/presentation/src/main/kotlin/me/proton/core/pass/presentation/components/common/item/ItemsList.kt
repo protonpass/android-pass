@@ -123,7 +123,7 @@ internal fun LoginRow(
     modifier: Modifier = Modifier
 ) {
     ItemRow(
-        icon = R.drawable.ic_proton_key,
+        icon = me.proton.core.presentation.R.drawable.ic_proton_key,
         title = item.name,
         subtitle = itemType.username,
         modifier = modifier
@@ -137,7 +137,7 @@ internal fun NoteRow(
     modifier: Modifier = Modifier
 ) {
     ItemRow(
-        icon = R.drawable.ic_proton_note,
+        icon = me.proton.core.presentation.R.drawable.ic_proton_note,
         title = item.name,
         subtitle = itemType.text.take(NOTE_MAX_CHARACTERS),
         modifier = modifier
@@ -151,7 +151,7 @@ internal fun AliasRow(
     modifier: Modifier = Modifier
 ) {
     ItemRow(
-        icon = R.drawable.ic_proton_alias,
+        icon = me.proton.core.presentation.R.drawable.ic_proton_alias,
         title = item.name,
         subtitle = itemType.aliasEmail,
         modifier = modifier

@@ -53,7 +53,7 @@ internal fun CreatePasswordViewContent(
                 onClick = { onRegenerateClick() }
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_proton_arrows_rotate),
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_arrows_rotate),
                     contentDescription = null
                 )
             }

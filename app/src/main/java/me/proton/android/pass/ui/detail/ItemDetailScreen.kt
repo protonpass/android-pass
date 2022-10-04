@@ -105,7 +105,7 @@ private fun ItemDetailTopBar(
                 modifier = Modifier.then(Modifier.size(24.dp))
             ) {
                 Icon(
-                    painterResource(R.drawable.ic_proton_three_dots_vertical),
+                    painterResource(me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical),
                     contentDescription = null,
                     tint = ProtonTheme.colors.iconNorm
                 )
@@ -123,7 +123,7 @@ private fun ItemDetailTopBar(
                         R.string.action_edit_placeholder,
                         topBarContent.itemTypeName
                     ),
-                    icon = R.drawable.ic_proton_eraser
+                    icon = me.proton.core.presentation.R.drawable.ic_proton_eraser
                 ) {
                     setExpanded(false)
 
@@ -135,7 +135,7 @@ private fun ItemDetailTopBar(
                 DropDownAction(
                     title = stringResource(R.string.action_move_to_trash),
                     textColor = ProtonTheme.colors.notificationError,
-                    icon = R.drawable.ic_proton_trash
+                    icon = me.proton.core.presentation.R.drawable.ic_proton_trash
                 ) {
                     setExpanded(false)
 
@@ -209,12 +209,12 @@ fun ConfirmSendToTrashDialog(
                 onConfirm(item)
                 itemState.value = null
             }) {
-                Text(text = stringResource(id = R.string.presentation_alert_ok))
+                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_ok))
             }
         },
         dismissButton = {
             TextButton(onClick = { itemState.value = null }) {
-                Text(text = stringResource(id = R.string.presentation_alert_cancel))
+                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_cancel))
             }
         }
     )

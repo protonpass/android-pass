@@ -80,7 +80,7 @@ fun UserSelector(
             modifier = Modifier
                 .size(LargeSpacing)
                 .align(Alignment.CenterVertically),
-            painter = painterResource(R.drawable.ic_proton_chevron_down),
+            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_down),
             colorFilter = ColorFilter.tint(Color.White),
             contentDescription = null
         )

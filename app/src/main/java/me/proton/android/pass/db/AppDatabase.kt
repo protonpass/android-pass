@@ -31,7 +31,6 @@ import me.proton.core.key.data.entity.PublicAddressKeyEntity
 import me.proton.core.pass.data.db.PassDatabase
 import me.proton.core.pass.data.db.entities.ItemEntity
 import me.proton.core.pass.data.db.entities.ItemKeyEntity
-import me.proton.core.pass.data.db.entities.SecretEntity
 import me.proton.core.pass.data.db.entities.ShareEntity
 import me.proton.core.pass.data.db.entities.VaultKeyEntity
 import me.proton.core.user.data.db.AddressDatabase
@@ -70,7 +69,6 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         ChallengeFrameEntity::class,
         FeatureFlagEntity::class,
         // Pass
-        SecretEntity::class,
         ShareEntity::class,
         ItemEntity::class,
         VaultKeyEntity::class,

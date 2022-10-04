@@ -16,6 +16,6 @@ class ProtonPassAutofillService : AutofillService() {
     }
 
     override fun onSaveRequest(request: SaveRequest, callback: SaveCallback) {
-        callback.onSuccess()
+        AutoSaveHandler.handleOnSave(this, request, callback)
     }
 }

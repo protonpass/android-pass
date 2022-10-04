@@ -6,7 +6,6 @@ import android.content.Context
 import android.os.CancellationSignal
 import android.service.autofill.Dataset
 import android.service.autofill.FillCallback
-import android.service.autofill.FillContext
 import android.service.autofill.FillRequest
 import android.service.autofill.FillResponse
 import android.service.autofill.SaveInfo
@@ -15,6 +14,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import me.proton.core.pass.autofill.Utils.getWindowNodes
 import me.proton.core.pass.autofill.entities.AndroidAutofillFieldId
 import me.proton.core.pass.autofill.entities.SearchCredentialsInfo
 import me.proton.core.pass.autofill.entities.asAndroid
@@ -42,13 +42,6 @@ object AutoFillHandler {
         cancellationSignal.setOnCancelListener {
             job.cancel()
         }
-    }
-
-    private fun getWindowNodes(fillContext: FillContext): List<AssistStructure.WindowNode> {
-        val structure: AssistStructure = fillContext.structure
-        return if (structure.windowNodeCount > 0)
-            (0 until structure.windowNodeCount).map { structure.getWindowNodeAt(it) } else
-            emptyList()
     }
 
     @Suppress("UnusedPrivateMember")

@@ -1,4 +1,4 @@
-package me.proton.core.pass.autofill.ui.autofill.auth
+package me.proton.core.pass.autofill.ui.auth
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Button
@@ -6,7 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
-const val AUTH_SCREEN_ROUTE = "autofill/auth"
+const val AUTH_SCREEN_ROUTE = "common/auth"
 
 @Composable
 fun AuthScreen(

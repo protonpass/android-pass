@@ -11,8 +11,8 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.autofill.entities.AutofillResponse
 import me.proton.core.pass.autofill.entities.SearchCredentialsInfo
-import me.proton.core.pass.autofill.ui.autofill.auth.AUTH_SCREEN_ROUTE
-import me.proton.core.pass.autofill.ui.autofill.auth.AuthScreen
+import me.proton.core.pass.autofill.ui.auth.AUTH_SCREEN_ROUTE
+import me.proton.core.pass.autofill.ui.auth.AuthScreen
 import me.proton.core.pass.autofill.ui.autofill.select.SELECT_ITEM_ROUTE
 import me.proton.core.pass.autofill.ui.autofill.select.SelectItemScreen
 

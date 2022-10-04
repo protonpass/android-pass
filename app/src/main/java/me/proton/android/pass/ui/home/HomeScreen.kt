@@ -200,13 +200,13 @@ private fun Home(
                 ItemAction(
                     onSelect = { goToEdit(navigation, it) },
                     title = R.string.action_edit_placeholder,
-                    icon = R.drawable.ic_proton_eraser,
+                    icon = me.proton.core.presentation.R.drawable.ic_proton_eraser,
                     textColor = ProtonTheme.colors.textNorm
                 ),
                 ItemAction(
                     onSelect = { onDeleteItemClicked(it) },
                     title = R.string.action_move_to_trash,
-                    icon = R.drawable.ic_proton_trash,
+                    icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
                     textColor = ProtonTheme.colors.notificationError
                 )
             )

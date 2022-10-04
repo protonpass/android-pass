@@ -41,7 +41,7 @@ fun BottomSheetContents(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
         )
         Divider(modifier = Modifier.fillMaxWidth())
-        BottomSheetItem(R.drawable.ic_proton_key, R.string.action_login, onItemClick = {
+        BottomSheetItem(me.proton.core.presentation.R.drawable.ic_proton_key, R.string.action_login, onItemClick = {
             scope.launch {
                 state.hide()
                 if (shareId != null) {
@@ -49,7 +49,7 @@ fun BottomSheetContents(
                 }
             }
         })
-        BottomSheetItem(R.drawable.ic_proton_alias, R.string.action_alias, onItemClick = {
+        BottomSheetItem(me.proton.core.presentation.R.drawable.ic_proton_alias, R.string.action_alias, onItemClick = {
             scope.launch {
                 state.hide()
                 if (shareId != null) {
@@ -57,7 +57,7 @@ fun BottomSheetContents(
                 }
             }
         })
-        BottomSheetItem(R.drawable.ic_proton_note, R.string.action_note, onItemClick = {
+        BottomSheetItem(me.proton.core.presentation.R.drawable.ic_proton_note, R.string.action_note, onItemClick = {
             scope.launch {
                 state.hide()
                 if (shareId != null) {
@@ -65,14 +65,18 @@ fun BottomSheetContents(
                 }
             }
         })
-        BottomSheetItem(R.drawable.ic_proton_arrows_rotate, R.string.action_password, onItemClick = {
-            scope.launch {
-                state.hide()
-                if (shareId != null) {
-                    navigation.toCreatePassword(shareId)
+        BottomSheetItem(
+            icon = me.proton.core.presentation.R.drawable.ic_proton_arrows_rotate,
+            title = R.string.action_password,
+            onItemClick = {
+                scope.launch {
+                    state.hide()
+                    if (shareId != null) {
+                        navigation.toCreatePassword(shareId)
+                    }
                 }
             }
-        })
+        )
     }
 }
 

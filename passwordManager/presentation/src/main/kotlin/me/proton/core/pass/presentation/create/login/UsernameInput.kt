@@ -25,7 +25,7 @@ internal fun UsernameInput(
         modifier = Modifier.padding(top = 8.dp),
         trailingIcon = {
             Icon(
-                painter = painterResource(R.drawable.ic_proton_alias),
+                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
                 contentDescription = null,
                 tint = ProtonTheme.colors.iconNorm,
                 modifier = Modifier.clickable { onGenerateAliasClick() }

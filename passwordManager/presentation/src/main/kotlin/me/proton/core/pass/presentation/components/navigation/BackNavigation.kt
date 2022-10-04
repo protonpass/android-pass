@@ -30,7 +30,7 @@ fun ChevronBackIcon(
 ) {
     NavigationIcon(onUpClick = onUpClick) {
         Icon(
-            painter = painterResource(R.drawable.ic_proton_chevron_left),
+            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_left),
             contentDescription = null
         )
     }
@@ -43,7 +43,7 @@ fun CrossBackIcon(
 ) {
     NavigationIcon(onUpClick = onUpClick) {
         Icon(
-            painter = painterResource(R.drawable.ic_proton_close),
+            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_close),
             contentDescription = null
         )
     }

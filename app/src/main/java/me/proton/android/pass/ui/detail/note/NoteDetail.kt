@@ -53,7 +53,7 @@ internal fun NoteRow(
 ) {
     if (model.note.isNotEmpty()) {
         Section(
-            title = R.string.field_note_title,
+            title = me.proton.core.pass.presentation.R.string.field_note_title,
             content = model.note
         )
     }

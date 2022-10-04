@@ -26,6 +26,7 @@ import me.proton.core.pass.presentation.uievents.ItemSavedState
 @ExperimentalComposeUiApi
 @Composable
 internal fun LoginContent(
+    modifier: Modifier = Modifier,
     @StringRes topBarTitle: Int,
     @StringRes topBarActionName: Int,
     uiState: CreateUpdateLoginUiState,
@@ -68,7 +69,7 @@ internal fun LoginContent(
         }
         LoginItemForm(
             loginItem = uiState.loginItem,
-            modifier = Modifier.padding(padding),
+            modifier = modifier.padding(padding),
             onTitleChange = onTitleChange,
             onTitleRequiredError = uiState.errorList.contains(LoginItemValidationErrors.BlankTitle),
             onUsernameChange = onUsernameChange,

@@ -27,6 +27,7 @@
     <application>
 
         <activity android:name="me.proton.core.pass.autofill.ui.autofill.AutofillActivity" />
+        <activity android:name="me.proton.core.pass.autofill.ui.autosave.AutosaveActivity" />
 
         <service
             android:name="me.proton.core.pass.autofill.ProtonPassAutofillService"

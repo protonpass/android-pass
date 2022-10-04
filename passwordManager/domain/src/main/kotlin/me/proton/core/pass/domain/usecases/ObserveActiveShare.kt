@@ -10,18 +10,22 @@ import me.proton.core.pass.domain.ShareId
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
-class ObserveActiveShare @Inject constructor(
-    private val accountManager: AccountManager,
+interface ObserveActiveShare {
+    operator fun invoke(): Flow<ShareId?>
+}
+
+class ObserveActiveShareImpl @Inject constructor(
+    accountManager: AccountManager,
     private val userManager: UserManager,
     private val observeShares: ObserveShares
-) {
+) : ObserveActiveShare {
 
     private val getCurrentUserIdFlow = accountManager.getPrimaryUserId()
         .filterNotNull()
         .flatMapLatest { userManager.observeUser(it) }
         .distinctUntilChanged()
 
-    operator fun invoke(): Flow<ShareId?> = getCurrentUserIdFlow
+    override operator fun invoke(): Flow<ShareId?> = getCurrentUserIdFlow
         .filterNotNull()
         .flatMapLatest { user ->
             observeShares(user.userId).map { shares ->

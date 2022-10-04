@@ -60,19 +60,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Autofill -->
-        <activity android:name=".ui.autofill.save.AutofillSaveSecretActivity"
-            android:theme="@android:style/Theme.Material.Light.Dialog.Alert"
-            android:launchMode="singleTop"
-            android:clearTaskOnLaunch="true"
-            android:excludeFromRecents="true" />
-        <activity android:name=".ui.autofill.search.AutofillListSecretsActivity"
-            android:theme="@android:style/Theme.Material.Light.Dialog.Alert"
-            android:launchMode="singleTop"
-            android:clearTaskOnLaunch="true"
-            android:excludeFromRecents="true" />
-        <!-- /Autofill -->
-
         <!-- Core-Auth activities -->
         <activity
             android:name="me.proton.core.auth.presentation.ui.AuthHelpActivity"

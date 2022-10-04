@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "5ee19c70f2cd1ea94abe17ad29e7b956",
+    "identityHash": "eb847852c0a7563d532891075244ead6",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -1667,92 +1667,6 @@
         "foreignKeys": []
       },
       {
-        "tableName": "secrets",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `name` TEXT NOT NULL, `type` INTEGER NOT NULL, `is_uploaded` INTEGER NOT NULL DEFAULT false, `contents` TEXT NOT NULL, `associated_uris` TEXT NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
-        "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "userId",
-            "columnName": "user_id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "addressId",
-            "columnName": "address_id",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "type",
-            "columnName": "type",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "isUploaded",
-            "columnName": "is_uploaded",
-            "affinity": "INTEGER",
-            "notNull": true,
-            "defaultValue": "false"
-          },
-          {
-            "fieldPath": "contents",
-            "columnName": "contents",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "associatedUris",
-            "columnName": "associated_uris",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "columnNames": [
-            "id"
-          ],
-          "autoGenerate": false
-        },
-        "indices": [],
-        "foreignKeys": [
-          {
-            "table": "AddressEntity",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "address_id"
-            ],
-            "referencedColumns": [
-              "addressId"
-            ]
-          },
-          {
-            "table": "UserEntity",
-            "onDelete": "CASCADE",
-            "onUpdate": "NO ACTION",
-            "columns": [
-              "user_id"
-            ],
-            "referencedColumns": [
-              "userId"
-            ]
-          }
-        ]
-      },
-      {
         "tableName": "ShareEntity",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `vault_id` TEXT NOT NULL, `share_type` INTEGER NOT NULL, `target_id` TEXT NOT NULL, `permission` INTEGER NOT NULL, `inviter_email` TEXT NOT NULL, `acceptance_signature` TEXT NOT NULL, `inviter_acceptance_signature` TEXT NOT NULL, `signing_key` TEXT NOT NULL, `signing_key_passphrase` TEXT, `content` TEXT, `content_format_version` INTEGER, `content_encrypted_address_signature` TEXT, `content_encrypted_vault_signature` TEXT, `content_signature_email` TEXT, `keystore_encrypted_content` BLOB, `keystore_encrypted_passphrase` BLOB, `name_key_id` TEXT, `expiration_time` INTEGER, `create_time` INTEGER NOT NULL, PRIMARY KEY(`id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
@@ -2294,7 +2208,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5ee19c70f2cd1ea94abe17ad29e7b956')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'eb847852c0a7563d532891075244ead6')"
     ]
   }
 }

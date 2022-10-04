@@ -236,7 +236,7 @@ private fun ItemsListItem(
 ) {
     NavigationDrawerListItem(
         title = R.string.navigation_item_items,
-        icon = R.drawable.ic_proton_key,
+        icon = me.proton.core.presentation.R.drawable.ic_proton_key,
         isSelected = isSelected,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,
@@ -270,7 +270,7 @@ private fun TrashListItem(
 ) {
     NavigationDrawerListItem(
         title = R.string.navigation_item_trash,
-        icon = R.drawable.ic_proton_trash,
+        icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
         isSelected = isSelected,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,
@@ -287,7 +287,7 @@ private fun HelpListItem(
 ) {
     NavigationDrawerListItem(
         title = R.string.navigation_item_help,
-        icon = R.drawable.ic_proton_question_circle,
+        icon = me.proton.core.presentation.R.drawable.ic_proton_question_circle,
         isSelected = isSelected,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,

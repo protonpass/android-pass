@@ -64,11 +64,9 @@ class AssistNodeTraversal {
     private fun detectFieldType(node: AutofillNode): FieldType? {
         val autofillHint = node.autofillHints.firstOrNull()
         val htmlAttributes = node.htmlAttributes
-        return when {
-            htmlAttributes.isNotEmpty() -> detectFieldTypeUsingHtmlInfo(htmlAttributes)
-            autofillHint != null -> detectFieldTypeUsingAutofillHint(autofillHint)
-            else -> detectFieldTypeUsingInputType(node.inputType)
-        }
+        return if (autofillHint != null) detectFieldTypeUsingAutofillHint(autofillHint)
+        else if (htmlAttributes.isNotEmpty()) detectFieldTypeUsingHtmlInfo(htmlAttributes)
+        else detectFieldTypeUsingInputType(node.inputType)
     }
 
     fun detectFieldTypeUsingHtmlInfo(

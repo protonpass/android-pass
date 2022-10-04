@@ -263,7 +263,6 @@ dependencies {
     implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:presentation"))
     implementation(project(":passwordManager:search:implementation"))
-    implementation(project(":autofill:service"))
 
     debugImplementation(libs.leakCanary)
 

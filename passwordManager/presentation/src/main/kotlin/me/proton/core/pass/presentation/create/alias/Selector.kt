@@ -27,7 +27,7 @@ internal fun Selector(
         onValueChange = {},
         trailingIcon = {
             Icon(
-                painter = painterResource(R.drawable.ic_proton_chevron_right),
+                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_right),
                 contentDescription = null,
                 tint = ProtonTheme.colors.iconNorm
             )

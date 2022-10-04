@@ -25,9 +25,9 @@ internal fun PasswordInput(
     var isVisible: Boolean by rememberSaveable { mutableStateOf(false) }
 
     val (visualTransformation, icon) = if (isVisible) {
-        Pair(VisualTransformation.None, painterResource(R.drawable.ic_proton_eye_slash))
+        Pair(VisualTransformation.None, painterResource(me.proton.core.presentation.R.drawable.ic_proton_eye_slash))
     } else {
-        Pair(PasswordVisualTransformation(), painterResource(R.drawable.ic_proton_eye))
+        Pair(PasswordVisualTransformation(), painterResource(me.proton.core.presentation.R.drawable.ic_proton_eye))
     }
 
     ProtonFormInput(

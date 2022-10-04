@@ -104,7 +104,7 @@ fun SaveCredentialsDialogContents(
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(stringResource(R.string.settings_save))
+            Text(stringResource(me.proton.core.usersettings.presentation.R.string.settings_save))
         }
     }
 }

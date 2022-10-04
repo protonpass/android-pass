@@ -67,7 +67,7 @@ internal fun WebsitesSection(
                 trailingIcon = {
                     if (shouldShowRemoveButton) {
                         Icon(
-                            painter = painterResource(R.drawable.ic_proton_minus_circle),
+                            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_minus_circle),
                             contentDescription = null,
                             tint = ProtonTheme.colors.iconNorm,
                             modifier = Modifier.clickable { onWebsitesChange.onRemoveWebsite(idx) }
@@ -100,7 +100,7 @@ internal fun WebsitesSection(
                 )
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_proton_plus),
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.width(8.dp))

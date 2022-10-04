@@ -20,14 +20,14 @@ package me.proton.android.pass.initializer
 
 import android.content.Context
 import androidx.startup.Initializer
-import io.sentry.Sentry
 import io.sentry.SentryOptions
+import io.sentry.android.core.SentryAndroid
 import me.proton.android.pass.BuildConfig
 
 class SentryInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {
-        Sentry.init { options: SentryOptions ->
+        SentryAndroid.init(context) { options: SentryOptions ->
             options.dsn = BuildConfig.SENTRY_DSN.takeIf { !BuildConfig.DEBUG }.orEmpty()
             options.release = BuildConfig.VERSION_NAME
             options.environment = BuildConfig.FLAVOR

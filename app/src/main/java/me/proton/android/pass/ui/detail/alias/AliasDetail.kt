@@ -50,15 +50,15 @@ fun AliasDetail(
 fun AliasContentView(
     model: AliasDetailViewModel.AliasUiModel
 ) {
-    val title = stringResource(R.string.field_alias_title)
-    val content = stringResource(R.string.field_copied_to_clipboard)
+    val title = stringResource(me.proton.core.pass.presentation.R.string.field_alias_title)
+    val content = stringResource(me.proton.core.pass.presentation.R.string.field_copied_to_clipboard)
     val copiedToClipboardMessage = "$title $content"
     val clipboardManager = LocalClipboardManager.current
     val localContext = LocalContext.current
     Section(
-        title = R.string.field_alias_title,
+        title = me.proton.core.pass.presentation.R.string.field_alias_title,
         content = model.alias,
-        icon = R.drawable.ic_proton_squares,
+        icon = me.proton.core.presentation.R.drawable.ic_proton_squares,
         onIconClick = {
             clipboardManager.setText(AnnotatedString(model.alias))
             Toast
@@ -69,7 +69,7 @@ fun AliasContentView(
 
     Row(modifier = Modifier.padding(vertical = 12.dp)) {
         Column(modifier = Modifier.weight(1f)) {
-            SectionTitle(R.string.field_mailboxes_title)
+            SectionTitle(me.proton.core.pass.presentation.R.string.field_mailboxes_title)
             model.mailboxes.forEach {
                 Text(
                     text = it.email,
@@ -82,7 +82,7 @@ fun AliasContentView(
 
     if (model.note.isNotEmpty()) {
         Section(
-            title = R.string.field_note_title,
+            title = me.proton.core.pass.presentation.R.string.field_note_title,
             content = model.note
         )
     }

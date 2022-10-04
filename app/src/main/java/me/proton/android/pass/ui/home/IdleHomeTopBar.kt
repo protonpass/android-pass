@@ -25,7 +25,7 @@ fun IdleHomeTopBar(
 ) {
     ProtonTopAppBar(
         title = {
-            TopBarTitleView(title = stringResource(id = R.string.title_items))
+            TopBarTitleView(title = stringResource(id = me.proton.core.pass.presentation.R.string.title_items))
         },
         navigationIcon = {
             Icon(
@@ -39,8 +39,8 @@ fun IdleHomeTopBar(
                 startSearchMode()
             }) {
                 Icon(
-                    painterResource(R.drawable.ic_proton_magnifier),
-                    contentDescription = stringResource(R.string.action_search),
+                    painterResource(me.proton.core.presentation.R.drawable.ic_proton_magnifier),
+                    contentDescription = stringResource(me.proton.core.pass.presentation.R.string.action_search),
                     tint = ProtonTheme.colors.iconNorm
                 )
             }
@@ -48,8 +48,8 @@ fun IdleHomeTopBar(
                 onAddItemClick()
             }) {
                 Icon(
-                    painterResource(R.drawable.ic_proton_plus),
-                    contentDescription = stringResource(R.string.action_create),
+                    painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
+                    contentDescription = stringResource(me.proton.core.pass.presentation.R.string.action_create),
                     tint = ProtonTheme.colors.iconNorm
                 )
             }

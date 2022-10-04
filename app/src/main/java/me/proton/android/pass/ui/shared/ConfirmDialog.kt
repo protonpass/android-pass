@@ -26,12 +26,12 @@ fun <T> ConfirmDialog(
                 onConfirm(value)
                 onDismiss()
             }) {
-                Text(text = stringResource(id = R.string.presentation_alert_ok))
+                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_ok))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = R.string.presentation_alert_cancel))
+                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_cancel))
             }
         }
     )

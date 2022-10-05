@@ -292,6 +292,6 @@ dependencies {
     androidTestImplementation(libs.core.test.android.instrumented)
 }
 
-configureJacoco(flavor = "dev")
+// configureJacoco(flavor = "dev")
 
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"

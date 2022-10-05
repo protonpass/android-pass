@@ -22,8 +22,6 @@ androidx-test-uiautomator = "2.2.0"
 androidx-work = "2.7.1"
 # CashApp
 turbine = "0.11.0"
-# Coil
-coil = "1.3.2"
 # Core
 core = "9.0.2"
 # Dagger
@@ -117,9 +115,6 @@ androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version
 
 # CashApp
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
-
-# Coil
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 # Core
 core-account = { module = "me.proton.core:account", version.ref = "core" }

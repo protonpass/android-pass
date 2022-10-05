@@ -1,6 +1,6 @@
 [versions]
 # Accompanist
-accompanist = "0.24.7-alpha"
+accompanist = "0.25.1"
 # Android
 material = "1.6.1"
 # AndroidX

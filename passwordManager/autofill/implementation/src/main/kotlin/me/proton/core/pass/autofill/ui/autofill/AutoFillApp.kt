@@ -9,8 +9,9 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.pass.autofill.entities.AndroidAutofillFieldId
 import me.proton.core.pass.autofill.entities.AutofillResponse
-import me.proton.core.pass.autofill.entities.SearchCredentialsInfo
+import me.proton.core.pass.autofill.entities.FieldType
 import me.proton.core.pass.autofill.ui.auth.AUTH_SCREEN_ROUTE
 import me.proton.core.pass.autofill.ui.auth.AuthScreen
 import me.proton.core.pass.autofill.ui.autofill.select.SELECT_ITEM_ROUTE
@@ -19,15 +20,17 @@ import me.proton.core.pass.autofill.ui.autofill.select.SelectItemScreen
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AutofillApp(
-    info: SearchCredentialsInfo,
+    modifier: Modifier = Modifier,
+    androidAutofillFieldIds: List<AndroidAutofillFieldId>,
+    autofillTypes: List<FieldType>,
     onAutofillResponse: (AutofillResponse?) -> Unit
 ) {
     val navController = rememberAnimatedNavController()
     ProtonTheme {
         AnimatedNavHost(
-            navController,
-            startDestination = AUTH_SCREEN_ROUTE,
-            modifier = Modifier.defaultMinSize(minHeight = 200.dp)
+            modifier = modifier.defaultMinSize(minHeight = 200.dp),
+            navController = navController,
+            startDestination = AUTH_SCREEN_ROUTE
         ) {
             composable(AUTH_SCREEN_ROUTE) {
                 AuthScreen(
@@ -41,7 +44,11 @@ fun AutofillApp(
             composable(SELECT_ITEM_ROUTE) {
                 SelectItemScreen(
                     onItemSelected = {
-                        val response = ItemFieldMapper.mapFields(it, info)
+                        val response = ItemFieldMapper.mapFields(
+                            item = it,
+                            androidAutofillFieldIds = androidAutofillFieldIds,
+                            autofillTypes = autofillTypes
+                        )
                         onAutofillResponse(response)
                     }
                 )

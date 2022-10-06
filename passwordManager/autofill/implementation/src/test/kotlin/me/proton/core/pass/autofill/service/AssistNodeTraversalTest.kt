@@ -1,7 +1,8 @@
-package me.proton.core.pass.autofill
+package me.proton.core.pass.autofill.service
 
 import android.text.InputType
 import android.view.View
+import me.proton.core.pass.autofill.AssistNodeTraversal
 import me.proton.core.pass.autofill.entities.AutofillFieldId
 import me.proton.core.pass.autofill.entities.AutofillNode
 import me.proton.core.pass.autofill.entities.FieldType

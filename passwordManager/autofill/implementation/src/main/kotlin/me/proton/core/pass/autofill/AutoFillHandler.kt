@@ -16,7 +16,6 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import me.proton.core.pass.autofill.Utils.getWindowNodes
 import me.proton.core.pass.autofill.entities.AndroidAutofillFieldId
-import me.proton.core.pass.autofill.entities.SearchCredentialsInfo
 import me.proton.core.pass.autofill.entities.asAndroid
 import me.proton.core.pass.autofill.service.R
 import me.proton.core.pass.autofill.ui.autofill.AutofillActivity
@@ -57,19 +56,11 @@ object AutoFillHandler {
         val authenticateView = RemoteViews(context.packageName, listItemId).apply {
             setTextViewText(android.R.id.text1, context.getString(R.string.autofill_authenticate_prompt))
         }
-
-        val appPackageName = Utils.getApplicationPackageName(windowNode)
-        val applicationName = Utils.getApplicationName(context, context.packageName)
-        val searchCredentialsInfo = SearchCredentialsInfo(
-            appPackageName,
-            applicationName,
-            assistFields
-        )
         val pendingIntent = PendingIntent.getActivity(
             context,
             AutofillActivity.REQUEST_CODE,
-            AutofillActivity.newIntent(context, searchCredentialsInfo),
-            PendingIntent.FLAG_MUTABLE
+            AutofillActivity.newIntent(context, assistFields),
+            PendingIntent.FLAG_CANCEL_CURRENT
         )
 
         // Single Dataset to force user authentication

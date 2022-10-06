@@ -1,6 +1,5 @@
 package me.proton.core.pass.data.crypto
 
-import javax.inject.Inject
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
@@ -12,25 +11,25 @@ import me.proton.core.key.domain.encryptData
 import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.getEncryptedPackets
+import me.proton.core.key.domain.getUnarmored
 import me.proton.core.key.domain.signData
 import me.proton.core.key.domain.useKeys
 import me.proton.core.pass.data.requests.CreateVaultRequest
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.SigningKey
 import me.proton.core.pass.domain.key.VaultKey
+import me.proton.core.pass.domain.key.publicKey
 import me.proton.core.pass.domain.key.usePrivateKey
 import me.proton.core.pass.domain.repositories.VaultItemKeyList
 import me.proton.core.user.domain.entity.UserAddress
 import proton_pass_vault_v1.VaultV1
+import javax.inject.Inject
 
 class CreateVault @Inject constructor(
     private val cryptoContext: CryptoContext
 ) : BaseCryptoOperation(cryptoContext) {
 
-    companion object {
-        const val CONTENT_FORMAT_VERSION = 1
-    }
-
+    @Suppress("LongMethod")
     fun createVaultRequest(
         vaultMetadata: VaultV1.Vault,
         userAddress: UserAddress
@@ -93,7 +92,7 @@ class CreateVault @Inject constructor(
         val (nameVaultKeySignature, vaultKeyPassphraseKeyPacketSignature) = vaultKey.usePrivateKey(
             cryptoContext
         ) {
-            Pair(signData(serializedMetadata), signData(vaultKeyPassphraseKeyPacket))
+            Pair(getUnarmored(signData(serializedMetadata)), signData(vaultKeyPassphraseKeyPacket))
         }
 
         // Generate item key
@@ -121,17 +120,14 @@ class CreateVault @Inject constructor(
         }
 
         val nameAddressSignature = userAddress.useKeys(cryptoContext) {
-            signData(serializedMetadata)
+            getUnarmored(signData(serializedMetadata))
         }
 
-        val (encryptedNameAddressSignature, encryptedNameVaultSignature) = vaultKey.usePrivateKey(
-            cryptoContext
-        ) {
-            Pair(
-                encryptData(nameAddressSignature.encodeToByteArray()),
-                encryptData(nameVaultKeySignature.encodeToByteArray())
-            )
-        }
+        val vaultPublicKey = vaultKey.publicKey(cryptoContext)
+        val encryptedNameAddressSignature =
+            cryptoContext.pgpCrypto.encryptData(nameAddressSignature, vaultPublicKey.key)
+        val encryptedNameVaultSignature =
+            cryptoContext.pgpCrypto.encryptData(nameVaultKeySignature, vaultPublicKey.key)
 
         return CreateVaultRequest(
             addressId = userAddress.addressId.id,
@@ -204,4 +200,8 @@ class CreateVault @Inject constructor(
         val keyPacket: Unarmored,
         val signature: Signature
     )
+
+    companion object {
+        const val CONTENT_FORMAT_VERSION = 1
+    }
 }

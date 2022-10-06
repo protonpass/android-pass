@@ -13,9 +13,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import me.proton.android.pass.ui.shared.ProtonFormInput
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.presentation.R
+import me.proton.core.pass.presentation.components.form.ProtonFormInput
 
 @Composable
 internal fun PasswordInput(

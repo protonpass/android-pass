@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.proton.android.pass.ui.shared.ProtonTextTitle
 import me.proton.core.pass.presentation.R
+import me.proton.core.pass.presentation.components.form.ProtonTextTitle
 
 @Composable
 internal fun MailboxSection(

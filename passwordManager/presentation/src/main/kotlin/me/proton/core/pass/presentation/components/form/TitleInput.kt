@@ -1,12 +1,16 @@
-package me.proton.android.pass.ui.shared.form
+package me.proton.core.pass.presentation.components.form
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.android.pass.ui.shared.ProtonFormInput
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.presentation.R
+import me.proton.core.pass.presentation.components.previewproviders.TitleInputPreviewData
+import me.proton.core.pass.presentation.components.previewproviders.TitleInputPreviewProvider
 
 @Composable
 fun TitleInput(
@@ -24,4 +28,18 @@ fun TitleInput(
         isError = onTitleRequiredError,
         errorMessage = stringResource(id = R.string.field_title_is_blank)
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+internal fun Preview_TitleInput(
+    @PreviewParameter(TitleInputPreviewProvider::class) data: TitleInputPreviewData
+) {
+    ProtonTheme {
+        TitleInput(
+            value = "test",
+            onChange = {},
+            onTitleRequiredError = false
+        )
+    }
 }

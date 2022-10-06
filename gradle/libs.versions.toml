@@ -45,7 +45,7 @@ kotlin = "1.7.10"
 coroutines = "1.6.4"
 serializationJson = "1.4.0"
 # Sentry
-sentry = "6.4.2"
+sentry = "6.4.3"
 # Squareup
 leakCanary = "2.9.1"
 okhttp = "4.10.0"

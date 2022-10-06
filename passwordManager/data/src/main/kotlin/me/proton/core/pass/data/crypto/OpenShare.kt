@@ -1,7 +1,5 @@
 package me.proton.core.pass.data.crypto
 
-import java.util.Date
-import javax.inject.Inject
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
@@ -26,8 +24,11 @@ import me.proton.core.pass.domain.ShareType
 import me.proton.core.pass.domain.VaultId
 import me.proton.core.pass.domain.key.SigningKey
 import me.proton.core.pass.domain.key.VaultKey
+import me.proton.core.pass.domain.key.publicKey
 import me.proton.core.pass.domain.key.usePrivateKey
 import me.proton.core.user.domain.entity.UserAddress
+import java.sql.Date
+import javax.inject.Inject
 
 class OpenShare @Inject constructor(
     val cryptoContext: CryptoContext
@@ -39,7 +40,13 @@ class OpenShare @Inject constructor(
         vaultKeys: List<VaultKey>
     ): Share {
         val shareType = requireNotNull(ShareType.map[response.targetType])
-        verifyAcceptanceSignature(response.acceptanceSignature, response.inviterAcceptanceSignature, response.signingKey, userAddress, inviterKeys)
+        verifyAcceptanceSignature(
+            response.acceptanceSignature,
+            response.inviterAcceptanceSignature,
+            response.signingKey,
+            userAddress,
+            inviterKeys
+        )
         val content = reencryptContent(response, vaultKeys)
 
         return Share(
@@ -61,10 +68,19 @@ class OpenShare @Inject constructor(
         response: ShareResponse,
         userAddress: UserAddress,
         inviterKeys: List<PublicKey>,
+        contentSignatureKeys: List<PublicKey>,
+        vaultKeys: List<VaultKey>,
         keystoreEncryptedContent: EncryptedByteArray? = null,
         keystoreEncryptedPassphrase: EncryptedByteArray? = null
     ): ShareEntity {
-        verifyAcceptanceSignature(response.acceptanceSignature, response.inviterAcceptanceSignature, response.signingKey, userAddress, inviterKeys)
+        verifyAcceptanceSignature(
+            response.acceptanceSignature,
+            response.inviterAcceptanceSignature,
+            response.signingKey,
+            userAddress,
+            inviterKeys
+        )
+        verifyContentSignatures(response, contentSignatureKeys, vaultKeys)
 
         return ShareEntity(
             id = response.shareId,
@@ -100,7 +116,13 @@ class OpenShare @Inject constructor(
         vaultKeys: List<VaultKey>
     ): Share {
         val shareType = requireNotNull(ShareType.map[entity.targetType])
-        verifyAcceptanceSignature(entity.acceptanceSignature, entity.inviterAcceptanceSignature, entity.signingKey, userAddress, inviterKeys)
+        verifyAcceptanceSignature(
+            entity.acceptanceSignature,
+            entity.inviterAcceptanceSignature,
+            entity.signingKey,
+            userAddress,
+            inviterKeys
+        )
         val signingKey = if (entity.keystoreEncryptedPassphrase == null) {
             ArmoredKey.Public(
                 entity.signingKey,
@@ -160,6 +182,63 @@ class OpenShare @Inject constructor(
         }
     }
 
+    @Suppress("ThrowsCount")
+    private fun verifyContentSignatures(
+        response: ShareResponse,
+        contentSignatureKeys: List<PublicKey>,
+        vaultKeys: List<VaultKey>
+    ) {
+        // Check share contents
+        if (response.targetType == ShareType.Item.value) {
+            return
+        }
+
+        val contentRotationId = response.contentRotationId
+            ?: throw CryptoException("Share should contain contentRotationId")
+        val contentEncryptedAddressSignature = response.contentEncryptedAddressSignature
+            ?: throw CryptoException("Share should contain contentEncryptedAddressSignature")
+        val contentEncryptedVaultSignature = response.contentEncryptedVaultSignature
+            ?: throw CryptoException("Share should contain contentEncryptedVaultSignature")
+        val content = response.content ?: throw CryptoException("Share should contain content")
+
+        // Obtain the vault key
+        val vaultKey = vaultKeys.find {
+            it.rotationId == contentRotationId
+        } ?: throw CryptoException("VaultKey not found")
+
+        // Decrypt the signatures
+        val decryptWithVaultKey = { data: String ->
+            vaultKey.usePrivateKey(cryptoContext) {
+                decryptData(getArmored(getBase64Decoded(data)))
+            }
+        }
+
+        val addressSignature = decryptWithVaultKey(contentEncryptedAddressSignature)
+        val vaultSignature = decryptWithVaultKey(contentEncryptedVaultSignature)
+        val decryptedContent = decryptWithVaultKey(content)
+
+        // Verify address signature
+        val armoredAddressSignature = cryptoContext.pgpCrypto.getArmored(addressSignature, PGPHeader.Signature)
+        val addressSignatureValid = contentSignatureKeys.any {
+            cryptoContext.pgpCrypto.verifyData(decryptedContent, armoredAddressSignature, it.key)
+        }
+
+        if (!addressSignatureValid) {
+            throw CryptoException("Address signature is not valid")
+        }
+
+        // Verify vault signature
+        val vaultSignatureValid = cryptoContext.pgpCrypto.verifyData(
+            data = decryptedContent,
+            signature = cryptoContext.pgpCrypto.getArmored(vaultSignature, PGPHeader.Signature),
+            publicKey = vaultKey.publicKey(cryptoContext).key
+        )
+        if (!vaultSignatureValid) {
+            throw CryptoException("Vault signature is not valid")
+        }
+    }
+
+
     private fun verifyAcceptanceSignature(
         acceptanceSignature: String,
         inviterAcceptanceSignature: String,
@@ -170,14 +249,22 @@ class OpenShare @Inject constructor(
         userAddress.useKeys(cryptoContext) {
             // Check Signing Key Signature
             val signingKeyFingerprint = Utils.getPrimaryV5Fingerprint(cryptoContext, signingKey)
-            val armoredAcceptanceSignature = getArmored(getBase64Decoded(acceptanceSignature), PGPHeader.Signature)
+            val armoredAcceptanceSignature = getArmored(
+                getBase64Decoded(acceptanceSignature),
+                PGPHeader.Signature
+            )
             val verified = verifyData(signingKeyFingerprint.encodeToByteArray(), armoredAcceptanceSignature)
             require(verified)
 
             // Check inviter acceptance signature
             val publicKeyRing = PublicKeyRing(inviterKeys)
-            val armoredInviterAcceptanceSignature = getArmored(getBase64Decoded(inviterAcceptanceSignature), PGPHeader.Signature)
-            val inviterVerified = publicKeyRing.verifyData(cryptoContext, signingKeyFingerprint.encodeToByteArray(), armoredInviterAcceptanceSignature)
+            val armoredInviterAcceptanceSignature =
+                getArmored(getBase64Decoded(inviterAcceptanceSignature), PGPHeader.Signature)
+            val inviterVerified = publicKeyRing.verifyData(
+                cryptoContext,
+                signingKeyFingerprint.encodeToByteArray(),
+                armoredInviterAcceptanceSignature
+            )
             require(inviterVerified)
         }
     }

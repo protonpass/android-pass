@@ -15,6 +15,7 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.pass.autofill.entities.AutofillItem
 import me.proton.core.pass.autofill.extensions.toAutoFillItem
 import me.proton.core.pass.autofill.extensions.toUiModel
+import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.search.SearchItems
 import javax.inject.Inject
@@ -26,9 +27,12 @@ class SelectItemViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val listItems: Flow<List<ItemUiModel>> = searchItems.observeResults()
-        .mapLatest { items -> items.map { it.toUiModel(cryptoContext) } }
+        .mapLatest { items ->
+            items.filter { it.itemType is ItemType.Login }.map { it.toUiModel(cryptoContext) }
+        }
 
-    private val itemClickedFlow: MutableStateFlow<ItemClickedEvent> = MutableStateFlow(ItemClickedEvent.None)
+    private val itemClickedFlow: MutableStateFlow<ItemClickedEvent> =
+        MutableStateFlow(ItemClickedEvent.None)
 
     val uiState: StateFlow<SelectItemUiState> = combine(
         listItems,
@@ -46,12 +50,12 @@ class SelectItemViewModel @Inject constructor(
         )
 
     fun onItemClicked(item: ItemUiModel) = viewModelScope.launch {
-        itemClickedFlow.value = ItemClickedEvent.Clicked(item.toAutoFillItem(cryptoContext.keyStoreCrypto))
+        itemClickedFlow.value =
+            ItemClickedEvent.Clicked(item.toAutoFillItem(cryptoContext.keyStoreCrypto))
     }
 
     internal sealed interface ItemClickedEvent {
         object None : ItemClickedEvent
         data class Clicked(val item: AutofillItem) : ItemClickedEvent
     }
-
 }

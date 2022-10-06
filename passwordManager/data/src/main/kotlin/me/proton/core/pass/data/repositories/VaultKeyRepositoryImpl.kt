@@ -1,6 +1,5 @@
 package me.proton.core.pass.data.repositories
 
-import javax.inject.Inject
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.PrivateKey
@@ -19,6 +18,7 @@ import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.repositories.VaultItemKeyList
 import me.proton.core.pass.domain.repositories.VaultKeyRepository
 import me.proton.core.user.domain.entity.UserAddress
+import javax.inject.Inject
 
 class VaultKeyRepositoryImpl @Inject constructor(
     private val localDataSource: LocalVaultItemKeyDataSource,
@@ -30,9 +30,10 @@ class VaultKeyRepositoryImpl @Inject constructor(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
-        forceRefresh: Boolean
+        forceRefresh: Boolean,
+        shouldStoreLocally: Boolean
     ): List<VaultKey> =
-        getVaultItemKeys(userAddress, shareId, signingKey, forceRefresh).vaultKeyList
+        getVaultItemKeys(userAddress, shareId, signingKey, forceRefresh, shouldStoreLocally).vaultKeyList
 
     override suspend fun getVaultKeyById(
         userAddress: UserAddress,
@@ -89,68 +90,12 @@ class VaultKeyRepositoryImpl @Inject constructor(
         return Pair(latestVaultKey, latestItemKey)
     }
 
-    override suspend fun storeVaultKey(
-        userAddress: UserAddress,
-        shareId: ShareId,
-        vaultKey: VaultKey,
-        keyPassphrase: String?,
-        keySignature: String,
-        createTime: Long
-    ) {
-        val entity = VaultKeyEntity(
-            rotationId = vaultKey.rotationId,
-            userId = userAddress.userId.id,
-            addressId = userAddress.addressId.id,
-            shareId = shareId.id,
-            rotation = vaultKey.rotation,
-            key = vaultKey.key.armored,
-            keyPassphrase = keyPassphrase,
-            keySignature = keySignature,
-            createTime = createTime,
-            encryptedKeyPassphrase = vaultKey.encryptedKeyPassphrase
-        )
-        localDataSource.storeKeys(
-            userAddress, shareId,
-            VaultItemKeyEntityList(
-                vaultKeys = listOf(entity),
-                itemKeys = emptyList()
-            )
-        )
-    }
-
-    override suspend fun storeItemKey(
-        userAddress: UserAddress,
-        shareId: ShareId,
-        itemKey: ItemKey,
-        keyPassphrase: String?,
-        keySignature: String,
-        createTime: Long
-    ) {
-        val entity = ItemKeyEntity(
-            rotationId = itemKey.rotationId,
-            userId = userAddress.userId.id,
-            addressId = userAddress.addressId.id,
-            shareId = shareId.id,
-            key = itemKey.key.armored,
-            keyPassphrase = keyPassphrase,
-            keySignature = keySignature,
-            createTime = createTime,
-            encryptedKeyPassphrase = itemKey.encryptedKeyPassphrase
-        )
-        localDataSource.storeKeys(
-            userAddress, shareId,
-            VaultItemKeyEntityList(
-                vaultKeys = emptyList(),
-                itemKeys = listOf(entity)
-            )
-        )
-    }
-
     private suspend fun getVaultItemKeys(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
-        forceRefresh: Boolean
+        forceRefresh: Boolean,
+        shouldStoreLocally: Boolean = true
     ): VaultItemKeyList {
         if (!forceRefresh) {
             val keys = localDataSource.getKeys(userAddress, shareId)
@@ -167,14 +112,16 @@ class VaultKeyRepositoryImpl @Inject constructor(
         val itemKeyPassphrases = open.itemKeyList
             .associate { it.rotationId to it.encryptedKeyPassphrase }
 
-        val entityKeys = domainToEntity(
-            remoteKeys,
-            userAddress,
-            shareId,
-            vaultKeyPassphrases,
-            itemKeyPassphrases
-        )
-        localDataSource.storeKeys(userAddress, shareId, entityKeys)
+        if (shouldStoreLocally) {
+            val entityKeys = domainToEntity(
+                remoteKeys,
+                userAddress,
+                shareId,
+                vaultKeyPassphrases,
+                itemKeyPassphrases
+            )
+            localDataSource.storeKeys(userAddress, shareId, entityKeys)
+        }
         return open
     }
 
@@ -218,7 +165,8 @@ class VaultKeyRepositoryImpl @Inject constructor(
 
     private fun entityToDomain(list: VaultItemKeyEntityList): VaultItemKeyList {
         val maxRotationId = list.vaultKeys
-            .maxByOrNull { it.rotation }?.rotationId
+            .maxByOrNull { it.rotation }
+            ?.rotationId
             ?: return VaultItemKeyList(emptyList(), emptyList())
 
         val vaultKeys = list.vaultKeys.map { vaultKeyEntityToDomain(it, maxRotationId) }

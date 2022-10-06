@@ -1,10 +1,8 @@
-package me.proton.android.pass.ui.shared
+package me.proton.core.pass.presentation.components.form
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.OutlinedTextField
@@ -23,76 +21,13 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.caption
-import me.proton.core.pass.presentation.R
-
-@Composable
-fun ProtonFormInput(
-    @StringRes title: Int,
-    value: String,
-    onChange: (String) -> Unit,
-    modifier: Modifier = Modifier,
-    @StringRes placeholder: Int? = null,
-    required: Boolean = false,
-    trailingIcon: @Composable (() -> Unit)? = null,
-    singleLine: Boolean = true,
-    moveToNextOnEnter: Boolean = true,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    editable: Boolean = true,
-    isError: Boolean = false,
-    errorMessage: String = ""
-) {
-    Column(modifier = modifier) {
-        ProtonTextTitle(title)
-        ProtonTextField(
-            value = value,
-            onChange = onChange,
-            placeholder = placeholder,
-            trailingIcon = trailingIcon,
-            singleLine = singleLine,
-            visualTransformation = visualTransformation,
-            moveToNextOnEnter = moveToNextOnEnter,
-            modifier = Modifier.padding(top = 8.dp),
-            editable = editable,
-            isError = isError
-        )
-        if (isError) {
-            Text(
-                text = errorMessage,
-                modifier = Modifier.padding(top = 4.dp),
-                fontSize = 12.sp,
-                style = ProtonTheme.typography.caption,
-                color = ProtonTheme.colors.notificationError
-            )
-        } else if (required) {
-            Text(
-                text = stringResource(R.string.field_required_indicator),
-                modifier = Modifier.padding(top = 4.dp),
-                fontSize = 12.sp,
-                style = ProtonTheme.typography.caption,
-                color = ProtonTheme.colors.textWeak
-            )
-        }
-    }
-}
-
-@Composable
-fun ProtonTextTitle(
-    @StringRes title: Int,
-    modifier: Modifier = Modifier
-) {
-    Text(
-        text = stringResource(title),
-        color = ProtonTheme.colors.textNorm,
-        style = ProtonTheme.typography.caption,
-        fontWeight = FontWeight.W500,
-        fontSize = 12.sp,
-        modifier = modifier
-    )
-}
+import me.proton.core.pass.presentation.components.previewproviders.ProtonTextFieldPreviewData
+import me.proton.core.pass.presentation.components.previewproviders.ProtonTextFieldPreviewProvider
 
 @Composable
 fun ProtonTextField(
@@ -172,4 +107,23 @@ fun ProtonTextFieldPlaceHolder(
         fontSize = 16.sp,
         fontWeight = FontWeight.W400
     )
+}
+
+
+@Preview(showBackground = true)
+@Composable
+internal fun Preview_ProtonTextField(
+    @PreviewParameter(ProtonTextFieldPreviewProvider::class)
+    data: ProtonTextFieldPreviewData
+) {
+    ProtonTheme {
+        ProtonTextField(
+            value = data.value,
+            placeholder = data.placeholder,
+            editable = data.isEditable,
+            isError = data.isError,
+            trailingIcon = data.icon,
+            onChange = {}
+        )
+    }
 }

@@ -27,10 +27,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import me.proton.android.pass.ui.shared.ProtonTextField
-import me.proton.android.pass.ui.shared.ProtonTextTitle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.presentation.R
+import me.proton.core.pass.presentation.components.form.ProtonTextField
+import me.proton.core.pass.presentation.components.form.ProtonTextTitle
 
 @Composable
 internal fun WebsitesSection(

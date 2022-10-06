@@ -9,8 +9,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.proton.android.pass.ui.shared.form.NoteInput
-import me.proton.android.pass.ui.shared.form.TitleInput
+import me.proton.core.pass.presentation.components.form.NoteInput
+import me.proton.core.pass.presentation.components.form.TitleInput
 
 @Composable
 internal fun CreateAliasForm(

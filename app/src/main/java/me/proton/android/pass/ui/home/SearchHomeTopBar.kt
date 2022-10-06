@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ArrowBackIcon
-import me.proton.android.pass.ui.shared.ProtonTextFieldPlaceHolder
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.pass.presentation.components.form.ProtonTextFieldPlaceHolder
 
 @ExperimentalComposeUiApi
 @Composable
@@ -40,7 +40,10 @@ fun SearchHomeTopBar(
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
-                textStyle = LocalTextStyle.current.copy(fontWeight = FontWeight.W400, fontSize = 16.sp),
+                textStyle = LocalTextStyle.current.copy(
+                    fontWeight = FontWeight.W400,
+                    fontSize = 16.sp
+                ),
                 singleLine = true,
                 modifier = Modifier.focusRequester(focusRequester)
             )

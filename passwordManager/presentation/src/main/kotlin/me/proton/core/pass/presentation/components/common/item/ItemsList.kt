@@ -25,6 +25,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.android.pass.ui.shared.DropDownAction
@@ -33,10 +36,9 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.presentation.R
 import me.proton.core.pass.presentation.components.model.ItemUiModel
+import me.proton.core.pass.presentation.components.previewproviders.ItemUiModelPreviewProvider
 
 typealias OnItemClick = (ItemUiModel) -> Unit
-
-private const val NOTE_MAX_CHARACTERS = 10
 
 data class ItemAction(
     val onSelect: (ItemUiModel) -> Unit,
@@ -136,10 +138,11 @@ internal fun NoteRow(
     itemType: ItemType.Note,
     modifier: Modifier = Modifier
 ) {
+    val processedText = itemType.text.replace("\n", " ")
     ItemRow(
         icon = me.proton.core.presentation.R.drawable.ic_proton_note,
         title = item.name,
-        subtitle = itemType.text.take(NOTE_MAX_CHARACTERS),
+        subtitle = processedText,
         modifier = modifier
     )
 }
@@ -190,7 +193,8 @@ internal fun ItemRow(
                 color = ProtonTheme.colors.textWeak,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.W400,
-                maxLines = 1
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -235,5 +239,13 @@ private fun ItemRowActions(
                 }
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun Preview_ItemRow(@PreviewParameter(ItemUiModelPreviewProvider::class) item: ItemUiModel) {
+    ProtonTheme {
+        ItemRow(item = item)
     }
 }

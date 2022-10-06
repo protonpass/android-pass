@@ -16,7 +16,8 @@ interface VaultKeyRepository {
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
-        forceRefresh: Boolean = false
+        forceRefresh: Boolean = false,
+        shouldStoreLocally: Boolean = false
     ): List<VaultKey>
 
     suspend fun getVaultKeyById(
@@ -46,22 +47,4 @@ interface VaultKeyRepository {
         signingKey: SigningKey,
         forceRefresh: Boolean = false
     ): Pair<VaultKey, ItemKey>
-
-    suspend fun storeVaultKey(
-        userAddress: UserAddress,
-        shareId: ShareId,
-        vaultKey: VaultKey,
-        keyPassphrase: String?,
-        keySignature: String,
-        createTime: Long
-    )
-
-    suspend fun storeItemKey(
-        userAddress: UserAddress,
-        shareId: ShareId,
-        itemKey: ItemKey,
-        keyPassphrase: String?,
-        keySignature: String,
-        createTime: Long
-    )
 }

@@ -70,6 +70,58 @@ class OpenShareTest {
         assertEquals(VAULT_DESCRIPTION, contents.description)
     }
 
+    @Test
+    fun testResponseToEntity() {
+        val userAddress = TestUtils.createUserAddress(
+            cryptoContext,
+            key = USER_PRIVATE_KEY,
+            passphrase = USER_PASSPHRASE.encodeToByteArray()
+        )
+        val userPublicKey = PublicKey(
+            cryptoContext.pgpCrypto.getPublicKey(USER_PRIVATE_KEY),
+            isPrimary = true,
+            isActive = true,
+            canEncrypt = true,
+            canVerify = true
+        )
+        val vaultKey = getVaultKey()
+        val vaultKeyInstance = VaultKey(
+            rotationId = createVaultResponse.contentRotationId!!,
+            rotation = 1,
+            key = ArmoredKey.Private(vaultKey.key, vaultKey),
+            encryptedKeyPassphrase = vaultKey.passphrase
+        )
+        val instance = OpenShare(cryptoContext)
+        val entity = instance.responseToEntity(
+            response = createVaultResponse,
+            userAddress = userAddress,
+            inviterKeys = listOf(userPublicKey),
+            contentSignatureKeys = listOf(userPublicKey),
+            vaultKeys = listOf(vaultKeyInstance),
+        )
+
+        assertEquals(entity.id, createVaultResponse.shareId)
+        assertEquals(entity.userId, userAddress.userId.id)
+        assertEquals(entity.addressId, userAddress.addressId.id)
+        assertEquals(entity.vaultId, createVaultResponse.vaultId)
+        assertEquals(entity.targetType, createVaultResponse.targetType)
+        assertEquals(entity.targetId, createVaultResponse.targetId)
+        assertEquals(entity.permission, createVaultResponse.permission)
+        assertEquals(entity.inviterEmail, createVaultResponse.inviterEmail)
+        assertEquals(entity.acceptanceSignature, createVaultResponse.acceptanceSignature)
+        assertEquals(entity.inviterAcceptanceSignature, createVaultResponse.inviterAcceptanceSignature)
+        assertEquals(entity.signingKey, createVaultResponse.signingKey)
+        assertEquals(entity.signingKeyPassphrase, createVaultResponse.signingKeyPassphrase)
+        assertEquals(entity.content, createVaultResponse.content)
+        assertEquals(entity.contentFormatVersion, createVaultResponse.contentFormatVersion)
+        assertEquals(entity.contentEncryptedAddressSignature, createVaultResponse.contentEncryptedAddressSignature)
+        assertEquals(entity.contentEncryptedVaultSignature, createVaultResponse.contentEncryptedVaultSignature)
+        assertEquals(entity.contentSignatureEmail, createVaultResponse.contentSignatureEmail)
+        assertEquals(entity.nameKeyId, createVaultResponse.contentRotationId)
+        assertEquals(entity.expirationTime, createVaultResponse.expirationTime)
+        assertEquals(entity.createTime, createVaultResponse.createTime)
+    }
+
     private fun getVaultKey(): PrivateKey = PrivateKey(
         key = VAULT_KEY,
         isPrimary = true,

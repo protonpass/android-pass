@@ -1,6 +1,5 @@
 package me.proton.core.pass.data.repositories
 
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.crypto.common.context.CryptoContext
@@ -25,6 +24,7 @@ import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.entity.NewVault
 import me.proton.core.pass.domain.key.SigningKey
+import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.repositories.ShareRepository
 import me.proton.core.pass.domain.repositories.VaultItemKeyList
 import me.proton.core.pass.domain.repositories.VaultKeyRepository
@@ -32,6 +32,7 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton_pass_vault_v1.VaultV1
+import javax.inject.Inject
 
 class ShareRepositoryImpl @Inject constructor(
     private val database: PassDatabase,
@@ -50,12 +51,12 @@ class ShareRepositoryImpl @Inject constructor(
         vault: NewVault
     ): Share {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-        val (request, _) = createVaultRequest(vault, userAddress)
+        val (request, keyList) = createVaultRequest(vault, userAddress)
         val shareResponse = remoteShareDataSource.createVault(userAddress.userId, request)
 
         // Replace the temporary rotationId we placed on the vaultKey with the actual rotationId
         val entity = database.inTransaction {
-            val entity = shareResponseToEntity(userAddress, shareResponse)
+            val entity = shareResponseToEntity(userAddress, shareResponse, keyList.vaultKeyList)
             localShareDataSource.upsertShares(listOf(entity))
 
             val reencryptedEntity = reencryptShareEntityContents(userAddress, shareResponse, entity)
@@ -101,7 +102,11 @@ class ShareRepositoryImpl @Inject constructor(
             share = storeShares(userAddress, listOf(shareResponse))[0]
         }
 
-        val addressKeys = keyRepository.getPublicAddress(userId, share.inviterEmail, source = Source.LocalIfAvailable)
+        val addressKeys = keyRepository.getPublicAddress(
+            userId,
+            share.inviterEmail,
+            source = Source.LocalIfAvailable
+        )
         return shareEntityToShare(userAddress, addressKeys.keys.publicKeyRing().keys, share)
     }
 
@@ -118,7 +123,14 @@ class ShareRepositoryImpl @Inject constructor(
         // would fail, so we first store the share without the reencryption, fetch the vaultKeys, and
         // then we reencrypt the data
         val entities = shares.map {
-            ShareResponseEntity(it, shareResponseToEntity(userAddress, it))
+            val signingKey = SigningKey(Utils.readKey(it.signingKey, isPrimary = true))
+            val vaultKeys = vaultKeyRepository.getVaultKeys(
+                userAddress,
+                ShareId(it.shareId),
+                signingKey,
+                shouldStoreLocally = false
+            )
+            ShareResponseEntity(it, shareResponseToEntity(userAddress, it, vaultKeys))
         }
 
         return database.inTransaction {
@@ -146,20 +158,38 @@ class ShareRepositoryImpl @Inject constructor(
         val vaultKeys = vaultKeyRepository.getVaultKeys(userAddress, ShareId(response.shareId), signingKey)
         return entity.copy(
             keystoreEncryptedContent = openShare.reencryptContent(response, vaultKeys),
-            keystoreEncryptedPassphrase = openShare.reencryptSigningKeyPassphrase(response.signingKeyPassphrase, userAddress)
+            keystoreEncryptedPassphrase = openShare.reencryptSigningKeyPassphrase(
+                response.signingKeyPassphrase,
+                userAddress
+            )
         )
     }
 
     private suspend fun shareResponseToEntity(
         userAddress: UserAddress,
-        shareResponse: ShareResponse
+        shareResponse: ShareResponse,
+        vaultKeys: List<VaultKey>
     ): ShareEntity {
-        val inviterKeys = keyRepository.getPublicAddress(userAddress.userId, shareResponse.inviterEmail, source = Source.LocalIfAvailable)
-        val inviterPublicKeys = inviterKeys.keys.publicKeyRing().keys
+        val inviterKeys = keyRepository.getPublicAddress(
+            userAddress.userId,
+            shareResponse.inviterEmail,
+            source = Source.LocalIfAvailable
+        ).keys.publicKeyRing().keys
+        val contentSignatureKeys = if (shareResponse.contentSignatureEmail != null) {
+            keyRepository.getPublicAddress(
+                userAddress.userId,
+                shareResponse.contentSignatureEmail,
+                source = Source.LocalIfAvailable
+            ).keys.publicKeyRing().keys
+        } else {
+            emptyList()
+        }
         return openShare.responseToEntity(
             shareResponse,
             userAddress,
-            inviterPublicKeys
+            inviterKeys,
+            contentSignatureKeys,
+            vaultKeys
         )
     }
 

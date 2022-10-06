@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import me.proton.android.pass.ui.shared.ProtonFormInput
 import me.proton.core.pass.presentation.R
+import me.proton.core.pass.presentation.components.form.ProtonFormInput
 
 @Composable
 fun AliasInput(

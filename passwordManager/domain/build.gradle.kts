@@ -45,7 +45,8 @@ dependencies {
     implementation(libs.core.domain)
     implementation(libs.core.key)
     implementation(libs.core.user)
-    implementation(libs.core.utilKotlin)
+
+    implementation(project(":passwordManager:log"))
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

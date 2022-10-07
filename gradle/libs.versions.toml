@@ -17,6 +17,7 @@ androidx-hilt-navigation-compose = "1.0.0"
 androidx-lifecycle = "2.5.1"
 androidx-navigation = "2.5.2"
 androidx-room = "2.4.3"
+androidx-startup = "1.1.1"
 androidx-test = "1.4.0"
 androidx-test-uiautomator = "2.2.0"
 androidx-work = "2.7.1"
@@ -110,6 +111,8 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 ## Room
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
+## Startup
+androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "androidx-startup" }
 ## Work
 androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
 

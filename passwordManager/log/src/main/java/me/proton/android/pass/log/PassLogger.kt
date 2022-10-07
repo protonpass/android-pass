@@ -2,12 +2,12 @@ package me.proton.android.pass.log
 
 import android.os.Build
 import android.os.LocaleList
-import java.util.Locale
 import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.LoggerLogTag
 import timber.log.Timber
+import java.util.Locale
 
-object PassKeyLogger : Logger {
+object PassLogger : Logger {
     override fun v(tag: String, message: String) = Timber.tag(tag).v(message)
     override fun v(tag: String, e: Throwable, message: String) = Timber.tag(tag).v(e, message)
     override fun d(tag: String, message: String) = Timber.tag(tag).d(message)

@@ -16,13 +16,10 @@
  * along with Proton Mail. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.pass.initializer
+package me.proton.android.pass.log
 
 import android.content.Context
 import androidx.startup.Initializer
-import me.proton.android.pass.BuildConfig
-import me.proton.android.pass.log.PassKeyLogger
-import me.proton.android.pass.log.deviceInfo
 import me.proton.core.util.kotlin.CoreLogger
 import timber.log.Timber
 
@@ -34,10 +31,10 @@ class LoggerInitializer : Initializer<Unit> {
         } else {
             // Timber.plant(SentryTree())
         }
-        PassKeyLogger.deviceInfo()
+        PassLogger.deviceInfo()
 
         // Forward Core Logs to Timber, using AppLogger.
-        CoreLogger.set(PassKeyLogger)
+        CoreLogger.set(PassLogger)
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> {

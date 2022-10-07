@@ -225,6 +225,7 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uiTooling)
+    implementation(libs.androidx.startup.runtime)
     implementation(libs.core.account)
     implementation(libs.core.accountManager)
     implementation(libs.core.accountManager.presentation.compose)
@@ -249,8 +250,6 @@ dependencies {
     implementation(libs.core.user)
     implementation(libs.core.userSettings)
     implementation(libs.core.utilAndroidDagger)
-    implementation(libs.core.utilKotlin)
-    implementation(libs.timber)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)
     implementation(libs.sentry)
@@ -263,6 +262,7 @@ dependencies {
     implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:presentation"))
     implementation(project(":passwordManager:search:implementation"))
+    implementation(project(":passwordManager:log"))
 
     debugImplementation(libs.leakCanary)
 

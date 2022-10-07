@@ -17,7 +17,7 @@ interface VaultKeyRepository {
         shareId: ShareId,
         signingKey: SigningKey,
         forceRefresh: Boolean = false,
-        shouldStoreLocally: Boolean = false
+        shouldStoreLocally: Boolean = true
     ): List<VaultKey>
 
     suspend fun getVaultKeyById(

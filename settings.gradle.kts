@@ -24,6 +24,7 @@ include(":passwordManager:presentation")
 include(":passwordManager:search:api")
 include(":passwordManager:search:implementation")
 include(":passwordManager:test")
+include(":passwordManager:log")
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)

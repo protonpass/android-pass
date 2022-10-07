@@ -91,6 +91,7 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(project(":passwordManager:domain"))
+    implementation(project(":passwordManager:log"))
 
     androidTestImplementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(project(":passwordManager:test"))

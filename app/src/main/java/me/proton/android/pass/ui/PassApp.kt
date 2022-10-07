@@ -48,6 +48,7 @@ fun PassApp(
     ProtonTheme {
         ProvideWindowInsets {
             val drawerViewModel = hiltViewModel<DrawerViewModel>()
+            hiltViewModel<AppViewModel>()
             val drawerUiState by drawerViewModel.drawerUiState.collectAsState()
             val navController = rememberAnimatedNavController()
             val appNavigator = rememberAppNavigator(navController)

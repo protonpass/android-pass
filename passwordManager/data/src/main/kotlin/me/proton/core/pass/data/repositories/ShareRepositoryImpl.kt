@@ -54,12 +54,17 @@ class ShareRepositoryImpl @Inject constructor(
         val (request, keyList) = createVaultRequest(vault, userAddress)
         val shareResponse = remoteShareDataSource.createVault(userAddress.userId, request)
 
-        // Replace the temporary rotationId we placed on the vaultKey with the actual rotationId
-        val entity = database.inTransaction {
-            val entity = shareResponseToEntity(userAddress, shareResponse, keyList.vaultKeyList)
-            localShareDataSource.upsertShares(listOf(entity))
+        // We replace manually the vaultKey.rotationId so it has the right value for performing the validation
+        val rotationId = shareResponse.contentRotationId
+            ?: throw IllegalStateException("ContentRotationID cannot be null")
+        val vaultKey = keyList.vaultKeyList.first().copy(rotationId = rotationId)
 
-            val reencryptedEntity = reencryptShareEntityContents(userAddress, shareResponse, entity)
+        // Replace the temporary rotationId we placed on the vaultKey with the actual rotationId
+        val responseAsEntity = shareResponseToEntity(userAddress, shareResponse, listOf(vaultKey))
+        val entity = database.inTransaction {
+            localShareDataSource.upsertShares(listOf(responseAsEntity))
+
+            val reencryptedEntity = reencryptShareEntityContents(userAddress, shareResponse, responseAsEntity)
             localShareDataSource.upsertShares(listOf(reencryptedEntity))
             reencryptedEntity
         }

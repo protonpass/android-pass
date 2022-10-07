@@ -24,6 +24,7 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import me.proton.android.pass.log.LoggerInitializer
 import me.proton.core.eventmanager.data.CoreEventManagerStarter
 
 class EventManagerInitializer : Initializer<Unit> {

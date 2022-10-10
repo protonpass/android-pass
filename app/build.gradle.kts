@@ -17,7 +17,7 @@
  */
 
 import java.io.FileInputStream
-import java.util.*
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -114,6 +114,7 @@ android {
     productFlavors {
         val gitHash = "git rev-parse --short HEAD".runCommand(workingDir = rootDir)
         create("dev") {
+            isDefault = true
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev+$gitHash"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")

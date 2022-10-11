@@ -8,6 +8,8 @@ import me.proton.core.pass.autofill.entities.AndroidAutofillFieldId
 import me.proton.core.pass.autofill.entities.AssistField
 import me.proton.core.pass.autofill.entities.AutofillNode
 import me.proton.core.pass.autofill.entities.FieldType
+import me.proton.core.pass.autofill.entities.InputTypeValue
+import me.proton.core.util.kotlin.hasFlag
 
 class AssistNodeTraversal {
 
@@ -46,19 +48,17 @@ class AssistNodeTraversal {
         val isImportant = node.isImportantForAutofill
         val hasAutoFillHints = node.autofillHints.isNotEmpty()
         val hasHtmlInfo = node.htmlAttributes.isNotEmpty()
-        val hasValidInputType = nodeHasValidInputType(node)
-        val hasAutofillInfo = hasValidInputType || hasAutoFillHints || hasHtmlInfo
+        val hasAutofillInfo = hasAutoFillHints || hasHtmlInfo || nodeHasValidInputType(node)
 
         return node.id != null && hasAutofillInfo && isImportant
     }
 
     private fun nodeHasValidInputType(node: AutofillNode): Boolean {
-        val inputType = node.inputType
-        val hasMultilineFlag = inputType hasFlag InputType.TYPE_TEXT_FLAG_MULTI_LINE ||
-            inputType hasFlag InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE
-        val hasAutoCorrectFlag = inputType hasFlag InputType.TYPE_TEXT_FLAG_AUTO_CORRECT
+        val hasMultilineFlag = node.inputType.value.hasFlag(InputType.TYPE_TEXT_FLAG_MULTI_LINE) ||
+            node.inputType.value.hasFlag(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE)
+        val hasAutoCorrectFlag = node.inputType.value.hasFlag(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT)
         // InputType.TYPE_TEXT_FLAG_CAP_SENTENCES might also be considered in the future
-        return inputType != 0 && !hasMultilineFlag && !hasAutoCorrectFlag
+        return !hasMultilineFlag && !hasAutoCorrectFlag && detectFieldTypeUsingInputType(node.inputType) != null
     }
 
     private fun detectFieldType(node: AutofillNode): FieldType? {
@@ -91,30 +91,21 @@ class AssistNodeTraversal {
         else -> null
     }
 
-    fun detectFieldTypeUsingInputType(inputType: Int): FieldType? = when {
-        inputType == InputType.TYPE_CLASS_PHONE -> FieldType.Phone
-        hasVariations(
-            inputType,
+    fun detectFieldTypeUsingInputType(inputType: InputTypeValue): FieldType? = when {
+        inputType.value == InputType.TYPE_CLASS_PHONE -> FieldType.Phone
+        inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
             InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
         ) -> FieldType.Email
-        hasVariations(
-            inputType,
+        inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_PASSWORD,
             InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD,
             InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD,
             InputType.TYPE_NUMBER_VARIATION_PASSWORD
         ) -> FieldType.Password
-        hasVariations(
-            inputType,
-            InputType.TYPE_TEXT_VARIATION_PERSON_NAME
-        ) -> FieldType.FullName
+        inputType.hasVariations(InputType.TYPE_TEXT_VARIATION_PERSON_NAME) -> FieldType.FullName
         else -> null
     }
-
-    private fun hasVariations(inputType: Int, vararg variations: Int): Boolean =
-        variations.any { inputType and InputType.TYPE_MASK_VARIATION == it }
-
 
     companion object {
         const val HINT_CURRENT_PASSWORD = "current-password"
@@ -122,15 +113,15 @@ class AssistNodeTraversal {
 }
 
 fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode = AutofillNode(
-    autofillId?.let(::AndroidAutofillFieldId),
-    className,
-    isImportantForAutofill(this),
-    text?.toString(),
-    autofillValue,
-    inputType,
-    autofillHints?.toList().orEmpty(),
-    htmlInfo?.attributes?.toList()?.map { it.first to it.second }.orEmpty(),
-    (0 until childCount).map { getChildAt(it).toAutofillNode() }
+    id = autofillId?.let(::AndroidAutofillFieldId),
+    className = className,
+    isImportantForAutofill = isImportantForAutofill(this),
+    text = text?.toString(),
+    autofillValue = autofillValue,
+    inputType = InputTypeValue(inputType),
+    autofillHints = autofillHints?.toList().orEmpty(),
+    htmlAttributes = htmlInfo?.attributes?.toList()?.map { it.first to it.second }.orEmpty(),
+    children = (0 until childCount).map { getChildAt(it).toAutofillNode() }
 )
 
 private fun isImportantForAutofill(node: AssistStructure.ViewNode): Boolean =
@@ -144,5 +135,3 @@ private fun isImportantForAutofill(node: AssistStructure.ViewNode): Boolean =
     } else {
         true
     }
-
-private infix fun Int.hasFlag(flag: Int): Boolean = this and flag == flag

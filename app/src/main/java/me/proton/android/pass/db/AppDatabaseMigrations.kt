@@ -5,8 +5,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
 import me.proton.core.pass.data.db.PassDatabase
+import me.proton.core.payment.data.local.db.PaymentDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
 
+@Suppress("MagicNumber")
 object AppDatabaseMigrations {
 
     val MIGRATION_0_1 = object : Migration(0, 1) {
@@ -23,6 +25,12 @@ object AppDatabaseMigrations {
             FeatureFlagDatabase.MIGRATION_3.migrate(database)
             HumanVerificationDatabase.MIGRATION_1.migrate(database)
             HumanVerificationDatabase.MIGRATION_2.migrate(database)
+        }
+    }
+
+    val MIGRATION_2_3 = object : Migration(2, 3) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            PaymentDatabase.MIGRATION_0.migrate(database)
         }
     }
 }

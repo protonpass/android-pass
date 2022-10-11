@@ -73,6 +73,7 @@ dependencies {
     implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:presentation"))
     implementation(project(":passwordManager:search:api"))
+    implementation(project(":passwordManager:log"))
 
     testImplementation(project(":passwordManager:test"))
     testImplementation(libs.turbine)

@@ -106,9 +106,11 @@ class AssistNodeTraversal {
             InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
             InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS
         ) -> FieldType.Email
+        /*
+        Taken from keepass, we have to either provide the pass type or the username
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-        ) -> FieldType.Username
+        ) -> FieldType.Username */
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_PASSWORD,
             InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD

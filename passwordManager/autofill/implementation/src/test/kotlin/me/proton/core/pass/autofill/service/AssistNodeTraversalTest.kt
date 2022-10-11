@@ -6,6 +6,7 @@ import me.proton.core.pass.autofill.AssistNodeTraversal
 import me.proton.core.pass.autofill.entities.AutofillFieldId
 import me.proton.core.pass.autofill.entities.AutofillNode
 import me.proton.core.pass.autofill.entities.FieldType
+import me.proton.core.pass.autofill.entities.InputTypeValue
 import me.proton.core.pass.autofill.service.utils.newAutofillFieldId
 import org.junit.Assert
 import org.junit.Test
@@ -96,7 +97,9 @@ class AssistNodeTraversalTest {
     fun inputTypeParsingReturnsKnownFieldType() {
         val traversal = AssistNodeTraversal()
 
-        val fieldWithInputType = { inputType: Int -> traversal.detectFieldTypeUsingInputType(inputType) }
+        val fieldWithInputType = { inputType: Int ->
+            traversal.detectFieldTypeUsingInputType(InputTypeValue(inputType))
+        }
 
         val phoneType = fieldWithInputType(InputType.TYPE_CLASS_PHONE)
         val emailType = fieldWithInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
@@ -162,7 +165,7 @@ class AssistNodeTraversalTest {
             isImportantForAutofill = isImportantForAutofill,
             text = text,
             autofillValue = null,
-            inputType = inputType,
+            inputType = InputTypeValue(inputType),
             autofillHints = autofillHints,
             htmlAttributes = htmlAttributes,
             children

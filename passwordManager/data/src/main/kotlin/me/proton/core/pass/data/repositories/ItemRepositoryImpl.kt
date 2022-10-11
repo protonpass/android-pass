@@ -6,6 +6,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PublicKey
@@ -48,6 +49,7 @@ import javax.inject.Inject
 class ItemRepositoryImpl @Inject constructor(
     private val database: PassDatabase,
     private val cryptoContext: CryptoContext,
+    private val accountManager: AccountManager,
     override val userAddressRepository: UserAddressRepository,
     private val keyRepository: PublicAddressRepository,
     private val vaultKeyRepository: VaultKeyRepository,
@@ -174,6 +176,11 @@ class ItemRepositoryImpl @Inject constructor(
             )
             is ShareSelection.AllShares -> localItemDataSource.observeItems(userId, itemState)
         }.map { items ->
+            // Detect if we have received the update from a logout
+            val isAccountStillAvailable = accountManager.getAccount(userId).first() != null
+            if (!isAccountStillAvailable) return@map emptyList()
+
+            // The update does not come from a logout
             val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
             refreshItemsIfNeeded(userAddress, shareSelection)
             items.map { entityToDomain(it) }

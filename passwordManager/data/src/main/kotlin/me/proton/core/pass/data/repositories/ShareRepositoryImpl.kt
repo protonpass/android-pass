@@ -75,16 +75,12 @@ class ShareRepositoryImpl @Inject constructor(
 
     override fun observeShares(userId: UserId): Flow<List<Share>> {
         return localShareDataSource.getAllSharesForUser(userId).mapLatest { shares ->
-            val shareList = if (shares.isEmpty()) {
-                performShareRefresh(userId)
-            } else {
-                shares
-            }
-            val userKeys = shareList
+            if (shares.isEmpty()) return@mapLatest emptyList()
+            val userKeys = shares
                 .map { it.inviterEmail }
                 .distinct()
                 .associateWith { keyRepository.getPublicAddress(userId, it, source = Source.LocalIfAvailable) }
-            shareList.map { entity ->
+            shares.map { entity ->
                 val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
                 val keys = requireNotNull(userKeys[entity.inviterEmail]?.keys?.map { it.publicKey })
                 shareEntityToShare(userAddress, keys, entity)

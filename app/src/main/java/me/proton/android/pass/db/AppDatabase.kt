@@ -3,6 +3,7 @@ package me.proton.android.pass.db
 import android.content.Context
 import androidx.room.Database
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import me.proton.core.account.data.db.AccountConverters
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.entity.AccountEntity
@@ -33,6 +34,8 @@ import me.proton.core.pass.data.db.entities.ItemEntity
 import me.proton.core.pass.data.db.entities.ItemKeyEntity
 import me.proton.core.pass.data.db.entities.ShareEntity
 import me.proton.core.pass.data.db.entities.VaultKeyEntity
+import me.proton.core.payment.data.local.db.PaymentDatabase
+import me.proton.core.payment.data.local.entity.GooglePurchaseEntity
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserConverters
 import me.proton.core.user.data.db.UserDatabase
@@ -52,27 +55,28 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         // Core
         AccountEntity::class,
         AccountMetadataEntity::class,
-        SessionEntity::class,
-        SessionDetailsEntity::class,
-        UserEntity::class,
-        UserKeyEntity::class,
         AddressEntity::class,
         AddressKeyEntity::class,
-        KeySaltEntity::class,
-        PublicAddressEntity::class,
-        PublicAddressKeyEntity::class,
+        ChallengeFrameEntity::class,
+        EventMetadataEntity::class,
+        FeatureFlagEntity::class,
+        GooglePurchaseEntity::class,
         HumanVerificationEntity::class,
-        UserSettingsEntity::class,
+        KeySaltEntity::class,
         OrganizationEntity::class,
         OrganizationKeysEntity::class,
-        EventMetadataEntity::class,
-        ChallengeFrameEntity::class,
-        FeatureFlagEntity::class,
+        PublicAddressEntity::class,
+        PublicAddressKeyEntity::class,
+        SessionDetailsEntity::class,
+        SessionEntity::class,
+        UserEntity::class,
+        UserKeyEntity::class,
+        UserSettingsEntity::class,
         // Pass
-        ShareEntity::class,
         ItemEntity::class,
-        VaultKeyEntity::class,
-        ItemKeyEntity::class
+        ItemKeyEntity::class,
+        ShareEntity::class,
+        VaultKeyEntity::class
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -91,23 +95,25 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
 abstract class AppDatabase :
     BaseDatabase(),
     AccountDatabase,
-    UserDatabase,
     AddressDatabase,
-    KeySaltDatabase,
-    HumanVerificationDatabase,
-    PublicAddressDatabase,
-    UserSettingsDatabase,
-    OrganizationDatabase,
-    EventMetadataDatabase,
     ChallengeDatabase,
+    EventMetadataDatabase,
     FeatureFlagDatabase,
-    PassDatabase {
+    HumanVerificationDatabase,
+    KeySaltDatabase,
+    OrganizationDatabase,
+    PassDatabase,
+    PaymentDatabase,
+    PublicAddressDatabase,
+    UserDatabase,
+    UserSettingsDatabase {
 
     companion object {
-        const val VERSION = 2
+        const val VERSION = 3
 
-        private val migrations = listOf(
-            AppDatabaseMigrations.MIGRATION_1_2
+        private val migrations: List<Migration> = listOf(
+            AppDatabaseMigrations.MIGRATION_1_2,
+            AppDatabaseMigrations.MIGRATION_2_3
         )
 
         fun buildDatabase(context: Context): AppDatabase =

@@ -10,10 +10,12 @@ import android.service.autofill.FillRequest
 import android.service.autofill.FillResponse
 import android.service.autofill.SaveInfo
 import android.widget.RemoteViews
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.pass.autofill.Utils.getWindowNodes
 import me.proton.core.pass.autofill.entities.AndroidAutofillFieldId
 import me.proton.core.pass.autofill.entities.AssistField
@@ -35,7 +37,10 @@ object AutoFillHandler {
             return
         }
 
-        val job = CoroutineScope(Dispatchers.IO).launch {
+        val handler = CoroutineExceptionHandler { _, exception ->
+            PassLogger.e("AutoFillHandler", exception)
+        }
+        val job = CoroutineScope(Dispatchers.IO).launch(handler) {
             searchAndFill(context, windowNode, request, callback)
         }
 

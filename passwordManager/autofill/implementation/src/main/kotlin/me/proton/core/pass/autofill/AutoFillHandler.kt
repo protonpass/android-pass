@@ -16,6 +16,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import me.proton.core.pass.autofill.Utils.getWindowNodes
 import me.proton.core.pass.autofill.entities.AndroidAutofillFieldId
+import me.proton.core.pass.autofill.entities.AssistField
 import me.proton.core.pass.autofill.entities.asAndroid
 import me.proton.core.pass.autofill.service.R
 import me.proton.core.pass.autofill.ui.autofill.AutofillActivity
@@ -50,7 +51,9 @@ object AutoFillHandler {
         request: FillRequest,
         callback: FillCallback
     ) {
-        val assistFields = AssistNodeTraversal().traverse(windowNode.rootViewNode)
+        val assistFields: List<AssistField> =
+            AssistNodeTraversal().traverse(windowNode.rootViewNode)
+        if (assistFields.isEmpty()) return
         val listItemId = android.R.layout.simple_list_item_1
 
         val authenticateView = RemoteViews(context.packageName, listItemId).apply {

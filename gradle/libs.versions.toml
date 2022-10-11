@@ -34,7 +34,7 @@ gradlePlugin-android = "7.2.2"
 gradlePlugin-doctor = "0.8.1"
 gradlePlugin-protobuf = "0.8.19"
 gradlePlugin-proton-detekt = "1.0.0-alpha03"
-gradlePlugin-sentry = "3.1.7"
+gradlePlugin-sentry = "3.2.0"
 gradlePlugin-versions = "0.42.0"
 # Jacoco
 jacoco = "0.8.7"

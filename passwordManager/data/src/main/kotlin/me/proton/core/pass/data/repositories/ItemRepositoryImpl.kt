@@ -6,8 +6,10 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.extension.publicKeyRing
@@ -17,11 +19,15 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.common.api.map
 import me.proton.core.pass.data.crypto.CreateItem
+import me.proton.core.pass.data.crypto.CryptoException
 import me.proton.core.pass.data.crypto.OpenItem
 import me.proton.core.pass.data.crypto.UpdateItem
 import me.proton.core.pass.data.db.PassDatabase
 import me.proton.core.pass.data.db.entities.ItemEntity
+import me.proton.core.pass.data.extensions.hasPackageName
 import me.proton.core.pass.data.extensions.itemType
+import me.proton.core.pass.data.extensions.serializeToProto
+import me.proton.core.pass.data.extensions.with
 import me.proton.core.pass.data.local.LocalItemDataSource
 import me.proton.core.pass.data.remote.RemoteItemDataSource
 import me.proton.core.pass.data.requests.CreateAliasRequest
@@ -37,6 +43,7 @@ import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.ShareSelection
 import me.proton.core.pass.domain.entity.NewAlias
+import me.proton.core.pass.domain.entity.PackageName
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.repositories.ItemRepository
@@ -46,6 +53,7 @@ import me.proton.core.pass.domain.repositories.VaultKeyRepository
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
+import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
 @Suppress("LongParameterList", "TooManyFunctions")
@@ -123,54 +131,13 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         item: Item,
         contents: ItemContents
-    ): Result<Item> {
-        val keyPacketResult: Result<KeyPacket> =
-            keyPacketRepository.getLatestKeyPacketForItem(userId, share.id, item.id)
-        when (keyPacketResult) {
-            is Result.Error -> return Result.Error(keyPacketResult.exception)
-            Result.Loading -> return Result.Loading
-            is Result.Success -> Unit
-        }
-        return withUserAddress(userId) { userAddress ->
-            val vaultKey =
-                vaultKeyRepository.getVaultKeyById(
-                    userAddress,
-                    share.id,
-                    share.signingKey,
-                    keyPacketResult.data.rotationId
-                )
-            val itemKey =
-                vaultKeyRepository.getItemKeyById(
-                    userAddress,
-                    share.id,
-                    share.signingKey,
-                    keyPacketResult.data.rotationId
-                )
-
-            val body = updateItem.updateItem(
-                vaultKey,
-                itemKey,
-                keyPacketResult.data,
-                userAddress,
-                contents,
-                item.revision
-            )
-            remoteItemDataSource.updateItem(userId, share.id, item.id, body)
-                .map { itemResponse ->
-                    val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
-                    val entity = itemResponseToEntity(
-                        userAddress,
-                        itemResponse,
-                        share,
-                        userPublicKeys,
-                        listOf(vaultKey),
-                        listOf(itemKey)
-                    )
-                    localItemDataSource.upsertItem(entity)
-                    entityToDomain(entity)
-                }
-        }
-    }
+    ): Result<Item> =
+       performUpdate(
+            userId,
+            share,
+            item,
+            contents.serializeToProto()
+       )
 
     override fun observeItems(
         userId: UserId,
@@ -285,6 +252,79 @@ class ItemRepositoryImpl @Inject constructor(
             TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
         remoteItemDataSource.delete(userId, shareId, body)
         localItemDataSource.delete(shareId, itemId)
+    }
+
+    override suspend fun addPackageToItem(shareId: ShareId, itemId: ItemId, packageName: PackageName): Result<Unit> {
+        val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
+        val item = entityToDomain(itemEntity)
+
+        val itemContents = item.content.decrypt(cryptoContext.keyStoreCrypto)
+        val newItemContents = ItemV1.Item.parseFrom(itemContents.array)
+
+        if (newItemContents.hasPackageName(packageName)) {
+            PassLogger.i("ItemRepositoryImpl", "Item already has this package name [shareId=$shareId] [itemId=$itemId] [packageName=$packageName]")
+            return
+        }
+        val updatedContents = newItemContents.with(packageName)
+
+        val userId = accountManager.getPrimaryUserId().first() ?: throw CryptoException("UserId cannot be null")
+        val share = shareRepository.getById(userId, shareId) ?: throw CryptoException("Share cannot be null")
+
+        performUpdate(userId, share, item, updatedContents)
+    }
+
+    private suspend fun performUpdate(
+        userId: UserId,
+        share: Share,
+        item: Item,
+        itemContents: ItemV1.Item
+    ): Result<Item> {
+        val keyPacketResult: Result<KeyPacket> =
+            keyPacketRepository.getLatestKeyPacketForItem(userId, share.id, item.id)
+        when (keyPacketResult) {
+            is Result.Error -> return Result.Error(keyPacketResult.exception)
+            Result.Loading -> return Result.Loading
+            is Result.Success -> Unit
+        }
+        return withUserAddress(userId) { userAddress ->
+            val vaultKey =
+                vaultKeyRepository.getVaultKeyById(
+                    userAddress,
+                    share.id,
+                    share.signingKey,
+                    keyPacketResult.data.rotationId
+                )
+            val itemKey =
+                vaultKeyRepository.getItemKeyById(
+                    userAddress,
+                    share.id,
+                    share.signingKey,
+                    keyPacketResult.data.rotationId
+                )
+
+            val body = updateItem.updateItem(
+                vaultKey,
+                itemKey,
+                keyPacketResult.data,
+                userAddress,
+                itemContents,
+                item.revision
+            )
+            remoteItemDataSource.updateItem(userId, share.id, item.id, body)
+                .map { itemResponse ->
+                    val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
+                    val entity = itemResponseToEntity(
+                        userAddress,
+                        itemResponse,
+                        share,
+                        userPublicKeys,
+                        listOf(vaultKey),
+                        listOf(itemKey)
+                    )
+                    localItemDataSource.upsertItem(entity)
+                    entityToDomain(entity)
+                }
+        }
     }
 
     private suspend fun refreshItemsIfNeeded(

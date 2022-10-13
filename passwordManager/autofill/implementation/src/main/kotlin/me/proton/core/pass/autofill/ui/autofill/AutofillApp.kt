@@ -16,6 +16,7 @@ import me.proton.core.pass.autofill.ui.auth.AUTH_SCREEN_ROUTE
 import me.proton.core.pass.autofill.ui.auth.AuthScreen
 import me.proton.core.pass.autofill.ui.autofill.select.SELECT_ITEM_ROUTE
 import me.proton.core.pass.autofill.ui.autofill.select.SelectItemScreen
+import me.proton.core.pass.domain.entity.PackageName
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -23,6 +24,7 @@ fun AutofillApp(
     modifier: Modifier = Modifier,
     androidAutofillFieldIds: List<AndroidAutofillFieldId>,
     autofillTypes: List<FieldType>,
+    packageName: PackageName,
     onAutofillResponse: (AutofillResponse?) -> Unit
 ) {
     val navController = rememberAnimatedNavController()
@@ -43,6 +45,7 @@ fun AutofillApp(
             }
             composable(SELECT_ITEM_ROUTE) {
                 SelectItemScreen(
+                    packageName = packageName,
                     onItemSelected = {
                         val response = ItemFieldMapper.mapFields(
                             item = it,

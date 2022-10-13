@@ -6,12 +6,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.core.pass.autofill.entities.AutofillItem
+import me.proton.core.pass.domain.entity.PackageName
 
 const val SELECT_ITEM_ROUTE = "autofill/item"
 
 @Composable
 fun SelectItemScreen(
     modifier: Modifier = Modifier,
+    packageName: PackageName,
     onItemSelected: (AutofillItem) -> Unit
 ) {
     val viewModel: SelectItemViewModel = hiltViewModel()
@@ -19,7 +21,7 @@ fun SelectItemScreen(
     SelectItemScreenContent(
         modifier = modifier,
         state = uiState,
-        onItemClicked = { viewModel.onItemClicked(it) },
+        onItemClicked = { viewModel.onItemClicked(it, packageName) },
         onItemSelected = onItemSelected
     )
 }

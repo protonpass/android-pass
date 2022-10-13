@@ -19,6 +19,7 @@ import me.proton.android.pass.log.PassLogger
 import me.proton.core.pass.autofill.Utils.getWindowNodes
 import me.proton.core.pass.autofill.entities.AndroidAutofillFieldId
 import me.proton.core.pass.autofill.entities.AssistField
+import me.proton.core.pass.autofill.entities.AutofillData
 import me.proton.core.pass.autofill.entities.asAndroid
 import me.proton.core.pass.autofill.service.R
 import me.proton.core.pass.autofill.ui.autofill.AutofillActivity
@@ -64,10 +65,14 @@ object AutoFillHandler {
         val authenticateView = RemoteViews(context.packageName, listItemId).apply {
             setTextViewText(android.R.id.text1, context.getString(R.string.autofill_authenticate_prompt))
         }
+        val data = AutofillData(
+            assistFields,
+            Utils.getApplicationPackageName(windowNode)
+        )
         val pendingIntent = PendingIntent.getActivity(
             context,
             AutofillActivity.REQUEST_CODE,
-            AutofillActivity.newIntent(context, assistFields),
+            AutofillActivity.newIntent(context, data),
             PendingIntent.FLAG_CANCEL_CURRENT
         )
 

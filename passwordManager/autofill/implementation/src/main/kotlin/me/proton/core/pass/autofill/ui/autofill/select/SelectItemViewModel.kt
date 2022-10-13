@@ -11,14 +11,13 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.pass.autofill.entities.AutofillItem
 import me.proton.core.pass.autofill.extensions.toAutoFillItem
 import me.proton.core.pass.autofill.extensions.toUiModel
+import me.proton.core.pass.data.usecases.AddPackageNameToItem
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.entity.PackageName
-import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.search.SearchItems
 import javax.inject.Inject
@@ -26,7 +25,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectItemViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
-    private val itemRepository: ItemRepository,
+    private val addPackageNameToItem: AddPackageNameToItem,
     searchItems: SearchItems
 ) : ViewModel() {
 
@@ -54,13 +53,7 @@ class SelectItemViewModel @Inject constructor(
         )
 
     fun onItemClicked(item: ItemUiModel, packageName: PackageName) = viewModelScope.launch {
-        try {
-            PassLogger.d("SelectItemViewModel", "Adding package to item [itemId=${item.id}] [packageName=${packageName}]")
-            itemRepository.addPackageToItem(item.shareId, item.id, packageName)
-            PassLogger.i("SelectItemViewModel", "Added package to item [itemId=${item.id}] [packageName=${packageName}]")
-        } catch (e: Throwable) {
-            PassLogger.e("SelectItemViewModel", e, "Error adding package to item [packageName=$packageName]")
-        }
+        addPackageNameToItem(item.shareId, item.id, packageName)
         itemClickedFlow.value = ItemClickedEvent.Clicked(item.toAutoFillItem(cryptoContext.keyStoreCrypto))
     }
 

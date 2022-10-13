@@ -1,19 +1,18 @@
 package me.proton.core.pass.data.crypto
 
-import javax.inject.Inject
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.key.domain.decryptSessionKey
 import me.proton.core.key.domain.encryptData
 import me.proton.core.key.domain.signData
 import me.proton.core.key.domain.useKeys
-import me.proton.core.pass.data.extensions.serializeToProto
 import me.proton.core.pass.data.requests.UpdateItemRequest
-import me.proton.core.pass.domain.ItemContents
 import me.proton.core.pass.domain.KeyPacket
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.key.usePrivateKey
 import me.proton.core.user.domain.entity.UserAddress
+import proton_pass_item_v1.ItemV1
+import javax.inject.Inject
 
 class UpdateItem @Inject constructor(
     private val cryptoContext: CryptoContext
@@ -28,11 +27,10 @@ class UpdateItem @Inject constructor(
         itemKey: ItemKey,
         keyPacket: KeyPacket,
         userAddress: UserAddress,
-        itemContents: ItemContents,
+        itemContent: ItemV1.Item,
         lastRevision: Long
     ): UpdateItemRequest {
-
-        val serializedItem = itemContents.serializeToProto()
+        val serializedItem = itemContent.toByteArray()
         val sessionKey = vaultKey.usePrivateKey(cryptoContext) {
             decryptSessionKey(keyPacket.keyPacket)
         }

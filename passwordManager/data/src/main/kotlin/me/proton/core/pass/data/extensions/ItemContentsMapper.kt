@@ -3,7 +3,7 @@ package me.proton.core.pass.data.extensions
 import me.proton.core.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
 
-fun ItemContents.serializeToProto(): ByteArray {
+fun ItemContents.serializeToProto(): ItemV1.Item {
     val builder = ItemV1.Item.newBuilder()
         .setMetadata(
             ItemV1.Metadata.newBuilder()
@@ -33,5 +33,4 @@ fun ItemContents.serializeToProto(): ByteArray {
     return builder
         .setContent(content)
         .build()
-        .toByteArray()
 }

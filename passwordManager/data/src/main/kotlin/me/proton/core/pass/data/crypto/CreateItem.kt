@@ -1,6 +1,5 @@
 package me.proton.core.pass.data.crypto
 
-import javax.inject.Inject
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.dataPacket
@@ -17,6 +16,7 @@ import me.proton.core.pass.domain.key.VaultKey
 import me.proton.core.pass.domain.key.publicKey
 import me.proton.core.pass.domain.key.usePrivateKey
 import me.proton.core.user.domain.entity.UserAddress
+import javax.inject.Inject
 
 class CreateItem @Inject constructor(
     private val cryptoContext: CryptoContext
@@ -32,7 +32,7 @@ class CreateItem @Inject constructor(
         userAddress: UserAddress,
         itemContents: ItemContents
     ): CreateItemRequest {
-        val serializedItem = itemContents.serializeToProto()
+        val serializedItem = itemContents.serializeToProto().toByteArray()
         val vaultKeyPublicKey = vaultKey.publicKey(cryptoContext)
 
         val (encryptedContents, vaultKeyPacket) = encryptContent(serializedItem, vaultKeyPublicKey)

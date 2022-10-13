@@ -10,6 +10,7 @@ import me.proton.core.key.domain.getArmored
 import me.proton.core.key.domain.getBase64Decoded
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyData
+import me.proton.core.pass.data.extensions.serializeToProto
 import me.proton.core.pass.domain.ItemContents
 import me.proton.core.pass.domain.KeyPacket
 import me.proton.core.pass.domain.key.VaultKey
@@ -39,7 +40,7 @@ class UpdateItemTest {
 
         val (sessionKey, keyPacket) = generateKeyPacketForVaultKey(vaultKey)
         val contents = ItemContents.Note(title = StringUtils.randomString(), note = StringUtils.randomString())
-        val body = instance.updateItem(vaultKey, itemKey, keyPacket, userAddress, contents, lastRevision)
+        val body = instance.updateItem(vaultKey, itemKey, keyPacket, userAddress, contents.serializeToProto(), lastRevision)
 
         assertEquals(lastRevision, body.lastRevision)
         assertEquals(vaultKey.rotationId, body.rotationId)

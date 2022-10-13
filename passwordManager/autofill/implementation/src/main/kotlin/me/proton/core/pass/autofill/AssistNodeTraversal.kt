@@ -54,8 +54,14 @@ class AssistNodeTraversal {
     }
 
     private fun nodeHasValidHints(autofillHints: Set<String>): Boolean = autofillHints
-        .map { detectFieldTypeUsingAutofillHint(it) }
-        .any { it != FieldType.Unknown }
+        .firstOrNull()
+        .let {
+            if (it != null) {
+                detectFieldTypeUsingAutofillHint(it) != FieldType.Unknown
+            } else {
+                false
+            }
+        }
 
     private fun nodeHasValidHtmlInfo(htmlAttributes: List<Pair<String, String>>): Boolean =
         detectFieldTypeUsingHtmlInfo(htmlAttributes) != FieldType.Unknown
@@ -100,7 +106,7 @@ class AssistNodeTraversal {
         }
     }
 
-    fun detectFieldTypeUsingAutofillHint(autofillHint: String) = when (autofillHint) {
+    fun detectFieldTypeUsingAutofillHint(autofillHint: String): FieldType = when (autofillHint) {
         View.AUTOFILL_HINT_EMAIL_ADDRESS -> FieldType.Email
         View.AUTOFILL_HINT_NAME -> FieldType.FullName
         View.AUTOFILL_HINT_USERNAME -> FieldType.Username

@@ -13,10 +13,11 @@ import androidx.activity.compose.setContent
 import androidx.core.os.bundleOf
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.pass.autofill.entities.AndroidAutofillFieldId
-import me.proton.core.pass.autofill.entities.AssistField
+import me.proton.core.pass.autofill.entities.AutofillData
 import me.proton.core.pass.autofill.entities.AutofillResponse
 import me.proton.core.pass.autofill.entities.FieldType
 import me.proton.core.pass.autofill.entities.asAndroid
+import me.proton.core.pass.domain.entity.PackageName
 
 @AndroidEntryPoint
 class AutofillActivity : ComponentActivity() {
@@ -37,8 +38,9 @@ class AutofillActivity : ComponentActivity() {
                 }
             }
             ?: emptyList()
+        val packageName = intent.extras?.getString(ARG_PACKAGE_NAME) ?: ""
 
-        if (ids.isEmpty() || types.isEmpty()) {
+        if (ids.isEmpty() || types.isEmpty() || packageName.isEmpty()) {
             finish()
             return
         }
@@ -46,6 +48,7 @@ class AutofillActivity : ComponentActivity() {
             AutofillApp(
                 androidAutofillFieldIds = ids,
                 autofillTypes = types,
+                packageName = PackageName(packageName),
                 onAutofillResponse = { onAutofillResponse(it) }
             )
         }
@@ -83,13 +86,15 @@ class AutofillActivity : ComponentActivity() {
         const val REQUEST_CODE = 1
         const val ARG_AUTOFILL_IDS = "arg_autofill_ids"
         const val ARG_AUTOFILL_TYPES = "arg_autofill_types"
+        const val ARG_PACKAGE_NAME = "arg_package_name"
 
-        fun newIntent(context: Context, assistFields: List<AssistField>): Intent =
+        fun newIntent(context: Context, data: AutofillData): Intent =
             Intent(context, AutofillActivity::class.java).apply {
                 putExtras(
                     bundleOf(
-                        ARG_AUTOFILL_IDS to assistFields.map { it.id.asAndroid().autofillId },
-                        ARG_AUTOFILL_TYPES to assistFields.map { it.type?.toString() }
+                        ARG_AUTOFILL_IDS to data.assistFields.map { it.id.asAndroid().autofillId },
+                        ARG_AUTOFILL_TYPES to data.assistFields.map { it.type?.toString() },
+                        ARG_PACKAGE_NAME to data.packageName
                     )
                 )
             }

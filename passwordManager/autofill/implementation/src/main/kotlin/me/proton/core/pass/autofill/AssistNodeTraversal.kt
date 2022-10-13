@@ -46,18 +46,19 @@ class AssistNodeTraversal {
 
     private fun nodeSupportsAutoFill(node: AutofillNode): Boolean {
         val isImportant = node.isImportantForAutofill
-        val hasAutofillInfo = nodeHasValidHints(node.autofillHints.toSet()) &&
+        val hasAutofillInfo = nodeHasValidHints(node.autofillHints.toSet()) ||
             nodeHasValidHtmlInfo(node.htmlAttributes) ||
             nodeHasValidInputType(node)
+
         return node.id != null && hasAutofillInfo && isImportant
     }
 
     private fun nodeHasValidHints(autofillHints: Set<String>): Boolean = autofillHints
-        .intersect(AUTOFILL_HINT_VALUES)
-        .isNotEmpty()
+        .map { detectFieldTypeUsingAutofillHint(it) }
+        .any { it != FieldType.Unknown }
 
     private fun nodeHasValidHtmlInfo(htmlAttributes: List<Pair<String, String>>): Boolean =
-        htmlAttributes.map { it.first }.contains("type")
+        detectFieldTypeUsingHtmlInfo(htmlAttributes) != FieldType.Unknown
 
     private fun nodeHasValidInputType(node: AutofillNode): Boolean {
         val hasMultilineFlag = node.inputType.value.hasFlag(InputType.TYPE_TEXT_FLAG_MULTI_LINE) ||
@@ -72,10 +73,17 @@ class AssistNodeTraversal {
     private fun detectFieldType(node: AutofillNode): FieldType {
         val autofillHint = node.autofillHints.firstOrNull()
         val htmlAttributes = node.htmlAttributes
-        return if (autofillHint != null) detectFieldTypeUsingAutofillHint(autofillHint)
-        else if (htmlAttributes.isNotEmpty() && htmlAttributes.firstOrNull { it.first == "type" } != null)
-            detectFieldTypeUsingHtmlInfo(htmlAttributes)
-        else detectFieldTypeUsingInputType(node.inputType)
+        var fieldType: FieldType = FieldType.Unknown
+        if (autofillHint != null) {
+            fieldType = detectFieldTypeUsingAutofillHint(autofillHint)
+        }
+        if (fieldType == FieldType.Unknown && htmlAttributes.isNotEmpty()) {
+            fieldType = detectFieldTypeUsingHtmlInfo(htmlAttributes)
+        }
+        if (fieldType == FieldType.Unknown) {
+            fieldType = detectFieldTypeUsingInputType(node.inputType)
+        }
+        return fieldType
     }
 
     fun detectFieldTypeUsingHtmlInfo(
@@ -86,7 +94,8 @@ class AssistNodeTraversal {
             "tel" -> FieldType.Phone
             "email" -> FieldType.Email
             "password" -> FieldType.Password
-            "text" -> FieldType.Other
+            // Forms tend to contain this field, commented to see if we have many issues without it
+            // "text" -> FieldType.Other
             else -> FieldType.Unknown
         }
     }
@@ -123,14 +132,6 @@ class AssistNodeTraversal {
 
     companion object {
         const val HINT_CURRENT_PASSWORD = "current-password"
-        private val AUTOFILL_HINT_VALUES: Set<String> = setOf(
-            View.AUTOFILL_HINT_EMAIL_ADDRESS,
-            View.AUTOFILL_HINT_NAME,
-            View.AUTOFILL_HINT_USERNAME,
-            View.AUTOFILL_HINT_PASSWORD,
-            HINT_CURRENT_PASSWORD,
-            View.AUTOFILL_HINT_PHONE
-        )
     }
 }
 

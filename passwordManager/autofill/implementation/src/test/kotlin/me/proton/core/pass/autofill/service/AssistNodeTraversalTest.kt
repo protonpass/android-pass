@@ -125,7 +125,7 @@ class AssistNodeTraversalTest {
         Assert.assertEquals(FieldType.Unknown, longMessageType)
     }*/
 
-    @Test
+/*    @Test
     fun htmlAttributesParsingReturnsKnownFieldType() {
         val traversal = AssistNodeTraversal()
 
@@ -141,7 +141,7 @@ class AssistNodeTraversalTest {
         Assert.assertEquals(FieldType.Other, genericType)
         // Not supported
         Assert.assertEquals(FieldType.Unknown, buttonType)
-    }
+    }*/
 
     private fun makeValidNode(children: List<AutofillNode> = emptyList()) =
         makeNode(

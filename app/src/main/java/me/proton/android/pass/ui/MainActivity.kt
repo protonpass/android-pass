@@ -2,6 +2,7 @@ package me.proton.android.pass.ui
 
 import android.os.Bundle
 import android.view.WindowManager
+import android.view.autofill.AutofillManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -39,7 +40,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             val state by launcherViewModel.state.collectAsState(Processing)
             when (state) {
-                AccountNeeded -> launcherViewModel.addAccount()
+                AccountNeeded -> {
+                    disableAutofill()
+                    launcherViewModel.addAccount()
+                }
                 Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
                 StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
                 PrimaryExist -> {
@@ -63,5 +67,10 @@ class MainActivity : ComponentActivity() {
                 WindowManager.LayoutParams.FLAG_SECURE
             )
         }
+    }
+
+    private fun disableAutofill() {
+        val autofillManager = getSystemService(AutofillManager::class.java)
+        autofillManager.disableAutofillServices()
     }
 }

@@ -17,14 +17,16 @@ if (includeCoreLibsHelper.exists()) {
 include(":app")
 include(":passwordManager:autofill:demo")
 include(":passwordManager:autofill:implementation")
+include(":passwordManager:common:api")
+include(":passwordManager:common:implementation")
 include(":passwordManager:dagger")
 include(":passwordManager:data")
 include(":passwordManager:domain")
+include(":passwordManager:log")
 include(":passwordManager:presentation")
 include(":passwordManager:search:api")
 include(":passwordManager:search:implementation")
 include(":passwordManager:test")
-include(":passwordManager:log")
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)

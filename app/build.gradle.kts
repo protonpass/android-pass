@@ -258,6 +258,7 @@ dependencies {
     implementation(libs.plumber)
 
     implementation(project(":passwordManager:autofill:implementation"))
+    implementation(project(":passwordManager:common:api"))
     implementation(project(":passwordManager:dagger"))
     implementation(project(":passwordManager:data"))
     implementation(project(":passwordManager:domain"))

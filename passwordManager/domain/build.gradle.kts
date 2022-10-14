@@ -46,6 +46,7 @@ dependencies {
     implementation(libs.core.key)
     implementation(libs.core.user)
 
+    implementation(project(":passwordManager:common:api"))
     implementation(project(":passwordManager:log"))
 
     implementation(libs.dagger.hilt.android)

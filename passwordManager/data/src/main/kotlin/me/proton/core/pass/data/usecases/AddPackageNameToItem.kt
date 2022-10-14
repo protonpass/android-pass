@@ -24,7 +24,11 @@ class AddPackageNameToItemImpl @Inject constructor(
                 )
                 .build()
         )
-        PassLogger.i("AddPackageNameToItem", "Scheduled AddPackageNameToItem")
+        PassLogger.i(TAG, "Scheduled AddPackageNameToItem")
+    }
+
+    companion object {
+        private const val TAG = "AddPackageNameToItem"
     }
 }
 

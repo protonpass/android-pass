@@ -15,11 +15,15 @@ fun ItemV1.Item.with(packageName: PackageName): ItemV1.Item {
     )
 
     return this.toBuilder()
-        .setPlatformSpecific(platformSpecific.toBuilder()
-            .setAndroid(platformSpecific.android.toBuilder()
-                .clearAllowedApps()
-                .addAllAllowedApps(allowedApps)
-                .build())
-            .build())
+        .setPlatformSpecific(
+            platformSpecific.toBuilder()
+                .setAndroid(
+                    platformSpecific.android.toBuilder()
+                        .clearAllowedApps()
+                        .addAllAllowedApps(allowedApps)
+                        .build()
+                )
+                .build()
+        )
         .build()
 }

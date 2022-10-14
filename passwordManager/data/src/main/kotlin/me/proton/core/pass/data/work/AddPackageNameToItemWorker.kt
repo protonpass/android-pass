@@ -12,6 +12,7 @@ import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.entity.PackageName
 import me.proton.core.pass.domain.repositories.ItemRepository
+import kotlin.Result as KResult
 
 @HiltWorker
 class AddPackageNameToItemWorker @AssistedInject constructor(
@@ -20,62 +21,57 @@ class AddPackageNameToItemWorker @AssistedInject constructor(
     private val itemRepository: ItemRepository
 ) : CoroutineWorker(appContext, workerParameters) {
     override suspend fun doWork(): Result {
-        PassLogger.i("AddPackageNameToItemWorker", "Starting work")
-        val data = getData()
+        PassLogger.i(TAG, "Starting work")
+        val data = getData(workerParameters.inputData)
         if (data.isFailure) {
             data.exceptionOrNull()?.let {
-                PassLogger.e("AddPackageNameToItemWorker", it, "Error retrieving data")
+                PassLogger.e(TAG, it, "Error retrieving data")
             }
             return Result.failure()
         }
 
         val inputData = data.getOrThrow()
-        return run(inputData)
+        val result = run(inputData)
+
+        return if (result.isFailure) {
+            val e = result.exceptionOrNull()
+            PassLogger.e(TAG, e!!, "Error adding package to item [packageName=$inputData.packageName]")
+            Result.failure()
+        } else {
+            PassLogger.i(
+                TAG,
+                "Added package to item [itemId=${inputData.itemId}] [packageName=${inputData.packageName}]"
+            )
+            Result.success()
+        }
     }
 
-    private suspend fun run(inputData: InputData): Result {
-        PassLogger.d("AddPackageNameToItemWorker", "Data received: $inputData")
-
-        try {
-            PassLogger.d(
-                "AddPackageNameToItemWorker",
-                "Adding package to item [itemId=${inputData.itemId}] [packageName=${inputData.packageName}]"
-            )
+    private suspend fun run(inputData: InputData): KResult<Unit> {
+        PassLogger.d(
+            TAG,
+            "Adding package to item [itemId=${inputData.itemId}] [packageName=${inputData.packageName}]"
+        )
+        return kotlin.runCatching {
             itemRepository.addPackageToItem(
                 inputData.shareId,
                 inputData.itemId,
                 inputData.packageName
             )
-            PassLogger.i(
-                "AddPackageNameToItemWorker",
-                "Added package to item [itemId=${inputData.itemId}] [packageName=${inputData.packageName}]"
-            )
-            return Result.success()
-        } catch (e: Throwable) {
-            PassLogger.e(
-                "AddPackageNameToItemWorker",
-                e,
-                "Error adding package to item [packageName=$inputData.packageName]"
-            )
-            return Result.failure()
         }
     }
 
-    private fun getData(): kotlin.Result<InputData> {
-        val shareId =
-            workerParameters.inputData.getString(ARG_SHARE_ID) ?: return kotlin.Result.failure(
-                IllegalStateException("Missing $ARG_SHARE_ID")
-            )
-        val itemId =
-            workerParameters.inputData.getString(ARG_ITEM_ID) ?: return kotlin.Result.failure(
-                IllegalStateException("Missing $ARG_ITEM_ID")
-            )
-        val packageName =
-            workerParameters.inputData.getString(ARG_PACKAGE_NAME) ?: return kotlin.Result.failure(
-                IllegalStateException("Missing $ARG_PACKAGE_NAME")
-            )
+    private fun getData(inputData: Data): KResult<InputData> {
+        val shareId = inputData.getString(ARG_SHARE_ID) ?: return KResult.failure(
+            IllegalStateException("Missing $ARG_SHARE_ID")
+        )
+        val itemId = inputData.getString(ARG_ITEM_ID) ?: return KResult.failure(
+            IllegalStateException("Missing $ARG_ITEM_ID")
+        )
+        val packageName = inputData.getString(ARG_PACKAGE_NAME) ?: return KResult.failure(
+            IllegalStateException("Missing $ARG_PACKAGE_NAME")
+        )
 
-        return kotlin.Result.success(
+        return KResult.success(
             InputData(
                 shareId = ShareId(shareId),
                 itemId = ItemId(itemId),
@@ -91,6 +87,8 @@ class AddPackageNameToItemWorker @AssistedInject constructor(
     )
 
     companion object {
+
+        private const val TAG = "AddPackageNameToItemWorker"
 
         private const val ARG_SHARE_ID = "arg_share_id"
         private const val ARG_ITEM_ID = "arg_item_id"

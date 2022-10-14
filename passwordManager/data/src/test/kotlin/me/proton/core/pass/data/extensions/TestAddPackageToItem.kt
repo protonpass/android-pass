@@ -44,11 +44,15 @@ internal class TestAddPackageToItem {
 
         val androidSpecific = androidSpecificBuilder.build()
         return ItemV1.Item.newBuilder()
-            .setPlatformSpecific(ItemV1.PlatformSpecific.newBuilder()
-                .setAndroid(ItemV1.AndroidSpecific.newBuilder()
-                    .addAllowedApps(androidSpecific)
-                    .build())
-                .build())
+            .setPlatformSpecific(
+                ItemV1.PlatformSpecific.newBuilder()
+                    .setAndroid(
+                        ItemV1.AndroidSpecific.newBuilder()
+                            .addAllowedApps(androidSpecific)
+                            .build()
+                    )
+                    .build()
+            )
             .build()
     }
 }

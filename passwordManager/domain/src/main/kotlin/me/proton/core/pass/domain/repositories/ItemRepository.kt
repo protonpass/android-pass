@@ -38,5 +38,5 @@ interface ItemRepository {
         shareId: ShareId,
         itemId: ItemId,
         packageName: PackageName
-    ): Result<Unit>
+    ): Result<Item>
 }

@@ -137,7 +137,7 @@ class ItemRepositoryImpl @Inject constructor(
             share,
             item,
             contents.serializeToProto()
-       )
+        )
 
     override fun observeItems(
         userId: UserId,
@@ -254,7 +254,7 @@ class ItemRepositoryImpl @Inject constructor(
         localItemDataSource.delete(shareId, itemId)
     }
 
-    override suspend fun addPackageToItem(shareId: ShareId, itemId: ItemId, packageName: PackageName): Result<Unit> {
+    override suspend fun addPackageToItem(shareId: ShareId, itemId: ItemId, packageName: PackageName): Result<Item> {
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
         val item = entityToDomain(itemEntity)
 
@@ -262,15 +262,18 @@ class ItemRepositoryImpl @Inject constructor(
         val newItemContents = ItemV1.Item.parseFrom(itemContents.array)
 
         if (newItemContents.hasPackageName(packageName)) {
-            PassLogger.i("ItemRepositoryImpl", "Item already has this package name [shareId=$shareId] [itemId=$itemId] [packageName=$packageName]")
-            return
+            PassLogger.i(
+                "ItemRepositoryImpl",
+                "Item already has this package name [shareId=$shareId] [itemId=$itemId] [packageName=$packageName]"
+            )
+            return Result.Success(item)
         }
         val updatedContents = newItemContents.with(packageName)
 
         val userId = accountManager.getPrimaryUserId().first() ?: throw CryptoException("UserId cannot be null")
         val share = shareRepository.getById(userId, shareId) ?: throw CryptoException("Share cannot be null")
 
-        performUpdate(userId, share, item, updatedContents)
+        return performUpdate(userId, share, item, updatedContents)
     }
 
     private suspend fun performUpdate(

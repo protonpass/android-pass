@@ -1,9 +1,10 @@
 package me.proton.core.pass.data.repositories
 
-import javax.inject.Inject
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.domain.entity.UserId
+import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.map
 import me.proton.core.pass.data.remote.RemoteKeyPacketDataSource
 import me.proton.core.pass.data.responses.KeyPacketInfo
 import me.proton.core.pass.domain.ItemId
@@ -15,6 +16,7 @@ import me.proton.core.pass.domain.repositories.ShareRepository
 import me.proton.core.pass.domain.repositories.VaultKeyRepository
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
+import javax.inject.Inject
 
 class KeyPacketRepositoryImpl @Inject constructor(
     private val cryptoContext: CryptoContext,
@@ -28,10 +30,9 @@ class KeyPacketRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): KeyPacket {
-        val data = remoteKeyPacketDataSource.getLatestKeyPacketForItem(userId, shareId, itemId)
-        return responseToDomain(userId, shareId, data)
-    }
+    ): Result<KeyPacket> =
+        remoteKeyPacketDataSource.getLatestKeyPacketForItem(userId, shareId, itemId)
+            .map { responseToDomain(userId, shareId, it) }
 
     private suspend fun responseToDomain(
         userId: UserId,
@@ -56,7 +57,9 @@ class KeyPacketRepositoryImpl @Inject constructor(
             armoredKeyPacketSignature,
             itemPublicKey.key
         )
-        require(validated) { "KeyPacketSignature did not match [shareId=${shareId.id}] [rotationId=${data.rotationId}]" }
+        require(validated) {
+            "KeyPacketSignature did not match [shareId=${shareId.id}] [rotationId=${data.rotationId}]"
+        }
 
         return KeyPacket(
             rotationId = data.rotationId,

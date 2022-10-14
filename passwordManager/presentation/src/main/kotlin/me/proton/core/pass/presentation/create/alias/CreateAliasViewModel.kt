@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.domain.AliasOptions
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.entity.NewAlias
@@ -26,15 +27,21 @@ class CreateAliasViewModel @Inject constructor(
         if (_aliasOptions != null) return@launch
         isLoadingState.value = IsLoadingState.Loading
         withUserId { userId ->
-            val aliasOptions = aliasRepository.getAliasOptions(userId, shareId)
-            _aliasOptions = aliasOptions
+            when (val result = aliasRepository.getAliasOptions(userId, shareId)) {
+                is Result.Success -> {
+                    _aliasOptions = result.data
 
-            isLoadingState.value = IsLoadingState.NotLoading
-            aliasItemState.value = aliasItemState.value.copy(
-                aliasOptions = aliasOptions,
-                selectedSuffix = aliasOptions.suffixes.first(),
-                selectedMailbox = aliasOptions.mailboxes.first()
-            )
+                    isLoadingState.value = IsLoadingState.NotLoading
+                    aliasItemState.value = aliasItemState.value.copy(
+                        aliasOptions = result.data,
+                        selectedSuffix = result.data.suffixes.first(),
+                        selectedMailbox = result.data.mailboxes.first()
+                    )
+                }
+                else -> {
+                    // no-op
+                }
+            }
         }
     }
 

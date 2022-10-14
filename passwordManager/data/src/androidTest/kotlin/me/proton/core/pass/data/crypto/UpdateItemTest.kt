@@ -40,7 +40,14 @@ class UpdateItemTest {
 
         val (sessionKey, keyPacket) = generateKeyPacketForVaultKey(vaultKey)
         val contents = ItemContents.Note(title = StringUtils.randomString(), note = StringUtils.randomString())
-        val body = instance.updateItem(vaultKey, itemKey, keyPacket, userAddress, contents.serializeToProto(), lastRevision)
+        val body = instance.createRequest(
+            vaultKey,
+            itemKey,
+            keyPacket,
+            userAddress,
+            contents.serializeToProto(),
+            lastRevision
+        )
 
         assertEquals(lastRevision, body.lastRevision)
         assertEquals(vaultKey.rotationId, body.rotationId)

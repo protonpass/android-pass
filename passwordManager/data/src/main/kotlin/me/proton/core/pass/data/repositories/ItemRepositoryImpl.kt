@@ -305,7 +305,7 @@ class ItemRepositoryImpl @Inject constructor(
                     keyPacketResult.data.rotationId
                 )
 
-            val body = updateItem.updateItem(
+            val body = updateItem.createRequest(
                 vaultKey,
                 itemKey,
                 keyPacketResult.data,

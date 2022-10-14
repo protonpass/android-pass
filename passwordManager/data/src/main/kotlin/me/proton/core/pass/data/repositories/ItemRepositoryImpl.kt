@@ -129,7 +129,7 @@ class ItemRepositoryImpl @Inject constructor(
         when (keyPacketResult) {
             is Result.Error -> return Result.Error(keyPacketResult.exception)
             Result.Loading -> return Result.Loading
-            is Result.Success -> keyPacketResult
+            is Result.Success -> Unit
         }
         return withUserAddress(userId) { userAddress ->
             val vaultKey =

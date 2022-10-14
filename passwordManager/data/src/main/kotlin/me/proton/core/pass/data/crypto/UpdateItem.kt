@@ -18,11 +18,8 @@ class UpdateItem @Inject constructor(
     private val cryptoContext: CryptoContext
 ) : BaseCryptoOperation(cryptoContext) {
 
-    companion object {
-        const val CONTENT_FORMAT_VERSION = 1
-    }
-
-    fun updateItem(
+    @Suppress("LongParameterList")
+    fun createRequest(
         vaultKey: VaultKey,
         itemKey: ItemKey,
         keyPacket: KeyPacket,
@@ -54,5 +51,9 @@ class UpdateItem @Inject constructor(
             itemKeySignature = b64(itemKeySignature),
             lastRevision = lastRevision
         )
+    }
+
+    companion object {
+        const val CONTENT_FORMAT_VERSION = 1
     }
 }

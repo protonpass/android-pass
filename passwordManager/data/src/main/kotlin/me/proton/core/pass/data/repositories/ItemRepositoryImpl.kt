@@ -132,7 +132,7 @@ class ItemRepositoryImpl @Inject constructor(
         item: Item,
         contents: ItemContents
     ): Result<Item> =
-       performUpdate(
+        performUpdate(
             userId,
             share,
             item,

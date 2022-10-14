@@ -9,13 +9,13 @@ import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.entity.PackageName
 import javax.inject.Inject
 
-interface AddPackageNameToItem  {
+interface AddPackageNameToItem {
     operator fun invoke(shareId: ShareId, itemId: ItemId, packageName: PackageName)
 }
 
 class AddPackageNameToItemImpl @Inject constructor(
     private val workManager: WorkManager
-): AddPackageNameToItem {
+) : AddPackageNameToItem {
     override fun invoke(shareId: ShareId, itemId: ItemId, packageName: PackageName) {
         workManager.enqueue(
             OneTimeWorkRequestBuilder<AddPackageNameToItemWorker>()

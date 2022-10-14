@@ -19,6 +19,13 @@ inline fun <R, T> Result<T>.map(transform: (value: T) -> R): Result<R> =
         Result.Loading -> Result.Loading
     }
 
+inline fun <R, T> Result<T>.flatMap(transform: (value: T) -> Result<R>): Result<R> =
+    when (this) {
+        is Result.Success -> transform(data)
+        is Result.Error -> Result.Error(exception)
+        Result.Loading -> Result.Loading
+    }
+
 fun <T> Flow<T>.asResult(): Flow<Result<T>> {
     return this
         .map<T, Result<T>> {

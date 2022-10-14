@@ -8,11 +8,13 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.android.pass.log.PassLogger
+import me.proton.core.pass.common.api.flatMap
+import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.entity.PackageName
 import me.proton.core.pass.domain.repositories.ItemRepository
-import kotlin.Result as KResult
+import me.proton.core.pass.common.api.Result as KResult
 
 @HiltWorker
 class AddPackageNameToItemWorker @AssistedInject constructor(
@@ -20,58 +22,58 @@ class AddPackageNameToItemWorker @AssistedInject constructor(
     @Assisted private val workerParameters: WorkerParameters,
     private val itemRepository: ItemRepository
 ) : CoroutineWorker(appContext, workerParameters) {
+
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting work")
-        val data = getData(workerParameters.inputData)
-        if (data.isFailure) {
-            data.exceptionOrNull()?.let {
-                PassLogger.e(TAG, it, "Error retrieving data")
+        val res = getData(workerParameters.inputData).flatMap { run(it) }
+
+        return when (res) {
+            is KResult.Error -> {
+                PassLogger.e(
+                    TAG,
+                    res.exception!!,
+                    "Error adding package to item"
+                )
+                Result.failure()
             }
-            return Result.failure()
-        }
-
-        val inputData = data.getOrThrow()
-        val result = run(inputData)
-
-        return if (result.isFailure) {
-            val e = result.exceptionOrNull()
-            PassLogger.e(TAG, e!!, "Error adding package to item [packageName=$inputData.packageName]")
-            Result.failure()
-        } else {
-            PassLogger.i(
-                TAG,
-                "Added package to item [itemId=${inputData.itemId}] [packageName=${inputData.packageName}]"
-            )
-            Result.success()
+            is KResult.Success -> {
+                PassLogger.i(
+                    TAG,
+                    "Added package to item [itemId=${res.data.id}]"
+                )
+                Result.success()
+            }
+            KResult.Loading -> {
+                // no-op, should never happen
+                Result.failure()
+            }
         }
     }
 
-    private suspend fun run(inputData: InputData): KResult<Unit> {
+    private suspend fun run(inputData: InputData): KResult<Item> {
         PassLogger.d(
             TAG,
             "Adding package to item [itemId=${inputData.itemId}] [packageName=${inputData.packageName}]"
         )
-        return kotlin.runCatching {
-            itemRepository.addPackageToItem(
-                inputData.shareId,
-                inputData.itemId,
-                inputData.packageName
-            )
-        }
+        return itemRepository.addPackageToItem(
+            inputData.shareId,
+            inputData.itemId,
+            inputData.packageName
+        )
     }
 
     private fun getData(inputData: Data): KResult<InputData> {
-        val shareId = inputData.getString(ARG_SHARE_ID) ?: return KResult.failure(
+        val shareId = inputData.getString(ARG_SHARE_ID) ?: return KResult.Error(
             IllegalStateException("Missing $ARG_SHARE_ID")
         )
-        val itemId = inputData.getString(ARG_ITEM_ID) ?: return KResult.failure(
+        val itemId = inputData.getString(ARG_ITEM_ID) ?: return KResult.Error(
             IllegalStateException("Missing $ARG_ITEM_ID")
         )
-        val packageName = inputData.getString(ARG_PACKAGE_NAME) ?: return KResult.failure(
+        val packageName = inputData.getString(ARG_PACKAGE_NAME) ?: return KResult.Error(
             IllegalStateException("Missing $ARG_PACKAGE_NAME")
         )
 
-        return KResult.success(
+        return KResult.Success(
             InputData(
                 shareId = ShareId(shareId),
                 itemId = ItemId(itemId),

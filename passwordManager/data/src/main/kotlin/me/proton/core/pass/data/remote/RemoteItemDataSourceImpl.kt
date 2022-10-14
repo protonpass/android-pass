@@ -2,6 +2,9 @@ package me.proton.core.pass.data.remote
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.map
+import me.proton.core.pass.common.api.toResult
 import me.proton.core.pass.data.api.PasswordManagerApi
 import me.proton.core.pass.data.requests.CreateAliasRequest
 import me.proton.core.pass.data.requests.CreateItemRequest
@@ -17,12 +20,20 @@ class RemoteItemDataSourceImpl @Inject constructor(
     private val api: ApiProvider
 ) : BaseRemoteDataSourceImpl(), RemoteItemDataSource {
 
-    override suspend fun createItem(userId: UserId, shareId: ShareId, body: CreateItemRequest): ItemRevision =
+    override suspend fun createItem(
+        userId: UserId,
+        shareId: ShareId,
+        body: CreateItemRequest
+    ): ItemRevision =
         api.get<PasswordManagerApi>(userId).invoke {
             createItem(shareId.id, body)
         }.valueOrThrow.item
 
-    override suspend fun createAlias(userId: UserId, shareId: ShareId, body: CreateAliasRequest): ItemRevision =
+    override suspend fun createAlias(
+        userId: UserId,
+        shareId: ShareId,
+        body: CreateAliasRequest
+    ): ItemRevision =
         api.get<PasswordManagerApi>(userId).invoke {
             createAlias(shareId.id, body)
         }.valueOrThrow.item
@@ -32,10 +43,13 @@ class RemoteItemDataSourceImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         body: UpdateItemRequest
-    ): ItemRevision =
-        api.get<PasswordManagerApi>(userId).invoke {
-            updateItem(shareId.id, itemId.id, body)
-        }.valueOrThrow.item
+    ): Result<ItemRevision> =
+        api.get<PasswordManagerApi>(userId)
+            .invoke {
+                updateItem(shareId.id, itemId.id, body)
+            }
+            .toResult()
+            .map { it.item }
 
     override suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision> =
         api.get<PasswordManagerApi>(userId).invoke {
@@ -53,12 +67,20 @@ class RemoteItemDataSourceImpl @Inject constructor(
             items
         }.valueOrThrow
 
-    override suspend fun sendToTrash(userId: UserId, shareId: ShareId, body: TrashItemsRequest): TrashItemsResponse =
+    override suspend fun sendToTrash(
+        userId: UserId,
+        shareId: ShareId,
+        body: TrashItemsRequest
+    ): TrashItemsResponse =
         api.get<PasswordManagerApi>(userId).invoke {
             trashItems(shareId.id, body)
         }.valueOrThrow
 
-    override suspend fun untrash(userId: UserId, shareId: ShareId, body: TrashItemsRequest): TrashItemsResponse =
+    override suspend fun untrash(
+        userId: UserId,
+        shareId: ShareId,
+        body: TrashItemsRequest
+    ): TrashItemsResponse =
         api.get<PasswordManagerApi>(userId).invoke {
             untrashItems(shareId.id, body)
         }.valueOrThrow

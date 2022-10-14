@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.domain.AliasMailbox
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemType
@@ -31,18 +32,29 @@ class AliasDetailViewModel @Inject constructor(
         if (itemFlow.value != null) return@launch
         itemFlow.value = item
 
-        accountManager.getPrimaryUserId().first { userId -> userId != null }?.let { userId ->
-            val mailboxes = aliasRepository.getAliasMailboxes(userId, item.shareId, item.id)
-            val alias = item.itemType as ItemType.Alias
-            viewState.value = ViewState.Data(
-                AliasUiModel(
-                    title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-                    alias = alias.aliasEmail,
-                    mailboxes = mailboxes,
-                    note = item.note.decrypt(cryptoContext.keyStoreCrypto)
-                )
-            )
-        }
+        accountManager.getPrimaryUserId()
+            .first { userId -> userId != null }
+            ?.let { userId ->
+                when (
+                    val result =
+                        aliasRepository.getAliasMailboxes(userId, item.shareId, item.id)
+                ) {
+                    is Result.Success -> {
+                        val alias = item.itemType as ItemType.Alias
+                        viewState.value = ViewState.Data(
+                            AliasUiModel(
+                                title = item.title.decrypt(cryptoContext.keyStoreCrypto),
+                                alias = alias.aliasEmail,
+                                mailboxes = result.data,
+                                note = item.note.decrypt(cryptoContext.keyStoreCrypto)
+                            )
+                        )
+                    }
+                    else -> {
+                        // no-op
+                    }
+                }
+            }
     }
 
     sealed class ViewState {

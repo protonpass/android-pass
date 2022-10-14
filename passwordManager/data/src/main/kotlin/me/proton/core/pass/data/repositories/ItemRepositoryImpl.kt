@@ -14,6 +14,8 @@ import me.proton.core.key.domain.extension.publicKeyRing
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
 import me.proton.core.network.domain.ApiException
+import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.map
 import me.proton.core.pass.data.crypto.CreateItem
 import me.proton.core.pass.data.crypto.OpenItem
 import me.proton.core.pass.data.crypto.UpdateItem
@@ -30,6 +32,7 @@ import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemContents
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ItemState
+import me.proton.core.pass.domain.KeyPacket
 import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.ShareSelection
@@ -120,46 +123,52 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         item: Item,
         contents: ItemContents
-    ): Item {
-        val keyPacket = keyPacketRepository.getLatestKeyPacketForItem(userId, share.id, item.id)
-
+    ): Result<Item> {
+        val keyPacketResult: Result<KeyPacket> =
+            keyPacketRepository.getLatestKeyPacketForItem(userId, share.id, item.id)
+        when (keyPacketResult) {
+            is Result.Error -> return Result.Error(keyPacketResult.exception)
+            Result.Loading -> return Result.Loading
+            is Result.Success -> keyPacketResult
+        }
         return withUserAddress(userId) { userAddress ->
             val vaultKey =
                 vaultKeyRepository.getVaultKeyById(
                     userAddress,
                     share.id,
                     share.signingKey,
-                    keyPacket.rotationId
+                    keyPacketResult.data.rotationId
                 )
             val itemKey =
                 vaultKeyRepository.getItemKeyById(
                     userAddress,
                     share.id,
                     share.signingKey,
-                    keyPacket.rotationId
+                    keyPacketResult.data.rotationId
                 )
 
             val body = updateItem.updateItem(
                 vaultKey,
                 itemKey,
-                keyPacket,
+                keyPacketResult.data,
                 userAddress,
                 contents,
                 item.revision
             )
-            val itemResponse = remoteItemDataSource.updateItem(userId, share.id, item.id, body)
-
-            val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
-            val entity = itemResponseToEntity(
-                userAddress,
-                itemResponse,
-                share,
-                userPublicKeys,
-                listOf(vaultKey),
-                listOf(itemKey)
-            )
-            localItemDataSource.upsertItem(entity)
-            entityToDomain(entity)
+            remoteItemDataSource.updateItem(userId, share.id, item.id, body)
+                .map { itemResponse ->
+                    val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
+                    val entity = itemResponseToEntity(
+                        userAddress,
+                        itemResponse,
+                        share,
+                        userPublicKeys,
+                        listOf(vaultKey),
+                        listOf(itemKey)
+                    )
+                    localItemDataSource.upsertItem(entity)
+                    entityToDomain(entity)
+                }
         }
     }
 

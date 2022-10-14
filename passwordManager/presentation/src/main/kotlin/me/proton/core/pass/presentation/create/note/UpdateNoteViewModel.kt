@@ -7,6 +7,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
@@ -45,13 +46,23 @@ class UpdateNoteViewModel @Inject constructor(
         requireNotNull(_item)
         isLoadingState.value = IsLoadingState.Loading
         val noteItem = noteItemState.value
-        accountManager.getPrimaryUserId().first { userId -> userId != null }?.let { userId ->
-            val share = getShare.invoke(userId, shareId)
-            requireNotNull(share)
-            val itemContents = noteItem.toItemContents()
-            val updatedItem = itemRepository.updateItem(userId, share, _item!!, itemContents)
-            isLoadingState.value = IsLoadingState.NotLoading
-            isItemSavedState.value = ItemSavedState.Success(updatedItem.id)
-        }
+        accountManager.getPrimaryUserId()
+            .first { userId -> userId != null }
+            ?.let { userId ->
+                val share = getShare.invoke(userId, shareId)
+                requireNotNull(share)
+                val itemContents = noteItem.toItemContents()
+                val updatedItemResult =
+                    itemRepository.updateItem(userId, share, _item!!, itemContents)
+                when (updatedItemResult) {
+                    is Result.Success -> {
+                        isLoadingState.value = IsLoadingState.NotLoading
+                        isItemSavedState.value = ItemSavedState.Success(updatedItemResult.data.id)
+                    }
+                    else -> {
+                        // no-op
+                    }
+                }
+            }
     }
 }

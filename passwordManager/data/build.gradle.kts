@@ -90,6 +90,7 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
+    implementation(project(":passwordManager:common:api"))
     implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:log"))
 

@@ -43,7 +43,7 @@ timber = "5.0.1"
 # Kotlin
 kotlin = "1.7.10"
 coroutines = "1.6.4"
-serializationJson = "1.4.0"
+serializationJson = "1.4.1"
 # Sentry
 sentry = "6.5.0"
 # Squareup

@@ -38,6 +38,7 @@ android {
 
 dependencies {
     api(project(":passwordManager:domain"))
+    implementation(project(":passwordManager:common:api"))
 
     implementation(libs.kotlinx.coroutines.core)
 }

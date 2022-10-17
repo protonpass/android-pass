@@ -1,5 +1,6 @@
 package me.proton.core.pass.presentation.create.alias
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +21,8 @@ abstract class BaseAliasViewModel(
     private val accountManager: AccountManager
 ) : ViewModel() {
 
-    protected val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(AliasItem.Empty)
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(AliasItem.Empty)
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
@@ -97,8 +99,6 @@ abstract class BaseAliasViewModel(
             }
         }
 
-        // If we don't have any selected mailbox, do not update, as we do not support
-        // not having any mailbox in an alias
         val allSelectedMailboxes = mailboxes.filter { it.selected }
         var mailboxTitle = allSelectedMailboxes.firstOrNull()?.model?.email ?: ""
         if (allSelectedMailboxes.size > 1) {

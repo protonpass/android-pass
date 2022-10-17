@@ -119,10 +119,12 @@ class ItemRepositoryImpl @Inject constructor(
         val (vaultKey, itemKey) = result.data
         val itemContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
         val body = createItem.createItem(vaultKey, itemKey, userAddress, itemContents)
+
+        val mailboxIds = newAlias.mailboxes.map { it.id }
         val requestBody = CreateAliasRequest(
             prefix = newAlias.prefix,
             signedSuffix = newAlias.suffix.signedSuffix,
-            mailboxes = listOf(newAlias.mailbox.id),
+            mailboxes = mailboxIds,
             item = body
         )
 

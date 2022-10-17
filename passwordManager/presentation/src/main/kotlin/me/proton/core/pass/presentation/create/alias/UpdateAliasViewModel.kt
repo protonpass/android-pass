@@ -3,6 +3,7 @@ package me.proton.core.pass.presentation.create.alias
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
@@ -41,24 +42,40 @@ class UpdateAliasViewModel @Inject constructor(
                             aliasRepository.getAliasMailboxes(userId, shareId, itemId)
                     ) {
                         is Result.Success -> {
-                            val alias = itemResult.data.itemType as ItemType.Alias
+                            val retrievedItem = itemResult.data
+                            val alias = retrievedItem.itemType as ItemType.Alias
                             val email = alias.aliasEmail
                             val (prefix, suffix) = extractPrefixSuffix(email)
+                            val mailboxes = mailboxesResult.data.map {
+                                AliasMailboxUiModel(
+                                    model = it,
+                                    selected = true
+                                )
+                            }
+
                             isLoadingState.value = IsLoadingState.NotLoading
                             aliasItemState.value = aliasItemState.value.copy(
-                                title = itemResult.data.title.decrypt(cryptoContext.keyStoreCrypto),
-                                note = itemResult.data.note.decrypt(cryptoContext.keyStoreCrypto),
+                                title = retrievedItem.title.decrypt(cryptoContext.keyStoreCrypto),
+                                note = retrievedItem.note.decrypt(cryptoContext.keyStoreCrypto),
                                 alias = prefix,
                                 aliasOptions = AliasOptions(emptyList(), emptyList()),
                                 selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
-                                selectedMailbox = mailboxesResult.data.first(),
+                                mailboxes = mailboxes,
                                 aliasToBeCreated = email
                             )
+                        }
+                        is Result.Error -> {
+                            val message = "Error getting alias mailboxes"
+                            PassLogger.i(TAG, mailboxesResult.exception ?: Exception(message), message)
                         }
                         else -> {
                             // no-op
                         }
                     }
+                }
+                is Result.Error -> {
+                    val message = "Error getting item by id"
+                    PassLogger.i(TAG, itemResult.exception ?: Exception(message), message)
                 }
                 else -> {
                     // no-op
@@ -87,4 +104,8 @@ class UpdateAliasViewModel @Inject constructor(
         val prefix: String,
         val suffix: String
     )
+
+    companion object {
+        const val TAG = "UpdateAliasViewModel"
+    }
 }

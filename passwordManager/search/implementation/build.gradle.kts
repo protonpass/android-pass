@@ -38,6 +38,7 @@ android {
 dependencies {
     api(project(":passwordManager:search:api"))
     api(project(":passwordManager:data"))
+    implementation(project(":passwordManager:common:api"))
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.core.crypto)

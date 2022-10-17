@@ -6,10 +6,12 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.onError
+import me.proton.core.pass.common.api.onSuccess
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
@@ -32,24 +34,19 @@ class ItemDetailViewModel @Inject constructor(
         accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
             ?.let { userId ->
-                when (
-                    val itemResult: Result<Item> =
-                        itemRepository.getById(userId, ShareId(shareId), ItemId(itemId))
-                ) {
-                    is Result.Error -> {
-                        // no-op
-                    }
-                    Result.Loading -> {
-                        // no-op
-                    }
-                    is Result.Success ->
+                itemRepository.getById(userId, ShareId(shareId), ItemId(itemId))
+                    .onSuccess { item ->
                         state.value = State.Content(
                             FullItemUiModel(
-                                name = itemResult.data.title.decrypt(cryptoContext.keyStoreCrypto),
-                                item = itemResult.data
+                                name = item.title.decrypt(cryptoContext.keyStoreCrypto),
+                                item = item
                             )
                         )
-                }
+                    }
+                    .onError {
+                        val defaultMessage = "Get by id error"
+                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                    }
             }
     }
 
@@ -75,4 +72,8 @@ class ItemDetailViewModel @Inject constructor(
         val name: String,
         val item: Item
     )
+
+    companion object {
+        private const val TAG = "ItemDetailViewModel"
+    }
 }

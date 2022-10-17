@@ -93,7 +93,7 @@ abstract class BaseAliasViewModel(
     fun onMailboxChange(mailbox: AliasMailboxUiModel) = viewModelScope.launch {
         val mailboxes = aliasItemState.value.mailboxes.map {
             if (it.model.id == mailbox.model.id) {
-                it.copy(selected = !it.selected)
+                it.copy(selected = !mailbox.selected)
             } else {
                 it
             }

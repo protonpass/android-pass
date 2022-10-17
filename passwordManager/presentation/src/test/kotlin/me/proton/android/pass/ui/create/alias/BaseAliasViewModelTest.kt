@@ -161,11 +161,13 @@ internal class BaseAliasViewModelTest {
 
                 assertThat(item.isMailboxListApplicable).isTrue()
                 assertThat(item.mailboxes.size).isEqualTo(2)
-                assertThat(item.mailboxes).isEqualTo(listOf(
-                    aliasMailbox1.copy(selected = true),
-                    aliasMailbox2.copy(selected = true),
-                ))
-                assertThat(item.mailboxTitle).isEqualTo("${firstEmail} (1+)")
+                assertThat(item.mailboxes).isEqualTo(
+                    listOf(
+                        aliasMailbox1.copy(selected = true),
+                        aliasMailbox2.copy(selected = true)
+                    )
+                )
+                assertThat(item.mailboxTitle).isEqualTo("$firstEmail (1+)")
             }
         }
 }

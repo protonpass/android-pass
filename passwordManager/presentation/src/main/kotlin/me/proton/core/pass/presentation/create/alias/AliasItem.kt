@@ -15,7 +15,7 @@ data class AliasItem(
     val selectedSuffix: AliasSuffix? = null,
     val mailboxes: List<AliasMailboxUiModel> = emptyList(),
     val isMailboxListApplicable: Boolean = false,
-    val aliasToBeCreated: String? = null,
+    val aliasToBeCreated: String? = null
 ) {
 
     fun validate(): Set<AliasItemValidationErrors> {

@@ -50,9 +50,9 @@ abstract class BaseAliasViewModel(
         )
 
     fun onTitleChange(value: String) = viewModelScope.launch {
-        aliasItemState.update { aliasItemState.value.copy(title = value) }
+        aliasItemState.update { it.copy(title = value) }
         aliasItemValidationErrorsState.update {
-            aliasItemValidationErrorsState.value.toMutableSet()
+            it.toMutableSet()
                 .apply { remove(AliasItemValidationErrors.BlankTitle) }
         }
     }
@@ -60,7 +60,7 @@ abstract class BaseAliasViewModel(
     fun onAliasChange(value: String) = viewModelScope.launch {
         if (value.contains(" ") || value.contains("\n")) return@launch
         aliasItemState.update {
-            aliasItemState.value.copy(
+            it.copy(
                 alias = value,
                 aliasToBeCreated = getAliasToBeCreated(
                     alias = value,
@@ -69,18 +69,18 @@ abstract class BaseAliasViewModel(
             )
         }
         aliasItemValidationErrorsState.update {
-            aliasItemValidationErrorsState.value.toMutableSet()
+            it.toMutableSet()
                 .apply { remove(AliasItemValidationErrors.BlankAlias) }
         }
     }
 
     fun onNoteChange(value: String) = viewModelScope.launch {
-        aliasItemState.update { aliasItemState.value.copy(note = value) }
+        aliasItemState.update { it.copy(note = value) }
     }
 
     fun onSuffixChange(suffix: AliasSuffix) = viewModelScope.launch {
         aliasItemState.update {
-            aliasItemState.value.copy(
+            it.copy(
                 selectedSuffix = suffix,
                 aliasToBeCreated = getAliasToBeCreated(
                     alias = aliasItemState.value.alias,
@@ -107,7 +107,7 @@ abstract class BaseAliasViewModel(
         }
 
         aliasItemState.update {
-            aliasItemState.value.copy(
+            it.copy(
                 mailboxes = mailboxes,
                 mailboxTitle = mailboxTitle,
                 isMailboxListApplicable = allSelectedMailboxes.isNotEmpty()

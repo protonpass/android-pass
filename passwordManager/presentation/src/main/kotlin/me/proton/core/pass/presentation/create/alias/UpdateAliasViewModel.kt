@@ -56,7 +56,7 @@ class UpdateAliasViewModel @Inject constructor(
 
                             isLoadingState.update { IsLoadingState.NotLoading }
                             aliasItemState.update {
-                                aliasItemState.value.copy(
+                                it.copy(
                                     title = retrievedItem.title.decrypt(cryptoContext.keyStoreCrypto),
                                     note = retrievedItem.note.decrypt(cryptoContext.keyStoreCrypto),
                                     alias = prefix,

@@ -22,5 +22,6 @@ dependencies {
     implementation(libs.core.key)
     implementation(libs.core.user)
     implementation(libs.core.utilKotlin)
+    implementation(project(":passwordManager:common:api"))
     implementation(project(":passwordManager:domain"))
 }

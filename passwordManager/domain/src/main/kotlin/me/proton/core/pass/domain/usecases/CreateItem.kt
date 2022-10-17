@@ -1,8 +1,10 @@
 package me.proton.core.pass.domain.usecases
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemContents
+import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.repositories.ShareRepository
@@ -17,10 +19,17 @@ class CreateItemImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemContents: ItemContents
-    ): Item {
-        val share = shareRepository.getById(userId, shareId)
-        requireNotNull(share)
-        return itemRepository.createItem(userId, share, itemContents)
+    ): Result<Item> = when (val shareResult = shareRepository.getById(userId, shareId)) {
+        is Result.Error -> Result.Error(shareResult.exception)
+        Result.Loading -> Result.Loading
+        is Result.Success -> {
+            val share: Share? = shareResult.data
+            if (share != null) {
+                itemRepository.createItem(userId, share, itemContents)
+            } else {
+                Result.Error(IllegalStateException("CreateItem has invalid share"))
+            }
+        }
     }
 }
 
@@ -29,5 +38,5 @@ interface CreateItem {
         userId: UserId,
         shareId: ShareId,
         itemContents: ItemContents
-    ): Item
+    ): Result<Item>
 }

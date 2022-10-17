@@ -27,7 +27,6 @@ import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.pass.domain.AliasMailbox
 import me.proton.core.pass.domain.AliasSuffix
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.presentation.R
@@ -39,6 +38,7 @@ import me.proton.core.pass.presentation.uievents.ItemSavedState
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
+@Suppress("LongParameterList", "LongMethod")
 internal fun AliasContent(
     uiState: CreateUpdateAliasUiState,
     @StringRes topBarTitle: Int,
@@ -47,19 +47,22 @@ internal fun AliasContent(
     onSubmit: () -> Unit,
     onSuccess: (ItemId) -> Unit,
     onSuffixChange: (AliasSuffix) -> Unit,
-    onMailboxChange: (AliasMailbox) -> Unit,
+    onMailboxChange: (AliasMailboxUiModel) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
-    onAliasChange: (String) -> Unit
+    onAliasChange: (String) -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
+
     val (bottomSheetContentType, setBottomSheetContentType) = remember {
-        mutableStateOf(
-            AliasBottomSheetContent.Suffix
-        )
+        mutableStateOf<AliasBottomSheetContent>(AliasBottomSheetContent.Suffix)
     }
+
+    val bottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        confirmStateChange = { false },
+    )
 
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
@@ -73,12 +76,8 @@ internal fun AliasContent(
                         onSuffixChange(suffix)
                     }
                 },
-                onMailboxSelect = { mailbox ->
-                    scope.launch {
-                        bottomSheetState.hide()
-                        onMailboxChange(mailbox)
-                    }
-                }
+                onMailboxSelect = { mailbox -> scope.launch { onMailboxChange(mailbox) } },
+                onCloseBottomSheet = { scope.launch { bottomSheetState.hide() } }
             )
         }
     ) {

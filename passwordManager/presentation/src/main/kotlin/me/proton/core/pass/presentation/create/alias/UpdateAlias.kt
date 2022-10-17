@@ -37,6 +37,6 @@ fun UpdateAlias(
         onMailboxChange = { viewModel.onMailboxChange(it) },
         onTitleChange = { viewModel.onTitleChange(it) },
         onNoteChange = { viewModel.onNoteChange(it) },
-        onAliasChange = { viewModel.onAliasChange(it) }
+        onAliasChange = { viewModel.onAliasChange(it) },
     )
 }

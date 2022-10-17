@@ -16,6 +16,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.android.pass.extension.toUiModel
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.map
+import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.usecases.ObserveActiveShare
 import me.proton.core.pass.domain.usecases.ObserveCurrentUser
 import me.proton.core.pass.domain.usecases.TrashItem
@@ -35,8 +38,12 @@ class HomeViewModel @Inject constructor(
 
     private val currentUserFlow = observeCurrentUser().filterNotNull()
 
-    private val listItems: Flow<List<ItemUiModel>> = searchItems.observeResults()
-        .mapLatest { items -> items.map { it.toUiModel(cryptoContext) } }
+    private val listItems: Flow<Result<List<ItemUiModel>>> = searchItems.observeResults()
+        .mapLatest { result: Result<List<Item>> ->
+            result.map { list ->
+                list.map { it.toUiModel(cryptoContext) }
+            }
+        }
 
     private val searchQuery: MutableStateFlow<String> = MutableStateFlow("")
     private val inSearchMode: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -46,13 +53,24 @@ class HomeViewModel @Inject constructor(
         listItems,
         searchQuery,
         inSearchMode
-    ) { shareId, items, searchQuery, inSearchMode ->
-        HomeUiState.Content(items, shareId, searchQuery, inSearchMode)
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = HomeUiState.Loading
-    )
+    ) { shareIdResult, itemsResult, searchQuery, inSearchMode ->
+        val share = when (shareIdResult) {
+            is Result.Success -> shareIdResult.data
+            is Result.Error -> return@combine HomeUiState.Error("Could not load share id")
+            Result.Loading -> return@combine HomeUiState.Loading
+        }
+        val itemList: List<ItemUiModel> = when (itemsResult) {
+            is Result.Success -> itemsResult.data
+            is Result.Error -> return@combine HomeUiState.Error("Could not load item list")
+            Result.Loading -> return@combine HomeUiState.Loading
+        }
+        HomeUiState.Content(itemList, share, searchQuery, inSearchMode)
+    }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = HomeUiState.Loading
+        )
 
     fun onSearchQueryChange(query: String) = viewModelScope.launch {
         if (query.contains("\n")) return@launch

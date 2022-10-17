@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
-import me.proton.core.pass.domain.Share
+import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.domain.entity.NewVault
 import me.proton.core.pass.domain.usecases.CreateVault
 import me.proton.core.pass.domain.usecases.ObserveCurrentUser
@@ -36,15 +36,24 @@ class AppViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             val currentUser: User = observeCurrentUser().firstOrNull() ?: return@launch
             refreshShares(currentUser.userId)
-            val shares: List<Share> = observeShares(currentUser.userId).firstOrNull() ?: emptyList()
-            if (shares.isEmpty()) {
-                createVault(
-                    userId = currentUser.userId,
-                    vault = NewVault(
-                        name = "Personal".encrypt(cryptoContext.keyStoreCrypto),
-                        description = "Personal vault".encrypt(cryptoContext.keyStoreCrypto)
-                    )
-                )
+            val sharesResult = observeShares(currentUser.userId)
+                .firstOrNull { it is Result.Success }
+                ?: Result.Error()
+            when (sharesResult) {
+                is Result.Success -> {
+                    if (sharesResult.data.isEmpty()) {
+                        createVault(
+                            userId = currentUser.userId,
+                            vault = NewVault(
+                                name = "Personal".encrypt(cryptoContext.keyStoreCrypto),
+                                description = "Personal vault".encrypt(cryptoContext.keyStoreCrypto)
+                            )
+                        )
+                    }
+                }
+                else -> {
+                    // no-op
+                }
             }
         }
     }

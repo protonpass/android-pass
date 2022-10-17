@@ -15,7 +15,10 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.pass.autofill.entities.AutofillItem
 import me.proton.core.pass.autofill.extensions.toAutoFillItem
 import me.proton.core.pass.autofill.extensions.toUiModel
+import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.map
 import me.proton.core.pass.data.usecases.AddPackageNameToItem
+import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.entity.PackageName
 import me.proton.core.pass.presentation.components.model.ItemUiModel
@@ -29,9 +32,11 @@ class SelectItemViewModel @Inject constructor(
     searchItems: SearchItems
 ) : ViewModel() {
 
-    private val listItems: Flow<List<ItemUiModel>> = searchItems.observeResults()
-        .mapLatest { items ->
-            items.filter { it.itemType is ItemType.Login }.map { it.toUiModel(cryptoContext) }
+    private val listItems: Flow<Result<List<ItemUiModel>>> = searchItems.observeResults()
+        .mapLatest { result: Result<List<Item>> ->
+            result.map { list ->
+                list.filter { it.itemType is ItemType.Login }.map { it.toUiModel(cryptoContext) }
+            }
         }
 
     private val itemClickedFlow: MutableStateFlow<ItemClickedEvent> =
@@ -40,9 +45,15 @@ class SelectItemViewModel @Inject constructor(
     val uiState: StateFlow<SelectItemUiState> = combine(
         listItems,
         itemClickedFlow
-    ) { items, itemClicked ->
+    ) { itemsResult, itemClicked ->
         when (itemClicked) {
-            is ItemClickedEvent.None -> SelectItemUiState.Content(items)
+            is ItemClickedEvent.None -> {
+                when (itemsResult) {
+                    is Result.Success -> SelectItemUiState.Content(itemsResult.data)
+                    is Result.Error -> SelectItemUiState.Error("Could not load selected item list")
+                    Result.Loading -> SelectItemUiState.Loading
+                }
+            }
             is ItemClickedEvent.Clicked -> SelectItemUiState.Selected(itemClicked.item)
         }
     }
@@ -54,7 +65,8 @@ class SelectItemViewModel @Inject constructor(
 
     fun onItemClicked(item: ItemUiModel, packageName: PackageName) = viewModelScope.launch {
         addPackageNameToItem(item.shareId, item.id, packageName)
-        itemClickedFlow.value = ItemClickedEvent.Clicked(item.toAutoFillItem(cryptoContext.keyStoreCrypto))
+        itemClickedFlow.value =
+            ItemClickedEvent.Clicked(item.toAutoFillItem(cryptoContext.keyStoreCrypto))
     }
 
     internal sealed interface ItemClickedEvent {

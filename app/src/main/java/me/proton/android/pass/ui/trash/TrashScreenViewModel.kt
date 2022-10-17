@@ -13,6 +13,7 @@ import me.proton.android.pass.extension.toUiModel
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.UserId
+import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.usecases.ObserveTrashedItems
 import me.proton.core.pass.presentation.components.model.ItemUiModel
@@ -27,8 +28,17 @@ class TrashScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
     val uiState: StateFlow<TrashUiState> = observeTrashedItems()
-        .map { items -> items.map { it.toUiModel(cryptoContext) } }
-        .map { TrashUiState.Content(it) }
+        .map { result ->
+            when (result) {
+                is Result.Success -> {
+                    TrashUiState.Content(result.data.map { it.toUiModel(cryptoContext) })
+                }
+                is Result.Error -> TrashUiState.Error(
+                    result.exception?.message ?: "Observe trash items errored"
+                )
+                Result.Loading -> TrashUiState.Loading
+            }
+        }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),

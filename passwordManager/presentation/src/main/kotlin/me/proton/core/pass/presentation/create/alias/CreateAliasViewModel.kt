@@ -2,6 +2,7 @@ package me.proton.core.pass.presentation.create.alias
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
@@ -38,14 +39,16 @@ class CreateAliasViewModel @Inject constructor(
                     }
                     val mailboxTitle = mailboxes.first { it.selected }.model.email
 
-                    isLoadingState.value = IsLoadingState.NotLoading
-                    aliasItemState.value = aliasItemState.value.copy(
-                        aliasOptions = aliasOptions,
-                        selectedSuffix = aliasOptions.suffixes.first(),
-                        mailboxes = mailboxes,
-                        mailboxTitle = mailboxTitle,
-                        isMailboxListApplicable = true,
-                    )
+                    isLoadingState.update { IsLoadingState.NotLoading }
+                    aliasItemState.update {
+                        aliasItemState.value.copy(
+                            aliasOptions = aliasOptions,
+                            selectedSuffix = aliasOptions.suffixes.first(),
+                            mailboxes = mailboxes,
+                            mailboxTitle = mailboxTitle,
+                            isMailboxListApplicable = true,
+                        )
+                    }
                 }
                 .onError {
                     val defaultMessage = "Could not get alias options"

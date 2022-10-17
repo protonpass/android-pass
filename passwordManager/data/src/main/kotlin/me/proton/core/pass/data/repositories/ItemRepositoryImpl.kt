@@ -17,6 +17,7 @@ import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
 import me.proton.core.network.domain.ApiException
 import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.asResult
 import me.proton.core.pass.common.api.map
 import me.proton.core.pass.data.crypto.CreateItem
 import me.proton.core.pass.data.crypto.CryptoException
@@ -77,53 +78,68 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         contents: ItemContents
-    ): Item {
-        return withUserAddress(userId) { userAddress ->
-            val (vaultKey, itemKey) =
-                vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
-            val body = createItem.createItem(vaultKey, itemKey, userAddress, contents)
-            val itemResponse = remoteItemDataSource.createItem(userId, share.id, body)
-
-            val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
-            val entity = itemResponseToEntity(
-                userAddress,
-                itemResponse,
-                share,
-                userPublicKeys,
-                listOf(vaultKey),
-                listOf(itemKey)
-            )
-            localItemDataSource.upsertItem(entity)
-            entityToDomain(entity)
+    ): Result<Item> = withUserAddress(userId) { userAddress ->
+        val result =
+            vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
+        when (result) {
+            is Result.Error -> return@withUserAddress Result.Error(result.exception)
+            Result.Loading -> return@withUserAddress Result.Loading
+            is Result.Success -> Unit
         }
+        val (vaultKey, itemKey) = result.data
+        val body = createItem.createItem(vaultKey, itemKey, userAddress, contents)
+        remoteItemDataSource.createItem(userId, share.id, body)
+            .map { itemResponse ->
+                val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
+                val entity = itemResponseToEntity(
+                    userAddress,
+                    itemResponse,
+                    share,
+                    userPublicKeys,
+                    listOf(vaultKey),
+                    listOf(itemKey)
+                )
+                localItemDataSource.upsertItem(entity)
+                entityToDomain(entity)
+            }
     }
 
-    override suspend fun createAlias(userId: UserId, share: Share, newAlias: NewAlias): Item {
-        return withUserAddress(userId) { userAddress ->
-            val (vaultKey, itemKey) =
-                vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
-            val itemContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
-            val body = createItem.createItem(vaultKey, itemKey, userAddress, itemContents)
-            val requestBody = CreateAliasRequest(
-                prefix = newAlias.prefix,
-                signedSuffix = newAlias.suffix.signedSuffix,
-                mailboxes = listOf(newAlias.mailbox.id),
-                item = body
-            )
-
-            val itemResponse = remoteItemDataSource.createAlias(userId, share.id, requestBody)
-            val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
-            val entity = itemResponseToEntity(
-                userAddress,
-                itemResponse,
-                share,
-                userPublicKeys,
-                listOf(vaultKey),
-                listOf(itemKey)
-            )
-            localItemDataSource.upsertItem(entity)
-            entityToDomain(entity)
+    override suspend fun createAlias(
+        userId: UserId,
+        share: Share,
+        newAlias: NewAlias
+    ): Result<Item> = withUserAddress(userId) { userAddress ->
+        val result =
+            vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
+        when (result) {
+            is Result.Error -> return@withUserAddress Result.Error(result.exception)
+            Result.Loading -> return@withUserAddress Result.Loading
+            is Result.Success -> Unit
         }
+        val (vaultKey, itemKey) = result.data
+        val itemContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
+        val body = createItem.createItem(vaultKey, itemKey, userAddress, itemContents)
+        val requestBody = CreateAliasRequest(
+            prefix = newAlias.prefix,
+            signedSuffix = newAlias.suffix.signedSuffix,
+            mailboxes = listOf(newAlias.mailbox.id),
+            item = body
+        )
+
+        remoteItemDataSource.createAlias(userId, share.id, requestBody)
+            .map { itemResponse ->
+                val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
+                val entity = itemResponseToEntity(
+                    userAddress,
+                    itemResponse,
+                    share,
+                    userPublicKeys,
+                    listOf(vaultKey),
+                    listOf(itemKey)
+                )
+                localItemDataSource.upsertItem(entity)
+                entityToDomain(entity)
+            }
     }
 
     override suspend fun updateItem(
@@ -143,55 +159,63 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareSelection: ShareSelection,
         itemState: ItemState
-    ): Flow<List<Item>> {
-        return when (shareSelection) {
+    ): Flow<Result<List<Item>>> =
+        when (shareSelection) {
             is ShareSelection.Share -> localItemDataSource.observeItemsForShare(
                 userId,
                 shareSelection.shareId,
                 itemState
             )
             is ShareSelection.AllShares -> localItemDataSource.observeItems(userId, itemState)
-        }.map { items ->
-            // Detect if we have received the update from a logout
-            val isAccountStillAvailable = accountManager.getAccount(userId).first() != null
-            if (!isAccountStillAvailable) return@map emptyList()
-
-            // The update does not come from a logout
-            val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-            refreshItemsIfNeeded(userAddress, shareSelection)
-            items.map { entityToDomain(it) }
         }
-    }
+            .map { items ->
+                // Detect if we have received the update from a logout
+                val isAccountStillAvailable = accountManager.getAccount(userId).first() != null
+                if (!isAccountStillAvailable) return@map emptyList()
 
-    override suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Item {
+                // The update does not come from a logout
+                val userAddress =
+                    requireNotNull(userAddressRepository.getAddresses(userId).primary())
+                refreshItemsIfNeeded(userAddress, shareSelection)
+                items.map { entityToDomain(it) }
+            }
+            .asResult()
+
+    override suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Item> {
         val item = localItemDataSource.getById(shareId, itemId)
         requireNotNull(item)
-        return entityToDomain(item)
+        return Result.Success(entityToDomain(item))
     }
 
-    override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
+    override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit> {
         val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-        if (item.state == ItemState.Trashed.value) return
+        if (item.state == ItemState.Trashed.value) return Result.Success(Unit)
 
         val body =
             TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
-        val response = remoteItemDataSource.sendToTrash(userId, shareId, body)
 
-        database.inTransaction {
-            response.items.find { it.itemId == item.id }?.let {
-                val updatedItem = item.copy(
-                    revision = it.revision,
-                    state = ItemState.Trashed.value
-                )
-                localItemDataSource.upsertItem(updatedItem)
+        return remoteItemDataSource.sendToTrash(userId, shareId, body)
+            .map { response ->
+                database.inTransaction {
+                    response.items.find { it.itemId == item.id }?.let {
+                        val updatedItem = item.copy(
+                            revision = it.revision,
+                            state = ItemState.Trashed.value
+                        )
+                        localItemDataSource.upsertItem(updatedItem)
+                    }
+                }
             }
-        }
     }
 
     @Suppress("SwallowedException")
-    override suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
+    override suspend fun untrashItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Result<Unit> {
         // Optimistically update the local database
-        val originalItem = database.inTransaction {
+        val originalItem: ItemEntity = database.inTransaction {
             val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
             if (item.state == ItemState.Active.value) return@inTransaction null
             val updatedItem = item.copy(
@@ -199,61 +223,76 @@ class ItemRepositoryImpl @Inject constructor(
             )
             localItemDataSource.upsertItem(updatedItem)
             item
-        } ?: return
+        } ?: return Result.Error(IllegalStateException("UnTrash item could not be updated locally"))
 
         // Perform the network request
-        try {
+        return try {
             val body = TrashItemsRequest(
-                listOf(
-                    TrashItemRevision(
-                        itemId = originalItem.id,
-                        revision = originalItem.revision
-                    )
-                )
+                listOf(TrashItemRevision(originalItem.id, originalItem.revision))
             )
             remoteItemDataSource.untrash(userId, shareId, body)
+            Result.Success(Unit)
         } catch (e: ApiException) {
             // In case of an exception, restore the old version
             localItemDataSource.upsertItem(originalItem)
+            Result.Error(e)
         }
     }
 
-    override suspend fun clearTrash(userId: UserId) {
+    override suspend fun clearTrash(userId: UserId): Result<Unit> {
         val trashedItems = localItemDataSource.getTrashedItems(userId)
         val trashedPerShare = trashedItems.groupBy { it.shareId }
         coroutineScope {
-            trashedPerShare.map { entry ->
-                async {
-                    val shareId = ShareId(entry.key)
-                    val shareItems = entry.value
-                    shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).forEach { items ->
-                        val body =
-                            TrashItemsRequest(items.map { TrashItemRevision(it.id, it.revision) })
-                        remoteItemDataSource.delete(userId, shareId, body)
-                        database.inTransaction {
-                            items.forEach { item ->
-                                localItemDataSource.delete(
-                                    shareId,
-                                    ItemId(item.id)
+            trashedPerShare
+                .map { entry ->
+                    async {
+                        val shareId = ShareId(entry.key)
+                        val shareItems = entry.value
+                        shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).forEach { items ->
+                            val body =
+                                TrashItemsRequest(
+                                    items.map {
+                                        TrashItemRevision(
+                                            it.id,
+                                            it.revision
+                                        )
+                                    }
                                 )
+                            remoteItemDataSource.delete(userId, shareId, body)
+                            database.inTransaction {
+                                items.forEach { item ->
+                                    localItemDataSource.delete(
+                                        shareId,
+                                        ItemId(item.id)
+                                    )
+                                }
                             }
                         }
                     }
                 }
-            }.awaitAll()
+                .awaitAll()
         }
+        return Result.Success(Unit)
     }
 
-    override suspend fun deleteItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
+    override suspend fun deleteItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): Result<Unit> {
         val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-        if (item.state != ItemState.Trashed.value) return
+        if (item.state != ItemState.Trashed.value) return Result.Success(Unit)
 
         val body =
             TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
-        remoteItemDataSource.delete(userId, shareId, body)
-        localItemDataSource.delete(shareId, itemId)
+        return remoteItemDataSource.delete(userId, shareId, body)
+            .map {
+                localItemDataSource.delete(shareId, itemId)
+                Result.Success(Unit)
+            }
     }
 
+    @Suppress("ReturnCount")
     override suspend fun addPackageToItem(shareId: ShareId, itemId: ItemId, packageName: PackageName): Result<Item> {
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
         val item = entityToDomain(itemEntity)
@@ -271,7 +310,13 @@ class ItemRepositoryImpl @Inject constructor(
         val updatedContents = newItemContents.with(packageName)
 
         val userId = accountManager.getPrimaryUserId().first() ?: throw CryptoException("UserId cannot be null")
-        val share = shareRepository.getById(userId, shareId) ?: throw CryptoException("Share cannot be null")
+        val shareResult = shareRepository.getById(userId, shareId)
+        when (shareResult) {
+            is Result.Error -> return Result.Error(shareResult.exception)
+            Result.Loading -> return Result.Loading
+            is Result.Success -> Unit
+        }
+        val share = shareResult.data ?: throw CryptoException("Share cannot be null")
 
         return performUpdate(userId, share, item, updatedContents)
     }
@@ -290,24 +335,31 @@ class ItemRepositoryImpl @Inject constructor(
             is Result.Success -> Unit
         }
         return withUserAddress(userId) { userAddress ->
-            val vaultKey =
-                vaultKeyRepository.getVaultKeyById(
-                    userAddress,
-                    share.id,
-                    share.signingKey,
-                    keyPacketResult.data.rotationId
-                )
-            val itemKey =
-                vaultKeyRepository.getItemKeyById(
-                    userAddress,
-                    share.id,
-                    share.signingKey,
-                    keyPacketResult.data.rotationId
-                )
-
+            val vaultKeyResult: Result<VaultKey> = vaultKeyRepository.getVaultKeyById(
+                userAddress,
+                share.id,
+                share.signingKey,
+                keyPacketResult.data.rotationId
+            )
+            when (vaultKeyResult) {
+                is Result.Error -> return@withUserAddress Result.Error(vaultKeyResult.exception)
+                Result.Loading -> return@withUserAddress Result.Loading
+                is Result.Success -> Unit
+            }
+            val itemKeyResult: Result<ItemKey> = vaultKeyRepository.getItemKeyById(
+                userAddress,
+                share.id,
+                share.signingKey,
+                keyPacketResult.data.rotationId
+            )
+            when (itemKeyResult) {
+                is Result.Error -> return@withUserAddress Result.Error(itemKeyResult.exception)
+                Result.Loading -> return@withUserAddress Result.Loading
+                is Result.Success -> Unit
+            }
             val body = updateItem.createRequest(
-                vaultKey,
-                itemKey,
+                vaultKeyResult.data,
+                itemKeyResult.data,
                 keyPacketResult.data,
                 userAddress,
                 itemContents,
@@ -321,8 +373,8 @@ class ItemRepositoryImpl @Inject constructor(
                         itemResponse,
                         share,
                         userPublicKeys,
-                        listOf(vaultKey),
-                        listOf(itemKey)
+                        listOf(vaultKeyResult.data),
+                        listOf(itemKeyResult.data)
                     )
                     localItemDataSource.upsertItem(entity)
                     entityToDomain(entity)
@@ -330,20 +382,28 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
+    @Suppress("ReturnCount")
     private suspend fun refreshItemsIfNeeded(
         userAddress: UserAddress,
         shareSelection: ShareSelection
-    ) {
-        val shareIds = when (shareSelection) {
-            is ShareSelection.AllShares -> shareRepository.observeShares(userAddress.userId).first()
+    ): Result<Unit> {
+        val shareIds: List<Share> = when (shareSelection) {
+            is ShareSelection.AllShares -> {
+                when (val result = shareRepository.observeShares(userAddress.userId).first()) {
+                    is Result.Error -> return Result.Error(result.exception)
+                    Result.Loading -> return Result.Loading
+                    is Result.Success -> result.data
+                }
+            }
             is ShareSelection.Share -> {
-                val share = requireNotNull(
-                    shareRepository.getById(
-                        userAddress.userId,
-                        shareSelection.shareId
-                    )
-                )
-                listOf(share)
+                when (
+                    val result: Result<Share?> =
+                        shareRepository.getById(userAddress.userId, shareSelection.shareId)
+                ) {
+                    is Result.Error -> return Result.Error(result.exception)
+                    Result.Loading -> return Result.Loading
+                    is Result.Success -> listOf(requireNotNull(result.data))
+                }
             }
         }
 
@@ -355,53 +415,67 @@ class ItemRepositoryImpl @Inject constructor(
                 }
             }
         }
+        return Result.Success(Unit)
     }
 
-    private suspend fun fetchItemsForShare(userAddress: UserAddress, share: Share): List<Item> {
-        val items = remoteItemDataSource.getItems(userAddress.userId, share.id)
-        val userKeys = items
-            .map { it.signatureEmail }
-            .distinct()
-            .associateWith {
-                val publicAddress =
-                    keyRepository.getPublicAddress(
-                        userAddress.userId,
-                        it,
-                        source = Source.LocalIfAvailable
-                    )
-                publicAddress.keys.publicKeyRing().keys
+    private suspend fun fetchItemsForShare(
+        userAddress: UserAddress,
+        share: Share
+    ): Result<List<Item>> =
+        remoteItemDataSource.getItems(userAddress.userId, share.id)
+            .map { items ->
+                val userKeys = items
+                    .map { it.signatureEmail }
+                    .distinct()
+                    .associateWith {
+                        val publicAddress =
+                            keyRepository.getPublicAddress(
+                                userAddress.userId,
+                                it,
+                                source = Source.LocalIfAvailable
+                            )
+                        publicAddress.keys.publicKeyRing().keys
+                    }
+
+                items.map { item ->
+                    val verifyKeys = requireNotNull(userKeys[item.signatureEmail])
+                    val vaultKeyResult: Result<VaultKey> = vaultKeyRepository
+                        .getVaultKeyById(
+                            userAddress,
+                            share.id,
+                            share.signingKey,
+                            item.rotationId
+                        )
+                    when (vaultKeyResult) {
+                        is Result.Error -> return Result.Error(vaultKeyResult.exception)
+                        Result.Loading -> return Result.Loading
+                        is Result.Success -> Unit
+                    }
+                    val itemKeyResult: Result<ItemKey> = vaultKeyRepository
+                        .getItemKeyById(
+                            userAddress,
+                            share.id,
+                            share.signingKey,
+                            item.rotationId
+                        )
+                    when (itemKeyResult) {
+                        is Result.Error -> return Result.Error(itemKeyResult.exception)
+                        Result.Loading -> return Result.Loading
+                        is Result.Success -> Unit
+                    }
+                    val entity =
+                        itemResponseToEntity(
+                            userAddress,
+                            item,
+                            share,
+                            verifyKeys,
+                            listOf(vaultKeyResult.data),
+                            listOf(itemKeyResult.data)
+                        )
+                    localItemDataSource.upsertItem(entity)
+                    entityToDomain(entity)
+                }
             }
-
-        return items.map { item ->
-            val verifyKeys = requireNotNull(userKeys[item.signatureEmail])
-            val vaultKey =
-                vaultKeyRepository.getVaultKeyById(
-                    userAddress,
-                    share.id,
-                    share.signingKey,
-                    item.rotationId
-                )
-            val itemKey =
-                vaultKeyRepository.getItemKeyById(
-                    userAddress,
-                    share.id,
-                    share.signingKey,
-                    item.rotationId
-                )
-
-            val entity =
-                itemResponseToEntity(
-                    userAddress,
-                    item,
-                    share,
-                    verifyKeys,
-                    listOf(vaultKey),
-                    listOf(itemKey)
-                )
-            localItemDataSource.upsertItem(entity)
-            entityToDomain(entity)
-        }
-    }
 
     private fun itemResponseToEntity(
         userAddress: UserAddress,

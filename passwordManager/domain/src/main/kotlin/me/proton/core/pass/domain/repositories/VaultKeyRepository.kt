@@ -1,5 +1,6 @@
 package me.proton.core.pass.domain.repositories
 
+import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.key.ItemKey
 import me.proton.core.pass.domain.key.SigningKey
@@ -18,33 +19,33 @@ interface VaultKeyRepository {
         signingKey: SigningKey,
         forceRefresh: Boolean = false,
         shouldStoreLocally: Boolean = true
-    ): List<VaultKey>
+    ): Result<List<VaultKey>>
 
     suspend fun getVaultKeyById(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         keyId: String
-    ): VaultKey
+    ): Result<VaultKey>
 
     suspend fun getItemKeyById(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         keyId: String
-    ): ItemKey
+    ): Result<ItemKey>
 
     suspend fun getLatestVaultKey(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         forceRefresh: Boolean = false
-    ): VaultKey
+    ): Result<VaultKey>
 
     suspend fun getLatestVaultItemKey(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         forceRefresh: Boolean = false
-    ): Pair<VaultKey, ItemKey>
+    ): Result<Pair<VaultKey, ItemKey>>
 }

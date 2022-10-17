@@ -49,26 +49,33 @@ class ShareRepositoryImpl @Inject constructor(
     private val createVault: CreateVault
 ) : ShareRepository {
 
+    @Suppress("ReturnCount")
     override suspend fun createVault(
         userId: SessionUserId,
         vault: NewVault
     ): Result<Share> {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
         val (request, keyList) = createVaultRequest(vault, userAddress)
-        val shareResponse = remoteShareDataSource.createVault(userAddress.userId, request)
+        val createVaultResult = remoteShareDataSource.createVault(userAddress.userId, request)
+        when (createVaultResult) {
+            is Result.Error -> return Result.Error(createVaultResult.exception)
+            Result.Loading -> return Result.Loading
+            is Result.Success -> Unit
+        }
 
         // We replace manually the vaultKey.rotationId so it has the right value for performing the validation
-        val rotationId = shareResponse.contentRotationId
+        val rotationId = createVaultResult.data.contentRotationId
             ?: throw IllegalStateException("ContentRotationID cannot be null")
         val vaultKey = keyList.vaultKeyList.first().copy(rotationId = rotationId)
 
         // Replace the temporary rotationId we placed on the vaultKey with the actual rotationId
-        val responseAsEntity = shareResponseToEntity(userAddress, shareResponse, listOf(vaultKey))
+        val responseAsEntity =
+            shareResponseToEntity(userAddress, createVaultResult.data, listOf(vaultKey))
         val entityResult: Result<ShareEntity> = database.inTransaction {
             localShareDataSource.upsertShares(listOf(responseAsEntity))
 
             val reencryptedEntityResult: Result<ShareEntity> =
-                reencryptShareEntityContents(userAddress, shareResponse, responseAsEntity)
+                reencryptShareEntityContents(userAddress, createVaultResult.data, responseAsEntity)
             when (reencryptedEntityResult) {
                 is Result.Error -> return@inTransaction Result.Error(reencryptedEntityResult.exception)
                 Result.Loading -> return@inTransaction Result.Loading
@@ -132,8 +139,15 @@ class ShareRepositoryImpl @Inject constructor(
         var share: ShareEntity? = localShareDataSource.getById(userId, shareId)
         if (share == null) {
             // Check remote
-            val shareResponse = remoteShareDataSource.getShareById(userId, shareId)
-                ?: return Result.Error(IllegalStateException("Couldn't fetch ShareById"))
+            val getShareResult = remoteShareDataSource.getShareById(userId, shareId)
+            when (getShareResult) {
+                is Result.Error -> return Result.Error(getShareResult.exception)
+                Result.Loading -> return Result.Loading
+                is Result.Success -> Unit
+            }
+            val shareResponse = getShareResult.data
+                ?: return Result.Error(IllegalStateException("Share Response is null"))
+
             val storeShareResult: Result<List<ShareEntity>> =
                 storeShares(userAddress, listOf(shareResponse))
             when (storeShareResult) {
@@ -154,8 +168,13 @@ class ShareRepositoryImpl @Inject constructor(
 
     private suspend fun performShareRefresh(userId: UserId): Result<List<ShareEntity>> {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-        val shares = remoteShareDataSource.getShares(userAddress.userId)
-        return storeShares(userAddress, shares)
+        val sharesResult = remoteShareDataSource.getShares(userAddress.userId)
+        when (sharesResult) {
+            is Result.Error -> return Result.Error(sharesResult.exception)
+            Result.Loading -> return Result.Loading
+            is Result.Success -> Unit
+        }
+        return storeShares(userAddress, sharesResult.data)
     }
 
     private suspend fun storeShares(

@@ -46,7 +46,7 @@ class CreateAliasViewModel @Inject constructor(
                             selectedSuffix = aliasOptions.suffixes.first(),
                             mailboxes = mailboxes,
                             mailboxTitle = mailboxTitle,
-                            isMailboxListApplicable = true,
+                            isMailboxListApplicable = true
                         )
                     }
                 }

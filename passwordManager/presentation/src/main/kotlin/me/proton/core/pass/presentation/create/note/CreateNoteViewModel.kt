@@ -4,9 +4,10 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.pass.common.api.Result
-import me.proton.core.pass.domain.Share
+import me.proton.core.pass.common.api.onError
+import me.proton.core.pass.common.api.onSuccess
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.usecases.GetShareById
@@ -31,30 +32,33 @@ class CreateNoteViewModel @Inject constructor(
             accountManager.getPrimaryUserId()
                 .first { userId -> userId != null }
                 ?.let { userId ->
-                    when (val shareResult = getShare.invoke(userId, shareId)) {
-                        is Result.Success -> {
-                            val share: Share? = shareResult.data
+                    getShare(userId, shareId)
+                        .onSuccess { share ->
                             requireNotNull(share)
                             val itemContents = noteItem.toItemContents()
-                            when (
-                                val itemResult =
-                                    itemRepository.createItem(userId, share, itemContents)
-                            ) {
-                                is Result.Success -> {
+                            itemRepository.createItem(userId, share, itemContents)
+                                .onSuccess { item ->
                                     isLoadingState.value = IsLoadingState.NotLoading
-                                    isItemSavedState.value =
-                                        ItemSavedState.Success(itemResult.data.id)
+                                    isItemSavedState.value = ItemSavedState.Success(item.id)
                                 }
-                                else -> {
-                                    // no-op
+                                .onError {
+                                    val defaultMessage = "Create item error"
+                                    PassLogger.i(
+                                        TAG,
+                                        it ?: Exception(defaultMessage),
+                                        defaultMessage
+                                    )
                                 }
-                            }
                         }
-                        else -> {
-                            // no-op
+                        .onError {
+                            val defaultMessage = "Get share error"
+                            PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                         }
-                    }
                 }
         }
+    }
+
+    companion object {
+        private const val TAG = "CreateNoteViewModel"
     }
 }

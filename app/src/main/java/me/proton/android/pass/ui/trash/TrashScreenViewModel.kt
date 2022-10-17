@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.android.pass.extension.toUiModel
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.UserId
@@ -33,9 +34,11 @@ class TrashScreenViewModel @Inject constructor(
                 is Result.Success -> {
                     TrashUiState.Content(result.data.map { it.toUiModel(cryptoContext) })
                 }
-                is Result.Error -> TrashUiState.Error(
-                    result.exception?.message ?: "Observe trash items errored"
-                )
+                is Result.Error -> {
+                    val defaultMessage = "Observe trash items error"
+                    PassLogger.i(TAG, result.exception ?: Exception(defaultMessage), defaultMessage)
+                    TrashUiState.Error(result.exception?.message ?: defaultMessage)
+                }
                 Result.Loading -> TrashUiState.Loading
             }
         }
@@ -66,5 +69,9 @@ class TrashScreenViewModel @Inject constructor(
     private suspend fun withUserId(block: suspend (UserId) -> Unit) {
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
         userId?.let { block(it) }
+    }
+
+    companion object {
+        private const val TAG = "TrashScreenViewModel"
     }
 }

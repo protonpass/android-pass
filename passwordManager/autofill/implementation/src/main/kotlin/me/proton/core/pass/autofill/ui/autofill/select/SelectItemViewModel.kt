@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.pass.autofill.entities.AutofillItem
 import me.proton.core.pass.autofill.extensions.toAutoFillItem
@@ -50,7 +51,15 @@ class SelectItemViewModel @Inject constructor(
             is ItemClickedEvent.None -> {
                 when (itemsResult) {
                     is Result.Success -> SelectItemUiState.Content(itemsResult.data)
-                    is Result.Error -> SelectItemUiState.Error("Could not load selected item list")
+                    is Result.Error -> {
+                        val defaultMessage = "Could not load selected item list"
+                        PassLogger.i(
+                            TAG,
+                            itemsResult.exception ?: Exception(defaultMessage),
+                            defaultMessage
+                        )
+                        SelectItemUiState.Error(defaultMessage)
+                    }
                     Result.Loading -> SelectItemUiState.Loading
                 }
             }
@@ -72,5 +81,9 @@ class SelectItemViewModel @Inject constructor(
     internal sealed interface ItemClickedEvent {
         object None : ItemClickedEvent
         data class Clicked(val item: AutofillItem) : ItemClickedEvent
+    }
+
+    companion object {
+        private const val TAG = "SelectItemViewModel"
     }
 }

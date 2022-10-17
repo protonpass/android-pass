@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.map
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.usecases.ObserveActiveItems
@@ -16,21 +18,21 @@ class SearchItemsImpl @Inject constructor(
 ) : SearchItems {
 
     private val queryState: MutableStateFlow<String> = MutableStateFlow("")
-    private val resultsFlow: Flow<List<Item>> = combine(
+    private val resultsFlow: Flow<Result<List<Item>>> = combine(
         observeActiveItems(),
         queryState,
         ::filterItems
     )
 
-    private fun filterItems(items: List<Item>, query: String): List<Item> =
+    private fun filterItems(itemsResult: Result<List<Item>>, query: String): Result<List<Item>> =
         if (query.isNotEmpty()) {
             val lowercaseQuery = query.lowercase()
-            items.filter { it.matchesQuery(lowercaseQuery) }
+            itemsResult.map { list -> list.filter { it.matchesQuery(lowercaseQuery) } }
         } else {
-            items
+            itemsResult
         }
 
-    override fun observeResults(): Flow<List<Item>> = resultsFlow
+    override fun observeResults(): Flow<Result<List<Item>>> = resultsFlow
 
     override fun updateQuery(query: String) {
         queryState.value = query

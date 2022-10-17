@@ -10,6 +10,7 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemId
+import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.usecases.GetShareById
@@ -31,14 +32,20 @@ class UpdateNoteViewModel @Inject constructor(
         if (_item != null) return@launch
         isLoadingState.value = IsLoadingState.Loading
         accountManager.getPrimaryUserId().first { userId -> userId != null }?.let { userId ->
-            val retrievedItem = itemRepository.getById(userId, shareId, itemId)
-            _item = retrievedItem
+            when (val result: Result<Item> = itemRepository.getById(userId, shareId, itemId)) {
+                is Result.Success -> {
+                    _item = result.data
 
-            isLoadingState.value = IsLoadingState.NotLoading
-            noteItemState.value = NoteItem(
-                title = retrievedItem.title.decrypt(cryptoContext.keyStoreCrypto),
-                note = retrievedItem.note.decrypt(cryptoContext.keyStoreCrypto)
-            )
+                    isLoadingState.value = IsLoadingState.NotLoading
+                    noteItemState.value = NoteItem(
+                        title = result.data.title.decrypt(cryptoContext.keyStoreCrypto),
+                        note = result.data.note.decrypt(cryptoContext.keyStoreCrypto)
+                    )
+                }
+                else -> {
+                    // no-op
+                }
+            }
         }
     }
 
@@ -49,15 +56,23 @@ class UpdateNoteViewModel @Inject constructor(
         accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
             ?.let { userId ->
-                val share = getShare.invoke(userId, shareId)
-                requireNotNull(share)
-                val itemContents = noteItem.toItemContents()
-                val updatedItemResult =
-                    itemRepository.updateItem(userId, share, _item!!, itemContents)
-                when (updatedItemResult) {
+                when (val shareResult = getShare.invoke(userId, shareId)) {
                     is Result.Success -> {
-                        isLoadingState.value = IsLoadingState.NotLoading
-                        isItemSavedState.value = ItemSavedState.Success(updatedItemResult.data.id)
+                        val share: Share? = shareResult.data
+                        requireNotNull(share)
+                        val itemContents = noteItem.toItemContents()
+                        val updatedItemResult =
+                            itemRepository.updateItem(userId, share, _item!!, itemContents)
+                        when (updatedItemResult) {
+                            is Result.Success -> {
+                                isLoadingState.value = IsLoadingState.NotLoading
+                                isItemSavedState.value =
+                                    ItemSavedState.Success(updatedItemResult.data.id)
+                            }
+                            else -> {
+                                // no-op
+                            }
+                        }
                     }
                     else -> {
                         // no-op

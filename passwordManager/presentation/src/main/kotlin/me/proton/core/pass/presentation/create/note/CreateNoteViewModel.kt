@@ -5,6 +5,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.usecases.GetShareById
@@ -26,14 +28,33 @@ class CreateNoteViewModel @Inject constructor(
             noteItemValidationErrorsState.value = noteItemValidationErrors
         } else {
             isLoadingState.value = IsLoadingState.Loading
-            accountManager.getPrimaryUserId().first { userId -> userId != null }?.let { userId ->
-                val share = getShare.invoke(userId, shareId)
-                requireNotNull(share)
-                val itemContents = noteItem.toItemContents()
-                val createdItem = itemRepository.createItem(userId, share, itemContents)
-                isLoadingState.value = IsLoadingState.NotLoading
-                isItemSavedState.value = ItemSavedState.Success(createdItem.id)
-            }
+            accountManager.getPrimaryUserId()
+                .first { userId -> userId != null }
+                ?.let { userId ->
+                    when (val shareResult = getShare.invoke(userId, shareId)) {
+                        is Result.Success -> {
+                            val share: Share? = shareResult.data
+                            requireNotNull(share)
+                            val itemContents = noteItem.toItemContents()
+                            when (
+                                val itemResult =
+                                    itemRepository.createItem(userId, share, itemContents)
+                            ) {
+                                is Result.Success -> {
+                                    isLoadingState.value = IsLoadingState.NotLoading
+                                    isItemSavedState.value =
+                                        ItemSavedState.Success(itemResult.data.id)
+                                }
+                                else -> {
+                                    // no-op
+                                }
+                            }
+                        }
+                        else -> {
+                            // no-op
+                        }
+                    }
+                }
         }
     }
 }

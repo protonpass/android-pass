@@ -5,6 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.ui.MainDispatcherRule
+import me.proton.core.pass.domain.AliasMailbox
 import me.proton.core.pass.presentation.create.alias.AliasItem
 import me.proton.core.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.core.pass.presentation.create.alias.BaseAliasViewModel
@@ -80,18 +81,91 @@ internal class BaseAliasViewModelTest {
     }
 
     @Test
-    fun `when the suffix has changed the state should hold it`() = runTest {
+    fun `when the mailbox has changed the state should hold it`() = runTest {
+        val aliasMailbox = AliasMailboxUiModel(TestAliasMailbox.create(), true)
+        baseAliasViewModel.aliasItemState.update {
+            AliasItem(mailboxes = listOf(aliasMailbox))
+        }
+        baseAliasViewModel.onMailboxChange(aliasMailbox)
+
+        baseAliasViewModel.aliasUiState.test {
+            assertThat(awaitItem().aliasItem)
+                .isEqualTo(
+                    Initial.aliasItem.copy(
+                        mailboxes = listOf(
+                            aliasMailbox.copy(
+                                selected = false
+                            )
+                        )
+                    )
+                )
+        }
+    }
+
+    @Test
+    fun `when there are no selected mailboxes isMailboxListApplicable should be false`() = runTest {
+        // Start as true
         val aliasMailbox = AliasMailboxUiModel(TestAliasMailbox.create(), true)
         baseAliasViewModel.aliasItemState.update {
             AliasItem(mailboxes = listOf(aliasMailbox))
         }
 
-        val updatedAliasMailbox = aliasMailbox.copy(selected = false)
-        baseAliasViewModel.onMailboxChange(updatedAliasMailbox)
+        // With this change, set it as false
+        baseAliasViewModel.onMailboxChange(aliasMailbox)
 
         baseAliasViewModel.aliasUiState.test {
-            assertThat(awaitItem().aliasItem)
-                .isEqualTo(Initial.aliasItem.copy(mailboxes = listOf(updatedAliasMailbox)))
+            val item = awaitItem().aliasItem
+            assertThat(item.isMailboxListApplicable).isFalse()
+            assertThat(item.mailboxes.size).isEqualTo(1)
+            assertThat(item.mailboxes[0].selected).isFalse()
         }
     }
+
+    @Test
+    fun `when there are selected mailboxes isMailboxListApplicable should be true`() = runTest {
+        // Start as false
+        val aliasMailbox = AliasMailboxUiModel(TestAliasMailbox.create(), false)
+        baseAliasViewModel.aliasItemState.update {
+            AliasItem(mailboxes = listOf(aliasMailbox))
+        }
+
+        // With this change, set it as false
+        baseAliasViewModel.onMailboxChange(aliasMailbox)
+
+        baseAliasViewModel.aliasUiState.test {
+            val item = awaitItem().aliasItem
+            assertThat(item.isMailboxListApplicable).isTrue()
+            assertThat(item.mailboxes.size).isEqualTo(1)
+            assertThat(item.mailboxes[0].selected).isTrue()
+        }
+    }
+
+    @Test
+    fun `when there are many selected mailboxes mailboxTitle should contain an indicator`() =
+        runTest {
+            val firstEmail = "test"
+
+            // Start both as false
+            val aliasMailbox1 = AliasMailboxUiModel(AliasMailbox(1, firstEmail), false)
+            val aliasMailbox2 = AliasMailboxUiModel(AliasMailbox(2, "test2"), false)
+            baseAliasViewModel.aliasItemState.update {
+                AliasItem(mailboxes = listOf(aliasMailbox1, aliasMailbox2))
+            }
+
+            // Set both to true
+            baseAliasViewModel.onMailboxChange(aliasMailbox1)
+            baseAliasViewModel.onMailboxChange(aliasMailbox2)
+
+            baseAliasViewModel.aliasUiState.test {
+                val item = awaitItem().aliasItem
+
+                assertThat(item.isMailboxListApplicable).isTrue()
+                assertThat(item.mailboxes.size).isEqualTo(2)
+                assertThat(item.mailboxes).isEqualTo(listOf(
+                    aliasMailbox1.copy(selected = true),
+                    aliasMailbox2.copy(selected = true),
+                ))
+                assertThat(item.mailboxTitle).isEqualTo("${firstEmail} (1+)")
+            }
+        }
 }

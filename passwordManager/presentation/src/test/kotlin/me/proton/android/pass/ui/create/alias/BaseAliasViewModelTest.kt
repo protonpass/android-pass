@@ -2,8 +2,11 @@ package me.proton.android.pass.ui.create.alias
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.ui.MainDispatcherRule
+import me.proton.core.pass.presentation.create.alias.AliasItem
+import me.proton.core.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.core.pass.presentation.create.alias.BaseAliasViewModel
 import me.proton.core.pass.presentation.create.alias.CreateUpdateAliasUiState.Companion.Initial
 import me.proton.core.pass.test.core.TestAccountManager
@@ -78,12 +81,17 @@ internal class BaseAliasViewModelTest {
 
     @Test
     fun `when the suffix has changed the state should hold it`() = runTest {
-        val aliasMailbox = TestAliasMailbox.create()
-        baseAliasViewModel.onMailboxChange(aliasMailbox)
+        val aliasMailbox = AliasMailboxUiModel(TestAliasMailbox.create(), true)
+        baseAliasViewModel.aliasItemState.update {
+            AliasItem(mailboxes = listOf(aliasMailbox))
+        }
+
+        val updatedAliasMailbox = aliasMailbox.copy(selected = false)
+        baseAliasViewModel.onMailboxChange(updatedAliasMailbox)
 
         baseAliasViewModel.aliasUiState.test {
             assertThat(awaitItem().aliasItem)
-                .isEqualTo(Initial.aliasItem.copy(mailboxes = aliasMailbox))
+                .isEqualTo(Initial.aliasItem.copy(mailboxes = listOf(updatedAliasMailbox)))
         }
     }
 }

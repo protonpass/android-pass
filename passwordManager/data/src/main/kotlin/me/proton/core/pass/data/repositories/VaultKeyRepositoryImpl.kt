@@ -4,6 +4,8 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
+import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.map
 import me.proton.core.pass.data.crypto.OpenKeys
 import me.proton.core.pass.data.db.entities.ItemKeyEntity
 import me.proton.core.pass.data.db.entities.VaultKeyEntity
@@ -32,22 +34,34 @@ class VaultKeyRepositoryImpl @Inject constructor(
         signingKey: SigningKey,
         forceRefresh: Boolean,
         shouldStoreLocally: Boolean
-    ): List<VaultKey> =
-        getVaultItemKeys(userAddress, shareId, signingKey, forceRefresh, shouldStoreLocally).vaultKeyList
+    ): Result<List<VaultKey>> {
+        val result = getVaultItemKeys(
+            userAddress,
+            shareId,
+            signingKey,
+            forceRefresh,
+            shouldStoreLocally
+        )
+        return when (result) {
+            is Result.Error -> Result.Error(result.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> Result.Success(result.data.vaultKeyList)
+        }
+    }
 
     override suspend fun getVaultKeyById(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         keyId: String
-    ): VaultKey {
+    ): Result<VaultKey> {
         val key = localDataSource.getVaultKeyById(userAddress, shareId, keyId)
         if (key != null) {
-            return vaultKeyEntityToDomain(key, key.rotationId)
+            return Result.Success(vaultKeyEntityToDomain(key, key.rotationId))
         }
 
-        val keys = getVaultItemKeys(userAddress, shareId, signingKey, true)
-        return requireNotNull(keys.vaultKeyList.firstOrNull { it.rotationId == keyId })
+        return getVaultItemKeys(userAddress, shareId, signingKey, true)
+            .map { keys -> requireNotNull(keys.vaultKeyList.firstOrNull { it.rotationId == keyId }) }
     }
 
     override suspend fun getItemKeyById(
@@ -55,15 +69,15 @@ class VaultKeyRepositoryImpl @Inject constructor(
         shareId: ShareId,
         signingKey: SigningKey,
         keyId: String
-    ): ItemKey {
+    ): Result<ItemKey> {
         val key = localDataSource.getItemKeyById(userAddress, shareId, keyId)
         if (key != null) {
-            return itemKeyEntityToDomain(key, key.rotationId)
+            return Result.Success(itemKeyEntityToDomain(key, key.rotationId))
         }
 
         // We didn't find it on the local storage
-        val keys = getVaultItemKeys(userAddress, shareId, signingKey, true)
-        return requireNotNull(keys.itemKeyList.firstOrNull { it.rotationId == keyId })
+        return getVaultItemKeys(userAddress, shareId, signingKey, true)
+            .map { keys -> requireNotNull(keys.itemKeyList.firstOrNull { it.rotationId == keyId }) }
     }
 
     override suspend fun getLatestVaultKey(
@@ -71,24 +85,23 @@ class VaultKeyRepositoryImpl @Inject constructor(
         shareId: ShareId,
         signingKey: SigningKey,
         forceRefresh: Boolean
-    ): VaultKey {
-        val keys = getVaultKeys(userAddress, shareId, signingKey, forceRefresh)
-        return requireNotNull(keys.maxByOrNull { it.rotation })
-    }
+    ): Result<VaultKey> = getVaultKeys(userAddress, shareId, signingKey, forceRefresh)
+        .map { keys -> requireNotNull(keys.maxByOrNull { it.rotation }) }
 
     override suspend fun getLatestVaultItemKey(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         forceRefresh: Boolean
-    ): Pair<VaultKey, ItemKey> {
-        val keys = getVaultItemKeys(userAddress, shareId, signingKey, forceRefresh)
-        val latestVaultKey = requireNotNull(keys.vaultKeyList.maxByOrNull { it.rotation })
-        val latestItemKey = requireNotNull(
-            keys.itemKeyList.firstOrNull { it.rotationId == latestVaultKey.rotationId }
-        )
-        return Pair(latestVaultKey, latestItemKey)
-    }
+    ): Result<Pair<VaultKey, ItemKey>> =
+        getVaultItemKeys(userAddress, shareId, signingKey, forceRefresh)
+            .map { keys ->
+                val latestVaultKey = requireNotNull(keys.vaultKeyList.maxByOrNull { it.rotation })
+                val latestItemKey = requireNotNull(
+                    keys.itemKeyList.firstOrNull { it.rotationId == latestVaultKey.rotationId }
+                )
+                Pair(latestVaultKey, latestItemKey)
+            }
 
     private suspend fun getVaultItemKeys(
         userAddress: UserAddress,
@@ -96,33 +109,38 @@ class VaultKeyRepositoryImpl @Inject constructor(
         signingKey: SigningKey,
         forceRefresh: Boolean,
         shouldStoreLocally: Boolean = true
-    ): VaultItemKeyList {
+    ): Result<VaultItemKeyList> {
         if (!forceRefresh) {
             val keys = localDataSource.getKeys(userAddress, shareId)
             if (keys.vaultKeys.isNotEmpty()) {
-                return entityToDomain(keys)
+                return Result.Success(entityToDomain(keys))
             }
         }
 
-        val remoteKeys = remoteDataSource.getKeys(userAddress.userId, shareId)
-        val open = openKeys.openKeys(remoteKeys, signingKey, userAddress)
+        return when (val result = remoteDataSource.getKeys(userAddress.userId, shareId)) {
+            is Result.Success -> {
+                val open = openKeys.openKeys(result.data, signingKey, userAddress)
 
-        val vaultKeyPassphrases = open.vaultKeyList
-            .associate { it.rotationId to it.encryptedKeyPassphrase }
-        val itemKeyPassphrases = open.itemKeyList
-            .associate { it.rotationId to it.encryptedKeyPassphrase }
+                val vaultKeyPassphrases = open.vaultKeyList
+                    .associate { it.rotationId to it.encryptedKeyPassphrase }
+                val itemKeyPassphrases = open.itemKeyList
+                    .associate { it.rotationId to it.encryptedKeyPassphrase }
 
-        if (shouldStoreLocally) {
-            val entityKeys = domainToEntity(
-                remoteKeys,
-                userAddress,
-                shareId,
-                vaultKeyPassphrases,
-                itemKeyPassphrases
-            )
-            localDataSource.storeKeys(userAddress, shareId, entityKeys)
+                if (shouldStoreLocally) {
+                    val entityKeys = domainToEntity(
+                        result.data,
+                        userAddress,
+                        shareId,
+                        vaultKeyPassphrases,
+                        itemKeyPassphrases
+                    )
+                    localDataSource.storeKeys(userAddress, shareId, entityKeys)
+                }
+                Result.Success(open)
+            }
+            is Result.Error -> Result.Error(result.exception)
+            Result.Loading -> Result.Loading
         }
-        return open
     }
 
     private fun domainToEntity(

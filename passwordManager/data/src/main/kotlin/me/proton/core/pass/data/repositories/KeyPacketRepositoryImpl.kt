@@ -9,6 +9,7 @@ import me.proton.core.pass.data.remote.RemoteKeyPacketDataSource
 import me.proton.core.pass.data.responses.KeyPacketInfo
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.KeyPacket
+import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.key.publicKey
 import me.proton.core.pass.domain.repositories.KeyPacketRepository
@@ -31,15 +32,27 @@ class KeyPacketRepositoryImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId
     ): Result<KeyPacket> =
-        remoteKeyPacketDataSource.getLatestKeyPacketForItem(userId, shareId, itemId)
-            .map { responseToDomain(userId, shareId, it) }
+        when (
+            val result =
+                remoteKeyPacketDataSource.getLatestKeyPacketForItem(userId, shareId, itemId)
+        ) {
+            is Result.Error -> Result.Error(result.exception)
+            Result.Loading -> Result.Loading
+            is Result.Success -> responseToDomain(userId, shareId, result.data)
+        }
 
     private suspend fun responseToDomain(
         userId: UserId,
         shareId: ShareId,
         data: KeyPacketInfo
-    ): KeyPacket {
-        val share = shareRepository.getById(userId, shareId)
+    ): Result<KeyPacket> {
+        val shareResult = shareRepository.getById(userId, shareId)
+        when (shareResult) {
+            is Result.Error -> return Result.Error(shareResult.exception)
+            Result.Loading -> return Result.Loading
+            is Result.Success -> Unit
+        }
+        val share: Share? = shareResult.data
         requireNotNull(share)
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
 
@@ -49,21 +62,28 @@ class KeyPacketRepositoryImpl @Inject constructor(
         val armoredKeyPacketSignature =
             cryptoContext.pgpCrypto.getArmored(decodedKeyPacketSignature, PGPHeader.Signature)
 
-        val itemKey =
-            keyRepository.getItemKeyById(userAddress, share.id, share.signingKey, data.rotationId)
-        val itemPublicKey = itemKey.publicKey(cryptoContext)
-        val validated = cryptoContext.pgpCrypto.verifyData(
-            decodedKeyPacket,
-            armoredKeyPacketSignature,
-            itemPublicKey.key
-        )
-        require(validated) {
-            "KeyPacketSignature did not match [shareId=${shareId.id}] [rotationId=${data.rotationId}]"
-        }
+        return keyRepository
+            .getItemKeyById(
+                userAddress,
+                share.id,
+                share.signingKey,
+                data.rotationId
+            )
+            .map { itemKey ->
+                val itemPublicKey = itemKey.publicKey(cryptoContext)
+                val validated = cryptoContext.pgpCrypto.verifyData(
+                    decodedKeyPacket,
+                    armoredKeyPacketSignature,
+                    itemPublicKey.key
+                )
+                require(validated) {
+                    "KeyPacketSignature did not match [shareId=${shareId.id}] [rotationId=${data.rotationId}]"
+                }
 
-        return KeyPacket(
-            rotationId = data.rotationId,
-            keyPacket = decodedKeyPacket
-        )
+                KeyPacket(
+                    rotationId = data.rotationId,
+                    keyPacket = decodedKeyPacket
+                )
+            }
     }
 }

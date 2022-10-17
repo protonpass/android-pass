@@ -14,8 +14,8 @@ import me.proton.core.pass.domain.entity.NewAlias
 import me.proton.core.pass.domain.entity.PackageName
 
 interface ItemRepository {
-    suspend fun createItem(userId: UserId, share: Share, contents: ItemContents): Item
-    suspend fun createAlias(userId: UserId, share: Share, newAlias: NewAlias): Item
+    suspend fun createItem(userId: UserId, share: Share, contents: ItemContents): Result<Item>
+    suspend fun createAlias(userId: UserId, share: Share, newAlias: NewAlias): Result<Item>
     suspend fun updateItem(
         userId: UserId,
         share: Share,
@@ -27,13 +27,13 @@ interface ItemRepository {
         userId: UserId,
         shareSelection: ShareSelection,
         itemState: ItemState
-    ): Flow<List<Item>>
+    ): Flow<Result<List<Item>>>
 
-    suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Item
-    suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId)
-    suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId)
-    suspend fun deleteItem(userId: UserId, shareId: ShareId, itemId: ItemId)
-    suspend fun clearTrash(userId: UserId)
+    suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Item>
+    suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit>
+    suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit>
+    suspend fun deleteItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit>
+    suspend fun clearTrash(userId: UserId): Result<Unit>
     suspend fun addPackageToItem(
         shareId: ShareId,
         itemId: ItemId,

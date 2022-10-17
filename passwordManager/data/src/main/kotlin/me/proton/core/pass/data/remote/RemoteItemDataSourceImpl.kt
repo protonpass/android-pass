@@ -24,19 +24,21 @@ class RemoteItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         body: CreateItemRequest
-    ): ItemRevision =
-        api.get<PasswordManagerApi>(userId).invoke {
-            createItem(shareId.id, body)
-        }.valueOrThrow.item
+    ): Result<ItemRevision> =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { createItem(shareId.id, body) }
+            .toResult()
+            .map { it.item }
 
     override suspend fun createAlias(
         userId: UserId,
         shareId: ShareId,
         body: CreateAliasRequest
-    ): ItemRevision =
-        api.get<PasswordManagerApi>(userId).invoke {
-            createAlias(shareId.id, body)
-        }.valueOrThrow.item
+    ): Result<ItemRevision> =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { createAlias(shareId.id, body) }
+            .toResult()
+            .map { it.item }
 
     override suspend fun updateItem(
         userId: UserId,
@@ -45,48 +47,52 @@ class RemoteItemDataSourceImpl @Inject constructor(
         body: UpdateItemRequest
     ): Result<ItemRevision> =
         api.get<PasswordManagerApi>(userId)
-            .invoke {
-                updateItem(shareId.id, itemId.id, body)
-            }
+            .invoke { updateItem(shareId.id, itemId.id, body) }
             .toResult()
             .map { it.item }
 
-    override suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision> =
-        api.get<PasswordManagerApi>(userId).invoke {
-            var page = 0
-            val items = mutableListOf<ItemRevision>()
-            while (true) {
-                val pageItems = getItems(shareId.id, page, PAGE_SIZE)
-                items.addAll(pageItems.items.revisions)
-                if (pageItems.items.revisions.size < PAGE_SIZE) {
-                    break
-                } else {
-                    page++
+    override suspend fun getItems(userId: UserId, shareId: ShareId): Result<List<ItemRevision>> =
+        api.get<PasswordManagerApi>(userId)
+            .invoke {
+                var page = 0
+                val items = mutableListOf<ItemRevision>()
+                while (true) {
+                    val pageItems = getItems(shareId.id, page, PAGE_SIZE)
+                    items.addAll(pageItems.items.revisions)
+                    if (pageItems.items.revisions.size < PAGE_SIZE) {
+                        break
+                    } else {
+                        page++
+                    }
                 }
+                items
             }
-            items
-        }.valueOrThrow
+            .toResult()
 
     override suspend fun sendToTrash(
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): TrashItemsResponse =
-        api.get<PasswordManagerApi>(userId).invoke {
-            trashItems(shareId.id, body)
-        }.valueOrThrow
+    ): Result<TrashItemsResponse> =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { trashItems(shareId.id, body) }
+            .toResult()
 
     override suspend fun untrash(
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): TrashItemsResponse =
-        api.get<PasswordManagerApi>(userId).invoke {
-            untrashItems(shareId.id, body)
-        }.valueOrThrow
+    ): Result<TrashItemsResponse> =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { untrashItems(shareId.id, body) }
+            .toResult()
 
-    override suspend fun delete(userId: UserId, shareId: ShareId, body: TrashItemsRequest) =
-        api.get<PasswordManagerApi>(userId).invoke {
-            deleteItems(shareId.id, body)
-        }.valueOrThrow
+    override suspend fun delete(
+        userId: UserId,
+        shareId: ShareId,
+        body: TrashItemsRequest
+    ): Result<Unit> =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { deleteItems(shareId.id, body) }
+            .toResult()
 }

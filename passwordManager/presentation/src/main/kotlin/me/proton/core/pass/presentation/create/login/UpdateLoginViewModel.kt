@@ -4,14 +4,15 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.onError
+import me.proton.core.pass.common.api.onSuccess
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ItemType
-import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.usecases.GetShareById
@@ -36,24 +37,24 @@ class UpdateLoginViewModel @Inject constructor(
         accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
             ?.let { userId ->
-                when (val itemResult = itemRepository.getById(userId, shareId, itemId)) {
-                    is Result.Success -> {
-                        val itemContents = itemResult.data.itemType as ItemType.Login
-                        _item = itemResult.data
+                itemRepository.getById(userId, shareId, itemId)
+                    .onSuccess { item ->
+                        val itemContents = item.itemType as ItemType.Login
+                        _item = item
 
                         isLoadingState.value = IsLoadingState.NotLoading
                         loginItemState.value = LoginItem(
-                            title = itemResult.data.title.decrypt(cryptoContext.keyStoreCrypto),
+                            title = item.title.decrypt(cryptoContext.keyStoreCrypto),
                             username = itemContents.username,
                             password = itemContents.password.decrypt(cryptoContext.keyStoreCrypto),
                             websiteAddresses = itemContents.websites.ifEmpty { listOf("") },
-                            note = itemResult.data.note.decrypt(cryptoContext.keyStoreCrypto)
+                            note = item.note.decrypt(cryptoContext.keyStoreCrypto)
                         )
                     }
-                    else -> {
-                        // no-op
+                    .onError {
+                        val defaultMessage = "Get by id error"
+                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                     }
-                }
             }
     }
 
@@ -64,28 +65,28 @@ class UpdateLoginViewModel @Inject constructor(
         accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
             ?.let { userId ->
-                when (val shareResult = getShare.invoke(userId, shareId)) {
-                    is Result.Success -> {
-                        val share: Share? = shareResult.data
+                getShare(userId, shareId)
+                    .onSuccess { share ->
                         requireNotNull(share)
                         val itemContents = loginItem.toItemContents()
-                        val updatedItemResult =
-                            itemRepository.updateItem(userId, share, _item!!, itemContents)
-                        when (updatedItemResult) {
-                            is Result.Success -> {
+                        itemRepository.updateItem(userId, share, _item!!, itemContents)
+                            .onSuccess { item ->
                                 isLoadingState.value = IsLoadingState.NotLoading
-                                isItemSavedState.value =
-                                    ItemSavedState.Success(updatedItemResult.data.id)
+                                isItemSavedState.value = ItemSavedState.Success(item.id)
                             }
-                            else -> {
-                                // no-op
+                            .onError {
+                                val defaultMessage = "Update item error"
+                                PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                             }
-                        }
                     }
-                    else -> {
-                        // no-op
+                    .onError {
+                        val defaultMessage = "Get share error"
+                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                     }
-                }
             }
+    }
+
+    companion object {
+        private const val TAG = "UpdateLoginViewModel"
     }
 }

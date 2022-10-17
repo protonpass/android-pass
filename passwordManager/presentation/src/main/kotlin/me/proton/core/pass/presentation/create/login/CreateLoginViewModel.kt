@@ -5,9 +5,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.pass.common.api.Result
-import me.proton.core.pass.domain.Item
+import me.proton.core.pass.common.api.onError
+import me.proton.core.pass.common.api.onSuccess
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.usecases.CreateItem
 import me.proton.core.pass.domain.usecases.ObserveActiveShare
@@ -48,16 +49,19 @@ class CreateLoginViewModel @Inject constructor(
     }
 
     fun createItem() = viewModelScope.launch {
-        when (val shareIdResult = observeActiveShare().firstOrNull()) {
-            is Result.Success -> {
-                shareIdResult.data?.let {
-                    createItem(it)
+        observeActiveShare()
+            .firstOrNull()
+            ?.onSuccess { shareId ->
+                if (shareId != null) {
+                    createItem(shareId)
+                } else {
+                    PassLogger.i(TAG, "Null Share Id")
                 }
             }
-            else -> {
-                // no-op
+            ?.onError {
+                val defaultMessage = "Observe active share error"
+                PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
             }
-        }
     }
 
     fun createItem(shareId: ShareId) = viewModelScope.launch {
@@ -71,19 +75,20 @@ class CreateLoginViewModel @Inject constructor(
                 .first { userId -> userId != null }
                 ?.let { userId ->
                     val itemContents = loginItem.toItemContents()
-                    when (
-                        val itemResult: Result<Item> =
-                            createItem(userId, shareId, itemContents)
-                    ) {
-                        is Result.Success -> {
+                    createItem(userId, shareId, itemContents)
+                        .onSuccess { item ->
                             isLoadingState.value = IsLoadingState.NotLoading
-                            isItemSavedState.value = ItemSavedState.Success(itemResult.data.id)
+                            isItemSavedState.value = ItemSavedState.Success(item.id)
                         }
-                        else -> {
-                            // no-op
+                        .onError {
+                            val defaultMessage = "Could not create item"
+                            PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                         }
-                    }
                 }
         }
+    }
+
+    companion object {
+        private const val TAG = "CreateLoginViewModel"
     }
 }

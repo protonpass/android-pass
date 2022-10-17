@@ -11,6 +11,9 @@ import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.onError
+import me.proton.core.pass.common.api.onSuccess
+import me.proton.core.pass.domain.Share
 import me.proton.core.pass.domain.entity.NewVault
 import me.proton.core.pass.domain.usecases.CreateVault
 import me.proton.core.pass.domain.usecases.ObserveCurrentUser
@@ -29,7 +32,7 @@ class AppViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        PassLogger.e("AppViewModel", throwable)
+        PassLogger.e(TAG, throwable)
     }
 
     init {
@@ -39,22 +42,30 @@ class AppViewModel @Inject constructor(
             val sharesResult = observeShares(currentUser.userId)
                 .firstOrNull { it is Result.Success }
                 ?: Result.Error()
-            when (sharesResult) {
-                is Result.Success -> {
-                    if (sharesResult.data.isEmpty()) {
-                        createVault(
+            sharesResult
+                .onSuccess { list ->
+                    if (list.isEmpty()) {
+                        val vaultResult: Result<Share> = createVault(
                             userId = currentUser.userId,
                             vault = NewVault(
                                 name = "Personal".encrypt(cryptoContext.keyStoreCrypto),
                                 description = "Personal vault".encrypt(cryptoContext.keyStoreCrypto)
                             )
                         )
+                        vaultResult.onError {
+                            val defaultMessage = "Create Vault error"
+                            PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                        }
                     }
                 }
-                else -> {
-                    // no-op
+                .onError {
+                    val defaultMessage = "Observe shares error"
+                    PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                 }
-            }
         }
+    }
+
+    companion object {
+        private const val TAG = "AppViewModel"
     }
 }

@@ -3,8 +3,10 @@ package me.proton.core.pass.presentation.create.alias
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.onError
+import me.proton.core.pass.common.api.onSuccess
 import me.proton.core.pass.domain.AliasOptions
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.entity.NewAlias
@@ -27,21 +29,21 @@ class CreateAliasViewModel @Inject constructor(
         if (_aliasOptions != null) return@launch
         isLoadingState.value = IsLoadingState.Loading
         withUserId { userId ->
-            when (val result = aliasRepository.getAliasOptions(userId, shareId)) {
-                is Result.Success -> {
-                    _aliasOptions = result.data
+            aliasRepository.getAliasOptions(userId, shareId)
+                .onSuccess { aliasOptions ->
+                    _aliasOptions = aliasOptions
 
                     isLoadingState.value = IsLoadingState.NotLoading
                     aliasItemState.value = aliasItemState.value.copy(
-                        aliasOptions = result.data,
-                        selectedSuffix = result.data.suffixes.first(),
-                        selectedMailbox = result.data.mailboxes.first()
+                        aliasOptions = aliasOptions,
+                        selectedSuffix = aliasOptions.suffixes.first(),
+                        selectedMailbox = aliasOptions.mailboxes.first()
                     )
                 }
-                else -> {
-                    // no-op
+                .onError {
+                    val defaultMessage = "Could not get alias options"
+                    PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                 }
-            }
         }
     }
 
@@ -55,9 +57,10 @@ class CreateAliasViewModel @Inject constructor(
         } else {
             isLoadingState.value = IsLoadingState.Loading
             withUserId { userId ->
-                val itemResult = createAlias(
-                    userId, shareId,
-                    NewAlias(
+                createAlias(
+                    userId = userId,
+                    shareId = shareId,
+                    newAlias = NewAlias(
                         title = aliasItem.title,
                         note = aliasItem.note,
                         prefix = aliasItem.alias,
@@ -65,16 +68,19 @@ class CreateAliasViewModel @Inject constructor(
                         mailbox = aliasItem.selectedMailbox
                     )
                 )
-                when (itemResult) {
-                    is Result.Success -> {
+                    .onSuccess { item ->
                         isLoadingState.value = IsLoadingState.NotLoading
-                        isItemSavedState.value = ItemSavedState.Success(itemResult.data.id)
+                        isItemSavedState.value = ItemSavedState.Success(item.id)
                     }
-                    else -> {
-                        // no-op
+                    .onError {
+                        val defaultMessage = "Create alias error"
+                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                     }
-                }
             }
         }
+    }
+
+    companion object {
+        private const val TAG = "CreateAliasViewModel"
     }
 }

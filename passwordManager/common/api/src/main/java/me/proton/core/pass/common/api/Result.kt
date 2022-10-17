@@ -19,6 +19,20 @@ inline fun <R, T> Result<T>.map(transform: (value: T) -> R): Result<R> =
         Result.Loading -> Result.Loading
     }
 
+inline fun <T> Result<T>.onError(action: (exception: Throwable?) -> Unit): Result<T> {
+    if (this is Result.Error) {
+        action(exception)
+    }
+    return this
+}
+
+inline fun <T> Result<T>.onSuccess(action: (value: T) -> Unit): Result<T> {
+    if (this is Result.Success) {
+        action(data)
+    }
+    return this
+}
+
 inline fun <R, T> Result<T>.flatMap(transform: (value: T) -> Result<R>): Result<R> =
     when (this) {
         is Result.Success -> transform(data)

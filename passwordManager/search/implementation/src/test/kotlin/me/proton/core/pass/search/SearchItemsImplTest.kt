@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.test.TestUtils.randomString
@@ -28,12 +29,12 @@ internal class SearchItemsImplTest {
     fun `empty query returns whole list`() =
         runTest {
             val itemList = listOf(TestItem.random(), TestItem.random())
-            observeActiveItems.sendItemList(itemList)
+            observeActiveItems.sendItemList(Result.Success(itemList))
 
             val flow = search.observeResults()
             search.updateQuery("")
             flow.test {
-                val items = awaitItem()
+                val items = (awaitItem() as Result.Success).data
                 assertThat(items).isEqualTo(itemList)
             }
         }
@@ -45,20 +46,20 @@ internal class SearchItemsImplTest {
             val item1 = TestItem.random(title = title)
             val item2 = TestItem.random(title = "$title-abc")
 
-            observeActiveItems.sendItemList(listOf(item1, item2))
+            observeActiveItems.sendItemList(Result.Success(listOf(item1, item2)))
 
             val flow = search.observeResults()
 
             search.updateQuery(title)
             flow.test {
-                val allItems = awaitItem()
+                val allItems = (awaitItem() as Result.Success).data
                 assertThat(allItems.size).isEqualTo(2)
                 assertThat(allItems[0]).isEqualTo(item1)
                 assertThat(allItems[1]).isEqualTo(item2)
 
                 search.updateQuery("$title-")
 
-                val filteredItems = awaitItem()
+                val filteredItems = (awaitItem() as Result.Success).data
                 assertThat(filteredItems.size).isEqualTo(1)
                 assertThat(filteredItems[0]).isEqualTo(item2)
             }
@@ -71,16 +72,17 @@ internal class SearchItemsImplTest {
             val item1 = TestItem.random(title = title)
             val item2 = TestItem.random()
 
-            observeActiveItems.sendItemList(emptyList())
+            observeActiveItems.sendItemList(Result.Success(emptyList()))
             search.updateQuery(title)
 
             val receiverFlow = search.observeResults()
             receiverFlow.test {
-                assertThat(awaitItem()).isEmpty() // Skip first
+                val first = (awaitItem() as Result.Success).data
+                assertThat(first).isEmpty() // Skip first
 
-                observeActiveItems.sendItemList(listOf(item1, item2))
+                observeActiveItems.sendItemList(Result.Success(listOf(item1, item2)))
 
-                val items = awaitItem()
+                val items = (awaitItem() as Result.Success).data
                 assertThat(items).isNotEmpty()
                 assertThat(items.size).isEqualTo(1)
                 assertThat(items[0]).isEqualTo(item1)
@@ -92,19 +94,19 @@ internal class SearchItemsImplTest {
         runTest {
             val item1 = TestItem.random(title = "abc")
             val item2 = TestItem.random(title = "def")
-            observeActiveItems.sendItemList(listOf(item1, item2))
+            observeActiveItems.sendItemList(Result.Success(listOf(item1, item2)))
             search.updateQuery("")
 
             search.observeResults().test {
-                val allItems = awaitItem()
+                val allItems = (awaitItem() as Result.Success).data
                 assertThat(allItems.size).isEqualTo(2)
 
                 search.updateQuery("ghi")
-                val noItems = awaitItem()
+                val noItems = (awaitItem() as Result.Success).data
                 assertThat(noItems).isEmpty()
 
                 search.clearSearch()
-                val allItemsAgain = awaitItem()
+                val allItemsAgain = (awaitItem() as Result.Success).data
                 assertThat(allItemsAgain.size).isEqualTo(2)
                 assertThat(allItemsAgain[0]).isEqualTo(item1)
                 assertThat(allItemsAgain[1]).isEqualTo(item2)
@@ -116,11 +118,11 @@ internal class SearchItemsImplTest {
         runTest {
             val item1 = TestItem.random(title = "ABc")
             val item2 = TestItem.random(title = "aBc")
-            observeActiveItems.sendItemList(listOf(item1, item2))
+            observeActiveItems.sendItemList(Result.Success(listOf(item1, item2)))
             search.updateQuery("ab")
 
             search.observeResults().test {
-                val filteredItems = awaitItem()
+                val filteredItems = (awaitItem() as Result.Success).data
                 assertThat(filteredItems.size).isEqualTo(2)
                 assertThat(filteredItems[0]).isEqualTo(item1)
                 assertThat(filteredItems[1]).isEqualTo(item2)
@@ -257,16 +259,16 @@ internal class SearchItemsImplTest {
         }
 
     private suspend fun runTestWithItemAndQuery(item: Item, query: String) {
-        observeActiveItems.sendItemList(listOf(item))
+        observeActiveItems.sendItemList(Result.Success(listOf(item)))
         search.updateQuery(query)
 
         search.observeResults().test {
-            val filteredItems = awaitItem()
+            val filteredItems = (awaitItem() as Result.Success).data
             assertThat(filteredItems.size).isEqualTo(1)
             assertThat(filteredItems[0]).isEqualTo(item)
 
             search.updateQuery("${query}abc")
-            val emptyItems = awaitItem()
+            val emptyItems = (awaitItem() as Result.Success).data
             assertThat(emptyItems).isEmpty()
         }
     }

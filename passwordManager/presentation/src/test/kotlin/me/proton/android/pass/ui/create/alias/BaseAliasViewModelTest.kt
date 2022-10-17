@@ -83,7 +83,7 @@ internal class BaseAliasViewModelTest {
 
         baseAliasViewModel.aliasUiState.test {
             assertThat(awaitItem().aliasItem)
-                .isEqualTo(Initial.aliasItem.copy(selectedMailbox = aliasMailbox))
+                .isEqualTo(Initial.aliasItem.copy(mailboxes = aliasMailbox))
         }
     }
 }

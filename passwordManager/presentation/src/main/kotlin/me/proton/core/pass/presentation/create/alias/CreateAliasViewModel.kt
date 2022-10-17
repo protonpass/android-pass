@@ -33,11 +33,18 @@ class CreateAliasViewModel @Inject constructor(
                 .onSuccess { aliasOptions ->
                     _aliasOptions = aliasOptions
 
+                    val mailboxes = aliasOptions.mailboxes.mapIndexed { idx, model ->
+                        AliasMailboxUiModel(model = model, selected = idx == 0)
+                    }
+                    val mailboxTitle = mailboxes.first { it.selected }.model.email
+
                     isLoadingState.value = IsLoadingState.NotLoading
                     aliasItemState.value = aliasItemState.value.copy(
                         aliasOptions = aliasOptions,
                         selectedSuffix = aliasOptions.suffixes.first(),
-                        selectedMailbox = aliasOptions.mailboxes.first()
+                        mailboxes = mailboxes,
+                        mailboxTitle = mailboxTitle,
+                        isMailboxListApplicable = true,
                     )
                 }
                 .onError {
@@ -49,8 +56,9 @@ class CreateAliasViewModel @Inject constructor(
 
     fun createAlias(shareId: ShareId) = viewModelScope.launch {
         val aliasItem = aliasItemState.value
-        if (aliasItem.selectedMailbox == null || aliasItem.selectedSuffix == null) return@launch
+        if (aliasItem.selectedSuffix == null) return@launch
 
+        val mailboxes = aliasItem.mailboxes.filter { it.selected }.map { it.model }
         val aliasItemValidationErrors = aliasItem.validate()
         if (aliasItemValidationErrors.isNotEmpty()) {
             aliasItemValidationErrorsState.value = aliasItemValidationErrors
@@ -65,7 +73,7 @@ class CreateAliasViewModel @Inject constructor(
                         note = aliasItem.note,
                         prefix = aliasItem.alias,
                         suffix = aliasItem.selectedSuffix,
-                        mailbox = aliasItem.selectedMailbox
+                        mailboxes = mailboxes
                     )
                 )
                     .onSuccess { item ->

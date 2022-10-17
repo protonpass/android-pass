@@ -9,13 +9,8 @@ internal fun MailboxSelector(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    val value = if (state.selectedMailbox != null) {
-        state.selectedMailbox.email
-    } else {
-        ""
-    }
     Selector(
-        text = value,
+        text = state.mailboxTitle,
         modifier = modifier,
         onClick = onClick
     )

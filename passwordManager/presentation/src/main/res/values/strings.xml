@@ -65,6 +65,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_empty_trash">Empty trash</string>
     <string name="action_save">Save</string>
+    <string name="action_apply">Apply</string>
 
 
     <!-- Create Login -->
@@ -104,7 +105,7 @@
     <string name="alias_you_are_about_to_create_alias">You\'re about to create alias</string>
 
     <string name="alias_bottomsheet_suffix_title">Suffix</string>
-    <string name="alias_bottomsheet_mailbox_title">Mailbox</string>
+    <string name="alias_bottomsheet_mailboxes_title">Mailboxes</string>
 
     <!--  Create password  -->
     <string name="title_create_password">Generate password</string>

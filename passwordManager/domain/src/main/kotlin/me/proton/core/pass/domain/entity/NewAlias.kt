@@ -8,5 +8,5 @@ data class NewAlias(
     val note: String,
     val prefix: String,
     val suffix: AliasSuffix,
-    val mailbox: AliasMailbox
+    val mailboxes: List<AliasMailbox>
 )

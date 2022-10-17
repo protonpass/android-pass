@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.domain.AliasMailbox
 import me.proton.core.pass.domain.AliasSuffix
 import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
@@ -80,8 +79,29 @@ abstract class BaseAliasViewModel(
         )
     }
 
-    fun onMailboxChange(mailbox: AliasMailbox) = viewModelScope.launch {
-        aliasItemState.value = aliasItemState.value.copy(selectedMailbox = mailbox)
+    fun onMailboxChange(mailbox: AliasMailboxUiModel) = viewModelScope.launch {
+        val mailboxes = aliasItemState.value.mailboxes.map {
+            if (it.model.id == mailbox.model.id) {
+                it.copy(selected = !it.selected)
+            } else {
+                it
+            }
+        }
+
+        // If we don't have any selected mailbox, do not update, as we do not support
+        // not having any mailbox in an alias
+        val allSelectedMailboxes = mailboxes.filter { it.selected }
+        var mailboxTitle = allSelectedMailboxes.firstOrNull()?.model?.email ?: ""
+        if (allSelectedMailboxes.size > 1) {
+            val howManyMore = allSelectedMailboxes.size - 1
+            mailboxTitle += " ($howManyMore+)"
+        }
+
+        aliasItemState.value = aliasItemState.value.copy(
+            mailboxes = mailboxes,
+            mailboxTitle = mailboxTitle,
+            isMailboxListApplicable = allSelectedMailboxes.isNotEmpty()
+        )
     }
 
     protected suspend fun withUserId(block: suspend (UserId) -> Unit) {

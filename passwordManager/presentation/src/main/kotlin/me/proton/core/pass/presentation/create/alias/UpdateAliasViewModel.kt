@@ -2,6 +2,7 @@ package me.proton.core.pass.presentation.create.alias
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
@@ -53,20 +54,26 @@ class UpdateAliasViewModel @Inject constructor(
                                 )
                             }
 
-                            isLoadingState.value = IsLoadingState.NotLoading
-                            aliasItemState.value = aliasItemState.value.copy(
-                                title = retrievedItem.title.decrypt(cryptoContext.keyStoreCrypto),
-                                note = retrievedItem.note.decrypt(cryptoContext.keyStoreCrypto),
-                                alias = prefix,
-                                aliasOptions = AliasOptions(emptyList(), emptyList()),
-                                selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
-                                mailboxes = mailboxes,
-                                aliasToBeCreated = email
-                            )
+                            isLoadingState.update { IsLoadingState.NotLoading }
+                            aliasItemState.update {
+                                aliasItemState.value.copy(
+                                    title = retrievedItem.title.decrypt(cryptoContext.keyStoreCrypto),
+                                    note = retrievedItem.note.decrypt(cryptoContext.keyStoreCrypto),
+                                    alias = prefix,
+                                    aliasOptions = AliasOptions(emptyList(), emptyList()),
+                                    selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
+                                    mailboxes = mailboxes,
+                                    aliasToBeCreated = email
+                                )
+                            }
                         }
                         is Result.Error -> {
                             val message = "Error getting alias mailboxes"
-                            PassLogger.i(TAG, mailboxesResult.exception ?: Exception(message), message)
+                            PassLogger.i(
+                                TAG,
+                                mailboxesResult.exception ?: Exception(message),
+                                message
+                            )
                         }
                         else -> {
                             // no-op

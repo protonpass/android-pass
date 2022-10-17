@@ -36,7 +36,7 @@ fun BottomSheetContents(
     contentType: AliasBottomSheetContent,
     onSuffixSelect: (AliasSuffix) -> Unit,
     onMailboxSelect: (AliasMailboxUiModel) -> Unit,
-    onCloseBottomSheet: () -> Unit,
+    onCloseBottomSheet: () -> Unit
 ) {
     Column {
         when (contentType) {
@@ -95,7 +95,7 @@ private fun BottomSheetTitle(
             IconButton(
                 onClick = button.onClick,
                 enabled = button.enabled,
-                modifier = Modifier.padding(end = 10.dp),
+                modifier = Modifier.padding(end = 10.dp)
             ) {
                 val textColor = if (button.enabled) {
                     ProtonTheme.colors.brandNorm
@@ -149,7 +149,7 @@ private fun BottomSheetItem(
             text = text,
             fontSize = 16.sp,
             fontWeight = FontWeight.W400,
-            color = ProtonTheme.colors.textNorm,
+            color = ProtonTheme.colors.textNorm
         )
         if (isChecked) {
             Icon(

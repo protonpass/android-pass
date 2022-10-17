@@ -50,7 +50,7 @@ internal fun AliasContent(
     onMailboxChange: (AliasMailboxUiModel) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
-    onAliasChange: (String) -> Unit,
+    onAliasChange: (String) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val scope = rememberCoroutineScope()
@@ -61,7 +61,7 @@ internal fun AliasContent(
 
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
-        confirmStateChange = { false },
+        confirmStateChange = { false }
     )
 
     ProtonModalBottomSheetLayout(

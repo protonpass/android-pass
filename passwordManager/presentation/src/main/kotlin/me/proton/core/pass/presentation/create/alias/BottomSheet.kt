@@ -141,11 +141,11 @@ private fun BottomSheetItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = { onClick() })
-            .padding(vertical = 12.dp, horizontal = 20.dp),
+            .padding(horizontal = 20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = Modifier.weight(1.0f),
+            modifier = Modifier.weight(1.0f).padding(vertical = 12.dp),
             text = text,
             fontSize = 16.sp,
             fontWeight = FontWeight.W400,

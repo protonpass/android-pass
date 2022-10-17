@@ -55,7 +55,7 @@ class CreateAliasViewModel @Inject constructor(
         } else {
             isLoadingState.value = IsLoadingState.Loading
             withUserId { userId ->
-                val item = createAlias(
+                val itemResult = createAlias(
                     userId, shareId,
                     NewAlias(
                         title = aliasItem.title,
@@ -65,8 +65,15 @@ class CreateAliasViewModel @Inject constructor(
                         mailbox = aliasItem.selectedMailbox
                     )
                 )
-                isLoadingState.value = IsLoadingState.NotLoading
-                isItemSavedState.value = ItemSavedState.Success(item.id)
+                when (itemResult) {
+                    is Result.Success -> {
+                        isLoadingState.value = IsLoadingState.NotLoading
+                        isItemSavedState.value = ItemSavedState.Success(itemResult.data.id)
+                    }
+                    else -> {
+                        // no-op
+                    }
+                }
             }
         }
     }

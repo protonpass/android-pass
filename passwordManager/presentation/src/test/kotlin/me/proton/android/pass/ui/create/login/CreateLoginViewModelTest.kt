@@ -5,6 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.ui.MainDispatcherRule
 import me.proton.core.domain.entity.UserId
+import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.create.login.CreateLoginViewModel
 import me.proton.core.pass.presentation.create.login.CreateUpdateLoginUiState.Companion.Initial
@@ -65,7 +66,7 @@ internal class CreateLoginViewModelTest {
         val userId = UserId("user-id")
         accountManager.sendPrimaryUserId(userId)
         val item = TestItem.create()
-        createItem.sendItem(item)
+        createItem.sendItem(Result.Success(item))
         val shareId = ShareId("id")
 
         createLoginViewModel.createItem(shareId)

@@ -33,27 +33,32 @@ class UpdateAliasViewModel @Inject constructor(
 
         isLoadingState.value = IsLoadingState.Loading
         withUserId { userId ->
-            val retrievedItem = itemRepository.getById(userId, shareId, itemId)
-            _item = retrievedItem
-
-            when (
-                val mailboxesResult =
-                    aliasRepository.getAliasMailboxes(userId, shareId, itemId)
-            ) {
+            when (val itemResult = itemRepository.getById(userId, shareId, itemId)) {
                 is Result.Success -> {
-                    val alias = retrievedItem.itemType as ItemType.Alias
-                    val email = alias.aliasEmail
-                    val (prefix, suffix) = extractPrefixSuffix(email)
-                    isLoadingState.value = IsLoadingState.NotLoading
-                    aliasItemState.value = aliasItemState.value.copy(
-                        title = retrievedItem.title.decrypt(cryptoContext.keyStoreCrypto),
-                        note = retrievedItem.note.decrypt(cryptoContext.keyStoreCrypto),
-                        alias = prefix,
-                        aliasOptions = AliasOptions(emptyList(), emptyList()),
-                        selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
-                        selectedMailbox = mailboxesResult.data.first(),
-                        aliasToBeCreated = email
-                    )
+                    _item = itemResult.data
+                    when (
+                        val mailboxesResult =
+                            aliasRepository.getAliasMailboxes(userId, shareId, itemId)
+                    ) {
+                        is Result.Success -> {
+                            val alias = itemResult.data.itemType as ItemType.Alias
+                            val email = alias.aliasEmail
+                            val (prefix, suffix) = extractPrefixSuffix(email)
+                            isLoadingState.value = IsLoadingState.NotLoading
+                            aliasItemState.value = aliasItemState.value.copy(
+                                title = itemResult.data.title.decrypt(cryptoContext.keyStoreCrypto),
+                                note = itemResult.data.note.decrypt(cryptoContext.keyStoreCrypto),
+                                alias = prefix,
+                                aliasOptions = AliasOptions(emptyList(), emptyList()),
+                                selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
+                                selectedMailbox = mailboxesResult.data.first(),
+                                aliasToBeCreated = email
+                            )
+                        }
+                        else -> {
+                            // no-op
+                        }
+                    }
                 }
                 else -> {
                     // no-op

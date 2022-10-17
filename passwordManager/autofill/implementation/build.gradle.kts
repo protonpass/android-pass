@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.core.presentation.compose)
     implementation(libs.core.user)
     implementation(libs.core.utilKotlin)
+    implementation(project(":passwordManager:common:api"))
     implementation(project(":passwordManager:data"))
     implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:presentation"))

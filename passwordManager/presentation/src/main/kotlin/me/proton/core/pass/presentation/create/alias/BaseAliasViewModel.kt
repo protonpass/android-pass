@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
@@ -47,36 +48,44 @@ abstract class BaseAliasViewModel(
         )
 
     fun onTitleChange(value: String) = viewModelScope.launch {
-        aliasItemState.value = aliasItemState.value.copy(title = value)
-        aliasItemValidationErrorsState.value = aliasItemValidationErrorsState.value.toMutableSet()
-            .apply { remove(AliasItemValidationErrors.BlankTitle) }
+        aliasItemState.update { aliasItemState.value.copy(title = value) }
+        aliasItemValidationErrorsState.update {
+            aliasItemValidationErrorsState.value.toMutableSet()
+                .apply { remove(AliasItemValidationErrors.BlankTitle) }
+        }
     }
 
     fun onAliasChange(value: String) = viewModelScope.launch {
         if (value.contains(" ") || value.contains("\n")) return@launch
-        aliasItemState.value = aliasItemState.value.copy(
-            alias = value,
-            aliasToBeCreated = getAliasToBeCreated(
+        aliasItemState.update {
+            aliasItemState.value.copy(
                 alias = value,
-                suffix = aliasItemState.value.selectedSuffix
+                aliasToBeCreated = getAliasToBeCreated(
+                    alias = value,
+                    suffix = aliasItemState.value.selectedSuffix
+                )
             )
-        )
-        aliasItemValidationErrorsState.value = aliasItemValidationErrorsState.value.toMutableSet()
-            .apply { remove(AliasItemValidationErrors.BlankAlias) }
+        }
+        aliasItemValidationErrorsState.update {
+            aliasItemValidationErrorsState.value.toMutableSet()
+                .apply { remove(AliasItemValidationErrors.BlankAlias) }
+        }
     }
 
     fun onNoteChange(value: String) = viewModelScope.launch {
-        aliasItemState.value = aliasItemState.value.copy(note = value)
+        aliasItemState.update { aliasItemState.value.copy(note = value) }
     }
 
     fun onSuffixChange(suffix: AliasSuffix) = viewModelScope.launch {
-        aliasItemState.value = aliasItemState.value.copy(
-            selectedSuffix = suffix,
-            aliasToBeCreated = getAliasToBeCreated(
-                alias = aliasItemState.value.alias,
-                suffix = suffix
+        aliasItemState.update {
+            aliasItemState.value.copy(
+                selectedSuffix = suffix,
+                aliasToBeCreated = getAliasToBeCreated(
+                    alias = aliasItemState.value.alias,
+                    suffix = suffix
+                )
             )
-        )
+        }
     }
 
     fun onMailboxChange(mailbox: AliasMailboxUiModel) = viewModelScope.launch {
@@ -97,11 +106,13 @@ abstract class BaseAliasViewModel(
             mailboxTitle += " ($howManyMore+)"
         }
 
-        aliasItemState.value = aliasItemState.value.copy(
-            mailboxes = mailboxes,
-            mailboxTitle = mailboxTitle,
-            isMailboxListApplicable = allSelectedMailboxes.isNotEmpty()
-        )
+        aliasItemState.update {
+            aliasItemState.value.copy(
+                mailboxes = mailboxes,
+                mailboxTitle = mailboxTitle,
+                isMailboxListApplicable = allSelectedMailboxes.isNotEmpty()
+            )
+        }
     }
 
     protected suspend fun withUserId(block: suspend (UserId) -> Unit) {

@@ -41,7 +41,7 @@ class CreateAliasViewModel @Inject constructor(
 
                     isLoadingState.update { IsLoadingState.NotLoading }
                     aliasItemState.update {
-                        aliasItemState.value.copy(
+                        it.copy(
                             aliasOptions = aliasOptions,
                             selectedSuffix = aliasOptions.suffixes.first(),
                             mailboxes = mailboxes,

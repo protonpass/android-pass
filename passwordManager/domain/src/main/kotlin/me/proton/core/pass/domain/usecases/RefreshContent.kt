@@ -24,11 +24,17 @@ class RefreshContentImpl @Inject constructor(
         shareRepository.refreshShares(userId)
             .onSuccess { shares ->
                 coroutineScope {
-                    shares.map { share ->
+                    val refreshItemsResults = shares.map { share ->
                         async { itemRepository.refreshItems(userId, share) }
                     }.awaitAll()
+
+                    val firstError = refreshItemsResults.firstOrNull { it is Result.Error }
+                    if (firstError != null) {
+                        firstError as Result.Error
+                    } else {
+                        Result.Success(Unit)
+                    }
                 }
             }
             .map { }
-
 }

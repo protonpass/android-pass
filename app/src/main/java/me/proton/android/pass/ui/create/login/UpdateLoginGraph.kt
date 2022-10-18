@@ -1,4 +1,4 @@
-package me.proton.core.pass.presentation.create.login
+package me.proton.android.pass.ui.create.login
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
@@ -11,6 +11,7 @@ import me.proton.android.pass.ui.navigation.composable
 import me.proton.android.pass.ui.navigation.findArg
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
+import me.proton.core.pass.presentation.create.login.UpdateLogin
 
 @OptIn(
     ExperimentalAnimationApi::class, ExperimentalMaterialApi::class,
@@ -24,7 +25,7 @@ fun NavGraphBuilder.updateLoginGraph(nav: AppNavigator) {
             onUpClick = { nav.onBackClick() },
             shareId = shareId,
             itemId = itemId,
-            onSuccess = {
+            onSuccess = { _, _ ->
                 nav.navigate(
                     destination = NavItem.ViewItem,
                     route = NavItem.ViewItem.createNavRoute(shareId, itemId),

@@ -1,12 +1,15 @@
 package me.proton.core.pass.presentation.create.login
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.pass.common.api.None
+import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.common.api.onError
 import me.proton.core.pass.common.api.onSuccess
 import me.proton.core.pass.domain.ShareId
@@ -20,10 +23,11 @@ import javax.inject.Inject
 class CreateLoginViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val createItem: CreateItem,
-    private val observeActiveShare: ObserveActiveShare
-) : BaseLoginViewModel() {
+    observeActiveShare: ObserveActiveShare,
+    savedStateHandle: SavedStateHandle
+) : BaseLoginViewModel(observeActiveShare, savedStateHandle) {
 
-    fun setInitialContents(initialContents: InitialCreateLoginContents) = viewModelScope.launch {
+    fun setInitialContents(initialContents: InitialCreateLoginContents) {
         val currentValue = loginItemState.value
         val websites = currentValue.websiteAddresses.toMutableList()
 
@@ -37,31 +41,23 @@ class CreateLoginViewModel @Inject constructor(
             }
         }
 
-
-        val newState = loginItemState.value.copy(
-            title = initialContents.title ?: currentValue.title,
-            username = initialContents.username ?: currentValue.username,
-            password = initialContents.password ?: currentValue.password,
-            websiteAddresses = websites
-        )
-
-        loginItemState.value = newState
+        loginItemState.update {
+            it.copy(
+                title = initialContents.title ?: currentValue.title,
+                username = initialContents.username ?: currentValue.username,
+                password = initialContents.password ?: currentValue.password,
+                websiteAddresses = websites
+            )
+        }
     }
 
     fun createItem() = viewModelScope.launch {
-        observeActiveShare()
-            .firstOrNull()
-            ?.onSuccess { shareId ->
-                if (shareId != null) {
-                    createItem(shareId)
-                } else {
-                    PassLogger.i(TAG, "Null Share Id")
-                }
+        when (val shareId = activeShareIdState.value) {
+            None -> mutableSnackbarMessage.tryEmit(LoginSnackbarMessages.CreationError)
+            is Some -> {
+                createItem(shareId.value)
             }
-            ?.onError {
-                val defaultMessage = "Observe active share error"
-                PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-            }
+        }
     }
 
     fun createItem(shareId: ShareId) = viewModelScope.launch {
@@ -71,20 +67,22 @@ class CreateLoginViewModel @Inject constructor(
             loginItemValidationErrorsState.value = loginItemValidationErrors
         } else {
             isLoadingState.value = IsLoadingState.Loading
-            accountManager.getPrimaryUserId()
-                .first { userId -> userId != null }
-                ?.let { userId ->
-                    val itemContents = loginItem.toItemContents()
-                    createItem(userId, shareId, itemContents)
-                        .onSuccess { item ->
-                            isLoadingState.value = IsLoadingState.NotLoading
-                            isItemSavedState.value = ItemSavedState.Success(item.id)
-                        }
-                        .onError {
-                            val defaultMessage = "Could not create item"
-                            PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                        }
-                }
+            val userId = accountManager.getPrimaryUserId()
+                .firstOrNull { userId -> userId != null }
+            if (userId != null) {
+                createItem(userId, shareId, loginItem.toItemContents())
+                    .onSuccess { item ->
+                        isItemSavedState.value = ItemSavedState.Success(item.id)
+                    }
+                    .onError {
+                        val defaultMessage = "Could not create item"
+                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                        mutableSnackbarMessage.tryEmit(LoginSnackbarMessages.CreationError)
+                    }
+            } else {
+                mutableSnackbarMessage.tryEmit(LoginSnackbarMessages.CreationError)
+            }
+            isLoadingState.value = IsLoadingState.NotLoading
         }
     }
 

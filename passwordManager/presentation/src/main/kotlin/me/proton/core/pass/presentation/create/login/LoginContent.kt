@@ -19,7 +19,10 @@ import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.pass.common.api.None
+import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.domain.ItemId
+import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
 
@@ -31,13 +34,14 @@ internal fun LoginContent(
     @StringRes topBarActionName: Int,
     uiState: CreateUpdateLoginUiState,
     onUpClick: () -> Unit,
-    onSuccess: (ItemId) -> Unit,
-    onSubmit: () -> Unit,
+    onSuccess: (ShareId, ItemId) -> Unit,
+    onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
     onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onWebsiteChange: OnWebsiteChange,
-    onNoteChange: (String) -> Unit
+    onNoteChange: (String) -> Unit,
+    onSnackbarMessage: (LoginSnackbarMessages) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     Scaffold(
@@ -49,7 +53,10 @@ internal fun LoginContent(
                     IconButton(
                         onClick = {
                             keyboardController?.hide()
-                            onSubmit()
+                            when (uiState.shareId) {
+                                None -> onSnackbarMessage(LoginSnackbarMessages.EmptyShareIdError)
+                                is Some -> onSubmit(uiState.shareId.value)
+                            }
                         },
                         modifier = Modifier.padding(end = 10.dp)
                     ) {
@@ -71,7 +78,7 @@ internal fun LoginContent(
             loginItem = uiState.loginItem,
             modifier = modifier.padding(padding),
             onTitleChange = onTitleChange,
-            onTitleRequiredError = uiState.errorList.contains(LoginItemValidationErrors.BlankTitle),
+            onTitleRequiredError = uiState.validationErrors.contains(LoginItemValidationErrors.BlankTitle),
             onUsernameChange = onUsernameChange,
             onPasswordChange = onPasswordChange,
             onWebsiteChange = onWebsiteChange,
@@ -80,7 +87,10 @@ internal fun LoginContent(
         LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {
             val isItemSaved = uiState.isItemSaved
             if (isItemSaved is ItemSavedState.Success) {
-                onSuccess(isItemSaved.itemId)
+                when (uiState.shareId) {
+                    None -> onSnackbarMessage(LoginSnackbarMessages.EmptyShareIdError)
+                    is Some -> onSuccess(uiState.shareId.value, isItemSaved.itemId)
+                }
             }
         }
     }

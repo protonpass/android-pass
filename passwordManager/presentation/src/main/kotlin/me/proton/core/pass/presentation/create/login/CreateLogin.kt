@@ -1,27 +1,60 @@
 package me.proton.core.pass.presentation.create.login
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.R
+import me.proton.core.pass.presentation.components.common.PassSnackbarHost
+import me.proton.core.pass.presentation.components.common.PassSnackbarHostState
+import me.proton.core.pass.presentation.create.login.LoginSnackbarMessages.CreationError
+import me.proton.core.pass.presentation.create.login.LoginSnackbarMessages.EmptyShareIdError
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
 fun CreateLogin(
+    modifier: Modifier = Modifier,
     onUpClick: () -> Unit,
-    onSuccess: (ItemId) -> Unit,
-    shareId: ShareId
+    onSuccess: (ShareId, ItemId) -> Unit,
+    viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<CreateLoginViewModel>()
     val uiState by viewModel.loginUiState.collectAsState()
+
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    val snackbarHostState = remember { PassSnackbarHostState() }
+
+    val creationError = stringResource(id = R.string.create_login_creation_error)
+    val emptyShareIdError = stringResource(id = R.string.create_login_empty_share_id)
+    val snackbarMessages = mapOf(
+        CreationError to creationError,
+        EmptyShareIdError to emptyShareIdError
+    )
+    LaunchedEffect(Unit) {
+        viewModel.snackbarMessage
+            .collectLatest { message ->
+                coroutineScope.launch {
+                    snackbarMessages[message]?.let {
+                        snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
+                    }
+                }
+            }
+    }
     val onWebsiteChange = object : OnWebsiteChange {
         override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int ->
             viewModel.onWebsiteChange(value, idx)
@@ -29,19 +62,31 @@ fun CreateLogin(
         override val onAddWebsite: () -> Unit = { viewModel.onAddWebsite() }
         override val onRemoveWebsite: (Int) -> Unit = { idx: Int -> viewModel.onRemoveWebsite(idx) }
     }
-    LoginContent(
-        uiState = uiState,
-        topBarTitle = R.string.title_create_login,
-        topBarActionName = R.string.action_save,
-        onUpClick = onUpClick,
-        onSuccess = onSuccess,
-        onSubmit = { viewModel.createItem(shareId) },
-        onTitleChange = { viewModel.onTitleChange(it) },
-        onUsernameChange = { viewModel.onUsernameChange(it) },
-        onPasswordChange = { viewModel.onPasswordChange(it) },
-        onWebsiteChange = onWebsiteChange,
-        onNoteChange = { viewModel.onNoteChange(it) }
-    )
+    Scaffold(
+        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) }
+    ) { innerPadding ->
+        LoginContent(
+            modifier = modifier.padding(innerPadding),
+            uiState = uiState,
+            topBarTitle = R.string.title_create_login,
+            topBarActionName = R.string.action_save,
+            onUpClick = onUpClick,
+            onSuccess = onSuccess,
+            onSubmit = { shareId -> viewModel.createItem(shareId) },
+            onTitleChange = { viewModel.onTitleChange(it) },
+            onUsernameChange = { viewModel.onUsernameChange(it) },
+            onPasswordChange = { viewModel.onPasswordChange(it) },
+            onWebsiteChange = onWebsiteChange,
+            onNoteChange = { viewModel.onNoteChange(it) },
+            onSnackbarMessage = { message ->
+                coroutineScope.launch {
+                    snackbarMessages[message]?.let {
+                        snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
+                    }
+                }
+            }
+        )
+    }
 }
 
 
@@ -52,12 +97,31 @@ fun CreateLoginWithInitialContents(
     modifier: Modifier,
     initialContents: InitialCreateLoginContents,
     onClose: () -> Unit,
-    onSuccess: () -> Unit
+    onSuccess: () -> Unit,
+    viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<CreateLoginViewModel>()
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         viewModel.setInitialContents(initialContents)
+    }
+
+    val snackbarHostState = remember { PassSnackbarHostState() }
+    val creationError = stringResource(id = R.string.create_login_creation_error)
+    val emptyShareIdError = stringResource(id = R.string.create_login_empty_share_id)
+    val snackbarMessages = mapOf(
+        CreationError to creationError,
+        EmptyShareIdError to emptyShareIdError
+    )
+    LaunchedEffect(Unit) {
+        viewModel.snackbarMessage
+            .collectLatest { message ->
+                coroutineScope.launch {
+                    snackbarMessages[message]?.let {
+                        snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
+                    }
+                }
+            }
     }
 
     val uiState by viewModel.loginUiState.collectAsState()
@@ -68,18 +132,29 @@ fun CreateLoginWithInitialContents(
         override val onAddWebsite: () -> Unit = { viewModel.onAddWebsite() }
         override val onRemoveWebsite: (Int) -> Unit = { idx: Int -> viewModel.onRemoveWebsite(idx) }
     }
-    LoginContent(
-        modifier = modifier,
-        uiState = uiState,
-        topBarTitle = R.string.title_create_login,
-        topBarActionName = R.string.action_save,
-        onUpClick = { onClose() },
-        onSuccess = { onSuccess() },
-        onSubmit = { viewModel.createItem() },
-        onTitleChange = { viewModel.onTitleChange(it) },
-        onUsernameChange = { viewModel.onUsernameChange(it) },
-        onPasswordChange = { viewModel.onPasswordChange(it) },
-        onWebsiteChange = onWebsiteChange,
-        onNoteChange = { viewModel.onNoteChange(it) }
-    )
+    Scaffold(
+        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) }
+    ) { innerPadding ->
+        LoginContent(
+            modifier = modifier.padding(innerPadding),
+            uiState = uiState,
+            topBarTitle = R.string.title_create_login,
+            topBarActionName = R.string.action_save,
+            onUpClick = { onClose() },
+            onSuccess = { shareId, itemId -> onSuccess() },
+            onSubmit = { viewModel.createItem() },
+            onTitleChange = { viewModel.onTitleChange(it) },
+            onUsernameChange = { viewModel.onUsernameChange(it) },
+            onPasswordChange = { viewModel.onPasswordChange(it) },
+            onWebsiteChange = onWebsiteChange,
+            onNoteChange = { viewModel.onNoteChange(it) },
+            onSnackbarMessage = { message ->
+                coroutineScope.launch {
+                    snackbarMessages[message]?.let {
+                        snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
+                    }
+                }
+            }
+        )
+    }
 }

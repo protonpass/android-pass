@@ -1,5 +1,6 @@
 package me.proton.core.pass.presentation.create.login
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
@@ -16,6 +17,7 @@ import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.usecases.GetShareById
+import me.proton.core.pass.domain.usecases.ObserveActiveShare
 import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
 import javax.inject.Inject
@@ -25,8 +27,10 @@ class UpdateLoginViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
-    private val getShare: GetShareById
-) : BaseLoginViewModel() {
+    private val getShare: GetShareById,
+    observeActiveShare: ObserveActiveShare,
+    savedStateHandle: SavedStateHandle
+) : BaseLoginViewModel(observeActiveShare, savedStateHandle) {
 
     private var _item: Item? = null
 

@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,13 +31,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import me.proton.android.pass.ui.shared.DropDownAction
 import me.proton.android.pass.ui.shared.ItemDropdownMenu
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.presentation.R
+import me.proton.core.pass.presentation.components.common.PassSwipeRefresh
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.components.previewproviders.ItemUiModelPreviewProvider
+import me.proton.core.pass.presentation.uievents.IsRefreshingState
 
 typealias OnItemClick = (ItemUiModel) -> Unit
 
@@ -50,17 +54,34 @@ data class ItemAction(
 @Composable
 fun ItemsList(
     items: List<ItemUiModel>,
+    @StringRes emptyListMessage: Int,
     modifier: Modifier = Modifier,
     itemActions: List<ItemAction> = emptyList(),
+    onRefresh: () -> Unit,
+    isRefreshing: IsRefreshingState,
     onItemClick: OnItemClick? = null
 ) {
-    LazyColumn(modifier = modifier) {
-        items(items) { item ->
-            ItemRow(
-                item = item,
-                onItemClicked = onItemClick,
-                itemActions = itemActions
-            )
+    PassSwipeRefresh(
+        state = SwipeRefreshState(isRefreshing is IsRefreshingState.Refreshing),
+        onRefresh = onRefresh
+    ) {
+        if (items.isNotEmpty()) {
+            LazyColumn(modifier = modifier) {
+                items(items) { item ->
+                    ItemRow(
+                        item = item,
+                        onItemClicked = onItemClick,
+                        itemActions = itemActions
+                    )
+                }
+            }
+        } else {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Text(
+                    text = stringResource(id = emptyListMessage),
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }
     }
 }

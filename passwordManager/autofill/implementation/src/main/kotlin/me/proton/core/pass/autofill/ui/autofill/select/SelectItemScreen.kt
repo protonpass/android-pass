@@ -18,10 +18,19 @@ fun SelectItemScreen(
 ) {
     val viewModel: SelectItemViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    SelectItemScreenContent(
-        modifier = modifier,
-        state = uiState,
-        onItemClicked = { viewModel.onItemClicked(it, packageName) },
-        onItemSelected = onItemSelected
-    )
+    val itemSelectedState by viewModel.itemClickedState.collectAsStateWithLifecycle()
+
+    when (val state = itemSelectedState) {
+        SelectItemViewModel.ItemClickedEvent.None -> {
+            SelectItemScreenContent(
+                modifier = modifier,
+                state = uiState,
+                onItemClicked = { viewModel.onItemClicked(it, packageName) },
+                onRefresh = { viewModel.onRefresh() }
+            )
+        }
+        is SelectItemViewModel.ItemClickedEvent.Clicked -> {
+            onItemSelected(state.item)
+        }
+    }
 }

@@ -58,16 +58,13 @@ fun HomeScreen(
     val coroutineScope = rememberCoroutineScope()
 
     RequestAutofillIfSupported()
-    val selectedShare = if (uiState is HomeUiState.Content) {
-        (uiState as HomeUiState.Content).selectedShare
-    } else null
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             BottomSheetContents(
                 state = bottomSheetState,
                 navigation = homeScreenNavigation,
-                shareId = selectedShare
+                shareId = uiState.homeListUiState.selectedShare
             )
         }
     ) {
@@ -104,9 +101,8 @@ private fun HomeContent(
     onRefresh: () -> Unit
 ) {
 
-    val selectedShare = if (uiState is HomeUiState.Content) uiState.selectedShare else null
-    val backHandlerEnabled = (uiState as? HomeUiState.Content)?.inSearchMode ?: false
-    BackHandler(enabled = backHandlerEnabled) {
+    // Only enable the backhandler if we are in search mode
+    BackHandler(enabled = uiState.searchUiState.inSearchMode) {
         onStopSearching()
     }
 
@@ -114,47 +110,47 @@ private fun HomeContent(
         modifier = modifier,
         scaffoldState = scaffoldState,
         topBar = {
-            val searchQuery = (uiState as? HomeUiState.Content)?.searchQuery.orEmpty()
-            val inSearchMode = (uiState as? HomeUiState.Content)?.inSearchMode ?: false
-
             HomeTopBar(
-                searchQuery = searchQuery,
-                inSearchMode = inSearchMode,
+                searchQuery = uiState.searchUiState.searchQuery,
+                inSearchMode = uiState.searchUiState.inSearchMode,
                 onSearchQueryChange = onSearchQueryChange,
                 onEnterSearch = onEnterSearch,
                 onStopSearching = onStopSearching,
                 onDrawerIconClick = onDrawerIconClick,
-                onAddItemClick = { onAddItemClick(selectedShare) }
+                onAddItemClick = { onAddItemClick(uiState.homeListUiState.selectedShare) }
             )
         }
     ) { contentPadding ->
         Box {
-            when (uiState) {
-                is HomeUiState.Loading -> LoadingDialog()
-                is HomeUiState.Content -> {
-                    var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
-                    val keyboardController = LocalSoftwareKeyboardController.current
-                    Home(
-                        items = uiState.items,
-                        modifier = Modifier.padding(contentPadding),
-                        onItemClick = { item ->
-                            keyboardController?.hide()
-                            homeScreenNavigation.toItemDetail(item.shareId, item.id)
-                        },
-                        navigation = homeScreenNavigation,
-                        onDeleteItemClicked = { itemToDelete = it },
-                        onRefresh = onRefresh
-                    )
-                    ConfirmItemDeletionDialog(
-                        state = itemToDelete,
-                        onDismiss = { itemToDelete = null },
-                        title = R.string.alert_confirm_item_send_to_trash_title,
-                        message = R.string.alert_confirm_item_send_to_trash_message,
-                        onConfirm = sendItemToTrash
-                    )
-                }
-                is HomeUiState.Error -> Text("Something went boom: ${uiState.message}")
+            if (uiState.homeListUiState.isLoading) {
+                LoadingDialog()
             }
+
+            if (uiState.homeListUiState.errorMessage != null) {
+                Text("Something went boom: ${uiState.homeListUiState.errorMessage}")
+            }
+
+            var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
+            val keyboardController = LocalSoftwareKeyboardController.current
+            Home(
+                items = uiState.homeListUiState.items,
+                modifier = Modifier.padding(contentPadding),
+                onItemClick = { item ->
+                    keyboardController?.hide()
+                    homeScreenNavigation.toItemDetail(item.shareId, item.id)
+                },
+                navigation = homeScreenNavigation,
+                onDeleteItemClicked = { itemToDelete = it },
+                isRefreshing = uiState.homeListUiState.isRefreshing,
+                onRefresh = onRefresh
+            )
+            ConfirmItemDeletionDialog(
+                state = itemToDelete,
+                onDismiss = { itemToDelete = null },
+                title = R.string.alert_confirm_item_send_to_trash_title,
+                message = R.string.alert_confirm_item_send_to_trash_message,
+                onConfirm = sendItemToTrash
+            )
         }
     }
 }
@@ -195,10 +191,11 @@ private fun Home(
     onItemClick: (ItemUiModel) -> Unit,
     navigation: HomeScreenNavigation,
     onDeleteItemClicked: (ItemUiModel) -> Unit,
+    isRefreshing: Boolean,
     onRefresh: () -> Unit
 ) {
     PassSwipeRefresh(
-        state = SwipeRefreshState(false),
+        state = SwipeRefreshState(isRefreshing),
         onRefresh = onRefresh
     ) {
         if (items.isNotEmpty()) {

@@ -19,25 +19,32 @@ import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.pass.common.api.None
+import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.domain.ItemId
+import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.create.note.NoteItemValidationErrors.BlankTitle
+import me.proton.core.pass.presentation.create.note.NoteSnackbarMessage.EmptyShareIdError
 import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
 
 @ExperimentalComposeUiApi
 @Composable
 internal fun NoteContent(
+    modifier: Modifier = Modifier,
     @StringRes topBarTitle: Int,
     @StringRes topBarActionName: Int,
     uiState: CreateUpdateNoteUiState,
     onUpClick: () -> Unit,
-    onSuccess: (ItemId) -> Unit,
-    onSubmit: () -> Unit,
+    onSuccess: (ShareId, ItemId) -> Unit,
+    onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
-    onNoteChange: (String) -> Unit
+    onNoteChange: (String) -> Unit,
+    onSnackbarMessage: (NoteSnackbarMessage) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     Scaffold(
+        modifier = modifier,
         topBar = {
             ProtonTopAppBar(
                 title = { TopBarTitleView(topBarTitle) },
@@ -46,7 +53,10 @@ internal fun NoteContent(
                     IconButton(
                         onClick = {
                             keyboardController?.hide()
-                            onSubmit()
+                            when (uiState.shareId) {
+                                None -> onSnackbarMessage(EmptyShareIdError)
+                                is Some -> onSubmit(uiState.shareId.value)
+                            }
                         },
                         modifier = Modifier.padding(end = 10.dp)
                     ) {
@@ -74,7 +84,10 @@ internal fun NoteContent(
         LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {
             val isItemSaved = uiState.isItemSaved
             if (isItemSaved is ItemSavedState.Success) {
-                onSuccess(isItemSaved.itemId)
+                when (uiState.shareId) {
+                    None -> onSnackbarMessage(EmptyShareIdError)
+                    is Some -> onSuccess(uiState.shareId.value, isItemSaved.itemId)
+                }
             }
         }
     }

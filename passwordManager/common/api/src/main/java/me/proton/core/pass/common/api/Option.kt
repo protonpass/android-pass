@@ -6,6 +6,8 @@ sealed interface Option<out A> {
 
     fun isNotEmpty(): Boolean = !isEmpty()
 
+    fun <R> map(block: (A) -> R): Option<R>
+
     companion object {
 
         @JvmStatic
@@ -20,6 +22,8 @@ object None : Option<Nothing> {
     override fun isEmpty(): Boolean = true
 
     override fun toString(): String = "Option.None"
+
+    override fun <R> map(block: (Nothing) -> R): Option<R> = None
 }
 
 data class Some<out T>(val value: T) : Option<T> {
@@ -27,6 +31,8 @@ data class Some<out T>(val value: T) : Option<T> {
     override fun isEmpty(): Boolean = false
 
     override fun toString(): String = "Option.Some($value)"
+
+    override fun <R> map(block: (T) -> R): Option<R> = Some(block(value))
 
     companion object {
         @PublishedApi

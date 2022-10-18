@@ -43,6 +43,7 @@ import me.proton.core.pass.presentation.components.common.PassSwipeRefresh
 import me.proton.core.pass.presentation.components.common.item.ItemAction
 import me.proton.core.pass.presentation.components.common.item.ItemsList
 import me.proton.core.pass.presentation.components.model.ItemUiModel
+import me.proton.core.pass.presentation.uievents.IsLoadingState
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -122,35 +123,36 @@ private fun HomeContent(
         }
     ) { contentPadding ->
         Box {
-            if (uiState.homeListUiState.isLoading) {
-                LoadingDialog()
+            when (uiState.homeListUiState.isLoading) {
+                IsLoadingState.Loading -> LoadingDialog()
+                IsLoadingState.NotLoading -> {
+                    var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
+                    val keyboardController = LocalSoftwareKeyboardController.current
+                    Home(
+                        items = uiState.homeListUiState.items,
+                        modifier = Modifier.padding(contentPadding),
+                        onItemClick = { item ->
+                            keyboardController?.hide()
+                            homeScreenNavigation.toItemDetail(item.shareId, item.id)
+                        },
+                        navigation = homeScreenNavigation,
+                        onDeleteItemClicked = { itemToDelete = it },
+                        isRefreshing = uiState.homeListUiState.isRefreshing,
+                        onRefresh = onRefresh
+                    )
+                    ConfirmItemDeletionDialog(
+                        state = itemToDelete,
+                        onDismiss = { itemToDelete = null },
+                        title = R.string.alert_confirm_item_send_to_trash_title,
+                        message = R.string.alert_confirm_item_send_to_trash_message,
+                        onConfirm = sendItemToTrash
+                    )
+                }
             }
 
             if (uiState.homeListUiState.errorMessage != null) {
                 Text("Something went boom: ${uiState.homeListUiState.errorMessage}")
             }
-
-            var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
-            val keyboardController = LocalSoftwareKeyboardController.current
-            Home(
-                items = uiState.homeListUiState.items,
-                modifier = Modifier.padding(contentPadding),
-                onItemClick = { item ->
-                    keyboardController?.hide()
-                    homeScreenNavigation.toItemDetail(item.shareId, item.id)
-                },
-                navigation = homeScreenNavigation,
-                onDeleteItemClicked = { itemToDelete = it },
-                isRefreshing = uiState.homeListUiState.isRefreshing,
-                onRefresh = onRefresh
-            )
-            ConfirmItemDeletionDialog(
-                state = itemToDelete,
-                onDismiss = { itemToDelete = null },
-                title = R.string.alert_confirm_item_send_to_trash_title,
-                message = R.string.alert_confirm_item_send_to_trash_message,
-                onConfirm = sendItemToTrash
-            )
         }
     }
 }
@@ -191,11 +193,11 @@ private fun Home(
     onItemClick: (ItemUiModel) -> Unit,
     navigation: HomeScreenNavigation,
     onDeleteItemClicked: (ItemUiModel) -> Unit,
-    isRefreshing: Boolean,
+    isRefreshing: IsLoadingState,
     onRefresh: () -> Unit
 ) {
     PassSwipeRefresh(
-        state = SwipeRefreshState(isRefreshing),
+        state = SwipeRefreshState(isRefreshing is IsLoadingState.Loading),
         onRefresh = onRefresh
     ) {
         if (items.isNotEmpty()) {

@@ -19,7 +19,7 @@ internal class BaseLoginViewModelTest {
 
     @Before
     fun setUp() {
-        baseLoginViewModel = object : BaseLoginViewModel() {}
+        baseLoginViewModel = object : BaseLoginViewModel(observeActiveShare) {}
     }
 
     @Test

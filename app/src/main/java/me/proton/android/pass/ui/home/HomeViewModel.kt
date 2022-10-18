@@ -59,23 +59,42 @@ class HomeViewModel @Inject constructor(
         inSearchMode,
         isRefreshing
     ) { shareIdResult, itemsResult, searchQuery, inSearchMode, isRefreshing ->
-        if (isRefreshing) return@combine HomeUiState.Loading
-        val share = when (shareIdResult) {
-            is Result.Success -> shareIdResult.data
-            is Result.Error -> return@combine HomeUiState.Error("Could not load share id")
-            Result.Loading -> return@combine HomeUiState.Loading
-        }
-        val itemList: List<ItemUiModel> = when (itemsResult) {
-            is Result.Success -> itemsResult.data
-            is Result.Error -> return@combine HomeUiState.Error("Could not load item list")
-            Result.Loading -> return@combine HomeUiState.Loading
-        }
-        HomeUiState.Content(itemList, share, searchQuery, inSearchMode)
+        val isLoading = shareIdResult is Result.Loading || itemsResult is Result.Loading
+        val items = (itemsResult as? Result.Success)?.data ?: emptyList()
+        val selectedShare = (shareIdResult as? Result.Success)?.data
+        val errorMessage = (shareIdResult as? Result.Error)?.exception?.message
+            ?: (itemsResult as? Result.Error)?.exception?.message
+
+        HomeUiState(
+            homeListUiState = HomeListUiState(
+                isLoading = isLoading,
+                isRefreshing = isRefreshing,
+                items = items,
+                selectedShare = selectedShare,
+                errorMessage = errorMessage
+            ),
+            searchUiState = SearchUiState(
+                searchQuery = searchQuery,
+                inSearchMode = inSearchMode
+            )
+        )
     }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = HomeUiState.Loading
+            initialValue = HomeUiState(
+                homeListUiState = HomeListUiState(
+                    isLoading = true,
+                    isRefreshing = false,
+                    items = emptyList(),
+                    selectedShare = null,
+                    errorMessage = null
+                ),
+                searchUiState = SearchUiState(
+                    searchQuery = "",
+                    inSearchMode = false
+                )
+            )
         )
 
     fun onSearchQueryChange(query: String) = viewModelScope.launch {
@@ -87,14 +106,14 @@ class HomeViewModel @Inject constructor(
 
     fun onStopSearching() = viewModelScope.launch {
         searchItems.clearSearch()
-        searchQuery.value = ""
-        inSearchMode.value = false
+        searchQuery.update { "" }
+        inSearchMode.update { false }
     }
 
     fun onEnterSearch() = viewModelScope.launch {
         searchItems.clearSearch()
-        searchQuery.value = ""
-        inSearchMode.value = true
+        searchQuery.update { "" }
+        inSearchMode.update { true }
     }
 
     fun onRefresh() = viewModelScope.launch {

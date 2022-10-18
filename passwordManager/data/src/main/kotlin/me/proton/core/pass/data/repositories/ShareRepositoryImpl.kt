@@ -99,37 +99,20 @@ class ShareRepositoryImpl @Inject constructor(
             .map { Result.Success(it) }
             .mapLatest { sharesResult ->
                 if (sharesResult.data.isEmpty()) return@mapLatest Result.Success(emptyList<Share>())
-                val userKeys = sharesResult.data
-                    .map { it.inviterEmail }
-                    .distinct()
-                    .associateWith {
-                        keyRepository.getPublicAddress(
-                            sessionUserId = userId,
-                            email = it,
-                            source = Source.LocalIfAvailable
-                        )
-                    }
-
-                val shareList: List<Share> = sharesResult.data.map { entity ->
-                    val userAddress =
-                        requireNotNull(userAddressRepository.getAddresses(userId).primary())
-                    val keys =
-                        requireNotNull(userKeys[entity.inviterEmail]?.keys?.map { it.publicKey })
-
-                    when (
-                        val result: Result<Share> =
-                            shareEntityToShare(userAddress, keys, entity)
-                    ) {
-                        is Result.Error -> return@mapLatest Result.Error(result.exception)
-                        Result.Loading -> return@mapLatest Result.Loading
-                        is Result.Success -> result.data
-                    }
-                }
-                Result.Success(shareList)
+                shareEntitiesToShares(userId, sharesResult.data)
             }
 
-    override suspend fun refreshShares(userId: UserId): Result<Unit> =
-        performShareRefresh(userId).map {}
+    override suspend fun refreshShares(userId: UserId): Result<List<Share>> {
+        val sharesResult = performShareRefresh(userId)
+        when (sharesResult) {
+            is Result.Error -> return Result.Error(sharesResult.exception)
+            Result.Loading -> return Result.Loading
+            is Result.Success -> Result.Success(Unit)
+        }
+
+        return shareEntitiesToShares(userId, sharesResult.data)
+    }
+
 
     @Suppress("ReturnCount")
     override suspend fun getById(userId: UserId, shareId: ShareId): Result<Share?> {
@@ -175,6 +158,39 @@ class ShareRepositoryImpl @Inject constructor(
             is Result.Success -> Unit
         }
         return storeShares(userAddress, sharesResult.data)
+    }
+
+    private suspend fun shareEntitiesToShares(
+        userId: UserId,
+        entities: List<ShareEntity>
+    ): Result<List<Share>> {
+        val userKeys = entities
+            .map { it.inviterEmail }
+            .distinct()
+            .associateWith {
+                keyRepository.getPublicAddress(
+                    sessionUserId = userId,
+                    email = it,
+                    source = Source.LocalIfAvailable
+                )
+            }
+
+        val shareList: List<Share> = entities.map { entity ->
+            val userAddress =
+                requireNotNull(userAddressRepository.getAddresses(userId).primary())
+            val keys =
+                requireNotNull(userKeys[entity.inviterEmail]?.keys?.map { it.publicKey })
+
+            when (
+                val result: Result<Share> =
+                    shareEntityToShare(userAddress, keys, entity)
+            ) {
+                is Result.Error -> return Result.Error(result.exception)
+                Result.Loading -> return Result.Loading
+                is Result.Success -> result.data
+            }
+        }
+        return Result.Success(shareList)
     }
 
     private suspend fun storeShares(

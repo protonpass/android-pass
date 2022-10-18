@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.extension.toUiModel
 import me.proton.core.crypto.common.context.CryptoContext
@@ -21,6 +22,7 @@ import me.proton.core.pass.common.api.map
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.usecases.ObserveActiveShare
 import me.proton.core.pass.domain.usecases.ObserveCurrentUser
+import me.proton.core.pass.domain.usecases.RefreshContent
 import me.proton.core.pass.domain.usecases.TrashItem
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.search.SearchItems
@@ -32,6 +34,7 @@ class HomeViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val trashItem: TrashItem,
     private val searchItems: SearchItems,
+    private val refreshContent: RefreshContent,
     observeCurrentUser: ObserveCurrentUser,
     observeActiveShare: ObserveActiveShare
 ) : ViewModel() {
@@ -47,13 +50,16 @@ class HomeViewModel @Inject constructor(
 
     private val searchQuery: MutableStateFlow<String> = MutableStateFlow("")
     private val inSearchMode: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val isRefreshing: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     val homeUiState: StateFlow<HomeUiState> = combine(
         observeActiveShare(),
         listItems,
         searchQuery,
-        inSearchMode
-    ) { shareIdResult, itemsResult, searchQuery, inSearchMode ->
+        inSearchMode,
+        isRefreshing
+    ) { shareIdResult, itemsResult, searchQuery, inSearchMode, isRefreshing ->
+        if (isRefreshing) return@combine HomeUiState.Loading
         val share = when (shareIdResult) {
             is Result.Success -> shareIdResult.data
             is Result.Error -> return@combine HomeUiState.Error("Could not load share id")
@@ -89,6 +95,15 @@ class HomeViewModel @Inject constructor(
         searchItems.clearSearch()
         searchQuery.value = ""
         inSearchMode.value = true
+    }
+
+    fun onRefresh() = viewModelScope.launch {
+        val userId = currentUserFlow.firstOrNull()?.userId
+        if (userId != null) {
+            isRefreshing.update { true }
+            refreshContent(userId)
+            isRefreshing.update { false }
+        }
     }
 
     fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch {

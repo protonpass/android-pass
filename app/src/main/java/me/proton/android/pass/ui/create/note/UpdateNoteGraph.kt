@@ -1,4 +1,4 @@
-package me.proton.core.pass.presentation.create.note
+package me.proton.android.pass.ui.create.note
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
@@ -11,6 +11,7 @@ import me.proton.android.pass.ui.navigation.composable
 import me.proton.android.pass.ui.navigation.findArg
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
+import me.proton.core.pass.presentation.create.note.UpdateNote
 
 @OptIn(
     ExperimentalAnimationApi::class, ExperimentalMaterialApi::class,

@@ -97,6 +97,11 @@
     <string name="title_create_note">Create note</string>
     <string name="title_edit_note">Edit note</string>
 
+    <string name="create_note_item_creation_error">Could not create Note</string>
+    <string name="create_note_item_update_error">Could not update Note</string>
+    <string name="create_note_init_error">Could not initialise Note</string>
+    <string name="create_note_empty_share_id">Share Id cannot be empty</string>
+
     <!-- Create Alias -->
     <string name="title_create_alias">Create alias</string>
     <string name="title_edit_alias">Edit alias</string>

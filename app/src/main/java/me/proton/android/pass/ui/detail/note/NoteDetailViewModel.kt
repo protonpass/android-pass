@@ -1,13 +1,17 @@
 package me.proton.android.pass.ui.detail.note
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.stateIn
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.pass.domain.Item
+import javax.inject.Inject
 
 @HiltViewModel
 class NoteDetailViewModel @Inject constructor(
@@ -16,8 +20,12 @@ class NoteDetailViewModel @Inject constructor(
 
     private val itemFlow: MutableStateFlow<Item?> = MutableStateFlow(null)
 
-    val initialViewState = getInitialState()
-    val viewState = itemFlow.mapLatest { getUiModel(it) }
+    val viewState: StateFlow<NoteUiModel> = itemFlow.mapLatest { getUiModel(it) }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = getInitialState()
+        )
 
     fun setItem(item: Item) {
         if (itemFlow.value == null) {

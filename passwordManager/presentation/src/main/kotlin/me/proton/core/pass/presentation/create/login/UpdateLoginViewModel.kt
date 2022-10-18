@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
@@ -37,7 +38,7 @@ class UpdateLoginViewModel @Inject constructor(
     fun setItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         if (_item != null) return@launch
 
-        isLoadingState.value = IsLoadingState.Loading
+        isLoadingState.update { IsLoadingState.Loading }
         accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
             ?.let { userId ->
@@ -46,25 +47,27 @@ class UpdateLoginViewModel @Inject constructor(
                         val itemContents = item.itemType as ItemType.Login
                         _item = item
 
-                        isLoadingState.value = IsLoadingState.NotLoading
-                        loginItemState.value = LoginItem(
-                            title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-                            username = itemContents.username,
-                            password = itemContents.password.decrypt(cryptoContext.keyStoreCrypto),
-                            websiteAddresses = itemContents.websites.ifEmpty { listOf("") },
-                            note = item.note.decrypt(cryptoContext.keyStoreCrypto)
-                        )
+                        loginItemState.update {
+                            LoginItem(
+                                title = item.title.decrypt(cryptoContext.keyStoreCrypto),
+                                username = itemContents.username,
+                                password = itemContents.password.decrypt(cryptoContext.keyStoreCrypto),
+                                websiteAddresses = itemContents.websites.ifEmpty { listOf("") },
+                                note = item.note.decrypt(cryptoContext.keyStoreCrypto)
+                            )
+                        }
                     }
                     .onError {
                         val defaultMessage = "Get by id error"
                         PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                     }
             }
+        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     fun updateItem(shareId: ShareId) = viewModelScope.launch {
         requireNotNull(_item)
-        isLoadingState.value = IsLoadingState.Loading
+        isLoadingState.update { IsLoadingState.Loading }
         val loginItem = loginItemState.value
         accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
@@ -75,8 +78,7 @@ class UpdateLoginViewModel @Inject constructor(
                         val itemContents = loginItem.toItemContents()
                         itemRepository.updateItem(userId, share, _item!!, itemContents)
                             .onSuccess { item ->
-                                isLoadingState.value = IsLoadingState.NotLoading
-                                isItemSavedState.value = ItemSavedState.Success(item.id)
+                                isItemSavedState.update { ItemSavedState.Success(item.id) }
                             }
                             .onError {
                                 val defaultMessage = "Update item error"
@@ -88,6 +90,7 @@ class UpdateLoginViewModel @Inject constructor(
                         PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                     }
             }
+        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     companion object {

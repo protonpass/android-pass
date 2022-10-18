@@ -52,11 +52,9 @@ class CreateLoginViewModel @Inject constructor(
     }
 
     fun createItem() = viewModelScope.launch {
-        when (val shareId = activeShareIdState.value) {
+        when (val shareId = loginUiState.value.shareId) {
             None -> mutableSnackbarMessage.tryEmit(LoginSnackbarMessages.CreationError)
-            is Some -> {
-                createItem(shareId.value)
-            }
+            is Some -> createItem(shareId.value)
         }
     }
 
@@ -64,15 +62,15 @@ class CreateLoginViewModel @Inject constructor(
         val loginItem = loginItemState.value
         val loginItemValidationErrors = loginItem.validate()
         if (loginItemValidationErrors.isNotEmpty()) {
-            loginItemValidationErrorsState.value = loginItemValidationErrors
+            loginItemValidationErrorsState.update { loginItemValidationErrors }
         } else {
-            isLoadingState.value = IsLoadingState.Loading
+            isLoadingState.update { IsLoadingState.Loading }
             val userId = accountManager.getPrimaryUserId()
                 .firstOrNull { userId -> userId != null }
             if (userId != null) {
                 createItem(userId, shareId, loginItem.toItemContents())
                     .onSuccess { item ->
-                        isItemSavedState.value = ItemSavedState.Success(item.id)
+                        isItemSavedState.update { ItemSavedState.Success(item.id) }
                     }
                     .onError {
                         val defaultMessage = "Could not create item"
@@ -82,7 +80,7 @@ class CreateLoginViewModel @Inject constructor(
             } else {
                 mutableSnackbarMessage.tryEmit(LoginSnackbarMessages.CreationError)
             }
-            isLoadingState.value = IsLoadingState.NotLoading
+            isLoadingState.update { IsLoadingState.NotLoading }
         }
     }
 

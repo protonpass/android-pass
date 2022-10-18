@@ -16,8 +16,12 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.extension.toUiModel
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.pass.common.api.None
+import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.common.api.map
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.usecases.ObserveActiveShare
@@ -26,6 +30,7 @@ import me.proton.core.pass.domain.usecases.RefreshContent
 import me.proton.core.pass.domain.usecases.TrashItem
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.uievents.IsLoadingState
+import me.proton.core.pass.presentation.uievents.IsRefreshingState
 import me.proton.core.pass.search.SearchItems
 import javax.inject.Inject
 
@@ -51,7 +56,8 @@ class HomeViewModel @Inject constructor(
 
     private val searchQuery: MutableStateFlow<String> = MutableStateFlow("")
     private val inSearchMode: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val isRefreshing: MutableStateFlow<IsLoadingState> = MutableStateFlow(IsLoadingState.NotLoading)
+    private val isRefreshing: MutableStateFlow<IsRefreshingState> =
+        MutableStateFlow(IsRefreshingState.NotRefreshing)
 
     val homeUiState: StateFlow<HomeUiState> = combine(
         observeActiveShare(),
@@ -60,15 +66,42 @@ class HomeViewModel @Inject constructor(
         inSearchMode,
         isRefreshing
     ) { shareIdResult, itemsResult, searchQuery, inSearchMode, isRefreshing ->
-        val isLoading = if (shareIdResult is Result.Loading || itemsResult is Result.Loading) {
-            IsLoadingState.Loading
-        } else {
-            IsLoadingState.NotLoading
+        val isLoading = IsLoadingState.from(
+            shareIdResult is Result.Loading || itemsResult is Result.Loading
+        )
+
+        val (items, itemsErrorMessage) = when (itemsResult) {
+            Result.Loading -> emptyList<ItemUiModel>() to None
+            is Result.Success -> itemsResult.data to None
+            is Result.Error -> {
+                val defaultMessage = "Observe items error"
+                PassLogger.i(
+                    TAG,
+                    itemsResult.exception ?: Exception(defaultMessage),
+                    defaultMessage
+                )
+                emptyList<ItemUiModel>() to Option.fromNullable(itemsResult.exception?.message)
+            }
         }
-        val items = (itemsResult as? Result.Success)?.data ?: emptyList()
-        val selectedShare = (shareIdResult as? Result.Success)?.data
-        val errorMessage = (shareIdResult as? Result.Error)?.exception?.message
-            ?: (itemsResult as? Result.Error)?.exception?.message
+
+        val (selectedShare, shareErrorMessage) = when (shareIdResult) {
+            Result.Loading -> None to None
+            is Result.Success -> Option.fromNullable(shareIdResult.data) to None
+            is Result.Error -> {
+                val defaultMessage = "Observe active share error"
+                PassLogger.i(
+                    TAG,
+                    shareIdResult.exception ?: Exception(defaultMessage),
+                    defaultMessage
+                )
+                None to Option.fromNullable(shareIdResult.exception?.message)
+            }
+        }
+
+        val errorMessage = when (itemsErrorMessage) {
+            is Some -> itemsErrorMessage
+            None -> shareErrorMessage
+        }
 
         HomeUiState(
             homeListUiState = HomeListUiState(
@@ -90,10 +123,10 @@ class HomeViewModel @Inject constructor(
             initialValue = HomeUiState(
                 homeListUiState = HomeListUiState(
                     isLoading = IsLoadingState.Loading,
-                    isRefreshing = IsLoadingState.NotLoading,
+                    isRefreshing = IsRefreshingState.NotRefreshing,
                     items = emptyList(),
-                    selectedShare = null,
-                    errorMessage = null
+                    selectedShare = None,
+                    errorMessage = None
                 ),
                 searchUiState = SearchUiState(
                     searchQuery = "",
@@ -124,9 +157,9 @@ class HomeViewModel @Inject constructor(
     fun onRefresh() = viewModelScope.launch {
         val userId = currentUserFlow.firstOrNull()?.userId
         if (userId != null) {
-            isRefreshing.update { IsLoadingState.Loading }
+            isRefreshing.update { IsRefreshingState.Refreshing }
             refreshContent(userId)
-            isRefreshing.update { IsLoadingState.NotLoading }
+            isRefreshing.update { IsRefreshingState.NotRefreshing }
         }
     }
 
@@ -137,5 +170,9 @@ class HomeViewModel @Inject constructor(
         if (userId != null) {
             trashItem.invoke(userId, item.shareId, item.id)
         }
+    }
+
+    companion object {
+        private const val TAG = "HomeViewModel"
     }
 }

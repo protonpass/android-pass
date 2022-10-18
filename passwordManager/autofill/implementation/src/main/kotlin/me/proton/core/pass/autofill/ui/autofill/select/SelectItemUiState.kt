@@ -1,17 +1,14 @@
 package me.proton.core.pass.autofill.ui.autofill.select
 
-import androidx.compose.runtime.Immutable
-import me.proton.core.pass.autofill.entities.AutofillItem
+import me.proton.core.pass.common.api.None
+import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.presentation.components.model.ItemUiModel
+import me.proton.core.pass.presentation.uievents.IsLoadingState
+import me.proton.core.pass.presentation.uievents.IsRefreshingState
 
-sealed class SelectItemUiState {
-    object Loading : SelectItemUiState()
-
-    @Immutable
-    data class Content(
-        val items: List<ItemUiModel>
-    ) : SelectItemUiState()
-
-    data class Selected(val autofillItem: AutofillItem) : SelectItemUiState()
-    data class Error(val message: String) : SelectItemUiState()
-}
+data class SelectItemUiState(
+    val isLoading: IsLoadingState,
+    val isRefreshing: IsRefreshingState,
+    val items: List<ItemUiModel>,
+    val errorMessage: Option<String> = None
+)

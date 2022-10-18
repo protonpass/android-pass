@@ -3,6 +3,7 @@ package me.proton.core.pass.presentation.create.login
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -11,7 +12,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -33,27 +33,21 @@ abstract class BaseLoginViewModel(
     private val shareId: Option<ShareId> =
         Option.fromNullable(savedStateHandle.get<String>("shareId")?.let { ShareId(it) })
 
-    protected val activeShareIdState: StateFlow<Option<ShareId>> =
-        flow<Option<ShareId>> { shareId }
-            .flatMapLatest { option ->
-                when (option) {
-                    None -> observeActiveShare()
-                        .distinctUntilChanged()
-                        .map { result ->
-                            when (result) {
-                                is Result.Error -> None
-                                Result.Loading -> None
-                                is Result.Success -> Option.fromNullable(result.data)
-                            }
+    private val activeShareIdState: Flow<Option<ShareId>> = MutableStateFlow(shareId)
+        .flatMapLatest { option ->
+            when (option) {
+                None -> observeActiveShare()
+                    .distinctUntilChanged()
+                    .map { result ->
+                        when (result) {
+                            is Result.Error -> None
+                            Result.Loading -> None
+                            is Result.Success -> Option.fromNullable(result.data)
                         }
-                    is Some -> flowOf(option)
-                }
+                    }
+                is Some -> flowOf(option)
             }
-            .stateIn(
-                scope = viewModelScope,
-                started = SharingStarted.WhileSubscribed(5_000),
-                initialValue = None
-            )
+        }
     protected val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)

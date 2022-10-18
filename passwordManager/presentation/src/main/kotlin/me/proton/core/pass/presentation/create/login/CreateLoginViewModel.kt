@@ -15,6 +15,7 @@ import me.proton.core.pass.common.api.onSuccess
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.domain.usecases.CreateItem
 import me.proton.core.pass.domain.usecases.ObserveActiveShare
+import me.proton.core.pass.presentation.create.login.LoginSnackbarMessages.ItemCreationError
 import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
 import javax.inject.Inject
@@ -53,7 +54,7 @@ class CreateLoginViewModel @Inject constructor(
 
     fun createItem() = viewModelScope.launch {
         when (val shareId = loginUiState.value.shareId) {
-            None -> mutableSnackbarMessage.tryEmit(LoginSnackbarMessages.CreationError)
+            None -> mutableSnackbarMessage.tryEmit(ItemCreationError)
             is Some -> createItem(shareId.value)
         }
     }
@@ -75,10 +76,10 @@ class CreateLoginViewModel @Inject constructor(
                     .onError {
                         val defaultMessage = "Could not create item"
                         PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                        mutableSnackbarMessage.tryEmit(LoginSnackbarMessages.CreationError)
+                        mutableSnackbarMessage.tryEmit(ItemCreationError)
                     }
             } else {
-                mutableSnackbarMessage.tryEmit(LoginSnackbarMessages.CreationError)
+                mutableSnackbarMessage.tryEmit(ItemCreationError)
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }

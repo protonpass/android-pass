@@ -22,8 +22,6 @@ import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.R
 import me.proton.core.pass.presentation.components.common.PassSnackbarHost
 import me.proton.core.pass.presentation.components.common.PassSnackbarHostState
-import me.proton.core.pass.presentation.create.login.LoginSnackbarMessages.CreationError
-import me.proton.core.pass.presentation.create.login.LoginSnackbarMessages.EmptyShareIdError
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -38,13 +36,8 @@ fun CreateLogin(
 
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { PassSnackbarHostState() }
-
-    val creationError = stringResource(id = R.string.create_login_creation_error)
-    val emptyShareIdError = stringResource(id = R.string.create_login_empty_share_id)
-    val snackbarMessages = mapOf(
-        CreationError to creationError,
-        EmptyShareIdError to emptyShareIdError
-    )
+    val snackbarMessages = LoginSnackbarMessages.values()
+        .associateWith { stringResource(id = it.id) }
     LaunchedEffect(Unit) {
         viewModel.snackbarMessage
             .collectLatest { message ->
@@ -107,12 +100,8 @@ fun CreateLoginWithInitialContents(
     }
 
     val snackbarHostState = remember { PassSnackbarHostState() }
-    val creationError = stringResource(id = R.string.create_login_creation_error)
-    val emptyShareIdError = stringResource(id = R.string.create_login_empty_share_id)
-    val snackbarMessages = mapOf(
-        CreationError to creationError,
-        EmptyShareIdError to emptyShareIdError
-    )
+    val snackbarMessages = LoginSnackbarMessages.values()
+        .associateWith { stringResource(id = it.id) }
     LaunchedEffect(Unit) {
         viewModel.snackbarMessage
             .collectLatest { message ->

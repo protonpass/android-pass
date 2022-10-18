@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -16,13 +15,12 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import me.proton.android.pass.R
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.android.pass.ui.detail.login.Section
 import me.proton.android.pass.ui.detail.login.SectionTitle
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.Item
-import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 
 @Composable
 fun AliasDetail(
@@ -31,7 +29,7 @@ fun AliasDetail(
     viewModel: AliasDetailViewModel = hiltViewModel()
 ) {
     viewModel.setItem(item)
-    val viewState by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(initial = viewModel.initialViewState)
+    val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
     when (val state = viewState) {
         is AliasDetailViewModel.ViewState.Loading -> LoadingDialog()

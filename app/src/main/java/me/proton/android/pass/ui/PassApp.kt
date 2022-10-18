@@ -7,7 +7,6 @@ import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlinx.coroutines.CoroutineScope
@@ -49,7 +49,7 @@ fun PassApp(
         ProvideWindowInsets {
             val drawerViewModel = hiltViewModel<DrawerViewModel>()
             hiltViewModel<AppViewModel>()
-            val drawerUiState by drawerViewModel.drawerUiState.collectAsState()
+            val drawerUiState by drawerViewModel.drawerUiState.collectAsStateWithLifecycle()
             val navController = rememberAnimatedNavController()
             val appNavigator = rememberAppNavigator(navController)
             val navDrawerNavigation = NavDrawerNavigation(

@@ -17,7 +17,6 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
@@ -51,7 +51,7 @@ fun HomeScreen(
     onDrawerIconClick: () -> Unit
 ) {
     val viewModel = hiltViewModel<HomeViewModel>()
-    val uiState by viewModel.homeUiState.collectAsState()
+    val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val coroutineScope = rememberCoroutineScope()
 

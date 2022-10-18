@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
@@ -27,8 +30,13 @@ class ItemDetailViewModel @Inject constructor(
     private val trashItem: TrashItem
 ) : ViewModel() {
 
-    val initialState = State.Loading
-    val state: MutableStateFlow<State> = MutableStateFlow(initialState)
+    private val _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
+    val state: StateFlow<State> = _state
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = State.Loading
+        )
 
     fun setContent(shareId: String, itemId: String) = viewModelScope.launch {
         accountManager.getPrimaryUserId()
@@ -36,7 +44,7 @@ class ItemDetailViewModel @Inject constructor(
             ?.let { userId ->
                 itemRepository.getById(userId, ShareId(shareId), ItemId(itemId))
                     .onSuccess { item ->
-                        state.value = State.Content(
+                        _state.value = State.Content(
                             FullItemUiModel(
                                 name = item.title.decrypt(cryptoContext.keyStoreCrypto),
                                 item = item
@@ -55,9 +63,9 @@ class ItemDetailViewModel @Inject constructor(
 
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
         if (userId != null) {
-            state.value = State.Loading
+            _state.value = State.Loading
             trashItem.invoke(userId, item.shareId, item.id)
-            state.value = State.ItemSentToTrash
+            _state.value = State.ItemSentToTrash
         }
     }
 

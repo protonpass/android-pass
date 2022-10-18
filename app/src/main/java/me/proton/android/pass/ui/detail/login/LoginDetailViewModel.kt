@@ -3,10 +3,12 @@ package me.proton.android.pass.ui.detail.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -14,6 +16,7 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.ItemType
+import javax.inject.Inject
 
 @HiltViewModel
 class LoginDetailViewModel @Inject constructor(
@@ -26,11 +29,14 @@ class LoginDetailViewModel @Inject constructor(
     )
 
     val copyToClipboardFlow: MutableSharedFlow<String?> = MutableSharedFlow()
-    val initialViewState = getInitialState()
-    val viewState = combine(
+    val viewState: StateFlow<LoginUiModel> = combine(
         itemFlow,
         passwordState,
         ::getUiModel
+    ).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = getInitialState()
     )
 
     fun setItem(item: Item) {

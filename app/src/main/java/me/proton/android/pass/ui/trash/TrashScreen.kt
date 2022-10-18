@@ -18,7 +18,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.LoadingDialog
@@ -37,7 +37,6 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.presentation.components.common.item.ItemAction
 import me.proton.core.pass.presentation.components.common.item.ItemsList
-import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 
 @ExperimentalMaterialApi
@@ -48,8 +47,7 @@ fun TrashScreen(
     onDrawerIconClick: () -> Unit
 ) {
     val viewModel: TrashScreenViewModel = hiltViewModel()
-    val uiState by rememberFlowWithLifecycle(flow = viewModel.uiState)
-        .collectAsState(initial = TrashUiState.Loading)
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     Scaffold(
         scaffoldState = scaffoldState,

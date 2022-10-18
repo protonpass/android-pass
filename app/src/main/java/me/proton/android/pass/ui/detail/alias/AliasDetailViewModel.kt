@@ -4,7 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
@@ -23,8 +26,13 @@ class AliasDetailViewModel @Inject constructor(
     private val accountManager: AccountManager
 ) : ViewModel() {
 
-    val initialViewState = ViewState.Loading
-    val viewState: MutableStateFlow<ViewState> = MutableStateFlow(initialViewState)
+    private val _viewState: MutableStateFlow<ViewState> = MutableStateFlow(ViewState.Loading)
+    val viewState: StateFlow<ViewState> = _viewState
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = ViewState.Loading
+        )
 
     private val itemFlow: MutableStateFlow<Item?> = MutableStateFlow(null)
 
@@ -41,7 +49,7 @@ class AliasDetailViewModel @Inject constructor(
                 ) {
                     is Result.Success -> {
                         val alias = item.itemType as ItemType.Alias
-                        viewState.value = ViewState.Data(
+                        _viewState.value = ViewState.Data(
                             AliasUiModel(
                                 title = item.title.decrypt(cryptoContext.keyStoreCrypto),
                                 alias = alias.aliasEmail,

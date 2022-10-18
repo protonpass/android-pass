@@ -1,10 +1,10 @@
 package me.proton.core.pass.autofill.ui.autofill.select
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.pass.autofill.entities.AutofillItem
 import me.proton.core.pass.domain.entity.PackageName
 
@@ -17,7 +17,7 @@ fun SelectItemScreen(
     onItemSelected: (AutofillItem) -> Unit
 ) {
     val viewModel: SelectItemViewModel = hiltViewModel()
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     SelectItemScreenContent(
         modifier = modifier,
         state = uiState,

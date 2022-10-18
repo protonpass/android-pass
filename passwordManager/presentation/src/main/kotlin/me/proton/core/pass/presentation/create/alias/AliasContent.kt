@@ -27,11 +27,15 @@ import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.pass.common.api.None
+import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.domain.AliasSuffix
 import me.proton.core.pass.domain.ItemId
+import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.R
 import me.proton.core.pass.presentation.create.alias.AliasItemValidationErrors.BlankAlias
 import me.proton.core.pass.presentation.create.alias.AliasItemValidationErrors.BlankTitle
+import me.proton.core.pass.presentation.create.alias.AliasSnackbarMessage.EmptyShareIdError
 import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
 
@@ -40,17 +44,19 @@ import me.proton.core.pass.presentation.uievents.ItemSavedState
 @Composable
 @Suppress("LongParameterList", "LongMethod")
 internal fun AliasContent(
+    modifier: Modifier = Modifier,
     uiState: CreateUpdateAliasUiState,
     @StringRes topBarTitle: Int,
     canEdit: Boolean,
     onUpClick: () -> Unit,
-    onSubmit: () -> Unit,
-    onSuccess: (ItemId) -> Unit,
+    onSubmit: (ShareId) -> Unit,
+    onSuccess: (ShareId, ItemId) -> Unit,
     onSuffixChange: (AliasSuffix) -> Unit,
     onMailboxChange: (AliasMailboxUiModel) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
-    onAliasChange: (String) -> Unit
+    onAliasChange: (String) -> Unit,
+    onSnackbarMessage: (AliasSnackbarMessage) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val scope = rememberCoroutineScope()
@@ -82,6 +88,7 @@ internal fun AliasContent(
         }
     ) {
         Scaffold(
+            modifier = modifier,
             topBar = {
                 ProtonTopAppBar(
                     title = { TopBarTitleView(topBarTitle) },
@@ -90,7 +97,10 @@ internal fun AliasContent(
                         IconButton(
                             onClick = {
                                 keyboardController?.hide()
-                                onSubmit()
+                                when (uiState.shareId) {
+                                    None -> onSnackbarMessage(EmptyShareIdError)
+                                    is Some -> onSubmit(uiState.shareId.value)
+                                }
                             },
                             modifier = Modifier.padding(end = 10.dp)
                         ) {
@@ -137,7 +147,10 @@ internal fun AliasContent(
             LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {
                 val isItemSaved = uiState.isItemSaved
                 if (isItemSaved is ItemSavedState.Success) {
-                    onSuccess(isItemSaved.itemId)
+                    when (uiState.shareId) {
+                        None -> onSnackbarMessage(EmptyShareIdError)
+                        is Some -> onSuccess(uiState.shareId.value, isItemSaved.itemId)
+                    }
                 }
             }
         }

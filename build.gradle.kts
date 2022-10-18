@@ -48,6 +48,7 @@ setupDependenciesPlugin()
 
 kotlinCompilerArgs(
     "-opt-in=kotlin.RequiresOptIn",
+    "-opt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
     // Enables experimental Coroutines (runBlockingTest).
     "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
     // Enables experimental Time (Turbine).

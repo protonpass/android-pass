@@ -14,6 +14,7 @@ androidx-espresso-core = "3.4.0"
 androidx-hilt = "1.0.0"
 androidx-hilt-navigation-compose = "1.0.0"
 androidx-lifecycle = "2.5.1"
+androidx-lifecycle-compose = "2.6.0-alpha02"
 androidx-navigation = "2.5.2"
 androidx-room = "2.4.3"
 androidx-startup = "1.1.1"
@@ -101,6 +102,7 @@ androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "androi
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidx-hilt-navigation-compose" }
 ## Lifecycle
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle-compose" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
 ## Navigation
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }

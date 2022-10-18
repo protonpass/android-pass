@@ -15,7 +15,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,10 +28,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.android.pass.R
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.Item
-import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 
 @Composable
 fun LoginDetail(
@@ -42,12 +41,13 @@ fun LoginDetail(
 ) {
     viewModel.setItem(item)
 
-    val model by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(initial = viewModel.initialViewState)
+    val model by viewModel.viewState.collectAsStateWithLifecycle()
 
     val localContext = LocalContext.current
     val clipboard = LocalClipboardManager.current
 
-    val copiedToClipboardSuffix = stringResource(me.proton.core.pass.presentation.R.string.field_copied_to_clipboard)
+    val copiedToClipboardSuffix =
+        stringResource(me.proton.core.pass.presentation.R.string.field_copied_to_clipboard)
     val storeToClipboard = { contents: String?, fieldName: String ->
         if (contents != null) {
             clipboard.setText(AnnotatedString(contents))
@@ -207,7 +207,11 @@ internal fun Section(
         if (icon != null) {
             IconButton(
                 onClick = { onIconClick?.invoke() },
-                modifier = Modifier.then(Modifier.size(24.dp).align(Alignment.CenterVertically))
+                modifier = Modifier.then(
+                    Modifier
+                        .size(24.dp)
+                        .align(Alignment.CenterVertically)
+                )
             ) {
                 Icon(painter = painterResource(icon), contentDescription = null)
             }

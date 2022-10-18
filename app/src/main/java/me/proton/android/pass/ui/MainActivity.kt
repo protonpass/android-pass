@@ -7,11 +7,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.ui.launcher.LauncherViewModel
@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
         launcherViewModel.register(this)
 
         setContent {
-            val state by launcherViewModel.state.collectAsState(Processing)
+            val state by launcherViewModel.state.collectAsStateWithLifecycle()
             when (state) {
                 AccountNeeded -> {
                     disableAutofill()

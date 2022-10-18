@@ -5,16 +5,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import me.proton.android.pass.R
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.android.pass.ui.detail.login.Section
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.Item
-import me.proton.core.pass.presentation.components.common.rememberFlowWithLifecycle
 
 @Composable
 fun NoteDetail(
@@ -24,7 +22,7 @@ fun NoteDetail(
 ) {
     viewModel.setItem(item)
 
-    val model by rememberFlowWithLifecycle(viewModel.viewState).collectAsState(initial = viewModel.initialViewState)
+    val model by viewModel.viewState.collectAsStateWithLifecycle()
     NoteContentView(
         model = model,
         modifier = modifier

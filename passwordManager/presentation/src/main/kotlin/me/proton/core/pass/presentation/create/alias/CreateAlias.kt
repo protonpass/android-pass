@@ -5,7 +5,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -17,6 +16,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonSnackbarType
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.R
@@ -32,7 +32,7 @@ fun CreateAlias(
     onSuccess: (ShareId, ItemId) -> Unit,
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
-    val viewState by viewModel.aliasUiState.collectAsState()
+    val viewState by viewModel.aliasUiState.collectAsStateWithLifecycle()
     val coroutineScope: CoroutineScope = rememberCoroutineScope()
     val snackbarHostState = remember { PassSnackbarHostState() }
     val snackbarMessages = AliasSnackbarMessage.values()

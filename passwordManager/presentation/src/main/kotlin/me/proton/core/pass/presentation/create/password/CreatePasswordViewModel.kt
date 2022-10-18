@@ -1,27 +1,36 @@
 package me.proton.core.pass.presentation.create.password
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import me.proton.core.pass.presentation.PasswordGenerator
 
 class CreatePasswordViewModel : ViewModel() {
 
-    val initialState = ViewState()
-    val state: MutableStateFlow<ViewState> = MutableStateFlow(initialState)
+    private val _state: MutableStateFlow<ViewState> = MutableStateFlow(ViewState())
+    val state: StateFlow<ViewState> = _state
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = ViewState()
+        )
 
     fun onLengthChange(value: Int) {
         val password = generatePassword(value, state.value.hasSpecialCharacters)
-        state.value = state.value.copy(length = value, password = password)
+        _state.value = state.value.copy(length = value, password = password)
     }
 
     fun onHasSpecialCharactersChange(value: Boolean) {
         val password = generatePassword(state.value.length, value)
-        state.value = state.value.copy(hasSpecialCharacters = value, password = password)
+        _state.value = state.value.copy(hasSpecialCharacters = value, password = password)
     }
 
     fun regenerate() {
         val password = generatePassword(state.value.length, state.value.hasSpecialCharacters)
-        state.value = state.value.copy(password = password)
+        _state.value = state.value.copy(password = password)
     }
 
     data class ViewState(

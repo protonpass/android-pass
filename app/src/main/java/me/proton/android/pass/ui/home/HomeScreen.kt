@@ -30,6 +30,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
@@ -38,6 +39,7 @@ import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
+import me.proton.core.pass.presentation.components.common.PassSwipeRefresh
 import me.proton.core.pass.presentation.components.common.item.ItemAction
 import me.proton.core.pass.presentation.components.common.item.ItemsList
 import me.proton.core.pass.presentation.components.model.ItemUiModel
@@ -78,7 +80,8 @@ fun HomeScreen(
             onStopSearching = { viewModel.onStopSearching() },
             sendItemToTrash = { viewModel.sendItemToTrash(it) },
             onDrawerIconClick = onDrawerIconClick,
-            onAddItemClick = { coroutineScope.launch { bottomSheetState.show() } }
+            onAddItemClick = { coroutineScope.launch { bottomSheetState.show() } },
+            onRefresh = { viewModel.onRefresh() }
         )
     }
 }
@@ -97,7 +100,8 @@ private fun HomeContent(
     onStopSearching: () -> Unit,
     sendItemToTrash: (ItemUiModel) -> Unit,
     onDrawerIconClick: () -> Unit,
-    onAddItemClick: (ShareId?) -> Unit
+    onAddItemClick: (ShareId?) -> Unit,
+    onRefresh: () -> Unit
 ) {
 
     val selectedShare = if (uiState is HomeUiState.Content) uiState.selectedShare else null
@@ -138,7 +142,8 @@ private fun HomeContent(
                             homeScreenNavigation.toItemDetail(item.shareId, item.id)
                         },
                         navigation = homeScreenNavigation,
-                        onDeleteItemClicked = { itemToDelete = it }
+                        onDeleteItemClicked = { itemToDelete = it },
+                        onRefresh = onRefresh
                     )
                     ConfirmItemDeletionDialog(
                         state = itemToDelete,
@@ -189,34 +194,40 @@ private fun Home(
     modifier: Modifier = Modifier,
     onItemClick: (ItemUiModel) -> Unit,
     navigation: HomeScreenNavigation,
-    onDeleteItemClicked: (ItemUiModel) -> Unit
+    onDeleteItemClicked: (ItemUiModel) -> Unit,
+    onRefresh: () -> Unit
 ) {
-    if (items.isNotEmpty()) {
-        ItemsList(
-            items = items,
-            modifier = modifier,
-            onItemClick = onItemClick,
-            itemActions = listOf(
-                ItemAction(
-                    onSelect = { goToEdit(navigation, it) },
-                    title = R.string.action_edit_placeholder,
-                    icon = me.proton.core.presentation.R.drawable.ic_proton_eraser,
-                    textColor = ProtonTheme.colors.textNorm
-                ),
-                ItemAction(
-                    onSelect = { onDeleteItemClicked(it) },
-                    title = R.string.action_move_to_trash,
-                    icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
-                    textColor = ProtonTheme.colors.notificationError
+    PassSwipeRefresh(
+        state = SwipeRefreshState(false),
+        onRefresh = onRefresh
+    ) {
+        if (items.isNotEmpty()) {
+            ItemsList(
+                items = items,
+                modifier = modifier,
+                onItemClick = onItemClick,
+                itemActions = listOf(
+                    ItemAction(
+                        onSelect = { goToEdit(navigation, it) },
+                        title = R.string.action_edit_placeholder,
+                        icon = me.proton.core.presentation.R.drawable.ic_proton_eraser,
+                        textColor = ProtonTheme.colors.textNorm
+                    ),
+                    ItemAction(
+                        onSelect = { onDeleteItemClicked(it) },
+                        title = R.string.action_move_to_trash,
+                        icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
+                        textColor = ProtonTheme.colors.notificationError
+                    )
                 )
             )
-        )
-    } else {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Text(
-                text = stringResource(R.string.message_no_saved_credentials),
-                modifier = Modifier.align(Alignment.Center)
-            )
+        } else {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Text(
+                    text = stringResource(R.string.message_no_saved_credentials),
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }
     }
 }

@@ -295,7 +295,11 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     @Suppress("ReturnCount")
-    override suspend fun addPackageToItem(shareId: ShareId, itemId: ItemId, packageName: PackageName): Result<Item> {
+    override suspend fun addPackageToItem(
+        shareId: ShareId,
+        itemId: ItemId,
+        packageName: PackageName
+    ): Result<Item> {
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
         val item = entityToDomain(itemEntity)
 
@@ -311,7 +315,8 @@ class ItemRepositoryImpl @Inject constructor(
         }
         val updatedContents = newItemContents.with(packageName)
 
-        val userId = accountManager.getPrimaryUserId().first() ?: throw CryptoException("UserId cannot be null")
+        val userId = accountManager.getPrimaryUserId().first()
+            ?: throw CryptoException("UserId cannot be null")
         val shareResult = shareRepository.getById(userId, shareId)
         when (shareResult) {
             is Result.Error -> return Result.Error(shareResult.exception)
@@ -321,6 +326,11 @@ class ItemRepositoryImpl @Inject constructor(
         val share = shareResult.data ?: throw CryptoException("Share cannot be null")
 
         return performUpdate(userId, share, item, updatedContents)
+    }
+
+    override suspend fun refreshItems(userId: UserId, share: Share): Result<List<Item>> {
+        val address = requireNotNull(userAddressRepository.getAddresses(userId).primary())
+        return fetchItemsForShare(address, share)
     }
 
     private suspend fun performUpdate(

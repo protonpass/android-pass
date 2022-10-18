@@ -24,13 +24,14 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.domain.ShareId
 
 @ExperimentalMaterialApi
 @Composable
 fun BottomSheetContents(
     state: ModalBottomSheetState,
-    shareId: ShareId?,
+    shareId: Option<ShareId>,
     navigation: HomeScreenNavigation
 ) {
     val scope = rememberCoroutineScope()
@@ -44,25 +45,19 @@ fun BottomSheetContents(
         BottomSheetItem(me.proton.core.presentation.R.drawable.ic_proton_key, R.string.action_login, onItemClick = {
             scope.launch {
                 state.hide()
-                if (shareId != null) {
-                    navigation.toCreateLogin(shareId)
-                }
+                shareId.map { navigation.toCreateLogin(it) }
             }
         })
         BottomSheetItem(me.proton.core.presentation.R.drawable.ic_proton_alias, R.string.action_alias, onItemClick = {
             scope.launch {
                 state.hide()
-                if (shareId != null) {
-                    navigation.toCreateAlias(shareId)
-                }
+                shareId.map { navigation.toCreateAlias(it) }
             }
         })
         BottomSheetItem(me.proton.core.presentation.R.drawable.ic_proton_note, R.string.action_note, onItemClick = {
             scope.launch {
                 state.hide()
-                if (shareId != null) {
-                    navigation.toCreateNote(shareId)
-                }
+                shareId.map { navigation.toCreateNote(it) }
             }
         })
         BottomSheetItem(
@@ -71,9 +66,7 @@ fun BottomSheetContents(
             onItemClick = {
                 scope.launch {
                     state.hide()
-                    if (shareId != null) {
-                        navigation.toCreatePassword(shareId)
-                    }
+                    shareId.map { navigation.toCreatePassword(it) }
                 }
             }
         )

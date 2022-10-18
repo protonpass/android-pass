@@ -6,7 +6,6 @@ import android.provider.Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE
 import android.view.autofill.AutofillManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -22,12 +21,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.swiperefresh.SwipeRefreshState
@@ -37,13 +34,15 @@ import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.pass.common.api.Option
+import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.presentation.components.common.PassSwipeRefresh
 import me.proton.core.pass.presentation.components.common.item.ItemAction
 import me.proton.core.pass.presentation.components.common.item.ItemsList
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.uievents.IsLoadingState
+import me.proton.core.pass.presentation.uievents.IsRefreshingState
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -98,7 +97,7 @@ private fun HomeContent(
     onStopSearching: () -> Unit,
     sendItemToTrash: (ItemUiModel) -> Unit,
     onDrawerIconClick: () -> Unit,
-    onAddItemClick: (ShareId?) -> Unit,
+    onAddItemClick: (Option<ShareId>) -> Unit,
     onRefresh: () -> Unit
 ) {
 
@@ -150,7 +149,7 @@ private fun HomeContent(
                 }
             }
 
-            if (uiState.homeListUiState.errorMessage != null) {
+            if (uiState.homeListUiState.errorMessage is Some) {
                 Text("Something went boom: ${uiState.homeListUiState.errorMessage}")
             }
         }
@@ -193,42 +192,31 @@ private fun Home(
     onItemClick: (ItemUiModel) -> Unit,
     navigation: HomeScreenNavigation,
     onDeleteItemClicked: (ItemUiModel) -> Unit,
-    isRefreshing: IsLoadingState,
+    isRefreshing: IsRefreshingState,
     onRefresh: () -> Unit
 ) {
-    PassSwipeRefresh(
-        state = SwipeRefreshState(isRefreshing is IsLoadingState.Loading),
-        onRefresh = onRefresh
-    ) {
-        if (items.isNotEmpty()) {
-            ItemsList(
-                items = items,
-                modifier = modifier,
-                onItemClick = onItemClick,
-                itemActions = listOf(
-                    ItemAction(
-                        onSelect = { goToEdit(navigation, it) },
-                        title = R.string.action_edit_placeholder,
-                        icon = me.proton.core.presentation.R.drawable.ic_proton_eraser,
-                        textColor = ProtonTheme.colors.textNorm
-                    ),
-                    ItemAction(
-                        onSelect = { onDeleteItemClicked(it) },
-                        title = R.string.action_move_to_trash,
-                        icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
-                        textColor = ProtonTheme.colors.notificationError
-                    )
-                )
+    ItemsList(
+        items = items,
+        emptyListMessage = R.string.message_no_saved_credentials,
+        modifier = modifier,
+        onItemClick = onItemClick,
+        onRefresh = onRefresh,
+        isRefreshing = isRefreshing,
+        itemActions = listOf(
+            ItemAction(
+                onSelect = { goToEdit(navigation, it) },
+                title = R.string.action_edit_placeholder,
+                icon = me.proton.core.presentation.R.drawable.ic_proton_eraser,
+                textColor = ProtonTheme.colors.textNorm
+            ),
+            ItemAction(
+                onSelect = { onDeleteItemClicked(it) },
+                title = R.string.action_move_to_trash,
+                icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
+                textColor = ProtonTheme.colors.notificationError
             )
-        } else {
-            Box(modifier = Modifier.fillMaxSize()) {
-                Text(
-                    text = stringResource(R.string.message_no_saved_credentials),
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-        }
-    }
+        )
+    )
 }
 
 internal fun goToEdit(

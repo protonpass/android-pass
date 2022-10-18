@@ -2,7 +2,6 @@ package me.proton.android.pass.ui.trash
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.ExperimentalMaterialApi
@@ -23,7 +22,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,6 +36,8 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.presentation.components.common.item.ItemAction
 import me.proton.core.pass.presentation.components.common.item.ItemsList
 import me.proton.core.pass.presentation.components.model.ItemUiModel
+import me.proton.core.pass.presentation.uievents.IsLoadingState
+import me.proton.core.pass.presentation.uievents.IsRefreshingState
 
 @ExperimentalMaterialApi
 @Composable
@@ -61,16 +61,17 @@ fun TrashScreen(
         Box(modifier = modifier.padding(contentPadding)) {
             var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
 
-            when (val state = uiState) {
-                is TrashUiState.Loading -> LoadingDialog()
-                is TrashUiState.Content -> {
+            when (uiState.isLoading) {
+                IsLoadingState.Loading -> LoadingDialog()
+                IsLoadingState.NotLoading -> {
                     Trash(
-                        items = state.items,
+                        items = uiState.items,
                         onRestoreClicked = { viewModel.restoreItem(it) },
-                        onDeleteItemClicked = { itemToDelete = it }
+                        onDeleteItemClicked = { itemToDelete = it },
+                        onRefresh = { viewModel.onRefresh() },
+                        isRefreshing = uiState.isRefreshing
                     )
                 }
-                is TrashUiState.Error -> Text("Something went boom: ${state.message}")
             }
 
             ConfirmClearTrashDialog(
@@ -149,35 +150,31 @@ internal fun Trash(
     items: List<ItemUiModel>,
     modifier: Modifier = Modifier,
     onRestoreClicked: (ItemUiModel) -> Unit,
-    onDeleteItemClicked: (ItemUiModel) -> Unit
+    onDeleteItemClicked: (ItemUiModel) -> Unit,
+    onRefresh: () -> Unit,
+    isRefreshing: IsRefreshingState,
 ) {
-    if (items.isNotEmpty()) {
-        ItemsList(
-            items = items,
-            modifier = modifier,
-            itemActions = listOf(
-                ItemAction(
-                    onSelect = { onRestoreClicked(it) },
-                    title = R.string.action_restore,
-                    icon = me.proton.core.presentation.R.drawable.ic_proton_eraser,
-                    textColor = ProtonTheme.colors.textNorm
-                ),
-                ItemAction(
-                    onSelect = { onDeleteItemClicked(it) },
-                    title = R.string.action_delete,
-                    icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
-                    textColor = ProtonTheme.colors.notificationError
-                )
+    ItemsList(
+        items = items,
+        emptyListMessage = R.string.message_no_trashed_credentials,
+        modifier = modifier,
+        onRefresh = onRefresh,
+        isRefreshing = isRefreshing,
+        itemActions = listOf(
+            ItemAction(
+                onSelect = { onRestoreClicked(it) },
+                title = R.string.action_restore,
+                icon = me.proton.core.presentation.R.drawable.ic_proton_eraser,
+                textColor = ProtonTheme.colors.textNorm
+            ),
+            ItemAction(
+                onSelect = { onDeleteItemClicked(it) },
+                title = R.string.action_delete,
+                icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
+                textColor = ProtonTheme.colors.notificationError
             )
         )
-    } else {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Text(
-                text = stringResource(R.string.message_no_trashed_credentials),
-                modifier = Modifier.align(Alignment.Center)
-            )
-        }
-    }
+    )
 }
 
 @Stable

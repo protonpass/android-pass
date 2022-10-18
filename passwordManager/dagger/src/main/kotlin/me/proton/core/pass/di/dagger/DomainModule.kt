@@ -10,6 +10,8 @@ import me.proton.core.pass.domain.usecases.ObserveActiveItems
 import me.proton.core.pass.domain.usecases.ObserveActiveItemsImpl
 import me.proton.core.pass.domain.usecases.ObserveActiveShare
 import me.proton.core.pass.domain.usecases.ObserveActiveShareImpl
+import me.proton.core.pass.domain.usecases.RefreshContent
+import me.proton.core.pass.domain.usecases.RefreshContentImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -23,4 +25,7 @@ abstract class DomainModule {
 
     @Binds
     abstract fun bindObserveActiveShare(observeActiveShareImpl: ObserveActiveShareImpl): ObserveActiveShare
+
+    @Binds
+    abstract fun bindRefreshContent(refreshContentImpl: RefreshContentImpl): RefreshContent
 }

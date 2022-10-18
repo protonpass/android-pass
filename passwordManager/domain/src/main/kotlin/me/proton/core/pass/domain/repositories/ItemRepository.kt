@@ -39,4 +39,9 @@ interface ItemRepository {
         itemId: ItemId,
         packageName: PackageName
     ): Result<Item>
+
+    suspend fun refreshItems(
+        userId: UserId,
+        share: Share
+    ): Result<List<Item>>
 }

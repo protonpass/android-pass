@@ -54,7 +54,7 @@ internal class CreateLoginViewModelTest {
 
             createLoginViewModel.loginUiState.test {
                 assertThat(awaitItem())
-                    .isEqualTo(Initial.copy(errorList = setOf(LoginItemValidationErrors.BlankTitle)))
+                    .isEqualTo(Initial.copy(validationErrors = setOf(LoginItemValidationErrors.BlankTitle)))
             }
         }
 

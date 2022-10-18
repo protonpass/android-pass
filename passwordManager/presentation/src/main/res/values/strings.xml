@@ -90,6 +90,9 @@
     <string name="field_username">Username</string>
     <string name="field_password">Password</string>
 
+    <string name="create_login_creation_error">Could not create Login</string>
+    <string name="create_login_empty_share_id">Share Id cannot be empty</string>
+
     <!-- Create Note -->
     <string name="title_create_note">Create note</string>
     <string name="title_edit_note">Edit note</string>

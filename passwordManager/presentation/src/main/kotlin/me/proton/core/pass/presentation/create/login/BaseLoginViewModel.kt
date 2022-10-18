@@ -30,7 +30,7 @@ abstract class BaseLoginViewModel(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val shareId: Option<ShareId> =
+    protected val shareId: Option<ShareId> =
         Option.fromNullable(savedStateHandle.get<String>("shareId")?.let { ShareId(it) })
 
     private val activeShareIdState: Flow<Option<ShareId>> = MutableStateFlow(shareId)

@@ -6,7 +6,6 @@ import kotlinx.coroutines.coroutineScope
 import me.proton.core.domain.entity.UserId
 import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.common.api.map
-import me.proton.core.pass.common.api.onSuccess
 import me.proton.core.pass.domain.repositories.ItemRepository
 import me.proton.core.pass.domain.repositories.ShareRepository
 import javax.inject.Inject
@@ -22,7 +21,7 @@ class RefreshContentImpl @Inject constructor(
 
     override suspend fun invoke(userId: UserId): Result<Unit> =
         shareRepository.refreshShares(userId)
-            .onSuccess { shares ->
+            .map { shares ->
                 coroutineScope {
                     val refreshItemsResults = shares.map { share ->
                         async { itemRepository.refreshItems(userId, share) }
@@ -36,5 +35,4 @@ class RefreshContentImpl @Inject constructor(
                     }
                 }
             }
-            .map { }
 }

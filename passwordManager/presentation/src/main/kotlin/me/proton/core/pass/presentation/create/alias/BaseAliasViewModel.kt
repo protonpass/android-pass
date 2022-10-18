@@ -1,25 +1,33 @@
 package me.proton.core.pass.presentation.create.alias
 
 import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.entity.UserId
+import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.domain.AliasSuffix
+import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
 
 abstract class BaseAliasViewModel(
-    private val accountManager: AccountManager
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    protected val shareId: Option<ShareId> =
+        Option.fromNullable(savedStateHandle.get<String>("shareId")?.let { ShareId(it) })
+
+    private val shareIdState: Flow<Option<ShareId>> = MutableStateFlow(shareId)
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(AliasItem.Empty)
@@ -29,14 +37,19 @@ abstract class BaseAliasViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val aliasItemValidationErrorsState: MutableStateFlow<Set<AliasItemValidationErrors>> =
         MutableStateFlow(emptySet())
+    protected val mutableSnackbarMessage: MutableSharedFlow<AliasSnackbarMessage> =
+        MutableSharedFlow(extraBufferCapacity = 1)
+    val snackbarMessage: SharedFlow<AliasSnackbarMessage> = mutableSnackbarMessage
 
     val aliasUiState: StateFlow<CreateUpdateAliasUiState> = combine(
+        shareIdState,
         aliasItemState,
         isLoadingState,
         isItemSavedState,
         aliasItemValidationErrorsState
-    ) { aliasItem, isLoading, isItemSaved, aliasItemValidationErrors ->
+    ) { shareId, aliasItem, isLoading, isItemSaved, aliasItemValidationErrors ->
         CreateUpdateAliasUiState(
+            shareId = shareId,
             aliasItem = aliasItem,
             errorList = aliasItemValidationErrors,
             isLoadingState = isLoading,
@@ -113,11 +126,6 @@ abstract class BaseAliasViewModel(
                 isMailboxListApplicable = allSelectedMailboxes.isNotEmpty()
             )
         }
-    }
-
-    protected suspend fun withUserId(block: suspend (UserId) -> Unit) {
-        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        userId?.let { block(it) }
     }
 
     private fun getAliasToBeCreated(alias: String, suffix: AliasSuffix?): String? {

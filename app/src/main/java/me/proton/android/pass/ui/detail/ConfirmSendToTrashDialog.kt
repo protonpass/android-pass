@@ -1,0 +1,41 @@
+package me.proton.android.pass.ui.detail
+
+import androidx.annotation.StringRes
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.ui.res.stringResource
+import me.proton.core.pass.domain.Item
+import me.proton.core.presentation.R
+
+@Composable
+fun ConfirmSendToTrashDialog(
+    itemState: MutableState<Item?>,
+    @StringRes title: Int,
+    @StringRes message: Int,
+    itemName: String,
+    onConfirm: (Item) -> Unit
+) {
+    val item = itemState.value ?: return
+
+    AlertDialog(
+        onDismissRequest = { itemState.value = null },
+        title = { Text(stringResource(title)) },
+        text = { Text(stringResource(message, itemName)) },
+        confirmButton = {
+            TextButton(onClick = {
+                onConfirm(item)
+                itemState.value = null
+            }) {
+                Text(text = stringResource(id = R.string.presentation_alert_ok))
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = { itemState.value = null }) {
+                Text(text = stringResource(id = R.string.presentation_alert_cancel))
+            }
+        }
+    )
+}

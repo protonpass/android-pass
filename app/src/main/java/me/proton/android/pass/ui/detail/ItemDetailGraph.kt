@@ -4,10 +4,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.ui.navigation.AppNavigator
-import me.proton.android.pass.ui.navigation.NavArgId
 import me.proton.android.pass.ui.navigation.NavItem
 import me.proton.android.pass.ui.navigation.composable
-import me.proton.android.pass.ui.navigation.findArg
 import me.proton.core.pass.domain.ItemType
 
 @OptIn(
@@ -18,8 +16,6 @@ fun NavGraphBuilder.itemDetailGraph(nav: AppNavigator) {
     composable(NavItem.ViewItem) {
         ItemDetailScreen(
             onUpClick = { nav.onBackClick() },
-            shareId = it.findArg(NavArgId.ShareId),
-            itemId = it.findArg(NavArgId.ItemId),
             onEditClick = { shareId, itemId, itemType ->
                 val destination = when (itemType) {
                     is ItemType.Login -> NavItem.EditLogin

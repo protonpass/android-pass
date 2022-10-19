@@ -39,3 +39,5 @@ data class Some<out T>(val value: T) : Option<T> {
         internal val unit: Option<Unit> = Some(Unit)
     }
 }
+
+fun <T> T?.toOption(): Option<T> = this?.let { Some(it) } ?: None

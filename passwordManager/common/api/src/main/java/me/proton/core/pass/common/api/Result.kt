@@ -56,3 +56,5 @@ fun <T> ApiResult<T>.toResult(): Result<T> =
     } catch (e: Throwable) {
         Result.Error(e)
     }
+
+fun <T> T?.toResult(): Result<T> = this?.let { Result.Success(it) } ?: Result.Error()

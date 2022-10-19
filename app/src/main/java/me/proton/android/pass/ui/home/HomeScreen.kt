@@ -72,8 +72,6 @@ fun HomeScreen(
             }
     }
 
-    val coroutineScope = rememberCoroutineScope()
-
     RequestAutofillIfSupported()
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
@@ -97,7 +95,7 @@ fun HomeScreen(
                 onStopSearching = { viewModel.onStopSearching() },
                 sendItemToTrash = { viewModel.sendItemToTrash(it) },
                 onDrawerIconClick = onDrawerIconClick,
-                onAddItemClick = { coroutineScope.launch { bottomSheetState.show() } },
+                onAddItemClick = { scope.launch { bottomSheetState.show() } },
                 onRefresh = { viewModel.onRefresh() }
             )
         }

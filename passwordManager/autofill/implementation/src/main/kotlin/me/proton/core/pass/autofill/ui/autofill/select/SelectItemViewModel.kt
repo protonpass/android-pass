@@ -64,7 +64,7 @@ class SelectItemViewModel @Inject constructor(
     val uiState: StateFlow<SelectItemUiState> = combine(
         listItems,
         isRefreshing,
-        itemClickedFlow,
+        itemClickedFlow
     ) { itemsResult, isRefreshing, itemClicked ->
         val isLoading = IsLoadingState.from(itemsResult is Result.Loading)
         val items = when (itemsResult) {
@@ -82,7 +82,7 @@ class SelectItemViewModel @Inject constructor(
             isLoading = isLoading,
             isRefreshing = isRefreshing,
             itemClickedEvent = itemClicked,
-            items = items,
+            items = items
         )
     }
         .stateIn(

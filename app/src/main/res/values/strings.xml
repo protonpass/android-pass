@@ -60,6 +60,8 @@
     <string name="error_observing_items">Error observing items</string>
     <string name="error_observing_share">Error observing share</string>
     <string name="error_refreshing">Error performing refresh</string>
+    <string name="error_clearing_trash">Error clearing trash</string>
+    <string name="error_deleting_item">Error deleting item</string>
 
     <!-- Detail -->
     <string name="detail_init_error">Could not initialise the element</string>

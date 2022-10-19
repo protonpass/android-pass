@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -23,6 +25,7 @@ import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.common.api.map
+import me.proton.core.pass.common.api.onError
 import me.proton.core.pass.domain.Item
 import me.proton.core.pass.domain.usecases.ObserveActiveShare
 import me.proton.core.pass.domain.usecases.ObserveCurrentUser
@@ -54,6 +57,10 @@ class HomeViewModel @Inject constructor(
             }
         }
 
+    private val mutableSnackbarMessage: MutableSharedFlow<HomeSnackbarMessage> =
+        MutableSharedFlow(extraBufferCapacity = 1)
+    val snackbarMessage: SharedFlow<HomeSnackbarMessage> = mutableSnackbarMessage
+
     private val searchQuery: MutableStateFlow<String> = MutableStateFlow("")
     private val inSearchMode: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
@@ -80,6 +87,7 @@ class HomeViewModel @Inject constructor(
                     itemsResult.exception ?: Exception(defaultMessage),
                     defaultMessage
                 )
+                mutableSnackbarMessage.tryEmit(HomeSnackbarMessage.ObserveItemsError)
                 emptyList<ItemUiModel>() to Option.fromNullable(itemsResult.exception?.message)
             }
         }
@@ -94,6 +102,7 @@ class HomeViewModel @Inject constructor(
                     shareIdResult.exception ?: Exception(defaultMessage),
                     defaultMessage
                 )
+                mutableSnackbarMessage.tryEmit(HomeSnackbarMessage.ObserveShareError)
                 None to Option.fromNullable(shareIdResult.exception?.message)
             }
         }
@@ -159,6 +168,11 @@ class HomeViewModel @Inject constructor(
         if (userId != null) {
             isRefreshing.update { IsRefreshingState.Refreshing }
             refreshContent(userId)
+                .onError {
+                    val message = "Error in refresh"
+                    PassLogger.i(TAG, it ?: Exception(message), message)
+                    mutableSnackbarMessage.tryEmit(HomeSnackbarMessage.RefreshError)
+                }
             isRefreshing.update { IsRefreshingState.NotRefreshing }
         }
     }

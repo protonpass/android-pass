@@ -25,19 +25,24 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.swiperefresh.SwipeRefreshState
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
+import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
+import me.proton.core.pass.presentation.components.common.PassSnackbarHost
+import me.proton.core.pass.presentation.components.common.PassSnackbarHostState
 import me.proton.core.pass.presentation.components.common.item.ItemAction
 import me.proton.core.pass.presentation.components.common.item.ItemsList
 import me.proton.core.pass.presentation.components.model.ItemUiModel
@@ -55,6 +60,21 @@ fun HomeScreen(
     val viewModel = hiltViewModel<HomeViewModel>()
     val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
+    val scope = rememberCoroutineScope()
+    val snackbarHostState = remember { PassSnackbarHostState() }
+    val snackbarMessages = HomeSnackbarMessage.values()
+        .associateWith { stringResource(id = it.id) }
+    LaunchedEffect(Unit) {
+        viewModel.snackbarMessage
+            .collectLatest { message ->
+                scope.launch {
+                    snackbarMessages[message]?.let {
+                        snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
+                    }
+                }
+            }
+    }
+
     val coroutineScope = rememberCoroutineScope()
 
     RequestAutofillIfSupported()
@@ -68,18 +88,22 @@ fun HomeScreen(
             )
         }
     ) {
-        HomeContent(
-            modifier = modifier,
-            uiState = uiState,
-            homeScreenNavigation = homeScreenNavigation,
-            onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
-            onEnterSearch = { viewModel.onEnterSearch() },
-            onStopSearching = { viewModel.onStopSearching() },
-            sendItemToTrash = { viewModel.sendItemToTrash(it) },
-            onDrawerIconClick = onDrawerIconClick,
-            onAddItemClick = { coroutineScope.launch { bottomSheetState.show() } },
-            onRefresh = { viewModel.onRefresh() }
-        )
+        Scaffold(
+            snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) }
+        ) { padding ->
+            HomeContent(
+                modifier = modifier.padding(padding),
+                uiState = uiState,
+                homeScreenNavigation = homeScreenNavigation,
+                onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
+                onEnterSearch = { viewModel.onEnterSearch() },
+                onStopSearching = { viewModel.onStopSearching() },
+                sendItemToTrash = { viewModel.sendItemToTrash(it) },
+                onDrawerIconClick = onDrawerIconClick,
+                onAddItemClick = { coroutineScope.launch { bottomSheetState.show() } },
+                onRefresh = { viewModel.onRefresh() }
+            )
+        }
     }
 }
 

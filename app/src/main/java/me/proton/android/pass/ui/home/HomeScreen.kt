@@ -11,6 +11,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -83,22 +84,19 @@ fun HomeScreen(
             )
         }
     ) {
-        Scaffold(
+        HomeContent(
+            modifier = modifier,
+            uiState = uiState,
+            homeScreenNavigation = homeScreenNavigation,
+            onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
+            onEnterSearch = { viewModel.onEnterSearch() },
+            onStopSearching = { viewModel.onStopSearching() },
+            sendItemToTrash = { viewModel.sendItemToTrash(it) },
+            onDrawerIconClick = onDrawerIconClick,
+            onAddItemClick = { scope.launch { bottomSheetState.show() } },
+            onRefresh = { viewModel.onRefresh() },
             snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) }
-        ) { padding ->
-            HomeContent(
-                modifier = modifier.padding(padding),
-                uiState = uiState,
-                homeScreenNavigation = homeScreenNavigation,
-                onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
-                onEnterSearch = { viewModel.onEnterSearch() },
-                onStopSearching = { viewModel.onStopSearching() },
-                sendItemToTrash = { viewModel.sendItemToTrash(it) },
-                onDrawerIconClick = onDrawerIconClick,
-                onAddItemClick = { scope.launch { bottomSheetState.show() } },
-                onRefresh = { viewModel.onRefresh() }
-            )
-        }
+        )
     }
 }
 
@@ -117,7 +115,8 @@ private fun HomeContent(
     sendItemToTrash: (ItemUiModel) -> Unit,
     onDrawerIconClick: () -> Unit,
     onAddItemClick: (Option<ShareId>) -> Unit,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    snackbarHost: @Composable (SnackbarHostState) -> Unit
 ) {
 
     // Only enable the backhandler if we are in search mode
@@ -138,7 +137,8 @@ private fun HomeContent(
                 onDrawerIconClick = onDrawerIconClick,
                 onAddItemClick = { onAddItemClick(uiState.homeListUiState.selectedShare) }
             )
-        }
+        },
+        snackbarHost = snackbarHost
     ) { contentPadding ->
         Box {
             when (uiState.homeListUiState.isLoading) {

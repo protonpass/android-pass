@@ -11,7 +11,7 @@ import me.proton.core.pass.presentation.uievents.IsSentToTrashState
 data class ItemDetailScreenUiState(
     val model: Option<ItemModelUiState>,
     val isLoading: IsLoadingState,
-    val isSentToTrash: IsSentToTrashState,
+    val isSentToTrash: IsSentToTrashState
 ) {
     companion object {
         val Loading = ItemDetailScreenUiState(

@@ -8,14 +8,14 @@ data class SelectItemUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
     val itemClickedEvent: ItemClickedEvent,
-    val items: List<ItemUiModel>,
+    val items: List<ItemUiModel>
 ) {
     companion object {
         val Loading = SelectItemUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
             itemClickedEvent = ItemClickedEvent.None,
-            items = emptyList(),
+            items = emptyList()
         )
     }
 }

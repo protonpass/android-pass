@@ -28,7 +28,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.accompanist.swiperefresh.SwipeRefreshState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R

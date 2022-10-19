@@ -24,7 +24,7 @@ internal fun SelectItemScreenContent(
 ) {
     Scaffold(
         modifier = modifier,
-        snackbarHost = snackbarHost,
+        snackbarHost = snackbarHost
     ) { padding ->
         when (state.isLoading) {
             IsLoadingState.Loading -> LoadingDialog()
@@ -52,7 +52,7 @@ fun PreviewSelectItemScreenContent(
             state = state,
             onItemClicked = {},
             onRefresh = {},
-            snackbarHost = {},
+            snackbarHost = {}
         )
     }
 }

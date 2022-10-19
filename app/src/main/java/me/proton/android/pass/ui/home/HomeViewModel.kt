@@ -116,7 +116,7 @@ class HomeViewModel @Inject constructor(
                 isLoading = isLoading,
                 isRefreshing = isRefreshing,
                 items = items,
-                selectedShare = selectedShare,
+                selectedShare = selectedShare
             ),
             searchUiState = SearchUiState(
                 searchQuery = searchQuery,

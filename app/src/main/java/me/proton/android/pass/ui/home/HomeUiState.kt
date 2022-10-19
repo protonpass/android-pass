@@ -26,14 +26,14 @@ data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
     val items: List<ItemUiModel>,
-    val selectedShare: Option<ShareId> = None,
+    val selectedShare: Option<ShareId> = None
 ) {
     companion object {
         val Loading = HomeListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
             items = emptyList(),
-            selectedShare = None,
+            selectedShare = None
         )
     }
 }

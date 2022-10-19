@@ -32,7 +32,7 @@ fun ItemDetailContent(
     onMoveToTrash: (Item) -> Unit,
     onSnackbarMessage: (DetailSnackbarMessages) -> Unit
 ) {
-    val itemToDelete = remember { mutableStateOf<Item?>(null) }
+    val itemToDelete = remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -40,7 +40,7 @@ fun ItemDetailContent(
                 uiState = uiState.model,
                 onUpClick = onUpClick,
                 onEditClick = onEditClick,
-                onDeleteClick = { itemToDelete.value = it },
+                onDeleteClick = { itemToDelete.value = true },
                 onSnackbarMessage = onSnackbarMessage
             )
         }
@@ -59,13 +59,16 @@ fun ItemDetailContent(
                         is ItemType.Alias -> AliasDetail(item, modifier)
                         ItemType.Password -> {}
                     }
-                    ConfirmSendToTrashDialog(
-                        itemState = itemToDelete,
-                        itemName = uiState.model.value.name,
-                        title = R.string.alert_confirm_item_send_to_trash_title,
-                        message = R.string.alert_confirm_item_send_to_trash_message,
-                        onConfirm = onMoveToTrash
-                    )
+                    if (itemToDelete.value) {
+                        ConfirmSendToTrashDialog(
+                            item = item,
+                            itemName = uiState.model.value.name,
+                            title = R.string.alert_confirm_item_send_to_trash_title,
+                            message = R.string.alert_confirm_item_send_to_trash_message,
+                            onConfirm = onMoveToTrash,
+                            onDismiss = { itemToDelete.value = false }
+                        )
+                    }
                 }
             }
         }

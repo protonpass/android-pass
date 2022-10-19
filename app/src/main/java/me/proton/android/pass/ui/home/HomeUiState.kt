@@ -27,7 +27,6 @@ data class HomeListUiState(
     val isRefreshing: IsRefreshingState,
     val items: List<ItemUiModel>,
     val selectedShare: Option<ShareId> = None,
-    val errorMessage: Option<String> = None
 ) {
     companion object {
         val Loading = HomeListUiState(
@@ -35,7 +34,6 @@ data class HomeListUiState(
             isRefreshing = IsRefreshingState.NotRefreshing,
             items = emptyList(),
             selectedShare = None,
-            errorMessage = None
         )
     }
 }

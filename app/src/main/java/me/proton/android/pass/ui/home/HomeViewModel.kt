@@ -24,7 +24,6 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.pass.common.api.None
 import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.common.api.Result
-import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.common.api.map
 import me.proton.core.pass.common.api.onError
 import me.proton.core.pass.domain.Item
@@ -82,9 +81,9 @@ class HomeViewModel @Inject constructor(
             shareIdResult is Result.Loading || itemsResult is Result.Loading
         )
 
-        val (items, itemsErrorMessage) = when (itemsResult) {
-            Result.Loading -> emptyList<ItemUiModel>() to None
-            is Result.Success -> itemsResult.data to None
+        val items = when (itemsResult) {
+            Result.Loading -> emptyList<ItemUiModel>()
+            is Result.Success -> itemsResult.data
             is Result.Error -> {
                 val defaultMessage = "Observe items error"
                 PassLogger.i(
@@ -93,13 +92,13 @@ class HomeViewModel @Inject constructor(
                     defaultMessage
                 )
                 mutableSnackbarMessage.tryEmit(HomeSnackbarMessage.ObserveItemsError)
-                emptyList<ItemUiModel>() to Option.fromNullable(itemsResult.exception?.message)
+                emptyList<ItemUiModel>()
             }
         }
 
-        val (selectedShare, shareErrorMessage) = when (shareIdResult) {
-            Result.Loading -> None to None
-            is Result.Success -> Option.fromNullable(shareIdResult.data) to None
+        val selectedShare = when (shareIdResult) {
+            Result.Loading -> None
+            is Result.Success -> Option.fromNullable(shareIdResult.data)
             is Result.Error -> {
                 val defaultMessage = "Observe active share error"
                 PassLogger.i(
@@ -108,13 +107,8 @@ class HomeViewModel @Inject constructor(
                     defaultMessage
                 )
                 mutableSnackbarMessage.tryEmit(HomeSnackbarMessage.ObserveShareError)
-                None to Option.fromNullable(shareIdResult.exception?.message)
+                None
             }
-        }
-
-        val errorMessage = when (itemsErrorMessage) {
-            is Some -> itemsErrorMessage
-            None -> shareErrorMessage
         }
 
         HomeUiState(
@@ -123,7 +117,6 @@ class HomeViewModel @Inject constructor(
                 isRefreshing = isRefreshing,
                 items = items,
                 selectedShare = selectedShare,
-                errorMessage = errorMessage
             ),
             searchUiState = SearchUiState(
                 searchQuery = searchQuery,

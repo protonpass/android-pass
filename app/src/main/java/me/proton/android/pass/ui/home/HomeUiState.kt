@@ -12,7 +12,14 @@ import me.proton.core.pass.presentation.uievents.IsRefreshingState
 data class HomeUiState(
     val homeListUiState: HomeListUiState,
     val searchUiState: SearchUiState
-)
+) {
+    companion object {
+        val Loading = HomeUiState(
+            homeListUiState = HomeListUiState.Loading,
+            searchUiState = SearchUiState.Initial
+        )
+    }
+}
 
 @Immutable
 data class HomeListUiState(
@@ -21,10 +28,27 @@ data class HomeListUiState(
     val items: List<ItemUiModel>,
     val selectedShare: Option<ShareId> = None,
     val errorMessage: Option<String> = None
-)
+) {
+    companion object {
+        val Loading = HomeListUiState(
+            isLoading = IsLoadingState.Loading,
+            isRefreshing = IsRefreshingState.NotRefreshing,
+            items = emptyList(),
+            selectedShare = None,
+            errorMessage = None
+        )
+    }
+}
 
 @Immutable
 data class SearchUiState(
     val searchQuery: String,
     val inSearchMode: Boolean
-)
+) {
+    companion object {
+        val Initial = SearchUiState(
+            searchQuery = "",
+            inSearchMode = false
+        )
+    }
+}

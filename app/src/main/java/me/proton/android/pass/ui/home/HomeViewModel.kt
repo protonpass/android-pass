@@ -129,19 +129,7 @@ class HomeViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = HomeUiState(
-                homeListUiState = HomeListUiState(
-                    isLoading = IsLoadingState.Loading,
-                    isRefreshing = IsRefreshingState.NotRefreshing,
-                    items = emptyList(),
-                    selectedShare = None,
-                    errorMessage = None
-                ),
-                searchUiState = SearchUiState(
-                    searchQuery = "",
-                    inSearchMode = false
-                )
-            )
+            initialValue = HomeUiState.Loading
         )
 
     fun onSearchQueryChange(query: String) = viewModelScope.launch {

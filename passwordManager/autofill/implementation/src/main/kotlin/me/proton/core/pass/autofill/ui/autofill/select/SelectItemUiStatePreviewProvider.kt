@@ -1,7 +1,6 @@
 package me.proton.core.pass.autofill.ui.autofill.select
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import me.proton.core.pass.common.api.None
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
@@ -16,7 +15,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                 isLoading = IsLoadingState.Loading,
                 isRefreshing = IsRefreshingState.NotRefreshing,
                 items = emptyList(),
-                errorMessage = None
+                itemClickedEvent = ItemClickedEvent.None
             ),
             SelectItemUiState(
                 isLoading = IsLoadingState.NotLoading,
@@ -31,7 +30,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                         )
                     )
                 ),
-                errorMessage = None
+                itemClickedEvent = ItemClickedEvent.None
             )
         )
 }

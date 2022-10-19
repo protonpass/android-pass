@@ -1,7 +1,5 @@
 package me.proton.android.pass.ui.detail
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -54,25 +52,21 @@ fun ItemDetailScreen(
                 }
             }
     }
-    Scaffold(
-        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) }
-    ) { innerPadding ->
-        ItemDetailContent(
-            modifier = modifier.padding(innerPadding),
-            uiState = uiState,
-            onUpClick = onUpClick,
-            onEditClick = onEditClick,
-            onMoveToTrash = { item: Item ->
-                viewModel.sendItemToTrash(item)
-            },
-            onSnackbarMessage = { message ->
-                coroutineScope.launch {
-                    snackbarMessages[message]?.let {
-                        snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
-                    }
+
+    ItemDetailContent(
+        modifier = modifier,
+        uiState = uiState,
+        onUpClick = onUpClick,
+        onEditClick = onEditClick,
+        onMoveToTrash = { item: Item -> viewModel.sendItemToTrash(item) },
+        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) },
+        onSnackbarMessage = { message ->
+            coroutineScope.launch {
+                snackbarMessages[message]?.let {
+                    snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
                 }
             }
-        )
-    }
+        }
+    )
 }
 

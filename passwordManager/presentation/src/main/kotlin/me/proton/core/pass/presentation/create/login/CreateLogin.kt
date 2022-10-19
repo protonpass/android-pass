@@ -1,8 +1,6 @@
 package me.proton.core.pass.presentation.create.login
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -55,31 +53,28 @@ fun CreateLogin(
         override val onAddWebsite: () -> Unit = { viewModel.onAddWebsite() }
         override val onRemoveWebsite: (Int) -> Unit = { idx: Int -> viewModel.onRemoveWebsite(idx) }
     }
-    Scaffold(
-        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) }
-    ) { innerPadding ->
-        LoginContent(
-            modifier = modifier.padding(innerPadding),
-            uiState = uiState,
-            topBarTitle = R.string.title_create_login,
-            topBarActionName = R.string.action_save,
-            onUpClick = onUpClick,
-            onSuccess = onSuccess,
-            onSubmit = { shareId -> viewModel.createItem(shareId) },
-            onTitleChange = { viewModel.onTitleChange(it) },
-            onUsernameChange = { viewModel.onUsernameChange(it) },
-            onPasswordChange = { viewModel.onPasswordChange(it) },
-            onWebsiteChange = onWebsiteChange,
-            onNoteChange = { viewModel.onNoteChange(it) },
-            onSnackbarMessage = { message ->
-                coroutineScope.launch {
-                    snackbarMessages[message]?.let {
-                        snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
-                    }
+    LoginContent(
+        modifier = modifier,
+        uiState = uiState,
+        topBarTitle = R.string.title_create_login,
+        topBarActionName = R.string.action_save,
+        onUpClick = onUpClick,
+        onSuccess = onSuccess,
+        onSubmit = { shareId -> viewModel.createItem(shareId) },
+        onTitleChange = { viewModel.onTitleChange(it) },
+        onUsernameChange = { viewModel.onUsernameChange(it) },
+        onPasswordChange = { viewModel.onPasswordChange(it) },
+        onWebsiteChange = onWebsiteChange,
+        onNoteChange = { viewModel.onNoteChange(it) },
+        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) },
+        onSnackbarMessage = { message ->
+            coroutineScope.launch {
+                snackbarMessages[message]?.let {
+                    snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
                 }
             }
-        )
-    }
+        }
+    )
 }
 
 
@@ -121,29 +116,27 @@ fun CreateLoginWithInitialContents(
         override val onAddWebsite: () -> Unit = { viewModel.onAddWebsite() }
         override val onRemoveWebsite: (Int) -> Unit = { idx: Int -> viewModel.onRemoveWebsite(idx) }
     }
-    Scaffold(
-        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) }
-    ) { innerPadding ->
-        LoginContent(
-            modifier = modifier.padding(innerPadding),
-            uiState = uiState,
-            topBarTitle = R.string.title_create_login,
-            topBarActionName = R.string.action_save,
-            onUpClick = { onClose() },
-            onSuccess = { shareId, itemId -> onSuccess() },
-            onSubmit = { viewModel.createItem() },
-            onTitleChange = { viewModel.onTitleChange(it) },
-            onUsernameChange = { viewModel.onUsernameChange(it) },
-            onPasswordChange = { viewModel.onPasswordChange(it) },
-            onWebsiteChange = onWebsiteChange,
-            onNoteChange = { viewModel.onNoteChange(it) },
-            onSnackbarMessage = { message ->
-                coroutineScope.launch {
-                    snackbarMessages[message]?.let {
-                        snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
-                    }
+
+    LoginContent(
+        modifier = modifier,
+        uiState = uiState,
+        topBarTitle = R.string.title_create_login,
+        topBarActionName = R.string.action_save,
+        onUpClick = { onClose() },
+        onSuccess = { _, _ -> onSuccess() },
+        onSubmit = { viewModel.createItem() },
+        onTitleChange = { viewModel.onTitleChange(it) },
+        onUsernameChange = { viewModel.onUsernameChange(it) },
+        onPasswordChange = { viewModel.onPasswordChange(it) },
+        onWebsiteChange = onWebsiteChange,
+        onNoteChange = { viewModel.onNoteChange(it) },
+        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) },
+        onSnackbarMessage = { message ->
+            coroutineScope.launch {
+                snackbarMessages[message]?.let {
+                    snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
                 }
             }
-        )
-    }
+        }
+    )
 }

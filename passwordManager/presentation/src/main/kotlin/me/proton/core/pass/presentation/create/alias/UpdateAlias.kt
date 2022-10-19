@@ -1,8 +1,6 @@
 package me.proton.core.pass.presentation.create.alias
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -47,29 +45,27 @@ fun UpdateAlias(
                 }
             }
     }
-    Scaffold(
-        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) }
-    ) { innerPadding ->
-        AliasContent(
-            modifier = modifier.padding(innerPadding),
-            uiState = viewState,
-            topBarTitle = R.string.title_edit_alias,
-            canEdit = false,
-            onUpClick = onUpClick,
-            onSuccess = onSuccess,
-            onSubmit = { viewModel.updateAlias() },
-            onSuffixChange = { viewModel.onSuffixChange(it) },
-            onMailboxChange = { viewModel.onMailboxChange(it) },
-            onTitleChange = { viewModel.onTitleChange(it) },
-            onNoteChange = { viewModel.onNoteChange(it) },
-            onAliasChange = { viewModel.onAliasChange(it) },
-            onSnackbarMessage = { message ->
-                coroutineScope.launch {
-                    snackbarMessages[message]?.let {
-                        snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
-                    }
+
+    AliasContent(
+        modifier = modifier,
+        uiState = viewState,
+        topBarTitle = R.string.title_edit_alias,
+        canEdit = false,
+        onUpClick = onUpClick,
+        onSuccess = onSuccess,
+        onSubmit = { viewModel.updateAlias() },
+        onSuffixChange = { viewModel.onSuffixChange(it) },
+        onMailboxChange = { viewModel.onMailboxChange(it) },
+        onTitleChange = { viewModel.onTitleChange(it) },
+        onNoteChange = { viewModel.onNoteChange(it) },
+        onAliasChange = { viewModel.onAliasChange(it) },
+        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) },
+        onSnackbarMessage = { message ->
+            coroutineScope.launch {
+                snackbarMessages[message]?.let {
+                    snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
                 }
             }
-        )
-    }
+        }
+    )
 }

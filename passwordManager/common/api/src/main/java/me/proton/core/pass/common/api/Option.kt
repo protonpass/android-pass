@@ -40,4 +40,8 @@ data class Some<out T>(val value: T) : Option<T> {
     }
 }
 
+fun <A> A.some(): Option<A> = Some(this)
+
+fun <A> none(): Option<A> = None
+
 fun <T> T?.toOption(): Option<T> = this?.let { Some(it) } ?: None

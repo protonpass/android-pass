@@ -11,7 +11,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -37,7 +36,6 @@ import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.common.api.Option
-import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
 import me.proton.core.pass.presentation.components.common.PassSnackbarHost
@@ -170,10 +168,6 @@ private fun HomeContent(
                         onConfirm = sendItemToTrash
                     )
                 }
-            }
-
-            if (uiState.homeListUiState.errorMessage is Some) {
-                Text("Something went boom: ${uiState.homeListUiState.errorMessage}")
             }
         }
     }

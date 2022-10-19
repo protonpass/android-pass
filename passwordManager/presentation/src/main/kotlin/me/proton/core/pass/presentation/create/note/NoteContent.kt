@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,6 +41,7 @@ internal fun NoteContent(
     onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
+    snackbarHost: @Composable (SnackbarHostState) -> Unit,
     onSnackbarMessage: (NoteSnackbarMessage) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -69,7 +71,8 @@ internal fun NoteContent(
                     }
                 }
             )
-        }
+        },
+        snackbarHost = snackbarHost
     ) { padding ->
         if (uiState.isLoadingState == IsLoadingState.Loading) {
             LoadingDialog()

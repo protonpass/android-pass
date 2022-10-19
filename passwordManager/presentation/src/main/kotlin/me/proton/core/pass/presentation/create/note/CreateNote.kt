@@ -1,8 +1,6 @@
 package me.proton.core.pass.presentation.create.note
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -47,26 +45,23 @@ fun CreateNote(
                 }
             }
     }
-    Scaffold(
-        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) }
-    ) { innerPadding ->
-        NoteContent(
-            modifier = modifier.padding(innerPadding),
-            uiState = noteUiState,
-            topBarTitle = R.string.title_create_note,
-            topBarActionName = R.string.action_save,
-            onUpClick = onUpClick,
-            onSuccess = onSuccess,
-            onSubmit = { shareId -> viewModel.createNote(shareId) },
-            onTitleChange = { viewModel.onTitleChange(it) },
-            onNoteChange = { viewModel.onNoteChange(it) },
-            onSnackbarMessage = { message ->
-                coroutineScope.launch {
-                    snackbarMessages[message]?.let {
-                        snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
-                    }
+    NoteContent(
+        modifier = modifier,
+        uiState = noteUiState,
+        topBarTitle = R.string.title_create_note,
+        topBarActionName = R.string.action_save,
+        onUpClick = onUpClick,
+        onSuccess = onSuccess,
+        onSubmit = { shareId -> viewModel.createNote(shareId) },
+        onTitleChange = { viewModel.onTitleChange(it) },
+        onNoteChange = { viewModel.onNoteChange(it) },
+        snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) },
+        onSnackbarMessage = { message ->
+            coroutineScope.launch {
+                snackbarMessages[message]?.let {
+                    snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
                 }
             }
-        )
-    }
+        }
+    )
 }

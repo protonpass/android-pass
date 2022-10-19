@@ -67,12 +67,7 @@ class TrashScreenViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = TrashUiState(
-                isLoading = IsLoadingState.Loading,
-                isRefreshing = IsRefreshingState.NotRefreshing,
-                items = emptyList(),
-                errorMessage = None
-            )
+            initialValue = TrashUiState.Loading
         )
 
     fun restoreItem(item: ItemUiModel) = viewModelScope.launch {

@@ -81,12 +81,7 @@ class SelectItemViewModel @Inject constructor(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = SelectItemUiState(
-                isLoading = IsLoadingState.Loading,
-                isRefreshing = IsRefreshingState.NotRefreshing,
-                items = emptyList(),
-                errorMessage = None
-            )
+            initialValue = SelectItemUiState.Loading
         )
 
     fun onItemClicked(item: ItemUiModel, packageName: PackageName) = viewModelScope.launch {

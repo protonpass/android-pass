@@ -10,7 +10,7 @@ import me.proton.core.compose.theme.ProtonTheme
 
 @Composable
 fun ItemDropdownMenu(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     expanded: Boolean,
     setExpanded: (Boolean) -> Unit,
     content: @Composable ColumnScope.() -> Unit

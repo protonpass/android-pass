@@ -11,4 +11,13 @@ data class SelectItemUiState(
     val isRefreshing: IsRefreshingState,
     val items: List<ItemUiModel>,
     val errorMessage: Option<String> = None
-)
+) {
+    companion object {
+        val Loading = SelectItemUiState(
+            isLoading = IsLoadingState.Loading,
+            isRefreshing = IsRefreshingState.NotRefreshing,
+            items = emptyList(),
+            errorMessage = None
+        )
+    }
+}

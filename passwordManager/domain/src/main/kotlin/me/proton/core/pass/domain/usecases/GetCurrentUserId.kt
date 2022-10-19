@@ -1,10 +1,22 @@
 package me.proton.core.pass.domain.usecases
 
-import javax.inject.Inject
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
+import me.proton.core.pass.common.api.Result
+import me.proton.core.pass.common.api.toResult
+import javax.inject.Inject
 
-class GetCurrentUserId @Inject constructor(
+interface GetCurrentUserId {
+    suspend operator fun invoke(): Result<UserId>
+}
+
+class GetCurrentUserIdImpl @Inject constructor(
     private val accountManager: AccountManager
-) {
-    operator fun invoke() = accountManager.getPrimaryUserId()
+) : GetCurrentUserId {
+    override suspend operator fun invoke(): Result<UserId> = accountManager.getPrimaryUserId()
+        .filterNotNull()
+        .firstOrNull()
+        .toResult()
 }

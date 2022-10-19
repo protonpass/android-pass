@@ -3,6 +3,7 @@ package me.proton.android.pass.ui.detail.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -10,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.decrypt
@@ -22,6 +24,10 @@ import javax.inject.Inject
 class LoginDetailViewModel @Inject constructor(
     private val cryptoContext: CryptoContext
 ) : ViewModel() {
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        PassLogger.e(TAG, throwable)
+    }
 
     private val itemFlow: MutableStateFlow<Item?> = MutableStateFlow(null)
     private val passwordState: MutableStateFlow<PasswordState> = MutableStateFlow(
@@ -45,7 +51,7 @@ class LoginDetailViewModel @Inject constructor(
         }
     }
 
-    fun copyPasswordToClipboard() = viewModelScope.launch {
+    fun copyPasswordToClipboard() = viewModelScope.launch(coroutineExceptionHandler) {
         val item = itemFlow.value
         if (item != null) {
             val itemType = item.itemType as ItemType.Login
@@ -111,5 +117,9 @@ class LoginDetailViewModel @Inject constructor(
             override val encrypted: EncryptedString,
             val clearText: String
         ) : PasswordState(encrypted)
+    }
+
+    companion object {
+        private const val TAG = "LoginDetailViewModel"
     }
 }

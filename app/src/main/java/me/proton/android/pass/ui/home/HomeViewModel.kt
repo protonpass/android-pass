@@ -4,6 +4,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,6 +48,10 @@ class HomeViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeActiveShare: ObserveActiveShare
 ) : ViewModel() {
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        PassLogger.e(TAG, throwable)
+    }
 
     private val currentUserFlow = observeCurrentUser().filterNotNull()
 
@@ -132,26 +137,26 @@ class HomeViewModel @Inject constructor(
             initialValue = HomeUiState.Loading
         )
 
-    fun onSearchQueryChange(query: String) = viewModelScope.launch {
-        if (query.contains("\n")) return@launch
+    fun onSearchQueryChange(query: String) {
+        if (query.contains("\n")) return
 
         searchQuery.value = query
         searchItems.updateQuery(query)
     }
 
-    fun onStopSearching() = viewModelScope.launch {
+    fun onStopSearching() {
         searchItems.clearSearch()
         searchQuery.update { "" }
         inSearchMode.update { false }
     }
 
-    fun onEnterSearch() = viewModelScope.launch {
+    fun onEnterSearch() {
         searchItems.clearSearch()
         searchQuery.update { "" }
         inSearchMode.update { true }
     }
 
-    fun onRefresh() = viewModelScope.launch {
+    fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
         val userId = currentUserFlow.firstOrNull()?.userId
         if (userId != null) {
             isRefreshing.update { IsRefreshingState.Refreshing }
@@ -165,7 +170,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch {
+    fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch(coroutineExceptionHandler) {
         if (item == null) return@launch
 
         val userId = currentUserFlow.firstOrNull()?.userId

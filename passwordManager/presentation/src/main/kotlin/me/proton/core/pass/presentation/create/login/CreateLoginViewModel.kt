@@ -3,6 +3,7 @@ package me.proton.core.pass.presentation.create.login
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -28,6 +29,10 @@ class CreateLoginViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(observeActiveShare, savedStateHandle) {
 
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        PassLogger.e(TAG, throwable)
+    }
+
     fun setInitialContents(initialContents: InitialCreateLoginContents) {
         val currentValue = loginItemState.value
         val websites = currentValue.websiteAddresses.toMutableList()
@@ -52,14 +57,14 @@ class CreateLoginViewModel @Inject constructor(
         }
     }
 
-    fun createItem() = viewModelScope.launch {
+    fun createItem() {
         when (val shareId = loginUiState.value.shareId) {
             None -> mutableSnackbarMessage.tryEmit(ItemCreationError)
             is Some -> createItem(shareId.value)
         }
     }
 
-    fun createItem(shareId: ShareId) = viewModelScope.launch {
+    fun createItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val loginItem = loginItemState.value
         val loginItemValidationErrors = loginItem.validate()
         if (loginItemValidationErrors.isNotEmpty()) {

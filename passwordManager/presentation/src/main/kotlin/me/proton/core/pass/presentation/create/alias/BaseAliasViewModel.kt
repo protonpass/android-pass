@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.domain.AliasSuffix
 import me.proton.core.pass.domain.ShareId
@@ -62,7 +61,7 @@ abstract class BaseAliasViewModel(
             initialValue = CreateUpdateAliasUiState.Initial
         )
 
-    fun onTitleChange(value: String) = viewModelScope.launch {
+    fun onTitleChange(value: String) {
         aliasItemState.update { it.copy(title = value) }
         aliasItemValidationErrorsState.update {
             it.toMutableSet()
@@ -70,8 +69,8 @@ abstract class BaseAliasViewModel(
         }
     }
 
-    fun onAliasChange(value: String) = viewModelScope.launch {
-        if (value.contains(" ") || value.contains("\n")) return@launch
+    fun onAliasChange(value: String) {
+        if (value.contains(" ") || value.contains("\n")) return
         aliasItemState.update {
             it.copy(
                 alias = value,
@@ -87,11 +86,11 @@ abstract class BaseAliasViewModel(
         }
     }
 
-    fun onNoteChange(value: String) = viewModelScope.launch {
+    fun onNoteChange(value: String) {
         aliasItemState.update { it.copy(note = value) }
     }
 
-    fun onSuffixChange(suffix: AliasSuffix) = viewModelScope.launch {
+    fun onSuffixChange(suffix: AliasSuffix) {
         aliasItemState.update {
             it.copy(
                 selectedSuffix = suffix,
@@ -103,7 +102,7 @@ abstract class BaseAliasViewModel(
         }
     }
 
-    fun onMailboxChange(mailbox: AliasMailboxUiModel) = viewModelScope.launch {
+    fun onMailboxChange(mailbox: AliasMailboxUiModel) {
         val mailboxes = aliasItemState.value.mailboxes.map {
             if (it.model.id == mailbox.model.id) {
                 it.copy(selected = !mailbox.selected)

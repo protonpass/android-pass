@@ -3,6 +3,7 @@ package me.proton.core.pass.presentation.create.note
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,7 +27,11 @@ class CreateNoteViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseNoteViewModel(savedStateHandle) {
 
-    fun createNote(shareId: ShareId) = viewModelScope.launch {
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        PassLogger.e(TAG, throwable)
+    }
+
+    fun createNote(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val noteItem = noteItemState.value
         val noteItemValidationErrors = noteItem.validate()
         if (noteItemValidationErrors.isNotEmpty()) {

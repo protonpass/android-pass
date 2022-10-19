@@ -34,7 +34,7 @@ class ItemDetailViewModel @Inject constructor(
     val state: StateFlow<State> = _state
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.Lazily,
+            started = SharingStarted.WhileSubscribed(5_000),
             initialValue = State.Loading
         )
 

@@ -79,9 +79,10 @@ fun ItemsList(
                 }
             }
         } else {
-            Box(modifier = modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .verticalScroll(rememberScrollState())
             ) {
                 Text(
                     text = stringResource(id = emptyListMessage),

@@ -34,7 +34,7 @@ internal fun ItemDetailTopBar(
     uiState: Option<ItemModelUiState>,
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
-    onDeleteClick: (Item?) -> Unit,
+    onDeleteClick: (Item) -> Unit,
     onSnackbarMessage: (DetailSnackbarMessages) -> Unit
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }

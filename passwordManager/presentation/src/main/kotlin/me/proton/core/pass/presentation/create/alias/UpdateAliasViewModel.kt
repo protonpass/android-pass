@@ -14,6 +14,7 @@ import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.common.api.onError
 import me.proton.core.pass.common.api.onSuccess
+import me.proton.core.pass.domain.AliasMailbox
 import me.proton.core.pass.domain.AliasOptions
 import me.proton.core.pass.domain.AliasSuffix
 import me.proton.core.pass.domain.Item
@@ -46,51 +47,55 @@ class UpdateAliasViewModel @Inject constructor(
             val userId = accountManager.getPrimaryUserId()
                 .first { userId -> userId != null }
             if (userId != null && shareId is Some && itemId is Some) {
-                itemRepository.getById(userId, shareId.value, itemId.value)
+                val itemResult = itemRepository.getById(userId, shareId.value, itemId.value)
+                itemResult
                     .onSuccess { item ->
                         _item = item
                         aliasRepository.getAliasMailboxes(userId, shareId.value, itemId.value)
-                            .onSuccess { mailboxes ->
-                                val alias = item.itemType as ItemType.Alias
-                                val email = alias.aliasEmail
-                                val (prefix, suffix) = extractPrefixSuffix(email)
-                                val mailboxesUiModel = mailboxes.map { mailbox ->
-                                    AliasMailboxUiModel(
-                                        model = mailbox,
-                                        selected = true
-                                    )
-                                }
-                                aliasItemState.update {
-                                    it.copy(
-                                        title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-                                        note = item.note.decrypt(cryptoContext.keyStoreCrypto),
-                                        alias = prefix,
-                                        aliasOptions = AliasOptions(emptyList(), emptyList()),
-                                        selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
-                                        mailboxes = mailboxesUiModel,
-                                        aliasToBeCreated = email
-                                    )
-                                }
-                            }
+                            .onSuccess { mailboxes -> onMailboxSuccess(item, mailboxes) }
                             .onError {
-                                val message = "Error getting alias mailboxes"
-                                PassLogger.i(TAG, it ?: Exception(message), message)
-                                mutableSnackbarMessage.tryEmit(InitError)
+                                showError("Error getting alias mailboxes", InitError, it)
                             }
                     }
-                    .onError {
-                        val message = "Error getting item by id"
-                        PassLogger.i(TAG, it ?: Exception(message), message)
-                        mutableSnackbarMessage.tryEmit(InitError)
-                    }
+                    .onError { showError("Error getting item by id", InitError, it) }
             } else {
-                PassLogger.i(TAG, "Empty user/share/item Id")
-                mutableSnackbarMessage.tryEmit(InitError)
+                showError("Empty user/share/item Id", InitError)
             }
         }
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
+    private fun onMailboxSuccess(item: Item, mailboxes: List<AliasMailbox>) {
+        val alias = item.itemType as ItemType.Alias
+        val email = alias.aliasEmail
+        val (prefix, suffix) = extractPrefixSuffix(email)
+        val mailboxesUiModel = mailboxes.map { mailbox ->
+            AliasMailboxUiModel(
+                model = mailbox,
+                selected = true
+            )
+        }
+        aliasItemState.update {
+            it.copy(
+                title = item.title.decrypt(cryptoContext.keyStoreCrypto),
+                note = item.note.decrypt(cryptoContext.keyStoreCrypto),
+                alias = prefix,
+                aliasOptions = AliasOptions(emptyList(), emptyList()),
+                selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
+                mailboxes = mailboxesUiModel,
+                aliasToBeCreated = email
+            )
+        }
+    }
+
+    private fun showError(
+        message: String,
+        snackbarMessage: AliasSnackbarMessage,
+        it: Throwable? = null
+    ) {
+        PassLogger.i(TAG, it ?: Exception(message), message)
+        mutableSnackbarMessage.tryEmit(snackbarMessage)
+    }
 
     fun updateAlias() = viewModelScope.launch {
 

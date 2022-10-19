@@ -61,4 +61,9 @@
     <string name="error_observing_share">Error observing share</string>
     <string name="error_refreshing">Error performing refresh</string>
 
+    <!-- Detail -->
+    <string name="detail_init_error">Could not initialise the element</string>
+    <string name="detail_send_to_trash_error">Could not send the element to the trash</string>
+    <string name="detail_item_not_loaded_error">The item has not been loaded</string>
+
 </resources>

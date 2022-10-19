@@ -57,5 +57,8 @@
     <string name="autofill_save_name_label">Save as</string>
     <string name="error_autofill_save_credentials">The credentials could not be saved.</string>
 
+    <string name="error_observing_items">Error observing items</string>
+    <string name="error_observing_share">Error observing share</string>
+    <string name="error_refreshing">Error performing refresh</string>
 
 </resources>

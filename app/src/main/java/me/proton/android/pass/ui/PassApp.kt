@@ -20,7 +20,6 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import me.proton.android.pass.ui.drawer.DrawerViewModel
 import me.proton.android.pass.ui.navigation.NavItem
 import me.proton.android.pass.ui.navigation.appGraph
 import me.proton.android.pass.ui.navigation.rememberAnimatedNavController
@@ -43,30 +42,29 @@ fun PassApp(
     authNavigation: AuthNavigation,
     startDestination: String = NavItem.Home.route,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    appViewModel: AppViewModel = hiltViewModel()
 ) {
     ProtonTheme {
         ProvideWindowInsets {
-            val drawerViewModel = hiltViewModel<DrawerViewModel>()
-            hiltViewModel<AppViewModel>()
-            val drawerUiState by drawerViewModel.drawerUiState.collectAsStateWithLifecycle()
+            val drawerUiState by appViewModel.drawerUiState.collectAsStateWithLifecycle()
             val navController = rememberAnimatedNavController()
             val appNavigator = rememberAppNavigator(navController)
             val navDrawerNavigation = NavDrawerNavigation(
                 onNavHome = {
-                    drawerViewModel.onDrawerSectionChanged(NavigationDrawerSection.Items)
+                    appViewModel.onDrawerSectionChanged(NavigationDrawerSection.Items)
                     appNavigator.navigate(NavItem.Home)
                 },
                 onNavSettings = {
-                    drawerViewModel.onDrawerSectionChanged(NavigationDrawerSection.Settings)
+                    appViewModel.onDrawerSectionChanged(NavigationDrawerSection.Settings)
                     appNavigator.navigate(NavItem.Settings)
                 },
                 onNavTrash = {
-                    drawerViewModel.onDrawerSectionChanged(NavigationDrawerSection.Trash)
+                    appViewModel.onDrawerSectionChanged(NavigationDrawerSection.Trash)
                     appNavigator.navigate(NavItem.Trash)
                 },
                 onNavHelp = {
-                    drawerViewModel.onDrawerSectionChanged(NavigationDrawerSection.Help)
+                    appViewModel.onDrawerSectionChanged(NavigationDrawerSection.Help)
                     appNavigator.navigate(NavItem.Help)
                 }
             )

@@ -5,10 +5,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
@@ -18,11 +19,8 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.pass.autofill.entities.AutofillItem
 import me.proton.core.pass.autofill.extensions.toAutoFillItem
 import me.proton.core.pass.autofill.extensions.toUiModel
-import me.proton.core.pass.common.api.None
-import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.common.api.map
 import me.proton.core.pass.data.usecases.AddPackageNameToItem
@@ -57,30 +55,34 @@ class SelectItemViewModel @Inject constructor(
         }
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> = MutableStateFlow(IsRefreshingState.NotRefreshing)
-    private val _itemClickedFlow: MutableStateFlow<ItemClickedEvent> = MutableStateFlow(ItemClickedEvent.None)
+    private val itemClickedFlow: MutableStateFlow<ItemClickedEvent> = MutableStateFlow(ItemClickedEvent.None)
 
-    val itemClickedState: StateFlow<ItemClickedEvent> = _itemClickedFlow.asStateFlow()
+    private val mutableSnackbarMessage: MutableSharedFlow<SelectItemSnackbarMessage> =
+        MutableSharedFlow(extraBufferCapacity = 1)
+    val snackbarMessage: SharedFlow<SelectItemSnackbarMessage> = mutableSnackbarMessage
 
     val uiState: StateFlow<SelectItemUiState> = combine(
         listItems,
-        isRefreshing
-    ) { itemsResult, isRefreshing ->
+        isRefreshing,
+        itemClickedFlow,
+    ) { itemsResult, isRefreshing, itemClicked ->
         val isLoading = IsLoadingState.from(itemsResult is Result.Loading)
-        val (items, errorMessage) = when (itemsResult) {
-            Result.Loading -> emptyList<ItemUiModel>() to None
-            is Result.Success -> itemsResult.data to None
+        val items = when (itemsResult) {
+            Result.Loading -> emptyList()
+            is Result.Success -> itemsResult.data
             is Result.Error -> {
                 val defaultMessage = "Could not load autofill items"
                 PassLogger.i(TAG, itemsResult.exception ?: Exception(defaultMessage), defaultMessage)
-                emptyList<ItemUiModel>() to Option.fromNullable(itemsResult.exception?.message)
+                mutableSnackbarMessage.tryEmit(SelectItemSnackbarMessage.LoadItemsError)
+                emptyList()
             }
         }
 
         SelectItemUiState(
             isLoading = isLoading,
             isRefreshing = isRefreshing,
+            itemClickedEvent = itemClicked,
             items = items,
-            errorMessage = errorMessage
         )
     }
         .stateIn(
@@ -91,7 +93,7 @@ class SelectItemViewModel @Inject constructor(
 
     fun onItemClicked(item: ItemUiModel, packageName: PackageName) {
         addPackageNameToItem(item.shareId, item.id, packageName)
-        _itemClickedFlow.update {
+        itemClickedFlow.update {
             ItemClickedEvent.Clicked(item.toAutoFillItem(cryptoContext.keyStoreCrypto))
         }
     }
@@ -103,11 +105,6 @@ class SelectItemViewModel @Inject constructor(
             refreshContent(userId)
             isRefreshing.update { IsRefreshingState.NotRefreshing }
         }
-    }
-
-    sealed interface ItemClickedEvent {
-        object None : ItemClickedEvent
-        data class Clicked(val item: AutofillItem) : ItemClickedEvent
     }
 
     companion object {

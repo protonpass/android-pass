@@ -3,4 +3,5 @@
     <string name="autofill_authenticate_prompt">Authenticate in Proton Pass</string>
     <string name="error_credentials_not_found">No matching credentials found</string>
     <string name="error_credentials_not_saved">Could not save the credentials</string>
+    <string name="error_loading_items">Could not load the items</string>
 </resources>

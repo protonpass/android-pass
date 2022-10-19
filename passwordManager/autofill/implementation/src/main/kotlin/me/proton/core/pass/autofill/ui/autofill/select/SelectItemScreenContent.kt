@@ -1,7 +1,8 @@
 package me.proton.core.pass.autofill.ui.autofill.select
 
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -9,7 +10,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.autofill.service.R
-import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.presentation.components.common.item.ItemsList
 import me.proton.core.pass.presentation.components.model.ItemUiModel
 import me.proton.core.pass.presentation.uievents.IsLoadingState
@@ -18,14 +18,19 @@ import me.proton.core.pass.presentation.uievents.IsLoadingState
 internal fun SelectItemScreenContent(
     modifier: Modifier = Modifier,
     state: SelectItemUiState,
+    snackbarHost: @Composable (SnackbarHostState) -> Unit,
     onItemClicked: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit
 ) {
-    Surface(modifier = modifier) {
+    Scaffold(
+        modifier = modifier,
+        snackbarHost = snackbarHost,
+    ) { padding ->
         when (state.isLoading) {
             IsLoadingState.Loading -> LoadingDialog()
             IsLoadingState.NotLoading -> {
                 ItemsList(
+                    modifier = modifier.padding(padding),
                     items = state.items,
                     emptyListMessage = R.string.error_credentials_not_found,
                     onRefresh = onRefresh,
@@ -33,10 +38,6 @@ internal fun SelectItemScreenContent(
                     onItemClick = onItemClicked
                 )
             }
-        }
-
-        if (state.errorMessage is Some) {
-            Text("Something went boom: ${state.errorMessage.value}")
         }
     }
 }
@@ -50,7 +51,8 @@ fun PreviewSelectItemScreenContent(
         SelectItemScreenContent(
             state = state,
             onItemClicked = {},
-            onRefresh = {}
+            onRefresh = {},
+            snackbarHost = {},
         )
     }
 }

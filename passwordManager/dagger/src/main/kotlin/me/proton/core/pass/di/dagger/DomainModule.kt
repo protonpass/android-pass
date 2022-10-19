@@ -6,6 +6,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.pass.domain.usecases.CreateItem
 import me.proton.core.pass.domain.usecases.CreateItemImpl
+import me.proton.core.pass.domain.usecases.GetCurrentShare
+import me.proton.core.pass.domain.usecases.GetCurrentShareImpl
+import me.proton.core.pass.domain.usecases.GetCurrentUserId
+import me.proton.core.pass.domain.usecases.GetCurrentUserIdImpl
 import me.proton.core.pass.domain.usecases.ObserveActiveItems
 import me.proton.core.pass.domain.usecases.ObserveActiveItemsImpl
 import me.proton.core.pass.domain.usecases.ObserveActiveShare
@@ -28,4 +32,10 @@ abstract class DomainModule {
 
     @Binds
     abstract fun bindRefreshContent(refreshContentImpl: RefreshContentImpl): RefreshContent
+
+    @Binds
+    abstract fun bindGetCurrentUserId(getCurrentUserIdImpl: GetCurrentUserIdImpl): GetCurrentUserId
+
+    @Binds
+    abstract fun bindGetCurrentShare(getCurrentShareImpl: GetCurrentShareImpl): GetCurrentShare
 }

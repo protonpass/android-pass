@@ -152,7 +152,7 @@ internal fun Trash(
     onRestoreClicked: (ItemUiModel) -> Unit,
     onDeleteItemClicked: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit,
-    isRefreshing: IsRefreshingState,
+    isRefreshing: IsRefreshingState
 ) {
     ItemsList(
         items = items,

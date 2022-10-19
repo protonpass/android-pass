@@ -3,6 +3,7 @@ package me.proton.core.pass.presentation.create.alias
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -30,10 +31,14 @@ class CreateAliasViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseAliasViewModel(savedStateHandle) {
 
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        PassLogger.e(TAG, throwable)
+    }
+
     private var _aliasOptions: AliasOptions? = null
 
     init {
-        viewModelScope.launch {
+        viewModelScope.launch(coroutineExceptionHandler) {
             if (_aliasOptions != null) return@launch
             isLoadingState.update { IsLoadingState.Loading }
             val userId = accountManager.getPrimaryUserId()
@@ -71,7 +76,7 @@ class CreateAliasViewModel @Inject constructor(
         }
     }
 
-    fun createAlias(shareId: ShareId) = viewModelScope.launch {
+    fun createAlias(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         val aliasItem = aliasItemState.value
         if (aliasItem.selectedSuffix == null) return@launch
 

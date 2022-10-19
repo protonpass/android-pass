@@ -3,6 +3,7 @@ package me.proton.core.pass.autofill.ui.autofill.select
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -44,6 +45,10 @@ class SelectItemViewModel @Inject constructor(
     searchItems: SearchItems
 ) : ViewModel() {
 
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        PassLogger.e(TAG, throwable)
+    }
+
     private val listItems: Flow<Result<List<ItemUiModel>>> = searchItems.observeResults()
         .mapLatest { result: Result<List<Item>> ->
             result.map { list ->
@@ -84,14 +89,14 @@ class SelectItemViewModel @Inject constructor(
             initialValue = SelectItemUiState.Loading
         )
 
-    fun onItemClicked(item: ItemUiModel, packageName: PackageName) = viewModelScope.launch {
+    fun onItemClicked(item: ItemUiModel, packageName: PackageName) {
         addPackageNameToItem(item.shareId, item.id, packageName)
         _itemClickedFlow.update {
             ItemClickedEvent.Clicked(item.toAutoFillItem(cryptoContext.keyStoreCrypto))
         }
     }
 
-    fun onRefresh() = viewModelScope.launch {
+    fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
         if (userId != null) {
             isRefreshing.update { IsRefreshingState.Refreshing }

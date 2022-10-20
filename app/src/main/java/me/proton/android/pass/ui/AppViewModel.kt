@@ -35,11 +35,11 @@ import javax.inject.Inject
 @HiltViewModel
 class AppViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
-    getCurrentUserId: GetCurrentUserId,
-    getCurrentShare: GetCurrentShare,
-    createVault: CreateVault,
-    refreshShares: RefreshShares,
-    cryptoContext: CryptoContext
+    private val getCurrentUserId: GetCurrentUserId,
+    private val getCurrentShare: GetCurrentShare,
+    private val createVault: CreateVault,
+    private val refreshShares: RefreshShares,
+    private val cryptoContext: CryptoContext
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -70,20 +70,19 @@ class AppViewModel @Inject constructor(
             )
         )
 
-    init {
-        viewModelScope.launch(coroutineExceptionHandler) {
-            val userIdResult: Result<UserId> = getCurrentUserId()
-            userIdResult
-                .onSuccess { userId ->
-                    refreshShares(userId)
-                        .onError { onInitError(it, "Refresh shares error") }
-                    getCurrentShare(userId)
-                        .onSuccess { onShareListReceived(it, userId, createVault, cryptoContext) }
-                        .onError { onInitError(it, "Observe shares error") }
-                }
-                .onError { onInitError(it, "UserId error") }
-        }
+    fun onStart() = viewModelScope.launch(coroutineExceptionHandler) {
+        val userIdResult: Result<UserId> = getCurrentUserId()
+        userIdResult
+            .onSuccess { userId ->
+                refreshShares(userId)
+                    .onError { onInitError(it, "Refresh shares error") }
+                getCurrentShare(userId)
+                    .onSuccess { onShareListReceived(it, userId, createVault, cryptoContext) }
+                    .onError { onInitError(it, "Observe shares error") }
+            }
+            .onError { onInitError(it, "UserId error") }
     }
+
 
     private suspend fun onShareListReceived(
         list: List<Share>,

@@ -25,6 +25,7 @@ import me.proton.core.pass.presentation.components.previewproviders.CreatePasswo
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CreatePasswordContent(
+    modifier: Modifier = Modifier,
     state: CreatePasswordUiState,
     onUpClick: () -> Unit,
     onLengthChange: (Int) -> Unit,
@@ -33,6 +34,7 @@ fun CreatePasswordContent(
     onConfirm: (String) -> Unit
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = {
             ProtonTopAppBar(
                 title = { TopBarTitleView(R.string.title_create_password) },
@@ -73,9 +75,9 @@ fun Preview_CreatePasswordContent(
     ProtonTheme {
         CreatePasswordContent(
             state = state,
-            onUpClick = { },
+            onUpClick = {},
             onLengthChange = {},
-            onRegenerateClick = { },
+            onRegenerateClick = {},
             onHasSpecialCharactersChange = {},
             onConfirm = {}
         )

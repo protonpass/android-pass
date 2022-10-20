@@ -34,6 +34,7 @@ import me.proton.core.pass.presentation.components.form.ProtonTextTitle
 
 @Composable
 internal fun WebsitesSection(
+    modifier: Modifier = Modifier,
     websites: List<String>,
     onWebsitesChange: OnWebsiteChange
 ) {
@@ -46,7 +47,7 @@ internal fun WebsitesSection(
     val shouldShowRemoveButton = websites.size > 1
     var isFocused: Boolean by rememberSaveable { mutableStateOf(false) }
     Column(
-        modifier = Modifier
+        modifier = modifier
             .clip(RoundedCornerShape(8.dp))
             .background(ProtonTheme.colors.backgroundSecondary)
             .border(

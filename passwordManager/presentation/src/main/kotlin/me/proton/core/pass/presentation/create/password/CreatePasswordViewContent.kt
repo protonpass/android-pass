@@ -29,13 +29,14 @@ import me.proton.core.pass.presentation.components.previewproviders.CreatePasswo
 
 @Composable
 internal fun CreatePasswordViewContent(
+    modifier: Modifier = Modifier,
     state: CreatePasswordUiState,
     onSpecialCharactersChange: (Boolean) -> Unit,
     onLengthChange: (Int) -> Unit,
     onRegenerateClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.padding(horizontal = 16.dp)
+        modifier = modifier.padding(horizontal = 16.dp)
     ) {
         Row(
             modifier = Modifier

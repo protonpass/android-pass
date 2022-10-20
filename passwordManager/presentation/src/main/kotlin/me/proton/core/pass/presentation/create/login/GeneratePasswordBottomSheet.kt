@@ -3,6 +3,7 @@ package me.proton.core.pass.presentation.create.login
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -15,12 +16,13 @@ import me.proton.core.pass.presentation.create.password.CreatePasswordViewModel
 
 @Composable
 fun GeneratePasswordBottomSheet(
+    modifier: Modifier = Modifier,
     onConfirm: (String) -> Unit
 ) {
     val viewModel = hiltViewModel<CreatePasswordViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    Column {
+    Column(modifier = modifier) {
         BottomSheetTitle(
             title = R.string.button_generate_password,
             button = BottomSheetTitleButton(

@@ -29,6 +29,7 @@ import me.proton.core.pass.presentation.components.form.ProtonTextTitle
 
 @Composable
 internal fun PasswordInput(
+    modifier: Modifier = Modifier,
     value: String,
     onChange: (String) -> Unit,
     onGeneratePasswordClick: () -> Unit
@@ -41,7 +42,7 @@ internal fun PasswordInput(
         Pair(PasswordVisualTransformation(), painterResource(me.proton.core.presentation.R.drawable.ic_proton_eye))
     }
 
-    Column(modifier = Modifier.padding(top = 28.dp)) {
+    Column(modifier = modifier.padding(top = 28.dp)) {
         ProtonTextTitle(R.string.field_password_title)
 
         Row(

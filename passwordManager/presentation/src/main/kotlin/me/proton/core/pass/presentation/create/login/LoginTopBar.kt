@@ -23,6 +23,7 @@ import me.proton.core.pass.domain.ShareId
 @ExperimentalComposeUiApi
 @Composable
 internal fun LoginTopBar(
+    modifier: Modifier = Modifier,
     uiState: CreateUpdateLoginUiState,
     @StringRes topBarTitle: Int,
     @StringRes topBarActionName: Int,
@@ -33,6 +34,7 @@ internal fun LoginTopBar(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     ProtonTopAppBar(
+        modifier = modifier,
         title = { TopBarTitleView(topBarTitle) },
         navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
         actions = {

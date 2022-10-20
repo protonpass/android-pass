@@ -28,11 +28,12 @@ data class BottomSheetTitleButton(
 
 @Composable
 fun BottomSheetTitle(
+    modifier: Modifier = Modifier,
     @StringRes title: Int,
     button: BottomSheetTitleButton? = null
 ) {
     Row(
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+        modifier = modifier.padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(

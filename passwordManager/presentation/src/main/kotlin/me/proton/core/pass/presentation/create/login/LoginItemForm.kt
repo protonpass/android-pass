@@ -22,7 +22,8 @@ internal fun LoginItemForm(
     onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onWebsiteChange: OnWebsiteChange,
-    onNoteChange: (String) -> Unit
+    onNoteChange: (String) -> Unit,
+    onGeneratePasswordClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -40,9 +41,12 @@ internal fun LoginItemForm(
             onChange = onUsernameChange,
             onGenerateAliasClick = {}
         )
-        PasswordInput(value = loginItem.password, onChange = onPasswordChange)
+        PasswordInput(
+            value = loginItem.password,
+            onChange = onPasswordChange,
+            onGeneratePasswordClick = onGeneratePasswordClick
+        )
         Spacer(modifier = Modifier.height(20.dp))
-        GeneratePasswordButton(onPasswordGenerated = { onPasswordChange(it) })
         WebsitesSection(websites = loginItem.websiteAddresses, onWebsitesChange = onWebsiteChange)
         NoteInput(value = loginItem.note, onChange = onNoteChange)
     }

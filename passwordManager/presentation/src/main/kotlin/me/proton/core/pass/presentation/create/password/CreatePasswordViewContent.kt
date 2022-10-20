@@ -20,24 +20,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.component.ProtonSolidButton
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.presentation.R
+import me.proton.core.pass.presentation.components.previewproviders.CreatePasswordStatePreviewProvider
 
 @Composable
 internal fun CreatePasswordViewContent(
-    state: CreatePasswordViewModel.ViewState,
-    onConfirm: (String) -> Unit,
+    state: CreatePasswordUiState,
     onSpecialCharactersChange: (Boolean) -> Unit,
     onLengthChange: (Int) -> Unit,
     onRegenerateClick: () -> Unit
 ) {
-
-    Column {
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp)
                 .padding(top = 16.dp, bottom = 48.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -62,9 +64,7 @@ internal fun CreatePasswordViewContent(
         Divider()
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -81,9 +81,7 @@ internal fun CreatePasswordViewContent(
         }
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -93,17 +91,20 @@ internal fun CreatePasswordViewContent(
                 onCheckedChange = { onSpecialCharactersChange(it) }
             )
         }
+    }
+}
 
-        Spacer(modifier = Modifier.weight(1f))
-
-        ProtonSolidButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
-                .height(48.dp),
-            onClick = { onConfirm(state.password) }
-        ) {
-            Text(stringResource(R.string.generate_password_confirm))
-        }
+@Preview(showBackground = true)
+@Composable
+fun Preview_CreatePasswordViewContent(
+    @PreviewParameter(CreatePasswordStatePreviewProvider::class) state: CreatePasswordUiState
+) {
+    ProtonTheme {
+        CreatePasswordViewContent(
+            state = state,
+            onSpecialCharactersChange = {},
+            onLengthChange = {},
+            onRegenerateClick = {}
+        )
     }
 }

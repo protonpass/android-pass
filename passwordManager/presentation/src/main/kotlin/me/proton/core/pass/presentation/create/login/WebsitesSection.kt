@@ -60,6 +60,7 @@ internal fun WebsitesSection(
 
         websites.forEachIndexed { idx, value ->
             ProtonTextField(
+                modifier = Modifier.fillMaxWidth(1.0f),
                 value = value,
                 onChange = { onWebsitesChange.onWebsiteValueChanged(it, idx) },
                 onFocusChange = { isFocused = it },

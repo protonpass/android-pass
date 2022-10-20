@@ -10,12 +10,12 @@ import me.proton.core.pass.presentation.PasswordGenerator
 
 class CreatePasswordViewModel : ViewModel() {
 
-    private val _state: MutableStateFlow<ViewState> = MutableStateFlow(ViewState())
-    val state: StateFlow<ViewState> = _state
+    private val _state: MutableStateFlow<CreatePasswordUiState> = MutableStateFlow(getInitialState())
+    val state: StateFlow<CreatePasswordUiState> = _state
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = ViewState()
+            initialValue = getInitialState()
         )
 
     fun onLengthChange(value: Int) {
@@ -33,14 +33,7 @@ class CreatePasswordViewModel : ViewModel() {
         _state.value = state.value.copy(password = password)
     }
 
-    data class ViewState(
-        val password: String = generatePassword(DEFAULT_LENGTH, true),
-        val length: Int = DEFAULT_LENGTH,
-        val hasSpecialCharacters: Boolean = true
-    )
-
     companion object {
-        private const val DEFAULT_LENGTH = PasswordGenerator.DEFAULT_LENGTH
         val LENGTH_RANGE = 4.toFloat()..64.toFloat()
 
         private fun generatePassword(length: Int, hasSpecialCharacters: Boolean): String {
@@ -50,5 +43,15 @@ class CreatePasswordViewModel : ViewModel() {
             }
             return PasswordGenerator.generatePassword(length, option)
         }
+
+        private fun getInitialState(): CreatePasswordUiState =
+            CreatePasswordUiState(
+                password = generatePassword(
+                    PasswordGenerator.DEFAULT_LENGTH,
+                    true
+                ),
+                length = PasswordGenerator.DEFAULT_LENGTH,
+                hasSpecialCharacters = true
+            )
     }
 }

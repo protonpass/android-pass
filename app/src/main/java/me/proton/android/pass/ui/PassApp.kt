@@ -7,6 +7,7 @@ import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,10 @@ fun PassApp(
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     appViewModel: AppViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(Unit) {
+        appViewModel.onStart()
+    }
+
     ProtonTheme {
         ProvideWindowInsets {
             val drawerUiState by appViewModel.drawerUiState.collectAsStateWithLifecycle()

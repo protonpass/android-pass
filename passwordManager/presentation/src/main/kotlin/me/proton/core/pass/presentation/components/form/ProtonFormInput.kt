@@ -2,6 +2,7 @@ package me.proton.core.pass.presentation.components.form
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -44,7 +45,7 @@ fun ProtonFormInput(
             singleLine = singleLine,
             visualTransformation = visualTransformation,
             moveToNextOnEnter = moveToNextOnEnter,
-            modifier = Modifier.padding(top = 8.dp),
+            modifier = Modifier.padding(top = 8.dp).fillMaxWidth(1.0f),
             editable = editable,
             isError = isError
         )

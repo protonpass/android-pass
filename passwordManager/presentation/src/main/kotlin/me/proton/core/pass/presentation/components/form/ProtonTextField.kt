@@ -2,7 +2,6 @@ package me.proton.core.pass.presentation.components.form
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.OutlinedTextField
@@ -33,8 +32,8 @@ import me.proton.core.pass.presentation.components.previewproviders.ProtonTextFi
 fun ProtonTextField(
     value: String,
     onChange: (String) -> Unit,
-    onFocusChange: ((Boolean) -> Unit)? = null,
     modifier: Modifier = Modifier,
+    onFocusChange: ((Boolean) -> Unit)? = null,
     @StringRes placeholder: Int? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     singleLine: Boolean = true,
@@ -67,7 +66,6 @@ fun ProtonTextField(
         placeholder = { ProtonTextFieldPlaceHolder(placeholder) },
         trailingIcon = trailingIcon,
         modifier = modifier
-            .fillMaxWidth()
             .onFocusChanged { state ->
                 onFocusChange?.let { it(state.isFocused) }
                     ?: run { isFocused = state.isFocused }

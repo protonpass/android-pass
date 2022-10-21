@@ -116,11 +116,10 @@ class ItemDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    fun onEmitSnackbarMessage(snackbarMessage: DetailSnackbarMessages) {
+    fun onEmitSnackbarMessage(snackbarMessage: DetailSnackbarMessages) =
         viewModelScope.launch {
             snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
-    }
 
     companion object {
         private const val TAG = "ItemDetailViewModel"

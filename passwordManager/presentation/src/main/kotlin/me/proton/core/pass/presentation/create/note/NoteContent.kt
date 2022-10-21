@@ -4,7 +4,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,8 +40,7 @@ internal fun NoteContent(
     onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
-    snackbarHost: @Composable (SnackbarHostState) -> Unit,
-    onSnackbarMessage: (NoteSnackbarMessage) -> Unit
+    onEmitSnackbarMessage: (NoteSnackbarMessage) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     Scaffold(
@@ -56,7 +54,7 @@ internal fun NoteContent(
                         onClick = {
                             keyboardController?.hide()
                             when (uiState.shareId) {
-                                None -> onSnackbarMessage(EmptyShareIdError)
+                                None -> onEmitSnackbarMessage(EmptyShareIdError)
                                 is Some -> onSubmit(uiState.shareId.value)
                             }
                         },
@@ -71,8 +69,7 @@ internal fun NoteContent(
                     }
                 }
             )
-        },
-        snackbarHost = snackbarHost
+        }
     ) { padding ->
         if (uiState.isLoadingState == IsLoadingState.Loading) {
             LoadingDialog()
@@ -88,7 +85,7 @@ internal fun NoteContent(
             val isItemSaved = uiState.isItemSaved
             if (isItemSaved is ItemSavedState.Success) {
                 when (uiState.shareId) {
-                    None -> onSnackbarMessage(EmptyShareIdError)
+                    None -> onEmitSnackbarMessage(EmptyShareIdError)
                     is Some -> onSuccess(uiState.shareId.value, isItemSaved.itemId)
                 }
             }

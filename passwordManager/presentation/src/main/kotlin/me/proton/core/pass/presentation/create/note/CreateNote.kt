@@ -34,7 +34,6 @@ fun CreateNote(
         onSubmit = { shareId -> viewModel.createNote(shareId) },
         onTitleChange = { viewModel.onTitleChange(it) },
         onNoteChange = { viewModel.onNoteChange(it) },
-        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
-        onSnackbarMessageDelivered = { viewModel.onSnackbarMessageDismissed() }
+        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) }
     )
 }

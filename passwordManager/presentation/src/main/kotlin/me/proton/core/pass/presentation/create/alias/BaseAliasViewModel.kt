@@ -5,14 +5,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.domain.AliasSuffix
 import me.proton.core.pass.domain.ShareId
@@ -20,6 +20,7 @@ import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
 
 abstract class BaseAliasViewModel(
+    private val snackbarMessageRepository: SnackbarMessageRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -36,21 +37,29 @@ abstract class BaseAliasViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val aliasItemValidationErrorsState: MutableStateFlow<Set<AliasItemValidationErrors>> =
         MutableStateFlow(emptySet())
-    protected val mutableSnackbarMessage: MutableSharedFlow<AliasSnackbarMessage> =
-        MutableSharedFlow(extraBufferCapacity = 1)
-    val snackbarMessage: SharedFlow<AliasSnackbarMessage> = mutableSnackbarMessage
+
+    private val aliasItemWrapperState = combine(
+        aliasItemState,
+        aliasItemValidationErrorsState
+    ) { aliasItem, aliasItemValidationErrors ->
+        AliasItemWrapper(aliasItem, aliasItemValidationErrors)
+    }
+
+    private data class AliasItemWrapper(
+        val aliasItem: AliasItem,
+        val aliasItemValidationErrors: Set<AliasItemValidationErrors>
+    )
 
     val aliasUiState: StateFlow<CreateUpdateAliasUiState> = combine(
         shareIdState,
-        aliasItemState,
+        aliasItemWrapperState,
         isLoadingState,
-        isItemSavedState,
-        aliasItemValidationErrorsState
-    ) { shareId, aliasItem, isLoading, isItemSaved, aliasItemValidationErrors ->
+        isItemSavedState
+    ) { shareId, aliasItemWrapper, isLoading, isItemSaved ->
         CreateUpdateAliasUiState(
             shareId = shareId,
-            aliasItem = aliasItem,
-            errorList = aliasItemValidationErrors,
+            aliasItem = aliasItemWrapper.aliasItem,
+            errorList = aliasItemWrapper.aliasItemValidationErrors,
             isLoadingState = isLoading,
             isItemSaved = isItemSaved
         )
@@ -124,6 +133,12 @@ abstract class BaseAliasViewModel(
                 mailboxTitle = mailboxTitle,
                 isMailboxListApplicable = allSelectedMailboxes.isNotEmpty()
             )
+        }
+    }
+
+    fun onEmitSnackbarMessage(snackbarMessage: AliasSnackbarMessage) {
+        viewModelScope.launch {
+            snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
     }
 

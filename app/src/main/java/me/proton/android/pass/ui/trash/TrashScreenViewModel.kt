@@ -3,9 +3,7 @@ package me.proton.android.pass.ui.trash
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -15,6 +13,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.extension.toUiModel
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
+import me.proton.android.pass.ui.trash.TrashSnackbarMessage.ClearTrashError
+import me.proton.android.pass.ui.trash.TrashSnackbarMessage.DeleteItemError
+import me.proton.android.pass.ui.trash.TrashSnackbarMessage.ObserveItemsError
+import me.proton.android.pass.ui.trash.TrashSnackbarMessage.RefreshError
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.UserId
@@ -34,15 +37,14 @@ class TrashScreenViewModel @Inject constructor(
     private val accountManager: AccountManager,
     observeTrashedItems: ObserveTrashedItems,
     private val itemRepository: ItemRepository,
-    private val refreshContent: RefreshContent
+    private val refreshContent: RefreshContent,
+    private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
-    private val mutableSnackbarMessage: MutableSharedFlow<TrashSnackbarMessage> =
-        MutableSharedFlow(extraBufferCapacity = 1)
-    val snackbarMessage: SharedFlow<TrashSnackbarMessage> = mutableSnackbarMessage
-
-    private val isLoading: MutableStateFlow<IsLoadingState> = MutableStateFlow(IsLoadingState.NotLoading)
-    private val isRefreshing: MutableStateFlow<IsRefreshingState> = MutableStateFlow(IsRefreshingState.NotRefreshing)
+    private val isLoading: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
+    private val isRefreshing: MutableStateFlow<IsRefreshingState> =
+        MutableStateFlow(IsRefreshingState.NotRefreshing)
 
     val uiState: StateFlow<TrashUiState> = combine(
         observeTrashedItems(),
@@ -50,13 +52,18 @@ class TrashScreenViewModel @Inject constructor(
         isLoading
     ) { itemsResult, refreshing, loading ->
 
-        val isLoading = IsLoadingState.from(itemsResult is Result.Loading || loading is IsLoadingState.Loading)
+        val isLoading =
+            IsLoadingState.from(itemsResult is Result.Loading || loading is IsLoadingState.Loading)
         val items = when (itemsResult) {
             Result.Loading -> emptyList()
             is Result.Error -> {
                 val defaultMessage = "Observe trash items error"
-                PassLogger.i(TAG, itemsResult.exception ?: Exception(defaultMessage), defaultMessage)
-                mutableSnackbarMessage.tryEmit(TrashSnackbarMessage.ObserveItemsError)
+                PassLogger.i(
+                    TAG,
+                    itemsResult.exception ?: Exception(defaultMessage),
+                    defaultMessage
+                )
+                snackbarMessageRepository.emitSnackbarMessage(ObserveItemsError)
                 emptyList()
             }
             is Result.Success -> {
@@ -88,7 +95,7 @@ class TrashScreenViewModel @Inject constructor(
                 .onError {
                     val message = "Error deleting item"
                     PassLogger.i(TAG, it ?: Exception(message), message)
-                    mutableSnackbarMessage.tryEmit(TrashSnackbarMessage.DeleteItemError)
+                    snackbarMessageRepository.emitSnackbarMessage(DeleteItemError)
                 }
         }
     }
@@ -100,7 +107,7 @@ class TrashScreenViewModel @Inject constructor(
                 .onError {
                     val message = "Error clearing trash"
                     PassLogger.i(TAG, it ?: Exception(message), message)
-                    mutableSnackbarMessage.tryEmit(TrashSnackbarMessage.ClearTrashError)
+                    snackbarMessageRepository.emitSnackbarMessage(ClearTrashError)
                 }
             isLoading.update { IsLoadingState.NotLoading }
         }
@@ -113,7 +120,7 @@ class TrashScreenViewModel @Inject constructor(
                 .onError {
                     val message = "Error in refresh"
                     PassLogger.i(TAG, it ?: Exception(message), message)
-                    mutableSnackbarMessage.tryEmit(TrashSnackbarMessage.RefreshError)
+                    snackbarMessageRepository.emitSnackbarMessage(RefreshError)
                 }
             isRefreshing.update { IsRefreshingState.NotRefreshing }
         }

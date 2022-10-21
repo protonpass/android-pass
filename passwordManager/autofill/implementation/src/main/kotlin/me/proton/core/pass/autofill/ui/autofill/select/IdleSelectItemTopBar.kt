@@ -35,7 +35,7 @@ fun IdleSelectItemTopBar(
 
 @Preview
 @Composable
-fun Preview_IdleSelectItemTopBar() {
+fun IdleSelectItemTopBarPreview() {
     IdleSelectItemTopBar(
         startSearchMode = {}
     )

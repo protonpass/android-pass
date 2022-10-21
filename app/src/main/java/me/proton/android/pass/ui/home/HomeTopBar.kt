@@ -41,7 +41,7 @@ internal fun HomeTopBar(
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Preview(showBackground = true)
 @Composable
-fun Preview_HomeTopBar_idle() {
+fun HomeTopBarIdlePreview() {
     ProtonTheme {
         HomeTopBar(
             searchQuery = "",
@@ -58,7 +58,7 @@ fun Preview_HomeTopBar_idle() {
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Preview(showBackground = true)
 @Composable
-fun Preview_HomeTopBar_search() {
+fun HomeTopBarSearchPreview() {
     ProtonTheme {
         HomeTopBar(
             searchQuery = "some search",

@@ -6,6 +6,8 @@ import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.ui.MainDispatcherRule
 import me.proton.core.pass.presentation.create.note.BaseNoteViewModel
 import me.proton.core.pass.presentation.create.note.CreateUpdateNoteUiState.Companion.Initial
+import me.proton.core.pass.test.core.TestSavedStateHandle
+import me.proton.core.pass.test.notification.TestSnackbarMessageRepository
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -19,7 +21,10 @@ internal class BaseNoteViewModelTest {
 
     @Before
     fun setUp() {
-        baseNoteViewModel = object : BaseNoteViewModel() {}
+        baseNoteViewModel = object : BaseNoteViewModel(
+            TestSnackbarMessageRepository(),
+            TestSavedStateHandle.create()
+        ) {}
     }
 
     @Test

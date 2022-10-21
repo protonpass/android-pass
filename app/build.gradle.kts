@@ -51,12 +51,11 @@ val sentryDSN: String = privateProperties.getProperty("SENTRY_DSN") ?: ""
 val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 
 android {
-    compileSdk = Config.compileSdk
-
+    compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
-        applicationId = Config.applicationId
-        minSdk = Config.minSdk
-        targetSdk = Config.targetSdk
+        applicationId = "me.proton.android.pass"
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = Config.versionCode
         versionName = Config.versionName
         testInstrumentationRunner = Config.testInstrumentationRunner

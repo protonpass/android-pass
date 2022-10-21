@@ -12,25 +12,38 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
     override val values: Sequence<SelectItemUiState>
         get() = sequenceOf(
             SelectItemUiState(
-                isLoading = IsLoadingState.Loading,
-                isRefreshing = IsRefreshingState.NotRefreshing,
-                items = emptyList(),
-                itemClickedEvent = ItemClickedEvent.None
+                SelectItemListUiState(
+                    isLoading = IsLoadingState.Loading,
+                    isRefreshing = IsRefreshingState.NotRefreshing,
+                    items = emptyList(),
+                    itemClickedEvent = ItemClickedEvent.None
+                ),
+                SearchUiState.Initial
             ),
             SelectItemUiState(
-                isLoading = IsLoadingState.NotLoading,
-                isRefreshing = IsRefreshingState.NotRefreshing,
-                items = listOf(
-                    ItemUiModel(
-                        id = ItemId("123"),
-                        shareId = ShareId("345"),
-                        name = "Item with long text",
-                        itemType = ItemType.Note(
-                            "Some very very long test that should be ellipsized as we type"
+                SelectItemListUiState(
+                    isLoading = IsLoadingState.NotLoading,
+                    isRefreshing = IsRefreshingState.NotRefreshing,
+                    items = listOf(
+                        ItemUiModel(
+                            id = ItemId("123"),
+                            shareId = ShareId("345"),
+                            name = "Item with long text",
+                            itemType = ItemType.Note(
+                                "Some very very long test that should be ellipsized as we type"
+                            )
                         )
-                    )
+                    ),
+                    itemClickedEvent = ItemClickedEvent.None
                 ),
-                itemClickedEvent = ItemClickedEvent.None
+                SearchUiState.Initial
+            ),
+            SelectItemUiState(
+                SelectItemListUiState.Loading,
+                SearchUiState(
+                    searchQuery = "query",
+                    inSearchMode = true
+                )
             )
         )
 }

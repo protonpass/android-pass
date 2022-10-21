@@ -6,9 +6,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -20,6 +18,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.extension.toUiModel
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessage
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
+import me.proton.android.pass.ui.home.HomeSnackbarMessage.ObserveItemsError
+import me.proton.android.pass.ui.home.HomeSnackbarMessage.ObserveShareError
+import me.proton.android.pass.ui.home.HomeSnackbarMessage.RefreshError
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.pass.common.api.None
 import me.proton.core.pass.common.api.Option
@@ -44,6 +47,7 @@ class HomeViewModel @Inject constructor(
     private val trashItem: TrashItem,
     private val searchItems: SearchItems,
     private val refreshContent: RefreshContent,
+    private val snackbarMessageRepository: SnackbarMessageRepository,
     observeCurrentUser: ObserveCurrentUser,
     observeActiveShare: ObserveActiveShare
 ) : ViewModel() {
@@ -61,28 +65,34 @@ class HomeViewModel @Inject constructor(
             }
         }
 
-    private val mutableSnackbarMessage: MutableSharedFlow<HomeSnackbarMessage> =
-        MutableSharedFlow(extraBufferCapacity = 1)
-    val snackbarMessage: SharedFlow<HomeSnackbarMessage> = mutableSnackbarMessage
+    private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
+    private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    private val searchQuery: MutableStateFlow<String> = MutableStateFlow("")
-    private val inSearchMode: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val searchWrapperWrapper = combine(
+        searchQueryState,
+        isInSearchModeState
+    ) { searchQuery, isInSearchMode -> SearchWrapper(searchQuery, isInSearchMode) }
+
+    private data class SearchWrapper(
+        val searchQuery: String,
+        val isInSearchMode: Boolean
+    )
+
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
         MutableStateFlow(IsRefreshingState.NotRefreshing)
 
     val homeUiState: StateFlow<HomeUiState> = combine(
         observeActiveShare(),
         listItems,
-        searchQuery,
-        inSearchMode,
+        searchWrapperWrapper,
         isRefreshing
-    ) { shareIdResult, itemsResult, searchQuery, inSearchMode, isRefreshing ->
+    ) { shareIdResult, itemsResult, searchWrapper, isRefreshing ->
         val isLoading = IsLoadingState.from(
             shareIdResult is Result.Loading || itemsResult is Result.Loading
         )
 
         val items = when (itemsResult) {
-            Result.Loading -> emptyList<ItemUiModel>()
+            Result.Loading -> emptyList()
             is Result.Success -> itemsResult.data
             is Result.Error -> {
                 val defaultMessage = "Observe items error"
@@ -91,8 +101,8 @@ class HomeViewModel @Inject constructor(
                     itemsResult.exception ?: Exception(defaultMessage),
                     defaultMessage
                 )
-                mutableSnackbarMessage.tryEmit(HomeSnackbarMessage.ObserveItemsError)
-                emptyList<ItemUiModel>()
+                snackbarMessageRepository.emitSnackbarMessage(ObserveItemsError)
+                emptyList()
             }
         }
 
@@ -106,7 +116,7 @@ class HomeViewModel @Inject constructor(
                     shareIdResult.exception ?: Exception(defaultMessage),
                     defaultMessage
                 )
-                mutableSnackbarMessage.tryEmit(HomeSnackbarMessage.ObserveShareError)
+                snackbarMessageRepository.emitSnackbarMessage(ObserveShareError)
                 None
             }
         }
@@ -119,8 +129,8 @@ class HomeViewModel @Inject constructor(
                 selectedShare = selectedShare
             ),
             searchUiState = SearchUiState(
-                searchQuery = searchQuery,
-                inSearchMode = inSearchMode
+                searchQuery = searchWrapper.searchQuery,
+                inSearchMode = searchWrapper.isInSearchMode
             )
         )
     }
@@ -133,20 +143,20 @@ class HomeViewModel @Inject constructor(
     fun onSearchQueryChange(query: String) {
         if (query.contains("\n")) return
 
-        searchQuery.value = query
+        searchQueryState.value = query
         searchItems.updateQuery(query)
     }
 
     fun onStopSearching() {
         searchItems.clearSearch()
-        searchQuery.update { "" }
-        inSearchMode.update { false }
+        searchQueryState.update { "" }
+        isInSearchModeState.update { false }
     }
 
     fun onEnterSearch() {
         searchItems.clearSearch()
-        searchQuery.update { "" }
-        inSearchMode.update { true }
+        searchQueryState.update { "" }
+        isInSearchModeState.update { true }
     }
 
     fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
@@ -157,7 +167,7 @@ class HomeViewModel @Inject constructor(
                 .onError {
                     val message = "Error in refresh"
                     PassLogger.i(TAG, it ?: Exception(message), message)
-                    mutableSnackbarMessage.tryEmit(HomeSnackbarMessage.RefreshError)
+                    snackbarMessageRepository.emitSnackbarMessage(RefreshError)
                 }
             isRefreshing.update { IsRefreshingState.NotRefreshing }
         }
@@ -169,6 +179,12 @@ class HomeViewModel @Inject constructor(
         val userId = currentUserFlow.firstOrNull()?.userId
         if (userId != null) {
             trashItem.invoke(userId, item.shareId, item.id)
+        }
+    }
+
+    fun onEmitSnackbarMessage(snackbarMessage: SnackbarMessage) {
+        viewModelScope.launch(coroutineExceptionHandler) {
+            snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
     }
 

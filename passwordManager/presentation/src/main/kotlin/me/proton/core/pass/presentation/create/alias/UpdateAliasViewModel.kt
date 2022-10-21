@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
@@ -33,8 +34,9 @@ class UpdateAliasViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val itemRepository: ItemRepository,
     private val aliasRepository: AliasRepository,
+    private val snackbarMessageRepository: SnackbarMessageRepository,
     savedStateHandle: SavedStateHandle
-) : BaseAliasViewModel(savedStateHandle) {
+) : BaseAliasViewModel(snackbarMessageRepository, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -93,13 +95,13 @@ class UpdateAliasViewModel @Inject constructor(
         }
     }
 
-    private fun showError(
+    private suspend fun showError(
         message: String,
         snackbarMessage: AliasSnackbarMessage,
         it: Throwable? = null
     ) {
         PassLogger.i(TAG, it ?: Exception(message), message)
-        mutableSnackbarMessage.tryEmit(snackbarMessage)
+        snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
     }
 
     fun updateAlias() = viewModelScope.launch(coroutineExceptionHandler) {

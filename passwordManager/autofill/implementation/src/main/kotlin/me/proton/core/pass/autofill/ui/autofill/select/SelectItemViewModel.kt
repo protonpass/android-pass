@@ -5,9 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -17,10 +15,12 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.pass.autofill.extensions.toAutoFillItem
 import me.proton.core.pass.autofill.extensions.toUiModel
+import me.proton.core.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
 import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.common.api.map
 import me.proton.core.pass.data.usecases.AddPackageNameToItem
@@ -40,6 +40,7 @@ class SelectItemViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val addPackageNameToItem: AddPackageNameToItem,
     private val refreshContent: RefreshContent,
+    private val snackbarMessageRepository: SnackbarMessageRepository,
     searchItems: SearchItems
 ) : ViewModel() {
 
@@ -54,12 +55,10 @@ class SelectItemViewModel @Inject constructor(
             }
         }
 
-    private val isRefreshing: MutableStateFlow<IsRefreshingState> = MutableStateFlow(IsRefreshingState.NotRefreshing)
-    private val itemClickedFlow: MutableStateFlow<ItemClickedEvent> = MutableStateFlow(ItemClickedEvent.None)
-
-    private val mutableSnackbarMessage: MutableSharedFlow<SelectItemSnackbarMessage> =
-        MutableSharedFlow(extraBufferCapacity = 1)
-    val snackbarMessage: SharedFlow<SelectItemSnackbarMessage> = mutableSnackbarMessage
+    private val isRefreshing: MutableStateFlow<IsRefreshingState> =
+        MutableStateFlow(IsRefreshingState.NotRefreshing)
+    private val itemClickedFlow: MutableStateFlow<ItemClickedEvent> =
+        MutableStateFlow(ItemClickedEvent.None)
 
     val uiState: StateFlow<SelectItemUiState> = combine(
         listItems,
@@ -72,8 +71,12 @@ class SelectItemViewModel @Inject constructor(
             is Result.Success -> itemsResult.data
             is Result.Error -> {
                 val defaultMessage = "Could not load autofill items"
-                PassLogger.i(TAG, itemsResult.exception ?: Exception(defaultMessage), defaultMessage)
-                mutableSnackbarMessage.tryEmit(SelectItemSnackbarMessage.LoadItemsError)
+                PassLogger.i(
+                    TAG,
+                    itemsResult.exception ?: Exception(defaultMessage),
+                    defaultMessage
+                )
+                snackbarMessageRepository.emitSnackbarMessage(LoadItemsError)
                 emptyList()
             }
         }

@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
@@ -30,8 +31,9 @@ class UpdateNoteViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
     private val getShare: GetShareById,
+    private val snackbarMessageRepository: SnackbarMessageRepository,
     savedStateHandle: SavedStateHandle
-) : BaseNoteViewModel(savedStateHandle) {
+) : BaseNoteViewModel(snackbarMessageRepository, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -59,11 +61,11 @@ class UpdateNoteViewModel @Inject constructor(
                     .onError {
                         val defaultMessage = "Get by id error"
                         PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                        mutableSnackbarMessage.tryEmit(InitError)
+                        snackbarMessageRepository.emitSnackbarMessage(InitError)
                     }
             } else {
                 PassLogger.i(TAG, "Empty user/share/item Id")
-                mutableSnackbarMessage.tryEmit(InitError)
+                snackbarMessageRepository.emitSnackbarMessage(InitError)
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }
@@ -87,17 +89,17 @@ class UpdateNoteViewModel @Inject constructor(
                         .onError {
                             val defaultMessage = "Update item error"
                             PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                            mutableSnackbarMessage.tryEmit(ItemUpdateError)
+                            snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
                         }
                 }
                 .onError {
                     val defaultMessage = "Get share error"
                     PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                    mutableSnackbarMessage.tryEmit(ItemUpdateError)
+                    snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
                 }
         } else {
             PassLogger.i(TAG, "Empty User Id")
-            mutableSnackbarMessage.tryEmit(ItemUpdateError)
+            snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
     }

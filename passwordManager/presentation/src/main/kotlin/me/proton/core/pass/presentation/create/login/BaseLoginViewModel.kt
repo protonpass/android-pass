@@ -4,9 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -16,6 +14,8 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.pass.common.api.None
 import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.common.api.Result
@@ -26,6 +26,7 @@ import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
 
 abstract class BaseLoginViewModel(
+    private val snackbarMessageRepository: SnackbarMessageRepository,
     observeActiveShare: ObserveActiveShare,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -55,21 +56,29 @@ abstract class BaseLoginViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val loginItemValidationErrorsState: MutableStateFlow<Set<LoginItemValidationErrors>> =
         MutableStateFlow(emptySet())
-    protected val mutableSnackbarMessage: MutableSharedFlow<LoginSnackbarMessages> =
-        MutableSharedFlow(extraBufferCapacity = 1)
-    val snackbarMessage: SharedFlow<LoginSnackbarMessages> = mutableSnackbarMessage
+
+    private val loginItemWrapperState = combine(
+        loginItemState,
+        loginItemValidationErrorsState
+    ) { loginItem, loginItemValidationErrors ->
+        LoginItemWrapper(loginItem, loginItemValidationErrors)
+    }
+
+    private data class LoginItemWrapper(
+        val loginItem: LoginItem,
+        val loginItemValidationErrors: Set<LoginItemValidationErrors>
+    )
 
     val loginUiState: StateFlow<CreateUpdateLoginUiState> = combine(
         activeShareIdState,
-        loginItemState,
+        loginItemWrapperState,
         isLoadingState,
-        isItemSavedState,
-        loginItemValidationErrorsState
-    ) { shareId, loginItem, isLoading, isItemSaved, loginItemValidationErrors ->
+        isItemSavedState
+    ) { shareId, loginItemWrapper, isLoading, isItemSaved ->
         CreateUpdateLoginUiState(
             shareId = shareId,
-            loginItem = loginItem,
-            validationErrors = loginItemValidationErrors,
+            loginItem = loginItemWrapper.loginItem,
+            validationErrors = loginItemWrapper.loginItemValidationErrors,
             isLoadingState = isLoading,
             isItemSaved = isItemSaved
         )
@@ -120,6 +129,12 @@ abstract class BaseLoginViewModel(
 
     fun onNoteChange(value: String) {
         loginItemState.update { it.copy(note = value) }
+    }
+
+    fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) {
+        viewModelScope.launch {
+            snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
+        }
     }
 }
 

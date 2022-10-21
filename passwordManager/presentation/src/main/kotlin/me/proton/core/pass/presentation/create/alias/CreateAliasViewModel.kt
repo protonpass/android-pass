@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.common.api.onError
@@ -28,8 +29,9 @@ class CreateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val aliasRepository: AliasRepository,
     private val createAlias: CreateAlias,
+    private val snackbarMessageRepository: SnackbarMessageRepository,
     savedStateHandle: SavedStateHandle
-) : BaseAliasViewModel(savedStateHandle) {
+) : BaseAliasViewModel(snackbarMessageRepository, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -67,11 +69,11 @@ class CreateAliasViewModel @Inject constructor(
                     .onError {
                         val defaultMessage = "Could not get alias options"
                         PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                        mutableSnackbarMessage.tryEmit(InitError)
+                        snackbarMessageRepository.emitSnackbarMessage(InitError)
                     }
             } else {
                 PassLogger.i(TAG, "Empty User Id")
-                mutableSnackbarMessage.tryEmit(InitError)
+                snackbarMessageRepository.emitSnackbarMessage(InitError)
             }
         }
     }
@@ -106,11 +108,11 @@ class CreateAliasViewModel @Inject constructor(
                     .onError {
                         val defaultMessage = "Create alias error"
                         PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                        mutableSnackbarMessage.tryEmit(ItemCreationError)
+                        snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
                     }
             } else {
                 PassLogger.i(TAG, "Empty User Id")
-                mutableSnackbarMessage.tryEmit(ItemCreationError)
+                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }

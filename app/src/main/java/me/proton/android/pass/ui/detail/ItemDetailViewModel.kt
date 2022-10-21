@@ -4,9 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -16,6 +14,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.ui.detail.DetailSnackbarMessages.InitError
 import me.proton.android.pass.ui.detail.DetailSnackbarMessages.SendToTrashError
 import me.proton.core.accountmanager.domain.AccountManager
@@ -42,6 +41,7 @@ class ItemDetailViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
     private val trashItem: TrashItem,
+    private val snackbarMessageRepository: SnackbarMessageRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -56,9 +56,6 @@ class ItemDetailViewModel @Inject constructor(
         MutableStateFlow(IsLoadingState.NotLoading)
     private val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
         MutableStateFlow(IsSentToTrashState.NotSent)
-    private val mutableSnackbarMessage: MutableSharedFlow<DetailSnackbarMessages> =
-        MutableSharedFlow(extraBufferCapacity = 1)
-    val snackbarMessage: SharedFlow<DetailSnackbarMessages> = mutableSnackbarMessage
 
     val uiState: StateFlow<ItemDetailScreenUiState> = combine(
         itemModelState,
@@ -95,11 +92,11 @@ class ItemDetailViewModel @Inject constructor(
                     .onError {
                         val defaultMessage = "Get by id error"
                         PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                        mutableSnackbarMessage.tryEmit(InitError)
+                        snackbarMessageRepository.emitSnackbarMessage(InitError)
                     }
             } else {
                 PassLogger.i(TAG, "Empty user/share/item Id")
-                mutableSnackbarMessage.tryEmit(InitError)
+                snackbarMessageRepository.emitSnackbarMessage(InitError)
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }
@@ -114,9 +111,15 @@ class ItemDetailViewModel @Inject constructor(
             isItemSentToTrashState.update { IsSentToTrashState.Sent }
         } else {
             PassLogger.i(TAG, "Empty userId")
-            mutableSnackbarMessage.tryEmit(SendToTrashError)
+            snackbarMessageRepository.emitSnackbarMessage(SendToTrashError)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    fun onEmitSnackbarMessage(snackbarMessage: DetailSnackbarMessages) {
+        viewModelScope.launch {
+            snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
+        }
     }
 
     companion object {

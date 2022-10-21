@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.pass.common.api.onError
 import me.proton.core.pass.common.api.onSuccess
@@ -24,8 +25,9 @@ class CreateNoteViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val getShare: GetShareById,
     private val itemRepository: ItemRepository,
+    private val snackbarMessageRepository: SnackbarMessageRepository,
     savedStateHandle: SavedStateHandle
-) : BaseNoteViewModel(savedStateHandle) {
+) : BaseNoteViewModel(snackbarMessageRepository, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -56,17 +58,17 @@ class CreateNoteViewModel @Inject constructor(
                                     it ?: Exception(defaultMessage),
                                     defaultMessage
                                 )
-                                mutableSnackbarMessage.tryEmit(ItemCreationError)
+                                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
                             }
                     }
                     .onError {
                         val defaultMessage = "Get share error"
                         PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                        mutableSnackbarMessage.tryEmit(ItemCreationError)
+                        snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
                     }
             } else {
                 PassLogger.i(TAG, "Empty User Id")
-                mutableSnackbarMessage.tryEmit(ItemCreationError)
+                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }

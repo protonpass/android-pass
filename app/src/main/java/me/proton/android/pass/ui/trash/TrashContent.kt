@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,7 +22,6 @@ import me.proton.core.pass.presentation.uievents.IsLoadingState
 fun TrashContent(
     modifier: Modifier,
     uiState: TrashUiState,
-    snackbarHost: @Composable (SnackbarHostState) -> Unit,
     onRestoreItem: (ItemUiModel) -> Unit,
     onDeleteItem: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit,
@@ -33,7 +31,6 @@ fun TrashContent(
 
     var showClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     Scaffold(
-        snackbarHost = snackbarHost,
         topBar = {
             TrashTopBar(
                 onDrawerIconClick = onDrawerIconClick,

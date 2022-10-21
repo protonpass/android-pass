@@ -11,7 +11,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -25,22 +24,17 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
-import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.pass.common.api.Option
 import me.proton.core.pass.domain.ItemType
 import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.presentation.components.common.PassSnackbarHost
-import me.proton.core.pass.presentation.components.common.PassSnackbarHostState
 import me.proton.core.pass.presentation.components.common.item.ItemAction
 import me.proton.core.pass.presentation.components.common.item.ItemsList
 import me.proton.core.pass.presentation.components.model.ItemUiModel
@@ -53,25 +47,12 @@ import me.proton.core.pass.presentation.uievents.IsRefreshingState
 fun HomeScreen(
     modifier: Modifier = Modifier,
     homeScreenNavigation: HomeScreenNavigation,
-    onDrawerIconClick: () -> Unit
+    onDrawerIconClick: () -> Unit,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<HomeViewModel>()
     val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
-    val snackbarHostState = remember { PassSnackbarHostState() }
-    val snackbarMessages = HomeSnackbarMessage.values()
-        .associateWith { stringResource(id = it.id) }
-    LaunchedEffect(Unit) {
-        viewModel.snackbarMessage
-            .collectLatest { message ->
-                scope.launch {
-                    snackbarMessages[message]?.let {
-                        snackbarHostState.showSnackbar(ProtonSnackbarType.ERROR, it)
-                    }
-                }
-            }
-    }
 
     RequestAutofillIfSupported()
     ProtonModalBottomSheetLayout(
@@ -94,8 +75,7 @@ fun HomeScreen(
             sendItemToTrash = { viewModel.sendItemToTrash(it) },
             onDrawerIconClick = onDrawerIconClick,
             onAddItemClick = { scope.launch { bottomSheetState.show() } },
-            onRefresh = { viewModel.onRefresh() },
-            snackbarHost = { PassSnackbarHost(snackbarHostState = snackbarHostState) }
+            onRefresh = { viewModel.onRefresh() }
         )
     }
 }
@@ -115,10 +95,8 @@ private fun HomeContent(
     sendItemToTrash: (ItemUiModel) -> Unit,
     onDrawerIconClick: () -> Unit,
     onAddItemClick: (Option<ShareId>) -> Unit,
-    onRefresh: () -> Unit,
-    snackbarHost: @Composable (SnackbarHostState) -> Unit
+    onRefresh: () -> Unit
 ) {
-
     // Only enable the backhandler if we are in search mode
     BackHandler(enabled = uiState.searchUiState.inSearchMode) {
         onStopSearching()
@@ -137,8 +115,7 @@ private fun HomeContent(
                 onDrawerIconClick = onDrawerIconClick,
                 onAddItemClick = { onAddItemClick(uiState.homeListUiState.selectedShare) }
             )
-        },
-        snackbarHost = snackbarHost
+        }
     ) { contentPadding ->
         Box {
             when (uiState.homeListUiState.isLoading) {

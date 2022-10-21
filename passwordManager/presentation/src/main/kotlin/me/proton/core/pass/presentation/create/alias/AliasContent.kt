@@ -6,7 +6,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -57,8 +56,7 @@ internal fun AliasContent(
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onAliasChange: (String) -> Unit,
-    snackbarHost: @Composable (SnackbarHostState) -> Unit,
-    onSnackbarMessage: (AliasSnackbarMessage) -> Unit
+    onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val scope = rememberCoroutineScope()
@@ -100,7 +98,7 @@ internal fun AliasContent(
                             onClick = {
                                 keyboardController?.hide()
                                 when (uiState.shareId) {
-                                    None -> onSnackbarMessage(EmptyShareIdError)
+                                    None -> onEmitSnackbarMessage(EmptyShareIdError)
                                     is Some -> onSubmit(uiState.shareId.value)
                                 }
                             },
@@ -115,8 +113,7 @@ internal fun AliasContent(
                         }
                     }
                 )
-            },
-            snackbarHost = snackbarHost
+            }
         ) { padding ->
             if (uiState.isLoadingState == IsLoadingState.Loading) {
                 LoadingDialog()
@@ -151,7 +148,7 @@ internal fun AliasContent(
                 val isItemSaved = uiState.isItemSaved
                 if (isItemSaved is ItemSavedState.Success) {
                     when (uiState.shareId) {
-                        None -> onSnackbarMessage(EmptyShareIdError)
+                        None -> onEmitSnackbarMessage(EmptyShareIdError)
                         is Some -> onSuccess(uiState.shareId.value, isItemSaved.itemId)
                     }
                 }

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,6 +18,7 @@ import me.proton.core.pass.common.api.None
 import me.proton.core.pass.common.api.Some
 import me.proton.core.pass.domain.ItemId
 import me.proton.core.pass.domain.ShareId
+import me.proton.core.pass.presentation.create.login.LoginSnackbarMessages.EmptyShareIdError
 import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
 
@@ -37,8 +37,7 @@ internal fun LoginContent(
     onPasswordChange: (String) -> Unit,
     onWebsiteChange: OnWebsiteChange,
     onNoteChange: (String) -> Unit,
-    snackbarHost: @Composable (SnackbarHostState) -> Unit,
-    onSnackbarMessage: (LoginSnackbarMessages) -> Unit
+    onEmitSnackbarMessage: (LoginSnackbarMessages) -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -67,10 +66,9 @@ internal fun LoginContent(
                     topBarActionName = topBarActionName,
                     onUpClick = onUpClick,
                     onSubmit = onSubmit,
-                    onSnackbarMessage = onSnackbarMessage
+                    onSnackbarMessage = onEmitSnackbarMessage
                 )
-            },
-            snackbarHost = snackbarHost
+            }
         ) { padding ->
             if (uiState.isLoadingState == IsLoadingState.Loading) {
                 LoadingDialog()
@@ -92,7 +90,7 @@ internal fun LoginContent(
                 val isItemSaved = uiState.isItemSaved
                 if (isItemSaved is ItemSavedState.Success) {
                     when (uiState.shareId) {
-                        None -> onSnackbarMessage(LoginSnackbarMessages.EmptyShareIdError)
+                        None -> onEmitSnackbarMessage(EmptyShareIdError)
                         is Some -> onSuccess(uiState.shareId.value, isItemSaved.itemId)
                     }
                 }

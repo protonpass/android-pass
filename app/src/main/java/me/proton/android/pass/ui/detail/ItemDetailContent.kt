@@ -3,7 +3,6 @@ package me.proton.android.pass.ui.detail
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -31,22 +30,21 @@ fun ItemDetailContent(
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
     onMoveToTrash: (Item) -> Unit,
-    snackbarHost: @Composable (SnackbarHostState) -> Unit,
-    onSnackbarMessage: (DetailSnackbarMessages) -> Unit
+    onEmitSnackbarMessage: (DetailSnackbarMessages) -> Unit
 ) {
     val itemToDelete = remember { mutableStateOf(false) }
 
     Scaffold(
+        modifier = modifier,
         topBar = {
             ItemDetailTopBar(
                 uiState = uiState.model,
                 onUpClick = onUpClick,
                 onEditClick = onEditClick,
                 onDeleteClick = { itemToDelete.value = true },
-                onSnackbarMessage = onSnackbarMessage
+                onSnackbarMessage = onEmitSnackbarMessage
             )
-        },
-        snackbarHost = snackbarHost
+        }
     ) { padding ->
         if (uiState.isLoading == IsLoadingState.Loading) {
             LoadingDialog()

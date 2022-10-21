@@ -80,9 +80,8 @@ abstract class BaseNoteViewModel(
         noteItemState.update { it.copy(note = value) }
     }
 
-    fun onEmitSnackbarMessage(snackbarMessage: NoteSnackbarMessage) {
+    fun onEmitSnackbarMessage(snackbarMessage: NoteSnackbarMessage) =
         viewModelScope.launch {
             snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
-    }
 }

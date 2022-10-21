@@ -3,7 +3,6 @@ package me.proton.core.pass.presentation.create.login
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -34,7 +33,7 @@ abstract class BaseLoginViewModel(
     protected val shareId: Option<ShareId> =
         Option.fromNullable(savedStateHandle.get<String>("shareId")?.let { ShareId(it) })
 
-    private val activeShareIdState: Flow<Option<ShareId>> = MutableStateFlow(shareId)
+    private val activeShareIdState: StateFlow<Option<ShareId>> = MutableStateFlow(shareId)
         .flatMapLatest { option ->
             when (option) {
                 None -> observeActiveShare()
@@ -49,6 +48,11 @@ abstract class BaseLoginViewModel(
                 is Some -> flowOf(option)
             }
         }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = shareId
+        )
     protected val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)

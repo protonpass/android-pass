@@ -148,35 +148,6 @@ private fun HomeContent(
     }
 }
 
-@ExperimentalComposeUiApi
-@ExperimentalMaterialApi
-@Composable
-private fun HomeTopBar(
-    searchQuery: String,
-    inSearchMode: Boolean,
-    onSearchQueryChange: (String) -> Unit,
-    onEnterSearch: () -> Unit,
-    onStopSearching: () -> Unit,
-    onDrawerIconClick: () -> Unit,
-    onAddItemClick: () -> Unit
-) {
-    if (inSearchMode) {
-        SearchHomeTopBar(
-            searchQuery = searchQuery,
-            onSearchQueryChange = onSearchQueryChange,
-            onStopSearch = {
-                onStopSearching()
-            }
-        )
-    } else {
-        IdleHomeTopBar(
-            startSearchMode = { onEnterSearch() },
-            onDrawerIconClick = onDrawerIconClick,
-            onAddItemClick = onAddItemClick
-        )
-    }
-}
-
 @Composable
 private fun Home(
     items: List<ItemUiModel>,

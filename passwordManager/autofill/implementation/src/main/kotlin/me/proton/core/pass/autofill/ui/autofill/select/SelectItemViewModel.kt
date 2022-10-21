@@ -41,7 +41,7 @@ class SelectItemViewModel @Inject constructor(
     private val addPackageNameToItem: AddPackageNameToItem,
     private val refreshContent: RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    searchItems: SearchItems
+    private val searchItems: SearchItems
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -55,6 +55,19 @@ class SelectItemViewModel @Inject constructor(
             }
         }
 
+    private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
+    private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
+    private val searchWrapper = combine(
+        searchQueryState,
+        isInSearchModeState
+    ) { searchQuery, isInSearchMode -> SearchWrapper(searchQuery, isInSearchMode) }
+
+    private data class SearchWrapper(
+        val searchQuery: String,
+        val isInSearchMode: Boolean
+    )
+
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
         MutableStateFlow(IsRefreshingState.NotRefreshing)
     private val itemClickedFlow: MutableStateFlow<ItemClickedEvent> =
@@ -63,8 +76,9 @@ class SelectItemViewModel @Inject constructor(
     val uiState: StateFlow<SelectItemUiState> = combine(
         listItems,
         isRefreshing,
-        itemClickedFlow
-    ) { itemsResult, isRefreshing, itemClicked ->
+        itemClickedFlow,
+        searchWrapper
+    ) { itemsResult, isRefreshing, itemClicked, search ->
         val isLoading = IsLoadingState.from(itemsResult is Result.Loading)
         val items = when (itemsResult) {
             Result.Loading -> emptyList()
@@ -82,10 +96,16 @@ class SelectItemViewModel @Inject constructor(
         }
 
         SelectItemUiState(
-            isLoading = isLoading,
-            isRefreshing = isRefreshing,
-            itemClickedEvent = itemClicked,
-            items = items
+            SelectItemListUiState(
+                isLoading = isLoading,
+                isRefreshing = isRefreshing,
+                itemClickedEvent = itemClicked,
+                items = items
+            ),
+            SearchUiState(
+                searchQuery = search.searchQuery,
+                inSearchMode = search.isInSearchMode
+            )
         )
     }
         .stateIn(
@@ -108,6 +128,25 @@ class SelectItemViewModel @Inject constructor(
             refreshContent(userId)
             isRefreshing.update { IsRefreshingState.NotRefreshing }
         }
+    }
+
+    fun onSearchQueryChange(query: String) {
+        if (query.contains("\n")) return
+
+        searchQueryState.value = query
+        searchItems.updateQuery(query)
+    }
+
+    fun onStopSearching() {
+        searchItems.clearSearch()
+        searchQueryState.update { "" }
+        isInSearchModeState.update { false }
+    }
+
+    fun onEnterSearch() {
+        searchItems.clearSearch()
+        searchQueryState.update { "" }
+        isInSearchModeState.update { true }
     }
 
     companion object {

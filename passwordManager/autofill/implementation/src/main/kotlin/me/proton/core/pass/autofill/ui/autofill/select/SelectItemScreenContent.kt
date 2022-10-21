@@ -18,20 +18,32 @@ internal fun SelectItemScreenContent(
     modifier: Modifier = Modifier,
     uiState: SelectItemUiState,
     onItemClicked: (ItemUiModel) -> Unit,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    onSearchQueryChange: (String) -> Unit,
+    onEnterSearch: () -> Unit,
+    onStopSearching: () -> Unit
 ) {
     Scaffold(
-        modifier = modifier
+        modifier = modifier,
+        topBar = {
+            SelectItemTopAppBar(
+                searchQuery = uiState.searchUiState.searchQuery,
+                inSearchMode = uiState.searchUiState.inSearchMode,
+                onSearchQueryChange = onSearchQueryChange,
+                onEnterSearch = onEnterSearch,
+                onStopSearching = onStopSearching
+            )
+        }
     ) { padding ->
-        when (uiState.isLoading) {
+        when (uiState.listUiState.isLoading) {
             IsLoadingState.Loading -> LoadingDialog()
             IsLoadingState.NotLoading -> {
                 ItemsList(
                     modifier = modifier.padding(padding),
-                    items = uiState.items,
+                    items = uiState.listUiState.items,
                     emptyListMessage = R.string.error_credentials_not_found,
                     onRefresh = onRefresh,
-                    isRefreshing = uiState.isRefreshing,
+                    isRefreshing = uiState.listUiState.isRefreshing,
                     onItemClick = onItemClicked
                 )
             }
@@ -48,7 +60,10 @@ fun PreviewSelectItemScreenContent(
         SelectItemScreenContent(
             uiState = state,
             onItemClicked = {},
-            onRefresh = {}
+            onRefresh = {},
+            onSearchQueryChange = {},
+            onEnterSearch = {},
+            onStopSearching = {}
         )
     }
 }

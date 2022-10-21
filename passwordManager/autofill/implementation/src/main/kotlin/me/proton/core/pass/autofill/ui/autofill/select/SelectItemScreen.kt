@@ -20,8 +20,8 @@ fun SelectItemScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(uiState.itemClickedEvent is ItemClickedEvent.Clicked) {
-        (uiState.itemClickedEvent as? ItemClickedEvent.Clicked)?.let {
+    LaunchedEffect(uiState.listUiState.itemClickedEvent is ItemClickedEvent.Clicked) {
+        (uiState.listUiState.itemClickedEvent as? ItemClickedEvent.Clicked)?.let {
             onItemSelected(it.item)
         }
     }
@@ -30,6 +30,9 @@ fun SelectItemScreen(
         modifier = modifier,
         uiState = uiState,
         onItemClicked = { viewModel.onItemClicked(it, packageName) },
-        onRefresh = { viewModel.onRefresh() }
+        onRefresh = { viewModel.onRefresh() },
+        onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
+        onEnterSearch = { viewModel.onEnterSearch() },
+        onStopSearching = { viewModel.onStopSearching() }
     )
 }

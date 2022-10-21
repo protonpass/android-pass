@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.core.domain)
     implementation(libs.core.key)
+    implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.user)
     implementation(libs.core.utilKotlin)

@@ -10,9 +10,10 @@ import me.proton.core.pass.presentation.create.alias.AliasItem
 import me.proton.core.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.core.pass.presentation.create.alias.BaseAliasViewModel
 import me.proton.core.pass.presentation.create.alias.CreateUpdateAliasUiState.Companion.Initial
-import me.proton.core.pass.test.core.TestAccountManager
+import me.proton.core.pass.test.core.TestSavedStateHandle
 import me.proton.core.pass.test.domain.TestAliasMailbox
 import me.proton.core.pass.test.domain.TestAliasSuffix
+import me.proton.core.pass.test.notification.TestSnackbarMessageRepository
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,7 +27,10 @@ internal class BaseAliasViewModelTest {
 
     @Before
     fun setUp() {
-        baseAliasViewModel = object : BaseAliasViewModel(TestAccountManager()) {}
+        baseAliasViewModel = object : BaseAliasViewModel(
+            TestSnackbarMessageRepository(),
+            TestSavedStateHandle.create()
+        ) {}
     }
 
     @Test

@@ -8,6 +8,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -45,10 +47,16 @@ internal fun LoginContent(
     )
     val scope = rememberCoroutineScope()
 
+    val (regeneratePassword, setRegeneratePassword) = remember { mutableStateOf(true) }
+
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             GeneratePasswordBottomSheet(
+                regeneratePassword = regeneratePassword,
+                onPasswordRegenerated = {
+                    setRegeneratePassword(false)
+                },
                 onConfirm = { password ->
                     scope.launch {
                         onPasswordChange(password)
@@ -83,7 +91,10 @@ internal fun LoginContent(
                 onWebsiteChange = onWebsiteChange,
                 onNoteChange = onNoteChange,
                 onGeneratePasswordClick = {
-                    scope.launch { bottomSheetState.show() }
+                    scope.launch {
+                        setRegeneratePassword(true)
+                        bottomSheetState.show()
+                    }
                 }
             )
             LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {

@@ -4,7 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
@@ -39,6 +43,15 @@ class CreateAliasViewModel @Inject constructor(
 
     private var _aliasOptions: AliasOptions? = null
 
+    private val mutableCloseScreenEventFlow: MutableStateFlow<CloseScreenEvent> =
+        MutableStateFlow(CloseScreenEvent.NotClose)
+    val closeScreenEventFlow: StateFlow<CloseScreenEvent> = mutableCloseScreenEventFlow
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = CloseScreenEvent.NotClose
+        )
+
     init {
         viewModelScope.launch(coroutineExceptionHandler) {
             if (_aliasOptions != null) return@launch
@@ -55,7 +68,6 @@ class CreateAliasViewModel @Inject constructor(
                         }
                         val mailboxTitle = mailboxes.first { it.selected }.model.email
 
-                        isLoadingState.update { IsLoadingState.NotLoading }
                         aliasItemState.update {
                             it.copy(
                                 aliasOptions = aliasOptions,
@@ -70,11 +82,14 @@ class CreateAliasViewModel @Inject constructor(
                         val defaultMessage = "Could not get alias options"
                         PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                         snackbarMessageRepository.emitSnackbarMessage(InitError)
+                        mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
                     }
             } else {
                 PassLogger.i(TAG, "Empty User Id")
                 snackbarMessageRepository.emitSnackbarMessage(InitError)
+                mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
             }
+            isLoadingState.update { IsLoadingState.NotLoading }
         }
     }
 

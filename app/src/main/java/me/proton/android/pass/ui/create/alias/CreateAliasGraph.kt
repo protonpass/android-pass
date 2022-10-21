@@ -16,6 +16,7 @@ import me.proton.core.pass.presentation.create.alias.CreateAlias
 fun NavGraphBuilder.createAliasGraph(nav: AppNavigator) {
     composable(NavItem.CreateAlias) {
         CreateAlias(
+            onClose = { nav.onBackClick() },
             onUpClick = { nav.onBackClick() },
             onSuccess = { nav.onBackClick() }
         )

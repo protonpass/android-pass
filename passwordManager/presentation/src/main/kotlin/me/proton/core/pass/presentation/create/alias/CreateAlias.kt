@@ -17,9 +17,15 @@ fun CreateAlias(
     modifier: Modifier = Modifier,
     onUpClick: () -> Unit,
     onSuccess: () -> Unit,
+    onClose: () -> Unit,
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.aliasUiState.collectAsStateWithLifecycle()
+    val closeScreenState by viewModel.closeScreenEventFlow.collectAsStateWithLifecycle()
+
+    if (closeScreenState is CloseScreenEvent.Close) {
+        onClose()
+    }
 
     AliasContent(
         modifier = modifier,

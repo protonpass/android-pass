@@ -2,7 +2,6 @@ package me.proton.core.pass.autofill.ui.autofill.select
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -17,24 +16,22 @@ import me.proton.core.pass.presentation.uievents.IsLoadingState
 @Composable
 internal fun SelectItemScreenContent(
     modifier: Modifier = Modifier,
-    state: SelectItemUiState,
-    snackbarHost: @Composable (SnackbarHostState) -> Unit,
+    uiState: SelectItemUiState,
     onItemClicked: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit
 ) {
     Scaffold(
-        modifier = modifier,
-        snackbarHost = snackbarHost
+        modifier = modifier
     ) { padding ->
-        when (state.isLoading) {
+        when (uiState.isLoading) {
             IsLoadingState.Loading -> LoadingDialog()
             IsLoadingState.NotLoading -> {
                 ItemsList(
                     modifier = modifier.padding(padding),
-                    items = state.items,
+                    items = uiState.items,
                     emptyListMessage = R.string.error_credentials_not_found,
                     onRefresh = onRefresh,
-                    isRefreshing = state.isRefreshing,
+                    isRefreshing = uiState.isRefreshing,
                     onItemClick = onItemClicked
                 )
             }
@@ -49,10 +46,9 @@ fun PreviewSelectItemScreenContent(
 ) {
     ProtonTheme {
         SelectItemScreenContent(
-            state = state,
+            uiState = state,
             onItemClicked = {},
-            onRefresh = {},
-            snackbarHost = {}
+            onRefresh = {}
         )
     }
 }

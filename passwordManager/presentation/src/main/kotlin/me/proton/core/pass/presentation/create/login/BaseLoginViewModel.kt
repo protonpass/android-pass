@@ -131,10 +131,9 @@ abstract class BaseLoginViewModel(
         loginItemState.update { it.copy(note = value) }
     }
 
-    fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) {
+    fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) =
         viewModelScope.launch {
             snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
-    }
 }
 

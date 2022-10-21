@@ -136,11 +136,10 @@ abstract class BaseAliasViewModel(
         }
     }
 
-    fun onEmitSnackbarMessage(snackbarMessage: AliasSnackbarMessage) {
+    fun onEmitSnackbarMessage(snackbarMessage: AliasSnackbarMessage) =
         viewModelScope.launch {
             snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
-    }
 
     private fun getAliasToBeCreated(alias: String, suffix: AliasSuffix?): String? {
         if (suffix != null && alias.isNotBlank()) {

@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.extension.toUiModel
 import me.proton.android.pass.log.PassLogger
-import me.proton.android.pass.notifications.api.SnackbarMessage
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.ui.home.HomeSnackbarMessage.ObserveItemsError
 import me.proton.android.pass.ui.home.HomeSnackbarMessage.ObserveShareError
@@ -179,12 +178,6 @@ class HomeViewModel @Inject constructor(
         val userId = currentUserFlow.firstOrNull()?.userId
         if (userId != null) {
             trashItem.invoke(userId, item.shareId, item.id)
-        }
-    }
-
-    fun onEmitSnackbarMessage(snackbarMessage: SnackbarMessage) {
-        viewModelScope.launch(coroutineExceptionHandler) {
-            snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
     }
 

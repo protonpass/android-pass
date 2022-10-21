@@ -17,13 +17,7 @@ fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
     composable(NavItem.CreateLogin) {
         CreateLogin(
             onUpClick = { nav.onBackClick() },
-            onSuccess = { shareId, itemId ->
-                nav.navigate(
-                    destination = NavItem.ViewItem,
-                    route = NavItem.ViewItem.createNavRoute(shareId, itemId),
-                    backDestination = NavItem.Home
-                )
-            }
+            onSuccess = { nav.onBackClick() }
         )
     }
 }

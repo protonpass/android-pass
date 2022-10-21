@@ -88,6 +88,7 @@ dependencies {
     implementation(project(":passwordManager:common:api"))
     implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:log"))
+    implementation(project(":passwordManager:notifications:api"))
 
     debugImplementation(libs.androidx.compose.uiTooling)
     debugImplementation(libs.androidx.compose.uiTestManifest)

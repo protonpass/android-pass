@@ -39,9 +39,7 @@ internal class CreateLoginViewModelTest {
     fun setUp() {
         accountManager = TestAccountManager()
         createItem = TestCreateItem()
-        observeActiveShare = TestObserveActiveShare().apply {
-            sendShare(Result.Success(null))
-        }
+        observeActiveShare = TestObserveActiveShare()
         createLoginViewModel = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,

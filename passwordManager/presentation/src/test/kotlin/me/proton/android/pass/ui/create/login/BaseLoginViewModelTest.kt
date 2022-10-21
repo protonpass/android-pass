@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.ui.MainDispatcherRule
+import me.proton.core.pass.common.api.Result
 import me.proton.core.pass.presentation.create.login.BaseLoginViewModel
 import me.proton.core.pass.presentation.create.login.CreateUpdateLoginUiState.Companion.Initial
 import me.proton.core.pass.test.core.TestSavedStateHandle
@@ -22,9 +23,12 @@ internal class BaseLoginViewModelTest {
 
     @Before
     fun setUp() {
+        val activeShare = TestObserveActiveShare().apply {
+            sendShare(Result.Success(null))
+        }
         baseLoginViewModel = object : BaseLoginViewModel(
             TestSnackbarMessageRepository(),
-            TestObserveActiveShare(),
+            activeShare,
             TestSavedStateHandle.create()
         ) {}
     }

@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
@@ -39,7 +40,8 @@ class AppViewModel @Inject constructor(
     private val getCurrentShare: GetCurrentShare,
     private val createVault: CreateVault,
     private val refreshShares: RefreshShares,
-    private val cryptoContext: CryptoContext
+    private val cryptoContext: CryptoContext,
+    private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -50,24 +52,25 @@ class AppViewModel @Inject constructor(
     private val drawerSectionState: MutableStateFlow<NavigationDrawerSection> =
         MutableStateFlow(NavigationDrawerSection.Items)
 
-    val drawerUiState: StateFlow<DrawerUiState> = combine(
+    val appUiState: StateFlow<AppUiState> = combine(
         currentUserFlow,
-        drawerSectionState
-    ) { user, sectionState ->
-        DrawerUiState(
-            appNameResId = R.string.app_name,
-            appVersion = BuildConfig.VERSION_NAME,
-            currentUser = user,
-            selectedSection = sectionState
+        drawerSectionState,
+        snackbarMessageRepository.snackbarMessage
+    ) { user, sectionState, snackbarMessage ->
+        AppUiState(
+            snackbarMessage = snackbarMessage,
+            drawerUiState = DrawerUiState(
+                appNameResId = R.string.app_name,
+                appVersion = BuildConfig.VERSION_NAME,
+                currentUser = user,
+                selectedSection = sectionState
+            )
         )
     }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = DrawerUiState(
-                appNameResId = R.string.app_name,
-                appVersion = BuildConfig.VERSION_NAME
-            )
+            initialValue = AppUiState.Initial
         )
 
     fun onStart() = viewModelScope.launch(coroutineExceptionHandler) {
@@ -106,6 +109,12 @@ class AppViewModel @Inject constructor(
 
     fun onDrawerSectionChanged(drawerSection: NavigationDrawerSection) {
         drawerSectionState.update { drawerSection }
+    }
+
+    fun onSnackbarMessageDelivered() {
+        viewModelScope.launch {
+            snackbarMessageRepository.snackbarMessageDelivered()
+        }
     }
 
     companion object {

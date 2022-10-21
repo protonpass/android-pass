@@ -2,10 +2,14 @@ package me.proton.android.pass.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.DrawerState
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberDrawerState
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -15,6 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -27,23 +32,18 @@ import me.proton.android.pass.ui.navigation.rememberAnimatedNavController
 import me.proton.android.pass.ui.navigation.rememberAppNavigator
 import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.pass.common.api.Some
+import me.proton.core.pass.presentation.components.common.PassSnackbarHost
+import me.proton.core.pass.presentation.components.common.rememberPassSnackbarHostState
 import me.proton.core.pass.presentation.components.navigation.AuthNavigation
 import me.proton.core.pass.presentation.components.navigation.drawer.ModalNavigationDrawer
 import me.proton.core.pass.presentation.components.navigation.drawer.NavDrawerNavigation
 import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerSection
 
-@OptIn(
-    ExperimentalAnimationApi::class,
-    ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class
-)
 @Composable
 fun PassApp(
     modifier: Modifier = Modifier,
     authNavigation: AuthNavigation,
-    startDestination: String = NavItem.Home.route,
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     appViewModel: AppViewModel = hiltViewModel()
 ) {
     LaunchedEffect(Unit) {
@@ -52,59 +52,103 @@ fun PassApp(
 
     ProtonTheme {
         ProvideWindowInsets {
-            val drawerUiState by appViewModel.drawerUiState.collectAsStateWithLifecycle()
-            val navController = rememberAnimatedNavController()
-            val appNavigator = rememberAppNavigator(navController)
-            val navDrawerNavigation = NavDrawerNavigation(
-                onNavHome = {
-                    appViewModel.onDrawerSectionChanged(NavigationDrawerSection.Items)
-                    appNavigator.navigate(NavItem.Home)
-                },
-                onNavSettings = {
-                    appViewModel.onDrawerSectionChanged(NavigationDrawerSection.Settings)
-                    appNavigator.navigate(NavItem.Settings)
-                },
-                onNavTrash = {
-                    appViewModel.onDrawerSectionChanged(NavigationDrawerSection.Trash)
-                    appNavigator.navigate(NavItem.Trash)
-                },
-                onNavHelp = {
-                    appViewModel.onDrawerSectionChanged(NavigationDrawerSection.Help)
-                    appNavigator.navigate(NavItem.Help)
-                }
-            )
-            BackHandler(drawerState.isOpen) { coroutineScope.launch { drawerState.close() } }
-            AnimatedNavHost(
+            val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
+            PassAppContent(
                 modifier = modifier,
-                navController = navController,
-                startDestination = startDestination
-            ) {
-                appGraph(
-                    appNavigation = appNavigator,
-                    navigationDrawer = { content ->
-                        var showSignOutDialog by remember { mutableStateOf(false) }
+                appUiState = appUiState,
+                authNavigation = authNavigation,
+                onDrawerSectionChanged = { appViewModel.onDrawerSectionChanged(it) },
+                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() }
+            )
+        }
+    }
+}
 
-                        ModalNavigationDrawer(
-                            drawerUiState = drawerUiState,
-                            drawerState = drawerState,
-                            navDrawerNavigation = navDrawerNavigation,
-                            authNavigation = authNavigation,
-                            onSignOutClick = { showSignOutDialog = true },
-                            signOutDialog = {
-                                if (showSignOutDialog) {
-                                    ConfirmSignOutDialog(
-                                        state = showSignOutDialog,
-                                        onDismiss = { showSignOutDialog = false },
-                                        onConfirm = { authNavigation.onRemove(null) }
-                                    )
-                                }
-                            },
-                            content = content
-                        )
-                    },
-                    onDrawerIconClick = { coroutineScope.launch { drawerState.open() } }
-                )
-            }
+
+@OptIn(
+    ExperimentalAnimationApi::class, ExperimentalMaterialApi::class,
+    ExperimentalComposeUiApi::class
+)
+@Composable
+fun PassAppContent(
+    modifier: Modifier = Modifier,
+    appUiState: AppUiState,
+    startDestination: String = NavItem.Home.route,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    authNavigation: AuthNavigation,
+    onDrawerSectionChanged: (NavigationDrawerSection) -> Unit,
+    onSnackbarMessageDelivered: () -> Unit
+) {
+    val navController = rememberAnimatedNavController()
+    val appNavigator = rememberAppNavigator(navController)
+    val scaffoldState: ScaffoldState = rememberScaffoldState()
+    val passSnackbarHostState =
+        rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
+    val navDrawerNavigation = NavDrawerNavigation(
+        onNavHome = {
+            onDrawerSectionChanged(NavigationDrawerSection.Items)
+            appNavigator.navigate(NavItem.Home)
+        },
+        onNavSettings = {
+            onDrawerSectionChanged(NavigationDrawerSection.Settings)
+            appNavigator.navigate(NavItem.Settings)
+        },
+        onNavTrash = {
+            onDrawerSectionChanged(NavigationDrawerSection.Trash)
+            appNavigator.navigate(NavItem.Trash)
+        },
+        onNavHelp = {
+            onDrawerSectionChanged(NavigationDrawerSection.Help)
+            appNavigator.navigate(NavItem.Help)
+        }
+    )
+    if (appUiState.snackbarMessage is Some) {
+        val snackbarMessage = stringResource(id = appUiState.snackbarMessage.value.id)
+        LaunchedEffect(appUiState.snackbarMessage.value) {
+            passSnackbarHostState.showSnackbar(
+                appUiState.snackbarMessage.value.type,
+                snackbarMessage
+            )
+            onSnackbarMessageDelivered()
+        }
+    }
+    BackHandler(drawerState.isOpen) { coroutineScope.launch { drawerState.close() } }
+    Scaffold(
+        modifier = modifier,
+        scaffoldState = scaffoldState,
+        snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
+    ) { contentPadding ->
+        AnimatedNavHost(
+            modifier = Modifier.padding(contentPadding),
+            navController = navController,
+            startDestination = startDestination
+        ) {
+            appGraph(
+                appNavigation = appNavigator,
+                navigationDrawer = { content ->
+                    var showSignOutDialog by remember { mutableStateOf(false) }
+
+                    ModalNavigationDrawer(
+                        drawerUiState = appUiState.drawerUiState,
+                        drawerState = drawerState,
+                        navDrawerNavigation = navDrawerNavigation,
+                        authNavigation = authNavigation,
+                        onSignOutClick = { showSignOutDialog = true },
+                        signOutDialog = {
+                            if (showSignOutDialog) {
+                                ConfirmSignOutDialog(
+                                    state = showSignOutDialog,
+                                    onDismiss = { showSignOutDialog = false },
+                                    onConfirm = { authNavigation.onRemove(null) }
+                                )
+                            }
+                        },
+                        content = content
+                    )
+                },
+                onDrawerIconClick = { coroutineScope.launch { drawerState.open() } }
+            )
         }
     }
 }

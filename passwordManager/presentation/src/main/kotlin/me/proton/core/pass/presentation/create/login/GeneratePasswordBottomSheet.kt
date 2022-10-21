@@ -1,6 +1,7 @@
 package me.proton.core.pass.presentation.create.login
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -17,9 +18,11 @@ fun GeneratePasswordBottomSheet(
     val viewModel = hiltViewModel<CreatePasswordViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    if (regeneratePassword) {
-        viewModel.regenerate()
-        onPasswordRegenerated()
+    LaunchedEffect(regeneratePassword) {
+        if (regeneratePassword) {
+            viewModel.regenerate()
+            onPasswordRegenerated()
+        }
     }
 
     GeneratePasswordBottomSheetContent(

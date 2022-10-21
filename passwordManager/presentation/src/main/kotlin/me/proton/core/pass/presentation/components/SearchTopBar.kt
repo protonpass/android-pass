@@ -62,7 +62,7 @@ fun SearchTopBar(
 @Preview(showBackground = true)
 @ExperimentalComposeUiApi
 @Composable
-fun Preview_SearchHomeTopBar() {
+fun SearchHomeTopBarPreview() {
     SearchTopBar(
         placeholder = R.string.action_search,
         searchQuery = "some search",

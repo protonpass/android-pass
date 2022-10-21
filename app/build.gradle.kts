@@ -264,6 +264,8 @@ dependencies {
     implementation(project(":passwordManager:dagger"))
     implementation(project(":passwordManager:data"))
     implementation(project(":passwordManager:domain"))
+    implementation(project(":passwordManager:notifications:api"))
+    implementation(project(":passwordManager:notifications:implementation"))
     implementation(project(":passwordManager:presentation"))
     implementation(project(":passwordManager:search:implementation"))
     implementation(project(":passwordManager:log"))

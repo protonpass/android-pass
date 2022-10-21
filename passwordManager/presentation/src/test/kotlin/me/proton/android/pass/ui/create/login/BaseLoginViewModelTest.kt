@@ -6,6 +6,9 @@ import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.ui.MainDispatcherRule
 import me.proton.core.pass.presentation.create.login.BaseLoginViewModel
 import me.proton.core.pass.presentation.create.login.CreateUpdateLoginUiState.Companion.Initial
+import me.proton.core.pass.test.core.TestSavedStateHandle
+import me.proton.core.pass.test.domain.usecases.TestObserveActiveShare
+import me.proton.core.pass.test.notification.TestSnackbarMessageRepository
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -19,7 +22,11 @@ internal class BaseLoginViewModelTest {
 
     @Before
     fun setUp() {
-        baseLoginViewModel = object : BaseLoginViewModel(observeActiveShare) {}
+        baseLoginViewModel = object : BaseLoginViewModel(
+            TestSnackbarMessageRepository(),
+            TestObserveActiveShare(),
+            TestSavedStateHandle.create()
+        ) {}
     }
 
     @Test

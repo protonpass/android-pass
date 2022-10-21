@@ -16,9 +16,11 @@ import me.proton.core.pass.presentation.uievents.IsLoadingState
 import me.proton.core.pass.presentation.uievents.ItemSavedState
 import me.proton.core.pass.test.TestUtils
 import me.proton.core.pass.test.core.TestAccountManager
+import me.proton.core.pass.test.core.TestSavedStateHandle
 import me.proton.core.pass.test.domain.TestItem
 import me.proton.core.pass.test.domain.usecases.TestCreateItem
 import me.proton.core.pass.test.domain.usecases.TestObserveActiveShare
+import me.proton.core.pass.test.notification.TestSnackbarMessageRepository
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -41,7 +43,9 @@ internal class CreateLoginViewModelTest {
         createLoginViewModel = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,
-            observeActiveShare = observeActiveShare
+            observeActiveShare = observeActiveShare,
+            snackbarMessageRepository = TestSnackbarMessageRepository(),
+            savedStateHandle = TestSavedStateHandle.create()
         )
     }
 

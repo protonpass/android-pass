@@ -10,10 +10,17 @@ import me.proton.core.pass.presentation.create.password.CreatePasswordViewModel
 @Composable
 fun GeneratePasswordBottomSheet(
     modifier: Modifier = Modifier,
+    regeneratePassword: Boolean,
+    onPasswordRegenerated: () -> Unit,
     onConfirm: (String) -> Unit
 ) {
     val viewModel = hiltViewModel<CreatePasswordViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    if (regeneratePassword) {
+        viewModel.regenerate()
+        onPasswordRegenerated()
+    }
 
     GeneratePasswordBottomSheetContent(
         modifier = modifier,

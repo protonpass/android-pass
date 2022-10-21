@@ -17,13 +17,7 @@ fun NavGraphBuilder.createNoteGraph(nav: AppNavigator) {
     composable(NavItem.CreateNote) {
         CreateNote(
             onUpClick = { nav.onBackClick() },
-            onSuccess = { shareId, itemId ->
-                nav.navigate(
-                    destination = NavItem.ViewItem,
-                    route = NavItem.ViewItem.createNavRoute(shareId, itemId),
-                    backDestination = NavItem.Home
-                )
-            }
+            onSuccess = { nav.onBackClick() }
         )
     }
 }

@@ -1,11 +1,18 @@
 package me.proton.core.pass.presentation.create.login
 
 import androidx.annotation.StringRes
+import me.proton.android.pass.notifications.api.SnackbarMessage
+import me.proton.android.pass.notifications.api.SnackbarType
 import me.proton.core.pass.presentation.R
 
-enum class LoginSnackbarMessages(@StringRes val id: Int) {
-    EmptyShareIdError(R.string.create_login_empty_share_id),
-    InitError(R.string.create_login_init_error),
-    ItemCreationError(R.string.create_login_item_creation_error),
-    ItemUpdateError(R.string.create_login_item_update_error)
+enum class LoginSnackbarMessages(
+    @StringRes override val id: Int,
+    override val type: SnackbarType
+) : SnackbarMessage {
+    EmptyShareIdError(R.string.create_login_empty_share_id, SnackbarType.ERROR),
+    InitError(R.string.create_login_init_error, SnackbarType.ERROR),
+    ItemCreationError(R.string.create_login_item_creation_error, SnackbarType.ERROR),
+    ItemUpdateError(R.string.create_login_item_update_error, SnackbarType.ERROR),
+    LoginCreated(R.string.login_created, SnackbarType.SUCCESS),
+    LoginUpdated(R.string.changes_saved, SnackbarType.SUCCESS)
 }

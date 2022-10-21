@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.pass.common.api.None
 import me.proton.core.pass.common.api.Some
@@ -25,9 +26,10 @@ import javax.inject.Inject
 class CreateLoginViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val createItem: CreateItem,
+    private val snackbarMessageRepository: SnackbarMessageRepository,
     observeActiveShare: ObserveActiveShare,
     savedStateHandle: SavedStateHandle
-) : BaseLoginViewModel(observeActiveShare, savedStateHandle) {
+) : BaseLoginViewModel(snackbarMessageRepository, observeActiveShare, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -59,7 +61,9 @@ class CreateLoginViewModel @Inject constructor(
 
     fun createItem() {
         when (val shareId = loginUiState.value.shareId) {
-            None -> mutableSnackbarMessage.tryEmit(ItemCreationError)
+            None -> viewModelScope.launch {
+                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+            }
             is Some -> createItem(shareId.value)
         }
     }
@@ -81,10 +85,10 @@ class CreateLoginViewModel @Inject constructor(
                     .onError {
                         val defaultMessage = "Could not create item"
                         PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                        mutableSnackbarMessage.tryEmit(ItemCreationError)
+                        snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
                     }
             } else {
-                mutableSnackbarMessage.tryEmit(ItemCreationError)
+                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }

@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
@@ -19,11 +18,13 @@ import me.proton.core.compose.theme.ProtonTheme
 @ExperimentalMaterialApi
 @Composable
 fun IdleHomeTopBar(
+    modifier: Modifier = Modifier,
     startSearchMode: () -> Unit,
     onDrawerIconClick: () -> Unit,
     onAddItemClick: () -> Unit
 ) {
     ProtonTopAppBar(
+        modifier = modifier,
         title = {
             TopBarTitleView(title = stringResource(id = me.proton.core.pass.presentation.R.string.title_items))
         },

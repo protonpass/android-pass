@@ -3,6 +3,7 @@ package me.proton.core.pass.autofill.ui.autofill.select
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -13,9 +14,11 @@ import me.proton.core.pass.presentation.R
 
 @Composable
 fun IdleSelectItemTopBar(
+    modifier: Modifier = Modifier,
     startSearchMode: () -> Unit
 ) {
     ProtonTopAppBar(
+        modifier = modifier,
         title = {
             TopBarTitleView(title = stringResource(id = R.string.title_items))
         },

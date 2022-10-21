@@ -24,6 +24,7 @@ import me.proton.core.pass.presentation.components.form.ProtonTextFieldPlaceHold
 @ExperimentalComposeUiApi
 @Composable
 fun SearchTopBar(
+    modifier: Modifier = Modifier,
     @StringRes placeholder: Int,
     searchQuery: String,
     onSearchQueryChange: (String) -> Unit,
@@ -32,6 +33,7 @@ fun SearchTopBar(
     val focusRequester = remember { FocusRequester() }
 
     ProtonTopAppBar(
+        modifier = modifier,
         title = {
             TextField(
                 value = searchQuery,

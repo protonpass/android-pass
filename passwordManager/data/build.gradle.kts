@@ -8,8 +8,8 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 plugins {
     id("com.android.library")
-    kotlin("android")
-    kotlin("kapt")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
     kotlin("plugin.serialization")
     id("com.google.protobuf")
     id("dagger.hilt.android.plugin")

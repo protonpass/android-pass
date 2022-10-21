@@ -21,8 +21,8 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("io.sentry.android.gradle")

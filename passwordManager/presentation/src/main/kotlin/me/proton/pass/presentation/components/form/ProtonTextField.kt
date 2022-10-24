@@ -110,7 +110,7 @@ fun ProtonTextFieldPlaceHolder(
 
 @Preview(showBackground = true)
 @Composable
-internal fun Preview_ProtonTextField(
+fun Preview_ProtonTextField(
     @PreviewParameter(ProtonTextFieldPreviewProvider::class)
     data: ProtonTextFieldPreviewData
 ) {

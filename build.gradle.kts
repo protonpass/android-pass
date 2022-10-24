@@ -24,6 +24,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.doctor)
     alias(libs.plugins.gradlePlugin.application) apply false
     alias(libs.plugins.gradlePlugin.library) apply false
+    alias(libs.plugins.gradlePlugin.ksp) apply false
     alias(libs.plugins.gradlePlugin.kotlin.jvm) apply false
     alias(libs.plugins.gradlePlugin.kotlin.serialization) apply false
     alias(libs.plugins.gradlePlugin.hilt) apply false
@@ -48,6 +49,7 @@ setupDependenciesPlugin()
 
 kotlinCompilerArgs(
     "-opt-in=kotlin.RequiresOptIn",
+    "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
     "-opt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
     // Enables experimental Coroutines (runBlockingTest).
     "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",

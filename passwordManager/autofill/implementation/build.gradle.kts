@@ -26,6 +26,12 @@ android {
             isMinifyEnabled = true
         }
     }
+    flavorDimensions += "default"
+    productFlavors {
+        maybeCreate("dev")
+        maybeCreate("alpha")
+        maybeCreate("prod")
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

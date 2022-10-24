@@ -11,11 +11,14 @@ import me.proton.pass.autofill.entities.AssistInfo
 import me.proton.pass.autofill.entities.AutofillNode
 import me.proton.pass.autofill.entities.FieldType
 import me.proton.pass.autofill.entities.InputTypeValue
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
+import me.proton.pass.common.api.toOption
 
 class AssistNodeTraversal {
 
     private var autoFillNodes = mutableListOf<AssistField>()
-    private var detectedUrl: String? = null
+    private var detectedUrl: Option<String> = None
 
     // For testing purposes
     var visitedNodes = 0
@@ -35,7 +38,7 @@ class AssistNodeTraversal {
     }
 
     private fun traverseInternal(node: AutofillNode) {
-        if (detectedUrl == null) {
+        if (detectedUrl is None) {
             detectedUrl = node.webDomain
         }
         if (nodeSupportsAutoFill(node)) {
@@ -159,7 +162,7 @@ fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode = AutofillNode(
     autofillHints = autofillHints?.toList().orEmpty(),
     htmlAttributes = htmlInfo?.attributes?.toList()?.map { it.first to it.second }.orEmpty(),
     children = (0 until childCount).map { getChildAt(it).toAutofillNode() },
-    webDomain = webDomain
+    webDomain = webDomain.toOption()
 )
 
 private fun isImportantForAutofill(node: AssistStructure.ViewNode): Boolean =

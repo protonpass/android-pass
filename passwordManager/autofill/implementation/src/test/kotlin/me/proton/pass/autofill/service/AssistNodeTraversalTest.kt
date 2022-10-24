@@ -8,6 +8,8 @@ import me.proton.pass.autofill.entities.AutofillNode
 import me.proton.pass.autofill.entities.FieldType
 import me.proton.pass.autofill.entities.InputTypeValue
 import me.proton.pass.autofill.service.utils.newAutofillFieldId
+import me.proton.pass.common.api.Some
+import me.proton.pass.common.api.toOption
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -107,7 +109,7 @@ class AssistNodeTraversalTest {
             )
         )
         val result = AssistNodeTraversal().traverse(structure)
-        Assert.assertEquals(domain, result.url)
+        Assert.assertEquals(Some(domain), result.url)
     }
 
     @Test
@@ -121,7 +123,7 @@ class AssistNodeTraversalTest {
             )
         )
         val result = AssistNodeTraversal().traverse(structure)
-        Assert.assertEquals(domain1, result.url)
+        Assert.assertEquals(Some(domain1), result.url)
     }
 
     @Test
@@ -137,7 +139,7 @@ class AssistNodeTraversalTest {
             )
         )
         val result = AssistNodeTraversal().traverse(structure)
-        Assert.assertEquals(domain1, result.url)
+        Assert.assertEquals(Some(domain1), result.url)
 
 
     }
@@ -219,7 +221,7 @@ class AssistNodeTraversalTest {
             autofillHints = autofillHints,
             htmlAttributes = htmlAttributes,
             children = children,
-            webDomain = webDomain
+            webDomain = webDomain.toOption()
         )
 
 }

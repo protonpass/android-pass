@@ -2,6 +2,7 @@ package me.proton.pass.autofill.entities
 
 import android.text.InputType
 import android.view.autofill.AutofillValue
+import me.proton.pass.common.api.Option
 
 @JvmInline
 value class InputTypeValue(val value: Int) {
@@ -20,5 +21,5 @@ data class AutofillNode(
     val autofillHints: List<String>,
     val htmlAttributes: List<Pair<String, String>>,
     val children: List<AutofillNode>,
-    val webDomain: String?
+    val webDomain: Option<String>
 )

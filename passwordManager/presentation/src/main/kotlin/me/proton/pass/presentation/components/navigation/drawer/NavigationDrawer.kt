@@ -62,6 +62,7 @@ fun ModalNavigationDrawer(
     authNavigation: AuthNavigation,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     onSignOutClick: () -> Unit,
+    onInternalDrawerClick: () -> Unit,
     signOutDialog: @Composable () -> Unit,
     content: @Composable () -> Unit
 ) {
@@ -73,7 +74,8 @@ fun ModalNavigationDrawer(
                 authNavigation = authNavigation,
                 navDrawerNavigation = navDrawerNavigation,
                 onCloseDrawer = { coroutineScope.launch { drawerState.close() } },
-                onSignOutClick = onSignOutClick
+                onSignOutClick = onSignOutClick,
+                onInternalDrawerClick = onInternalDrawerClick
             )
             signOutDialog()
         }
@@ -90,6 +92,7 @@ fun NavigationDrawer(
     navDrawerNavigation: NavDrawerNavigation,
     authNavigation: AuthNavigation,
     onSignOutClick: () -> Unit = {},
+    onInternalDrawerClick: () -> Unit = {},
     onCloseDrawer: () -> Unit
 ) {
     val sidebarColors = requireNotNull(ProtonTheme.colors.sidebarColors)
@@ -147,6 +150,12 @@ fun NavigationDrawer(
                         name = stringResource(id = drawerUiState.appNameResId),
                         version = drawerUiState.appVersion
                     )
+                    if (drawerUiState.internalDrawerEnabled) {
+                        InternalDrawerItem(
+                            closeDrawerAction = { onCloseDrawer() },
+                            onClick = { onInternalDrawerClick() }
+                        )
+                    }
                 }
             }
         }
@@ -325,4 +334,20 @@ fun NavigationDrawerListItem(
         closeDrawerAction()
         onClick()
     }
+}
+
+@Composable
+private fun InternalDrawerItem(
+    modifier: Modifier = Modifier,
+    closeDrawerAction: () -> Unit,
+    onClick: () -> Unit
+) {
+    NavigationDrawerListItem(
+        title = R.string.navigation_item_internal_drawer,
+        icon = me.proton.core.presentation.R.drawable.ic_proton_cog_wheel,
+        isSelected = false,
+        closeDrawerAction = closeDrawerAction,
+        modifier = modifier,
+        onClick = onClick
+    )
 }

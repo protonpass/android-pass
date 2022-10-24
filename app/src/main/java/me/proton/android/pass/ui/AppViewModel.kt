@@ -63,7 +63,8 @@ class AppViewModel @Inject constructor(
                 appNameResId = R.string.app_name,
                 appVersion = BuildConfig.VERSION_NAME,
                 currentUser = user,
-                selectedSection = sectionState
+                selectedSection = sectionState,
+                internalDrawerEnabled = BuildConfig.FLAVOR == "dev"
             )
         )
     }

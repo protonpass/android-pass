@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -27,6 +28,12 @@ android {
         release {
             isMinifyEnabled = true
         }
+    }
+    flavorDimensions += "default"
+    productFlavors {
+        maybeCreate("dev")
+        maybeCreate("alpha")
+        maybeCreate("prod")
     }
 
     compileOptions {
@@ -84,6 +91,9 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
+
+    add("devImplementation", libs.showkase)
+    add("kspDev", libs.showkaseProcessor)
 
     implementation(project(":passwordManager:common:api"))
     implementation(project(":passwordManager:domain"))

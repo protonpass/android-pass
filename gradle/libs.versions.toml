@@ -35,6 +35,7 @@ protobuf-lite = "3.0.0"
 # Gradle
 gradlePlugin-android = "7.2.2"
 gradlePlugin-doctor = "0.8.1"
+gradlePlugin-ksp = "1.7.10-1.0.6"
 gradlePlugin-protobuf = "0.8.19"
 gradlePlugin-proton-detekt = "1.0.0"
 gradlePlugin-sentry = "3.2.0"
@@ -49,6 +50,8 @@ coroutines = "1.6.4"
 serializationJson = "1.4.1"
 # Sentry
 sentry = "6.5.0"
+# Showkase
+showkase = "1.0.0-beta14"
 # Squareup
 leakCanary = "2.9.1"
 okhttp = "4.10.0"
@@ -62,6 +65,7 @@ truth = "1.1.3"
 gradlePlugin-application = { id = "com.android.application", version.ref = "gradlePlugin-android" }
 gradlePlugin-doctor = { id = "com.osacky.doctor", version.ref = "gradlePlugin-doctor" }
 gradlePlugin-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
+gradlePlugin-ksp = { id = "com.google.devtools.ksp", version.ref = "gradlePlugin-ksp" }
 gradlePlugin-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 gradlePlugin-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 gradlePlugin-library = { id = "com.android.library", version.ref = "gradlePlugin-android" }
@@ -176,6 +180,10 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 
 # Sentry
 sentry = { module = "io.sentry:sentry-android", version.ref = "sentry" }
+
+# Showkase
+showkase = { module = "com.airbnb.android:showkase", version.ref = "showkase" }
+showkaseProcessor = { module = "com.airbnb.android:showkase-processor", version.ref = "showkase" }
 
 # Squareup
 leakCanary = { module = "com.squareup.leakcanary:leakcanary-android", version.ref = "leakCanary" }

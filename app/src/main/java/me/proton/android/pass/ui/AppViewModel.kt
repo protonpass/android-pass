@@ -19,18 +19,18 @@ import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.common.api.Result
-import me.proton.core.pass.common.api.onError
-import me.proton.core.pass.common.api.onSuccess
-import me.proton.core.pass.domain.Share
-import me.proton.core.pass.domain.entity.NewVault
-import me.proton.core.pass.domain.usecases.CreateVault
-import me.proton.core.pass.domain.usecases.GetCurrentShare
-import me.proton.core.pass.domain.usecases.GetCurrentUserId
-import me.proton.core.pass.domain.usecases.ObserveCurrentUser
-import me.proton.core.pass.domain.usecases.RefreshShares
-import me.proton.core.pass.presentation.components.navigation.drawer.DrawerUiState
-import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerSection
+import me.proton.pass.common.api.Result
+import me.proton.pass.common.api.onError
+import me.proton.pass.common.api.onSuccess
+import me.proton.pass.domain.Share
+import me.proton.pass.domain.entity.NewVault
+import me.proton.pass.domain.usecases.CreateVault
+import me.proton.pass.domain.usecases.GetCurrentShare
+import me.proton.pass.domain.usecases.GetCurrentUserId
+import me.proton.pass.domain.usecases.ObserveCurrentUser
+import me.proton.pass.domain.usecases.RefreshShares
+import me.proton.pass.presentation.components.navigation.drawer.DrawerUiState
+import me.proton.pass.presentation.components.navigation.drawer.NavigationDrawerSection
 import javax.inject.Inject
 
 @HiltViewModel

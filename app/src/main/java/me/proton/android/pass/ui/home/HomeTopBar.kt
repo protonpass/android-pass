@@ -7,7 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import me.proton.android.pass.R
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.pass.presentation.components.SearchTopBar
+import me.proton.pass.presentation.components.SearchTopBar
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi

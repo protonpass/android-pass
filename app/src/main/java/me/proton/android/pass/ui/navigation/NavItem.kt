@@ -2,8 +2,8 @@ package me.proton.android.pass.ui.navigation
 
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
-import me.proton.core.pass.domain.ItemId
-import me.proton.core.pass.domain.ShareId
+import me.proton.pass.domain.ItemId
+import me.proton.pass.domain.ShareId
 
 sealed class NavItem(
     val baseRoute: String,

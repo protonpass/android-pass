@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.android.pass.ui.detail.login.Section
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.pass.domain.Item
+import me.proton.pass.domain.Item
 
 @Composable
 fun NoteDetail(
@@ -51,7 +51,7 @@ internal fun NoteRow(
 ) {
     if (model.note.isNotEmpty()) {
         Section(
-            title = me.proton.core.pass.presentation.R.string.field_note_title,
+            title = me.proton.pass.presentation.R.string.field_note_title,
             content = model.note
         )
     }

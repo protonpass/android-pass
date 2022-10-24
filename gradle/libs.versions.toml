@@ -36,7 +36,7 @@ protobuf-lite = "3.0.0"
 gradlePlugin-android = "7.2.2"
 gradlePlugin-doctor = "0.8.1"
 gradlePlugin-protobuf = "0.8.19"
-gradlePlugin-proton-detekt = "1.0.0-alpha03"
+gradlePlugin-proton-detekt = "1.0.0"
 gradlePlugin-sentry = "3.2.0"
 gradlePlugin-versions = "0.43.0"
 # Jacoco

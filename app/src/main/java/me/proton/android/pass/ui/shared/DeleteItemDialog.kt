@@ -3,7 +3,7 @@ package me.proton.android.pass.ui.shared
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import me.proton.core.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.components.model.ItemUiModel
 
 @Composable
 fun ConfirmItemDeletionDialog(

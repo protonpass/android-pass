@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.pass.common.api.Option
-import me.proton.core.pass.domain.ShareId
+import me.proton.pass.common.api.Option
+import me.proton.pass.domain.ShareId
 
 @ExperimentalMaterialApi
 @Composable

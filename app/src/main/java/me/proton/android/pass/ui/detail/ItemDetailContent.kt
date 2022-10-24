@@ -14,13 +14,13 @@ import me.proton.android.pass.ui.detail.alias.AliasDetail
 import me.proton.android.pass.ui.detail.login.LoginDetail
 import me.proton.android.pass.ui.detail.note.NoteDetail
 import me.proton.android.pass.ui.shared.LoadingDialog
-import me.proton.core.pass.common.api.None
-import me.proton.core.pass.common.api.Some
-import me.proton.core.pass.domain.Item
-import me.proton.core.pass.domain.ItemId
-import me.proton.core.pass.domain.ItemType
-import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Some
+import me.proton.pass.domain.Item
+import me.proton.pass.domain.ItemId
+import me.proton.pass.domain.ItemType
+import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.uievents.IsLoadingState
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

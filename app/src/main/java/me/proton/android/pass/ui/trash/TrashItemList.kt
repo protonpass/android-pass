@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.proton.android.pass.R
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.pass.presentation.components.common.item.ItemAction
-import me.proton.core.pass.presentation.components.common.item.ItemsList
-import me.proton.core.pass.presentation.components.model.ItemUiModel
-import me.proton.core.pass.presentation.uievents.IsRefreshingState
+import me.proton.pass.presentation.components.common.item.ItemAction
+import me.proton.pass.presentation.components.common.item.ItemsList
+import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.uievents.IsRefreshingState
 
 @Composable
 internal fun TrashItemList(

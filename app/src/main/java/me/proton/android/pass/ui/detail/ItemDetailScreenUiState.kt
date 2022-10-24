@@ -1,11 +1,11 @@
 package me.proton.android.pass.ui.detail
 
 import androidx.compose.runtime.Immutable
-import me.proton.core.pass.common.api.None
-import me.proton.core.pass.common.api.Option
-import me.proton.core.pass.domain.Item
-import me.proton.core.pass.presentation.uievents.IsLoadingState
-import me.proton.core.pass.presentation.uievents.IsSentToTrashState
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
+import me.proton.pass.domain.Item
+import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsSentToTrashState
 
 @Immutable
 data class ItemDetailScreenUiState(

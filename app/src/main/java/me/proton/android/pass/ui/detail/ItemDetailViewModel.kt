@@ -20,19 +20,19 @@ import me.proton.android.pass.ui.detail.DetailSnackbarMessages.SendToTrashError
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.core.pass.common.api.None
-import me.proton.core.pass.common.api.Option
-import me.proton.core.pass.common.api.Some
-import me.proton.core.pass.common.api.onError
-import me.proton.core.pass.common.api.onSuccess
-import me.proton.core.pass.common.api.some
-import me.proton.core.pass.domain.Item
-import me.proton.core.pass.domain.ItemId
-import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.domain.repositories.ItemRepository
-import me.proton.core.pass.domain.usecases.TrashItem
-import me.proton.core.pass.presentation.uievents.IsLoadingState
-import me.proton.core.pass.presentation.uievents.IsSentToTrashState
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
+import me.proton.pass.common.api.Some
+import me.proton.pass.common.api.onError
+import me.proton.pass.common.api.onSuccess
+import me.proton.pass.common.api.some
+import me.proton.pass.domain.Item
+import me.proton.pass.domain.ItemId
+import me.proton.pass.domain.ShareId
+import me.proton.pass.domain.repositories.ItemRepository
+import me.proton.pass.domain.usecases.TrashItem
+import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsSentToTrashState
 import javax.inject.Inject
 
 @HiltViewModel

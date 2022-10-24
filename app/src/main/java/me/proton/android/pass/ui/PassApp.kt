@@ -32,13 +32,13 @@ import me.proton.android.pass.ui.navigation.rememberAnimatedNavController
 import me.proton.android.pass.ui.navigation.rememberAppNavigator
 import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.pass.common.api.Some
-import me.proton.core.pass.presentation.components.common.PassSnackbarHost
-import me.proton.core.pass.presentation.components.common.rememberPassSnackbarHostState
-import me.proton.core.pass.presentation.components.navigation.AuthNavigation
-import me.proton.core.pass.presentation.components.navigation.drawer.ModalNavigationDrawer
-import me.proton.core.pass.presentation.components.navigation.drawer.NavDrawerNavigation
-import me.proton.core.pass.presentation.components.navigation.drawer.NavigationDrawerSection
+import me.proton.pass.common.api.Some
+import me.proton.pass.presentation.components.common.PassSnackbarHost
+import me.proton.pass.presentation.components.common.rememberPassSnackbarHostState
+import me.proton.pass.presentation.components.navigation.AuthNavigation
+import me.proton.pass.presentation.components.navigation.drawer.ModalNavigationDrawer
+import me.proton.pass.presentation.components.navigation.drawer.NavDrawerNavigation
+import me.proton.pass.presentation.components.navigation.drawer.NavigationDrawerSection
 
 @Composable
 fun PassApp(

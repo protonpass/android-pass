@@ -12,11 +12,11 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.core.pass.common.api.Result
-import me.proton.core.pass.domain.AliasMailbox
-import me.proton.core.pass.domain.Item
-import me.proton.core.pass.domain.ItemType
-import me.proton.core.pass.domain.repositories.AliasRepository
+import me.proton.pass.common.api.Result
+import me.proton.pass.domain.AliasMailbox
+import me.proton.pass.domain.Item
+import me.proton.pass.domain.ItemType
+import me.proton.pass.domain.repositories.AliasRepository
 import javax.inject.Inject
 
 @HiltViewModel

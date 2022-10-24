@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.core.pass.domain.Item
+import me.proton.pass.domain.Item
 import javax.inject.Inject
 
 @HiltViewModel

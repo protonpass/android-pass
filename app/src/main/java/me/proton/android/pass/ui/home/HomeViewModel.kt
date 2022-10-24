@@ -23,20 +23,20 @@ import me.proton.android.pass.ui.home.HomeSnackbarMessage.ObserveItemsError
 import me.proton.android.pass.ui.home.HomeSnackbarMessage.ObserveShareError
 import me.proton.android.pass.ui.home.HomeSnackbarMessage.RefreshError
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.pass.common.api.None
-import me.proton.core.pass.common.api.Option
-import me.proton.core.pass.common.api.Result
-import me.proton.core.pass.common.api.map
-import me.proton.core.pass.common.api.onError
-import me.proton.core.pass.domain.Item
-import me.proton.core.pass.domain.usecases.ObserveActiveShare
-import me.proton.core.pass.domain.usecases.ObserveCurrentUser
-import me.proton.core.pass.domain.usecases.RefreshContent
-import me.proton.core.pass.domain.usecases.TrashItem
-import me.proton.core.pass.presentation.components.model.ItemUiModel
-import me.proton.core.pass.presentation.uievents.IsLoadingState
-import me.proton.core.pass.presentation.uievents.IsRefreshingState
-import me.proton.core.pass.search.SearchItems
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
+import me.proton.pass.common.api.Result
+import me.proton.pass.common.api.map
+import me.proton.pass.common.api.onError
+import me.proton.pass.domain.Item
+import me.proton.pass.domain.usecases.ObserveActiveShare
+import me.proton.pass.domain.usecases.ObserveCurrentUser
+import me.proton.pass.domain.usecases.RefreshContent
+import me.proton.pass.domain.usecases.TrashItem
+import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsRefreshingState
+import me.proton.pass.search.SearchItems
 import javax.inject.Inject
 
 @ExperimentalMaterialApi

@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.LoadingDialog
-import me.proton.core.pass.presentation.components.model.ItemUiModel
-import me.proton.core.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.uievents.IsLoadingState
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

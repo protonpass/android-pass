@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.pass.presentation.R
+import me.proton.pass.presentation.R
 
 
 @ExperimentalMaterialApi

@@ -18,7 +18,7 @@
   -->
 
 <manifest xmlns:tools="http://schemas.android.com/tools"
-    package="me.proton.core.pass.autofill.service"
+    package="me.proton.pass.autofill.service"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
@@ -26,18 +26,18 @@
 
     <application>
 
-        <activity android:name="me.proton.core.pass.autofill.ui.autofill.AutofillActivity"
+        <activity android:name="me.proton.pass.autofill.ui.autofill.AutofillActivity"
             android:launchMode="singleTop"
             android:clearTaskOnLaunch="true"
             android:excludeFromRecents="true"/>
 
-        <activity android:name="me.proton.core.pass.autofill.ui.autosave.AutosaveActivity"
+        <activity android:name="me.proton.pass.autofill.ui.autosave.AutosaveActivity"
             android:launchMode="singleTop"
             android:clearTaskOnLaunch="true"
             android:excludeFromRecents="true"/>
 
         <service
-            android:name="me.proton.core.pass.autofill.ProtonPassAutofillService"
+            android:name="me.proton.pass.autofill.ProtonPassAutofillService"
             android:label="Pass Autofill"
             android:permission="android.permission.BIND_AUTOFILL_SERVICE"
             android:exported="true">

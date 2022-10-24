@@ -3,8 +3,8 @@ package me.proton.android.pass.ui.home
 import androidx.compose.runtime.Stable
 import me.proton.android.pass.ui.navigation.AppNavigator
 import me.proton.android.pass.ui.navigation.NavItem
-import me.proton.core.pass.domain.ItemId
-import me.proton.core.pass.domain.ShareId
+import me.proton.pass.domain.ItemId
+import me.proton.pass.domain.ShareId
 
 @Stable
 data class HomeScreenNavigation(val appNavigator: AppNavigator) {

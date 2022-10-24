@@ -30,7 +30,7 @@ fun HelpScreen(
             ProtonTopAppBar(
                 title = {
                     TopBarTitleView(
-                        title = stringResource(id = me.proton.core.pass.presentation.R.string.title_help)
+                        title = stringResource(id = me.proton.pass.presentation.R.string.title_help)
                     )
                 },
                 navigationIcon = {

@@ -4,11 +4,11 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.ui.MainDispatcherRule
-import me.proton.core.pass.presentation.create.login.BaseLoginViewModel
-import me.proton.core.pass.presentation.create.login.CreateUpdateLoginUiState.Companion.Initial
-import me.proton.core.pass.test.core.TestSavedStateHandle
-import me.proton.core.pass.test.domain.usecases.TestObserveActiveShare
-import me.proton.core.pass.test.notification.TestSnackbarMessageRepository
+import me.proton.pass.presentation.create.login.BaseLoginViewModel
+import me.proton.pass.presentation.create.login.CreateUpdateLoginUiState.Companion.Initial
+import me.proton.pass.test.core.TestSavedStateHandle
+import me.proton.pass.test.domain.usecases.TestObserveActiveShare
+import me.proton.pass.test.notification.TestSnackbarMessageRepository
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

@@ -8,9 +8,9 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.test.android.instrumented.utils.StringUtils
 import me.proton.pass.domain.key.ItemKey
 import me.proton.pass.domain.key.VaultKey
-import me.proton.test.android.instrumented.utils.StringUtils
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey

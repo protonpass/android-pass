@@ -32,11 +32,15 @@ object AutoSaveHandler {
         context: Context,
         windowNode: AssistStructure.WindowNode
     ) {
-        val fieldsToSave = AssistNodeTraversal().traverse(windowNode.rootViewNode)
+        val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
 
         val packageName = getApplicationPackageName(windowNode)
         val applicationName = getApplicationName(context, packageName)
-        val saveInformations = SaveFieldExtractor.extract(fieldsToSave, packageName, applicationName)
+        val saveInformations = SaveFieldExtractor.extract(
+            assistInfo.fields,
+            packageName,
+            applicationName
+        )
 
         // We should handle what happens if there are multiple credentials
         saveInformations.firstOrNull()?.let { launchSaveCredentialScreen(context, it) }

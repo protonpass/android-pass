@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.onStart
-import me.proton.account.domain.entity.Account
+import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.domain.entity.Product
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 

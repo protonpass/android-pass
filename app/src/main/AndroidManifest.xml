@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="me.proton.android.pass">
 
-    <uses-sdk tools:overrideLibrary="me.proton.core.pass.autofill.service" />
+    <uses-sdk tools:overrideLibrary="me.proton.pass.autofill.service" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application

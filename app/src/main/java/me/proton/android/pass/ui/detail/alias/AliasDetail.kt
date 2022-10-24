@@ -20,7 +20,7 @@ import me.proton.android.pass.ui.detail.login.Section
 import me.proton.android.pass.ui.detail.login.SectionTitle
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.pass.domain.Item
+import me.proton.pass.domain.Item
 
 @Composable
 fun AliasDetail(
@@ -48,13 +48,13 @@ fun AliasDetail(
 fun AliasContentView(
     model: AliasDetailViewModel.AliasUiModel
 ) {
-    val title = stringResource(me.proton.core.pass.presentation.R.string.field_alias_title)
-    val content = stringResource(me.proton.core.pass.presentation.R.string.field_copied_to_clipboard)
+    val title = stringResource(me.proton.pass.presentation.R.string.field_alias_title)
+    val content = stringResource(me.proton.pass.presentation.R.string.field_copied_to_clipboard)
     val copiedToClipboardMessage = "$title $content"
     val clipboardManager = LocalClipboardManager.current
     val localContext = LocalContext.current
     Section(
-        title = me.proton.core.pass.presentation.R.string.field_alias_title,
+        title = me.proton.pass.presentation.R.string.field_alias_title,
         content = model.alias,
         icon = me.proton.core.presentation.R.drawable.ic_proton_squares,
         onIconClick = {
@@ -67,7 +67,7 @@ fun AliasContentView(
 
     Row(modifier = Modifier.padding(vertical = 12.dp)) {
         Column(modifier = Modifier.weight(1f)) {
-            SectionTitle(me.proton.core.pass.presentation.R.string.field_mailboxes_title)
+            SectionTitle(me.proton.pass.presentation.R.string.field_mailboxes_title)
             model.mailboxes.forEach {
                 Text(
                     text = it.email,
@@ -80,7 +80,7 @@ fun AliasContentView(
 
     if (model.note.isNotEmpty()) {
         Section(
-            title = me.proton.core.pass.presentation.R.string.field_note_title,
+            title = me.proton.pass.presentation.R.string.field_note_title,
             content = model.note
         )
     }

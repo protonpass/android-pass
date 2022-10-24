@@ -21,14 +21,14 @@ import me.proton.android.pass.ui.trash.TrashSnackbarMessage.RefreshError
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.UserId
-import me.proton.core.pass.common.api.Result
-import me.proton.core.pass.common.api.onError
-import me.proton.core.pass.domain.repositories.ItemRepository
-import me.proton.core.pass.domain.usecases.ObserveTrashedItems
-import me.proton.core.pass.domain.usecases.RefreshContent
-import me.proton.core.pass.presentation.components.model.ItemUiModel
-import me.proton.core.pass.presentation.uievents.IsLoadingState
-import me.proton.core.pass.presentation.uievents.IsRefreshingState
+import me.proton.pass.common.api.Result
+import me.proton.pass.common.api.onError
+import me.proton.pass.domain.repositories.ItemRepository
+import me.proton.pass.domain.usecases.ObserveTrashedItems
+import me.proton.pass.domain.usecases.RefreshContent
+import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsRefreshingState
 import javax.inject.Inject
 
 @HiltViewModel

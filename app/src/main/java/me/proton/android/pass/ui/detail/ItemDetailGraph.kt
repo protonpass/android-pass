@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.ui.navigation.AppNavigator
 import me.proton.android.pass.ui.navigation.NavItem
 import me.proton.android.pass.ui.navigation.composable
-import me.proton.core.pass.domain.ItemType
+import me.proton.pass.domain.ItemType
 
 @OptIn(
     ExperimentalAnimationApi::class,

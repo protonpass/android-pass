@@ -6,7 +6,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import me.proton.core.pass.domain.Item
+import me.proton.pass.domain.Item
 import me.proton.core.presentation.R
 
 @Composable

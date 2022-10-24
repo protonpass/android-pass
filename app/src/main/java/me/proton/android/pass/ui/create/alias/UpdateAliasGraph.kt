@@ -7,7 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.ui.navigation.AppNavigator
 import me.proton.android.pass.ui.navigation.NavItem
 import me.proton.android.pass.ui.navigation.composable
-import me.proton.core.pass.presentation.create.alias.UpdateAlias
+import me.proton.pass.presentation.create.alias.UpdateAlias
 
 @OptIn(
     ExperimentalAnimationApi::class, ExperimentalMaterialApi::class,

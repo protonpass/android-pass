@@ -7,11 +7,11 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.proton.core.pass.domain.Item
-import me.proton.core.pass.domain.ItemId
-import me.proton.core.pass.domain.ItemType
-import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.presentation.uievents.IsSentToTrashState
+import me.proton.pass.domain.Item
+import me.proton.pass.domain.ItemId
+import me.proton.pass.domain.ItemType
+import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.uievents.IsSentToTrashState
 
 @ExperimentalComposeUiApi
 @Composable

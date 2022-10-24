@@ -20,7 +20,7 @@ import me.proton.android.pass.ui.launcher.LauncherViewModel.State.PrimaryExist
 import me.proton.android.pass.ui.launcher.LauncherViewModel.State.Processing
 import me.proton.android.pass.ui.launcher.LauncherViewModel.State.StepNeeded
 import me.proton.core.compose.component.ProtonCenteredProgress
-import me.proton.core.pass.presentation.components.navigation.AuthNavigation
+import me.proton.pass.presentation.components.navigation.AuthNavigation
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

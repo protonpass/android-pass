@@ -32,14 +32,14 @@ import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.pass.common.api.Option
-import me.proton.core.pass.domain.ItemType
-import me.proton.core.pass.domain.ShareId
-import me.proton.core.pass.presentation.components.common.item.ItemAction
-import me.proton.core.pass.presentation.components.common.item.ItemsList
-import me.proton.core.pass.presentation.components.model.ItemUiModel
-import me.proton.core.pass.presentation.uievents.IsLoadingState
-import me.proton.core.pass.presentation.uievents.IsRefreshingState
+import me.proton.pass.common.api.Option
+import me.proton.pass.domain.ItemType
+import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.components.common.item.ItemAction
+import me.proton.pass.presentation.components.common.item.ItemsList
+import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsRefreshingState
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi

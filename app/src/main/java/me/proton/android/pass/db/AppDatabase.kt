@@ -29,11 +29,11 @@ import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.entity.KeySaltEntity
 import me.proton.core.key.data.entity.PublicAddressEntity
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
-import me.proton.core.pass.data.db.PassDatabase
-import me.proton.core.pass.data.db.entities.ItemEntity
-import me.proton.core.pass.data.db.entities.ItemKeyEntity
-import me.proton.core.pass.data.db.entities.ShareEntity
-import me.proton.core.pass.data.db.entities.VaultKeyEntity
+import me.proton.pass.data.db.PassDatabase
+import me.proton.pass.data.db.entities.ItemEntity
+import me.proton.pass.data.db.entities.ItemKeyEntity
+import me.proton.pass.data.db.entities.ShareEntity
+import me.proton.pass.data.db.entities.VaultKeyEntity
 import me.proton.core.payment.data.local.db.PaymentDatabase
 import me.proton.core.payment.data.local.entity.GooglePurchaseEntity
 import me.proton.core.user.data.db.AddressDatabase

@@ -18,13 +18,13 @@ import me.proton.android.pass.ui.shared.ItemDropdownMenu
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.pass.common.api.None
-import me.proton.core.pass.common.api.Option
-import me.proton.core.pass.common.api.Some
-import me.proton.core.pass.domain.Item
-import me.proton.core.pass.domain.ItemId
-import me.proton.core.pass.domain.ItemType
-import me.proton.core.pass.domain.ShareId
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
+import me.proton.pass.common.api.Some
+import me.proton.pass.domain.Item
+import me.proton.pass.domain.ItemId
+import me.proton.pass.domain.ItemType
+import me.proton.pass.domain.ShareId
 import me.proton.core.presentation.R
 
 @ExperimentalComposeUiApi

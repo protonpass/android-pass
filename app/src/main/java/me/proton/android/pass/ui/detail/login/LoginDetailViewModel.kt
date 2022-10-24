@@ -16,8 +16,8 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
-import me.proton.core.pass.domain.Item
-import me.proton.core.pass.domain.ItemType
+import me.proton.pass.domain.Item
+import me.proton.pass.domain.ItemType
 import javax.inject.Inject
 
 @HiltViewModel

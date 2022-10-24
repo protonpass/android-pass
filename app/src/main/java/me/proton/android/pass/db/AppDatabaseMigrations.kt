@@ -4,7 +4,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
 import me.proton.core.humanverification.data.db.HumanVerificationDatabase
-import me.proton.core.pass.data.db.PassDatabase
+import me.proton.pass.data.db.PassDatabase
 import me.proton.core.payment.data.local.db.PaymentDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
 

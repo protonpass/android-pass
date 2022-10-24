@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.sp
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ArrowBackIcon
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import me.proton.core.pass.presentation.components.form.ProtonTextFieldPlaceHolder
+import me.proton.pass.presentation.components.form.ProtonTextFieldPlaceHolder
 
 @ExperimentalComposeUiApi
 @Composable

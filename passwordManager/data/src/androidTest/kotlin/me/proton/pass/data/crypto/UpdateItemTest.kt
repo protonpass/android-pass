@@ -10,6 +10,7 @@ import me.proton.core.key.domain.getArmored
 import me.proton.core.key.domain.getBase64Decoded
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyData
+import me.proton.core.test.android.instrumented.utils.StringUtils
 import me.proton.pass.data.extensions.serializeToProto
 import me.proton.pass.domain.ItemContents
 import me.proton.pass.domain.KeyPacket
@@ -17,7 +18,6 @@ import me.proton.pass.domain.key.VaultKey
 import me.proton.pass.domain.key.publicKey
 import me.proton.pass.domain.key.usePrivateKey
 import me.proton.pass.test.crypto.TestKeyStoreCrypto
-import me.proton.test.android.instrumented.utils.StringUtils
 import org.junit.Test
 import proton_pass_item_v1.ItemV1
 import kotlin.random.Random

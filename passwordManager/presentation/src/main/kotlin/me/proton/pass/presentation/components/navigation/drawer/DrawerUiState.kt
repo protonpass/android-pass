@@ -30,5 +30,6 @@ data class DrawerUiState(
     val closeOnBackEnabled: Boolean = true,
     val closeOnActionEnabled: Boolean = true,
     val currentUser: User? = null,
-    val selectedSection: NavigationDrawerSection? = null
+    val selectedSection: NavigationDrawerSection? = null,
+    val internalDrawerEnabled: Boolean = false
 )

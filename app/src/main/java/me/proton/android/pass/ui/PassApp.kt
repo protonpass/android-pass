@@ -26,6 +26,9 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import me.proton.android.pass.ui.internal.InternalDrawerState
+import me.proton.android.pass.ui.internal.InternalDrawerValue
+import me.proton.android.pass.ui.internal.rememberInternalDrawerState
 import me.proton.android.pass.ui.navigation.NavItem
 import me.proton.android.pass.ui.navigation.appGraph
 import me.proton.android.pass.ui.navigation.rememberAnimatedNavController
@@ -119,36 +122,43 @@ fun PassAppContent(
         scaffoldState = scaffoldState,
         snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
     ) { contentPadding ->
-        AnimatedNavHost(
-            modifier = Modifier.padding(contentPadding),
-            navController = navController,
-            startDestination = startDestination
+        val internalDrawerState: InternalDrawerState =
+            rememberInternalDrawerState(initialValue = InternalDrawerValue.Closed)
+        InternalDrawer(
+            drawerState = internalDrawerState
         ) {
-            appGraph(
-                appNavigation = appNavigator,
-                navigationDrawer = { content ->
-                    var showSignOutDialog by remember { mutableStateOf(false) }
+            AnimatedNavHost(
+                modifier = Modifier.padding(contentPadding),
+                navController = navController,
+                startDestination = startDestination
+            ) {
+                appGraph(
+                    appNavigation = appNavigator,
+                    navigationDrawer = { content ->
+                        var showSignOutDialog by remember { mutableStateOf(false) }
 
-                    ModalNavigationDrawer(
-                        drawerUiState = appUiState.drawerUiState,
-                        drawerState = drawerState,
-                        navDrawerNavigation = navDrawerNavigation,
-                        authNavigation = authNavigation,
-                        onSignOutClick = { showSignOutDialog = true },
-                        signOutDialog = {
-                            if (showSignOutDialog) {
-                                ConfirmSignOutDialog(
-                                    state = showSignOutDialog,
-                                    onDismiss = { showSignOutDialog = false },
-                                    onConfirm = { authNavigation.onRemove(null) }
-                                )
-                            }
-                        },
-                        content = content
-                    )
-                },
-                onDrawerIconClick = { coroutineScope.launch { drawerState.open() } }
-            )
+                        ModalNavigationDrawer(
+                            drawerUiState = appUiState.drawerUiState,
+                            drawerState = drawerState,
+                            navDrawerNavigation = navDrawerNavigation,
+                            authNavigation = authNavigation,
+                            onSignOutClick = { showSignOutDialog = true },
+                            signOutDialog = {
+                                if (showSignOutDialog) {
+                                    ConfirmSignOutDialog(
+                                        state = showSignOutDialog,
+                                        onDismiss = { showSignOutDialog = false },
+                                        onConfirm = { authNavigation.onRemove(null) }
+                                    )
+                                }
+                            },
+                            onInternalDrawerClick = { coroutineScope.launch { internalDrawerState.open() } },
+                            content = content
+                        )
+                    },
+                    onDrawerIconClick = { coroutineScope.launch { drawerState.open() } }
+                )
+            }
         }
     }
 }

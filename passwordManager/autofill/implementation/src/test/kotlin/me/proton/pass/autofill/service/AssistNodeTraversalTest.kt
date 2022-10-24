@@ -57,7 +57,7 @@ class AssistNodeTraversalTest {
 
         val result = AssistNodeTraversal().traverse(rootNode)
 
-        Assert.assertEquals(FieldType.Email, result.firstOrNull()?.type)
+        Assert.assertEquals(FieldType.Email, result.fields.firstOrNull()?.type)
     }
 
 /*
@@ -84,7 +84,8 @@ class AssistNodeTraversalTest {
         val emailType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_EMAIL_ADDRESS)
         val passwordType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_PASSWORD)
         val nameType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_NAME)
-        val creditCardType = traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_CREDIT_CARD_NUMBER)
+        val creditCardType =
+            traversal.detectFieldTypeUsingAutofillHint(View.AUTOFILL_HINT_CREDIT_CARD_NUMBER)
 
         Assert.assertEquals(FieldType.Phone, phoneType)
         Assert.assertEquals(FieldType.Username, usernameType)
@@ -93,6 +94,52 @@ class AssistNodeTraversalTest {
         Assert.assertEquals(FieldType.FullName, nameType)
         // Still not supported
         Assert.assertEquals(FieldType.Unknown, creditCardType)
+    }
+
+    @Test
+    fun `is able to extract URL`() {
+        val domain = "somedomain.example"
+        val structure = makeNode(
+            children = listOf(
+                makeNode(
+                    webDomain = domain
+                )
+            )
+        )
+        val result = AssistNodeTraversal().traverse(structure)
+        Assert.assertEquals(domain, result.url)
+    }
+
+    @Test
+    fun `return the first URL if it contains multiple ones`() {
+        val domain1 = "somedomain.example"
+        val domain2 = "other.example"
+        val structure = makeNode(
+            children = listOf(
+                makeNode(webDomain = domain1),
+                makeNode(webDomain = domain2)
+            )
+        )
+        val result = AssistNodeTraversal().traverse(structure)
+        Assert.assertEquals(domain1, result.url)
+    }
+
+    @Test
+    fun `return the parent URL if the child also contains a URL`() {
+        val domain1 = "somedomain.example"
+        val domain2 = "other.example"
+        val structure = makeNode(
+            webDomain = domain1,
+            children = listOf(
+                makeNode(
+                    webDomain = domain2
+                )
+            )
+        )
+        val result = AssistNodeTraversal().traverse(structure)
+        Assert.assertEquals(domain1, result.url)
+
+
     }
 
 /*    @Test
@@ -159,7 +206,8 @@ class AssistNodeTraversalTest {
         inputType: Int = 0,
         autofillHints: List<String> = emptyList(),
         htmlAttributes: List<Pair<String, String>> = emptyList(),
-        children: List<AutofillNode> = emptyList()
+        children: List<AutofillNode> = emptyList(),
+        webDomain: String? = null
     ) =
         AutofillNode(
             id = autofillId,
@@ -170,7 +218,8 @@ class AssistNodeTraversalTest {
             inputType = InputTypeValue(inputType),
             autofillHints = autofillHints,
             htmlAttributes = htmlAttributes,
-            children
+            children = children,
+            webDomain = webDomain
         )
 
 }

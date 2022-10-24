@@ -2,7 +2,6 @@ package me.proton.pass.domain
 
 import androidx.annotation.StringRes
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.pass.domain.R
 
 sealed class ItemType {
 

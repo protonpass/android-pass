@@ -23,6 +23,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
+    id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("io.sentry.android.gradle")
@@ -109,7 +110,7 @@ android {
         }
     }
 
-    flavorDimensions.add("default")
+    flavorDimensions += "default"
     productFlavors {
         val gitHash = "git rev-parse --short HEAD".runCommand(workingDir = rootDir)
         create("dev") {
@@ -257,6 +258,9 @@ dependencies {
     implementation(libs.sentry)
     implementation(libs.okhttp)
     implementation(libs.plumber)
+
+    add("devImplementation", libs.showkase)
+    add("kspDev", libs.showkaseProcessor)
 
     implementation(project(":passwordManager:autofill:implementation"))
     implementation(project(":passwordManager:common:api"))

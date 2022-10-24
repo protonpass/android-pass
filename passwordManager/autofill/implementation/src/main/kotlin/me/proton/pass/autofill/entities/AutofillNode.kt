@@ -19,5 +19,6 @@ data class AutofillNode(
     val inputType: InputTypeValue,
     val autofillHints: List<String>,
     val htmlAttributes: List<Pair<String, String>>,
-    val children: List<AutofillNode>
+    val children: List<AutofillNode>,
+    val webDomain: String?
 )

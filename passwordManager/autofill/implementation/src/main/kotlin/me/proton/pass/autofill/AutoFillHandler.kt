@@ -61,8 +61,9 @@ object AutoFillHandler {
         windowNode: AssistStructure.WindowNode,
         callback: FillCallback
     ) {
-        val assistFields: List<AssistField> =
-            AssistNodeTraversal().traverse(windowNode.rootViewNode)
+        val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
+        val assistFields: List<AssistField> = assistInfo.fields
+
         if (assistFields.isEmpty()) return
 
         if (!coroutineContext.isActive) {

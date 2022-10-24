@@ -4,32 +4,40 @@ import android.app.assist.AssistStructure
 import android.os.Build
 import android.text.InputType
 import android.view.View
+import me.proton.core.util.kotlin.hasFlag
 import me.proton.pass.autofill.entities.AndroidAutofillFieldId
 import me.proton.pass.autofill.entities.AssistField
+import me.proton.pass.autofill.entities.AssistInfo
 import me.proton.pass.autofill.entities.AutofillNode
 import me.proton.pass.autofill.entities.FieldType
 import me.proton.pass.autofill.entities.InputTypeValue
-import me.proton.core.util.kotlin.hasFlag
 
 class AssistNodeTraversal {
 
     private var autoFillNodes = mutableListOf<AssistField>()
+    private var detectedUrl: String? = null
 
     // For testing purposes
     var visitedNodes = 0
         private set
 
-    fun traverse(node: AssistStructure.ViewNode): List<AssistField> =
+    fun traverse(node: AssistStructure.ViewNode): AssistInfo =
         traverse(node.toAutofillNode())
 
-    fun traverse(node: AutofillNode): List<AssistField> {
+    fun traverse(node: AutofillNode): AssistInfo {
         visitedNodes = 0
         autoFillNodes = mutableListOf()
         traverseInternal(node)
-        return autoFillNodes
+        return AssistInfo(
+            autoFillNodes,
+            detectedUrl
+        )
     }
 
     private fun traverseInternal(node: AutofillNode) {
+        if (detectedUrl == null) {
+            detectedUrl = node.webDomain
+        }
         if (nodeSupportsAutoFill(node)) {
             val assistField = AssistField(
                 node.id!!,
@@ -150,7 +158,8 @@ fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode = AutofillNode(
     inputType = InputTypeValue(inputType),
     autofillHints = autofillHints?.toList().orEmpty(),
     htmlAttributes = htmlInfo?.attributes?.toList()?.map { it.first to it.second }.orEmpty(),
-    children = (0 until childCount).map { getChildAt(it).toAutofillNode() }
+    children = (0 until childCount).map { getChildAt(it).toAutofillNode() },
+    webDomain = webDomain
 )
 
 private fun isImportantForAutofill(node: AssistStructure.ViewNode): Boolean =

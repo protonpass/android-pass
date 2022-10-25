@@ -71,7 +71,7 @@ fun ProtonFormInput(
 
 @Preview(showBackground = true)
 @Composable
-fun Preview_ProtonFormInput(
+fun ProtonFormInputPreview(
     @PreviewParameter(ProtonFormInputPreviewProvider::class) data: ProtonFormInputPreviewData
 ) {
     ProtonTheme {

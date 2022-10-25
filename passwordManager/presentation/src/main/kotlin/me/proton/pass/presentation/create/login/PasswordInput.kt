@@ -82,7 +82,7 @@ internal fun PasswordInput(
 
 @Preview(showBackground = true, widthDp = 400)
 @Composable
-fun Preview_PasswordInput() {
+fun PasswordInputPreview() {
     ProtonTheme {
         PasswordInput(
             value = "someValue",

@@ -106,7 +106,9 @@ private fun BottomSheetItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            modifier = Modifier.weight(1.0f).padding(vertical = 12.dp),
+            modifier = Modifier
+                .weight(1.0f)
+                .padding(vertical = 12.dp),
             text = text,
             fontSize = 16.sp,
             fontWeight = FontWeight.W400,
@@ -124,13 +126,15 @@ private fun BottomSheetItem(
 
 @Preview(showBackground = true, widthDp = 400)
 @Composable
-fun Preview_BottomSheetTitle() {
-    BottomSheetTitle(
-        title = R.string.alias_bottomsheet_mailboxes_title,
-        button = BottomSheetTitleButton(
-            title = R.string.action_apply,
-            onClick = {},
-            enabled = false
+fun BottomSheetTitlePreview() {
+    ProtonTheme {
+        BottomSheetTitle(
+            title = R.string.alias_bottomsheet_mailboxes_title,
+            button = BottomSheetTitleButton(
+                title = R.string.action_apply,
+                onClick = {},
+                enabled = false
+            )
         )
-    )
+    }
 }

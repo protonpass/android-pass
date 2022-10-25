@@ -25,7 +25,7 @@ fun NoteInput(value: String, onChange: (String) -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun Preview_NoteInput(@PreviewParameter(NoteInputPreviewProvider::class) value: String) {
+fun NoteInputPreview(@PreviewParameter(NoteInputPreviewProvider::class) value: String) {
     ProtonTheme {
         NoteInput(value, {})
     }

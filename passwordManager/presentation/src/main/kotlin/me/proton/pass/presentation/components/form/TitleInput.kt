@@ -32,7 +32,7 @@ fun TitleInput(
 
 @Preview(showBackground = true)
 @Composable
-fun Preview_TitleInput(
+fun TitleInputPreview(
     @PreviewParameter(TitleInputPreviewProvider::class) data: TitleInputPreviewData
 ) {
     ProtonTheme {

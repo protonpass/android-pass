@@ -147,6 +147,8 @@ private fun Autofill(
 
 @Preview(showBackground = true)
 @Composable
-private fun Preview_ExplicitAutofillTypeDemo() {
-    ExplicitAutofillTypesDemo(onLoginClicked = {})
+private fun ExplicitAutofillTypeDemoPreview() {
+    ProtonTheme {
+        ExplicitAutofillTypesDemo(onLoginClicked = {})
+    }
 }

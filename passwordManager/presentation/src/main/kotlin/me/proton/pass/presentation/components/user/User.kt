@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -50,9 +51,9 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.User
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.extensions.currentLocale
-import me.proton.core.user.domain.entity.User
 
 @Composable
 fun UserSelector(
@@ -128,37 +129,40 @@ fun UserDetails(
     }
 }
 
-@Preview(backgroundColor = 0xFFF)
+@Preview
 @Composable
-fun PreviewUserDetails() {
+fun UserDetailsPreview() {
     ProtonTheme {
-        UserDetails(PREVIEW_USER)
+        Surface {
+            UserDetails(PREVIEW_USER)
+        }
     }
 }
 
-@Preview(
-    backgroundColor = 0xFFF,
-    widthDp = 250
-)
+@Preview(widthDp = 250)
 @Composable
-fun PreviewUserDetailsWithLongNameAndAddress() {
+fun UserDetailsWithLongNameAndAddressPreview() {
     ProtonTheme {
-        UserDetails(
-            PREVIEW_USER.copy(
-                displayName = "A very long name to see that everything holds on one line",
-                email = "a.very.long.name.to.see.that.everything.holds.on.one.line@protonmail.com"
+        Surface {
+            UserDetails(
+                PREVIEW_USER.copy(
+                    displayName = "A very long name to see that everything holds on one line",
+                    email = "a.very.long.name.to.see.that.everything.holds.on.one.line@protonmail.com"
+                )
             )
-        )
+        }
     }
 }
 
 @Preview
 @Composable
-fun PreviewUserSelector() {
+fun UserSelectorPreview() {
     ProtonTheme(isDark = true) {
-        UserSelector(
-            currentUser = PREVIEW_USER
-        ) {
+        Surface {
+            UserSelector(
+                currentUser = PREVIEW_USER
+            ) {
+            }
         }
     }
 }

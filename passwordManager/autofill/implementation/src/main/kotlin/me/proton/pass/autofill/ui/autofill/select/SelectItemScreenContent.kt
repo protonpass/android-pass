@@ -2,6 +2,7 @@ package me.proton.pass.autofill.ui.autofill.select
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,19 +52,21 @@ internal fun SelectItemScreenContent(
     }
 }
 
-@Preview(showSystemUi = true, showBackground = true)
+@Preview
 @Composable
 fun PreviewSelectItemScreenContent(
     @PreviewParameter(SelectItemUiStatePreviewProvider::class) state: SelectItemUiState
 ) {
     ProtonTheme {
-        SelectItemScreenContent(
-            uiState = state,
-            onItemClicked = {},
-            onRefresh = {},
-            onSearchQueryChange = {},
-            onEnterSearch = {},
-            onStopSearching = {}
-        )
+        Surface {
+            SelectItemScreenContent(
+                uiState = state,
+                onItemClicked = {},
+                onRefresh = {},
+                onSearchQueryChange = {},
+                onEnterSearch = {},
+                onStopSearching = {}
+            )
+        }
     }
 }

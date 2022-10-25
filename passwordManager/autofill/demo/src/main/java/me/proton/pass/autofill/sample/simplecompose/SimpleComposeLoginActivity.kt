@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -68,7 +69,8 @@ fun ExplicitAutofillTypesDemo(onLoginClicked: () -> Unit) {
             onFill = { nameState = it }
         ) { autofillNode ->
             OutlinedTextField(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .onFocusChanged {
                         autofill?.apply {
                             if (it.isFocused) {
@@ -96,7 +98,8 @@ fun ExplicitAutofillTypesDemo(onLoginClicked: () -> Unit) {
             onFill = { emailState = it }
         ) { autofillNode ->
             OutlinedTextField(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
                     .onFocusChanged {
                         autofill?.run {
                             if (it.isFocused) {
@@ -145,10 +148,12 @@ private fun Autofill(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 private fun ExplicitAutofillTypeDemoPreview() {
     ProtonTheme {
-        ExplicitAutofillTypesDemo(onLoginClicked = {})
+        Surface {
+            ExplicitAutofillTypesDemo(onLoginClicked = {})
+        }
     }
 }

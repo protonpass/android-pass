@@ -1,6 +1,7 @@
 package me.proton.pass.presentation.create.login
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,19 +41,21 @@ fun GeneratePasswordBottomSheetContent(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 @Suppress("FunctionMaxLength")
 fun GeneratePasswordBottomSheetContentPreview(
     @PreviewParameter(CreatePasswordStatePreviewProvider::class) state: CreatePasswordUiState
 ) {
     ProtonTheme {
-        GeneratePasswordBottomSheetContent(
-            state = state,
-            onLengthChange = {},
-            onRegenerateClick = {},
-            onHasSpecialCharactersChange = {},
-            onConfirm = {}
-        )
+        Surface {
+            GeneratePasswordBottomSheetContent(
+                state = state,
+                onLengthChange = {},
+                onRegenerateClick = {},
+                onHasSpecialCharactersChange = {},
+                onConfirm = {}
+            )
+        }
     }
 }

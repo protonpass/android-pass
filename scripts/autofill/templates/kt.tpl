@@ -1,5 +1,5 @@
 package me.proton.pass.autofill
 
-val BROWSERS = listOf(
+val BROWSERS = setOf(
 {{CONTENT}}
 )

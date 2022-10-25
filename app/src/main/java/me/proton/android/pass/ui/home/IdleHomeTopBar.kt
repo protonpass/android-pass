@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
@@ -63,10 +64,12 @@ fun IdleHomeTopBar(
 @Composable
 fun IdleHomeTopBarPreview() {
     ProtonTheme {
-        IdleHomeTopBar(
-            startSearchMode = {},
-            onDrawerIconClick = {},
-            onAddItemClick = {}
-        )
+        Surface {
+            IdleHomeTopBar(
+                startSearchMode = {},
+                onDrawerIconClick = {},
+                onAddItemClick = {}
+            )
+        }
     }
 }

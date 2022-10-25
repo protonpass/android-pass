@@ -49,7 +49,7 @@ fun NavigationDrawerAppVersion(
 
 @Preview
 @Composable
-fun PreviewNavigationDrawerAppVersion() {
+fun NavigationDrawerAppVersionPreview() {
     ProtonTheme {
         NavigationDrawerAppVersion(name = "Name", version = "1.0.0")
     }

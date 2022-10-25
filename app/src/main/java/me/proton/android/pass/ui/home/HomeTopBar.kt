@@ -1,6 +1,7 @@
 package me.proton.android.pass.ui.home
 
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -43,35 +44,39 @@ internal fun HomeTopBar(
 }
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun HomeTopBarIdlePreview() {
     ProtonTheme {
-        HomeTopBar(
-            searchQuery = "",
-            inSearchMode = false,
-            onSearchQueryChange = {},
-            onEnterSearch = {},
-            onStopSearching = {},
-            onDrawerIconClick = {},
-            onAddItemClick = {}
-        )
+        Surface {
+            HomeTopBar(
+                searchQuery = "",
+                inSearchMode = false,
+                onSearchQueryChange = {},
+                onEnterSearch = {},
+                onStopSearching = {},
+                onDrawerIconClick = {},
+                onAddItemClick = {}
+            )
+        }
     }
 }
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun HomeTopBarSearchPreview() {
     ProtonTheme {
-        HomeTopBar(
-            searchQuery = "some search",
-            inSearchMode = true,
-            onSearchQueryChange = {},
-            onEnterSearch = {},
-            onStopSearching = {},
-            onDrawerIconClick = {},
-            onAddItemClick = {}
-        )
+        Surface {
+            HomeTopBar(
+                searchQuery = "some search",
+                inSearchMode = true,
+                onSearchQueryChange = {},
+                onEnterSearch = {},
+                onStopSearching = {},
+                onDrawerIconClick = {},
+                onAddItemClick = {}
+            )
+        }
     }
 }

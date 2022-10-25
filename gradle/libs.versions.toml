@@ -34,6 +34,7 @@ protoc = "3.0.0"
 protobuf-lite = "3.0.0"
 # Gradle
 gradlePlugin-android = "7.2.2"
+gradlePlugin-dependency-analysis = "1.13.1"
 gradlePlugin-doctor = "0.8.1"
 gradlePlugin-ksp = "1.7.10-1.0.6"
 gradlePlugin-protobuf = "0.8.19"
@@ -63,6 +64,7 @@ truth = "1.1.3"
 
 [plugins]
 gradlePlugin-application = { id = "com.android.application", version.ref = "gradlePlugin-android" }
+gradlePlugin-dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version.ref = "gradlePlugin-dependency-analysis" }
 gradlePlugin-doctor = { id = "com.osacky.doctor", version.ref = "gradlePlugin-doctor" }
 gradlePlugin-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 gradlePlugin-ksp = { id = "com.google.devtools.ksp", version.ref = "gradlePlugin-ksp" }
@@ -141,6 +143,7 @@ core-featureFlag = { module = "me.proton.core:feature-flag", version.ref = "core
 core-humanVerification = { module = "me.proton.core:human-verification", version.ref = "core" }
 core-key = { module = "me.proton.core:key", version.ref = "core" }
 core-network = { module = "me.proton.core:network", version.ref = "core" }
+core-network-domain = { module = "me.proton.core:network-domain", version.ref = "core" }
 core-payment = { module = "me.proton.core:payment", version.ref = "core" }
 # core-payment-iap = { module = "me.proton.core:payment-iap", version.ref = "core" }
 core-plan = { module = "me.proton.core:plan", version.ref = "core" }

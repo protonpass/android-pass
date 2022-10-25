@@ -24,6 +24,9 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
+    sourceSets {
+        getByName("test").java.srcDirs("build/generated/ksp/devDebugUnitTest/kotlin")
+    }
 }
 
 androidComponents {

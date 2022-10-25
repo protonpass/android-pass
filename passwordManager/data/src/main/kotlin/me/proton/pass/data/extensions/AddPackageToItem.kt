@@ -27,3 +27,17 @@ fun ItemV1.Item.with(packageName: PackageName): ItemV1.Item {
         )
         .build()
 }
+
+fun ItemV1.Item.withUrl(url: String): ItemV1.Item {
+    val websites = content.login.urlsList.toMutableList()
+    websites.add(url)
+    return this.toBuilder()
+        .setContent(
+            content.toBuilder()
+                .setLogin(
+                    content.login.toBuilder()
+                        .addUrls(url)
+                        .build()
+                ).build()
+        ).build()
+}

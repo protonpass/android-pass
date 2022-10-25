@@ -1,6 +1,7 @@
 package me.proton.pass.presentation.components.form
 
 import androidx.annotation.StringRes
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,10 +27,12 @@ fun ProtonTextTitle(
     )
 }
 
-@Preview(showBackground = true, widthDp = 200, heightDp = 40)
+@Preview(widthDp = 200, heightDp = 40)
 @Composable
 fun ProtonTextTitlePreview() {
     ProtonTheme {
-        ProtonTextTitle(title = me.proton.pass.presentation.R.string.field_title_title)
+        Surface {
+            ProtonTextTitle(title = me.proton.pass.presentation.R.string.field_title_title)
+        }
     }
 }

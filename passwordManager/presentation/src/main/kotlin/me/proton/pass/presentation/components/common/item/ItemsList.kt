@@ -16,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -270,10 +271,12 @@ private fun ItemRowActions(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun ItemRowPreview(@PreviewParameter(ItemUiModelPreviewProvider::class) item: ItemUiModel) {
     ProtonTheme {
-        ItemRow(item = item)
+        Surface {
+            ItemRow(item = item)
+        }
     }
 }

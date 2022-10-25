@@ -1,6 +1,7 @@
 package me.proton.pass.presentation.components.form
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -30,16 +31,18 @@ fun TitleInput(
     )
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun TitleInputPreview(
     @PreviewParameter(TitleInputPreviewProvider::class) data: TitleInputPreviewData
 ) {
     ProtonTheme {
-        TitleInput(
-            value = "test",
-            onChange = {},
-            onTitleRequiredError = false
-        )
+        Surface {
+            TitleInput(
+                value = "test",
+                onChange = {},
+                onTitleRequiredError = false
+            )
+        }
     }
 }

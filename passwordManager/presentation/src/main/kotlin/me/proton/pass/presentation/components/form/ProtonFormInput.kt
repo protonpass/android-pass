@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -45,7 +46,9 @@ fun ProtonFormInput(
             singleLine = singleLine,
             visualTransformation = visualTransformation,
             moveToNextOnEnter = moveToNextOnEnter,
-            modifier = Modifier.padding(top = 8.dp).fillMaxWidth(1.0f),
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .fillMaxWidth(1.0f),
             editable = editable,
             isError = isError
         )
@@ -69,21 +72,23 @@ fun ProtonFormInput(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun ProtonFormInputPreview(
     @PreviewParameter(ProtonFormInputPreviewProvider::class) data: ProtonFormInputPreviewData
 ) {
     ProtonTheme {
-        ProtonFormInput(
-            title = R.string.field_title_title,
-            placeholder = R.string.field_title_hint,
-            value = data.value,
-            required = data.isRequired,
-            editable = data.isEditable,
-            isError = data.isError,
-            errorMessage = data.errorMessage,
-            onChange = {}
-        )
+        Surface {
+            ProtonFormInput(
+                title = R.string.field_title_title,
+                placeholder = R.string.field_title_hint,
+                value = data.value,
+                required = data.isRequired,
+                editable = data.isEditable,
+                isError = data.isError,
+                errorMessage = data.errorMessage,
+                onChange = {}
+            )
+        }
     }
 }

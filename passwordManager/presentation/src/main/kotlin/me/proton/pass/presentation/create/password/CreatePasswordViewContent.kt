@@ -13,6 +13,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Slider
+import androidx.compose.material.Surface
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -95,17 +96,19 @@ internal fun CreatePasswordViewContent(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun CreatePasswordViewContentPreview(
     @PreviewParameter(CreatePasswordStatePreviewProvider::class) state: CreatePasswordUiState
 ) {
     ProtonTheme {
-        CreatePasswordViewContent(
-            state = state,
-            onSpecialCharactersChange = {},
-            onLengthChange = {},
-            onRegenerateClick = {}
-        )
+        Surface {
+            CreatePasswordViewContent(
+                state = state,
+                onSpecialCharactersChange = {},
+                onLengthChange = {},
+                onRegenerateClick = {}
+            )
+        }
     }
 }

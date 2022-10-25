@@ -2,6 +2,7 @@ package me.proton.pass.presentation.components
 
 import androidx.annotation.StringRes
 import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.Surface
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -18,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.android.pass.ui.shared.ArrowBackIcon
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.form.ProtonTextFieldPlaceHolder
 
@@ -61,15 +63,19 @@ fun SearchTopBar(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @ExperimentalComposeUiApi
 @Composable
 fun SearchHomeTopBarPreview() {
-    SearchTopBar(
-        placeholder = R.string.action_search,
-        searchQuery = "some search",
-        onSearchQueryChange = {},
-        onStopSearch = {}
-    )
+    ProtonTheme {
+        Surface {
+            SearchTopBar(
+                placeholder = R.string.action_search,
+                searchQuery = "some search",
+                onSearchQueryChange = {},
+                onStopSearch = {}
+            )
+        }
+    }
 }
 

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,16 +38,24 @@ internal fun PasswordInput(
     var isVisible: Boolean by rememberSaveable { mutableStateOf(false) }
 
     val (visualTransformation, icon) = if (isVisible) {
-        Pair(VisualTransformation.None, painterResource(me.proton.core.presentation.R.drawable.ic_proton_eye_slash))
+        Pair(
+            VisualTransformation.None,
+            painterResource(me.proton.core.presentation.R.drawable.ic_proton_eye_slash)
+        )
     } else {
-        Pair(PasswordVisualTransformation(), painterResource(me.proton.core.presentation.R.drawable.ic_proton_eye))
+        Pair(
+            PasswordVisualTransformation(),
+            painterResource(me.proton.core.presentation.R.drawable.ic_proton_eye)
+        )
     }
 
     Column(modifier = modifier.padding(top = 28.dp)) {
         ProtonTextTitle(R.string.field_password_title)
 
         Row(
-            modifier = Modifier.fillMaxWidth(1.0f).padding(top = 8.dp)
+            modifier = Modifier
+                .fillMaxWidth(1.0f)
+                .padding(top = 8.dp)
         ) {
             ProtonTextField(
                 value = value,
@@ -67,7 +76,9 @@ internal fun PasswordInput(
             OutlinedButton(
                 onClick = onGeneratePasswordClick,
                 shape = ProtonTheme.shapes.medium,
-                modifier = Modifier.size(48.dp).align(Alignment.CenterVertically)
+                modifier = Modifier
+                    .size(48.dp)
+                    .align(Alignment.CenterVertically)
             ) {
                 Icon(
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_arrows_rotate),
@@ -80,14 +91,16 @@ internal fun PasswordInput(
     }
 }
 
-@Preview(showBackground = true, widthDp = 400)
+@Preview(widthDp = 400)
 @Composable
 fun PasswordInputPreview() {
     ProtonTheme {
-        PasswordInput(
-            value = "someValue",
-            onChange = {},
-            onGeneratePasswordClick = {}
-        )
+        Surface {
+            PasswordInput(
+                value = "someValue",
+                onChange = {},
+                onGeneratePasswordClick = {}
+            )
+        }
     }
 }

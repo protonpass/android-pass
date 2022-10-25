@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -108,20 +109,22 @@ fun ProtonTextFieldPlaceHolder(
 }
 
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun ProtonTextFieldPreview(
     @PreviewParameter(ProtonTextFieldPreviewProvider::class)
     data: ProtonTextFieldPreviewData
 ) {
     ProtonTheme {
-        ProtonTextField(
-            value = data.value,
-            placeholder = data.placeholder,
-            editable = data.isEditable,
-            isError = data.isError,
-            trailingIcon = data.icon,
-            onChange = {}
-        )
+        Surface {
+            ProtonTextField(
+                value = data.value,
+                placeholder = data.placeholder,
+                editable = data.isEditable,
+                isError = data.isError,
+                trailingIcon = data.icon,
+                onChange = {}
+            )
+        }
     }
 }

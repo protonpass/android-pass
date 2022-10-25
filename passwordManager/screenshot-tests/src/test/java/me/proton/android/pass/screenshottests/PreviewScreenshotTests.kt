@@ -2,6 +2,7 @@ package me.proton.android.pass.screenshottests
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
+import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import com.airbnb.android.showkase.models.Showkase
 import com.airbnb.android.showkase.models.ShowkaseBrowserComponent
@@ -28,7 +29,8 @@ class PreviewScreenshotTests {
 
     @get:Rule
     val paparazzi = Paparazzi(
-        maxPercentDifference = 0.0
+        maxPercentDifference = 0.0,
+        deviceConfig = DeviceConfig.NEXUS_5
     )
 
     @Test

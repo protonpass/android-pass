@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -67,19 +68,21 @@ fun CreatePasswordContent(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun CreatePasswordContentPreview(
     @PreviewParameter(CreatePasswordStatePreviewProvider::class) state: CreatePasswordUiState
 ) {
     ProtonTheme {
-        CreatePasswordContent(
-            state = state,
-            onUpClick = {},
-            onLengthChange = {},
-            onRegenerateClick = {},
-            onHasSpecialCharactersChange = {},
-            onConfirm = {}
-        )
+        Surface {
+            CreatePasswordContent(
+                state = state,
+                onUpClick = {},
+                onLengthChange = {},
+                onRegenerateClick = {},
+                onHasSpecialCharactersChange = {},
+                onConfirm = {}
+            )
+        }
     }
 }

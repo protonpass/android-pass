@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -124,17 +125,19 @@ private fun BottomSheetItem(
     }
 }
 
-@Preview(showBackground = true, widthDp = 400)
+@Preview(widthDp = 400)
 @Composable
 fun BottomSheetTitlePreview() {
     ProtonTheme {
-        BottomSheetTitle(
-            title = R.string.alias_bottomsheet_mailboxes_title,
-            button = BottomSheetTitleButton(
-                title = R.string.action_apply,
-                onClick = {},
-                enabled = false
+        Surface {
+            BottomSheetTitle(
+                title = R.string.alias_bottomsheet_mailboxes_title,
+                button = BottomSheetTitleButton(
+                    title = R.string.action_apply,
+                    onClick = {},
+                    enabled = false
+                )
             )
-        )
+        }
     }
 }

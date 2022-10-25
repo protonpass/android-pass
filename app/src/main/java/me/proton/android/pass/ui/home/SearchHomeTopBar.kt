@@ -1,6 +1,7 @@
 package me.proton.android.pass.ui.home
 
 import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.Surface
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -58,15 +59,17 @@ fun SearchHomeTopBar(
     }
 }
 
-@Preview(showBackground = true)
+@Preview
 @ExperimentalComposeUiApi
 @Composable
 fun SearchHomeTopBarPreview() {
     ProtonTheme {
-        SearchHomeTopBar(
-            searchQuery = "some search",
-            onSearchQueryChange = {},
-            onStopSearch = {}
-        )
+        Surface {
+            SearchHomeTopBar(
+                searchQuery = "some search",
+                onSearchQueryChange = {},
+                onStopSearch = {}
+            )
+        }
     }
 }

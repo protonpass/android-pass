@@ -2,6 +2,7 @@ package me.proton.pass.domain.repositories
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
+import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemContents
@@ -34,10 +35,11 @@ interface ItemRepository {
     suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit>
     suspend fun deleteItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit>
     suspend fun clearTrash(userId: UserId): Result<Unit>
-    suspend fun addPackageToItem(
+    suspend fun addPackageAndUrlToItem(
         shareId: ShareId,
         itemId: ItemId,
-        packageName: PackageName
+        packageName: Option<PackageName>,
+        url: Option<String>
     ): Result<Item>
 
     suspend fun refreshItems(

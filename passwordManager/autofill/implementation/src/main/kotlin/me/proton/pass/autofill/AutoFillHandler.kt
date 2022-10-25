@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.pass.autofill.Utils.getWindowNodes
 import me.proton.pass.autofill.entities.AndroidAutofillFieldId
-import me.proton.pass.autofill.entities.AssistField
+import me.proton.pass.autofill.entities.AssistInfo
 import me.proton.pass.autofill.entities.AutofillData
 import me.proton.pass.autofill.entities.asAndroid
 import me.proton.pass.autofill.service.R
@@ -62,20 +62,18 @@ object AutoFillHandler {
         callback: FillCallback
     ) {
         val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
-        val assistFields: List<AssistField> = assistInfo.fields
-
-        if (assistFields.isEmpty()) return
+        if (assistInfo.fields.isEmpty()) return
 
         if (!coroutineContext.isActive) {
             callback.onFailure(context.getString(R.string.error_credentials_not_found))
             return
         }
 
-        val autofillIds = assistFields.map {
+        val autofillIds = assistInfo.fields.map {
             (it.id as AndroidAutofillFieldId).autofillId
         }.toTypedArray()
         // Single Dataset to force user authentication
-        val dataset = buildDataset(context, windowNode, assistFields)
+        val dataset = buildDataset(context, windowNode, assistInfo)
         val saveInfo = SaveInfo.Builder(SaveInfo.SAVE_DATA_TYPE_GENERIC, autofillIds).build()
         val response = FillResponse.Builder()
             .addDataset(dataset)
@@ -88,10 +86,10 @@ object AutoFillHandler {
     private fun buildDataset(
         context: Context,
         windowNode: AssistStructure.WindowNode,
-        assistFields: List<AssistField>
+        assistInfo: AssistInfo
     ): Dataset {
         val data = AutofillData(
-            assistFields,
+            assistInfo,
             Utils.getApplicationPackageName(windowNode)
         )
         val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -121,7 +119,7 @@ object AutoFillHandler {
             Dataset.Builder(presentations)
                 .apply {
                     setAuthentication(pendingIntent.intentSender)
-                    for (value in assistFields) {
+                    for (value in assistInfo.fields) {
                         setField(value.id.asAndroid().autofillId, null)
                     }
                 }
@@ -137,7 +135,7 @@ object AutoFillHandler {
 //                        addInlineSuggestion(this, spec, pendingIntent)
 //                    }
 //                }
-                    for (value in assistFields) {
+                    for (value in assistInfo.fields) {
                         setValue(value.id.asAndroid().autofillId, null)
                     }
                 }

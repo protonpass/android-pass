@@ -18,12 +18,17 @@ import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.pass.autofill.BROWSERS
 import me.proton.pass.autofill.extensions.toAutoFillItem
 import me.proton.pass.autofill.extensions.toUiModel
 import me.proton.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
+import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.map
-import me.proton.pass.data.usecases.AddPackageNameToItem
+import me.proton.pass.data.usecases.UpdateAutofillItem
+import me.proton.pass.data.usecases.UpdateAutofillItemData
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.entity.PackageName
@@ -38,7 +43,7 @@ import javax.inject.Inject
 class SelectItemViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val accountManager: AccountManager,
-    private val addPackageNameToItem: AddPackageNameToItem,
+    private val updateAutofillItem: UpdateAutofillItem,
     private val refreshContent: RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val searchItems: SearchItems
@@ -54,6 +59,8 @@ class SelectItemViewModel @Inject constructor(
                 list.filter { it.itemType is ItemType.Login }.map { it.toUiModel(cryptoContext) }
             }
         }
+
+    private val webDomainFilterState: MutableStateFlow<Option<String>> = MutableStateFlow(None)
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -115,7 +122,17 @@ class SelectItemViewModel @Inject constructor(
         )
 
     fun onItemClicked(item: ItemUiModel, packageName: PackageName) {
-        addPackageNameToItem(item.shareId, item.id, packageName)
+        if (shouldUpdateItem(packageName)) {
+            updateAutofillItem(
+                shareId = item.shareId,
+                itemId = item.id,
+                data = UpdateAutofillItemData(
+                    packageName = Some(packageName),
+                    url = webDomainFilterState.value
+                )
+            )
+        }
+
         itemClickedFlow.update {
             ItemClickedEvent.Clicked(item.toAutoFillItem(cryptoContext.keyStoreCrypto))
         }
@@ -148,6 +165,14 @@ class SelectItemViewModel @Inject constructor(
         searchQueryState.update { "" }
         isInSearchModeState.update { true }
     }
+
+    fun setWebDomain(domain: Option<String>) {
+        webDomainFilterState.update { domain }
+    }
+
+    private fun shouldUpdateItem(packageName: PackageName): Boolean =
+        webDomainFilterState.value is Some || !BROWSERS.contains(packageName.packageName)
+
 
     companion object {
         private const val TAG = "SelectItemViewModel"

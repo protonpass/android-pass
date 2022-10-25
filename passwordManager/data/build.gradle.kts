@@ -99,6 +99,7 @@ dependencies {
     testImplementation(libs.kotlinTest)
     testImplementation(libs.junit)
     testImplementation(libs.core.test.kotlin)
+    testImplementation(project(":passwordManager:test"))
 
     androidTestImplementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(project(":passwordManager:test"))

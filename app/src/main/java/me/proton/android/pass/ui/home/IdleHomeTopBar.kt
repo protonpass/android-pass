@@ -61,10 +61,12 @@ fun IdleHomeTopBar(
 @Preview
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun Preview_IdleHomeTopBar() {
-    IdleHomeTopBar(
-        startSearchMode = {},
-        onDrawerIconClick = {},
-        onAddItemClick = {}
-    )
+fun IdleHomeTopBarPreview() {
+    ProtonTheme {
+        IdleHomeTopBar(
+            startSearchMode = {},
+            onDrawerIconClick = {},
+            onAddItemClick = {}
+        )
+    }
 }

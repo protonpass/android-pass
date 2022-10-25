@@ -28,7 +28,7 @@ fun ProtonTextTitle(
 
 @Preview(showBackground = true, widthDp = 200, heightDp = 40)
 @Composable
-fun Preview_ProtonTextTitle() {
+fun ProtonTextTitlePreview() {
     ProtonTheme {
         ProtonTextTitle(title = me.proton.pass.presentation.R.string.field_title_title)
     }

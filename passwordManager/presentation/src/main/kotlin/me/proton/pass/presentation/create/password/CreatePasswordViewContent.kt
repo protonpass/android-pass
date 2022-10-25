@@ -97,7 +97,7 @@ internal fun CreatePasswordViewContent(
 
 @Preview(showBackground = true)
 @Composable
-fun Preview_CreatePasswordViewContent(
+fun CreatePasswordViewContentPreview(
     @PreviewParameter(CreatePasswordStatePreviewProvider::class) state: CreatePasswordUiState
 ) {
     ProtonTheme {

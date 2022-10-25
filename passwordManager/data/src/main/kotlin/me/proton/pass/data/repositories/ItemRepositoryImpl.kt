@@ -16,7 +16,13 @@ import me.proton.core.key.domain.extension.publicKeyRing
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
 import me.proton.core.network.domain.ApiException
+import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.extension.primary
+import me.proton.core.user.domain.repository.UserAddressRepository
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
+import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.asResult
 import me.proton.pass.common.api.map
 import me.proton.pass.data.crypto.CreateItem
@@ -26,9 +32,11 @@ import me.proton.pass.data.crypto.UpdateItem
 import me.proton.pass.data.db.PassDatabase
 import me.proton.pass.data.db.entities.ItemEntity
 import me.proton.pass.data.extensions.hasPackageName
+import me.proton.pass.data.extensions.hasWebsite
 import me.proton.pass.data.extensions.itemType
 import me.proton.pass.data.extensions.serializeToProto
 import me.proton.pass.data.extensions.with
+import me.proton.pass.data.extensions.withUrl
 import me.proton.pass.data.local.LocalItemDataSource
 import me.proton.pass.data.remote.RemoteItemDataSource
 import me.proton.pass.data.requests.CreateAliasRequest
@@ -39,6 +47,7 @@ import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemContents
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemState
+import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.KeyPacket
 import me.proton.pass.domain.Share
 import me.proton.pass.domain.ShareId
@@ -51,9 +60,6 @@ import me.proton.pass.domain.repositories.ItemRepository
 import me.proton.pass.domain.repositories.KeyPacketRepository
 import me.proton.pass.domain.repositories.ShareRepository
 import me.proton.pass.domain.repositories.VaultKeyRepository
-import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.extension.primary
-import me.proton.core.user.domain.repository.UserAddressRepository
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
@@ -295,10 +301,11 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     @Suppress("ReturnCount")
-    override suspend fun addPackageToItem(
+    override suspend fun addPackageAndUrlToItem(
         shareId: ShareId,
         itemId: ItemId,
-        packageName: PackageName
+        packageName: Option<PackageName>,
+        url: Option<String>
     ): Result<Item> {
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
         val item = entityToDomain(itemEntity)
@@ -306,14 +313,55 @@ class ItemRepositoryImpl @Inject constructor(
         val itemContents = item.content.decrypt(cryptoContext.keyStoreCrypto)
         val newItemContents = ItemV1.Item.parseFrom(itemContents.array)
 
-        if (newItemContents.hasPackageName(packageName)) {
-            PassLogger.i(
-                "ItemRepositoryImpl",
-                "Item already has this package name [shareId=$shareId] [itemId=$itemId] [packageName=$packageName]"
-            )
+        var needsToUpdate = false
+
+        val itemContentsWithPackageName = when (packageName) {
+            None -> newItemContents
+            is Some -> {
+                if (newItemContents.hasPackageName(packageName.value)) {
+                    PassLogger.i(
+                        TAG,
+                        "Item already has this package name [shareId=$shareId] [itemId=$itemId] [packageName=$packageName]"
+                    )
+                    newItemContents
+                } else {
+                    needsToUpdate = true
+                    newItemContents.with(packageName.value)
+                }
+            }
+        }
+
+        val updatedContents = when (url) {
+            None -> itemContentsWithPackageName
+            is Some -> when (val loginItem = item.itemType) {
+                is ItemType.Login -> {
+                    if (loginItem.hasWebsite(url.value)) {
+                        // Item already has the URL, not doing anything
+                        PassLogger.i(
+                            TAG,
+                            "Item already has the URL in the websites list, not performing any update"
+                        )
+                        itemContentsWithPackageName
+                    } else {
+                        // Item does not have the URL, adding it
+                        needsToUpdate = true
+                        itemContentsWithPackageName.withUrl(url.value)
+                    }
+                }
+                else -> {
+                    PassLogger.i(
+                        TAG,
+                        "Not performing any update, as we can only add urls to ItemType.Login"
+                    )
+                    return Result.Success(item)
+                }
+            }
+        }
+
+        if (!needsToUpdate) {
+            PassLogger.i(TAG, "Did not need to perform any update")
             return Result.Success(item)
         }
-        val updatedContents = newItemContents.with(packageName)
 
         val userId = accountManager.getPrimaryUserId().first()
             ?: throw CryptoException("UserId cannot be null")
@@ -533,5 +581,6 @@ class ItemRepositoryImpl @Inject constructor(
 
     companion object {
         const val MAX_TRASH_ITEMS_PER_REQUEST = 50
+        const val TAG = "ItemRepositoryImpl"
     }
 }

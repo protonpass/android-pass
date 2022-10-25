@@ -9,22 +9,19 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.autofill.entities.AndroidAutofillFieldId
+import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillResponse
-import me.proton.pass.autofill.entities.FieldType
 import me.proton.pass.autofill.ui.auth.AUTH_SCREEN_ROUTE
 import me.proton.pass.autofill.ui.auth.AuthScreen
 import me.proton.pass.autofill.ui.autofill.select.SELECT_ITEM_ROUTE
+import me.proton.pass.autofill.ui.autofill.select.SelectItemInitialState
 import me.proton.pass.autofill.ui.autofill.select.SelectItemScreen
-import me.proton.pass.domain.entity.PackageName
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AutofillApp(
     modifier: Modifier = Modifier,
-    androidAutofillFieldIds: List<AndroidAutofillFieldId>,
-    autofillTypes: List<FieldType>,
-    packageName: PackageName,
+    state: AutofillAppState,
     onAutofillResponse: (AutofillResponse?) -> Unit
 ) {
     val navController = rememberAnimatedNavController()
@@ -45,12 +42,15 @@ fun AutofillApp(
             }
             composable(SELECT_ITEM_ROUTE) {
                 SelectItemScreen(
-                    packageName = packageName,
+                    initialState = SelectItemInitialState(
+                        packageName = state.packageName,
+                        webDomain = state.webDomain
+                    ),
                     onItemSelected = {
                         val response = ItemFieldMapper.mapFields(
                             item = it,
-                            androidAutofillFieldIds = androidAutofillFieldIds,
-                            autofillTypes = autofillTypes
+                            androidAutofillFieldIds = state.androidAutofillIds,
+                            autofillTypes = state.fieldTypes
                         )
                         onAutofillResponse(response)
                     }

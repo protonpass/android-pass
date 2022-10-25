@@ -8,7 +8,11 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.android.pass.log.PassLogger
+import me.proton.pass.common.api.Option
+import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.flatMap
+import me.proton.pass.common.api.toOption
+import me.proton.pass.data.usecases.UpdateAutofillItemData
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
@@ -55,10 +59,11 @@ class AddPackageNameToItemWorker @AssistedInject constructor(
             TAG,
             "Adding package to item [itemId=${inputData.itemId}] [packageName=${inputData.packageName}]"
         )
-        return itemRepository.addPackageToItem(
+        return itemRepository.addPackageAndUrlToItem(
             inputData.shareId,
             inputData.itemId,
-            inputData.packageName
+            inputData.packageName,
+            inputData.url
         )
     }
 
@@ -69,15 +74,21 @@ class AddPackageNameToItemWorker @AssistedInject constructor(
         val itemId = inputData.getString(ARG_ITEM_ID) ?: return KResult.Error(
             IllegalStateException("Missing $ARG_ITEM_ID")
         )
-        val packageName = inputData.getString(ARG_PACKAGE_NAME) ?: return KResult.Error(
-            IllegalStateException("Missing $ARG_PACKAGE_NAME")
-        )
+        val packageName = inputData.getString(ARG_PACKAGE_NAME).toOption().map { PackageName(it) }
+        val url = inputData.getString(ARG_URL).toOption()
+
+        if (url.isEmpty() && packageName.isEmpty()) {
+            return KResult.Error(
+                IllegalStateException("Did not receive neither package name nor url")
+            )
+        }
 
         return KResult.Success(
             InputData(
                 shareId = ShareId(shareId),
                 itemId = ItemId(itemId),
-                packageName = PackageName(packageName)
+                packageName = packageName,
+                url
             )
         )
     }
@@ -85,7 +96,8 @@ class AddPackageNameToItemWorker @AssistedInject constructor(
     internal data class InputData(
         val shareId: ShareId,
         val itemId: ItemId,
-        val packageName: PackageName
+        val packageName: Option<PackageName>,
+        val url: Option<String>
     )
 
     companion object {
@@ -95,16 +107,25 @@ class AddPackageNameToItemWorker @AssistedInject constructor(
         private const val ARG_SHARE_ID = "arg_share_id"
         private const val ARG_ITEM_ID = "arg_item_id"
         private const val ARG_PACKAGE_NAME = "arg_package_name"
+        private const val ARG_URL = "arg_url"
 
-        fun create(shareId: ShareId, itemId: ItemId, packageName: PackageName): Data =
-            Data.Builder()
-                .putAll(
-                    mapOf(
-                        ARG_SHARE_ID to shareId.id,
-                        ARG_ITEM_ID to itemId.id,
-                        ARG_PACKAGE_NAME to packageName.packageName
-                    )
-                )
+        fun create(shareId: ShareId, itemId: ItemId, data: UpdateAutofillItemData): Data {
+            val extras = mutableMapOf(
+                ARG_SHARE_ID to shareId.id,
+                ARG_ITEM_ID to itemId.id
+            )
+
+            if (data.packageName is Some) {
+                extras.put(ARG_PACKAGE_NAME, data.packageName.value.packageName)
+            }
+
+            if (data.url is Some) {
+                extras.put(ARG_URL, data.url.value)
+            }
+
+            return Data.Builder()
+                .putAll(extras.toMap())
                 .build()
+        }
     }
 }

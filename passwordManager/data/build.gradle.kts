@@ -10,6 +10,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
+    id("com.google.devtools.ksp")
     kotlin("plugin.serialization")
     id("com.google.protobuf")
     id("dagger.hilt.android.plugin")
@@ -83,7 +84,7 @@ dependencies {
     implementation(libs.core.user)
     implementation(libs.core.utilKotlin)
     implementation(libs.retrofit)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.google.protobuf.lite)
 
     implementation(libs.dagger.hilt.android)

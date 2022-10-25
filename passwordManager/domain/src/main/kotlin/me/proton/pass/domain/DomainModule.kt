@@ -1,4 +1,4 @@
-package me.proton.pass.di.dagger
+package me.proton.pass.domain
 
 import dagger.Binds
 import dagger.Module

@@ -67,7 +67,7 @@ fun BottomSheetTitle(
 
 @Preview(showBackground = true)
 @Composable
-fun Preview_BottomSheetTitle(
+fun BottomSheetTitlePreview(
     @PreviewParameter(BottomSheetTitlePreviewProvider::class) button: BottomSheetTitleButton?
 ) {
     ProtonTheme {

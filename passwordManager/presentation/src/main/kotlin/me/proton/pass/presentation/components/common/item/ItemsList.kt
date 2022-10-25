@@ -37,8 +37,8 @@ import com.google.accompanist.swiperefresh.SwipeRefreshState
 import me.proton.android.pass.ui.shared.DropDownAction
 import me.proton.android.pass.ui.shared.ItemDropdownMenu
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.presentation.R
 import me.proton.pass.domain.ItemType
+import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.PassSwipeRefresh
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.components.previewproviders.ItemUiModelPreviewProvider
@@ -272,7 +272,7 @@ private fun ItemRowActions(
 
 @Preview(showBackground = true)
 @Composable
-fun Preview_ItemRow(@PreviewParameter(ItemUiModelPreviewProvider::class) item: ItemUiModel) {
+fun ItemRowPreview(@PreviewParameter(ItemUiModelPreviewProvider::class) item: ItemUiModel) {
     ProtonTheme {
         ItemRow(item = item)
     }

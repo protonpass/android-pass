@@ -43,7 +43,7 @@ fun GeneratePasswordBottomSheetContent(
 @Preview(showBackground = true)
 @Composable
 @Suppress("FunctionMaxLength")
-fun Preview_GeneratePasswordBottomSheetContent(
+fun GeneratePasswordBottomSheetContentPreview(
     @PreviewParameter(CreatePasswordStatePreviewProvider::class) state: CreatePasswordUiState
 ) {
     ProtonTheme {

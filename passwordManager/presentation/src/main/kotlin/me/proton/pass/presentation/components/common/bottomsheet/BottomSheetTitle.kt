@@ -3,9 +3,11 @@ package me.proton.pass.presentation.components.common.bottomsheet
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,7 +35,8 @@ fun BottomSheetTitle(
     button: BottomSheetTitleButton? = null
 ) {
     Row(
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+        modifier = modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+            .height(40.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
@@ -65,15 +68,17 @@ fun BottomSheetTitle(
     Divider(modifier = Modifier.fillMaxWidth())
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun BottomSheetTitlePreview(
     @PreviewParameter(BottomSheetTitlePreviewProvider::class) button: BottomSheetTitleButton?
 ) {
     ProtonTheme {
-        BottomSheetTitle(
-            title = R.string.button_generate_password,
-            button = button
-        )
+        Surface {
+            BottomSheetTitle(
+                title = R.string.button_generate_password,
+                button = button
+            )
+        }
     }
 }

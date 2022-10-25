@@ -2,6 +2,7 @@ package me.proton.pass.autofill.ui.autofill.select
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -39,7 +40,11 @@ fun IdleSelectItemTopBar(
 @Preview
 @Composable
 fun IdleSelectItemTopBarPreview() {
-    IdleSelectItemTopBar(
-        startSearchMode = {}
-    )
+    ProtonTheme {
+        Surface {
+            IdleSelectItemTopBar(
+                startSearchMode = {}
+            )
+        }
+    }
 }

@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.coroutines.core)
     implementation(project(":passwordManager:common:api"))
+    implementation(project(":passwordManager:common-ui:api"))
     implementation(project(":passwordManager:data"))
     implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:notifications:api"))

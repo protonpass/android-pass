@@ -20,8 +20,7 @@ import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.commonui.api.PairPreviewProvider
-import me.proton.pass.commonui.api.ThemePreviewProvider
+import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.previewproviders.CreatePasswordStatePreviewProvider
 
@@ -71,9 +70,7 @@ fun CreatePasswordContent(
 }
 
 class ThemeAndCreatePasswordUiStateProvider :
-    PairPreviewProvider<Boolean, CreatePasswordUiState>(
-        ThemePreviewProvider() to CreatePasswordStatePreviewProvider()
-    )
+    ThemePairPreviewProvider<CreatePasswordUiState>(CreatePasswordStatePreviewProvider())
 
 
 @Preview

@@ -96,6 +96,7 @@ dependencies {
     add("kspDev", libs.showkaseProcessor)
 
     implementation(project(":passwordManager:common:api"))
+    implementation(project(":passwordManager:common-ui:api"))
     implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:log"))
     implementation(project(":passwordManager:notifications:api"))

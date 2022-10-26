@@ -13,7 +13,7 @@ import me.proton.pass.autofill.entities.FieldType
 import me.proton.pass.autofill.entities.InputTypeValue
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
-import me.proton.pass.common.api.toOption
+import me.proton.pass.common.api.Some
 
 class AssistNodeTraversal {
 
@@ -39,7 +39,7 @@ class AssistNodeTraversal {
 
     private fun traverseInternal(node: AutofillNode) {
         if (detectedUrl is None) {
-            detectedUrl = node.webDomain
+            detectedUrl = node.url
         }
         if (nodeSupportsAutoFill(node)) {
             val assistField = AssistField(
@@ -152,18 +152,31 @@ class AssistNodeTraversal {
     }
 }
 
-fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode = AutofillNode(
-    id = autofillId?.let(::AndroidAutofillFieldId),
-    className = className,
-    isImportantForAutofill = isImportantForAutofill(this),
-    text = text?.toString(),
-    autofillValue = autofillValue,
-    inputType = InputTypeValue(inputType),
-    autofillHints = autofillHints?.toList().orEmpty(),
-    htmlAttributes = htmlInfo?.attributes?.toList()?.map { it.first to it.second }.orEmpty(),
-    children = (0 until childCount).map { getChildAt(it).toAutofillNode() },
-    webDomain = webDomain.toOption()
-)
+fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode {
+    return AutofillNode(
+        id = autofillId?.let(::AndroidAutofillFieldId),
+        className = className,
+        isImportantForAutofill = isImportantForAutofill(this),
+        text = text?.toString(),
+        autofillValue = autofillValue,
+        inputType = InputTypeValue(inputType),
+        autofillHints = autofillHints?.toList().orEmpty(),
+        htmlAttributes = htmlInfo?.attributes?.toList()?.map { it.first to it.second }.orEmpty(),
+        children = (0 until childCount).map { getChildAt(it).toAutofillNode() },
+        url = getUrl()
+    )
+}
+
+private fun AssistStructure.ViewNode.getUrl(): Option<String> {
+    if (webDomain == null) return None
+    val scheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        webScheme ?: "https"
+    } else {
+        "https"
+    }
+
+    return Some("$scheme://$webDomain")
+}
 
 private fun isImportantForAutofill(node: AssistStructure.ViewNode): Boolean =
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {

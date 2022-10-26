@@ -8,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.previewproviders.NoteInputPreviewProvider
 
@@ -22,6 +23,16 @@ fun NoteInput(value: String, onChange: (String) -> Unit) {
         singleLine = false,
         moveToNextOnEnter = false
     )
+}
+
+@Preview
+@Composable
+fun NoteInputThemePreview(@PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean) {
+    ProtonTheme(isDark = isDarkMode) {
+        Surface {
+            NoteInput("Note input") {}
+        }
+    }
 }
 
 @Preview

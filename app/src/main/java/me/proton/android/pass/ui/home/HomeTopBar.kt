@@ -6,8 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.android.pass.R
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.components.SearchTopBar
 
 @ExperimentalComposeUiApi
@@ -46,8 +48,10 @@ internal fun HomeTopBar(
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun HomeTopBarIdlePreview() {
-    ProtonTheme {
+fun HomeTopBarIdlePreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
+) {
+    ProtonTheme(isDark = isDarkMode) {
         Surface {
             HomeTopBar(
                 searchQuery = "",
@@ -65,8 +69,10 @@ fun HomeTopBarIdlePreview() {
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun HomeTopBarSearchPreview() {
-    ProtonTheme {
+fun HomeTopBarSearchPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
+) {
+    ProtonTheme(isDark = isDarkMode) {
         Surface {
             HomeTopBar(
                 searchQuery = "some search",

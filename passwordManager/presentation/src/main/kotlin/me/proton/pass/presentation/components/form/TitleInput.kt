@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.commonui.api.PairPreviewProvider
+import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.previewproviders.TitleInputPreviewData
@@ -49,9 +49,8 @@ fun TitleInputThemePreview(
     }
 }
 
-class ThemeAndTitleInputProvider : PairPreviewProvider<Boolean, TitleInputPreviewData>(
-    ThemePreviewProvider() to TitleInputPreviewProvider()
-)
+class ThemeAndTitleInputProvider :
+    ThemePairPreviewProvider<TitleInputPreviewData>(TitleInputPreviewProvider())
 
 @Preview
 @Composable

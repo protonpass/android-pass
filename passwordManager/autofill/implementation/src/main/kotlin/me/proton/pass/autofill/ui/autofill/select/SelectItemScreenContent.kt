@@ -10,8 +10,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.autofill.service.R
-import me.proton.pass.commonui.api.PairPreviewProvider
-import me.proton.pass.commonui.api.ThemePreviewProvider
+import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.components.common.item.ItemsList
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -54,9 +53,8 @@ internal fun SelectItemScreenContent(
     }
 }
 
-class ThemeAndSelectItemUiStateProvider : PairPreviewProvider<Boolean, SelectItemUiState>(
-    ThemePreviewProvider() to SelectItemUiStatePreviewProvider()
-)
+class ThemeAndSelectItemUiStateProvider :
+    ThemePairPreviewProvider<SelectItemUiState>(SelectItemUiStatePreviewProvider())
 
 @Preview
 @Composable

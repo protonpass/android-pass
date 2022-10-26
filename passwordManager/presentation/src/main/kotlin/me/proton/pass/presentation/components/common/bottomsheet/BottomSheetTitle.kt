@@ -19,8 +19,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.commonui.api.PairPreviewProvider
-import me.proton.pass.commonui.api.ThemePreviewProvider
+import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.previewproviders.BottomSheetTitlePreviewProvider
 
@@ -71,9 +70,8 @@ fun BottomSheetTitle(
     Divider(modifier = Modifier.fillMaxWidth())
 }
 
-class ThemeAndBottomSheetProvider : PairPreviewProvider<Boolean, BottomSheetTitleButton?>(
-    ThemePreviewProvider() to BottomSheetTitlePreviewProvider()
-)
+class ThemeAndBottomSheetProvider :
+    ThemePairPreviewProvider<BottomSheetTitleButton?>(BottomSheetTitlePreviewProvider())
 
 @Preview
 @Composable

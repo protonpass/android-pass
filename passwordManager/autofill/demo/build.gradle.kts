@@ -80,6 +80,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.core.presentation.compose)
 
+    implementation(project(":passwordManager:common-ui:api"))
+
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)

@@ -262,6 +262,7 @@ dependencies {
 
     implementation(project(":passwordManager:autofill:implementation"))
     implementation(project(":passwordManager:common:api"))
+    implementation(project(":passwordManager:common-ui:api"))
     implementation(project(":passwordManager:data"))
     implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:notifications:api"))

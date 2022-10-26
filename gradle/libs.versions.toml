@@ -26,14 +26,14 @@ androidx-work = "2.7.1"
 # CashApp
 turbine = "0.12.0"
 # Core
-core = "9.1.2"
+core = "9.2.0"
 # Dagger
 dagger = "2.44"
 # Google
 protoc = "3.0.0"
 protobuf-lite = "3.0.0"
 # Gradle
-gradlePlugin-android = "7.2.2"
+gradlePlugin-android = "7.3.1"
 gradlePlugin-dependency-analysis = "1.13.1"
 gradlePlugin-doctor = "0.8.1"
 gradlePlugin-paparazzi = "1.1.0"

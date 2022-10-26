@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitleButton
@@ -38,6 +39,29 @@ fun GeneratePasswordBottomSheetContent(
             onRegenerateClick = onRegenerateClick,
             onSpecialCharactersChange = onHasSpecialCharactersChange
         )
+    }
+}
+
+@Preview
+@Composable
+@Suppress("FunctionMaxLength")
+fun GeneratePasswordBottomSheetContentThemePreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    ProtonTheme(isDark = isDark) {
+        Surface {
+            GeneratePasswordBottomSheetContent(
+                state = CreatePasswordUiState(
+                    password = "a1b!c_d3e#fg",
+                    length = 12,
+                    hasSpecialCharacters = true
+                ),
+                onLengthChange = {},
+                onRegenerateClick = {},
+                onHasSpecialCharactersChange = {},
+                onConfirm = {}
+            )
+        }
     }
 }
 

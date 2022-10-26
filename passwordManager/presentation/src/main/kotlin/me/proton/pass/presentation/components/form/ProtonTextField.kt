@@ -26,6 +26,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.commonui.api.PairPreviewProvider
+import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.components.previewproviders.ProtonTextFieldPreviewData
 import me.proton.pass.presentation.components.previewproviders.ProtonTextFieldPreviewProvider
 
@@ -108,21 +110,25 @@ fun ProtonTextFieldPlaceHolder(
     )
 }
 
+class ThemeAndProtonTextFieldProvider :
+    PairPreviewProvider<Boolean, ProtonTextFieldPreviewData>(
+        ThemePreviewProvider() to ProtonTextFieldPreviewProvider()
+    )
 
 @Preview
 @Composable
 fun ProtonTextFieldPreview(
-    @PreviewParameter(ProtonTextFieldPreviewProvider::class)
-    data: ProtonTextFieldPreviewData
+    @PreviewParameter(ThemeAndProtonTextFieldProvider::class)
+    input: Pair<Boolean, ProtonTextFieldPreviewData>
 ) {
-    ProtonTheme {
+    ProtonTheme(isDark = input.first) {
         Surface {
             ProtonTextField(
-                value = data.value,
-                placeholder = data.placeholder,
-                editable = data.isEditable,
-                isError = data.isError,
-                trailingIcon = data.icon,
+                value = input.second.value,
+                placeholder = input.second.placeholder,
+                editable = input.second.isEditable,
+                isError = input.second.isError,
+                trailingIcon = input.second.icon,
                 onChange = {}
             )
         }

@@ -22,8 +22,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.form.ProtonTextField
 import me.proton.pass.presentation.components.form.ProtonTextTitle
@@ -93,8 +95,10 @@ internal fun PasswordInput(
 
 @Preview(widthDp = 400)
 @Composable
-fun PasswordInputPreview() {
-    ProtonTheme {
+fun PasswordInputPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
+) {
+    ProtonTheme(isDark = isDarkMode) {
         Surface {
             PasswordInput(
                 value = "someValue",

@@ -14,12 +14,14 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ArrowBackIcon
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.components.form.ProtonTextFieldPlaceHolder
 
 @ExperimentalComposeUiApi
@@ -62,8 +64,10 @@ fun SearchHomeTopBar(
 @Preview
 @ExperimentalComposeUiApi
 @Composable
-fun SearchHomeTopBarPreview() {
-    ProtonTheme {
+fun SearchHomeTopBarPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
+) {
+    ProtonTheme(isDark = isDarkMode) {
         Surface {
             SearchHomeTopBar(
                 searchQuery = "some search",

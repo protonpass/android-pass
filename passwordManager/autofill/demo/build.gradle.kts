@@ -43,14 +43,12 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 
     buildFeatures {
         compose = true
-        viewBinding {
-            isEnabled = true
-        }
+        viewBinding = true
     }
 
     composeOptions {

@@ -311,22 +311,59 @@ class ItemRepositoryImpl @Inject constructor(
         val item = entityToDomain(itemEntity)
 
         val itemContents = item.content.decrypt(cryptoContext.keyStoreCrypto)
-        val newItemContents = ItemV1.Item.parseFrom(itemContents.array)
+        val itemProto = ItemV1.Item.parseFrom(itemContents.array)
 
+        val (needsToUpdate, updatedContents) = updateItemContents(
+            item,
+            itemProto,
+            packageName,
+            url
+        )
+
+        if (!needsToUpdate) {
+            PassLogger.i(TAG, "Did not need to perform any update")
+            return Result.Success(item)
+        }
+
+        val userId = accountManager.getPrimaryUserId().first()
+            ?: throw CryptoException("UserId cannot be null")
+        val shareResult = shareRepository.getById(userId, shareId)
+        when (shareResult) {
+            is Result.Error -> return Result.Error(shareResult.exception)
+            Result.Loading -> return Result.Loading
+            is Result.Success -> Unit
+        }
+        val share = shareResult.data ?: throw CryptoException("Share cannot be null")
+
+        return performUpdate(userId, share, item, updatedContents)
+    }
+
+    override suspend fun refreshItems(userId: UserId, share: Share): Result<List<Item>> {
+        val address = requireNotNull(userAddressRepository.getAddresses(userId).primary())
+        return fetchItemsForShare(address, share)
+    }
+
+    private fun updateItemContents(
+        item: Item,
+        itemProto: ItemV1.Item,
+        packageName: Option<PackageName>,
+        url: Option<String>
+    ): Pair<Boolean, ItemV1.Item> {
         var needsToUpdate = false
 
         val itemContentsWithPackageName = when (packageName) {
-            None -> newItemContents
+            None -> itemProto
             is Some -> {
-                if (newItemContents.hasPackageName(packageName.value)) {
+                if (itemProto.hasPackageName(packageName.value)) {
                     PassLogger.i(
                         TAG,
-                        "Item already has this package name [shareId=$shareId] [itemId=$itemId] [packageName=$packageName]"
+                        "Item already has this package name " +
+                            "[shareId=${item.shareId}] [itemId=${item.id}] [packageName=$packageName]"
                     )
-                    newItemContents
+                    itemProto
                 } else {
                     needsToUpdate = true
-                    newItemContents.with(packageName.value)
+                    itemProto.with(packageName.value)
                 }
             }
         }
@@ -353,32 +390,12 @@ class ItemRepositoryImpl @Inject constructor(
                         TAG,
                         "Not performing any update, as we can only add urls to ItemType.Login"
                     )
-                    return Result.Success(item)
+                    itemContentsWithPackageName
                 }
             }
         }
 
-        if (!needsToUpdate) {
-            PassLogger.i(TAG, "Did not need to perform any update")
-            return Result.Success(item)
-        }
-
-        val userId = accountManager.getPrimaryUserId().first()
-            ?: throw CryptoException("UserId cannot be null")
-        val shareResult = shareRepository.getById(userId, shareId)
-        when (shareResult) {
-            is Result.Error -> return Result.Error(shareResult.exception)
-            Result.Loading -> return Result.Loading
-            is Result.Success -> Unit
-        }
-        val share = shareResult.data ?: throw CryptoException("Share cannot be null")
-
-        return performUpdate(userId, share, item, updatedContents)
-    }
-
-    override suspend fun refreshItems(userId: UserId, share: Share): Result<List<Item>> {
-        val address = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-        return fetchItemsForShare(address, share)
+        return needsToUpdate to updatedContents
     }
 
     private suspend fun performUpdate(

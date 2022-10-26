@@ -67,7 +67,7 @@ android {
 }
 
 dependencies {
-    compileOnly(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
+    compileOnly(files("../../../proton-libs/gopenpgp/gopenpgp.aar"))
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.work.runtime.ktx)
@@ -101,7 +101,7 @@ dependencies {
     testImplementation(libs.core.test.kotlin)
     testImplementation(project(":passwordManager:test"))
 
-    androidTestImplementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
+    androidTestImplementation(files("../../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(project(":passwordManager:test"))
 
     androidTestImplementation(libs.androidx.compose.ui.test)

@@ -125,7 +125,7 @@ private fun BottomSheetItem(
     }
 }
 
-@Preview(widthDp = 400)
+@Preview
 @Composable
 fun BottomSheetTitlePreview() {
     ProtonTheme {

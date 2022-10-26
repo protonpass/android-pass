@@ -33,11 +33,13 @@ import androidx.compose.ui.platform.LocalAutofillTree
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.headline
 import me.proton.core.compose.theme.subheadline
 import me.proton.pass.autofill.sample.LoginResultActivity
+import me.proton.pass.commonui.api.ThemePreviewProvider
 
 class SimpleComposeLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -150,8 +152,10 @@ private fun Autofill(
 
 @Preview
 @Composable
-private fun ExplicitAutofillTypeDemoPreview() {
-    ProtonTheme {
+fun ExplicitAutofillTypeDemoPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
+) {
+    ProtonTheme(isDark = isDarkMode) {
         Surface {
             ExplicitAutofillTypesDemo(onLoginClicked = {})
         }

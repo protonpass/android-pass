@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.previewproviders.CreatePasswordStatePreviewProvider
 
@@ -95,6 +96,28 @@ internal fun CreatePasswordViewContent(
         }
     }
 }
+
+@Preview
+@Composable
+fun CreatePasswordViewContentThemePreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
+) {
+    ProtonTheme(isDark = isDarkMode) {
+        Surface {
+            CreatePasswordViewContent(
+                state = CreatePasswordUiState(
+                    password = "a1b!c_d3e#fg",
+                    length = 12,
+                    hasSpecialCharacters = true
+                ),
+                onSpecialCharactersChange = {},
+                onLengthChange = {},
+                onRegenerateClick = {}
+            )
+        }
+    }
+}
+
 
 @Preview
 @Composable

@@ -26,9 +26,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionHint
+import me.proton.pass.commonui.api.ThemePreviewProvider
 
 @Composable
 fun NavigationDrawerAppVersion(
@@ -50,8 +52,10 @@ fun NavigationDrawerAppVersion(
 
 @Preview
 @Composable
-fun NavigationDrawerAppVersionPreview() {
-    ProtonTheme {
+fun NavigationDrawerAppVersionPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
+) {
+    ProtonTheme(isDark = isDarkMode) {
         Surface {
             NavigationDrawerAppVersion(name = "Name", version = "1.0.0")
         }

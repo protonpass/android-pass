@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.commonui.api.PairPreviewProvider
+import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.previewproviders.BottomSheetTitlePreviewProvider
 
@@ -35,7 +37,8 @@ fun BottomSheetTitle(
     button: BottomSheetTitleButton? = null
 ) {
     Row(
-        modifier = modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+        modifier = modifier
+            .padding(horizontal = 16.dp, vertical = 12.dp)
             .height(40.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -68,16 +71,21 @@ fun BottomSheetTitle(
     Divider(modifier = Modifier.fillMaxWidth())
 }
 
+class ThemeAndBottomSheetProvider : PairPreviewProvider<Boolean, BottomSheetTitleButton?>(
+    ThemePreviewProvider() to BottomSheetTitlePreviewProvider()
+)
+
 @Preview
 @Composable
 fun BottomSheetTitlePreview(
-    @PreviewParameter(BottomSheetTitlePreviewProvider::class) button: BottomSheetTitleButton?
+    @PreviewParameter(ThemeAndBottomSheetProvider::class)
+    input: Pair<Boolean, BottomSheetTitleButton?>
 ) {
-    ProtonTheme {
+    ProtonTheme(isDark = input.first) {
         Surface {
             BottomSheetTitle(
                 title = R.string.button_generate_password,
-                button = button
+                button = input.second
             )
         }
     }

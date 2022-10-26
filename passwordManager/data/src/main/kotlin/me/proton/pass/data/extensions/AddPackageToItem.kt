@@ -38,6 +38,8 @@ fun ItemV1.Item.withUrl(url: String): ItemV1.Item {
                     content.login.toBuilder()
                         .addUrls(url)
                         .build()
-                ).build()
-        ).build()
+                )
+                .build()
+        )
+        .build()
 }

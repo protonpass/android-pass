@@ -16,8 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.caption
-import me.proton.pass.commonui.api.PairPreviewProvider
-import me.proton.pass.commonui.api.ThemePreviewProvider
+import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.previewproviders.ProtonFormInputPreviewData
 import me.proton.pass.presentation.components.previewproviders.ProtonFormInputPreviewProvider
@@ -75,9 +74,7 @@ fun ProtonFormInput(
 }
 
 class ThemeAndProtonFormInputProvider :
-    PairPreviewProvider<Boolean, ProtonFormInputPreviewData>(
-        ThemePreviewProvider() to ProtonFormInputPreviewProvider()
-    )
+    ThemePairPreviewProvider<ProtonFormInputPreviewData>(ProtonFormInputPreviewProvider())
 
 @Preview
 @Composable

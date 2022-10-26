@@ -19,7 +19,7 @@ fun SelectItemScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(initialState.webDomain) {
         viewModel.setWebDomain(initialState.webDomain)
     }
 

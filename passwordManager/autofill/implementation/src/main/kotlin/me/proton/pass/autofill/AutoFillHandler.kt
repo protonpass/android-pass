@@ -126,36 +126,14 @@ object AutoFillHandler {
         }
         val inlinePresentation: Option<InlinePresentation> =
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                request.inlineSuggestionsRequest
-                    ?.inlinePresentationSpecs
-                    .orEmpty()
-                    .firstNotNullOfOrNull { buildInlinePresentation(context, it, pendingIntent) }
-                    .toOption()
+                buildInlineSuggestion(context, request, pendingIntent).toOption()
             } else {
                 None
             }
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val presentationsBuilder = Presentations.Builder()
-            presentationsBuilder.setMenuPresentation(authenticateView)
-            if (inlinePresentation is Some) {
-                presentationsBuilder.setInlinePresentation(inlinePresentation.value)
-            }
-            val datasetBuilder = Dataset.Builder(presentationsBuilder.build())
-            datasetBuilder.setAuthentication(pendingIntent.intentSender)
-            for (value in assistInfo.fields) {
-                datasetBuilder.setField(value.id.asAndroid().autofillId, null)
-            }
-            datasetBuilder.build()
+            buildDatasetGTE33(authenticateView, inlinePresentation, pendingIntent, assistInfo)
         } else {
-            val datasetBuilder = Dataset.Builder(authenticateView)
-            if (inlinePresentation is Some && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                datasetBuilder.setInlinePresentation(inlinePresentation.value)
-            }
-            datasetBuilder.setAuthentication(pendingIntent.intentSender)
-            for (value in assistInfo.fields) {
-                datasetBuilder.setValue(value.id.asAndroid().autofillId, null)
-            }
-            datasetBuilder.build()
+            buildDatasetLT33(authenticateView, inlinePresentation, pendingIntent, assistInfo)
         }
     }
 
@@ -179,5 +157,52 @@ object AutoFillHandler {
             inlinePresentationSpec,
             false
         )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun buildInlineSuggestion(
+        context: Context,
+        request: FillRequest,
+        pendingIntent: PendingIntent
+    ): InlinePresentation? = request.inlineSuggestionsRequest
+        ?.inlinePresentationSpecs
+        .orEmpty()
+        .firstNotNullOfOrNull { buildInlinePresentation(context, it, pendingIntent) }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun buildDatasetGTE33(
+        authenticateView: RemoteViews,
+        inlinePresentation: Option<InlinePresentation>,
+        pendingIntent: PendingIntent,
+        assistInfo: AssistInfo
+    ): Dataset {
+        val presentationsBuilder = Presentations.Builder()
+        presentationsBuilder.setMenuPresentation(authenticateView)
+        if (inlinePresentation is Some) {
+            presentationsBuilder.setInlinePresentation(inlinePresentation.value)
+        }
+        val datasetBuilder = Dataset.Builder(presentationsBuilder.build())
+        datasetBuilder.setAuthentication(pendingIntent.intentSender)
+        for (value in assistInfo.fields) {
+            datasetBuilder.setField(value.id.asAndroid().autofillId, null)
+        }
+        return datasetBuilder.build()
+    }
+
+    private fun buildDatasetLT33(
+        authenticateView: RemoteViews,
+        inlinePresentation: Option<InlinePresentation>,
+        pendingIntent: PendingIntent,
+        assistInfo: AssistInfo
+    ): Dataset {
+        val datasetBuilder = Dataset.Builder(authenticateView)
+        if (inlinePresentation is Some && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            datasetBuilder.setInlinePresentation(inlinePresentation.value)
+        }
+        datasetBuilder.setAuthentication(pendingIntent.intentSender)
+        for (value in assistInfo.fields) {
+            datasetBuilder.setValue(value.id.asAndroid().autofillId, null)
+        }
+        datasetBuilder.build()
     }
 }

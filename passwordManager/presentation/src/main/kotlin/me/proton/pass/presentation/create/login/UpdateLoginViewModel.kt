@@ -87,6 +87,9 @@ class UpdateLoginViewModel @Inject constructor(
 
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         requireNotNull(_item)
+        val shouldUpdate = validateItem()
+        if (!shouldUpdate) return@launch
+
         isLoadingState.update { IsLoadingState.Loading }
         val loginItem = loginItemState.value
         val userId = accountManager.getPrimaryUserId()

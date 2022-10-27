@@ -10,6 +10,8 @@ import me.proton.pass.domain.usecases.GetCurrentShare
 import me.proton.pass.domain.usecases.GetCurrentShareImpl
 import me.proton.pass.domain.usecases.GetCurrentUserId
 import me.proton.pass.domain.usecases.GetCurrentUserIdImpl
+import me.proton.pass.domain.usecases.GetSuggestedLoginItems
+import me.proton.pass.domain.usecases.GetSuggestedLoginItemsImpl
 import me.proton.pass.domain.usecases.ObserveActiveItems
 import me.proton.pass.domain.usecases.ObserveActiveItemsImpl
 import me.proton.pass.domain.usecases.ObserveActiveShare
@@ -38,4 +40,9 @@ abstract class DomainModule {
 
     @Binds
     abstract fun bindGetCurrentShare(getCurrentShareImpl: GetCurrentShareImpl): GetCurrentShare
+
+    @Binds
+    abstract fun bindGetSuggestedLoginItems(
+        getSuggestedLoginItemsImpl: GetSuggestedLoginItemsImpl
+    ): GetSuggestedLoginItems
 }

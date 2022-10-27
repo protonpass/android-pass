@@ -12,11 +12,13 @@ import kotlin.random.Random
 
 object TestItem {
 
-    fun create(): Item = Item(
+    fun create(
+        itemType: ItemType = ItemType.Password
+    ): Item = Item(
         id = ItemId(id = "item-id"),
         revision = 0,
         shareId = ShareId(id = "share-id"),
-        itemType = ItemType.Password,
+        itemType = itemType,
         title = "item-title",
         note = "item-note",
         content = EncryptedByteArray(byteArrayOf())
@@ -26,6 +28,7 @@ object TestItem {
         val itemTypeParam = itemType ?: ItemType.Login(
             randomString(),
             randomString().encrypt(TestKeyStoreCrypto),
+            emptyList(),
             emptyList()
         )
         val titleParam = title ?: randomString()

@@ -7,11 +7,13 @@ object TestItemType {
     fun login(
         username: String? = null,
         password: String? = null,
-        websites: List<String> = emptyList()
+        websites: List<String> = emptyList(),
+        allowedPackageNames: List<String> = emptyList()
     ): ItemType.Login =
         ItemType.Login(
             username = username ?: TestUtils.randomString(),
             password = password ?: TestUtils.randomString(),
-            websites = websites
+            websites = websites,
+            allowedPackageNames = allowedPackageNames
         )
 }

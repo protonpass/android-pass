@@ -18,7 +18,9 @@ fun ItemType.Companion.fromParsed(
         ItemV1.Content.ContentCase.LOGIN -> ItemType.Login(
             username = parsed.content.login.username,
             password = parsed.content.login.password.encrypt(cryptoContext.keyStoreCrypto),
-            websites = parsed.content.login.urlsList
+            websites = parsed.content.login.urlsList,
+            allowedPackageNames = parsed.platformSpecific.android.allowedAppsOrBuilderList
+                .map { it.packageName }
         )
         ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)
         ItemV1.Content.ContentCase.ALIAS -> {

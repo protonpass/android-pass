@@ -43,4 +43,11 @@ class UrlSanitizerTest {
         val res = UrlSanitizer.sanitize(domain)
         assertTrue(res is Result.Error)
     }
+
+    @Test
+    fun `url with spaces should return error`() {
+        val domain = "https://url with spaces"
+        val res = UrlSanitizer.sanitize(domain)
+        assertTrue(res is Result.Error)
+    }
 }

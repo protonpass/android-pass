@@ -5,4 +5,5 @@
     <string name="error_credentials_not_saved">Could not save the credentials</string>
     <string name="error_loading_items">Could not load the items</string>
     <string name="topbar_search_query">Search items</string>
+    <string name="inline_suggestions_open_app">Open Proton Pass</string>
 </resources>

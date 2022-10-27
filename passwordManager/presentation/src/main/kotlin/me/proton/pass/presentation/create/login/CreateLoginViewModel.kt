@@ -69,29 +69,26 @@ class CreateLoginViewModel @Inject constructor(
     }
 
     fun createItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
-        val loginItem = loginItemState.value
-        val loginItemValidationErrors = loginItem.validate()
-        if (loginItemValidationErrors.isNotEmpty()) {
-            loginItemValidationErrorsState.update { loginItemValidationErrors }
+        val shouldCreate = validateItem()
+        if (!shouldCreate) return@launch
+
+        isLoadingState.update { IsLoadingState.Loading }
+        val userId = accountManager.getPrimaryUserId()
+            .firstOrNull { userId -> userId != null }
+        if (userId != null) {
+            createItem(userId, shareId, loginItemState.value.toItemContents())
+                .onSuccess { item ->
+                    isItemSavedState.update { ItemSavedState.Success(item.id) }
+                }
+                .onError {
+                    val defaultMessage = "Could not create item"
+                    PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                    snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+                }
         } else {
-            isLoadingState.update { IsLoadingState.Loading }
-            val userId = accountManager.getPrimaryUserId()
-                .firstOrNull { userId -> userId != null }
-            if (userId != null) {
-                createItem(userId, shareId, loginItem.toItemContents())
-                    .onSuccess { item ->
-                        isItemSavedState.update { ItemSavedState.Success(item.id) }
-                    }
-                    .onError {
-                        val defaultMessage = "Could not create item"
-                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                        snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
-                    }
-            } else {
-                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
-            }
-            isLoadingState.update { IsLoadingState.NotLoading }
+            snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
         }
+        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     companion object {

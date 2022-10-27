@@ -154,5 +154,24 @@ abstract class BaseLoginViewModel(
         viewModelScope.launch {
             snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
+
+    protected fun validateItem(): Boolean {
+        loginItemState.update {
+            val websites = it.websiteAddresses.map { url ->
+                when (val res = UrlSanitizer.sanitize(url)) {
+                    is Result.Success -> res.data
+                    else -> url
+                }
+            }
+            it.copy(websiteAddresses = websites)
+        }
+        val loginItem = loginItemState.value
+        val loginItemValidationErrors = loginItem.validate()
+        if (loginItemValidationErrors.isNotEmpty()) {
+            loginItemValidationErrorsState.update { loginItemValidationErrors }
+            return false
+        }
+        return true
+    }
 }
 

@@ -15,12 +15,12 @@ object UrlSanitizer {
             url
         }
 
-        try {
+        return try {
             val parsed = URI(urlWithScheme)
             val meaningfulSection = "${parsed.scheme}://${parsed.host}"
-            return Result.Success(meaningfulSection)
+            Result.Success(meaningfulSection)
         } catch (e: URISyntaxException) {
-            return Result.Error(e)
+            Result.Error(e)
         }
     }
 }

@@ -89,6 +89,16 @@ internal fun LoginContent(
                 onUsernameChange = onUsernameChange,
                 onPasswordChange = onPasswordChange,
                 onWebsiteChange = onWebsiteChange,
+                focusLastWebsite = uiState.focusLastWebsite,
+                doesWebsiteIndexHaveError = { idx ->
+                    uiState.validationErrors.any {
+                        if (it is LoginItemValidationErrors.InvalidUrl) {
+                            it.index == idx
+                        } else {
+                            false
+                        }
+                    }
+                },
                 onNoteChange = onNoteChange,
                 onGeneratePasswordClick = {
                     scope.launch {

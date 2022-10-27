@@ -10,7 +10,7 @@ import kotlin.test.assertTrue
 class UrlSanitizerTest {
 
     @Test
-    fun `empty url should return success`() {
+    fun `empty url should return error`() {
         val res = UrlSanitizer.sanitize("")
         assertTrue(res is Result.Error)
         assertNotNull(res.exception)

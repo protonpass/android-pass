@@ -164,11 +164,15 @@ abstract class BaseLoginViewModel(
         return true
     }
 
-    protected fun sanitizeWebsites(websites: List<String>): List<String> =
+    private fun sanitizeWebsites(websites: List<String>): List<String> =
         websites.map { url ->
-            when (val res = UrlSanitizer.sanitize(url)) {
-                is Result.Success -> res.data
-                else -> url
+            if (url.isBlank()) {
+                ""
+            } else {
+                when (val res = UrlSanitizer.sanitize(url)) {
+                    is Result.Success -> res.data
+                    else -> url
+                }
             }
         }
 

@@ -18,9 +18,11 @@ data class LoginItem(
         val mutableSet = mutableSetOf<LoginItemValidationErrors>()
         if (title.isBlank()) mutableSet.add(LoginItemValidationErrors.BlankTitle)
         websiteAddresses.forEachIndexed { idx, url ->
-            val validation = UrlSanitizer.sanitize(url)
-            if (validation is Result.Error) {
-                mutableSet.add(LoginItemValidationErrors.InvalidUrl(idx))
+            if (url.isNotBlank()) {
+                val validation = UrlSanitizer.sanitize(url)
+                if (validation is Result.Error) {
+                    mutableSet.add(LoginItemValidationErrors.InvalidUrl(idx))
+                }
             }
         }
 

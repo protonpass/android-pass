@@ -6,7 +6,7 @@ import java.net.URISyntaxException
 
 object UrlSanitizer {
     fun sanitize(url: String): Result<String> {
-        if (url.isEmpty()) return Result.Success(url)
+        if (url.isEmpty()) return Result.Error(IllegalArgumentException("url cannot be empty"))
 
         // If it doesn't have a scheme, add https://
         val urlWithScheme = if (!url.contains("://")) {

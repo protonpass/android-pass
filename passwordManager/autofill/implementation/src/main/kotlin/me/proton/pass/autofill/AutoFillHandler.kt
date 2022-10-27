@@ -203,6 +203,6 @@ object AutoFillHandler {
         for (value in assistInfo.fields) {
             datasetBuilder.setValue(value.id.asAndroid().autofillId, null)
         }
-        datasetBuilder.build()
+        return datasetBuilder.build()
     }
 }

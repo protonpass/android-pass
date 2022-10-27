@@ -4,13 +4,17 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.presentation.UrlSanitizer
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class UrlSanitizerTest {
 
     @Test
     fun `empty url should return success`() {
-        assertTrue(UrlSanitizer.sanitize("") is Result.Success)
+        val res = UrlSanitizer.sanitize("")
+        assertTrue(res is Result.Error)
+        assertNotNull(res.exception)
+        assertTrue(res.exception is IllegalArgumentException)
     }
 
     @Test

@@ -13,7 +13,8 @@ data class CreateUpdateLoginUiState(
     val loginItem: LoginItem,
     val validationErrors: Set<LoginItemValidationErrors>,
     val isLoadingState: IsLoadingState,
-    val isItemSaved: ItemSavedState
+    val isItemSaved: ItemSavedState,
+    val focusLastWebsite: Boolean
 ) {
     companion object {
         val Initial = CreateUpdateLoginUiState(
@@ -21,7 +22,8 @@ data class CreateUpdateLoginUiState(
             isLoadingState = IsLoadingState.NotLoading,
             loginItem = LoginItem.Empty,
             validationErrors = emptySet(),
-            isItemSaved = ItemSavedState.Unknown
+            isItemSaved = ItemSavedState.Unknown,
+            focusLastWebsite = false
         )
     }
 }

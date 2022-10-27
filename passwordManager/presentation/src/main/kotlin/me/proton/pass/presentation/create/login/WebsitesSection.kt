@@ -17,12 +17,16 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,7 +40,9 @@ import me.proton.pass.presentation.components.form.ProtonTextTitle
 internal fun WebsitesSection(
     modifier: Modifier = Modifier,
     websites: List<String>,
-    onWebsitesChange: OnWebsiteChange
+    focusLastWebsite: Boolean,
+    onWebsitesChange: OnWebsiteChange,
+    doesWebsiteIndexHaveError: (Int) -> Boolean
 ) {
     ProtonTextTitle(
         title = R.string.field_website_address_title,
@@ -59,9 +65,16 @@ internal fun WebsitesSection(
         val shouldShowAddWebsiteButton =
             websites.count() == 1 && websites.last().isNotEmpty() || websites.count() > 1
 
+        val focusRequester = remember { FocusRequester() }
         websites.forEachIndexed { idx, value ->
+            val textFieldModifier = if (idx < websites.count() - 1) {
+                Modifier
+            } else {
+                Modifier.focusRequester(focusRequester)
+            }
             ProtonTextField(
-                modifier = Modifier.fillMaxWidth(1.0f),
+                modifier = textFieldModifier.fillMaxWidth(1.0f),
+                isError = doesWebsiteIndexHaveError(idx),
                 value = value,
                 onChange = { onWebsitesChange.onWebsiteValueChanged(it, idx) },
                 onFocusChange = { isFocused = it },
@@ -79,6 +92,13 @@ internal fun WebsitesSection(
             )
             if (shouldShowAddWebsiteButton) {
                 Divider()
+            }
+        }
+
+        // If we receive focusLastWebsite, call requestFocus
+        LaunchedEffect(focusLastWebsite) {
+            if (focusLastWebsite) {
+                focusRequester.requestFocus()
             }
         }
 

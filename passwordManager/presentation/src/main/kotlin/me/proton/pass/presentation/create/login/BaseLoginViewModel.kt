@@ -124,12 +124,7 @@ abstract class BaseLoginViewModel(
 
     fun onAddWebsite() {
         loginItemState.update {
-            val websites = it.websiteAddresses.map { url ->
-                when (val res = UrlSanitizer.sanitize(url)) {
-                    is Result.Success -> res.data
-                    else -> url
-                }
-            }.toMutableList()
+            val websites = sanitizeWebsites(it.websiteAddresses).toMutableList()
             websites.add("")
 
             it.copy(websiteAddresses = websites)
@@ -157,12 +152,7 @@ abstract class BaseLoginViewModel(
 
     protected fun validateItem(): Boolean {
         loginItemState.update {
-            val websites = it.websiteAddresses.map { url ->
-                when (val res = UrlSanitizer.sanitize(url)) {
-                    is Result.Success -> res.data
-                    else -> url
-                }
-            }
+            val websites = sanitizeWebsites(it.websiteAddresses)
             it.copy(websiteAddresses = websites)
         }
         val loginItem = loginItemState.value
@@ -173,5 +163,14 @@ abstract class BaseLoginViewModel(
         }
         return true
     }
+
+    protected fun sanitizeWebsites(websites: List<String>): List<String> =
+        websites.map { url ->
+            when (val res = UrlSanitizer.sanitize(url)) {
+                is Result.Success -> res.data
+                else -> url
+            }
+        }
+
 }
 

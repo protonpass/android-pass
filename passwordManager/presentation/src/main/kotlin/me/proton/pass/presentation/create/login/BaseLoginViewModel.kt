@@ -113,10 +113,11 @@ abstract class BaseLoginViewModel(
     }
 
     fun onWebsiteChange(value: String, index: Int) {
+        val newValue = value.replace(" ", "").replace("\n", "")
         loginItemState.update {
             it.copy(
                 websiteAddresses = it.websiteAddresses.toMutableList()
-                    .apply { this[index] = value }
+                    .apply { this[index] = newValue }
             )
         }
         focusLastWebsiteState.update { false }

@@ -22,6 +22,8 @@ internal fun LoginItemForm(
     onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onWebsiteChange: OnWebsiteChange,
+    doesWebsiteIndexHaveError: (Int) -> Boolean,
+    focusLastWebsite: Boolean,
     onNoteChange: (String) -> Unit,
     onGeneratePasswordClick: () -> Unit
 ) {
@@ -47,7 +49,12 @@ internal fun LoginItemForm(
             onGeneratePasswordClick = onGeneratePasswordClick
         )
         Spacer(modifier = Modifier.height(20.dp))
-        WebsitesSection(websites = loginItem.websiteAddresses, onWebsitesChange = onWebsiteChange)
+        WebsitesSection(
+            websites = loginItem.websiteAddresses,
+            onWebsitesChange = onWebsiteChange,
+            focusLastWebsite = focusLastWebsite,
+            doesWebsiteIndexHaveError = doesWebsiteIndexHaveError
+        )
         NoteInput(value = loginItem.note, onChange = onNoteChange)
     }
 }

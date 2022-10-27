@@ -21,6 +21,7 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.usecases.ObserveActiveShare
+import me.proton.pass.presentation.UrlSanitizer
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
@@ -60,6 +61,7 @@ abstract class BaseLoginViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val loginItemValidationErrorsState: MutableStateFlow<Set<LoginItemValidationErrors>> =
         MutableStateFlow(emptySet())
+    protected val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val loginItemWrapperState = combine(
         loginItemState,
@@ -77,14 +79,16 @@ abstract class BaseLoginViewModel(
         activeShareIdState,
         loginItemWrapperState,
         isLoadingState,
-        isItemSavedState
-    ) { shareId, loginItemWrapper, isLoading, isItemSaved ->
+        isItemSavedState,
+        focusLastWebsiteState
+    ) { shareId, loginItemWrapper, isLoading, isItemSaved, focusLastWebsite ->
         CreateUpdateLoginUiState(
             shareId = shareId,
             loginItem = loginItemWrapper.loginItem,
             validationErrors = loginItemWrapper.loginItemValidationErrors,
             isLoadingState = isLoading,
-            isItemSaved = isItemSaved
+            isItemSaved = isItemSaved,
+            focusLastWebsite = focusLastWebsite
         )
     }
         .stateIn(
@@ -115,12 +119,22 @@ abstract class BaseLoginViewModel(
                     .apply { this[index] = value }
             )
         }
+        focusLastWebsiteState.update { false }
     }
 
     fun onAddWebsite() {
         loginItemState.update {
-            it.copy(websiteAddresses = it.websiteAddresses.toMutableList().apply { add("") })
+            val websites = it.websiteAddresses.map { url ->
+                when (val res = UrlSanitizer.sanitize(url)) {
+                    is Result.Success -> res.data
+                    else -> url
+                }
+            }.toMutableList()
+            websites.add("")
+
+            it.copy(websiteAddresses = websites)
         }
+        focusLastWebsiteState.update { true }
     }
 
     fun onRemoveWebsite(index: Int) {
@@ -129,6 +143,7 @@ abstract class BaseLoginViewModel(
                 websiteAddresses = it.websiteAddresses.toMutableList().apply { removeAt(index) }
             )
         }
+        focusLastWebsiteState.update { false }
     }
 
     fun onNoteChange(value: String) {

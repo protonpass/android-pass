@@ -53,7 +53,7 @@ serializationJson = "1.4.1"
 # Sentry
 sentry = "6.5.0"
 # Showkase
-showkase = "1.0.0-beta14"
+showkase = "1.0.0-beta13"
 # Squareup
 leakCanary = "2.9.1"
 okhttp = "4.10.0"

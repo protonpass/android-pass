@@ -1,5 +1,6 @@
 package me.proton.pass.autofill
 
+import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.app.assist.AssistStructure
 import android.content.Context
@@ -9,9 +10,14 @@ import android.service.autofill.Dataset
 import android.service.autofill.FillCallback
 import android.service.autofill.FillRequest
 import android.service.autofill.FillResponse
+import android.service.autofill.InlinePresentation
 import android.service.autofill.Presentations
 import android.service.autofill.SaveInfo
 import android.widget.RemoteViews
+import android.widget.inline.InlinePresentationSpec
+import androidx.annotation.RequiresApi
+import androidx.autofill.inline.UiVersions
+import androidx.autofill.inline.v1.InlineSuggestionUi
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +31,10 @@ import me.proton.pass.autofill.entities.AutofillData
 import me.proton.pass.autofill.entities.asAndroid
 import me.proton.pass.autofill.service.R
 import me.proton.pass.autofill.ui.autofill.AutofillActivity
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
+import me.proton.pass.common.api.Some
+import me.proton.pass.common.api.toOption
 import kotlin.coroutines.coroutineContext
 
 object AutoFillHandler {
@@ -47,7 +57,7 @@ object AutoFillHandler {
             PassLogger.e(TAG, exception)
         }
         val job = CoroutineScope(Dispatchers.IO).launch(handler) {
-            searchAndFill(context, windowNode, callback)
+            searchAndFill(context, windowNode, callback, request)
         }
 
         cancellationSignal.setOnCancelListener {
@@ -59,7 +69,8 @@ object AutoFillHandler {
     private suspend fun searchAndFill(
         context: Context,
         windowNode: AssistStructure.WindowNode,
-        callback: FillCallback
+        callback: FillCallback,
+        request: FillRequest
     ) {
         val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
         if (assistInfo.fields.isEmpty()) return
@@ -73,7 +84,7 @@ object AutoFillHandler {
             (it.id as AndroidAutofillFieldId).autofillId
         }.toTypedArray()
         // Single Dataset to force user authentication
-        val dataset = buildDataset(context, windowNode, assistInfo)
+        val dataset = buildDataset(context, windowNode, assistInfo, request)
         val saveInfo = SaveInfo.Builder(SaveInfo.SAVE_DATA_TYPE_GENERIC, autofillIds).build()
         val response = FillResponse.Builder()
             .addDataset(dataset)
@@ -86,7 +97,8 @@ object AutoFillHandler {
     private fun buildDataset(
         context: Context,
         windowNode: AssistStructure.WindowNode,
-        assistInfo: AssistInfo
+        assistInfo: AssistInfo,
+        request: FillRequest
     ): Dataset {
         val data = AutofillData(
             assistInfo,
@@ -112,34 +124,60 @@ object AutoFillHandler {
                 context.getString(R.string.autofill_authenticate_prompt)
             )
         }
+        val inlinePresentation: Option<InlinePresentation> =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                request.inlineSuggestionsRequest
+                    ?.inlinePresentationSpecs
+                    .orEmpty()
+                    .firstNotNullOfOrNull { buildInlinePresentation(context, it, pendingIntent) }
+                    .toOption()
+            } else {
+                None
+            }
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val presentations = Presentations.Builder()
-                .setMenuPresentation(authenticateView)
-                .build()
-            Dataset.Builder(presentations)
-                .apply {
-                    setAuthentication(pendingIntent.intentSender)
-                    for (value in assistInfo.fields) {
-                        setField(value.id.asAndroid().autofillId, null)
-                    }
-                }
-                .build()
+            val presentationsBuilder = Presentations.Builder()
+            presentationsBuilder.setMenuPresentation(authenticateView)
+            if (inlinePresentation is Some) {
+                presentationsBuilder.setInlinePresentation(inlinePresentation.value)
+            }
+            val datasetBuilder = Dataset.Builder(presentationsBuilder.build())
+            datasetBuilder.setAuthentication(pendingIntent.intentSender)
+            for (value in assistInfo.fields) {
+                datasetBuilder.setField(value.id.asAndroid().autofillId, null)
+            }
+            datasetBuilder.build()
         } else {
-            Dataset.Builder(authenticateView)
-                .apply {
-                    setAuthentication(pendingIntent.intentSender)
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//                    val inlineSuggestionSpecs = request.inlineSuggestionsRequest
-//                        ?.inlinePresentationSpecs.orEmpty()
-//                    for (spec in inlineSuggestionSpecs) {
-//                        addInlineSuggestion(this, spec, pendingIntent)
-//                    }
-//                }
-                    for (value in assistInfo.fields) {
-                        setValue(value.id.asAndroid().autofillId, null)
-                    }
-                }
-                .build()
+            val datasetBuilder = Dataset.Builder(authenticateView)
+            if (inlinePresentation is Some && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                datasetBuilder.setInlinePresentation(inlinePresentation.value)
+            }
+            datasetBuilder.setAuthentication(pendingIntent.intentSender)
+            for (value in assistInfo.fields) {
+                datasetBuilder.setValue(value.id.asAndroid().autofillId, null)
+            }
+            datasetBuilder.build()
         }
+    }
+
+    @SuppressLint("RestrictedApi")
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun buildInlinePresentation(
+        context: Context,
+        inlinePresentationSpec: InlinePresentationSpec,
+        pendingIntent: PendingIntent
+    ): InlinePresentation? {
+        val imeStyle = inlinePresentationSpec.style
+        if (!UiVersions.getVersions(imeStyle).contains(UiVersions.INLINE_UI_VERSION_1))
+            return null
+
+        return InlinePresentation(
+            InlineSuggestionUi.newContentBuilder(pendingIntent)
+                .setContentDescription(context.getString(R.string.inline_suggestions_open_app))
+                .setTitle(context.getString(R.string.inline_suggestions_open_app))
+                .build()
+                .slice,
+            inlinePresentationSpec,
+            false
+        )
     }
 }

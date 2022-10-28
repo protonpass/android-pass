@@ -139,7 +139,8 @@ internal class SearchItemsImplTest {
                     itemType = ItemType.Login(
                         username = randomString(),
                         password = randomString().encrypt(TestKeyStoreCrypto),
-                        websites = emptyList()
+                        websites = emptyList(),
+                        allowedPackageNames = emptyList()
                     )
                 ),
                 query = title
@@ -156,7 +157,8 @@ internal class SearchItemsImplTest {
                     itemType = ItemType.Login(
                         username = randomString(),
                         password = randomString().encrypt(TestKeyStoreCrypto),
-                        websites = emptyList()
+                        websites = emptyList(),
+                        allowedPackageNames = emptyList()
                     )
                 ),
                 query = note
@@ -172,7 +174,8 @@ internal class SearchItemsImplTest {
                     itemType = ItemType.Login(
                         username = randomString(),
                         password = randomString().encrypt(TestKeyStoreCrypto),
-                        websites = listOf(website)
+                        websites = listOf(website),
+                        allowedPackageNames = emptyList()
                     )
                 ),
                 query = website

@@ -37,13 +37,20 @@ internal fun CreateAliasForm(
             onTitleRequiredError = onTitleRequiredError
         )
         Spacer(Modifier.padding(vertical = 8.dp))
-        AliasSection(
-            state = state,
-            onChange = onAliasChange,
-            onSuffixClick = onSuffixClick,
-            canEdit = canEdit,
-            onAliasRequiredError = onAliasRequiredError
-        )
+
+        if (canEdit) {
+            CreateAliasSection(
+                state = state,
+                onChange = onAliasChange,
+                onSuffixClick = onSuffixClick,
+                canEdit = canEdit,
+                onAliasRequiredError = onAliasRequiredError
+            )
+        } else {
+            DisplayAliasSection(
+                state = state
+            )
+        }
         Spacer(Modifier.padding(vertical = 8.dp))
         MailboxSection(
             state = state,

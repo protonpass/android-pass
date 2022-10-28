@@ -24,6 +24,7 @@ import me.proton.pass.domain.repositories.AliasRepository
 import me.proton.pass.domain.usecases.CreateAlias
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.ItemCreationError
+import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 import javax.inject.Inject
@@ -77,6 +78,7 @@ class CreateAliasViewModel @Inject constructor(
                                 isMailboxListApplicable = true
                             )
                         }
+                        isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
                     }
                     .onError {
                         val defaultMessage = "Could not get alias options"
@@ -101,36 +103,36 @@ class CreateAliasViewModel @Inject constructor(
         val aliasItemValidationErrors = aliasItem.validate()
         if (aliasItemValidationErrors.isNotEmpty()) {
             aliasItemValidationErrorsState.update { aliasItemValidationErrors }
-        } else {
-            isLoadingState.update { IsLoadingState.Loading }
-            val userId = accountManager.getPrimaryUserId()
-                .first { userId -> userId != null }
-            if (userId != null) {
-                createAlias(
-                    userId = userId,
-                    shareId = shareId,
-                    newAlias = NewAlias(
-                        title = aliasItem.title,
-                        note = aliasItem.note,
-                        prefix = aliasItem.alias,
-                        suffix = aliasItem.selectedSuffix,
-                        mailboxes = mailboxes
-                    )
-                )
-                    .onSuccess { item ->
-                        isItemSavedState.update { ItemSavedState.Success(item.id) }
-                    }
-                    .onError {
-                        val defaultMessage = "Create alias error"
-                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                        snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
-                    }
-            } else {
-                PassLogger.i(TAG, "Empty User Id")
-                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
-            }
-            isLoadingState.update { IsLoadingState.NotLoading }
+            return@launch
         }
+
+        isLoadingState.update { IsLoadingState.Loading }
+        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
+        if (userId != null) {
+            createAlias(
+                userId = userId,
+                shareId = shareId,
+                newAlias = NewAlias(
+                    title = aliasItem.title,
+                    note = aliasItem.note,
+                    prefix = aliasItem.alias,
+                    suffix = aliasItem.selectedSuffix,
+                    mailboxes = mailboxes
+                )
+            )
+                .onSuccess { item ->
+                    isItemSavedState.update { ItemSavedState.Success(item.id) }
+                }
+                .onError {
+                    val defaultMessage = "Create alias error"
+                    PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                    snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+                }
+        } else {
+            PassLogger.i(TAG, "Empty User Id")
+            snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+        }
+        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     companion object {

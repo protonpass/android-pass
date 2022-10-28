@@ -3,10 +3,8 @@ package me.proton.pass.presentation.create.alias
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,24 +13,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import me.proton.android.pass.ui.shared.CrossBackIcon
 import me.proton.android.pass.ui.shared.LoadingDialog
-import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Some
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.R
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankAlias
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankTitle
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.EmptyShareIdError
@@ -58,7 +46,6 @@ internal fun AliasContent(
     onAliasChange: (String) -> Unit,
     onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
     val scope = rememberCoroutineScope()
 
     val (bottomSheetContentType, setBottomSheetContentType) = remember {
@@ -90,28 +77,13 @@ internal fun AliasContent(
         Scaffold(
             modifier = modifier,
             topBar = {
-                ProtonTopAppBar(
-                    title = { TopBarTitleView(topBarTitle) },
-                    navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
-                    actions = {
-                        IconButton(
-                            onClick = {
-                                keyboardController?.hide()
-                                when (uiState.shareId) {
-                                    None -> onEmitSnackbarMessage(EmptyShareIdError)
-                                    is Some -> onSubmit(uiState.shareId.value)
-                                }
-                            },
-                            modifier = Modifier.padding(end = 10.dp)
-                        ) {
-                            Text(
-                                text = stringResource(R.string.action_save),
-                                color = ProtonTheme.colors.brandNorm,
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.W500
-                            )
-                        }
-                    }
+                AliasTopBar(
+                    topBarTitle = topBarTitle,
+                    onUpClick = onUpClick,
+                    isButtonEnabled = uiState.isApplyButtonEnabled,
+                    shareId = uiState.shareId,
+                    onEmitSnackbarMessage = onEmitSnackbarMessage,
+                    onSubmit = onSubmit
                 )
             }
         ) { padding ->
@@ -134,10 +106,8 @@ internal fun AliasContent(
                 },
                 onMailboxClick = {
                     scope.launch {
-                        if (canEdit) {
-                            setBottomSheetContentType(AliasBottomSheetContent.Mailbox)
-                            bottomSheetState.show()
-                        }
+                        setBottomSheetContentType(AliasBottomSheetContent.Mailbox)
+                        bottomSheetState.show()
                     }
                 },
                 onTitleChange = { onTitleChange(it) },

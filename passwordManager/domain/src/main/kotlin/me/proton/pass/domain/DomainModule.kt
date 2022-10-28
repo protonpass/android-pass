@@ -18,6 +18,8 @@ import me.proton.pass.domain.usecases.ObserveActiveShare
 import me.proton.pass.domain.usecases.ObserveActiveShareImpl
 import me.proton.pass.domain.usecases.RefreshContent
 import me.proton.pass.domain.usecases.RefreshContentImpl
+import me.proton.pass.domain.usecases.UpdateAlias
+import me.proton.pass.domain.usecases.UpdateAliasImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -45,4 +47,7 @@ abstract class DomainModule {
     abstract fun bindGetSuggestedLoginItems(
         getSuggestedLoginItemsImpl: GetSuggestedLoginItemsImpl
     ): GetSuggestedLoginItems
+
+    @Binds
+    abstract fun bindUpdateAlias(updateAliasImpl: UpdateAliasImpl): UpdateAlias
 }

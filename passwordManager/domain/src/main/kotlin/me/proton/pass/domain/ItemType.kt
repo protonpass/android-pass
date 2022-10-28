@@ -8,8 +8,7 @@ sealed class ItemType {
     data class Login(
         val username: String,
         val password: EncryptedString,
-        val websites: List<String>,
-        val allowedPackageNames: List<String>
+        val websites: List<String>
     ) : ItemType()
     data class Note(val text: String) : ItemType()
     data class Alias(val aliasEmail: String) : ItemType()

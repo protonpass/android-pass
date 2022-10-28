@@ -18,9 +18,7 @@ fun ItemType.Companion.fromParsed(
         ItemV1.Content.ContentCase.LOGIN -> ItemType.Login(
             username = parsed.content.login.username,
             password = parsed.content.login.password.encrypt(cryptoContext.keyStoreCrypto),
-            websites = parsed.content.login.urlsList,
-            allowedPackageNames = parsed.platformSpecific.android.allowedAppsOrBuilderList
-                .map { it.packageName }
+            websites = parsed.content.login.urlsList
         )
         ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)
         ItemV1.Content.ContentCase.ALIAS -> {
@@ -38,4 +36,10 @@ fun ItemEntity.itemType(cryptoContext: CryptoContext): ItemType {
     val decrypted = encryptedContent.decrypt(cryptoContext.keyStoreCrypto)
     val parsed = ItemV1.Item.parseFrom(decrypted.array)
     return ItemType.fromParsed(cryptoContext, parsed, aliasEmail)
+}
+
+fun ItemEntity.allowedApps(cryptoContext: CryptoContext): List<String> {
+    val decrypted = encryptedContent.decrypt(cryptoContext.keyStoreCrypto)
+    val parsed = ItemV1.Item.parseFrom(decrypted.array)
+    return parsed.platformSpecific.android.allowedAppsList.map { it.packageName }
 }

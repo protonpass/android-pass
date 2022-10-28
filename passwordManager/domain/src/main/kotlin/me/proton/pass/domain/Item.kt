@@ -13,5 +13,6 @@ data class Item(
     val itemType: ItemType,
     val title: EncryptedString,
     val note: EncryptedString,
-    val content: EncryptedByteArray
+    val content: EncryptedByteArray,
+    val allowedPackageNames: List<String>
 )

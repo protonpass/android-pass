@@ -28,14 +28,17 @@ class GetSuggestedLoginItemsImplTest {
     @Test
     fun `given an item with an allowed package name should return the suggested element`() =
         runTest {
-            val firstItemType =
-                TestItemType.login(allowedPackageNames = listOf("my.first.package.name"))
-            val secondItemType =
-                TestItemType.login(allowedPackageNames = listOf("my.second.package.name"))
-            val firstItem = TestItem.create(firstItemType)
-            val successResult: Result<List<Item>> = Result.Success(
-                listOf(firstItem, TestItem.create(secondItemType))
+            val firstItemType = TestItemType.login()
+            val secondItemType = TestItemType.login()
+            val firstItem = TestItem.create(
+                itemType = firstItemType,
+                allowedPackageNames = listOf("my.first.package.name")
             )
+            val secondItem = TestItem.create(
+                itemType = secondItemType,
+                allowedPackageNames = listOf("my.second.package.name")
+            )
+            val successResult: Result<List<Item>> = Result.Success(listOf(firstItem, secondItem))
             observeActiveItems.sendItemList(successResult)
             getSuggestedLoginItems.invoke(UrlOrPackage("my.first.package.name"))
                 .test {
@@ -47,8 +50,11 @@ class GetSuggestedLoginItemsImplTest {
     @Test
     fun `given an item with an allowed package name should return empty list on no matches`() =
         runTest {
-            val itemType = TestItemType.login(allowedPackageNames = listOf("my.package.name"))
-            val item = TestItem.create(itemType)
+            val itemType = TestItemType.login()
+            val item = TestItem.create(
+                itemType = itemType,
+                allowedPackageNames = listOf("my.package.name")
+            )
             val successResult: Result<List<Item>> = Result.Success(listOf(item))
             observeActiveItems.sendItemList(successResult)
             getSuggestedLoginItems.invoke(UrlOrPackage("my.incorrect.package.name"))

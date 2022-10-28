@@ -5,6 +5,9 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.map
 import me.proton.pass.data.extensions.toDomain
 import me.proton.pass.data.remote.RemoteAliasDataSource
+import me.proton.pass.data.requests.UpdateAliasMailboxesRequest
+import me.proton.pass.data.responses.AliasMailboxResponse
+import me.proton.pass.domain.AliasDetails
 import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.domain.AliasOptions
 import me.proton.pass.domain.ItemId
@@ -21,12 +24,33 @@ class AliasRepositoryImpl @Inject constructor(
         return response.map { it.toDomain() }
     }
 
-    override suspend fun getAliasMailboxes(
+    override suspend fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<List<AliasMailbox>> {
+    ): Result<AliasDetails> {
         val response = remoteDataSource.getAliasDetails(userId, shareId, itemId)
-        return response.map { it.mailboxes.map { AliasMailbox(id = it.id, email = it.email) } }
+        return response.map { details ->
+            AliasDetails(
+                email = details.email,
+                mailboxes = mapMailboxes(details.mailboxes),
+                availableMailboxes = mapMailboxes(details.availableMailboxes)
+            )
+        }
     }
+
+    override suspend fun updateAliasMailboxes(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        mailboxes: List<AliasMailbox>
+    ): Result<Unit> {
+        val request = UpdateAliasMailboxesRequest(
+            mailboxIds = mailboxes.map { it.id }
+        )
+        return remoteDataSource.updateAliasMailboxes(userId, shareId, itemId, request).map { }
+    }
+
+    private fun mapMailboxes(input: List<AliasMailboxResponse>): List<AliasMailbox> =
+        input.map { AliasMailbox(id = it.id, email = it.email) }
 }

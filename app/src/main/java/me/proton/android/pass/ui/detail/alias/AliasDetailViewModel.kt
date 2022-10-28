@@ -45,7 +45,7 @@ class AliasDetailViewModel @Inject constructor(
             ?.let { userId ->
                 when (
                     val result =
-                        aliasRepository.getAliasMailboxes(userId, item.shareId, item.id)
+                        aliasRepository.getAliasDetails(userId, item.shareId, item.id)
                 ) {
                     is Result.Success -> {
                         val alias = item.itemType as ItemType.Alias
@@ -53,7 +53,7 @@ class AliasDetailViewModel @Inject constructor(
                             AliasUiModel(
                                 title = item.title.decrypt(cryptoContext.keyStoreCrypto),
                                 alias = alias.aliasEmail,
-                                mailboxes = result.data,
+                                mailboxes = result.data.mailboxes,
                                 note = item.note.decrypt(cryptoContext.keyStoreCrypto)
                             )
                         )

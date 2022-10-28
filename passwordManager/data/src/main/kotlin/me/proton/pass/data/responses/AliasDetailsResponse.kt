@@ -14,5 +14,7 @@ data class AliasDetails(
     @SerialName("Email")
     val email: String,
     @SerialName("Mailboxes")
-    val mailboxes: List<AliasMailboxResponse>
+    val mailboxes: List<AliasMailboxResponse>,
+    @SerialName("AvailableMailboxes")
+    val availableMailboxes: List<AliasMailboxResponse>
 )

@@ -16,6 +16,7 @@ import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
@@ -37,6 +38,8 @@ abstract class BaseAliasViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val aliasItemValidationErrorsState: MutableStateFlow<Set<AliasItemValidationErrors>> =
         MutableStateFlow(emptySet())
+    protected val isApplyButtonEnabledState: MutableStateFlow<IsButtonEnabled> =
+        MutableStateFlow(IsButtonEnabled.Disabled)
 
     private val aliasItemWrapperState = combine(
         aliasItemState,
@@ -54,14 +57,16 @@ abstract class BaseAliasViewModel(
         shareIdState,
         aliasItemWrapperState,
         isLoadingState,
-        isItemSavedState
-    ) { shareId, aliasItemWrapper, isLoading, isItemSaved ->
+        isItemSavedState,
+        isApplyButtonEnabledState
+    ) { shareId, aliasItemWrapper, isLoading, isItemSaved, isButtonEnabled ->
         CreateUpdateAliasUiState(
             shareId = shareId,
             aliasItem = aliasItemWrapper.aliasItem,
             errorList = aliasItemWrapper.aliasItemValidationErrors,
             isLoadingState = isLoading,
-            isItemSaved = isItemSaved
+            isItemSaved = isItemSaved,
+            isApplyButtonEnabled = isButtonEnabled
         )
     }
         .stateIn(
@@ -70,7 +75,7 @@ abstract class BaseAliasViewModel(
             initialValue = CreateUpdateAliasUiState.Initial
         )
 
-    fun onTitleChange(value: String) {
+    open fun onTitleChange(value: String) {
         aliasItemState.update { it.copy(title = value) }
         aliasItemValidationErrorsState.update {
             it.toMutableSet()
@@ -95,7 +100,7 @@ abstract class BaseAliasViewModel(
         }
     }
 
-    fun onNoteChange(value: String) {
+    open fun onNoteChange(value: String) {
         aliasItemState.update { it.copy(note = value) }
     }
 
@@ -111,7 +116,7 @@ abstract class BaseAliasViewModel(
         }
     }
 
-    fun onMailboxChange(mailbox: AliasMailboxUiModel) {
+    open fun onMailboxChange(mailbox: AliasMailboxUiModel) {
         val mailboxes = aliasItemState.value.mailboxes.map {
             if (it.model.id == mailbox.model.id) {
                 it.copy(selected = !mailbox.selected)
@@ -120,18 +125,11 @@ abstract class BaseAliasViewModel(
             }
         }
 
-        val allSelectedMailboxes = mailboxes.filter { it.selected }
-        var mailboxTitle = allSelectedMailboxes.firstOrNull()?.model?.email ?: ""
-        if (allSelectedMailboxes.size > 1) {
-            val howManyMore = allSelectedMailboxes.size - 1
-            mailboxTitle += " ($howManyMore+)"
-        }
-
         aliasItemState.update {
             it.copy(
                 mailboxes = mailboxes,
-                mailboxTitle = mailboxTitle,
-                isMailboxListApplicable = allSelectedMailboxes.isNotEmpty()
+                mailboxTitle = getMailboxTitle(mailboxes),
+                isMailboxListApplicable = mailboxes.any { it.selected }
             )
         }
     }
@@ -140,6 +138,16 @@ abstract class BaseAliasViewModel(
         viewModelScope.launch {
             snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
+
+    protected fun getMailboxTitle(mailboxes: List<AliasMailboxUiModel>): String {
+        val allSelectedMailboxes = mailboxes.filter { it.selected }
+        var mailboxTitle = allSelectedMailboxes.firstOrNull()?.model?.email ?: ""
+        if (allSelectedMailboxes.size > 1) {
+            val howManyMore = allSelectedMailboxes.size - 1
+            mailboxTitle += " ($howManyMore+)"
+        }
+        return mailboxTitle
+    }
 
     private fun getAliasToBeCreated(alias: String, suffix: AliasSuffix?): String? {
         if (suffix != null && alias.isNotBlank()) {

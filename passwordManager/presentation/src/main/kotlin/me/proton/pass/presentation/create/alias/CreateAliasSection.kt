@@ -12,7 +12,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
 
 @Composable
-internal fun AliasSection(
+internal fun CreateAliasSection(
     state: AliasItem,
     canEdit: Boolean,
     onAliasRequiredError: Boolean,

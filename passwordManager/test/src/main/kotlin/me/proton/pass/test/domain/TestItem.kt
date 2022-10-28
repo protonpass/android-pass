@@ -13,7 +13,8 @@ import kotlin.random.Random
 object TestItem {
 
     fun create(
-        itemType: ItemType = ItemType.Password
+        itemType: ItemType = ItemType.Password,
+        allowedPackageNames: List<String> = emptyList()
     ): Item = Item(
         id = ItemId(id = "item-id"),
         revision = 0,
@@ -21,14 +22,14 @@ object TestItem {
         itemType = itemType,
         title = "item-title",
         note = "item-note",
-        content = EncryptedByteArray(byteArrayOf())
+        content = EncryptedByteArray(byteArrayOf()),
+        allowedPackageNames = allowedPackageNames
     )
 
     fun random(itemType: ItemType? = null, title: String? = null, note: String? = null): Item {
         val itemTypeParam = itemType ?: ItemType.Login(
             randomString(),
             randomString().encrypt(TestKeyStoreCrypto),
-            emptyList(),
             emptyList()
         )
         val titleParam = title ?: randomString()
@@ -40,7 +41,8 @@ object TestItem {
             itemType = itemTypeParam,
             title = TestKeyStoreCrypto.encrypt(titleParam),
             note = TestKeyStoreCrypto.encrypt(noteParam),
-            content = EncryptedByteArray(byteArrayOf())
+            content = EncryptedByteArray(byteArrayOf()),
+            allowedPackageNames = emptyList()
         )
     }
 }

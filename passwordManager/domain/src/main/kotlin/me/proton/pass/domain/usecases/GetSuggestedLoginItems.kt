@@ -23,7 +23,7 @@ class GetSuggestedLoginItemsImpl @Inject constructor(
             result.map { list ->
                 list.filter {
                     if (it.itemType is ItemType.Login) {
-                        if (it.itemType.allowedPackageNames.contains(urlOrPackage.value))
+                        if (it.allowedPackageNames.contains(urlOrPackage.value))
                             return@filter true
                         if (it.itemType.websites.contains(urlOrPackage.value))
                             return@filter true

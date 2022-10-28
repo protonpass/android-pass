@@ -3,15 +3,13 @@ package me.proton.pass.autofill.ui.autofill
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.service.autofill.Dataset
 import android.view.autofill.AutofillId
 import android.view.autofill.AutofillManager
-import android.view.autofill.AutofillValue
-import android.widget.RemoteViews
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.os.bundleOf
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.pass.autofill.DatasetUtils
 import me.proton.pass.autofill.entities.AndroidAutofillFieldId
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillData
@@ -63,27 +61,12 @@ class AutofillActivity : ComponentActivity() {
     }
 
     private fun prepareAutofillResult(response: AutofillResponse) {
-        val dataset = generateDataset(response)
+        val dataset = DatasetUtils.generateDataset(packageName, response)
         val replyIntent = Intent().apply {
             putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, dataset)
         }
         setResult(RESULT_OK, replyIntent)
     }
-
-    private fun generateDataset(response: AutofillResponse): Dataset {
-        val datasetBuilder = Dataset.Builder()
-        response.mappings.forEach { mapping ->
-            val remoteView = RemoteViews(packageName, android.R.layout.simple_list_item_1)
-            remoteView.setTextViewText(android.R.id.text1, mapping.displayValue)
-            datasetBuilder.setValue(
-                mapping.autofillFieldId.asAndroid().autofillId,
-                AutofillValue.forText(mapping.contents),
-                remoteView
-            )
-        }
-        return datasetBuilder.build()
-    }
-
 
     companion object {
         const val REQUEST_CODE = 1

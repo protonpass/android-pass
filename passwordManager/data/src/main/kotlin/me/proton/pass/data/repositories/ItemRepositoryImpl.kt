@@ -31,6 +31,7 @@ import me.proton.pass.data.crypto.OpenItem
 import me.proton.pass.data.crypto.UpdateItem
 import me.proton.pass.data.db.PassDatabase
 import me.proton.pass.data.db.entities.ItemEntity
+import me.proton.pass.data.extensions.allowedApps
 import me.proton.pass.data.extensions.hasPackageName
 import me.proton.pass.data.extensions.hasWebsite
 import me.proton.pass.data.extensions.itemType
@@ -593,7 +594,8 @@ class ItemRepositoryImpl @Inject constructor(
             itemType = entity.itemType(cryptoContext),
             title = entity.encryptedTitle,
             note = entity.encryptedNote,
-            content = entity.encryptedContent
+            content = entity.encryptedContent,
+            allowedPackageNames = entity.allowedApps(cryptoContext)
         )
 
     companion object {

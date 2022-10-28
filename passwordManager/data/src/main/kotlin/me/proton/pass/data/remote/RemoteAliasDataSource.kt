@@ -2,6 +2,7 @@ package me.proton.pass.data.remote
 
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
+import me.proton.pass.data.requests.UpdateAliasMailboxesRequest
 import me.proton.pass.data.responses.AliasDetails
 import me.proton.pass.data.responses.AliasOptionsResponse
 import me.proton.pass.domain.ItemId
@@ -13,5 +14,11 @@ interface RemoteAliasDataSource {
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
+    ): Result<AliasDetails>
+    suspend fun updateAliasMailboxes(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        mailboxes: UpdateAliasMailboxesRequest
     ): Result<AliasDetails>
 }

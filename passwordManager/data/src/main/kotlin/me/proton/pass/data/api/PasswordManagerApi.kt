@@ -5,6 +5,7 @@ import me.proton.pass.data.requests.CreateAliasRequest
 import me.proton.pass.data.requests.CreateItemRequest
 import me.proton.pass.data.requests.CreateVaultRequest
 import me.proton.pass.data.requests.TrashItemsRequest
+import me.proton.pass.data.requests.UpdateAliasMailboxesRequest
 import me.proton.pass.data.requests.UpdateItemRequest
 import me.proton.pass.data.responses.AliasDetailsResponse
 import me.proton.pass.data.responses.CreateItemResponse
@@ -102,5 +103,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getAliasDetails(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String
+    ): AliasDetailsResponse
+
+    @POST("$PREFIX/share/{shareId}/alias/{itemId}/mailbox")
+    suspend fun updateAliasMailboxes(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Body request: UpdateAliasMailboxesRequest
     ): AliasDetailsResponse
 }

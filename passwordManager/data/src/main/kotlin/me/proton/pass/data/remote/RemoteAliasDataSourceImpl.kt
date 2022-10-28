@@ -6,6 +6,7 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.toResult
 import me.proton.pass.data.api.PasswordManagerApi
+import me.proton.pass.data.requests.UpdateAliasMailboxesRequest
 import me.proton.pass.data.responses.AliasDetails
 import me.proton.pass.data.responses.AliasOptionsResponse
 import me.proton.pass.domain.ItemId
@@ -34,6 +35,19 @@ class RemoteAliasDataSourceImpl @Inject constructor(
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 getAliasDetails(shareId.id, itemId.id)
+            }
+            .toResult()
+            .map { it.alias }
+
+    override suspend fun updateAliasMailboxes(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        mailboxes: UpdateAliasMailboxesRequest
+    ): Result<AliasDetails> =
+        api.get<PasswordManagerApi>(userId)
+            .invoke {
+                updateAliasMailboxes(shareId.id, itemId.id, mailboxes)
             }
             .toResult()
             .map { it.alias }

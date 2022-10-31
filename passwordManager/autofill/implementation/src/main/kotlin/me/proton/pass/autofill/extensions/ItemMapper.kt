@@ -17,14 +17,24 @@ fun Item.toUiModel(cryptoContext: CryptoContext): ItemUiModel =
         itemType = itemType
     )
 
-fun ItemUiModel.toAutoFillItem(crypto: KeyStoreCrypto): AutofillItem {
+fun ItemUiModel.toAutoFillItem(crypto: KeyStoreCrypto): AutofillItem =
     if (itemType is ItemType.Login) {
         val asLogin = itemType as ItemType.Login
-        return AutofillItem.Login(
+        AutofillItem.Login(
             username = asLogin.username,
             password = asLogin.password.decrypt(crypto)
         )
     } else {
-        return AutofillItem.Unknown
+        AutofillItem.Unknown
     }
-}
+
+fun Item.toAutofillItem(crypto: KeyStoreCrypto): AutofillItem =
+    if (itemType is ItemType.Login) {
+        val asLogin = itemType as ItemType.Login
+        AutofillItem.Login(
+            username = asLogin.username,
+            password = asLogin.password.decrypt(crypto)
+        )
+    } else {
+        AutofillItem.Unknown
+    }

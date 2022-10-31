@@ -10,7 +10,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.autofill.entities.AutofillAppState
-import me.proton.pass.autofill.entities.AutofillResponse
+import me.proton.pass.autofill.entities.AutofillMappings
 import me.proton.pass.autofill.ui.auth.AUTH_SCREEN_ROUTE
 import me.proton.pass.autofill.ui.auth.AuthScreen
 import me.proton.pass.autofill.ui.autofill.select.SELECT_ITEM_ROUTE
@@ -22,7 +22,7 @@ import me.proton.pass.autofill.ui.autofill.select.SelectItemScreen
 fun AutofillApp(
     modifier: Modifier = Modifier,
     state: AutofillAppState,
-    onAutofillResponse: (AutofillResponse?) -> Unit
+    onAutofillResponse: (AutofillMappings?) -> Unit
 ) {
     val navController = rememberAnimatedNavController()
     ProtonTheme {

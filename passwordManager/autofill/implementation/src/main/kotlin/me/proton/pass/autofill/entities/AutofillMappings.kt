@@ -1,5 +1,5 @@
 package me.proton.pass.autofill.entities
 
-data class AutofillResponse(
+data class AutofillMappings(
     val mappings: List<DatasetMapping>
 )

@@ -11,6 +11,7 @@ import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.pass.autofill.DatasetBuilderOptions
 import me.proton.pass.autofill.DatasetUtils
 import me.proton.pass.autofill.InlinePresentationUtils
 import me.proton.pass.autofill.PendingIntentUtils
@@ -44,9 +45,7 @@ internal fun FillResponse.Builder.addInlineSuggestion(
         context = context,
         cryptoContext = cryptoContext,
         item = item.toOption(),
-        authenticateView = None,
-        inlinePresentation = inlinePresentation.some(),
-        pendingIntent = None,
+        dsbOptions = DatasetBuilderOptions(inlinePresentation = inlinePresentation.some()),
         assistFields = assistFields
     )
     addDataset(dataset)
@@ -65,9 +64,10 @@ internal fun FillResponse.Builder.addInlineSuggestion(
         context = context,
         cryptoContext = cryptoContext,
         item = item,
-        authenticateView = None,
-        inlinePresentation = inlinePresentation.some(),
-        pendingIntent = pendingIntent,
+        dsbOptions = DatasetBuilderOptions(
+            inlinePresentation = inlinePresentation.some(),
+            pendingIntent = pendingIntent
+        ),
         assistFields = assistFields
     )
     addDataset(dataset)

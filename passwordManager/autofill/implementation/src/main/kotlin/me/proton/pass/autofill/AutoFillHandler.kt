@@ -125,9 +125,10 @@ object AutoFillHandler {
                 context = context,
                 cryptoContext = cryptoContext,
                 item = None,
-                authenticateView = getDialogView(context).toOption(),
-                inlinePresentation = None,
-                pendingIntent = getOpenAppPendingIntent(context, autofillData).toOption(),
+                dsbOptions = DatasetBuilderOptions(
+                    authenticateView = getDialogView(context).toOption(),
+                    pendingIntent = getOpenAppPendingIntent(context, autofillData).toOption()
+                ),
                 assistFields = autofillData.assistInfo.fields
             )
             responseBuilder.addDataset(defaultDataset)

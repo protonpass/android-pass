@@ -9,7 +9,7 @@ import android.view.autofill.AutofillValue
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
 import me.proton.android.pass.log.PassLogger
-import me.proton.pass.autofill.entities.AssistInfo
+import me.proton.pass.autofill.entities.AssistField
 import me.proton.pass.autofill.entities.AutofillResponse
 import me.proton.pass.autofill.entities.asAndroid
 import me.proton.pass.common.api.Option
@@ -23,15 +23,6 @@ object DatasetUtils {
         response.mappings.forEach { mapping ->
             val remoteView = RemoteViews(packageName, android.R.layout.simple_list_item_1)
             remoteView.setTextViewText(android.R.id.text1, mapping.displayValue)
-            PassLogger.d(
-                "VicLog",
-                "autofillId: " + mapping.autofillFieldId.asAndroid().autofillId.toString()
-            )
-            PassLogger.d(
-                "VicLog",
-                "contents: " + AutofillValue.forText(mapping.contents).toString()
-            )
-            PassLogger.d("VicLog", "displayValue: " + mapping.displayValue)
             datasetBuilder.setValue(
                 mapping.autofillFieldId.asAndroid().autofillId,
                 AutofillValue.forText(mapping.contents),
@@ -45,20 +36,20 @@ object DatasetUtils {
         authenticateView: Option<RemoteViews>,
         inlinePresentation: Option<InlinePresentation>,
         pendingIntent: Option<PendingIntent>,
-        assistInfo: AssistInfo
+        assistFields: List<AssistField>
     ): Dataset = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         buildDatasetGTE33(
             authenticateView = authenticateView,
             inlinePresentation = inlinePresentation,
             pendingIntent = pendingIntent,
-            assistInfo = assistInfo
+            assistFields = assistFields
         )
     } else {
         buildDatasetLT33(
             authenticateView = authenticateView,
             inlinePresentation = inlinePresentation,
             pendingIntent = pendingIntent,
-            assistInfo = assistInfo
+            assistFields = assistFields
         )
     }
 
@@ -67,7 +58,7 @@ object DatasetUtils {
         authenticateView: Option<RemoteViews>,
         inlinePresentation: Option<InlinePresentation>,
         pendingIntent: Option<PendingIntent>,
-        assistInfo: AssistInfo
+        assistFields: List<AssistField>
     ): Dataset {
         val presentationsBuilder = Presentations.Builder()
         if (authenticateView is Some) {
@@ -80,7 +71,7 @@ object DatasetUtils {
         if (pendingIntent is Some) {
             datasetBuilder.setAuthentication(pendingIntent.value.intentSender)
         }
-        for (value in assistInfo.fields) {
+        for (value in assistFields) {
             datasetBuilder.setField(value.id.asAndroid().autofillId, null)
         }
         return datasetBuilder.build()
@@ -90,20 +81,24 @@ object DatasetUtils {
         authenticateView: Option<RemoteViews>,
         inlinePresentation: Option<InlinePresentation>,
         pendingIntent: Option<PendingIntent>,
-        assistInfo: AssistInfo
+        assistFields: List<AssistField>
     ): Dataset {
         val datasetBuilder = if (authenticateView is Some) {
             Dataset.Builder(authenticateView.value)
         } else {
             Dataset.Builder()
         }
+        PassLogger.d("VicLog", "inlinePresentation is Some " + (inlinePresentation is Some).toString())
         if (inlinePresentation is Some && Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             datasetBuilder.setInlinePresentation(inlinePresentation.value)
         }
+        PassLogger.d("VicLog", "pendingIntent is Some " + (pendingIntent is Some).toString())
+
         if (pendingIntent is Some) {
             datasetBuilder.setAuthentication(pendingIntent.value.intentSender)
         }
-        for (value in assistInfo.fields) {
+        for (value in assistFields) {
+            PassLogger.d("VicLog", "value $value")
             datasetBuilder.setValue(
                 value.id.asAndroid().autofillId,
                 null

@@ -1,15 +1,12 @@
 package me.proton.pass.autofill
 
-import android.app.PendingIntent
 import android.app.assist.AssistStructure
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.CancellationSignal
 import android.service.autofill.FillCallback
 import android.service.autofill.FillRequest
 import android.service.autofill.FillResponse
-import android.service.autofill.InlinePresentation
 import android.widget.RemoteViews
 import androidx.annotation.ChecksSdkIntAtLeast
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -20,16 +17,16 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.pass.autofill.PendingIntentUtils.getOpenAppPendingIntent
 import me.proton.pass.autofill.Utils.getWindowNodes
 import me.proton.pass.autofill.entities.AutofillData
 import me.proton.pass.autofill.extensions.addInlineSuggestion
 import me.proton.pass.autofill.extensions.addOpenAppInlineSuggestion
 import me.proton.pass.autofill.extensions.addSaveInfo
 import me.proton.pass.autofill.service.R
-import me.proton.pass.autofill.ui.autofill.AutofillActivity
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Result
-import me.proton.pass.common.api.some
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.usecases.GetSuggestedLoginItems
@@ -40,13 +37,15 @@ import kotlin.math.min
 object AutoFillHandler {
 
     private const val TAG = "AutoFillHandler"
+    private const val INLINE_SUGGESTIONS_OFFSET = 1
 
     fun handleAutofill(
         context: Context,
         request: FillRequest,
         cancellationSignal: CancellationSignal,
         callback: FillCallback,
-        getSuggestedLoginItems: GetSuggestedLoginItems
+        getSuggestedLoginItems: GetSuggestedLoginItems,
+        cryptoContext: CryptoContext
     ) {
         val windowNode = getWindowNodes(request.fillContexts.last()).lastOrNull()
         if (windowNode?.rootViewNode == null) {
@@ -64,7 +63,8 @@ object AutoFillHandler {
                     windowNode = windowNode,
                     callback = callback,
                     request = request,
-                    getSuggestedLoginItems = getSuggestedLoginItems
+                    getSuggestedLoginItems = getSuggestedLoginItems,
+                    cryptoContext = cryptoContext
                 )
             }
 
@@ -79,7 +79,8 @@ object AutoFillHandler {
         windowNode: AssistStructure.WindowNode,
         callback: FillCallback,
         request: FillRequest,
-        getSuggestedLoginItems: GetSuggestedLoginItems
+        getSuggestedLoginItems: GetSuggestedLoginItems,
+        cryptoContext: CryptoContext
     ) {
         val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
         if (assistInfo.fields.isEmpty()) return
@@ -95,36 +96,35 @@ object AutoFillHandler {
                     ?: return
             val min = min(maxSuggestion, suggestedItemsResult.data.size)
             val size = if (maxSuggestion > suggestedItemsResult.data.size) {
-                min + 1
+                min + INLINE_SUGGESTIONS_OFFSET
             } else {
                 min
             }
             if (size > 0) {
-                val emptyPending = getEmptyPendingIntent(context)
-                for (i in 0 until size - 1) {
-                    val inlinePresentation: InlinePresentation =
-                        InlinePresentationUtils.create(
-                            title = "github.com",
-                            subtitle = "vic@test.com".some(),
-                            inlinePresentationSpec = inlineSuggestionRequest.inlinePresentationSpecs[i],
-                            pendingIntent = emptyPending
-                        )
+                val specs =
+                    inlineSuggestionRequest.inlinePresentationSpecs.take(size - INLINE_SUGGESTIONS_OFFSET)
+                for ((index, spec) in specs.withIndex()) {
                     responseBuilder.addInlineSuggestion(
-                        inlinePresentation = inlinePresentation,
-                        pendingIntent = emptyPending.some(),
+                        context = context,
+                        cryptoContext = cryptoContext,
+                        item = suggestedItemsResult.data[index],
+                        spec = spec,
                         assistFields = assistInfo.fields
                     )
                 }
                 responseBuilder.addOpenAppInlineSuggestion(
                     context = context,
+                    cryptoContext = cryptoContext,
                     inlinePresentationSpec = inlineSuggestionRequest.inlinePresentationSpecs[size],
                     pendingIntent = getOpenAppPendingIntent(context, autofillData),
                     assistFields = assistInfo.fields
                 )
             }
-
         } else {
             val defaultDataset = DatasetUtils.buildDataset(
+                context = context,
+                cryptoContext = cryptoContext,
+                item = None,
                 authenticateView = getDialogView(context).toOption(),
                 inlinePresentation = None,
                 pendingIntent = getOpenAppPendingIntent(context, autofillData).toOption(),
@@ -163,29 +163,4 @@ object AutoFillHandler {
         )
         return view
     }
-
-    private fun getOpenAppPendingIntent(
-        context: Context,
-        autofillData: AutofillData
-    ): PendingIntent = PendingIntent.getActivity(
-        context,
-        AutofillActivity.REQUEST_CODE,
-        AutofillActivity.newIntent(context, autofillData),
-        getAutofillPendingIntentFlag()
-    )
-
-    private fun getEmptyPendingIntent(context: Context) =
-        PendingIntent.getService(
-            context,
-            0,
-            Intent(),
-            getAutofillPendingIntentFlag()
-        )
-
-    private fun getAutofillPendingIntentFlag(): Int =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            PendingIntent.FLAG_MUTABLE or PendingIntent.FLAG_CANCEL_CURRENT
-        } else {
-            PendingIntent.FLAG_CANCEL_CURRENT
-        }
 }

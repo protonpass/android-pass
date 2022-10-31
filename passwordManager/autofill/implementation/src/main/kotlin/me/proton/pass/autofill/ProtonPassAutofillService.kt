@@ -30,7 +30,8 @@ class ProtonPassAutofillService : AutofillService() {
             request,
             cancellationSignal,
             callback,
-            getSuggestedLoginItems
+            getSuggestedLoginItems,
+            cryptoContext
         )
     }
 

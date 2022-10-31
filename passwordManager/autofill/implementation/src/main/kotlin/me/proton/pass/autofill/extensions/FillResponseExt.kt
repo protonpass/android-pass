@@ -12,8 +12,8 @@ import androidx.annotation.RequiresApi
 import me.proton.pass.autofill.DatasetUtils
 import me.proton.pass.autofill.InlinePresentationUtils
 import me.proton.pass.autofill.entities.AndroidAutofillFieldId
+import me.proton.pass.autofill.entities.AssistField
 import me.proton.pass.autofill.entities.AssistInfo
-import me.proton.pass.autofill.entities.AutofillData
 import me.proton.pass.autofill.service.R
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
@@ -23,14 +23,14 @@ import me.proton.pass.common.api.toOption
 @RequiresApi(Build.VERSION_CODES.R)
 internal fun FillResponse.Builder.addInlineSuggestion(
     inlinePresentation: InlinePresentation,
-    assistInfo: AssistInfo,
-    pendingIntent: Option<PendingIntent>
+    pendingIntent: Option<PendingIntent>,
+    assistFields: List<AssistField>
 ) {
     val dataset = DatasetUtils.buildDataset(
         authenticateView = None,
         inlinePresentation = inlinePresentation.some(),
         pendingIntent = pendingIntent,
-        assistInfo = assistInfo
+        assistFields = assistFields
     )
     addDataset(dataset)
 }
@@ -38,9 +38,9 @@ internal fun FillResponse.Builder.addInlineSuggestion(
 @RequiresApi(Build.VERSION_CODES.R)
 internal fun FillResponse.Builder.addOpenAppInlineSuggestion(
     context: Context,
-    autofillData: AutofillData,
     inlinePresentationSpec: InlinePresentationSpec,
-    pendingIntent: PendingIntent
+    pendingIntent: PendingIntent,
+    assistFields: List<AssistField>
 ) {
     val defaultTitle = context.getString(R.string.inline_suggestions_open_app)
     val inlinePresentation: InlinePresentation =
@@ -52,8 +52,8 @@ internal fun FillResponse.Builder.addOpenAppInlineSuggestion(
         )
     addInlineSuggestion(
         inlinePresentation = inlinePresentation,
-        assistInfo = autofillData.assistInfo,
-        pendingIntent = pendingIntent.toOption()
+        pendingIntent = pendingIntent.toOption(),
+        assistFields = assistFields
     )
 }
 

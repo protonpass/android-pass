@@ -2,7 +2,7 @@ package me.proton.pass.autofill.ui.autofill
 
 import me.proton.pass.autofill.entities.AndroidAutofillFieldId
 import me.proton.pass.autofill.entities.AutofillItem
-import me.proton.pass.autofill.entities.AutofillResponse
+import me.proton.pass.autofill.entities.AutofillMappings
 import me.proton.pass.autofill.entities.DatasetMapping
 import me.proton.pass.autofill.entities.FieldType
 
@@ -11,7 +11,7 @@ object ItemFieldMapper {
         item: AutofillItem,
         androidAutofillFieldIds: List<AndroidAutofillFieldId>,
         autofillTypes: List<FieldType>
-    ): AutofillResponse {
+    ): AutofillMappings {
         val mappings = when (item) {
             is AutofillItem.Login -> getMappingsForLoginItem(
                 item,
@@ -20,7 +20,7 @@ object ItemFieldMapper {
             )
             is AutofillItem.Unknown -> emptyList()
         }
-        return AutofillResponse(mappings)
+        return AutofillMappings(mappings)
     }
 
     private fun getMappingsForLoginItem(

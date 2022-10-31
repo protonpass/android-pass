@@ -9,19 +9,25 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.os.bundleOf
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.pass.autofill.DatasetBuilderOptions
 import me.proton.pass.autofill.DatasetUtils
 import me.proton.pass.autofill.entities.AndroidAutofillFieldId
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillData
-import me.proton.pass.autofill.entities.AutofillResponse
+import me.proton.pass.autofill.entities.AutofillMappings
 import me.proton.pass.autofill.entities.FieldType
 import me.proton.pass.autofill.entities.asAndroid
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.entity.PackageName
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AutofillActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var cryptoContext: CryptoContext
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,13 +61,19 @@ class AutofillActivity : ComponentActivity() {
         }
     }
 
-    private fun onAutofillResponse(response: AutofillResponse?) {
-        response?.let { prepareAutofillResult(it) }
+    private fun onAutofillResponse(autofillMappings: AutofillMappings?) {
+        autofillMappings?.let { prepareAutofillResult(it) }
         finish()
     }
 
-    private fun prepareAutofillResult(response: AutofillResponse) {
-        val dataset = DatasetUtils.generateDataset(packageName, response)
+    private fun prepareAutofillResult(autofillMappings: AutofillMappings) {
+        val dataset = DatasetUtils.buildDataset(
+            this,
+            cryptoContext,
+            DatasetBuilderOptions(),
+            autofillMappings,
+            emptyList()
+        )
         val replyIntent = Intent().apply {
             putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, dataset)
         }

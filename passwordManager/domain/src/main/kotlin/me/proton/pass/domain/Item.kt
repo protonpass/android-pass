@@ -3,8 +3,7 @@ package me.proton.pass.domain
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 
-@JvmInline
-value class ItemId(val id: String)
+data class ItemId(val id: String)
 
 data class Item(
     val id: ItemId,

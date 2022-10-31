@@ -1,16 +1,13 @@
 package me.proton.pass.domain
 
+import java.util.Date
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.pass.domain.key.SigningKey
 import me.proton.pass.domain.key.VaultKey
-import java.util.Date
 
-@JvmInline
-value class ShareId(val id: String)
-
-@JvmInline
-value class VaultId(val id: String)
+data class ShareId(val id: String)
+data class VaultId(val id: String)
 
 data class Share(
     val id: ShareId,

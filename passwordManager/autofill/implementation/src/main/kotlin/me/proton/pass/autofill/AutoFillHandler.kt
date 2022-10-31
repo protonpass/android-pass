@@ -73,6 +73,7 @@ object AutoFillHandler {
         }
     }
 
+    @Suppress("ReturnCount")
     private suspend fun searchAndFill(
         context: Context,
         windowNode: AssistStructure.WindowNode,
@@ -99,31 +100,26 @@ object AutoFillHandler {
                 min
             }
             if (size > 0) {
+                val emptyPending = getEmptyPendingIntent(context)
                 for (i in 0 until size - 1) {
-                    val pendingIntent = PendingIntent.getService(
-                        context,
-                        0,
-                        Intent(),
-                        getAutofillPendingIntentFlag()
-                    )
                     val inlinePresentation: InlinePresentation =
                         InlinePresentationUtils.create(
                             title = "github.com",
                             subtitle = "vic@test.com".some(),
                             inlinePresentationSpec = inlineSuggestionRequest.inlinePresentationSpecs[i],
-                            pendingIntent = pendingIntent
+                            pendingIntent = emptyPending
                         )
                     responseBuilder.addInlineSuggestion(
                         inlinePresentation = inlinePresentation,
-                        assistInfo = assistInfo,
-                        pendingIntent = pendingIntent.toOption()
+                        pendingIntent = emptyPending.some(),
+                        assistFields = assistInfo.fields
                     )
                 }
                 responseBuilder.addOpenAppInlineSuggestion(
                     context = context,
-                    autofillData = autofillData,
                     inlinePresentationSpec = inlineSuggestionRequest.inlinePresentationSpecs[size],
-                    pendingIntent = getOpenAppPendingIntent(context, autofillData)
+                    pendingIntent = getOpenAppPendingIntent(context, autofillData),
+                    assistFields = assistInfo.fields
                 )
             }
 
@@ -132,7 +128,7 @@ object AutoFillHandler {
                 authenticateView = getDialogView(context).toOption(),
                 inlinePresentation = None,
                 pendingIntent = getOpenAppPendingIntent(context, autofillData).toOption(),
-                assistInfo = autofillData.assistInfo
+                assistFields = autofillData.assistInfo.fields
             )
             responseBuilder.addDataset(defaultDataset)
         }
@@ -168,11 +164,21 @@ object AutoFillHandler {
         return view
     }
 
-    private fun getOpenAppPendingIntent(context: Context, autofillData: AutofillData) =
-        PendingIntent.getActivity(
+    private fun getOpenAppPendingIntent(
+        context: Context,
+        autofillData: AutofillData
+    ): PendingIntent = PendingIntent.getActivity(
+        context,
+        AutofillActivity.REQUEST_CODE,
+        AutofillActivity.newIntent(context, autofillData),
+        getAutofillPendingIntentFlag()
+    )
+
+    private fun getEmptyPendingIntent(context: Context) =
+        PendingIntent.getService(
             context,
-            AutofillActivity.REQUEST_CODE,
-            AutofillActivity.newIntent(context, autofillData),
+            0,
+            Intent(),
             getAutofillPendingIntentFlag()
         )
 

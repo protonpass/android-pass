@@ -111,7 +111,7 @@ object AutoFillHandler {
                     responseBuilder.addItemInlineSuggestion(
                         context = context,
                         cryptoContext = cryptoContext,
-                        item = item,
+                        itemOption = item,
                         inlinePresentationSpec = spec,
                         assistFields = assistInfo.fields
                     )

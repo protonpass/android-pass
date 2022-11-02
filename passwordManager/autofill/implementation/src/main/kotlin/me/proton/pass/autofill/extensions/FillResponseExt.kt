@@ -10,7 +10,6 @@ import android.view.autofill.AutofillId
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.autofill.DatasetBuilderOptions
 import me.proton.pass.autofill.DatasetUtils
 import me.proton.pass.autofill.InlinePresentationUtils
@@ -25,8 +24,9 @@ import me.proton.pass.autofill.service.R
 import me.proton.pass.autofill.ui.autofill.ItemFieldMapper
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
-import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.toOption
+import me.proton.pass.data.extensions.itemName
+import me.proton.pass.data.extensions.loginUsername
 import me.proton.pass.domain.Item
 
 @Suppress("LongParameterList")
@@ -70,8 +70,8 @@ internal fun FillResponse.Builder.addItemInlineSuggestion(
     val inlinePresentation = itemOption
         .map { item ->
             InlinePresentationUtils.create(
-                title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-                subtitle = Some("subtitle"),
+                title = item.itemName(cryptoContext),
+                subtitle = item.loginUsername(cryptoContext),
                 inlinePresentationSpec = inlinePresentationSpec,
                 pendingIntent = PendingIntentUtils.getEmptyPendingIntent(context)
             )

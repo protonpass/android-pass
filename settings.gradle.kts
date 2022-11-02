@@ -35,6 +35,8 @@ include(":passwordManager:presentation")
 include(":passwordManager:screenshot-tests")
 include(":passwordManager:search:api")
 include(":passwordManager:search:implementation")
+include(":passwordManager:preferences:api")
+include(":passwordManager:preferences:implementation")
 include(":passwordManager:test")
 
 dependencyResolutionManagement {

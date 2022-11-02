@@ -71,7 +71,7 @@ internal fun FillResponse.Builder.addItemInlineSuggestion(
         .map { item ->
             InlinePresentationUtils.create(
                 title = item.itemName(cryptoContext),
-                subtitle = item.loginUsername(cryptoContext),
+                subtitle = item.loginUsername(),
                 inlinePresentationSpec = inlinePresentationSpec,
                 pendingIntent = PendingIntentUtils.getEmptyPendingIntent(context)
             )

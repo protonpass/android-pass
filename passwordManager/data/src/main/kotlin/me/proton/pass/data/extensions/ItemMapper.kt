@@ -35,14 +35,9 @@ fun ItemType.Companion.fromParsed(
 fun Item.itemName(cryptoContext: CryptoContext): String =
     title.decrypt(cryptoContext.keyStoreCrypto)
 
-fun Item.loginUsername(cryptoContext: CryptoContext): Option<String> {
-    val decrypted = content.decrypt(cryptoContext.keyStoreCrypto)
-    val parsed = ItemV1.Item.parseFrom(decrypted.array)
-    return if (parsed.content.contentCase == ItemV1.Content.ContentCase.LOGIN) {
-        parsed.content.login.username.toOption()
-    } else {
-        None
-    }
+fun Item.loginUsername(): Option<String> = when (val type = itemType) {
+    is ItemType.Login -> type.username.toOption()
+    else -> None
 }
 
 fun ItemEntity.itemType(cryptoContext: CryptoContext): ItemType {

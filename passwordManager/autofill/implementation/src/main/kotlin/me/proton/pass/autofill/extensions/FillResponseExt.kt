@@ -26,7 +26,6 @@ import me.proton.pass.autofill.ui.autofill.ItemFieldMapper
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Some
-import me.proton.pass.common.api.some
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.Item
 
@@ -64,26 +63,24 @@ private fun FillResponse.Builder.addInlineSuggestion(
 internal fun FillResponse.Builder.addItemInlineSuggestion(
     context: Context,
     cryptoContext: CryptoContext,
-    item: Option<Item>,
+    itemOption: Option<Item>,
     inlinePresentationSpec: InlinePresentationSpec,
     assistFields: List<AssistField>
 ) {
-    val inlinePresentation = when (item) {
-        None -> None
-        is Some -> {
+    val inlinePresentation = itemOption
+        .map { item ->
             InlinePresentationUtils.create(
-                title = item.value.title.decrypt(cryptoContext.keyStoreCrypto),
+                title = item.title.decrypt(cryptoContext.keyStoreCrypto),
                 subtitle = Some("subtitle"),
                 inlinePresentationSpec = inlinePresentationSpec,
                 pendingIntent = PendingIntentUtils.getEmptyPendingIntent(context)
-            ).some()
+            )
         }
-    }
 
     addInlineSuggestion(
         context = context,
         cryptoContext = cryptoContext,
-        itemOption = item,
+        itemOption = itemOption,
         inlinePresentation = inlinePresentation,
         pendingIntent = None,
         assistFields = assistFields

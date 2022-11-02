@@ -1,0 +1,5 @@
+package me.proton.pass.common.api
+
+import kotlin.text.Typography.ellipsis
+
+fun String.ellipsize(size: Int) = take(size) + if (length > size) ellipsis else ""

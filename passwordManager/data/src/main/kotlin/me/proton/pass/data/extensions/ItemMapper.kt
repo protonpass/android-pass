@@ -3,6 +3,9 @@ package me.proton.pass.data.extensions
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
+import me.proton.pass.common.api.toOption
 import me.proton.pass.data.db.entities.ItemEntity
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
@@ -31,6 +34,16 @@ fun ItemType.Companion.fromParsed(
 
 fun Item.itemName(cryptoContext: CryptoContext): String =
     title.decrypt(cryptoContext.keyStoreCrypto)
+
+fun Item.loginUsername(cryptoContext: CryptoContext): Option<String> {
+    val decrypted = content.decrypt(cryptoContext.keyStoreCrypto)
+    val parsed = ItemV1.Item.parseFrom(decrypted.array)
+    return if (parsed.content.contentCase == ItemV1.Content.ContentCase.LOGIN) {
+        parsed.content.login.username.toOption()
+    } else {
+        None
+    }
+}
 
 fun ItemEntity.itemType(cryptoContext: CryptoContext): ItemType {
     val decrypted = encryptedContent.decrypt(cryptoContext.keyStoreCrypto)

@@ -35,20 +35,17 @@ import me.proton.pass.domain.Item
 private fun FillResponse.Builder.addInlineSuggestion(
     context: Context,
     cryptoContext: CryptoContext,
-    item: Option<Item>,
+    itemOption: Option<Item>,
     inlinePresentation: Option<InlinePresentation>,
     pendingIntent: Option<PendingIntent>,
     assistFields: List<AssistField>
 ) {
-    val autofillMappings: Option<AutofillMappings> = when (item) {
-        None -> None
-        is Some -> {
-            ItemFieldMapper.mapFields(
-                item.value.toAutofillItem(cryptoContext.keyStoreCrypto),
-                assistFields.map { it.id.asAndroid() },
-                assistFields.map { it.type ?: FieldType.Unknown }
-            ).some()
-        }
+    val autofillMappings: Option<AutofillMappings> = itemOption.map { item ->
+        ItemFieldMapper.mapFields(
+            item.toAutofillItem(cryptoContext.keyStoreCrypto),
+            assistFields.map { it.id.asAndroid() },
+            assistFields.map { it.type ?: FieldType.Unknown }
+        )
     }
 
     val dataset = DatasetUtils.buildDataset(
@@ -86,7 +83,7 @@ internal fun FillResponse.Builder.addItemInlineSuggestion(
     addInlineSuggestion(
         context = context,
         cryptoContext = cryptoContext,
-        item = item,
+        itemOption = item,
         inlinePresentation = inlinePresentation,
         pendingIntent = None,
         assistFields = assistFields
@@ -112,7 +109,7 @@ internal fun FillResponse.Builder.addOpenAppInlineSuggestion(
     addInlineSuggestion(
         context = context,
         cryptoContext = cryptoContext,
-        item = None,
+        itemOption = None,
         inlinePresentation = inlinePresentation.toOption(),
         pendingIntent = pendingIntent.toOption(),
         assistFields = assistFields

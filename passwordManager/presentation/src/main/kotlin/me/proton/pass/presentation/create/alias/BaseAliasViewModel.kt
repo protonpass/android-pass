@@ -33,7 +33,7 @@ abstract class BaseAliasViewModel(
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(AliasItem.Empty)
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.NotLoading)
+        MutableStateFlow(IsLoadingState.Loading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
     protected val aliasItemValidationErrorsState: MutableStateFlow<Set<AliasItemValidationErrors>> =

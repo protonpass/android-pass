@@ -46,9 +46,9 @@ fun AutofillApp(
                         packageName = state.packageName,
                         webDomain = state.webDomain
                     ),
-                    onItemSelected = {
+                    onItemSelected = { autofillItem ->
                         val response = ItemFieldMapper.mapFields(
-                            item = it,
+                            item = autofillItem,
                             androidAutofillFieldIds = state.androidAutofillIds,
                             autofillTypes = state.fieldTypes
                         )

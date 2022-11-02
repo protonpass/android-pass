@@ -18,7 +18,11 @@ import me.proton.pass.autofill.PendingIntentUtils
 import me.proton.pass.autofill.entities.AndroidAutofillFieldId
 import me.proton.pass.autofill.entities.AssistField
 import me.proton.pass.autofill.entities.AssistInfo
+import me.proton.pass.autofill.entities.AutofillMappings
+import me.proton.pass.autofill.entities.FieldType
+import me.proton.pass.autofill.entities.asAndroid
 import me.proton.pass.autofill.service.R
+import me.proton.pass.autofill.ui.autofill.ItemFieldMapper
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Some
@@ -26,51 +30,67 @@ import me.proton.pass.common.api.some
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.Item
 
+@Suppress("LongParameterList")
 @RequiresApi(Build.VERSION_CODES.R)
-internal fun FillResponse.Builder.addInlineSuggestion(
+private fun FillResponse.Builder.addInlineSuggestion(
     context: Context,
     cryptoContext: CryptoContext,
-    item: Item,
-    spec: InlinePresentationSpec,
+    item: Option<Item>,
+    inlinePresentation: Option<InlinePresentation>,
+    pendingIntent: Option<PendingIntent>,
     assistFields: List<AssistField>
 ) {
-    val inlinePresentation: InlinePresentation =
-        InlinePresentationUtils.create(
-            title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-            subtitle = Some("subtitle"),
-            inlinePresentationSpec = spec,
-            pendingIntent = PendingIntentUtils.getEmptyPendingIntent(context)
-        )
+    val autofillMappings: Option<AutofillMappings> = when (item) {
+        None -> None
+        is Some -> {
+            ItemFieldMapper.mapFields(
+                item.value.toAutofillItem(cryptoContext.keyStoreCrypto),
+                assistFields.map { it.id.asAndroid() },
+                assistFields.map { it.type ?: FieldType.Unknown }
+            ).some()
+        }
+    }
+
     val dataset = DatasetUtils.buildDataset(
         context = context,
-        cryptoContext = cryptoContext,
-        item = item.toOption(),
-        dsbOptions = DatasetBuilderOptions(inlinePresentation = inlinePresentation.some()),
+        autofillMappings = autofillMappings,
+        dsbOptions = DatasetBuilderOptions(
+            inlinePresentation = inlinePresentation,
+            pendingIntent = pendingIntent
+        ),
         assistFields = assistFields
     )
     addDataset(dataset)
 }
 
 @RequiresApi(Build.VERSION_CODES.R)
-internal fun FillResponse.Builder.addInlineSuggestion(
+internal fun FillResponse.Builder.addItemInlineSuggestion(
     context: Context,
     cryptoContext: CryptoContext,
     item: Option<Item>,
-    inlinePresentation: InlinePresentation,
-    pendingIntent: Option<PendingIntent>,
+    inlinePresentationSpec: InlinePresentationSpec,
     assistFields: List<AssistField>
 ) {
-    val dataset = DatasetUtils.buildDataset(
+    val inlinePresentation = when (item) {
+        None -> None
+        is Some -> {
+            InlinePresentationUtils.create(
+                title = item.value.title.decrypt(cryptoContext.keyStoreCrypto),
+                subtitle = Some("subtitle"),
+                inlinePresentationSpec = inlinePresentationSpec,
+                pendingIntent = PendingIntentUtils.getEmptyPendingIntent(context)
+            ).some()
+        }
+    }
+
+    addInlineSuggestion(
         context = context,
         cryptoContext = cryptoContext,
         item = item,
-        dsbOptions = DatasetBuilderOptions(
-            inlinePresentation = inlinePresentation.some(),
-            pendingIntent = pendingIntent
-        ),
+        inlinePresentation = inlinePresentation,
+        pendingIntent = None,
         assistFields = assistFields
     )
-    addDataset(dataset)
 }
 
 @RequiresApi(Build.VERSION_CODES.R)
@@ -93,7 +113,7 @@ internal fun FillResponse.Builder.addOpenAppInlineSuggestion(
         context = context,
         cryptoContext = cryptoContext,
         item = None,
-        inlinePresentation = inlinePresentation,
+        inlinePresentation = inlinePresentation.toOption(),
         pendingIntent = pendingIntent.toOption(),
         assistFields = assistFields
     )

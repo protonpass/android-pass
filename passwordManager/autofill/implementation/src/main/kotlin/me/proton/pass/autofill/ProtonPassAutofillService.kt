@@ -26,12 +26,12 @@ class ProtonPassAutofillService : AutofillService() {
         callback: FillCallback
     ) {
         AutoFillHandler.handleAutofill(
-            this,
-            request,
-            cancellationSignal,
-            callback,
-            getSuggestedLoginItems,
-            cryptoContext
+            context = this,
+            cryptoContext = cryptoContext,
+            request = request,
+            callback = callback,
+            cancellationSignal = cancellationSignal,
+            getSuggestedLoginItems = getSuggestedLoginItems
         )
     }
 

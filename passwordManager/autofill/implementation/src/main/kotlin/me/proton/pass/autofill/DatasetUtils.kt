@@ -8,36 +8,29 @@ import android.service.autofill.Presentations
 import android.view.autofill.AutofillValue
 import android.widget.RemoteViews
 import androidx.annotation.RequiresApi
-import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.pass.autofill.entities.AssistField
-import me.proton.pass.autofill.entities.FieldType
+import me.proton.pass.autofill.entities.AutofillMappings
 import me.proton.pass.autofill.entities.asAndroid
-import me.proton.pass.autofill.extensions.toAutofillItem
-import me.proton.pass.autofill.ui.autofill.ItemFieldMapper
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Some
-import me.proton.pass.domain.Item
 
 object DatasetUtils {
 
     internal fun buildDataset(
         context: Context,
-        cryptoContext: CryptoContext,
         dsbOptions: DatasetBuilderOptions,
-        item: Option<Item>,
+        autofillMappings: Option<AutofillMappings>,
         assistFields: List<AssistField>
     ): Dataset = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         buildDatasetGTE33(
-            cryptoContext = cryptoContext,
-            item = item,
+            autofillMappings = autofillMappings,
             dsbOptions = dsbOptions,
             assistFields = assistFields
         )
     } else {
         buildDatasetLT33(
             context = context,
-            cryptoContext = cryptoContext,
-            item = item,
+            autofillMappings = autofillMappings,
             dsbOptions = dsbOptions,
             assistFields = assistFields
         )
@@ -45,9 +38,8 @@ object DatasetUtils {
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun buildDatasetGTE33(
-        cryptoContext: CryptoContext,
         dsbOptions: DatasetBuilderOptions,
-        item: Option<Item>,
+        autofillMappings: Option<AutofillMappings>,
         assistFields: List<AssistField>
     ): Dataset {
         val presentationsBuilder = Presentations.Builder()
@@ -61,14 +53,8 @@ object DatasetUtils {
         if (dsbOptions.pendingIntent is Some) {
             datasetBuilder.setAuthentication(dsbOptions.pendingIntent.value.intentSender)
         }
-        if (item is Some) {
-            val autofillItem = item.value.toAutofillItem(cryptoContext.keyStoreCrypto)
-            val autofillMappings = ItemFieldMapper.mapFields(
-                autofillItem,
-                assistFields.map { it.id.asAndroid() },
-                assistFields.map { it.type ?: FieldType.Unknown }
-            )
-            autofillMappings.mappings
+        if (autofillMappings is Some) {
+            autofillMappings.value.mappings
                 .forEach { mapping ->
                     val fieldBuilder = Field.Builder()
                     fieldBuilder.setValue(AutofillValue.forText(mapping.contents))
@@ -87,9 +73,8 @@ object DatasetUtils {
 
     private fun buildDatasetLT33(
         context: Context,
-        cryptoContext: CryptoContext,
         dsbOptions: DatasetBuilderOptions,
-        item: Option<Item>,
+        autofillMappings: Option<AutofillMappings>,
         assistFields: List<AssistField>
     ): Dataset {
         val datasetBuilder = if (dsbOptions.authenticateView is Some) {
@@ -106,14 +91,8 @@ object DatasetUtils {
             datasetBuilder.setAuthentication(dsbOptions.pendingIntent.value.intentSender)
         }
 
-        if (item is Some) {
-            val autofillItem = item.value.toAutofillItem(cryptoContext.keyStoreCrypto)
-            val autofillMappings = ItemFieldMapper.mapFields(
-                autofillItem,
-                assistFields.map { it.id.asAndroid() },
-                assistFields.map { it.type ?: FieldType.Unknown }
-            )
-            autofillMappings.mappings
+        if (autofillMappings is Some) {
+            autofillMappings.value.mappings
                 .forEach { mapping ->
                     datasetBuilder.setValue(
                         mapping.autofillFieldId.asAndroid().autofillId,

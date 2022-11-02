@@ -21,11 +21,12 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.pass.autofill.PendingIntentUtils.getOpenAppPendingIntent
 import me.proton.pass.autofill.Utils.getWindowNodes
 import me.proton.pass.autofill.entities.AutofillData
-import me.proton.pass.autofill.extensions.addInlineSuggestion
+import me.proton.pass.autofill.extensions.addItemInlineSuggestion
 import me.proton.pass.autofill.extensions.addOpenAppInlineSuggestion
 import me.proton.pass.autofill.extensions.addSaveInfo
 import me.proton.pass.autofill.service.R
 import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.Item
@@ -39,13 +40,14 @@ object AutoFillHandler {
     private const val TAG = "AutoFillHandler"
     private const val INLINE_SUGGESTIONS_OFFSET = 1
 
+    @Suppress("LongParameterList")
     fun handleAutofill(
         context: Context,
+        cryptoContext: CryptoContext,
         request: FillRequest,
-        cancellationSignal: CancellationSignal,
         callback: FillCallback,
-        getSuggestedLoginItems: GetSuggestedLoginItems,
-        cryptoContext: CryptoContext
+        cancellationSignal: CancellationSignal,
+        getSuggestedLoginItems: GetSuggestedLoginItems
     ) {
         val windowNode = getWindowNodes(request.fillContexts.last()).lastOrNull()
         if (windowNode?.rootViewNode == null) {
@@ -60,11 +62,11 @@ object AutoFillHandler {
             .launch(handler) {
                 searchAndFill(
                     context = context,
+                    cryptoContext = cryptoContext,
                     windowNode = windowNode,
                     callback = callback,
                     request = request,
-                    getSuggestedLoginItems = getSuggestedLoginItems,
-                    cryptoContext = cryptoContext
+                    getSuggestedLoginItems = getSuggestedLoginItems
                 )
             }
 
@@ -73,14 +75,14 @@ object AutoFillHandler {
         }
     }
 
-    @Suppress("ReturnCount")
+    @Suppress("ReturnCount", "LongParameterList")
     private suspend fun searchAndFill(
         context: Context,
+        cryptoContext: CryptoContext,
         windowNode: AssistStructure.WindowNode,
         callback: FillCallback,
         request: FillRequest,
-        getSuggestedLoginItems: GetSuggestedLoginItems,
-        cryptoContext: CryptoContext
+        getSuggestedLoginItems: GetSuggestedLoginItems
     ) {
         val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
         if (assistInfo.fields.isEmpty()) return
@@ -104,11 +106,13 @@ object AutoFillHandler {
                 val specs =
                     inlineSuggestionRequest.inlinePresentationSpecs.take(size - INLINE_SUGGESTIONS_OFFSET)
                 for ((index, spec) in specs.withIndex()) {
-                    responseBuilder.addInlineSuggestion(
+
+                    val item: Option<Item> = suggestedItemsResult.data.getOrNull(index).toOption()
+                    responseBuilder.addItemInlineSuggestion(
                         context = context,
                         cryptoContext = cryptoContext,
-                        item = suggestedItemsResult.data[index],
-                        spec = spec,
+                        item = item,
+                        inlinePresentationSpec = spec,
                         assistFields = assistInfo.fields
                     )
                 }
@@ -123,8 +127,7 @@ object AutoFillHandler {
         } else {
             val defaultDataset = DatasetUtils.buildDataset(
                 context = context,
-                cryptoContext = cryptoContext,
-                item = None,
+                autofillMappings = None,
                 dsbOptions = DatasetBuilderOptions(
                     authenticateView = getDialogView(context).toOption(),
                     pendingIntent = getOpenAppPendingIntent(context, autofillData).toOption()

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.ui.navigation.NavItem
 import me.proton.android.pass.ui.navigation.composable
+import me.proton.pass.presentation.settings.SettingsScreen
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
 fun NavGraphBuilder.settingsGraph(

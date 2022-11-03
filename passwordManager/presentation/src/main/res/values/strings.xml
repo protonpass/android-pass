@@ -135,4 +135,20 @@
     <!--  Common create items  -->
     <string name="changes_saved">Changes saved</string>
 
+    <!-- Settings -->
+    <string name="settings_autofill_section_title">Autofill</string>
+    <string name="settings_autofill_preference_title">Autofill service</string>
+    <string name="settings_autofill_preference_description">Save and fill usernames and password in apps and supported browsers.</string>
+
+    <string name="settings_authentication_section_title">Authentication</string>
+    <string name="settings_authentication_preference_title">Fingerprint unlock</string>
+    <string name="settings_authentication_preference_description">Require your fingerprint for interacting with the app.</string>
+
+    <string name="settings_appearance_section_title">Appearance</string>
+    <string name="settings_appearance_preference_title">Theme</string>
+    <string name="settings_appearance_preference_subtitle_match_system">Match system</string>
+    <string name="settings_appearance_preference_subtitle_light">Light</string>
+    <string name="settings_appearance_preference_subtitle_dark">Dark</string>
+    <string name="settings_appearance_preference_description">Select the theme for the app.</string>
+
 </resources>

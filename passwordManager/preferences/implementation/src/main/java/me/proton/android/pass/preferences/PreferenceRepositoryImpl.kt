@@ -16,10 +16,7 @@ class PreferenceRepositoryImpl @Inject constructor(
 
     override fun setBiometricLockState(state: BiometricLockState): Flow<Unit> = flow {
         dataStore.edit { preferences ->
-            preferences[PassPreferences.BIOMETRIC_LOCK] = when (state) {
-                BiometricLockState.Enabled -> true
-                BiometricLockState.Disabled -> false
-            }
+            preferences[PassPreferences.BIOMETRIC_LOCK] = state.value()
         }
     }
 
@@ -27,11 +24,6 @@ class PreferenceRepositoryImpl @Inject constructor(
         dataStore.data
             .map { preferences ->
                 val value = preferences[PassPreferences.BIOMETRIC_LOCK] ?: DEFAULT_BIOMETRIC_LOCK
-                if (value) {
-                    BiometricLockState.Enabled
-                } else {
-                    BiometricLockState.Disabled
-                }
+                BiometricLockState.from(value)
             }
-
 }

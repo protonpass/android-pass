@@ -5,15 +5,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.android.pass.preferences.ThemePreference
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 
 @Composable
@@ -38,24 +32,5 @@ fun Settings(
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             theme = state.themePreference
         )
-    }
-}
-
-@Preview
-@Composable
-fun SettingsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
-    ProtonTheme(isDark = isDark) {
-        Surface {
-            Settings(
-                state = SettingsUiState(
-                    isFingerPrintEnabled = IsButtonEnabled.Enabled,
-                    themePreference = ThemePreference.System
-                ),
-                onFingerPrintLockChange = {},
-                onOpenThemeSelection = {}
-            )
-        }
     }
 }

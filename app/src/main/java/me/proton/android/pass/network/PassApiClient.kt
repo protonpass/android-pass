@@ -2,6 +2,7 @@ package me.proton.android.pass.network
 
 import android.os.Build
 import me.proton.android.pass.BuildConfig
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.network.domain.ApiClient
 import java.util.Locale
 import javax.inject.Inject
@@ -21,5 +22,11 @@ class PassApiClient @Inject constructor() : ApiClient {
         .append(")")
         .toString()
 
-    override fun forceUpdate(errorMessage: String) = Unit
+    override fun forceUpdate(errorMessage: String) {
+        PassLogger.i(TAG, errorMessage)
+    }
+
+    companion object {
+        const val TAG = "PassApiClient"
+    }
 }

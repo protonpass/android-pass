@@ -3,7 +3,9 @@ package me.proton.pass.domain.usecases
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Result
+import me.proton.pass.common.api.some
 import me.proton.pass.domain.Item
 import me.proton.pass.test.domain.TestItem
 import me.proton.pass.test.domain.TestItemType
@@ -40,7 +42,7 @@ class GetSuggestedLoginItemsImplTest {
             )
             val successResult: Result<List<Item>> = Result.Success(listOf(firstItem, secondItem))
             observeActiveItems.sendItemList(successResult)
-            getSuggestedLoginItems.invoke(UrlOrPackage("my.first.package.name"))
+            getSuggestedLoginItems.invoke("my.first.package.name".some(), None)
                 .test {
                     assertThat(awaitItem())
                         .isEqualTo(Result.Success(listOf(firstItem)))
@@ -57,7 +59,7 @@ class GetSuggestedLoginItemsImplTest {
             )
             val successResult: Result<List<Item>> = Result.Success(listOf(item))
             observeActiveItems.sendItemList(successResult)
-            getSuggestedLoginItems.invoke(UrlOrPackage("my.incorrect.package.name"))
+            getSuggestedLoginItems.invoke("my.incorrect.package.name".some(), None)
                 .test {
                     assertThat(awaitItem())
                         .isEqualTo(Result.Success(emptyList<Item>()))
@@ -76,7 +78,7 @@ class GetSuggestedLoginItemsImplTest {
                 listOf(firstItem, TestItem.create(secondItemType))
             )
             observeActiveItems.sendItemList(successResult)
-            getSuggestedLoginItems.invoke(UrlOrPackage("www.proton.me"))
+            getSuggestedLoginItems.invoke(None, "www.proton.me".some())
                 .test {
                     assertThat(awaitItem())
                         .isEqualTo(Result.Success(listOf(firstItem)))
@@ -90,7 +92,7 @@ class GetSuggestedLoginItemsImplTest {
             val item = TestItem.create(itemType)
             val successResult: Result<List<Item>> = Result.Success(listOf(item))
             observeActiveItems.sendItemList(successResult)
-            getSuggestedLoginItems.invoke(UrlOrPackage("www.proton.me.2"))
+            getSuggestedLoginItems.invoke(None, "www.proton.me.2".some())
                 .test {
                     assertThat(awaitItem())
                         .isEqualTo(Result.Success(emptyList<Item>()))

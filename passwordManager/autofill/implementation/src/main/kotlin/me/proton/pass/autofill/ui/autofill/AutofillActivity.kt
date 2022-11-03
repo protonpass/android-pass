@@ -1,10 +1,12 @@
 package me.proton.pass.autofill.ui.autofill
 
+import android.R
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.autofill.AutofillId
 import android.view.autofill.AutofillManager
+import android.widget.RemoteViews
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.os.bundleOf
@@ -62,9 +64,13 @@ class AutofillActivity : ComponentActivity() {
     }
 
     private fun prepareAutofillResult(autofillMappings: AutofillMappings) {
+        val remoteView = RemoteViews(packageName, R.layout.simple_list_item_1).toOption()
         val dataset = DatasetUtils.buildDataset(
             this,
-            DatasetBuilderOptions(),
+            DatasetBuilderOptions(
+                // Autofill presentations cannot be empty on 33, or it will throw an IllegalStateException
+                authenticateView = remoteView
+            ),
             autofillMappings.toOption(),
             emptyList()
         )

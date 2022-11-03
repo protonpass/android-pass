@@ -20,17 +20,33 @@ package me.proton.android.pass.log
 
 import android.content.Context
 import androidx.startup.Initializer
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
+import me.proton.core.usersettings.domain.DeviceSettingsHandler
+import me.proton.core.usersettings.domain.onDeviceSettingsChanged
 import me.proton.core.util.kotlin.CoreLogger
 import timber.log.Timber
 
 class LoggerInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
-        } else {
-            // Timber.plant(SentryTree())
+        val entryPoint = EntryPointAccessors.fromApplication(
+            context.applicationContext,
+            LoggerInitializerEntryPoint::class.java
+        )
+
+        val tree = if (BuildConfig.DEBUG) Timber.DebugTree() else null // SentryTree()
+        val handler = entryPoint.handler()
+        handler.onDeviceSettingsChanged {
+            if (it.isCrashReportEnabled) {
+                tree?.let { tree -> Timber.plant(tree) }
+            } else {
+                Timber.uprootAll()
+            }
         }
+
         PassLogger.deviceInfo()
 
         // Forward Core Logs to Timber, using AppLogger.
@@ -44,5 +60,11 @@ class LoggerInitializer : Initializer<Unit> {
             emptyList()
             // listOf(SentryInitializer::class.java)
         }
+    }
+
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface LoggerInitializerEntryPoint {
+        fun handler(): DeviceSettingsHandler
     }
 }

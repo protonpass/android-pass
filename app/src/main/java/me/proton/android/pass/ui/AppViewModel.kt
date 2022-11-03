@@ -16,6 +16,7 @@ import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
+import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
@@ -41,7 +42,8 @@ class AppViewModel @Inject constructor(
     private val createVault: CreateVault,
     private val refreshShares: RefreshShares,
     private val cryptoContext: CryptoContext,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarMessageRepository: SnackbarMessageRepository,
+    preferenceRepository: PreferenceRepository
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -55,8 +57,9 @@ class AppViewModel @Inject constructor(
     val appUiState: StateFlow<AppUiState> = combine(
         currentUserFlow,
         drawerSectionState,
-        snackbarMessageRepository.snackbarMessage
-    ) { user, sectionState, snackbarMessage ->
+        snackbarMessageRepository.snackbarMessage,
+        preferenceRepository.getThemePreference()
+    ) { user, sectionState, snackbarMessage, theme ->
         AppUiState(
             snackbarMessage = snackbarMessage,
             drawerUiState = DrawerUiState(
@@ -65,7 +68,8 @@ class AppViewModel @Inject constructor(
                 currentUser = user,
                 selectedSection = sectionState,
                 internalDrawerEnabled = BuildConfig.FLAVOR == "dev"
-            )
+            ),
+            theme = theme
         )
     }
         .stateIn(

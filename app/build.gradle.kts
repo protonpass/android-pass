@@ -263,6 +263,7 @@ dependencies {
     implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:notifications:api"))
     implementation(project(":passwordManager:notifications:implementation"))
+    implementation(project(":passwordManager:preferences:api"))
     implementation(project(":passwordManager:preferences:implementation"))
     implementation(project(":passwordManager:presentation"))
     implementation(project(":passwordManager:search:implementation"))

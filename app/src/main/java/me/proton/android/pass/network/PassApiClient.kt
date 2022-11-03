@@ -1,10 +1,10 @@
 package me.proton.android.pass.network
 
 import android.os.Build
-import java.util.Locale
-import javax.inject.Inject
 import me.proton.android.pass.BuildConfig
 import me.proton.core.network.domain.ApiClient
+import java.util.Locale
+import javax.inject.Inject
 
 class PassApiClient @Inject constructor() : ApiClient {
     override val appVersionHeader: String = "android-pass@${BuildConfig.VERSION_NAME}"
@@ -21,7 +21,5 @@ class PassApiClient @Inject constructor() : ApiClient {
         .append(")")
         .toString()
 
-    override fun forceUpdate(errorMessage: String) {
-        TODO("Not yet implemented")
-    }
+    override fun forceUpdate(errorMessage: String) = Unit
 }

@@ -8,6 +8,7 @@ import android.service.autofill.FillCallback
 import android.service.autofill.FillRequest
 import android.service.autofill.FillResponse
 import android.widget.RemoteViews
+import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.ChecksSdkIntAtLeast
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
@@ -28,6 +29,7 @@ import me.proton.pass.autofill.service.R
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
+import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.usecases.GetSuggestedLoginItems
@@ -89,52 +91,44 @@ object AutoFillHandler {
         val autofillData = AutofillData(assistInfo, Utils.getApplicationPackageName(windowNode))
         val responseBuilder = FillResponse.Builder()
         if (hasSupportForInlineSuggestions(request)) {
-            val inlineSuggestionRequest = request.inlineSuggestionsRequest ?: return
-            val maxSuggestion = inlineSuggestionRequest.maxSuggestionCount
-            val suggestedItemsResult: Result.Success<List<Item>> =
+            val inlineRequest = request.inlineSuggestionsRequest ?: return
+            val maxSuggestion = inlineRequest.maxSuggestionCount
+            val suggestedItemsResult: Option<Result.Success<List<Item>>> =
                 getSuggestedLoginItems(UrlOrPackage(autofillData.packageName))
                     .filterIsInstance<Result.Success<List<Item>>>()
                     .firstOrNull()
-                    ?: return
-            val min = min(maxSuggestion, suggestedItemsResult.data.size)
-            val size = if (maxSuggestion > suggestedItemsResult.data.size) {
-                min + INLINE_SUGGESTIONS_OFFSET
-            } else {
-                min
-            }
-            if (size > 0) {
-                val specs =
-                    inlineSuggestionRequest.inlinePresentationSpecs.take(size - INLINE_SUGGESTIONS_OFFSET)
-                for ((index, spec) in specs.withIndex()) {
-
-                    val item: Option<Item> = suggestedItemsResult.data.getOrNull(index).toOption()
-                    responseBuilder.addItemInlineSuggestion(
-                        context = context,
-                        cryptoContext = cryptoContext,
-                        itemOption = item,
-                        inlinePresentationSpec = spec,
-                        assistFields = assistInfo.fields
-                    )
-                }
-                responseBuilder.addOpenAppInlineSuggestion(
-                    context = context,
-                    cryptoContext = cryptoContext,
-                    inlinePresentationSpec = inlineSuggestionRequest.inlinePresentationSpecs[size],
-                    pendingIntent = getOpenAppPendingIntent(context, autofillData),
-                    assistFields = assistInfo.fields
+                    .toOption()
+            if (suggestedItemsResult is Some) {
+                val size: Int = getAvailableSuggestionSpots(
+                    maxSuggestion = maxSuggestion,
+                    itemsSize = suggestedItemsResult.value.data.size
                 )
+                if (size > 0) {
+                    val specs: List<InlinePresentationSpec> =
+                        inlineRequest.inlinePresentationSpecs.take(size - INLINE_SUGGESTIONS_OFFSET)
+                    for ((index, spec) in specs.withIndex()) {
+                        val item: Option<Item> = suggestedItemsResult.value.data
+                            .getOrNull(index)
+                            .toOption()
+                        responseBuilder.addItemInlineSuggestion(
+                            context = context,
+                            cryptoContext = cryptoContext,
+                            itemOption = item,
+                            inlinePresentationSpec = spec,
+                            assistFields = assistInfo.fields
+                        )
+                    }
+                }
             }
-        } else {
-            val defaultDataset = DatasetUtils.buildDataset(
+            responseBuilder.addOpenAppInlineSuggestion(
                 context = context,
-                autofillMappings = None,
-                dsbOptions = DatasetBuilderOptions(
-                    authenticateView = getDialogView(context).toOption(),
-                    pendingIntent = getOpenAppPendingIntent(context, autofillData).toOption()
-                ),
-                assistFields = autofillData.assistInfo.fields
+                cryptoContext = cryptoContext,
+                inlinePresentationSpec = inlineRequest.inlinePresentationSpecs.last(),
+                pendingIntent = getOpenAppPendingIntent(context, autofillData),
+                assistFields = assistInfo.fields
             )
-            responseBuilder.addDataset(defaultDataset)
+        } else {
+            addMenuPresentationDataset(context, autofillData, responseBuilder)
         }
         if (!coroutineContext.isActive) {
             callback.onFailure(context.getString(R.string.error_credentials_not_found))
@@ -142,6 +136,32 @@ object AutoFillHandler {
         }
         responseBuilder.addSaveInfo(assistInfo)
         callback.onSuccess(responseBuilder.build())
+    }
+
+    private fun addMenuPresentationDataset(
+        context: Context,
+        autofillData: AutofillData,
+        responseBuilder: FillResponse.Builder
+    ) {
+        val defaultDataset = DatasetUtils.buildDataset(
+            context = context,
+            autofillMappings = None,
+            dsbOptions = DatasetBuilderOptions(
+                authenticateView = getMenuPresentationView(context).toOption(),
+                pendingIntent = getOpenAppPendingIntent(context, autofillData).toOption()
+            ),
+            assistFields = autofillData.assistInfo.fields
+        )
+        responseBuilder.addDataset(defaultDataset)
+    }
+
+    private fun getAvailableSuggestionSpots(maxSuggestion: Int, itemsSize: Int): Int {
+        val min = min(maxSuggestion, itemsSize)
+        return if (maxSuggestion > itemsSize) {
+            min + INLINE_SUGGESTIONS_OFFSET
+        } else {
+            min
+        }
     }
 
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.R)
@@ -156,7 +176,7 @@ object AutoFillHandler {
             false
         }
 
-    private fun getDialogView(context: Context): RemoteViews {
+    private fun getMenuPresentationView(context: Context): RemoteViews {
         val view = RemoteViews(
             context.packageName,
             android.R.layout.simple_list_item_1

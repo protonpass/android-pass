@@ -17,7 +17,7 @@
  */
 
 import java.io.FileInputStream
-import java.util.Properties
+import java.util.*
 
 plugins {
     id("com.android.application")
@@ -263,6 +263,7 @@ dependencies {
     implementation(project(":passwordManager:domain"))
     implementation(project(":passwordManager:notifications:api"))
     implementation(project(":passwordManager:notifications:implementation"))
+    implementation(project(":passwordManager:preferences:implementation"))
     implementation(project(":passwordManager:presentation"))
     implementation(project(":passwordManager:search:implementation"))
     implementation(project(":passwordManager:log"))

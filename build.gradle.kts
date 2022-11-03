@@ -86,9 +86,3 @@ fun isNonStable(version: String): Boolean {
 protonDetekt {
     threshold = 0
 }
-
-subprojects {
-    tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
-        baseline.set(file("${rootProject.projectDir}/detekt-baseline.xml"))
-    }
-}

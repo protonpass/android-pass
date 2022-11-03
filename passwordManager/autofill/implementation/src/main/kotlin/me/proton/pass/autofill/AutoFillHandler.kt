@@ -33,7 +33,6 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.usecases.GetSuggestedLoginItems
-import me.proton.pass.domain.usecases.UrlOrPackage
 import kotlin.coroutines.coroutineContext
 import kotlin.math.min
 
@@ -94,7 +93,10 @@ object AutoFillHandler {
             val inlineRequest = request.inlineSuggestionsRequest ?: return
             val maxSuggestion = inlineRequest.maxSuggestionCount
             val suggestedItemsResult: Option<Result.Success<List<Item>>> =
-                getSuggestedLoginItems(UrlOrPackage(autofillData.packageName))
+                getSuggestedLoginItems(
+                    packageName = autofillData.packageName.toOption(),
+                    url = autofillData.assistInfo.url
+                )
                     .filterIsInstance<Result.Success<List<Item>>>()
                     .firstOrNull()
                     .toOption()

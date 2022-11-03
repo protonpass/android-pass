@@ -6,9 +6,12 @@ import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import me.proton.android.pass.preferences.extensions.from
+import me.proton.android.pass.preferences.extensions.value
 import javax.inject.Inject
 
-private const val DEFAULT_BIOMETRIC_LOCK = false
+private val DEFAULT_BIOMETRIC_LOCK = BiometricLockState.Disabled.value()
+private val DEFAULT_THEME_PREFERENCE = ThemePreference.System.value()
 
 class PreferenceRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<Preferences>
@@ -18,6 +21,7 @@ class PreferenceRepositoryImpl @Inject constructor(
         dataStore.edit { preferences ->
             preferences[PassPreferences.BIOMETRIC_LOCK] = state.value()
         }
+        emit(Unit)
     }
 
     override fun getBiometricLockState(): Flow<BiometricLockState> =
@@ -25,5 +29,19 @@ class PreferenceRepositoryImpl @Inject constructor(
             .map { preferences ->
                 val value = preferences[PassPreferences.BIOMETRIC_LOCK] ?: DEFAULT_BIOMETRIC_LOCK
                 BiometricLockState.from(value)
+            }
+
+    override fun setThemePreference(theme: ThemePreference): Flow<Unit> = flow {
+        dataStore.edit { preferences ->
+            preferences[PassPreferences.THEME] = theme.value()
+        }
+        emit(Unit)
+    }
+
+    override fun getThemePreference(): Flow<ThemePreference> =
+        dataStore.data
+            .map { preferences ->
+                val value = preferences[PassPreferences.THEME] ?: DEFAULT_THEME_PREFERENCE
+                ThemePreference.from(value)
             }
 }

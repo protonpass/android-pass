@@ -1,5 +1,6 @@
 package me.proton.pass.presentation.settings
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.uievents.IsButtonEnabled
@@ -18,6 +20,7 @@ import me.proton.pass.presentation.uievents.IsButtonEnabled
 fun Settings(
     modifier: Modifier = Modifier,
     state: SettingsUiState,
+    onOpenThemeSelection: () -> Unit,
     onFingerPrintLockChange: (IsButtonEnabled) -> Unit
 ) {
     Column(modifier = modifier) {
@@ -29,7 +32,12 @@ fun Settings(
             onToggleChange = onFingerPrintLockChange
         )
         Divider(modifier = Modifier.fillMaxWidth())
-        AppearanceSection(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp))
+        AppearanceSection(
+            modifier = Modifier
+                .clickable(onClick = onOpenThemeSelection)
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            theme = state.themePreference
+        )
     }
 }
 
@@ -41,8 +49,12 @@ fun SettingsPreview(
     ProtonTheme(isDark = isDark) {
         Surface {
             Settings(
-                state = SettingsUiState(isFingerPrintEnabled = IsButtonEnabled.Enabled),
-                onFingerPrintLockChange = {}
+                state = SettingsUiState(
+                    isFingerPrintEnabled = IsButtonEnabled.Enabled,
+                    themePreference = ThemePreference.System
+                ),
+                onFingerPrintLockChange = {},
+                onOpenThemeSelection = {}
             )
         }
     }

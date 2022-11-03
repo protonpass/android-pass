@@ -27,6 +27,7 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.map
+import me.proton.pass.common.api.toOption
 import me.proton.pass.data.usecases.UpdateAutofillItem
 import me.proton.pass.data.usecases.UpdateAutofillItemData
 import me.proton.pass.domain.Item
@@ -122,14 +123,14 @@ class SelectItemViewModel @Inject constructor(
         )
 
     fun onItemClicked(item: ItemUiModel, packageName: PackageName) {
-        if (shouldUpdateItem(packageName)) {
+        val packageNameOption = packageName.takeIf { !BROWSERS.contains(packageName.packageName) }
+            .toOption()
+        val domain = webDomainFilterState.value
+        if (packageNameOption is Some || domain is Some) {
             updateAutofillItem(
                 shareId = item.shareId,
                 itemId = item.id,
-                data = UpdateAutofillItemData(
-                    packageName = Some(packageName),
-                    url = webDomainFilterState.value
-                )
+                data = UpdateAutofillItemData(packageNameOption, domain)
             )
         }
 
@@ -169,10 +170,6 @@ class SelectItemViewModel @Inject constructor(
     fun setWebDomain(domain: Option<String>) {
         webDomainFilterState.update { domain }
     }
-
-    private fun shouldUpdateItem(packageName: PackageName): Boolean =
-        webDomainFilterState.value is Some || !BROWSERS.contains(packageName.packageName)
-
 
     companion object {
         private const val TAG = "SelectItemViewModel"

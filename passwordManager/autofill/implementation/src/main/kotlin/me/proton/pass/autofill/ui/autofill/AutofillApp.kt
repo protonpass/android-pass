@@ -3,12 +3,17 @@ package me.proton.pass.autofill.ui.autofill
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillMappings
 import me.proton.pass.autofill.ui.auth.AUTH_SCREEN_ROUTE
@@ -25,7 +30,16 @@ fun AutofillApp(
     onAutofillResponse: (AutofillMappings?) -> Unit
 ) {
     val navController = rememberAnimatedNavController()
-    ProtonTheme {
+    val viewModel: AutofillAppViewModel = hiltViewModel()
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
+
+    val isDark = when (uiState.theme) {
+        ThemePreference.Light -> false
+        ThemePreference.Dark -> true
+        ThemePreference.System -> isNightMode()
+    }
+
+    ProtonTheme(isDark = isDark) {
         AnimatedNavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
             navController = navController,

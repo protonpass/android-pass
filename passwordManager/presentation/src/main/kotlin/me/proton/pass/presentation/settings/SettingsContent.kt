@@ -1,13 +1,10 @@
-package me.proton.android.pass.ui.settings
+package me.proton.pass.presentation.settings
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberScaffoldState
@@ -16,12 +13,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.pass.presentation.R
+import me.proton.pass.presentation.uievents.IsButtonEnabled
 
-@ExperimentalMaterialApi
 @Composable
-fun SettingsScreen(
+fun SettingsContent(
     modifier: Modifier = Modifier,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
+    state: SettingsUiState,
+    onFingerPrintLockChange: (IsButtonEnabled) -> Unit,
     onDrawerIconClick: () -> Unit
 ) {
     Scaffold(
@@ -30,7 +30,7 @@ fun SettingsScreen(
             ProtonTopAppBar(
                 title = {
                     TopBarTitleView(
-                        title = stringResource(id = me.proton.pass.presentation.R.string.title_settings)
+                        title = stringResource(id = R.string.title_settings)
                     )
                 },
                 navigationIcon = {
@@ -43,8 +43,10 @@ fun SettingsScreen(
             )
         }
     ) { contentPadding ->
-        Box(modifier = modifier.padding(contentPadding)) {
-            Text(text = "Future settings screen")
-        }
+        Settings(
+            modifier = modifier.padding(contentPadding),
+            state = state,
+            onFingerPrintLockChange = onFingerPrintLockChange
+        )
     }
 }

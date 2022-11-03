@@ -150,5 +150,6 @@
     <string name="settings_appearance_preference_subtitle_light">Light</string>
     <string name="settings_appearance_preference_subtitle_dark">Dark</string>
     <string name="settings_appearance_preference_description">Select the theme for the app.</string>
+    <string name="settings_theme_selector_title">Select the theme</string>
 
 </resources>

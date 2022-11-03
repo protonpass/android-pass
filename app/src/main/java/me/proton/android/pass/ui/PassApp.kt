@@ -26,6 +26,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import me.proton.android.pass.preferences.ThemePreference
 import me.proton.android.pass.ui.internal.InternalDrawerState
 import me.proton.android.pass.ui.internal.InternalDrawerValue
 import me.proton.android.pass.ui.internal.rememberInternalDrawerState
@@ -35,6 +36,7 @@ import me.proton.android.pass.ui.navigation.rememberAnimatedNavController
 import me.proton.android.pass.ui.navigation.rememberAppNavigator
 import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.common.api.Some
 import me.proton.pass.presentation.components.common.PassSnackbarHost
 import me.proton.pass.presentation.components.common.rememberPassSnackbarHostState
@@ -53,9 +55,15 @@ fun PassApp(
         appViewModel.onStart()
     }
 
-    ProtonTheme {
+    val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
+
+    val isDark = when (appUiState.theme) {
+        ThemePreference.Dark -> true
+        ThemePreference.Light -> false
+        ThemePreference.System -> isNightMode()
+    }
+    ProtonTheme(isDark = isDark) {
         ProvideWindowInsets {
-            val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
             PassAppContent(
                 modifier = modifier,
                 appUiState = appUiState,

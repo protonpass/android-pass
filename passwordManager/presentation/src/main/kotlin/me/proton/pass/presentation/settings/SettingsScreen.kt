@@ -25,6 +25,7 @@ fun SettingsScreen(
         scaffoldState = scaffoldState,
         onDrawerIconClick = onDrawerIconClick,
         state = state,
+        onThemeChange = { viewModel.onThemePreferenceChange(it) },
         onFingerPrintLockChange = { viewModel.onFingerPrintLockChange(it) }
     )
 }

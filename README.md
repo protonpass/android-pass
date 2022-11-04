@@ -27,3 +27,13 @@ $ ./gradlew assembleDevDebug
 ```
 
 The APK will be in `app/build/outputs/apk/dev/debug/`.
+
+## How to create modules
+
+To ease modularization we have a task that will create modules for us, we can run with the following command:
+
+```
+$ ./gradlew genModule --module=:pass:my-new-module --conf=api,impl,fakes
+```
+
+Where as a module we specify the path of the module and as configuration we pass which submodules should contain. `api` for the exposed contract, `impl` for the actual implementation and `fakes` for the exposed fake implementations for tests.

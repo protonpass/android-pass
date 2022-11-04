@@ -1,17 +1,18 @@
 plugins {
-    id("com.android.library")
+    id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.kapt")
-    id("dagger.hilt.android.plugin")
-    id("com.google.devtools.ksp")
+    id("kotlin-android")
 }
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
+        applicationId = "me.proton.pass.core.autofill.sample"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
+        versionCode = Config.versionCode
+        versionName = Config.versionName
         testInstrumentationRunner = Config.testInstrumentationRunner
     }
 
@@ -23,34 +24,31 @@ android {
 
     buildTypes {
         debug {
+            isMinifyEnabled = false
+            isDebuggable = true
             isTestCoverageEnabled = true
         }
         release {
             isMinifyEnabled = true
+            //isShrinkResources = true // should be replaced by useResourceShrinker
+            proguardFiles(
+                getDefaultProguardFile("proguard-android.txt"),
+                "proguard-rules.pro"
+            )
         }
-    }
-    flavorDimensions += "default"
-    productFlavors {
-        maybeCreate("dev")
-        maybeCreate("alpha")
-        maybeCreate("prod")
     }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-
-    hilt {
-        enableAggregatingTask = true
+        jvmTarget = "11"
     }
 
     buildFeatures {
         compose = true
+        viewBinding = true
     }
 
     composeOptions {
@@ -65,7 +63,12 @@ android {
 }
 
 dependencies {
-    implementation(libs.accompanist.swipeRefresh)
+    implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.insets)
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.systemUiController)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.compose.foundationLayout)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.foundationLayout)
@@ -74,36 +77,10 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uiTooling)
-    implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.androidx.hilt.work)
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.core.accountManager)
-    implementation(libs.core.accountManager.presentation.compose)
-    implementation(libs.core.auth)
-    implementation(libs.core.domain)
-    implementation(libs.core.key)
-    implementation(libs.core.network)
-    implementation(libs.core.presentation)
+    implementation(libs.material)
     implementation(libs.core.presentation.compose)
-    implementation(libs.core.user)
-    implementation(libs.core.utilKotlin)
 
-    implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
-
-    add("devImplementation", libs.showkase)
-    add("kspDev", libs.showkaseProcessor)
-
-    implementation(project(":passwordManager:common:api"))
-    implementation(project(":passwordManager:common-ui:api"))
-    implementation(project(":passwordManager:domain"))
-    implementation(project(":passwordManager:log"))
-    implementation(project(":passwordManager:notifications:api"))
-    implementation(project(":passwordManager:preferences:api"))
-
-    debugImplementation(libs.androidx.compose.uiTooling)
-    debugImplementation(libs.androidx.compose.uiTestManifest)
+    implementation(project(":pass:common-ui:api"))
 
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
@@ -111,7 +88,6 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.core.test.kotlin)
-    testImplementation(project(":passwordManager:test"))
 
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)

@@ -36,8 +36,8 @@ androidComponents {
 }
 
 dependencies {
-    implementation(project(":passwordManager:presentation"))
-    implementation(project(":passwordManager:common-ui:api"))
+    implementation(project(":pass:presentation"))
+    implementation(project(":pass:common-ui:api"))
 
     testImplementation(libs.androidx.compose.ui)
     testImplementation(libs.androidx.compose.uiTooling)

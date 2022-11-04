@@ -36,9 +36,9 @@ android {
 }
 
 dependencies {
-    api(project(":passwordManager:search:api"))
-    api(project(":passwordManager:data"))
-    implementation(project(":passwordManager:common:api"))
+    api(project(":pass:search:api"))
+    api(project(":pass:data"))
+    implementation(project(":pass:common:api"))
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.core.crypto)
@@ -47,7 +47,7 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
-    testImplementation(project(":passwordManager:test"))
+    testImplementation(project(":pass:test"))
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)

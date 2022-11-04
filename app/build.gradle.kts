@@ -17,7 +17,7 @@
  */
 
 import java.io.FileInputStream
-import java.util.*
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -256,18 +256,18 @@ dependencies {
     add("devImplementation", libs.showkase)
     add("kspDev", libs.showkaseProcessor)
 
-    implementation(project(":passwordManager:autofill:implementation"))
-    implementation(project(":passwordManager:common:api"))
-    implementation(project(":passwordManager:common-ui:api"))
-    implementation(project(":passwordManager:data"))
-    implementation(project(":passwordManager:domain"))
-    implementation(project(":passwordManager:notifications:api"))
-    implementation(project(":passwordManager:notifications:implementation"))
-    implementation(project(":passwordManager:preferences:api"))
-    implementation(project(":passwordManager:preferences:implementation"))
-    implementation(project(":passwordManager:presentation"))
-    implementation(project(":passwordManager:search:implementation"))
-    implementation(project(":passwordManager:log"))
+    implementation(project(":pass:autofill:implementation"))
+    implementation(project(":pass:common:api"))
+    implementation(project(":pass:common-ui:api"))
+    implementation(project(":pass:data"))
+    implementation(project(":pass:domain"))
+    implementation(project(":pass:notifications:api"))
+    implementation(project(":pass:notifications:implementation"))
+    implementation(project(":pass:preferences:api"))
+    implementation(project(":pass:preferences:implementation"))
+    implementation(project(":pass:presentation"))
+    implementation(project(":pass:search:implementation"))
+    implementation(project(":pass:log"))
 
     debugImplementation(libs.leakCanary)
 
@@ -284,7 +284,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.core.test.kotlin)
     testImplementation(libs.mockk)
-    testImplementation(project(":passwordManager:test"))
+    testImplementation(project(":pass:test"))
 
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)

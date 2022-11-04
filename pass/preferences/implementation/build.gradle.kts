@@ -21,7 +21,8 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
-    implementation(project(":passwordManager:common:api"))
-    implementation(project(":passwordManager:notifications:api"))
+    implementation(project(":pass:common:api"))
+    implementation(project(":pass:preferences:api"))
+    implementation(libs.androidx.datastore.preferences)
 
 }

@@ -13,7 +13,7 @@ XML_ROW_TEMPLATE_PATH="${REPO_ROOT}/scripts/autofill/templates/xml_row.tpl"
 KT_TEMPLATE_PATH="${REPO_ROOT}/scripts/autofill/templates/kt.tpl"
 KT_ROW_TEMPLATE_PATH="${REPO_ROOT}/scripts/autofill/templates/kt_row.tpl"
 
-DEST_BASE_PATH="${REPO_ROOT}/passwordManager/autofill/implementation/src/main"
+DEST_BASE_PATH="${REPO_ROOT}/pass/autofill/implementation/src/main"
 
 XML_DEST_PATH="${DEST_BASE_PATH}/res/xml/autofill_service.xml"
 KT_DEST_PATH="${DEST_BASE_PATH}/kotlin/me/proton/pass/autofill/BrowserList.kt"

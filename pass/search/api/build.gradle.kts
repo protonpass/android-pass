@@ -4,7 +4,6 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     id("kotlin-parcelize")
     kotlin("plugin.serialization")
-    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -38,18 +37,8 @@ android {
 }
 
 dependencies {
+    api(project(":pass:domain"))
+    implementation(project(":pass:common:api"))
+
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.core.account)
-    implementation(libs.core.accountManager)
-    implementation(libs.core.crypto)
-    implementation(libs.core.domain)
-    implementation(libs.core.key)
-    implementation(libs.core.user)
-
-    implementation(project(":passwordManager:common:api"))
-    implementation(project(":passwordManager:log"))
-
-    implementation(libs.dagger.hilt.android)
-    kapt(libs.dagger.hilt.android.compiler)
-    kapt(libs.androidx.hilt.compiler)
 }

@@ -6,7 +6,7 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:scripts::g')
 
 APK_PATH=$(find "${REPO_ROOT}/app/build/outputs/apk/dev/debug" -type f -name '*.apk')
-TEST_APK_PATH=$(find "${REPO_ROOT}/passwordManager/data/build/outputs/apk/androidTest/debug" -type f -name '*.apk')
+TEST_APK_PATH=$(find "${REPO_ROOT}/pass/data/build/outputs/apk/androidTest/debug" -type f -name '*.apk')
 
 gcloud firebase test android run \
   --app "${APK_PATH}" \

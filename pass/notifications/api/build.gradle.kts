@@ -5,5 +5,5 @@ plugins {
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
-    implementation(project(":passwordManager:common:api"))
+    implementation(project(":pass:common:api"))
 }

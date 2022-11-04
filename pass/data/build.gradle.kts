@@ -91,18 +91,18 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
-    implementation(project(":passwordManager:common:api"))
-    implementation(project(":passwordManager:domain"))
-    implementation(project(":passwordManager:log"))
+    implementation(project(":pass:common:api"))
+    implementation(project(":pass:domain"))
+    implementation(project(":pass:log"))
 
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)
     testImplementation(libs.junit)
     testImplementation(libs.core.test.kotlin)
-    testImplementation(project(":passwordManager:test"))
+    testImplementation(project(":pass:test"))
 
     androidTestImplementation(files("../../../proton-libs/gopenpgp/gopenpgp.aar"))
-    androidTestImplementation(project(":passwordManager:test"))
+    androidTestImplementation(project(":pass:test"))
 
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)

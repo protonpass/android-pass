@@ -22,7 +22,7 @@ dependencies {
     implementation(libs.core.key)
     implementation(libs.core.user)
     implementation(libs.core.utilKotlin)
-    implementation(project(":passwordManager:common:api"))
-    implementation(project(":passwordManager:domain"))
-    implementation(project(":passwordManager:notifications:api"))
+    implementation(project(":pass:common:api"))
+    implementation(project(":pass:domain"))
+    implementation(project(":pass:notifications:api"))
 }

@@ -32,6 +32,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.paparazzi) apply false
     alias(libs.plugins.gradlePlugin.protobuf) apply false
     alias(libs.plugins.gradlePlugin.sentry) apply false
+    id("me.proton.android.pass.module-gen")
 }
 
 val isCI = System.getenv().containsKey("CI")

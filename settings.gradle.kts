@@ -22,6 +22,8 @@ includeCoreBuild {
 include(":app")
 include(":pass:autofill:demo")
 include(":pass:autofill:implementation")
+include(":pass:biometry:api")
+include(":pass:biometry:implementation")
 include(":pass:common:api")
 include(":pass:common:implementation")
 include(":pass:common-ui:api")

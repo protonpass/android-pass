@@ -1,8 +1,8 @@
 package me.proton.android.pass.plugins.modulegen
 
 
-fun StringBuilder.appendConfiguration(moduleConfiguration: Configuration): StringBuilder =
-    when (moduleConfiguration) {
+fun StringBuilder.appendConfiguration(configuration: Configuration): StringBuilder =
+    when (configuration) {
         Configuration.API -> appendJvmPlugin()
         Configuration.IMPL -> appendAndroidLibraryPlugin()
             .appendLibraryDependency()
@@ -28,6 +28,7 @@ private fun StringBuilder.appendAndroidLibraryPlugin(): StringBuilder = append(
     }
     
     android {
+        namespace = "&s2"
         compileSdk = libs.versions.compileSdk.get().toInt()
 
         defaultConfig {
@@ -43,7 +44,7 @@ private fun StringBuilder.appendAndroidLibraryPlugin(): StringBuilder = append(
 private fun StringBuilder.appendLibraryDependency(): StringBuilder = append(
     """
     dependencies {
-        implementation(project(":&s:api"))
+        implementation(project(":&s1:api"))
     }
     
 """

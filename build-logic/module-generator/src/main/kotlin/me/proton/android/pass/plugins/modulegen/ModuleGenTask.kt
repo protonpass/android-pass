@@ -57,8 +57,32 @@ open class ModuleGenTask : DefaultTask() {
 
         with(project) {
             generateDirs(moduleList, detectedConfList)
+            generateManifest(moduleList, detectedConfList)
             generateBuildGradle(moduleList, detectedConfList)
             generateModuleSettings(moduleList, detectedConfList)
+        }
+    }
+
+    private fun Project.generateManifest(
+        modulePath: List<String>,
+        detectedConfList: List<Configuration>
+    ) {
+        detectedConfList.forEach { conf ->
+            when (conf) {
+                Configuration.IMPL,
+                Configuration.FAKES -> {
+                    val lcConfiguration = conf.name.toLowerCase(Locale.ROOT)
+                    val dir = modulePath.joinToString("/")
+                    val manifestFile = "AndroidManifest.xml"
+                    val manifestContent = """
+                        <?xml version="1.0" encoding="utf-8"?>
+                        <manifest/>
+                        
+                    """.trimIndent()
+                    file("$dir/$lcConfiguration/src/main/$manifestFile").writeText(manifestContent)
+                }
+                else -> Unit
+            }
         }
     }
 
@@ -79,7 +103,7 @@ open class ModuleGenTask : DefaultTask() {
         configurationList
             .forEach { configuration ->
                 val lcConfiguration = configuration.name.toLowerCase(Locale.ROOT)
-                val configurationPath = "$PACKAGE_NAME.$subpackage.$lcConfiguration"
+                val configurationPath = "$ROOT_PACKAGE_NAME.$subpackage.$lcConfiguration"
                     .replace('.', '/')
                     .replace("-", "")
                 mkdir("$dir/$lcConfiguration/src/main/kotlin/$configurationPath")
@@ -100,7 +124,8 @@ open class ModuleGenTask : DefaultTask() {
                 val stringBuilder = StringBuilder()
                 stringBuilder.appendConfiguration(configuration)
                 configuration to stringBuilder.toString()
-                    .replace("&s", moduleList.joinToString(":"))
+                    .replace("&s1", moduleList.joinToString(":"))
+                    .replace("&s2", PASS_PACKAGE_NAME + "." + moduleList.last())
             }
             .forEach { pair ->
                 file("$dir/${pair.first}/build.gradle.kts")
@@ -117,6 +142,7 @@ open class ModuleGenTask : DefaultTask() {
         val fileLines = file(settingsFile).readLines()
         val firstIncludeIndex = fileLines.indexOfFirst { it.startsWith(includePrefix) }
         val includeList = fileLines.filter { it.startsWith(includePrefix) }.toMutableSet()
+        val includeListSize = includeList.size
 
         val includeModulesPath = moduleList.joinToString(":")
         configurationList
@@ -127,14 +153,14 @@ open class ModuleGenTask : DefaultTask() {
                     includeList.add(include)
                 }
             }
-
         val output = fileLines.take(firstIncludeIndex) +
             includeList.sorted() +
-            fileLines.takeLast(fileLines.size - (firstIncludeIndex + includeList.size) + 2)
+            fileLines.takeLast(fileLines.size - (firstIncludeIndex + includeListSize))
         file(settingsFile).writeText(output.joinToString(separator = "\n", postfix = "\n"))
     }
 
     companion object {
-        const val PACKAGE_NAME = "me.proton.android.pass"
+        const val ROOT_PACKAGE_NAME = "me.proton.android"
+        const val PASS_PACKAGE_NAME = "$ROOT_PACKAGE_NAME.pass"
     }
 }

@@ -1,0 +1,140 @@
+package me.proton.android.pass.plugins.modulegen
+
+import org.gradle.api.DefaultTask
+import org.gradle.api.GradleException
+import org.gradle.api.Project
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.options.Option
+import java.util.Locale
+
+open class ModuleGenTask : DefaultTask() {
+
+    private var moduleInput: String? = null
+    private var configurationInput: String? = null
+
+    @Option(
+        option = "module",
+        description = "Module path to be generated"
+    )
+    open fun setModule(moduleInput: String?) {
+        this.moduleInput = moduleInput
+    }
+
+    @Option(
+        option = "conf",
+        description = "Configurations to be generated. api,impl,fakes"
+    )
+    open fun setConf(configurationInput: String?) {
+        this.configurationInput = configurationInput
+    }
+
+    @Input
+    open fun getModule(): String? = moduleInput
+
+    @Input
+    open fun getConf(): String? = configurationInput
+
+    @Suppress("ThrowsCount")
+    @TaskAction
+    fun generate() {
+        val module = moduleInput ?: throw GradleException("Module input cannot be null")
+        val configurationList =
+            configurationInput ?: throw GradleException("Configurations input cannot be null")
+
+        val moduleRegex = "[^-a-z]".toRegex()
+        val moduleList: List<String> = sanitizeModuleInput(module, moduleRegex)
+        val detectedConfList: List<Configuration> = detectConfigurations(configurationList)
+        if (moduleList.isEmpty()) {
+            throw GradleException("Detected an empty module path")
+        }
+        if (detectedConfList.isEmpty()) {
+            throw GradleException("Couldn't detect a proper configuration")
+        }
+
+        logger.lifecycle("Sanitized module path: :${moduleList.joinToString(":")}")
+        logger.lifecycle("Detected configurations: $detectedConfList")
+
+        with(project) {
+            generateDirs(moduleList, detectedConfList)
+            generateBuildGradle(moduleList, detectedConfList)
+            generateModuleSettings(moduleList, detectedConfList)
+        }
+    }
+
+    private fun sanitizeModuleInput(path: String, regex: Regex): List<String> = path.split(":")
+        .map { segment -> regex.replace(segment.toLowerCase(Locale.ROOT), "") }
+        .filter(String::isNotEmpty)
+
+    private fun detectConfigurations(input: String): List<Configuration> = input
+        .split(",")
+        .map { conf -> Configuration.valueOf(conf.toUpperCase(Locale.ROOT)) }
+
+    private fun Project.generateDirs(
+        modulePath: List<String>,
+        configurationList: List<Configuration>
+    ) {
+        val dir = modulePath.joinToString("/")
+        val subpackage = modulePath.joinToString(".")
+        configurationList
+            .forEach { configuration ->
+                val lcConfiguration = configuration.name.toLowerCase(Locale.ROOT)
+                val configurationPath = "$PACKAGE_NAME.$subpackage.$lcConfiguration"
+                    .replace('.', '/')
+                    .replace("-", "")
+                mkdir("$dir/$lcConfiguration/src/main/kotlin/$configurationPath")
+                if (configuration == Configuration.IMPL) {
+                    mkdir("$dir/$lcConfiguration/src/androidTest/kotlin/$configurationPath")
+                    mkdir("$dir/$lcConfiguration/src/test/kotlin/$configurationPath")
+                }
+            }
+    }
+
+    private fun Project.generateBuildGradle(
+        moduleList: List<String>,
+        configurationList: List<Configuration>
+    ) {
+        val dir = moduleList.joinToString("/")
+        configurationList
+            .map { configuration ->
+                val stringBuilder = StringBuilder()
+                stringBuilder.appendConfiguration(configuration)
+                configuration to stringBuilder.toString()
+                    .replace("&s", moduleList.joinToString(":"))
+            }
+            .forEach { pair ->
+                file("$dir/${pair.first}/build.gradle.kts")
+                    .writeText(pair.second)
+            }
+    }
+
+    private fun Project.generateModuleSettings(
+        moduleList: List<String>,
+        configurationList: List<Configuration>
+    ) {
+        val settingsFile = "settings.gradle.kts"
+        val includePrefix = "include("
+        val fileLines = file(settingsFile).readLines()
+        val firstIncludeIndex = fileLines.indexOfFirst { it.startsWith(includePrefix) }
+        val includeList = fileLines.filter { it.startsWith(includePrefix) }.toMutableSet()
+
+        val includeModulesPath = moduleList.joinToString(":")
+        configurationList
+            .forEach { configuration ->
+                val lcConfiguration = configuration.name.toLowerCase(Locale.ROOT)
+                val include = "$includePrefix\":$includeModulesPath:$lcConfiguration\")"
+                if (!includeList.contains(include)) {
+                    includeList.add(include)
+                }
+            }
+
+        val output = fileLines.take(firstIncludeIndex) +
+            includeList.sorted() +
+            fileLines.takeLast(fileLines.size - (firstIncludeIndex + includeList.size) + 2)
+        file(settingsFile).writeText(output.joinToString(separator = "\n", postfix = "\n"))
+    }
+
+    companion object {
+        const val PACKAGE_NAME = "me.proton.android.pass"
+    }
+}

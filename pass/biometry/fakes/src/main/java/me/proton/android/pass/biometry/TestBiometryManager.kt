@@ -1,6 +1,5 @@
 package me.proton.android.pass.biometry
 
-import android.content.Context
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,6 +22,6 @@ class TestBiometryManager : BiometryManager {
 
     override fun getBiometryStatus(): BiometryStatus = biometryStatus
 
-    override fun launch(context: Context): Flow<BiometryResult> = resultFlow
+    override fun launch(context: ContextHolder): Flow<BiometryResult> = resultFlow
 
 }

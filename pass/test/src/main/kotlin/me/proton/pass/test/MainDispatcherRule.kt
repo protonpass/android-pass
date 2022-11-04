@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui
+package me.proton.pass.test
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestDispatcher

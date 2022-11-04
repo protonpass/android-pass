@@ -4,12 +4,12 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
-import me.proton.android.pass.ui.MainDispatcherRule
 import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.BaseAliasViewModel
 import me.proton.pass.presentation.create.alias.CreateUpdateAliasUiState.Companion.Initial
+import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.core.TestSavedStateHandle
 import me.proton.pass.test.domain.TestAliasMailbox
 import me.proton.pass.test.domain.TestAliasSuffix

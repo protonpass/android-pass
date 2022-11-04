@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
+import me.proton.android.pass.biometry.BiometryManager
+import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.android.pass.preferences.ThemePreference
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AutofillAppViewModel @Inject constructor(
-    preferenceRepository: PreferenceRepository
+    preferenceRepository: PreferenceRepository,
+    private val biometryManager: BiometryManager
 ) : ViewModel() {
 
     private val themeState: Flow<ThemePreference> =
@@ -28,9 +31,14 @@ class AutofillAppViewModel @Inject constructor(
     val state: StateFlow<AutofillAppUiState> = combine(
         themeState, biometricLockState
     ) { theme, fingerprint ->
+        val fingerprintRequired = when (biometryManager.getBiometryStatus()) {
+            BiometryStatus.CanAuthenticate -> fingerprint is BiometricLockState.Enabled
+            else -> false
+        }
+
         AutofillAppUiState(
             theme = theme,
-            isFingerprintRequired = fingerprint is BiometricLockState.Enabled
+            isFingerprintRequired = fingerprintRequired
         )
     }
         .stateIn(

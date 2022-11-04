@@ -119,13 +119,15 @@ open class ModuleGenTask : DefaultTask() {
         configurationList: List<Configuration>
     ) {
         val dir = moduleList.joinToString("/")
+        val subpackage = moduleList.joinToString(".")
         configurationList
             .map { configuration ->
+                val lcConfiguration = configuration.name.toLowerCase(Locale.ROOT)
                 val stringBuilder = StringBuilder()
                 stringBuilder.appendConfiguration(configuration)
                 configuration to stringBuilder.toString()
                     .replace("&s1", moduleList.joinToString(":"))
-                    .replace("&s2", PASS_PACKAGE_NAME + "." + moduleList.last())
+                    .replace("&s2", "$ROOT_PACKAGE_NAME.$subpackage.$lcConfiguration")
             }
             .forEach { pair ->
                 file("$dir/${pair.first}/build.gradle.kts")
@@ -161,6 +163,5 @@ open class ModuleGenTask : DefaultTask() {
 
     companion object {
         const val ROOT_PACKAGE_NAME = "me.proton.android"
-        const val PASS_PACKAGE_NAME = "$ROOT_PACKAGE_NAME.pass"
     }
 }

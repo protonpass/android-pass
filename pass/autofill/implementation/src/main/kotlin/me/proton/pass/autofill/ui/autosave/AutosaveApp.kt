@@ -48,7 +48,8 @@ fun AutosaveApp(
                         navController.navigate(SAVE_ITEM_ROUTE) {
                             popUpTo(0)
                         }
-                    }
+                    },
+                    onAuthFailed = { onFinished() }
                 )
             }
             composable(SAVE_ITEM_ROUTE) {

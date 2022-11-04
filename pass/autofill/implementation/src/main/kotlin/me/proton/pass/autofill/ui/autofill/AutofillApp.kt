@@ -27,7 +27,9 @@ import me.proton.pass.autofill.ui.autofill.select.SelectItemScreen
 fun AutofillApp(
     modifier: Modifier = Modifier,
     state: AutofillAppState,
-    onAutofillResponse: (AutofillMappings?) -> Unit
+    onAutofillResponse: (AutofillMappings?) -> Unit,
+    onFinished: () -> Unit
+
 ) {
     val navController = rememberAnimatedNavController()
     val viewModel: AutofillAppViewModel = hiltViewModel()
@@ -39,11 +41,17 @@ fun AutofillApp(
         ThemePreference.System -> isNightMode()
     }
 
+    val startDestination = if (uiState.isFingerprintRequired) {
+        AUTH_SCREEN_ROUTE
+    } else {
+        SELECT_ITEM_ROUTE
+    }
+
     ProtonTheme(isDark = isDark) {
         AnimatedNavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
             navController = navController,
-            startDestination = AUTH_SCREEN_ROUTE
+            startDestination = startDestination
         ) {
             composable(AUTH_SCREEN_ROUTE) {
                 AuthScreen(
@@ -51,7 +59,8 @@ fun AutofillApp(
                         navController.navigate(SELECT_ITEM_ROUTE) {
                             popUpTo(0)
                         }
-                    }
+                    },
+                    onAuthFailed = { onFinished() }
                 )
             }
             composable(SELECT_ITEM_ROUTE) {

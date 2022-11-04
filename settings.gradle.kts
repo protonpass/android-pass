@@ -1,7 +1,7 @@
-
 rootProject.name = "Password Manager"
 
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google()
         mavenCentral()
@@ -24,21 +24,21 @@ include(":pass:autofill:demo")
 include(":pass:autofill:implementation")
 include(":pass:biometry:api")
 include(":pass:biometry:implementation")
-include(":pass:common:api")
-include(":pass:common:implementation")
 include(":pass:common-ui:api")
 include(":pass:common-ui:implementation")
+include(":pass:common:api")
+include(":pass:common:implementation")
 include(":pass:data")
 include(":pass:domain")
 include(":pass:log")
 include(":pass:notifications:api")
 include(":pass:notifications:implementation")
+include(":pass:preferences:api")
+include(":pass:preferences:implementation")
 include(":pass:presentation")
 include(":pass:screenshot-tests")
 include(":pass:search:api")
 include(":pass:search:implementation")
-include(":pass:preferences:api")
-include(":pass:preferences:implementation")
 include(":pass:test")
 
 dependencyResolutionManagement {

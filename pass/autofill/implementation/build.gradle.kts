@@ -89,6 +89,8 @@ dependencies {
     implementation(project(":pass:log"))
 
     testImplementation(project(":pass:test"))
+    testImplementation(project(":pass:biometry:fakes"))
+    testImplementation(project(":pass:preferences:fakes"))
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)

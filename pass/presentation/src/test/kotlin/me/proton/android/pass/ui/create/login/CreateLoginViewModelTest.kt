@@ -3,7 +3,6 @@ package me.proton.android.pass.ui.create.login
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.android.pass.ui.MainDispatcherRule
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.ShareId
@@ -14,6 +13,7 @@ import me.proton.pass.presentation.create.login.LoginItem
 import me.proton.pass.presentation.create.login.LoginItemValidationErrors
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
+import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.TestUtils
 import me.proton.pass.test.core.TestAccountManager
 import me.proton.pass.test.core.TestSavedStateHandle

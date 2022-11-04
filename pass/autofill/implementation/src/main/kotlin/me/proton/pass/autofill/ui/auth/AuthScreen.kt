@@ -16,8 +16,8 @@ fun AuthScreen(
     onAuthFailed: () -> Unit
 ) {
     val viewModel: AuthViewModel = hiltViewModel()
-
     val state by viewModel.state.collectAsStateWithLifecycle()
+
     LaunchedEffect(state) {
         when (state) {
             AuthStatus.Success -> onAuthSuccessful()
@@ -31,5 +31,18 @@ fun AuthScreen(
         viewModel.init(ctx)
     }
 
-    Text("Place your fingerprint, please")
+    when (state) {
+        AuthStatus.Canceled -> {
+            Text("Auth canceled by the user. TODO: Do something")
+        }
+        AuthStatus.Pending -> {
+            Text("Place your fingerprint, please")
+        }
+        AuthStatus.Success -> {
+            Text("Welcome back!")
+        }
+        AuthStatus.Failed -> {
+            Text("Auth failed!")
+        }
+    }
 }

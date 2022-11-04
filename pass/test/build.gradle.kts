@@ -15,6 +15,8 @@ android {
 
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.coroutines.test)
+    implementation(libs.junit)
     implementation(libs.core.account)
     implementation(libs.core.accountManager)
     implementation(libs.core.crypto)

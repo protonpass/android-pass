@@ -3,9 +3,9 @@ package me.proton.android.pass.ui.create.note
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.android.pass.ui.MainDispatcherRule
 import me.proton.pass.presentation.create.note.BaseNoteViewModel
 import me.proton.pass.presentation.create.note.CreateUpdateNoteUiState.Companion.Initial
+import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.core.TestSavedStateHandle
 import me.proton.pass.test.notification.TestSnackbarMessageRepository
 import org.junit.Before

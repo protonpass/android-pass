@@ -95,6 +95,7 @@ dependencies {
     add("devImplementation", libs.showkase)
     add("kspDev", libs.showkaseProcessor)
 
+    implementation(project(":pass:biometry:api"))
     implementation(project(":pass:common:api"))
     implementation(project(":pass:common-ui:api"))
     implementation(project(":pass:domain"))

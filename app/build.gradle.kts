@@ -257,6 +257,7 @@ dependencies {
     add("kspDev", libs.showkaseProcessor)
 
     implementation(project(":pass:autofill:implementation"))
+    implementation(project(":pass:biometry:implementation"))
     implementation(project(":pass:common:api"))
     implementation(project(":pass:common-ui:api"))
     implementation(project(":pass:data"))

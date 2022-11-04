@@ -130,7 +130,7 @@ open class ModuleGenTask : DefaultTask() {
                     .replace("&s2", "$ROOT_PACKAGE_NAME.$subpackage.$lcConfiguration")
             }
             .forEach { pair ->
-                file("$dir/${pair.first}/build.gradle.kts")
+                file("$dir/${pair.first.name.toLowerCase(Locale.ROOT)}/build.gradle.kts")
                     .writeText(pair.second)
             }
     }

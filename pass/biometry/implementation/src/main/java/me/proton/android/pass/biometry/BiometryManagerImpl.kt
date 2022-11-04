@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.channelFlow
 import me.proton.android.pass.biometry.extensions.from
 import me.proton.android.pass.biometry.implementation.R
 import me.proton.android.pass.log.PassLogger
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Some
 import javax.inject.Inject
 
 class BiometryManagerImpl @Inject constructor(
@@ -29,7 +31,7 @@ class BiometryManagerImpl @Inject constructor(
             else -> BiometryStatus.NotAvailable
         }
 
-    override fun launch(context: Context): Flow<BiometryResult> = channelFlow {
+    override fun launch(context: ContextHolder): Flow<BiometryResult> = channelFlow {
         val canAuthenticate = canAuthenticate()
         if (canAuthenticate is BiometryResult.FailedToStart) {
             trySend(canAuthenticate)
@@ -56,10 +58,19 @@ class BiometryManagerImpl @Inject constructor(
             }
         }
 
-        val prompt = when (context) {
+        val ctx = when (val ctx = context.getContext()) {
+            None -> {
+                PassLogger.i(TAG, "Received None context")
+                trySend(BiometryResult.FailedToStart(BiometryStartupError.Unknown))
+                return@channelFlow
+            }
+            is Some -> ctx.value
+        }
+
+        val prompt = when (ctx) {
             is FragmentActivity -> BiometricPrompt(
-                context,
-                ContextCompat.getMainExecutor(context),
+                ctx,
+                ContextCompat.getMainExecutor(ctx),
                 callback
             )
             else -> {
@@ -70,7 +81,7 @@ class BiometryManagerImpl @Inject constructor(
             }
         }
 
-        prompt.authenticate(getPromptInfo(context))
+        prompt.authenticate(getPromptInfo(ctx))
         awaitClose()
     }
 

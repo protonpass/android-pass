@@ -59,7 +59,6 @@ dependencies {
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.autofill)
-    implementation(libs.androidx.biometric)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.foundationLayout)
     implementation(libs.androidx.compose.material)

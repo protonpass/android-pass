@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.android.pass.biometry.BiometryManager
+import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.PreferenceRepository
@@ -20,7 +22,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val preferencesRepository: PreferenceRepository
+    private val preferencesRepository: PreferenceRepository,
+    private val biometryManager: BiometryManager
 ) : ViewModel() {
 
     private val biometricLockState: Flow<BiometricLockState> =
@@ -32,12 +35,19 @@ class SettingsViewModel @Inject constructor(
         biometricLockState,
         themeState
     ) { biometricLock, theme ->
-        val fingerprintEnabled = when (biometricLock) {
-            BiometricLockState.Enabled -> IsButtonEnabled.Enabled
-            BiometricLockState.Disabled -> IsButtonEnabled.Disabled
+        val fingerprintSection = when (biometryManager.getBiometryStatus()) {
+            BiometryStatus.NotEnrolled -> FingerprintSectionState.NoFingerprintRegistered
+            BiometryStatus.NotAvailable -> FingerprintSectionState.NotAvailable
+            BiometryStatus.CanAuthenticate -> {
+                val available = when (biometricLock) {
+                    BiometricLockState.Enabled -> IsButtonEnabled.Enabled
+                    BiometricLockState.Disabled -> IsButtonEnabled.Disabled
+                }
+                FingerprintSectionState.Available(available)
+            }
         }
         SettingsUiState(
-            isFingerPrintEnabled = fingerprintEnabled,
+            fingerprintSection = fingerprintSection,
             themePreference = theme
         )
     }.stateIn(

@@ -142,7 +142,8 @@
 
     <string name="settings_authentication_section_title">Authentication</string>
     <string name="settings_authentication_preference_title">Fingerprint unlock</string>
-    <string name="settings_authentication_preference_description">Require your fingerprint for interacting with the app.</string>
+    <string name="settings_authentication_preference_description_enabled">Require your fingerprint for interacting with the app.</string>
+    <string name="settings_authentication_preference_description_no_fingerprint">You cannot require your fingerprint for interacting with the app as there are no fingerprints registered on this device.</string>
 
     <string name="settings_appearance_section_title">Appearance</string>
     <string name="settings_appearance_preference_title">Theme</string>

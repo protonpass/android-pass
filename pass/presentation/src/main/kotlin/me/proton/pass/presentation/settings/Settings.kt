@@ -20,12 +20,22 @@ fun Settings(
     Column(modifier = modifier) {
         AutofillSection(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp))
         Divider(modifier = Modifier.fillMaxWidth())
-        AuthenticationSection(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-            isToggleChecked = state.isFingerPrintEnabled,
-            onToggleChange = onFingerPrintLockChange
-        )
-        Divider(modifier = Modifier.fillMaxWidth())
+
+        if (state.fingerprintSection != FingerprintSectionState.NotAvailable) {
+            val (enabled, toggleChecked) = when (val res = state.fingerprintSection) {
+                FingerprintSectionState.NoFingerprintRegistered -> false to IsButtonEnabled.Disabled
+                is FingerprintSectionState.Available -> true to res.enabled
+                else -> false to IsButtonEnabled.Disabled
+            }
+            AuthenticationSection(
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                enabled = enabled,
+                isToggleChecked = toggleChecked,
+                onToggleChange = onFingerPrintLockChange
+            )
+            Divider(modifier = Modifier.fillMaxWidth())
+        }
+
         AppearanceSection(
             modifier = Modifier
                 .clickable(onClick = onOpenThemeSelection)

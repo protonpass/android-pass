@@ -25,6 +25,7 @@ import me.proton.pass.presentation.uievents.value
 @Composable
 fun AuthenticationSection(
     modifier: Modifier = Modifier,
+    enabled: Boolean,
     isToggleChecked: IsButtonEnabled,
     onToggleChange: (IsButtonEnabled) -> Unit
 ) {
@@ -38,13 +39,19 @@ fun AuthenticationSection(
                 text = stringResource(R.string.settings_authentication_preference_title)
             )
             Switch(
+                enabled = enabled,
                 checked = isToggleChecked.value(),
                 onCheckedChange = { onToggleChange(IsButtonEnabled.from(it)) }
             )
         }
 
+        val description = if (enabled) {
+            R.string.settings_authentication_preference_description_enabled
+        } else {
+            R.string.settings_authentication_preference_description_no_fingerprint
+        }
         SettingPreferenceDescription(
-            text = stringResource(R.string.settings_authentication_preference_description)
+            text = stringResource(description)
         )
     }
 }
@@ -61,7 +68,8 @@ fun AuthenticationSectionPreview(
         Surface {
             AuthenticationSection(
                 isToggleChecked = input.second,
-                onToggleChange = {}
+                onToggleChange = {},
+                enabled = true
             )
         }
     }

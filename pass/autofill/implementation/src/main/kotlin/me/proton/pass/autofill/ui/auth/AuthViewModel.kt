@@ -1,6 +1,5 @@
 package me.proton.pass.autofill.ui.auth
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,6 +13,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.biometry.BiometryAuthError
 import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryResult
+import me.proton.android.pass.biometry.ContextHolder
 import me.proton.android.pass.log.PassLogger
 import javax.inject.Inject
 
@@ -30,7 +30,7 @@ class AuthViewModel @Inject constructor(
             initialValue = AuthStatus.Pending
         )
 
-    fun init(context: Context) = viewModelScope.launch {
+    fun init(context: ContextHolder) = viewModelScope.launch {
         PassLogger.i(TAG, "Launching Biometry")
         biometryManager.launch(context)
             .map { result ->

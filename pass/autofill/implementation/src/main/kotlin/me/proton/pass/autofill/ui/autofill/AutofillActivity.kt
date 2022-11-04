@@ -1,15 +1,14 @@
 package me.proton.pass.autofill.ui.autofill
 
-import android.R
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.autofill.AutofillId
 import android.view.autofill.AutofillManager
 import android.widget.RemoteViews
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.pass.autofill.DatasetBuilderOptions
 import me.proton.pass.autofill.DatasetUtils
@@ -24,7 +23,7 @@ import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.entity.PackageName
 
 @AndroidEntryPoint
-class AutofillActivity : ComponentActivity() {
+class AutofillActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +52,8 @@ class AutofillActivity : ComponentActivity() {
         setContent {
             AutofillApp(
                 state = AutofillAppState(PackageName(packageName), ids, types, webDomain),
-                onAutofillResponse = { onAutofillResponse(it) }
+                onAutofillResponse = { onAutofillResponse(it) },
+                onFinished = { finish() }
             )
         }
     }
@@ -64,7 +64,7 @@ class AutofillActivity : ComponentActivity() {
     }
 
     private fun prepareAutofillResult(autofillMappings: AutofillMappings) {
-        val remoteView = RemoteViews(packageName, R.layout.simple_list_item_1).toOption()
+        val remoteView = RemoteViews(packageName, android.R.layout.simple_list_item_1).toOption()
         val dataset = DatasetUtils.buildDataset(
             this,
             DatasetBuilderOptions(

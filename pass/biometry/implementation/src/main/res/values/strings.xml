@@ -1,0 +1,3 @@
+<resources>
+    <string name="biometric_prompt_title">Unlock with fingerprint</string>
+</resources>

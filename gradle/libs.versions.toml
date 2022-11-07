@@ -43,6 +43,7 @@ gradlePlugin-ksp = "1.7.10-1.0.6"
 gradlePlugin-protobuf = "0.8.19"
 gradlePlugin-proton-detekt = "1.0.0"
 gradlePlugin-sentry = "3.2.0"
+gradlePlugin-test-logger = "3.2.0"
 gradlePlugin-versions = "0.43.0"
 # Jacoco
 jacoco = "0.8.7"
@@ -79,6 +80,7 @@ gradlePlugin-paparazzi = { id = "app.cash.paparazzi", version.ref = "gradlePlugi
 gradlePlugin-protobuf = { id = "com.google.protobuf", version.ref = "gradlePlugin-protobuf" }
 gradlePlugin-proton-detekt = { id = "me.proton.core.gradle-plugins.detekt", version.ref = "gradlePlugin-proton-detekt" }
 gradlePlugin-sentry = { id = "io.sentry.android.gradle", version.ref = "gradlePlugin-sentry" }
+gradlePlugin-test-logger = { id = "com.adarshr.test-logger", version.ref = "gradlePlugin-test-logger" }
 gradlePlugin-test = { id = "com.android.test", version.ref = "gradlePlugin-android" }
 gradlePlugin-versions = { id = "com.github.ben-manes.versions", version.ref = "gradlePlugin-versions" }
 

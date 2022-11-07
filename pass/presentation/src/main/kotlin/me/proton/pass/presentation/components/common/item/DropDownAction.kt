@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.shared
+package me.proton.pass.presentation.components.common.item
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Row

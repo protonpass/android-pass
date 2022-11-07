@@ -17,7 +17,7 @@
  */
 
 import java.io.FileInputStream
-import java.util.Properties
+import java.util.*
 
 plugins {
     id("com.android.application")
@@ -257,6 +257,7 @@ dependencies {
     add("kspDev", libs.showkaseProcessor)
 
     implementation(project(":pass:autofill:implementation"))
+    implementation(project(":pass:biometry:api"))
     implementation(project(":pass:biometry:implementation"))
     implementation(project(":pass:common:api"))
     implementation(project(":pass:common-ui:api"))

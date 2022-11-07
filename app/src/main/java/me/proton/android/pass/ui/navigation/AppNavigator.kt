@@ -6,6 +6,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import me.proton.android.pass.log.PassLogger
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -19,8 +20,11 @@ class AppNavigator(
 ) {
 
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
+        val destinationRoute = route ?: destination.route
+        PassLogger.d(TAG, "Navigating to $destinationRoute")
+
         if (destination.isTopLevel) {
-            navController.navigate(route ?: destination.route) {
+            navController.navigate(destinationRoute) {
                 popUpTo(navController.graph.findStartDestination().id) {
                     saveState = true
                 }
@@ -28,7 +32,7 @@ class AppNavigator(
                 restoreState = true
             }
         } else {
-            navController.navigate(route ?: destination.route) {
+            navController.navigate(destinationRoute) {
                 if (backDestination != null) {
                     popUpTo(backDestination.route)
                 }
@@ -38,5 +42,9 @@ class AppNavigator(
 
     fun onBackClick() {
         navController.popBackStack()
+    }
+
+    companion object {
+        private const val TAG = "AppNavigator"
     }
 }

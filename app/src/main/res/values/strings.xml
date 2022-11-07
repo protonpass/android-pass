@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Password Manager</string>
+    <string name="app_name">Proton Pass</string>
 
     <!--  Actions  -->
     <string name="action_edit">Edit</string>

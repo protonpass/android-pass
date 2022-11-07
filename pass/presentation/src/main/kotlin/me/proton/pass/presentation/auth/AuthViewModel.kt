@@ -1,4 +1,4 @@
-package me.proton.pass.autofill.ui.auth
+package me.proton.pass.presentation.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

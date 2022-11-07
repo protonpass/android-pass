@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,16 +23,18 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.components.previewproviders.ItemUiModelPreviewProvider
 
 @Composable
 internal fun ItemRow(
+    modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
-    title: String,
-    subtitle: String,
-    modifier: Modifier = Modifier
+    title: AnnotatedString,
+    subtitle: AnnotatedString
 ) {
     Column(
         modifier = modifier
@@ -67,14 +70,16 @@ internal fun ItemRow(
 
 @Composable
 internal fun ItemRow(
+    modifier: Modifier = Modifier,
     item: ItemUiModel,
+    highlight: Option<String> = None,
     itemActions: List<ItemAction> = emptyList(),
     onItemClicked: (ItemUiModel) -> Unit = {}
 ) {
     val (expanded, setExpanded) = remember { mutableStateOf(false) }
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .clickable { onItemClicked.invoke(item) }
             .padding(end = 12.dp),
@@ -82,6 +87,7 @@ internal fun ItemRow(
     ) {
         ItemRowContents(
             item = item,
+            highlight = highlight,
             modifier = Modifier.weight(1f)
         )
         ItemRowActions(

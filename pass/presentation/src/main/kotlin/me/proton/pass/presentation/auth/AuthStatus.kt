@@ -1,4 +1,4 @@
-package me.proton.pass.autofill.ui.auth
+package me.proton.pass.presentation.auth
 
 sealed interface AuthStatus {
     object Pending : AuthStatus

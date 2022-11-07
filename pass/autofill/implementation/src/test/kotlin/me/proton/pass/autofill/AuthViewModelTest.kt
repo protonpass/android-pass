@@ -8,8 +8,8 @@ import me.proton.android.pass.biometry.BiometryResult
 import me.proton.android.pass.biometry.BiometryStartupError
 import me.proton.android.pass.biometry.ContextHolder
 import me.proton.android.pass.biometry.TestBiometryManager
-import me.proton.pass.autofill.ui.auth.AuthStatus
-import me.proton.pass.autofill.ui.auth.AuthViewModel
+import me.proton.pass.presentation.auth.AuthStatus
+import me.proton.pass.presentation.auth.AuthViewModel
 import me.proton.pass.common.api.None
 import me.proton.pass.test.MainDispatcherRule
 import org.junit.Before

@@ -15,11 +15,12 @@ import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.autofill.entities.SaveInformation
-import me.proton.pass.autofill.ui.auth.AUTH_SCREEN_ROUTE
-import me.proton.pass.autofill.ui.auth.AuthScreen
 import me.proton.pass.autofill.ui.autofill.AutofillAppViewModel
 import me.proton.pass.autofill.ui.autosave.save.SAVE_ITEM_ROUTE
 import me.proton.pass.autofill.ui.autosave.save.SaveItemScreen
+import me.proton.pass.presentation.auth.AuthScreen
+
+private const val AUTH_SCREEN_ROUTE = "common/auth"
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

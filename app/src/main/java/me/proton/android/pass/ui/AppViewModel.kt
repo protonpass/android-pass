@@ -9,13 +9,18 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.AuthRequiredState
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
+import me.proton.android.pass.biometry.BiometryManager
+import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
+import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
@@ -37,13 +42,14 @@ import javax.inject.Inject
 @HiltViewModel
 class AppViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
+    preferenceRepository: PreferenceRepository,
     private val getCurrentUserId: GetCurrentUserId,
     private val getCurrentShare: GetCurrentShare,
     private val createVault: CreateVault,
     private val refreshShares: RefreshShares,
     private val cryptoContext: CryptoContext,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    preferenceRepository: PreferenceRepository
+    private val biometryManager: BiometryManager
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -54,12 +60,27 @@ class AppViewModel @Inject constructor(
     private val drawerSectionState: MutableStateFlow<NavigationDrawerSection> =
         MutableStateFlow(NavigationDrawerSection.Items)
 
+    val authRequiredState: StateFlow<AuthRequiredState> = preferenceRepository
+        .getBiometricLockState()
+        .map { state ->
+            when (biometryManager.getBiometryStatus()) {
+                BiometryStatus.CanAuthenticate -> AuthRequiredState.Value(state)
+                else -> AuthRequiredState.Value(BiometricLockState.Disabled)
+            }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = AuthRequiredState.Loading
+        )
+
     val appUiState: StateFlow<AppUiState> = combine(
         currentUserFlow,
         drawerSectionState,
         snackbarMessageRepository.snackbarMessage,
         preferenceRepository.getThemePreference()
     ) { user, sectionState, snackbarMessage, theme ->
+
         AppUiState(
             snackbarMessage = snackbarMessage,
             drawerUiState = DrawerUiState(

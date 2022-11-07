@@ -19,6 +19,8 @@ sealed class NavItem(
         navArgument(it.key) { type = it.navType }
     }
 
+    object Auth : NavItem("auth", isTopLevel = true)
+
     object Home : NavItem("home", isTopLevel = true)
 
     object Settings : NavItem("settings", isTopLevel = true)

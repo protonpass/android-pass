@@ -8,4 +8,6 @@ interface PreferenceRepository {
 
     fun setThemePreference(theme: ThemePreference): Flow<Unit>
     fun getThemePreference(): Flow<ThemePreference>
+
+    fun clearPreferences(): Flow<Unit>
 }

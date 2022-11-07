@@ -42,5 +42,8 @@ fun Settings(
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             theme = state.themePreference
         )
+        Divider(modifier = Modifier.fillMaxWidth())
+
+        AppSection()
     }
 }

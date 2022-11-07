@@ -13,18 +13,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.swiperefresh.SwipeRefreshState
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
 import me.proton.pass.presentation.components.common.PassSwipeRefresh
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.uievents.IsRefreshingState
 
 @Composable
 fun ItemsList(
-    items: List<ItemUiModel>,
-    @StringRes emptyListMessage: Int,
     modifier: Modifier = Modifier,
+    items: List<ItemUiModel>,
+    highlight: Option<String> = None,
+    @StringRes emptyListMessage: Int,
+    isRefreshing: IsRefreshingState,
     itemActions: List<ItemAction> = emptyList(),
     onRefresh: () -> Unit,
-    isRefreshing: IsRefreshingState,
     onItemClick: (ItemUiModel) -> Unit = {}
 ) {
     PassSwipeRefresh(
@@ -33,10 +36,11 @@ fun ItemsList(
         onRefresh = onRefresh
     ) {
         if (items.isNotEmpty()) {
-            LazyColumn(modifier = modifier.fillMaxSize()) {
-                items(items) { item ->
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(items = items, key = { it.id.id }) { item ->
                     ItemRow(
                         item = item,
+                        highlight = highlight,
                         onItemClicked = onItemClick,
                         itemActions = itemActions
                     )
@@ -44,7 +48,7 @@ fun ItemsList(
             }
         } else {
             Box(
-                modifier = modifier
+                modifier = Modifier
                     .fillMaxSize()
                     .verticalScroll(rememberScrollState())
             ) {

@@ -3,7 +3,6 @@ package me.proton.android.pass.ui
 import android.os.Bundle
 import android.view.WindowManager
 import android.view.autofill.AutofillManager
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.android.pass.BuildConfig
@@ -23,7 +23,7 @@ import me.proton.core.compose.component.ProtonCenteredProgress
 import me.proton.pass.presentation.components.navigation.AuthNavigation
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
 
     private val launcherViewModel: LauncherViewModel by viewModels()
 
@@ -42,6 +42,7 @@ class MainActivity : ComponentActivity() {
             when (state) {
                 AccountNeeded -> {
                     disableAutofill()
+                    launcherViewModel.clearPreferences()
                     launcherViewModel.addAccount()
                 }
                 Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())

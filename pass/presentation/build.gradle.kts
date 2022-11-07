@@ -86,6 +86,7 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.user)
+    implementation(libs.core.userSettings)
     implementation(libs.core.utilKotlin)
 
     implementation(libs.dagger.hilt.android)

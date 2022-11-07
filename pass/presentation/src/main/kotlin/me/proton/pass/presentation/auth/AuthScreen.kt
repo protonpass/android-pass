@@ -1,4 +1,4 @@
-package me.proton.pass.autofill.ui.auth
+package me.proton.pass.presentation.auth
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -10,8 +10,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.android.pass.biometry.ContextHolder
 import me.proton.pass.common.api.Some
 import java.lang.ref.WeakReference
-
-const val AUTH_SCREEN_ROUTE = "common/auth"
 
 @Composable
 fun AuthScreen(

@@ -29,4 +29,6 @@ class TestPreferenceRepository : PreferenceRepository {
 
     override fun getThemePreference(): Flow<ThemePreference> = themePreference
 
+    override fun clearPreferences(): Flow<Unit> = flowOf(Unit)
+
 }

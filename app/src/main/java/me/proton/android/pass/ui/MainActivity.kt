@@ -42,7 +42,6 @@ class MainActivity : FragmentActivity() {
             when (state) {
                 AccountNeeded -> {
                     disableAutofill()
-                    launcherViewModel.clearPreferences()
                     launcherViewModel.addAccount()
                 }
                 Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())

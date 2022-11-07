@@ -8,8 +8,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.android.pass.biometry.ContextHolder
-import me.proton.pass.common.api.Some
-import java.lang.ref.WeakReference
 
 @Composable
 fun AuthScreen(
@@ -29,7 +27,7 @@ fun AuthScreen(
 
     val ctx = LocalContext.current
     LaunchedEffect(Unit) {
-        viewModel.init(ContextHolder(Some(WeakReference(ctx))))
+        viewModel.init(ContextHolder.fromContext(ctx))
     }
 
     when (state) {

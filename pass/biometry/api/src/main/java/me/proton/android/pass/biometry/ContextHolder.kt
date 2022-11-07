@@ -13,4 +13,8 @@ class ContextHolder(private val context: Option<WeakReference<Context>>) {
             None -> None
             is Some -> ctx.value.get().toOption()
         }
+
+    companion object {
+        fun fromContext(context: Context): ContextHolder = ContextHolder(Some(WeakReference(context)))
+    }
 }

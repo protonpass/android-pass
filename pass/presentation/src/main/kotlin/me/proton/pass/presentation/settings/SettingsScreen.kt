@@ -6,8 +6,10 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.proton.android.pass.biometry.ContextHolder
 
 
 @ExperimentalMaterialApi
@@ -20,12 +22,15 @@ fun SettingsScreen(
     val viewModel: SettingsViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val context = LocalContext.current
     SettingsContent(
         modifier = modifier,
         scaffoldState = scaffoldState,
         onDrawerIconClick = onDrawerIconClick,
         state = state,
         onThemeChange = { viewModel.onThemePreferenceChange(it) },
-        onFingerPrintLockChange = { viewModel.onFingerPrintLockChange(it) }
+        onFingerPrintLockChange = {
+            viewModel.onFingerPrintLockChange(ContextHolder.fromContext(context), it)
+        }
     )
 }

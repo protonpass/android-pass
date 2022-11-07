@@ -26,6 +26,8 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import me.proton.android.pass.AuthRequiredState
+import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.android.pass.ui.internal.InternalDrawerState
 import me.proton.android.pass.ui.internal.InternalDrawerValue
@@ -56,20 +58,54 @@ fun PassApp(
     }
 
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
+    val authRequiredState by appViewModel.authRequiredState.collectAsStateWithLifecycle()
 
+    when (val state = authRequiredState) {
+        // We should provide some kind of "Loading" screen here,
+        // but it would only be shown for a few ms
+        AuthRequiredState.Loading -> {}
+        is AuthRequiredState.Value -> {
+            PassAppContent(
+                modifier = modifier,
+                appUiState = appUiState,
+                biometricLockState = state.state,
+                authNavigation = authNavigation,
+                onDrawerSectionChanged = { appViewModel.onDrawerSectionChanged(it) },
+                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() }
+            )
+        }
+    }
+}
+
+@Composable
+fun PassAppContent(
+    modifier: Modifier = Modifier,
+    appUiState: AppUiState,
+    biometricLockState: BiometricLockState,
+    authNavigation: AuthNavigation,
+    onDrawerSectionChanged: (NavigationDrawerSection) -> Unit,
+    onSnackbarMessageDelivered: () -> Unit
+) {
     val isDark = when (appUiState.theme) {
         ThemePreference.Dark -> true
         ThemePreference.Light -> false
         ThemePreference.System -> isNightMode()
     }
+
+    val startDestination = when (biometricLockState) {
+        BiometricLockState.Enabled -> NavItem.Auth.route
+        BiometricLockState.Disabled -> NavItem.Home.route
+    }
+
     ProtonTheme(isDark = isDark) {
         ProvideWindowInsets {
             PassAppContent(
                 modifier = modifier,
                 appUiState = appUiState,
                 authNavigation = authNavigation,
-                onDrawerSectionChanged = { appViewModel.onDrawerSectionChanged(it) },
-                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() }
+                startDestination = startDestination,
+                onDrawerSectionChanged = onDrawerSectionChanged,
+                onSnackbarMessageDelivered = onSnackbarMessageDelivered
             )
         }
     }

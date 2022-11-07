@@ -44,4 +44,12 @@ class PreferenceRepositoryImpl @Inject constructor(
                 val value = preferences[PassPreferences.THEME] ?: DEFAULT_THEME_PREFERENCE
                 ThemePreference.from(value)
             }
+
+    override fun clearPreferences(): Flow<Unit> = flow {
+        dataStore.edit { preferences ->
+            preferences[PassPreferences.THEME] = DEFAULT_THEME_PREFERENCE
+            preferences[PassPreferences.BIOMETRIC_LOCK] = DEFAULT_BIOMETRIC_LOCK
+        }
+        emit(Unit)
+    }
 }

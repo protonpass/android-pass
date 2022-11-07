@@ -32,10 +32,25 @@ plugins {
     alias(libs.plugins.gradlePlugin.paparazzi) apply false
     alias(libs.plugins.gradlePlugin.protobuf) apply false
     alias(libs.plugins.gradlePlugin.sentry) apply false
+    alias(libs.plugins.gradlePlugin.test.logger) apply false
     id("me.proton.android.pass.module-gen")
 }
 
 val isCI = System.getenv().containsKey("CI")
+
+subprojects {
+    apply {
+        plugin("com.adarshr.test-logger")
+    }
+
+    tasks.withType<Test> {
+        maxParallelForks = (Runtime.getRuntime().availableProcessors() / 2).takeIf { it > 0 } ?: 1
+    }
+
+    configure<com.adarshr.gradle.testlogger.TestLoggerExtension> {
+        theme = com.adarshr.gradle.testlogger.theme.ThemeType.MOCHA_PARALLEL
+    }
+}
 
 doctor {
     javaHome {

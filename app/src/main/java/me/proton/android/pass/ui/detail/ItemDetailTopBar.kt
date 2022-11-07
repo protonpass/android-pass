@@ -13,8 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.android.pass.ui.detail.DetailSnackbarMessages.ItemNotLoadedError
 import me.proton.android.pass.ui.shared.ChevronBackIcon
-import me.proton.android.pass.ui.shared.DropDownAction
-import me.proton.android.pass.ui.shared.ItemDropdownMenu
+import me.proton.pass.presentation.components.common.item.DropDownAction
+import me.proton.pass.presentation.components.common.item.ItemDropdownMenu
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme

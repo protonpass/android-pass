@@ -9,11 +9,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.android.pass.biometry.BiometryAuthError
 import me.proton.android.pass.biometry.BiometryManager
+import me.proton.android.pass.biometry.BiometryResult
 import me.proton.android.pass.biometry.BiometryStatus
+import me.proton.android.pass.biometry.ContextHolder
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.android.pass.preferences.ThemePreference
@@ -23,7 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val preferencesRepository: PreferenceRepository,
-    private val biometryManager: BiometryManager
+    private val biometryManager: BiometryManager,
+    private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
     private val biometricLockState: Flow<BiometricLockState> =
@@ -56,18 +62,48 @@ class SettingsViewModel @Inject constructor(
         initialValue = SettingsUiState.Initial
     )
 
-    fun onFingerPrintLockChange(state: IsButtonEnabled) = viewModelScope.launch {
-        val lockState = when (state) {
-            IsButtonEnabled.Enabled -> BiometricLockState.Enabled
-            IsButtonEnabled.Disabled -> BiometricLockState.Disabled
+    fun onFingerPrintLockChange(contextHolder: ContextHolder, state: IsButtonEnabled) =
+        viewModelScope.launch {
+            biometryManager.launch(contextHolder)
+                .map { result ->
+                    when (val res = result) {
+                        BiometryResult.Success -> performFingerprintLockChange(state)
+                        is BiometryResult.Error -> {
+                            when (res.cause) {
+                                // If the user has cancelled it, do nothing
+                                BiometryAuthError.Canceled -> {}
+                                BiometryAuthError.UserCanceled -> {}
+
+                                else ->
+                                    snackbarMessageRepository
+                                        .emitSnackbarMessage(SettingsSnackbarMessage.BiometryFailedToAuthenticateError)
+                            }
+                        }
+
+                        // User can retry
+                        BiometryResult.Failed -> {}
+                        is BiometryResult.FailedToStart ->
+                            snackbarMessageRepository
+                                .emitSnackbarMessage(SettingsSnackbarMessage.BiometryFailedToStartError)
+                    }
+                    PassLogger.i(TAG, "Biometry result: $result")
+                }
+                .collect { }
         }
-        PassLogger.d(TAG, "Changing BiometricLock to $lockState")
-        preferencesRepository.setBiometricLockState(lockState).collect()
-    }
 
     fun onThemePreferenceChange(theme: ThemePreference) = viewModelScope.launch {
         PassLogger.d(TAG, "Changing theme to $theme")
         preferencesRepository.setThemePreference(theme).collect()
+    }
+
+    private suspend fun performFingerprintLockChange(state: IsButtonEnabled) {
+        val (lockState, message) = when (state) {
+            IsButtonEnabled.Enabled -> BiometricLockState.Enabled to SettingsSnackbarMessage.FingerprintLockEnabled
+            IsButtonEnabled.Disabled -> BiometricLockState.Disabled to SettingsSnackbarMessage.FingerprintLockDisabled
+        }
+        PassLogger.d(TAG, "Changing BiometricLock to $lockState")
+        preferencesRepository.setBiometricLockState(lockState).collect()
+        snackbarMessageRepository.emitSnackbarMessage(message)
     }
 
     companion object {

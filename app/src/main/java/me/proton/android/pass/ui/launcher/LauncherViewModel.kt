@@ -26,6 +26,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -116,6 +117,7 @@ class LauncherViewModel @Inject constructor(
 
     fun signOut(userId: UserId? = null) = viewModelScope.launch {
         accountManager.disableAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
+        clearPreferencesIfNeeded()
     }
 
     fun switch(userId: UserId) = viewModelScope.launch {
@@ -128,10 +130,14 @@ class LauncherViewModel @Inject constructor(
 
     fun remove(userId: UserId? = null) = viewModelScope.launch {
         accountManager.removeAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
+        clearPreferencesIfNeeded()
     }
 
-    fun clearPreferences() = viewModelScope.launch {
-        preferenceRepository.clearPreferences()
+    private suspend fun clearPreferencesIfNeeded() {
+        val accounts = accountManager.getAccounts().first()
+        if (accounts.isEmpty()) {
+            preferenceRepository.clearPreferences()
+        }
     }
 
     fun subscription() = viewModelScope.launch {

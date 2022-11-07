@@ -33,6 +33,7 @@ import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.common.api.Option
+import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.components.common.item.ItemAction
@@ -125,6 +126,7 @@ private fun HomeContent(
                     val keyboardController = LocalSoftwareKeyboardController.current
                     Home(
                         items = uiState.homeListUiState.items,
+                        highlight = uiState.searchUiState.searchQuery.toOption(),
                         modifier = Modifier.padding(contentPadding),
                         onItemClick = { item ->
                             keyboardController?.hide()
@@ -151,6 +153,7 @@ private fun HomeContent(
 @Composable
 private fun Home(
     items: List<ItemUiModel>,
+    highlight: Option<String>,
     modifier: Modifier = Modifier,
     onItemClick: (ItemUiModel) -> Unit,
     navigation: HomeScreenNavigation,
@@ -159,9 +162,10 @@ private fun Home(
     onRefresh: () -> Unit
 ) {
     ItemsList(
-        items = items,
-        emptyListMessage = R.string.message_no_saved_credentials,
         modifier = modifier,
+        items = items,
+        highlight = highlight,
+        emptyListMessage = R.string.message_no_saved_credentials,
         onItemClick = onItemClick,
         onRefresh = onRefresh,
         isRefreshing = isRefreshing,

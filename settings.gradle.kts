@@ -1,4 +1,4 @@
-rootProject.name = "Password Manager"
+rootProject.name = "Proton Pass"
 
 pluginManagement {
     includeBuild("build-logic")

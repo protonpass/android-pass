@@ -46,10 +46,7 @@ class PreferenceRepositoryImpl @Inject constructor(
             }
 
     override fun clearPreferences(): Flow<Unit> = flow {
-        dataStore.edit { preferences ->
-            preferences[PassPreferences.THEME] = DEFAULT_THEME_PREFERENCE
-            preferences[PassPreferences.BIOMETRIC_LOCK] = DEFAULT_BIOMETRIC_LOCK
-        }
+        dataStore.edit { preferences -> preferences.clear() }
         emit(Unit)
     }
 }

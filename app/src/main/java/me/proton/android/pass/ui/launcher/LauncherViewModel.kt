@@ -30,6 +30,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
 import me.proton.core.account.domain.entity.isReady
@@ -62,7 +63,8 @@ class LauncherViewModel @Inject constructor(
     private val authOrchestrator: AuthOrchestrator,
     private val plansOrchestrator: PlansOrchestrator,
     private val reportOrchestrator: ReportOrchestrator,
-    private val userSettingsOrchestrator: UserSettingsOrchestrator
+    private val userSettingsOrchestrator: UserSettingsOrchestrator,
+    private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
 
     val state: StateFlow<State> = accountManager.getAccounts()
@@ -126,6 +128,10 @@ class LauncherViewModel @Inject constructor(
 
     fun remove(userId: UserId? = null) = viewModelScope.launch {
         accountManager.removeAccount(requireNotNull(userId ?: getPrimaryUserIdOrNull()))
+    }
+
+    fun clearPreferences() = viewModelScope.launch {
+        preferenceRepository.clearPreferences()
     }
 
     fun subscription() = viewModelScope.launch {

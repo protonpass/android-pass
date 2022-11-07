@@ -16,11 +16,12 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillMappings
-import me.proton.pass.autofill.ui.auth.AUTH_SCREEN_ROUTE
-import me.proton.pass.autofill.ui.auth.AuthScreen
 import me.proton.pass.autofill.ui.autofill.select.SELECT_ITEM_ROUTE
 import me.proton.pass.autofill.ui.autofill.select.SelectItemInitialState
 import me.proton.pass.autofill.ui.autofill.select.SelectItemScreen
+import me.proton.pass.presentation.auth.AuthScreen
+
+private const val AUTH_SCREEN_ROUTE = "common/auth"
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

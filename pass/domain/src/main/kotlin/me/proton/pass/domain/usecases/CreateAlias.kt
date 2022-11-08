@@ -10,11 +10,19 @@ import me.proton.pass.domain.repositories.ItemRepository
 import me.proton.pass.domain.repositories.ShareRepository
 import javax.inject.Inject
 
-class CreateAlias @Inject constructor(
+interface CreateAlias {
+    suspend operator fun invoke(
+        userId: UserId,
+        shareId: ShareId,
+        newAlias: NewAlias
+    ): Result<Item>
+}
+
+class CreateAliasImpl @Inject constructor(
     private val shareRepository: ShareRepository,
     private val itemRepository: ItemRepository
-) {
-    suspend operator fun invoke(
+) : CreateAlias {
+    override suspend fun invoke(
         userId: UserId,
         shareId: ShareId,
         newAlias: NewAlias

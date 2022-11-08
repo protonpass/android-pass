@@ -12,5 +12,6 @@ enum class SettingsSnackbarMessage(
     BiometryFailedToStartError(R.string.error_biometry_failed_to_start, SnackbarType.ERROR),
     BiometryFailedToAuthenticateError(R.string.error_biometry_failed_to_authenticate, SnackbarType.ERROR),
     FingerprintLockEnabled(R.string.settings_fingerprint_lock_enabled, SnackbarType.SUCCESS),
-    FingerprintLockDisabled(R.string.settings_fingerprint_lock_disabled, SnackbarType.SUCCESS)
+    FingerprintLockDisabled(R.string.settings_fingerprint_lock_disabled, SnackbarType.SUCCESS),
+    ErrorPerformingOperation(R.string.error_performing_operation, SnackbarType.ERROR)
 }

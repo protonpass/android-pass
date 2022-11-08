@@ -40,14 +40,18 @@ inline fun <R, T> Result<T>.flatMap(transform: (value: T) -> Result<R>): Result<
         Result.Loading -> Result.Loading
     }
 
-fun <T> Flow<T>.asResult(): Flow<Result<T>> {
-    return this
+fun <T> Flow<T>.asResult(): Flow<Result<T>> =
+    this
+        .asResultWithoutLoading()
+        .onStart { emit(Result.Loading) }
+
+
+fun <T> Flow<T>.asResultWithoutLoading(): Flow<Result<T>> =
+    this
         .map<T, Result<T>> {
             Result.Success(it)
         }
-        .onStart { emit(Result.Loading) }
         .catch { emit(Result.Error(it)) }
-}
 
 @Suppress("TooGenericExceptionCaught")
 fun <T> ApiResult<T>.toResult(): Result<T> =

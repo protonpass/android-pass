@@ -10,27 +10,27 @@ After cloning this repo, make sure that you have the required submodules:
 $ git submodule update --init
 ```
 
-Then, either open the project in Android Studio, or create manually a `local.properties` file with the following contents:
+Also make sure you have installed [git-lfs](https://git-lfs.github.com/) to be able to run screenshot tests.
+
+If you want to build the APK via command line, run the following command:
 
 ```
-sdk.dir=PATH_TO_YOUR_ANDROID_SDK_DIR
-```
-
-Once you have that file available, copy it into the `proton-libs/` directory (this is required in order to build the Proton Core Android libraries from source).
-
-By default, Android Studio will select the Alpha variant. For using it against our internal servers, open the "Build variants" selector in the lower-left corner and select `devDebug` for the `:app` module.
-
-Otherwise, if you want to build the APK via command line, run the following command:
-
-```
-$ ./gradlew assembleDevDebug
+$ ./gradlew :app:assembleDevDebug
 ```
 
 The APK will be in `app/build/outputs/apk/dev/debug/`.
 
+## How to record new screenshots with Paparazzi
+
+To be able to record new images for screenshot testing you will need to run the following task:
+
+```
+$ ./gradlew :pass:screenshot-tests:recordPaparazziDevDebug
+```
+
 ## How to create modules
 
-To ease modularization we have a task that will create modules for us, we can run with the following command:
+To ease modularization we have a task that will create modules for us, we can run it with the following command:
 
 ```
 $ ./gradlew genModule --module=:pass:my-new-module --conf=api,impl,fakes

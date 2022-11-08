@@ -199,10 +199,12 @@ class UpdateAliasViewModel @Inject constructor(
 
         val itemData = if (itemDataChanged) {
             val aliasItem = aliasItemState.value
-            Some (UpdateAliasItemContent(
-                title = aliasItem.title,
-                note = aliasItem.note
-            ))
+            Some(
+                UpdateAliasItemContent(
+                    title = aliasItem.title,
+                    note = aliasItem.note
+                )
+            )
         } else None
 
         val body = UpdateAliasContent(

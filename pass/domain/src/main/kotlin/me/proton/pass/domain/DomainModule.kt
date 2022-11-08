@@ -4,6 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.pass.domain.usecases.CreateAlias
+import me.proton.pass.domain.usecases.CreateAliasImpl
 import me.proton.pass.domain.usecases.CreateItem
 import me.proton.pass.domain.usecases.CreateItemImpl
 import me.proton.pass.domain.usecases.GetCurrentShare
@@ -47,6 +49,9 @@ abstract class DomainModule {
     abstract fun bindGetSuggestedLoginItems(
         getSuggestedLoginItemsImpl: GetSuggestedLoginItemsImpl
     ): GetSuggestedLoginItems
+
+    @Binds
+    abstract fun bindCreateAlias(createAliasImpl: CreateAliasImpl): CreateAlias
 
     @Binds
     abstract fun bindUpdateAlias(updateAliasImpl: UpdateAliasImpl): UpdateAlias

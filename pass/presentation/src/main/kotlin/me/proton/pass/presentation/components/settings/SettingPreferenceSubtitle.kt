@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultSmall
 import me.proton.pass.commonui.api.ThemePreviewProvider
 
 @Composable
@@ -22,6 +23,7 @@ fun SettingPreferenceSubtitle(
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
         color = ProtonTheme.colors.textWeak,
+        style = ProtonTheme.typography.defaultSmall,
         text = text
     )
 }

@@ -1,5 +1,6 @@
 package me.proton.pass.presentation.settings
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -35,6 +36,12 @@ fun SettingsContent(
 ) {
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
+
+    BackHandler(
+        enabled = bottomSheetState.isVisible
+    ) {
+        scope.launch { bottomSheetState.hide() }
+    }
 
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,

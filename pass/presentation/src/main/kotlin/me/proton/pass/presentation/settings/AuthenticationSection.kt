@@ -1,24 +1,18 @@
 package me.proton.pass.presentation.settings
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
-import androidx.compose.material.Switch
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
+import me.proton.core.compose.component.ProtonSettingsHeader
+import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.previewproviders.ButtonEnabledPreviewProvider
-import me.proton.pass.presentation.components.settings.SettingPreferenceDescription
-import me.proton.pass.presentation.components.settings.SettingPreferenceTitle
-import me.proton.pass.presentation.components.settings.SettingSectionTitle
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.value
 
@@ -29,29 +23,25 @@ fun AuthenticationSection(
     isToggleChecked: IsButtonEnabled,
     onToggleChange: (IsButtonEnabled) -> Unit
 ) {
-    Column(modifier = modifier.padding(vertical = 12.dp)) {
-        SettingSectionTitle(text = stringResource(R.string.settings_authentication_section_title))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            SettingPreferenceTitle(
-                modifier = Modifier
-                    .padding(vertical = 20.dp)
-                    .weight(1f),
-                text = stringResource(R.string.settings_authentication_preference_title)
-            )
-            Switch(
-                enabled = enabled,
-                checked = isToggleChecked.value(),
-                onCheckedChange = { onToggleChange(IsButtonEnabled.from(it)) }
-            )
-        }
+    val description = if (enabled) {
+        R.string.settings_authentication_preference_description_enabled
+    } else {
+        R.string.settings_authentication_preference_description_no_fingerprint
+    }
 
-        val description = if (enabled) {
-            R.string.settings_authentication_preference_description_enabled
-        } else {
-            R.string.settings_authentication_preference_description_no_fingerprint
-        }
-        SettingPreferenceDescription(
-            text = stringResource(description)
+    val value = if (enabled) {
+        isToggleChecked.value()
+    } else {
+        null
+    }
+
+    Column(modifier = modifier) {
+        ProtonSettingsHeader(title = R.string.settings_authentication_section_title)
+        ProtonSettingsToggleItem(
+            name = stringResource(R.string.settings_authentication_preference_title),
+            value = value,
+            onToggle = { onToggleChange(IsButtonEnabled.from(it)) },
+            hint = stringResource(description)
         )
     }
 }

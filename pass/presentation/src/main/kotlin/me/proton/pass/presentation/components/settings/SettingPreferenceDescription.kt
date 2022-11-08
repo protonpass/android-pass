@@ -5,11 +5,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultSmall
 import me.proton.pass.commonui.api.ThemePreviewProvider
 
 @Composable
@@ -19,10 +18,9 @@ fun SettingPreferenceDescription(
 ) {
     Text(
         modifier = modifier.fillMaxWidth(),
-        fontWeight = FontWeight.W400,
-        fontSize = 12.sp,
         color = ProtonTheme.colors.textHint,
-        text = text
+        text = text,
+        style = ProtonTheme.typography.defaultSmall
     )
 }
 

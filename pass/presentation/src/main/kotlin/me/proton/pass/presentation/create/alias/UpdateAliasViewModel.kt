@@ -29,6 +29,7 @@ import me.proton.pass.domain.repositories.AliasRepository
 import me.proton.pass.domain.repositories.ItemRepository
 import me.proton.pass.domain.usecases.UpdateAlias
 import me.proton.pass.domain.usecases.UpdateAliasContent
+import me.proton.pass.domain.usecases.UpdateAliasItemContent
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -196,9 +197,17 @@ class UpdateAliasViewModel @Inject constructor(
             Some(selectedMailboxes)
         } else None
 
+        val itemData = if (itemDataChanged) {
+            val aliasItem = aliasItemState.value
+            Some (UpdateAliasItemContent(
+                title = aliasItem.title,
+                note = aliasItem.note
+            ))
+        } else None
+
         val body = UpdateAliasContent(
             mailboxes = mailboxes,
-            itemData = None
+            itemData = itemData
         )
         return body
     }

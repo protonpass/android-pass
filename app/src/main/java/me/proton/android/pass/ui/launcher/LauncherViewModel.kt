@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
@@ -53,6 +54,8 @@ import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.report.presentation.entity.BugReportInput
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
+import me.proton.pass.common.api.Result
+import me.proton.pass.common.api.asResultWithoutLoading
 import javax.inject.Inject
 
 @HiltViewModel
@@ -136,7 +139,13 @@ class LauncherViewModel @Inject constructor(
     private suspend fun clearPreferencesIfNeeded() {
         val accounts = accountManager.getAccounts().first()
         if (accounts.isEmpty()) {
-            preferenceRepository.clearPreferences()
+            preferenceRepository.clearPreferences().asResultWithoutLoading()
+                .collect {
+                    if (it is Result.Error) {
+                        val message = "Error clearing preferences"
+                        PassLogger.e(TAG, it.exception ?: Exception(message), message)
+                    }
+                }
         }
     }
 
@@ -164,4 +173,8 @@ class LauncherViewModel @Inject constructor(
     private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
 
     enum class State { Processing, AccountNeeded, PrimaryExist, StepNeeded }
+
+    companion object {
+        private const val TAG = "LauncherViewModel"
+    }
 }

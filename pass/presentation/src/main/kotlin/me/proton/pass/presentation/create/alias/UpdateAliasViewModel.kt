@@ -167,7 +167,7 @@ class UpdateAliasViewModel @Inject constructor(
                 .onError {
                     val defaultMessage = "Update alias error"
                     PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                    snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.ItemCreationError)
+                    snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.AliasUpdated)
                 }
         } else {
             PassLogger.i(TAG, "Empty User Id")

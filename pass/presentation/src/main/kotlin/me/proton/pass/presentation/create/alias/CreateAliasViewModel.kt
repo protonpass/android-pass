@@ -20,6 +20,7 @@ import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.AliasOptions
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.NewAlias
+import me.proton.pass.domain.errors.CannotCreateMoreAliasesError
 import me.proton.pass.domain.repositories.AliasRepository
 import me.proton.pass.domain.usecases.CreateAlias
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
@@ -123,16 +124,22 @@ class CreateAliasViewModel @Inject constructor(
                 .onSuccess { item ->
                     isItemSavedState.update { ItemSavedState.Success(item.id) }
                 }
-                .onError {
-                    val defaultMessage = "Create alias error"
-                    PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                    snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
-                }
+                .onError { onCreateAliasError(it) }
         } else {
             PassLogger.i(TAG, "Empty User Id")
             snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    private suspend fun onCreateAliasError(cause: Throwable?) {
+        if (cause is CannotCreateMoreAliasesError) {
+            snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.CannotCreateMoreAliasesError)
+        } else {
+            val defaultMessage = "Create alias error"
+            PassLogger.i(TAG, cause ?: Exception(defaultMessage), defaultMessage)
+            snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+        }
     }
 
     companion object {

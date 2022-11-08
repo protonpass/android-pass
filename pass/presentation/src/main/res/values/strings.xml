@@ -121,6 +121,7 @@
     <string name="alias_bottomsheet_mailboxes_title">Mailboxes</string>
 
     <string name="create_alias_item_creation_error">Could not create Alias</string>
+    <string name="create_alias_cannot_create_more_aliases_error">You cannot create any more aliases</string>
     <string name="create_alias_item_update_error">Could not update Alias</string>
     <string name="create_alias_init_error">Could not initialise Alias</string>
     <string name="create_alias_empty_share_id">Share Id cannot be empty</string>

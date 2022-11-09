@@ -20,6 +20,7 @@ import me.proton.android.pass.biometry.ContextHolder
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState
+import me.proton.android.pass.preferences.HasAuthenticated
 import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.pass.common.api.Result
@@ -87,7 +88,17 @@ class SettingsViewModel @Inject constructor(
             biometryManager.launch(contextHolder)
                 .map { result ->
                     when (result) {
-                        BiometryResult.Success -> performFingerprintLockChange(state)
+                        BiometryResult.Success -> {
+                            preferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+                                .asResultWithoutLoading()
+                                .collect { prefResult ->
+                                    prefResult.onError {
+                                        val message = "Could not save HasAuthenticated preference"
+                                        PassLogger.e(TAG, it ?: RuntimeException(message))
+                                    }
+                                }
+                            performFingerprintLockChange(state)
+                        }
                         is BiometryResult.Error -> {
                             when (result.cause) {
                                 // If the user has cancelled it, do nothing

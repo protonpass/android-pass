@@ -5,9 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.isActive
 import me.proton.pass.domain.autofill.AutofillManager
 import me.proton.pass.domain.autofill.AutofillStatus
 import me.proton.pass.domain.autofill.AutofillSupportedStatus
@@ -31,7 +33,7 @@ class AutofillManagerImpl @Inject constructor(
             return@flow
         }
 
-        while (true) {
+        while (currentCoroutineContext().isActive) {
             if (autofillManager.hasEnabledAutofillServices()) {
                 emit(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
             } else if (autofillManager.isEnabled) {

@@ -26,10 +26,11 @@ data class HomeScreenNavigation(val appNavigator: AppNavigator) {
     val toEditAlias: (ShareId, ItemId) -> Unit = { shareId: ShareId, itemId: ItemId ->
         appNavigator.navigate(NavItem.EditAlias, NavItem.EditAlias.createNavRoute(shareId, itemId))
     }
-
     val toItemDetail: (ShareId, ItemId) -> Unit = { shareId: ShareId, itemId: ItemId ->
         appNavigator.navigate(NavItem.ViewItem, NavItem.ViewItem.createNavRoute(shareId, itemId))
     }
+    val toAuth: () -> Unit = { appNavigator.navigate(NavItem.Auth) }
+    val toOnBoarding: () -> Unit = { appNavigator.navigate(NavItem.OnBoarding) }
 
     val toCreatePassword: (ShareId) -> Unit = { shareId: ShareId ->
         appNavigator.navigate(

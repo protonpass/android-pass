@@ -10,9 +10,10 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.commonui.api.ThemePreviewProvider
+import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.domain.autofill.AutofillStatus
 import me.proton.pass.presentation.R
+import me.proton.pass.presentation.components.previewproviders.AutofillStatusPreviewProvider
 
 @Composable
 fun AutofillSection(
@@ -37,15 +38,18 @@ fun AutofillSection(
     }
 }
 
+class AutofillSectionPreviewProvider :
+    ThemePairPreviewProvider<AutofillStatus>(AutofillStatusPreviewProvider())
+
 @Preview
 @Composable
 fun AutofillSectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(AutofillSectionPreviewProvider::class) input: Pair<Boolean, AutofillStatus>
 ) {
-    ProtonTheme(isDark = isDark) {
+    ProtonTheme(isDark = input.first) {
         Surface {
             AutofillSection(
-                state = AutofillStatus.EnabledByOurService,
+                state = input.second,
                 onToggleChange = {}
             )
         }

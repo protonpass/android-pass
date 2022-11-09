@@ -20,7 +20,7 @@ fun Settings(
         if (state.autofillStatus is AutofillSupportedStatus.Supported) {
             item {
                 AutofillSection(
-                    state = state.autofillStatus.status,
+                    state = state.autofillStatus.status.value(),
                     onToggleChange = onToggleAutofillChange
                 )
                 Divider(modifier = Modifier.fillMaxWidth())

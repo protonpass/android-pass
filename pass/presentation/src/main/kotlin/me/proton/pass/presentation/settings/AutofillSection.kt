@@ -11,40 +11,32 @@ import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
-import me.proton.pass.domain.autofill.AutofillStatus
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.previewproviders.AutofillStatusPreviewProvider
+import me.proton.pass.presentation.components.previewproviders.BooleanPreviewProvider
 
 @Composable
 fun AutofillSection(
     modifier: Modifier = Modifier,
-    state: AutofillStatus,
+    state: Boolean,
     onToggleChange: (Boolean) -> Unit
 ) {
-    val value = when (state) {
-        AutofillStatus.Disabled -> false
-        AutofillStatus.EnabledByOurService -> true
-        AutofillStatus.EnabledByOtherService -> false
-    }
-
     Column(modifier = modifier) {
         ProtonSettingsHeader(title = R.string.settings_autofill_section_title)
         ProtonSettingsToggleItem(
             name = stringResource(R.string.settings_autofill_preference_title),
-            value = value,
+            value = state,
             hint = stringResource(R.string.settings_autofill_preference_description),
             onToggle = onToggleChange
         )
     }
 }
 
-class AutofillSectionPreviewProvider :
-    ThemePairPreviewProvider<AutofillStatus>(AutofillStatusPreviewProvider())
+class ThemedBooleanPreviewProvider : ThemePairPreviewProvider<Boolean>(BooleanPreviewProvider())
 
 @Preview
 @Composable
 fun AutofillSectionPreview(
-    @PreviewParameter(AutofillSectionPreviewProvider::class) input: Pair<Boolean, AutofillStatus>
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     ProtonTheme(isDark = input.first) {
         Surface {

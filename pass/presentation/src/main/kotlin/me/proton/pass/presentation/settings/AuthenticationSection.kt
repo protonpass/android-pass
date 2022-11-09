@@ -46,13 +46,13 @@ fun AuthenticationSection(
     }
 }
 
-class ThemedBooleanPreviewProvider :
+class ThemedButtonEnabledPreviewProvider :
     ThemePairPreviewProvider<IsButtonEnabled>(ButtonEnabledPreviewProvider())
 
 @Preview
 @Composable
 fun AuthenticationSectionPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, IsButtonEnabled>
+    @PreviewParameter(ThemedButtonEnabledPreviewProvider::class) input: Pair<Boolean, IsButtonEnabled>
 ) {
     ProtonTheme(isDark = input.first) {
         Surface {

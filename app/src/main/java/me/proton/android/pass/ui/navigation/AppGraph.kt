@@ -17,6 +17,7 @@ import me.proton.android.pass.ui.detail.itemDetailGraph
 import me.proton.android.pass.ui.help.helpGraph
 import me.proton.android.pass.ui.home.HomeScreenNavigation
 import me.proton.android.pass.ui.home.homeGraph
+import me.proton.android.pass.ui.onboarding.onBoardingGraph
 import me.proton.android.pass.ui.settings.settingsGraph
 import me.proton.android.pass.ui.trash.trashGraph
 
@@ -24,25 +25,27 @@ import me.proton.android.pass.ui.trash.trashGraph
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 fun NavGraphBuilder.appGraph(
-    appNavigation: AppNavigator,
+    appNavigator: AppNavigator,
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
-    onDrawerIconClick: () -> Unit
+    onDrawerIconClick: () -> Unit,
+    finishActivity: () -> Unit
 ) {
     homeGraph(
         navigationDrawer,
-        HomeScreenNavigation(appNavigation),
+        HomeScreenNavigation(appNavigator),
         onDrawerIconClick
     )
     trashGraph(navigationDrawer, onDrawerIconClick)
     helpGraph(navigationDrawer, onDrawerIconClick)
     settingsGraph(navigationDrawer, onDrawerIconClick)
-    createLoginGraph(appNavigation)
-    updateLoginGraph(appNavigation)
-    createNoteGraph(appNavigation)
-    updateNoteGraph(appNavigation)
-    createAliasGraph(appNavigation)
-    updateAliasGraph(appNavigation)
-    createPasswordGraph(appNavigation)
-    itemDetailGraph(appNavigation)
-    authGraph(appNavigation)
+    createLoginGraph(appNavigator)
+    updateLoginGraph(appNavigator)
+    createNoteGraph(appNavigator)
+    updateNoteGraph(appNavigator)
+    createAliasGraph(appNavigator)
+    updateAliasGraph(appNavigator)
+    createPasswordGraph(appNavigator)
+    itemDetailGraph(appNavigator)
+    authGraph(appNavigator, finishActivity)
+    onBoardingGraph(appNavigator, finishActivity)
 }

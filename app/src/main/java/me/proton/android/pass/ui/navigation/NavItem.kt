@@ -19,7 +19,9 @@ sealed class NavItem(
         navArgument(it.key) { type = it.navType }
     }
 
-    object Auth : NavItem("auth", isTopLevel = true)
+    object OnBoarding : NavItem("onBoarding")
+
+    object Auth : NavItem("auth")
 
     object Home : NavItem("home", isTopLevel = true)
 

@@ -51,7 +51,8 @@ data class NavDrawerNavigation(
     val onNavHome: () -> Unit,
     val onNavSettings: () -> Unit,
     val onNavTrash: () -> Unit,
-    val onNavHelp: () -> Unit
+    val onNavHelp: () -> Unit,
+    val onInternalDrawerClick: () -> Unit
 )
 
 @Composable
@@ -62,7 +63,6 @@ fun ModalNavigationDrawer(
     authNavigation: AuthNavigation,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     onSignOutClick: () -> Unit,
-    onInternalDrawerClick: () -> Unit,
     signOutDialog: @Composable () -> Unit,
     content: @Composable () -> Unit
 ) {
@@ -74,8 +74,7 @@ fun ModalNavigationDrawer(
                 authNavigation = authNavigation,
                 navDrawerNavigation = navDrawerNavigation,
                 onCloseDrawer = { coroutineScope.launch { drawerState.close() } },
-                onSignOutClick = onSignOutClick,
-                onInternalDrawerClick = onInternalDrawerClick
+                onSignOutClick = onSignOutClick
             )
             signOutDialog()
         }
@@ -92,7 +91,6 @@ fun NavigationDrawer(
     navDrawerNavigation: NavDrawerNavigation,
     authNavigation: AuthNavigation,
     onSignOutClick: () -> Unit = {},
-    onInternalDrawerClick: () -> Unit = {},
     onCloseDrawer: () -> Unit
 ) {
     val sidebarColors = requireNotNull(ProtonTheme.colors.sidebarColors)
@@ -153,7 +151,7 @@ fun NavigationDrawer(
                     if (drawerUiState.internalDrawerEnabled) {
                         InternalDrawerItem(
                             closeDrawerAction = { onCloseDrawer() },
-                            onClick = { onInternalDrawerClick() }
+                            onClick = { navDrawerNavigation.onInternalDrawerClick() }
                         )
                     }
                 }

@@ -5,6 +5,7 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.proton.core.compose.component.ProtonSettingsList
+import me.proton.pass.domain.autofill.AutofillSupportedStatus
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 
 @Composable
@@ -12,12 +13,18 @@ fun Settings(
     modifier: Modifier = Modifier,
     state: SettingsUiState,
     onOpenThemeSelection: () -> Unit,
-    onFingerPrintLockChange: (IsButtonEnabled) -> Unit
+    onFingerPrintLockChange: (IsButtonEnabled) -> Unit,
+    onToggleAutofillChange: (Boolean) -> Unit
 ) {
     ProtonSettingsList(modifier = modifier) {
-        item {
-            AutofillSection()
-            Divider(modifier = Modifier.fillMaxWidth())
+        if (state.autofillStatus is AutofillSupportedStatus.Supported) {
+            item {
+                AutofillSection(
+                    state = state.autofillStatus.status,
+                    onToggleChange = onToggleAutofillChange
+                )
+                Divider(modifier = Modifier.fillMaxWidth())
+            }
         }
 
         if (state.fingerprintSection != FingerprintSectionState.NotAvailable) {

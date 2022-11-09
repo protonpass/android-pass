@@ -26,6 +26,8 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
+import me.proton.pass.domain.autofill.AutofillManager
+import me.proton.pass.domain.autofill.AutofillSupportedStatus
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import javax.inject.Inject
 
@@ -33,7 +35,8 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val preferencesRepository: PreferenceRepository,
     private val biometryManager: BiometryManager,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val autofillManager: AutofillManager
 ) : ViewModel() {
 
     private val biometricLockState: Flow<BiometricLockState> = preferencesRepository
@@ -48,10 +51,15 @@ class SettingsViewModel @Inject constructor(
         .map { getTheme(it) }
         .distinctUntilChanged()
 
+    private val autofillState: Flow<AutofillSupportedStatus> = autofillManager
+        .getAutofillStatus()
+        .distinctUntilChanged()
+
     val state: StateFlow<SettingsUiState> = combine(
         biometricLockState,
-        themeState
-    ) { biometricLock, theme ->
+        themeState,
+        autofillState
+    ) { biometricLock, theme, autofill ->
         val fingerprintSection = when (biometryManager.getBiometryStatus()) {
             BiometryStatus.NotEnrolled -> FingerprintSectionState.NoFingerprintRegistered
             BiometryStatus.NotAvailable -> FingerprintSectionState.NotAvailable
@@ -65,7 +73,8 @@ class SettingsViewModel @Inject constructor(
         }
         SettingsUiState(
             fingerprintSection = fingerprintSection,
-            themePreference = theme
+            themePreference = theme,
+            autofillStatus = autofill
         )
     }.stateIn(
         scope = viewModelScope,
@@ -110,6 +119,14 @@ class SettingsViewModel @Inject constructor(
                 PassLogger.e(TAG, it ?: Exception(errMessage), errMessage)
                 snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.ErrorPerformingOperation)
             }
+    }
+
+    fun onToggleAutofill(value: Boolean) {
+        if (value) {
+            autofillManager.openAutofillSelector()
+        } else {
+            autofillManager.disableAutofill()
+        }
     }
 
     private suspend fun performFingerprintLockChange(state: IsButtonEnabled) {

@@ -31,6 +31,7 @@ fun SettingsScreen(
         onThemeChange = { viewModel.onThemePreferenceChange(it) },
         onFingerPrintLockChange = {
             viewModel.onFingerPrintLockChange(ContextHolder.fromContext(context), it)
-        }
+        },
+        onToggleAutofillChange = { viewModel.onToggleAutofill(it) }
     )
 }

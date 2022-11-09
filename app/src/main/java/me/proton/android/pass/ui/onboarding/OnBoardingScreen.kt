@@ -16,17 +16,15 @@ fun OnBoardingScreen(
     viewModel: OnBoardingViewModel = hiltViewModel(),
     onBoardingShown: () -> Unit
 ) {
-    val onBoardingShown by viewModel.onboardingUiState.collectAsStateWithLifecycle()
-    LaunchedEffect(onBoardingShown) {
-        if (onBoardingShown) {
+    val onBoardingUiState by viewModel.onboardingUiState.collectAsStateWithLifecycle()
+    LaunchedEffect(onBoardingUiState) {
+        if (onBoardingUiState) {
             onBoardingShown()
         }
     }
     Box(modifier = modifier) {
         Button(
-            onClick = {
-                viewModel.onBoardingComplete()
-            }
+            onClick = { viewModel.onBoardingComplete() }
         ) {
             Text(text = "On Boarding Shown")
         }

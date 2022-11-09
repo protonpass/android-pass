@@ -15,10 +15,15 @@ import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryResult
 import me.proton.android.pass.biometry.ContextHolder
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.preferences.HasAuthenticated
+import me.proton.android.pass.preferences.PreferenceRepository
+import me.proton.pass.common.api.asResultWithoutLoading
+import me.proton.pass.common.api.onError
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
+    private val preferenceRepository: PreferenceRepository,
     private val biometryManager: BiometryManager
 ) : ViewModel() {
 
@@ -34,13 +39,22 @@ class AuthViewModel @Inject constructor(
         PassLogger.i(TAG, "Launching Biometry")
         biometryManager.launch(context)
             .map { result ->
-                when (val res = result) {
-                    BiometryResult.Success -> _state.update { AuthStatus.Success }
+                when (result) {
+                    BiometryResult.Success -> {
+                        preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+                            .asResultWithoutLoading()
+                            .collect { prefResult ->
+                                prefResult.onError {
+                                    val message = "Could not save HasAuthenticated preference"
+                                    PassLogger.e(TAG, it ?: RuntimeException(message))
+                                }
+                            }
+                        _state.update { AuthStatus.Success }
+                    }
                     is BiometryResult.Error -> {
-                        when (res.cause) {
+                        when (result.cause) {
                             BiometryAuthError.Canceled -> _state.update { AuthStatus.Canceled }
                             BiometryAuthError.UserCanceled -> _state.update { AuthStatus.Canceled }
-
                             else -> _state.update { AuthStatus.Failed }
                         }
                     }

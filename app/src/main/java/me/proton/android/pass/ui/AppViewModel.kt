@@ -14,14 +14,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.android.pass.AuthRequiredState
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
-import me.proton.android.pass.biometry.BiometryManager
-import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.crypto.common.context.CryptoContext
@@ -51,8 +47,7 @@ class AppViewModel @Inject constructor(
     private val createVault: CreateVault,
     private val refreshShares: RefreshShares,
     private val cryptoContext: CryptoContext,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val biometryManager: BiometryManager
+    private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -63,17 +58,7 @@ class AppViewModel @Inject constructor(
     private val drawerSectionState: MutableStateFlow<NavigationDrawerSection> =
         MutableStateFlow(NavigationDrawerSection.Items)
 
-    val authRequiredState: StateFlow<AuthRequiredState> = preferenceRepository
-        .getBiometricLockState()
-        .asResultWithoutLoading()
-        .map { getAuthRequiredState(it) }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = AuthRequiredState.Loading
-        )
-
-    val themePreference: Flow<ThemePreference> = preferenceRepository
+    private val themePreference: Flow<ThemePreference> = preferenceRepository
         .getThemePreference()
         .asResultWithoutLoading()
         .map { getThemePreference(it) }
@@ -84,7 +69,6 @@ class AppViewModel @Inject constructor(
         snackbarMessageRepository.snackbarMessage,
         themePreference
     ) { user, sectionState, snackbarMessage, theme ->
-
         AppUiState(
             snackbarMessage = snackbarMessage,
             drawerUiState = DrawerUiState(
@@ -146,20 +130,6 @@ class AppViewModel @Inject constructor(
             snackbarMessageRepository.snackbarMessageDelivered()
         }
     }
-
-    private fun getAuthRequiredState(state: Result<BiometricLockState>): AuthRequiredState =
-        when (state) {
-            Result.Loading -> AuthRequiredState.Loading
-            is Result.Success -> when (biometryManager.getBiometryStatus()) {
-                BiometryStatus.CanAuthenticate -> AuthRequiredState.Value(state.data)
-                else -> AuthRequiredState.Value(BiometricLockState.Disabled)
-            }
-            is Result.Error -> {
-                val message = "Error getting BiometricLockState"
-                PassLogger.e(TAG, state.exception ?: Exception(message), message)
-                AuthRequiredState.Value(BiometricLockState.Disabled)
-            }
-        }
 
     private fun getThemePreference(state: Result<ThemePreference>): ThemePreference =
         when (state) {

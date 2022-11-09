@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.preferences.HasAuthenticated
 import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
@@ -56,6 +57,7 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.asResultWithoutLoading
+import me.proton.pass.common.api.onError
 import javax.inject.Inject
 
 @HiltViewModel
@@ -70,6 +72,19 @@ class LauncherViewModel @Inject constructor(
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
     private val preferenceRepository: PreferenceRepository
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch {
+            preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+                .asResultWithoutLoading()
+                .collect { result ->
+                    result.onError {
+                        val message = "Could not save HasAuthenticated preference"
+                        PassLogger.e(TAG, it ?: RuntimeException(message))
+                    }
+                }
+        }
+    }
 
     val state: StateFlow<State> = accountManager.getAccounts()
         .map { accounts ->

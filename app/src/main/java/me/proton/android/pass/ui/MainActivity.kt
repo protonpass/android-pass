@@ -53,7 +53,7 @@ class MainActivity : FragmentActivity() {
                         onRemove = { launcherViewModel.remove(it) },
                         onSwitch = { launcherViewModel.switch(it) }
                     )
-                    PassApp(authNavigation = authNavigation)
+                    PassApp(authNavigation = authNavigation, finishActivity = { finish() })
                 }
             }
         }

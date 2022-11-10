@@ -1,10 +1,12 @@
 package me.proton.pass.domain.usecases
 
+import kotlinx.coroutines.flow.first
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
+import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemContents
@@ -50,6 +52,8 @@ class UpdateAliasImpl @Inject constructor(
                 item.id,
                 content.mailboxes.value
             )
+                .asResultWithoutLoading()
+                .first()
             if (res is Result.Error) {
                 return Result.Error(res.exception)
             }

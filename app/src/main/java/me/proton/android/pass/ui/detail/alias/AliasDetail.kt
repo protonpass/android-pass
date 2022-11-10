@@ -12,8 +12,8 @@ import me.proton.pass.domain.Item
 
 @Composable
 fun AliasDetail(
-    item: Item,
-    modifier: Modifier
+    modifier: Modifier,
+    item: Item
 ) {
     val viewModel: AliasDetailViewModel = hiltViewModel()
     LaunchedEffect(item) {
@@ -22,7 +22,7 @@ fun AliasDetail(
 
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     AliasDetailContent(
-        modifier = Modifier.padding(horizontal = 16.dp),
+        modifier = modifier.padding(horizontal = 16.dp),
         state = viewState
     )
 }

@@ -35,8 +35,8 @@ import me.proton.pass.domain.Item
 
 @Composable
 fun LoginDetail(
-    item: Item,
     modifier: Modifier = Modifier,
+    item: Item,
     viewModel: LoginDetailViewModel = hiltViewModel()
 ) {
     viewModel.setItem(item)

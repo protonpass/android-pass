@@ -16,8 +16,8 @@ import me.proton.pass.domain.Item
 
 @Composable
 fun NoteDetail(
-    item: Item,
     modifier: Modifier = Modifier,
+    item: Item,
     viewModel: NoteDetailViewModel = hiltViewModel()
 ) {
     viewModel.setItem(item)

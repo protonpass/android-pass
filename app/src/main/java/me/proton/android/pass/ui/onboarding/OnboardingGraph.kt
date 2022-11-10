@@ -21,4 +21,3 @@ fun NavGraphBuilder.onBoardingGraph(
         OnBoardingScreen { nav.onBackClick() }
     }
 }
-

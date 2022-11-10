@@ -8,6 +8,11 @@ sealed interface Option<out A> {
 
     fun <R> map(block: (A) -> R): Option<R>
 
+    fun value(): A? = when (this) {
+        None -> null
+        is Some -> this.value
+    }
+
     companion object {
 
         @JvmStatic

@@ -57,9 +57,8 @@ fun AutosaveApp(
                 SaveItemScreen(
                     modifier = Modifier,
                     info = info,
-                    onSaved = {
-                        onFinished()
-                    }
+                    onSaved = { onFinished() },
+                    onCreateAliasClick = { } // Not implemented yet
                 )
             }
         }

@@ -8,6 +8,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.LoginCreated
 
@@ -44,7 +45,8 @@ fun CreateLogin(
         onPasswordChange = { viewModel.onPasswordChange(it) },
         onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) },
-        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) }
+        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
+        onCreateAliasClick = {}
     )
 }
 
@@ -53,12 +55,13 @@ fun CreateLogin(
 @ExperimentalComposeUiApi
 @Composable
 fun CreateLoginWithInitialContents(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     initialContents: InitialCreateLoginContents,
     onClose: () -> Unit,
     onSuccess: () -> Unit,
-    viewModel: CreateLoginViewModel = hiltViewModel()
+    onCreateAliasClick: (ShareId) -> Unit
 ) {
+    val viewModel: CreateLoginViewModel = hiltViewModel()
     LaunchedEffect(Unit) {
         viewModel.setInitialContents(initialContents)
     }
@@ -84,6 +87,7 @@ fun CreateLoginWithInitialContents(
         onPasswordChange = { viewModel.onPasswordChange(it) },
         onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) },
-        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) }
+        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
+        onCreateAliasClick = onCreateAliasClick
     )
 }

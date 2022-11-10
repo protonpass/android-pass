@@ -16,9 +16,9 @@ import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.ItemSavedState
 
 abstract class BaseAliasViewModel(
     private val snackbarMessageRepository: SnackbarMessageRepository,
@@ -34,8 +34,8 @@ abstract class BaseAliasViewModel(
     val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(AliasItem.Empty)
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.Loading)
-    protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
-        MutableStateFlow(ItemSavedState.Unknown)
+    protected val isAliasSavedState: MutableStateFlow<AliasSavedState> =
+        MutableStateFlow(AliasSavedState.Unknown)
     protected val aliasItemValidationErrorsState: MutableStateFlow<Set<AliasItemValidationErrors>> =
         MutableStateFlow(emptySet())
     protected val isApplyButtonEnabledState: MutableStateFlow<IsButtonEnabled> =
@@ -57,7 +57,7 @@ abstract class BaseAliasViewModel(
         shareIdState,
         aliasItemWrapperState,
         isLoadingState,
-        isItemSavedState,
+        isAliasSavedState,
         isApplyButtonEnabledState
     ) { shareId, aliasItemWrapper, isLoading, isItemSaved, isButtonEnabled ->
         CreateUpdateAliasUiState(
@@ -65,7 +65,7 @@ abstract class BaseAliasViewModel(
             aliasItem = aliasItemWrapper.aliasItem,
             errorList = aliasItemWrapper.aliasItemValidationErrors,
             isLoadingState = isLoading,
-            isItemSaved = isItemSaved,
+            isAliasSavedState = isItemSaved,
             isApplyButtonEnabled = isButtonEnabled
         )
     }
@@ -149,7 +149,7 @@ abstract class BaseAliasViewModel(
         return mailboxTitle
     }
 
-    private fun getAliasToBeCreated(alias: String, suffix: AliasSuffix?): String? {
+    protected fun getAliasToBeCreated(alias: String, suffix: AliasSuffix?): String? {
         if (suffix != null && alias.isNotBlank()) {
             return "$alias${suffix.suffix}"
         }

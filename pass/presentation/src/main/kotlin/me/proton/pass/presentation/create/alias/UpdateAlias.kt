@@ -29,7 +29,7 @@ fun UpdateAlias(
         topBarTitle = R.string.title_edit_alias,
         canEdit = false,
         onUpClick = onUpClick,
-        onSuccess = { shareId, itemId ->
+        onSuccess = { shareId, itemId, _ ->
             viewModel.onEmitSnackbarMessage(AliasUpdated)
             onSuccess(shareId, itemId)
         },

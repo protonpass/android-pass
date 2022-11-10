@@ -2,11 +2,16 @@ package me.proton.android.pass.ui.create.login
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.ui.navigation.AppNavigator
 import me.proton.android.pass.ui.navigation.NavItem
 import me.proton.android.pass.ui.navigation.composable
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
+import me.proton.pass.presentation.create.alias.RESULT_CREATED_ALIAS
 import me.proton.pass.presentation.create.login.UpdateLogin
 
 @OptIn(
@@ -15,7 +20,10 @@ import me.proton.pass.presentation.create.login.UpdateLogin
 )
 fun NavGraphBuilder.updateLoginGraph(nav: AppNavigator) {
     composable(NavItem.EditLogin) {
+        val createdAlias by nav.navState<Option<String>>(RESULT_CREATED_ALIAS, None).collectAsStateWithLifecycle()
+
         UpdateLogin(
+            createdAlias = createdAlias.value(),
             onUpClick = { nav.onBackClick() },
             onSuccess = { shareId, itemId ->
                 nav.navigate(
@@ -23,6 +31,9 @@ fun NavGraphBuilder.updateLoginGraph(nav: AppNavigator) {
                     route = NavItem.ViewItem.createNavRoute(shareId, itemId),
                     backDestination = NavItem.Home
                 )
+            },
+            onCreateAliasClick = { shareId ->
+                nav.navigate(NavItem.CreateAlias, NavItem.CreateAlias.createNavRoute(shareId))
             }
         )
     }

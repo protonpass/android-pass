@@ -1,8 +1,8 @@
 package me.proton.pass.presentation.create.login
 
 data class InitialCreateLoginContents(
-    val title: String?,
-    val username: String?,
-    val password: String?,
-    val url: String?
+    val title: String? = null,
+    val username: String? = null,
+    val password: String? = null,
+    val url: String? = null
 )

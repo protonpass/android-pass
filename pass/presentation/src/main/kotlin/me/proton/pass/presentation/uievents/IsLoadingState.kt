@@ -1,5 +1,8 @@
 package me.proton.pass.presentation.uievents
 
+import androidx.compose.runtime.Stable
+
+@Stable
 sealed interface IsLoadingState {
     object Loading : IsLoadingState
     object NotLoading : IsLoadingState

@@ -1,7 +1,8 @@
 package me.proton.pass.test.data
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
-import me.proton.pass.common.api.Result
 import me.proton.pass.domain.AliasDetails
 import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.domain.AliasOptions
@@ -11,38 +12,49 @@ import me.proton.pass.domain.repositories.AliasRepository
 
 class TestAliasRepository : AliasRepository {
 
-    private var aliasOptions: Result<AliasOptions> = Result.Loading
-    private var aliasDetails: Result<AliasDetails> = Result.Loading
-    private var updateAliasMailboxesResult: Result<Unit> = Result.Loading
+    private var aliasOptions: AliasOptions? = null
+    private var aliasDetails: AliasDetails? = null
 
-    fun setAliasOptions(aliasOptions: Result<AliasOptions>) {
+    fun setAliasOptions(aliasOptions: AliasOptions) {
         this.aliasOptions = aliasOptions
     }
 
-    fun setAliasDetails(aliasDetails: Result<AliasDetails>) {
+    fun setAliasDetails(aliasDetails: AliasDetails) {
         this.aliasDetails = aliasDetails
     }
 
-    fun setUpdateAliasMailboxesResult(result: Result<Unit>) {
-        this.updateAliasMailboxesResult = result
-    }
-
-    override suspend fun getAliasOptions(
+    override fun getAliasOptions(
         userId: UserId,
         shareId: ShareId
-    ): Result<AliasOptions> = aliasOptions
+    ): Flow<AliasOptions> = flow {
+        val currentValue = aliasOptions
+        if (currentValue != null) {
+            emit(currentValue)
+        } else {
+            throw IllegalStateException("Requested getAliasOptions before it was set")
+        }
+    }
 
-    override suspend fun getAliasDetails(
+    override fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<AliasDetails> = aliasDetails
+    ): Flow<AliasDetails> = flow {
+        val currentValue = aliasDetails
+        if (currentValue != null) {
+            emit(currentValue)
+        } else {
+            throw IllegalStateException("Requested getAliasDetails before it was set")
+        }
+    }
 
-    override suspend fun updateAliasMailboxes(
+    override fun updateAliasMailboxes(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         mailboxes: List<AliasMailbox>
-    ): Result<Unit> = updateAliasMailboxesResult
+    ): Flow<Unit> = flow {
+        emit(Unit)
+    }
 
 }

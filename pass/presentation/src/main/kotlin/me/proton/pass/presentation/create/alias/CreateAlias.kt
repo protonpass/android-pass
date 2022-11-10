@@ -10,13 +10,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.AliasCreated
 
+const val RESULT_CREATED_ALIAS = "created_alias"
+
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
 fun CreateAlias(
     modifier: Modifier = Modifier,
     onUpClick: () -> Unit,
-    onSuccess: () -> Unit,
+    onSuccess: (String) -> Unit,
     onClose: () -> Unit,
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
@@ -33,9 +35,9 @@ fun CreateAlias(
         topBarTitle = R.string.title_create_alias,
         canEdit = true,
         onUpClick = onUpClick,
-        onSuccess = { _, _ ->
+        onSuccess = { _, _, alias ->
             viewModel.onEmitSnackbarMessage(AliasCreated)
-            onSuccess()
+            onSuccess(alias)
         },
         onSubmit = { shareId -> viewModel.createAlias(shareId) },
         onSuffixChange = { viewModel.onSuffixChange(it) },

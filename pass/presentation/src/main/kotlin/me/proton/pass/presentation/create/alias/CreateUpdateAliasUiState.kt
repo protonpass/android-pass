@@ -4,9 +4,9 @@ import androidx.compose.runtime.Immutable
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.ItemSavedState
 
 @Immutable
 data class CreateUpdateAliasUiState(
@@ -14,7 +14,7 @@ data class CreateUpdateAliasUiState(
     val aliasItem: AliasItem,
     val errorList: Set<AliasItemValidationErrors>,
     val isLoadingState: IsLoadingState,
-    val isItemSaved: ItemSavedState,
+    val isAliasSavedState: AliasSavedState,
     val isApplyButtonEnabled: IsButtonEnabled
 ) {
     companion object {
@@ -23,7 +23,7 @@ data class CreateUpdateAliasUiState(
             isLoadingState = IsLoadingState.Loading,
             aliasItem = AliasItem.Empty,
             errorList = emptySet(),
-            isItemSaved = ItemSavedState.Unknown,
+            isAliasSavedState = AliasSavedState.Unknown,
             isApplyButtonEnabled = IsButtonEnabled.Disabled
         )
     }

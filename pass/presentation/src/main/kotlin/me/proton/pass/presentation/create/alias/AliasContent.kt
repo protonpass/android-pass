@@ -24,8 +24,8 @@ import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankAlias
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankTitle
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.EmptyShareIdError
+import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.ItemSavedState
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -38,7 +38,7 @@ internal fun AliasContent(
     canEdit: Boolean,
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
-    onSuccess: (ShareId, ItemId) -> Unit,
+    onSuccess: (ShareId, ItemId, String) -> Unit,
     onSuffixChange: (AliasSuffix) -> Unit,
     onMailboxChange: (AliasMailboxUiModel) -> Unit,
     onTitleChange: (String) -> Unit,
@@ -114,12 +114,16 @@ internal fun AliasContent(
                 onNoteChange = { onNoteChange(it) },
                 onAliasChange = { onAliasChange(it) }
             )
-            LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {
-                val isItemSaved = uiState.isItemSaved
-                if (isItemSaved is ItemSavedState.Success) {
+            LaunchedEffect(uiState.isAliasSavedState is AliasSavedState.Success) {
+                val isAliasSaved = uiState.isAliasSavedState
+                if (isAliasSaved is AliasSavedState.Success) {
                     when (uiState.shareId) {
                         None -> onEmitSnackbarMessage(EmptyShareIdError)
-                        is Some -> onSuccess(uiState.shareId.value, isItemSaved.itemId)
+                        is Some -> onSuccess(
+                            uiState.shareId.value,
+                            isAliasSaved.itemId,
+                            isAliasSaved.alias
+                        )
                     }
                 }
             }

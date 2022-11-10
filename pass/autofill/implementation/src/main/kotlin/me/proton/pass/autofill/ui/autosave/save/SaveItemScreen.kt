@@ -6,6 +6,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import me.proton.pass.autofill.entities.SaveInformation
 import me.proton.pass.autofill.entities.SaveItemType
+import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.create.login.CreateLoginWithInitialContents
 import me.proton.pass.presentation.create.login.InitialCreateLoginContents
 
@@ -17,7 +18,8 @@ const val SAVE_ITEM_ROUTE = "save/item"
 fun SaveItemScreen(
     modifier: Modifier,
     info: SaveInformation,
-    onSaved: () -> Unit
+    onSaved: () -> Unit,
+    onCreateAliasClick: (ShareId) -> Unit
 ) {
     val (username, password) = when (info.itemType) {
         is SaveItemType.Login -> Pair(info.itemType.identity, info.itemType.password)
@@ -34,6 +36,7 @@ fun SaveItemScreen(
         modifier = modifier,
         initialContents = initialContents,
         onClose = onSaved, // For now we consider close to be the same as success
-        onSuccess = onSaved
+        onSuccess = onSaved,
+        onCreateAliasClick = onCreateAliasClick
     )
 }

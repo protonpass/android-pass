@@ -55,9 +55,9 @@ fun ItemDetailContent(
                 is Some -> {
                     val item = uiState.model.value.item
                     when (item.itemType) {
-                        is ItemType.Login -> LoginDetail(item, modifier)
-                        is ItemType.Note -> NoteDetail(item, modifier)
-                        is ItemType.Alias -> AliasDetail(item, modifier)
+                        is ItemType.Login -> LoginDetail(modifier, item)
+                        is ItemType.Note -> NoteDetail(modifier, item)
+                        is ItemType.Alias -> AliasDetail(modifier, item)
                         ItemType.Password -> {}
                     }
                     if (itemToDelete.value) {

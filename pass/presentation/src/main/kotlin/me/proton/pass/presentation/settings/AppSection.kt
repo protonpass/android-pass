@@ -7,8 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonSettingsHeader
-import me.proton.core.usersettings.presentation.compose.view.CrashReportSettingsToggleItem
-import me.proton.core.usersettings.presentation.compose.view.TelemetrySettingsToggleItem
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.usersettings.presentation.compose.view.CrashReportSettingToggleItem
+import me.proton.core.usersettings.presentation.compose.view.TelemetrySettingToggleItem
+import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 
 @Composable
@@ -17,7 +19,7 @@ fun AppSection(
 ) {
     Column(modifier = modifier.padding(vertical = 12.dp)) {
         ProtonSettingsHeader(title = stringResource(R.string.settings_app_section_title))
-        TelemetrySettingsToggleItem()
-        CrashReportSettingsToggleItem(divider = {})
+        TelemetrySettingToggleItem()
+        CrashReportSettingToggleItem(divider = {})
     }
 }

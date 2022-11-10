@@ -1,10 +1,9 @@
 package me.proton.pass.data.remote
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
-import me.proton.pass.common.api.Result
-import me.proton.pass.common.api.map
-import me.proton.pass.common.api.toResult
 import me.proton.pass.data.api.PasswordManagerApi
 import me.proton.pass.data.requests.UpdateAliasMailboxesRequest
 import me.proton.pass.data.responses.AliasDetails
@@ -16,39 +15,39 @@ import javax.inject.Inject
 class RemoteAliasDataSourceImpl @Inject constructor(
     private val api: ApiProvider
 ) : RemoteAliasDataSource {
-    override suspend fun getAliasOptions(
+    override fun getAliasOptions(
         userId: UserId,
         shareId: ShareId
-    ): Result<AliasOptionsResponse> =
-        api.get<PasswordManagerApi>(userId)
-            .invoke {
-                getAliasOptions(shareId.id)
-            }
-            .toResult()
-            .map { it.options }
+    ): Flow<AliasOptionsResponse> = flow {
+        val res = api.get<PasswordManagerApi>(userId)
+            .invoke { getAliasOptions(shareId.id) }
+            .valueOrThrow
+            .options
+        emit(res)
+    }
 
-    override suspend fun getAliasDetails(
+    override fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<AliasDetails> =
-        api.get<PasswordManagerApi>(userId)
-            .invoke {
-                getAliasDetails(shareId.id, itemId.id)
-            }
-            .toResult()
-            .map { it.alias }
+    ): Flow<AliasDetails> = flow {
+        val res = api.get<PasswordManagerApi>(userId)
+            .invoke { getAliasDetails(shareId.id, itemId.id) }
+            .valueOrThrow
+            .alias
+        emit(res)
+    }
 
-    override suspend fun updateAliasMailboxes(
+    override fun updateAliasMailboxes(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         mailboxes: UpdateAliasMailboxesRequest
-    ): Result<AliasDetails> =
-        api.get<PasswordManagerApi>(userId)
-            .invoke {
-                updateAliasMailboxes(shareId.id, itemId.id, mailboxes)
-            }
-            .toResult()
-            .map { it.alias }
+    ): Flow<AliasDetails> = flow {
+        val res = api.get<PasswordManagerApi>(userId)
+            .invoke { updateAliasMailboxes(shareId.id, itemId.id, mailboxes) }
+            .valueOrThrow
+            .alias
+        emit(res)
+    }
 }

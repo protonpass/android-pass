@@ -1,8 +1,8 @@
 package me.proton.pass.data.repositories
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
-import me.proton.pass.common.api.Result
-import me.proton.pass.common.api.map
 import me.proton.pass.data.extensions.toDomain
 import me.proton.pass.data.remote.RemoteAliasDataSource
 import me.proton.pass.data.requests.UpdateAliasMailboxesRequest
@@ -19,32 +19,30 @@ class AliasRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteAliasDataSource
 ) : AliasRepository {
 
-    override suspend fun getAliasOptions(userId: UserId, shareId: ShareId): Result<AliasOptions> {
-        val response = remoteDataSource.getAliasOptions(userId, shareId)
-        return response.map { it.toDomain() }
-    }
+    override fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions> =
+        remoteDataSource.getAliasOptions(userId, shareId)
+            .map { it.toDomain() }
 
-    override suspend fun getAliasDetails(
+    override fun getAliasDetails(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<AliasDetails> {
-        val response = remoteDataSource.getAliasDetails(userId, shareId, itemId)
-        return response.map { details ->
-            AliasDetails(
-                email = details.email,
-                mailboxes = mapMailboxes(details.mailboxes),
-                availableMailboxes = mapMailboxes(details.availableMailboxes)
-            )
-        }
-    }
+    ): Flow<AliasDetails> =
+        remoteDataSource.getAliasDetails(userId, shareId, itemId)
+            .map { details ->
+                AliasDetails(
+                    email = details.email,
+                    mailboxes = mapMailboxes(details.mailboxes),
+                    availableMailboxes = mapMailboxes(details.availableMailboxes)
+                )
+            }
 
-    override suspend fun updateAliasMailboxes(
+    override fun updateAliasMailboxes(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         mailboxes: List<AliasMailbox>
-    ): Result<Unit> {
+    ): Flow<Unit> {
         val request = UpdateAliasMailboxesRequest(
             mailboxIds = mailboxes.map { it.id }
         )

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.proton.android.pass.ui.NavHomeUiState
 import me.proton.android.pass.ui.NavHomeViewModel
 
 @Composable
@@ -13,6 +14,7 @@ fun NavHome(
     onDrawerIconClick: () -> Unit,
     viewModel: NavHomeViewModel = hiltViewModel()
 ) {
-    val state by viewModel.navHomeUiState.collectAsStateWithLifecycle()
+    val state by viewModel.navHomeUiState.collectAsStateWithLifecycle(NavHomeUiState.Initial)
+
     NavHomeContent(state, navigationDrawer, homeScreenNavigation, onDrawerIconClick)
 }

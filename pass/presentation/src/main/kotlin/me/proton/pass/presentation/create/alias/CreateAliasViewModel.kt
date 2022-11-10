@@ -15,7 +15,9 @@ import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.pass.common.api.Some
+import me.proton.pass.common.api.asResult
 import me.proton.pass.common.api.onError
+import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.AliasOptions
 import me.proton.pass.domain.ShareId
@@ -62,31 +64,8 @@ class CreateAliasViewModel @Inject constructor(
                 .first { userId -> userId != null }
             if (userId != null && shareId is Some) {
                 aliasRepository.getAliasOptions(userId, shareId.value)
-                    .onSuccess { aliasOptions ->
-                        _aliasOptions = aliasOptions
-
-                        val mailboxes = aliasOptions.mailboxes.mapIndexed { idx, model ->
-                            AliasMailboxUiModel(model = model, selected = idx == 0)
-                        }
-                        val mailboxTitle = mailboxes.first { it.selected }.model.email
-
-                        aliasItemState.update {
-                            it.copy(
-                                aliasOptions = aliasOptions,
-                                selectedSuffix = aliasOptions.suffixes.first(),
-                                mailboxes = mailboxes,
-                                mailboxTitle = mailboxTitle,
-                                isMailboxListApplicable = true
-                            )
-                        }
-                        isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
-                    }
-                    .onError {
-                        val defaultMessage = "Could not get alias options"
-                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                        snackbarMessageRepository.emitSnackbarMessage(InitError)
-                        mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
-                    }
+                    .asResult()
+                    .collect { onAliasOptions(it) }
             } else {
                 PassLogger.i(TAG, "Empty User Id")
                 snackbarMessageRepository.emitSnackbarMessage(InitError)
@@ -130,6 +109,35 @@ class CreateAliasViewModel @Inject constructor(
             snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    private suspend fun onAliasOptions(result: Result<AliasOptions>) {
+        result
+            .onSuccess { aliasOptions ->
+                _aliasOptions = aliasOptions
+
+                val mailboxes = aliasOptions.mailboxes.mapIndexed { idx, model ->
+                    AliasMailboxUiModel(model = model, selected = idx == 0)
+                }
+                val mailboxTitle = mailboxes.first { it.selected }.model.email
+
+                aliasItemState.update {
+                    it.copy(
+                        aliasOptions = aliasOptions,
+                        selectedSuffix = aliasOptions.suffixes.first(),
+                        mailboxes = mailboxes,
+                        mailboxTitle = mailboxTitle,
+                        isMailboxListApplicable = true
+                    )
+                }
+                isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
+            }
+            .onError {
+                val defaultMessage = "Could not get alias options"
+                PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                snackbarMessageRepository.emitSnackbarMessage(InitError)
+                mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
+            }
     }
 
     private suspend fun onCreateAliasError(cause: Throwable?) {

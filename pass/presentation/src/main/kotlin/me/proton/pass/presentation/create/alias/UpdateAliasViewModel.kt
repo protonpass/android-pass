@@ -15,7 +15,9 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
+import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
+import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.AliasDetails
@@ -103,39 +105,43 @@ class UpdateAliasViewModel @Inject constructor(
             .onSuccess { item ->
                 _item = item
                 aliasRepository.getAliasDetails(userId, shareId, itemId)
-                    .onSuccess { details -> onAliasDetails(item, details) }
-                    .onError {
-                        showError("Error getting alias mailboxes", InitError, it)
-                    }
+                    .asResultWithoutLoading()
+                    .collect { onAliasDetails(it, item) }
             }
             .onError { showError("Error getting item by id", InitError, it) }
     }
 
-    private fun onAliasDetails(item: Item, details: AliasDetails) {
-        val alias = item.itemType as ItemType.Alias
-        val email = alias.aliasEmail
-        val (prefix, suffix) = extractPrefixSuffix(email)
+    private suspend fun onAliasDetails(result: Result<AliasDetails>, item: Item) {
+        result
+            .onSuccess { details ->
+                val alias = item.itemType as ItemType.Alias
+                val email = alias.aliasEmail
+                val (prefix, suffix) = extractPrefixSuffix(email)
 
-        val mailboxes = details.availableMailboxes.map { mailbox ->
-            AliasMailboxUiModel(
-                model = mailbox,
-                selected = details.mailboxes.any { it.id == mailbox.id }
-            )
-        }
+                val mailboxes = details.availableMailboxes.map { mailbox ->
+                    AliasMailboxUiModel(
+                        model = mailbox,
+                        selected = details.mailboxes.any { it.id == mailbox.id }
+                    )
+                }
 
-        aliasItemState.update {
-            it.copy(
-                title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-                note = item.note.decrypt(cryptoContext.keyStoreCrypto),
-                alias = prefix,
-                aliasOptions = AliasOptions(emptyList(), details.mailboxes),
-                selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
-                mailboxes = mailboxes,
-                aliasToBeCreated = email,
-                mailboxTitle = getMailboxTitle(mailboxes),
-                isMailboxListApplicable = true // By default it should be applicable
-            )
-        }
+                aliasItemState.update {
+                    it.copy(
+                        title = item.title.decrypt(cryptoContext.keyStoreCrypto),
+                        note = item.note.decrypt(cryptoContext.keyStoreCrypto),
+                        alias = prefix,
+                        aliasOptions = AliasOptions(emptyList(), details.mailboxes),
+                        selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
+                        mailboxes = mailboxes,
+                        aliasToBeCreated = email,
+                        mailboxTitle = getMailboxTitle(mailboxes),
+                        isMailboxListApplicable = true // By default it should be applicable
+                    )
+                }
+            }
+            .onError {
+                showError("Error getting alias mailboxes", InitError, it)
+            }
     }
 
     private suspend fun showError(

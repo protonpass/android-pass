@@ -6,75 +6,105 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessage
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
+import me.proton.android.pass.ui.detail.DetailSnackbarMessages
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.common.api.Result
-import me.proton.pass.domain.AliasMailbox
+import me.proton.pass.common.api.asResultWithoutLoading
+import me.proton.pass.domain.AliasDetails
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.repositories.AliasRepository
+import me.proton.pass.presentation.uievents.IsLoadingState
 import javax.inject.Inject
 
 @HiltViewModel
 class AliasDetailViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val aliasRepository: AliasRepository,
-    private val accountManager: AccountManager
+    private val accountManager: AccountManager,
+    private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
-    private val _viewState: MutableStateFlow<ViewState> = MutableStateFlow(ViewState.Loading)
-    val viewState: StateFlow<ViewState> = _viewState
+    private val loadingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.Loading)
+    private val modelState: MutableStateFlow<AliasUiModel?> = MutableStateFlow(null)
+
+    val viewState: StateFlow<AliasDetailUiState> = combine(
+        loadingState,
+        modelState
+    ) { loading, model ->
+        AliasDetailUiState(
+            isLoadingState = loading,
+            model = model
+        )
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,
-            initialValue = ViewState.Loading
+            initialValue = AliasDetailUiState.Initial
         )
 
-    private val itemFlow: MutableStateFlow<Item?> = MutableStateFlow(null)
-
     fun setItem(item: Item) = viewModelScope.launch {
-        if (itemFlow.value != null) return@launch
-        itemFlow.value = item
+        loadingState.update { IsLoadingState.Loading }
 
-        accountManager.getPrimaryUserId()
-            .first { userId -> userId != null }
-            ?.let { userId ->
-                when (
-                    val result =
-                        aliasRepository.getAliasDetails(userId, item.shareId, item.id)
-                ) {
-                    is Result.Success -> {
-                        val alias = item.itemType as ItemType.Alias
-                        _viewState.value = ViewState.Data(
-                            AliasUiModel(
-                                title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-                                alias = alias.aliasEmail,
-                                mailboxes = result.data.mailboxes,
-                                note = item.note.decrypt(cryptoContext.keyStoreCrypto)
-                            )
-                        )
-                    }
-                    else -> {
-                        // no-op
-                    }
+        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
+        if (userId != null) {
+            aliasRepository.getAliasDetails(userId, item.shareId, item.id)
+                .asResultWithoutLoading()
+                .collect { onAliasDetails(it, item) }
+        } else {
+            showError("UserId is null", DetailSnackbarMessages.InitError, null)
+            loadingState.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    private suspend fun onAliasDetails(result: Result<AliasDetails>, item: Item) {
+        when (result) {
+            is Result.Success -> {
+                val alias = item.itemType as ItemType.Alias
+                modelState.update {
+                    AliasUiModel(
+                        title = item.title.decrypt(cryptoContext.keyStoreCrypto),
+                        alias = alias.aliasEmail,
+                        mailboxes = result.data.mailboxes,
+                        note = item.note.decrypt(cryptoContext.keyStoreCrypto)
+                    )
                 }
             }
+            is Result.Error -> {
+                showError(
+                    "Error getting alias details",
+                    DetailSnackbarMessages.InitError,
+                    result.exception
+                )
+            }
+            else -> {
+                // no-op
+            }
+        }
+        loadingState.update { IsLoadingState.NotLoading }
     }
 
-    sealed class ViewState {
-        object Loading : ViewState()
-        data class Error(val message: String) : ViewState()
-        data class Data(val model: AliasUiModel) : ViewState()
+    private suspend fun showError(
+        message: String,
+        snackbarMessage: SnackbarMessage,
+        throwable: Throwable? = null
+    ) {
+        PassLogger.e(TAG, throwable ?: Exception(message), message)
+        snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
     }
 
-    data class AliasUiModel(
-        val title: String,
-        val alias: String,
-        val mailboxes: List<AliasMailbox>,
-        val note: String
-    )
+    companion object {
+        private const val TAG = "AliasDetailViewModel"
+    }
 }

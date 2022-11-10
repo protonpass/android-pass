@@ -19,7 +19,9 @@ import me.proton.pass.common.api.asResult
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.onSuccess
+import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.domain.AliasOptions
+import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.NewAlias
 import me.proton.pass.domain.errors.CannotCreateMoreAliasesError
@@ -27,9 +29,9 @@ import me.proton.pass.domain.repositories.AliasRepository
 import me.proton.pass.domain.usecases.CreateAlias
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.ItemCreationError
+import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.ItemSavedState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -87,6 +89,16 @@ class CreateAliasViewModel @Inject constructor(
         }
 
         isLoadingState.update { IsLoadingState.Loading }
+        performCreateAlias(shareId, aliasItem, aliasItem.selectedSuffix, mailboxes)
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    private suspend fun performCreateAlias(
+        shareId: ShareId,
+        aliasItem: AliasItem,
+        aliasSuffix: AliasSuffix,
+        mailboxes: List<AliasMailbox>
+    ) {
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
         if (userId != null) {
             createAlias(
@@ -96,19 +108,20 @@ class CreateAliasViewModel @Inject constructor(
                     title = aliasItem.title,
                     note = aliasItem.note,
                     prefix = aliasItem.alias,
-                    suffix = aliasItem.selectedSuffix,
+                    suffix = aliasSuffix,
                     mailboxes = mailboxes
                 )
             )
                 .onSuccess { item ->
-                    isItemSavedState.update { ItemSavedState.Success(item.id) }
+                    val generatedAlias =
+                        getAliasToBeCreated(aliasItem.alias, aliasSuffix) ?: ""
+                    isAliasSavedState.update { AliasSavedState.Success(item.id, generatedAlias) }
                 }
                 .onError { onCreateAliasError(it) }
         } else {
             PassLogger.i(TAG, "Empty User Id")
             snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
         }
-        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     private suspend fun onAliasOptions(result: Result<AliasOptions>) {

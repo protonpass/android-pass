@@ -25,7 +25,8 @@ internal fun LoginItemForm(
     doesWebsiteIndexHaveError: (Int) -> Boolean,
     focusLastWebsite: Boolean,
     onNoteChange: (String) -> Unit,
-    onGeneratePasswordClick: () -> Unit
+    onGeneratePasswordClick: () -> Unit,
+    onCreateAliasClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -41,7 +42,7 @@ internal fun LoginItemForm(
         UsernameInput(
             value = loginItem.username,
             onChange = onUsernameChange,
-            onGenerateAliasClick = {}
+            onGenerateAliasClick = onCreateAliasClick
         )
         PasswordInput(
             value = loginItem.password,

@@ -2,6 +2,7 @@ package me.proton.pass.presentation.create.login
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -17,11 +18,18 @@ import me.proton.pass.presentation.create.login.LoginSnackbarMessages.LoginUpdat
 @Composable
 fun UpdateLogin(
     modifier: Modifier = Modifier,
+    createdAlias: String?,
     onUpClick: () -> Unit,
     onSuccess: (ShareId, ItemId) -> Unit,
-    viewModel: UpdateLoginViewModel = hiltViewModel()
+    onCreateAliasClick: (ShareId) -> Unit
 ) {
+    val viewModel: UpdateLoginViewModel = hiltViewModel()
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(createdAlias) {
+        createdAlias?.let { viewModel.onUsernameChange(it) }
+    }
+
     val onWebsiteChange = object : OnWebsiteChange {
         override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int ->
             viewModel.onWebsiteChange(value, idx)
@@ -46,6 +54,7 @@ fun UpdateLogin(
         onPasswordChange = { viewModel.onPasswordChange(it) },
         onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) },
-        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) }
+        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
+        onCreateAliasClick = onCreateAliasClick
     )
 }

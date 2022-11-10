@@ -53,9 +53,12 @@ class AppNavigator(
         navController.popBackStack()
     }
 
-    fun <T> navState(key: String, default: T): StateFlow<T> =
-        (navController.currentBackStackEntry?.savedStateHandle ?: SavedStateHandle())
+    fun <T> navState(key: String, default: T?): StateFlow<T?> {
+        val res = (navController.currentBackStackEntry?.savedStateHandle ?: SavedStateHandle())
             .getStateFlow(key, default)
+        navController.currentBackStackEntry?.savedStateHandle?.remove<T>(key)
+        return res
+    }
 
     companion object {
         private const val TAG = "AppNavigator"

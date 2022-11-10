@@ -33,9 +33,9 @@ import me.proton.pass.domain.usecases.UpdateAlias
 import me.proton.pass.domain.usecases.UpdateAliasContent
 import me.proton.pass.domain.usecases.UpdateAliasItemContent
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
+import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.ItemSavedState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -168,7 +168,12 @@ class UpdateAliasViewModel @Inject constructor(
                 content = body
             )
                 .onSuccess { item ->
-                    isItemSavedState.update { ItemSavedState.Success(item.id) }
+                    isAliasSavedState.update {
+                        AliasSavedState.Success(
+                            itemId = item.id,
+                            alias = "" // we don't care about it as we are updating it
+                        )
+                    }
                 }
                 .onError {
                     val defaultMessage = "Update alias error"

@@ -39,7 +39,8 @@ internal fun LoginContent(
     onPasswordChange: (String) -> Unit,
     onWebsiteChange: OnWebsiteChange,
     onNoteChange: (String) -> Unit,
-    onEmitSnackbarMessage: (LoginSnackbarMessages) -> Unit
+    onEmitSnackbarMessage: (LoginSnackbarMessages) -> Unit,
+    onCreateAliasClick: (ShareId) -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -104,6 +105,11 @@ internal fun LoginContent(
                     scope.launch {
                         setRegeneratePassword(true)
                         bottomSheetState.show()
+                    }
+                },
+                onCreateAliasClick = {
+                    if (uiState.shareId is Some) {
+                        onCreateAliasClick(uiState.shareId.value)
                     }
                 }
             )

@@ -14,8 +14,8 @@ import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage
 import me.proton.pass.presentation.create.alias.CreateAliasViewModel
+import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.ItemSavedState
 import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.core.TestAccountManager
 import me.proton.pass.test.core.TestSavedStateHandle
@@ -96,7 +96,7 @@ class CreateAliasViewModelTest {
             val item = awaitItem()
 
             assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-            assertThat(item.isItemSaved).isInstanceOf(ItemSavedState.Success::class.java)
+            assertThat(item.isAliasSavedState).isInstanceOf(AliasSavedState.Success::class.java)
         }
     }
 

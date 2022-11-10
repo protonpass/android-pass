@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="snackbar_preferences_cleared_success">Preferences cleared</string>
+    <string name="snackbar_preferences_cleared_error">Error clearing preferences</string>
+</resources>

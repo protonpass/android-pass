@@ -49,11 +49,9 @@ class CreateAliasViewModelTest {
 
         aliasRepository = TestAliasRepository()
         aliasRepository.setAliasOptions(
-            Result.Success(
-                AliasOptions(
-                    suffixes = listOf(suffix),
-                    mailboxes = listOf(mailbox)
-                )
+            AliasOptions(
+                suffixes = listOf(suffix),
+                mailboxes = listOf(mailbox)
             )
         )
 

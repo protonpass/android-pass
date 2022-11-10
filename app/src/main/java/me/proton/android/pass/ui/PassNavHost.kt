@@ -11,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -33,7 +32,6 @@ fun PassNavHost(
     modifier: Modifier = Modifier,
     drawerUiState: DrawerUiState,
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
-    navController: NavHostController,
     appNavigator: AppNavigator,
     navDrawerNavigation: NavDrawerNavigation,
     coreNavigation: CoreNavigation,
@@ -43,7 +41,7 @@ fun PassNavHost(
     BackHandler(drawerState.isOpen) { coroutineScope.launch { drawerState.close() } }
     AnimatedNavHost(
         modifier = modifier,
-        navController = navController,
+        navController = appNavigator.navController,
         startDestination = NavItem.Home.route
     ) {
         appGraph(

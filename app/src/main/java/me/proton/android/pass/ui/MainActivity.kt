@@ -20,7 +20,7 @@ import me.proton.android.pass.ui.launcher.LauncherViewModel.State.PrimaryExist
 import me.proton.android.pass.ui.launcher.LauncherViewModel.State.Processing
 import me.proton.android.pass.ui.launcher.LauncherViewModel.State.StepNeeded
 import me.proton.core.compose.component.ProtonCenteredProgress
-import me.proton.pass.presentation.components.navigation.AuthNavigation
+import me.proton.pass.presentation.components.navigation.CoreNavigation
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
@@ -47,13 +47,14 @@ class MainActivity : FragmentActivity() {
                 Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
                 StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
                 PrimaryExist -> {
-                    val authNavigation = AuthNavigation(
+                    val coreNavigation = CoreNavigation(
                         onSignIn = { launcherViewModel.signIn(it) },
                         onSignOut = { launcherViewModel.signOut(it) },
                         onRemove = { launcherViewModel.remove(it) },
-                        onSwitch = { launcherViewModel.switch(it) }
+                        onSwitch = { launcherViewModel.switch(it) },
+                        onReport = { launcherViewModel.report() }
                     )
-                    PassApp(authNavigation = authNavigation, finishActivity = { finish() })
+                    PassApp(coreNavigation = coreNavigation, finishActivity = { finish() })
                 }
             }
         }

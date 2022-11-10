@@ -27,14 +27,14 @@ import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.common.api.Some
 import me.proton.pass.presentation.components.common.PassSnackbarHost
 import me.proton.pass.presentation.components.common.rememberPassSnackbarHostState
-import me.proton.pass.presentation.components.navigation.AuthNavigation
+import me.proton.pass.presentation.components.navigation.CoreNavigation
 import me.proton.pass.presentation.components.navigation.drawer.NavDrawerNavigation
 import me.proton.pass.presentation.components.navigation.drawer.NavigationDrawerSection
 
 @Composable
 fun PassApp(
     modifier: Modifier = Modifier,
-    authNavigation: AuthNavigation,
+    coreNavigation: CoreNavigation,
     finishActivity: () -> Unit,
     appViewModel: AppViewModel = hiltViewModel()
 ) {
@@ -54,7 +54,7 @@ fun PassApp(
             PassAppContent(
                 modifier = modifier,
                 appUiState = appUiState,
-                authNavigation = authNavigation,
+                coreNavigation = coreNavigation,
                 onDrawerSectionChanged = { appViewModel.onDrawerSectionChanged(it) },
                 onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
                 finishActivity = finishActivity
@@ -72,7 +72,7 @@ fun PassAppContent(
     appUiState: AppUiState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     internalDrawerState: InternalDrawerState = rememberInternalDrawerState(InternalDrawerValue.Closed),
-    authNavigation: AuthNavigation,
+    coreNavigation: CoreNavigation,
     onDrawerSectionChanged: (NavigationDrawerSection) -> Unit,
     onSnackbarMessageDelivered: () -> Unit,
     finishActivity: () -> Unit
@@ -95,9 +95,8 @@ fun PassAppContent(
             onDrawerSectionChanged(NavigationDrawerSection.Trash)
             appNavigator.navigate(NavItem.Trash)
         },
-        onNavHelp = {
-            onDrawerSectionChanged(NavigationDrawerSection.Help)
-            appNavigator.navigate(NavItem.Help)
+        onBugReport = {
+            coreNavigation.onReport()
         },
         onInternalDrawerClick = {
             coroutineScope.launch { internalDrawerState.open() }
@@ -125,7 +124,7 @@ fun PassAppContent(
                 navController = navController,
                 appNavigator = appNavigator,
                 navDrawerNavigation = navDrawerNavigation,
-                authNavigation = authNavigation,
+                coreNavigation = coreNavigation,
                 finishActivity = finishActivity
             )
         }

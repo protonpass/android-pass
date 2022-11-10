@@ -44,15 +44,15 @@ import me.proton.core.compose.theme.ProtonDimens.DefaultSpacing
 import me.proton.core.compose.theme.ProtonDimens.SmallSpacing
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.navigation.AuthNavigation
+import me.proton.pass.presentation.components.navigation.CoreNavigation
 
 @Stable
 data class NavDrawerNavigation(
     val onNavHome: () -> Unit,
     val onNavSettings: () -> Unit,
     val onNavTrash: () -> Unit,
-    val onNavHelp: () -> Unit,
-    val onInternalDrawerClick: () -> Unit
+    val onInternalDrawerClick: () -> Unit,
+    val onBugReport: () -> Unit
 )
 
 @Composable
@@ -60,7 +60,7 @@ fun ModalNavigationDrawer(
     drawerUiState: DrawerUiState,
     drawerState: DrawerState,
     navDrawerNavigation: NavDrawerNavigation,
-    authNavigation: AuthNavigation,
+    coreNavigation: CoreNavigation,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     onSignOutClick: () -> Unit,
     signOutDialog: @Composable () -> Unit,
@@ -71,7 +71,7 @@ fun ModalNavigationDrawer(
         drawerContent = {
             NavigationDrawer(
                 drawerUiState = drawerUiState,
-                authNavigation = authNavigation,
+                coreNavigation = coreNavigation,
                 navDrawerNavigation = navDrawerNavigation,
                 onCloseDrawer = { coroutineScope.launch { drawerState.close() } },
                 onSignOutClick = onSignOutClick
@@ -89,7 +89,7 @@ fun NavigationDrawer(
     drawerUiState: DrawerUiState,
     accountPrimaryState: AccountPrimaryState = rememberAccountPrimaryState(),
     navDrawerNavigation: NavDrawerNavigation,
-    authNavigation: AuthNavigation,
+    coreNavigation: CoreNavigation,
     onSignOutClick: () -> Unit = {},
     onCloseDrawer: () -> Unit
 ) {
@@ -106,10 +106,10 @@ fun NavigationDrawer(
                             .background(sidebarColors.backgroundNorm)
                             .padding(all = SmallSpacing)
                             .fillMaxWidth(),
-                        onRemove = { authNavigation.onRemove(it) },
-                        onSignIn = { authNavigation.onSignIn(it) },
-                        onSignOut = { authNavigation.onSignOut(it) },
-                        onSwitch = { authNavigation.onSwitch(it) },
+                        onRemove = { coreNavigation.onRemove(it) },
+                        onSignIn = { coreNavigation.onSignIn(it) },
+                        onSignOut = { coreNavigation.onSignOut(it) },
+                        onSwitch = { coreNavigation.onSwitch(it) },
                         viewState = accountPrimaryState
                     )
                 }
@@ -135,10 +135,10 @@ fun NavigationDrawer(
                         closeDrawerAction = { onCloseDrawer() },
                         onClick = { navDrawerNavigation.onNavTrash() }
                     )
-                    HelpListItem(
-                        isSelected = drawerUiState.selectedSection == NavigationDrawerSection.Help,
+                    ReportProblemItem(
+                        isSelected = false,
                         closeDrawerAction = { onCloseDrawer() },
-                        onClick = { navDrawerNavigation.onNavHelp() }
+                        onClick = { navDrawerNavigation.onBugReport() }
                     )
                     SignOutListItem(
                         closeDrawerAction = { onCloseDrawer() },
@@ -286,15 +286,15 @@ private fun TrashListItem(
 }
 
 @Composable
-private fun HelpListItem(
+private fun ReportProblemItem(
     modifier: Modifier = Modifier,
     isSelected: Boolean,
     closeDrawerAction: () -> Unit,
     onClick: () -> Unit
 ) {
     NavigationDrawerListItem(
-        title = R.string.navigation_item_help,
-        icon = me.proton.core.presentation.R.drawable.ic_proton_question_circle,
+        title = R.string.navigation_item_bug_report,
+        icon = me.proton.core.presentation.R.drawable.ic_proton_bug,
         isSelected = isSelected,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,

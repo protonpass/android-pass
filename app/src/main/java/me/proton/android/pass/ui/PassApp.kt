@@ -20,7 +20,6 @@ import me.proton.android.pass.ui.internal.InternalDrawerState
 import me.proton.android.pass.ui.internal.InternalDrawerValue
 import me.proton.android.pass.ui.internal.rememberInternalDrawerState
 import me.proton.android.pass.ui.navigation.NavItem
-import me.proton.android.pass.ui.navigation.rememberAnimatedNavController
 import me.proton.android.pass.ui.navigation.rememberAppNavigator
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
@@ -77,8 +76,7 @@ fun PassAppContent(
     onSnackbarMessageDelivered: () -> Unit,
     finishActivity: () -> Unit
 ) {
-    val navController = rememberAnimatedNavController()
-    val appNavigator = rememberAppNavigator(navController)
+    val appNavigator = rememberAppNavigator()
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState =
         rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
@@ -121,7 +119,6 @@ fun PassAppContent(
             PassNavHost(
                 modifier = Modifier.padding(contentPadding),
                 drawerUiState = appUiState.drawerUiState,
-                navController = navController,
                 appNavigator = appNavigator,
                 navDrawerNavigation = navDrawerNavigation,
                 coreNavigation = coreNavigation,

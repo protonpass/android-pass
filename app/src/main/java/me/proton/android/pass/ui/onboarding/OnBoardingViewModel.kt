@@ -32,7 +32,6 @@ class OnBoardingViewModel @Inject constructor(
                         val message = "Could not save HasCompletedOnBoarding preference"
                         PassLogger.e(TAG, it ?: RuntimeException(message))
                     }
-                PassLogger.d("VicLog", result.toString())
             }
     }
 

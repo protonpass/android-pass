@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import me.proton.android.pass.preferences.PreferenceRepository
@@ -30,7 +30,7 @@ class NavHomeViewModel @Inject constructor(
         biometricLock.value() && !hasAuthenticated.value()
     }
 
-    val navHomeUiState: StateFlow<NavHomeUiState> = combine(
+    val navHomeUiState: SharedFlow<NavHomeUiState> = combine(
         shouldAuthenticateState.asResultWithoutLoading(),
         preferenceRepository.getHasCompletedOnBoarding().asResultWithoutLoading()
     ) { shouldAuthenticate, hasCompletedOnBoarding ->

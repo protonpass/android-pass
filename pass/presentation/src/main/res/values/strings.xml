@@ -53,6 +53,7 @@
     <string name="navigation_item_settings">@string/title_settings</string>
     <string name="navigation_item_items">@string/title_items</string>
     <string name="navigation_item_help">@string/title_help</string>
+    <string name="navigation_item_bug_report">Report a problem</string>
     <string name="navigation_item_internal_drawer">Internal developer options</string>
     <string name="navigation_item_sign_out">@string/title_sign_out</string>
 

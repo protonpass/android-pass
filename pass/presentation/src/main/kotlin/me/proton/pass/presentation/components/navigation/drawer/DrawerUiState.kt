@@ -21,7 +21,7 @@ import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
 import me.proton.core.user.domain.entity.User
 
-enum class NavigationDrawerSection { Items, Settings, Trash, Help }
+enum class NavigationDrawerSection { Items, Settings, Trash, Report }
 
 @Immutable
 data class DrawerUiState(

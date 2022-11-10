@@ -19,7 +19,7 @@ import me.proton.android.pass.ui.navigation.AppNavigator
 import me.proton.android.pass.ui.navigation.NavItem
 import me.proton.android.pass.ui.navigation.appGraph
 import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
-import me.proton.pass.presentation.components.navigation.AuthNavigation
+import me.proton.pass.presentation.components.navigation.CoreNavigation
 import me.proton.pass.presentation.components.navigation.drawer.DrawerUiState
 import me.proton.pass.presentation.components.navigation.drawer.ModalNavigationDrawer
 import me.proton.pass.presentation.components.navigation.drawer.NavDrawerNavigation
@@ -36,7 +36,7 @@ fun PassNavHost(
     navController: NavHostController,
     appNavigator: AppNavigator,
     navDrawerNavigation: NavDrawerNavigation,
-    authNavigation: AuthNavigation,
+    coreNavigation: CoreNavigation,
     finishActivity: () -> Unit,
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
@@ -55,14 +55,14 @@ fun PassNavHost(
                     drawerUiState = drawerUiState,
                     drawerState = drawerState,
                     navDrawerNavigation = navDrawerNavigation,
-                    authNavigation = authNavigation,
+                    coreNavigation = coreNavigation,
                     onSignOutClick = { setShowSignOutDialog(true) },
                     signOutDialog = {
                         if (isSignOutDialogShown) {
                             ConfirmSignOutDialog(
                                 state = isSignOutDialogShown,
                                 onDismiss = { setShowSignOutDialog(false) },
-                                onConfirm = { authNavigation.onRemove(null) }
+                                onConfirm = { coreNavigation.onRemove(null) }
                             )
                         }
                     },

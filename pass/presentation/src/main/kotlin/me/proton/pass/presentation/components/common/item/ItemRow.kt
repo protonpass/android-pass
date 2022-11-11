@@ -36,6 +36,7 @@ internal fun ItemRow(
     Row(
         modifier = modifier
             .padding(horizontal = 20.dp, vertical = 12.dp)
+            .fillMaxWidth()
     ) {
         icon()
         Column(modifier = Modifier.padding(horizontal = 20.dp)) {

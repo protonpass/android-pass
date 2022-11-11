@@ -11,7 +11,7 @@ import me.proton.android.pass.ui.navigation.NavItem
 import me.proton.android.pass.ui.navigation.composable
 import me.proton.pass.presentation.create.alias.RESULT_CREATED_ALIAS
 import me.proton.pass.presentation.create.login.CreateLoginWithInitialContents
-import me.proton.pass.presentation.create.login.InitialCreateLoginContents
+import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 
 @OptIn(
     ExperimentalAnimationApi::class, ExperimentalMaterialApi::class,
@@ -23,7 +23,7 @@ fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
             .collectAsStateWithLifecycle()
 
         CreateLoginWithInitialContents(
-            initialContents = InitialCreateLoginContents(
+            initialContents = InitialCreateLoginUiState(
                 username = createdAlias
             ),
             onClose = { nav.onBackClick() },

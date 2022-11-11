@@ -8,7 +8,7 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.create.login.CreateLoginViewModel
 import me.proton.pass.presentation.create.login.CreateUpdateLoginUiState.Companion.Initial
-import me.proton.pass.presentation.create.login.InitialCreateLoginContents
+import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 import me.proton.pass.presentation.create.login.LoginItem
 import me.proton.pass.presentation.create.login.LoginItemValidationErrors
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -96,7 +96,7 @@ internal class CreateLoginViewModelTest {
 
     @Test
     fun `setting initial data emits the proper contents`() = runTest {
-        val initialContents = InitialCreateLoginContents(
+        val initialContents = InitialCreateLoginUiState(
             title = TestUtils.randomString(),
             username = TestUtils.randomString(),
             password = TestUtils.randomString(),

@@ -35,7 +35,7 @@ class CreateLoginViewModel @Inject constructor(
         PassLogger.e(TAG, throwable)
     }
 
-    fun setInitialContents(initialContents: InitialCreateLoginContents) {
+    fun setInitialContents(initialContents: InitialCreateLoginUiState) {
         val currentValue = loginItemState.value
         val websites = currentValue.websiteAddresses.toMutableList()
 

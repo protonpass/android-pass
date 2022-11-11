@@ -9,8 +9,6 @@ import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.ui.navigation.AppNavigator
 import me.proton.android.pass.ui.navigation.NavItem
 import me.proton.android.pass.ui.navigation.composable
-import me.proton.pass.common.api.None
-import me.proton.pass.common.api.Option
 import me.proton.pass.presentation.create.alias.RESULT_CREATED_ALIAS
 import me.proton.pass.presentation.create.login.UpdateLogin
 
@@ -20,10 +18,11 @@ import me.proton.pass.presentation.create.login.UpdateLogin
 )
 fun NavGraphBuilder.updateLoginGraph(nav: AppNavigator) {
     composable(NavItem.EditLogin) {
-        val createdAlias by nav.navState<Option<String>>(RESULT_CREATED_ALIAS, None).collectAsStateWithLifecycle()
+        val createdAlias by nav.navState<String>(RESULT_CREATED_ALIAS, null)
+            .collectAsStateWithLifecycle()
 
         UpdateLogin(
-            createdAlias = createdAlias.value(),
+            createdAlias = createdAlias,
             onUpClick = { nav.onBackClick() },
             onSuccess = { shareId, itemId ->
                 nav.navigate(

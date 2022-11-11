@@ -169,4 +169,12 @@
     <string name="item_type_note_description">Keep important information secure.</string>
     <string name="item_type_password_description">Generate &amp; copy a secure password.</string>
 
+    <!-- OnBoarding -->
+    <string name="on_boarding_autofill_content">Save and fill usernames and password in apps and supported browsers.</string>
+    <string name="on_boarding_autofill_title">Autofill</string>
+    <string name="on_boarding_autofill_button">Enable autofill</string>
+    <string name="on_boarding_fingerprint_content">Save and fill usernames and password in apps and supported browsers.</string>
+    <string name="on_boarding_fingerprint_title">Fingerprint unlock</string>
+    <string name="on_boarding_fingerprint_button">Enable Fingerprint unlock</string>
+    <string name="on_boarding_skip">Skip</string>
 </resources>

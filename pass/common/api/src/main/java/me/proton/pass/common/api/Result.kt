@@ -36,7 +36,7 @@ inline fun <T> Result<T>.onSuccess(action: (value: T) -> Unit): Result<T> {
 
 fun <T> Result<T>.logError(logger: Logger, tag: String, defaultMessage: String): Result<T> {
     if (this is Result.Error) {
-        logger.e(tag, exception ?: RuntimeException(defaultMessage))
+        logger.e(tag, exception ?: RuntimeException(defaultMessage), defaultMessage)
     }
     return this
 }

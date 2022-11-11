@@ -57,11 +57,7 @@ fun BottomSheetItem(
             .clickable(onClick = { onItemClick() })
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
-        icon?.let {
-            Column {
-                it()
-            }
-        }
+        icon?.let { it() }
         Column(modifier = Modifier.padding(start = 20.dp)) {
             Text(
                 text = stringResource(title),

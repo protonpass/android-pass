@@ -37,9 +37,7 @@ internal fun ItemRow(
         modifier = modifier
             .padding(horizontal = 20.dp, vertical = 12.dp)
     ) {
-        Column {
-            icon()
-        }
+        icon()
         Column(modifier = Modifier.padding(horizontal = 20.dp)) {
             Row {
                 Text(

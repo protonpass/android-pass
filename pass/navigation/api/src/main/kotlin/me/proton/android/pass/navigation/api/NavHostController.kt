@@ -1,9 +1,7 @@
-package me.proton.android.pass.ui.navigation
+package me.proton.android.pass.navigation.api
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Parcel
-import android.util.Base64
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.Saver
@@ -38,7 +36,7 @@ fun createNavController(context: Context) =
 private fun NavControllerSaver(
     context: Context,
     keyStoreCrypto: KeyStoreCrypto
-): Saver<NavHostController, *> = Saver<NavHostController, Bundle>(
+): Saver<NavHostController, *> = Saver(
     save = { keyStoreCrypto.encrypt(it.saveState()) },
     restore = { createNavController(context).apply { restoreState(keyStoreCrypto.decrypt(it)) } }
 )
@@ -48,17 +46,17 @@ internal fun KeyStoreCrypto.encrypt(bundle: Bundle?) = Bundle().apply {
         return@apply
     }
 
-    val parcel = Parcel.obtain()
+    val parcel = android.os.Parcel.obtain()
     bundle.writeToParcel(parcel, 0)
-    val base64 = String(Base64.encode(parcel.marshall(), Base64.NO_WRAP))
+    val base64 = String(android.util.Base64.encode(parcel.marshall(), android.util.Base64.NO_WRAP))
     putString(PROTON_NAV_KEY, encrypt(base64))
     parcel.recycle()
 }
 
 internal fun KeyStoreCrypto.decrypt(bundle: Bundle): Bundle {
     val encrypted = bundle.getString(PROTON_NAV_KEY) ?: return Bundle()
-    val bytes = Base64.decode(decrypt(encrypted), Base64.NO_WRAP)
-    val parcel = Parcel.obtain()
+    val bytes = android.util.Base64.decode(decrypt(encrypted), android.util.Base64.NO_WRAP)
+    val parcel = android.os.Parcel.obtain()
     parcel.unmarshall(bytes, 0, bytes.size)
     parcel.setDataPosition(0)
     val decrypted = Bundle.CREATOR.createFromParcel(parcel)
@@ -67,3 +65,4 @@ internal fun KeyStoreCrypto.decrypt(bundle: Bundle): Bundle {
 }
 
 private const val PROTON_NAV_KEY = "proton.nav.bundle"
+

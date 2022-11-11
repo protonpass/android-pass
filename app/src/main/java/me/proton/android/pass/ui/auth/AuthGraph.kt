@@ -3,8 +3,8 @@ package me.proton.android.pass.ui.auth
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-import me.proton.android.pass.ui.navigation.AppNavigator
-import me.proton.android.pass.ui.navigation.NavItem
+import me.proton.android.pass.navigation.api.AppNavigator
+import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.android.pass.ui.navigation.composable
 import me.proton.pass.presentation.auth.AuthScreen
 
@@ -15,7 +15,7 @@ fun NavGraphBuilder.authGraph(
     nav: AppNavigator,
     finishActivity: () -> Unit
 ) {
-    composable(NavItem.Auth) {
+    composable(AppNavItem.Auth) {
         BackHandler {
             finishActivity()
         }

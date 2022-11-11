@@ -98,6 +98,7 @@ dependencies {
     add("devImplementation", libs.showkase)
     add("kspDev", libs.showkaseProcessor)
 
+    implementation(project(":pass:autofill:api"))
     implementation(project(":pass:biometry:api"))
     implementation(project(":pass:common:api"))
     implementation(project(":pass:common-ui:api"))
@@ -116,6 +117,10 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.core.test.kotlin)
     testImplementation(project(":pass:test"))
+    testImplementation(project(":pass:autofill:fakes"))
+    testImplementation(project(":pass:biometry:fakes"))
+    testImplementation(project(":pass:notifications:fakes"))
+    testImplementation(project(":pass:preferences:fakes"))
 
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)

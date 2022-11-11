@@ -20,7 +20,7 @@ import me.proton.pass.test.core.TestSavedStateHandle
 import me.proton.pass.test.domain.TestItem
 import me.proton.pass.test.domain.usecases.TestCreateItem
 import me.proton.pass.test.domain.usecases.TestObserveActiveShare
-import me.proton.pass.test.notification.TestSnackbarMessageRepository
+import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

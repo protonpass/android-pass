@@ -1,4 +1,4 @@
-package me.proton.pass.data.autofill
+package me.proton.pass.autofill
 
 import android.content.Context
 import android.content.Intent
@@ -7,12 +7,12 @@ import android.provider.Settings
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
-import me.proton.pass.domain.autofill.AutofillManager
-import me.proton.pass.domain.autofill.AutofillStatus
-import me.proton.pass.domain.autofill.AutofillSupportedStatus
+import me.proton.android.pass.autofill.api.AutofillManager
+import me.proton.android.pass.autofill.api.AutofillStatus
+import me.proton.android.pass.autofill.api.AutofillSupportedStatus.Supported
+import me.proton.android.pass.autofill.api.AutofillSupportedStatus.Unsupported
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
@@ -20,26 +20,26 @@ class AutofillManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : AutofillManager {
 
-    override fun getAutofillStatus(): Flow<AutofillSupportedStatus> = flow {
+    override fun getAutofillStatus() = flow {
         val autofillManager =
             context.getSystemService(android.view.autofill.AutofillManager::class.java)
         if (autofillManager == null) {
-            emit(AutofillSupportedStatus.Unsupported)
+            emit(Unsupported)
             return@flow
         }
 
         if (!autofillManager.isAutofillSupported) {
-            emit(AutofillSupportedStatus.Unsupported)
+            emit(Unsupported)
             return@flow
         }
 
         while (currentCoroutineContext().isActive) {
             if (autofillManager.hasEnabledAutofillServices()) {
-                emit(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
+                emit(Supported(AutofillStatus.EnabledByOurService))
             } else if (autofillManager.isEnabled) {
-                emit(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOtherService))
+                emit(Supported(AutofillStatus.EnabledByOtherService))
             } else {
-                emit(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
+                emit(Supported(AutofillStatus.Disabled))
             }
 
             delay(UPDATE_TIME)

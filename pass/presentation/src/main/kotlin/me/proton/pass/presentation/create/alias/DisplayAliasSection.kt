@@ -11,6 +11,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.form.ProtonFormInput
+import me.proton.pass.presentation.components.previewproviders.AliasItemParameter
 import me.proton.pass.presentation.components.previewproviders.AliasItemPreviewProvider
 
 @Composable
@@ -27,16 +28,16 @@ internal fun DisplayAliasSection(
     )
 }
 
-class ThemedDisplayAliasPreviewProvider : ThemePairPreviewProvider<AliasItem>(AliasItemPreviewProvider())
+class ThemedDisplayAliasPreviewProvider : ThemePairPreviewProvider<AliasItemParameter>(AliasItemPreviewProvider())
 
 @Preview
 @Composable
 fun DisplayAliasSectionPreview(
-    @PreviewParameter(ThemedDisplayAliasPreviewProvider::class) input: Pair<Boolean, AliasItem>
+    @PreviewParameter(ThemedDisplayAliasPreviewProvider::class) input: Pair<Boolean, AliasItemParameter>
 ) {
     ProtonTheme(isDark = input.first) {
         Surface {
-            DisplayAliasSection(state = input.second)
+            DisplayAliasSection(state = input.second.item)
         }
     }
 }

@@ -4,6 +4,8 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
@@ -15,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.LoadingDialog
@@ -49,6 +52,16 @@ internal fun HomeContent(
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = { onAddItemClick(uiState.homeListUiState.selectedShare) }
+            ) {
+                Icon(
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
+                    contentDescription = null
+                )
+            }
+        },
         topBar = {
             HomeTopBar(
                 searchQuery = uiState.searchUiState.searchQuery,
@@ -57,7 +70,7 @@ internal fun HomeContent(
                 onEnterSearch = onEnterSearch,
                 onStopSearching = onStopSearching,
                 onDrawerIconClick = onDrawerIconClick,
-                onAddItemClick = { onAddItemClick(uiState.homeListUiState.selectedShare) }
+                onMoreOptionsClick = { } // Not implemented yet
             )
         }
     ) { contentPadding ->

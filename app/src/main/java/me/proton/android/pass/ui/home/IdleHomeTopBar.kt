@@ -22,7 +22,7 @@ fun IdleHomeTopBar(
     modifier: Modifier = Modifier,
     startSearchMode: () -> Unit,
     onDrawerIconClick: () -> Unit,
-    onAddItemClick: () -> Unit
+    onMoreOptionsClick: () -> Unit
 ) {
     ProtonTopAppBar(
         modifier = modifier,
@@ -42,12 +42,10 @@ fun IdleHomeTopBar(
                     tint = ProtonTheme.colors.iconNorm
                 )
             }
-            IconButton(onClick = {
-                onAddItemClick()
-            }) {
+            IconButton(onClick = onMoreOptionsClick) {
                 Icon(
-                    painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
-                    contentDescription = stringResource(me.proton.pass.presentation.R.string.action_create),
+                    painterResource(me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical),
+                    contentDescription = null,
                     tint = ProtonTheme.colors.iconNorm
                 )
             }
@@ -66,7 +64,7 @@ fun IdleHomeTopBarPreview(
             IdleHomeTopBar(
                 startSearchMode = {},
                 onDrawerIconClick = {},
-                onAddItemClick = {}
+                onMoreOptionsClick = {}
             )
         }
     }

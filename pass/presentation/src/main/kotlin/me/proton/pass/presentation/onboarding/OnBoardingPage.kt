@@ -48,7 +48,7 @@ fun OnBoardingPage(
         )
         Spacer(modifier = Modifier.height(58.dp))
         ProtonSolidButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().height(48.dp),
             onClick = { onMainButtonClick(onBoardingPageData.page) }
         ) {
             Text(
@@ -58,7 +58,7 @@ fun OnBoardingPage(
             )
         }
         ProtonTextButton(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().height(48.dp),
             onClick = { onSkipButtonClick(onBoardingPageData.page) }
         ) {
             Text(

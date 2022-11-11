@@ -65,6 +65,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pager.indicators)
     implementation(libs.accompanist.swipeRefresh)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.foundation)

@@ -29,7 +29,6 @@ class PreviewScreenshotTests {
 
     @get:Rule
     val paparazzi = Paparazzi(
-        maxPercentDifference = 0.0,
         deviceConfig = DeviceConfig.NEXUS_5
     )
 

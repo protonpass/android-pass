@@ -120,30 +120,9 @@ class OnBoardingViewModel @Inject constructor(
 
     private fun onBiometrySuccess() {
         viewModelScope.launch {
-            preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-                .asResultWithoutLoading()
-                .collect { pResult ->
-                    pResult.logError(
-                        PassLogger,
-                        TAG,
-                        "Could not save HasAuthenticated preference"
-                    )
-                }
-
-            PassLogger.d(TAG, "Changing BiometricLock to ${BiometricLockState.Enabled}")
-            preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
-                .asResultWithoutLoading()
-                .collect { pResult ->
-                    pResult
-                        .onSuccess {
-                            snackbarMessageRepository.emitSnackbarMessage(FingerprintLockEnabled)
-                        }
-                        .logError(PassLogger, TAG, "Error setting BiometricLockState")
-                        .onError {
-                            snackbarMessageRepository.emitSnackbarMessage(ErrorPerformingOperation)
-                        }
-                }
-
+            saveHasAuthenticatedFlag()
+            saveBiometricLockStateFlag()
+            saveOnBoardingCompleteFlag()
         }
     }
 
@@ -153,20 +132,52 @@ class OnBoardingViewModel @Inject constructor(
 
     private fun onSkipFingerprint() {
         viewModelScope.launch {
-            preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
-                .asResultWithoutLoading()
-                .collect { result ->
-                    result
-                        .onSuccess {
-                            _onBoardingUiState.update { it.copy(isCompleted = true) }
-                        }
-                        .logError(
-                            PassLogger,
-                            TAG,
-                            "Could not save HasCompletedOnBoarding preference"
-                        )
-                }
+            saveOnBoardingCompleteFlag()
         }
+    }
+
+    private suspend fun saveHasAuthenticatedFlag() {
+        preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+            .asResultWithoutLoading()
+            .collect { pResult ->
+                pResult.logError(
+                    PassLogger,
+                    TAG,
+                    "Could not save HasAuthenticated preference"
+                )
+            }
+    }
+
+    private suspend fun saveBiometricLockStateFlag() {
+        PassLogger.d(TAG, "Changing BiometricLock to ${BiometricLockState.Enabled}")
+        preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
+            .asResultWithoutLoading()
+            .collect { pResult ->
+                pResult
+                    .onSuccess {
+                        snackbarMessageRepository.emitSnackbarMessage(FingerprintLockEnabled)
+                    }
+                    .logError(PassLogger, TAG, "Error setting BiometricLockState")
+                    .onError {
+                        snackbarMessageRepository.emitSnackbarMessage(ErrorPerformingOperation)
+                    }
+            }
+    }
+
+    private suspend fun saveOnBoardingCompleteFlag() {
+        preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
+            .asResultWithoutLoading()
+            .collect { result ->
+                result
+                    .onSuccess {
+                        _onBoardingUiState.update { it.copy(isCompleted = true) }
+                    }
+                    .logError(
+                        PassLogger,
+                        TAG,
+                        "Could not save HasCompletedOnBoarding preference"
+                    )
+            }
     }
 
     companion object {

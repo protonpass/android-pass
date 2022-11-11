@@ -22,8 +22,6 @@ android {
 }
 
 dependencies {
-    implementation(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
-
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.accompanist.navigation.animation)
@@ -31,6 +29,5 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.core.crypto)
     implementation(libs.core.utilKotlin)
-    implementation(project(":pass:common:api"))
     implementation(project(":pass:log"))
 }

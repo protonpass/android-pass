@@ -1,15 +1,11 @@
 package me.proton.pass.presentation.settings
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -18,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
 import me.proton.android.pass.preferences.ThemePreference
+import me.proton.android.pass.ui.shared.HamburgerIcon
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
@@ -67,10 +64,8 @@ fun SettingsContent(
                         )
                     },
                     navigationIcon = {
-                        Icon(
-                            Icons.Default.Menu,
-                            modifier = Modifier.clickable { onDrawerIconClick() },
-                            contentDescription = null
+                        HamburgerIcon(
+                            onClick = onDrawerIconClick
                         )
                     }
                 )

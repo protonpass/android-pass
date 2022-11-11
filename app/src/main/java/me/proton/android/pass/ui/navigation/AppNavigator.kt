@@ -4,9 +4,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
-import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import me.proton.android.pass.log.PassLogger
 
@@ -53,12 +53,12 @@ class AppNavigator(
         navController.popBackStack()
     }
 
-    fun <T> navState(key: String, default: T?): StateFlow<T?> {
-        val res = (navController.currentBackStackEntry?.savedStateHandle ?: SavedStateHandle())
-            .getStateFlow(key, default)
-        navController.currentBackStackEntry?.savedStateHandle?.remove<T>(key)
-        return res
-    }
+    fun <T> navState(key: String, default: T?): StateFlow<T?> = MutableStateFlow(
+        navController.currentBackStackEntry
+            ?.savedStateHandle
+            ?.remove<T>(key)
+            ?: default
+    )
 
     companion object {
         private const val TAG = "AppNavigator"

@@ -1,4 +1,4 @@
-package me.proton.pass.domain.autofill
+package me.proton.android.pass.autofill.api
 
 sealed interface AutofillSupportedStatus {
     object Unsupported : AutofillSupportedStatus

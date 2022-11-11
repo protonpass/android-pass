@@ -12,6 +12,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.android.pass.autofill.api.AutofillManager
+import me.proton.android.pass.autofill.api.AutofillSupportedStatus
 import me.proton.android.pass.biometry.BiometryAuthError
 import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryResult
@@ -27,8 +29,6 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
-import me.proton.pass.domain.autofill.AutofillManager
-import me.proton.pass.domain.autofill.AutofillSupportedStatus
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import javax.inject.Inject
 

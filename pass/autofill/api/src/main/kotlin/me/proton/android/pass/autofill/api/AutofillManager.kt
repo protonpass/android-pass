@@ -1,4 +1,4 @@
-package me.proton.pass.domain.autofill
+package me.proton.android.pass.autofill.api
 
 import kotlinx.coroutines.flow.Flow
 

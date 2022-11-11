@@ -23,7 +23,7 @@ internal fun HomeTopBar(
     onEnterSearch: () -> Unit,
     onStopSearching: () -> Unit,
     onDrawerIconClick: () -> Unit,
-    onAddItemClick: () -> Unit
+    onMoreOptionsClick: () -> Unit
 ) {
     if (inSearchMode) {
         SearchTopBar(
@@ -40,7 +40,7 @@ internal fun HomeTopBar(
             modifier = modifier,
             startSearchMode = { onEnterSearch() },
             onDrawerIconClick = onDrawerIconClick,
-            onAddItemClick = onAddItemClick
+            onMoreOptionsClick = onMoreOptionsClick
         )
     }
 }
@@ -60,7 +60,7 @@ fun HomeTopBarIdlePreview(
                 onEnterSearch = {},
                 onStopSearching = {},
                 onDrawerIconClick = {},
-                onAddItemClick = {}
+                onMoreOptionsClick = {}
             )
         }
     }
@@ -81,7 +81,7 @@ fun HomeTopBarSearchPreview(
                 onEnterSearch = {},
                 onStopSearching = {},
                 onDrawerIconClick = {},
-                onAddItemClick = {}
+                onMoreOptionsClick = {}
             )
         }
     }

@@ -56,7 +56,7 @@ fun CreateLogin(
 @Composable
 fun CreateLoginWithInitialContents(
     modifier: Modifier = Modifier,
-    initialContents: InitialCreateLoginContents,
+    initialContents: InitialCreateLoginUiState,
     onClose: () -> Unit,
     onSuccess: () -> Unit,
     onCreateAliasClick: (ShareId) -> Unit

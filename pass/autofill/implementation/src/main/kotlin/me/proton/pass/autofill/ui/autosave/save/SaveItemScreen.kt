@@ -8,7 +8,7 @@ import me.proton.pass.autofill.entities.SaveInformation
 import me.proton.pass.autofill.entities.SaveItemType
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.create.login.CreateLoginWithInitialContents
-import me.proton.pass.presentation.create.login.InitialCreateLoginContents
+import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 
 const val SAVE_ITEM_ROUTE = "save/item"
 
@@ -25,7 +25,7 @@ fun SaveItemScreen(
         is SaveItemType.Login -> Pair(info.itemType.identity, info.itemType.password)
         is SaveItemType.SingleValue -> Pair(info.itemType.contents, info.itemType.contents)
     }
-    val initialContents = InitialCreateLoginContents(
+    val initialContents = InitialCreateLoginUiState(
         title = info.appName,
         username = username,
         password = password,

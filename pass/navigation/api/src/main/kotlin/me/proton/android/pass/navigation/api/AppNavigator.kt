@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.navigation
+package me.proton.android.pass.navigation.api
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
@@ -20,7 +20,6 @@ fun rememberAppNavigator(
 class AppNavigator(
     val navController: NavHostController
 ) {
-
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
         val destinationRoute = route ?: destination.route
         PassLogger.d(TAG, "Navigating to $destinationRoute")

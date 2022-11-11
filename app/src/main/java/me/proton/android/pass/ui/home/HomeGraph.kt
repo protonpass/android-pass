@@ -3,7 +3,7 @@ package me.proton.android.pass.ui.home
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
-import me.proton.android.pass.ui.navigation.NavItem
+import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.android.pass.ui.navigation.composable
 
 @OptIn(
@@ -14,7 +14,7 @@ fun NavGraphBuilder.homeGraph(
     homeScreenNavigation: HomeScreenNavigation,
     onDrawerIconClick: () -> Unit
 ) {
-    composable(NavItem.Home) {
+    composable(AppNavItem.Home) {
         NavHome(navigationDrawer, homeScreenNavigation, onDrawerIconClick)
     }
 }

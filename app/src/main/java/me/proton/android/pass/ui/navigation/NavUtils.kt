@@ -8,7 +8,7 @@ import com.google.accompanist.navigation.animation.composable
 
 @ExperimentalAnimationApi
 fun NavGraphBuilder.composable(
-    navItem: NavItem,
+    navItem: AppNavItem,
     content: @Composable (NavBackStackEntry) -> Unit
 ) {
     composable(

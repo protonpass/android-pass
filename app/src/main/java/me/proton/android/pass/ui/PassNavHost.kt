@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import me.proton.android.pass.ui.navigation.AppNavigator
-import me.proton.android.pass.ui.navigation.NavItem
+import me.proton.android.pass.navigation.api.AppNavigator
+import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.android.pass.ui.navigation.appGraph
 import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
 import me.proton.pass.presentation.components.navigation.CoreNavigation
@@ -42,7 +42,7 @@ fun PassNavHost(
     AnimatedNavHost(
         modifier = modifier,
         navController = appNavigator.navController,
-        startDestination = NavItem.Home.route
+        startDestination = AppNavItem.Home.route
     ) {
         appGraph(
             appNavigator = appNavigator,

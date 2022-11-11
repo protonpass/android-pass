@@ -5,6 +5,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
+import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.ui.auth.authGraph
 import me.proton.android.pass.ui.create.alias.createAliasGraph
 import me.proton.android.pass.ui.create.alias.updateAliasGraph

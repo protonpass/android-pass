@@ -2,15 +2,16 @@ package me.proton.android.pass.ui.navigation
 
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import me.proton.android.pass.navigation.api.NavItem
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 
-sealed class NavItem(
+sealed class AppNavItem(
     val baseRoute: String,
     private val navArgIds: List<NavArgId> = emptyList(),
-    val isTopLevel: Boolean = false
-) {
-    val route = run {
+    override val isTopLevel: Boolean = false
+) : NavItem {
+    override val route = run {
         val argKeys = navArgIds.map { "{${it.key}}" }
         listOf(baseRoute).plus(argKeys).joinToString("/")
     }
@@ -19,55 +20,55 @@ sealed class NavItem(
         navArgument(it.key) { type = it.navType }
     }
 
-    object OnBoarding : NavItem("onBoarding")
+    object OnBoarding : AppNavItem("onBoarding")
 
-    object Auth : NavItem("auth")
+    object Auth : AppNavItem("auth")
 
-    object Home : NavItem("home", isTopLevel = true)
+    object Home : AppNavItem("home", isTopLevel = true)
 
-    object Settings : NavItem("settings", isTopLevel = true)
+    object Settings : AppNavItem("settings", isTopLevel = true)
 
-    object Trash : NavItem("trash", isTopLevel = true)
+    object Trash : AppNavItem("trash", isTopLevel = true)
 
-    object Help : NavItem("help", isTopLevel = true)
+    object Help : AppNavItem("help", isTopLevel = true)
 
-    object CreateLogin : NavItem("createLogin", listOf(NavArgId.ShareId)) {
+    object CreateLogin : AppNavItem("createLogin", listOf(NavArgId.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
     }
 
-    object EditLogin : NavItem("editLogin", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
+    object EditLogin : AppNavItem("editLogin", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
 
-    object CreateAlias : NavItem("createAlias", listOf(NavArgId.ShareId)) {
+    object CreateAlias : AppNavItem("createAlias", listOf(NavArgId.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
     }
 
-    object EditAlias : NavItem("editAlias", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
+    object EditAlias : AppNavItem("editAlias", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
 
-    object CreateNote : NavItem("createNote", listOf(NavArgId.ShareId)) {
+    object CreateNote : AppNavItem("createNote", listOf(NavArgId.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
     }
 
-    object EditNote : NavItem("editNote", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
+    object EditNote : AppNavItem("editNote", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
 
-    object CreatePassword : NavItem("createPassword", listOf(NavArgId.ShareId)) {
+    object CreatePassword : AppNavItem("createPassword", listOf(NavArgId.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "${CreatePassword.baseRoute}/${shareId.id}"
     }
 
-    object EditPassword : NavItem("editPassword", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
+    object EditPassword : AppNavItem("editPassword", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
 
-    object ViewItem : NavItem("viewItem", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
+    object ViewItem : AppNavItem("viewItem", listOf(NavArgId.ShareId, NavArgId.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =
             "$baseRoute/${shareId.id}/${itemId.id}"
     }

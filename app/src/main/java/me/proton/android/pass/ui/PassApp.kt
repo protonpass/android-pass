@@ -15,12 +15,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import me.proton.android.pass.navigation.api.rememberAppNavigator
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.android.pass.ui.internal.InternalDrawerState
 import me.proton.android.pass.ui.internal.InternalDrawerValue
 import me.proton.android.pass.ui.internal.rememberInternalDrawerState
-import me.proton.android.pass.ui.navigation.NavItem
-import me.proton.android.pass.ui.navigation.rememberAppNavigator
+import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.common.api.Some
@@ -83,15 +83,15 @@ fun PassAppContent(
     val navDrawerNavigation = NavDrawerNavigation(
         onNavHome = {
             onDrawerSectionChanged(NavigationDrawerSection.Items)
-            appNavigator.navigate(NavItem.Home)
+            appNavigator.navigate(AppNavItem.Home)
         },
         onNavSettings = {
             onDrawerSectionChanged(NavigationDrawerSection.Settings)
-            appNavigator.navigate(NavItem.Settings)
+            appNavigator.navigate(AppNavItem.Settings)
         },
         onNavTrash = {
             onDrawerSectionChanged(NavigationDrawerSection.Trash)
-            appNavigator.navigate(NavItem.Trash)
+            appNavigator.navigate(AppNavItem.Trash)
         },
         onBugReport = {
             coreNavigation.onReport()

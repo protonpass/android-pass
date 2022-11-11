@@ -6,8 +6,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
-import me.proton.android.pass.ui.navigation.AppNavigator
-import me.proton.android.pass.ui.navigation.NavItem
+import me.proton.android.pass.navigation.api.AppNavigator
+import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.android.pass.ui.navigation.composable
 import me.proton.pass.presentation.create.alias.RESULT_CREATED_ALIAS
 import me.proton.pass.presentation.create.login.CreateLoginWithInitialContents
@@ -18,7 +18,7 @@ import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
     ExperimentalComposeUiApi::class
 )
 fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
-    composable(NavItem.CreateLogin) {
+    composable(AppNavItem.CreateLogin) {
         val createdAlias by nav.navState<String>(RESULT_CREATED_ALIAS, null)
             .collectAsStateWithLifecycle()
 
@@ -29,7 +29,7 @@ fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
             onClose = { nav.onBackClick() },
             onSuccess = { nav.onBackClick() },
             onCreateAliasClick = { shareId ->
-                nav.navigate(NavItem.CreateAlias, NavItem.CreateAlias.createNavRoute(shareId))
+                nav.navigate(AppNavItem.CreateAlias, AppNavItem.CreateAlias.createNavRoute(shareId))
             }
         )
     }

@@ -1,15 +1,12 @@
 package me.proton.android.pass.ui.trash
 
-import androidx.compose.foundation.clickable
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import me.proton.android.pass.ui.shared.HamburgerIcon
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
@@ -25,10 +22,8 @@ internal fun TrashTopBar(
     ProtonTopAppBar(
         title = { TopBarTitleView(title = stringResource(id = R.string.title_trash)) },
         navigationIcon = {
-            Icon(
-                Icons.Default.Menu,
-                modifier = Modifier.clickable { onDrawerIconClick() },
-                contentDescription = null
+            HamburgerIcon(
+                onClick = onDrawerIconClick
             )
         },
         actions = {

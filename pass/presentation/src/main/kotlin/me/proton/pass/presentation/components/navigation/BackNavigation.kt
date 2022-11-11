@@ -1,14 +1,16 @@
 package me.proton.android.pass.ui.shared
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import me.proton.pass.presentation.R
+import androidx.compose.ui.unit.dp
 
 @ExperimentalComposeUiApi
 @Composable
@@ -51,15 +53,35 @@ fun CrossBackIcon(
 
 @ExperimentalComposeUiApi
 @Composable
+fun HamburgerIcon(
+    onClick: () -> Unit
+) {
+    NavigationIcon(
+        modifier = Modifier.padding(start = 4.dp),
+        onUpClick = onClick
+    ) {
+        Icon(
+            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_hamburger),
+            contentDescription = null
+        )
+    }
+}
+
+@ExperimentalComposeUiApi
+@Composable
 private fun NavigationIcon(
+    modifier: Modifier = Modifier,
     onUpClick: () -> Unit,
     icon: @Composable () -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    IconButton(onClick = {
-        keyboardController?.hide()
-        onUpClick()
-    }) {
+    IconButton(
+        modifier = modifier,
+        onClick = {
+            keyboardController?.hide()
+            onUpClick()
+        }
+    ) {
         icon()
     }
 }

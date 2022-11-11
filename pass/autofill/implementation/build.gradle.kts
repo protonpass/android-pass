@@ -56,6 +56,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":pass:autofill:api"))
+
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.autofill)
@@ -70,6 +72,7 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.core.domain)
     implementation(libs.core.key)
     implementation(libs.core.presentation)

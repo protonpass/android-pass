@@ -20,7 +20,9 @@ includeCoreBuild {
 }
 
 include(":app")
+include(":pass:autofill:api")
 include(":pass:autofill:demo")
+include(":pass:autofill:fakes")
 include(":pass:autofill:implementation")
 include(":pass:biometry:api")
 include(":pass:biometry:fakes")
@@ -34,6 +36,7 @@ include(":pass:domain")
 include(":pass:log")
 include(":pass:navigation:api")
 include(":pass:notifications:api")
+include(":pass:notifications:fakes")
 include(":pass:notifications:implementation")
 include(":pass:preferences:api")
 include(":pass:preferences:fakes")

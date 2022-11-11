@@ -1,12 +1,10 @@
 package me.proton.pass.presentation.components.common.item
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -32,38 +29,37 @@ import me.proton.pass.presentation.components.previewproviders.ItemUiModelPrevie
 @Composable
 internal fun ItemRow(
     modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
+    icon: @Composable () -> Unit,
     title: AnnotatedString,
     subtitle: AnnotatedString
 ) {
-    Column(
+    Row(
         modifier = modifier
             .padding(horizontal = 20.dp, vertical = 12.dp)
     ) {
-        Row {
-            Icon(
-                painter = painterResource(icon),
-                contentDescription = null,
-                tint = ProtonTheme.colors.iconNorm
-            )
-            Text(
-                text = title,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.W400,
-                color = ProtonTheme.colors.textNorm,
-                modifier = Modifier.padding(start = 20.dp),
-                maxLines = 1
-            )
+        Column {
+            icon()
         }
-        Row(modifier = Modifier.padding(start = 44.dp, end = 20.dp)) {
-            Text(
-                text = subtitle,
-                color = ProtonTheme.colors.textWeak,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.W400,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+        Column(modifier = Modifier.padding(horizontal = 20.dp)) {
+            Row {
+                Text(
+                    text = title,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.W400,
+                    color = ProtonTheme.colors.textNorm,
+                    maxLines = 1
+                )
+            }
+            Row {
+                Text(
+                    text = subtitle,
+                    color = ProtonTheme.colors.textWeak,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.W400,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }

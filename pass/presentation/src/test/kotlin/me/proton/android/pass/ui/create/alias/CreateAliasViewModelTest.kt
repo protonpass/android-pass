@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
+import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.AliasMailbox
@@ -25,7 +26,6 @@ import me.proton.pass.test.domain.TestAliasSuffix
 import me.proton.pass.test.domain.TestItem
 import me.proton.pass.test.domain.TestShare
 import me.proton.pass.test.domain.usecases.TestCreateAlias
-import me.proton.pass.test.notification.TestSnackbarMessageRepository
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

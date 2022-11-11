@@ -9,6 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.autofill.api.AutofillManager
+import me.proton.android.pass.autofill.api.AutofillStatus
+import me.proton.android.pass.autofill.api.AutofillSupportedStatus
 import me.proton.android.pass.biometry.BiometryAuthError
 import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryResult
@@ -23,9 +26,6 @@ import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.common.api.logError
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
-import me.proton.pass.domain.autofill.AutofillManager
-import me.proton.pass.domain.autofill.AutofillStatus
-import me.proton.pass.domain.autofill.AutofillSupportedStatus
 import me.proton.pass.presentation.onboarding.OnBoardingPageName.Autofill
 import me.proton.pass.presentation.onboarding.OnBoardingPageName.Fingerprint
 import me.proton.pass.presentation.onboarding.OnBoardingSnackbarMessage.BiometryFailedToAuthenticateError

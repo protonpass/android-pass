@@ -1,8 +1,8 @@
 package me.proton.pass.presentation.settings
 
+import me.proton.android.pass.autofill.api.AutofillStatus
+import me.proton.android.pass.autofill.api.AutofillSupportedStatus
 import me.proton.android.pass.preferences.ThemePreference
-import me.proton.pass.domain.autofill.AutofillStatus
-import me.proton.pass.domain.autofill.AutofillSupportedStatus
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 
 data class SettingsUiState(

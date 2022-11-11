@@ -1,4 +1,4 @@
-package me.proton.pass.test.notification
+package me.proton.android.pass.notifications.fakes
 
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow

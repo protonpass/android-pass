@@ -18,6 +18,10 @@ import me.proton.android.pass.R
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
+import me.proton.pass.presentation.components.common.item.icon.AliasIcon
+import me.proton.pass.presentation.components.common.item.icon.LoginIcon
+import me.proton.pass.presentation.components.common.item.icon.NoteIcon
+import me.proton.pass.presentation.components.common.item.icon.PasswordIcon
 
 @ExperimentalMaterialApi
 @Composable
@@ -34,27 +38,43 @@ fun BottomSheetContents(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
         )
         Divider(modifier = Modifier.fillMaxWidth())
-        BottomSheetItem(me.proton.core.presentation.R.drawable.ic_proton_key, R.string.action_login, onItemClick = {
-            scope.launch {
-                state.hide()
-                shareId.map { navigation.toCreateLogin(it) }
-            }
-        })
-        BottomSheetItem(me.proton.core.presentation.R.drawable.ic_proton_alias, R.string.action_alias, onItemClick = {
-            scope.launch {
-                state.hide()
-                shareId.map { navigation.toCreateAlias(it) }
-            }
-        })
-        BottomSheetItem(me.proton.core.presentation.R.drawable.ic_proton_note, R.string.action_note, onItemClick = {
-            scope.launch {
-                state.hide()
-                shareId.map { navigation.toCreateNote(it) }
-            }
-        })
         BottomSheetItem(
-            icon = me.proton.core.presentation.R.drawable.ic_proton_arrows_rotate,
+            icon = { LoginIcon() },
+            title = R.string.action_login,
+            subtitle = me.proton.pass.presentation.R.string.item_type_login_description,
+            onItemClick = {
+                scope.launch {
+                    state.hide()
+                    shareId.map { navigation.toCreateLogin(it) }
+                }
+            }
+        )
+        BottomSheetItem(
+            icon = { AliasIcon() },
+            title = R.string.action_alias,
+            subtitle = me.proton.pass.presentation.R.string.item_type_alias_description,
+            onItemClick = {
+                scope.launch {
+                    state.hide()
+                    shareId.map { navigation.toCreateAlias(it) }
+                }
+            }
+        )
+        BottomSheetItem(
+            icon = { NoteIcon() },
+            title = R.string.action_note,
+            subtitle = me.proton.pass.presentation.R.string.item_type_note_description,
+            onItemClick = {
+                scope.launch {
+                    state.hide()
+                    shareId.map { navigation.toCreateNote(it) }
+                }
+            }
+        )
+        BottomSheetItem(
+            icon = { PasswordIcon() },
             title = R.string.action_password,
+            subtitle = me.proton.pass.presentation.R.string.item_type_password_description,
             onItemClick = {
                 scope.launch {
                     state.hide()

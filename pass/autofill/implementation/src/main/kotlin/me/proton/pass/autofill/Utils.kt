@@ -6,7 +6,9 @@ import android.content.pm.PackageManager
 import android.service.autofill.FillContext
 import me.proton.pass.autofill.entities.AssistInfo
 import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
+import me.proton.pass.presentation.UrlSanitizer
 
 object Utils {
 
@@ -32,7 +34,10 @@ object Utils {
     fun getTitle(context: Context, assistInfo: AssistInfo, packageName: String): String =
         when (assistInfo.url) {
             None -> getApplicationName(context, packageName)
-            is Some -> assistInfo.url.value
+            is Some -> when (val res = UrlSanitizer.getDomain(assistInfo.url.value)) {
+                Result.Loading -> ""
+                is Result.Error -> ""
+                is Result.Success -> res.data
+            }
         }
-
 }

@@ -1,7 +1,7 @@
 package me.proton.android.pass.ui.navigation
 
-import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import me.proton.android.pass.navigation.api.NavArgId
 import me.proton.android.pass.navigation.api.NavItem
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
@@ -72,9 +72,4 @@ sealed class AppNavItem(
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
-}
-
-enum class NavArgId(val key: String, val navType: NavType<*>) {
-    ItemId("itemId", NavType.StringType),
-    ShareId("shareId", NavType.StringType),
 }

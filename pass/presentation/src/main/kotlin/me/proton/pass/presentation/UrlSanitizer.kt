@@ -23,4 +23,19 @@ object UrlSanitizer {
             Result.Error(e)
         }
     }
+
+    fun getDomain(url: String): Result<String> =
+        when (val res = sanitize(url)) {
+            Result.Loading -> Result.Loading
+            is Result.Error -> res
+            is Result.Success -> {
+                try {
+                    val parsed = URI(res.data)
+                    Result.Success(parsed.host)
+                } catch (e: URISyntaxException) {
+                    Result.Error(e)
+                }
+            }
+        }
+
 }

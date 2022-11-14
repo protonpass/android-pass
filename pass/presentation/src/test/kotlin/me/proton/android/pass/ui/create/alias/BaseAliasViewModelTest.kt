@@ -30,35 +30,16 @@ internal class BaseAliasViewModelTest {
         baseAliasViewModel = object : BaseAliasViewModel(
             TestSnackbarMessageRepository(),
             TestSavedStateHandle.create()
-        ) {}
+        ) {
+            override fun onTitleChange(value: String) {}
+            override fun onAliasChange(value: String) {}
+        }
     }
 
     @Test
     fun `should start with the initial state`() = runTest {
         baseAliasViewModel.aliasUiState.test {
             assertThat(awaitItem()).isEqualTo(Initial)
-        }
-    }
-
-    @Test
-    fun `when the title has changed the state should hold it`() = runTest {
-        val titleInput = "Title Changed"
-        baseAliasViewModel.onTitleChange(titleInput)
-
-        baseAliasViewModel.aliasUiState.test {
-            assertThat(awaitItem().aliasItem)
-                .isEqualTo(Initial.aliasItem.copy(title = titleInput))
-        }
-    }
-
-    @Test
-    fun `given no suffix when the alias has changed the state should hold it`() = runTest {
-        val aliasInput = "aliasInput"
-        baseAliasViewModel.onAliasChange(aliasInput)
-
-        baseAliasViewModel.aliasUiState.test {
-            assertThat(awaitItem().aliasItem)
-                .isEqualTo(Initial.aliasItem.copy(alias = aliasInput))
         }
     }
 

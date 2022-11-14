@@ -84,7 +84,8 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun createItem(
         userId: UserId,
         share: Share,
-        contents: ItemContents
+        contents: ItemContents,
+        packageName: PackageName?
     ): Result<Item> = withUserAddress(userId) { userAddress ->
         val result =
             vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
@@ -94,7 +95,7 @@ class ItemRepositoryImpl @Inject constructor(
             is Result.Success -> Unit
         }
         val (vaultKey, itemKey) = result.data
-        val body = createItem.create(vaultKey, itemKey, userAddress, contents)
+        val body = createItem.create(vaultKey, itemKey, userAddress, contents, packageName)
         remoteItemDataSource.createItem(userId, share.id, body)
             .map { itemResponse ->
                 val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys

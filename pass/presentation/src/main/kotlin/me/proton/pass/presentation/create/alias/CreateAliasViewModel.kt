@@ -47,6 +47,7 @@ class CreateAliasViewModel @Inject constructor(
         PassLogger.e(TAG, throwable)
     }
 
+    private var titleAliasInSync = true
     private var _aliasOptions: AliasOptions? = null
 
     private val mutableCloseScreenEventFlow: MutableStateFlow<CloseScreenEvent> =
@@ -77,6 +78,7 @@ class CreateAliasViewModel @Inject constructor(
         }
     }
 
+
     fun setInitialState(state: InitialCreateAliasUiState) = viewModelScope.launch {
         aliasItemState.update {
             val alias = state.alias()
@@ -89,6 +91,46 @@ class CreateAliasViewModel @Inject constructor(
                 )
             )
         }
+    }
+
+    override fun onTitleChange(value: String) {
+        aliasItemState.update {
+            val alias = if (titleAliasInSync) {
+                value.filter { it.isLetterOrDigit() }.lowercase()
+            } else {
+                it.alias
+            }
+            it.copy(
+                title = value,
+                alias = alias,
+                aliasToBeCreated = getAliasToBeCreated(
+                    alias = alias,
+                    suffix = aliasItemState.value.selectedSuffix
+                )
+            )
+        }
+        aliasItemValidationErrorsState.update {
+            it.toMutableSet()
+                .apply { remove(AliasItemValidationErrors.BlankTitle) }
+        }
+    }
+
+    override fun onAliasChange(value: String) {
+        if (value.contains(" ") || value.contains("\n")) return
+        aliasItemState.update {
+            it.copy(
+                alias = value,
+                aliasToBeCreated = getAliasToBeCreated(
+                    alias = value,
+                    suffix = aliasItemState.value.selectedSuffix
+                )
+            )
+        }
+        aliasItemValidationErrorsState.update {
+            it.toMutableSet()
+                .apply { remove(AliasItemValidationErrors.BlankAlias) }
+        }
+        titleAliasInSync = false
     }
 
     fun createAlias(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {

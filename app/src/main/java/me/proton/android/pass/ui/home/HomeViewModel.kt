@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.android.pass.extension.toUiModel
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.ui.home.HomeSnackbarMessage.ObserveItemsError
@@ -34,6 +33,7 @@ import me.proton.pass.domain.usecases.ObserveCurrentUser
 import me.proton.pass.domain.usecases.RefreshContent
 import me.proton.pass.domain.usecases.TrashItem
 import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 import me.proton.pass.search.SearchItems

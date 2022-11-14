@@ -10,6 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
+import me.proton.pass.presentation.components.model.ItemUiModel
 
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -18,7 +19,7 @@ fun CreateLogin(
     modifier: Modifier = Modifier,
     initialContents: InitialCreateLoginUiState,
     onClose: () -> Unit,
-    onSuccess: () -> Unit,
+    onSuccess: (ItemUiModel) -> Unit,
     onCreateAliasClick: (ShareId) -> Unit
 ) {
     val viewModel: CreateLoginViewModel = hiltViewModel()
@@ -47,7 +48,7 @@ fun CreateLogin(
         topBarTitle = R.string.title_create_login,
         topBarActionName = R.string.action_save,
         onUpClick = { onClose() },
-        onSuccess = { _, _ -> onSuccess() },
+        onSuccess = { _, _, item -> onSuccess(item) },
         onSubmit = { viewModel.createItem() },
         onTitleChange = { viewModel.onTitleChange(it) },
         onUsernameChange = { viewModel.onUsernameChange(it) },

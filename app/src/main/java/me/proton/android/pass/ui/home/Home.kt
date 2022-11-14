@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.proton.android.pass.R
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ItemType
 import me.proton.pass.presentation.components.common.item.ItemAction
 import me.proton.pass.presentation.components.common.item.ItemsList
@@ -14,7 +13,7 @@ import me.proton.pass.presentation.uievents.IsRefreshingState
 @Composable
 internal fun Home(
     items: List<ItemUiModel>,
-    highlight: Option<String>,
+    highlight: String?,
     modifier: Modifier = Modifier,
     onItemClick: (ItemUiModel) -> Unit,
     navigation: HomeScreenNavigation,

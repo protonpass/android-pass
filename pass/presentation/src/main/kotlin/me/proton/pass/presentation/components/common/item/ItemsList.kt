@@ -13,8 +13,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.swiperefresh.SwipeRefreshState
-import me.proton.pass.common.api.None
-import me.proton.pass.common.api.Option
 import me.proton.pass.presentation.components.common.PassSwipeRefresh
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.uievents.IsRefreshingState
@@ -23,7 +21,7 @@ import me.proton.pass.presentation.uievents.IsRefreshingState
 fun ItemsList(
     modifier: Modifier = Modifier,
     items: List<ItemUiModel>,
-    highlight: Option<String> = None,
+    highlight: String? = null,
     @StringRes emptyListMessage: Int,
     isRefreshing: IsRefreshingState,
     itemActions: List<ItemAction> = emptyList(),

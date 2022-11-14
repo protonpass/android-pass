@@ -19,7 +19,6 @@ import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.pass.common.api.Option
-import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.components.common.PassFloatingActionButton
 import me.proton.pass.presentation.components.model.ItemUiModel
@@ -75,7 +74,7 @@ internal fun HomeContent(
                     val keyboardController = LocalSoftwareKeyboardController.current
                     Home(
                         items = uiState.homeListUiState.items,
-                        highlight = uiState.searchUiState.searchQuery.toOption(),
+                        highlight = uiState.searchUiState.searchQuery,
                         modifier = Modifier.padding(contentPadding),
                         onItemClick = { item ->
                             keyboardController?.hide()

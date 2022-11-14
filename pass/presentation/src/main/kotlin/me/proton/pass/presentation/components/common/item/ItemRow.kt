@@ -20,8 +20,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.common.api.None
-import me.proton.pass.common.api.Option
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.components.previewproviders.ItemUiModelPreviewProvider
@@ -67,7 +65,7 @@ internal fun ItemRow(
 internal fun ItemRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
-    highlight: Option<String> = None,
+    highlight: String? = null,
     itemActions: List<ItemAction> = emptyList(),
     onItemClicked: (ItemUiModel) -> Unit = {}
 ) {

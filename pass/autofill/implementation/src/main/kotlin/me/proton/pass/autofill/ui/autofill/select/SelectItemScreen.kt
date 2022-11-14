@@ -8,13 +8,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.pass.autofill.entities.AutofillItem
 
-const val SELECT_ITEM_ROUTE = "autofill/item"
-
 @Composable
 fun SelectItemScreen(
     modifier: Modifier = Modifier,
     initialState: SelectItemInitialState,
     onItemSelected: (AutofillItem) -> Unit,
+    onCreateLoginClicked: () -> Unit,
     viewModel: SelectItemViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -36,6 +35,7 @@ fun SelectItemScreen(
         onRefresh = { viewModel.onRefresh() },
         onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
         onEnterSearch = { viewModel.onEnterSearch() },
-        onStopSearching = { viewModel.onStopSearching() }
+        onStopSearching = { viewModel.onStopSearching() },
+        onCreateLoginClicked = onCreateLoginClicked
     )
 }

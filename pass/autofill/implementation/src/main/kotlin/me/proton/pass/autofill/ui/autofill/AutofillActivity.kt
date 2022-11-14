@@ -18,6 +18,7 @@ import me.proton.pass.autofill.entities.AutofillData
 import me.proton.pass.autofill.entities.AutofillMappings
 import me.proton.pass.autofill.entities.FieldType
 import me.proton.pass.autofill.entities.asAndroid
+import me.proton.pass.autofill.entities.isEmpty
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.entity.PackageName
@@ -28,6 +29,22 @@ class AutofillActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val appState = extractAppState()
+        if (appState.isEmpty()) {
+            finish()
+            return
+        }
+
+        setContent {
+            AutofillApp(
+                state = appState,
+                onAutofillResponse = { onAutofillResponse(it) },
+                onFinished = { finish() }
+            )
+        }
+    }
+
+    private fun extractAppState(): AutofillAppState {
         val ids: List<AndroidAutofillFieldId> =
             intent.extras?.getParcelableArrayList<AutofillId>(ARG_AUTOFILL_IDS)
                 ?.map { AndroidAutofillFieldId(it) }
@@ -43,19 +60,9 @@ class AutofillActivity : FragmentActivity() {
             ?: emptyList()
         val packageName = intent.extras?.getString(ARG_PACKAGE_NAME) ?: ""
         val webDomain = intent.extras?.getString(ARG_WEB_DOMAIN).toOption()
+        val title = intent.extras?.getString(ARG_TITLE) ?: ""
 
-        if (ids.isEmpty() || types.isEmpty() || packageName.isEmpty()) {
-            finish()
-            return
-        }
-
-        setContent {
-            AutofillApp(
-                state = AutofillAppState(PackageName(packageName), ids, types, webDomain),
-                onAutofillResponse = { onAutofillResponse(it) },
-                onFinished = { finish() }
-            )
-        }
+        return AutofillAppState(PackageName(packageName), ids, types, webDomain, title)
     }
 
     private fun onAutofillResponse(autofillMappings: AutofillMappings?) {
@@ -86,6 +93,7 @@ class AutofillActivity : FragmentActivity() {
         const val ARG_AUTOFILL_TYPES = "arg_autofill_types"
         const val ARG_PACKAGE_NAME = "arg_package_name"
         const val ARG_WEB_DOMAIN = "arg_web_domain"
+        const val ARG_TITLE = "arg_title"
 
         fun newIntent(context: Context, data: AutofillData): Intent =
             Intent(context, AutofillActivity::class.java).apply {
@@ -98,7 +106,8 @@ class AutofillActivity : FragmentActivity() {
                     bundleOf(
                         ARG_AUTOFILL_IDS to fields.map { it.id.asAndroid().autofillId },
                         ARG_AUTOFILL_TYPES to fields.map { it.type?.toString() },
-                        ARG_PACKAGE_NAME to data.packageName
+                        ARG_PACKAGE_NAME to data.packageName,
+                        ARG_TITLE to data.title
                     )
                 )
             }

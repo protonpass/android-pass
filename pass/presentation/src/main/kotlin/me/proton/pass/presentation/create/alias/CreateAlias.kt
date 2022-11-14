@@ -2,6 +2,7 @@ package me.proton.pass.presentation.create.alias
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -17,11 +18,17 @@ const val RESULT_CREATED_ALIAS = "created_alias"
 @Composable
 fun CreateAlias(
     modifier: Modifier = Modifier,
+    initialState: InitialCreateAliasUiState = InitialCreateAliasUiState(),
     onUpClick: () -> Unit,
     onSuccess: (String) -> Unit,
-    onClose: () -> Unit,
-    viewModel: CreateAliasViewModel = hiltViewModel()
+    onClose: () -> Unit
 ) {
+    val viewModel: CreateAliasViewModel = hiltViewModel()
+
+    LaunchedEffect(initialState) {
+        viewModel.setInitialState(initialState)
+    }
+
     val viewState by viewModel.aliasUiState.collectAsStateWithLifecycle()
     val closeScreenState by viewModel.closeScreenEventFlow.collectAsStateWithLifecycle()
 

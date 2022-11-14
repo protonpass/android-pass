@@ -16,7 +16,7 @@ sealed class AppNavItem(
         listOf(baseRoute).plus(argKeys).joinToString("/")
     }
 
-    val args = navArgIds.map {
+    override val args = navArgIds.map {
         navArgument(it.key) { type = it.navType }
     }
 

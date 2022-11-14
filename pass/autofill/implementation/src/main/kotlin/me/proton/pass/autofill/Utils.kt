@@ -4,6 +4,9 @@ import android.app.assist.AssistStructure
 import android.content.Context
 import android.content.pm.PackageManager
 import android.service.autofill.FillContext
+import me.proton.pass.autofill.entities.AssistInfo
+import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Some
 
 object Utils {
 
@@ -25,4 +28,11 @@ object Utils {
             (0 until structure.windowNodeCount).map { structure.getWindowNodeAt(it) } else
             emptyList()
     }
+
+    fun getTitle(context: Context, assistInfo: AssistInfo, packageName: String): String =
+        when (assistInfo.url) {
+            None -> getApplicationName(context, packageName)
+            is Some -> assistInfo.url.value
+        }
+
 }

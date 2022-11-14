@@ -18,9 +18,3 @@ fun NavGraphBuilder.composable(
         content(it)
     }
 }
-
-inline fun <reified T> NavBackStackEntry.findArg(arg: NavArgId): T {
-    val value = arguments?.get(arg.key)
-    requireNotNull(value)
-    return value as T
-}

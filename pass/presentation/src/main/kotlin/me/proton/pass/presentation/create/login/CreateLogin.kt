@@ -65,6 +65,13 @@ fun CreateLoginWithInitialContents(
     LaunchedEffect(Unit) {
         viewModel.setInitialContents(initialContents)
     }
+
+    // Necessary for detecting alias generated
+    LaunchedEffect(initialContents.username) {
+        if (initialContents.username != null) {
+            viewModel.onUsernameChange(initialContents.username)
+        }
+    }
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
     val onWebsiteChange = object : OnWebsiteChange {
         override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int ->

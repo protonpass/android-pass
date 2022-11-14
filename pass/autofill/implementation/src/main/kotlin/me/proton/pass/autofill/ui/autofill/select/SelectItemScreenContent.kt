@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.autofill.service.R
-import me.proton.pass.common.api.toOption
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.components.common.PassFloatingActionButton
 import me.proton.pass.presentation.components.common.item.ItemsList
@@ -51,7 +50,7 @@ internal fun SelectItemScreenContent(
                 ItemsList(
                     modifier = modifier.padding(padding),
                     items = uiState.listUiState.items,
-                    highlight = uiState.searchUiState.searchQuery.toOption(),
+                    highlight = uiState.searchUiState.searchQuery,
                     emptyListMessage = R.string.error_credentials_not_found,
                     onRefresh = onRefresh,
                     isRefreshing = uiState.listUiState.isRefreshing,

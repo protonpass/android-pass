@@ -6,8 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.common.api.None
-import me.proton.pass.common.api.Option
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.domain.ItemType
 import me.proton.pass.presentation.components.common.item.icon.NoteIcon
@@ -20,7 +18,7 @@ fun NoteRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
     itemType: ItemType.Note,
-    highlight: Option<String>
+    highlight: String? = null
 ) {
     val processedText = itemType.text.replace("\n", " ")
     ItemRow(
@@ -44,7 +42,6 @@ fun NoteRowPreview(
         Surface {
             NoteRow(
                 item = input.second.model,
-                highlight = None,
                 itemType = input.second.itemType
             )
         }

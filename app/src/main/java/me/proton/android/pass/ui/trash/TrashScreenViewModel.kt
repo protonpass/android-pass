@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.android.pass.extension.toUiModel
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.ui.trash.TrashSnackbarMessage.ClearTrashError
@@ -27,6 +26,7 @@ import me.proton.pass.domain.repositories.ItemRepository
 import me.proton.pass.domain.usecases.ObserveTrashedItems
 import me.proton.pass.domain.usecases.RefreshContent
 import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 import javax.inject.Inject

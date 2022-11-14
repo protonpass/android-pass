@@ -20,7 +20,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.pass.autofill.BROWSERS
 import me.proton.pass.autofill.extensions.toAutoFillItem
-import me.proton.pass.autofill.extensions.toUiModel
 import me.proton.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
@@ -35,6 +34,7 @@ import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.entity.PackageName
 import me.proton.pass.domain.usecases.RefreshContent
 import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 import me.proton.pass.search.SearchItems

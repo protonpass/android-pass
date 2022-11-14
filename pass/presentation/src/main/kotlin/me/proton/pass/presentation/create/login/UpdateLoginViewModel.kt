@@ -25,6 +25,7 @@ import me.proton.pass.domain.usecases.GetShareById
 import me.proton.pass.domain.usecases.ObserveActiveShare
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.InitError
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.ItemUpdateError
+import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 import javax.inject.Inject
@@ -101,7 +102,7 @@ class UpdateLoginViewModel @Inject constructor(
                     val itemContents = loginItem.toItemContents()
                     itemRepository.updateItem(userId, share, _item!!, itemContents)
                         .onSuccess { item ->
-                            isItemSavedState.update { ItemSavedState.Success(item.id) }
+                            isItemSavedState.update { ItemSavedState.Success(item.id, item.toUiModel(cryptoContext)) }
                         }
                         .onError {
                             val defaultMessage = "Update item error"

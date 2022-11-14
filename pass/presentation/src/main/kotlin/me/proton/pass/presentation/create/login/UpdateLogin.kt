@@ -44,7 +44,7 @@ fun UpdateLogin(
         topBarTitle = R.string.title_edit_login,
         topBarActionName = R.string.action_save,
         onUpClick = onUpClick,
-        onSuccess = { shareId, itemId ->
+        onSuccess = { shareId, itemId, _ ->
             viewModel.onEmitSnackbarMessage(LoginUpdated)
             onSuccess(shareId, itemId)
         },

@@ -32,9 +32,6 @@ fun ItemType.Companion.fromParsed(
     }
 }
 
-fun Item.itemName(cryptoContext: CryptoContext): String =
-    title.decrypt(cryptoContext.keyStoreCrypto)
-
 fun Item.loginUsername(): Option<String> = when (val type = itemType) {
     is ItemType.Login -> type.username.toOption()
     else -> None

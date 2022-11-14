@@ -20,6 +20,7 @@ import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Some
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.EmptyShareIdError
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
@@ -32,7 +33,7 @@ internal fun LoginContent(
     @StringRes topBarActionName: Int,
     uiState: CreateUpdateLoginUiState,
     onUpClick: () -> Unit,
-    onSuccess: (ShareId, ItemId) -> Unit,
+    onSuccess: (ShareId, ItemId, ItemUiModel) -> Unit,
     onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
     onUsernameChange: (String) -> Unit,
@@ -118,7 +119,7 @@ internal fun LoginContent(
                 if (isItemSaved is ItemSavedState.Success) {
                     when (uiState.shareId) {
                         None -> onEmitSnackbarMessage(EmptyShareIdError)
-                        is Some -> onSuccess(uiState.shareId.value, isItemSaved.itemId)
+                        is Some -> onSuccess(uiState.shareId.value, isItemSaved.itemId, isItemSaved.item)
                     }
                 }
             }

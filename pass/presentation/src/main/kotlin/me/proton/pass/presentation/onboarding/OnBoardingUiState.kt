@@ -2,6 +2,8 @@ package me.proton.pass.presentation.onboarding
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import me.proton.pass.presentation.onboarding.OnBoardingPageName.Autofill
+import me.proton.pass.presentation.onboarding.OnBoardingPageName.Fingerprint
 
 data class OnBoardingUiState(
     val selectedPage: Int,
@@ -20,7 +22,8 @@ enum class OnBoardingPageName {
 
 open class OnBoardingUiStatePreviewProvider : PreviewParameterProvider<OnBoardingUiState> {
     override val values: Sequence<OnBoardingUiState> = sequenceOf(
-        OnBoardingUiState(0, setOf(OnBoardingPageName.Autofill), false),
-        OnBoardingUiState(0, setOf(OnBoardingPageName.Fingerprint), false)
+        OnBoardingUiState(0, setOf(Autofill), false),
+        OnBoardingUiState(0, setOf(Fingerprint), false),
+        OnBoardingUiState(0, setOf(Autofill, Fingerprint), false)
     )
 }

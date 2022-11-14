@@ -1,19 +1,19 @@
-package me.proton.pass.autofill.ui
+package me.proton.android.pass.navigation.api
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
-import me.proton.pass.autofill.ui.autofill.AutofillNavItem
 
 @ExperimentalAnimationApi
 fun NavGraphBuilder.composable(
-    navItem: AutofillNavItem,
+    navItem: NavItem,
     content: @Composable (NavBackStackEntry) -> Unit
 ) {
     composable(
-        route = navItem.route
+        route = navItem.route,
+        arguments = navItem.args
     ) {
         content(it)
     }

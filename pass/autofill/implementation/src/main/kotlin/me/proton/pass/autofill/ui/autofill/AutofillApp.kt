@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import me.proton.android.pass.navigation.api.composable
 import me.proton.android.pass.navigation.api.rememberAppNavigator
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.theme.ProtonTheme
@@ -19,7 +20,6 @@ import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillMappings
 import me.proton.pass.autofill.ui.autofill.select.SelectItemInitialState
 import me.proton.pass.autofill.ui.autofill.select.SelectItemScreen
-import me.proton.pass.autofill.ui.composable
 import me.proton.pass.presentation.auth.AuthScreen
 import me.proton.pass.presentation.create.alias.CreateAlias
 import me.proton.pass.presentation.create.alias.InitialCreateAliasUiState

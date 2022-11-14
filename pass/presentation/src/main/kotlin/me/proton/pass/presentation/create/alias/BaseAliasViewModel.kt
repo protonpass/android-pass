@@ -75,30 +75,8 @@ abstract class BaseAliasViewModel(
             initialValue = CreateUpdateAliasUiState.Initial
         )
 
-    open fun onTitleChange(value: String) {
-        aliasItemState.update { it.copy(title = value) }
-        aliasItemValidationErrorsState.update {
-            it.toMutableSet()
-                .apply { remove(AliasItemValidationErrors.BlankTitle) }
-        }
-    }
-
-    fun onAliasChange(value: String) {
-        if (value.contains(" ") || value.contains("\n")) return
-        aliasItemState.update {
-            it.copy(
-                alias = value,
-                aliasToBeCreated = getAliasToBeCreated(
-                    alias = value,
-                    suffix = aliasItemState.value.selectedSuffix
-                )
-            )
-        }
-        aliasItemValidationErrorsState.update {
-            it.toMutableSet()
-                .apply { remove(AliasItemValidationErrors.BlankAlias) }
-        }
-    }
+    abstract fun onTitleChange(value: String)
+    abstract fun onAliasChange(value: String)
 
     open fun onNoteChange(value: String) {
         aliasItemState.update { it.copy(note = value) }

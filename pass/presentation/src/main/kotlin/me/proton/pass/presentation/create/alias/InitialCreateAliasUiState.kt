@@ -1,6 +1,7 @@
 package me.proton.pass.presentation.create.alias
 
-data class InitialCreateAliasUiState(
+@JvmInline
+value class InitialCreateAliasUiState(
     val title: String? = null
 )
 

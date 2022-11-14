@@ -10,7 +10,7 @@ import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.android.pass.ui.navigation.composable
 import me.proton.pass.presentation.create.alias.RESULT_CREATED_ALIAS
-import me.proton.pass.presentation.create.login.CreateLoginWithInitialContents
+import me.proton.pass.presentation.create.login.CreateLogin
 import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 
 @OptIn(
@@ -22,7 +22,7 @@ fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
         val createdAlias by nav.navState<String>(RESULT_CREATED_ALIAS, null)
             .collectAsStateWithLifecycle()
 
-        CreateLoginWithInitialContents(
+        CreateLogin(
             initialContents = InitialCreateLoginUiState(
                 username = createdAlias
             ),

@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.onError
@@ -28,7 +28,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UpdateNoteViewModel @Inject constructor(
-    private val cryptoContext: CryptoContext,
+    private val keyStoreCrypto: KeyStoreCrypto,
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
     private val getShare: GetShareById,
@@ -54,8 +54,8 @@ class UpdateNoteViewModel @Inject constructor(
                         _item = item
                         noteItemState.update {
                             NoteItem(
-                                title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-                                note = item.note.decrypt(cryptoContext.keyStoreCrypto)
+                                title = item.title.decrypt(keyStoreCrypto),
+                                note = item.note.decrypt(keyStoreCrypto)
                             )
                         }
                     }
@@ -85,7 +85,12 @@ class UpdateNoteViewModel @Inject constructor(
                     val itemContents = noteItem.toItemContents()
                     itemRepository.updateItem(userId, share, _item!!, itemContents)
                         .onSuccess { item ->
-                            isItemSavedState.update { ItemSavedState.Success(item.id, item.toUiModel(cryptoContext)) }
+                            isItemSavedState.update {
+                                ItemSavedState.Success(
+                                    item.id,
+                                    item.toUiModel(keyStoreCrypto)
+                                )
+                            }
                         }
                         .onError {
                             val defaultMessage = "Update item error"

@@ -54,4 +54,28 @@ class UrlSanitizerTest {
         val res = UrlSanitizer.sanitize(domain)
         assertTrue(res is Result.Error)
     }
+
+    @Test
+    fun `getDomain empty url should return error`() {
+        val res = UrlSanitizer.getDomain("")
+        assertTrue(res is Result.Error)
+        assertNotNull(res.exception)
+        assertTrue(res.exception is IllegalArgumentException)
+    }
+
+    @Test
+    fun `getDomain should be able to extract domain from url with scheme`() {
+        val domain = "a.b.c.d"
+        val res = UrlSanitizer.getDomain("https://$domain/e?f=g")
+        assertTrue(res is Result.Success)
+        assertEquals(res.data, domain)
+    }
+
+    @Test
+    fun `getDomain should be able to extract domain from url without scheme`() {
+        val domain = "a.b.c.d"
+        val res = UrlSanitizer.getDomain(domain)
+        assertTrue(res is Result.Success)
+        assertEquals(res.data, domain)
+    }
 }

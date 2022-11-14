@@ -93,7 +93,8 @@ fun AutofillApp(
                 CreateLogin(
                     initialContents = InitialCreateLoginUiState(
                         title = state.title,
-                        username = createdAlias
+                        username = createdAlias,
+                        url = state.webDomain.value()
                     ),
                     onClose = { appNavigator.onBackClick() },
                     onSuccess = { item ->

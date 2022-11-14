@@ -15,7 +15,12 @@ import me.proton.pass.domain.entity.NewAlias
 import me.proton.pass.domain.entity.PackageName
 
 interface ItemRepository {
-    suspend fun createItem(userId: UserId, share: Share, contents: ItemContents): Result<Item>
+    suspend fun createItem(
+        userId: UserId,
+        share: Share,
+        contents: ItemContents,
+        packageName: PackageName? = null
+    ): Result<Item>
     suspend fun createAlias(userId: UserId, share: Share, newAlias: NewAlias): Result<Item>
     suspend fun updateItem(
         userId: UserId,

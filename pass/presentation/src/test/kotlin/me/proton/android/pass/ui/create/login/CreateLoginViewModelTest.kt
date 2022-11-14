@@ -6,17 +6,20 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.create.login.CreateLoginViewModel
 import me.proton.pass.presentation.create.login.CreateUpdateLoginUiState.Companion.Initial
 import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 import me.proton.pass.presentation.create.login.LoginItem
 import me.proton.pass.presentation.create.login.LoginItemValidationErrors
+import me.proton.pass.presentation.extension.itemName
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.TestUtils
 import me.proton.pass.test.core.TestAccountManager
 import me.proton.pass.test.core.TestSavedStateHandle
+import me.proton.pass.test.crypto.TestKeyStoreCrypto
 import me.proton.pass.test.domain.TestItem
 import me.proton.pass.test.domain.usecases.TestCreateItem
 import me.proton.pass.test.domain.usecases.TestObserveActiveShare
@@ -45,7 +48,8 @@ internal class CreateLoginViewModelTest {
             createItem = createItem,
             observeActiveShare = observeActiveShare,
             snackbarMessageRepository = TestSnackbarMessageRepository(),
-            savedStateHandle = TestSavedStateHandle.create()
+            savedStateHandle = TestSavedStateHandle.create(),
+            keyStoreCrypto = TestKeyStoreCrypto
         )
     }
 
@@ -69,11 +73,10 @@ internal class CreateLoginViewModelTest {
 
         val userId = UserId("user-id")
         accountManager.sendPrimaryUserId(userId)
-        val item = TestItem.create()
+        val item = TestItem.create(keyStoreCrypto = TestKeyStoreCrypto)
         createItem.sendItem(Result.Success(item))
-        val shareId = ShareId("id")
 
-        createLoginViewModel.createItem(shareId)
+        createLoginViewModel.createItem(item.shareId)
 
         createLoginViewModel.loginUiState.test {
             assertThat(awaitItem())
@@ -88,7 +91,15 @@ internal class CreateLoginViewModelTest {
                     Initial.copy(
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.NotLoading,
-                        isItemSaved = ItemSavedState.Success(item.id)
+                        isItemSaved = ItemSavedState.Success(
+                            item.id,
+                            ItemUiModel(
+                                id = item.id,
+                                shareId = item.shareId,
+                                name = item.itemName(TestKeyStoreCrypto),
+                                itemType = item.itemType
+                            )
+                        )
                     )
                 )
         }

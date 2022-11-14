@@ -21,7 +21,7 @@ import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.ui.home.HomeSnackbarMessage.ObserveItemsError
 import me.proton.android.pass.ui.home.HomeSnackbarMessage.ObserveShareError
 import me.proton.android.pass.ui.home.HomeSnackbarMessage.RefreshError
-import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
@@ -42,7 +42,7 @@ import javax.inject.Inject
 @ExperimentalMaterialApi
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val cryptoContext: CryptoContext,
+    private val keyStoreCrypto: KeyStoreCrypto,
     private val trashItem: TrashItem,
     private val searchItems: SearchItems,
     private val refreshContent: RefreshContent,
@@ -60,7 +60,7 @@ class HomeViewModel @Inject constructor(
     private val listItems: Flow<Result<List<ItemUiModel>>> = searchItems.observeResults()
         .mapLatest { result: Result<List<Item>> ->
             result.map { list ->
-                list.map { it.toUiModel(cryptoContext) }
+                list.map { it.toUiModel(keyStoreCrypto) }
             }
         }
 

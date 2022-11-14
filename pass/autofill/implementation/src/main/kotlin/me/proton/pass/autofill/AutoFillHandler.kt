@@ -117,7 +117,7 @@ object AutoFillHandler {
                             .toOption()
                         responseBuilder.addItemInlineSuggestion(
                             context = context,
-                            cryptoContext = cryptoContext,
+                            keyStoreCrypto = cryptoContext.keyStoreCrypto,
                             itemOption = item,
                             inlinePresentationSpec = spec,
                             assistFields = assistInfo.fields
@@ -127,7 +127,7 @@ object AutoFillHandler {
             }
             responseBuilder.addOpenAppInlineSuggestion(
                 context = context,
-                cryptoContext = cryptoContext,
+                keyStoreCrypto = cryptoContext.keyStoreCrypto,
                 inlinePresentationSpec = inlineRequest.inlinePresentationSpecs.last(),
                 pendingIntent = getOpenAppPendingIntent(context, autofillData),
                 assistFields = assistInfo.fields

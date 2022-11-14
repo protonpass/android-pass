@@ -25,9 +25,9 @@ import me.proton.pass.autofill.ui.autofill.ItemFieldMapper
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.toOption
-import me.proton.pass.data.extensions.itemName
 import me.proton.pass.data.extensions.loginUsername
 import me.proton.pass.domain.Item
+import me.proton.pass.presentation.extension.itemName
 
 @Suppress("LongParameterList")
 @RequiresApi(Build.VERSION_CODES.R)

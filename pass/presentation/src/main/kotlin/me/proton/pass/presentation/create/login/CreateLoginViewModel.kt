@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.onError
@@ -18,6 +19,7 @@ import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.usecases.CreateItem
 import me.proton.pass.domain.usecases.ObserveActiveShare
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.ItemCreationError
+import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 import javax.inject.Inject
@@ -27,6 +29,7 @@ class CreateLoginViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val createItem: CreateItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val cryptoContext: CryptoContext,
     observeActiveShare: ObserveActiveShare,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(snackbarMessageRepository, observeActiveShare, savedStateHandle) {
@@ -78,7 +81,7 @@ class CreateLoginViewModel @Inject constructor(
         if (userId != null) {
             createItem(userId, shareId, loginItemState.value.toItemContents())
                 .onSuccess { item ->
-                    isItemSavedState.update { ItemSavedState.Success(item.id) }
+                    isItemSavedState.update { ItemSavedState.Success(item.id, item.toUiModel(cryptoContext)) }
                 }
                 .onError {
                     val defaultMessage = "Could not create item"

@@ -21,6 +21,7 @@ import me.proton.pass.domain.repositories.ItemRepository
 import me.proton.pass.domain.usecases.GetShareById
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.InitError
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.ItemUpdateError
+import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 import javax.inject.Inject
@@ -84,7 +85,7 @@ class UpdateNoteViewModel @Inject constructor(
                     val itemContents = noteItem.toItemContents()
                     itemRepository.updateItem(userId, share, _item!!, itemContents)
                         .onSuccess { item ->
-                            isItemSavedState.update { ItemSavedState.Success(item.id) }
+                            isItemSavedState.update { ItemSavedState.Success(item.id, item.toUiModel(cryptoContext)) }
                         }
                         .onError {
                             val defaultMessage = "Update item error"

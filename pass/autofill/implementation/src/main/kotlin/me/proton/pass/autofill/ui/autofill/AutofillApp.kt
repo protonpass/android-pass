@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,13 @@ fun AutofillApp(
     val viewModel: AutofillAppViewModel = hiltViewModel()
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
+    LaunchedEffect(uiState.itemSelected is AutofillItemSelectedState.Selected) {
+        val selected = uiState.itemSelected
+        if (selected is AutofillItemSelectedState.Selected) {
+            onAutofillResponse(selected.item)
+        }
+    }
+
     val isDark = when (uiState.theme) {
         ThemePreference.Light -> false
         ThemePreference.Dark -> true
@@ -71,12 +79,7 @@ fun AutofillApp(
                         webDomain = state.webDomain
                     ),
                     onItemSelected = { autofillItem ->
-                        val response = ItemFieldMapper.mapFields(
-                            item = autofillItem,
-                            androidAutofillFieldIds = state.androidAutofillIds,
-                            autofillTypes = state.fieldTypes
-                        )
-                        onAutofillResponse(response)
+                        viewModel.onAutofillItemClicked(state, autofillItem)
                     },
                     onCreateLoginClicked = {
                         appNavigator.navigate(AutofillNavItem.CreateLogin)
@@ -93,8 +96,8 @@ fun AutofillApp(
                         username = createdAlias
                     ),
                     onClose = { appNavigator.onBackClick() },
-                    onSuccess = {
-
+                    onSuccess = { item ->
+                        viewModel.onItemCreated(state, item)
                     },
                     onCreateAliasClick = {
                         appNavigator.navigate(

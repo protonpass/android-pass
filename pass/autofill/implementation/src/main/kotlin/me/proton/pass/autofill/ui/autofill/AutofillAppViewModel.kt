@@ -4,27 +4,39 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.android.pass.preferences.ThemePreference
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.pass.autofill.entities.AutofillAppState
+import me.proton.pass.autofill.entities.AutofillItem
+import me.proton.pass.autofill.extensions.toAutoFillItem
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.asResultWithoutLoading
+import me.proton.pass.presentation.components.model.ItemUiModel
 import javax.inject.Inject
 
 @HiltViewModel
 class AutofillAppViewModel @Inject constructor(
     preferenceRepository: PreferenceRepository,
-    private val biometryManager: BiometryManager
+    private val biometryManager: BiometryManager,
+    private val keyStoreCrypto: KeyStoreCrypto
 ) : ViewModel() {
+
+    private val itemSelectedState: MutableStateFlow<AutofillItemSelectedState> =
+        MutableStateFlow(AutofillItemSelectedState.Unknown)
 
     private val themeState: Flow<ThemePreference> = preferenceRepository
         .getThemePreference()
@@ -39,8 +51,10 @@ class AutofillAppViewModel @Inject constructor(
         .distinctUntilChanged()
 
     val state: StateFlow<AutofillAppUiState> = combine(
-        themeState, biometricLockState
-    ) { theme, fingerprint ->
+        themeState,
+        biometricLockState,
+        itemSelectedState
+    ) { theme, fingerprint, itemSelected ->
         val fingerprintRequired = when (biometryManager.getBiometryStatus()) {
             BiometryStatus.CanAuthenticate -> fingerprint is BiometricLockState.Enabled
             else -> false
@@ -48,7 +62,8 @@ class AutofillAppViewModel @Inject constructor(
 
         AutofillAppUiState(
             theme = theme,
-            isFingerprintRequired = fingerprintRequired
+            isFingerprintRequired = fingerprintRequired,
+            itemSelected = itemSelected
         )
     }
         .stateIn(
@@ -56,6 +71,23 @@ class AutofillAppViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = AutofillAppUiState.Initial
         )
+
+    fun onAutofillItemClicked(state: AutofillAppState, autofillItem: AutofillItem) = viewModelScope.launch {
+        updateAutofillItemState(state, autofillItem)
+    }
+
+    fun onItemCreated(state: AutofillAppState, item: ItemUiModel) = viewModelScope.launch {
+        onAutofillItemClicked(state, item.toAutoFillItem(keyStoreCrypto))
+    }
+
+    private fun updateAutofillItemState(state: AutofillAppState, autofillItem: AutofillItem) {
+        val response = ItemFieldMapper.mapFields(
+            item = autofillItem,
+            androidAutofillFieldIds = state.androidAutofillIds,
+            autofillTypes = state.fieldTypes
+        )
+        itemSelectedState.update { AutofillItemSelectedState.Selected(response) }
+    }
 
     private fun getBiometricLockState(state: Result<BiometricLockState>): BiometricLockState =
         when (state) {

@@ -45,7 +45,7 @@ fun OnBoardingContent(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ) {
-        if (uiState.pageCount > 1) {
+        if (uiState.enabledPages.size > 1) {
             LaunchedEffect(uiState.selectedPage != pagerState.currentPage && !pagerState.isScrollInProgress) {
                 coroutineScope.launch { pagerState.animateScrollToPage(uiState.selectedPage) }
             }
@@ -55,7 +55,7 @@ fun OnBoardingContent(
             HorizontalPager(
                 modifier = Modifier,
                 state = pagerState,
-                count = uiState.pageCount
+                count = uiState.enabledPages.size
             ) { page ->
                 val pageUiState = when (page) {
                     0 -> autofillPageUiState()
@@ -76,9 +76,15 @@ fun OnBoardingContent(
                     .align(Alignment.CenterHorizontally)
                     .padding(16.dp)
             )
-        } else {
+        } else if (uiState.enabledPages.contains(Fingerprint)) {
             OnBoardingPage(
                 onBoardingPageData = fingerPrintPageUiState(),
+                onMainButtonClick = onMainButtonClick,
+                onSkipButtonClick = onSkipButtonClick
+            )
+        } else if (uiState.enabledPages.contains(Autofill)) {
+            OnBoardingPage(
+                onBoardingPageData = autofillPageUiState(),
                 onMainButtonClick = onMainButtonClick,
                 onSkipButtonClick = onSkipButtonClick
             )

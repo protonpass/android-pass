@@ -1,9 +1,9 @@
 package me.proton.pass.presentation.onboarding
 
-import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
@@ -15,6 +15,7 @@ import me.proton.android.pass.autofill.api.AutofillSupportedStatus
 import me.proton.android.pass.biometry.BiometryAuthError
 import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryResult
+import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.biometry.ContextHolder
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -47,19 +48,35 @@ class OnBoardingViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val autofillStatus =
-                autofillManager.getAutofillStatus().firstOrNull()
-            if (shouldHideAutofill(autofillStatus)) {
-                _onBoardingUiState.update { it.copy(pageCount = 1) }
+            val autofillStatus = async { autofillManager.getAutofillStatus().firstOrNull() }
+            val biometryStatus = async { biometryManager.getBiometryStatus() }
+            val supportedPages = mutableSetOf<OnBoardingPageName>()
+            if (shouldShowAutofill(autofillStatus.await())) {
+                supportedPages.add(Autofill)
+            }
+            if (shouldShowFingerprint(biometryStatus.await())) {
+                supportedPages.add(Fingerprint)
+            }
+            if (supportedPages.isNotEmpty()) {
+                _onBoardingUiState.update { it.copy(enabledPages = supportedPages) }
+            } else {
+                saveOnBoardingCompleteFlag()
             }
         }
     }
 
-    private fun shouldHideAutofill(autofillStatus: AutofillSupportedStatus?): Boolean =
+    private fun shouldShowAutofill(autofillStatus: AutofillSupportedStatus?): Boolean =
         when (autofillStatus) {
-            is AutofillSupportedStatus.Supported -> autofillStatus.status == AutofillStatus.EnabledByOurService
-            AutofillSupportedStatus.Unsupported -> true
-            else -> true
+            is AutofillSupportedStatus.Supported -> autofillStatus.status != AutofillStatus.EnabledByOurService
+            AutofillSupportedStatus.Unsupported -> false
+            else -> false
+        }
+
+    private fun shouldShowFingerprint(biometryStatus: BiometryStatus): Boolean =
+        when (biometryStatus) {
+            BiometryStatus.CanAuthenticate -> true
+            BiometryStatus.NotAvailable,
+            BiometryStatus.NotEnrolled -> false
         }
 
     fun onMainButtonClick(page: OnBoardingPageName, contextHolder: ContextHolder) {
@@ -184,9 +201,3 @@ class OnBoardingViewModel @Inject constructor(
         private const val TAG = "OnBoardingViewModel"
     }
 }
-
-@Stable
-enum class OnBoardingPageName {
-    Autofill, Fingerprint
-}
-

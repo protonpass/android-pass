@@ -7,6 +7,7 @@ import me.proton.android.pass.autofill.api.AutofillStatus
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus
 import me.proton.android.pass.autofill.fakes.TestAutofillManager
 import me.proton.android.pass.biometry.BiometryResult
+import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.biometry.ContextHolder
 import me.proton.android.pass.biometry.TestBiometryManager
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
@@ -15,6 +16,8 @@ import me.proton.android.pass.preferences.HasAuthenticated
 import me.proton.android.pass.preferences.HasCompletedOnBoarding
 import me.proton.android.pass.preferences.TestPreferenceRepository
 import me.proton.pass.common.api.None
+import me.proton.pass.presentation.onboarding.OnBoardingPageName.Autofill
+import me.proton.pass.presentation.onboarding.OnBoardingPageName.Fingerprint
 import me.proton.pass.test.MainDispatcherRule
 import org.junit.Before
 import org.junit.Rule
@@ -37,77 +40,116 @@ class OnBoardingViewModelTest {
         preferenceRepository = TestPreferenceRepository()
         biometryManager = TestBiometryManager()
         autofillManager = TestAutofillManager()
-        viewModel = OnBoardingViewModel(
-            autofillManager,
-            biometryManager,
-            preferenceRepository,
-            snackbarMessageRepository
-        )
     }
 
     @Test
     fun `sends correct initial state`() = runTest {
+        viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial)
         }
     }
 
     @Test
+    fun `given no supported features should complete on boarding`() = runTest {
+        biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
+        autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
+        viewModel = createViewModel()
+        viewModel.onBoardingUiState.test {
+            preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
+            assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial.copy(isCompleted = true))
+        }
+    }
+
+    @Test
     fun `given unsupported autofill should show 1 screen`() = runTest {
+        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+        viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             skipItems(1)
             autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
-            assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial.copy(pageCount = 1))
+            assertThat(awaitItem()).isEqualTo(
+                OnBoardingUiState.Initial.copy(enabledPages = setOf(Fingerprint))
+            )
         }
     }
 
     @Test
     fun `given already enabled autofill should show 1 screen`() = runTest {
+        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+        viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             skipItems(1)
             autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
-            assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial.copy(pageCount = 1))
+            assertThat(awaitItem()).isEqualTo(
+                OnBoardingUiState.Initial.copy(enabledPages = setOf(Fingerprint))
+            )
         }
     }
 
     @Test
     fun `given a click on enable autofill should select next page`() = runTest {
+        viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             skipItems(1)
-            viewModel.onMainButtonClick(OnBoardingPageName.Autofill, ContextHolder(None))
+            viewModel.onMainButtonClick(Autofill, ContextHolder(None))
             assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial.copy(selectedPage = 1))
         }
     }
 
     @Test
     fun `given a click on skip autofill should select next page`() = runTest {
+        viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             skipItems(1)
-            viewModel.onSkipButtonClick(OnBoardingPageName.Autofill)
+            viewModel.onSkipButtonClick(Autofill)
             assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial.copy(selectedPage = 1))
         }
     }
 
     @Test
+    fun `given unsupported biometric should show 1 screen`() = runTest {
+        biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
+        viewModel = createViewModel()
+        viewModel.onBoardingUiState.test {
+            skipItems(1)
+            autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
+            assertThat(awaitItem()).isEqualTo(
+                OnBoardingUiState.Initial.copy(enabledPages = setOf(Autofill))
+            )
+        }
+    }
+
+    @Test
     fun `given a click on enable fingerprint should complete on boarding`() = runTest {
+        viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             skipItems(1)
             biometryManager.emitResult(BiometryResult.Success)
             preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
             preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
             preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
-            viewModel.onMainButtonClick(OnBoardingPageName.Fingerprint, ContextHolder(None))
+            viewModel.onMainButtonClick(Fingerprint, ContextHolder(None))
             assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial.copy(isCompleted = true))
         }
     }
 
     @Test
     fun `given a click on skip fingerprint should complete on boarding`() = runTest {
+        viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             skipItems(1)
             preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
-            viewModel.onSkipButtonClick(OnBoardingPageName.Fingerprint)
+            viewModel.onSkipButtonClick(Fingerprint)
             assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial.copy(isCompleted = true))
         }
     }
+
+    private fun createViewModel() =
+        OnBoardingViewModel(
+            autofillManager,
+            biometryManager,
+            preferenceRepository,
+            snackbarMessageRepository
+        )
 }

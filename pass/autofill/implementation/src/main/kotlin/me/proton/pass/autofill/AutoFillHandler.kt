@@ -87,7 +87,10 @@ object AutoFillHandler {
     ) {
         val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
         if (assistInfo.fields.isEmpty()) return
-        val autofillData = AutofillData(assistInfo, Utils.getApplicationPackageName(windowNode))
+
+        val packageName = Utils.getApplicationPackageName(windowNode)
+        val title = Utils.getTitle(context, assistInfo, packageName)
+        val autofillData = AutofillData(assistInfo, packageName, title)
         val responseBuilder = FillResponse.Builder()
         if (hasSupportForInlineSuggestions(request)) {
             val inlineRequest = request.inlineSuggestionsRequest ?: return

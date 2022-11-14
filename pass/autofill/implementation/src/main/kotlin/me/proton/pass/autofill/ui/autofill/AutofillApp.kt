@@ -2,6 +2,7 @@ package me.proton.pass.autofill.ui.autofill
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -9,30 +10,31 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import me.proton.android.pass.navigation.api.rememberAppNavigator
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillMappings
-import me.proton.pass.autofill.ui.autofill.select.SELECT_ITEM_ROUTE
 import me.proton.pass.autofill.ui.autofill.select.SelectItemInitialState
 import me.proton.pass.autofill.ui.autofill.select.SelectItemScreen
+import me.proton.pass.autofill.ui.composable
 import me.proton.pass.presentation.auth.AuthScreen
+import me.proton.pass.presentation.create.alias.CreateAlias
+import me.proton.pass.presentation.create.alias.InitialCreateAliasUiState
+import me.proton.pass.presentation.create.alias.RESULT_CREATED_ALIAS
+import me.proton.pass.presentation.create.login.CreateLoginWithInitialContents
+import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 
-private const val AUTH_SCREEN_ROUTE = "common/auth"
-
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun AutofillApp(
     modifier: Modifier = Modifier,
     state: AutofillAppState,
     onAutofillResponse: (AutofillMappings?) -> Unit,
     onFinished: () -> Unit
-
 ) {
-    val navController = rememberAnimatedNavController()
+    val appNavigator = rememberAppNavigator()
     val viewModel: AutofillAppViewModel = hiltViewModel()
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -43,28 +45,26 @@ fun AutofillApp(
     }
 
     val startDestination = if (uiState.isFingerprintRequired) {
-        AUTH_SCREEN_ROUTE
+        AutofillNavItem.Auth.route
     } else {
-        SELECT_ITEM_ROUTE
+        AutofillNavItem.SelectItem.route
     }
 
     ProtonTheme(isDark = isDark) {
         AnimatedNavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
-            navController = navController,
+            navController = appNavigator.navController,
             startDestination = startDestination
         ) {
-            composable(AUTH_SCREEN_ROUTE) {
+            composable(AutofillNavItem.Auth) {
                 AuthScreen(
                     onAuthSuccessful = {
-                        navController.navigate(SELECT_ITEM_ROUTE) {
-                            popUpTo(0)
-                        }
+                        appNavigator.navigate(AutofillNavItem.SelectItem)
                     },
                     onAuthFailed = { onFinished() }
                 )
             }
-            composable(SELECT_ITEM_ROUTE) {
+            composable(AutofillNavItem.SelectItem) {
                 SelectItemScreen(
                     initialState = SelectItemInitialState(
                         packageName = state.packageName,
@@ -77,7 +77,43 @@ fun AutofillApp(
                             autofillTypes = state.fieldTypes
                         )
                         onAutofillResponse(response)
+                    },
+                    onCreateLoginClicked = {
+                        appNavigator.navigate(AutofillNavItem.CreateLogin)
                     }
+                )
+            }
+            composable(AutofillNavItem.CreateLogin) {
+                val createdAlias by appNavigator.navState<String>(RESULT_CREATED_ALIAS, null)
+                    .collectAsStateWithLifecycle()
+
+                CreateLoginWithInitialContents(
+                    initialContents = InitialCreateLoginUiState(
+                        title = state.title,
+                        username = createdAlias
+                    ),
+                    onClose = { appNavigator.onBackClick() },
+                    onSuccess = {
+
+                    },
+                    onCreateAliasClick = {
+                        appNavigator.navigate(
+                            AutofillNavItem.CreateAlias,
+                            AutofillNavItem.CreateAlias.createNavRoute(it)
+                        )
+                    }
+                )
+            }
+            composable(AutofillNavItem.CreateAlias) {
+                CreateAlias(
+                    initialState = InitialCreateAliasUiState(
+                        title = state.title
+                    ),
+                    onSuccess = { alias ->
+                        appNavigator.navigateUpWithResult(RESULT_CREATED_ALIAS, alias)
+                    },
+                    onUpClick = { appNavigator.onBackClick() },
+                    onClose = { appNavigator.onBackClick() }
                 )
             }
         }

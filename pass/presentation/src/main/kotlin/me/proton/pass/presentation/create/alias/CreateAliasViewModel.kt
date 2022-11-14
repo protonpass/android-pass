@@ -14,10 +14,10 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.asResult
 import me.proton.pass.common.api.onError
-import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.domain.AliasOptions
@@ -74,6 +74,16 @@ class CreateAliasViewModel @Inject constructor(
                 mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
             }
             isLoadingState.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    fun setInitialState(state: InitialCreateAliasUiState) = viewModelScope.launch {
+        aliasItemState.update {
+            it.copy(
+                title = state.title ?: "",
+                alias = state.alias()
+
+            )
         }
     }
 

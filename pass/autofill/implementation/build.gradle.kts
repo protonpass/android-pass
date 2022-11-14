@@ -85,6 +85,7 @@ dependencies {
     implementation(project(":pass:common-ui:api"))
     implementation(project(":pass:data"))
     implementation(project(":pass:domain"))
+    implementation(project(":pass:navigation:api"))
     implementation(project(":pass:notifications:api"))
     implementation(project(":pass:preferences:api"))
     implementation(project(":pass:presentation"))

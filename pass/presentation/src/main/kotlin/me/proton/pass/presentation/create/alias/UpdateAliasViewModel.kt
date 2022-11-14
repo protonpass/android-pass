@@ -81,9 +81,22 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     override fun onTitleChange(value: String) {
-        super.onTitleChange(value)
+        aliasItemState.update { it.copy(title = value) }
+        aliasItemValidationErrorsState.update {
+            it.toMutableSet()
+                .apply { remove(AliasItemValidationErrors.BlankTitle) }
+        }
         isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
         itemDataChanged = true
+    }
+
+    override fun onAliasChange(value: String) {
+        // no-op as alias cannot be changed from Update view
+        // should never be called
+        PassLogger.e(
+            TAG,
+            IllegalStateException("UpdateAliasViewModel.onAliasChange should never be called")
+        )
     }
 
     private suspend fun setupInitialState() {

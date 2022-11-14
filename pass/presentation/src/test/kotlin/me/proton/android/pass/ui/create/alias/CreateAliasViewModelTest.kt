@@ -15,6 +15,7 @@ import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage
 import me.proton.pass.presentation.create.alias.CreateAliasViewModel
+import me.proton.pass.presentation.create.alias.CreateUpdateAliasUiState
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.test.MainDispatcherRule
@@ -68,6 +69,59 @@ class CreateAliasViewModelTest {
                 set("shareId", "123")
             }
         )
+    }
+
+    @Test
+    fun `title alias sync`() = runTest {
+        val titleInput = "Title changed"
+        viewModel.onSuffixChange(suffix)
+        viewModel.onTitleChange(titleInput)
+
+        viewModel.aliasUiState.test {
+            val item = awaitItem()
+            assertThat(item.aliasItem.title).isEqualTo(titleInput)
+            assertThat(item.aliasItem.alias).isEqualTo("titlechanged")
+            assertThat(item.aliasItem.aliasToBeCreated).isEqualTo("titlechanged${suffix.suffix}")
+
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        val newAlias = "myalias"
+        viewModel.onAliasChange(newAlias)
+
+        viewModel.aliasUiState.test {
+            val item = awaitItem()
+            assertThat(item.aliasItem.title).isEqualTo(titleInput)
+            assertThat(item.aliasItem.alias).isEqualTo(newAlias)
+            assertThat(item.aliasItem.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
+
+            cancelAndIgnoreRemainingEvents()
+        }
+
+        val newTitle = "New title"
+        viewModel.onTitleChange(newTitle)
+
+        viewModel.aliasUiState.test {
+            val item = awaitItem()
+            assertThat(item.aliasItem.title).isEqualTo(newTitle)
+            assertThat(item.aliasItem.alias).isEqualTo(newAlias)
+            assertThat(item.aliasItem.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
+
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun `given no suffix when the alias has changed the state should hold it`() = runTest {
+        val aliasInput = "aliasInput"
+        viewModel.onAliasChange(aliasInput)
+
+        viewModel.aliasUiState.test {
+            assertThat(awaitItem().aliasItem)
+                .isEqualTo(CreateUpdateAliasUiState.Initial.aliasItem.copy(alias = aliasInput))
+
+            cancelAndIgnoreRemainingEvents()
+        }
     }
 
     @Test

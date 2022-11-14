@@ -1,13 +1,10 @@
 package me.proton.pass.autofill.ui.autofill.select
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.android.pass.ui.shared.LoadingDialog
@@ -15,6 +12,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.autofill.service.R
 import me.proton.pass.common.api.toOption
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
+import me.proton.pass.presentation.components.common.PassFloatingActionButton
 import me.proton.pass.presentation.components.common.item.ItemsList
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -33,14 +31,9 @@ internal fun SelectItemScreenContent(
     Scaffold(
         modifier = modifier,
         floatingActionButton = {
-            FloatingActionButton(
+            PassFloatingActionButton(
                 onClick = onCreateLoginClicked
-            ) {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
-                    contentDescription = null
-                )
-            }
+            )
         },
         topBar = {
             SelectItemTopAppBar(

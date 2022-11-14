@@ -21,10 +21,9 @@ fun CreateAlias(
     initialState: InitialCreateAliasUiState = InitialCreateAliasUiState(),
     onUpClick: () -> Unit,
     onSuccess: (String) -> Unit,
-    onClose: () -> Unit
+    onClose: () -> Unit,
+    viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
-    val viewModel: CreateAliasViewModel = hiltViewModel()
-
     LaunchedEffect(initialState) {
         viewModel.setInitialState(initialState)
     }

@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.ShareId
@@ -28,7 +28,7 @@ class CreateNoteViewModel @Inject constructor(
     private val getShare: GetShareById,
     private val itemRepository: ItemRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val cryptoContext: CryptoContext,
+    private val keyStoreCrypto: KeyStoreCrypto,
     savedStateHandle: SavedStateHandle
 ) : BaseNoteViewModel(snackbarMessageRepository, savedStateHandle) {
 
@@ -55,7 +55,7 @@ class CreateNoteViewModel @Inject constructor(
                                 isItemSavedState.update {
                                     ItemSavedState.Success(
                                         item.id,
-                                        item.toUiModel(cryptoContext)
+                                        item.toUiModel(keyStoreCrypto)
                                     )
                                 }
                             }

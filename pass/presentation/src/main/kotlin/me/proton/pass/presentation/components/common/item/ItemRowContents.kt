@@ -2,7 +2,6 @@ package me.proton.pass.presentation.components.common.item
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ItemType
 import me.proton.pass.presentation.components.model.ItemUiModel
 
@@ -10,7 +9,7 @@ import me.proton.pass.presentation.components.model.ItemUiModel
 internal fun ItemRowContents(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
-    highlight: Option<String>
+    highlight: String?
 ) {
     when (val itemType = item.itemType) {
         is ItemType.Login -> LoginRow(

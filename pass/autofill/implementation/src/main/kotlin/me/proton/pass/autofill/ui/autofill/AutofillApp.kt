@@ -23,7 +23,7 @@ import me.proton.pass.presentation.auth.AuthScreen
 import me.proton.pass.presentation.create.alias.CreateAlias
 import me.proton.pass.presentation.create.alias.InitialCreateAliasUiState
 import me.proton.pass.presentation.create.alias.RESULT_CREATED_ALIAS
-import me.proton.pass.presentation.create.login.CreateLoginWithInitialContents
+import me.proton.pass.presentation.create.login.CreateLogin
 import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
@@ -87,7 +87,7 @@ fun AutofillApp(
                 val createdAlias by appNavigator.navState<String>(RESULT_CREATED_ALIAS, null)
                     .collectAsStateWithLifecycle()
 
-                CreateLoginWithInitialContents(
+                CreateLogin(
                     initialContents = InitialCreateLoginUiState(
                         title = state.title,
                         username = createdAlias

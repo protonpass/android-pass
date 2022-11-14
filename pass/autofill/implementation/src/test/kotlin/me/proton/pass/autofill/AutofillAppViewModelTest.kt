@@ -11,6 +11,7 @@ import me.proton.android.pass.preferences.ThemePreference
 import me.proton.pass.autofill.ui.autofill.AutofillAppUiState
 import me.proton.pass.autofill.ui.autofill.AutofillAppViewModel
 import me.proton.pass.test.MainDispatcherRule
+import me.proton.pass.test.crypto.TestKeyStoreCrypto
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -33,7 +34,8 @@ class AutofillAppViewModelTest {
         biometryManager = TestBiometryManager()
         viewModel = AutofillAppViewModel(
             preferenceRepository,
-            biometryManager
+            biometryManager,
+            TestKeyStoreCrypto
         )
     }
 

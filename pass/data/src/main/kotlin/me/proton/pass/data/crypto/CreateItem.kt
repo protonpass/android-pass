@@ -12,6 +12,7 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.pass.data.extensions.serializeToProto
 import me.proton.pass.data.requests.CreateItemRequest
 import me.proton.pass.domain.ItemContents
+import me.proton.pass.domain.entity.PackageName
 import me.proton.pass.domain.key.ItemKey
 import me.proton.pass.domain.key.VaultKey
 import me.proton.pass.domain.key.publicKey
@@ -26,9 +27,10 @@ class CreateItem @Inject constructor(
         vaultKey: VaultKey,
         itemKey: ItemKey,
         userAddress: UserAddress,
-        itemContents: ItemContents
+        itemContents: ItemContents,
+        packageName: PackageName? = null
     ): CreateItemRequest {
-        val serializedItem = itemContents.serializeToProto().toByteArray()
+        val serializedItem = itemContents.serializeToProto(packageName).toByteArray()
         val vaultKeyPublicKey = vaultKey.publicKey(cryptoContext)
 
         val (encryptedContents, vaultKeyPacket) = encryptContent(serializedItem, vaultKeyPublicKey)

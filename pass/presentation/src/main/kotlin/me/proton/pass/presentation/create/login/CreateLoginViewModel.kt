@@ -16,6 +16,7 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.ShareId
+import me.proton.pass.domain.entity.PackageName
 import me.proton.pass.domain.usecases.CreateItem
 import me.proton.pass.domain.usecases.ObserveActiveShare
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.ItemCreationError
@@ -38,7 +39,11 @@ class CreateLoginViewModel @Inject constructor(
         PassLogger.e(TAG, throwable)
     }
 
+    private var packageName: PackageName? = null
+
     fun setInitialContents(initialContents: InitialCreateLoginUiState) {
+        packageName = initialContents.packageName
+
         val currentValue = loginItemState.value
         val websites = currentValue.websiteAddresses.toMutableList()
 
@@ -79,7 +84,7 @@ class CreateLoginViewModel @Inject constructor(
         val userId = accountManager.getPrimaryUserId()
             .firstOrNull { userId -> userId != null }
         if (userId != null) {
-            createItem(userId, shareId, loginItemState.value.toItemContents())
+            createItem(userId, shareId, loginItemState.value.toItemContents(), packageName)
                 .onSuccess { item ->
                     isItemSavedState.update {
                         ItemSavedState.Success(

@@ -98,8 +98,14 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     private fun onEnableAutofill() {
-        autofillManager.openAutofillSelector()
-        _onBoardingUiState.update { it.copy(selectedPage = 1) }
+        viewModelScope.launch {
+            autofillManager.openAutofillSelector()
+            if (_onBoardingUiState.value.enabledPages.count() > 1) {
+                _onBoardingUiState.update { it.copy(selectedPage = 1) }
+            } else {
+                saveOnBoardingCompleteFlag()
+            }
+        }
     }
 
     private fun onEnableFingerprint(contextHolder: ContextHolder) {
@@ -144,7 +150,13 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     private fun onSkipAutofill() {
-        _onBoardingUiState.update { it.copy(selectedPage = 1) }
+        viewModelScope.launch {
+            if (_onBoardingUiState.value.enabledPages.count() > 1) {
+                _onBoardingUiState.update { it.copy(selectedPage = 1) }
+            } else {
+                saveOnBoardingCompleteFlag()
+            }
+        }
     }
 
     private fun onSkipFingerprint() {

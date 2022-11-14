@@ -18,7 +18,7 @@ import me.proton.android.pass.ui.trash.TrashSnackbarMessage.DeleteItemError
 import me.proton.android.pass.ui.trash.TrashSnackbarMessage.ObserveItemsError
 import me.proton.android.pass.ui.trash.TrashSnackbarMessage.RefreshError
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.onError
@@ -33,7 +33,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TrashScreenViewModel @Inject constructor(
-    private val cryptoContext: CryptoContext,
+    private val keyStoreCrypto: KeyStoreCrypto,
     private val accountManager: AccountManager,
     observeTrashedItems: ObserveTrashedItems,
     private val itemRepository: ItemRepository,
@@ -67,7 +67,7 @@ class TrashScreenViewModel @Inject constructor(
                 emptyList()
             }
             is Result.Success -> {
-                itemsResult.data.map { it.toUiModel(cryptoContext) }
+                itemsResult.data.map { it.toUiModel(keyStoreCrypto) }
             }
         }
 

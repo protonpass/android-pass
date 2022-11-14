@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Some
@@ -32,7 +32,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UpdateLoginViewModel @Inject constructor(
-    private val cryptoContext: CryptoContext,
+    private val keyStoreCrypto: KeyStoreCrypto,
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
     private val getShare: GetShareById,
@@ -65,11 +65,11 @@ class UpdateLoginViewModel @Inject constructor(
 
                         loginItemState.update {
                             LoginItem(
-                                title = item.title.decrypt(cryptoContext.keyStoreCrypto),
+                                title = item.title.decrypt(keyStoreCrypto),
                                 username = itemContents.username,
-                                password = itemContents.password.decrypt(cryptoContext.keyStoreCrypto),
+                                password = itemContents.password.decrypt(keyStoreCrypto),
                                 websiteAddresses = itemContents.websites.ifEmpty { listOf("") },
-                                note = item.note.decrypt(cryptoContext.keyStoreCrypto)
+                                note = item.note.decrypt(keyStoreCrypto)
                             )
                         }
                     }
@@ -102,7 +102,12 @@ class UpdateLoginViewModel @Inject constructor(
                     val itemContents = loginItem.toItemContents()
                     itemRepository.updateItem(userId, share, _item!!, itemContents)
                         .onSuccess { item ->
-                            isItemSavedState.update { ItemSavedState.Success(item.id, item.toUiModel(cryptoContext)) }
+                            isItemSavedState.update {
+                                ItemSavedState.Success(
+                                    item.id,
+                                    item.toUiModel(keyStoreCrypto)
+                                )
+                            }
                         }
                         .onError {
                             val defaultMessage = "Update item error"

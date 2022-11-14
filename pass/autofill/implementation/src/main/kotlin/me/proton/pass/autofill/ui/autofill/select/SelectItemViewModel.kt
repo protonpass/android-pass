@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.pass.autofill.BROWSERS
 import me.proton.pass.autofill.extensions.toAutoFillItem
 import me.proton.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
@@ -42,7 +42,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectItemViewModel @Inject constructor(
-    private val cryptoContext: CryptoContext,
+    private val keyStoreCrypto: KeyStoreCrypto,
     private val accountManager: AccountManager,
     private val updateAutofillItem: UpdateAutofillItem,
     private val refreshContent: RefreshContent,
@@ -57,7 +57,7 @@ class SelectItemViewModel @Inject constructor(
     private val listItems: Flow<Result<List<ItemUiModel>>> = searchItems.observeResults()
         .mapLatest { result: Result<List<Item>> ->
             result.map { list ->
-                list.filter { it.itemType is ItemType.Login }.map { it.toUiModel(cryptoContext) }
+                list.filter { it.itemType is ItemType.Login }.map { it.toUiModel(keyStoreCrypto) }
             }
         }
 
@@ -135,7 +135,7 @@ class SelectItemViewModel @Inject constructor(
         }
 
         itemClickedFlow.update {
-            ItemClickedEvent.Clicked(item.toAutoFillItem(cryptoContext.keyStoreCrypto))
+            ItemClickedEvent.Clicked(item.toAutoFillItem(keyStoreCrypto))
         }
     }
 

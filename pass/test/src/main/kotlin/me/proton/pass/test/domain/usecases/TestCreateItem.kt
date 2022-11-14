@@ -5,6 +5,7 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemContents
 import me.proton.pass.domain.ShareId
+import me.proton.pass.domain.entity.PackageName
 import me.proton.pass.domain.usecases.CreateItem
 
 class TestCreateItem : CreateItem {
@@ -14,7 +15,8 @@ class TestCreateItem : CreateItem {
     override suspend fun invoke(
         userId: UserId,
         shareId: ShareId,
-        itemContents: ItemContents
+        itemContents: ItemContents,
+        packageName: PackageName?
     ): Result<Item> = item
 
     fun sendItem(item: Result<Item>) {

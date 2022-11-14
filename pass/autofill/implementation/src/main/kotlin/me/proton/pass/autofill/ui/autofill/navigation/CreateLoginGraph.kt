@@ -24,11 +24,18 @@ fun NavGraphBuilder.createLoginGraph(
         val createdAlias by appNavigator.navState<String>(RESULT_CREATED_ALIAS, null)
             .collectAsStateWithLifecycle()
 
+        val packageName = if (state.webDomain.isEmpty()) {
+            state.packageName
+        } else {
+            null
+        }
+
         CreateLogin(
             initialContents = InitialCreateLoginUiState(
                 title = state.title,
                 username = createdAlias,
-                url = state.webDomain.value()
+                url = state.webDomain.value(),
+                packageName = packageName
             ),
             onClose = { appNavigator.onBackClick() },
             onSuccess = onItemCreated,

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 
 class TestBiometryManager : BiometryManager {
 
-    private var biometryStatus: BiometryStatus = BiometryStatus.CanAuthenticate
+    private var biometryStatus: BiometryStatus? = null
 
     private val resultFlow = MutableSharedFlow<BiometryResult>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
@@ -20,7 +20,7 @@ class TestBiometryManager : BiometryManager {
         resultFlow.tryEmit(result)
     }
 
-    override fun getBiometryStatus(): BiometryStatus = biometryStatus
+    override fun getBiometryStatus(): BiometryStatus = checkNotNull(biometryStatus)
 
     override fun launch(context: ContextHolder): Flow<BiometryResult> = resultFlow
 

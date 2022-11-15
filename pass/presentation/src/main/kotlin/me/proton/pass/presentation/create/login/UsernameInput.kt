@@ -1,9 +1,13 @@
 package me.proton.pass.presentation.create.login
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.ButtonDefaults
@@ -36,32 +40,32 @@ internal fun UsernameInput(
         Row(
             modifier = Modifier
                 .fillMaxWidth(1.0f)
-                .padding(top = 8.dp),
+                .padding(top = 8.dp)
+                .height(IntrinsicSize.Min),
             verticalAlignment = Alignment.CenterVertically
         ) {
             ProtonTextField(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .weight(1.0f),
                 value = value,
                 onChange = onChange,
-                placeholder = R.string.field_username_hint,
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .weight(1.0f)
+                placeholder = R.string.field_username_hint
             )
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             OutlinedButton(
                 onClick = onGenerateAliasClick,
                 shape = ProtonTheme.shapes.medium,
                 modifier = Modifier
-                    .size(48.dp)
+                    .fillMaxHeight()
+                    .aspectRatio(1.0f)
                     .align(Alignment.CenterVertically)
             ) {
                 Icon(
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
                     contentDescription = null,
                     tint = ProtonTheme.colors.iconNorm,
-                    modifier = Modifier
-                        .size(36.dp)
-                        .align(Alignment.CenterVertically)
+                    modifier = Modifier.align(Alignment.CenterVertically)
                 )
             }
         }
@@ -77,7 +81,7 @@ fun UsernameInputPreview(
     ProtonTheme(isDark = isDark) {
         Surface {
             UsernameInput(
-                value = "asda",
+                value = "some value",
                 onChange = {},
                 onGenerateAliasClick = {}
             )

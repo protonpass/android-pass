@@ -15,6 +15,7 @@ import me.proton.pass.presentation.components.form.TitleInput
 internal fun CreateNoteItemForm(
     modifier: Modifier = Modifier,
     state: NoteItem,
+    enabled: Boolean,
     onTitleRequiredError: Boolean,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit
@@ -26,7 +27,16 @@ internal fun CreateNoteItemForm(
             .padding(16.dp)
     ) {
 
-        TitleInput(value = state.title, onChange = onTitleChange, onTitleRequiredError = onTitleRequiredError)
-        NoteInput(value = state.note, onChange = onNoteChange)
+        TitleInput(
+            enabled = enabled,
+            value = state.title,
+            onChange = onTitleChange,
+            onTitleRequiredError = onTitleRequiredError
+        )
+        NoteInput(
+            enabled = enabled,
+            value = state.note,
+            onChange = onNoteChange
+        )
     }
 }

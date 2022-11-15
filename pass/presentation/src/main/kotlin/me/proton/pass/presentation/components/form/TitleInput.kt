@@ -14,16 +14,19 @@ import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.previewproviders.TitleInputPreviewData
 import me.proton.pass.presentation.components.previewproviders.TitleInputPreviewProvider
+import me.proton.pass.presentation.uievents.value
 
 @Composable
 fun TitleInput(
     value: String,
     onChange: (String) -> Unit,
-    onTitleRequiredError: Boolean
+    onTitleRequiredError: Boolean,
+    enabled: Boolean = true
 ) {
     ProtonFormInput(
         title = R.string.field_title_title,
         placeholder = R.string.field_title_hint,
+        editable = enabled,
         value = value,
         onChange = onChange,
         required = true,

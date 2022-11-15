@@ -57,6 +57,7 @@ fun ProtonTextField(
 
     OutlinedTextField(
         value = value,
+        enabled = editable,
         onValueChange = {
             if (singleLine && it.contains("\n")) {
                 // If is set to SingleLine and enter is pressed, go to the next field

@@ -79,10 +79,14 @@ class CreateAliasViewModel @Inject constructor(
 
     fun setInitialState(state: InitialCreateAliasUiState) = viewModelScope.launch {
         aliasItemState.update {
+            val alias = state.alias()
             it.copy(
                 title = state.title ?: "",
-                alias = state.alias()
-
+                alias = alias,
+                aliasToBeCreated = getAliasToBeCreated(
+                    alias = alias,
+                    suffix = it.selectedSuffix
+                )
             )
         }
     }
@@ -145,12 +149,19 @@ class CreateAliasViewModel @Inject constructor(
                 val mailboxTitle = mailboxes.first { it.selected }.model.email
 
                 aliasItemState.update {
+                    val selectedSuffix = aliasOptions.suffixes.first()
+                    val aliasToBeCreated = if (it.alias.isNotBlank()) {
+                        getAliasToBeCreated(it.alias, selectedSuffix)
+                    } else {
+                        null
+                    }
                     it.copy(
                         aliasOptions = aliasOptions,
-                        selectedSuffix = aliasOptions.suffixes.first(),
+                        selectedSuffix = selectedSuffix,
                         mailboxes = mailboxes,
                         mailboxTitle = mailboxTitle,
-                        isMailboxListApplicable = true
+                        isMailboxListApplicable = true,
+                        aliasToBeCreated = aliasToBeCreated
                     )
                 }
                 isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }

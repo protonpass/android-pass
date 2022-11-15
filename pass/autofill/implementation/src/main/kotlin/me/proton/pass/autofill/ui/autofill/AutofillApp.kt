@@ -1,24 +1,25 @@
 package me.proton.pass.autofill.ui.autofill
 
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import me.proton.android.pass.navigation.api.rememberAppNavigator
+import me.proton.android.pass.notifications.api.SnackbarMessage
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillMappings
+import me.proton.pass.common.api.Some
+import me.proton.pass.presentation.components.common.PassSnackbarHost
+import me.proton.pass.presentation.components.common.rememberPassSnackbarHostState
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun AutofillApp(
     modifier: Modifier = Modifier,
@@ -26,7 +27,6 @@ fun AutofillApp(
     onAutofillResponse: (AutofillMappings?) -> Unit,
     onFinished: () -> Unit
 ) {
-    val appNavigator = rememberAppNavigator()
     val viewModel: AutofillAppViewModel = hiltViewModel()
     val uiState by viewModel.state.collectAsStateWithLifecycle()
 
@@ -43,25 +43,32 @@ fun AutofillApp(
         ThemePreference.System -> isNightMode()
     }
 
-    val startDestination = if (uiState.isFingerprintRequired) {
-        AutofillNavItem.Auth.route
-    } else {
-        AutofillNavItem.SelectItem.route
+    val scaffoldState = rememberScaffoldState()
+    val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
+
+    if (uiState.snackbarMessage is Some) {
+        val snackbarMessage = (uiState.snackbarMessage as Some<SnackbarMessage>).value
+        val message = stringResource(id = snackbarMessage.id)
+        LaunchedEffect(snackbarMessage) {
+            passSnackbarHostState.showSnackbar(snackbarMessage.type, message)
+            viewModel.onSnackbarMessageDelivered()
+        }
     }
 
     ProtonTheme(isDark = isDark) {
-        AnimatedNavHost(
-            modifier = modifier.defaultMinSize(minHeight = 200.dp),
-            navController = appNavigator.navController,
-            startDestination = startDestination
-        ) {
-            appGraph(
-                appNavigator = appNavigator,
-                state = state,
+        Scaffold(
+            modifier = modifier,
+            snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
+        ) { padding ->
+            AutofillAppContent(
+                modifier = Modifier.padding(padding),
+                appState = state,
+                uiState = uiState,
+                onFinished = onFinished,
                 onAutofillItemClicked = { viewModel.onAutofillItemClicked(state, it) },
-                onItemCreated = { viewModel.onItemCreated(state, it) },
-                onFinished = onFinished
+                onItemCreated = { viewModel.onItemCreated(state, it) }
             )
         }
     }
 }
+

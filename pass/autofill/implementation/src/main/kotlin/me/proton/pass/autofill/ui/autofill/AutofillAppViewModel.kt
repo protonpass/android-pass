@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.android.pass.preferences.ThemePreference
@@ -32,7 +33,8 @@ import javax.inject.Inject
 class AutofillAppViewModel @Inject constructor(
     preferenceRepository: PreferenceRepository,
     private val biometryManager: BiometryManager,
-    private val keyStoreCrypto: KeyStoreCrypto
+    private val keyStoreCrypto: KeyStoreCrypto,
+    private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
     private val itemSelectedState: MutableStateFlow<AutofillItemSelectedState> =
@@ -53,8 +55,9 @@ class AutofillAppViewModel @Inject constructor(
     val state: StateFlow<AutofillAppUiState> = combine(
         themeState,
         biometricLockState,
-        itemSelectedState
-    ) { theme, fingerprint, itemSelected ->
+        itemSelectedState,
+        snackbarMessageRepository.snackbarMessage
+    ) { theme, fingerprint, itemSelected, snackbarMessage ->
         val fingerprintRequired = when (biometryManager.getBiometryStatus()) {
             BiometryStatus.CanAuthenticate -> fingerprint is BiometricLockState.Enabled
             else -> false
@@ -63,7 +66,8 @@ class AutofillAppViewModel @Inject constructor(
         AutofillAppUiState(
             theme = theme,
             isFingerprintRequired = fingerprintRequired,
-            itemSelected = itemSelected
+            itemSelected = itemSelected,
+            snackbarMessage = snackbarMessage
         )
     }
         .stateIn(
@@ -78,6 +82,10 @@ class AutofillAppViewModel @Inject constructor(
 
     fun onItemCreated(state: AutofillAppState, item: ItemUiModel) = viewModelScope.launch {
         onAutofillItemClicked(state, item.toAutoFillItem(keyStoreCrypto))
+    }
+
+    fun onSnackbarMessageDelivered() = viewModelScope.launch {
+        snackbarMessageRepository.snackbarMessageDelivered()
     }
 
     private fun updateAutofillItemState(state: AutofillAppState, autofillItem: AutofillItem) {

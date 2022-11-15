@@ -5,6 +5,8 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.biometry.TestBiometryManager
+import me.proton.android.pass.notifications.fakes.TestSnackbarMessage
+import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.TestPreferenceRepository
 import me.proton.android.pass.preferences.ThemePreference
@@ -24,6 +26,7 @@ class AutofillAppViewModelTest {
     private lateinit var viewModel: AutofillAppViewModel
     private lateinit var preferenceRepository: TestPreferenceRepository
     private lateinit var biometryManager: TestBiometryManager
+    private lateinit var snackbarMessageRepository: TestSnackbarMessageRepository
 
     @Before
     fun setUp() {
@@ -32,10 +35,14 @@ class AutofillAppViewModelTest {
         preferenceRepository.setBiometricLockState(BiometricLockState.Disabled)
 
         biometryManager = TestBiometryManager()
+
+        snackbarMessageRepository = TestSnackbarMessageRepository()
+
         viewModel = AutofillAppViewModel(
             preferenceRepository,
             biometryManager,
-            TestKeyStoreCrypto
+            TestKeyStoreCrypto,
+            snackbarMessageRepository
         )
     }
 
@@ -75,6 +82,7 @@ class AutofillAppViewModelTest {
     fun `if biometry is available preference is returned (Enabled)`() = runTest {
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
+        snackbarMessageRepository.emitSnackbarMessage(TestSnackbarMessage())
 
         viewModel.state.test {
             assertThat(awaitItem().isFingerprintRequired).isTrue()

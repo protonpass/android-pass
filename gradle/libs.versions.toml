@@ -26,7 +26,7 @@ androidx-test = "1.4.0"
 androidx-test-uiautomator = "2.2.0"
 androidx-work = "2.7.1"
 # CashApp
-turbine = "0.12.0"
+turbine = "0.12.1"
 # Core
 core = "9.4.0"
 # Dagger

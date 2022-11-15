@@ -2,9 +2,13 @@ package me.proton.pass.presentation.create.login
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.ButtonDefaults
@@ -58,8 +62,10 @@ internal fun PasswordInput(
             modifier = Modifier
                 .fillMaxWidth(1.0f)
                 .padding(top = 8.dp)
+                .height(IntrinsicSize.Min)
         ) {
             ProtonTextField(
+                modifier = Modifier.weight(1.0f).fillMaxHeight(),
                 value = value,
                 onChange = onChange,
                 placeholder = R.string.field_password_hint,
@@ -71,15 +77,15 @@ internal fun PasswordInput(
                         modifier = Modifier.clickable { isVisible = !isVisible }
                     )
                 },
-                visualTransformation = visualTransformation,
-                modifier = Modifier.weight(1.0f)
+                visualTransformation = visualTransformation
             )
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             OutlinedButton(
                 onClick = onGeneratePasswordClick,
                 shape = ProtonTheme.shapes.medium,
                 modifier = Modifier
-                    .size(48.dp)
+                    .fillMaxHeight()
+                    .aspectRatio(1.0f)
                     .align(Alignment.CenterVertically)
             ) {
                 Icon(
@@ -93,7 +99,7 @@ internal fun PasswordInput(
     }
 }
 
-@Preview(widthDp = 400)
+@Preview
 @Composable
 fun PasswordInputPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean

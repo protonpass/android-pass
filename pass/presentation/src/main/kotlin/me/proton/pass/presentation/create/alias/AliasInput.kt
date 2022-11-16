@@ -10,20 +10,31 @@ import me.proton.pass.presentation.components.form.ProtonFormInput
 
 @Composable
 fun AliasInput(
+    modifier: Modifier = Modifier,
     value: String,
     onChange: (String) -> Unit,
     onAliasRequiredError: Boolean,
+    onInvalidAliasError: Boolean,
     editable: Boolean
 ) {
+
+    val errorMessage = if (onAliasRequiredError) {
+        stringResource(R.string.field_alias_is_blank)
+    } else if (onInvalidAliasError) {
+        stringResource(R.string.field_alias_invalid)
+    } else {
+        ""
+    }
+
     ProtonFormInput(
+        modifier = modifier.padding(top = 8.dp),
         title = R.string.field_alias_title,
         placeholder = R.string.field_alias_hint,
         value = value,
         onChange = onChange,
         required = true,
-        modifier = Modifier.padding(top = 8.dp),
-        isError = onAliasRequiredError,
+        isError = onAliasRequiredError || onInvalidAliasError,
         editable = editable,
-        errorMessage = stringResource(id = R.string.field_alias_is_blank)
+        errorMessage = errorMessage
     )
 }

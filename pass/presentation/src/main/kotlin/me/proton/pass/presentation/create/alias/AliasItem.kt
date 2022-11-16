@@ -3,7 +3,6 @@ package me.proton.pass.presentation.create.alias
 import androidx.compose.runtime.Immutable
 import me.proton.pass.domain.AliasOptions
 import me.proton.pass.domain.AliasSuffix
-import me.proton.pass.domain.ItemContents
 
 @Immutable
 data class AliasItem(
@@ -22,23 +21,24 @@ data class AliasItem(
         val mutableSet = mutableSetOf<AliasItemValidationErrors>()
         if (title.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankTitle)
         if (alias.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankAlias)
+        if (!areAllAliasCharactersValid()) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
         if (mailboxes.count { it.selected } == 0) mutableSet.add(AliasItemValidationErrors.NoMailboxes)
         return mutableSet.toSet()
     }
 
-    fun toItemContents(): ItemContents =
-        ItemContents.Alias(
-            title = title,
-            note = note
-        )
+    private fun areAllAliasCharactersValid(): Boolean =
+        alias.all { it.isLetterOrDigit() || ALLOWED_SPECIAL_CHARACTERS.contains(it) }
+
 
     companion object {
         val Empty = AliasItem()
+        private val ALLOWED_SPECIAL_CHARACTERS: List<Char> = listOf('_', '-', '.')
     }
 }
 
 sealed interface AliasItemValidationErrors {
     object BlankTitle : AliasItemValidationErrors
     object BlankAlias : AliasItemValidationErrors
+    object InvalidAliasContent : AliasItemValidationErrors
     object NoMailboxes : AliasItemValidationErrors
 }

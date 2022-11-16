@@ -16,6 +16,7 @@ internal fun CreateAliasSection(
     state: AliasItem,
     canEdit: Boolean,
     onAliasRequiredError: Boolean,
+    onInvalidAliasError: Boolean,
     onChange: (String) -> Unit,
     onSuffixClick: () -> Unit
 ) {
@@ -23,7 +24,8 @@ internal fun CreateAliasSection(
         value = state.alias,
         onChange = onChange,
         editable = canEdit,
-        onAliasRequiredError = onAliasRequiredError
+        onAliasRequiredError = onAliasRequiredError,
+        onInvalidAliasError = onInvalidAliasError
     )
     AliasSelector(
         state = state,

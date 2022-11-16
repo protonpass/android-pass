@@ -19,6 +19,7 @@ internal fun CreateAliasForm(
     canEdit: Boolean,
     onTitleRequiredError: Boolean,
     onAliasRequiredError: Boolean,
+    onInvalidAliasError: Boolean,
     onTitleChange: (String) -> Unit,
     onAliasChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
@@ -44,7 +45,8 @@ internal fun CreateAliasForm(
                 onChange = onAliasChange,
                 onSuffixClick = onSuffixClick,
                 canEdit = canEdit,
-                onAliasRequiredError = onAliasRequiredError
+                onAliasRequiredError = onAliasRequiredError,
+                onInvalidAliasError = onInvalidAliasError
             )
         } else {
             DisplayAliasSection(

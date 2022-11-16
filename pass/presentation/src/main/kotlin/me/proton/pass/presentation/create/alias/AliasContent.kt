@@ -23,6 +23,7 @@ import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankAlias
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankTitle
+import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.InvalidAliasContent
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.EmptyShareIdError
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -90,12 +91,14 @@ internal fun AliasContent(
             if (uiState.isLoadingState == IsLoadingState.Loading) {
                 LoadingDialog()
             }
+
             CreateAliasForm(
                 state = uiState.aliasItem,
                 canEdit = canEdit,
                 modifier = Modifier.padding(padding),
                 onTitleRequiredError = uiState.errorList.contains(BlankTitle),
                 onAliasRequiredError = uiState.errorList.contains(BlankAlias),
+                onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),
                 onSuffixClick = {
                     scope.launch {
                         if (canEdit) {

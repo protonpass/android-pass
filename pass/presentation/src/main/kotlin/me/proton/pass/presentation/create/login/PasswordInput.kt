@@ -1,6 +1,5 @@
 package me.proton.pass.presentation.create.login
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
@@ -57,12 +56,11 @@ internal fun PasswordInput(
 
     Column(modifier = modifier.padding(top = 28.dp)) {
         ProtonTextTitle(R.string.field_password_title)
-
+        Spacer(modifier = Modifier.height(8.dp))
         Row(
             modifier = Modifier
-                .fillMaxWidth(1.0f)
-                .padding(top = 8.dp)
                 .height(IntrinsicSize.Min)
+                .fillMaxWidth(1.0f)
         ) {
             ProtonTextField(
                 modifier = Modifier.weight(1.0f).fillMaxHeight(),

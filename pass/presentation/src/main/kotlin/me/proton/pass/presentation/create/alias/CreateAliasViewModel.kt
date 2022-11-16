@@ -128,7 +128,10 @@ class CreateAliasViewModel @Inject constructor(
         }
         aliasItemValidationErrorsState.update {
             it.toMutableSet()
-                .apply { remove(AliasItemValidationErrors.BlankAlias) }
+                .apply {
+                    remove(AliasItemValidationErrors.BlankAlias)
+                    remove(AliasItemValidationErrors.InvalidAliasContent)
+                }
         }
         titleAliasInSync = false
     }

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -68,12 +69,15 @@ internal fun PasswordInput(
                 onChange = onChange,
                 placeholder = R.string.field_password_hint,
                 trailingIcon = {
-                    Icon(
-                        painter = icon,
-                        contentDescription = null,
-                        tint = ProtonTheme.colors.iconNorm,
-                        modifier = Modifier.clickable { isVisible = !isVisible }
-                    )
+                    IconButton(
+                        onClick = { isVisible = !isVisible }
+                    ) {
+                        Icon(
+                            painter = icon,
+                            contentDescription = null,
+                            tint = ProtonTheme.colors.iconNorm
+                        )
+                    }
                 },
                 visualTransformation = visualTransformation
             )

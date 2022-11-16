@@ -16,6 +16,7 @@ import me.proton.pass.presentation.uievents.value
 
 @Composable
 fun NoteInput(
+    modifier: Modifier = Modifier,
     value: String,
     enabled: Boolean = true,
     onChange: (String) -> Unit
@@ -26,7 +27,7 @@ fun NoteInput(
         editable = enabled,
         value = value,
         onChange = onChange,
-        modifier = Modifier.padding(top = 28.dp),
+        modifier = modifier.padding(top = 28.dp),
         singleLine = false,
         moveToNextOnEnter = false
     )

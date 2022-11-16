@@ -7,14 +7,19 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
+import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.TestUtils.randomString
 import me.proton.pass.test.crypto.TestKeyStoreCrypto
 import me.proton.pass.test.domain.TestItem
 import me.proton.pass.test.domain.usecases.TestObserveActiveItems
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 internal class SearchItemsImplTest {
+
+    @get:Rule
+    val dispatcherRule = MainDispatcherRule()
 
     private lateinit var observeActiveItems: TestObserveActiveItems
     private lateinit var search: SearchItems

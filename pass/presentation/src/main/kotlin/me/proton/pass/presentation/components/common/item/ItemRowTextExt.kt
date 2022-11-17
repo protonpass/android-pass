@@ -8,34 +8,35 @@ import androidx.compose.ui.text.withStyle
 
 private const val CHARACTER_OFFSET = 20
 
-fun String.highlight(text: String?): AnnotatedString =
-    if (text.isNullOrBlank()) {
-        buildAnnotatedString { append(this@highlight) }
+fun String.highlight(highlight: String?): AnnotatedString {
+    val input = this@highlight
+    return if (highlight.isNullOrBlank()) {
+        buildAnnotatedString { append(input) }
     } else {
-        val indexes = text.toRegex(setOf(RegexOption.IGNORE_CASE))
-            .findAll(this@highlight)
+        val indexes = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
+            .findAll(input)
             .map { it.range }
             .toList()
         val annotated = buildAnnotatedString {
             if (indexes.isEmpty()) {
-                append(this@highlight)
+                append(input)
             } else {
                 indexes.fold(0) { start, intRange ->
-                    append(this@highlight.substring(start, intRange.first))
+                    append(input.substring(start, intRange.first))
                     withStyle(
                         style = SpanStyle(
                             fontWeight = FontWeight.Bold
                         )
                     ) {
-                        append(this@highlight.substring(intRange))
+                        append(input.substring(intRange))
                     }
                     return@fold intRange.last + 1
                 }
-                if (this@highlight.length > indexes.last().last + 1) {
+                if (input.length > indexes.last().last + 1) {
                     append(
-                        this@highlight.substring(
+                        input.substring(
                             indexes.last().last + 1,
-                            this@highlight.length
+                            input.length
                         )
                     )
                 }
@@ -53,3 +54,4 @@ fun String.highlight(text: String?): AnnotatedString =
             annotated
         }
     }
+}

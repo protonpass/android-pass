@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -62,7 +63,17 @@ fun ActionableItemRowPreview(
 ) {
     ProtonTheme(isDark = input.first) {
         Surface {
-            ActionableItemRow(item = input.second)
+            ActionableItemRow(
+                item = input.second,
+                itemActions = listOf(
+                    ItemAction(
+                        onSelect = {},
+                        title = 0,
+                        icon = 0,
+                        textColor = Color.Blue
+                    )
+                )
+            )
         }
     }
 }

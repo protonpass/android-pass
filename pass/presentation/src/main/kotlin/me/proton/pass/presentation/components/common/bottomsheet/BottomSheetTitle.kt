@@ -31,7 +31,8 @@ data class BottomSheetTitleButton(
 fun BottomSheetTitle(
     modifier: Modifier = Modifier,
     @StringRes title: Int,
-    button: BottomSheetTitleButton? = null
+    button: BottomSheetTitleButton? = null,
+    showDivider: Boolean = true
 ) {
     Row(
         modifier = modifier
@@ -64,6 +65,9 @@ fun BottomSheetTitle(
                 )
             }
         }
+    }
+    if (showDivider) {
+        Divider(modifier = Modifier.fillMaxWidth())
     }
 }
 

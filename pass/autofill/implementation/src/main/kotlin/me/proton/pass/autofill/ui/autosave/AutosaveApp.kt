@@ -50,7 +50,8 @@ fun AutosaveApp(
                             popUpTo(0)
                         }
                     },
-                    onAuthFailed = { onFinished() }
+                    onAuthFailed = { onFinished() },
+                    onAuthDismissed = { onFinished() }
                 )
             }
             composable(SAVE_ITEM_ROUTE) {

@@ -157,6 +157,9 @@
     <!--  Common create items  -->
     <string name="changes_saved">Changes saved</string>
 
+    <!-- Alias details -->
+    <string name="alias_copied_to_clipboard">Alias copied to the clipboard</string>
+
     <!-- Settings -->
     <string name="settings_autofill_section_title">Autofill</string>
     <string name="settings_autofill_preference_title">Autofill service</string>

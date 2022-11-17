@@ -11,10 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import me.proton.pass.presentation.detail.DetailSnackbarMessages.ItemNotLoadedError
-import me.proton.android.pass.ui.shared.ChevronBackIcon
-import me.proton.pass.presentation.components.common.item.DropDownAction
-import me.proton.pass.presentation.components.common.item.ItemDropdownMenu
+import me.proton.android.pass.ui.shared.ArrowBackIcon
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
@@ -26,6 +23,9 @@ import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
+import me.proton.pass.presentation.components.common.item.DropDownAction
+import me.proton.pass.presentation.components.common.item.ItemDropdownMenu
+import me.proton.pass.presentation.detail.DetailSnackbarMessages.ItemNotLoadedError
 
 @ExperimentalComposeUiApi
 @Composable
@@ -45,7 +45,7 @@ internal fun ItemDetailTopBar(
     ProtonTopAppBar(
         modifier = modifier,
         title = { TopBarTitleView(title) },
-        navigationIcon = { ChevronBackIcon(onUpClick = onUpClick) },
+        navigationIcon = { ArrowBackIcon(onUpClick = onUpClick) },
         actions = {
             IconButton(
                 onClick = { setExpanded(true) },

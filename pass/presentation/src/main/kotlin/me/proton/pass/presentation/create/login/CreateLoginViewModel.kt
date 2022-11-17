@@ -104,6 +104,11 @@ class CreateLoginViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
+    fun onRemoveAlias() {
+        loginItemState.update { it.copy(username = "") }
+        canUpdateUsernameState.update { true }
+    }
+
     companion object {
         private const val TAG = "CreateLoginViewModel"
     }

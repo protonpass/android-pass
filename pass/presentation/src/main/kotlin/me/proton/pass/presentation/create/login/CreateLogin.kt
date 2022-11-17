@@ -30,7 +30,7 @@ fun CreateLogin(
     // Necessary for detecting alias generated
     LaunchedEffect(initialContents.username) {
         if (initialContents.username != null) {
-            viewModel.onUsernameChange(initialContents.username)
+            viewModel.onAliasGenerated(initialContents.username)
         }
     }
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
@@ -56,6 +56,7 @@ fun CreateLogin(
         onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) },
         onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
-        onCreateAliasClick = onCreateAliasClick
+        onCreateAliasClick = onCreateAliasClick,
+        onRemoveAliasClick = { viewModel.onRemoveAlias() }
     )
 }

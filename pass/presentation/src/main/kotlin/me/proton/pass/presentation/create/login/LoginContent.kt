@@ -22,6 +22,8 @@ import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.EmptyShareIdError
+import me.proton.pass.presentation.create.login.bottomsheet.LoginBottomSheet
+import me.proton.pass.presentation.create.login.bottomsheet.LoginBottomSheetContent
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
@@ -41,7 +43,8 @@ internal fun LoginContent(
     onWebsiteChange: OnWebsiteChange,
     onNoteChange: (String) -> Unit,
     onEmitSnackbarMessage: (LoginSnackbarMessages) -> Unit,
-    onCreateAliasClick: (ShareId) -> Unit
+    onCreateAliasClick: (ShareId) -> Unit,
+    onRemoveAliasClick: () -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -50,18 +53,24 @@ internal fun LoginContent(
     val scope = rememberCoroutineScope()
 
     val (regeneratePassword, setRegeneratePassword) = remember { mutableStateOf(true) }
+    val (bottomSheetContent, setBottomSheetContent) = remember {
+        mutableStateOf<LoginBottomSheetContent>(LoginBottomSheetContent.GeneratePassword)
+    }
+    val (showRemoveAliasDialog, setShowRemoveAliasDialog) = remember { mutableStateOf(false) }
 
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
-            GeneratePasswordBottomSheet(
+            LoginBottomSheet(
+                content = bottomSheetContent,
                 regeneratePassword = regeneratePassword,
-                onPasswordRegenerated = {
-                    setRegeneratePassword(false)
-                },
-                onConfirm = { password ->
+                setRegeneratePassword = setRegeneratePassword,
+                onPasswordChange = { password -> onPasswordChange(password) },
+                hideBottomSheet = { scope.launch { bottomSheetState.hide() } },
+                onEditAliasClick = {},
+                onRemoveAliasClick = {
                     scope.launch {
-                        onPasswordChange(password)
+                        setShowRemoveAliasDialog(true)
                         bottomSheetState.hide()
                     }
                 }
@@ -84,8 +93,9 @@ internal fun LoginContent(
                 LoadingDialog()
             }
             LoginItemForm(
-                loginItem = uiState.loginItem,
                 modifier = modifier.padding(padding),
+                loginItem = uiState.loginItem,
+                canUpdateUsername = uiState.canUpdateUsername,
                 onTitleChange = onTitleChange,
                 onTitleRequiredError = uiState.validationErrors.contains(LoginItemValidationErrors.BlankTitle),
                 onUsernameChange = onUsernameChange,
@@ -104,6 +114,7 @@ internal fun LoginContent(
                 onNoteChange = onNoteChange,
                 onGeneratePasswordClick = {
                     scope.launch {
+                        setBottomSheetContent(LoginBottomSheetContent.GeneratePassword)
                         setRegeneratePassword(true)
                         bottomSheetState.show()
                     }
@@ -112,14 +123,36 @@ internal fun LoginContent(
                     if (uiState.shareId is Some) {
                         onCreateAliasClick(uiState.shareId.value)
                     }
+                },
+                onAliasOptionsClick = {
+                    scope.launch {
+                        setBottomSheetContent(LoginBottomSheetContent.AliasOptions)
+                        bottomSheetState.show()
+                    }
                 }
             )
+
+            if (showRemoveAliasDialog) {
+                ConfirmRemoveAliasDialog(
+                    onDismiss = { setShowRemoveAliasDialog(false) },
+                    onCancel = { setShowRemoveAliasDialog(false) },
+                    onConfirm = {
+                        setShowRemoveAliasDialog(false)
+                        onRemoveAliasClick()
+                    }
+                )
+            }
+
             LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {
                 val isItemSaved = uiState.isItemSaved
                 if (isItemSaved is ItemSavedState.Success) {
                     when (uiState.shareId) {
                         None -> onEmitSnackbarMessage(EmptyShareIdError)
-                        is Some -> onSuccess(uiState.shareId.value, isItemSaved.itemId, isItemSaved.item)
+                        is Some -> onSuccess(
+                            uiState.shareId.value,
+                            isItemSaved.itemId,
+                            isItemSaved.item
+                        )
                     }
                 }
             }

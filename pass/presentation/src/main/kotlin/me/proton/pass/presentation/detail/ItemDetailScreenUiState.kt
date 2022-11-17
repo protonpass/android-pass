@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail
+package me.proton.pass.presentation.detail
 
 import androidx.compose.runtime.Immutable
 import me.proton.pass.common.api.None

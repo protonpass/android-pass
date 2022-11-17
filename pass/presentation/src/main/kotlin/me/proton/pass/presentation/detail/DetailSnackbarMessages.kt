@@ -1,9 +1,9 @@
-package me.proton.android.pass.ui.detail
+package me.proton.pass.presentation.detail
 
 import androidx.annotation.StringRes
-import me.proton.android.pass.R
 import me.proton.android.pass.notifications.api.SnackbarMessage
 import me.proton.android.pass.notifications.api.SnackbarType
+import me.proton.pass.presentation.R
 
 enum class DetailSnackbarMessages(
     @StringRes override val id: Int,

@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail
+package me.proton.pass.presentation.detail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -9,10 +9,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import me.proton.android.pass.R
-import me.proton.android.pass.ui.detail.alias.AliasDetail
-import me.proton.android.pass.ui.detail.login.LoginDetail
-import me.proton.android.pass.ui.detail.note.NoteDetail
+import me.proton.pass.presentation.detail.alias.AliasDetail
+import me.proton.pass.presentation.detail.login.LoginDetail
+import me.proton.pass.presentation.detail.note.NoteDetail
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Some
@@ -20,6 +19,7 @@ import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.R
 import me.proton.pass.presentation.uievents.IsLoadingState
 
 @OptIn(ExperimentalComposeUiApi::class)

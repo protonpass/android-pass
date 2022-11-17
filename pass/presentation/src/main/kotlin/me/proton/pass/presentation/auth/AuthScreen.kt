@@ -1,6 +1,5 @@
 package me.proton.pass.presentation.auth
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -12,7 +11,8 @@ import me.proton.android.pass.biometry.ContextHolder
 @Composable
 fun AuthScreen(
     onAuthSuccessful: () -> Unit,
-    onAuthFailed: () -> Unit
+    onAuthFailed: () -> Unit,
+    onAuthDismissed: () -> Unit
 ) {
     val viewModel: AuthViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -21,27 +21,13 @@ fun AuthScreen(
         when (state) {
             AuthStatus.Success -> onAuthSuccessful()
             AuthStatus.Failed -> onAuthFailed()
-            else -> {}
+            AuthStatus.Canceled -> onAuthDismissed()
+            AuthStatus.Pending -> {}
         }
     }
 
     val ctx = LocalContext.current
     LaunchedEffect(Unit) {
         viewModel.init(ContextHolder.fromContext(ctx))
-    }
-
-    when (state) {
-        AuthStatus.Canceled -> {
-            Text("Auth canceled by the user. TODO: Do something")
-        }
-        AuthStatus.Pending -> {
-            Text("Place your fingerprint, please")
-        }
-        AuthStatus.Success -> {
-            Text("Welcome back!")
-        }
-        AuthStatus.Failed -> {
-            Text("Auth failed!")
-        }
     }
 }

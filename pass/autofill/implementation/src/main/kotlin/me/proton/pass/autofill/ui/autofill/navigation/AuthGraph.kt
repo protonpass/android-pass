@@ -17,7 +17,8 @@ fun NavGraphBuilder.authGraph(
             onAuthSuccessful = {
                 appNavigator.navigate(AutofillNavItem.SelectItem)
             },
-            onAuthFailed = onFinished
+            onAuthFailed = onFinished,
+            onAuthDismissed = onFinished
         )
     }
 }

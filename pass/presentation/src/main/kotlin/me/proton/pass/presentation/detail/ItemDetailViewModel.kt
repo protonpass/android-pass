@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail
+package me.proton.pass.presentation.detail
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -15,8 +15,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.android.pass.ui.detail.DetailSnackbarMessages.InitError
-import me.proton.android.pass.ui.detail.DetailSnackbarMessages.SendToTrashError
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
@@ -31,6 +29,8 @@ import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.repositories.ItemRepository
 import me.proton.pass.domain.usecases.TrashItem
+import me.proton.pass.presentation.detail.DetailSnackbarMessages.InitError
+import me.proton.pass.presentation.detail.DetailSnackbarMessages.SendToTrashError
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsSentToTrashState
 import javax.inject.Inject

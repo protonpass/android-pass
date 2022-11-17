@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail
+package me.proton.pass.presentation.detail
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import me.proton.android.pass.ui.detail.DetailSnackbarMessages.ItemNotLoadedError
+import me.proton.pass.presentation.detail.DetailSnackbarMessages.ItemNotLoadedError
 import me.proton.android.pass.ui.shared.ChevronBackIcon
 import me.proton.pass.presentation.components.common.item.DropDownAction
 import me.proton.pass.presentation.components.common.item.ItemDropdownMenu
@@ -25,7 +25,7 @@ import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
-import me.proton.core.presentation.R
+import me.proton.pass.presentation.R
 
 @ExperimentalComposeUiApi
 @Composable
@@ -52,7 +52,7 @@ internal fun ItemDetailTopBar(
                 modifier = Modifier.then(Modifier.size(24.dp))
             ) {
                 Icon(
-                    painterResource(R.drawable.ic_proton_three_dots_vertical),
+                    painterResource(me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical),
                     contentDescription = null,
                     tint = ProtonTheme.colors.iconNorm
                 )
@@ -61,10 +61,10 @@ internal fun ItemDetailTopBar(
             ItemDropdownMenu(expanded = expanded, setExpanded = { setExpanded(false) }) {
                 DropDownAction(
                     title = stringResource(
-                        me.proton.android.pass.R.string.action_edit_placeholder,
+                        R.string.action_edit_placeholder,
                         itemTypeName
                     ),
-                    icon = R.drawable.ic_proton_eraser
+                    icon = me.proton.core.presentation.R.drawable.ic_proton_eraser
                 ) {
                     setExpanded(false)
 
@@ -77,9 +77,9 @@ internal fun ItemDetailTopBar(
                     }
                 }
                 DropDownAction(
-                    title = stringResource(me.proton.android.pass.R.string.action_move_to_trash),
+                    title = stringResource(R.string.action_move_to_trash),
                     textColor = ProtonTheme.colors.notificationError,
-                    icon = R.drawable.ic_proton_trash
+                    icon = me.proton.core.presentation.R.drawable.ic_proton_trash
                 ) {
                     setExpanded(false)
 

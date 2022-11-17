@@ -7,6 +7,7 @@ import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.navigation.api.composable
 import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.pass.domain.ItemType
+import me.proton.pass.presentation.detail.ItemDetailScreen
 
 @OptIn(
     ExperimentalAnimationApi::class,

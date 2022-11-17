@@ -11,7 +11,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.pass.presentation.components.model.ItemUiModel
@@ -62,8 +61,8 @@ fun TrashContent(
             ConfirmItemDeletionDialog(
                 state = itemToDelete,
                 onDismiss = { itemToDelete = null },
-                title = R.string.alert_confirm_item_deletion_title,
-                message = R.string.alert_confirm_item_deletion_message,
+                title = me.proton.pass.presentation.R.string.alert_confirm_item_deletion_title,
+                message = me.proton.pass.presentation.R.string.alert_confirm_item_deletion_message,
                 onConfirm = onDeleteItem
             )
         }

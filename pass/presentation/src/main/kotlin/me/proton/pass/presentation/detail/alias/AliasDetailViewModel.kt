@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail.alias
+package me.proton.pass.presentation.detail.alias
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessage
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.android.pass.ui.detail.DetailSnackbarMessages
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
@@ -24,6 +23,7 @@ import me.proton.pass.domain.AliasDetails
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.repositories.AliasRepository
+import me.proton.pass.presentation.detail.DetailSnackbarMessages
 import me.proton.pass.presentation.uievents.IsLoadingState
 import javax.inject.Inject
 

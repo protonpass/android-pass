@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail.note
+package me.proton.pass.presentation.detail.note
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,9 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.proton.android.pass.ui.detail.login.Section
+import me.proton.pass.presentation.detail.login.Section
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.domain.Item
+import me.proton.pass.presentation.R
 
 @Composable
 fun NoteDetail(
@@ -51,7 +52,7 @@ internal fun NoteRow(
 ) {
     if (model.note.isNotEmpty()) {
         Section(
-            title = me.proton.pass.presentation.R.string.field_note_title,
+            title = R.string.field_note_title,
             content = model.note
         )
     }

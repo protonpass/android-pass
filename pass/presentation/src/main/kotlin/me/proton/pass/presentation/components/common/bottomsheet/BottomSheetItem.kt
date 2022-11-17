@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmall
 import me.proton.pass.commonui.api.ThemePreviewProvider
+import me.proton.pass.commonui.api.applyIf
 import me.proton.pass.presentation.R
 
 @Composable
@@ -35,9 +36,8 @@ fun BottomSheetItem(
     @StringRes title: Int,
     @StringRes subtitle: Int? = null,
     tint: Color? = null,
-    onItemClick: () -> Unit
+    onItemClick: (() -> Unit)? = null
 ) {
-
     val iconTint = tint ?: LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
     BottomSheetItem(
         modifier = modifier,
@@ -62,13 +62,16 @@ fun BottomSheetItem(
     @StringRes title: Int,
     @StringRes subtitle: Int? = null,
     tint: Color? = null,
-    onItemClick: () -> Unit
+    onItemClick: (() -> Unit)? = null
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = { onItemClick() })
+            .applyIf(
+                condition = onItemClick != null,
+                ifTrue = { clickable { onItemClick?.invoke() } }
+            )
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         icon?.let { it() }

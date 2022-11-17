@@ -1,7 +1,6 @@
 package me.proton.android.pass.ui.home
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
@@ -16,12 +15,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
-import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.components.common.PassFloatingActionButton
 import me.proton.pass.presentation.components.model.ItemUiModel
-import me.proton.pass.presentation.uievents.IsLoadingState
 
 @Suppress("LongParameterList")
 @ExperimentalComposeUiApi
@@ -65,34 +62,28 @@ internal fun HomeContent(
             )
         }
     ) { contentPadding ->
-        Box {
-            when (uiState.homeListUiState.isLoading) {
-                IsLoadingState.Loading -> LoadingDialog()
-                IsLoadingState.NotLoading -> {
-                    var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
-                    val keyboardController = LocalSoftwareKeyboardController.current
-                    Home(
-                        items = uiState.homeListUiState.items,
-                        highlight = uiState.searchUiState.searchQuery,
-                        modifier = Modifier.padding(contentPadding),
-                        onItemClick = { item ->
-                            keyboardController?.hide()
-                            homeScreenNavigation.toItemDetail(item.shareId, item.id)
-                        },
-                        navigation = homeScreenNavigation,
-                        onDeleteItemClicked = { itemToDelete = it },
-                        isRefreshing = uiState.homeListUiState.isRefreshing,
-                        onRefresh = onRefresh
-                    )
-                    ConfirmItemDeletionDialog(
-                        state = itemToDelete,
-                        onDismiss = { itemToDelete = null },
-                        title = me.proton.pass.presentation.R.string.alert_confirm_item_send_to_trash_title,
-                        message = me.proton.pass.presentation.R.string.alert_confirm_item_send_to_trash_message,
-                        onConfirm = sendItemToTrash
-                    )
-                }
-            }
-        }
+        var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
+        val keyboardController = LocalSoftwareKeyboardController.current
+        Home(
+            modifier = Modifier.padding(contentPadding),
+            items = uiState.homeListUiState.items,
+            highlight = uiState.searchUiState.searchQuery,
+            onItemClick = { item ->
+                keyboardController?.hide()
+                homeScreenNavigation.toItemDetail(item.shareId, item.id)
+            },
+            navigation = homeScreenNavigation,
+            onDeleteItemClicked = { itemToDelete = it },
+            isLoading = uiState.homeListUiState.isLoading,
+            isRefreshing = uiState.homeListUiState.isRefreshing,
+            onRefresh = onRefresh
+        )
+        ConfirmItemDeletionDialog(
+            state = itemToDelete,
+            onDismiss = { itemToDelete = null },
+            title = me.proton.pass.presentation.R.string.alert_confirm_item_send_to_trash_title,
+            message = me.proton.pass.presentation.R.string.alert_confirm_item_send_to_trash_message,
+            onConfirm = sendItemToTrash
+        )
     }
 }

@@ -7,14 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.autofill.service.R
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.components.common.PassFloatingActionButton
 import me.proton.pass.presentation.components.common.item.ItemsList
 import me.proton.pass.presentation.components.model.ItemUiModel
-import me.proton.pass.presentation.uievents.IsLoadingState
 
 @Composable
 internal fun SelectItemScreenContent(
@@ -44,20 +42,16 @@ internal fun SelectItemScreenContent(
             )
         }
     ) { padding ->
-        when (uiState.listUiState.isLoading) {
-            IsLoadingState.Loading -> LoadingDialog()
-            IsLoadingState.NotLoading -> {
-                ItemsList(
-                    modifier = modifier.padding(padding),
-                    items = uiState.listUiState.items,
-                    highlight = uiState.searchUiState.searchQuery,
-                    emptyListMessage = R.string.error_credentials_not_found,
-                    onRefresh = onRefresh,
-                    isRefreshing = uiState.listUiState.isRefreshing,
-                    onItemClick = onItemClicked
-                )
-            }
-        }
+        ItemsList(
+            modifier = modifier.padding(padding),
+            items = uiState.listUiState.items,
+            highlight = uiState.searchUiState.searchQuery,
+            emptyListMessage = R.string.error_credentials_not_found,
+            isLoading = uiState.listUiState.isLoading,
+            isRefreshing = uiState.listUiState.isRefreshing,
+            onRefresh = onRefresh,
+            onItemClick = onItemClicked
+        )
     }
 }
 

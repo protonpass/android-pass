@@ -8,6 +8,7 @@ import me.proton.pass.domain.ItemType
 import me.proton.pass.presentation.components.common.item.ItemAction
 import me.proton.pass.presentation.components.common.item.ItemsList
 import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 
 @Composable
@@ -19,6 +20,7 @@ internal fun Home(
     navigation: HomeScreenNavigation,
     onDeleteItemClicked: (ItemUiModel) -> Unit,
     isRefreshing: IsRefreshingState,
+    isLoading: IsLoadingState,
     onRefresh: () -> Unit
 ) {
     ItemsList(
@@ -29,6 +31,7 @@ internal fun Home(
         onItemClick = onItemClick,
         onRefresh = onRefresh,
         isRefreshing = isRefreshing,
+        isLoading = isLoading,
         itemActions = listOf(
             ItemAction(
                 onSelect = { goToEdit(navigation, it) },

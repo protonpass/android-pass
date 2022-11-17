@@ -1,6 +1,5 @@
 package me.proton.android.pass.ui.shared
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
@@ -10,7 +9,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 
 @ExperimentalComposeUiApi
 @Composable
@@ -54,10 +52,11 @@ fun CrossBackIcon(
 @ExperimentalComposeUiApi
 @Composable
 fun HamburgerIcon(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     NavigationIcon(
-        modifier = Modifier.padding(start = 4.dp),
+        modifier = modifier,
         onUpClick = onClick
     ) {
         Icon(

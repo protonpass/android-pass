@@ -7,22 +7,24 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.components.common.item.ItemAction
 import me.proton.pass.presentation.components.common.item.ItemsList
 import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 
 @Composable
 internal fun TrashItemList(
-    items: List<ItemUiModel>,
     modifier: Modifier = Modifier,
+    items: List<ItemUiModel>,
+    isRefreshing: IsRefreshingState,
+    isLoading: IsLoadingState,
     onRestoreClicked: (ItemUiModel) -> Unit,
     onDeleteItemClicked: (ItemUiModel) -> Unit,
-    onRefresh: () -> Unit,
-    isRefreshing: IsRefreshingState
+    onRefresh: () -> Unit
 ) {
     ItemsList(
+        modifier = modifier,
         items = items,
         emptyListMessage = R.string.message_no_trashed_credentials,
-        modifier = modifier,
-        onRefresh = onRefresh,
+        isLoading = isLoading,
         isRefreshing = isRefreshing,
         itemActions = listOf(
             ItemAction(
@@ -37,6 +39,7 @@ internal fun TrashItemList(
                 icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
                 textColor = ProtonTheme.colors.notificationError
             )
-        )
+        ),
+        onRefresh = onRefresh
     )
 }

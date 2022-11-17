@@ -3,6 +3,7 @@ package me.proton.pass.presentation.components.common.item.icon
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
@@ -23,6 +24,7 @@ fun RoundedTintedIcon(
         contentDescription = null,
         tint = color,
         modifier = modifier
+            .size(36.dp)
             .clip(RoundedCornerShape(8.dp))
             .background(color = color.copy(alpha = 0.2f))
             .padding(8.dp)

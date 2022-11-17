@@ -32,13 +32,13 @@ internal fun Home(
         itemActions = listOf(
             ItemAction(
                 onSelect = { goToEdit(navigation, it) },
-                title = R.string.action_edit_placeholder,
+                title = me.proton.pass.presentation.R.string.action_edit_placeholder,
                 icon = me.proton.core.presentation.R.drawable.ic_proton_eraser,
                 textColor = ProtonTheme.colors.textNorm
             ),
             ItemAction(
                 onSelect = { onDeleteItemClicked(it) },
-                title = R.string.action_move_to_trash,
+                title = me.proton.pass.presentation.R.string.action_move_to_trash,
                 icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
                 textColor = ProtonTheme.colors.notificationError
             )

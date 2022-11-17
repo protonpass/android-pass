@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail.alias
+package me.proton.pass.presentation.detail.alias
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable

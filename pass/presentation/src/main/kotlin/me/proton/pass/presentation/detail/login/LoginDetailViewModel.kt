@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail.login
+package me.proton.pass.presentation.detail.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

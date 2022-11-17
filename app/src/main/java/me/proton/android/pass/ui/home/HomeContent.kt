@@ -15,7 +15,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import me.proton.android.pass.R
 import me.proton.android.pass.ui.shared.ConfirmItemDeletionDialog
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.pass.common.api.Option
@@ -88,8 +87,8 @@ internal fun HomeContent(
                     ConfirmItemDeletionDialog(
                         state = itemToDelete,
                         onDismiss = { itemToDelete = null },
-                        title = R.string.alert_confirm_item_send_to_trash_title,
-                        message = R.string.alert_confirm_item_send_to_trash_message,
+                        title = me.proton.pass.presentation.R.string.alert_confirm_item_send_to_trash_title,
+                        message = me.proton.pass.presentation.R.string.alert_confirm_item_send_to_trash_message,
                         onConfirm = sendItemToTrash
                     )
                 }

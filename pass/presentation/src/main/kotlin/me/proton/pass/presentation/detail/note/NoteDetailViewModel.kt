@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail.note
+package me.proton.pass.presentation.detail.note
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

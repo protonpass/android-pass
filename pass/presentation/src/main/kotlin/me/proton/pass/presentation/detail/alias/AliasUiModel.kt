@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail.alias
+package me.proton.pass.presentation.detail.alias
 
 import me.proton.pass.domain.AliasMailbox
 

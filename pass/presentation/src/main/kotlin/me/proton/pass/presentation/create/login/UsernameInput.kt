@@ -85,10 +85,9 @@ internal fun UsernameInput(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
-fun UsernameInputPreview(
+fun UsernameInputCanUpdateTruePreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     ProtonTheme(isDark = isDark) {
@@ -99,6 +98,24 @@ fun UsernameInputPreview(
                 onGenerateAliasClick = {},
                 onAliasOptionsClick = {},
                 canUpdateUsername = true
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun UsernameInputCanUpdateFalsePreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    ProtonTheme(isDark = isDark) {
+        Surface {
+            UsernameInput(
+                value = "some value",
+                onChange = {},
+                onGenerateAliasClick = {},
+                onAliasOptionsClick = {},
+                canUpdateUsername = false
             )
         }
     }

@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail.login
+package me.proton.pass.presentation.detail.login
 
 import android.widget.Toast
 import androidx.annotation.DrawableRes
@@ -29,9 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.proton.android.pass.R
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.domain.Item
+import me.proton.pass.presentation.R
 
 @Composable
 fun LoginDetail(
@@ -108,7 +108,7 @@ internal fun UsernameRow(
 ) {
     val usernameFieldName = stringResource(me.proton.pass.presentation.R.string.field_username)
     Section(
-        title = me.proton.pass.presentation.R.string.field_username_title,
+        title = R.string.field_username_title,
         content = model.username,
         icon = me.proton.core.presentation.R.drawable.ic_proton_squares,
         onIconClick = { storeToClipboard(model.username, usernameFieldName) }
@@ -123,7 +123,7 @@ internal fun WebsiteSection(
 
     Row(modifier = Modifier.padding(vertical = 12.dp)) {
         Column(modifier = Modifier.weight(1f)) {
-            SectionTitle(title = me.proton.pass.presentation.R.string.field_website_address_title)
+            SectionTitle(title = R.string.field_website_address_title)
             model.websites.forEach {
                 Text(
                     text = it,
@@ -152,7 +152,7 @@ internal fun PasswordRow(
     }
 
     Section(
-        title = me.proton.pass.presentation.R.string.field_detail_password_title,
+        title = R.string.field_detail_password_title,
         content = sectionContent,
         icon = me.proton.core.presentation.R.drawable.ic_proton_squares,
         onIconClick = { onCopyPasswordClick() },
@@ -176,7 +176,7 @@ internal fun NoteRow(
 ) {
     if (model.note.isNotEmpty()) {
         Section(
-            title = me.proton.pass.presentation.R.string.field_note_title,
+            title = R.string.field_note_title,
             content = model.note
         )
     }

@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.detail.alias
+package me.proton.pass.presentation.detail.alias
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -13,8 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.proton.android.pass.ui.detail.login.Section
-import me.proton.android.pass.ui.detail.login.SectionTitle
+import me.proton.pass.presentation.detail.login.Section
+import me.proton.pass.presentation.detail.login.SectionTitle
 import me.proton.android.pass.ui.shared.LoadingDialog
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R

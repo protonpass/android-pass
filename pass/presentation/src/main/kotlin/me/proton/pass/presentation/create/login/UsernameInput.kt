@@ -30,9 +30,17 @@ import me.proton.pass.presentation.components.form.ProtonTextTitle
 internal fun UsernameInput(
     modifier: Modifier = Modifier,
     value: String,
+    canUpdateUsername: Boolean,
     onChange: (String) -> Unit,
-    onGenerateAliasClick: () -> Unit
+    onGenerateAliasClick: () -> Unit,
+    onAliasOptionsClick: () -> Unit
 ) {
+    val buttonIcon = if (canUpdateUsername) {
+        me.proton.core.presentation.R.drawable.ic_proton_alias
+    } else {
+        me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical
+    }
+
     Column(modifier = modifier) {
         ProtonTextTitle(R.string.field_username_title)
         Spacer(modifier = Modifier.height(8.dp))
@@ -48,11 +56,18 @@ internal fun UsernameInput(
                     .weight(1.0f),
                 value = value,
                 onChange = onChange,
+                editable = canUpdateUsername,
                 placeholder = R.string.field_username_hint
             )
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             OutlinedButton(
-                onClick = onGenerateAliasClick,
+                onClick = {
+                    if (canUpdateUsername) {
+                        onGenerateAliasClick()
+                    } else {
+                        onAliasOptionsClick()
+                    }
+                },
                 shape = ProtonTheme.shapes.medium,
                 modifier = Modifier
                     .fillMaxHeight()
@@ -60,7 +75,7 @@ internal fun UsernameInput(
                     .align(Alignment.CenterVertically)
             ) {
                 Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
+                    painter = painterResource(buttonIcon),
                     contentDescription = null,
                     tint = ProtonTheme.colors.iconNorm,
                     modifier = Modifier.align(Alignment.CenterVertically)
@@ -81,7 +96,9 @@ fun UsernameInputPreview(
             UsernameInput(
                 value = "some value",
                 onChange = {},
-                onGenerateAliasClick = {}
+                onGenerateAliasClick = {},
+                onAliasOptionsClick = {},
+                canUpdateUsername = true
             )
         }
     }

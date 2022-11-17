@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material.LocalContentColor
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,11 +34,21 @@ fun BottomSheetItem(
     @DrawableRes icon: Int,
     @StringRes title: Int,
     @StringRes subtitle: Int? = null,
+    tint: Color? = null,
     onItemClick: () -> Unit
 ) {
+
+    val iconTint = tint ?: LocalContentColor.current.copy(alpha = LocalContentAlpha.current)
     BottomSheetItem(
         modifier = modifier,
-        icon = { Icon(painter = painterResource(icon), contentDescription = stringResource(title)) },
+        icon = {
+            Icon(
+                painter = painterResource(icon),
+                contentDescription = stringResource(title),
+                tint = iconTint
+            )
+        },
+        tint = tint,
         title = title,
         subtitle = subtitle,
         onItemClick = onItemClick
@@ -48,6 +61,7 @@ fun BottomSheetItem(
     icon: (@Composable () -> Unit)?,
     @StringRes title: Int,
     @StringRes subtitle: Int? = null,
+    tint: Color? = null,
     onItemClick: () -> Unit
 ) {
     Row(
@@ -58,12 +72,14 @@ fun BottomSheetItem(
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         icon?.let { it() }
+
+        val textColor = tint ?: ProtonTheme.colors.textNorm
         Column(modifier = Modifier.padding(start = 20.dp)) {
             Text(
                 text = stringResource(title),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.W400,
-                color = ProtonTheme.colors.textNorm
+                color = textColor
             )
             subtitle?.let {
                 Text(

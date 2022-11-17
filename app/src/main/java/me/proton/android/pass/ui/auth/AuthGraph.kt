@@ -21,7 +21,8 @@ fun NavGraphBuilder.authGraph(
         }
         AuthScreen(
             onAuthSuccessful = { nav.onBackClick() },
-            onAuthFailed = { nav.onBackClick() }
+            onAuthFailed = { nav.onBackClick() },
+            onAuthDismissed = { finishActivity() }
         )
     }
 }

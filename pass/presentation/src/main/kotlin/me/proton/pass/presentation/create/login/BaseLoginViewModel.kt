@@ -62,17 +62,20 @@ abstract class BaseLoginViewModel(
     protected val loginItemValidationErrorsState: MutableStateFlow<Set<LoginItemValidationErrors>> =
         MutableStateFlow(emptySet())
     protected val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    protected val canUpdateUsernameState: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
     private val loginItemWrapperState = combine(
         loginItemState,
-        loginItemValidationErrorsState
-    ) { loginItem, loginItemValidationErrors ->
-        LoginItemWrapper(loginItem, loginItemValidationErrors)
+        loginItemValidationErrorsState,
+        canUpdateUsernameState
+    ) { loginItem, loginItemValidationErrors, updateUsername ->
+        LoginItemWrapper(loginItem, loginItemValidationErrors, updateUsername)
     }
 
     private data class LoginItemWrapper(
         val loginItem: LoginItem,
-        val loginItemValidationErrors: Set<LoginItemValidationErrors>
+        val loginItemValidationErrors: Set<LoginItemValidationErrors>,
+        val canUpdateUsername: Boolean
     )
 
     val loginUiState: StateFlow<CreateUpdateLoginUiState> = combine(
@@ -88,7 +91,8 @@ abstract class BaseLoginViewModel(
             validationErrors = loginItemWrapper.loginItemValidationErrors,
             isLoadingState = isLoading,
             isItemSaved = isItemSaved,
-            focusLastWebsite = focusLastWebsite
+            focusLastWebsite = focusLastWebsite,
+            canUpdateUsername = loginItemWrapper.canUpdateUsername
         )
     }
         .stateIn(
@@ -106,6 +110,11 @@ abstract class BaseLoginViewModel(
 
     fun onUsernameChange(value: String) {
         loginItemState.update { it.copy(username = value) }
+    }
+
+    fun onAliasGenerated(value: String) {
+        loginItemState.update { it.copy(username = value) }
+        canUpdateUsernameState.update { false }
     }
 
     fun onPasswordChange(value: String) {

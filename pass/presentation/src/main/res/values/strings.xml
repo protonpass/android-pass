@@ -68,6 +68,8 @@
     <string name="action_empty_trash">Empty trash</string>
     <string name="action_save">Save</string>
     <string name="action_apply">Apply</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_remove">Remove</string>
 
     <!-- Actions -->
     <string name="action_cancel">Cancel</string>
@@ -136,6 +138,9 @@
     <string name="field_copied_to_clipboard">copied to the clipboard</string>
     <string name="field_username">Username</string>
     <string name="field_password">Password</string>
+    <string name="delete_alias_dialog_text">Remove together with the alias item?</string>
+    <string name="delete_alias_dialog_cancel">Keep alias</string>
+    <string name="delete_alias_dialog_confirm">@string/action_remove</string>
 
     <string name="create_login_item_creation_error">Could not create Login</string>
     <string name="create_login_item_update_error">Could not update Login</string>

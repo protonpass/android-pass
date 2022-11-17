@@ -16,11 +16,8 @@
  * along with Proton Mail. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
-
 plugins {
     alias(libs.plugins.gradlePlugin.proton.detekt)
-    alias(libs.plugins.gradlePlugin.versions)
     alias(libs.plugins.gradlePlugin.dependency.analysis)
     alias(libs.plugins.gradlePlugin.doctor)
     alias(libs.plugins.gradlePlugin.application) apply false
@@ -63,8 +60,6 @@ tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
 
-setupDependenciesPlugin()
-
 kotlinCompilerArgs(
     "-opt-in=kotlin.RequiresOptIn",
     "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
@@ -81,22 +76,6 @@ fun Project.kotlinCompilerArgs(vararg extraCompilerArgs: String) {
             kotlinOptions { freeCompilerArgs = freeCompilerArgs + extraCompilerArgs }
         }
     }
-}
-
-fun Project.setupDependenciesPlugin() {
-    // https://github.com/ben-manes/gradle-versions-plugin
-    tasks.withType<DependencyUpdatesTask> {
-        rejectVersionIf {
-            isNonStable(candidate.version) && !isNonStable(currentVersion)
-        }
-    }
-}
-
-fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
-    val regex = "^[0-9,.v-]+(-r)?$".toRegex()
-    val isStable = stableKeyword || regex.matches(version)
-    return isStable.not()
 }
 
 protonDetekt {

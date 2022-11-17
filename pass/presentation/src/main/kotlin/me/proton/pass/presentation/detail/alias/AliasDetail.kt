@@ -23,6 +23,7 @@ fun AliasDetail(
     val viewState by viewModel.viewState.collectAsStateWithLifecycle()
     AliasDetailContent(
         modifier = modifier.padding(horizontal = 16.dp),
-        state = viewState
+        state = viewState,
+        emitSnackbarMessage = { viewModel.emitSnackbarMessage(it) }
     )
 }

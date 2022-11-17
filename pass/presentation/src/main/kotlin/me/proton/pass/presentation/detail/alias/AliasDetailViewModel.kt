@@ -68,6 +68,10 @@ class AliasDetailViewModel @Inject constructor(
         }
     }
 
+    fun emitSnackbarMessage(message: SnackbarMessage) = viewModelScope.launch {
+        snackbarMessageRepository.emitSnackbarMessage(message)
+    }
+
     private suspend fun onAliasDetails(result: Result<AliasDetails>, item: Item) {
         when (result) {
             is Result.Success -> {

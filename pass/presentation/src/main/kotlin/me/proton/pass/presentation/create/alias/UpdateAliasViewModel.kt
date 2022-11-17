@@ -36,6 +36,7 @@ import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.utils.AliasUtils
 import javax.inject.Inject
 
 @HiltViewModel
@@ -129,7 +130,7 @@ class UpdateAliasViewModel @Inject constructor(
             .onSuccess { details ->
                 val alias = item.itemType as ItemType.Alias
                 val email = alias.aliasEmail
-                val (prefix, suffix) = extractPrefixSuffix(email)
+                val (prefix, suffix) = AliasUtils.extractPrefixSuffix(email)
 
                 val mailboxes = details.availableMailboxes.map { mailbox ->
                     AliasMailboxUiModel(
@@ -168,7 +169,10 @@ class UpdateAliasViewModel @Inject constructor(
 
     fun updateAlias() = viewModelScope.launch(coroutineExceptionHandler) {
         val canUpdate = canUpdateAlias()
-        if (!canUpdate) return@launch
+        if (!canUpdate) {
+            PassLogger.i(TAG, "Cannot update alias")
+            return@launch
+        }
 
         val body = createUpdateAliasBody()
         isLoadingState.update { IsLoadingState.Loading }
@@ -181,31 +185,38 @@ class UpdateAliasViewModel @Inject constructor(
                 content = body
             )
                 .onSuccess { item ->
+                    PassLogger.i(TAG, "Alias successfully updated")
                     isAliasSavedState.update {
                         AliasSavedState.Success(
                             itemId = item.id,
                             alias = "" // we don't care about it as we are updating it
                         )
                     }
+                    isLoadingState.update { IsLoadingState.NotLoading }
                 }
                 .onError {
                     val defaultMessage = "Update alias error"
                     PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
                     snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.AliasUpdated)
+                    isLoadingState.update { IsLoadingState.NotLoading }
                 }
         } else {
             PassLogger.i(TAG, "Empty User Id")
             snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.ItemCreationError)
+            isLoadingState.update { IsLoadingState.NotLoading }
         }
-        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     private fun canUpdateAlias(): Boolean {
-        if (!itemDataChanged && !mailboxesChanged) return false
+        if (!itemDataChanged && !mailboxesChanged) {
+            PassLogger.i(TAG, "Nor item nor mailboxes have changed")
+            return false
+        }
 
         val aliasItem = aliasItemState.value
         val aliasItemValidationErrors = aliasItem.validate()
         if (aliasItemValidationErrors.isNotEmpty()) {
+            PassLogger.i(TAG, "alias item validation has failed: $aliasItemValidationErrors")
             aliasItemValidationErrorsState.update { aliasItemValidationErrors }
             return false
         }
@@ -237,23 +248,6 @@ class UpdateAliasViewModel @Inject constructor(
         )
         return body
     }
-
-    @Suppress("MagicNumber")
-    private fun extractPrefixSuffix(email: String): PrefixSuffix {
-        val parts = email.split(".")
-        val suffix = "${parts[parts.size - 2]}.${parts[parts.size - 1]}"
-        var prefix = ""
-        for (idx in 0..parts.size - 3) {
-            if (idx > 0) prefix += "."
-            prefix += parts[idx]
-        }
-        return PrefixSuffix(prefix, suffix)
-    }
-
-    internal data class PrefixSuffix(
-        val prefix: String,
-        val suffix: String
-    )
 
     companion object {
         const val TAG = "UpdateAliasViewModel"

@@ -23,8 +23,8 @@
     <!-- Home -->
     <string name="placeholder_item_search">Login, alias or note</string>
 
-    <!-- Messages -->
-    <string name="message_no_saved_credentials">You don\'t have any saved credentials.</string>
+    <!-- Empty List -->
+    <string name="empty_list_home_subtitle">Create a new item</string>
     <string name="message_no_trashed_credentials">You don\'t have any trashed credentials.</string>
 
     <!-- BottomSheet -->

@@ -3,18 +3,18 @@ package me.proton.pass.search
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
+import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.map
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
-import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import javax.inject.Inject
 
 class SearchItemsImpl @Inject constructor(
     private val crypto: KeyStoreCrypto,
-    observeActiveItems: me.proton.android.pass.data.api.usecases.ObserveActiveItems
+    observeActiveItems: ObserveActiveItems
 ) : SearchItems {
 
     private val queryState: MutableStateFlow<String> = MutableStateFlow("")

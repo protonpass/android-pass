@@ -14,20 +14,20 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.domain.ShareId
-import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.pass.presentation.UrlSanitizer
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
 abstract class BaseLoginViewModel(
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    observeActiveShare: me.proton.android.pass.data.api.usecases.ObserveActiveShare,
+    observeActiveShare: ObserveActiveShare,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 

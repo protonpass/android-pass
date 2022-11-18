@@ -7,6 +7,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.usecases.CreateItem
+import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
@@ -17,8 +19,6 @@ import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.PackageName
-import me.proton.android.pass.data.api.usecases.CreateItem
-import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.ItemCreationError
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -28,10 +28,10 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateLoginViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val createItem: me.proton.android.pass.data.api.usecases.CreateItem,
+    private val createItem: CreateItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val keyStoreCrypto: KeyStoreCrypto,
-    observeActiveShare: me.proton.android.pass.data.api.usecases.ObserveActiveShare,
+    observeActiveShare: ObserveActiveShare,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(snackbarMessageRepository, observeActiveShare, savedStateHandle) {
 

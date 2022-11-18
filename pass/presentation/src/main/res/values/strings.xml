@@ -83,6 +83,9 @@
     <string name="alert_confirm_clear_trash_title">Clear trash?</string>
     <string name="alert_confirm_clear_trash_message">Are you sure you want to clear the trash? All your trashed items will be deleted permanently</string>
 
+    <!-- List -->
+    <string name="empty_list_title">No items</string>
+
     <!-- Detail -->
     <string name="detail_init_error">Could not initialise the element</string>
     <string name="detail_send_to_trash_error">Could not send the element to the trash</string>

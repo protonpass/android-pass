@@ -4,13 +4,13 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
+import me.proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.domain.AliasOptions
 import me.proton.pass.domain.AliasSuffix
-import me.proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage
@@ -126,7 +126,7 @@ class CreateAliasViewModelTest {
 
     @Test
     fun `is able to handle CannotCreateMoreAliases`() = runTest {
-        createAlias.setResult(Result.Error(me.proton.android.pass.data.api.errors.CannotCreateMoreAliasesError()))
+        createAlias.setResult(Result.Error(CannotCreateMoreAliasesError()))
         setupContentsForCreation()
 
         viewModel.createAlias(TestShare.create().id)

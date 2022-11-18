@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.pass.autofill.PendingIntentUtils.getOpenAppPendingIntent
@@ -32,7 +33,6 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.Item
-import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import kotlin.coroutines.coroutineContext
 import kotlin.math.min
 
@@ -48,7 +48,7 @@ object AutoFillHandler {
         request: FillRequest,
         callback: FillCallback,
         cancellationSignal: CancellationSignal,
-        getSuggestedLoginItems: me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+        getSuggestedLoginItems: GetSuggestedLoginItems
     ) {
         val windowNode = getWindowNodes(request.fillContexts.last()).lastOrNull()
         if (windowNode?.rootViewNode == null) {
@@ -83,7 +83,7 @@ object AutoFillHandler {
         windowNode: AssistStructure.WindowNode,
         callback: FillCallback,
         request: FillRequest,
-        getSuggestedLoginItems: me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+        getSuggestedLoginItems: GetSuggestedLoginItems
     ) {
         val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
         if (assistInfo.fields.isEmpty()) return

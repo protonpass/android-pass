@@ -17,8 +17,8 @@ import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ShareId
-import me.proton.pass.domain.repositories.ItemRepository
-import me.proton.pass.domain.usecases.GetShareById
+import me.proton.android.pass.data.api.repositories.ItemRepository
+import me.proton.android.pass.data.api.usecases.GetShareById
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.InitError
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.ItemUpdateError
 import me.proton.pass.presentation.extension.toUiModel
@@ -30,8 +30,8 @@ import javax.inject.Inject
 class UpdateNoteViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository,
-    private val getShare: GetShareById,
+    private val itemRepository: me.proton.android.pass.data.api.repositories.ItemRepository,
+    private val getShare: me.proton.android.pass.data.api.usecases.GetShareById,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseNoteViewModel(snackbarMessageRepository, savedStateHandle) {

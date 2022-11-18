@@ -20,9 +20,9 @@ import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
-import me.proton.pass.domain.repositories.ItemRepository
-import me.proton.pass.domain.usecases.GetShareById
-import me.proton.pass.domain.usecases.ObserveActiveShare
+import me.proton.android.pass.data.api.repositories.ItemRepository
+import me.proton.android.pass.data.api.usecases.GetShareById
+import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.InitError
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.ItemUpdateError
 import me.proton.pass.presentation.extension.toUiModel
@@ -34,10 +34,10 @@ import javax.inject.Inject
 class UpdateLoginViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository,
-    private val getShare: GetShareById,
+    private val itemRepository: me.proton.android.pass.data.api.repositories.ItemRepository,
+    private val getShare: me.proton.android.pass.data.api.usecases.GetShareById,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    observeActiveShare: ObserveActiveShare,
+    observeActiveShare: me.proton.android.pass.data.api.usecases.ObserveActiveShare,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(snackbarMessageRepository, observeActiveShare, savedStateHandle) {
 

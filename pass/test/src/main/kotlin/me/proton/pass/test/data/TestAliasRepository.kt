@@ -2,13 +2,13 @@ package me.proton.pass.test.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import me.proton.android.pass.data.api.repositories.AliasRepository
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.domain.AliasDetails
 import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.domain.AliasOptions
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
-import me.proton.pass.domain.repositories.AliasRepository
 
 class TestAliasRepository : AliasRepository {
 

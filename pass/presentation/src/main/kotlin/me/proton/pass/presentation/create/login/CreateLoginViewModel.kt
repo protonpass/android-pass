@@ -17,8 +17,8 @@ import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.PackageName
-import me.proton.pass.domain.usecases.CreateItem
-import me.proton.pass.domain.usecases.ObserveActiveShare
+import me.proton.android.pass.data.api.usecases.CreateItem
+import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.ItemCreationError
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -28,10 +28,10 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateLoginViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val createItem: CreateItem,
+    private val createItem: me.proton.android.pass.data.api.usecases.CreateItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val keyStoreCrypto: KeyStoreCrypto,
-    observeActiveShare: ObserveActiveShare,
+    observeActiveShare: me.proton.android.pass.data.api.usecases.ObserveActiveShare,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(snackbarMessageRepository, observeActiveShare, savedStateHandle) {
 

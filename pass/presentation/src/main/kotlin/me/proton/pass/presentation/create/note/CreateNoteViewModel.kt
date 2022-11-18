@@ -7,6 +7,8 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.repositories.ItemRepository
+import me.proton.android.pass.data.api.usecases.GetShareById
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
@@ -14,8 +16,6 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.ShareId
-import me.proton.android.pass.data.api.repositories.ItemRepository
-import me.proton.android.pass.data.api.usecases.GetShareById
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.ItemCreationError
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -25,8 +25,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateNoteViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val getShare: me.proton.android.pass.data.api.usecases.GetShareById,
-    private val itemRepository: me.proton.android.pass.data.api.repositories.ItemRepository,
+    private val getShare: GetShareById,
+    private val itemRepository: ItemRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val keyStoreCrypto: KeyStoreCrypto,
     savedStateHandle: SavedStateHandle

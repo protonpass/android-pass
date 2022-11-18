@@ -11,6 +11,9 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.repositories.ItemRepository
+import me.proton.android.pass.data.api.usecases.ObserveTrashedItems
+import me.proton.android.pass.data.api.usecases.RefreshContent
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.ui.trash.TrashSnackbarMessage.ClearTrashError
@@ -22,9 +25,6 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.onError
-import me.proton.android.pass.data.api.repositories.ItemRepository
-import me.proton.android.pass.data.api.usecases.ObserveTrashedItems
-import me.proton.android.pass.data.api.usecases.RefreshContent
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -35,9 +35,9 @@ import javax.inject.Inject
 class TrashScreenViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val accountManager: AccountManager,
-    observeTrashedItems: me.proton.android.pass.data.api.usecases.ObserveTrashedItems,
-    private val itemRepository: me.proton.android.pass.data.api.repositories.ItemRepository,
-    private val refreshContent: me.proton.android.pass.data.api.usecases.RefreshContent,
+    observeTrashedItems: ObserveTrashedItems,
+    private val itemRepository: ItemRepository,
+    private val refreshContent: RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 

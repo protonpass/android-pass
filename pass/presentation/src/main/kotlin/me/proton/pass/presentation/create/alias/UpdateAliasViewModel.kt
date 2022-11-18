@@ -7,6 +7,11 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.repositories.AliasRepository
+import me.proton.android.pass.data.api.repositories.ItemRepository
+import me.proton.android.pass.data.api.usecases.UpdateAlias
+import me.proton.android.pass.data.api.usecases.UpdateAliasContent
+import me.proton.android.pass.data.api.usecases.UpdateAliasItemContent
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
@@ -27,11 +32,6 @@ import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
-import me.proton.android.pass.data.api.repositories.AliasRepository
-import me.proton.android.pass.data.api.repositories.ItemRepository
-import me.proton.android.pass.data.api.usecases.UpdateAlias
-import me.proton.android.pass.data.api.usecases.UpdateAliasContent
-import me.proton.android.pass.data.api.usecases.UpdateAliasItemContent
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsButtonEnabled
@@ -43,10 +43,10 @@ import javax.inject.Inject
 class UpdateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val cryptoContext: CryptoContext,
-    private val itemRepository: me.proton.android.pass.data.api.repositories.ItemRepository,
-    private val aliasRepository: me.proton.android.pass.data.api.repositories.AliasRepository,
+    private val itemRepository: ItemRepository,
+    private val aliasRepository: AliasRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val updateAliasUseCase: me.proton.android.pass.data.api.usecases.UpdateAlias,
+    private val updateAliasUseCase: UpdateAlias,
     savedStateHandle: SavedStateHandle
 ) : BaseAliasViewModel(snackbarMessageRepository, savedStateHandle) {
 
@@ -223,7 +223,7 @@ class UpdateAliasViewModel @Inject constructor(
         return true
     }
 
-    private fun createUpdateAliasBody(): me.proton.android.pass.data.api.usecases.UpdateAliasContent {
+    private fun createUpdateAliasBody(): UpdateAliasContent {
         val mailboxes = if (mailboxesChanged) {
             val selectedMailboxes = aliasItemState.value
                 .mailboxes
@@ -235,14 +235,14 @@ class UpdateAliasViewModel @Inject constructor(
         val itemData = if (itemDataChanged) {
             val aliasItem = aliasItemState.value
             Some(
-                me.proton.android.pass.data.api.usecases.UpdateAliasItemContent(
+                UpdateAliasItemContent(
                     title = aliasItem.title,
                     note = aliasItem.note
                 )
             )
         } else None
 
-        val body = me.proton.android.pass.data.api.usecases.UpdateAliasContent(
+        val body = UpdateAliasContent(
             mailboxes = mailboxes,
             itemData = itemData
         )

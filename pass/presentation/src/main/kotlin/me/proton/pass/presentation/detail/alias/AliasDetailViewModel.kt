@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.repositories.AliasRepository
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessage
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -22,7 +23,6 @@ import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.domain.AliasDetails
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
-import me.proton.android.pass.data.api.repositories.AliasRepository
 import me.proton.pass.presentation.detail.DetailSnackbarMessages
 import me.proton.pass.presentation.uievents.IsLoadingState
 import javax.inject.Inject
@@ -30,7 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AliasDetailViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
-    private val aliasRepository: me.proton.android.pass.data.api.repositories.AliasRepository,
+    private val aliasRepository: AliasRepository,
     private val accountManager: AccountManager,
     private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {

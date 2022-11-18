@@ -9,12 +9,12 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.map
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
-import me.proton.pass.domain.usecases.ObserveActiveItems
+import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import javax.inject.Inject
 
 class SearchItemsImpl @Inject constructor(
     private val crypto: KeyStoreCrypto,
-    observeActiveItems: ObserveActiveItems
+    observeActiveItems: me.proton.android.pass.data.api.usecases.ObserveActiveItems
 ) : SearchItems {
 
     private val queryState: MutableStateFlow<String> = MutableStateFlow("")

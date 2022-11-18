@@ -16,6 +16,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
+import me.proton.android.pass.data.api.usecases.CreateVault
+import me.proton.android.pass.data.api.usecases.GetCurrentShare
+import me.proton.android.pass.data.api.usecases.GetCurrentUserId
+import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
+import me.proton.android.pass.data.api.usecases.RefreshShares
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.PreferenceRepository
@@ -29,11 +34,6 @@ import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.Share
 import me.proton.pass.domain.entity.NewVault
-import me.proton.pass.domain.usecases.CreateVault
-import me.proton.pass.domain.usecases.GetCurrentShare
-import me.proton.pass.domain.usecases.GetCurrentUserId
-import me.proton.pass.domain.usecases.ObserveCurrentUser
-import me.proton.pass.domain.usecases.RefreshShares
 import me.proton.pass.presentation.components.navigation.drawer.DrawerUiState
 import me.proton.pass.presentation.components.navigation.drawer.NavigationDrawerSection
 import javax.inject.Inject
@@ -104,7 +104,7 @@ class AppViewModel @Inject constructor(
     private suspend fun onShareListReceived(
         list: List<Share>,
         userId: UserId,
-        createVault: CreateVault,
+        createVault: me.proton.android.pass.data.api.usecases.CreateVault,
         cryptoContext: CryptoContext
     ) {
         if (list.isEmpty()) {

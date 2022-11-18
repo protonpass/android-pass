@@ -37,7 +37,7 @@ android {
 
 dependencies {
     api(project(":pass:search:api"))
-    api(project(":pass:data"))
+    api(project(":pass:data:api"))
     implementation(project(":pass:common:api"))
 
     implementation(libs.kotlinx.coroutines.core)

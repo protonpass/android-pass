@@ -14,6 +14,9 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.usecases.RefreshContent
+import me.proton.android.pass.data.api.usecases.UpdateAutofillItem
+import me.proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
@@ -27,12 +30,9 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.toOption
-import me.proton.pass.data.usecases.UpdateAutofillItem
-import me.proton.pass.data.usecases.UpdateAutofillItemData
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.entity.PackageName
-import me.proton.pass.domain.usecases.RefreshContent
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState

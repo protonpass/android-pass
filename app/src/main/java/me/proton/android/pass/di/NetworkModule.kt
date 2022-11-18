@@ -34,32 +34,6 @@ import me.proton.core.network.data.di.DohProviderUrls
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.serverconnection.DohAlternativesListener
-import me.proton.pass.data.local.LocalItemDataSource
-import me.proton.pass.data.local.LocalItemDataSourceImpl
-import me.proton.pass.data.local.LocalShareDataSource
-import me.proton.pass.data.local.LocalShareDataSourceImpl
-import me.proton.pass.data.local.LocalVaultItemKeyDataSource
-import me.proton.pass.data.local.LocalVaultItemKeyDataSourceImpl
-import me.proton.pass.data.remote.RemoteAliasDataSource
-import me.proton.pass.data.remote.RemoteAliasDataSourceImpl
-import me.proton.pass.data.remote.RemoteItemDataSource
-import me.proton.pass.data.remote.RemoteItemDataSourceImpl
-import me.proton.pass.data.remote.RemoteKeyPacketDataSource
-import me.proton.pass.data.remote.RemoteKeyPacketDataSourceImpl
-import me.proton.pass.data.remote.RemoteShareDataSource
-import me.proton.pass.data.remote.RemoteShareDataSourceImpl
-import me.proton.pass.data.remote.RemoteVaultItemKeyDataSource
-import me.proton.pass.data.remote.RemoteVaultItemKeyDataSourceImpl
-import me.proton.pass.data.repositories.AliasRepositoryImpl
-import me.proton.pass.data.repositories.ItemRepositoryImpl
-import me.proton.pass.data.repositories.KeyPacketRepositoryImpl
-import me.proton.pass.data.repositories.ShareRepositoryImpl
-import me.proton.pass.data.repositories.VaultKeyRepositoryImpl
-import me.proton.pass.domain.repositories.AliasRepository
-import me.proton.pass.domain.repositories.ItemRepository
-import me.proton.pass.domain.repositories.KeyPacketRepository
-import me.proton.pass.domain.repositories.ShareRepository
-import me.proton.pass.domain.repositories.VaultKeyRepository
 import me.proton.core.util.kotlin.takeIfNotBlank
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -109,67 +83,4 @@ object NetworkModule {
 abstract class NetworkBindModule {
     @Binds
     abstract fun bindApiClient(apiClient: PassApiClient): ApiClient
-
-    @Binds
-    abstract fun bindRemoteShareDataSource(
-        remoteShareDataSource: RemoteShareDataSourceImpl
-    ): RemoteShareDataSource
-
-    @Binds
-    abstract fun bindLocalShareDataSource(
-        localShareDataSource: LocalShareDataSourceImpl
-    ): LocalShareDataSource
-
-    @Binds
-    abstract fun bindShareRepository(
-        shareRepositoryImpl: ShareRepositoryImpl
-    ): ShareRepository
-
-    @Binds
-    abstract fun bindVaultKeyRepository(
-        vaultKeyRepositoryImpl: VaultKeyRepositoryImpl
-    ): VaultKeyRepository
-
-    @Binds
-    abstract fun bindRemoteVaultKeyDataSource(
-        remoteVaultItemKeyDataSourceImpl: RemoteVaultItemKeyDataSourceImpl
-    ): RemoteVaultItemKeyDataSource
-
-    @Binds
-    abstract fun bindLocalVaultKeyDataSource(
-        localVaultItemKeyDataSourceImpl: LocalVaultItemKeyDataSourceImpl
-    ): LocalVaultItemKeyDataSource
-
-    @Binds
-    abstract fun bindItemRepository(itemRepositoryImpl: ItemRepositoryImpl): ItemRepository
-
-    @Binds
-    abstract fun bindRemoteItemDataSource(
-        remoteItemDataSourceImpl: RemoteItemDataSourceImpl
-    ): RemoteItemDataSource
-
-    @Binds
-    abstract fun bindLocalItemDataSource(
-        localItemDataSourceImpl: LocalItemDataSourceImpl
-    ): LocalItemDataSource
-
-    @Binds
-    abstract fun bindKeyPacketRepository(
-        keyPacketRepository: KeyPacketRepositoryImpl
-    ): KeyPacketRepository
-
-    @Binds
-    abstract fun bindRemoteKeyPacketDataSource(
-        remoteKeyPacketDataSource: RemoteKeyPacketDataSourceImpl
-    ): RemoteKeyPacketDataSource
-
-    @Binds
-    abstract fun bindAliasRepository(
-        aliasRepository: AliasRepositoryImpl
-    ): AliasRepository
-
-    @Binds
-    abstract fun bindRemoteAliasDataSource(
-        remoteAliasDataSource: RemoteAliasDataSourceImpl
-    ): RemoteAliasDataSource
 }

@@ -1,6 +1,8 @@
 package me.proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
+import me.proton.android.pass.data.api.repositories.AliasRepository
+import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.usecases.GetShareById
 import me.proton.android.pass.data.api.usecases.UpdateAlias
 import me.proton.android.pass.data.api.usecases.UpdateAliasContent
@@ -18,8 +20,8 @@ import me.proton.pass.domain.ShareId
 import javax.inject.Inject
 
 class UpdateAliasImpl @Inject constructor(
-    private val aliasRepository: me.proton.android.pass.data.api.repositories.AliasRepository,
-    private val itemRepository: me.proton.android.pass.data.api.repositories.ItemRepository,
+    private val aliasRepository: AliasRepository,
+    private val itemRepository: ItemRepository,
     private val getShareById: GetShareById
 ) : UpdateAlias {
 

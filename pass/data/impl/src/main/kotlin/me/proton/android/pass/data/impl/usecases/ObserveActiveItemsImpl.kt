@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
+import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.core.accountmanager.domain.AccountManager
@@ -21,7 +22,7 @@ class ObserveActiveItemsImpl @Inject constructor(
     accountManager: AccountManager,
     private val userManager: UserManager,
     private val observeActiveShare: ObserveActiveShare,
-    private val itemRepository: me.proton.android.pass.data.api.repositories.ItemRepository
+    private val itemRepository: ItemRepository
 ) : ObserveActiveItems {
 
     private val getCurrentUserIdFlow = accountManager.getPrimaryUserId()

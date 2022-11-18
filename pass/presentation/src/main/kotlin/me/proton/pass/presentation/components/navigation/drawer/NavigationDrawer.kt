@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DrawerState
 import androidx.compose.material.ModalDrawer
@@ -35,6 +36,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.presentation.compose.AccountPrimaryItem
@@ -68,6 +70,7 @@ fun ModalNavigationDrawer(
 ) {
     ModalDrawer(
         drawerState = drawerState,
+        drawerShape = CutCornerShape(0.dp),
         drawerContent = {
             NavigationDrawer(
                 drawerUiState = drawerUiState,
@@ -96,10 +99,10 @@ fun NavigationDrawer(
     val sidebarColors = requireNotNull(ProtonTheme.colors.sidebarColors)
     ProtonTheme(colors = sidebarColors) {
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize(),
             color = ProtonTheme.colors.backgroundNorm
         ) {
-            Column(modifier) {
+            Column {
                 if (drawerUiState.currentUser != null) {
                     AccountPrimaryItem(
                         modifier = Modifier

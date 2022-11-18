@@ -27,8 +27,8 @@ import me.proton.pass.common.api.some
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
-import me.proton.pass.domain.repositories.ItemRepository
-import me.proton.pass.domain.usecases.TrashItem
+import me.proton.android.pass.data.api.repositories.ItemRepository
+import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.pass.presentation.detail.DetailSnackbarMessages.InitError
 import me.proton.pass.presentation.detail.DetailSnackbarMessages.SendToTrashError
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -39,8 +39,8 @@ import javax.inject.Inject
 class ItemDetailViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val accountManager: AccountManager,
-    private val itemRepository: ItemRepository,
-    private val trashItem: TrashItem,
+    private val itemRepository: me.proton.android.pass.data.api.repositories.ItemRepository,
+    private val trashItem: me.proton.android.pass.data.api.usecases.TrashItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {

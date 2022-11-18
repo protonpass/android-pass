@@ -4,6 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
+import me.proton.android.pass.data.impl.db.PassDatabase
+import me.proton.android.pass.data.impl.db.entities.ItemEntity
+import me.proton.android.pass.data.impl.db.entities.ItemKeyEntity
+import me.proton.android.pass.data.impl.db.entities.ShareEntity
+import me.proton.android.pass.data.impl.db.entities.VaultKeyEntity
 import me.proton.core.account.data.db.AccountConverters
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.account.data.entity.AccountEntity
@@ -29,11 +34,6 @@ import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.entity.KeySaltEntity
 import me.proton.core.key.data.entity.PublicAddressEntity
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
-import me.proton.pass.data.db.PassDatabase
-import me.proton.pass.data.db.entities.ItemEntity
-import me.proton.pass.data.db.entities.ItemKeyEntity
-import me.proton.pass.data.db.entities.ShareEntity
-import me.proton.pass.data.db.entities.VaultKeyEntity
 import me.proton.core.payment.data.local.db.PaymentDatabase
 import me.proton.core.payment.data.local.entity.GooglePurchaseEntity
 import me.proton.core.user.data.db.AddressDatabase

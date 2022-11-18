@@ -28,10 +28,10 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.onError
 import me.proton.pass.domain.Item
-import me.proton.pass.domain.usecases.ObserveActiveShare
-import me.proton.pass.domain.usecases.ObserveCurrentUser
-import me.proton.pass.domain.usecases.RefreshContent
-import me.proton.pass.domain.usecases.TrashItem
+import me.proton.android.pass.data.api.usecases.ObserveActiveShare
+import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
+import me.proton.android.pass.data.api.usecases.RefreshContent
+import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -43,12 +43,12 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val trashItem: TrashItem,
+    private val trashItem: me.proton.android.pass.data.api.usecases.TrashItem,
     private val searchItems: SearchItems,
-    private val refreshContent: RefreshContent,
+    private val refreshContent: me.proton.android.pass.data.api.usecases.RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    observeCurrentUser: ObserveCurrentUser,
-    observeActiveShare: ObserveActiveShare
+    observeCurrentUser: me.proton.android.pass.data.api.usecases.ObserveCurrentUser,
+    observeActiveShare: me.proton.android.pass.data.api.usecases.ObserveActiveShare
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->

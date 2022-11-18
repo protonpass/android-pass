@@ -22,7 +22,7 @@ import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.domain.AliasDetails
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
-import me.proton.pass.domain.repositories.AliasRepository
+import me.proton.android.pass.data.api.repositories.AliasRepository
 import me.proton.pass.presentation.detail.DetailSnackbarMessages
 import me.proton.pass.presentation.uievents.IsLoadingState
 import javax.inject.Inject
@@ -30,7 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AliasDetailViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
-    private val aliasRepository: AliasRepository,
+    private val aliasRepository: me.proton.android.pass.data.api.repositories.AliasRepository,
     private val accountManager: AccountManager,
     private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {

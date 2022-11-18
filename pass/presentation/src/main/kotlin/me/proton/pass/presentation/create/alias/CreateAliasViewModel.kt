@@ -24,9 +24,9 @@ import me.proton.pass.domain.AliasOptions
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.NewAlias
-import me.proton.pass.domain.errors.CannotCreateMoreAliasesError
-import me.proton.pass.domain.repositories.AliasRepository
-import me.proton.pass.domain.usecases.CreateAlias
+import me.proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
+import me.proton.android.pass.data.api.repositories.AliasRepository
+import me.proton.android.pass.data.api.usecases.CreateAlias
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.ItemCreationError
 import me.proton.pass.presentation.uievents.AliasSavedState
@@ -37,8 +37,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val aliasRepository: AliasRepository,
-    private val createAlias: CreateAlias,
+    private val aliasRepository: me.proton.android.pass.data.api.repositories.AliasRepository,
+    private val createAlias: me.proton.android.pass.data.api.usecases.CreateAlias,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseAliasViewModel(snackbarMessageRepository, savedStateHandle) {
@@ -220,7 +220,7 @@ class CreateAliasViewModel @Inject constructor(
     }
 
     private suspend fun onCreateAliasError(cause: Throwable?) {
-        if (cause is CannotCreateMoreAliasesError) {
+        if (cause is me.proton.android.pass.data.api.errors.CannotCreateMoreAliasesError) {
             snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.CannotCreateMoreAliasesError)
         } else {
             val defaultMessage = "Create alias error"

@@ -103,6 +103,7 @@ dependencies {
     implementation(project(":pass:biometry:api"))
     implementation(project(":pass:common:api"))
     implementation(project(":pass:common-ui:api"))
+    implementation(project(":pass:data:api"))
     implementation(project(":pass:domain"))
     implementation(project(":pass:log"))
     implementation(project(":pass:notifications:api"))

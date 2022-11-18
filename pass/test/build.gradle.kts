@@ -25,6 +25,7 @@ dependencies {
     implementation(libs.core.user)
     implementation(libs.core.utilKotlin)
     implementation(project(":pass:common:api"))
+    implementation(project(":pass:data:api"))
     implementation(project(":pass:domain"))
     implementation(project(":pass:notifications:api"))
 }

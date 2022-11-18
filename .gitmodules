@@ -1,3 +1,0 @@
-[submodule "pass/data/contents-proto-definition"]
-	path = pass/data/contents-proto-definition
-	url = ../../../proton/clients/pass/contents-proto-definition.git

@@ -43,12 +43,12 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val trashItem: me.proton.android.pass.data.api.usecases.TrashItem,
+    private val trashItem: TrashItem,
     private val searchItems: SearchItems,
-    private val refreshContent: me.proton.android.pass.data.api.usecases.RefreshContent,
+    private val refreshContent: RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    observeCurrentUser: me.proton.android.pass.data.api.usecases.ObserveCurrentUser,
-    observeActiveShare: me.proton.android.pass.data.api.usecases.ObserveActiveShare
+    observeCurrentUser: ObserveCurrentUser,
+    observeActiveShare: ObserveActiveShare
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->

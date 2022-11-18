@@ -104,7 +104,7 @@ class AppViewModel @Inject constructor(
     private suspend fun onShareListReceived(
         list: List<Share>,
         userId: UserId,
-        createVault: me.proton.android.pass.data.api.usecases.CreateVault,
+        createVault: CreateVault,
         cryptoContext: CryptoContext
     ) {
         if (list.isEmpty()) {

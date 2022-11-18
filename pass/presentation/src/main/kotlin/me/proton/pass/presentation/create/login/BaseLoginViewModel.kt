@@ -20,14 +20,14 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.domain.ShareId
-import me.proton.pass.domain.usecases.ObserveActiveShare
+import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.pass.presentation.UrlSanitizer
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
 abstract class BaseLoginViewModel(
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    observeActiveShare: ObserveActiveShare,
+    observeActiveShare: me.proton.android.pass.data.api.usecases.ObserveActiveShare,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 

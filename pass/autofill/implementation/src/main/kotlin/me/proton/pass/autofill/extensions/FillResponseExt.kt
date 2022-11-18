@@ -9,6 +9,7 @@ import android.service.autofill.SaveInfo
 import android.view.autofill.AutofillId
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
+import me.proton.android.pass.data.api.extensions.loginUsername
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.pass.autofill.DatasetBuilderOptions
 import me.proton.pass.autofill.DatasetUtils
@@ -25,7 +26,6 @@ import me.proton.pass.autofill.ui.autofill.ItemFieldMapper
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.toOption
-import me.proton.pass.data.extensions.loginUsername
 import me.proton.pass.domain.Item
 import me.proton.pass.presentation.extension.itemName
 

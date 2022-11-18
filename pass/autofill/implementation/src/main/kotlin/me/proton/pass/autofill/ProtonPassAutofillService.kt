@@ -8,14 +8,14 @@ import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.pass.domain.usecases.GetSuggestedLoginItems
+import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProtonPassAutofillService : AutofillService() {
 
     @Inject
-    lateinit var getSuggestedLoginItems: GetSuggestedLoginItems
+    lateinit var getSuggestedLoginItems: me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 
     @Inject
     lateinit var cryptoContext: CryptoContext

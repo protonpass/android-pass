@@ -17,7 +17,7 @@
  */
 
 import java.io.FileInputStream
-import java.util.Properties
+import java.util.*
 
 plugins {
     id("com.android.application")
@@ -260,7 +260,8 @@ dependencies {
     implementation(project(":pass:biometry:implementation"))
     implementation(project(":pass:common:api"))
     implementation(project(":pass:common-ui:api"))
-    implementation(project(":pass:data"))
+    implementation(project(":pass:data:api"))
+    implementation(project(":pass:data:impl"))
     implementation(project(":pass:domain"))
     implementation(project(":pass:navigation:api"))
     implementation(project(":pass:notifications:api"))

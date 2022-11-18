@@ -27,7 +27,7 @@ internal fun Home(
         modifier = modifier,
         items = items,
         highlight = highlight,
-        emptyListMessage = R.string.message_no_saved_credentials,
+        emptyListMessage = R.string.empty_list_home_subtitle,
         onItemClick = onItemClick,
         onRefresh = onRefresh,
         isRefreshing = isRefreshing,

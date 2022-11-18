@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.commonui.api.applyIf
 
 @Composable
 fun RoundedCornersContainer(
@@ -17,16 +18,13 @@ fun RoundedCornersContainer(
     onClick: (() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
-
-    var boxModifier = modifier.clip(RoundedCornerShape(12.dp))
-    boxModifier = if (onClick != null) {
-        boxModifier.clickable { onClick() }
-    } else {
-        boxModifier
-    }
-
     Box(
-        modifier = boxModifier
+        modifier = modifier
+            .clip(RoundedCornerShape(12.dp))
+            .applyIf(
+                condition = onClick != null,
+                ifTrue = { clickable { onClick?.invoke() } }
+            )
             .border(
                 width = 1.dp,
                 color = ProtonTheme.colors.separatorNorm,

@@ -29,5 +29,5 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.core.crypto)
     implementation(libs.core.utilKotlin)
-    implementation(project(":pass:log"))
+    implementation(projects.pass.log)
 }

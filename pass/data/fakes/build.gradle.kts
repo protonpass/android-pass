@@ -13,5 +13,5 @@ android {
     }
 }
 dependencies {
-    implementation(project(":pass:data:api"))
+    implementation(projects.pass.data.api)
 }

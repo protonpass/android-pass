@@ -46,8 +46,8 @@ dependencies {
     implementation(libs.core.key)
     implementation(libs.core.user)
 
-    implementation(project(":pass:common:api"))
-    implementation(project(":pass:log"))
+    implementation(projects.pass.common.api)
+    implementation(projects.pass.log)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

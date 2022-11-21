@@ -80,7 +80,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.core.presentation.compose)
 
-    implementation(project(":pass:common-ui:api"))
+    implementation(projects.pass.commonUi.api)
 
     testImplementation(libs.turbine)
     testImplementation(libs.truth)

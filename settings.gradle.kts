@@ -19,6 +19,8 @@ includeCoreBuild {
     includeBuild("gopenpgp")
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
 include(":app")
 include(":pass:autofill:api")
 include(":pass:autofill:demo")

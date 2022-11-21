@@ -74,6 +74,8 @@
     <string name="action_edit_placeholder">Edit %s</string>
     <string name="action_reveal_password">Reveal password</string>
     <string name="action_conceal_password">Conceal password</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_restore">Restore</string>
 
     <!-- Alerts -->
     <string name="alert_confirm_item_send_to_trash_title">Send item to trash?</string>
@@ -82,9 +84,29 @@
     <string name="alert_confirm_item_deletion_message">Are you sure you want to permanently delete \'%s\'?</string>
     <string name="alert_confirm_clear_trash_title">Clear trash?</string>
     <string name="alert_confirm_clear_trash_message">Are you sure you want to clear the trash? All your trashed items will be deleted permanently</string>
+    <string name="alert_confirm_sign_out_title">Sign out?</string>
+    <string name="alert_confirm_sign_out_message">Are you sure you want to sign out?</string>
 
-    <!-- List -->
+    <!-- Home -->
+    <string name="placeholder_item_search">Login, alias or note</string>
+    <string name="sorting_bottomsheet_title">Sorting</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_type">Sort by type</string>
     <string name="empty_list_title">No items</string>
+    <string name="title_new">New</string>
+    <string name="action_login">Login</string>
+    <string name="action_alias">Alias</string>
+    <string name="action_note">Note</string>
+    <string name="action_password">Password</string>
+    <string name="empty_list_home_subtitle">Create a new item</string>
+    <string name="error_observing_items">Error observing items</string>
+    <string name="error_observing_share">Error observing share</string>
+    <string name="error_refreshing">Error performing refresh</string>
+    <string name="error_clearing_trash">Error clearing trash</string>
+    <string name="error_deleting_item">Error deleting item</string>
+
+    <!-- Trash -->
+    <string name="message_no_trashed_credentials">You don\'t have any trashed credentials.</string>
 
     <!-- Detail -->
     <string name="detail_init_error">Could not initialise the element</string>

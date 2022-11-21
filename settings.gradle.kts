@@ -1,5 +1,18 @@
 rootProject.name = "ProtonPass"
 
+fun getProtosUrl(): String {
+    val isCI = System.getenv("CI").toBoolean()
+    if (isCI) {
+        val username = "gitlab-ci-token"
+        val token = System.getenv("CI_JOB_TOKEN")
+        return "https://${username}:${token}@gitlab.protontech.ch/proton/clients/pass/contents-proto-definition.git"
+    } else {
+        val username = "AndroidDeployToken"
+        val token = "glpat-Poxe3LKtUJSqKXKgusac"
+        return "https://${username}:${token}@gitlab.protontech.ch/proton/clients/pass/contents-proto-definition.git"
+    }
+}
+
 pluginManagement {
     includeBuild("build-logic")
     repositories {
@@ -16,6 +29,12 @@ plugins {
 includeCoreBuild {
     branch.set("main")
     includeBuild("gopenpgp")
+
+    includeRepo("contents-proto-definition") {
+        uri.set(getProtosUrl())
+        branch.set("master")
+        checkoutDirectory.set(file("./pass/protos/contents-proto-definition"))
+    }
 }
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")

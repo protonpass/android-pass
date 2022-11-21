@@ -112,3 +112,5 @@ sentry.properties
 gradle-user-home/
 profile-out*/
 
+# pass protobuf repo (handled by gradle plugin)
+pass/protos/contents-proto-definition

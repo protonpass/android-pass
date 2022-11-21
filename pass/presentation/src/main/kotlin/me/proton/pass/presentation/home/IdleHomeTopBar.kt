@@ -3,18 +3,14 @@ package me.proton.pass.presentation.home
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.android.pass.ui.shared.HamburgerIcon
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.commonui.api.ThemePreviewProvider
 
 @ExperimentalMaterialApi
 @Composable
@@ -51,21 +47,4 @@ fun IdleHomeTopBar(
             }
         }
     )
-}
-
-@Preview
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun IdleHomeTopBarPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
-) {
-    ProtonTheme(isDark = isDarkMode) {
-        Surface {
-            IdleHomeTopBar(
-                startSearchMode = {},
-                onDrawerIconClick = {},
-                onMoreOptionsClick = {}
-            )
-        }
-    }
 }

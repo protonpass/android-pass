@@ -592,11 +592,11 @@ class ItemRepositoryImpl @Inject constructor(
             id = ItemId(entity.id),
             revision = entity.revision,
             shareId = ShareId(entity.shareId),
-            itemType = entity.itemType(cryptoContext),
+            itemType = entity.itemType(cryptoContext.keyStoreCrypto),
             title = entity.encryptedTitle,
             note = entity.encryptedNote,
             content = entity.encryptedContent,
-            allowedPackageNames = entity.allowedApps(cryptoContext)
+            allowedPackageNames = entity.allowedApps(cryptoContext.keyStoreCrypto)
         )
 
     companion object {

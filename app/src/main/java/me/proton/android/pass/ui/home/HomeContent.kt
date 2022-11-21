@@ -34,6 +34,7 @@ internal fun HomeContent(
     onStopSearching: () -> Unit,
     sendItemToTrash: (ItemUiModel) -> Unit,
     onDrawerIconClick: () -> Unit,
+    onMoreOptionsClick: () -> Unit,
     onAddItemClick: (Option<ShareId>) -> Unit,
     onRefresh: () -> Unit
 ) {
@@ -58,7 +59,7 @@ internal fun HomeContent(
                 onEnterSearch = onEnterSearch,
                 onStopSearching = onStopSearching,
                 onDrawerIconClick = onDrawerIconClick,
-                onMoreOptionsClick = { } // Not implemented yet
+                onMoreOptionsClick = onMoreOptionsClick
             )
         }
     ) { contentPadding ->

@@ -22,6 +22,9 @@
 
     <!-- Home -->
     <string name="placeholder_item_search">Login, alias or note</string>
+    <string name="sorting_bottomsheet_title">Sorting</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_type">Sort by type</string>
 
     <!-- Empty List -->
     <string name="empty_list_home_subtitle">Create a new item</string>

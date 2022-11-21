@@ -50,7 +50,7 @@ internal fun AliasContent(
     val scope = rememberCoroutineScope()
 
     val (bottomSheetContentType, setBottomSheetContentType) = remember {
-        mutableStateOf<AliasBottomSheetContent>(AliasBottomSheetContent.Suffix)
+        mutableStateOf<AliasBottomSheetType>(AliasBottomSheetType.Suffix)
     }
 
     val bottomSheetState = rememberModalBottomSheetState(
@@ -61,7 +61,7 @@ internal fun AliasContent(
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
-            BottomSheetContents(
+            AliasBottomSheetContents(
                 modelState = uiState.aliasItem,
                 contentType = bottomSheetContentType,
                 onSuffixSelect = { suffix ->
@@ -102,14 +102,14 @@ internal fun AliasContent(
                 onSuffixClick = {
                     scope.launch {
                         if (canEdit) {
-                            setBottomSheetContentType(AliasBottomSheetContent.Suffix)
+                            setBottomSheetContentType(AliasBottomSheetType.Suffix)
                             bottomSheetState.show()
                         }
                     }
                 },
                 onMailboxClick = {
                     scope.launch {
-                        setBottomSheetContentType(AliasBottomSheetContent.Mailbox)
+                        setBottomSheetContentType(AliasBottomSheetType.Mailbox)
                         bottomSheetState.show()
                     }
                 },

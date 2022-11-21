@@ -13,8 +13,8 @@ android {
     }
 }
 dependencies {
-    implementation(project(":pass:common:api"))
-    implementation(project(":pass:notifications:api"))
+    implementation(projects.pass.common.api)
+    implementation(projects.pass.notifications.api)
 
     implementation(libs.kotlinx.coroutines.core)
 }

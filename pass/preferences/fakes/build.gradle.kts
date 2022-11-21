@@ -5,6 +5,6 @@ plugins {
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
-    implementation(project(":pass:common:api"))
-    implementation(project(":pass:preferences:api"))
+    implementation(projects.pass.common.api)
+    implementation(projects.pass.preferences.api)
 }

@@ -22,6 +22,6 @@ dependencies {
     implementation(libs.core.domain)
     implementation(libs.core.key)
     implementation(libs.core.user)
-    implementation(project(":pass:common:api"))
-    implementation(project(":pass:domain"))
+    implementation(projects.pass.common.api)
+    implementation(projects.pass.domain)
 }

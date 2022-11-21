@@ -24,8 +24,8 @@ dependencies {
     implementation(libs.core.key)
     implementation(libs.core.user)
     implementation(libs.core.utilKotlin)
-    implementation(project(":pass:common:api"))
-    implementation(project(":pass:data:api"))
-    implementation(project(":pass:domain"))
-    implementation(project(":pass:notifications:api"))
+    implementation(projects.pass.common.api)
+    implementation(projects.pass.data.api)
+    implementation(projects.pass.domain)
+    implementation(projects.pass.notifications.api)
 }

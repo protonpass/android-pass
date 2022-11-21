@@ -14,5 +14,5 @@ android {
 
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
-    implementation(project(":pass:biometry:api"))
+    implementation(projects.pass.biometry.api)
 }

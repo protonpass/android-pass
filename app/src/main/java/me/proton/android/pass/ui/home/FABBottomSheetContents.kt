@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import me.proton.android.pass.R
-import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
 import me.proton.pass.presentation.components.common.item.icon.AliasIcon
@@ -25,13 +24,14 @@ import me.proton.pass.presentation.components.common.item.icon.PasswordIcon
 
 @ExperimentalMaterialApi
 @Composable
-fun BottomSheetContents(
+fun FABBottomSheetContents(
+    modifier: Modifier = Modifier,
     state: ModalBottomSheetState,
-    shareId: Option<ShareId>,
+    shareId: ShareId?,
     navigation: HomeScreenNavigation
 ) {
     val scope = rememberCoroutineScope()
-    Column {
+    Column(modifier) {
         Text(
             text = stringResource(R.string.title_new),
             fontSize = 16.sp,
@@ -45,7 +45,7 @@ fun BottomSheetContents(
             onItemClick = {
                 scope.launch {
                     state.hide()
-                    shareId.map { navigation.toCreateLogin(it) }
+                    shareId?.let { navigation.toCreateLogin(it) }
                 }
             }
         )
@@ -56,7 +56,7 @@ fun BottomSheetContents(
             onItemClick = {
                 scope.launch {
                     state.hide()
-                    shareId.map { navigation.toCreateAlias(it) }
+                    shareId?.let { navigation.toCreateAlias(it) }
                 }
             }
         )
@@ -67,7 +67,7 @@ fun BottomSheetContents(
             onItemClick = {
                 scope.launch {
                     state.hide()
-                    shareId.map { navigation.toCreateNote(it) }
+                    shareId?.let { navigation.toCreateNote(it) }
                 }
             }
         )
@@ -78,7 +78,7 @@ fun BottomSheetContents(
             onItemClick = {
                 scope.launch {
                     state.hide()
-                    shareId.map { navigation.toCreatePassword(it) }
+                    shareId?.let { navigation.toCreatePassword(it) }
                 }
             }
         )

@@ -52,21 +52,21 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
-    implementation(project(":pass:common:api"))
-    implementation(project(":pass:data:api"))
-    implementation(project(":pass:domain"))
-    implementation(project(":pass:log"))
-    implementation(project(":pass:protos"))
+    implementation(projects.pass.common.api)
+    implementation(projects.pass.data.api)
+    implementation(projects.pass.domain)
+    implementation(projects.pass.log)
+    implementation(projects.pass.protos)
 
     testImplementation(libs.core.test.kotlin)
     testImplementation(libs.junit)
     testImplementation(libs.kotlinTest)
     testImplementation(libs.truth)
     testImplementation(libs.turbine)
-    testImplementation(project(":pass:test"))
+    testImplementation(projects.pass.test)
 
     androidTestImplementation(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
-    androidTestImplementation(project(":pass:test"))
+    androidTestImplementation(projects.pass.test)
 
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)

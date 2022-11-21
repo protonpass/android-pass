@@ -36,9 +36,9 @@ android {
 }
 
 dependencies {
-    api(project(":pass:search:api"))
-    api(project(":pass:data:api"))
-    implementation(project(":pass:common:api"))
+    api(projects.pass.search.api)
+    api(projects.pass.data.api)
+    implementation(projects.pass.common.api)
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.core.crypto)
@@ -47,7 +47,7 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
-    testImplementation(project(":pass:test"))
+    testImplementation(projects.pass.test)
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)

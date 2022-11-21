@@ -13,7 +13,7 @@ android {
     }
 }
 dependencies {
-    implementation(project(":pass:autofill:api"))
+    implementation(projects.pass.autofill.api)
 
     implementation(libs.kotlinx.coroutines.core)
 }

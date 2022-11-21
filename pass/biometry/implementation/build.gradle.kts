@@ -21,9 +21,9 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
-    implementation(project(":pass:common:api"))
-    implementation(project(":pass:biometry:api"))
-    implementation(project(":pass:log"))
+    implementation(projects.pass.common.api)
+    implementation(projects.pass.biometry.api)
+    implementation(projects.pass.log)
     implementation(libs.androidx.biometric)
     implementation(libs.core.utilKotlin)
 }

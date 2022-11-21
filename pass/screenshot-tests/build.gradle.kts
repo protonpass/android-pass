@@ -36,8 +36,8 @@ androidComponents {
 }
 
 dependencies {
-    implementation(project(":pass:presentation"))
-    implementation(project(":pass:common-ui:api"))
+    implementation(projects.pass.presentation)
+    implementation(projects.pass.commonUi.api)
 
     testImplementation(libs.androidx.compose.ui)
     testImplementation(libs.androidx.compose.uiTooling)

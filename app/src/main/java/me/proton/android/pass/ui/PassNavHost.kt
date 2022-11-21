@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.android.pass.ui.navigation.appGraph
-import me.proton.android.pass.ui.shared.ConfirmSignOutDialog
+import me.proton.pass.presentation.shared.ConfirmSignOutDialog
 import me.proton.pass.presentation.components.navigation.CoreNavigation
 import me.proton.pass.presentation.components.navigation.drawer.DrawerUiState
 import me.proton.pass.presentation.components.navigation.drawer.ModalNavigationDrawer

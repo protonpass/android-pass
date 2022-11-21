@@ -26,7 +26,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
-    val (currentBottomSheet, setBottomSheet) = remember { mutableStateOf(HomeBottomSheetType.FAB) }
+    val (currentBottomSheet, setBottomSheet) = remember { mutableStateOf(HomeBottomSheetType.CreateItem) }
 
     val bottomSheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
@@ -38,7 +38,7 @@ fun HomeScreen(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {
-                HomeBottomSheetType.FAB -> FABBottomSheetContents(
+                HomeBottomSheetType.CreateItem -> FABBottomSheetContents(
                     state = bottomSheetState,
                     navigation = homeScreenNavigation,
                     shareId = uiState.homeListUiState.selectedShare.value()
@@ -64,7 +64,7 @@ fun HomeScreen(
                 scope.launch { bottomSheetState.show() }
             },
             onAddItemClick = {
-                setBottomSheet(HomeBottomSheetType.FAB)
+                setBottomSheet(HomeBottomSheetType.CreateItem)
                 scope.launch { bottomSheetState.show() }
             },
             onRefresh = { viewModel.onRefresh() }

@@ -13,5 +13,8 @@ android {
     }
 }
 dependencies {
+    implementation(libs.core.user)
+    implementation(projects.pass.common.api)
     implementation(projects.pass.data.api)
+    implementation(projects.pass.domain)
 }

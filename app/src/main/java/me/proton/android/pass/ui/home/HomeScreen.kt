@@ -5,12 +5,15 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import me.proton.android.pass.ui.home.bottomsheet.SortingBottomSheetContents
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 
 @ExperimentalMaterialApi
@@ -23,6 +26,8 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
+    val (currentBottomSheet, setBottomSheet) = remember { mutableStateOf(HomeBottomSheetType.FAB) }
+
     val bottomSheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
@@ -32,11 +37,17 @@ fun HomeScreen(
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
-            BottomSheetContents(
-                state = bottomSheetState,
-                navigation = homeScreenNavigation,
-                shareId = uiState.homeListUiState.selectedShare
-            )
+            when (currentBottomSheet) {
+                HomeBottomSheetType.FAB -> FABBottomSheetContents(
+                    state = bottomSheetState,
+                    navigation = homeScreenNavigation,
+                    shareId = uiState.homeListUiState.selectedShare.value()
+                )
+                HomeBottomSheetType.Sorting -> SortingBottomSheetContents {}
+                HomeBottomSheetType.LoginOptions -> {}
+                HomeBottomSheetType.AliasOptions -> {}
+                HomeBottomSheetType.NoteOptions -> {}
+            }
         }
     ) {
         HomeContent(
@@ -48,7 +59,14 @@ fun HomeScreen(
             onStopSearching = { viewModel.onStopSearching() },
             sendItemToTrash = { viewModel.sendItemToTrash(it) },
             onDrawerIconClick = onDrawerIconClick,
-            onAddItemClick = { scope.launch { bottomSheetState.show() } },
+            onMoreOptionsClick = {
+                setBottomSheet(HomeBottomSheetType.Sorting)
+                scope.launch { bottomSheetState.show() }
+            },
+            onAddItemClick = {
+                setBottomSheet(HomeBottomSheetType.FAB)
+                scope.launch { bottomSheetState.show() }
+            },
             onRefresh = { viewModel.onRefresh() }
         )
     }

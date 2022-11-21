@@ -1,7 +1,7 @@
 package me.proton.android.pass.ui.home
 
 enum class HomeBottomSheetType {
-    FAB,
+    CreateItem,
     Sorting,
     LoginOptions,
     AliasOptions,

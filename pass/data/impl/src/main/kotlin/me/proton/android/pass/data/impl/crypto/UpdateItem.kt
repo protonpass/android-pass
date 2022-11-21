@@ -6,20 +6,31 @@ import me.proton.core.key.domain.decryptSessionKey
 import me.proton.core.key.domain.encryptData
 import me.proton.core.key.domain.signData
 import me.proton.core.key.domain.useKeys
+import me.proton.core.user.domain.entity.UserAddress
 import me.proton.pass.domain.KeyPacket
 import me.proton.pass.domain.key.ItemKey
 import me.proton.pass.domain.key.VaultKey
 import me.proton.pass.domain.key.usePrivateKey
-import me.proton.core.user.domain.entity.UserAddress
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
-class UpdateItem @Inject constructor(
-    private val cryptoContext: CryptoContext
-) : BaseCryptoOperation(cryptoContext) {
-
+interface UpdateItem {
     @Suppress("LongParameterList")
     fun createRequest(
+        vaultKey: VaultKey,
+        itemKey: ItemKey,
+        keyPacket: KeyPacket,
+        userAddress: UserAddress,
+        itemContent: ItemV1.Item,
+        lastRevision: Long
+    ): UpdateItemRequest
+}
+
+class UpdateItemImpl @Inject constructor(
+    private val cryptoContext: CryptoContext
+) : UpdateItem, BaseCryptoOperation(cryptoContext) {
+
+    override fun createRequest(
         vaultKey: VaultKey,
         itemKey: ItemKey,
         keyPacket: KeyPacket,

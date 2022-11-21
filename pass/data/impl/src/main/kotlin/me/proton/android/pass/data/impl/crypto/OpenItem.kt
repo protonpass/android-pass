@@ -25,12 +25,22 @@ import me.proton.pass.domain.key.usePrivateKey
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
-class OpenItem @Inject constructor(
+interface OpenItem {
+    fun open(
+        response: ItemRevision,
+        share: Share,
+        verifyKeys: List<PublicKey>,
+        vaultKeys: List<VaultKey>,
+        itemKeys: List<ItemKey>
+    ): Item
+}
+
+class OpenItemImpl @Inject constructor(
     private val cryptoContext: CryptoContext
-) : BaseCryptoOperation(cryptoContext) {
+) : OpenItem, BaseCryptoOperation(cryptoContext) {
 
     @Suppress("TooGenericExceptionThrown")
-    fun open(
+    override fun open(
         response: ItemRevision,
         share: Share,
         verifyKeys: List<PublicKey>,
@@ -87,7 +97,7 @@ class OpenItem @Inject constructor(
             title = decoded.metadata.name.encrypt(cryptoContext.keyStoreCrypto),
             note = decoded.metadata.note.encrypt(cryptoContext.keyStoreCrypto),
             content = reencryptedContents,
-            itemType = ItemType.fromParsed(cryptoContext, decoded, aliasEmail = response.aliasEmail),
+            itemType = ItemType.fromParsed(cryptoContext.keyStoreCrypto, decoded, aliasEmail = response.aliasEmail),
             allowedPackageNames = decoded.platformSpecific.android.allowedAppsList
                 .map { it.packageName }
         )

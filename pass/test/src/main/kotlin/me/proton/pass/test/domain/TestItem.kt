@@ -2,6 +2,7 @@ package me.proton.pass.test.domain
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId
@@ -32,7 +33,12 @@ object TestItem {
         )
     }
 
-    fun random(itemType: ItemType? = null, title: String? = null, note: String? = null): Item {
+    fun random(
+        itemType: ItemType? = null,
+        title: String? = null,
+        note: String? = null,
+        content: ByteArray? = null
+    ): Item {
         val itemTypeParam = itemType ?: ItemType.Login(
             randomString(),
             randomString().encrypt(TestKeyStoreCrypto),
@@ -40,6 +46,11 @@ object TestItem {
         )
         val titleParam = title ?: randomString()
         val noteParam = note ?: randomString()
+        val itemContent = if (content != null) {
+            TestKeyStoreCrypto.encrypt(PlainByteArray(content))
+        } else {
+            TestKeyStoreCrypto.encrypt(PlainByteArray(byteArrayOf(0x00)))
+        }
         return Item(
             id = ItemId(randomString()),
             revision = Random.nextLong(),
@@ -47,7 +58,7 @@ object TestItem {
             itemType = itemTypeParam,
             title = TestKeyStoreCrypto.encrypt(titleParam),
             note = TestKeyStoreCrypto.encrypt(noteParam),
-            content = EncryptedByteArray(byteArrayOf()),
+            content = itemContent,
             allowedPackageNames = emptyList()
         )
     }

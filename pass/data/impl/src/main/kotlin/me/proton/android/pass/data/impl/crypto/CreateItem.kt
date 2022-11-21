@@ -19,16 +19,26 @@ import me.proton.pass.domain.key.publicKey
 import me.proton.pass.domain.key.usePrivateKey
 import javax.inject.Inject
 
-class CreateItem @Inject constructor(
-    private val cryptoContext: CryptoContext
-) : BaseCryptoOperation(cryptoContext) {
-
+interface CreateItem {
     fun create(
         vaultKey: VaultKey,
         itemKey: ItemKey,
         userAddress: UserAddress,
         itemContents: ItemContents,
         packageName: PackageName? = null
+    ): CreateItemRequest
+}
+
+class CreateItemImpl @Inject constructor(
+    private val cryptoContext: CryptoContext
+) : CreateItem, BaseCryptoOperation(cryptoContext) {
+
+    override fun create(
+        vaultKey: VaultKey,
+        itemKey: ItemKey,
+        userAddress: UserAddress,
+        itemContents: ItemContents,
+        packageName: PackageName?
     ): CreateItemRequest {
         val serializedItem = itemContents.serializeToProto(packageName).toByteArray()
         val vaultKeyPublicKey = vaultKey.publicKey(cryptoContext)

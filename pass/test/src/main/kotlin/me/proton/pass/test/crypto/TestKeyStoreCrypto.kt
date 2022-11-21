@@ -8,7 +8,7 @@ import me.proton.core.crypto.common.keystore.PlainByteArray
 class TestException(override val message: String) : RuntimeException(message)
 
 object TestKeyStoreCrypto : KeyStoreCrypto {
-    const val ENCRYPTED_SUFFIX = "-encrypted"
+    private const val ENCRYPTED_SUFFIX = "-encrypted"
     private val ENCRYPTED_TRAIL = listOf(0xCA.toByte(), 0xFE.toByte())
 
     override fun isUsingKeyStore(): Boolean = true

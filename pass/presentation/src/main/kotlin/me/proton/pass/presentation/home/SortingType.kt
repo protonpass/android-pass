@@ -1,4 +1,4 @@
-package me.proton.pass.presentation.home.bottomsheet
+package me.proton.pass.presentation.home
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Stable

@@ -28,6 +28,7 @@ import me.proton.pass.presentation.shared.ConfirmItemDeletionDialog
 internal fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
+    shouldScrollToTop: Boolean,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     homeScreenNavigation: HomeScreenNavigation,
     onSearchQueryChange: (String) -> Unit,
@@ -37,7 +38,8 @@ internal fun HomeContent(
     onDrawerIconClick: () -> Unit,
     onMoreOptionsClick: () -> Unit,
     onAddItemClick: (Option<ShareId>) -> Unit,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    onScrollToTop: () -> Unit
 ) {
     // Only enable the backhandler if we are in search mode
     BackHandler(enabled = uiState.searchUiState.inSearchMode) {
@@ -69,6 +71,7 @@ internal fun HomeContent(
         Home(
             modifier = Modifier.padding(contentPadding),
             items = uiState.homeListUiState.items,
+            shouldScrollToTop = shouldScrollToTop,
             highlight = uiState.searchUiState.searchQuery,
             onItemClick = { item ->
                 keyboardController?.hide()
@@ -78,7 +81,8 @@ internal fun HomeContent(
             onDeleteItemClicked = { itemToDelete = it },
             isLoading = uiState.homeListUiState.isLoading,
             isRefreshing = uiState.homeListUiState.isRefreshing,
-            onRefresh = onRefresh
+            onRefresh = onRefresh,
+            onScrollToTop = onScrollToTop
         )
         ConfirmItemDeletionDialog(
             state = itemToDelete,

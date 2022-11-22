@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
+import me.proton.pass.presentation.home.SortingType
 
 @ExperimentalMaterialApi
 @Composable

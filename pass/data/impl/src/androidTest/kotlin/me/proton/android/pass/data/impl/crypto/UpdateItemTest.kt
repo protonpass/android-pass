@@ -34,7 +34,7 @@ class UpdateItemTest {
     @Test
     fun canUpdateItem() {
         val userAddress = TestUtils.createUserAddress(cryptoContext)
-        val instance = UpdateItem(cryptoContext)
+        val instance = UpdateItemImpl(cryptoContext)
         val (vaultKey, itemKey) = TestUtils.createVaultKeyItemKey(cryptoContext)
         val lastRevision = Random.nextLong()
 

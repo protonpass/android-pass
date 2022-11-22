@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -83,7 +85,9 @@ class HomeViewModel @Inject constructor(
             SortingType.ByName -> result.map { list -> list.sortByTitle(keyStoreCrypto) }
             SortingType.ByItemType -> result.map { list -> list.sortByItemType(keyStoreCrypto) }
         }
-    }.distinctUntilChanged()
+    }
+        .flowOn(Dispatchers.Default)
+        .distinctUntilChanged()
 
     private val resultsFlow: Flow<Result<List<ItemUiModel>>> = combine(
         sortedListItemFlow,

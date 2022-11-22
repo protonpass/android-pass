@@ -12,11 +12,11 @@ import me.proton.core.key.domain.getArmored
 import me.proton.core.key.domain.getBase64Decoded
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyData
+import me.proton.core.user.domain.entity.UserAddress
 import me.proton.pass.domain.ItemContents
 import me.proton.pass.domain.key.ItemKey
 import me.proton.pass.domain.key.VaultKey
 import me.proton.pass.domain.key.usePrivateKey
-import me.proton.core.user.domain.entity.UserAddress
 import me.proton.pass.test.TestUtils.randomString
 import me.proton.pass.test.crypto.TestKeyStoreCrypto
 import org.junit.Test
@@ -41,10 +41,10 @@ class CreateItemTest {
             note = randomString()
         )
 
-        val instance = CreateItem(cryptoContext)
+        val instance = CreateItemImpl(cryptoContext)
         val request = instance.create(vaultKey, itemKey, userAddress, contents)
 
-        assertEquals(request.contentFormatVersion, CreateItem.CONTENT_FORMAT_VERSION)
+        assertEquals(request.contentFormatVersion, CreateItemImpl.CONTENT_FORMAT_VERSION)
         assertTrue(request.labels.isEmpty())
         assertEquals(request.rotationId, vaultKey.rotationId)
 

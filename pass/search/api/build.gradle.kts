@@ -38,7 +38,7 @@ android {
 
 dependencies {
     api(projects.pass.domain)
-    implementation(projects.pass.common.api)
+    api(projects.pass.common.api)
 
     implementation(libs.kotlinx.coroutines.core)
 }

@@ -27,6 +27,7 @@ fun HomeScreen(
 ) {
     val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
     val (currentBottomSheet, setBottomSheet) = remember { mutableStateOf(HomeBottomSheetType.CreateItem) }
+    val (shouldScrollToTop, setScrollToTop) = remember { mutableStateOf(false) }
 
     val bottomSheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
@@ -43,7 +44,15 @@ fun HomeScreen(
                     navigation = homeScreenNavigation,
                     shareId = uiState.homeListUiState.selectedShare.value()
                 )
-                HomeBottomSheetType.Sorting -> SortingBottomSheetContents {}
+                HomeBottomSheetType.Sorting -> SortingBottomSheetContents(
+                    sortingType = uiState.homeListUiState.sortingType
+                ) {
+                    viewModel.onSortingTypeChanged(it)
+                    setScrollToTop(true)
+                    scope.launch {
+                        bottomSheetState.hide()
+                    }
+                }
                 HomeBottomSheetType.LoginOptions -> {}
                 HomeBottomSheetType.AliasOptions -> {}
                 HomeBottomSheetType.NoteOptions -> {}
@@ -53,6 +62,7 @@ fun HomeScreen(
         HomeContent(
             modifier = modifier,
             uiState = uiState,
+            shouldScrollToTop = shouldScrollToTop,
             homeScreenNavigation = homeScreenNavigation,
             onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
             onEnterSearch = { viewModel.onEnterSearch() },
@@ -67,7 +77,8 @@ fun HomeScreen(
                 setBottomSheet(HomeBottomSheetType.CreateItem)
                 scope.launch { bottomSheetState.show() }
             },
-            onRefresh = { viewModel.onRefresh() }
+            onRefresh = { viewModel.onRefresh() },
+            onScrollToTop = { setScrollToTop(false) }
         )
     }
 }

@@ -10,12 +10,14 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
 import me.proton.android.pass.data.api.usecases.RefreshContent
@@ -23,6 +25,7 @@ import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
@@ -36,7 +39,7 @@ import me.proton.pass.presentation.home.HomeSnackbarMessage.ObserveShareError
 import me.proton.pass.presentation.home.HomeSnackbarMessage.RefreshError
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
-import me.proton.pass.search.SearchItems
+import me.proton.pass.search.ItemFilter
 import javax.inject.Inject
 
 @ExperimentalMaterialApi
@@ -44,11 +47,12 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val trashItem: TrashItem,
-    private val searchItems: SearchItems,
     private val refreshContent: RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     observeCurrentUser: ObserveCurrentUser,
-    observeActiveShare: ObserveActiveShare
+    observeActiveShare: ObserveActiveShare,
+    observeActiveItems: ObserveActiveItems,
+    itemFilter: ItemFilter
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -56,13 +60,6 @@ class HomeViewModel @Inject constructor(
     }
 
     private val currentUserFlow = observeCurrentUser().filterNotNull()
-
-    private val listItems: Flow<Result<List<ItemUiModel>>> = searchItems.observeResults()
-        .mapLatest { result: Result<List<Item>> ->
-            result.map { list ->
-                list.map { it.toUiModel(keyStoreCrypto) }
-            }
-        }
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -72,20 +69,45 @@ class HomeViewModel @Inject constructor(
         isInSearchModeState
     ) { searchQuery, isInSearchMode -> SearchWrapper(searchQuery, isInSearchMode) }
 
+    private val isRefreshing: MutableStateFlow<IsRefreshingState> =
+        MutableStateFlow(IsRefreshingState.NotRefreshing)
+
+    private val sortingTypeState: MutableStateFlow<SortingType> =
+        MutableStateFlow(SortingType.ByName)
+
+    private val sortedListItemFlow: Flow<Result<List<Item>>> = combine(
+        observeActiveItems(),
+        sortingTypeState
+    ) { result, sortingType ->
+        when (sortingType) {
+            SortingType.ByName -> result.map { list -> list.sortByTitle(keyStoreCrypto) }
+            SortingType.ByItemType -> result.map { list -> list.sortByItemType(keyStoreCrypto) }
+        }
+    }.distinctUntilChanged()
+
+    private val resultsFlow: Flow<Result<List<ItemUiModel>>> = combine(
+        sortedListItemFlow,
+        searchQueryState
+    ) { sortedList, searchQuery ->
+        itemFilter.filterByQuery(sortedList, searchQuery)
+    }.mapLatest { result: Result<List<Item>> ->
+        result.map { list ->
+            list.map { it.toUiModel(keyStoreCrypto) }
+        }
+    }
+
     private data class SearchWrapper(
         val searchQuery: String,
         val isInSearchMode: Boolean
     )
 
-    private val isRefreshing: MutableStateFlow<IsRefreshingState> =
-        MutableStateFlow(IsRefreshingState.NotRefreshing)
-
     val homeUiState: StateFlow<HomeUiState> = combine(
         observeActiveShare(),
-        listItems,
+        resultsFlow,
         searchWrapperWrapper,
-        isRefreshing
-    ) { shareIdResult, itemsResult, searchWrapper, isRefreshing ->
+        isRefreshing,
+        sortingTypeState
+    ) { shareIdResult, itemsResult, searchWrapper, isRefreshing, sortingType ->
         val isLoading = IsLoadingState.from(
             shareIdResult is Result.Loading || itemsResult is Result.Loading
         )
@@ -125,7 +147,8 @@ class HomeViewModel @Inject constructor(
                 isLoading = isLoading,
                 isRefreshing = isRefreshing,
                 items = items,
-                selectedShare = selectedShare
+                selectedShare = selectedShare,
+                sortingType = sortingType
             ),
             searchUiState = SearchUiState(
                 searchQuery = searchWrapper.searchQuery,
@@ -143,19 +166,20 @@ class HomeViewModel @Inject constructor(
         if (query.contains("\n")) return
 
         searchQueryState.value = query
-        searchItems.updateQuery(query)
     }
 
     fun onStopSearching() {
-        searchItems.clearSearch()
         searchQueryState.update { "" }
         isInSearchModeState.update { false }
     }
 
     fun onEnterSearch() {
-        searchItems.clearSearch()
         searchQueryState.update { "" }
         isInSearchModeState.update { true }
+    }
+
+    fun onSortingTypeChanged(sortingType: SortingType) {
+        sortingTypeState.update { sortingType }
     }
 
     fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
@@ -180,6 +204,15 @@ class HomeViewModel @Inject constructor(
             trashItem.invoke(userId, item.shareId, item.id)
         }
     }
+
+    private fun List<Item>.sortByTitle(crypto: KeyStoreCrypto) =
+        sortedBy { it.title.decrypt(crypto).lowercase() }
+
+    private fun List<Item>.sortByItemType(crypto: KeyStoreCrypto) =
+        groupBy { it.itemType.toWeightedInt() }
+            .toSortedMap()
+            .map { it.value.sortByTitle(crypto) }
+            .flatten()
 
     companion object {
         private const val TAG = "HomeViewModel"

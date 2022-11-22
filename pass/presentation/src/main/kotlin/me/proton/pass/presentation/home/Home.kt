@@ -14,6 +14,7 @@ import me.proton.pass.presentation.uievents.IsRefreshingState
 @Composable
 internal fun Home(
     items: List<ItemUiModel>,
+    shouldScrollToTop: Boolean,
     highlight: String?,
     modifier: Modifier = Modifier,
     onItemClick: (ItemUiModel) -> Unit,
@@ -21,11 +22,13 @@ internal fun Home(
     onDeleteItemClicked: (ItemUiModel) -> Unit,
     isRefreshing: IsRefreshingState,
     isLoading: IsLoadingState,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    onScrollToTop: () -> Unit
 ) {
     ItemsList(
         modifier = modifier,
         items = items,
+        shouldScrollToTop = shouldScrollToTop,
         highlight = highlight,
         emptyListMessage = R.string.empty_list_home_subtitle,
         onItemClick = onItemClick,
@@ -45,7 +48,8 @@ internal fun Home(
                 icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
                 textColor = ProtonTheme.colors.notificationError
             )
-        )
+        ),
+        onScrollToTop = onScrollToTop
     )
 }
 

@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.android.pass.data.api.usecases.RefreshContent
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItem
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItemData
@@ -37,7 +38,7 @@ import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
-import me.proton.pass.search.SearchItems
+import me.proton.pass.search.ItemFilter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,19 +48,13 @@ class SelectItemViewModel @Inject constructor(
     private val updateAutofillItem: UpdateAutofillItem,
     private val refreshContent: RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val searchItems: SearchItems
+    observeActiveItems: ObserveActiveItems,
+    itemFilter: ItemFilter
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
-
-    private val listItems: Flow<Result<List<ItemUiModel>>> = searchItems.observeResults()
-        .mapLatest { result: Result<List<Item>> ->
-            result.map { list ->
-                list.filter { it.itemType is ItemType.Login }.map { it.toUiModel(keyStoreCrypto) }
-            }
-        }
 
     private val webDomainFilterState: MutableStateFlow<Option<String>> = MutableStateFlow(None)
 
@@ -75,6 +70,17 @@ class SelectItemViewModel @Inject constructor(
         val searchQuery: String,
         val isInSearchMode: Boolean
     )
+
+    private val listItems: Flow<Result<List<ItemUiModel>>> = combine(
+        observeActiveItems(),
+        searchQueryState
+    ) { list, searchQuery ->
+        itemFilter.filterByQuery(list, searchQuery)
+    }.mapLatest { result: Result<List<Item>> ->
+        result.map { list ->
+            list.filter { it.itemType is ItemType.Login }.map { it.toUiModel(keyStoreCrypto) }
+        }
+    }
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
         MutableStateFlow(IsRefreshingState.NotRefreshing)
@@ -151,18 +157,15 @@ class SelectItemViewModel @Inject constructor(
     fun onSearchQueryChange(query: String) {
         if (query.contains("\n")) return
 
-        searchQueryState.value = query
-        searchItems.updateQuery(query)
+        searchQueryState.update { query }
     }
 
     fun onStopSearching() {
-        searchItems.clearSearch()
         searchQueryState.update { "" }
         isInSearchModeState.update { false }
     }
 
     fun onEnterSearch() {
-        searchItems.clearSearch()
         searchQueryState.update { "" }
         isInSearchModeState.update { true }
     }

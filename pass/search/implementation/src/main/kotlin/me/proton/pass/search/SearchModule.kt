@@ -10,5 +10,5 @@ import dagger.hilt.components.SingletonComponent
 abstract class SearchModule {
 
     @Binds
-    abstract fun bindSearchItems(searchItemsImpl: SearchItemsImpl): SearchItems
+    abstract fun bindItemFilter(itemFilterImpl: ItemFilterImpl): ItemFilter
 }

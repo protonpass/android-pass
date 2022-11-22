@@ -45,12 +45,14 @@ internal fun SelectItemScreenContent(
         ItemsList(
             modifier = modifier.padding(padding),
             items = uiState.listUiState.items,
+            shouldScrollToTop = false,
             highlight = uiState.searchUiState.searchQuery,
             emptyListMessage = R.string.error_credentials_not_found,
             isLoading = uiState.listUiState.isLoading,
             isRefreshing = uiState.listUiState.isRefreshing,
             onRefresh = onRefresh,
-            onItemClick = onItemClicked
+            onItemClick = onItemClicked,
+            onScrollToTop = {}
         )
     }
 }

@@ -23,6 +23,7 @@ internal fun TrashItemList(
     ItemsList(
         modifier = modifier,
         items = items,
+        shouldScrollToTop = false,
         emptyListMessage = R.string.message_no_trashed_credentials,
         isLoading = isLoading,
         isRefreshing = isRefreshing,
@@ -40,6 +41,7 @@ internal fun TrashItemList(
                 textColor = ProtonTheme.colors.notificationError
             )
         ),
-        onRefresh = onRefresh
+        onRefresh = onRefresh,
+        onScrollToTop = { }
     )
 }

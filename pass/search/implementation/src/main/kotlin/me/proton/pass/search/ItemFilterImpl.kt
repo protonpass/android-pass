@@ -1,9 +1,5 @@
 package me.proton.pass.search
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
-import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.common.api.Result
@@ -12,19 +8,11 @@ import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
 import javax.inject.Inject
 
-class SearchItemsImpl @Inject constructor(
-    private val crypto: KeyStoreCrypto,
-    observeActiveItems: ObserveActiveItems
-) : SearchItems {
+class ItemFilterImpl @Inject constructor(
+    private val keyStoreCrypto: KeyStoreCrypto
+) : ItemFilter {
 
-    private val queryState: MutableStateFlow<String> = MutableStateFlow("")
-    private val resultsFlow: Flow<Result<List<Item>>> = combine(
-        observeActiveItems(),
-        queryState,
-        ::filterItems
-    )
-
-    private fun filterItems(itemsResult: Result<List<Item>>, query: String): Result<List<Item>> =
+    override fun filterByQuery(itemsResult: Result<List<Item>>, query: String): Result<List<Item>> =
         if (query.isNotEmpty()) {
             val lowercaseQuery = query.lowercase()
             itemsResult.map { list -> list.filter { it.matchesQuery(lowercaseQuery) } }
@@ -32,21 +20,11 @@ class SearchItemsImpl @Inject constructor(
             itemsResult
         }
 
-    override fun observeResults(): Flow<Result<List<Item>>> = resultsFlow
-
-    override fun updateQuery(query: String) {
-        queryState.value = query
-    }
-
-    override fun clearSearch() {
-        queryState.value = ""
-    }
-
     private fun isItemMatch(item: Item, query: String): Boolean {
-        val decryptedTitle = item.title.decrypt(crypto)
+        val decryptedTitle = item.title.decrypt(keyStoreCrypto)
         if (decryptedTitle.lowercase().contains(query)) return true
 
-        val decryptedNote = item.note.decrypt(crypto)
+        val decryptedNote = item.note.decrypt(keyStoreCrypto)
         if (decryptedNote.lowercase().contains(query)) return true
 
         return when (val itemType = item.itemType) {
@@ -74,5 +52,4 @@ class SearchItemsImpl @Inject constructor(
 
     private fun Item.matchesQuery(query: String): Boolean =
         isItemMatch(this, query)
-
 }

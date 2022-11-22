@@ -49,6 +49,7 @@ include(":pass:presentation")
 include(":pass:protos")
 include(":pass:screenshot-tests")
 include(":pass:search:api")
+include(":pass:search:fakes")
 include(":pass:search:implementation")
 include(":pass:test")
 

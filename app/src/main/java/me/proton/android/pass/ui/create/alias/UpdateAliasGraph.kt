@@ -17,6 +17,9 @@ fun NavGraphBuilder.updateAliasGraph(nav: AppNavigator) {
     composable(AppNavItem.EditAlias) {
         UpdateAlias(
             onUpClick = { nav.onBackClick() },
+            onAliasDeleted = {
+                nav.popUpTo(AppNavItem.Home)
+            },
             onSuccess = { shareId, itemId ->
                 nav.navigate(
                     destination = AppNavItem.ViewItem,

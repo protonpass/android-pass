@@ -4,7 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.data.api.repositories.AliasRepository
@@ -36,6 +40,7 @@ import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.ItemDeletedState
 import me.proton.pass.presentation.utils.AliasUtils
 import javax.inject.Inject
 
@@ -56,6 +61,14 @@ class UpdateAliasViewModel @Inject constructor(
 
     private val itemId: Option<ItemId> =
         Option.fromNullable(savedStateHandle.get<String>("itemId")?.let { ItemId(it) })
+
+    private val _aliasDeletedState: MutableStateFlow<ItemDeletedState> = MutableStateFlow(ItemDeletedState.Unknown)
+    val aliasDeletedState: StateFlow<ItemDeletedState> = _aliasDeletedState
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000L),
+            initialValue = ItemDeletedState.Unknown
+        )
 
     private var _item: Item? = null
 
@@ -98,6 +111,19 @@ class UpdateAliasViewModel @Inject constructor(
             TAG,
             IllegalStateException("UpdateAliasViewModel.onAliasChange should never be called")
         )
+    }
+
+    fun onDeleteAlias() = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
+        if (userId != null && shareId is Some && itemId is Some) {
+            itemRepository.trashItem(userId, shareId.value, itemId.value)
+            snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.AliasMovedToTrash)
+            _aliasDeletedState.update { ItemDeletedState.Deleted }
+        } else {
+            showError("Empty user/share/item Id", InitError)
+        }
+        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     private suspend fun setupInitialState() {

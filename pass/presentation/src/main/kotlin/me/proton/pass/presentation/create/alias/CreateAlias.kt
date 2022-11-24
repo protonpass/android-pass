@@ -40,6 +40,7 @@ fun CreateAlias(
         uiState = viewState,
         topBarTitle = R.string.title_create_alias,
         canEdit = true,
+        canDelete = false,
         onUpClick = onUpClick,
         onSuccess = { _, _, alias ->
             viewModel.onEmitSnackbarMessage(AliasCreated)
@@ -51,6 +52,7 @@ fun CreateAlias(
         onTitleChange = { viewModel.onTitleChange(it) },
         onNoteChange = { viewModel.onNoteChange(it) },
         onAliasChange = { viewModel.onAliasChange(it) },
-        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) }
+        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
+        onDeleteAlias = {} // We cannot delete alias from the Create screen
     )
 }

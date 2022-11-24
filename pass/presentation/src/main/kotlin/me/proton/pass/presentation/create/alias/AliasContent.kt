@@ -37,6 +37,7 @@ internal fun AliasContent(
     uiState: CreateUpdateAliasUiState,
     @StringRes topBarTitle: Int,
     canEdit: Boolean,
+    canDelete: Boolean,
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
     onSuccess: (ShareId, ItemId, String) -> Unit,
@@ -45,7 +46,8 @@ internal fun AliasContent(
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onAliasChange: (String) -> Unit,
-    onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit
+    onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit,
+    onDeleteAlias: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
@@ -95,6 +97,7 @@ internal fun AliasContent(
             CreateAliasForm(
                 state = uiState.aliasItem,
                 canEdit = canEdit,
+                canDelete = canDelete,
                 modifier = Modifier.padding(padding),
                 onTitleRequiredError = uiState.errorList.contains(BlankTitle),
                 onAliasRequiredError = uiState.errorList.contains(BlankAlias),
@@ -115,7 +118,8 @@ internal fun AliasContent(
                 },
                 onTitleChange = { onTitleChange(it) },
                 onNoteChange = { onNoteChange(it) },
-                onAliasChange = { onAliasChange(it) }
+                onAliasChange = { onAliasChange(it) },
+                onDeleteAliasClick = onDeleteAlias
             )
             LaunchedEffect(uiState.isAliasSavedState is AliasSavedState.Success) {
                 val isAliasSaved = uiState.isAliasSavedState

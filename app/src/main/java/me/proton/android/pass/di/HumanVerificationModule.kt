@@ -23,7 +23,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.android.pass.BuildConfig
-import me.proton.core.humanverification.presentation.CaptchaApiHost
 import me.proton.core.humanverification.presentation.HumanVerificationApiHost
 import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 
@@ -38,8 +37,4 @@ object HumanVerificationModule {
     @HumanVerificationApiHost
     fun provideHumanVerificationApiHost(): String =
         "https://${BuildConfig.HUMAN_VERIFICATION_HOST}/"
-
-    @Provides
-    @CaptchaApiHost
-    fun provideCaptchaApiHost(): String = "api.${BuildConfig.HOST}"
 }

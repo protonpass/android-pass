@@ -6,6 +6,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import me.proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.repositories.KeyPacketRepository
 import me.proton.android.pass.data.api.repositories.ShareRepository
@@ -199,7 +200,7 @@ class ItemRepositoryImpl @Inject constructor(
 
     override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit> {
         val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-        if (item.state == ItemState.Trashed.value) return Result.Success(Unit)
+        if (item.state == ItemState.Trashed.value) return Result.Error(CannotRemoveNotTrashedItemError())
 
         val body =
             TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))

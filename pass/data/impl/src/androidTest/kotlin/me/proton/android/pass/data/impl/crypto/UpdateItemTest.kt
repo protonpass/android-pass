@@ -11,12 +11,12 @@ import me.proton.core.key.domain.getArmored
 import me.proton.core.key.domain.getBase64Decoded
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyData
-import me.proton.core.test.android.instrumented.utils.StringUtils
 import me.proton.pass.domain.ItemContents
 import me.proton.pass.domain.KeyPacket
 import me.proton.pass.domain.key.VaultKey
 import me.proton.pass.domain.key.publicKey
 import me.proton.pass.domain.key.usePrivateKey
+import me.proton.pass.test.TestUtils.randomString
 import me.proton.pass.test.crypto.TestKeyStoreCrypto
 import org.junit.Test
 import proton_pass_item_v1.ItemV1
@@ -39,7 +39,7 @@ class UpdateItemTest {
         val lastRevision = Random.nextLong()
 
         val (sessionKey, keyPacket) = generateKeyPacketForVaultKey(vaultKey)
-        val contents = ItemContents.Note(title = StringUtils.randomString(), note = StringUtils.randomString())
+        val contents = ItemContents.Note(title = randomString(), note = randomString())
         val body = instance.createRequest(
             vaultKey,
             itemKey,

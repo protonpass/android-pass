@@ -70,6 +70,7 @@
     <string name="action_apply">Apply</string>
 
     <!-- Actions -->
+    <string name="action_cancel">Cancel</string>
     <string name="action_move_to_trash">Move to trash</string>
     <string name="action_edit_placeholder">Edit %s</string>
     <string name="action_reveal_password">Reveal password</string>
@@ -172,6 +173,7 @@
     <string name="create_alias_init_error">Could not initialise Alias</string>
     <string name="create_alias_empty_share_id">Share Id cannot be empty</string>
     <string name="alias_created">Alias created</string>
+    <string name="alias_moved_to_trash">Alias moved to trash</string>
 
     <!--  Create password  -->
     <string name="title_create_password">Generate password</string>

@@ -41,6 +41,10 @@ class AppNavigator(
         }
     }
 
+    fun popUpTo(destination: NavItem) {
+        navController.popBackStack(route = destination.route, inclusive = false, saveState = false)
+    }
+
     fun onBackClick() {
         navController.popBackStack()
     }

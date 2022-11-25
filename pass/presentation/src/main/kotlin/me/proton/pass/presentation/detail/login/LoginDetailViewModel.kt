@@ -13,7 +13,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.pass.domain.Item
@@ -102,22 +101,6 @@ class LoginDetailViewModel @Inject constructor(
             websites = emptyList(),
             note = ""
         )
-
-    data class LoginUiModel(
-        val title: String,
-        val username: String,
-        val password: PasswordState,
-        val websites: List<String>,
-        val note: String
-    )
-
-    sealed class PasswordState(open val encrypted: EncryptedString) {
-        data class Concealed(override val encrypted: EncryptedString) : PasswordState(encrypted)
-        data class Revealed(
-            override val encrypted: EncryptedString,
-            val clearText: String
-        ) : PasswordState(encrypted)
-    }
 
     companion object {
         private const val TAG = "LoginDetailViewModel"

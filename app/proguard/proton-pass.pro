@@ -1,0 +1,1 @@
+-keep class me.proton.android.pass.ui.PassShowkaseModuleCodegen { *; }

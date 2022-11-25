@@ -137,6 +137,7 @@
     <string name="field_copied_to_clipboard">copied to the clipboard</string>
     <string name="field_username">Username</string>
     <string name="field_password">Password</string>
+    <string name="field_websites">Websites</string>
     <string name="delete_alias_dialog_text">Remove together with the alias item?</string>
     <string name="delete_alias_dialog_cancel">Keep alias</string>
     <string name="delete_alias_dialog_confirm">@string/action_remove</string>

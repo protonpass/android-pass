@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
@@ -30,7 +31,7 @@ fun WebsiteSection(
     modifier: Modifier = Modifier,
     websites: List<String>
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.fillMaxWidth()) {
         DetailSectionTitle(text = stringResource(R.string.field_websites))
         Spacer(modifier = Modifier.height(8.dp))
 

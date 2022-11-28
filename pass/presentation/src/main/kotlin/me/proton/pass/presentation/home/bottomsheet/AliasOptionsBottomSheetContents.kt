@@ -7,10 +7,12 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
+import me.proton.pass.domain.ItemType
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemIcon
@@ -19,23 +21,28 @@ import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemSubtitle
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
 import me.proton.pass.presentation.components.common.item.icon.AliasIcon
+import me.proton.pass.presentation.components.model.ItemUiModel
 
 @ExperimentalMaterialApi
 @Composable
 fun AliasOptionsBottomSheetContents(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    itemUiModel: ItemUiModel?
 ) {
     Column(modifier) {
         BottomSheetItemRow(
-            title = { BottomSheetItemTitle(textId = R.string.bottomsheet_copy_username) },
-            subtitle = { BottomSheetItemSubtitle(textId = R.string.bottomsheet_move_to_trash) },
+            title = { BottomSheetItemTitle(text = itemUiModel?.name ?: "") },
+            subtitle = {
+                BottomSheetItemSubtitle(
+                    text = (itemUiModel?.itemType as? ItemType.Alias)?.aliasEmail ?: ""
+                )
+            },
             icon = { AliasIcon() }
         )
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = listOf(
-                copyUsername(),
-                copyPassword(),
+                copyAlias(),
                 edit(),
                 moveToTrash()
             )
@@ -43,56 +50,13 @@ fun AliasOptionsBottomSheetContents(
     }
 }
 
-private fun copyUsername(): BottomSheetItem = object : BottomSheetItem {
+private fun copyAlias(): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(textId = R.string.bottomsheet_copy_username) }
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val icon: (@Composable () -> Unit)
         get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-    override val onClick: () -> Unit
-        get() = { }
-}
-
-private fun copyPassword(): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(textId = R.string.bottomsheet_copy_password) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val icon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-    override val onClick: () -> Unit
-        get() = { }
-}
-
-private fun edit(): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(textId = R.string.bottomsheet_edit) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val icon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_pencil) }
-    override val onClick: () -> Unit
-        get() = { }
-}
-
-private fun moveToTrash(): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = {
-            BottomSheetItemTitle(
-                textId = R.string.bottomsheet_move_to_trash,
-                textcolor = ProtonTheme.colors.notificationError
-            )
-        }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val icon: (@Composable () -> Unit)
-        get() = {
-            BottomSheetItemIcon(
-                iconId = me.proton.core.presentation.R.drawable.ic_proton_trash,
-                tint = ProtonTheme.colors.notificationError
-            )
-        }
     override val onClick: () -> Unit
         get() = { }
 }
@@ -105,7 +69,7 @@ fun AliasOptionsBottomSheetContentsPreview(
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            AliasOptionsBottomSheetContents()
+            AliasOptionsBottomSheetContents(Modifier, null)
         }
     }
 }

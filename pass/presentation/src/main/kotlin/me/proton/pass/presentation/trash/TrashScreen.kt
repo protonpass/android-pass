@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -29,6 +30,7 @@ fun TrashScreen(
         skipHalfExpanded = true
     )
     val (selectedItem, setSelectedItem) = remember { mutableStateOf<ItemUiModel?>(null) }
+    val (showClearTrashDialog, setShowClearTrashDialog) = rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     ProtonModalBottomSheetLayout(
@@ -52,7 +54,7 @@ fun TrashScreen(
                 )
                 TrashBottomSheetType.AllTrashActions -> TrashAllBottomSheetContents(
                     onEmptyTrash = {
-                        viewModel.clearTrash()
+                        setShowClearTrashDialog(true)
                         scope.launch {
                             bottomSheetState.hide()
                         }
@@ -76,6 +78,11 @@ fun TrashScreen(
             },
             onDrawerIconClick = onDrawerIconClick,
             onRefresh = { viewModel.onRefresh() }
+        )
+        ConfirmClearTrashDialog(
+            show = showClearTrashDialog,
+            onDismiss = { setShowClearTrashDialog(false) },
+            onConfirm = { viewModel.clearTrash() }
         )
     }
 }

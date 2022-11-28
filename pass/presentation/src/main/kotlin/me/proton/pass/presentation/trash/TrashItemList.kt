@@ -2,9 +2,7 @@ package me.proton.pass.presentation.trash
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.item.ItemAction
 import me.proton.pass.presentation.components.common.item.ItemsList
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -16,8 +14,7 @@ internal fun TrashItemList(
     items: List<ItemUiModel>,
     isRefreshing: IsRefreshingState,
     isLoading: IsLoadingState,
-    onRestoreClicked: (ItemUiModel) -> Unit,
-    onDeleteItemClicked: (ItemUiModel) -> Unit,
+    onItemMenuClick: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit
 ) {
     ItemsList(
@@ -27,21 +24,9 @@ internal fun TrashItemList(
         emptyListMessage = R.string.message_no_trashed_credentials,
         isLoading = isLoading,
         isRefreshing = isRefreshing,
-        itemActions = listOf(
-            ItemAction(
-                onSelect = { onRestoreClicked(it) },
-                title = R.string.action_restore,
-                icon = me.proton.core.presentation.R.drawable.ic_proton_eraser,
-                textColor = ProtonTheme.colors.textNorm
-            ),
-            ItemAction(
-                onSelect = { onDeleteItemClicked(it) },
-                title = R.string.action_delete,
-                icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
-                textColor = ProtonTheme.colors.notificationError
-            )
-        ),
+        onItemMenuClick = onItemMenuClick,
         onRefresh = onRefresh,
+        onItemClick = {},
         onScrollToTop = { }
     )
 }

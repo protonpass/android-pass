@@ -1,9 +1,28 @@
 package me.proton.android.pass.preferences
 
-sealed interface ThemePreference {
-    object Light : ThemePreference
-    object Dark : ThemePreference
-    object System : ThemePreference
+private const val THEME_SYSTEM = 1
+private const val THEME_LIGHT = 2
+private const val THEME_DARK = 3
 
-    companion object
+enum class ThemePreference {
+    Light,
+    Dark,
+    System;
+
+    fun value(): Int =
+        when (this) {
+            System -> THEME_SYSTEM
+            Light -> THEME_LIGHT
+            Dark -> THEME_DARK
+        }
+
+    companion object {
+        fun from(value: Int): ThemePreference =
+            when (value) {
+                THEME_SYSTEM -> System
+                THEME_LIGHT -> Light
+                THEME_DARK -> Dark
+                else -> System
+            }
+    }
 }

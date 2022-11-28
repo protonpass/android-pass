@@ -20,14 +20,15 @@ import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitl
 @ExperimentalMaterialApi
 @Composable
 fun TrashAllBottomSheetContents(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEmptyTrash: () -> Unit
 ) {
     Column(modifier) {
         BottomSheetTitle(title = R.string.bottomsheet_trash_all_items_title)
         BottomSheetItemList(
             items = listOf(
                 restoreAll(),
-                emptyTrash()
+                emptyTrash(onEmptyTrash)
             )
         )
     }
@@ -44,7 +45,9 @@ private fun restoreAll(): BottomSheetItem = object : BottomSheetItem {
         get() = { }
 }
 
-private fun emptyTrash(): BottomSheetItem = object : BottomSheetItem {
+private fun emptyTrash(
+    onEmptyTrash: () -> Unit
+): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = {
             BottomSheetItemTitle(
@@ -62,7 +65,7 @@ private fun emptyTrash(): BottomSheetItem = object : BottomSheetItem {
             )
         }
     override val onClick: () -> Unit
-        get() = { }
+        get() = onEmptyTrash
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -73,7 +76,7 @@ fun TrashAllBottomSheetContentsPreview(
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            TrashAllBottomSheetContents()
+            TrashAllBottomSheetContents {}
         }
     }
 }

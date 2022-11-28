@@ -57,14 +57,14 @@ fun TrashItemBottomSheetContents(
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = listOf(
-                restoreAll(),
-                emptyTrash()
+                restoreItem(),
+                deleteItem()
             )
         )
     }
 }
 
-private fun restoreAll(): BottomSheetItem = object : BottomSheetItem {
+private fun restoreItem(): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_restore)) }
     override val subtitle: (@Composable () -> Unit)?
@@ -75,7 +75,7 @@ private fun restoreAll(): BottomSheetItem = object : BottomSheetItem {
         get() = { }
 }
 
-private fun emptyTrash(): BottomSheetItem = object : BottomSheetItem {
+private fun deleteItem(): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = {
             BottomSheetItemTitle(

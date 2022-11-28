@@ -15,7 +15,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.domain.ItemType
+import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.home.bottomsheet.AliasOptionsBottomSheetContents
+import me.proton.pass.presentation.home.bottomsheet.LoginOptionsBottomSheetContents
+import me.proton.pass.presentation.home.bottomsheet.NoteOptionsBottomSheetContents
 import me.proton.pass.presentation.home.bottomsheet.SortingBottomSheetContents
 
 @ExperimentalMaterialApi
@@ -29,6 +32,7 @@ fun HomeScreen(
 ) {
     val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
     val (currentBottomSheet, setBottomSheet) = remember { mutableStateOf(HomeBottomSheetType.CreateItem) }
+    val (selectedItem, setSelectedItem) = remember { mutableStateOf<ItemUiModel?>(null) }
     val (shouldScrollToTop, setScrollToTop) = remember { mutableStateOf(false) }
 
     val bottomSheetState = rememberModalBottomSheetState(
@@ -84,9 +88,9 @@ fun HomeScreen(
                         bottomSheetState.hide()
                     }
                 }
-                HomeBottomSheetType.LoginOptions -> AliasOptionsBottomSheetContents()
-                HomeBottomSheetType.AliasOptions -> AliasOptionsBottomSheetContents()
-                HomeBottomSheetType.NoteOptions -> AliasOptionsBottomSheetContents()
+                HomeBottomSheetType.LoginOptions -> LoginOptionsBottomSheetContents(itemUiModel = selectedItem)
+                HomeBottomSheetType.AliasOptions -> AliasOptionsBottomSheetContents(itemUiModel = selectedItem)
+                HomeBottomSheetType.NoteOptions -> NoteOptionsBottomSheetContents(itemUiModel = selectedItem)
             }
         }
     ) {
@@ -109,6 +113,7 @@ fun HomeScreen(
                 scope.launch { bottomSheetState.show() }
             },
             onItemMenuClick = { item ->
+                setSelectedItem(item)
                 when (item.itemType) {
                     is ItemType.Alias -> setBottomSheet(HomeBottomSheetType.AliasOptions)
                     is ItemType.Login -> setBottomSheet(HomeBottomSheetType.LoginOptions)

@@ -17,7 +17,7 @@ import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemList
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemText
+import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
 import me.proton.pass.presentation.components.common.item.icon.AliasIcon
 import me.proton.pass.presentation.components.common.item.icon.LoginIcon
@@ -49,7 +49,7 @@ fun FABBottomSheetContents(
 
 private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemText(textId = R.string.action_login) }
+        get() = { BottomSheetItemTitle(textId = R.string.action_login) }
     override val subtitle: (@Composable () -> Unit)
         get() = {
             Text(
@@ -66,7 +66,7 @@ private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : B
 
 private fun createAlias(onCreateAlias: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemText(textId = R.string.action_alias) }
+        get() = { BottomSheetItemTitle(textId = R.string.action_alias) }
     override val subtitle: (@Composable () -> Unit)
         get() = {
             Text(
@@ -83,7 +83,7 @@ private fun createAlias(onCreateAlias: () -> Unit): BottomSheetItem = object : B
 
 private fun createNote(onCreateNote: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemText(textId = R.string.action_note) }
+        get() = { BottomSheetItemTitle(textId = R.string.action_note) }
     override val subtitle: (@Composable () -> Unit)
         get() = {
             Text(
@@ -101,7 +101,7 @@ private fun createNote(onCreateNote: () -> Unit): BottomSheetItem = object : Bot
 private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemText(textId = R.string.action_password) }
+            get() = { BottomSheetItemTitle(textId = R.string.action_password) }
         override val subtitle: (@Composable () -> Unit)
             get() = {
                 Text(

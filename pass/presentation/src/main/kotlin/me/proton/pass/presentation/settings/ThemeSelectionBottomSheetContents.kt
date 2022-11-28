@@ -15,7 +15,7 @@ import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemIcon
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemList
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemText
+import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
 
 @Composable
@@ -44,7 +44,7 @@ private fun ThemePreference.toBottomSheetItem(
 ): BottomSheetItem = when (this) {
     ThemePreference.Light -> object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemText(textId = R.string.settings_appearance_preference_subtitle_light) }
+            get() = { BottomSheetItemTitle(textId = R.string.settings_appearance_preference_subtitle_light) }
         override val subtitle: (() -> Unit)?
             get() = null
         override val icon: @Composable (() -> Unit)
@@ -54,7 +54,7 @@ private fun ThemePreference.toBottomSheetItem(
     }
     ThemePreference.Dark -> object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemText(textId = R.string.settings_appearance_preference_subtitle_dark) }
+            get() = { BottomSheetItemTitle(textId = R.string.settings_appearance_preference_subtitle_dark) }
         override val subtitle: (() -> Unit)?
             get() = null
         override val icon: @Composable (() -> Unit)
@@ -64,7 +64,7 @@ private fun ThemePreference.toBottomSheetItem(
     }
     ThemePreference.System -> object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemText(textId = R.string.settings_appearance_preference_subtitle_match_system) }
+            get() = { BottomSheetItemTitle(textId = R.string.settings_appearance_preference_subtitle_match_system) }
         override val subtitle: (() -> Unit)?
             get() = null
         override val icon: @Composable (() -> Unit)

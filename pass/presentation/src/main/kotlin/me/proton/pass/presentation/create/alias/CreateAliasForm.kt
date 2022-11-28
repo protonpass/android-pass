@@ -69,7 +69,7 @@ internal fun CreateAliasForm(
         NoteInput(value = state.note, onChange = onNoteChange)
 
         if (canDelete) {
-            Spacer(Modifier.height(height = 8.dp))
+            Spacer(Modifier.height(height = 24.dp))
             PassOutlinedButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.action_move_to_trash),

@@ -12,7 +12,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
+import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
+import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemIcon
@@ -73,7 +75,14 @@ fun NoteOptionsBottomSheetContentsPreview(
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            NoteOptionsBottomSheetContents(Modifier, null)
+            NoteOptionsBottomSheetContents(
+                itemUiModel = ItemUiModel(
+                    id = ItemId(id = ""),
+                    shareId = ShareId(id = ""),
+                    name = "My Note",
+                    itemType = ItemType.Note("My note text")
+                )
+            )
         }
     }
 }

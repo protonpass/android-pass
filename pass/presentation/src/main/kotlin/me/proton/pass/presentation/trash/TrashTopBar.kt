@@ -16,7 +16,7 @@ import me.proton.pass.presentation.R
 @Composable
 internal fun TrashTopBar(
     onDrawerIconClick: () -> Unit,
-    onClearTrashClick: () -> Unit
+    onMoreOptionsClick: () -> Unit
 ) {
     ProtonTopAppBar(
         title = { TopBarTitleView(title = stringResource(id = R.string.title_trash)) },
@@ -26,10 +26,10 @@ internal fun TrashTopBar(
             )
         },
         actions = {
-            IconButton(onClick = { onClearTrashClick() }) {
+            IconButton(onClick = onMoreOptionsClick) {
                 Icon(
-                    painterResource(me.proton.core.presentation.R.drawable.ic_proton_trash),
-                    contentDescription = stringResource(R.string.action_empty_trash),
+                    painterResource(me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical),
+                    contentDescription = null,
                     tint = ProtonTheme.colors.iconNorm
                 )
             }

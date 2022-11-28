@@ -258,6 +258,7 @@ dependencies {
     implementation(projects.pass.autofill.implementation)
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.biometry.implementation)
+    implementation(projects.pass.clipboard.impl)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.data.api)

@@ -22,6 +22,7 @@ dependencies {
 
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.core.crypto)
     implementation(libs.core.utilKotlin)
 
     implementation(projects.pass.clipboard.api)

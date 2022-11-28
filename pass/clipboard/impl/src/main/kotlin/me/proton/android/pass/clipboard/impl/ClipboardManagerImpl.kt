@@ -12,15 +12,20 @@ class ClipboardManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val scheduler: ClearClipboardScheduler
 ) : ClipboardManager {
-    override fun copyToClipboard(text: String, clearAfterSeconds: Long?) {
+    override fun copyToClipboard(text: String, clearAfterSeconds: Long?, isSecure: Boolean) {
         val androidClipboard = context.getSystemService(AndroidClipboardManager::class.java)
         if (androidClipboard == null) {
             PassLogger.i(TAG, "Could not get ClipboardManager")
             return
         }
 
-        androidClipboard.setPrimaryClip(ClipData.newPlainText(text, text))
-        clearAfterSeconds?.let { scheduler.schedule(it) }
+        val data = if (isSecure) {
+            ClipData.newPlainText("·······", text)
+        } else {
+            ClipData.newPlainText(text, text)
+        }
+        androidClipboard.setPrimaryClip(data)
+        clearAfterSeconds?.let { scheduler.schedule(it, text) }
     }
 
     companion object {

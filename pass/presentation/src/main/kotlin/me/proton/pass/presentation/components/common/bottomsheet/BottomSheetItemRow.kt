@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import me.proton.pass.commonui.api.applyIf
 
 @Composable
 fun ColumnScope.BottomSheetItemRow(
@@ -20,12 +21,15 @@ fun ColumnScope.BottomSheetItemRow(
     subtitle: (@Composable () -> Unit)? = null,
     icon: (@Composable () -> Unit)? = null,
     alignIconLeft: Boolean = true,
-    onClick: () -> Unit
+    onClick: (() -> Unit)? = null
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable(onClick = { onClick() })
+            .applyIf(
+                condition = onClick != null,
+                ifTrue = { clickable { onClick?.invoke() } }
+            )
             .padding(horizontal = 20.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

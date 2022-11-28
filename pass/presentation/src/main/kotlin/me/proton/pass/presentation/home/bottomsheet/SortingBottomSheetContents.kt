@@ -13,7 +13,7 @@ import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemIcon
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemList
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemText
+import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
 import me.proton.pass.presentation.home.SortingType
 
@@ -40,7 +40,7 @@ private fun sortingItemList(
         .map {
             object : BottomSheetItem {
                 override val title: @Composable () -> Unit
-                    get() = { BottomSheetItemText(textId = it.titleId) }
+                    get() = { BottomSheetItemTitle(textId = it.titleId) }
                 override val subtitle: (() -> Unit)?
                     get() = null
                 override val icon: @Composable (() -> Unit)?

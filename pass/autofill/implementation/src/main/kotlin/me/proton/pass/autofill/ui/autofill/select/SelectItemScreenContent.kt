@@ -52,6 +52,7 @@ internal fun SelectItemScreenContent(
             isRefreshing = uiState.listUiState.isRefreshing,
             onRefresh = onRefresh,
             onItemClick = onItemClicked,
+            onItemMenuClick = {},
             onScrollToTop = {}
         )
     }

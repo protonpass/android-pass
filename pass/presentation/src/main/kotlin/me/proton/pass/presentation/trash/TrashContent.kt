@@ -20,7 +20,7 @@ import me.proton.pass.presentation.shared.ConfirmItemDeletionDialog
 fun TrashContent(
     modifier: Modifier,
     uiState: TrashUiState,
-    onRestoreItem: (ItemUiModel) -> Unit,
+    // onRestoreItem: (ItemUiModel) -> Unit,
     onDeleteItem: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit,
     onClearTrash: () -> Unit,
@@ -42,8 +42,7 @@ fun TrashContent(
                 items = uiState.items,
                 isRefreshing = uiState.isRefreshing,
                 isLoading = uiState.isLoading,
-                onRestoreClicked = { onRestoreItem(it) },
-                onDeleteItemClicked = { itemToDelete = it },
+                onItemMenuClick = {},
                 onRefresh = onRefresh
             )
 

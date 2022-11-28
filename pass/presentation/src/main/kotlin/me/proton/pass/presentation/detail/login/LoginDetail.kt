@@ -45,7 +45,7 @@ fun LoginDetail(
         viewModel.copyToClipboardFlow.collect { storeToClipboard(it, passwordFieldName) }
     }
 
-    LoginContentView(
+    LoginContent(
         modifier = modifier,
         model = model,
         onTogglePasswordClick = { viewModel.togglePassword() },

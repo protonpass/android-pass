@@ -5,6 +5,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
@@ -40,7 +41,7 @@ private fun sortingItemList(
         .map {
             object : BottomSheetItem {
                 override val title: @Composable () -> Unit
-                    get() = { BottomSheetItemTitle(textId = it.titleId) }
+                    get() = { BottomSheetItemTitle(text = stringResource(id = it.titleId)) }
                 override val subtitle: (() -> Unit)?
                     get() = null
                 override val icon: @Composable (() -> Unit)?

@@ -1,8 +1,6 @@
 package me.proton.pass.presentation.home
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -18,7 +16,6 @@ import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemList
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
 import me.proton.pass.presentation.components.common.item.icon.AliasIcon
 import me.proton.pass.presentation.components.common.item.icon.LoginIcon
 import me.proton.pass.presentation.components.common.item.icon.NoteIcon
@@ -34,8 +31,6 @@ fun FABBottomSheetContents(
     onCreatePassword: () -> Unit
 ) {
     Column(modifier) {
-        BottomSheetTitle(title = R.string.title_new)
-        Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = listOf(
                 createLogin(onCreateLogin),
@@ -49,7 +44,7 @@ fun FABBottomSheetContents(
 
 private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(textId = R.string.action_login) }
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_login)) }
     override val subtitle: (@Composable () -> Unit)
         get() = {
             Text(
@@ -66,7 +61,7 @@ private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : B
 
 private fun createAlias(onCreateAlias: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(textId = R.string.action_alias) }
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_alias)) }
     override val subtitle: (@Composable () -> Unit)
         get() = {
             Text(
@@ -83,7 +78,7 @@ private fun createAlias(onCreateAlias: () -> Unit): BottomSheetItem = object : B
 
 private fun createNote(onCreateNote: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(textId = R.string.action_note) }
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_note)) }
     override val subtitle: (@Composable () -> Unit)
         get() = {
             Text(
@@ -101,7 +96,7 @@ private fun createNote(onCreateNote: () -> Unit): BottomSheetItem = object : Bot
 private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(textId = R.string.action_password) }
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_password)) }
         override val subtitle: (@Composable () -> Unit)
             get() = {
                 Text(

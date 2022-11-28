@@ -2,21 +2,23 @@ package me.proton.pass.presentation.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.launch
-import me.proton.pass.domain.ShareId
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultSmall
+import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
+import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemList
+import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemText
+import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
 import me.proton.pass.presentation.components.common.item.icon.AliasIcon
 import me.proton.pass.presentation.components.common.item.icon.LoginIcon
 import me.proton.pass.presentation.components.common.item.icon.NoteIcon
@@ -26,61 +28,108 @@ import me.proton.pass.presentation.components.common.item.icon.PasswordIcon
 @Composable
 fun FABBottomSheetContents(
     modifier: Modifier = Modifier,
-    state: ModalBottomSheetState,
-    shareId: ShareId?,
-    navigation: HomeScreenNavigation
+    onCreateLogin: () -> Unit,
+    onCreateAlias: () -> Unit,
+    onCreateNote: () -> Unit,
+    onCreatePassword: () -> Unit
 ) {
-    val scope = rememberCoroutineScope()
     Column(modifier) {
-        Text(
-            text = stringResource(R.string.title_new),
-            fontSize = 16.sp,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
-        )
+        BottomSheetTitle(title = R.string.title_new)
         Divider(modifier = Modifier.fillMaxWidth())
-        BottomSheetItem(
-            icon = { LoginIcon() },
-            title = R.string.action_login,
-            subtitle = me.proton.pass.presentation.R.string.item_type_login_description,
-            onItemClick = {
-                scope.launch {
-                    state.hide()
-                    shareId?.let { navigation.toCreateLogin(it) }
-                }
-            }
+        BottomSheetItemList(
+            items = listOf(
+                createLogin(onCreateLogin),
+                createAlias(onCreateAlias),
+                createNote(onCreateNote),
+                createPassword(onCreatePassword)
+            )
         )
-        BottomSheetItem(
-            icon = { AliasIcon() },
-            title = R.string.action_alias,
-            subtitle = me.proton.pass.presentation.R.string.item_type_alias_description,
-            onItemClick = {
-                scope.launch {
-                    state.hide()
-                    shareId?.let { navigation.toCreateAlias(it) }
-                }
+    }
+}
+
+private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemText(textId = R.string.action_login) }
+    override val subtitle: (@Composable () -> Unit)
+        get() = {
+            Text(
+                text = stringResource(R.string.item_type_login_description),
+                style = ProtonTheme.typography.defaultSmall,
+                color = ProtonTheme.colors.textWeak
+            )
+        }
+    override val icon: (@Composable () -> Unit)
+        get() = { LoginIcon() }
+    override val onClick: () -> Unit
+        get() = onCreateLogin
+}
+
+private fun createAlias(onCreateAlias: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemText(textId = R.string.action_alias) }
+    override val subtitle: (@Composable () -> Unit)
+        get() = {
+            Text(
+                text = stringResource(R.string.item_type_alias_description),
+                style = ProtonTheme.typography.defaultSmall,
+                color = ProtonTheme.colors.textWeak
+            )
+        }
+    override val icon: (@Composable () -> Unit)
+        get() = { AliasIcon() }
+    override val onClick: () -> Unit
+        get() = onCreateAlias
+}
+
+private fun createNote(onCreateNote: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemText(textId = R.string.action_note) }
+    override val subtitle: (@Composable () -> Unit)
+        get() = {
+            Text(
+                text = stringResource(R.string.item_type_note_description),
+                style = ProtonTheme.typography.defaultSmall,
+                color = ProtonTheme.colors.textWeak
+            )
+        }
+    override val icon: (@Composable () -> Unit)
+        get() = { NoteIcon() }
+    override val onClick: () -> Unit
+        get() = onCreateNote
+}
+
+private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemText(textId = R.string.action_password) }
+        override val subtitle: (@Composable () -> Unit)
+            get() = {
+                Text(
+                    text = stringResource(R.string.item_type_password_description),
+                    style = ProtonTheme.typography.defaultSmall,
+                    color = ProtonTheme.colors.textWeak
+                )
             }
-        )
-        BottomSheetItem(
-            icon = { NoteIcon() },
-            title = R.string.action_note,
-            subtitle = me.proton.pass.presentation.R.string.item_type_note_description,
-            onItemClick = {
-                scope.launch {
-                    state.hide()
-                    shareId?.let { navigation.toCreateNote(it) }
-                }
-            }
-        )
-        BottomSheetItem(
-            icon = { PasswordIcon() },
-            title = R.string.action_password,
-            subtitle = me.proton.pass.presentation.R.string.item_type_password_description,
-            onItemClick = {
-                scope.launch {
-                    state.hide()
-                    shareId?.let { navigation.toCreatePassword(it) }
-                }
-            }
-        )
+        override val icon: (@Composable () -> Unit)
+            get() = { PasswordIcon() }
+        override val onClick: () -> Unit
+            get() = onCreatePassword
+    }
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview
+@Composable
+fun FABBottomSheetContentsPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    ProtonTheme(isDark = isDark) {
+        Surface {
+            FABBottomSheetContents(
+                onCreateLogin = {},
+                onCreateAlias = {},
+                onCreateNote = {},
+                onCreatePassword = {}
+            )
+        }
     }
 }

@@ -273,6 +273,7 @@ dependencies {
     implementation(projects.pass.log)
 
     debugImplementation(libs.leakCanary)
+    debugImplementation(libs.androidx.compose.uiTooling)
 
     ksp(libs.androidx.room.compiler)
 

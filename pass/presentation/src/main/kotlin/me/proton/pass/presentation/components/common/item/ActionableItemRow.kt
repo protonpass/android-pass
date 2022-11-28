@@ -5,19 +5,23 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
+import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.components.previewproviders.ItemUiModelPreviewProvider
 
@@ -26,15 +30,13 @@ internal fun ActionableItemRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
     highlight: String? = null,
-    itemActions: List<ItemAction> = emptyList(),
-    onItemClicked: (ItemUiModel) -> Unit = {}
+    onItemClick: (ItemUiModel) -> Unit = {},
+    onItemMenuClick: (ItemUiModel) -> Unit = {}
 ) {
-    val (expanded, setExpanded) = remember { mutableStateOf(false) }
-
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onItemClicked(item) }
+            .clickable { onItemClick(item) }
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -44,12 +46,15 @@ internal fun ActionableItemRow(
             modifier = Modifier.weight(1f)
         )
         Spacer(modifier = Modifier.width(16.dp))
-        ItemRowActions(
-            expanded = expanded,
-            setExpanded = setExpanded,
-            actions = itemActions,
-            item = item
-        )
+        IconButton(
+            onClick = { onItemMenuClick(item) },
+            modifier = Modifier.size(24.dp)
+        ) {
+            Icon(
+                ImageVector.vectorResource(R.drawable.ic_three_dots_vertical_24),
+                contentDescription = stringResource(id = R.string.action_content_description_menu)
+            )
+        }
     }
 }
 
@@ -64,15 +69,7 @@ fun ActionableItemRowPreview(
     ProtonTheme(isDark = input.first) {
         Surface {
             ActionableItemRow(
-                item = input.second,
-                itemActions = listOf(
-                    ItemAction(
-                        onSelect = {},
-                        title = 0,
-                        icon = 0,
-                        textColor = Color.Blue
-                    )
-                )
+                item = input.second
             )
         }
     }

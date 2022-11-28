@@ -18,6 +18,7 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.PassFloatingActionButton
+import me.proton.pass.presentation.components.common.item.ItemsList
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.shared.ConfirmItemDeletionDialog
 
@@ -38,6 +39,7 @@ internal fun HomeContent(
     onDrawerIconClick: () -> Unit,
     onMoreOptionsClick: () -> Unit,
     onAddItemClick: (Option<ShareId>) -> Unit,
+    onItemMenuClick: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit,
     onScrollToTop: () -> Unit
 ) {
@@ -68,7 +70,7 @@ internal fun HomeContent(
     ) { contentPadding ->
         var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
         val keyboardController = LocalSoftwareKeyboardController.current
-        Home(
+        ItemsList(
             modifier = Modifier.padding(contentPadding),
             items = uiState.homeListUiState.items,
             shouldScrollToTop = shouldScrollToTop,
@@ -77,8 +79,8 @@ internal fun HomeContent(
                 keyboardController?.hide()
                 homeScreenNavigation.toItemDetail(item.shareId, item.id)
             },
-            navigation = homeScreenNavigation,
-            onDeleteItemClicked = { itemToDelete = it },
+            emptyListMessage = R.string.empty_list_home_subtitle,
+            onItemMenuClick = onItemMenuClick,
             isLoading = uiState.homeListUiState.isLoading,
             isRefreshing = uiState.homeListUiState.isRefreshing,
             onRefresh = onRefresh,

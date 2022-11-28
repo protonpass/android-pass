@@ -19,7 +19,7 @@ fun TrashScreen(
     TrashContent(
         modifier = modifier,
         uiState = uiState,
-        onRestoreItem = { viewModel.restoreItem(it) },
+        // onRestoreItem = { viewModel.restoreItem(it) },
         onDeleteItem = { viewModel.deleteItem(it) },
         onDrawerIconClick = onDrawerIconClick,
         onClearTrash = { viewModel.clearTrash() },

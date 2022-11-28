@@ -27,9 +27,9 @@ fun ItemsList(
     @StringRes emptyListMessage: Int,
     isRefreshing: IsRefreshingState,
     isLoading: IsLoadingState,
-    itemActions: List<ItemAction> = emptyList(),
     onRefresh: () -> Unit,
-    onItemClick: (ItemUiModel) -> Unit = {},
+    onItemClick: (ItemUiModel) -> Unit,
+    onItemMenuClick: (ItemUiModel) -> Unit,
     onScrollToTop: () -> Unit
 ) {
     val scrollableState = rememberLazyListState()
@@ -50,8 +50,8 @@ fun ItemsList(
                     ActionableItemRow(
                         item = item,
                         highlight = highlight,
-                        onItemClicked = onItemClick,
-                        itemActions = itemActions
+                        onItemClick = onItemClick,
+                        onItemMenuClick = onItemMenuClick
                     )
                 }
             }

@@ -72,6 +72,7 @@
     <string name="action_remove">Remove</string>
 
     <!-- Actions -->
+    <string name="action_content_description_menu">Item action menu</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_move_to_trash">Move to trash</string>
     <string name="action_edit_placeholder">Edit %s</string>
@@ -225,6 +226,13 @@
     <string name="item_type_alias_description">Hide your identity with a separate email address.</string>
     <string name="item_type_note_description">Keep important information secure.</string>
     <string name="item_type_password_description">Generate &amp; copy a secure password.</string>
+
+    <!-- Common bottomsheet -->
+    <string name="bottomsheet_content_description_item_icon">BottomSheet item icon</string>
+    <string name="bottomsheet_copy_password">Copy password</string>
+    <string name="bottomsheet_copy_username">Copy username</string>
+    <string name="bottomsheet_edit">Edit</string>
+    <string name="bottomsheet_move_to_trash">Move to trash</string>
 
     <!-- OnBoarding -->
     <string name="on_boarding_autofill_content">Save and fill usernames and password in apps and supported browsers.</string>

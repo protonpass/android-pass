@@ -6,8 +6,6 @@ import androidx.datastore.preferences.core.edit
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import me.proton.android.pass.preferences.extensions.from
-import me.proton.android.pass.preferences.extensions.value
 import javax.inject.Inject
 
 private val DEFAULT_BIOMETRIC_LOCK = BiometricLockState.Disabled.value()

@@ -10,7 +10,7 @@ class TestClipboardManager : ClipboardManager {
     fun getContents() = contents
     fun getClearAfterSeconds() = _clearAfterSeconds
 
-    override fun copyToClipboard(text: String, clearAfterSeconds: Long?) {
+    override fun copyToClipboard(text: String, clearAfterSeconds: Long?, isSecure: Boolean) {
         contents = text
         _clearAfterSeconds = clearAfterSeconds
     }

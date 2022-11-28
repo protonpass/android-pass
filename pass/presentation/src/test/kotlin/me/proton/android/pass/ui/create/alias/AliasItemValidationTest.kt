@@ -45,6 +45,50 @@ class AliasItemValidationTest {
     }
 
     @Test
+    fun `alias starting with dot should return error`() {
+        val item = itemWithContents(alias = ".somealias")
+
+        val res = item.validate()
+        assertThat(res.size).isEqualTo(1)
+        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
+    }
+
+    @Test
+    fun `alias ending with dot should return error`() {
+        val item = itemWithContents(alias = "somealias.")
+
+        val res = item.validate()
+        assertThat(res.size).isEqualTo(1)
+        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
+    }
+
+    @Test
+    fun `alias containing two dots should return error`() {
+        val item = itemWithContents(alias = "some..alias")
+
+        val res = item.validate()
+        assertThat(res.size).isEqualTo(1)
+        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
+    }
+
+    @Test
+    fun `alias containing two non-consecutive dots should not return error`() {
+        val item = itemWithContents(alias = "so.me.alias")
+
+        val res = item.validate()
+        assertThat(res.isEmpty()).isTrue()
+    }
+
+    @Test
+    fun `alias containing uppercase should return error`() {
+        val item = itemWithContents(alias = "someAlias")
+
+        val res = item.validate()
+        assertThat(res.size).isEqualTo(1)
+        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
+    }
+
+    @Test
     fun `empty mailboxes should return an error`() {
         val item = itemWithContents(mailboxes = emptyList())
 

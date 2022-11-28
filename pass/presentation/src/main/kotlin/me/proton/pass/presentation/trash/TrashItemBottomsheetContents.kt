@@ -31,13 +31,15 @@ import me.proton.pass.presentation.components.model.ItemUiModel
 @Composable
 fun TrashItemBottomSheetContents(
     modifier: Modifier = Modifier,
-    itemUiModel: ItemUiModel?
+    itemUiModel: ItemUiModel,
+    onRestoreItem: (ItemUiModel) -> Unit,
+    onDeleteItem: (ItemUiModel) -> Unit
 ) {
     Column(modifier) {
         BottomSheetItemRow(
-            title = { BottomSheetItemTitle(text = itemUiModel?.name ?: "") },
+            title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = {
-                val text = when (val itemType = itemUiModel?.itemType) {
+                val text = when (val itemType = itemUiModel.itemType) {
                     is ItemType.Alias -> itemType.aliasEmail
                     is ItemType.Login -> itemType.username
                     is ItemType.Note -> itemType.text.replace("\n", " ")
@@ -46,7 +48,7 @@ fun TrashItemBottomSheetContents(
                 BottomSheetItemSubtitle(text = text)
             },
             icon = {
-                when (itemUiModel?.itemType) {
+                when (itemUiModel.itemType) {
                     is ItemType.Alias -> AliasIcon()
                     is ItemType.Login -> LoginIcon()
                     is ItemType.Note -> NoteIcon()
@@ -57,14 +59,17 @@ fun TrashItemBottomSheetContents(
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = listOf(
-                restoreItem(),
-                deleteItem()
+                restoreItem(itemUiModel, onRestoreItem),
+                deleteItem(itemUiModel, onDeleteItem)
             )
         )
     }
 }
 
-private fun restoreItem(): BottomSheetItem = object : BottomSheetItem {
+private fun restoreItem(
+    itemUiModel: ItemUiModel,
+    onRestoreItem: (ItemUiModel) -> Unit
+): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_restore)) }
     override val subtitle: (@Composable () -> Unit)?
@@ -72,10 +77,13 @@ private fun restoreItem(): BottomSheetItem = object : BottomSheetItem {
     override val icon: (@Composable () -> Unit)
         get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_clock_rotate_left) }
     override val onClick: () -> Unit
-        get() = { }
+        get() = { onRestoreItem(itemUiModel) }
 }
 
-private fun deleteItem(): BottomSheetItem = object : BottomSheetItem {
+private fun deleteItem(
+    itemUiModel: ItemUiModel,
+    onDeleteItem: (ItemUiModel) -> Unit
+): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = {
             BottomSheetItemTitle(
@@ -93,7 +101,7 @@ private fun deleteItem(): BottomSheetItem = object : BottomSheetItem {
             )
         }
     override val onClick: () -> Unit
-        get() = { }
+        get() = { onDeleteItem(itemUiModel) }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -105,12 +113,15 @@ fun TrashItemBottomSheetContentsPreview(
     ProtonTheme(isDark = isDark) {
         Surface {
             TrashItemBottomSheetContents(
+                Modifier,
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "My Alias",
                     itemType = ItemType.Alias("alias.email@proton.me")
-                )
+                ),
+                {},
+                {}
             )
         }
     }

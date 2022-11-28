@@ -23,7 +23,7 @@ fun TrashScreen(
     viewModel: TrashScreenViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val (currentBottomSheet, setBottomSheet) = remember { mutableStateOf(TrashBottomSheetType.ItemActions) }
+    val (currentBottomSheet, setBottomSheet) = remember { mutableStateOf(TrashBottomSheetType.AllTrashActions) }
     val bottomSheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
@@ -35,8 +35,29 @@ fun TrashScreen(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {
-                TrashBottomSheetType.ItemActions -> TrashItemBottomSheetContents(itemUiModel = selectedItem)
-                TrashBottomSheetType.AllTrashActions -> TrashAllBottomSheetContents()
+                TrashBottomSheetType.ItemActions -> TrashItemBottomSheetContents(
+                    itemUiModel = selectedItem!!,
+                    onRestoreItem = {
+                        viewModel.restoreItem(it)
+                        scope.launch {
+                            bottomSheetState.hide()
+                        }
+                    },
+                    onDeleteItem = {
+                        viewModel.deleteItem(it)
+                        scope.launch {
+                            bottomSheetState.hide()
+                        }
+                    }
+                )
+                TrashBottomSheetType.AllTrashActions -> TrashAllBottomSheetContents(
+                    onEmptyTrash = {
+                        viewModel.clearTrash()
+                        scope.launch {
+                            bottomSheetState.hide()
+                        }
+                    }
+                )
             }
         }
     ) {

@@ -44,7 +44,7 @@ fun SettingsContent(
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
-            ThemeSelectionBottomSheet(
+            ThemeSelectionBottomSheetContents(
                 onThemeSelected = { theme ->
                     scope.launch {
                         bottomSheetState.hide()

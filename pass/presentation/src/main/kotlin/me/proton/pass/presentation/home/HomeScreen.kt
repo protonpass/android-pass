@@ -14,6 +14,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
+import me.proton.pass.domain.ItemType
+import me.proton.pass.presentation.home.bottomsheet.AliasOptionsBottomSheetContents
 import me.proton.pass.presentation.home.bottomsheet.SortingBottomSheetContents
 
 @ExperimentalMaterialApi
@@ -40,9 +42,38 @@ fun HomeScreen(
         sheetContent = {
             when (currentBottomSheet) {
                 HomeBottomSheetType.CreateItem -> FABBottomSheetContents(
-                    state = bottomSheetState,
-                    navigation = homeScreenNavigation,
-                    shareId = uiState.homeListUiState.selectedShare.value()
+                    onCreateLogin = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            uiState.homeListUiState.selectedShare.value()?.let {
+                                homeScreenNavigation.toCreateLogin(it)
+                            }
+                        }
+                    },
+                    onCreateAlias = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            uiState.homeListUiState.selectedShare.value()?.let {
+                                homeScreenNavigation.toCreateAlias(it)
+                            }
+                        }
+                    },
+                    onCreateNote = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            uiState.homeListUiState.selectedShare.value()?.let {
+                                homeScreenNavigation.toCreateNote(it)
+                            }
+                        }
+                    },
+                    onCreatePassword = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            uiState.homeListUiState.selectedShare.value()?.let {
+                                homeScreenNavigation.toCreatePassword(it)
+                            }
+                        }
+                    }
                 )
                 HomeBottomSheetType.Sorting -> SortingBottomSheetContents(
                     sortingType = uiState.homeListUiState.sortingType
@@ -53,9 +84,9 @@ fun HomeScreen(
                         bottomSheetState.hide()
                     }
                 }
-                HomeBottomSheetType.LoginOptions -> {}
-                HomeBottomSheetType.AliasOptions -> {}
-                HomeBottomSheetType.NoteOptions -> {}
+                HomeBottomSheetType.LoginOptions -> AliasOptionsBottomSheetContents()
+                HomeBottomSheetType.AliasOptions -> AliasOptionsBottomSheetContents()
+                HomeBottomSheetType.NoteOptions -> AliasOptionsBottomSheetContents()
             }
         }
     ) {
@@ -75,6 +106,15 @@ fun HomeScreen(
             },
             onAddItemClick = {
                 setBottomSheet(HomeBottomSheetType.CreateItem)
+                scope.launch { bottomSheetState.show() }
+            },
+            onItemMenuClick = { item ->
+                when (item.itemType) {
+                    is ItemType.Alias -> setBottomSheet(HomeBottomSheetType.AliasOptions)
+                    is ItemType.Login -> setBottomSheet(HomeBottomSheetType.LoginOptions)
+                    is ItemType.Note -> setBottomSheet(HomeBottomSheetType.NoteOptions)
+                    ItemType.Password -> {}
+                }
                 scope.launch { bottomSheetState.show() }
             },
             onRefresh = { viewModel.onRefresh() },

@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import me.proton.pass.presentation.R
@@ -20,19 +19,17 @@ import me.proton.pass.presentation.shared.ConfirmItemDeletionDialog
 fun TrashContent(
     modifier: Modifier,
     uiState: TrashUiState,
-    // onRestoreItem: (ItemUiModel) -> Unit,
+    onTopBarMenuClick: () -> Unit,
+    onItemMenuClick: (ItemUiModel) -> Unit,
     onDeleteItem: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit,
-    onClearTrash: () -> Unit,
     onDrawerIconClick: () -> Unit
 ) {
-
-    var showClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     Scaffold(
         topBar = {
             TrashTopBar(
                 onDrawerIconClick = onDrawerIconClick,
-                onClearTrashClick = { showClearTrashDialog = true }
+                onMoreOptionsClick = onTopBarMenuClick
             )
         }
     ) { contentPadding ->
@@ -42,14 +39,8 @@ fun TrashContent(
                 items = uiState.items,
                 isRefreshing = uiState.isRefreshing,
                 isLoading = uiState.isLoading,
-                onItemMenuClick = {},
+                onItemMenuClick = onItemMenuClick,
                 onRefresh = onRefresh
-            )
-
-            ConfirmClearTrashDialog(
-                show = showClearTrashDialog,
-                onDismiss = { showClearTrashDialog = false },
-                onConfirm = onClearTrash
             )
             ConfirmItemDeletionDialog(
                 state = itemToDelete,

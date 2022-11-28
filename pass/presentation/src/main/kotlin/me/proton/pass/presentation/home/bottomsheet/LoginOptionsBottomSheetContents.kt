@@ -20,12 +20,12 @@ import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemRow
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemSubtitle
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
-import me.proton.pass.presentation.components.common.item.icon.AliasIcon
+import me.proton.pass.presentation.components.common.item.icon.LoginIcon
 import me.proton.pass.presentation.components.model.ItemUiModel
 
 @ExperimentalMaterialApi
 @Composable
-fun AliasOptionsBottomSheetContents(
+fun LoginOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel?
 ) {
@@ -34,15 +34,16 @@ fun AliasOptionsBottomSheetContents(
             title = { BottomSheetItemTitle(text = itemUiModel?.name ?: "") },
             subtitle = {
                 BottomSheetItemSubtitle(
-                    text = (itemUiModel?.itemType as? ItemType.Alias)?.aliasEmail ?: ""
+                    text = (itemUiModel?.itemType as? ItemType.Login)?.username ?: ""
                 )
             },
-            icon = { AliasIcon() }
+            icon = { LoginIcon() }
         )
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = listOf(
-                copyAlias(),
+                copyUsername(),
+                copyPassword(),
                 edit(),
                 moveToTrash()
             )
@@ -50,9 +51,20 @@ fun AliasOptionsBottomSheetContents(
     }
 }
 
-private fun copyAlias(): BottomSheetItem = object : BottomSheetItem {
+private fun copyUsername(): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_username)) }
+    override val subtitle: (@Composable () -> Unit)?
+        get() = null
+    override val icon: (@Composable () -> Unit)
+        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+    override val onClick: () -> Unit
+        get() = { }
+}
+
+private fun copyPassword(): BottomSheetItem = object : BottomSheetItem {
+    override val title: @Composable () -> Unit
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_password)) }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val icon: (@Composable () -> Unit)
@@ -64,12 +76,12 @@ private fun copyAlias(): BottomSheetItem = object : BottomSheetItem {
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun AliasOptionsBottomSheetContentsPreview(
+fun LoginOptionsBottomSheetContentsPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            AliasOptionsBottomSheetContents(Modifier, null)
+            LoginOptionsBottomSheetContents(Modifier, null)
         }
     }
 }

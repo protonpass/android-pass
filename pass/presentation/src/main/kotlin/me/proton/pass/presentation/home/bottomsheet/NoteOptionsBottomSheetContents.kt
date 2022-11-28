@@ -20,12 +20,12 @@ import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemRow
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemSubtitle
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
-import me.proton.pass.presentation.components.common.item.icon.AliasIcon
+import me.proton.pass.presentation.components.common.item.icon.NoteIcon
 import me.proton.pass.presentation.components.model.ItemUiModel
 
 @ExperimentalMaterialApi
 @Composable
-fun AliasOptionsBottomSheetContents(
+fun NoteOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel?
 ) {
@@ -33,16 +33,20 @@ fun AliasOptionsBottomSheetContents(
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel?.name ?: "") },
             subtitle = {
+                val processedText = (itemUiModel?.itemType as? ItemType.Note)
+                    ?.text
+                    ?.replace("\n", " ")
+                    ?: ""
                 BottomSheetItemSubtitle(
-                    text = (itemUiModel?.itemType as? ItemType.Alias)?.aliasEmail ?: ""
+                    text = processedText
                 )
             },
-            icon = { AliasIcon() }
+            icon = { NoteIcon() }
         )
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = listOf(
-                copyAlias(),
+                copyNote(),
                 edit(),
                 moveToTrash()
             )
@@ -50,9 +54,9 @@ fun AliasOptionsBottomSheetContents(
     }
 }
 
-private fun copyAlias(): BottomSheetItem = object : BottomSheetItem {
+private fun copyNote(): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_note)) }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val icon: (@Composable () -> Unit)
@@ -64,12 +68,12 @@ private fun copyAlias(): BottomSheetItem = object : BottomSheetItem {
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun AliasOptionsBottomSheetContentsPreview(
+fun NoteOptionsBottomSheetContentsPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            AliasOptionsBottomSheetContents(Modifier, null)
+            NoteOptionsBottomSheetContents(Modifier, null)
         }
     }
 }

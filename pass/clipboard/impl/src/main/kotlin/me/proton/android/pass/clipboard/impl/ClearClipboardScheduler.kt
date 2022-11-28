@@ -3,15 +3,20 @@ package me.proton.android.pass.clipboard.impl
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import me.proton.android.pass.log.PassLogger
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.crypto.common.keystore.encrypt
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class ClearClipboardScheduler @Inject constructor(
-    private val workManager: WorkManager
+    private val workManager: WorkManager,
+    private val keyStoreCrypto: KeyStoreCrypto
 ) {
-    fun schedule(delaySeconds: Long) {
+    fun schedule(delaySeconds: Long, expectedClipboardContents: String) {
+        val data = ClearClipboardWorker.createInputData(expectedClipboardContents.encrypt(keyStoreCrypto))
         workManager.enqueue(
             OneTimeWorkRequestBuilder<ClearClipboardWorker>()
+                .setInputData(data)
                 .setInitialDelay(delaySeconds, TimeUnit.SECONDS)
                 .build()
         )

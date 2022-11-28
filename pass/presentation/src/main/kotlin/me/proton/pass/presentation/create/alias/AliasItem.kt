@@ -20,14 +20,32 @@ data class AliasItem(
     fun validate(): Set<AliasItemValidationErrors> {
         val mutableSet = mutableSetOf<AliasItemValidationErrors>()
         if (title.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankTitle)
+
         if (alias.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankAlias)
+
+        if (alias.startsWith(".")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
+
+        if (alias.endsWith(".")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
+
+        if (alias.contains("..")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
+
         if (!areAllAliasCharactersValid()) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
+
         if (mailboxes.count { it.selected } == 0) mutableSet.add(AliasItemValidationErrors.NoMailboxes)
+
         return mutableSet.toSet()
     }
 
-    private fun areAllAliasCharactersValid(): Boolean =
-        alias.all { it.isLetterOrDigit() || ALLOWED_SPECIAL_CHARACTERS.contains(it) }
+    private fun areAllAliasCharactersValid(): Boolean {
+        for (char in alias) {
+            // If it's not a letter or a digit, check if it's one of the allowed symbols
+            if (!char.isLetterOrDigit() && !ALLOWED_SPECIAL_CHARACTERS.contains(char)) return false
+
+            // If it's a letter, must be lowercase
+            if (char.isLetter() && char.isUpperCase()) return false
+        }
+        return true
+    }
 
 
     companion object {

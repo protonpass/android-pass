@@ -77,7 +77,6 @@
     <string name="action_edit_placeholder">Edit %s</string>
     <string name="action_reveal_password">Reveal password</string>
     <string name="action_conceal_password">Conceal password</string>
-    <string name="action_edit">Edit</string>
     <string name="action_restore">Restore</string>
 
     <!-- Alerts -->

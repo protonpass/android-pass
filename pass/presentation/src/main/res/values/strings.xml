@@ -110,6 +110,10 @@
 
     <!-- Trash -->
     <string name="message_no_trashed_credentials">You don\'t have any trashed credentials.</string>
+    <string name="bottomsheet_trash_all_items_title">Trash</string>
+    <string name="bottomsheet_restore_all_items">Restore all items</string>
+    <string name="bottomsheet_delete_permanently">Delete permanently</string>
+    <string name="bottomsheet_empty_trash">Empty trash</string>
 
     <!-- Detail -->
     <string name="detail_init_error">Could not initialise the element</string>

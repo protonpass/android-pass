@@ -6,6 +6,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.android.pass.preferences.ThemePreference
@@ -44,7 +45,11 @@ private fun ThemePreference.toBottomSheetItem(
 ): BottomSheetItem = when (this) {
     ThemePreference.Light -> object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(textId = R.string.settings_appearance_preference_subtitle_light) }
+            get() = {
+                BottomSheetItemTitle(
+                    text = stringResource(id = R.string.settings_appearance_preference_subtitle_light)
+                )
+            }
         override val subtitle: (() -> Unit)?
             get() = null
         override val icon: @Composable (() -> Unit)
@@ -54,7 +59,11 @@ private fun ThemePreference.toBottomSheetItem(
     }
     ThemePreference.Dark -> object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(textId = R.string.settings_appearance_preference_subtitle_dark) }
+            get() = {
+                BottomSheetItemTitle(
+                    text = stringResource(id = R.string.settings_appearance_preference_subtitle_dark)
+                )
+            }
         override val subtitle: (() -> Unit)?
             get() = null
         override val icon: @Composable (() -> Unit)
@@ -64,7 +73,11 @@ private fun ThemePreference.toBottomSheetItem(
     }
     ThemePreference.System -> object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(textId = R.string.settings_appearance_preference_subtitle_match_system) }
+            get() = {
+                BottomSheetItemTitle(
+                    text = stringResource(id = R.string.settings_appearance_preference_subtitle_match_system)
+                )
+            }
         override val subtitle: (() -> Unit)?
             get() = null
         override val icon: @Composable (() -> Unit)

@@ -1,8 +1,8 @@
 package me.proton.pass.autofill.ui.autofill.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.navigation.api.AppNavigator
@@ -14,7 +14,10 @@ import me.proton.pass.presentation.create.alias.RESULT_CREATED_ALIAS
 import me.proton.pass.presentation.create.login.CreateLogin
 import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 
-@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
+@OptIn(
+    ExperimentalAnimationApi::class,
+    ExperimentalLifecycleComposeApi::class
+)
 fun NavGraphBuilder.createLoginGraph(
     appNavigator: AppNavigator,
     state: AutofillAppState,

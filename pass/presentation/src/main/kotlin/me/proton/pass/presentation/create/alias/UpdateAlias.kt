@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
@@ -18,6 +19,7 @@ import me.proton.pass.presentation.components.dialogs.ConfirmMoveItemToTrashDial
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.AliasUpdated
 import me.proton.pass.presentation.uievents.ItemDeletedState
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable

@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.android.pass.notifications.api.SnackbarMessage
 import me.proton.android.pass.preferences.ThemePreference
@@ -20,6 +21,7 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.presentation.components.common.PassSnackbarHost
 import me.proton.pass.presentation.components.common.rememberPassSnackbarHostState
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun AutofillApp(
     modifier: Modifier = Modifier,

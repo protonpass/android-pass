@@ -11,6 +11,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import kotlinx.coroutines.CoroutineScope
@@ -30,6 +31,7 @@ import me.proton.pass.presentation.components.navigation.CoreNavigation
 import me.proton.pass.presentation.components.navigation.drawer.NavDrawerNavigation
 import me.proton.pass.presentation.components.navigation.drawer.NavigationDrawerSection
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun PassApp(
     modifier: Modifier = Modifier,

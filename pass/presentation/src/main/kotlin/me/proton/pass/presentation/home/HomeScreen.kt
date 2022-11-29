@@ -11,6 +11,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
@@ -22,9 +23,12 @@ import me.proton.pass.presentation.home.bottomsheet.LoginOptionsBottomSheetConte
 import me.proton.pass.presentation.home.bottomsheet.NoteOptionsBottomSheetContents
 import me.proton.pass.presentation.home.bottomsheet.SortingBottomSheetContents
 
+@OptIn(
+    ExperimentalLifecycleComposeApi::class,
+    ExperimentalMaterialApi::class,
+    ExperimentalComposeUiApi::class
+)
 @Suppress("ComplexMethod")
-@ExperimentalMaterialApi
-@ExperimentalComposeUiApi
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,

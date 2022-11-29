@@ -7,9 +7,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.pass.domain.Item
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun AliasDetail(
     modifier: Modifier = Modifier,

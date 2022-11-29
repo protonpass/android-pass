@@ -1,9 +1,8 @@
 package me.proton.android.pass.ui.create.login
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.navigation.api.AppNavigator
@@ -14,8 +13,8 @@ import me.proton.pass.presentation.create.login.CreateLogin
 import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 
 @OptIn(
-    ExperimentalAnimationApi::class, ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class
+    ExperimentalAnimationApi::class,
+    ExperimentalLifecycleComposeApi::class
 )
 fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
     composable(AppNavItem.CreateLogin) {

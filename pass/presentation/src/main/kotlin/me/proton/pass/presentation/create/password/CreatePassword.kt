@@ -2,12 +2,12 @@ package me.proton.pass.presentation.create.password
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
-@ExperimentalComposeUiApi
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun CreatePassword(
     modifier: Modifier = Modifier,

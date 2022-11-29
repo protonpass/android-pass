@@ -1,9 +1,9 @@
 package me.proton.pass.presentation.home
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -12,7 +12,7 @@ import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 
-@ExperimentalMaterialApi
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun IdleHomeTopBar(
     modifier: Modifier = Modifier,

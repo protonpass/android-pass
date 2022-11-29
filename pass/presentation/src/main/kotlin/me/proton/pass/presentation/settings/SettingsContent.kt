@@ -10,6 +10,7 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
@@ -21,7 +22,7 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SettingsContent(
     modifier: Modifier = Modifier,

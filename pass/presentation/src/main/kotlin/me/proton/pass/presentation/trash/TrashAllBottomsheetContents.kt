@@ -24,7 +24,7 @@ fun TrashAllBottomSheetContents(
     onEmptyTrash: () -> Unit
 ) {
     Column(modifier) {
-        BottomSheetTitle(title = R.string.bottomsheet_trash_all_items_title)
+        BottomSheetTitle(title = R.string.bottomsheet_trash_all_items_title, showDivider = false)
         BottomSheetItemList(
             items = listOf(
                 restoreAll(),

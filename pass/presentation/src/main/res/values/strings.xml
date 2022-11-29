@@ -201,13 +201,13 @@
     <string name="changes_saved">Changes saved</string>
 
     <!-- Alias details -->
-    <string name="alias_copied_to_clipboard">Alias copied to the clipboard</string>
+    <string name="alias_copied_to_clipboard">Alias copied</string>
     <!-- Note details -->
-    <string name="note_copied_to_clipboard">Note copied to the clipboard</string>
+    <string name="note_copied_to_clipboard">Note copied</string>
     <!-- Login details -->
-    <string name="username_copied_to_clipboard">Username copied to the clipboard</string>
-    <string name="password_copied_to_clipboard">Password copied to the clipboard</string>
-    <string name="website_copied_to_clipboard">Website copied to the clipboard</string>
+    <string name="username_copied_to_clipboard">Username copied</string>
+    <string name="password_copied_to_clipboard">Password copied</string>
+    <string name="website_copied_to_clipboard">Website copied</string>
 
     <!-- Settings -->
     <string name="settings_autofill_section_title">Autofill</string>

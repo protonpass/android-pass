@@ -77,14 +77,15 @@ fun AliasOptionsBottomSheetContentsPreview(
     ProtonTheme(isDark = isDark) {
         Surface {
             AliasOptionsBottomSheetContents(
-                Modifier,
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "My Alias",
                     itemType = ItemType.Alias("alias.email@proton.me")
                 ),
-                {}, { _, _ -> }, {}
+                onCopyAlias = {},
+                onEdit = { _, _ -> },
+                onMoveToTrash = {}
             )
         }
     }

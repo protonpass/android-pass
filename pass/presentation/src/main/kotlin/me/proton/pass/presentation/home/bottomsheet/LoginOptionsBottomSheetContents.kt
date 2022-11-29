@@ -91,14 +91,16 @@ fun LoginOptionsBottomSheetContentsPreview(
     ProtonTheme(isDark = isDark) {
         Surface {
             LoginOptionsBottomSheetContents(
-                Modifier,
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "My Login",
                     itemType = ItemType.Login("My username", "My password", emptyList())
                 ),
-                {}, {}, { _, _ -> }, {}
+                onCopyUsername = {},
+                onCopyPassword = {},
+                onEdit = { _, _ -> },
+                onMoveToTrash = {}
             )
         }
     }

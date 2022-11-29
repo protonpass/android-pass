@@ -155,8 +155,8 @@ internal fun SearchTextField(
     )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Preview
-@ExperimentalComposeUiApi
 @Composable
 fun SearchHomeTopBarPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean

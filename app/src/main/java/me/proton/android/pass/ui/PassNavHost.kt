@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlinx.coroutines.CoroutineScope
@@ -17,15 +18,16 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.android.pass.ui.navigation.appGraph
-import me.proton.pass.presentation.shared.ConfirmSignOutDialog
 import me.proton.pass.presentation.components.navigation.CoreNavigation
 import me.proton.pass.presentation.components.navigation.drawer.DrawerUiState
 import me.proton.pass.presentation.components.navigation.drawer.ModalNavigationDrawer
 import me.proton.pass.presentation.components.navigation.drawer.NavDrawerNavigation
+import me.proton.pass.presentation.shared.ConfirmSignOutDialog
 
 @OptIn(
     ExperimentalAnimationApi::class,
-    ExperimentalMaterialApi::class
+    ExperimentalMaterialApi::class,
+    ExperimentalComposeUiApi::class
 )
 @Composable
 fun PassNavHost(

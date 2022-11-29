@@ -3,8 +3,10 @@ package me.proton.pass.presentation.home
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun NavHome(
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,

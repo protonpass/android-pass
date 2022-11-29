@@ -109,10 +109,6 @@
     <string name="error_refreshing">Error performing refresh</string>
     <string name="error_clearing_trash">Error clearing trash</string>
     <string name="error_deleting_item">Error deleting item</string>
-    <string name="home_snackbar_alias_copied">Alias copied</string>
-    <string name="home_snackbar_password_copied">Password copied</string>
-    <string name="home_snackbar_username_copied">Username copied</string>
-    <string name="home_snackbar_note_copied">Note copied</string>
 
     <!-- Trash -->
     <string name="message_no_trashed_credentials">You don\'t have any trashed credentials.</string>

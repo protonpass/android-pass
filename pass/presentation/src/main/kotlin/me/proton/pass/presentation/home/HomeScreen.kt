@@ -15,12 +15,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.domain.ItemType
+import me.proton.pass.presentation.components.dialogs.ConfirmMoveItemToTrashDialog
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.home.bottomsheet.AliasOptionsBottomSheetContents
 import me.proton.pass.presentation.home.bottomsheet.LoginOptionsBottomSheetContents
 import me.proton.pass.presentation.home.bottomsheet.NoteOptionsBottomSheetContents
 import me.proton.pass.presentation.home.bottomsheet.SortingBottomSheetContents
 
+@Suppress("ComplexMethod")
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
@@ -34,6 +36,7 @@ fun HomeScreen(
     val (currentBottomSheet, setBottomSheet) = remember { mutableStateOf(HomeBottomSheetType.CreateItem) }
     val (selectedItem, setSelectedItem) = remember { mutableStateOf<ItemUiModel?>(null) }
     val (shouldScrollToTop, setScrollToTop) = remember { mutableStateOf(false) }
+    val (shouldShowDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf(false) }
 
     val bottomSheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
@@ -90,13 +93,13 @@ fun HomeScreen(
                     itemUiModel = selectedItem!!,
                     onCopyUsername = {
                         scope.launch { bottomSheetState.hide() }
-                        viewModel.copyToClipboard(it)
+                        viewModel.copyToClipboard(it, HomeClipboardType.Username)
                     },
                     onCopyPassword = {
                         scope.launch { bottomSheetState.hide() }
                         viewModel.copyToClipboard(
                             text = it,
-                            isSensitive = true
+                            HomeClipboardType.Password
                         )
                     },
                     onEdit = { shareId, itemId ->
@@ -105,14 +108,14 @@ fun HomeScreen(
                     },
                     onMoveToTrash = {
                         scope.launch { bottomSheetState.hide() }
-                        viewModel.sendItemToTrash(it)
+                        setShowDeleteDialog(true)
                     }
                 )
                 HomeBottomSheetType.AliasOptions -> AliasOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     onCopyAlias = {
                         scope.launch { bottomSheetState.hide() }
-                        viewModel.copyToClipboard(it)
+                        viewModel.copyToClipboard(it, HomeClipboardType.Alias)
                     },
                     onEdit = { shareId, itemId ->
                         scope.launch { bottomSheetState.hide() }
@@ -120,14 +123,14 @@ fun HomeScreen(
                     },
                     onMoveToTrash = {
                         scope.launch { bottomSheetState.hide() }
-                        viewModel.sendItemToTrash(it)
+                        setShowDeleteDialog(true)
                     }
                 )
                 HomeBottomSheetType.NoteOptions -> NoteOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     onCopyNote = {
                         scope.launch { bottomSheetState.hide() }
-                        viewModel.copyToClipboard(it)
+                        viewModel.copyToClipboard(it, HomeClipboardType.Note)
                     },
                     onEdit = { shareId, itemId ->
                         scope.launch { bottomSheetState.hide() }
@@ -135,7 +138,7 @@ fun HomeScreen(
                     },
                     onMoveToTrash = {
                         scope.launch { bottomSheetState.hide() }
-                        viewModel.sendItemToTrash(it)
+                        setShowDeleteDialog(true)
                     }
                 )
             }
@@ -172,5 +175,17 @@ fun HomeScreen(
             onRefresh = { viewModel.onRefresh() },
             onScrollToTop = { setScrollToTop(false) }
         )
+
+        if (shouldShowDeleteDialog) {
+            ConfirmMoveItemToTrashDialog(
+                itemName = selectedItem?.name ?: "",
+                onConfirm = {
+                    viewModel.sendItemToTrash(selectedItem)
+                    setShowDeleteDialog(false)
+                },
+                onDismiss = { setShowDeleteDialog(false) },
+                onCancel = { setShowDeleteDialog(false) }
+            )
+        }
     }
 }

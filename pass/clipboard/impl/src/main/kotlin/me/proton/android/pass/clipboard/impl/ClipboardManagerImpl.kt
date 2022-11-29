@@ -1,7 +1,10 @@
 package me.proton.android.pass.clipboard.impl
 
 import android.content.ClipData
+import android.content.ClipDescription
 import android.content.Context
+import android.os.Build
+import android.os.PersistableBundle
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.android.pass.clipboard.api.ClipboardManager
 import me.proton.android.pass.log.PassLogger
@@ -19,13 +22,24 @@ class ClipboardManagerImpl @Inject constructor(
             return
         }
 
-        val data = if (isSecure) {
-            ClipData.newPlainText("·······", text)
-        } else {
-            ClipData.newPlainText(text, text)
+        val clipData = ClipData.newPlainText("pass-contents", text)
+        if (isSecure) {
+            applySecureFlag(clipData)
         }
-        androidClipboard.setPrimaryClip(data)
+        androidClipboard.setPrimaryClip(clipData)
         clearAfterSeconds?.let { scheduler.schedule(it, text) }
+    }
+
+    private fun applySecureFlag(clipData: ClipData) {
+        val key = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            ClipDescription.EXTRA_IS_SENSITIVE
+        } else {
+            "android.content.extra.IS_SENSITIVE"
+        }
+
+        clipData.description.extras = PersistableBundle().apply {
+            putBoolean(key, true)
+        }
     }
 
     companion object {

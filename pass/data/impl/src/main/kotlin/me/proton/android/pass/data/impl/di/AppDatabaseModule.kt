@@ -1,4 +1,4 @@
-package me.proton.android.pass.di
+package me.proton.android.pass.data.impl.di
 
 import android.content.Context
 import dagger.Binds
@@ -7,8 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import me.proton.android.pass.data.impl.db.AppDatabase
 import me.proton.android.pass.data.impl.db.PassDatabase
-import me.proton.android.pass.db.AppDatabase
 import me.proton.core.account.data.db.AccountDatabase
 import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.eventmanager.data.db.EventMetadataDatabase

@@ -1,10 +1,9 @@
-package me.proton.android.pass.db
+package me.proton.android.pass.data.impl.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
-import me.proton.android.pass.data.impl.db.PassDatabase
 import me.proton.android.pass.data.impl.db.entities.ItemEntity
 import me.proton.android.pass.data.impl.db.entities.ItemKeyEntity
 import me.proton.android.pass.data.impl.db.entities.ShareEntity
@@ -109,15 +108,17 @@ abstract class AppDatabase :
     UserSettingsDatabase {
 
     companion object {
-        const val VERSION = 3
+        const val VERSION = 4
+        const val DB_NAME = "db-passkey"
 
         private val migrations: List<Migration> = listOf(
             AppDatabaseMigrations.MIGRATION_1_2,
-            AppDatabaseMigrations.MIGRATION_2_3
+            AppDatabaseMigrations.MIGRATION_2_3,
+            AppDatabaseMigrations.MIGRATION_3_4
         )
 
         fun buildDatabase(context: Context): AppDatabase =
-            databaseBuilder<AppDatabase>(context, "db-passkey")
+            databaseBuilder<AppDatabase>(context, DB_NAME)
                 .apply { migrations.forEach { addMigrations(it) } }
                 .fallbackToDestructiveMigration()
                 .build()

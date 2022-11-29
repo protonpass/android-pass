@@ -23,7 +23,7 @@ fun AliasDetailContent(
     }
 
     val model = state.model ?: return
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(horizontal = 16.dp)) {
         AliasAddressSection(
             alias = model.alias,
             onAliasCopied = {

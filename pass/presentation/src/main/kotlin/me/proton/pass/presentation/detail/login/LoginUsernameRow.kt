@@ -22,12 +22,11 @@ import me.proton.pass.presentation.detail.DetailSectionTitle
 fun LoginUsernameRow(
     modifier: Modifier = Modifier,
     username: String,
-    storeToClipboard: (contents: String?, fieldName: String) -> Unit
+    onUsernameClick: () -> Unit
 ) {
-    val usernameFieldName = stringResource(R.string.field_username)
     RoundedCornersContainer(
         modifier = modifier.fillMaxWidth(),
-        onClick = { storeToClipboard(username, usernameFieldName) }
+        onClick = onUsernameClick
     ) {
         Column {
             DetailSectionTitle(text = stringResource(R.string.field_username))
@@ -46,7 +45,7 @@ fun LoginUsernameRowPreview(
         Surface {
             LoginUsernameRow(
                 username = "some.username",
-                storeToClipboard = { _, _ -> }
+                onUsernameClick = {}
             )
         }
     }

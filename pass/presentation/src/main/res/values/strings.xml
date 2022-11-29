@@ -79,6 +79,8 @@
     <string name="action_reveal_password">Reveal password</string>
     <string name="action_conceal_password">Conceal password</string>
     <string name="action_restore">Restore</string>
+    <string name="action_open">Open</string>
+    <string name="action_copy">Copy</string>
 
     <!-- Alerts -->
     <string name="alert_confirm_item_send_to_trash_title">Send item to trash?</string>
@@ -202,6 +204,10 @@
     <string name="alias_copied_to_clipboard">Alias copied to the clipboard</string>
     <!-- Note details -->
     <string name="note_copied_to_clipboard">Note copied to the clipboard</string>
+    <!-- Login details -->
+    <string name="username_copied_to_clipboard">Username copied to the clipboard</string>
+    <string name="password_copied_to_clipboard">Password copied to the clipboard</string>
+    <string name="website_copied_to_clipboard">Website copied to the clipboard</string>
 
     <!-- Settings -->
     <string name="settings_autofill_section_title">Autofill</string>

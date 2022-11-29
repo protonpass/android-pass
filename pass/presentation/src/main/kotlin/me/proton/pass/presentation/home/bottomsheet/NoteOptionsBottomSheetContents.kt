@@ -78,14 +78,15 @@ fun NoteOptionsBottomSheetContentsPreview(
     ProtonTheme(isDark = isDark) {
         Surface {
             NoteOptionsBottomSheetContents(
-                Modifier,
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "My Note",
                     itemType = ItemType.Note("My note text")
                 ),
-                {}, { _, _ -> }, {}
+                onCopyNote = {},
+                onEdit = { _, _ -> },
+                onMoveToTrash = {}
             )
         }
     }

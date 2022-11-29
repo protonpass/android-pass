@@ -15,6 +15,14 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         testInstrumentationRunner = Config.testInstrumentationRunner
+
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+    }
+
+    sourceSets {
+        getByName("androidTest").assets.srcDir("$projectDir/schemas")
     }
 
     compileOptions {
@@ -32,21 +40,28 @@ dependencies {
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.serialization.json)
     implementation(libs.core.account)
     implementation(libs.core.accountManager)
+    implementation(libs.core.challenge)
     implementation(libs.core.crypto)
     implementation(libs.core.data)
     implementation(libs.core.dataRoom)
     implementation(libs.core.domain)
+    implementation(libs.core.eventManager)
+    implementation(libs.core.featureFlag)
+    implementation(libs.core.humanVerification)
     implementation(libs.core.key)
     implementation(libs.core.network)
+    implementation(libs.core.payment)
     implementation(libs.core.user)
+    implementation(libs.core.userSettings)
     implementation(libs.core.utilKotlin)
-    implementation(libs.retrofit)
-    ksp(libs.androidx.room.compiler)
     implementation(libs.google.protobuf.lite)
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit)
+
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
@@ -70,11 +85,12 @@ dependencies {
 
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)
+    androidTestImplementation(libs.androidx.room.testing)
     androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.core.ktx)
-    androidTestImplementation(libs.androidx.test.runner)
-    androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.androidx.test.espresso.core)
-    androidTestImplementation(libs.kotlinTest)
+    androidTestImplementation(libs.androidx.test.rules)
+    androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.core.test.android.instrumented)
+    androidTestImplementation(libs.kotlinTest)
 }

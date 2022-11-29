@@ -55,6 +55,8 @@ data class ItemEntity(
     val itemKeySignature: String,
     @ColumnInfo(name = Columns.STATE)
     val state: Int,
+    @ColumnInfo(name = Columns.ITEM_TYPE)
+    val itemType: Int,
     @ColumnInfo(name = Columns.SIGNATURE_EMAIL)
     val signatureEmail: String,
     @ColumnInfo(name = Columns.ALIAS_EMAIL)
@@ -84,6 +86,7 @@ data class ItemEntity(
         const val USER_SIGNATURE = "user_signature"
         const val ITEM_KEY_SIGNATURE = "item_key_signature"
         const val STATE = "state"
+        const val ITEM_TYPE = "item_type"
         const val SIGNATURE_EMAIL = "signature_email"
         const val ALIAS_EMAIL = "alias_email"
         const val CREATE_TIME = "create_time"

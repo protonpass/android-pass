@@ -200,7 +200,9 @@ class ItemRepositoryImpl @Inject constructor(
 
     override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit> {
         val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-        if (item.state == ItemState.Trashed.value) return Result.Error(CannotRemoveNotTrashedItemError())
+        if (item.state == ItemState.Trashed.value) return Result.Error(
+            CannotRemoveNotTrashedItemError()
+        )
 
         val body =
             TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
@@ -578,6 +580,7 @@ class ItemRepositoryImpl @Inject constructor(
             userSignature = itemRevision.userSignature,
             itemKeySignature = itemRevision.itemKeySignature,
             state = itemRevision.state,
+            itemType = item.itemType.toWeightedInt(),
             signatureEmail = itemRevision.signatureEmail,
             createTime = itemRevision.createTime,
             modifyTime = itemRevision.modifyTime,

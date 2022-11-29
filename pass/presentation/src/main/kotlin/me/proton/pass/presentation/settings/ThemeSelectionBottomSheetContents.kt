@@ -1,8 +1,6 @@
 package me.proton.pass.presentation.settings
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,8 +23,7 @@ fun ThemeSelectionBottomSheetContents(
     onThemeSelected: (ThemePreference) -> Unit
 ) {
     Column(modifier = modifier) {
-        BottomSheetTitle(title = R.string.settings_theme_selector_title)
-        Divider(modifier = Modifier.fillMaxWidth())
+        BottomSheetTitle(title = R.string.settings_theme_selector_title, showDivider = true)
         BottomSheetItemList(
             items = themeItemList(
                 onThemeTypeSelected = onThemeSelected

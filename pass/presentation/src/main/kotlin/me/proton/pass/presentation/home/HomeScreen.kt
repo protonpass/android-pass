@@ -84,13 +84,60 @@ fun HomeScreen(
                 ) {
                     viewModel.onSortingTypeChanged(it)
                     setScrollToTop(true)
-                    scope.launch {
-                        bottomSheetState.hide()
-                    }
+                    scope.launch { bottomSheetState.hide() }
                 }
-                HomeBottomSheetType.LoginOptions -> LoginOptionsBottomSheetContents(itemUiModel = selectedItem)
-                HomeBottomSheetType.AliasOptions -> AliasOptionsBottomSheetContents(itemUiModel = selectedItem)
-                HomeBottomSheetType.NoteOptions -> NoteOptionsBottomSheetContents(itemUiModel = selectedItem)
+                HomeBottomSheetType.LoginOptions -> LoginOptionsBottomSheetContents(
+                    itemUiModel = selectedItem!!,
+                    onCopyUsername = {
+                        scope.launch { bottomSheetState.hide() }
+                        viewModel.copyToClipboard(it)
+                    },
+                    onCopyPassword = {
+                        scope.launch { bottomSheetState.hide() }
+                        viewModel.copyToClipboard(
+                            text = it,
+                            isSensitive = true
+                        )
+                    },
+                    onEdit = { shareId, itemId ->
+                        scope.launch { bottomSheetState.hide() }
+                        homeScreenNavigation.toEditLogin(shareId, itemId)
+                    },
+                    onMoveToTrash = {
+                        scope.launch { bottomSheetState.hide() }
+                        viewModel.sendItemToTrash(it)
+                    }
+                )
+                HomeBottomSheetType.AliasOptions -> AliasOptionsBottomSheetContents(
+                    itemUiModel = selectedItem!!,
+                    onCopyAlias = {
+                        scope.launch { bottomSheetState.hide() }
+                        viewModel.copyToClipboard(it)
+                    },
+                    onEdit = { shareId, itemId ->
+                        scope.launch { bottomSheetState.hide() }
+                        homeScreenNavigation.toEditAlias(shareId, itemId)
+                    },
+                    onMoveToTrash = {
+                        scope.launch { bottomSheetState.hide() }
+                        viewModel.sendItemToTrash(it)
+                    }
+                )
+                HomeBottomSheetType.NoteOptions -> NoteOptionsBottomSheetContents(
+                    itemUiModel = selectedItem!!,
+                    onCopyNote = {
+                        scope.launch { bottomSheetState.hide() }
+                        viewModel.copyToClipboard(it)
+                    },
+                    onEdit = { shareId, itemId ->
+                        scope.launch { bottomSheetState.hide() }
+                        homeScreenNavigation.toEditNote(shareId, itemId)
+                    },
+                    onMoveToTrash = {
+                        scope.launch { bottomSheetState.hide() }
+                        viewModel.sendItemToTrash(it)
+                    }
+                )
             }
         }
     ) {

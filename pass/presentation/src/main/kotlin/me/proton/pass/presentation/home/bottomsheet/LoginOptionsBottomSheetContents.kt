@@ -29,14 +29,19 @@ import me.proton.pass.presentation.components.model.ItemUiModel
 @Composable
 fun LoginOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
-    itemUiModel: ItemUiModel?
+    itemUiModel: ItemUiModel,
+    onCopyUsername: (String) -> Unit,
+    onCopyPassword: (String) -> Unit,
+    onEdit: (ShareId, ItemId) -> Unit,
+    onMoveToTrash: (ItemUiModel) -> Unit
 ) {
+    val itemType = itemUiModel.itemType as ItemType.Login
     Column(modifier) {
         BottomSheetItemRow(
-            title = { BottomSheetItemTitle(text = itemUiModel?.name ?: "") },
+            title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = {
                 BottomSheetItemSubtitle(
-                    text = (itemUiModel?.itemType as? ItemType.Login)?.username ?: ""
+                    text = itemType.username
                 )
             },
             icon = { LoginIcon() }
@@ -44,36 +49,38 @@ fun LoginOptionsBottomSheetContents(
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = listOf(
-                copyUsername(),
-                copyPassword(),
-                edit(),
-                moveToTrash()
+                copyUsername(itemType.username, onCopyUsername),
+                copyPassword(itemType.password, onCopyPassword),
+                edit(itemUiModel, onEdit),
+                moveToTrash(itemUiModel, onMoveToTrash)
             )
         )
     }
 }
 
-private fun copyUsername(): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_username)) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val icon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-    override val onClick: () -> Unit
-        get() = { }
-}
+private fun copyUsername(username: String, onCopyUsername: (String) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_username)) }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val icon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val onClick: () -> Unit
+            get() = { onCopyUsername(username) }
+    }
 
-private fun copyPassword(): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_password)) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val icon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-    override val onClick: () -> Unit
-        get() = { }
-}
+private fun copyPassword(password: String, onCopyPassword: (String) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_password)) }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val icon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val onClick: () -> Unit
+            get() = { onCopyPassword(password) }
+    }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
@@ -84,12 +91,14 @@ fun LoginOptionsBottomSheetContentsPreview(
     ProtonTheme(isDark = isDark) {
         Surface {
             LoginOptionsBottomSheetContents(
+                Modifier,
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "My Login",
                     itemType = ItemType.Login("My username", "My password", emptyList())
-                )
+                ),
+                {}, {}, { _, _ -> }, {}
             )
         }
     }

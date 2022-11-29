@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.clipboard.api.ClipboardManager
 import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -51,6 +52,7 @@ class HomeViewModel @Inject constructor(
     private val trashItem: TrashItem,
     private val refreshContent: RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val clipboardManager: ClipboardManager,
     observeCurrentUser: ObserveCurrentUser,
     observeActiveShare: ObserveActiveShare,
     observeActiveItems: ObserveActiveItems,
@@ -206,6 +208,14 @@ class HomeViewModel @Inject constructor(
         val userId = currentUserFlow.firstOrNull()?.userId
         if (userId != null) {
             trashItem.invoke(userId, item.shareId, item.id)
+        }
+    }
+
+    fun copyToClipboard(text: String, isSensitive: Boolean = false) {
+        if (isSensitive) {
+            clipboardManager.copyToClipboard(text = keyStoreCrypto.decrypt(text), isSecure = true)
+        } else {
+            clipboardManager.copyToClipboard(text = text)
         }
     }
 

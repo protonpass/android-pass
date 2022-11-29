@@ -37,9 +37,13 @@ import me.proton.pass.common.api.onError
 import me.proton.pass.domain.Item
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
+import me.proton.pass.presentation.home.HomeSnackbarMessage.AliasCopied
+import me.proton.pass.presentation.home.HomeSnackbarMessage.NoteCopied
 import me.proton.pass.presentation.home.HomeSnackbarMessage.ObserveItemsError
 import me.proton.pass.presentation.home.HomeSnackbarMessage.ObserveShareError
+import me.proton.pass.presentation.home.HomeSnackbarMessage.PasswordCopied
 import me.proton.pass.presentation.home.HomeSnackbarMessage.RefreshError
+import me.proton.pass.presentation.home.HomeSnackbarMessage.UsernameCopied
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 import me.proton.pass.search.ItemFilter
@@ -211,11 +215,35 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun copyToClipboard(text: String, isSensitive: Boolean = false) {
-        if (isSensitive) {
-            clipboardManager.copyToClipboard(text = keyStoreCrypto.decrypt(text), isSecure = true)
-        } else {
-            clipboardManager.copyToClipboard(text = text)
+    fun copyToClipboard(text: String, homeClipboardType: HomeClipboardType) {
+        when (homeClipboardType) {
+            HomeClipboardType.Alias -> {
+                clipboardManager.copyToClipboard(text = text)
+                viewModelScope.launch {
+                    snackbarMessageRepository.emitSnackbarMessage(AliasCopied)
+                }
+            }
+            HomeClipboardType.Note -> {
+                clipboardManager.copyToClipboard(text = text)
+                viewModelScope.launch {
+                    snackbarMessageRepository.emitSnackbarMessage(NoteCopied)
+                }
+            }
+            HomeClipboardType.Password -> {
+                clipboardManager.copyToClipboard(
+                    text = keyStoreCrypto.decrypt(text),
+                    isSecure = true
+                )
+                viewModelScope.launch {
+                    snackbarMessageRepository.emitSnackbarMessage(PasswordCopied)
+                }
+            }
+            HomeClipboardType.Username -> {
+                clipboardManager.copyToClipboard(text = text)
+                viewModelScope.launch {
+                    snackbarMessageRepository.emitSnackbarMessage(UsernameCopied)
+                }
+            }
         }
     }
 

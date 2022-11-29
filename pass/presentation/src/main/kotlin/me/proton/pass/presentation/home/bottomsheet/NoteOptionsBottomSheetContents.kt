@@ -29,16 +29,17 @@ import me.proton.pass.presentation.components.model.ItemUiModel
 @Composable
 fun NoteOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
-    itemUiModel: ItemUiModel?
+    itemUiModel: ItemUiModel,
+    onCopyNote: (String) -> Unit,
+    onEdit: (ShareId, ItemId) -> Unit,
+    onMoveToTrash: (ItemUiModel) -> Unit
 ) {
+    val itemType = itemUiModel.itemType as ItemType.Note
     Column(modifier) {
         BottomSheetItemRow(
-            title = { BottomSheetItemTitle(text = itemUiModel?.name ?: "") },
+            title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = {
-                val processedText = (itemUiModel?.itemType as? ItemType.Note)
-                    ?.text
-                    ?.replace("\n", " ")
-                    ?: ""
+                val processedText = itemType.text.replace("\n", " ")
                 BottomSheetItemSubtitle(
                     text = processedText
                 )
@@ -48,24 +49,25 @@ fun NoteOptionsBottomSheetContents(
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = listOf(
-                copyNote(),
-                edit(),
-                moveToTrash()
+                copyNote(itemType.text, onCopyNote),
+                edit(itemUiModel, onEdit),
+                moveToTrash(itemUiModel, onMoveToTrash)
             )
         )
     }
 }
 
-private fun copyNote(): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_note)) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val icon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-    override val onClick: () -> Unit
-        get() = { }
-}
+private fun copyNote(text: String, onCopyNote: (String) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_note)) }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val icon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val onClick: () -> Unit
+            get() = { onCopyNote(text) }
+    }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
@@ -76,12 +78,14 @@ fun NoteOptionsBottomSheetContentsPreview(
     ProtonTheme(isDark = isDark) {
         Surface {
             NoteOptionsBottomSheetContents(
+                Modifier,
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "My Note",
                     itemType = ItemType.Note("My note text")
-                )
+                ),
+                {}, { _, _ -> }, {}
             )
         }
     }

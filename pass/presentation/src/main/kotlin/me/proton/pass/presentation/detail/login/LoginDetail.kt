@@ -1,22 +1,33 @@
 package me.proton.pass.presentation.detail.login
 
-import android.widget.Toast
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.Scaffold
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
+import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.domain.Item
-import me.proton.pass.presentation.R
+import me.proton.pass.presentation.detail.login.bottomsheet.LoginDetailBottomSheetContents
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun LoginDetail(
     modifier: Modifier = Modifier,
+    topBar: @Composable () -> Unit,
     item: Item,
     viewModel: LoginDetailViewModel = hiltViewModel()
 ) {
@@ -26,30 +37,55 @@ fun LoginDetail(
 
     val model by viewModel.viewState.collectAsStateWithLifecycle()
 
-    val localContext = LocalContext.current
-    val clipboard = LocalClipboardManager.current
-
-    val copiedToClipboardSuffix = stringResource(R.string.field_copied_to_clipboard)
-    val storeToClipboard = { contents: String?, fieldName: String ->
-        if (contents != null) {
-            clipboard.setText(AnnotatedString(contents))
-            val message = "$fieldName $copiedToClipboardSuffix"
-            Toast
-                .makeText(localContext, message, Toast.LENGTH_SHORT)
-                .show()
+    val bottomSheetState = rememberModalBottomSheetState(
+        ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+    val (selectedWebsite, setSelectedWebsite) = remember { mutableStateOf("") }
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+    ProtonModalBottomSheetLayout(
+        sheetState = bottomSheetState,
+        sheetContent = {
+            LoginDetailBottomSheetContents(
+                website = selectedWebsite,
+                onCopyToClipboard = { website ->
+                    viewModel.copyWebsiteToClipboard(website)
+                    scope.launch { bottomSheetState.hide() }
+                },
+                onOpenWebsite = { website ->
+                    openWebsite(context, website)
+                    scope.launch { bottomSheetState.hide() }
+                }
+            )
+        }
+    ) {
+        Scaffold(
+            topBar = topBar
+        ) { padding ->
+            LoginContent(
+                modifier = modifier.padding(padding),
+                model = model,
+                onTogglePasswordClick = { viewModel.togglePassword() },
+                onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },
+                onUsernameClick = { viewModel.copyUsernameToClipboard() },
+                onWebsiteClicked = { website -> openWebsite(context, website) },
+                onWebsiteLongClicked = { website ->
+                    setSelectedWebsite(website)
+                    scope.launch { bottomSheetState.show() }
+                }
+            )
         }
     }
+}
 
-    val passwordFieldName = stringResource(R.string.field_password)
-    LaunchedEffect(viewModel) {
-        viewModel.copyToClipboardFlow.collect { storeToClipboard(it, passwordFieldName) }
+fun openWebsite(context: Context, website: String) {
+    runCatching {
+        Uri.parse(website)
+    }.onSuccess { uri ->
+        val i = Intent(Intent.ACTION_VIEW).apply {
+            setData(uri)
+        }
+        context.startActivity(i)
     }
-
-    LoginContent(
-        modifier = modifier,
-        model = model,
-        onTogglePasswordClick = { viewModel.togglePassword() },
-        onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },
-        storeToClipboard = storeToClipboard
-    )
 }

@@ -26,7 +26,7 @@ fun SortingBottomSheetContents(
     onSortingTypeSelected: (SortingType) -> Unit
 ) {
     Column(modifier) {
-        BottomSheetTitle(title = R.string.sorting_bottomsheet_title)
+        BottomSheetTitle(title = R.string.sorting_bottomsheet_title, showDivider = false)
         BottomSheetItemList(
             items = sortingItemList(sortingType, onSortingTypeSelected)
         )

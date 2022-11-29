@@ -62,8 +62,6 @@ tasks.register("clean", Delete::class) {
 
 kotlinCompilerArgs(
     "-opt-in=kotlin.RequiresOptIn",
-    "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-    "-opt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
     // Enables experimental Coroutines (runBlockingTest).
     "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
     // Enables experimental Time (Turbine).

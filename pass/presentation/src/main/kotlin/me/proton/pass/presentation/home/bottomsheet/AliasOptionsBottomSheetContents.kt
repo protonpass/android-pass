@@ -29,14 +29,18 @@ import me.proton.pass.presentation.components.model.ItemUiModel
 @Composable
 fun AliasOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
-    itemUiModel: ItemUiModel?
+    itemUiModel: ItemUiModel,
+    onCopyAlias: (String) -> Unit,
+    onEdit: (ShareId, ItemId) -> Unit,
+    onMoveToTrash: (ItemUiModel) -> Unit
 ) {
+    val itemType = itemUiModel.itemType as ItemType.Alias
     Column(modifier) {
         BottomSheetItemRow(
-            title = { BottomSheetItemTitle(text = itemUiModel?.name ?: "") },
+            title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = {
                 BottomSheetItemSubtitle(
-                    text = (itemUiModel?.itemType as? ItemType.Alias)?.aliasEmail ?: ""
+                    text = itemType.aliasEmail
                 )
             },
             icon = { AliasIcon() }
@@ -44,24 +48,25 @@ fun AliasOptionsBottomSheetContents(
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = listOf(
-                copyAlias(),
-                edit(),
-                moveToTrash()
+                copyAlias(itemType.aliasEmail, onCopyAlias),
+                edit(itemUiModel, onEdit),
+                moveToTrash(itemUiModel, onMoveToTrash)
             )
         )
     }
 }
 
-private fun copyAlias(): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val icon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
-    override val onClick: () -> Unit
-        get() = { }
-}
+private fun copyAlias(aliasEmail: String, onCopyAlias: (String) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val icon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val onClick: () -> Unit
+            get() = { onCopyAlias(aliasEmail) }
+    }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
@@ -72,12 +77,14 @@ fun AliasOptionsBottomSheetContentsPreview(
     ProtonTheme(isDark = isDark) {
         Surface {
             AliasOptionsBottomSheetContents(
+                Modifier,
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "My Alias",
                     itemType = ItemType.Alias("alias.email@proton.me")
-                )
+                ),
+                {}, { _, _ -> }, {}
             )
         }
     }

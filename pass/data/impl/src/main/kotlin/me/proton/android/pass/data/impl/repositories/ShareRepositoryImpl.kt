@@ -295,7 +295,11 @@ class ShareRepositoryImpl @Inject constructor(
         val signingKey = SigningKey(Utils.readKey(entity.signingKey, isPrimary = true))
         return vaultKeyRepository.getVaultKeys(userAddress, ShareId(entity.id), signingKey)
             .map { vaultKeys ->
-                openShare.open(entity, userAddress, inviterKeys, vaultKeys)
+                try {
+                    openShare.open(entity, userAddress, inviterKeys, vaultKeys)
+                } catch (e: IllegalArgumentException) {
+                    return Result.Error(e)
+                }
             }
     }
 

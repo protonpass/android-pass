@@ -17,13 +17,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.domain.Item
 import me.proton.pass.presentation.detail.login.bottomsheet.LoginDetailBottomSheetContents
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun LoginDetail(
     modifier: Modifier = Modifier,

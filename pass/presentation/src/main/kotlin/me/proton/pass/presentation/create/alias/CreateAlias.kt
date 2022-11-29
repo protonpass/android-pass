@@ -7,14 +7,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.AliasCreated
 
 const val RESULT_CREATED_ALIAS = "created_alias"
 
-@ExperimentalMaterialApi
-@ExperimentalComposeUiApi
+@OptIn(
+    ExperimentalLifecycleComposeApi::class,
+    ExperimentalMaterialApi::class,
+    ExperimentalComposeUiApi::class
+)
 @Composable
 fun CreateAlias(
     modifier: Modifier = Modifier,

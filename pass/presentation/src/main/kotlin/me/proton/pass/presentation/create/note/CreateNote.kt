@@ -6,10 +6,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.NoteCreated
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable

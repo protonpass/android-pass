@@ -1,20 +1,18 @@
 package me.proton.pass.presentation.create.login
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.LoginUpdated
 
-@ExperimentalMaterialApi
-@ExperimentalComposeUiApi
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun UpdateLogin(
     modifier: Modifier = Modifier,

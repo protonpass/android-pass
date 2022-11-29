@@ -6,6 +6,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -28,6 +29,7 @@ import me.proton.pass.presentation.components.previewproviders.AliasTopBarInput
 import me.proton.pass.presentation.components.previewproviders.AliasTopBarPreviewProvider
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AliasTopBar(
     modifier: Modifier = Modifier,

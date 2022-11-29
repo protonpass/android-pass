@@ -8,48 +8,49 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
-import me.proton.core.crypto.common.context.CryptoContext
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import me.proton.android.pass.clipboard.api.ClipboardManager
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.domain.Item
+import me.proton.pass.presentation.detail.DetailSnackbarMessages
 import javax.inject.Inject
 
 @HiltViewModel
 class NoteDetailViewModel @Inject constructor(
-    private val cryptoContext: CryptoContext
+    private val keyStoreCrypto: KeyStoreCrypto,
+    private val clipboardManager: ClipboardManager,
+    private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
     private val itemFlow: MutableStateFlow<Item?> = MutableStateFlow(null)
 
-    val viewState: StateFlow<NoteUiModel> = itemFlow.mapLatest { getUiModel(it) }
+    val viewState: StateFlow<NoteDetailUiState> = itemFlow.mapLatest { getUiModel(it) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = getInitialState()
+            initialValue = NoteDetailUiState.Initial
         )
 
     fun setItem(item: Item) {
-        if (itemFlow.value == null) {
-            itemFlow.value = item
-        }
+        itemFlow.update { item }
     }
 
-    private fun getUiModel(item: Item?): NoteUiModel {
-        if (item == null) return getInitialState()
+    fun onCopyToClipboard() = viewModelScope.launch {
+        val decrypted = itemFlow.value?.note?.decrypt(keyStoreCrypto) ?: ""
+        clipboardManager.copyToClipboard(decrypted)
+        snackbarMessageRepository.emitSnackbarMessage(DetailSnackbarMessages.NoteCopiedToClipboard)
+    }
 
-        return NoteUiModel(
-            title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-            note = item.note.decrypt(cryptoContext.keyStoreCrypto)
+    private fun getUiModel(item: Item?): NoteDetailUiState {
+        if (item == null) return NoteDetailUiState.Initial
+
+        return NoteDetailUiState(
+            title = item.title.decrypt(keyStoreCrypto),
+            note = item.note.decrypt(keyStoreCrypto)
         )
     }
 
-    private fun getInitialState(): NoteUiModel =
-        NoteUiModel(
-            title = "",
-            note = ""
-        )
-
-    data class NoteUiModel(
-        val title: String,
-        val note: String
-    )
 }

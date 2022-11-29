@@ -191,6 +191,8 @@
 
     <!-- Alias details -->
     <string name="alias_copied_to_clipboard">Alias copied to the clipboard</string>
+    <!-- Note details -->
+    <string name="note_copied_to_clipboard">Note copied to the clipboard</string>
 
     <!-- Settings -->
     <string name="settings_autofill_section_title">Autofill</string>

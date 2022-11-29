@@ -4,24 +4,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.clipboard.api.ClipboardManager
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
+import me.proton.pass.presentation.detail.DetailSnackbarMessages
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginDetailViewModel @Inject constructor(
-    private val cryptoContext: CryptoContext
+    private val cryptoContext: CryptoContext,
+    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val clipboardManager: ClipboardManager
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -33,7 +38,6 @@ class LoginDetailViewModel @Inject constructor(
         PasswordState.Concealed("".encrypt(cryptoContext.keyStoreCrypto))
     )
 
-    val copyToClipboardFlow: MutableSharedFlow<String?> = MutableSharedFlow()
     val viewState: StateFlow<LoginUiModel> = combine(
         itemFlow,
         passwordState,
@@ -45,22 +49,33 @@ class LoginDetailViewModel @Inject constructor(
     )
 
     fun setItem(item: Item) {
-        if (itemFlow.value == null) {
-            itemFlow.value = item
-        }
+        itemFlow.update { item }
     }
 
     fun copyPasswordToClipboard() = viewModelScope.launch(coroutineExceptionHandler) {
-        val item = itemFlow.value
-        if (item != null) {
+        itemFlow.value?.let { item ->
             val itemType = item.itemType as ItemType.Login
             val text = when (val password = passwordState.value) {
                 is PasswordState.Revealed -> password.clearText
                 is PasswordState.Concealed ->
                     itemType.password.decrypt(cryptoContext.keyStoreCrypto)
             }
-            copyToClipboardFlow.emit(text)
+            clipboardManager.copyToClipboard(text = text, isSecure = true)
+            snackbarMessageRepository.emitSnackbarMessage(DetailSnackbarMessages.PasswordCopiedToClipboard)
         }
+    }
+
+    fun copyUsernameToClipboard() = viewModelScope.launch {
+        itemFlow.value?.let { item ->
+            val itemType = item.itemType as ItemType.Login
+            clipboardManager.copyToClipboard(itemType.username, clearAfterSeconds = null)
+            snackbarMessageRepository.emitSnackbarMessage(DetailSnackbarMessages.UsernameCopiedToClipboard)
+        }
+    }
+
+    fun copyWebsiteToClipboard(website: String) = viewModelScope.launch {
+        clipboardManager.copyToClipboard(website, clearAfterSeconds = null)
+        snackbarMessageRepository.emitSnackbarMessage(DetailSnackbarMessages.WebsiteCopiedToClipbopard)
     }
 
     fun togglePassword() {

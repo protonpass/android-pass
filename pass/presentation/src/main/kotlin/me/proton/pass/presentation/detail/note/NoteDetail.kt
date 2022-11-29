@@ -1,5 +1,7 @@
 package me.proton.pass.presentation.detail.note
 
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -11,6 +13,7 @@ import me.proton.pass.domain.Item
 @Composable
 fun NoteDetail(
     modifier: Modifier = Modifier,
+    topBar: @Composable () -> Unit,
     item: Item,
     viewModel: NoteDetailViewModel = hiltViewModel()
 ) {
@@ -19,9 +22,13 @@ fun NoteDetail(
     }
 
     val model by viewModel.viewState.collectAsStateWithLifecycle()
-    NoteContent(
-        modifier = modifier,
-        model = model,
-        onCopyToClipboard = { viewModel.onCopyToClipboard() }
-    )
+    Scaffold(
+        topBar = topBar
+    ) { padding ->
+        NoteContent(
+            modifier = modifier.padding(padding),
+            model = model,
+            onCopyToClipboard = { viewModel.onCopyToClipboard() }
+        )
+    }
 }

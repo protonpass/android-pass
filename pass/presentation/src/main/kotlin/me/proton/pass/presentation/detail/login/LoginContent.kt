@@ -14,13 +14,15 @@ fun LoginContent(
     modifier: Modifier = Modifier,
     model: LoginUiModel,
     onTogglePasswordClick: () -> Unit,
+    onUsernameClick: () -> Unit,
     onCopyPasswordClick: () -> Unit,
-    storeToClipboard: (contents: String?, fieldName: String) -> Unit
+    onWebsiteClicked: (String) -> Unit,
+    onWebsiteLongClicked: (String) -> Unit
 ) {
     Column(modifier.padding(horizontal = 16.dp)) {
         LoginUsernameRow(
             username = model.username,
-            storeToClipboard = storeToClipboard
+            onUsernameClick = onUsernameClick
         )
         Spacer(modifier = Modifier.height(12.dp))
         LoginPasswordRow(
@@ -32,7 +34,9 @@ fun LoginContent(
             Spacer(modifier = Modifier.height(12.dp))
             WebsiteSection(
                 modifier = Modifier.padding(start = 16.dp),
-                websites = model.websites
+                websites = model.websites,
+                onWebsiteClicked = onWebsiteClicked,
+                onWebsiteLongClicked = onWebsiteLongClicked
             )
         }
         Spacer(modifier = Modifier.height(28.dp))

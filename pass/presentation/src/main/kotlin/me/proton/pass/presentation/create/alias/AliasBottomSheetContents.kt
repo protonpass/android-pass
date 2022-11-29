@@ -1,11 +1,8 @@
 package me.proton.pass.presentation.create.alias
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
@@ -29,10 +26,9 @@ fun AliasBottomSheetContents(
                         title = R.string.action_apply,
                         onClick = onCloseBottomSheet,
                         enabled = modelState.isMailboxListApplicable
-
-                    )
+                    ),
+                    showDivider = true
                 )
-                Divider(modifier = Modifier.fillMaxWidth())
                 AliasBottomSheetItemList(
                     items = modelState.mailboxes,
                     displayer = { it.model.email },
@@ -41,8 +37,7 @@ fun AliasBottomSheetContents(
                 )
             }
             is AliasBottomSheetType.Suffix -> {
-                BottomSheetTitle(title = R.string.alias_bottomsheet_suffix_title)
-                Divider(modifier = Modifier.fillMaxWidth())
+                BottomSheetTitle(title = R.string.alias_bottomsheet_suffix_title, showDivider = true)
                 AliasBottomSheetItemList(
                     items = modelState.aliasOptions.suffixes,
                     displayer = { it.suffix },

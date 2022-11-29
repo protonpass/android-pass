@@ -1,8 +1,6 @@
 package me.proton.pass.presentation.create.login
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,9 +31,9 @@ fun GeneratePasswordBottomSheetContent(
                 R.string.generate_password_confirm,
                 onClick = { onConfirm(state.password) },
                 enabled = true
-            )
+            ),
+            showDivider = false
         )
-        Divider(modifier = Modifier.fillMaxWidth())
         CreatePasswordViewContent(
             state = state,
             onLengthChange = onLengthChange,

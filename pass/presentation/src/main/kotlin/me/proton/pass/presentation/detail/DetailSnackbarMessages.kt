@@ -13,5 +13,8 @@ enum class DetailSnackbarMessages(
     SendToTrashError(R.string.detail_send_to_trash_error, SnackbarType.ERROR),
     ItemNotLoadedError(R.string.detail_item_not_loaded_error, SnackbarType.ERROR),
     AliasCopiedToClipboard(R.string.alias_copied_to_clipboard, SnackbarType.NORM),
-    NoteCopiedToClipboard(R.string.note_copied_to_clipboard, SnackbarType.NORM)
+    NoteCopiedToClipboard(R.string.note_copied_to_clipboard, SnackbarType.NORM),
+    UsernameCopiedToClipboard(R.string.username_copied_to_clipboard, SnackbarType.NORM),
+    PasswordCopiedToClipboard(R.string.password_copied_to_clipboard, SnackbarType.NORM),
+    WebsiteCopiedToClipbopard(R.string.website_copied_to_clipboard, SnackbarType.NORM)
 }

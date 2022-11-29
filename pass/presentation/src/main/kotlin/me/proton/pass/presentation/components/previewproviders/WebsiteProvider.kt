@@ -7,7 +7,6 @@ class WebsiteProvider : PreviewParameterProvider<List<String>> {
         get() = sequenceOf(
             emptyList(),
             listOf("http://test.local"),
-            listOf("http://test.local", "http://other.local"),
-            listOf("http://test.local", "http://other.local", "http://random.local")
+            listOf("http://test.local", "http://other.local")
         )
 }

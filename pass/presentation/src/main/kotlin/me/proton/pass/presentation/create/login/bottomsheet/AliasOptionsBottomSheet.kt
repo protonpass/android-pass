@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
@@ -12,7 +13,7 @@ import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemIcon
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemList
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemText
+import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
 
 @Composable
@@ -29,7 +30,7 @@ fun AliasOptionsBottomSheet(
         BottomSheetItemList(
             items = listOf(
                 createEdit(onEditAliasClick),
-                createRemoveAlias(onRemoveAliasClick),
+                createRemoveAlias(onRemoveAliasClick)
             )
         )
     }
@@ -37,7 +38,7 @@ fun AliasOptionsBottomSheet(
 
 private fun createEdit(onEditAlias: () -> Unit): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
-        get() = { BottomSheetItemText(textId = R.string.action_edit) }
+        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_edit)) }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
     override val icon: (@Composable () -> Unit)
@@ -46,17 +47,22 @@ private fun createEdit(onEditAlias: () -> Unit): BottomSheetItem = object : Bott
         get() = onEditAlias
 }
 
-
 private fun createRemoveAlias(onRemoveAlias: () -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemText(textId = R.string.action_remove) }
+            get() = {
+                BottomSheetItemTitle(
+                    text = stringResource(id = R.string.action_remove),
+                    textcolor = ProtonTheme.colors.notificationError
+                )
+            }
         override val subtitle: (@Composable () -> Unit)?
             get() = null
         override val icon: (@Composable () -> Unit)
             get() = {
                 BottomSheetItemIcon(
-                    iconId = me.proton.core.presentation.R.drawable.ic_proton_trash
+                    iconId = me.proton.core.presentation.R.drawable.ic_proton_trash,
+                    tint = ProtonTheme.colors.notificationError
                 )
             }
         override val onClick: () -> Unit

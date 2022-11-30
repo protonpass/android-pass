@@ -3,6 +3,7 @@ package me.proton.android.pass.data.impl.db
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.android.pass.data.impl.db.dao.ItemKeysDao
 import me.proton.android.pass.data.impl.db.dao.ItemsDao
+import me.proton.android.pass.data.impl.db.dao.PassEventsDao
 import me.proton.android.pass.data.impl.db.dao.SharesDao
 import me.proton.android.pass.data.impl.db.dao.VaultKeysDao
 import me.proton.core.data.room.db.Database
@@ -14,6 +15,7 @@ interface PassDatabase : Database {
     fun itemsDao(): ItemsDao
     fun vaultKeysDao(): VaultKeysDao
     fun itemKeysDao(): ItemKeysDao
+    fun passEventsDao(): PassEventsDao
 
     companion object {
         val MIGRATION_4 = object : DatabaseMigration {

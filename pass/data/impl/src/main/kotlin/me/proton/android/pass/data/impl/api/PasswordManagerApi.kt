@@ -10,11 +10,13 @@ import me.proton.android.pass.data.impl.responses.AliasDetailsResponse
 import me.proton.android.pass.data.impl.responses.CreateItemResponse
 import me.proton.android.pass.data.impl.responses.CreateVaultResponse
 import me.proton.android.pass.data.impl.responses.GetAliasOptionsResponse
+import me.proton.android.pass.data.impl.responses.GetEventsResponse
 import me.proton.android.pass.data.impl.responses.GetItemsResponse
 import me.proton.android.pass.data.impl.responses.GetKeyPacketResponse
 import me.proton.android.pass.data.impl.responses.GetShareResponse
 import me.proton.android.pass.data.impl.responses.GetSharesResponse
 import me.proton.android.pass.data.impl.responses.GetVaultKeysResponse
+import me.proton.android.pass.data.impl.responses.LastEventIdResponse
 import me.proton.android.pass.data.impl.responses.TrashItemsResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.Body
@@ -111,4 +113,16 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("itemId") itemId: String,
         @Body request: UpdateAliasMailboxesRequest
     ): AliasDetailsResponse
+
+    // Events
+    @GET("$PREFIX/share/{shareId}/event")
+    suspend fun getLastEventId(
+        @Path("shareId") shareId: String
+    ): LastEventIdResponse
+
+    @GET("$PREFIX/share/{shareId}/event/{lastEventId}")
+    suspend fun getEvents(
+        @Path("shareId") shareId: String,
+        @Path("lastEventId") lastEventId: String
+    ): GetEventsResponse
 }

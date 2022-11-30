@@ -6,11 +6,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
@@ -92,19 +94,19 @@ class HomeViewModel @Inject constructor(
             SortingType.ByItemType -> result.map { list -> list.sortByItemType(keyStoreCrypto) }
         }
     }
-        .flowOn(Dispatchers.Default)
         .distinctUntilChanged()
 
+    @OptIn(FlowPreview::class)
     private val resultsFlow: Flow<Result<List<ItemUiModel>>> = combine(
         sortedListItemFlow,
-        searchQueryState
+        searchQueryState.debounce(DEBOUNCE_TIMEOUT)
     ) { sortedList, searchQuery ->
         itemFilter.filterByQuery(sortedList, searchQuery)
     }.mapLatest { result: Result<List<Item>> ->
         result.map { list ->
             list.map { it.toUiModel(keyStoreCrypto) }
         }
-    }
+    }.flowOn(Dispatchers.Default)
 
     private data class SearchWrapper(
         val searchQuery: String,
@@ -257,6 +259,7 @@ class HomeViewModel @Inject constructor(
             .flatten()
 
     companion object {
+        private const val DEBOUNCE_TIMEOUT = 300L
         private const val TAG = "HomeViewModel"
     }
 }

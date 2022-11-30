@@ -4,12 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -71,16 +75,18 @@ class SelectItemViewModel @Inject constructor(
         val isInSearchMode: Boolean
     )
 
+    @OptIn(FlowPreview::class)
     private val listItems: Flow<Result<List<ItemUiModel>>> = combine(
         observeActiveItems(),
-        searchQueryState
+        searchQueryState.debounce(DEBOUNCE_TIMEOUT)
     ) { list, searchQuery ->
         itemFilter.filterByQuery(list, searchQuery)
     }.mapLatest { result: Result<List<Item>> ->
         result.map { list ->
-            list.filter { it.itemType is ItemType.Login }.map { it.toUiModel(keyStoreCrypto) }
+            list.filter { it.itemType is ItemType.Login }
+                .map { it.toUiModel(keyStoreCrypto) }
         }
-    }
+    }.flowOn(Dispatchers.Default)
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
         MutableStateFlow(IsRefreshingState.NotRefreshing)
@@ -175,6 +181,7 @@ class SelectItemViewModel @Inject constructor(
     }
 
     companion object {
+        private const val DEBOUNCE_TIMEOUT = 300L
         private const val TAG = "SelectItemViewModel"
     }
 }

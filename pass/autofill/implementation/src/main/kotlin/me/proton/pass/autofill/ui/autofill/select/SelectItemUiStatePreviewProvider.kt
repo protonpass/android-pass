@@ -6,6 +6,7 @@ import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsProcessingSearchState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 
 class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiState> {
@@ -43,7 +44,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                 SelectItemListUiState.Loading,
                 SearchUiState(
                     searchQuery = "query",
-                    inSearchMode = true
+                    inSearchMode = true,
+                    isProcessingSearch = IsProcessingSearchState.NotLoading
                 )
             )
         )

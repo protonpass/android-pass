@@ -40,6 +40,7 @@ import me.proton.pass.domain.entity.PackageName
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsProcessingSearchState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 import me.proton.pass.presentation.utils.ItemUiFilter
 import javax.inject.Inject
@@ -62,15 +63,21 @@ class SelectItemViewModel @Inject constructor(
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val isProcessingSearchState: MutableStateFlow<IsProcessingSearchState> =
+        MutableStateFlow(IsProcessingSearchState.NotLoading)
 
     private val searchWrapper = combine(
         searchQueryState,
-        isInSearchModeState
-    ) { searchQuery, isInSearchMode -> SearchWrapper(searchQuery, isInSearchMode) }
+        isInSearchModeState,
+        isProcessingSearchState
+    ) { searchQuery, isInSearchMode, isProcessingSearch ->
+        SearchWrapper(searchQuery, isInSearchMode, isProcessingSearch)
+    }
 
     private data class SearchWrapper(
         val searchQuery: String,
-        val isInSearchMode: Boolean
+        val isInSearchMode: Boolean,
+        val isProcessingSearch: IsProcessingSearchState
     )
 
     private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = observeActiveItems()
@@ -86,6 +93,7 @@ class SelectItemViewModel @Inject constructor(
         activeItemUIModelFlow,
         searchQueryState.debounce(DEBOUNCE_TIMEOUT)
     ) { result, searchQuery ->
+        isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
         result.map { ItemUiFilter.filterByQuery(it, searchQuery) }
     }.flowOn(Dispatchers.Default)
 
@@ -125,7 +133,8 @@ class SelectItemViewModel @Inject constructor(
             ),
             SearchUiState(
                 searchQuery = search.searchQuery,
-                inSearchMode = search.isInSearchMode
+                inSearchMode = search.isInSearchMode,
+                isProcessingSearch = search.isProcessingSearch
             )
         )
     }
@@ -165,6 +174,7 @@ class SelectItemViewModel @Inject constructor(
         if (query.contains("\n")) return
 
         searchQueryState.update { query }
+        isProcessingSearchState.update { IsProcessingSearchState.Loading }
     }
 
     fun onStopSearching() {

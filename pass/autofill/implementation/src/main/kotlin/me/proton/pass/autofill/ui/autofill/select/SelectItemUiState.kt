@@ -3,6 +3,7 @@ package me.proton.pass.autofill.ui.autofill.select
 import androidx.compose.runtime.Immutable
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsProcessingSearchState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 
 @Immutable
@@ -37,12 +38,14 @@ data class SelectItemListUiState(
 @Immutable
 data class SearchUiState(
     val searchQuery: String,
-    val inSearchMode: Boolean
+    val inSearchMode: Boolean,
+    val isProcessingSearch: IsProcessingSearchState
 ) {
     companion object {
         val Initial = SearchUiState(
             searchQuery = "",
-            inSearchMode = false
+            inSearchMode = false,
+            isProcessingSearch = IsProcessingSearchState.NotLoading
         )
     }
 }

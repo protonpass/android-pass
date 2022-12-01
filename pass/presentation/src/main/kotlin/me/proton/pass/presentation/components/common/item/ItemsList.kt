@@ -1,6 +1,5 @@
 package me.proton.pass.presentation.components.common.item
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,7 +8,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import me.proton.pass.presentation.components.common.PassSwipeRefresh
 import me.proton.pass.presentation.components.model.ItemUiModel
@@ -24,13 +22,13 @@ fun ItemsList(
     items: List<ItemUiModel>,
     shouldScrollToTop: Boolean,
     highlight: String? = null,
-    @StringRes emptyListMessage: Int,
     isRefreshing: IsRefreshingState,
     isLoading: IsLoadingState,
     onRefresh: () -> Unit,
     onItemClick: (ItemUiModel) -> Unit,
     onItemMenuClick: (ItemUiModel) -> Unit,
-    onScrollToTop: () -> Unit
+    onScrollToTop: () -> Unit,
+    emptyContent: @Composable () -> Unit
 ) {
     val scrollableState = rememberLazyListState()
     LaunchedEffect(shouldScrollToTop) {
@@ -62,7 +60,7 @@ fun ItemsList(
                 }
             }
         } else {
-            EmptyList(emptyListMessage = stringResource(id = emptyListMessage))
+            emptyContent()
         }
     }
 }

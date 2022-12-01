@@ -35,6 +35,7 @@ fun SettingsScreen(
             viewModel.onFingerPrintLockChange(ContextHolder.fromContext(context), it)
         },
         onToggleAutofillChange = { viewModel.onToggleAutofill(it) },
-        onForceSyncClick = { viewModel.onForceSync() }
+        onForceSyncClick = { viewModel.onForceSync() },
+        onAppVersionClick = { viewModel.copyAppVersion(appVersion) }
     )
 }

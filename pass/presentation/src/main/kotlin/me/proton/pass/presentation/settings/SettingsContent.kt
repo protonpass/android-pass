@@ -35,7 +35,8 @@ fun SettingsContent(
     onFingerPrintLockChange: (IsButtonEnabled) -> Unit,
     onDrawerIconClick: () -> Unit,
     onToggleAutofillChange: (Boolean) -> Unit,
-    onForceSyncClick: () -> Unit
+    onForceSyncClick: () -> Unit,
+    onAppVersionClick: () -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
@@ -86,7 +87,8 @@ fun SettingsContent(
                 onOpenThemeSelection = { scope.launch { bottomSheetState.show() } },
                 onFingerPrintLockChange = onFingerPrintLockChange,
                 onToggleAutofillChange = onToggleAutofillChange,
-                onForceSyncClick = onForceSyncClick
+                onForceSyncClick = onForceSyncClick,
+                onAppVersionClick = onAppVersionClick
             )
         }
     }

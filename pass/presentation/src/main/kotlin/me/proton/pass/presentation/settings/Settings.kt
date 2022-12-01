@@ -16,7 +16,8 @@ fun Settings(
     onOpenThemeSelection: () -> Unit,
     onFingerPrintLockChange: (IsButtonEnabled) -> Unit,
     onToggleAutofillChange: (Boolean) -> Unit,
-    onForceSyncClick: () -> Unit
+    onForceSyncClick: () -> Unit,
+    onAppVersionClick: () -> Unit
 ) {
     ProtonSettingsList(modifier = modifier) {
         if (state.autofillStatus is AutofillSupportedStatus.Supported) {
@@ -56,7 +57,8 @@ fun Settings(
         item {
             AppSection(
                 appVersion = appVersion,
-                onForceSyncClick = onForceSyncClick
+                onForceSyncClick = onForceSyncClick,
+                onAppVersionClick = onAppVersionClick
             )
         }
     }

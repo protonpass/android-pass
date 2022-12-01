@@ -3,6 +3,7 @@ package me.proton.android.pass.data.impl.fakes
 import me.proton.android.pass.data.impl.db.PassDatabase
 import me.proton.android.pass.data.impl.db.dao.ItemKeysDao
 import me.proton.android.pass.data.impl.db.dao.ItemsDao
+import me.proton.android.pass.data.impl.db.dao.PassEventsDao
 import me.proton.android.pass.data.impl.db.dao.SharesDao
 import me.proton.android.pass.data.impl.db.dao.VaultKeysDao
 
@@ -20,6 +21,10 @@ class TestPassDatabase : PassDatabase {
     }
 
     override fun itemKeysDao(): ItemKeysDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun passEventsDao(): PassEventsDao {
         throw IllegalStateException("This method should not be called")
     }
 

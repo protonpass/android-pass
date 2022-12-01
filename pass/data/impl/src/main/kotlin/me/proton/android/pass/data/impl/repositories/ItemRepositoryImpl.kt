@@ -6,6 +6,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import me.proton.android.pass.data.api.PendingEventList
 import me.proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.repositories.KeyPacketRepository
@@ -22,6 +23,7 @@ import me.proton.android.pass.data.impl.extensions.hasPackageName
 import me.proton.android.pass.data.impl.extensions.hasWebsite
 import me.proton.android.pass.data.impl.extensions.itemType
 import me.proton.android.pass.data.impl.extensions.serializeToProto
+import me.proton.android.pass.data.impl.extensions.toData
 import me.proton.android.pass.data.impl.extensions.with
 import me.proton.android.pass.data.impl.extensions.withUrl
 import me.proton.android.pass.data.impl.local.LocalItemDataSource
@@ -40,6 +42,7 @@ import me.proton.core.key.domain.extension.publicKeyRing
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
 import me.proton.core.network.domain.ApiException
+import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
@@ -65,7 +68,7 @@ import me.proton.pass.domain.key.VaultKey
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
-@Suppress("LongParameterList", "TooManyFunctions")
+@Suppress("LongParameterList", "TooManyFunctions", "LargeClass")
 class ItemRepositoryImpl @Inject constructor(
     private val database: PassDatabase,
     private val cryptoContext: CryptoContext,
@@ -346,6 +349,112 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun refreshItems(userId: UserId, share: Share): Result<List<Item>> {
         val address = requireNotNull(userAddressRepository.getAddresses(userId).primary())
         return fetchItemsForShare(address, share)
+    }
+
+    override suspend fun refreshItems(userId: UserId, shareId: ShareId): Result<List<Item>> {
+        val share = getShare(userId, shareId)
+        return refreshItems(userId, share)
+    }
+
+    override suspend fun applyEvents(
+        userId: UserId,
+        addressId: AddressId,
+        shareId: ShareId,
+        events: PendingEventList
+    ) {
+        PassLogger.i(
+            TAG,
+            "Applying events: [updates=${events.updatedItems.size}] [deletes=${events.deletedItemIds.size}]"
+        )
+
+        val userAddress = requireNotNull(userAddressRepository.getAddress(userId, addressId))
+        val share = getShare(userId, shareId)
+
+        val userEmails = events.updatedItems
+            .map { it.signatureEmail }
+            .distinct()
+        val userKeys = getUserKeys(userId, userEmails)
+
+        val keys = events.updatedItems
+            .map { it.rotationId }
+            .distinct()
+            .associateWith { rotationId -> getVaultKeyItemKey(userAddress, share, rotationId) }
+
+        val updateAsEntities = events.updatedItems.map {
+            val verifyKeys = requireNotNull(userKeys[it.signatureEmail])
+            val (vaultKey, itemKey) = requireNotNull(keys[it.rotationId])
+            itemResponseToEntity(
+                userAddress,
+                it.toData(),
+                share,
+                verifyKeys,
+                listOf(vaultKey),
+                listOf(itemKey)
+            )
+        }
+
+        database.inTransaction {
+            localItemDataSource.upsertItems(updateAsEntities)
+            events.deletedItemIds.forEach { itemId ->
+                localItemDataSource.delete(shareId, ItemId(itemId))
+            }
+        }
+        PassLogger.i(TAG, "Finishing applying events")
+    }
+
+    private suspend fun getShare(userId: UserId, shareId: ShareId): Share =
+        when (val share = shareRepository.getById(userId, shareId)) {
+            is Result.Success -> share.data
+            is Result.Error -> {
+                val error =
+                    share.exception ?: IllegalStateException("Got error in shareRepository.getById")
+                throw error
+            }
+            Result.Loading -> throw IllegalStateException("shareRepository.getById cannot return Loading")
+        } ?: throw IllegalStateException("Could not find share [shareId=${shareId.id}]")
+
+    private suspend fun getUserKeys(userId: UserId, emails: List<String>) = emails
+        .associateWith {
+            val publicAddress =
+                keyRepository.getPublicAddress(
+                    userId,
+                    it,
+                    source = Source.LocalIfAvailable
+                )
+            publicAddress.keys.publicKeyRing().keys
+        }
+
+    @Suppress("ThrowsCount")
+    private suspend fun getVaultKeyItemKey(
+        userAddress: UserAddress,
+        share: Share,
+        rotationId: String
+    ): Pair<VaultKey, ItemKey> {
+        val vaultKeyResult =
+            vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, rotationId)
+        val vaultKey = when (vaultKeyResult) {
+            is Result.Success -> vaultKeyResult.data
+            is Result.Error -> {
+                val error = vaultKeyResult.exception
+                    ?: IllegalStateException("Got error in vaultKeyRepository.getVaultKeyById")
+                throw error
+            }
+            Result.Loading -> throw IllegalStateException("vaultKeyRepository.getVaultKeyById cannot return Loading")
+        }
+
+        val itemKeyResult =
+            vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, rotationId)
+        val itemKey = when (itemKeyResult) {
+            is Result.Success -> itemKeyResult.data
+            is Result.Error -> {
+                val error = itemKeyResult.exception
+                    ?: IllegalStateException("Got error in vaultKeyRepository.getItemKeyById")
+                throw error
+            }
+            Result.Loading -> throw IllegalStateException("vaultKeyRepository.getItemKeyById cannot return Loading")
+        }
+
+        return Pair(vaultKey, itemKey)
     }
 
     private fun updateItemContents(

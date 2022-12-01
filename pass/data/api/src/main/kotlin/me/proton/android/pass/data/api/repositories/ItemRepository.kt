@@ -1,7 +1,9 @@
 package me.proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.android.pass.data.api.PendingEventList
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.Item
@@ -51,4 +53,16 @@ interface ItemRepository {
         userId: UserId,
         share: Share
     ): Result<List<Item>>
+
+    suspend fun refreshItems(
+        userId: UserId,
+        shareId: ShareId
+    ): Result<List<Item>>
+
+    suspend fun applyEvents(
+        userId: UserId,
+        addressId: AddressId,
+        shareId: ShareId,
+        events: PendingEventList
+    )
 }

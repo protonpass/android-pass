@@ -10,12 +10,16 @@ import me.proton.pass.presentation.settings.SettingsScreen
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
 fun NavGraphBuilder.settingsGraph(
+    appVersion: String,
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
     onDrawerIconClick: () -> Unit
 ) {
     composable(AppNavItem.Settings) {
         navigationDrawer {
-            SettingsScreen { onDrawerIconClick() }
+            SettingsScreen(
+                appVersion = appVersion,
+                onDrawerIconClick = onDrawerIconClick
+            )
         }
     }
 }

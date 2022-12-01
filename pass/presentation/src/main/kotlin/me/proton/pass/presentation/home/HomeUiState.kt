@@ -6,6 +6,7 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsProcessingSearchState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 
 @Immutable
@@ -42,11 +43,13 @@ data class HomeListUiState(
 @Immutable
 data class SearchUiState(
     val searchQuery: String,
+    val isProcessingSearch: IsProcessingSearchState,
     val inSearchMode: Boolean
 ) {
     companion object {
         val Initial = SearchUiState(
             searchQuery = "",
+            isProcessingSearch  = IsProcessingSearchState.NotLoading,
             inSearchMode = false
         )
     }

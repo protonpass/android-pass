@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.proton.android.pass.ui.shared.LoadingDialog
+import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.pass.presentation.detail.DetailNoteSection
 import me.proton.pass.presentation.detail.DetailSnackbarMessages
 import me.proton.pass.presentation.uievents.IsLoadingState

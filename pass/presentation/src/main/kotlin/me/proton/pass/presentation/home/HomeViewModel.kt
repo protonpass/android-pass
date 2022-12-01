@@ -45,6 +45,7 @@ import me.proton.pass.presentation.home.HomeSnackbarMessage.PasswordCopied
 import me.proton.pass.presentation.home.HomeSnackbarMessage.RefreshError
 import me.proton.pass.presentation.home.HomeSnackbarMessage.UsernameCopied
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsProcessingSearchState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 import me.proton.pass.presentation.utils.ItemUiFilter
 import javax.inject.Inject
@@ -70,11 +71,16 @@ class HomeViewModel @Inject constructor(
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val isProcessingSearchState: MutableStateFlow<IsProcessingSearchState> =
+        MutableStateFlow(IsProcessingSearchState.NotLoading)
 
     private val searchWrapperWrapper = combine(
         searchQueryState,
-        isInSearchModeState
-    ) { searchQuery, isInSearchMode -> SearchWrapper(searchQuery, isInSearchMode) }
+        isInSearchModeState,
+        isProcessingSearchState
+    ) { searchQuery, isInSearchMode, isProcessingSearch ->
+        SearchWrapper(searchQuery, isInSearchMode, isProcessingSearch)
+    }
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
         MutableStateFlow(IsRefreshingState.NotRefreshing)
@@ -106,12 +112,14 @@ class HomeViewModel @Inject constructor(
         sortedListItemFlow,
         searchQueryState.debounce(DEBOUNCE_TIMEOUT)
     ) { result, searchQuery ->
+        isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
         result.map { ItemUiFilter.filterByQuery(it, searchQuery) }
     }.flowOn(Dispatchers.Default)
 
     private data class SearchWrapper(
         val searchQuery: String,
-        val isInSearchMode: Boolean
+        val isInSearchMode: Boolean,
+        val isProcessingSearch: IsProcessingSearchState
     )
 
     val homeUiState: StateFlow<HomeUiState> = combine(
@@ -165,7 +173,8 @@ class HomeViewModel @Inject constructor(
             ),
             searchUiState = SearchUiState(
                 searchQuery = searchWrapper.searchQuery,
-                inSearchMode = searchWrapper.isInSearchMode
+                inSearchMode = searchWrapper.isInSearchMode,
+                isProcessingSearch = searchWrapper.isProcessingSearch
             )
         )
     }
@@ -179,6 +188,7 @@ class HomeViewModel @Inject constructor(
         if (query.contains("\n")) return
 
         searchQueryState.value = query
+        isProcessingSearchState.update { IsProcessingSearchState.Loading }
     }
 
     fun onStopSearching() {

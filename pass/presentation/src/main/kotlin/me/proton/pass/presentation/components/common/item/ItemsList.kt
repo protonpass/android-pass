@@ -1,18 +1,22 @@
 package me.proton.pass.presentation.components.common.item
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import me.proton.pass.presentation.components.common.PassSwipeRefresh
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
+import me.proton.pass.presentation.uievents.IsProcessingSearchState
 
 private const val PLACEHOLDER_ELEMENTS = 40
 
@@ -24,6 +28,7 @@ fun ItemsList(
     highlight: String? = null,
     isRefreshing: IsRefreshingState,
     isLoading: IsLoadingState,
+    isProcessingSearch: IsProcessingSearchState = IsProcessingSearchState.NotLoading,
     onRefresh: () -> Unit,
     onItemClick: (ItemUiModel) -> Unit,
     onItemMenuClick: (ItemUiModel) -> Unit,
@@ -42,7 +47,14 @@ fun ItemsList(
         state = SwipeRefreshState(isRefreshing is IsRefreshingState.Refreshing),
         onRefresh = onRefresh
     ) {
-        if (items.isNotEmpty()) {
+        if (isProcessingSearch == IsProcessingSearchState.Loading) {
+            Box(
+                modifier = modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
+        } else if (items.isNotEmpty()) {
             LazyColumn(modifier = Modifier.fillMaxSize(), state = scrollableState) {
                 items(items = items, key = { it.id.id }) { item ->
                     ActionableItemRow(
@@ -59,7 +71,7 @@ fun ItemsList(
                     PlaceholderItemRow()
                 }
             }
-        } else {
+        } else  {
             emptyContent()
         }
     }

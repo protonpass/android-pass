@@ -16,7 +16,7 @@ import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.android.pass.ui.shared.HamburgerIcon
-import me.proton.android.pass.ui.shared.LoadingDialog
+import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar

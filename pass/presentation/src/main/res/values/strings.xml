@@ -233,6 +233,12 @@
     <string name="settings_fingerprint_lock_disabled">Fingerprint unlock disabled</string>
     <string name="error_performing_operation">Error performing operation</string>
 
+    <string name="settings_app_version_title">App version</string>
+    <string name="settings_force_sync_title">Force sync</string>
+    <string name="settings_force_sync_hint">Download all your items again to make sure you are in sync</string>
+    <string name="settings_force_sync_success">Your items are now in sync</string>
+    <string name="settings_force_sync_error">Error performing sync</string>
+
     <!-- Create item bottomsheet -->
     <string name="item_type_login_description">Keep your usernames and passwords secure.</string>
     <string name="item_type_alias_description">Hide your identity with a separate email address.</string>

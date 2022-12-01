@@ -29,6 +29,7 @@ import me.proton.pass.presentation.home.HomeScreenNavigation
 @ExperimentalComposeUiApi
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
+    appVersion: String,
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
     onDrawerIconClick: () -> Unit,
     finishActivity: () -> Unit
@@ -40,7 +41,7 @@ fun NavGraphBuilder.appGraph(
     )
     trashGraph(navigationDrawer, onDrawerIconClick)
     helpGraph(navigationDrawer, onDrawerIconClick)
-    settingsGraph(navigationDrawer, onDrawerIconClick)
+    settingsGraph(appVersion, navigationDrawer, onDrawerIconClick)
     createLoginGraph(appNavigator)
     updateLoginGraph(appNavigator)
     createNoteGraph(appNavigator)

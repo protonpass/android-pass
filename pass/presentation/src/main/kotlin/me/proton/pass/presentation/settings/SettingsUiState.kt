@@ -4,17 +4,20 @@ import me.proton.android.pass.autofill.api.AutofillStatus
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.pass.presentation.uievents.IsButtonEnabled
+import me.proton.pass.presentation.uievents.IsLoadingState
 
 data class SettingsUiState(
     val fingerprintSection: FingerprintSectionState,
     val themePreference: ThemePreference,
-    val autofillStatus: AutofillSupportedStatus
+    val autofillStatus: AutofillSupportedStatus,
+    val isLoadingState: IsLoadingState
 ) {
     companion object {
         val Initial = SettingsUiState(
             fingerprintSection = FingerprintSectionState.Available(IsButtonEnabled.Disabled),
             themePreference = ThemePreference.System,
-            autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled)
+            autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
+            isLoadingState = IsLoadingState.NotLoading
         )
     }
 }

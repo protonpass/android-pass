@@ -10,6 +10,8 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -27,6 +29,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.takeOrElse
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.VisualTransformation
@@ -37,9 +40,11 @@ import androidx.compose.ui.unit.sp
 import me.proton.android.pass.ui.shared.ArrowBackIcon
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.commonui.api.ThemePreviewProvider
+import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.form.ProtonTextFieldPlaceHolder
+import me.proton.pass.presentation.components.previewproviders.SearchTopBarData
+import me.proton.pass.presentation.components.previewproviders.SearchTopBarPreviewProvider
 
 @ExperimentalComposeUiApi
 @Composable
@@ -62,7 +67,18 @@ fun SearchTopBar(
                 placeholder = { ProtonTextFieldPlaceHolder(placeholder) }
             )
         },
-        navigationIcon = { ArrowBackIcon { onStopSearch() } }
+        navigationIcon = { ArrowBackIcon { onStopSearch() } },
+        actions = {
+            if (searchQuery.isNotEmpty()) {
+                IconButton(onClick = { onSearchQueryChange("") }) {
+                    Icon(
+                        painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross),
+                        contentDescription = null,
+                        tint = ProtonTheme.colors.iconWeak
+                    )
+                }
+            }
+        }
     )
 
     LaunchedEffect(Unit) {
@@ -155,17 +171,20 @@ internal fun SearchTextField(
     )
 }
 
+class ThemeAndSearchTopBarProvider :
+    ThemePairPreviewProvider<SearchTopBarData>(SearchTopBarPreviewProvider())
+
 @OptIn(ExperimentalComposeUiApi::class)
 @Preview
 @Composable
 fun SearchHomeTopBarPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
+    @PreviewParameter(ThemeAndSearchTopBarProvider::class) input: Pair<Boolean, SearchTopBarData>
 ) {
-    ProtonTheme(isDark = isDarkMode) {
+    ProtonTheme(isDark = input.first) {
         Surface {
             SearchTopBar(
                 placeholder = R.string.action_search,
-                searchQuery = "some search",
+                searchQuery = input.second.value,
                 onSearchQueryChange = {},
                 onStopSearch = {}
             )

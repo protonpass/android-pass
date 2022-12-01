@@ -1,9 +1,14 @@
 package me.proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.impl.db.PassDatabase
 import me.proton.android.pass.data.impl.db.entities.ItemEntity
 import me.proton.core.domain.entity.UserId
+import me.proton.pass.domain.ITEM_TYPE_ALIAS
+import me.proton.pass.domain.ITEM_TYPE_LOGIN
+import me.proton.pass.domain.ITEM_TYPE_NOTE
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemState
 import me.proton.pass.domain.ShareId
@@ -42,4 +47,21 @@ class LocalItemDataSourceImpl @Inject constructor(
 
     override suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean =
         database.itemsDao().countItems(userId.id, shareId.id) > 0
+
+    override fun observeItemCountSummary(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<ItemCountSummary> =
+        database.itemsDao().itemSummary(userId.id, shareId.id).map { values ->
+            val logins = values.firstOrNull { it.itemKind == ITEM_TYPE_LOGIN }?.itemCount ?: 0
+            val aliases = values.firstOrNull { it.itemKind == ITEM_TYPE_ALIAS }?.itemCount ?: 0
+            val notes = values.firstOrNull { it.itemKind == ITEM_TYPE_NOTE }?.itemCount ?: 0
+            ItemCountSummary(
+                total = logins + aliases + notes,
+                login = logins,
+                alias = aliases,
+                note = notes
+            )
+        }
+
 }

@@ -3,6 +3,11 @@ package me.proton.pass.domain
 import androidx.annotation.StringRes
 import me.proton.core.crypto.common.keystore.EncryptedString
 
+const val ITEM_TYPE_LOGIN = 0
+const val ITEM_TYPE_ALIAS = 1
+const val ITEM_TYPE_NOTE = 2
+const val ITEM_TYPE_PASSWORD = 3
+
 sealed interface ItemType {
 
     data class Login(
@@ -17,10 +22,10 @@ sealed interface ItemType {
 
     @Suppress("MagicNumber")
     fun toWeightedInt(): Int = when (this) {
-        is Login -> 0
-        is Alias -> 1
-        is Note -> 2
-        is Password -> 3
+        is Login -> ITEM_TYPE_LOGIN
+        is Alias -> ITEM_TYPE_ALIAS
+        is Note -> ITEM_TYPE_NOTE
+        is Password -> ITEM_TYPE_PASSWORD
     }
 
     @StringRes

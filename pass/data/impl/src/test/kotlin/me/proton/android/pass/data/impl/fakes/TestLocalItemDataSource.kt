@@ -1,10 +1,13 @@
 package me.proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.impl.db.entities.ItemEntity
 import me.proton.android.pass.data.impl.local.LocalItemDataSource
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.AddressId
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemState
 import me.proton.pass.domain.ShareId
@@ -12,8 +15,13 @@ import me.proton.pass.domain.ShareId
 class TestLocalItemDataSource : LocalItemDataSource {
 
     private val memory: MutableList<ItemEntity> = mutableListOf()
+    private var summary: MutableStateFlow<ItemCountSummary> = MutableStateFlow(ItemCountSummary(0, 0, 0, 0))
 
     fun getMemory(): List<ItemEntity> = memory
+
+    fun emitSummary(value: ItemCountSummary) {
+        summary.tryEmit(value)
+    }
 
     override suspend fun upsertItem(item: ItemEntity) {
         memory.add(item)
@@ -52,4 +60,10 @@ class TestLocalItemDataSource : LocalItemDataSource {
     override suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean {
         throw IllegalStateException("Not yet implemented")
     }
+
+    override fun observeItemCountSummary(
+        userId: UserId,
+        addressId: AddressId,
+        shareId: ShareId
+    ): Flow<ItemCountSummary> = summary
 }

@@ -38,7 +38,7 @@
 
         <service
             android:name="me.proton.pass.autofill.ProtonPassAutofillService"
-            android:label="Pass Autofill"
+            android:label="@string/autofill_service_name"
             android:permission="android.permission.BIND_AUTOFILL_SERVICE"
             android:exported="true">
             <meta-data

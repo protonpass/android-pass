@@ -51,6 +51,7 @@ internal fun SelectItemScreenContent(
             shouldScrollToTop = false,
             highlight = uiState.searchUiState.searchQuery,
             isLoading = uiState.listUiState.isLoading,
+            isProcessingSearch = uiState.searchUiState.isProcessingSearch,
             isRefreshing = uiState.listUiState.isRefreshing,
             onRefresh = onRefresh,
             onItemClick = onItemClicked,

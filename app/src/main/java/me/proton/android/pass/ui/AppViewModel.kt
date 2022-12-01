@@ -4,6 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -16,6 +19,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
+import me.proton.android.pass.data.api.usecases.ApplyPendingEvents
 import me.proton.android.pass.data.api.usecases.CreateVault
 import me.proton.android.pass.data.api.usecases.GetCurrentShare
 import me.proton.android.pass.data.api.usecases.GetCurrentUserId
@@ -47,7 +51,8 @@ class AppViewModel @Inject constructor(
     private val createVault: CreateVault,
     private val refreshShares: RefreshShares,
     private val cryptoContext: CryptoContext,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val applyPendingEvents: ApplyPendingEvents
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -94,7 +99,7 @@ class AppViewModel @Inject constructor(
                 refreshShares(userId)
                     .onError { onInitError(it, "Refresh shares error") }
                 getCurrentShare(userId)
-                    .onSuccess { onShareListReceived(it, userId, createVault, cryptoContext) }
+                    .onSuccess { onShareListReceived(it, userId) }
                     .onError { onInitError(it, "Observe shares error") }
             }
             .onError { onInitError(it, "UserId error") }
@@ -103,9 +108,7 @@ class AppViewModel @Inject constructor(
 
     private suspend fun onShareListReceived(
         list: List<Share>,
-        userId: UserId,
-        createVault: CreateVault,
-        cryptoContext: CryptoContext
+        userId: UserId
     ) {
         if (list.isEmpty()) {
             val vault = NewVault(
@@ -114,6 +117,28 @@ class AppViewModel @Inject constructor(
             )
             createVault(userId, vault)
                 .onError { onInitError(it, "Create Vault error") }
+        } else {
+            applyEvents(list, userId)
+        }
+    }
+
+    private suspend fun applyEvents(list: List<Share>, userId: UserId) {
+        coroutineScope {
+            val results = list.map { share ->
+                async {
+                    val res = kotlin.runCatching {
+                        applyPendingEvents(userId, share.id)
+                    }.onFailure {
+                        onInitError(it, "Error refreshing share [share_id=${share.id}]")
+                    }
+
+                    res.isSuccess
+                }
+            }.awaitAll()
+            val anyError = results.any { !it }
+            if (anyError) {
+                snackbarMessageRepository.emitSnackbarMessage(AppSnackbarMessage.CouldNotRefreshItems)
+            }
         }
     }
 

@@ -31,7 +31,7 @@ fun AppSection(
             hint = stringResource(R.string.settings_force_sync_hint),
             onClick = onForceSyncClick
         )
-        TelemetrySettingToggleItem()
+        TelemetrySettingToggleItem(divider = {})
         CrashReportSettingToggleItem(divider = {})
         ProtonSettingsItem(
             name = stringResource(R.string.settings_app_version_title),

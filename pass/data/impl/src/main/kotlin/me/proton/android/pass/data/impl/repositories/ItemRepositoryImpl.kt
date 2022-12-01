@@ -6,6 +6,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.api.PendingEventList
 import me.proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
 import me.proton.android.pass.data.api.repositories.ItemRepository
@@ -401,6 +402,12 @@ class ItemRepositoryImpl @Inject constructor(
         }
         PassLogger.i(TAG, "Finishing applying events")
     }
+
+    override fun observeItemCountSummary(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareId)
+
 
     private suspend fun getShare(userId: UserId, shareId: ShareId): Share =
         when (val share = shareRepository.getById(userId, shareId)) {

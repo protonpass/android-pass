@@ -4,13 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.autofill.api.AutofillManager
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus
@@ -19,25 +22,30 @@ import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryResult
 import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.biometry.ContextHolder
+import me.proton.android.pass.data.api.usecases.RefreshContent
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.HasAuthenticated
 import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.android.pass.preferences.ThemePreference
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.presentation.uievents.IsButtonEnabled
+import me.proton.pass.presentation.uievents.IsLoadingState
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
+    private val accountManager: AccountManager,
     private val preferencesRepository: PreferenceRepository,
     private val biometryManager: BiometryManager,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val autofillManager: AutofillManager
+    private val autofillManager: AutofillManager,
+    private val refreshContent: RefreshContent
 ) : ViewModel() {
 
     private val biometricLockState: Flow<BiometricLockState> = preferencesRepository
@@ -56,11 +64,14 @@ class SettingsViewModel @Inject constructor(
         .getAutofillStatus()
         .distinctUntilChanged()
 
+    private val isLoadingState: MutableStateFlow<IsLoadingState> = MutableStateFlow(IsLoadingState.NotLoading)
+
     val state: StateFlow<SettingsUiState> = combine(
         biometricLockState,
         themeState,
-        autofillState
-    ) { biometricLock, theme, autofill ->
+        autofillState,
+        isLoadingState
+    ) { biometricLock, theme, autofill, loading ->
         val fingerprintSection = when (biometryManager.getBiometryStatus()) {
             BiometryStatus.NotEnrolled -> FingerprintSectionState.NoFingerprintRegistered
             BiometryStatus.NotAvailable -> FingerprintSectionState.NotAvailable
@@ -75,7 +86,8 @@ class SettingsViewModel @Inject constructor(
         SettingsUiState(
             fingerprintSection = fingerprintSection,
             themePreference = theme,
-            autofillStatus = autofill
+            autofillStatus = autofill,
+            isLoadingState = loading
         )
     }.stateIn(
         scope = viewModelScope,
@@ -138,6 +150,22 @@ class SettingsViewModel @Inject constructor(
         } else {
             autofillManager.disableAutofill()
         }
+    }
+
+    fun onForceSync() = viewModelScope.launch {
+        val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+
+        isLoadingState.update { IsLoadingState.Loading }
+        runCatching {
+            refreshContent.invoke(userId)
+        }.onSuccess {
+            snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.SyncSuccessful)
+        }.onFailure {
+            PassLogger.i(TAG, it, "Error performing sync")
+            snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.ErrorPerformingSync)
+        }
+
+        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     private suspend fun performFingerprintLockChange(state: IsButtonEnabled) {

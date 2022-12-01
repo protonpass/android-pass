@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonSettingsHeader
+import me.proton.core.compose.component.ProtonSettingsItem
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.usersettings.presentation.compose.view.CrashReportSettingToggleItem
 import me.proton.core.usersettings.presentation.compose.view.TelemetrySettingToggleItem
@@ -18,12 +19,23 @@ import me.proton.pass.presentation.R
 
 @Composable
 fun AppSection(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    appVersion: String,
+    onForceSyncClick: () -> Unit
 ) {
     Column(modifier = modifier.padding(vertical = 12.dp)) {
         ProtonSettingsHeader(title = stringResource(R.string.settings_app_section_title))
+        ProtonSettingsItem(
+            name = stringResource(R.string.settings_force_sync_title),
+            hint = stringResource(R.string.settings_force_sync_hint),
+            onClick = onForceSyncClick
+        )
         TelemetrySettingToggleItem()
         CrashReportSettingToggleItem(divider = {})
+        ProtonSettingsItem(
+            name = stringResource(R.string.settings_app_version_title),
+            hint = appVersion
+        )
     }
 }
 
@@ -34,7 +46,10 @@ fun AppSectionPreview(
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            AppSection()
+            AppSection(
+                appVersion = "1.2.3",
+                onForceSyncClick = {}
+            )
         }
     }
 }

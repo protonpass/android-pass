@@ -3,7 +3,7 @@ package me.proton.android.pass.data.impl.usecases
 import me.proton.android.pass.data.api.PendingEventList
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.usecases.ApplyPendingEvents
-import me.proton.android.pass.data.impl.extensions.toDomain
+import me.proton.android.pass.data.impl.extensions.toPendingEvent
 import me.proton.android.pass.data.impl.repositories.EventRepository
 import me.proton.android.pass.data.impl.responses.EventList
 import me.proton.android.pass.log.PassLogger
@@ -40,7 +40,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     }
 
     private fun EventList.toDomain(): PendingEventList = PendingEventList(
-        updatedItems = updatedItems.map { it.toDomain() },
+        updatedItems = updatedItems.map { it.toPendingEvent() },
         deletedItemIds = deletedItemIds
     )
 

@@ -1,10 +1,10 @@
 package me.proton.android.pass.data.impl.extensions
 
+import me.proton.android.pass.data.api.PendingEventItemRevision
 import me.proton.android.pass.data.impl.responses.ItemRevision
-import me.proton.android.pass.data.api.ItemRevision as DomainItemRevision
 
-fun ItemRevision.toDomain(): DomainItemRevision =
-    DomainItemRevision(
+fun ItemRevision.toPendingEvent(): PendingEventItemRevision =
+    PendingEventItemRevision(
         itemId = itemId,
         revision = revision,
         contentFormatVersion = contentFormatVersion,
@@ -20,7 +20,7 @@ fun ItemRevision.toDomain(): DomainItemRevision =
         modifyTime = modifyTime
     )
 
-fun DomainItemRevision.toData(): ItemRevision =
+fun PendingEventItemRevision.toItemRevision(): ItemRevision =
     ItemRevision(
         itemId = itemId,
         revision = revision,

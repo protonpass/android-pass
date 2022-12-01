@@ -5,6 +5,12 @@ import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 import me.proton.android.pass.data.impl.db.entities.ItemEntity
 import me.proton.core.data.room.db.BaseDao
+import me.proton.pass.domain.ItemStateValues
+
+data class SummaryRow(
+    val itemKind: Int,
+    val itemCount: Long
+)
 
 @Dao
 abstract class ItemsDao : BaseDao<ItemEntity>() {
@@ -76,4 +82,18 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract suspend fun countItems(userId: String, shareId: String): Int
+
+    @Query(
+        """
+        SELECT 
+            ${ItemEntity.Columns.ITEM_TYPE} as itemKind,
+            COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
+        FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE}
+        GROUP BY ${ItemEntity.Columns.ITEM_TYPE}
+        """
+    )
+    abstract fun itemSummary(userId: String, shareId: String): Flow<List<SummaryRow>>
 }

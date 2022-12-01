@@ -187,7 +187,7 @@ class HomeViewModel @Inject constructor(
     fun onSearchQueryChange(query: String) {
         if (query.contains("\n")) return
 
-        searchQueryState.value = query
+        searchQueryState.update { query }
         isProcessingSearchState.update { IsProcessingSearchState.Loading }
     }
 

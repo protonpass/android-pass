@@ -1,22 +1,20 @@
 package me.proton.pass.presentation.components.common.item
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefreshState
+import me.proton.pass.presentation.components.common.Loading
 import me.proton.pass.presentation.components.common.PassSwipeRefresh
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.IsRefreshingState
 import me.proton.pass.presentation.uievents.IsProcessingSearchState
+import me.proton.pass.presentation.uievents.IsRefreshingState
 
 private const val PLACEHOLDER_ELEMENTS = 40
 
@@ -48,12 +46,7 @@ fun ItemsList(
         onRefresh = onRefresh
     ) {
         if (isProcessingSearch == IsProcessingSearchState.Loading) {
-            Box(
-                modifier = modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+            Loading(Modifier.fillMaxSize())
         } else if (items.isNotEmpty()) {
             LazyColumn(modifier = Modifier.fillMaxSize(), state = scrollableState) {
                 items(items = items, key = { it.id.id }) { item ->
@@ -71,7 +64,7 @@ fun ItemsList(
                     PlaceholderItemRow()
                 }
             }
-        } else  {
+        } else {
             emptyContent()
         }
     }

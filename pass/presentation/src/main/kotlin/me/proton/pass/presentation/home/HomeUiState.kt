@@ -49,7 +49,7 @@ data class SearchUiState(
     companion object {
         val Initial = SearchUiState(
             searchQuery = "",
-            isProcessingSearch  = IsProcessingSearchState.NotLoading,
+            isProcessingSearch = IsProcessingSearchState.NotLoading,
             inSearchMode = false
         )
     }

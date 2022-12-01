@@ -117,7 +117,7 @@ abstract class AppDatabase :
         const val VERSION = 5
         const val DB_NAME = "db-passkey"
 
-        private val migrations: List<Migration> = listOf(
+        val migrations: List<Migration> = listOf(
             AppDatabaseMigrations.MIGRATION_1_2,
             AppDatabaseMigrations.MIGRATION_2_3,
             AppDatabaseMigrations.MIGRATION_3_4

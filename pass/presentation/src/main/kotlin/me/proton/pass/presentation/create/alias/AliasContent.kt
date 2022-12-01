@@ -14,7 +14,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
-import me.proton.android.pass.ui.shared.LoadingDialog
+import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Some

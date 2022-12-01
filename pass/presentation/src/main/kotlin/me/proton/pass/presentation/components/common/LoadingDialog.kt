@@ -1,4 +1,4 @@
-package me.proton.android.pass.ui.shared
+package me.proton.pass.presentation.components.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

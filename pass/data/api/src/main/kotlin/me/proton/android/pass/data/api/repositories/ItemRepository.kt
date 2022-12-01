@@ -1,6 +1,7 @@
 package me.proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.api.PendingEventList
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
@@ -65,4 +66,9 @@ interface ItemRepository {
         shareId: ShareId,
         events: PendingEventList
     )
+
+    fun observeItemCountSummary(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<ItemCountSummary>
 }

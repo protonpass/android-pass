@@ -1,6 +1,7 @@
 package me.proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.impl.db.entities.ItemEntity
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.domain.ItemId
@@ -17,4 +18,8 @@ interface LocalItemDataSource {
     suspend fun getTrashedItems(userId: UserId): List<ItemEntity>
     suspend fun delete(shareId: ShareId, itemId: ItemId): Boolean
     suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean
+    fun observeItemCountSummary(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<ItemCountSummary>
 }

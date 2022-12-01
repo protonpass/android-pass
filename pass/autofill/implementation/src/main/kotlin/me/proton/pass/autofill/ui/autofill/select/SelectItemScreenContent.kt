@@ -5,12 +5,15 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.autofill.service.R
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
+import me.proton.pass.presentation.components.common.EmptySearchResults
 import me.proton.pass.presentation.components.common.PassFloatingActionButton
+import me.proton.pass.presentation.components.common.item.EmptyList
 import me.proton.pass.presentation.components.common.item.ItemsList
 import me.proton.pass.presentation.components.model.ItemUiModel
 
@@ -47,13 +50,19 @@ internal fun SelectItemScreenContent(
             items = uiState.listUiState.items,
             shouldScrollToTop = false,
             highlight = uiState.searchUiState.searchQuery,
-            emptyListMessage = R.string.error_credentials_not_found,
             isLoading = uiState.listUiState.isLoading,
             isRefreshing = uiState.listUiState.isRefreshing,
             onRefresh = onRefresh,
             onItemClick = onItemClicked,
             onItemMenuClick = {},
-            onScrollToTop = {}
+            onScrollToTop = {},
+            emptyContent = {
+                if (uiState.searchUiState.inSearchMode) {
+                    EmptySearchResults()
+                } else {
+                    EmptyList(emptyListMessage = stringResource(id = R.string.error_credentials_not_found))
+                }
+            }
         )
     }
 }

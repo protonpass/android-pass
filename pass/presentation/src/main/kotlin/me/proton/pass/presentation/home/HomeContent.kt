@@ -14,10 +14,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
+import me.proton.pass.presentation.components.common.EmptySearchResults
 import me.proton.pass.presentation.components.common.PassFloatingActionButton
+import me.proton.pass.presentation.components.common.item.EmptyList
 import me.proton.pass.presentation.components.common.item.ItemsList
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.shared.ConfirmItemDeletionDialog
@@ -79,12 +82,18 @@ internal fun HomeContent(
                 keyboardController?.hide()
                 homeScreenNavigation.toItemDetail(item.shareId, item.id)
             },
-            emptyListMessage = R.string.empty_list_home_subtitle,
             onItemMenuClick = onItemMenuClick,
             isLoading = uiState.homeListUiState.isLoading,
             isRefreshing = uiState.homeListUiState.isRefreshing,
             onRefresh = onRefresh,
-            onScrollToTop = onScrollToTop
+            onScrollToTop = onScrollToTop,
+            emptyContent = {
+                if (uiState.searchUiState.inSearchMode) {
+                    EmptySearchResults()
+                } else {
+                    EmptyList(emptyListMessage = stringResource(id = R.string.empty_list_home_subtitle))
+                }
+            }
         )
         ConfirmItemDeletionDialog(
             state = itemToDelete,

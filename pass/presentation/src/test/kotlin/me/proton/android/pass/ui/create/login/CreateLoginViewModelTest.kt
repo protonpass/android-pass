@@ -24,6 +24,7 @@ import me.proton.pass.test.domain.TestItem
 import me.proton.pass.test.domain.usecases.TestCreateItem
 import me.proton.pass.test.domain.usecases.TestObserveActiveShare
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
+import me.proton.core.crypto.common.keystore.decrypt
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -97,6 +98,7 @@ internal class CreateLoginViewModelTest {
                                 id = item.id,
                                 shareId = item.shareId,
                                 name = item.itemName(TestKeyStoreCrypto),
+                                note = item.note.decrypt(TestKeyStoreCrypto),
                                 itemType = item.itemType
                             )
                         )

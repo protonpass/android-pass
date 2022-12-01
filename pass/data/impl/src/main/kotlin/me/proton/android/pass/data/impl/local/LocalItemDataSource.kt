@@ -9,6 +9,7 @@ import me.proton.pass.domain.ShareId
 
 interface LocalItemDataSource {
     suspend fun upsertItem(item: ItemEntity)
+    suspend fun upsertItems(items: List<ItemEntity>)
     fun observeItemsForShare(userId: UserId, shareId: ShareId, itemState: ItemState): Flow<List<ItemEntity>>
     fun observeItems(userId: UserId, itemState: ItemState): Flow<List<ItemEntity>>
     suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity?

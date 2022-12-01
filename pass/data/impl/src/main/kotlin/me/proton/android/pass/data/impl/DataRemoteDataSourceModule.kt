@@ -6,6 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import me.proton.android.pass.data.impl.remote.RemoteAliasDataSourceImpl
+import me.proton.android.pass.data.impl.remote.RemoteEventDataSource
+import me.proton.android.pass.data.impl.remote.RemoteEventDataSourceImpl
 import me.proton.android.pass.data.impl.remote.RemoteItemDataSource
 import me.proton.android.pass.data.impl.remote.RemoteItemDataSourceImpl
 import me.proton.android.pass.data.impl.remote.RemoteKeyPacketDataSource
@@ -34,5 +36,7 @@ abstract class DataRemoteDataSourceModule {
     @Binds
     abstract fun bindRemoteVaultItemKeyDataSource(impl: RemoteVaultItemKeyDataSourceImpl): RemoteVaultItemKeyDataSource
 
+    @Binds
+    abstract fun bindRemoteEventDataSource(impl: RemoteEventDataSourceImpl): RemoteEventDataSource
 }
 

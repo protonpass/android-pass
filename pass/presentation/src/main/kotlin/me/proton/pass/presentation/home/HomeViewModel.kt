@@ -22,10 +22,10 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.clipboard.api.ClipboardManager
+import me.proton.android.pass.data.api.usecases.ApplyPendingEvents
 import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
-import me.proton.android.pass.data.api.usecases.RefreshContent
 import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -34,6 +34,8 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
+import me.proton.pass.common.api.Some
+import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.onError
 import me.proton.pass.domain.Item
@@ -56,9 +58,9 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val trashItem: TrashItem,
-    private val refreshContent: RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val clipboardManager: ClipboardManager,
+    private val applyPendingEvents: ApplyPendingEvents,
     observeCurrentUser: ObserveCurrentUser,
     observeActiveShare: ObserveActiveShare,
     observeActiveItems: ObserveActiveItems,
@@ -196,14 +198,19 @@ class HomeViewModel @Inject constructor(
 
     fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
         val userId = currentUserFlow.firstOrNull()?.userId
-        if (userId != null) {
+        val share = homeUiState.value.homeListUiState.selectedShare
+        if (userId != null && share is Some) {
             isRefreshing.update { IsRefreshingState.Refreshing }
-            refreshContent(userId)
-                .onError {
-                    val message = "Error in refresh"
-                    PassLogger.i(TAG, it ?: Exception(message), message)
-                    snackbarMessageRepository.emitSnackbarMessage(RefreshError)
-                }
+
+            val res = applyPendingEvents(userId, share.value)
+                .asResultWithoutLoading()
+                .firstOrNull()
+
+            res?.onError {
+                val message = "Error in refresh"
+                PassLogger.i(TAG, it ?: Exception(message), message)
+                snackbarMessageRepository.emitSnackbarMessage(RefreshError)
+            }
             isRefreshing.update { IsRefreshingState.NotRefreshing }
         }
     }

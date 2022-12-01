@@ -19,6 +19,10 @@ class TestLocalItemDataSource : LocalItemDataSource {
         memory.add(item)
     }
 
+    override suspend fun upsertItems(items: List<ItemEntity>) {
+        memory.addAll(items)
+    }
+
     override fun observeItemsForShare(
         userId: UserId,
         shareId: ShareId,

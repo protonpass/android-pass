@@ -10,6 +10,8 @@ import me.proton.android.pass.data.api.repositories.KeyPacketRepository
 import me.proton.android.pass.data.api.repositories.ShareRepository
 import me.proton.android.pass.data.api.repositories.VaultKeyRepository
 import me.proton.android.pass.data.impl.repositories.AliasRepositoryImpl
+import me.proton.android.pass.data.impl.repositories.EventRepository
+import me.proton.android.pass.data.impl.repositories.EventRepositoryImpl
 import me.proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import me.proton.android.pass.data.impl.repositories.KeyPacketRepositoryImpl
 import me.proton.android.pass.data.impl.repositories.ShareRepositoryImpl
@@ -33,5 +35,8 @@ abstract class DataRepositoryModule {
 
     @Binds
     abstract fun bindVaultKeyRepository(impl: VaultKeyRepositoryImpl): VaultKeyRepository
+
+    @Binds
+    abstract fun bindEventRepository(impl: EventRepositoryImpl): EventRepository
 
 }

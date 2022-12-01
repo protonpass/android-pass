@@ -4,6 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.android.pass.data.api.usecases.ApplyPendingEvents
 import me.proton.android.pass.data.api.usecases.CreateAlias
 import me.proton.android.pass.data.api.usecases.CreateItem
 import me.proton.android.pass.data.api.usecases.CreateVault
@@ -25,6 +26,7 @@ import me.proton.android.pass.data.api.usecases.RefreshShares
 import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.android.pass.data.api.usecases.UpdateAlias
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItem
+import me.proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import me.proton.android.pass.data.impl.usecases.CreateAliasImpl
 import me.proton.android.pass.data.impl.usecases.CreateItemImpl
 import me.proton.android.pass.data.impl.usecases.CreateVaultImpl
@@ -113,5 +115,8 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindUpdateAutofillItem(impl: UpdateAutofillItemImpl): UpdateAutofillItem
+
+    @Binds
+    abstract fun bindApplyPendingEvents(impl: ApplyPendingEventsImpl): ApplyPendingEvents
 }
 

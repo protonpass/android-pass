@@ -21,7 +21,8 @@ import me.proton.pass.presentation.R
 fun AppSection(
     modifier: Modifier = Modifier,
     appVersion: String,
-    onForceSyncClick: () -> Unit
+    onForceSyncClick: () -> Unit,
+    onAppVersionClick: () -> Unit
 ) {
     Column(modifier = modifier.padding(vertical = 12.dp)) {
         ProtonSettingsHeader(title = stringResource(R.string.settings_app_section_title))
@@ -34,7 +35,8 @@ fun AppSection(
         CrashReportSettingToggleItem(divider = {})
         ProtonSettingsItem(
             name = stringResource(R.string.settings_app_version_title),
-            hint = appVersion
+            hint = appVersion,
+            onClick = onAppVersionClick
         )
     }
 }
@@ -48,7 +50,8 @@ fun AppSectionPreview(
         Surface {
             AppSection(
                 appVersion = "1.2.3",
-                onForceSyncClick = {}
+                onForceSyncClick = {},
+                onAppVersionClick = {}
             )
         }
     }

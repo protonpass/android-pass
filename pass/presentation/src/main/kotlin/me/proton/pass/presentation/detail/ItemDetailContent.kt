@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import me.proton.android.pass.ui.shared.LoadingDialog
+import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.pass.common.api.Some
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId

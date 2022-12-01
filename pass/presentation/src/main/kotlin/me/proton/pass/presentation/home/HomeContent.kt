@@ -84,6 +84,7 @@ internal fun HomeContent(
             },
             onItemMenuClick = onItemMenuClick,
             isLoading = uiState.homeListUiState.isLoading,
+            isProcessingSearch = uiState.searchUiState.isProcessingSearch,
             isRefreshing = uiState.homeListUiState.isRefreshing,
             onRefresh = onRefresh,
             onScrollToTop = onScrollToTop,

@@ -1,6 +1,5 @@
 package me.proton.android.pass.data.impl.local
 
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import me.proton.android.pass.data.impl.db.PassDatabase
 import me.proton.android.pass.data.impl.db.entities.ItemEntity
@@ -8,13 +7,16 @@ import me.proton.core.domain.entity.UserId
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemState
 import me.proton.pass.domain.ShareId
+import javax.inject.Inject
 
 class LocalItemDataSourceImpl @Inject constructor(
     private val database: PassDatabase
 ) : LocalItemDataSource {
 
-    override suspend fun upsertItem(item: ItemEntity) =
-        database.itemsDao().insertOrUpdate(item)
+    override suspend fun upsertItem(item: ItemEntity) = upsertItems(listOf(item))
+
+    override suspend fun upsertItems(items: List<ItemEntity>) =
+        database.itemsDao().insertOrUpdate(*items.toTypedArray())
 
     override fun observeItemsForShare(
         userId: UserId,

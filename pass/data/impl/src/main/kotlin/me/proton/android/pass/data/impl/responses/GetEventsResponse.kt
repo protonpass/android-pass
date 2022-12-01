@@ -18,8 +18,8 @@ data class EventList(
     @SerialName("DeletedItemIDs")
     val deletedItemIds: List<String>,
     @SerialName("NewRotationID")
-    val newRotationId: String,
-    @SerialName("LatestEventId")
+    val newRotationId: String?,
+    @SerialName("LatestEventID")
     val latestEventId: String,
     @SerialName("EventsPending")
     val eventsPending: Boolean,

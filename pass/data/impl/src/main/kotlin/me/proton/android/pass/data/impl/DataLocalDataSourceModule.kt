@@ -4,6 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.android.pass.data.impl.local.LocalEventDataSource
+import me.proton.android.pass.data.impl.local.LocalEventDataSourceImpl
 import me.proton.android.pass.data.impl.local.LocalItemDataSource
 import me.proton.android.pass.data.impl.local.LocalItemDataSourceImpl
 import me.proton.android.pass.data.impl.local.LocalShareDataSource
@@ -23,5 +25,8 @@ abstract class DataLocalDataSourceModule {
 
     @Binds
     abstract fun bindLocalVaultItemKeyDataSource(impl: LocalVaultItemKeyDataSourceImpl): LocalVaultItemKeyDataSource
+
+    @Binds
+    abstract fun bindLocalEventDataSource(impl: LocalEventDataSourceImpl): LocalEventDataSource
 
 }

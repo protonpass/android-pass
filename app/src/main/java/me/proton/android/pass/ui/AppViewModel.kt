@@ -6,7 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -122,23 +121,21 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    private suspend fun applyEvents(list: List<Share>, userId: UserId) {
-        coroutineScope {
-            val results = list.map { share ->
-                async {
-                    val res = kotlin.runCatching {
-                        applyPendingEvents(userId, share.id)
-                    }.onFailure {
-                        onInitError(it, "Error refreshing share [share_id=${share.id}]")
-                    }
-
-                    res.isSuccess
+    private fun applyEvents(list: List<Share>, userId: UserId) = viewModelScope.launch {
+        val results = list.map { share ->
+            async {
+                val res = kotlin.runCatching {
+                    applyPendingEvents(userId, share.id)
+                }.onFailure {
+                    onInitError(it, "Error refreshing share [share_id=${share.id}]")
                 }
-            }.awaitAll()
-            val anyError = results.any { !it }
-            if (anyError) {
-                snackbarMessageRepository.emitSnackbarMessage(AppSnackbarMessage.CouldNotRefreshItems)
+
+                res.isSuccess
             }
+        }.awaitAll()
+        val anyError = results.any { !it }
+        if (anyError) {
+            snackbarMessageRepository.emitSnackbarMessage(AppSnackbarMessage.CouldNotRefreshItems)
         }
     }
 

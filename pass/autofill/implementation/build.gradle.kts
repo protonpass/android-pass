@@ -89,7 +89,6 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.presentation)
-    implementation(projects.pass.search.api)
     implementation(projects.pass.log)
 
     testImplementation(projects.pass.test)

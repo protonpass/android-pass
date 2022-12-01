@@ -81,6 +81,7 @@ fun AliasOptionsBottomSheetContentsPreview(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "My Alias",
+                    note = "Note content",
                     itemType = ItemType.Alias("alias.email@proton.me")
                 ),
                 onCopyAlias = {},

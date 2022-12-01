@@ -73,8 +73,6 @@ class HomeViewModel @Inject constructor(
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val isAppLoadingState: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.NotLoading)
 
     private val searchWrapperWrapper = combine(
         searchQueryState,
@@ -110,19 +108,6 @@ class HomeViewModel @Inject constructor(
         }
     }.flowOn(Dispatchers.Default)
 
-    private val refreshingState: Flow<IsRefreshingState> = combine(
-        isRefreshing,
-        isAppLoadingState
-    ) { refreshing, appLoading ->
-        when (refreshing) {
-            IsRefreshingState.Refreshing -> IsRefreshingState.Refreshing
-            IsRefreshingState.NotRefreshing -> when (appLoading) {
-                IsLoadingState.Loading -> IsRefreshingState.Refreshing
-                IsLoadingState.NotLoading -> IsRefreshingState.NotRefreshing
-            }
-        }
-    }
-
     private data class SearchWrapper(
         val searchQuery: String,
         val isInSearchMode: Boolean
@@ -132,9 +117,9 @@ class HomeViewModel @Inject constructor(
         observeActiveShare(),
         resultsFlow,
         searchWrapperWrapper,
-        refreshingState,
+        isRefreshing,
         sortingTypeState
-    ) { shareIdResult, itemsResult, searchWrapper, isRefreshing, sortingType ->
+    ) { shareIdResult, itemsResult, searchWrapper, refreshing, sortingType ->
         val isLoading = IsLoadingState.from(
             shareIdResult is Result.Loading || itemsResult is Result.Loading
         )
@@ -172,7 +157,7 @@ class HomeViewModel @Inject constructor(
         HomeUiState(
             homeListUiState = HomeListUiState(
                 isLoading = isLoading,
-                isRefreshing = isRefreshing,
+                isRefreshing = refreshing,
                 items = items,
                 selectedShare = selectedShare,
                 sortingType = sortingType
@@ -264,14 +249,6 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun setAppLoadingState(appLoadingState: IsLoadingState) {
-        val mapped = when (appLoadingState) {
-            IsLoadingState.NotLoading -> IsRefreshingState.NotRefreshing
-            IsLoadingState.Loading -> IsRefreshingState.Refreshing
-        }
-        isRefreshing.update { mapped }
     }
 
     private fun List<Item>.sortByTitle(crypto: KeyStoreCrypto) =

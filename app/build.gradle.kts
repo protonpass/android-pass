@@ -117,12 +117,12 @@ android {
             versionNameSuffix = "-alpha.${Config.versionCode}+$gitHash"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
             buildConfigField("String", "HOST", "\"protonmail.ch\"")
-            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "false")
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
         }
         create("prod") {
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
             buildConfigField("String", "HOST", "\"protonmail.ch\"")
-            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "false")
+            buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
         }
     }
 

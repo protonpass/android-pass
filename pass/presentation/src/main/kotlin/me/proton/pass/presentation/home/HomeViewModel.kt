@@ -35,9 +35,7 @@ import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
-import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.common.api.map
-import me.proton.pass.common.api.onError
 import me.proton.pass.domain.Item
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
@@ -75,6 +73,8 @@ class HomeViewModel @Inject constructor(
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val isAppLoadingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
 
     private val searchWrapperWrapper = combine(
         searchQueryState,
@@ -110,6 +110,19 @@ class HomeViewModel @Inject constructor(
         }
     }.flowOn(Dispatchers.Default)
 
+    private val refreshingState: Flow<IsRefreshingState> = combine(
+        isRefreshing,
+        isAppLoadingState
+    ) { refreshing, appLoading ->
+        when (refreshing) {
+            IsRefreshingState.Refreshing -> IsRefreshingState.Refreshing
+            IsRefreshingState.NotRefreshing -> when (appLoading) {
+                IsLoadingState.Loading -> IsRefreshingState.Refreshing
+                IsLoadingState.NotLoading -> IsRefreshingState.NotRefreshing
+            }
+        }
+    }
+
     private data class SearchWrapper(
         val searchQuery: String,
         val isInSearchMode: Boolean
@@ -119,7 +132,7 @@ class HomeViewModel @Inject constructor(
         observeActiveShare(),
         resultsFlow,
         searchWrapperWrapper,
-        isRefreshing,
+        refreshingState,
         sortingTypeState
     ) { shareIdResult, itemsResult, searchWrapper, isRefreshing, sortingType ->
         val isLoading = IsLoadingState.from(
@@ -201,16 +214,13 @@ class HomeViewModel @Inject constructor(
         val share = homeUiState.value.homeListUiState.selectedShare
         if (userId != null && share is Some) {
             isRefreshing.update { IsRefreshingState.Refreshing }
-
-            val res = applyPendingEvents(userId, share.value)
-                .asResultWithoutLoading()
-                .firstOrNull()
-
-            res?.onError {
-                val message = "Error in refresh"
-                PassLogger.i(TAG, it ?: Exception(message), message)
+            runCatching {
+                applyPendingEvents(userId, share.value)
+            }.onFailure {
+                PassLogger.i(TAG, it, "Error in refresh")
                 snackbarMessageRepository.emitSnackbarMessage(RefreshError)
             }
+
             isRefreshing.update { IsRefreshingState.NotRefreshing }
         }
     }
@@ -254,6 +264,14 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setAppLoadingState(appLoadingState: IsLoadingState) {
+        val mapped = when (appLoadingState) {
+            IsLoadingState.NotLoading -> IsRefreshingState.NotRefreshing
+            IsLoadingState.Loading -> IsRefreshingState.Refreshing
+        }
+        isRefreshing.update { mapped }
     }
 
     private fun List<Item>.sortByTitle(crypto: KeyStoreCrypto) =

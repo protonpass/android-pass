@@ -15,5 +15,6 @@ enum class SettingsSnackbarMessage(
     FingerprintLockDisabled(R.string.settings_fingerprint_lock_disabled, SnackbarType.SUCCESS),
     ErrorPerformingOperation(R.string.error_performing_operation, SnackbarType.ERROR),
     ErrorPerformingSync(R.string.settings_force_sync_error, SnackbarType.ERROR),
-    SyncSuccessful(R.string.settings_force_sync_success, SnackbarType.SUCCESS)
+    SyncSuccessful(R.string.settings_force_sync_success, SnackbarType.SUCCESS),
+    AppVersionCopied(R.string.settings_app_version_copied_to_clipboard, SnackbarType.SUCCESS)
 }

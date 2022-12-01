@@ -22,6 +22,7 @@ import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryResult
 import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.biometry.ContextHolder
+import me.proton.android.pass.clipboard.api.ClipboardManager
 import me.proton.android.pass.data.api.usecases.RefreshContent
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -45,7 +46,8 @@ class SettingsViewModel @Inject constructor(
     private val biometryManager: BiometryManager,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val autofillManager: AutofillManager,
-    private val refreshContent: RefreshContent
+    private val refreshContent: RefreshContent,
+    private val clipboardManager: ClipboardManager
 ) : ViewModel() {
 
     private val biometricLockState: Flow<BiometricLockState> = preferencesRepository
@@ -166,6 +168,11 @@ class SettingsViewModel @Inject constructor(
         }
 
         isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    fun copyAppVersion(appVersion: String) = viewModelScope.launch {
+        clipboardManager.copyToClipboard(appVersion, clearAfterSeconds = null)
+        snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.AppVersionCopied)
     }
 
     private suspend fun performFingerprintLockChange(state: IsButtonEnabled) {

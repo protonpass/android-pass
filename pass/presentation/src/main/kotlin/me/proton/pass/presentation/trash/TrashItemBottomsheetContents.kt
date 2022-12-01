@@ -118,6 +118,7 @@ fun TrashItemBottomSheetContentsPreview(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "My Alias",
+                    note = "Note",
                     itemType = ItemType.Alias("alias.email@proton.me")
                 ),
                 {},

@@ -8,5 +8,6 @@ data class ItemUiModel(
     val id: ItemId,
     val shareId: ShareId,
     val name: String,
+    val note: String,
     val itemType: ItemType
 )

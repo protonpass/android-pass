@@ -25,6 +25,7 @@ class NoteItemPreviewProvider : PreviewParameterProvider<NoteItemParameter> {
                     id = ItemId("123"),
                     shareId = ShareId("345"),
                     name = title,
+                    note = "Note content",
                     itemType = ItemType.Note(text = text)
                 ),
                 itemType = ItemType.Note(text = text)

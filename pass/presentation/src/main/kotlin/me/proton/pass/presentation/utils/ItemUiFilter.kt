@@ -1,31 +1,23 @@
-package me.proton.pass.search
+package me.proton.pass.presentation.utils
 
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.pass.common.api.Result
-import me.proton.pass.common.api.map
-import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
-import javax.inject.Inject
+import me.proton.pass.presentation.components.model.ItemUiModel
 
-class ItemFilterImpl @Inject constructor(
-    private val keyStoreCrypto: KeyStoreCrypto
-) : ItemFilter {
-
-    override fun filterByQuery(itemsResult: Result<List<Item>>, query: String): Result<List<Item>> =
+object ItemUiFilter {
+    fun filterByQuery(
+        list: List<ItemUiModel>,
+        query: String
+    ): List<ItemUiModel> =
         if (query.isNotEmpty()) {
             val lowercaseQuery = query.lowercase()
-            itemsResult.map { list -> list.filter { it.matchesQuery(lowercaseQuery) } }
+            list.filter { it.matchesQuery(lowercaseQuery) }
         } else {
-            itemsResult
+            list
         }
 
-    private fun isItemMatch(item: Item, query: String): Boolean {
-        val decryptedTitle = item.title.decrypt(keyStoreCrypto)
-        if (decryptedTitle.lowercase().contains(query)) return true
-
-        val decryptedNote = item.note.decrypt(keyStoreCrypto)
-        if (decryptedNote.lowercase().contains(query)) return true
+    private fun isItemMatch(item: ItemUiModel, query: String): Boolean {
+        if (item.name.lowercase().contains(query)) return true
+        if (item.note.lowercase().contains(query)) return true
 
         return when (val itemType = item.itemType) {
             is ItemType.Alias -> isAliasMatch(itemType, query)
@@ -50,6 +42,6 @@ class ItemFilterImpl @Inject constructor(
     private fun isNoteMatch(itemType: ItemType.Note, query: String): Boolean =
         itemType.text.lowercase().contains(query)
 
-    private fun Item.matchesQuery(query: String): Boolean =
+    private fun ItemUiModel.matchesQuery(query: String): Boolean =
         isItemMatch(this, query)
 }

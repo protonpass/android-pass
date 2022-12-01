@@ -266,7 +266,6 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.preferences.implementation)
     implementation(projects.pass.presentation)
-    implementation(projects.pass.search.implementation)
     implementation(projects.pass.log)
 
     debugImplementation(libs.leakCanary)

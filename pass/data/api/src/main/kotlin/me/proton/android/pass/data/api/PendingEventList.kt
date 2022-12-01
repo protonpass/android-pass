@@ -1,6 +1,6 @@
 package me.proton.android.pass.data.api
 
-data class ItemRevision(
+data class PendingEventItemRevision(
     val itemId: String,
     val revision: Long,
     val contentFormatVersion: Int,
@@ -17,6 +17,6 @@ data class ItemRevision(
 )
 
 data class PendingEventList(
-    val updatedItems: List<ItemRevision>,
+    val updatedItems: List<PendingEventItemRevision>,
     val deletedItemIds: List<String>
 )

@@ -23,7 +23,7 @@ import me.proton.android.pass.data.impl.extensions.hasPackageName
 import me.proton.android.pass.data.impl.extensions.hasWebsite
 import me.proton.android.pass.data.impl.extensions.itemType
 import me.proton.android.pass.data.impl.extensions.serializeToProto
-import me.proton.android.pass.data.impl.extensions.toData
+import me.proton.android.pass.data.impl.extensions.toItemRevision
 import me.proton.android.pass.data.impl.extensions.with
 import me.proton.android.pass.data.impl.extensions.withUrl
 import me.proton.android.pass.data.impl.local.LocalItemDataSource
@@ -385,7 +385,7 @@ class ItemRepositoryImpl @Inject constructor(
             val (vaultKey, itemKey) = requireNotNull(keys[it.rotationId])
             itemResponseToEntity(
                 userAddress,
-                it.toData(),
+                it.toItemRevision(),
                 share,
                 verifyKeys,
                 listOf(vaultKey),

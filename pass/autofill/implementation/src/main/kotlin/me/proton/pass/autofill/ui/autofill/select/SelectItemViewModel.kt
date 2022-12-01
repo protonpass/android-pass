@@ -12,9 +12,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -35,14 +36,12 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.toOption
-import me.proton.pass.domain.Item
-import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.entity.PackageName
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
-import me.proton.pass.search.ItemFilter
+import me.proton.pass.presentation.utils.ItemUiFilter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,8 +51,7 @@ class SelectItemViewModel @Inject constructor(
     private val updateAutofillItem: UpdateAutofillItem,
     private val refreshContent: RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    observeActiveItems: ObserveActiveItems,
-    itemFilter: ItemFilter
+    observeActiveItems: ObserveActiveItems
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -75,17 +73,20 @@ class SelectItemViewModel @Inject constructor(
         val isInSearchMode: Boolean
     )
 
+    private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = observeActiveItems()
+        .map { itemResult ->
+            itemResult.map { list ->
+                list.map { it.toUiModel(keyStoreCrypto) }
+            }
+        }
+        .distinctUntilChanged()
+
     @OptIn(FlowPreview::class)
     private val listItems: Flow<Result<List<ItemUiModel>>> = combine(
-        observeActiveItems(),
+        activeItemUIModelFlow,
         searchQueryState.debounce(DEBOUNCE_TIMEOUT)
-    ) { list, searchQuery ->
-        itemFilter.filterByQuery(list, searchQuery)
-    }.mapLatest { result: Result<List<Item>> ->
-        result.map { list ->
-            list.filter { it.itemType is ItemType.Login }
-                .map { it.toUiModel(keyStoreCrypto) }
-        }
+    ) { result, searchQuery ->
+        result.map { ItemUiFilter.filterByQuery(it, searchQuery) }
     }.flowOn(Dispatchers.Default)
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =

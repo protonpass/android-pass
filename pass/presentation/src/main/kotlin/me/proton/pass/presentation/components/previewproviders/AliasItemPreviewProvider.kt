@@ -26,7 +26,7 @@ class AliasItemPreviewProvider : PreviewParameterProvider<AliasItemParameter> {
                     id = ItemId("123"),
                     shareId = ShareId("456"),
                     name = title,
-                    itemType = ItemType.Alias(aliasEmail = alias)
+                    itemType = ItemType.Alias(aliasEmail = alias), note = ""
                 ),
                 item = AliasItem(aliasToBeCreated = alias),
                 itemType = ItemType.Alias(aliasEmail = alias)

@@ -25,6 +25,7 @@ class LoginItemPreviewProvider : PreviewParameterProvider<LoginItemParameter> {
                     id = ItemId("123"),
                     shareId = ShareId("345"),
                     name = title,
+                    note = "Note content",
                     itemType = ItemType.Login(
                         username = username,
                         password = "",

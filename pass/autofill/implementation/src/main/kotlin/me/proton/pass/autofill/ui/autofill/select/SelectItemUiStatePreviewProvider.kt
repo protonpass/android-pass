@@ -29,6 +29,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                             id = ItemId("123"),
                             shareId = ShareId("345"),
                             name = "Item with long text",
+                            note = "Note content",
                             itemType = ItemType.Note(
                                 "Some very very long test that should be ellipsized as we type"
                             )

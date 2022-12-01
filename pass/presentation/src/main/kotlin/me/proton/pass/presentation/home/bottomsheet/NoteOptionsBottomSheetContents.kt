@@ -82,6 +82,7 @@ fun NoteOptionsBottomSheetContentsPreview(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
                     name = "My Note",
+                    note = "Note content",
                     itemType = ItemType.Note("My note text")
                 ),
                 onCopyNote = {},

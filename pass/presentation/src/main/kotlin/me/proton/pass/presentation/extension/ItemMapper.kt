@@ -9,7 +9,8 @@ fun Item.toUiModel(keyStoreCrypto: KeyStoreCrypto): ItemUiModel =
     ItemUiModel(
         id = id,
         shareId = shareId,
-        name = itemName(keyStoreCrypto),
+        name = title.decrypt(keyStoreCrypto),
+        note = note.decrypt(keyStoreCrypto),
         itemType = itemType
     )
 

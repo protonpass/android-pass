@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -30,13 +30,11 @@ import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.map
-import me.proton.pass.domain.Item
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.home.HomeSnackbarMessage.AliasCopied
@@ -48,7 +46,7 @@ import me.proton.pass.presentation.home.HomeSnackbarMessage.RefreshError
 import me.proton.pass.presentation.home.HomeSnackbarMessage.UsernameCopied
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
-import me.proton.pass.search.ItemFilter
+import me.proton.pass.presentation.utils.ItemUiFilter
 import javax.inject.Inject
 
 @ExperimentalMaterialApi
@@ -61,8 +59,7 @@ class HomeViewModel @Inject constructor(
     private val applyPendingEvents: ApplyPendingEvents,
     observeCurrentUser: ObserveCurrentUser,
     observeActiveShare: ObserveActiveShare,
-    observeActiveItems: ObserveActiveItems,
-    itemFilter: ItemFilter
+    observeActiveItems: ObserveActiveItems
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -85,13 +82,21 @@ class HomeViewModel @Inject constructor(
     private val sortingTypeState: MutableStateFlow<SortingType> =
         MutableStateFlow(SortingType.ByName)
 
-    private val sortedListItemFlow: Flow<Result<List<Item>>> = combine(
-        observeActiveItems(),
+    private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = observeActiveItems()
+        .map { itemResult ->
+            itemResult.map { list ->
+                list.map { it.toUiModel(keyStoreCrypto) }
+            }
+        }
+        .distinctUntilChanged()
+
+    private val sortedListItemFlow: Flow<Result<List<ItemUiModel>>> = combine(
+        activeItemUIModelFlow,
         sortingTypeState
     ) { result, sortingType ->
         when (sortingType) {
-            SortingType.ByName -> result.map { list -> list.sortByTitle(keyStoreCrypto) }
-            SortingType.ByItemType -> result.map { list -> list.sortByItemType(keyStoreCrypto) }
+            SortingType.ByName -> result.map { list -> list.sortByTitle() }
+            SortingType.ByItemType -> result.map { list -> list.sortByItemType() }
         }
     }
         .distinctUntilChanged()
@@ -100,12 +105,8 @@ class HomeViewModel @Inject constructor(
     private val resultsFlow: Flow<Result<List<ItemUiModel>>> = combine(
         sortedListItemFlow,
         searchQueryState.debounce(DEBOUNCE_TIMEOUT)
-    ) { sortedList, searchQuery ->
-        itemFilter.filterByQuery(sortedList, searchQuery)
-    }.mapLatest { result: Result<List<Item>> ->
-        result.map { list ->
-            list.map { it.toUiModel(keyStoreCrypto) }
-        }
+    ) { result, searchQuery ->
+        result.map { ItemUiFilter.filterByQuery(it, searchQuery) }
     }.flowOn(Dispatchers.Default)
 
     private data class SearchWrapper(
@@ -251,13 +252,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun List<Item>.sortByTitle(crypto: KeyStoreCrypto) =
-        sortedBy { it.title.decrypt(crypto).lowercase() }
+    private fun List<ItemUiModel>.sortByTitle() = sortedBy { it.name.lowercase() }
 
-    private fun List<Item>.sortByItemType(crypto: KeyStoreCrypto) =
+    private fun List<ItemUiModel>.sortByItemType() =
         groupBy { it.itemType.toWeightedInt() }
             .toSortedMap()
-            .map { it.value.sortByTitle(crypto) }
+            .map { it.value }
             .flatten()
 
     companion object {

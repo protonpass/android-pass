@@ -12,9 +12,11 @@ import me.proton.pass.presentation.uievents.IsButtonEnabled
 fun Settings(
     modifier: Modifier = Modifier,
     state: SettingsUiState,
+    appVersion: String,
     onOpenThemeSelection: () -> Unit,
     onFingerPrintLockChange: (IsButtonEnabled) -> Unit,
-    onToggleAutofillChange: (Boolean) -> Unit
+    onToggleAutofillChange: (Boolean) -> Unit,
+    onForceSyncClick: () -> Unit
 ) {
     ProtonSettingsList(modifier = modifier) {
         if (state.autofillStatus is AutofillSupportedStatus.Supported) {
@@ -51,6 +53,11 @@ fun Settings(
             Divider(modifier = Modifier.fillMaxWidth())
         }
 
-        item { AppSection() }
+        item {
+            AppSection(
+                appVersion = appVersion,
+                onForceSyncClick = onForceSyncClick
+            )
+        }
     }
 }

@@ -6,6 +6,8 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -27,8 +29,10 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.presentation.components.common.PassSnackbarHost
 import me.proton.pass.presentation.components.common.rememberPassSnackbarHostState
 import me.proton.pass.presentation.components.navigation.CoreNavigation
+import me.proton.pass.presentation.components.navigation.drawer.HomeSection
 import me.proton.pass.presentation.components.navigation.drawer.NavDrawerNavigation
 import me.proton.pass.presentation.components.navigation.drawer.NavigationDrawerSection
+import me.proton.pass.presentation.home.HomeFilterMode
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -76,12 +80,30 @@ fun PassAppContent(
 ) {
     val appNavigator = rememberAppNavigator()
     val scaffoldState = rememberScaffoldState()
-    val passSnackbarHostState =
-        rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
+    val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
+    val (homeFilterState, setHomeFilterState) = remember { mutableStateOf(HomeFilterMode.AllItems) }
     val navDrawerNavigation = NavDrawerNavigation(
-        onNavHome = {
-            onDrawerSectionChanged(NavigationDrawerSection.Items)
-            appNavigator.navigate(AppNavItem.Home)
+        onNavHome = { section ->
+            when (section) {
+                HomeSection.Items -> {
+                    setHomeFilterState(HomeFilterMode.AllItems)
+                    onDrawerSectionChanged(NavigationDrawerSection.Items)
+                }
+                HomeSection.Logins -> {
+                    setHomeFilterState(HomeFilterMode.Logins)
+                    onDrawerSectionChanged(NavigationDrawerSection.Logins)
+                }
+                HomeSection.Aliases -> {
+                    setHomeFilterState(HomeFilterMode.Aliases)
+                    onDrawerSectionChanged(NavigationDrawerSection.Aliases)
+
+                }
+                HomeSection.Notes -> {
+                    setHomeFilterState(HomeFilterMode.Notes)
+                    onDrawerSectionChanged(NavigationDrawerSection.Notes)
+                }
+            }
+            appNavigator.navigate(destination = AppNavItem.Home)
         },
         onNavSettings = {
             onDrawerSectionChanged(NavigationDrawerSection.Settings)
@@ -118,6 +140,7 @@ fun PassAppContent(
                 modifier = Modifier.padding(contentPadding),
                 drawerUiState = appUiState.drawerUiState,
                 appNavigator = appNavigator,
+                homeFilterMode = homeFilterState,
                 navDrawerNavigation = navDrawerNavigation,
                 coreNavigation = coreNavigation,
                 finishActivity = finishActivity

@@ -32,6 +32,7 @@ import me.proton.pass.presentation.shared.ConfirmItemDeletionDialog
 internal fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
+    homeFilter: HomeFilterMode,
     shouldScrollToTop: Boolean,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     homeScreenNavigation: HomeScreenNavigation,
@@ -63,6 +64,7 @@ internal fun HomeContent(
             HomeTopBar(
                 searchQuery = uiState.searchUiState.searchQuery,
                 inSearchMode = uiState.searchUiState.inSearchMode,
+                homeFilter = homeFilter,
                 onSearchQueryChange = onSearchQueryChange,
                 onEnterSearch = onEnterSearch,
                 onStopSearching = onStopSearching,

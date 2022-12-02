@@ -21,6 +21,10 @@
     <string name="title_retry">Retry</string>
     <string name="title_help">Help</string>
     <string name="title_items">Items</string>
+    <string name="title_all_items">All items</string>
+    <string name="title_all_logins">All logins</string>
+    <string name="title_all_aliases">All aliases</string>
+    <string name="title_all_notes">All notes</string>
     <string name="title_settings">Settings</string>
     <string name="title_sign_out">Sign out</string>
     <string name="title_size">Size</string>

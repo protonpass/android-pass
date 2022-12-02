@@ -19,9 +19,18 @@ package me.proton.pass.presentation.components.navigation.drawer
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
+import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.core.user.domain.entity.User
 
-enum class NavigationDrawerSection { Items, Settings, Trash, Report }
+enum class NavigationDrawerSection {
+    Items,
+    Logins,
+    Aliases,
+    Notes,
+    Settings,
+    Trash,
+    Report
+}
 
 @Immutable
 data class DrawerUiState(
@@ -31,5 +40,6 @@ data class DrawerUiState(
     val closeOnActionEnabled: Boolean = true,
     val currentUser: User? = null,
     val selectedSection: NavigationDrawerSection? = null,
-    val internalDrawerEnabled: Boolean = false
+    val internalDrawerEnabled: Boolean = false,
+    val itemCountSummary: ItemCountSummary = ItemCountSummary.Initial
 )

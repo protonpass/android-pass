@@ -50,6 +50,7 @@ class InternalDrawerViewModel @Inject constructor(
             val folder = File(context.filesDir, "logs")
             folder.mkdir()
             val filename = File(folder, "logs.log")
+            filename.delete()
             filename.createNewFile()
             val cmd = "logcat -d --pid=${android.os.Process.myPid()} -f" + filename.absolutePath
             Runtime.getRuntime().exec(cmd)

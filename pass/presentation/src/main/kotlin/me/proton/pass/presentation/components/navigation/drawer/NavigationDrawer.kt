@@ -128,7 +128,7 @@ fun NavigationDrawer(
                         .weight(1f, fill = false),
                     verticalArrangement = Arrangement.Top
                 ) {
-                    ItemsListSection(
+                    DrawerItemTypeSection(
                         itemCount = drawerUiState.itemCountSummary,
                         closeDrawerAction = { onCloseDrawer() },
                         selectedSection = drawerUiState.selectedSection,

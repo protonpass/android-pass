@@ -18,7 +18,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 
-private data class ItemSection(
+private data class DrawerItemSectionSpec(
     @StringRes val title: Int,
     @DrawableRes val icon: Int,
     val section: HomeSection,
@@ -30,7 +30,7 @@ private data class ItemSection(
 private val horizontalSpacerWidth = 24.dp
 
 private val Sections = listOf(
-    ItemSection(
+    DrawerItemSectionSpec(
         title = R.string.navigation_item_items,
         icon = me.proton.core.presentation.R.drawable.ic_proton_vault,
         section = HomeSection.Items,
@@ -38,7 +38,7 @@ private val Sections = listOf(
         countFn = { it.total },
         isSelectedFn = { it == NavigationDrawerSection.Items }
     ),
-    ItemSection(
+    DrawerItemSectionSpec(
         title = R.string.navigation_item_logins,
         icon = me.proton.core.presentation.R.drawable.ic_proton_key,
         section = HomeSection.Logins,
@@ -46,7 +46,7 @@ private val Sections = listOf(
         countFn = { it.login },
         isSelectedFn = { it == NavigationDrawerSection.Logins }
     ),
-    ItemSection(
+    DrawerItemSectionSpec(
         title = R.string.navigation_item_aliases,
         icon = me.proton.core.presentation.R.drawable.ic_proton_alias,
         section = HomeSection.Aliases,
@@ -54,7 +54,7 @@ private val Sections = listOf(
         countFn = { it.alias },
         isSelectedFn = { it == NavigationDrawerSection.Aliases }
     ),
-    ItemSection(
+    DrawerItemSectionSpec(
         title = R.string.navigation_item_notes,
         icon = me.proton.core.presentation.R.drawable.ic_proton_note,
         section = HomeSection.Notes,
@@ -65,7 +65,7 @@ private val Sections = listOf(
 )
 
 @Composable
-fun ItemsListSection(
+fun DrawerItemTypeSection(
     modifier: Modifier = Modifier,
     selectedSection: NavigationDrawerSection?,
     itemCount: ItemCountSummary,
@@ -74,7 +74,6 @@ fun ItemsListSection(
 ) {
     Column(modifier = modifier) {
         Sections.forEach {
-
             NavigationDrawerListItem(
                 title = stringResource(it.title),
                 icon = it.icon,
@@ -97,7 +96,7 @@ fun ItemsListSectionPreview(
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            ItemsListSection(
+            DrawerItemTypeSection(
                 selectedSection = NavigationDrawerSection.Items,
                 itemCount = ItemCountSummary.Initial,
                 closeDrawerAction = {},

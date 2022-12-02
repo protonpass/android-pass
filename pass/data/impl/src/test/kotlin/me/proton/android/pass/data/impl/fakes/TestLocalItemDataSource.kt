@@ -7,7 +7,6 @@ import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.impl.db.entities.ItemEntity
 import me.proton.android.pass.data.impl.local.LocalItemDataSource
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.AddressId
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemState
 import me.proton.pass.domain.ShareId
@@ -63,7 +62,6 @@ class TestLocalItemDataSource : LocalItemDataSource {
 
     override fun observeItemCountSummary(
         userId: UserId,
-        addressId: AddressId,
         shareId: ShareId
     ): Flow<ItemCountSummary> = summary
 }

@@ -4,5 +4,4 @@
 
     <string name="snackbar_preferences_cleared_success">Preferences cleared</string>
     <string name="snackbar_preferences_cleared_error">Error clearing preferences</string>
-    <string name="snackbar_could_not_refresh_items">Could not refresh your items</string>
 </resources>

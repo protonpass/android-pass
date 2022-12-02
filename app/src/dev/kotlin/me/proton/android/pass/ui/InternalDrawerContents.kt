@@ -45,5 +45,12 @@ fun InternalDrawerContents(
         ) {
             Text(text = "Clear preferences")
         }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { viewModel.shareLogCatOutput(localContext) },
+        ) {
+            Text(text = "Share Logs")
+        }
     }
 }

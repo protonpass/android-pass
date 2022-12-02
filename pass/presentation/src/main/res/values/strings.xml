@@ -51,7 +51,10 @@
     <string name="navigation_item_trash">@string/title_trash</string>
     <string name="navigation_item_offline">@string/title_offline_available</string>
     <string name="navigation_item_settings">@string/title_settings</string>
-    <string name="navigation_item_items">@string/title_items</string>
+    <string name="navigation_item_items">All items</string>
+    <string name="navigation_item_logins">Logins</string>
+    <string name="navigation_item_aliases">Aliases</string>
+    <string name="navigation_item_notes">Notes</string>
     <string name="navigation_item_help">@string/title_help</string>
     <string name="navigation_item_bug_report">Report a problem</string>
     <string name="navigation_item_internal_drawer">Internal developer options</string>

@@ -14,7 +14,7 @@ import me.proton.pass.domain.ShareId
 class TestLocalItemDataSource : LocalItemDataSource {
 
     private val memory: MutableList<ItemEntity> = mutableListOf()
-    private var summary: MutableStateFlow<ItemCountSummary> = MutableStateFlow(ItemCountSummary(0, 0, 0, 0))
+    private var summary: MutableStateFlow<ItemCountSummary> = MutableStateFlow(ItemCountSummary.Initial)
 
     fun getMemory(): List<ItemEntity> = memory
 

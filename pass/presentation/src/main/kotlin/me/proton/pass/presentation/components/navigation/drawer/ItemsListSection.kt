@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -48,7 +49,7 @@ private val Sections = listOf(
     ItemSection(
         title = R.string.navigation_item_aliases,
         icon = me.proton.core.presentation.R.drawable.ic_proton_alias,
-        section = HomeSection.Logins,
+        section = HomeSection.Aliases,
         startContent = { Spacer(modifier = Modifier.width(horizontalSpacerWidth)) },
         countFn = { it.alias },
         isSelectedFn = { it == NavigationDrawerSection.Aliases }
@@ -70,18 +71,20 @@ fun ItemsListSection(
     itemCount: ItemCountSummary,
     closeDrawerAction: () -> Unit,
     onSectionClick: (HomeSection) -> Unit
-
 ) {
     Column(modifier = modifier) {
         Sections.forEach {
-            ItemsListItem(
+
+            NavigationDrawerListItem(
                 title = stringResource(it.title),
                 icon = it.icon,
-                itemCount = it.countFn(itemCount),
-                isSelected = it.isSelectedFn(selectedSection),
                 closeDrawerAction = closeDrawerAction,
+                isSelected = it.isSelectedFn(selectedSection),
+                onClick = { onSectionClick(it.section) },
                 startContent = it.startContent,
-                onClick = { onSectionClick(it.section) }
+                endContent = {
+                    Text(text = "${it.countFn(itemCount)}")
+                }
             )
         }
     }

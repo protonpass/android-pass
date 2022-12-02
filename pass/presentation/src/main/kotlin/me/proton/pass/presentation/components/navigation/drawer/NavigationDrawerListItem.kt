@@ -30,7 +30,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -47,25 +46,7 @@ fun NavigationDrawerListItem(
     title: String,
     isSelected: Boolean = false,
     onClick: () -> Unit,
-    startContent: @Composable () -> Unit = {},
-    endContent: @Composable () -> Unit = {}
-) = NavigationDrawerListItem(
-    modifier = modifier,
-    icon = painterResource(icon),
-    title = title,
-    isSelected = isSelected,
-    onClick = onClick,
-    startContent = startContent,
-    endContent = endContent
-)
-
-@Composable
-fun NavigationDrawerListItem(
-    modifier: Modifier = Modifier,
-    icon: Painter,
-    title: String,
-    isSelected: Boolean = false,
-    onClick: () -> Unit,
+    closeDrawerAction: () -> Unit,
     startContent: @Composable () -> Unit = {},
     endContent: @Composable () -> Unit = {}
 ) {
@@ -79,7 +60,10 @@ fun NavigationDrawerListItem(
         modifier = modifier
             .fillMaxWidth()
             .height(ListItemHeight)
-            .clickable(onClick = onClick)
+            .clickable(onClick = {
+                onClick()
+                closeDrawerAction()
+            })
             .background(backgroundColor)
             .padding(horizontal = DefaultSpacing, vertical = SmallSpacing)
             .semantics(mergeDescendants = true) {
@@ -88,7 +72,11 @@ fun NavigationDrawerListItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         startContent()
-        Icon(painter = icon, contentDescription = null, tint = ProtonTheme.colors.iconWeak)
+        Icon(
+            painter = painterResource(icon),
+            contentDescription = null,
+            tint = ProtonTheme.colors.iconWeak
+        )
         Text(
             text = title,
             modifier = Modifier.padding(start = ListItemTextStartPadding),

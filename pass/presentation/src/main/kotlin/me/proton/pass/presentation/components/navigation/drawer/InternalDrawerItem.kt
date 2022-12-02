@@ -3,6 +3,7 @@ package me.proton.pass.presentation.components.navigation.drawer
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
@@ -16,7 +17,7 @@ fun InternalDrawerItem(
     onClick: () -> Unit
 ) {
     NavigationDrawerListItem(
-        title = R.string.navigation_item_internal_drawer,
+        title = stringResource(R.string.navigation_item_internal_drawer),
         icon = me.proton.core.presentation.R.drawable.ic_proton_cog_wheel,
         isSelected = false,
         closeDrawerAction = closeDrawerAction,

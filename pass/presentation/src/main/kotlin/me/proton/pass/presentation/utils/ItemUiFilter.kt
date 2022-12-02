@@ -9,8 +9,12 @@ object ItemUiFilter {
         query: String
     ): List<ItemUiModel> =
         if (query.isNotEmpty()) {
-            val lowercaseQuery = query.lowercase()
-            list.filter { it.matchesQuery(lowercaseQuery) }
+            if (query.isNotBlank()) {
+                val lowercaseQuery = query.lowercase()
+                list.filter { it.matchesQuery(lowercaseQuery) }
+            } else {
+                emptyList()
+            }
         } else {
             list
         }

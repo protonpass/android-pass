@@ -6,8 +6,8 @@ import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.components.model.ItemUiModel
 
-class NoteItemPreviewProvider : PreviewParameterProvider<NoteItemParameter> {
-    override val values: Sequence<NoteItemParameter>
+class NoteRowPreviewProvider : PreviewParameterProvider<NoteRowParameter> {
+    override val values: Sequence<NoteRowParameter>
         get() = sequenceOf(
             with(title = "Empty note", text = ""),
             with(title = "This is a note item", text = "the note"),
@@ -15,12 +15,18 @@ class NoteItemPreviewProvider : PreviewParameterProvider<NoteItemParameter> {
                 title = "Very long text",
                 text = "this is a very long note that should become " +
                     "ellipsized if the text does not fit properly"
+            ),
+            with(
+                title = "Very long text",
+                text = "this is a very long note that should " +
+                    "highlight the word monkey during the rendering",
+                highlight = "monkey"
             )
         )
 
     companion object {
-        private fun with(title: String, text: String): NoteItemParameter =
-            NoteItemParameter(
+        private fun with(title: String, text: String, highlight: String = ""): NoteRowParameter =
+            NoteRowParameter(
                 model = ItemUiModel(
                     id = ItemId("123"),
                     shareId = ShareId("345"),
@@ -28,14 +34,13 @@ class NoteItemPreviewProvider : PreviewParameterProvider<NoteItemParameter> {
                     note = "Note content",
                     itemType = ItemType.Note(text = text)
                 ),
-                itemType = ItemType.Note(text = text)
+                highlight = highlight
             )
-
     }
 }
 
-data class NoteItemParameter(
+data class NoteRowParameter(
     val model: ItemUiModel,
-    val itemType: ItemType.Note
+    val highlight: String
 )
 

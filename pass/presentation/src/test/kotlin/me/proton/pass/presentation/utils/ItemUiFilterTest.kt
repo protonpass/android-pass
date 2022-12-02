@@ -19,6 +19,13 @@ internal class ItemFilterImplTest {
     }
 
     @Test
+    fun `blank query returns empty list`() {
+        val itemList = listOf(TestItemUiModel.create(), TestItemUiModel.create())
+        val filteredItems = ItemUiFilter.filterByQuery(itemList, " ")
+        assertThat(filteredItems).isEqualTo(emptyList<ItemUiModel>())
+    }
+
+    @Test
     fun `query that matches items returns the matching items`() {
         val title = randomString()
         val item1 = TestItemUiModel.create(title = title)

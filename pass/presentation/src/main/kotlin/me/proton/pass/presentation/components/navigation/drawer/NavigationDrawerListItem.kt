@@ -18,10 +18,10 @@
 package me.proton.pass.presentation.components.navigation.drawer
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,7 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
@@ -43,26 +42,32 @@ import me.proton.core.compose.theme.ProtonTheme
 
 @Composable
 fun NavigationDrawerListItem(
-    @DrawableRes icon: Int,
-    @StringRes title: Int,
     modifier: Modifier = Modifier,
+    @DrawableRes icon: Int,
+    title: String,
     isSelected: Boolean = false,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    startContent: @Composable () -> Unit = {},
+    endContent: @Composable () -> Unit = {}
 ) = NavigationDrawerListItem(
-    icon = painterResource(icon),
-    title = stringResource(title),
     modifier = modifier,
+    icon = painterResource(icon),
+    title = title,
     isSelected = isSelected,
-    onClick = onClick
+    onClick = onClick,
+    startContent = startContent,
+    endContent = endContent
 )
 
 @Composable
 fun NavigationDrawerListItem(
+    modifier: Modifier = Modifier,
     icon: Painter,
     title: String,
-    modifier: Modifier = Modifier,
     isSelected: Boolean = false,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    startContent: @Composable () -> Unit = {},
+    endContent: @Composable () -> Unit = {}
 ) {
     val backgroundColor = if (isSelected) {
         ProtonTheme.colors.interactionWeakPressed
@@ -82,6 +87,7 @@ fun NavigationDrawerListItem(
             },
         verticalAlignment = Alignment.CenterVertically
     ) {
+        startContent()
         Icon(painter = icon, contentDescription = null, tint = ProtonTheme.colors.iconWeak)
         Text(
             text = title,
@@ -89,6 +95,8 @@ fun NavigationDrawerListItem(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
+        Spacer(modifier = Modifier.weight(1f))
+        endContent()
     }
 }
 

@@ -45,12 +45,19 @@ import me.proton.core.accountmanager.presentation.compose.rememberAccountPrimary
 import me.proton.core.compose.theme.ProtonDimens.DefaultSpacing
 import me.proton.core.compose.theme.ProtonDimens.SmallSpacing
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.navigation.CoreNavigation
 
 @Stable
+enum class HomeSection {
+    Items,
+    Logins,
+    Aliases,
+    Notes
+}
+
+@Stable
 data class NavDrawerNavigation(
-    val onNavHome: () -> Unit,
+    val onNavHome: (HomeSection) -> Unit,
     val onNavSettings: () -> Unit,
     val onNavTrash: () -> Unit,
     val onInternalDrawerClick: () -> Unit,
@@ -123,10 +130,13 @@ fun NavigationDrawer(
                         .weight(1f, fill = false),
                     verticalArrangement = Arrangement.Top
                 ) {
-                    ItemsListItem(
-                        isSelected = drawerUiState.selectedSection == NavigationDrawerSection.Items,
+                    ItemsListSection(
+                        itemCount = drawerUiState.itemCountSummary,
                         closeDrawerAction = { onCloseDrawer() },
-                        onClick = { navDrawerNavigation.onNavHome() }
+                        selectedSection = drawerUiState.selectedSection,
+                        onSectionClick = { section ->
+                            navDrawerNavigation.onNavHome(section)
+                        }
                     )
                     SettingsListItem(
                         isSelected = drawerUiState.selectedSection == NavigationDrawerSection.Settings,
@@ -237,86 +247,22 @@ private fun ShareItem(
 }
 */
 
+@Suppress("LongParameterList")
 @Composable
-private fun ItemsListItem(
+fun NavigationDrawerListItem(
     modifier: Modifier = Modifier,
-    isSelected: Boolean,
+    @DrawableRes icon: Int,
+    @StringRes title: Int,
     closeDrawerAction: () -> Unit,
+    isSelected: Boolean,
     onClick: () -> Unit
 ) {
     NavigationDrawerListItem(
-        title = R.string.navigation_item_items,
-        icon = me.proton.core.presentation.R.drawable.ic_proton_key,
+        modifier = modifier,
+        icon = icon,
+        title = stringResource(title),
         isSelected = isSelected,
         closeDrawerAction = closeDrawerAction,
-        modifier = modifier,
-        onClick = onClick
-    )
-}
-
-@Composable
-private fun SettingsListItem(
-    modifier: Modifier = Modifier,
-    isSelected: Boolean,
-    closeDrawerAction: () -> Unit,
-    onClick: () -> Unit
-) {
-    NavigationDrawerListItem(
-        title = R.string.navigation_item_settings,
-        icon = R.drawable.ic_settings,
-        isSelected = isSelected,
-        closeDrawerAction = closeDrawerAction,
-        modifier = modifier,
-        onClick = onClick
-    )
-}
-
-@Composable
-private fun TrashListItem(
-    modifier: Modifier = Modifier,
-    isSelected: Boolean,
-    closeDrawerAction: () -> Unit,
-    onClick: () -> Unit
-) {
-    NavigationDrawerListItem(
-        title = R.string.navigation_item_trash,
-        icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
-        isSelected = isSelected,
-        closeDrawerAction = closeDrawerAction,
-        modifier = modifier,
-        onClick = onClick
-    )
-}
-
-@Composable
-private fun ReportProblemItem(
-    modifier: Modifier = Modifier,
-    isSelected: Boolean,
-    closeDrawerAction: () -> Unit,
-    onClick: () -> Unit
-) {
-    NavigationDrawerListItem(
-        title = R.string.navigation_item_bug_report,
-        icon = me.proton.core.presentation.R.drawable.ic_proton_bug,
-        isSelected = isSelected,
-        closeDrawerAction = closeDrawerAction,
-        modifier = modifier,
-        onClick = onClick
-    )
-}
-
-@Composable
-private fun SignOutListItem(
-    modifier: Modifier = Modifier,
-    closeDrawerAction: () -> Unit,
-    onClick: () -> Unit
-) {
-    NavigationDrawerListItem(
-        icon = R.drawable.ic_sign_out,
-        title = R.string.navigation_item_sign_out,
-        closeDrawerAction = closeDrawerAction,
-        modifier = modifier,
-        isSelected = false,
         onClick = onClick
     )
 }
@@ -324,31 +270,25 @@ private fun SignOutListItem(
 @Suppress("LongParameterList")
 @Composable
 fun NavigationDrawerListItem(
+    modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
-    @StringRes title: Int,
+    title: String,
     closeDrawerAction: () -> Unit,
-    modifier: Modifier = Modifier,
     isSelected: Boolean,
-    onClick: () -> Unit
-) {
-    NavigationDrawerListItem(icon, title, modifier, isSelected) {
-        closeDrawerAction()
-        onClick()
-    }
-}
-
-@Composable
-private fun InternalDrawerItem(
-    modifier: Modifier = Modifier,
-    closeDrawerAction: () -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    startContent: @Composable () -> Unit = {},
+    endContent: @Composable () -> Unit = {}
 ) {
     NavigationDrawerListItem(
-        title = R.string.navigation_item_internal_drawer,
-        icon = me.proton.core.presentation.R.drawable.ic_proton_cog_wheel,
-        isSelected = false,
-        closeDrawerAction = closeDrawerAction,
         modifier = modifier,
-        onClick = onClick
+        icon = icon,
+        title = title,
+        isSelected = isSelected,
+        startContent = startContent,
+        endContent = endContent,
+        onClick = {
+            onClick()
+            closeDrawerAction()
+        }
     )
 }

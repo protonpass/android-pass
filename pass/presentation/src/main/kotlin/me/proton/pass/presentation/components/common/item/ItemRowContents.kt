@@ -9,25 +9,22 @@ import me.proton.pass.presentation.components.model.ItemUiModel
 internal fun ItemRowContents(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
-    highlight: String?
+    highlight: String
 ) {
-    when (val itemType = item.itemType) {
+    when (item.itemType) {
         is ItemType.Login -> LoginRow(
             modifier = modifier,
             item = item,
-            itemType = itemType,
             highlight = highlight
         )
         is ItemType.Note -> NoteRow(
             modifier = modifier,
             item = item,
-            itemType = itemType,
             highlight = highlight
         )
         is ItemType.Alias -> AliasRow(
             modifier = modifier,
             item = item,
-            itemType = itemType,
             highlight = highlight
         )
         ItemType.Password -> {}

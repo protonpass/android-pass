@@ -8,50 +8,39 @@ import androidx.compose.ui.text.withStyle
 
 private const val CHARACTER_OFFSET = 20
 
-fun String.highlight(highlight: String?): AnnotatedString {
-    val input = this@highlight
-    return if (highlight.isNullOrBlank()) {
-        buildAnnotatedString { append(input) }
+fun String.highlight(matches: Sequence<MatchResult>): AnnotatedString {
+    val indexes = matches.map { it.range }.toList()
+    val annotated = buildHighlightedString(this, indexes)
+    val offset = indexes.first().first - CHARACTER_OFFSET
+    return if (shouldAddVisualOffset(offset)) {
+        AnnotatedString(Typography.ellipsis.toString()) +
+            annotated.subSequence(offset, length)
     } else {
-        val indexes = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
-            .findAll(input)
-            .map { it.range }
-            .toList()
-        val annotated = buildAnnotatedString {
-            if (indexes.isEmpty()) {
-                append(input)
-            } else {
-                indexes.fold(0) { start, intRange ->
-                    append(input.substring(start, intRange.first))
-                    withStyle(
-                        style = SpanStyle(
-                            fontWeight = FontWeight.Bold
-                        )
-                    ) {
-                        append(input.substring(intRange))
-                    }
-                    return@fold intRange.last + 1
-                }
-                if (input.length > indexes.last().last + 1) {
-                    append(
-                        input.substring(
-                            indexes.last().last + 1,
-                            input.length
-                        )
-                    )
-                }
-            }
-        }
-        if (indexes.isNotEmpty()) {
-            val offset = indexes.first().first - CHARACTER_OFFSET
-            if (offset > 0) {
-                AnnotatedString(Typography.ellipsis.toString()) +
-                    annotated.subSequence(offset, length)
-            } else {
-                annotated
-            }
-        } else {
-            annotated
-        }
+        annotated
     }
 }
+
+private fun buildHighlightedString(input: String, indexes: List<IntRange>) =
+    buildAnnotatedString {
+        indexes.fold(0) { start, intRange ->
+            append(input.substring(start, intRange.first))
+            withStyle(
+                style = SpanStyle(
+                    fontWeight = FontWeight.Bold
+                )
+            ) {
+                append(input.substring(intRange))
+            }
+            return@fold intRange.last + 1
+        }
+        if (input.length > indexes.last().last + 1) {
+            append(
+                input.substring(
+                    indexes.last().last + 1,
+                    input.length
+                )
+            )
+        }
+    }
+
+private fun shouldAddVisualOffset(offset: Int) = offset > 0

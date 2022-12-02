@@ -29,7 +29,7 @@ import me.proton.pass.presentation.components.previewproviders.ItemUiModelPrevie
 internal fun ActionableItemRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
-    highlight: String? = null,
+    highlight: String = "",
     onItemClick: (ItemUiModel) -> Unit = {},
     onItemMenuClick: (ItemUiModel) -> Unit = {}
 ) {

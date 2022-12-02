@@ -23,7 +23,7 @@ fun ItemsList(
     modifier: Modifier = Modifier,
     items: List<ItemUiModel>,
     shouldScrollToTop: Boolean,
-    highlight: String? = null,
+    highlight: String = "",
     isRefreshing: IsRefreshingState,
     isLoading: IsLoadingState,
     isProcessingSearch: IsProcessingSearchState = IsProcessingSearchState.NotLoading,

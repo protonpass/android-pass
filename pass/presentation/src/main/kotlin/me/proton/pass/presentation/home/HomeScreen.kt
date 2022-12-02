@@ -4,6 +4,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +34,7 @@ import me.proton.pass.presentation.home.bottomsheet.SortingBottomSheetContents
 fun HomeScreen(
     modifier: Modifier = Modifier,
     homeScreenNavigation: HomeScreenNavigation,
+    homeFilterMode: HomeFilterMode,
     onDrawerIconClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -41,6 +43,10 @@ fun HomeScreen(
     val (selectedItem, setSelectedItem) = remember { mutableStateOf<ItemUiModel?>(null) }
     val (shouldScrollToTop, setScrollToTop) = remember { mutableStateOf(false) }
     val (shouldShowDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf(false) }
+
+    LaunchedEffect(homeFilterMode) {
+        viewModel.setFilterMode(homeFilterMode)
+    }
 
     val bottomSheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden,
@@ -151,6 +157,7 @@ fun HomeScreen(
         HomeContent(
             modifier = modifier,
             uiState = uiState,
+            homeFilter = homeFilterMode,
             shouldScrollToTop = shouldScrollToTop,
             homeScreenNavigation = homeScreenNavigation,
             onSearchQueryChange = { viewModel.onSearchQueryChange(it) },

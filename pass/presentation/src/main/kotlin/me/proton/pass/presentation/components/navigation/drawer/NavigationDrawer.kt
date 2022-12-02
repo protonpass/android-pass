@@ -17,8 +17,6 @@
  */
 package me.proton.pass.presentation.components.navigation.drawer
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -247,48 +245,3 @@ private fun ShareItem(
 }
 */
 
-@Suppress("LongParameterList")
-@Composable
-fun NavigationDrawerListItem(
-    modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
-    @StringRes title: Int,
-    closeDrawerAction: () -> Unit,
-    isSelected: Boolean,
-    onClick: () -> Unit
-) {
-    NavigationDrawerListItem(
-        modifier = modifier,
-        icon = icon,
-        title = stringResource(title),
-        isSelected = isSelected,
-        closeDrawerAction = closeDrawerAction,
-        onClick = onClick
-    )
-}
-
-@Suppress("LongParameterList")
-@Composable
-fun NavigationDrawerListItem(
-    modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
-    title: String,
-    closeDrawerAction: () -> Unit,
-    isSelected: Boolean,
-    onClick: () -> Unit,
-    startContent: @Composable () -> Unit = {},
-    endContent: @Composable () -> Unit = {}
-) {
-    NavigationDrawerListItem(
-        modifier = modifier,
-        icon = icon,
-        title = title,
-        isSelected = isSelected,
-        startContent = startContent,
-        endContent = endContent,
-        onClick = {
-            onClick()
-            closeDrawerAction()
-        }
-    )
-}

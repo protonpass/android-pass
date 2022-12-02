@@ -12,16 +12,21 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
+import me.proton.android.pass.data.api.ItemCountSummary
+import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.usecases.ApplyPendingEvents
 import me.proton.android.pass.data.api.usecases.CreateVault
 import me.proton.android.pass.data.api.usecases.GetCurrentShare
 import me.proton.android.pass.data.api.usecases.GetCurrentUserId
+import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
 import me.proton.android.pass.data.api.usecases.RefreshShares
 import me.proton.android.pass.log.PassLogger
@@ -45,6 +50,8 @@ import javax.inject.Inject
 class AppViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     preferenceRepository: PreferenceRepository,
+    observeActiveShare: ObserveActiveShare,
+    itemRepository: ItemRepository,
     private val getCurrentUserId: GetCurrentUserId,
     private val getCurrentShare: GetCurrentShare,
     private val createVault: CreateVault,
@@ -67,12 +74,37 @@ class AppViewModel @Inject constructor(
         .asResultWithoutLoading()
         .map { getThemePreference(it) }
 
+    private val itemCountSummaryFlow: Flow<ItemCountSummary> = combine(
+        currentUserFlow,
+        observeActiveShare()
+    ) { user, share -> user.userId to share }
+        .flatMapLatest {
+            val (userId, shareResult) = it
+            when (shareResult) {
+                Result.Loading -> flowOf(ItemCountSummary.Initial)
+                is Result.Error -> {
+                    val message = "Cannot retrieve ItemCountSummary"
+                    PassLogger.e(TAG, shareResult.exception ?: Exception(message), message)
+                    flowOf(ItemCountSummary.Initial)
+                }
+                is Result.Success -> {
+                    val shareId = shareResult.data
+                    if (shareId != null) {
+                        itemRepository.observeItemCountSummary(userId, shareId)
+                    } else {
+                        flowOf(ItemCountSummary.Initial)
+                    }
+                }
+            }
+        }
+
     val appUiState: StateFlow<AppUiState> = combine(
         currentUserFlow,
         drawerSectionState,
         snackbarMessageRepository.snackbarMessage,
-        themePreference
-    ) { user, sectionState, snackbarMessage, theme ->
+        themePreference,
+        itemCountSummaryFlow
+    ) { user, sectionState, snackbarMessage, theme, itemCount ->
         AppUiState(
             snackbarMessage = snackbarMessage,
             drawerUiState = DrawerUiState(
@@ -80,7 +112,8 @@ class AppViewModel @Inject constructor(
                 appVersion = BuildConfig.VERSION_NAME,
                 currentUser = user,
                 selectedSection = sectionState,
-                internalDrawerEnabled = BuildConfig.FLAVOR == "dev"
+                internalDrawerEnabled = BuildConfig.FLAVOR == "dev",
+                itemCountSummary = itemCount
             ),
             theme = theme
         )

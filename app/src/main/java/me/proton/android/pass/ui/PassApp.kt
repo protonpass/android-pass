@@ -1,6 +1,5 @@
 package me.proton.android.pass.ui
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
@@ -64,9 +63,6 @@ fun PassApp(
     }
 }
 
-@OptIn(
-    ExperimentalAnimationApi::class
-)
 @Composable
 fun PassAppContent(
     modifier: Modifier = Modifier,

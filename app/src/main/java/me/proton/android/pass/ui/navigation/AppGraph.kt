@@ -22,22 +22,26 @@ import me.proton.android.pass.ui.settings.settingsGraph
 import me.proton.android.pass.ui.trash.trashGraph
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.home.HomeFilterMode
 import me.proton.pass.presentation.home.HomeScreenNavigation
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
+@Suppress("LongParameterList")
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
     appVersion: String,
+    homeFilterMode: HomeFilterMode,
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
     onDrawerIconClick: () -> Unit,
     finishActivity: () -> Unit
 ) {
     homeGraph(
-        navigationDrawer,
-        createHomeScreenNavigation(appNavigator),
-        onDrawerIconClick
+        navigationDrawer = navigationDrawer,
+        homeScreenNavigation = createHomeScreenNavigation(appNavigator),
+        onDrawerIconClick = onDrawerIconClick,
+        homeFilterMode = homeFilterMode
     )
     trashGraph(navigationDrawer, onDrawerIconClick)
     helpGraph(navigationDrawer, onDrawerIconClick)

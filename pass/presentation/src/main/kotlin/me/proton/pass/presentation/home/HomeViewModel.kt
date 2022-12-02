@@ -35,6 +35,7 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.map
+import me.proton.pass.domain.ItemType
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.home.HomeSnackbarMessage.AliasCopied
@@ -66,6 +67,9 @@ class HomeViewModel @Inject constructor(
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
+
+    private val filterModeFlow: MutableStateFlow<HomeFilterMode> =
+        MutableStateFlow(HomeFilterMode.AllItems)
 
     private val currentUserFlow = observeCurrentUser().filterNotNull()
 
@@ -110,10 +114,24 @@ class HomeViewModel @Inject constructor(
     @OptIn(FlowPreview::class)
     private val resultsFlow: Flow<Result<List<ItemUiModel>>> = combine(
         sortedListItemFlow,
-        searchQueryState.debounce(DEBOUNCE_TIMEOUT)
-    ) { result, searchQuery ->
+        searchQueryState.debounce(DEBOUNCE_TIMEOUT),
+        filterModeFlow
+    ) { result, searchQuery, filterMode ->
         isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
-        result.map { ItemUiFilter.filterByQuery(it, searchQuery) }
+        if (searchQuery.isNotBlank()) {
+            result.map { ItemUiFilter.filterByQuery(it, searchQuery) }
+        } else {
+            result.map { items ->
+                items.filter {
+                    when (filterMode) {
+                        HomeFilterMode.AllItems -> true
+                        HomeFilterMode.Aliases -> it.itemType is ItemType.Alias
+                        HomeFilterMode.Logins -> it.itemType is ItemType.Login
+                        HomeFilterMode.Notes -> it.itemType is ItemType.Note
+                    }
+                }
+            }
+        }
     }.flowOn(Dispatchers.Default)
 
     private data class SearchWrapper(
@@ -260,6 +278,10 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun setFilterMode(mode: HomeFilterMode) {
+        filterModeFlow.update { mode }
     }
 
     private fun List<ItemUiModel>.sortByTitle() = sortedBy { it.name.lowercase() }

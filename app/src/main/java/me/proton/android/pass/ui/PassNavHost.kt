@@ -23,6 +23,7 @@ import me.proton.pass.presentation.components.navigation.CoreNavigation
 import me.proton.pass.presentation.components.navigation.drawer.DrawerUiState
 import me.proton.pass.presentation.components.navigation.drawer.ModalNavigationDrawer
 import me.proton.pass.presentation.components.navigation.drawer.NavDrawerNavigation
+import me.proton.pass.presentation.home.HomeFilterMode
 import me.proton.pass.presentation.shared.ConfirmSignOutDialog
 
 @OptIn(
@@ -35,6 +36,7 @@ fun PassNavHost(
     modifier: Modifier = Modifier,
     drawerUiState: DrawerUiState,
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    homeFilterMode: HomeFilterMode,
     appNavigator: AppNavigator,
     navDrawerNavigation: NavDrawerNavigation,
     coreNavigation: CoreNavigation,
@@ -50,6 +52,7 @@ fun PassNavHost(
         appGraph(
             appNavigator = appNavigator,
             appVersion = BuildConfig.VERSION_NAME,
+            homeFilterMode = homeFilterMode,
             navigationDrawer = { content ->
                 val (isSignOutDialogShown, setShowSignOutDialog) =
                     remember { mutableStateOf(false) }

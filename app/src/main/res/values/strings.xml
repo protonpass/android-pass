@@ -1,24 +1,6 @@
 <resources>
     <string name="app_name">Proton Pass</string>
 
-    <string name="secret_type_username">User name</string>
-    <string name="secret_type_email">Email</string>
-    <string name="secret_type_password">Password</string>
-    <string name="secret_type_full_name">Full name</string>
-    <string name="secret_type_phone">Phone number</string>
-    <string name="secret_type_other">Other</string>
-
-    <string name="item_type_login_format">Login: %s</string>
-    <string name="item_type_note_format">Note: %s</string>
-
-    <string name="item_secret_type_message">Type: %s</string>
-    <string name="item_secret_login_identity">Identity: %s</string>
-    <string name="item_secret_login_password">Password: %s</string>
-    <string name="action_authenticate">Authenticate</string>
-    <string name="autofill_list_secrets_empty_message">No compatible credentials found.</string>
-    <string name="autofill_save_user_label">User</string>
-    <string name="autofill_save_address_label">Address</string>
-    <string name="autofill_save_name_label">Save as</string>
-    <string name="error_autofill_save_credentials">The credentials could not be saved.</string>
+    <string name="snackbar_could_not_refresh_items">Could not refresh your items</string>
 
 </resources>

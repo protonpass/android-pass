@@ -73,5 +73,3 @@ sealed class AppNavItem(
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
 }
-
-

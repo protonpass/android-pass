@@ -3,15 +3,15 @@ package me.proton.pass.presentation.home
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.ExperimentalComposeUiApi
 import me.proton.pass.common.api.Some
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun NavHomeContent(
     state: NavHomeUiState,
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
     homeScreenNavigation: HomeScreenNavigation,
+    homeFilterMode: HomeFilterMode,
     onDrawerIconClick: () -> Unit
 ) {
     when {
@@ -29,6 +29,7 @@ fun NavHomeContent(
             navigationDrawer {
                 HomeScreen(
                     homeScreenNavigation = homeScreenNavigation,
+                    homeFilterMode = homeFilterMode,
                     onDrawerIconClick = onDrawerIconClick
                 )
             }

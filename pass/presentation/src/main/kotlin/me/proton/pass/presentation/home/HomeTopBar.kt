@@ -19,6 +19,7 @@ internal fun HomeTopBar(
     modifier: Modifier = Modifier,
     searchQuery: String,
     inSearchMode: Boolean,
+    homeFilter: HomeFilterMode,
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
     onStopSearching: () -> Unit,
@@ -38,6 +39,7 @@ internal fun HomeTopBar(
     } else {
         IdleHomeTopBar(
             modifier = modifier,
+            homeFilter = homeFilter,
             startSearchMode = { onEnterSearch() },
             onDrawerIconClick = onDrawerIconClick,
             onMoreOptionsClick = onMoreOptionsClick
@@ -55,6 +57,7 @@ fun HomeTopBarIdlePreview(
         Surface {
             HomeTopBar(
                 searchQuery = "",
+                homeFilter = HomeFilterMode.AllItems,
                 inSearchMode = false,
                 onSearchQueryChange = {},
                 onEnterSearch = {},
@@ -76,6 +79,7 @@ fun HomeTopBarSearchPreview(
         Surface {
             HomeTopBar(
                 searchQuery = "some search",
+                homeFilter = HomeFilterMode.AllItems,
                 inSearchMode = true,
                 onSearchQueryChange = {},
                 onEnterSearch = {},

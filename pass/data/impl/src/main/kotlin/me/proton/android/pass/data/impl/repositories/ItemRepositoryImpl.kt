@@ -408,7 +408,6 @@ class ItemRepositoryImpl @Inject constructor(
         shareId: ShareId
     ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareId)
 
-
     private suspend fun getShare(userId: UserId, shareId: ShareId): Share =
         when (val share = shareRepository.getById(userId, shareId)) {
             is Result.Success -> share.data

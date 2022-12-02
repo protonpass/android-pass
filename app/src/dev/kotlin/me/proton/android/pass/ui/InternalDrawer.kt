@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.DrawerDefaults.scrimColor
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
@@ -85,7 +86,7 @@ fun InternalDrawer(
                         )
                 }
                     .offset { IntOffset(drawerState.offset.value.roundToInt(), 0) },
-                shape = MaterialTheme.shapes.large,
+                shape = CutCornerShape(0.dp),
                 color = MaterialTheme.colors.surface,
                 contentColor = contentColorFor(MaterialTheme.colors.surface),
                 elevation = 16.dp

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import me.proton.android.pass.data.api.repositories.ItemRepository
+import me.proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.core.accountmanager.domain.AccountManager
@@ -30,7 +31,9 @@ class ObserveActiveItemsImpl @Inject constructor(
         .flatMapLatest { userManager.observeUser(it) }
         .distinctUntilChanged()
 
-    override operator fun invoke(): Flow<Result<List<Item>>> = observeActiveShare()
+    override operator fun invoke(
+        filter: ItemTypeFilter
+    ): Flow<Result<List<Item>>> = observeActiveShare()
         .flatMapLatest { result: Result<ShareId?> ->
             when (result) {
                 is Result.Error -> return@flatMapLatest flowOf(Result.Error(result.exception))
@@ -41,9 +44,10 @@ class ObserveActiveItemsImpl @Inject constructor(
                         .combine(getCurrentUserIdFlow.filterNotNull()) { share, user -> share to user }
                         .flatMapLatest { v ->
                             itemRepository.observeItems(
-                                v.second.userId,
-                                ShareSelection.Share(v.first),
-                                ItemState.Active
+                                userId = v.second.userId,
+                                shareSelection = ShareSelection.Share(v.first),
+                                itemState = ItemState.Active,
+                                itemTypeFilter = filter
                             )
                         }
                 }

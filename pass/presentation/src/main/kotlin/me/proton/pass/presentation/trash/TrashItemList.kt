@@ -2,9 +2,6 @@ package me.proton.pass.presentation.trash
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.item.EmptyList
 import me.proton.pass.presentation.components.common.item.ItemsList
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -29,12 +26,6 @@ internal fun TrashItemList(
         onRefresh = onRefresh,
         onItemClick = {},
         onScrollToTop = {},
-        emptyContent = {
-            EmptyList(
-                emptyListTitle = stringResource(R.string.trash_empty_list_title),
-                emptyListMessage = stringResource(R.string.trash_empty_list_message),
-                emptyListImage = R.drawable.empty_trash
-            )
-        }
+        emptyContent = { EmptyTrashContent() }
     )
 }

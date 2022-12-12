@@ -6,6 +6,7 @@ import me.proton.android.pass.data.impl.requests.CreateVaultRequest
 import me.proton.android.pass.data.impl.requests.TrashItemsRequest
 import me.proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import me.proton.android.pass.data.impl.requests.UpdateItemRequest
+import me.proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import me.proton.android.pass.data.impl.responses.AliasDetailsResponse
 import me.proton.android.pass.data.impl.responses.CreateItemResponse
 import me.proton.android.pass.data.impl.responses.CreateVaultResponse
@@ -18,6 +19,7 @@ import me.proton.android.pass.data.impl.responses.GetSharesResponse
 import me.proton.android.pass.data.impl.responses.GetVaultKeysResponse
 import me.proton.android.pass.data.impl.responses.LastEventIdResponse
 import me.proton.android.pass.data.impl.responses.TrashItemsResponse
+import me.proton.android.pass.data.impl.responses.UpdateLastUsedTimeResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -74,6 +76,13 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("itemId") itemId: String,
         @Body request: UpdateItemRequest
     ): CreateItemResponse
+
+    @PUT("$PREFIX/share/{shareId}/item/{itemId}/lastuse")
+    suspend fun updateLastUsedTime(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Body request: UpdateLastUsedTimeRequest
+    ): UpdateLastUsedTimeResponse
 
     @POST("$PREFIX/share/{shareId}/item/trash")
     suspend fun trashItems(

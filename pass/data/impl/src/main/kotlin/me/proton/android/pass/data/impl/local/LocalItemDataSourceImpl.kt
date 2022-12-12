@@ -64,4 +64,8 @@ class LocalItemDataSourceImpl @Inject constructor(
             )
         }
 
+    override suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long) {
+        database.itemsDao().updateLastUsedTime(shareId.id, itemId.id, now)
+    }
+
 }

@@ -32,15 +32,14 @@ core = "9.6.0"
 # Dagger
 dagger = "2.44"
 # Google
-protoc = "3.0.0"
-protobuf-lite = "3.0.0"
+protobuf = "3.21.11"
 # Gradle
 gradlePlugin-android = "7.3.1"
 gradlePlugin-dependency-analysis = "1.14.1"
 gradlePlugin-doctor = "0.8.1"
 gradlePlugin-paparazzi = "1.1.0"
 gradlePlugin-ksp = "1.7.10-1.0.6"
-gradlePlugin-protobuf = "0.8.19"
+gradlePlugin-protobuf = "0.9.1"
 gradlePlugin-proton-detekt = "1.1.1"
 gradlePlugin-sentry = "3.2.0"
 gradlePlugin-test-logger = "3.2.0"
@@ -177,9 +176,8 @@ dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compil
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
 
 # Google
-google-protobuf-lite = { module = "com.google.protobuf:protobuf-lite", version.ref = "protobuf-lite" }
-google-protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protoc" }
-google-protobuf-protocGenJavalite = { module = "com.google.protobuf:protoc-gen-javalite", version.ref = "protobuf-lite" }
+google-protobuf-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobuf" }
+google-protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 
 # JakeWharton
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }

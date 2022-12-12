@@ -1,7 +1,7 @@
 package me.proton.android.pass.ui.detail
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.navigation.api.composable
@@ -10,12 +10,12 @@ import me.proton.pass.domain.ItemType
 import me.proton.pass.presentation.detail.ItemDetailScreen
 
 @OptIn(
-    ExperimentalAnimationApi::class,
-    ExperimentalComposeUiApi::class
+    ExperimentalAnimationApi::class
 )
-fun NavGraphBuilder.itemDetailGraph(nav: AppNavigator) {
+fun NavGraphBuilder.itemDetailGraph(modifier: Modifier, nav: AppNavigator) {
     composable(AppNavItem.ViewItem) {
         ItemDetailScreen(
+            modifier = modifier,
             onUpClick = { nav.onBackClick() },
             onEditClick = { shareId, itemId, itemType ->
                 val destination = when (itemType) {

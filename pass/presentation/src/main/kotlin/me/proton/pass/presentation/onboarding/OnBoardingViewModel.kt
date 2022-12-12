@@ -29,6 +29,7 @@ import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.presentation.onboarding.OnBoardingPageName.Autofill
 import me.proton.pass.presentation.onboarding.OnBoardingPageName.Fingerprint
+import me.proton.pass.presentation.onboarding.OnBoardingPageName.Last
 import me.proton.pass.presentation.onboarding.OnBoardingSnackbarMessage.BiometryFailedToAuthenticateError
 import me.proton.pass.presentation.onboarding.OnBoardingSnackbarMessage.BiometryFailedToStartError
 import me.proton.pass.presentation.onboarding.OnBoardingSnackbarMessage.ErrorPerformingOperation
@@ -57,11 +58,8 @@ class OnBoardingViewModel @Inject constructor(
             if (shouldShowFingerprint(biometryStatus.await())) {
                 supportedPages.add(Fingerprint)
             }
-            if (supportedPages.isNotEmpty()) {
-                _onBoardingUiState.update { it.copy(enabledPages = supportedPages) }
-            } else {
-                saveOnBoardingCompleteFlag()
-            }
+            supportedPages.add(Last)
+            _onBoardingUiState.update { it.copy(enabledPages = supportedPages) }
         }
     }
 
@@ -83,6 +81,13 @@ class OnBoardingViewModel @Inject constructor(
         when (page) {
             Autofill -> onEnableAutofill()
             Fingerprint -> onEnableFingerprint(contextHolder)
+            Last -> onFinishOnBoarding()
+        }
+    }
+
+    private fun onFinishOnBoarding() {
+        viewModelScope.launch {
+            saveOnBoardingCompleteFlag()
         }
     }
 
@@ -90,6 +95,7 @@ class OnBoardingViewModel @Inject constructor(
         when (page) {
             Autofill -> onSkipAutofill()
             Fingerprint -> onSkipFingerprint()
+            Last -> {}
         }
     }
 
@@ -102,8 +108,6 @@ class OnBoardingViewModel @Inject constructor(
             autofillManager.openAutofillSelector()
             if (_onBoardingUiState.value.enabledPages.count() > 1) {
                 _onBoardingUiState.update { it.copy(selectedPage = 1) }
-            } else {
-                saveOnBoardingCompleteFlag()
             }
         }
     }
@@ -145,23 +149,19 @@ class OnBoardingViewModel @Inject constructor(
         viewModelScope.launch {
             saveHasAuthenticatedFlag()
             saveBiometricLockStateFlag()
-            saveOnBoardingCompleteFlag()
+            _onBoardingUiState.update { it.copy(selectedPage = it.selectedPage + 1) }
         }
     }
 
     private fun onSkipAutofill() {
         viewModelScope.launch {
-            if (_onBoardingUiState.value.enabledPages.count() > 1) {
-                _onBoardingUiState.update { it.copy(selectedPage = 1) }
-            } else {
-                saveOnBoardingCompleteFlag()
-            }
+            _onBoardingUiState.update { it.copy(selectedPage = it.selectedPage + 1) }
         }
     }
 
     private fun onSkipFingerprint() {
         viewModelScope.launch {
-            saveOnBoardingCompleteFlag()
+            _onBoardingUiState.update { it.copy(selectedPage = it.selectedPage + 1) }
         }
     }
 

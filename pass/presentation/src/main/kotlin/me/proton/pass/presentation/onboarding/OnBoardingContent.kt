@@ -29,6 +29,7 @@ import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.onboarding.OnBoardingPageName.Autofill
 import me.proton.pass.presentation.onboarding.OnBoardingPageName.Fingerprint
+import me.proton.pass.presentation.onboarding.OnBoardingPageName.Last
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -45,52 +46,55 @@ fun OnBoardingContent(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Bottom
     ) {
-        if (uiState.enabledPages.size > 1) {
-            LaunchedEffect(uiState.selectedPage != pagerState.currentPage && !pagerState.isScrollInProgress) {
-                coroutineScope.launch { pagerState.animateScrollToPage(uiState.selectedPage) }
+        LaunchedEffect(uiState.selectedPage != pagerState.currentPage && !pagerState.isScrollInProgress) {
+            coroutineScope.launch { pagerState.animateScrollToPage(uiState.selectedPage) }
+        }
+        LaunchedEffect(pagerState) {
+            snapshotFlow { pagerState.currentPage }.collectLatest { onSelectedPageChanged(it) }
+        }
+        HorizontalPager(
+            modifier = Modifier,
+            state = pagerState,
+            count = uiState.enabledPages.size
+        ) { page ->
+            val pageUiState = if (uiState.enabledPages.contains(Autofill) && page == 0) {
+                autofillPageUiState()
+            } else if (
+                isFingerprintSecondPage(uiState, page) || isFingerprintFirstPage(uiState, page)
+            ) {
+                fingerPrintPageUiState()
+            } else {
+                lastPageUiState()
             }
-            LaunchedEffect(pagerState) {
-                snapshotFlow { pagerState.currentPage }.collectLatest { onSelectedPageChanged(it) }
-            }
-            HorizontalPager(
-                modifier = Modifier,
-                state = pagerState,
-                count = uiState.enabledPages.size
-            ) { page ->
-                val pageUiState = when (page) {
-                    0 -> autofillPageUiState()
-                    1 -> fingerPrintPageUiState()
-                    else -> throw NotImplementedError("On boarding page not implemented")
-                }
-                OnBoardingPage(
-                    onBoardingPageData = pageUiState,
-                    onMainButtonClick = onMainButtonClick,
-                    onSkipButtonClick = onSkipButtonClick
-                )
-            }
-            Spacer(modifier = Modifier.padding(4.dp))
-
-            HorizontalPagerIndicator(
-                pagerState = pagerState,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(16.dp)
-            )
-        } else if (uiState.enabledPages.contains(Fingerprint)) {
             OnBoardingPage(
-                onBoardingPageData = fingerPrintPageUiState(),
-                onMainButtonClick = onMainButtonClick,
-                onSkipButtonClick = onSkipButtonClick
-            )
-        } else if (uiState.enabledPages.contains(Autofill)) {
-            OnBoardingPage(
-                onBoardingPageData = autofillPageUiState(),
+                onBoardingPageData = pageUiState,
                 onMainButtonClick = onMainButtonClick,
                 onSkipButtonClick = onSkipButtonClick
             )
         }
+        Spacer(modifier = Modifier.padding(4.dp))
+        HorizontalPagerIndicator(
+            pagerState = pagerState,
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(16.dp)
+        )
     }
 }
+
+@Composable
+private fun isFingerprintSecondPage(
+    uiState: OnBoardingUiState,
+    page: Int
+) = uiState.enabledPages.containsAll(listOf(Fingerprint, Autofill)) && page == 1
+
+@Composable
+private fun isFingerprintFirstPage(
+    uiState: OnBoardingUiState,
+    page: Int
+) = uiState.enabledPages.contains(Fingerprint) &&
+    !uiState.enabledPages.contains(Autofill) &&
+    page == 0
 
 @Composable
 fun autofillPageUiState(): OnBoardingPageUiState =
@@ -98,7 +102,9 @@ fun autofillPageUiState(): OnBoardingPageUiState =
         page = Autofill,
         title = stringResource(R.string.on_boarding_autofill_title),
         subtitle = stringResource(R.string.on_boarding_autofill_content),
-        mainButton = stringResource(R.string.on_boarding_autofill_button)
+        image = R.drawable.onboarding_fingerprint,
+        mainButton = stringResource(R.string.on_boarding_autofill_button),
+        showSkipButton = true
     )
 
 @Composable
@@ -107,7 +113,20 @@ fun fingerPrintPageUiState(): OnBoardingPageUiState =
         page = Fingerprint,
         title = stringResource(R.string.on_boarding_fingerprint_title),
         subtitle = stringResource(R.string.on_boarding_fingerprint_content),
-        mainButton = stringResource(R.string.on_boarding_fingerprint_button)
+        image = R.drawable.onboarding_fingerprint,
+        mainButton = stringResource(R.string.on_boarding_fingerprint_button),
+        showSkipButton = true
+    )
+
+@Composable
+fun lastPageUiState(): OnBoardingPageUiState =
+    OnBoardingPageUiState(
+        page = Last,
+        title = stringResource(R.string.on_boarding_last_page_title),
+        subtitle = stringResource(R.string.on_boarding_last_page_content),
+        image = R.drawable.onboarding_last,
+        mainButton = stringResource(R.string.on_boarding_last_page_button),
+        showSkipButton = false
     )
 
 class ThemeAndOnBoardingUiStatePreviewProvider :

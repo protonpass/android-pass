@@ -18,6 +18,7 @@ import me.proton.android.pass.preferences.TestPreferenceRepository
 import me.proton.pass.common.api.None
 import me.proton.pass.presentation.onboarding.OnBoardingPageName.Autofill
 import me.proton.pass.presentation.onboarding.OnBoardingPageName.Fingerprint
+import me.proton.pass.presentation.onboarding.OnBoardingPageName.Last
 import me.proton.pass.test.MainDispatcherRule
 import org.junit.Before
 import org.junit.Rule
@@ -51,13 +52,19 @@ class OnBoardingViewModelTest {
     }
 
     @Test
-    fun `given no supported features should complete on boarding`() = runTest {
+    fun `given no supported features should show last page`() = runTest {
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
         autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
-            assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial.copy(isCompleted = true))
+            assertThat(awaitItem()).isEqualTo(
+                OnBoardingUiState.Initial.copy(
+                    enabledPages = setOf(
+                        Last
+                    )
+                )
+            )
         }
     }
 
@@ -69,7 +76,7 @@ class OnBoardingViewModelTest {
             skipItems(1)
             autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
             assertThat(awaitItem()).isEqualTo(
-                OnBoardingUiState.Initial.copy(enabledPages = setOf(Fingerprint))
+                OnBoardingUiState.Initial.copy(enabledPages = setOf(Fingerprint, Last))
             )
         }
     }
@@ -82,7 +89,7 @@ class OnBoardingViewModelTest {
             skipItems(1)
             autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
             assertThat(awaitItem()).isEqualTo(
-                OnBoardingUiState.Initial.copy(enabledPages = setOf(Fingerprint))
+                OnBoardingUiState.Initial.copy(enabledPages = setOf(Fingerprint, Last))
             )
         }
     }
@@ -98,7 +105,7 @@ class OnBoardingViewModelTest {
                 viewModel.onMainButtonClick(Autofill, ContextHolder(None))
                 assertThat(awaitItem()).isEqualTo(
                     OnBoardingUiState.Initial.copy(
-                        enabledPages = setOf(Autofill, Fingerprint),
+                        enabledPages = setOf(Autofill, Fingerprint, Last),
                         selectedPage = 1
                     )
                 )
@@ -116,8 +123,8 @@ class OnBoardingViewModelTest {
                 viewModel.onMainButtonClick(Autofill, ContextHolder(None))
                 assertThat(awaitItem()).isEqualTo(
                     OnBoardingUiState.Initial.copy(
-                        enabledPages = setOf(Autofill),
-                        isCompleted = true
+                        selectedPage = 1,
+                        enabledPages = setOf(Autofill, Last)
                     )
                 )
             }
@@ -134,7 +141,7 @@ class OnBoardingViewModelTest {
                 viewModel.onSkipButtonClick(Autofill)
                 assertThat(awaitItem()).isEqualTo(
                     OnBoardingUiState.Initial.copy(
-                        enabledPages = setOf(Autofill, Fingerprint),
+                        enabledPages = setOf(Autofill, Fingerprint, Last),
                         selectedPage = 1
                     )
                 )
@@ -152,8 +159,8 @@ class OnBoardingViewModelTest {
                 viewModel.onSkipButtonClick(Autofill)
                 assertThat(awaitItem()).isEqualTo(
                     OnBoardingUiState.Initial.copy(
-                        enabledPages = setOf(Autofill),
-                        isCompleted = true
+                        selectedPage = 1,
+                        enabledPages = setOf(Autofill, Last)
                     )
                 )
             }
@@ -167,33 +174,63 @@ class OnBoardingViewModelTest {
             skipItems(1)
             autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
             assertThat(awaitItem()).isEqualTo(
-                OnBoardingUiState.Initial.copy(enabledPages = setOf(Autofill))
+                OnBoardingUiState.Initial.copy(enabledPages = setOf(Autofill, Last))
             )
         }
     }
 
     @Test
-    fun `given a click on enable fingerprint should complete on boarding`() = runTest {
+    fun `given a click on enable fingerprint should select last page`() = runTest {
+        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             skipItems(1)
             biometryManager.emitResult(BiometryResult.Success)
             preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
             preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
-            preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
             viewModel.onMainButtonClick(Fingerprint, ContextHolder(None))
-            assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial.copy(isCompleted = true))
+            assertThat(awaitItem()).isEqualTo(
+                OnBoardingUiState.Initial.copy(
+                    selectedPage = 1,
+                    enabledPages = setOf(Fingerprint, Last)
+                )
+            )
         }
     }
 
     @Test
-    fun `given a click on skip fingerprint should complete on boarding`() = runTest {
+    fun `given a click on skip fingerprint should select last page`() = runTest {
+        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
+        viewModel = createViewModel()
+        viewModel.onBoardingUiState.test {
+            skipItems(1)
+            viewModel.onSkipButtonClick(Fingerprint)
+            assertThat(awaitItem()).isEqualTo(
+                OnBoardingUiState.Initial.copy(
+                    selectedPage = 1,
+                    enabledPages = setOf(Fingerprint, Last)
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `given a click on get started in last page should complete on boarding`() = runTest {
+        biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
             skipItems(1)
             preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
-            viewModel.onSkipButtonClick(Fingerprint)
-            assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial.copy(isCompleted = true))
+            viewModel.onMainButtonClick(Last, ContextHolder(None))
+            assertThat(awaitItem()).isEqualTo(
+                OnBoardingUiState.Initial.copy(
+                    enabledPages = setOf(Last),
+                    isCompleted = true
+                )
+            )
         }
     }
 

@@ -1,5 +1,6 @@
 package me.proton.pass.presentation.components.common.item
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,7 +27,12 @@ import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 
 @Composable
-fun EmptyList(modifier: Modifier = Modifier, emptyListMessage: String) {
+fun EmptyList(
+    modifier: Modifier = Modifier,
+    emptyListMessage: String,
+    emptyListTitle: String = stringResource(R.string.empty_list_title),
+    @DrawableRes emptyListImage: Int = R.drawable.placeholder_bound_box
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -36,11 +42,12 @@ fun EmptyList(modifier: Modifier = Modifier, emptyListMessage: String) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(id = R.drawable.placeholder_bound_box),
+            painter = painterResource(id = emptyListImage),
             contentDescription = ""
         )
+        Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = stringResource(id = R.string.empty_list_title),
+            text = emptyListTitle,
             style = ProtonTheme.typography.headline
         )
         Spacer(modifier = Modifier.height(4.dp))

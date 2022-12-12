@@ -30,7 +30,11 @@ internal fun TrashItemList(
         onItemClick = {},
         onScrollToTop = {},
         emptyContent = {
-            EmptyList(emptyListMessage = stringResource(id = R.string.message_no_trashed_credentials))
+            EmptyList(
+                emptyListTitle = stringResource(R.string.trash_empty_list_title),
+                emptyListMessage = stringResource(R.string.trash_empty_list_message),
+                emptyListImage = R.drawable.empty_trash
+            )
         }
     )
 }

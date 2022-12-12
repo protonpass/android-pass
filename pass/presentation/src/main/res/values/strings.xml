@@ -123,7 +123,8 @@
     <string name="error_deleting_item">Error deleting item</string>
 
     <!-- Trash -->
-    <string name="message_no_trashed_credentials">You don\'t have any trashed credentials.</string>
+    <string name="trash_empty_list_title">Trash empty</string>
+    <string name="trash_empty_list_message">Deleted items will be moved here first</string>
     <string name="bottomsheet_trash_all_items_title">Trash</string>
     <string name="bottomsheet_restore_all_items">Restore all items</string>
     <string name="bottomsheet_delete_permanently">Delete permanently</string>

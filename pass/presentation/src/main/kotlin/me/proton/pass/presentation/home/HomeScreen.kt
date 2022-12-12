@@ -1,5 +1,7 @@
 package me.proton.pass.presentation.home
 
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
@@ -15,8 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
-import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.domain.ItemType
+import me.proton.pass.presentation.components.common.bottomsheet.PassModalBottomSheetLayout
 import me.proton.pass.presentation.components.dialogs.ConfirmMoveItemToTrashDialog
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.home.bottomsheet.AliasOptionsBottomSheetContents
@@ -54,11 +56,14 @@ fun HomeScreen(
     )
     val scope = rememberCoroutineScope()
 
-    ProtonModalBottomSheetLayout(
+    PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {
                 HomeBottomSheetType.CreateItem -> FABBottomSheetContents(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .imePadding(),
                     onCreateLogin = {
                         scope.launch {
                             bottomSheetState.hide()
@@ -93,6 +98,9 @@ fun HomeScreen(
                     }
                 )
                 HomeBottomSheetType.Sorting -> SortingBottomSheetContents(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .imePadding(),
                     sortingType = uiState.homeListUiState.sortingType
                 ) {
                     viewModel.onSortingTypeChanged(it)
@@ -100,6 +108,9 @@ fun HomeScreen(
                     scope.launch { bottomSheetState.hide() }
                 }
                 HomeBottomSheetType.LoginOptions -> LoginOptionsBottomSheetContents(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .imePadding(),
                     itemUiModel = selectedItem!!,
                     onCopyUsername = {
                         scope.launch { bottomSheetState.hide() }
@@ -122,6 +133,9 @@ fun HomeScreen(
                     }
                 )
                 HomeBottomSheetType.AliasOptions -> AliasOptionsBottomSheetContents(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .imePadding(),
                     itemUiModel = selectedItem!!,
                     onCopyAlias = {
                         scope.launch { bottomSheetState.hide() }
@@ -137,6 +151,9 @@ fun HomeScreen(
                     }
                 )
                 HomeBottomSheetType.NoteOptions -> NoteOptionsBottomSheetContents(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .imePadding(),
                     itemUiModel = selectedItem!!,
                     onCopyNote = {
                         scope.launch { bottomSheetState.hide() }

@@ -1,6 +1,8 @@
 package me.proton.pass.presentation.create.alias
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -14,13 +16,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
-import me.proton.pass.presentation.components.common.LoadingDialog
-import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Some
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.components.common.LoadingDialog
+import me.proton.pass.presentation.components.common.bottomsheet.PassModalBottomSheetLayout
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankAlias
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankTitle
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.InvalidAliasContent
@@ -60,10 +62,13 @@ internal fun AliasContent(
         confirmStateChange = { false }
     )
 
-    ProtonModalBottomSheetLayout(
+    PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             AliasBottomSheetContents(
+                modifier = Modifier
+                    .navigationBarsPadding()
+                    .imePadding(),
                 modelState = uiState.aliasItem,
                 contentType = bottomSheetContentType,
                 onSuffixSelect = { suffix ->

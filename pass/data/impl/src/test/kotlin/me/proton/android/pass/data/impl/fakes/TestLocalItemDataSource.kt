@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import me.proton.android.pass.data.api.ItemCountSummary
+import me.proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.android.pass.data.impl.db.entities.ItemEntity
 import me.proton.android.pass.data.impl.local.LocalItemDataSource
 import me.proton.core.domain.entity.UserId
@@ -33,10 +34,15 @@ class TestLocalItemDataSource : LocalItemDataSource {
     override fun observeItemsForShare(
         userId: UserId,
         shareId: ShareId,
-        itemState: ItemState
+        itemState: ItemState,
+        filter: ItemTypeFilter
     ): Flow<List<ItemEntity>> = flowOf(memory)
 
-    override fun observeItems(userId: UserId, itemState: ItemState): Flow<List<ItemEntity>> {
+    override fun observeItems(
+        userId: UserId,
+        itemState: ItemState,
+        filter: ItemTypeFilter
+    ): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")
     }
 

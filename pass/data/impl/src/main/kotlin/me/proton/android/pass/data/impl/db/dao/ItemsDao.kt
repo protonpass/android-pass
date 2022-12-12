@@ -28,12 +28,48 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
         SELECT * FROM ${ItemEntity.TABLE} 
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.STATE} = :itemState
+          AND ${ItemEntity.Columns.ITEM_TYPE} = :itemType
+        ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
+        """
+    )
+    abstract fun observeAllForAddress(
+        userId: String,
+        itemState: Int,
+        itemType: Int
+    ): Flow<List<ItemEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE} 
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
           AND ${ItemEntity.Columns.SHARE_ID} = :shareId
           AND ${ItemEntity.Columns.STATE} = :itemState
         ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
         """
     )
-    abstract fun observerAllForShare(userId: String, shareId: String, itemState: Int): Flow<List<ItemEntity>>
+    abstract fun observerAllForShare(
+        userId: String,
+        shareId: String,
+        itemState: Int
+    ): Flow<List<ItemEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE} 
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.STATE} = :itemState
+          AND ${ItemEntity.Columns.ITEM_TYPE} = :itemType
+        ORDER BY ${ItemEntity.Columns.CREATE_TIME} DESC
+        """
+    )
+    abstract fun observeAllForShare(
+        userId: String,
+        shareId: String,
+        itemState: Int,
+        itemType: Int
+    ): Flow<List<ItemEntity>>
 
     @Query(
         """

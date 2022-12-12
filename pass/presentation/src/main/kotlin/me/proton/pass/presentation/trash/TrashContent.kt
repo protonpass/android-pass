@@ -2,7 +2,6 @@ package me.proton.pass.presentation.trash
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,7 +13,6 @@ import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.shared.ConfirmItemDeletionDialog
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TrashContent(
     modifier: Modifier,

@@ -4,7 +4,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItem
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItemData
-import me.proton.android.pass.data.impl.work.AddPackageNameToItemWorker
+import me.proton.android.pass.data.impl.work.UpdateAutofillItemWorker
 import me.proton.android.pass.log.PassLogger
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
@@ -16,9 +16,9 @@ class UpdateAutofillItemImpl @Inject constructor(
 
     override fun invoke(shareId: ShareId, itemId: ItemId, data: UpdateAutofillItemData) {
         workManager.enqueue(
-            OneTimeWorkRequestBuilder<AddPackageNameToItemWorker>()
+            OneTimeWorkRequestBuilder<UpdateAutofillItemWorker>()
                 .setInputData(
-                    AddPackageNameToItemWorker.create(shareId, itemId, data)
+                    UpdateAutofillItemWorker.create(shareId, itemId, data)
                 )
                 .build()
         )

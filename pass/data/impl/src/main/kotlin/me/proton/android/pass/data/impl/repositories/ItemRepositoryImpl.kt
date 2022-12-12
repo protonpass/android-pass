@@ -33,6 +33,7 @@ import me.proton.android.pass.data.impl.requests.CreateAliasRequest
 import me.proton.android.pass.data.impl.requests.TrashItemRevision
 import me.proton.android.pass.data.impl.requests.TrashItemsRequest
 import me.proton.android.pass.data.impl.responses.ItemRevision
+import me.proton.android.pass.data.impl.util.TimeUtil
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
@@ -445,6 +446,19 @@ class ItemRepositoryImpl @Inject constructor(
         shareId: ShareId
     ): Flow<ItemCountSummary> = localItemDataSource.observeItemCountSummary(userId, shareId)
 
+    override suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId) {
+        val userId = accountManager.getPrimaryUserId().first()
+            ?: throw CryptoException("UserId cannot be null")
+
+        PassLogger.i(TAG, "Updating last used time [shareId=$shareId][itemId=$itemId]")
+
+        val now = TimeUtil.getNowUtc()
+        localItemDataSource.updateLastUsedTime(shareId, itemId, now)
+        remoteItemDataSource.updateLastUsedTime(userId, shareId, itemId, now)
+
+        PassLogger.i(TAG, "Updated last used time [shareId=$shareId][itemId=$itemId]")
+    }
+
     private suspend fun getShare(userId: UserId, shareId: ShareId): Share =
         when (val share = shareRepository.getById(userId, shareId)) {
             is Result.Success -> share.data
@@ -736,6 +750,7 @@ class ItemRepositoryImpl @Inject constructor(
             signatureEmail = itemRevision.signatureEmail,
             createTime = itemRevision.createTime,
             modifyTime = itemRevision.modifyTime,
+            lastUsedTime = itemRevision.lastUseTime,
             encryptedContent = item.content,
             encryptedTitle = item.title,
             encryptedNote = item.note,

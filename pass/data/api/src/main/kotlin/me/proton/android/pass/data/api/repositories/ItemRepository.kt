@@ -3,6 +3,7 @@ package me.proton.android.pass.data.api.repositories
 import kotlinx.coroutines.flow.Flow
 import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.api.PendingEventList
+import me.proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.pass.common.api.Option
@@ -35,7 +36,8 @@ interface ItemRepository {
     fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,
-        itemState: ItemState
+        itemState: ItemState,
+        itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All
     ): Flow<Result<List<Item>>>
 
     suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Item>

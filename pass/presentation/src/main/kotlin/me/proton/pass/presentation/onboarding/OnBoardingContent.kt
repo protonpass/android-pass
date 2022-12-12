@@ -1,9 +1,13 @@
 package me.proton.pass.presentation.onboarding
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -12,6 +16,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -102,10 +109,30 @@ fun autofillPageUiState(): OnBoardingPageUiState =
         page = Autofill,
         title = stringResource(R.string.on_boarding_autofill_title),
         subtitle = stringResource(R.string.on_boarding_autofill_content),
-        image = R.drawable.onboarding_fingerprint,
+        image = @Composable {
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp)
+                    .background(onBoardingBrush())
+                    .padding(38.dp, 0.dp),
+                painter = painterResource(id = R.drawable.onboarding_autofill),
+                contentDescription = ""
+            )
+        },
         mainButton = stringResource(R.string.on_boarding_autofill_button),
         showSkipButton = true
     )
+
+@Composable
+private fun onBoardingBrush() = Brush.linearGradient(
+    colors = listOf(
+        ProtonTheme.colors.brandNorm.copy(alpha = 0.3F),
+        Color.Transparent,
+        Color.Transparent,
+        Color.Transparent
+    )
+)
 
 @Composable
 fun fingerPrintPageUiState(): OnBoardingPageUiState =
@@ -113,7 +140,16 @@ fun fingerPrintPageUiState(): OnBoardingPageUiState =
         page = Fingerprint,
         title = stringResource(R.string.on_boarding_fingerprint_title),
         subtitle = stringResource(R.string.on_boarding_fingerprint_content),
-        image = R.drawable.onboarding_fingerprint,
+        image = @Composable {
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp)
+                    .background(onBoardingBrush()),
+                painter = painterResource(id = R.drawable.onboarding_fingerprint),
+                contentDescription = ""
+            )
+        },
         mainButton = stringResource(R.string.on_boarding_fingerprint_button),
         showSkipButton = true
     )
@@ -124,7 +160,16 @@ fun lastPageUiState(): OnBoardingPageUiState =
         page = Last,
         title = stringResource(R.string.on_boarding_last_page_title),
         subtitle = stringResource(R.string.on_boarding_last_page_content),
-        image = R.drawable.onboarding_last,
+        image = @Composable {
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp)
+                    .background(onBoardingBrush()),
+                painter = painterResource(id = R.drawable.onboarding_last),
+                contentDescription = ""
+            )
+        },
         mainButton = stringResource(R.string.on_boarding_last_page_button),
         showSkipButton = false
     )

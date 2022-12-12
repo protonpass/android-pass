@@ -18,6 +18,10 @@ class ObserveItemsImpl @Inject constructor(
         userId: UserId,
         selection: ShareSelection,
         itemState: ItemState
-    ): Flow<Result<List<Item>>> = itemRepository.observeItems(userId, selection, itemState)
+    ): Flow<Result<List<Item>>> = itemRepository.observeItems(
+        userId = userId,
+        shareSelection = selection,
+        itemState = itemState
+    )
 }
 

@@ -13,6 +13,7 @@ import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.repositories.KeyPacketRepository
 import me.proton.android.pass.data.api.repositories.ShareRepository
 import me.proton.android.pass.data.api.repositories.VaultKeyRepository
+import me.proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.android.pass.data.impl.crypto.CreateItem
 import me.proton.android.pass.data.impl.crypto.CryptoException
 import me.proton.android.pass.data.impl.crypto.OpenItem
@@ -174,15 +175,21 @@ class ItemRepositoryImpl @Inject constructor(
     override fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,
-        itemState: ItemState
+        itemState: ItemState,
+        itemTypeFilter: ItemTypeFilter
     ): Flow<Result<List<Item>>> =
         when (shareSelection) {
             is ShareSelection.Share -> localItemDataSource.observeItemsForShare(
-                userId,
-                shareSelection.shareId,
-                itemState
+                userId = userId,
+                shareId = shareSelection.shareId,
+                itemState = itemState,
+                filter = itemTypeFilter
             )
-            is ShareSelection.AllShares -> localItemDataSource.observeItems(userId, itemState)
+            is ShareSelection.AllShares -> localItemDataSource.observeItems(
+                userId = userId,
+                itemState = itemState,
+                filter = itemTypeFilter
+            )
         }
             .map { items ->
                 // Detect if we have received the update from a logout

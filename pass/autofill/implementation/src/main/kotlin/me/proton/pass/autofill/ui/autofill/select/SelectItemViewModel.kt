@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.android.pass.data.api.usecases.RefreshContent
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItem
@@ -80,7 +81,9 @@ class SelectItemViewModel @Inject constructor(
         val isProcessingSearch: IsProcessingSearchState
     )
 
-    private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = observeActiveItems()
+    private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = observeActiveItems(
+        filter = ItemTypeFilter.Logins
+    )
         .map { itemResult ->
             itemResult.map { list ->
                 list.map { it.toUiModel(keyStoreCrypto) }

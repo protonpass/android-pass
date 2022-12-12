@@ -11,10 +11,12 @@ import me.proton.android.pass.data.impl.crypto.OpenShare
 import me.proton.android.pass.data.impl.crypto.Utils
 import me.proton.android.pass.data.impl.db.PassDatabase
 import me.proton.android.pass.data.impl.db.entities.ShareEntity
+import me.proton.android.pass.data.impl.error.InvalidAddressSignature
 import me.proton.android.pass.data.impl.local.LocalShareDataSource
 import me.proton.android.pass.data.impl.remote.RemoteShareDataSource
 import me.proton.android.pass.data.impl.requests.CreateVaultRequest
 import me.proton.android.pass.data.impl.responses.ShareResponse
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.SessionUserId
@@ -141,10 +143,23 @@ class ShareRepositoryImpl @Inject constructor(
             share = storeShareResult.data[0]
         }
 
+        return try {
+            shareEntityToShare(userAddress, share, Source.LocalIfAvailable)
+        } catch (e: InvalidAddressSignature) {
+            PassLogger.i(TAG, e, "Received InvalidAddressSignature. Retrying re-fetching the keys")
+            shareEntityToShare(userAddress, share, Source.RemoteNoCache)
+        }
+    }
+
+    private suspend fun shareEntityToShare(
+        userAddress: UserAddress,
+        share: ShareEntity,
+        source: Source
+    ): Result<Share?> {
         val addressKeys = keyRepository.getPublicAddress(
-            userId,
+            userAddress.userId,
             share.inviterEmail,
-            source = Source.LocalIfAvailable
+            source = source
         )
         return shareEntityToShare(userAddress, addressKeys.keys.publicKeyRing().keys, share)
     }
@@ -263,17 +278,41 @@ class ShareRepositoryImpl @Inject constructor(
         userAddress: UserAddress,
         shareResponse: ShareResponse,
         vaultKeys: List<VaultKey>
+    ): ShareEntity =
+        try {
+            innerShareResponseToEntity(
+                userAddress = userAddress,
+                shareResponse = shareResponse,
+                vaultKeys = vaultKeys,
+                keyAddressSource = Source.LocalIfAvailable
+            )
+        } catch (e: InvalidAddressSignature) {
+            PassLogger.i(TAG, e, "Received InvalidAddressSignature. Retrying re-fetching the keys")
+            innerShareResponseToEntity(
+                userAddress = userAddress,
+                shareResponse = shareResponse,
+                vaultKeys = vaultKeys,
+                keyAddressSource = Source.RemoteNoCache
+            )
+        }
+
+
+    private suspend fun innerShareResponseToEntity(
+        userAddress: UserAddress,
+        shareResponse: ShareResponse,
+        vaultKeys: List<VaultKey>,
+        keyAddressSource: Source
     ): ShareEntity {
         val inviterKeys = keyRepository.getPublicAddress(
             userAddress.userId,
             shareResponse.inviterEmail,
-            source = Source.LocalIfAvailable
+            source = keyAddressSource
         ).keys.publicKeyRing().keys
         val contentSignatureKeys = if (shareResponse.contentSignatureEmail != null) {
             keyRepository.getPublicAddress(
                 userAddress.userId,
                 shareResponse.contentSignatureEmail,
-                source = Source.LocalIfAvailable
+                source = keyAddressSource
             ).keys.publicKeyRing().keys
         } else {
             emptyList()
@@ -318,4 +357,8 @@ class ShareRepositoryImpl @Inject constructor(
         val response: ShareResponse,
         val entity: ShareEntity
     )
+
+    companion object {
+        private const val TAG = "ShareRepositoryImpl"
+    }
 }

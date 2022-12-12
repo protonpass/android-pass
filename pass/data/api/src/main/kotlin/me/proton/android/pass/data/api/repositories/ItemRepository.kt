@@ -72,4 +72,9 @@ interface ItemRepository {
         userId: UserId,
         shareId: ShareId
     ): Flow<ItemCountSummary>
+
+    suspend fun updateItemLastUsed(
+        shareId: ShareId,
+        itemId: ItemId
+    )
 }

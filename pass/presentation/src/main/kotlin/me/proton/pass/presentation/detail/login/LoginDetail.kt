@@ -3,6 +3,8 @@ package me.proton.pass.presentation.detail.login
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -20,8 +22,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
-import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.domain.Item
+import me.proton.pass.presentation.components.common.bottomsheet.PassModalBottomSheetLayout
 import me.proton.pass.presentation.detail.login.bottomsheet.LoginDetailBottomSheetContents
 
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class)
@@ -45,10 +47,13 @@ fun LoginDetail(
     val (selectedWebsite, setSelectedWebsite) = remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    ProtonModalBottomSheetLayout(
+    PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             LoginDetailBottomSheetContents(
+                modifier = Modifier
+                    .navigationBarsPadding()
+                    .imePadding(),
                 website = selectedWebsite,
                 onCopyToClipboard = { website ->
                     viewModel.copyWebsiteToClipboard(website)
@@ -62,10 +67,11 @@ fun LoginDetail(
         }
     ) {
         Scaffold(
+            modifier = modifier,
             topBar = topBar
         ) { padding ->
             LoginContent(
-                modifier = modifier.padding(padding),
+                modifier = Modifier.padding(padding),
                 model = model,
                 onTogglePasswordClick = { viewModel.togglePassword() },
                 onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },

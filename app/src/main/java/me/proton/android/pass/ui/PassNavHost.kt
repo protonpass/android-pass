@@ -2,10 +2,10 @@ package me.proton.android.pass.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.DrawerState
-import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,7 +35,7 @@ import me.proton.pass.presentation.shared.ConfirmSignOutDialog
 fun PassNavHost(
     modifier: Modifier = Modifier,
     drawerUiState: DrawerUiState,
-    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+    drawerState: DrawerState,
     homeFilterMode: HomeFilterMode,
     appNavigator: AppNavigator,
     navDrawerNavigation: NavDrawerNavigation,
@@ -50,6 +50,9 @@ fun PassNavHost(
         startDestination = AppNavItem.Home.route
     ) {
         appGraph(
+            modifier = Modifier
+                .systemBarsPadding()
+                .imePadding(),
             appNavigator = appNavigator,
             appVersion = BuildConfig.VERSION_NAME,
             homeFilterMode = homeFilterMode,

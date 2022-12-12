@@ -17,6 +17,8 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -76,10 +78,14 @@ internal fun CreatePasswordViewContent(
                 text = stringResource(R.string.character_count, state.length)
             )
             Spacer(modifier = Modifier.width(8.dp))
+            val (length, setLength) = remember { mutableStateOf(state.length.toFloat()) }
             Slider(
-                value = state.length.toFloat(),
+                value = length,
                 valueRange = CreatePasswordViewModel.LENGTH_RANGE,
-                onValueChange = { onLengthChange(it.toInt()) }
+                onValueChange = {
+                    setLength(it)
+                    onLengthChange(it.toInt())
+                }
             )
         }
 

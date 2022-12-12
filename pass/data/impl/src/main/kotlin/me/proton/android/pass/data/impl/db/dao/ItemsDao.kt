@@ -96,4 +96,14 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun itemSummary(userId: String, shareId: String): Flow<List<SummaryRow>>
+
+    @Query(
+        """
+        UPDATE ${ItemEntity.TABLE}
+        SET ${ItemEntity.Columns.LAST_USED_TIME} = :now
+        WHERE ${ItemEntity.Columns.ID} = :itemId
+          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+        """
+    )
+    abstract fun updateLastUsedTime(shareId: String, itemId: String, now: Long)
 }

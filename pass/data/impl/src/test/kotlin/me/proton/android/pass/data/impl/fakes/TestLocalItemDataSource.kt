@@ -64,4 +64,8 @@ class TestLocalItemDataSource : LocalItemDataSource {
         userId: UserId,
         shareId: ShareId
     ): Flow<ItemCountSummary> = summary
+
+    override suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long) {
+        throw IllegalStateException("Not yet implemented")
+    }
 }

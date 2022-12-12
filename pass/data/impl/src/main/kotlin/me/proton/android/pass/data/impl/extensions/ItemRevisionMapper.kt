@@ -17,7 +17,9 @@ fun ItemRevision.toPendingEvent(): PendingEventItemRevision =
         aliasEmail = aliasEmail,
         labels = labels,
         createTime = createTime,
-        modifyTime = modifyTime
+        modifyTime = modifyTime,
+        lastUseTime = lastUseTime,
+        revisionTime = revisionTime
     )
 
 fun PendingEventItemRevision.toItemRevision(): ItemRevision =
@@ -34,5 +36,7 @@ fun PendingEventItemRevision.toItemRevision(): ItemRevision =
         aliasEmail = aliasEmail,
         labels = labels,
         createTime = createTime,
-        modifyTime = modifyTime
+        modifyTime = modifyTime,
+        lastUseTime = lastUseTime,
+        revisionTime = revisionTime
     )

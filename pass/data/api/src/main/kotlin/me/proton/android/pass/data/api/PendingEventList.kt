@@ -13,7 +13,9 @@ data class PendingEventItemRevision(
     val aliasEmail: String?,
     val labels: List<String>,
     val createTime: Long,
-    val modifyTime: Long
+    val modifyTime: Long,
+    val lastUseTime: Long,
+    val revisionTime: Long
 )
 
 data class PendingEventList(

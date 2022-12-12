@@ -6,6 +6,7 @@ import me.proton.android.pass.data.impl.requests.CreateAliasRequest
 import me.proton.android.pass.data.impl.requests.CreateItemRequest
 import me.proton.android.pass.data.impl.requests.TrashItemsRequest
 import me.proton.android.pass.data.impl.requests.UpdateItemRequest
+import me.proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import me.proton.android.pass.data.impl.responses.ItemRevision
 import me.proton.android.pass.data.impl.responses.TrashItemsResponse
 import me.proton.core.domain.entity.UserId
@@ -109,4 +110,15 @@ class RemoteItemDataSourceImpl @Inject constructor(
         api.get<PasswordManagerApi>(userId)
             .invoke { deleteItems(shareId.id, body) }
             .toResult()
+
+    override suspend fun updateLastUsedTime(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        now: Long
+    ): Result<Unit> =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { updateLastUsedTime(shareId.id, itemId.id, UpdateLastUsedTimeRequest(now)) }
+            .toResult()
+            .map { }
 }

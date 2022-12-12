@@ -22,4 +22,5 @@ interface LocalItemDataSource {
         userId: UserId,
         shareId: ShareId
     ): Flow<ItemCountSummary>
+    suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long)
 }

@@ -45,4 +45,11 @@ interface RemoteItemDataSource {
     ): Result<TrashItemsResponse>
 
     suspend fun delete(userId: UserId, shareId: ShareId, body: TrashItemsRequest): Result<Unit>
+
+    suspend fun updateLastUsedTime(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        now: Long
+    ): Result<Unit>
 }

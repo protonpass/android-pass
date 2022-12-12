@@ -7,6 +7,7 @@ import me.proton.android.pass.data.impl.requests.TrashItemsRequest
 import me.proton.android.pass.data.impl.requests.UpdateItemRequest
 import me.proton.android.pass.data.impl.responses.ItemRevision
 import me.proton.android.pass.data.impl.responses.TrashItemsResponse
+import me.proton.android.pass.data.impl.util.TimeUtil
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.Item
@@ -14,7 +15,6 @@ import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemStateValues
 import me.proton.pass.domain.ShareId
 import me.proton.pass.test.crypto.TestKeyStoreCrypto
-import java.util.Date
 
 class TestRemoteItemDataSource : RemoteItemDataSource {
 
@@ -81,6 +81,15 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
+    override suspend fun updateLastUsedTime(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        now: Long
+    ) {
+        throw IllegalStateException("Not yet implemented")
+    }
+
     data class CreateItemParams(
         val userId: UserId,
         val shareId: ShareId,
@@ -89,7 +98,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
 
     companion object {
         fun createItemRevision(item: Item): ItemRevision {
-            val now = Date().time
+            val now = TimeUtil.getNowUtc()
             return ItemRevision(
                 itemId = item.id.id,
                 revision = item.revision,
@@ -103,7 +112,9 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
                 aliasEmail = null,
                 labels = emptyList(),
                 createTime = now,
-                modifyTime = now
+                modifyTime = now,
+                lastUseTime = now,
+                revisionTime = now
             )
         }
     }

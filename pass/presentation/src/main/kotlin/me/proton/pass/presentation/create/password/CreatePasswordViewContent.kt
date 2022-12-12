@@ -82,9 +82,11 @@ internal fun CreatePasswordViewContent(
             Slider(
                 value = length,
                 valueRange = CreatePasswordViewModel.LENGTH_RANGE,
-                onValueChange = {
-                    setLength(it)
-                    onLengthChange(it.toInt())
+                onValueChange = { newLength ->
+                    if (length.toInt() != newLength.toInt()) {
+                        setLength(newLength)
+                        onLengthChange(newLength.toInt())
+                    }
                 }
             )
         }

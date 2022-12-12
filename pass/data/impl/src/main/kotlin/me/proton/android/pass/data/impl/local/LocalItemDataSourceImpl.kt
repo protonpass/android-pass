@@ -3,6 +3,7 @@ package me.proton.android.pass.data.impl.local
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.android.pass.data.api.ItemCountSummary
+import me.proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.android.pass.data.impl.db.PassDatabase
 import me.proton.android.pass.data.impl.db.entities.ItemEntity
 import me.proton.core.domain.entity.UserId
@@ -26,12 +27,25 @@ class LocalItemDataSourceImpl @Inject constructor(
     override fun observeItemsForShare(
         userId: UserId,
         shareId: ShareId,
-        itemState: ItemState
+        itemState: ItemState,
+        filter: ItemTypeFilter
     ): Flow<List<ItemEntity>> =
-        database.itemsDao().observerAllForShare(userId.id, shareId.id, itemState.value)
+        if (filter == ItemTypeFilter.All) {
+            database.itemsDao().observerAllForShare(userId.id, shareId.id, itemState.value)
+        } else {
+            database.itemsDao().observeAllForShare(userId.id, shareId.id, itemState.value, filter.value())
+        }
 
-    override fun observeItems(userId: UserId, itemState: ItemState): Flow<List<ItemEntity>> =
-        database.itemsDao().observeAllForAddress(userId.id, itemState.value)
+    override fun observeItems(
+        userId: UserId,
+        itemState: ItemState,
+        filter: ItemTypeFilter
+    ): Flow<List<ItemEntity>> =
+        if (filter == ItemTypeFilter.All) {
+            database.itemsDao().observeAllForAddress(userId.id, itemState.value)
+        } else {
+            database.itemsDao().observeAllForAddress(userId.id, itemState.value, filter.value())
+        }
 
     override suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity? =
         database.itemsDao().getById(shareId.id, itemId.id)
@@ -64,8 +78,16 @@ class LocalItemDataSourceImpl @Inject constructor(
             )
         }
 
+
     override suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long) {
         database.itemsDao().updateLastUsedTime(shareId.id, itemId.id, now)
+    }
+
+    private fun ItemTypeFilter.value(): Int = when (this) {
+        ItemTypeFilter.Logins -> ITEM_TYPE_LOGIN
+        ItemTypeFilter.Aliases -> ITEM_TYPE_ALIAS
+        ItemTypeFilter.Notes -> ITEM_TYPE_NOTE
+        ItemTypeFilter.All -> throw IllegalStateException("Cannot call value to ItemTypeFilter.All")
     }
 
 }

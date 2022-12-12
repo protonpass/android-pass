@@ -292,6 +292,43 @@ class ItemRepositoryImpl @Inject constructor(
         return Result.Success(Unit)
     }
 
+    override suspend fun restoreItems(userId: UserId): Result<Unit> {
+        val trashedItems = localItemDataSource.getTrashedItems(userId)
+        val trashedPerShare = trashedItems.groupBy { it.shareId }
+        coroutineScope {
+            trashedPerShare
+                .map { entry ->
+                    async {
+                        val shareId = ShareId(entry.key)
+                        val shareItems = entry.value
+                        shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).forEach { items ->
+                            val body =
+                                TrashItemsRequest(
+                                    items.map {
+                                        TrashItemRevision(
+                                            it.id,
+                                            it.revision
+                                        )
+                                    }
+                                )
+                            remoteItemDataSource.untrash(userId, shareId, body)
+                            database.inTransaction {
+                                items.forEach { item ->
+                                    localItemDataSource.setItemState(
+                                        shareId,
+                                        ItemId(item.id),
+                                        ItemState.Active
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+                .awaitAll()
+        }
+        return Result.Success(Unit)
+    }
+
     override suspend fun deleteItem(
         userId: UserId,
         shareId: ShareId,

@@ -21,20 +21,23 @@ import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitl
 @Composable
 fun TrashAllBottomSheetContents(
     modifier: Modifier = Modifier,
-    onEmptyTrash: () -> Unit
+    onEmptyTrash: () -> Unit,
+    onRestoreAll: () -> Unit
 ) {
     Column(modifier) {
         BottomSheetTitle(title = R.string.bottomsheet_trash_all_items_title, showDivider = false)
         BottomSheetItemList(
             items = listOf(
-                restoreAll(),
+                restoreAll(onRestoreAll),
                 emptyTrash(onEmptyTrash)
             )
         )
     }
 }
 
-private fun restoreAll(): BottomSheetItem = object : BottomSheetItem {
+private fun restoreAll(
+    onRestoreAll: () -> Unit
+): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_restore_all_items)) }
     override val subtitle: (@Composable () -> Unit)?
@@ -42,7 +45,7 @@ private fun restoreAll(): BottomSheetItem = object : BottomSheetItem {
     override val icon: (@Composable () -> Unit)
         get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_clock_rotate_left) }
     override val onClick: () -> Unit
-        get() = { }
+        get() = onRestoreAll
 }
 
 private fun emptyTrash(
@@ -76,7 +79,10 @@ fun TrashAllBottomSheetContentsPreview(
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            TrashAllBottomSheetContents {}
+            TrashAllBottomSheetContents(
+                onEmptyTrash = {},
+                onRestoreAll = {}
+            )
         }
     }
 }

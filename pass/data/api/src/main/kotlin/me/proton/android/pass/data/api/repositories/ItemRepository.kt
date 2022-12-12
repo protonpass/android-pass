@@ -43,6 +43,7 @@ interface ItemRepository {
     suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit>
     suspend fun deleteItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit>
     suspend fun clearTrash(userId: UserId): Result<Unit>
+    suspend fun restoreItems(userId: UserId): Result<Unit>
     suspend fun addPackageAndUrlToItem(
         shareId: ShareId,
         itemId: ItemId,

@@ -1,9 +1,3 @@
-import com.google.protobuf.gradle.generateProtoTasks
-import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.plugins
-import com.google.protobuf.gradle.protobuf
-import com.google.protobuf.gradle.protoc
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
@@ -60,21 +54,19 @@ dependencies {
 
 
 protobuf {
-    val archSuffix = if (org.apache.tools.ant.taskdefs.condition.Os.isFamily(org.apache.tools.ant.taskdefs.condition.Os.FAMILY_MAC)) ":osx-x86_64" else ""
     val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
     protoc {
-        artifact = "${catalog.findLibrary("google.protobuf.protoc").get().get()}$archSuffix"
-    }
-    plugins {
-        id("javalite") {
-            artifact =
-                "${catalog.findLibrary("google.protobuf.protocGenJavalite").get().get()}$archSuffix"
-        }
+        artifact = "${catalog.findLibrary("google.protobuf.protoc").get().get()}"
     }
     generateProtoTasks {
         all().forEach { task ->
-            task.plugins {
-                id("javalite") { }
+            task.builtins {
+                val java by registering {
+                    option("lite")
+                }
+                val kotlin by registering {
+                    option("lite")
+                }
             }
         }
     }

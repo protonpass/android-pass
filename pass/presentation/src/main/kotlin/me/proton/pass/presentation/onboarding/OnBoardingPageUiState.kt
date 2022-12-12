@@ -4,5 +4,7 @@ data class OnBoardingPageUiState(
     val page: OnBoardingPageName,
     val title: String,
     val subtitle: String,
-    val mainButton: String
+    val image: Int,
+    val mainButton: String,
+    val showSkipButton: Boolean
 )

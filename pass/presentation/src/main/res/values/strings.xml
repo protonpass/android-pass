@@ -268,11 +268,14 @@
     <string name="bottomsheet_move_to_trash">Move to trash</string>
 
     <!-- OnBoarding -->
-    <string name="on_boarding_autofill_content">Save and fill usernames and password in apps and supported browsers.</string>
-    <string name="on_boarding_autofill_title">Autofill</string>
-    <string name="on_boarding_autofill_button">Enable autofill</string>
-    <string name="on_boarding_fingerprint_content">Save and fill usernames and password in apps and supported browsers.</string>
-    <string name="on_boarding_fingerprint_title">Fingerprint unlock</string>
-    <string name="on_boarding_fingerprint_button">Enable Fingerprint unlock</string>
-    <string name="on_boarding_skip">Skip</string>
+    <string name="on_boarding_autofill_content">Let Proton Pass fill in login details for you. No typing or copy-paste required.</string>
+    <string name="on_boarding_autofill_title">Log in to apps instantly</string>
+    <string name="on_boarding_autofill_button">Turn on autofill</string>
+    <string name="on_boarding_fingerprint_content">Enable face or fingerprint unlock so no one else can access your Proton Pass.</string>
+    <string name="on_boarding_fingerprint_title">Keep sensitive info secure</string>
+    <string name="on_boarding_fingerprint_button">Enable biometric unlock</string>
+    <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead use an email alias that you can discard anytime.</string>
+    <string name="on_boarding_last_page_title">Enjoy a spam-free inbox</string>
+    <string name="on_boarding_last_page_button">Get started</string>
+    <string name="on_boarding_skip">Not now</string>
 </resources>

@@ -24,6 +24,7 @@ fun TrashContent(
     onDrawerIconClick: () -> Unit
 ) {
     Scaffold(
+        modifier = modifier,
         topBar = {
             TrashTopBar(
                 onDrawerIconClick = onDrawerIconClick,
@@ -31,7 +32,7 @@ fun TrashContent(
             )
         }
     ) { contentPadding ->
-        Box(modifier = modifier.padding(contentPadding)) {
+        Box(modifier = Modifier.padding(contentPadding)) {
             var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
             TrashItemList(
                 items = uiState.items,

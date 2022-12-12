@@ -1,5 +1,7 @@
 package me.proton.pass.presentation.trash
 
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
@@ -14,7 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
-import me.proton.core.compose.component.ProtonModalBottomSheetLayout
+import me.proton.pass.presentation.components.common.bottomsheet.PassModalBottomSheetLayout
 import me.proton.pass.presentation.components.model.ItemUiModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class)
@@ -35,11 +37,14 @@ fun TrashScreen(
     val (showRestoreAllDialog, setShowRestoreAllDialog) = rememberSaveable { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
-    ProtonModalBottomSheetLayout(
+    PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {
                 TrashBottomSheetType.ItemActions -> TrashItemBottomSheetContents(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .imePadding(),
                     itemUiModel = selectedItem!!,
                     onRestoreItem = {
                         viewModel.restoreItem(it)
@@ -55,6 +60,9 @@ fun TrashScreen(
                     }
                 )
                 TrashBottomSheetType.AllTrashActions -> TrashAllBottomSheetContents(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .imePadding(),
                     onEmptyTrash = {
                         setShowClearTrashDialog(true)
                         scope.launch {

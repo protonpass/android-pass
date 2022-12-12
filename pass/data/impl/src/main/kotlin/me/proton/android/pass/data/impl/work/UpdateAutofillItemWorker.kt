@@ -13,6 +13,7 @@ import me.proton.android.pass.log.PassLogger
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.flatMap
+import me.proton.pass.common.api.map
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId
@@ -21,7 +22,7 @@ import me.proton.pass.domain.entity.PackageName
 import me.proton.pass.common.api.Result as KResult
 
 @HiltWorker
-class AddPackageNameToItemWorker @AssistedInject constructor(
+class UpdateAutofillItemWorker @AssistedInject constructor(
     @Assisted appContext: Context,
     @Assisted private val workerParameters: WorkerParameters,
     private val itemRepository: ItemRepository
@@ -64,7 +65,10 @@ class AddPackageNameToItemWorker @AssistedInject constructor(
             inputData.itemId,
             inputData.packageName,
             inputData.url
-        )
+        ).map {
+            itemRepository.updateItemLastUsed(inputData.shareId, inputData.itemId)
+            it
+        }
     }
 
     private fun getData(inputData: Data): KResult<InputData> {

@@ -1,6 +1,7 @@
 package me.proton.android.pass.data.impl.crypto
 
 import me.proton.android.pass.data.impl.db.entities.ShareEntity
+import me.proton.android.pass.data.impl.error.InvalidAddressSignature
 import me.proton.android.pass.data.impl.responses.ShareResponse
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -17,6 +18,7 @@ import me.proton.core.key.domain.getArmored
 import me.proton.core.key.domain.getBase64Decoded
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyData
+import me.proton.core.user.domain.entity.UserAddress
 import me.proton.pass.domain.Share
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.SharePermission
@@ -26,7 +28,6 @@ import me.proton.pass.domain.key.SigningKey
 import me.proton.pass.domain.key.VaultKey
 import me.proton.pass.domain.key.publicKey
 import me.proton.pass.domain.key.usePrivateKey
-import me.proton.core.user.domain.entity.UserAddress
 import java.sql.Date
 import javax.inject.Inject
 
@@ -224,8 +225,9 @@ class OpenShare @Inject constructor(
         }
 
         if (!addressSignatureValid) {
-            throw CryptoException("Address signature is not valid")
+            throw InvalidAddressSignature()
         }
+
 
         // Verify vault signature
         val vaultSignatureValid = cryptoContext.pgpCrypto.verifyData(
@@ -265,7 +267,7 @@ class OpenShare @Inject constructor(
                 signingKeyFingerprint.encodeToByteArray(),
                 armoredInviterAcceptanceSignature
             )
-            require(inviterVerified)
+            if (!inviterVerified) throw InvalidAddressSignature()
         }
     }
 

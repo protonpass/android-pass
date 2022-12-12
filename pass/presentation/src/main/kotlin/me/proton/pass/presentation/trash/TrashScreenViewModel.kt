@@ -27,6 +27,7 @@ import me.proton.pass.presentation.trash.TrashSnackbarMessage.ClearTrashError
 import me.proton.pass.presentation.trash.TrashSnackbarMessage.DeleteItemError
 import me.proton.pass.presentation.trash.TrashSnackbarMessage.ObserveItemsError
 import me.proton.pass.presentation.trash.TrashSnackbarMessage.RefreshError
+import me.proton.pass.presentation.trash.TrashSnackbarMessage.RestoreItemsError
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 import javax.inject.Inject
@@ -108,6 +109,19 @@ class TrashScreenViewModel @Inject constructor(
                     val message = "Error clearing trash"
                     PassLogger.i(TAG, it ?: Exception(message), message)
                     snackbarMessageRepository.emitSnackbarMessage(ClearTrashError)
+                }
+            isLoading.update { IsLoadingState.NotLoading }
+        }
+    }
+
+    fun restoreItems() = viewModelScope.launch {
+        withUserId {
+            isLoading.update { IsLoadingState.Loading }
+            itemRepository.restoreItems(it)
+                .onError {
+                    val message = "Error restoring items"
+                    PassLogger.i(TAG, it ?: Exception(message), message)
+                    snackbarMessageRepository.emitSnackbarMessage(RestoreItemsError)
                 }
             isLoading.update { IsLoadingState.NotLoading }
         }

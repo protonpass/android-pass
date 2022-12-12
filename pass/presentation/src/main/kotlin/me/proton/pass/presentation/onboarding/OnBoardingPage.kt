@@ -1,7 +1,11 @@
 package me.proton.pass.presentation.onboarding
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -9,6 +13,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -27,28 +34,49 @@ fun OnBoardingPage(
     onMainButtonClick: (OnBoardingPageName) -> Unit,
     onSkipButtonClick: (OnBoardingPageName) -> Unit
 ) {
+    val brush = Brush.linearGradient(
+        colors = listOf(
+            ProtonTheme.colors.brandNorm.copy(alpha = 0.3F),
+            Color.Transparent,
+            Color.Transparent
+        )
+    )
+
     Column(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(24.dp),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+                .background(brush),
+            painter = painterResource(id = onBoardingPageData.image),
+            contentDescription = ""
+        )
+        Spacer(modifier = Modifier.height(18.dp))
         Text(
+            modifier = Modifier.padding(32.dp, 0.dp),
             color = ProtonTheme.colors.textNorm,
             style = ProtonTheme.typography.headline,
             text = onBoardingPageData.title,
             textAlign = TextAlign.Center,
             maxLines = 1
         )
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         Text(
+            modifier = Modifier.padding(32.dp, 0.dp),
             text = onBoardingPageData.subtitle,
             style = ProtonTypography.Default.default,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.height(58.dp))
+        Spacer(modifier = Modifier.height(24.dp).weight(1F))
         ProtonSolidButton(
-            modifier = Modifier.fillMaxWidth().height(48.dp),
+            modifier = Modifier
+                .padding(32.dp, 0.dp)
+                .fillMaxWidth()
+                .height(48.dp),
             onClick = { onMainButtonClick(onBoardingPageData.page) }
         ) {
             Text(
@@ -57,15 +85,24 @@ fun OnBoardingPage(
                 maxLines = 1
             )
         }
-        ProtonTextButton(
-            modifier = Modifier.fillMaxWidth().height(48.dp),
-            onClick = { onSkipButtonClick(onBoardingPageData.page) }
-        ) {
-            Text(
-                text = stringResource(R.string.on_boarding_skip),
-                textAlign = TextAlign.Center,
-                maxLines = 1
-            )
+        Spacer(modifier = Modifier.height(16.dp))
+        if (onBoardingPageData.showSkipButton) {
+            ProtonTextButton(
+                modifier = Modifier
+                    .padding(32.dp, 0.dp)
+                    .fillMaxWidth()
+                    .height(48.dp),
+                onClick = { onSkipButtonClick(onBoardingPageData.page) }
+            ) {
+                Text(
+                    text = stringResource(R.string.on_boarding_skip),
+                    textAlign = TextAlign.Center,
+                    maxLines = 1
+                )
+            }
+        } else {
+            Spacer(modifier = Modifier.height(48.dp))
         }
+        Spacer(modifier = Modifier.height(50.dp))
     }
 }

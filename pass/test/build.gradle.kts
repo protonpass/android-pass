@@ -5,6 +5,7 @@ plugins {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
+    namespace = "me.proton.pass.test"
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()

@@ -8,6 +8,7 @@ plugins {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
+    namespace = "me.proton.pass.autofill.service"
     buildFeatures.buildConfig = false
 
     defaultConfig {

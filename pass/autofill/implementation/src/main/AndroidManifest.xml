@@ -18,7 +18,6 @@
   -->
 
 <manifest xmlns:tools="http://schemas.android.com/tools"
-    package="me.proton.pass.autofill.service"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"

@@ -22,12 +22,12 @@ object BrowserUtils {
                     context.startActivity(i)
                 } catch (e: ActivityNotFoundException) {
                     val message = "Could not find a suitable activity"
-                    PassLogger.i(TAG, e = e, message)
+                    PassLogger.i(TAG, e, message)
                 }
             }
             .onError {
                 val message = "Could not find a suitable url"
-                PassLogger.i(TAG, e = it ?: Exception(message), message)
+                PassLogger.i(TAG, it ?: Exception(message), message)
             }
     }
 }

@@ -33,55 +33,66 @@ fun OnBoardingPage(
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        onBoardingPageData.image()
-        Spacer(modifier = Modifier.height(18.dp))
-        Text(
-            modifier = Modifier.padding(32.dp, 0.dp),
-            color = ProtonTheme.colors.textNorm,
-            style = ProtonTheme.typography.headline,
-            text = onBoardingPageData.title,
-            textAlign = TextAlign.Center,
-            maxLines = 1
-        )
-        Spacer(modifier = Modifier.height(24.dp))
-        Text(
-            modifier = Modifier.padding(32.dp, 0.dp),
-            text = onBoardingPageData.subtitle,
-            style = ProtonTypography.Default.default,
-            textAlign = TextAlign.Center
-        )
-        Spacer(modifier = Modifier.height(24.dp).weight(1F))
-        ProtonSolidButton(
+        onBoardingPageData.image(this)
+        Column(
             modifier = Modifier
-                .padding(32.dp, 0.dp)
                 .fillMaxWidth()
-                .height(48.dp),
-            onClick = { onMainButtonClick(onBoardingPageData.page) }
+                .weight(1f),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.height(18.dp))
             Text(
-                text = onBoardingPageData.mainButton,
+                modifier = Modifier.padding(32.dp, 0.dp),
+                color = ProtonTheme.colors.textNorm,
+                style = ProtonTheme.typography.headline,
+                text = onBoardingPageData.title,
                 textAlign = TextAlign.Center,
                 maxLines = 1
             )
-        }
-        Spacer(modifier = Modifier.height(16.dp))
-        if (onBoardingPageData.showSkipButton) {
-            ProtonTextButton(
+            Spacer(modifier = Modifier.height(24.dp))
+            Text(
+                modifier = Modifier.padding(32.dp, 0.dp),
+                text = onBoardingPageData.subtitle,
+                style = ProtonTypography.Default.default,
+                textAlign = TextAlign.Center
+            )
+            Spacer(
+                modifier = Modifier
+                    .height(24.dp)
+                    .weight(1f)
+            )
+            ProtonSolidButton(
                 modifier = Modifier
                     .padding(32.dp, 0.dp)
                     .fillMaxWidth()
                     .height(48.dp),
-                onClick = { onSkipButtonClick(onBoardingPageData.page) }
+                onClick = { onMainButtonClick(onBoardingPageData.page) }
             ) {
                 Text(
-                    text = stringResource(R.string.on_boarding_skip),
+                    text = onBoardingPageData.mainButton,
                     textAlign = TextAlign.Center,
                     maxLines = 1
                 )
             }
-        } else {
-            Spacer(modifier = Modifier.height(48.dp))
+            Spacer(modifier = Modifier.height(16.dp))
+            if (onBoardingPageData.showSkipButton) {
+                ProtonTextButton(
+                    modifier = Modifier
+                        .padding(32.dp, 0.dp)
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    onClick = { onSkipButtonClick(onBoardingPageData.page) }
+                ) {
+                    Text(
+                        text = stringResource(R.string.on_boarding_skip),
+                        textAlign = TextAlign.Center,
+                        maxLines = 1
+                    )
+                }
+            } else {
+                Spacer(modifier = Modifier.height(48.dp))
+            }
+            Spacer(modifier = Modifier.height(50.dp))
         }
-        Spacer(modifier = Modifier.height(50.dp))
     }
 }

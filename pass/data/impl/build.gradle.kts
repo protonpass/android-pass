@@ -91,6 +91,5 @@ dependencies {
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.androidx.test.runner)
-    androidTestImplementation(libs.core.test.android.instrumented)
     androidTestImplementation(libs.kotlinTest)
 }

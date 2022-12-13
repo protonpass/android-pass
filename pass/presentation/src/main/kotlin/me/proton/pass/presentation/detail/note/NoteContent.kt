@@ -21,7 +21,7 @@ fun NoteContent(
             .clickable { onCopyToClipboard() }
             .fillMaxWidth()
             .padding(vertical = 16.dp, horizontal = 32.dp),
-        text = model.title,
+        text = model.note,
         style = ProtonTheme.typography.default
     )
 }

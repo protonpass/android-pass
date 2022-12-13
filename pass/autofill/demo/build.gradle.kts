@@ -6,6 +6,7 @@ plugins {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
+    namespace = "me.proton.pass.autofill.sample"
 
     defaultConfig {
         applicationId = "me.proton.pass.core.autofill.sample"

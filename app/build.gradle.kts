@@ -53,6 +53,8 @@ val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
+    namespace = "me.proton.android.pass"
+
     defaultConfig {
         applicationId = "me.proton.android.pass"
         minSdk = libs.versions.minSdk.get().toInt()

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -113,7 +112,7 @@ fun autofillPageUiState(): OnBoardingPageUiState =
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(300.dp)
+                    .weight(1f)
                     .background(onBoardingBrush())
                     .padding(38.dp, 0.dp),
                 painter = painterResource(id = R.drawable.onboarding_autofill),
@@ -144,7 +143,7 @@ fun fingerPrintPageUiState(): OnBoardingPageUiState =
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(300.dp)
+                    .weight(1f)
                     .background(onBoardingBrush()),
                 painter = painterResource(id = R.drawable.onboarding_fingerprint),
                 contentDescription = ""
@@ -164,7 +163,7 @@ fun lastPageUiState(): OnBoardingPageUiState =
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(300.dp)
+                    .weight(1f)
                     .background(onBoardingBrush()),
                 painter = painterResource(id = R.drawable.onboarding_last),
                 contentDescription = ""

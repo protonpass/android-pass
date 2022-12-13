@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -91,6 +92,9 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.presentation)
     implementation(projects.pass.log)
+
+    add("devImplementation", libs.showkase)
+    add("kspDev", libs.showkaseProcessor)
 
     testImplementation(projects.pass.test)
     testImplementation(projects.pass.biometry.fakes)

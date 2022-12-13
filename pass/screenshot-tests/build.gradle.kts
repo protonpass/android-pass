@@ -36,6 +36,7 @@ androidComponents {
 }
 
 dependencies {
+    implementation(projects.pass.autofill.implementation)
     implementation(projects.pass.presentation)
     implementation(projects.pass.commonUi.api)
 

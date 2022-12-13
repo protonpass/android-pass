@@ -1,6 +1,8 @@
 package me.proton.pass.presentation.detail.alias
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,7 +30,9 @@ fun AliasDetail(
         topBar = topBar
     ) { padding ->
         AliasDetailContent(
-            modifier = modifier.padding(padding),
+            modifier = modifier
+                .padding(padding)
+                .verticalScroll(rememberScrollState()),
             state = viewState,
             emitSnackbarMessage = { viewModel.emitSnackbarMessage(it) }
         )

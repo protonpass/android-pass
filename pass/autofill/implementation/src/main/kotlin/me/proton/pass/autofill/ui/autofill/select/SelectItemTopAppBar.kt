@@ -12,7 +12,8 @@ fun SelectItemTopAppBar(
     inSearchMode: Boolean,
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
-    onStopSearching: () -> Unit
+    onStopSearching: () -> Unit,
+    onClose: () -> Unit
 ) {
     if (inSearchMode) {
         SearchTopBar(
@@ -23,7 +24,8 @@ fun SelectItemTopAppBar(
         )
     } else {
         IdleSelectItemTopBar(
-            startSearchMode = onEnterSearch
+            startSearchMode = onEnterSearch,
+            onClose = onClose
         )
     }
 }

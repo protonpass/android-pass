@@ -14,7 +14,8 @@ import me.proton.pass.autofill.ui.autofill.select.SelectItemScreen
 fun NavGraphBuilder.selectItemGraph(
     appNavigator: AppNavigator,
     state: AutofillAppState,
-    onAutofillItemClicked: (AutofillItem) -> Unit
+    onAutofillItemClicked: (AutofillItem) -> Unit,
+    onClose: () -> Unit
 ) {
     composable(AutofillNavItem.SelectItem) {
         SelectItemScreen(
@@ -25,7 +26,8 @@ fun NavGraphBuilder.selectItemGraph(
             onItemSelected = onAutofillItemClicked,
             onCreateLoginClicked = {
                 appNavigator.navigate(AutofillNavItem.CreateLogin)
-            }
+            },
+            onClose = onClose
         )
     }
 }

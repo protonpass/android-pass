@@ -1,8 +1,5 @@
 package me.proton.pass.presentation.detail.login
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -25,6 +22,7 @@ import kotlinx.coroutines.launch
 import me.proton.pass.domain.Item
 import me.proton.pass.presentation.components.common.bottomsheet.PassModalBottomSheetLayout
 import me.proton.pass.presentation.detail.login.bottomsheet.LoginDetailBottomSheetContents
+import me.proton.pass.presentation.utils.BrowserUtils.openWebsite
 
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class)
 @Composable
@@ -86,13 +84,3 @@ fun LoginDetail(
     }
 }
 
-fun openWebsite(context: Context, website: String) {
-    runCatching {
-        Uri.parse(website)
-    }.onSuccess { uri ->
-        val i = Intent(Intent.ACTION_VIEW).apply {
-            setData(uri)
-        }
-        context.startActivity(i)
-    }
-}

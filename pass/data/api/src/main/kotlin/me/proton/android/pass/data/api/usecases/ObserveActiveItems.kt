@@ -4,11 +4,11 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.Item
 
-sealed interface ItemTypeFilter {
-    object All : ItemTypeFilter
-    object Logins : ItemTypeFilter
-    object Aliases : ItemTypeFilter
-    object Notes : ItemTypeFilter
+enum class ItemTypeFilter {
+    All,
+    Logins,
+    Aliases,
+    Notes;
 }
 
 interface ObserveActiveItems {

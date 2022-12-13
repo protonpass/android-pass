@@ -2,7 +2,6 @@ package me.proton.pass.presentation.create.note
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -24,7 +23,7 @@ import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Some
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.components.common.Loading
+import me.proton.pass.presentation.components.common.TopBarLoading
 import me.proton.pass.presentation.create.note.NoteItemValidationErrors.BlankTitle
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.EmptyShareIdError
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -65,10 +64,7 @@ internal fun NoteContent(
                         modifier = Modifier.padding(end = 10.dp)
                     ) {
                         if (uiState.isLoadingState == IsLoadingState.Loading) {
-                            Loading(
-                                modifier = modifier.size(20.dp),
-                                strokeWidth = 2.dp
-                            )
+                            TopBarLoading()
                         } else {
                             Text(
                                 text = stringResource(topBarActionName),

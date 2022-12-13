@@ -4,24 +4,29 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.android.pass.ui.shared.ArrowBackIcon
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun IdleSelectItemTopBar(
     modifier: Modifier = Modifier,
-    startSearchMode: () -> Unit
+    startSearchMode: () -> Unit,
+    onClose: () -> Unit
 ) {
     ProtonTopAppBar(
         modifier = modifier,
+        navigationIcon = { ArrowBackIcon(onUpClick = onClose) },
         title = {
             TopBarTitleView(title = stringResource(id = R.string.title_items))
         },
@@ -47,7 +52,8 @@ fun IdleSelectItemTopBarPreview(
     ProtonTheme(isDark = isDark) {
         Surface {
             IdleSelectItemTopBar(
-                startSearchMode = {}
+                startSearchMode = {},
+                onClose = {}
             )
         }
     }

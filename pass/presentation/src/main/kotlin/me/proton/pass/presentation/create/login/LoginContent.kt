@@ -36,6 +36,7 @@ internal fun LoginContent(
     @StringRes topBarTitle: Int,
     @StringRes topBarActionName: Int,
     uiState: CreateUpdateLoginUiState,
+    showCreateAliasButton: Boolean,
     onUpClick: () -> Unit,
     onSuccess: (ShareId, ItemId, ItemUiModel) -> Unit,
     onSubmit: (ShareId) -> Unit,
@@ -101,6 +102,7 @@ internal fun LoginContent(
             LoginItemForm(
                 modifier = Modifier.padding(padding),
                 loginItem = uiState.loginItem,
+                showCreateAliasButton = showCreateAliasButton,
                 canUpdateUsername = uiState.canUpdateUsername,
                 onTitleChange = onTitleChange,
                 onTitleRequiredError = uiState.validationErrors.contains(LoginItemValidationErrors.BlankTitle),

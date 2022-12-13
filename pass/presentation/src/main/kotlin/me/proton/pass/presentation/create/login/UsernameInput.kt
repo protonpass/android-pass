@@ -21,16 +21,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.form.ProtonTextField
 import me.proton.pass.presentation.components.form.ProtonTextTitle
+import me.proton.pass.presentation.settings.ThemedBooleanPreviewProvider
 
 @Composable
 internal fun UsernameInput(
     modifier: Modifier = Modifier,
     value: String,
     canUpdateUsername: Boolean,
+    showCreateAliasButton: Boolean,
     onChange: (String) -> Unit,
     onGenerateAliasClick: () -> Unit,
     onAliasOptionsClick: () -> Unit
@@ -59,27 +60,29 @@ internal fun UsernameInput(
                 editable = canUpdateUsername,
                 placeholder = R.string.field_username_hint
             )
-            Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-            OutlinedButton(
-                onClick = {
-                    if (canUpdateUsername) {
-                        onGenerateAliasClick()
-                    } else {
-                        onAliasOptionsClick()
-                    }
-                },
-                shape = ProtonTheme.shapes.medium,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .aspectRatio(1.0f)
-                    .align(Alignment.CenterVertically)
-            ) {
-                Icon(
-                    painter = painterResource(buttonIcon),
-                    contentDescription = null,
-                    tint = ProtonTheme.colors.iconNorm,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
+            if (showCreateAliasButton) {
+                Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+                OutlinedButton(
+                    onClick = {
+                        if (canUpdateUsername) {
+                            onGenerateAliasClick()
+                        } else {
+                            onAliasOptionsClick()
+                        }
+                    },
+                    shape = ProtonTheme.shapes.medium,
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .aspectRatio(1.0f)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Icon(
+                        painter = painterResource(buttonIcon),
+                        contentDescription = null,
+                        tint = ProtonTheme.colors.iconNorm,
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                }
             }
         }
     }
@@ -88,12 +91,13 @@ internal fun UsernameInput(
 @Preview(showBackground = true)
 @Composable
 fun UsernameInputCanUpdateTruePreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    ProtonTheme(isDark = isDark) {
+    ProtonTheme(isDark = input.first) {
         Surface {
             UsernameInput(
                 value = "some value",
+                showCreateAliasButton = input.second,
                 onChange = {},
                 onGenerateAliasClick = {},
                 onAliasOptionsClick = {},
@@ -106,12 +110,13 @@ fun UsernameInputCanUpdateTruePreview(
 @Preview(showBackground = true)
 @Composable
 fun UsernameInputCanUpdateFalsePreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    ProtonTheme(isDark = isDark) {
+    ProtonTheme(isDark = input.first) {
         Surface {
             UsernameInput(
                 value = "some value",
+                showCreateAliasButton = input.second,
                 onChange = {},
                 onGenerateAliasClick = {},
                 onAliasOptionsClick = {},

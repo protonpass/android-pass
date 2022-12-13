@@ -39,6 +39,7 @@ fun UpdateLogin(
     LoginContent(
         modifier = modifier,
         uiState = uiState,
+        showCreateAliasButton = true,
         topBarTitle = R.string.title_edit_login,
         topBarActionName = R.string.action_save,
         onUpClick = onUpClick,

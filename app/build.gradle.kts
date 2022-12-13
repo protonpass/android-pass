@@ -282,7 +282,6 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.core.test.kotlin)
-    testImplementation(libs.mockk)
     testImplementation(projects.pass.test)
 
     androidTestImplementation(libs.androidx.compose.ui.test)

@@ -5,13 +5,10 @@ plugins {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
+    namespace = "me.proton.android.pass.commonui.implementation"
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
     }
-}
-
-dependencies {
-
 }

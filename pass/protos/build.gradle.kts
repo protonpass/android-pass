@@ -61,7 +61,7 @@ dependencies {
 protobuf {
     val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
     protoc {
-        artifact = "${catalog.findLibrary("google.protobuf.protoc").get().get()}"
+        artifact = catalog.findLibrary("google.protobuf.protoc").get().get().toString()
     }
     generateProtoTasks {
         all().forEach { task ->

@@ -3,6 +3,8 @@ package me.proton.pass.presentation.detail.login
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
@@ -69,7 +71,9 @@ fun LoginDetail(
             topBar = topBar
         ) { padding ->
             LoginContent(
-                modifier = Modifier.padding(padding),
+                modifier = Modifier
+                    .padding(padding)
+                    .verticalScroll(rememberScrollState()),
                 model = model,
                 onTogglePasswordClick = { viewModel.togglePassword() },
                 onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },

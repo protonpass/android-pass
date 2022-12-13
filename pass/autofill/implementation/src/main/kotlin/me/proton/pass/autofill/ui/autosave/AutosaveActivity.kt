@@ -3,15 +3,15 @@ package me.proton.pass.autofill.ui.autosave
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.pass.autofill.entities.SaveInformation
 import me.proton.pass.autofill.extensions.deserializeParcelable
 import me.proton.pass.autofill.extensions.marshalParcelable
 
 @AndroidEntryPoint
-class AutosaveActivity : ComponentActivity() {
+class AutosaveActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

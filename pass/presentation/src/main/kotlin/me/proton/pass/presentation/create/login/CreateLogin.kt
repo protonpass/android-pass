@@ -18,6 +18,7 @@ import me.proton.pass.presentation.components.model.ItemUiModel
 fun CreateLogin(
     modifier: Modifier = Modifier,
     initialContents: InitialCreateLoginUiState,
+    showCreateAliasButton: Boolean = true,
     onClose: () -> Unit,
     onSuccess: (ItemUiModel) -> Unit,
     onCreateAliasClick: (ShareId) -> Unit
@@ -45,6 +46,7 @@ fun CreateLogin(
     LoginContent(
         modifier = modifier,
         uiState = uiState,
+        showCreateAliasButton = showCreateAliasButton,
         topBarTitle = R.string.title_create_login,
         topBarActionName = R.string.action_save,
         onUpClick = { onClose() },

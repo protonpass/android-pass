@@ -3,11 +3,12 @@ package me.proton.pass.autofill.ui.autosave
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -22,7 +23,7 @@ import me.proton.pass.presentation.auth.AuthScreen
 
 private const val AUTH_SCREEN_ROUTE = "common/auth"
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalLifecycleComposeApi::class)
 @Composable
 fun AutosaveApp(
     info: SaveInformation,
@@ -30,7 +31,7 @@ fun AutosaveApp(
 ) {
     val navController = rememberAnimatedNavController()
     val viewModel: AutofillAppViewModel = hiltViewModel()
-    val uiState by viewModel.state.collectAsState()
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
     val isDark = when (uiState.theme) {
         ThemePreference.Light -> false
         ThemePreference.Dark -> true

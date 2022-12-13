@@ -2,9 +2,9 @@ package me.proton.pass.presentation.onboarding
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -29,8 +29,6 @@ fun OnBoardingPage(
     onSkipButtonClick: (OnBoardingPageName) -> Unit
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         onBoardingPageData.image(this)
@@ -92,7 +90,11 @@ fun OnBoardingPage(
             } else {
                 Spacer(modifier = Modifier.height(48.dp))
             }
-            Spacer(modifier = Modifier.height(50.dp))
+            Spacer(
+                modifier = Modifier
+                    .heightIn(0.dp, 50.dp)
+                    .weight(1f)
+            )
         }
     }
 }

@@ -16,6 +16,7 @@ fun SelectItemScreen(
     initialState: SelectItemInitialState,
     onItemSelected: (AutofillItem) -> Unit,
     onCreateLoginClicked: () -> Unit,
+    onClose: () -> Unit,
     viewModel: SelectItemViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -38,6 +39,7 @@ fun SelectItemScreen(
         onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
         onEnterSearch = { viewModel.onEnterSearch() },
         onStopSearching = { viewModel.onStopSearching() },
-        onCreateLoginClicked = onCreateLoginClicked
+        onCreateLoginClicked = onCreateLoginClicked,
+        onClose = onClose
     )
 }

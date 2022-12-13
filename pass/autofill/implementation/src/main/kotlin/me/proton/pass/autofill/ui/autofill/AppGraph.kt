@@ -24,7 +24,7 @@ fun NavGraphBuilder.appGraph(
     onFinished: () -> Unit
 ) {
     authGraph(appNavigator, onFinished)
-    selectItemGraph(appNavigator, state, onAutofillItemClicked)
+    selectItemGraph(appNavigator, state, onAutofillItemClicked, onFinished)
     createLoginGraph(appNavigator, state, onItemCreated)
     createAliasGraph(appNavigator, state)
 }

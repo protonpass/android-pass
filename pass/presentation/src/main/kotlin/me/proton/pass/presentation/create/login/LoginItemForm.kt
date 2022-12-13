@@ -62,6 +62,10 @@ internal fun LoginItemForm(
             focusLastWebsite = focusLastWebsite,
             doesWebsiteIndexHaveError = doesWebsiteIndexHaveError
         )
-        NoteInput(value = loginItem.note, onChange = onNoteChange)
+        NoteInput(
+            contentModifier = Modifier.height(100.dp),
+            value = loginItem.note,
+            onChange = onNoteChange
+        )
     }
 }

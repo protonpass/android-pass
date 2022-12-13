@@ -27,6 +27,7 @@ fun ProtonFormInput(
     value: String,
     onChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    contentModifier: Modifier = Modifier,
     @StringRes placeholder: Int? = null,
     required: Boolean = false,
     trailingIcon: @Composable (() -> Unit)? = null,
@@ -47,7 +48,7 @@ fun ProtonFormInput(
             singleLine = singleLine,
             visualTransformation = visualTransformation,
             moveToNextOnEnter = moveToNextOnEnter,
-            modifier = Modifier
+            modifier = contentModifier
                 .padding(top = 8.dp)
                 .fillMaxWidth(1.0f),
             editable = editable,

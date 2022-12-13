@@ -17,17 +17,19 @@ import me.proton.pass.presentation.uievents.value
 @Composable
 fun NoteInput(
     modifier: Modifier = Modifier,
+    contentModifier: Modifier = Modifier,
     value: String,
     enabled: Boolean = true,
     onChange: (String) -> Unit
 ) {
     ProtonFormInput(
+        modifier = modifier.padding(top = 28.dp),
+        contentModifier = contentModifier,
         title = R.string.field_note_title,
         placeholder = R.string.field_note_hint,
         editable = enabled,
         value = value,
         onChange = onChange,
-        modifier = modifier.padding(top = 28.dp),
         singleLine = false,
         moveToNextOnEnter = false
     )

@@ -86,7 +86,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         shareId: ShareId,
         itemId: ItemId,
         now: Long
-    ) {
+    ): Result<Unit> {
         throw IllegalStateException("Not yet implemented")
     }
 

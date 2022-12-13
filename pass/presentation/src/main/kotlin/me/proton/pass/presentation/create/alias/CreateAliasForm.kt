@@ -66,7 +66,10 @@ internal fun CreateAliasForm(
             state = state,
             onMailboxClick = onMailboxClick
         )
-        NoteInput(value = state.note, onChange = onNoteChange)
+        NoteInput(
+            contentModifier = Modifier.height(100.dp),
+            value = state.note, onChange = onNoteChange
+        )
 
         if (canDelete) {
             Spacer(Modifier.height(height = 24.dp))

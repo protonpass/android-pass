@@ -26,7 +26,8 @@ internal fun SelectItemScreenContent(
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
     onStopSearching: () -> Unit,
-    onCreateLoginClicked: () -> Unit
+    onCreateLoginClicked: () -> Unit,
+    onClose: () -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -41,7 +42,8 @@ internal fun SelectItemScreenContent(
                 inSearchMode = uiState.searchUiState.inSearchMode,
                 onSearchQueryChange = onSearchQueryChange,
                 onEnterSearch = onEnterSearch,
-                onStopSearching = onStopSearching
+                onStopSearching = onStopSearching,
+                onClose = onClose
             )
         }
     ) { padding ->
@@ -85,7 +87,8 @@ fun PreviewSelectItemScreenContent(
                 onSearchQueryChange = {},
                 onEnterSearch = {},
                 onStopSearching = {},
-                onCreateLoginClicked = {}
+                onCreateLoginClicked = {},
+                onClose = {}
             )
         }
     }

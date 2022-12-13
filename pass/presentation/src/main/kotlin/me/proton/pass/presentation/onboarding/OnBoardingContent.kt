@@ -59,7 +59,7 @@ fun OnBoardingContent(
             snapshotFlow { pagerState.currentPage }.collectLatest { onSelectedPageChanged(it) }
         }
         HorizontalPager(
-            modifier = Modifier,
+            modifier = Modifier.weight(1f),
             state = pagerState,
             count = uiState.enabledPages.size
         ) { page ->

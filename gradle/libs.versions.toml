@@ -61,7 +61,6 @@ okhttp = "4.10.0"
 retrofit = "2.9.0"
 # Test
 junit = "4.13.2"
-mockk = "1.13.2"
 testParameterInjector = "1.9"
 truth = "1.1.3"
 
@@ -216,6 +215,5 @@ androidx-test-uiautomator = { module = "androidx.test.uiautomator:uiautomator", 
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlinTest = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 testParameterInjector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testParameterInjector" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }

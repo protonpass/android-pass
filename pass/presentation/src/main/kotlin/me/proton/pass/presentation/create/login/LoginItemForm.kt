@@ -17,6 +17,7 @@ import me.proton.pass.presentation.components.form.TitleInput
 internal fun LoginItemForm(
     modifier: Modifier = Modifier,
     loginItem: LoginItem,
+    showCreateAliasButton: Boolean,
     onTitleChange: (String) -> Unit,
     onTitleRequiredError: Boolean,
     onUsernameChange: (String) -> Unit,
@@ -43,6 +44,7 @@ internal fun LoginItemForm(
         )
         UsernameInput(
             value = loginItem.username,
+            showCreateAliasButton = showCreateAliasButton,
             canUpdateUsername = canUpdateUsername,
             onChange = onUsernameChange,
             onGenerateAliasClick = onCreateAliasClick,

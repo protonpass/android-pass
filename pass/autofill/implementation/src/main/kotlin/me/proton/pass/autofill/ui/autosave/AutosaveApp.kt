@@ -56,10 +56,8 @@ fun AutosaveApp(
             }
             composable(SAVE_ITEM_ROUTE) {
                 SaveItemScreen(
-                    modifier = Modifier,
                     info = info,
-                    onSaved = { onFinished() },
-                    onCreateAliasClick = { } // Not implemented yet
+                    onSaved = { onFinished() }
                 )
             }
         }

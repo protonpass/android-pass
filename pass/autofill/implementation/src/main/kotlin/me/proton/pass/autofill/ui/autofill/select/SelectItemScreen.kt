@@ -22,7 +22,7 @@ fun SelectItemScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(initialState.webDomain) {
-        viewModel.setWebDomain(initialState.webDomain)
+        viewModel.setInitialState(initialState)
     }
 
     LaunchedEffect(uiState.listUiState.itemClickedEvent is ItemClickedEvent.Clicked) {
@@ -34,8 +34,7 @@ fun SelectItemScreen(
     SelectItemScreenContent(
         modifier = modifier,
         uiState = uiState,
-        onItemClicked = { viewModel.onItemClicked(it, initialState.packageName) },
-        onRefresh = { viewModel.onRefresh() },
+        onItemClicked = { viewModel.onItemClicked(it) },
         onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
         onEnterSearch = { viewModel.onEnterSearch() },
         onStopSearching = { viewModel.onStopSearching() },

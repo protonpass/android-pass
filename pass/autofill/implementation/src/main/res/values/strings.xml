@@ -7,4 +7,8 @@
     <string name="error_loading_items">Could not load the items</string>
     <string name="topbar_search_query">Search items</string>
     <string name="inline_suggestions_open_app">Open Proton Pass</string>
+
+    <!-- Placeholder will contain the domain / app name we are trying to autofill -->
+    <string name="autofill_suggestions_for_placeholder">Suggestions for %s</string>
+    <string name="autofill_suggestions_other_items">Other items</string>
 </resources>

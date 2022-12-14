@@ -19,15 +19,6 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
         get() = sequenceOf(
             SelectItemUiState(
                 SelectItemListUiState(
-                    isLoading = IsLoadingState.Loading,
-                    isRefreshing = IsRefreshingState.NotRefreshing,
-                    items = SelectItemListItems.Initial,
-                    itemClickedEvent = ItemClickedEvent.None
-                ),
-                SearchUiState.Initial
-            ),
-            SelectItemUiState(
-                SelectItemListUiState(
                     isLoading = IsLoadingState.NotLoading,
                     isRefreshing = IsRefreshingState.NotRefreshing,
                     items = SelectItemListItems(

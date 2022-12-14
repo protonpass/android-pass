@@ -24,4 +24,9 @@ dependencies {
     implementation(libs.core.user)
     implementation(projects.pass.common.api)
     implementation(projects.pass.domain)
+
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.junit)
 }

@@ -1,6 +1,5 @@
 package me.proton.android.pass.navigation.api
 
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavType
 
 enum class NavArgId(val key: String, val navType: NavType<*>) {
@@ -8,8 +7,14 @@ enum class NavArgId(val key: String, val navType: NavType<*>) {
     ShareId("shareId", NavType.StringType),
 }
 
-inline fun <reified T> NavBackStackEntry.findArg(arg: NavArgId): T {
-    val value = arguments?.get(arg.key)
-    requireNotNull(value)
-    return value as T
+sealed interface OptionalNavArgId {
+    val key: String
+    val navType: NavType<*>
+}
+
+enum class AliasOptionalNavArgId : OptionalNavArgId {
+    Title {
+        override val key: String = "aliasTitle"
+        override val navType: NavType<*> = NavType.StringType
+    }
 }

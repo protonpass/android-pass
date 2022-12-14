@@ -21,7 +21,7 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.UrlSanitizer
+import me.proton.android.pass.data.api.UrlSanitizer
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 

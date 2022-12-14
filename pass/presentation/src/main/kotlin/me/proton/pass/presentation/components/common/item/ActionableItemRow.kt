@@ -26,10 +26,11 @@ import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.components.previewproviders.ItemUiModelPreviewProvider
 
 @Composable
-internal fun ActionableItemRow(
+fun ActionableItemRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
     highlight: String = "",
+    showMenuIcon: Boolean,
     onItemClick: (ItemUiModel) -> Unit = {},
     onItemMenuClick: (ItemUiModel) -> Unit = {}
 ) {
@@ -45,15 +46,17 @@ internal fun ActionableItemRow(
             highlight = highlight,
             modifier = Modifier.weight(1f)
         )
-        Spacer(modifier = Modifier.width(16.dp))
-        IconButton(
-            onClick = { onItemMenuClick(item) },
-            modifier = Modifier.size(24.dp)
-        ) {
-            Icon(
-                ImageVector.vectorResource(R.drawable.ic_three_dots_vertical_24),
-                contentDescription = stringResource(id = R.string.action_content_description_menu)
-            )
+        if (showMenuIcon) {
+            Spacer(modifier = Modifier.width(16.dp))
+            IconButton(
+                onClick = { onItemMenuClick(item) },
+                modifier = Modifier.size(24.dp)
+            ) {
+                Icon(
+                    ImageVector.vectorResource(R.drawable.ic_three_dots_vertical_24),
+                    contentDescription = stringResource(id = R.string.action_content_description_menu)
+                )
+            }
         }
     }
 }
@@ -63,13 +66,29 @@ class ThemeAndItemUiModelProvider :
 
 @Preview
 @Composable
-fun ActionableItemRowPreview(
+fun ActionableItemRowPreviewWithMenuIcon(
     @PreviewParameter(ThemeAndItemUiModelProvider::class) input: Pair<Boolean, ItemUiModel>
 ) {
     ProtonTheme(isDark = input.first) {
         Surface {
             ActionableItemRow(
-                item = input.second
+                item = input.second,
+                showMenuIcon = true
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ActionableItemRowPreviewWithoutMenuIcon(
+    @PreviewParameter(ThemeAndItemUiModelProvider::class) input: Pair<Boolean, ItemUiModel>
+) {
+    ProtonTheme(isDark = input.first) {
+        Surface {
+            ActionableItemRow(
+                item = input.second,
+                showMenuIcon = false
             )
         }
     }

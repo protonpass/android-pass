@@ -10,6 +10,7 @@ import me.proton.android.pass.data.api.usecases.CreateItem
 import me.proton.android.pass.data.api.usecases.CreateVault
 import me.proton.android.pass.data.api.usecases.GetAddressById
 import me.proton.android.pass.data.api.usecases.GetAddressesForUserId
+import me.proton.android.pass.data.api.usecases.GetAppNameFromPackageName
 import me.proton.android.pass.data.api.usecases.GetCurrentShare
 import me.proton.android.pass.data.api.usecases.GetCurrentUserId
 import me.proton.android.pass.data.api.usecases.GetShareById
@@ -32,6 +33,7 @@ import me.proton.android.pass.data.impl.usecases.CreateItemImpl
 import me.proton.android.pass.data.impl.usecases.CreateVaultImpl
 import me.proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import me.proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
+import me.proton.android.pass.data.impl.usecases.GetAppNameFromPackageNameImpl
 import me.proton.android.pass.data.impl.usecases.GetCurrentShareImpl
 import me.proton.android.pass.data.impl.usecases.GetCurrentUserIdImpl
 import me.proton.android.pass.data.impl.usecases.GetShareByIdImpl
@@ -118,5 +120,10 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindApplyPendingEvents(impl: ApplyPendingEventsImpl): ApplyPendingEvents
+
+    @Binds
+    abstract fun bindGetAppNameFromPackageName(
+        impl: GetAppNameFromPackageNameImpl
+    ): GetAppNameFromPackageName
 }
 

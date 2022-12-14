@@ -1,6 +1,11 @@
-package me.proton.pass.autofill.ui.autofill.select
+package me.proton.pass.autofill.ui.previewproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import me.proton.pass.autofill.ui.autofill.select.ItemClickedEvent
+import me.proton.pass.autofill.ui.autofill.select.SearchUiState
+import me.proton.pass.autofill.ui.autofill.select.SelectItemListItems
+import me.proton.pass.autofill.ui.autofill.select.SelectItemListUiState
+import me.proton.pass.autofill.ui.autofill.select.SelectItemUiState
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId

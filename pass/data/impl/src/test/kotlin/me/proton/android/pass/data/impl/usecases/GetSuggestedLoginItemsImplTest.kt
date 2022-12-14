@@ -99,5 +99,17 @@ class GetSuggestedLoginItemsImplTest {
                         .isEqualTo(Result.Success(emptyList<Item>()))
                 }
         }
+
+    @Test
+    fun `given an item with matching domain should return the suggestion`() = runTest {
+        val baseDomain = "www.proton.me"
+        val itemType = TestItemType.login(websites = listOf("https://$baseDomain/somepath"))
+        val item = TestItem.create(itemType)
+        val successResult: Result<List<Item>> = Result.Success(listOf(item))
+        observeActiveItems.sendItemList(successResult)
+        getSuggestedLoginItems.invoke(None, baseDomain.some()).test {
+            assertThat(awaitItem()).isEqualTo(Result.Success(listOf(item)))
+        }
+    }
 }
 

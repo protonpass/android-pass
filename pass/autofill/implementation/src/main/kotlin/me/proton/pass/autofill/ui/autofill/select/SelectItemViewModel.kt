@@ -36,7 +36,7 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.flatMap
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.toOption
-import me.proton.pass.presentation.UrlSanitizer
+import me.proton.android.pass.data.api.UrlSanitizer
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState

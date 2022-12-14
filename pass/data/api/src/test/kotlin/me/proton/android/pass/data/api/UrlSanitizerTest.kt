@@ -1,7 +1,6 @@
-package me.proton.android.pass.presentation
+package me.proton.android.pass.data.api
 
 import me.proton.pass.common.api.Result
-import me.proton.pass.presentation.UrlSanitizer
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull

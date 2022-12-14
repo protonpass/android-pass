@@ -8,7 +8,7 @@ import me.proton.pass.autofill.entities.AssistInfo
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
-import me.proton.pass.presentation.UrlSanitizer
+import me.proton.android.pass.data.api.UrlSanitizer
 
 object Utils {
 

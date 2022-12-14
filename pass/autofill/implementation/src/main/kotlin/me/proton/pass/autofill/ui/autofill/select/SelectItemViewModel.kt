@@ -3,7 +3,6 @@ package me.proton.pass.autofill.ui.autofill.select
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -13,54 +12,52 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.usecases.GetAppNameFromPackageName
+import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import me.proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.android.pass.data.api.usecases.ObserveActiveItems
-import me.proton.android.pass.data.api.usecases.RefreshContent
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItem
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.pass.autofill.BROWSERS
 import me.proton.pass.autofill.extensions.toAutoFillItem
 import me.proton.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
 import me.proton.pass.common.api.None
-import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
+import me.proton.pass.common.api.flatMap
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.toOption
-import me.proton.pass.domain.entity.PackageName
+import me.proton.pass.presentation.UrlSanitizer
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsProcessingSearchState
 import me.proton.pass.presentation.uievents.IsRefreshingState
 import me.proton.pass.presentation.utils.ItemUiFilter
+import java.net.URI
 import javax.inject.Inject
 
 @HiltViewModel
 class SelectItemViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val accountManager: AccountManager,
     private val updateAutofillItem: UpdateAutofillItem,
-    private val refreshContent: RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    observeActiveItems: ObserveActiveItems
+    private val getAppNameFromPackageName: GetAppNameFromPackageName,
+    observeActiveItems: ObserveActiveItems,
+    getSuggestedLoginItems: GetSuggestedLoginItems
 ) : ViewModel() {
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        PassLogger.e(TAG, throwable)
-    }
-
-    private val webDomainFilterState: MutableStateFlow<Option<String>> = MutableStateFlow(None)
+    private val initialState: MutableStateFlow<SelectItemInitialState?> =
+        MutableStateFlow(null)
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -81,23 +78,64 @@ class SelectItemViewModel @Inject constructor(
         val isProcessingSearch: IsProcessingSearchState
     )
 
-    private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = observeActiveItems(
-        filter = ItemTypeFilter.Logins
-    )
+    private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> =
+        observeActiveItems(filter = ItemTypeFilter.Logins)
+            .map { itemResult ->
+                itemResult.map { list ->
+                    list.map { it.toUiModel(keyStoreCrypto) }
+                }
+            }
+            .distinctUntilChanged()
+
+    private val suggestionsItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = initialState
+        .flatMapLatest { state ->
+            if (state == null) {
+                flowOf(Result.Loading)
+            } else {
+                val packageName = if (BROWSERS.contains(state.packageName.packageName)) {
+                    None
+                } else {
+                    Some(state.packageName.packageName)
+                }
+                getSuggestedLoginItems(packageName, state.webDomain)
+            }
+        }
         .map { itemResult ->
             itemResult.map { list ->
                 list.map { it.toUiModel(keyStoreCrypto) }
             }
         }
-        .distinctUntilChanged()
+
 
     @OptIn(FlowPreview::class)
-    private val listItems: Flow<Result<List<ItemUiModel>>> = combine(
+    private val listItems: Flow<Result<SelectItemListItems>> = combine(
         activeItemUIModelFlow,
+        suggestionsItemUIModelFlow,
         searchQueryState.debounce(DEBOUNCE_TIMEOUT)
-    ) { result, searchQuery ->
+    ) { result, suggestionsResult, searchQuery ->
         isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
-        result.map { ItemUiFilter.filterByQuery(it, searchQuery) }
+        if (searchQuery.isNotBlank()) {
+            result
+                .map { ItemUiFilter.filterByQuery(it, searchQuery) }
+                .map { items ->
+                    SelectItemListItems(
+                        suggestions = emptyList(),
+                        items = items,
+                        suggestionsForTitle = ""
+                    )
+                }
+        } else {
+            result.flatMap { items ->
+                suggestionsResult.map { suggestions ->
+                    SelectItemListItems(
+                        items = items,
+                        suggestions = suggestions,
+                        suggestionsForTitle = getSuggestionsTitle()
+                    )
+                }
+            }
+        }
+
     }.flowOn(Dispatchers.Default)
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
@@ -113,7 +151,7 @@ class SelectItemViewModel @Inject constructor(
     ) { itemsResult, isRefreshing, itemClicked, search ->
         val isLoading = IsLoadingState.from(itemsResult is Result.Loading)
         val items = when (itemsResult) {
-            Result.Loading -> emptyList()
+            Result.Loading -> SelectItemListItems.Initial
             is Result.Success -> itemsResult.data
             is Result.Error -> {
                 val defaultMessage = "Could not load autofill items"
@@ -123,7 +161,7 @@ class SelectItemViewModel @Inject constructor(
                     defaultMessage
                 )
                 snackbarMessageRepository.emitSnackbarMessage(LoadItemsError)
-                emptyList()
+                SelectItemListItems.Initial
             }
         }
 
@@ -147,29 +185,22 @@ class SelectItemViewModel @Inject constructor(
             initialValue = SelectItemUiState.Loading
         )
 
-    fun onItemClicked(item: ItemUiModel, packageName: PackageName) {
-        val packageNameOption = packageName.takeIf { !BROWSERS.contains(packageName.packageName) }
+    fun onItemClicked(item: ItemUiModel) {
+        val state = initialState.value ?: return
+
+        val packageNameOption = state.packageName
+            .takeIf { !BROWSERS.contains(state.packageName.packageName) }
             .toOption()
-        val domain = webDomainFilterState.value
-        if (packageNameOption is Some || domain is Some) {
+        if (packageNameOption is Some || state.webDomain is Some) {
             updateAutofillItem(
                 shareId = item.shareId,
                 itemId = item.id,
-                data = UpdateAutofillItemData(packageNameOption, domain)
+                data = UpdateAutofillItemData(packageNameOption, state.webDomain)
             )
         }
 
         itemClickedFlow.update {
             ItemClickedEvent.Clicked(item.toAutoFillItem(keyStoreCrypto))
-        }
-    }
-
-    fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
-        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        if (userId != null) {
-            isRefreshing.update { IsRefreshingState.Refreshing }
-            refreshContent(userId)
-            isRefreshing.update { IsRefreshingState.NotRefreshing }
         }
     }
 
@@ -190,8 +221,40 @@ class SelectItemViewModel @Inject constructor(
         isInSearchModeState.update { true }
     }
 
-    fun setWebDomain(domain: Option<String>) {
-        webDomainFilterState.update { domain }
+    fun setInitialState(state: SelectItemInitialState) {
+        initialState.update { state }
+    }
+
+    private fun getSuggestionsTitle(): String {
+        val state = initialState.value ?: return ""
+        if (BROWSERS.contains(state.packageName.packageName)) {
+            if (state.webDomain is Some) {
+                return getSuggestionsTitleForDomain(state.webDomain.value)
+            } else {
+                PassLogger.i(TAG, "Received autofill suggestion with only browser package name and no domain")
+                return ""
+            }
+        } else {
+            return getAppNameFromPackageName(state.packageName)
+        }
+    }
+
+    private fun getSuggestionsTitleForDomain(domain: String): String {
+        val sanitized = UrlSanitizer.sanitize(domain)
+        return when (sanitized) {
+            Result.Loading -> ""
+            is Result.Error -> {
+                val message = "Error sanitizing URL [url=$domain]"
+                PassLogger.i(TAG, sanitized.exception ?: Exception(message), message)
+                ""
+            }
+            is Result.Success -> {
+                runCatching {
+                    val parsed = URI(sanitized.data)
+                    parsed.host
+                }.getOrNull() ?: ""
+            }
+        }
     }
 
     companion object {

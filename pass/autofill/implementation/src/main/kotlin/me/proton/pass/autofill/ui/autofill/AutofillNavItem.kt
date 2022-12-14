@@ -3,7 +3,7 @@ package me.proton.pass.autofill.ui.autofill
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.navArgument
 import me.proton.android.pass.navigation.api.AliasOptionalNavArgId
-import me.proton.android.pass.navigation.api.NavArgId
+import me.proton.android.pass.navigation.api.CommonNavArgId
 import me.proton.android.pass.navigation.api.NavItem
 import me.proton.android.pass.navigation.api.OptionalNavArgId
 import me.proton.pass.common.api.Option
@@ -11,7 +11,7 @@ import me.proton.pass.domain.ShareId
 
 sealed class AutofillNavItem(
     val baseRoute: String,
-    private val navArgIds: List<NavArgId> = emptyList(),
+    private val navArgIds: List<CommonNavArgId> = emptyList(),
     private val optionalArgIds: List<OptionalNavArgId> = emptyList(),
     override val isTopLevel: Boolean = false
 ) : NavItem {
@@ -47,7 +47,7 @@ sealed class AutofillNavItem(
     object CreateLogin : AutofillNavItem("createLogin", isTopLevel = true)
     object CreateAlias : AutofillNavItem(
         baseRoute = "createAlias",
-        navArgIds = listOf(NavArgId.ShareId),
+        navArgIds = listOf(CommonNavArgId.ShareId),
         optionalArgIds = listOf(AliasOptionalNavArgId.Title)
     ) {
         fun createNavRoute(shareId: ShareId, title: Option<String>) = buildString {

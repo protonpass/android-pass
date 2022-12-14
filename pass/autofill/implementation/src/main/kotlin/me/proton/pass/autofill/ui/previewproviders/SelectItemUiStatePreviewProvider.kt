@@ -66,7 +66,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
         )
 
     private fun item(name: String): ItemUiModel = ItemUiModel(
-        id = ItemId("123"),
+        id = ItemId(name),
         shareId = ShareId("345"),
         name = name,
         note = "Note content",

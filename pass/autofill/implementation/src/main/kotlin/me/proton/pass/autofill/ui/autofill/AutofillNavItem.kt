@@ -13,7 +13,7 @@ sealed class AutofillNavItem(
     val baseRoute: String,
     private val navArgIds: List<NavArgId> = emptyList(),
     private val optionalArgIds: List<OptionalNavArgId> = emptyList(),
-    override val isTopLevel: Boolean
+    override val isTopLevel: Boolean = false
 ) : NavItem {
 
     override val route = run {
@@ -48,8 +48,7 @@ sealed class AutofillNavItem(
     object CreateAlias : AutofillNavItem(
         baseRoute = "createAlias",
         navArgIds = listOf(NavArgId.ShareId),
-        optionalArgIds = listOf(AliasOptionalNavArgId.Title),
-        isTopLevel = true
+        optionalArgIds = listOf(AliasOptionalNavArgId.Title)
     ) {
         fun createNavRoute(shareId: ShareId, title: Option<String>) = buildString {
             append("$baseRoute/${shareId.id}")

@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import me.proton.android.pass.data.api.UrlSanitizer
 import me.proton.android.pass.data.api.usecases.GetAppNameFromPackageName
 import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import me.proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -36,7 +37,6 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.flatMap
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.toOption
-import me.proton.android.pass.data.api.UrlSanitizer
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -227,21 +227,20 @@ class SelectItemViewModel @Inject constructor(
 
     private fun getSuggestionsTitle(): String {
         val state = initialState.value ?: return ""
-        if (BROWSERS.contains(state.packageName.packageName)) {
+        return if (BROWSERS.contains(state.packageName.packageName)) {
             if (state.webDomain is Some) {
-                return getSuggestionsTitleForDomain(state.webDomain.value)
+                getSuggestionsTitleForDomain(state.webDomain.value)
             } else {
                 PassLogger.i(TAG, "Received autofill suggestion with only browser package name and no domain")
-                return ""
+                ""
             }
         } else {
-            return getAppNameFromPackageName(state.packageName)
+            getAppNameFromPackageName(state.packageName)
         }
     }
 
-    private fun getSuggestionsTitleForDomain(domain: String): String {
-        val sanitized = UrlSanitizer.sanitize(domain)
-        return when (sanitized) {
+    private fun getSuggestionsTitleForDomain(domain: String): String =
+        when (val sanitized = UrlSanitizer.sanitize(domain)) {
             Result.Loading -> ""
             is Result.Error -> {
                 val message = "Error sanitizing URL [url=$domain]"
@@ -252,10 +251,9 @@ class SelectItemViewModel @Inject constructor(
                 runCatching {
                     val parsed = URI(sanitized.data)
                     parsed.host
-                }.getOrNull() ?: ""
+                }.getOrDefault("")
             }
         }
-    }
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

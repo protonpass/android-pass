@@ -47,7 +47,12 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                 SearchUiState.Initial
             ),
             SelectItemUiState(
-                SelectItemListUiState.Loading,
+                SelectItemListUiState(
+                    isLoading = IsLoadingState.NotLoading,
+                    isRefreshing = IsRefreshingState.NotRefreshing,
+                    items = SelectItemListItems.Initial,
+                    itemClickedEvent = ItemClickedEvent.None
+                ),
                 SearchUiState(
                     searchQuery = "query",
                     inSearchMode = true,

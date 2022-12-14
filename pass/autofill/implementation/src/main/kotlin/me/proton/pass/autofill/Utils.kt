@@ -3,12 +3,13 @@ package me.proton.pass.autofill
 import android.app.assist.AssistStructure
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import android.service.autofill.FillContext
+import me.proton.android.pass.data.api.UrlSanitizer
 import me.proton.pass.autofill.entities.AssistInfo
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
-import me.proton.android.pass.data.api.UrlSanitizer
 
 object Utils {
 
@@ -20,7 +21,14 @@ object Utils {
 
     fun getApplicationName(context: Context, packageName: String): String {
         val packageManager = context.packageManager
-        val appInfo = packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
+        val appInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager.getApplicationInfo(
+                packageName,
+                PackageManager.ApplicationInfoFlags.of(PackageManager.GET_META_DATA.toLong())
+            )
+        } else {
+            packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
+        }
         return packageManager.getApplicationLabel(appInfo).toString()
     }
 

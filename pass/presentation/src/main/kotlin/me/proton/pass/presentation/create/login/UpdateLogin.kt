@@ -54,7 +54,7 @@ fun UpdateLogin(
         onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) },
         onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
-        onCreateAliasClick = onCreateAliasClick,
+        onCreateAliasClick = { shareId, _ -> onCreateAliasClick(shareId) },
         onRemoveAliasClick = { }
     )
 }

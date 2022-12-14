@@ -2,13 +2,8 @@ package me.proton.pass.autofill.ui.autofill.select
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.components.common.PassFloatingActionButton
 import me.proton.pass.presentation.components.model.ItemUiModel
 
@@ -46,28 +41,5 @@ internal fun SelectItemScreenContent(
             uiState = uiState,
             onItemClicked = onItemClicked
         )
-    }
-}
-
-class ThemeAndSelectItemUiStateProvider :
-    ThemePairPreviewProvider<SelectItemUiState>(SelectItemUiStatePreviewProvider())
-
-@Preview
-@Composable
-fun PreviewSelectItemScreenContent(
-    @PreviewParameter(ThemeAndSelectItemUiStateProvider::class) input: Pair<Boolean, SelectItemUiState>
-) {
-    ProtonTheme(isDark = input.first) {
-        Surface {
-            SelectItemScreenContent(
-                uiState = input.second,
-                onItemClicked = {},
-                onSearchQueryChange = {},
-                onEnterSearch = {},
-                onStopSearching = {},
-                onCreateLoginClicked = {},
-                onClose = {}
-            )
-        }
     }
 }

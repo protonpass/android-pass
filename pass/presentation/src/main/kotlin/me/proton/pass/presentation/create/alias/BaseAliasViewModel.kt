@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.navigation.api.AliasOptionalNavArgId
-import me.proton.android.pass.navigation.api.NavArgId
+import me.proton.android.pass.navigation.api.CommonNavArgId
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.toOption
@@ -29,7 +29,7 @@ abstract class BaseAliasViewModel(
 ) : ViewModel() {
 
     protected val shareId: Option<ShareId> =
-        savedStateHandle.get<String>(NavArgId.ShareId.key)
+        savedStateHandle.get<String>(CommonNavArgId.ShareId.key)
             .toOption()
             .map { ShareId(it) }
 

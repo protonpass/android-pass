@@ -16,7 +16,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                 SelectItemListUiState(
                     isLoading = IsLoadingState.Loading,
                     isRefreshing = IsRefreshingState.NotRefreshing,
-                    items = emptyList(),
+                    items = SelectItemListItems.Initial,
                     itemClickedEvent = ItemClickedEvent.None
                 ),
                 SearchUiState.Initial
@@ -25,16 +25,26 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                 SelectItemListUiState(
                     isLoading = IsLoadingState.NotLoading,
                     isRefreshing = IsRefreshingState.NotRefreshing,
-                    items = listOf(
-                        ItemUiModel(
-                            id = ItemId("123"),
-                            shareId = ShareId("345"),
-                            name = "Item with long text",
-                            note = "Note content",
-                            itemType = ItemType.Note(
-                                "Some very very long test that should be ellipsized as we type"
-                            )
-                        )
+                    items = SelectItemListItems(
+                        suggestions = emptyList(),
+                        items = listOf(item("Item with long text")),
+                        suggestionsForTitle = ""
+                    ),
+                    itemClickedEvent = ItemClickedEvent.None
+                ),
+                SearchUiState.Initial
+            ),
+            SelectItemUiState(
+                SelectItemListUiState(
+                    isLoading = IsLoadingState.NotLoading,
+                    isRefreshing = IsRefreshingState.NotRefreshing,
+                    items = SelectItemListItems(
+                        suggestions = listOf(item("Suggested item")),
+                        items = listOf(
+                            item("Item with long text"),
+                            item("Another item")
+                        ),
+                        suggestionsForTitle = "some.website.local"
                     ),
                     itemClickedEvent = ItemClickedEvent.None
                 ),
@@ -49,4 +59,14 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                 )
             )
         )
+
+    private fun item(name: String): ItemUiModel = ItemUiModel(
+        id = ItemId("123"),
+        shareId = ShareId("345"),
+        name = name,
+        note = "Note content",
+        itemType = ItemType.Note(
+            "Some very very long test that should be ellipsized as we type"
+        )
+    )
 }

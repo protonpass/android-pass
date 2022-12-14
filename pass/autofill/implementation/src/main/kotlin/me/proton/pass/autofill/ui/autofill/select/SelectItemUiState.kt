@@ -23,14 +23,28 @@ data class SelectItemListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
     val itemClickedEvent: ItemClickedEvent,
-    val items: List<ItemUiModel>
+    val items: SelectItemListItems
 ) {
     companion object {
         val Loading = SelectItemListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
             itemClickedEvent = ItemClickedEvent.None,
-            items = emptyList()
+            items = SelectItemListItems.Initial
+        )
+    }
+}
+
+data class SelectItemListItems(
+    val suggestions: List<ItemUiModel>,
+    val items: List<ItemUiModel>,
+    val suggestionsForTitle: String
+) {
+    companion object {
+        val Initial = SelectItemListItems(
+            suggestions = emptyList(),
+            items = emptyList(),
+            suggestionsForTitle = ""
         )
     }
 }

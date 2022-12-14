@@ -22,13 +22,14 @@ const val RESULT_CREATED_ALIAS = "created_alias"
 @Composable
 fun CreateAlias(
     modifier: Modifier = Modifier,
-    initialState: InitialCreateAliasUiState = InitialCreateAliasUiState(),
+    initialState: InitialCreateAliasUiState? = null,
     onUpClick: () -> Unit,
     onSuccess: (String) -> Unit,
     onClose: () -> Unit,
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
     LaunchedEffect(initialState) {
+        initialState ?: return@LaunchedEffect
         viewModel.setInitialState(initialState)
     }
 

@@ -12,8 +12,11 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.navigation.api.AliasOptionalNavArgId
+import me.proton.android.pass.navigation.api.NavArgId
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.common.api.Option
+import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.uievents.AliasSavedState
@@ -26,12 +29,23 @@ abstract class BaseAliasViewModel(
 ) : ViewModel() {
 
     protected val shareId: Option<ShareId> =
-        Option.fromNullable(savedStateHandle.get<String>("shareId")?.let { ShareId(it) })
+        savedStateHandle.get<String>(NavArgId.ShareId.key)
+            .toOption()
+            .map { ShareId(it) }
+
+    private val title: Option<String> = savedStateHandle
+        .get<String>(AliasOptionalNavArgId.Title.key)
+        .toOption()
 
     private val shareIdState: Flow<Option<ShareId>> = MutableStateFlow(shareId)
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
-    val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(AliasItem.Empty)
+    val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(
+        AliasItem(
+            title = title.value() ?: "",
+            alias = title.value() ?: ""
+        )
+    )
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.Loading)
     protected val isAliasSavedState: MutableStateFlow<AliasSavedState> =

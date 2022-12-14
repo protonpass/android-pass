@@ -17,7 +17,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 import me.proton.pass.common.api.None
+import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Some
+import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.components.common.LoadingDialog
@@ -46,7 +48,7 @@ internal fun LoginContent(
     onWebsiteChange: OnWebsiteChange,
     onNoteChange: (String) -> Unit,
     onEmitSnackbarMessage: (LoginSnackbarMessages) -> Unit,
-    onCreateAliasClick: (ShareId) -> Unit,
+    onCreateAliasClick: (ShareId, Option<String>) -> Unit,
     onRemoveAliasClick: () -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
@@ -129,7 +131,7 @@ internal fun LoginContent(
                 },
                 onCreateAliasClick = {
                     if (uiState.shareId is Some) {
-                        onCreateAliasClick(uiState.shareId.value)
+                        onCreateAliasClick(uiState.shareId.value, uiState.loginItem.title.toOption())
                     }
                 },
                 onAliasOptionsClick = {

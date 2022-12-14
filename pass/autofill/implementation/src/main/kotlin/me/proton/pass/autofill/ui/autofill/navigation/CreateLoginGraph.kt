@@ -42,10 +42,10 @@ fun NavGraphBuilder.createLoginGraph(
             ),
             onClose = { appNavigator.onBackClick() },
             onSuccess = onItemCreated,
-            onCreateAliasClick = {
+            onCreateAliasClick = { shareId, titleOption ->
                 appNavigator.navigate(
                     AutofillNavItem.CreateAlias,
-                    AutofillNavItem.CreateAlias.createNavRoute(it)
+                    AutofillNavItem.CreateAlias.createNavRoute(shareId, titleOption)
                 )
             }
         )

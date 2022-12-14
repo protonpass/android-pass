@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.model.ItemUiModel
@@ -21,7 +22,7 @@ fun CreateLogin(
     showCreateAliasButton: Boolean = true,
     onClose: () -> Unit,
     onSuccess: (ItemUiModel) -> Unit,
-    onCreateAliasClick: (ShareId) -> Unit
+    onCreateAliasClick: (ShareId, Option<String>) -> Unit
 ) {
     val viewModel: CreateLoginViewModel = hiltViewModel()
     LaunchedEffect(Unit) {

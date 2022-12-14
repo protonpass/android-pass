@@ -2,6 +2,7 @@ package me.proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.android.pass.data.api.UrlSanitizer
 import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import me.proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.android.pass.data.api.usecases.ObserveActiveItems
@@ -38,9 +39,27 @@ class GetSuggestedLoginItemsImpl @Inject constructor(
         url: Option<String>,
         item: Item,
         login: ItemType.Login
-    ): Boolean {
-        return packageName is Some && item.allowedPackageNames.contains(packageName.value) ||
-            url is Some && login.websites.contains(url.value)
+    ): Boolean =
+        if (packageName is Some) {
+            isPackageNameMatch(packageName.value, item)
+        } else if (url is Some) {
+            isUrlMatch(url.value, login)
+        } else false
+
+    private fun isPackageNameMatch(packageName: String, item: Item): Boolean =
+        item.allowedPackageNames.contains(packageName)
+
+    private fun isUrlMatch(url: String, login: ItemType.Login): Boolean {
+        val urlDomain = when (val domain = UrlSanitizer.getDomain(url)) {
+            is Result.Success -> domain.data
+            else -> return false
+        }
+        val loginDomains = login.websites.map { UrlSanitizer.getDomain(it) }
+
+        return loginDomains.any {
+            it is Result.Success && it.data == urlDomain
+        }
     }
+
 }
 

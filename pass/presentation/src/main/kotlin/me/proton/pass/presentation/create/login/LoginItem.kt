@@ -3,7 +3,7 @@ package me.proton.pass.presentation.create.login
 import androidx.compose.runtime.Immutable
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.ItemContents
-import me.proton.pass.presentation.UrlSanitizer
+import me.proton.android.pass.data.api.UrlSanitizer
 
 @Immutable
 data class LoginItem(

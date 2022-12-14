@@ -1,4 +1,4 @@
-package me.proton.pass.presentation
+package me.proton.android.pass.data.api
 
 import me.proton.pass.common.api.Result
 import java.net.URI

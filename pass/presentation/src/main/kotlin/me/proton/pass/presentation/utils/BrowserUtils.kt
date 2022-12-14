@@ -7,7 +7,7 @@ import android.net.Uri
 import me.proton.android.pass.log.PassLogger
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
-import me.proton.pass.presentation.UrlSanitizer
+import me.proton.android.pass.data.api.UrlSanitizer
 
 object BrowserUtils {
     const val TAG = "BrowserUtils"

@@ -16,7 +16,6 @@ import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage
 import me.proton.pass.presentation.create.alias.CreateAliasViewModel
 import me.proton.pass.presentation.create.alias.CreateUpdateAliasUiState
-import me.proton.pass.presentation.create.alias.InitialCreateAliasUiState
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.test.MainDispatcherRule
@@ -59,21 +58,13 @@ class CreateAliasViewModelTest {
 
         createAlias = TestCreateAlias()
         snackbarRepository = TestSnackbarMessageRepository()
-        viewModel = CreateAliasViewModel(
-            accountManager = TestAccountManager().apply {
-                sendPrimaryUserId(UserId("123"))
-            },
-            aliasRepository = aliasRepository,
-            createAlias = createAlias,
-            snackbarMessageRepository = snackbarRepository,
-            savedStateHandle = TestSavedStateHandle.create().apply {
-                set("shareId", "123")
-            }
-        )
     }
+
 
     @Test
     fun `title alias sync`() = runTest {
+        viewModel = createAliasViewModel()
+
         val titleInput = "Title changed"
         viewModel.onSuffixChange(suffix)
         viewModel.onTitleChange(titleInput)
@@ -114,6 +105,8 @@ class CreateAliasViewModelTest {
 
     @Test
     fun `given no suffix when the alias has changed the state should hold it`() = runTest {
+        viewModel = createAliasViewModel()
+
         val aliasInput = "aliasInput"
         viewModel.onAliasChange(aliasInput)
 
@@ -127,6 +120,8 @@ class CreateAliasViewModelTest {
 
     @Test
     fun `is able to handle CannotCreateMoreAliases`() = runTest {
+        viewModel = createAliasViewModel()
+
         createAlias.setResult(Result.Error(CannotCreateMoreAliasesError()))
         setupContentsForCreation()
 
@@ -142,6 +137,8 @@ class CreateAliasViewModelTest {
 
     @Test
     fun `emits success when alias is created successfully`() = runTest {
+        viewModel = createAliasViewModel()
+
         createAlias.setResult(Result.Success(TestItem.random()))
         setupContentsForCreation()
 
@@ -157,6 +154,8 @@ class CreateAliasViewModelTest {
 
     @Test
     fun `spaces in title are properly formatted`() = runTest {
+        viewModel = createAliasViewModel()
+
         val titleInput = "ThiS iS a TeSt"
         viewModel.onTitleChange(titleInput)
         viewModel.aliasUiState.test {
@@ -167,12 +166,29 @@ class CreateAliasViewModelTest {
 
     @Test
     fun `setInitialState properly formats alias`() = runTest {
-        viewModel.setInitialState(InitialCreateAliasUiState(title = "ThiS.iS_a TeSt"))
+        viewModel = createAliasViewModel(title = "ThiS.iS_a TeSt")
         viewModel.aliasUiState.test {
             val item = awaitItem()
             assertThat(item.aliasItem.alias).isEqualTo("this.is_a-test")
         }
     }
+
+    private fun createAliasViewModel(title: String? = null, isDraft: Boolean = false) =
+        CreateAliasViewModel(
+            accountManager = TestAccountManager().apply {
+                sendPrimaryUserId(UserId("123"))
+            },
+            aliasRepository = aliasRepository,
+            createAlias = createAlias,
+            snackbarMessageRepository = snackbarRepository,
+            savedStateHandle = TestSavedStateHandle.create().apply {
+                set("shareId", "123")
+                set("isDraft", isDraft)
+                title?.let {
+                    set("aliasTitle", title)
+                }
+            }
+        )
 
     private fun setupContentsForCreation() {
         viewModel.aliasItemState.update {

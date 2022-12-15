@@ -25,6 +25,7 @@ import me.proton.pass.test.domain.usecases.TestCreateItem
 import me.proton.pass.test.domain.usecases.TestObserveActiveShare
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.pass.test.domain.usecases.TestCreateAlias
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -50,7 +51,8 @@ internal class CreateLoginViewModelTest {
             observeActiveShare = observeActiveShare,
             snackbarMessageRepository = TestSnackbarMessageRepository(),
             savedStateHandle = TestSavedStateHandle.create(),
-            keyStoreCrypto = TestKeyStoreCrypto
+            keyStoreCrypto = TestKeyStoreCrypto,
+            createAlias = TestCreateAlias()
         )
     }
 

@@ -19,7 +19,6 @@ import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitl
 @Composable
 fun AliasOptionsBottomSheet(
     modifier: Modifier = Modifier,
-    onEditAliasClick: () -> Unit,
     onRemoveAliasClick: () -> Unit
 ) {
     Column(modifier = modifier) {
@@ -29,22 +28,10 @@ fun AliasOptionsBottomSheet(
         )
         BottomSheetItemList(
             items = listOf(
-                createEdit(onEditAliasClick),
                 createRemoveAlias(onRemoveAliasClick)
             )
         )
     }
-}
-
-private fun createEdit(onEditAlias: () -> Unit): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_edit)) }
-    override val subtitle: (@Composable () -> Unit)?
-        get() = null
-    override val icon: (@Composable () -> Unit)
-        get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_pencil) }
-    override val onClick: () -> Unit
-        get() = onEditAlias
 }
 
 private fun createRemoveAlias(onRemoveAlias: () -> Unit): BottomSheetItem =
@@ -77,7 +64,6 @@ fun AliasOptionsBottomSheetPreview(
     ProtonTheme(isDark = isDark) {
         Surface {
             AliasOptionsBottomSheet(
-                onEditAliasClick = {},
                 onRemoveAliasClick = {}
             )
         }

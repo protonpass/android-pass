@@ -6,6 +6,7 @@ import me.proton.android.pass.navigation.api.AliasOptionalNavArgId
 import me.proton.android.pass.navigation.api.CommonNavArgId
 import me.proton.android.pass.navigation.api.NavItem
 import me.proton.android.pass.navigation.api.OptionalNavArgId
+import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 
@@ -36,7 +37,12 @@ sealed class AutofillNavItem(
             .plus(
                 optionalArgIds.map {
                     navArgument(it.key) {
-                        nullable = true
+                        if (it.navType.isNullableAllowed) {
+                            nullable = true
+                        }
+                        if (it.default != null) {
+                            defaultValue = it.default
+                        }
                         type = it.navType
                     }
                 }
@@ -48,11 +54,16 @@ sealed class AutofillNavItem(
     object CreateAlias : AutofillNavItem(
         baseRoute = "createAlias",
         navArgIds = listOf(CommonNavArgId.ShareId),
-        optionalArgIds = listOf(AliasOptionalNavArgId.Title)
+        optionalArgIds = listOf(AliasOptionalNavArgId.Title, AliasOptionalNavArgId.IsDraft)
     ) {
-        fun createNavRoute(shareId: ShareId, title: Option<String>) = buildString {
+        fun createNavRoute(
+            shareId: ShareId,
+            isDraft: Boolean = false,
+            title: Option<String> = None
+        ) = buildString {
             append("$baseRoute/${shareId.id}")
-            if (title.isNotEmpty()) append("?${title.value()}")
+            append("?${AliasOptionalNavArgId.IsDraft.key}=$isDraft")
+            if (title.isNotEmpty()) append("&${AliasOptionalNavArgId.Title.key}=${title.value()}")
         }
     }
 }

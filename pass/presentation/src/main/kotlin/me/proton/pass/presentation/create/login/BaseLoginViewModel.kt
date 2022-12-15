@@ -14,18 +14,28 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.UrlSanitizer
+import me.proton.android.pass.data.api.usecases.CreateAlias
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
+import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
+import me.proton.pass.domain.Item
 import me.proton.pass.domain.ShareId
-import me.proton.android.pass.data.api.UrlSanitizer
+import me.proton.pass.domain.entity.NewAlias
+import me.proton.pass.presentation.create.alias.AliasItem
+import me.proton.pass.presentation.create.alias.AliasSnackbarMessage
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
 abstract class BaseLoginViewModel(
+    private val createAlias: CreateAlias,
+    protected val accountManager: AccountManager,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     observeActiveShare: ObserveActiveShare,
     savedStateHandle: SavedStateHandle
@@ -55,6 +65,7 @@ abstract class BaseLoginViewModel(
             initialValue = shareId
         )
     protected val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
+    protected val aliasItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
@@ -112,11 +123,6 @@ abstract class BaseLoginViewModel(
         loginItemState.update { it.copy(username = value) }
     }
 
-    fun onAliasGenerated(value: String) {
-        loginItemState.update { it.copy(username = value) }
-        canUpdateUsernameState.update { false }
-    }
-
     fun onPasswordChange(value: String) {
         loginItemState.update { it.copy(password = value) }
     }
@@ -160,6 +166,29 @@ abstract class BaseLoginViewModel(
             snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
 
+    suspend fun performCreateAlias(
+        userId: UserId,
+        shareId: ShareId,
+        aliasItem: AliasItem
+    ): Result<Item> =
+        if (aliasItem.selectedSuffix != null) {
+            createAlias(
+                userId = userId,
+                shareId = shareId,
+                newAlias = NewAlias(
+                    title = aliasItem.title,
+                    note = aliasItem.note,
+                    prefix = aliasItem.alias,
+                    suffix = aliasItem.selectedSuffix,
+                    mailboxes = aliasItem.mailboxes.filter { it.selected }.map { it.model }
+                )
+            )
+        } else {
+            PassLogger.i(TAG, "Empty suffix on create alias")
+            snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.ItemCreationError)
+            Result.Error()
+        }
+
     protected fun validateItem(): Boolean {
         loginItemState.update {
             val websites = sanitizeWebsites(it.websiteAddresses)
@@ -186,5 +215,8 @@ abstract class BaseLoginViewModel(
             }
         }
 
+    companion object {
+        private const val TAG = "BaseLoginViewModel"
+    }
 }
 

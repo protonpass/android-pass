@@ -27,6 +27,7 @@ import me.proton.android.pass.data.api.usecases.RefreshShares
 import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.android.pass.data.api.usecases.UpdateAlias
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItem
+import me.proton.android.pass.data.api.usecases.UpdateItem
 import me.proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import me.proton.android.pass.data.impl.usecases.CreateAliasImpl
 import me.proton.android.pass.data.impl.usecases.CreateItemImpl
@@ -50,6 +51,7 @@ import me.proton.android.pass.data.impl.usecases.RefreshSharesImpl
 import me.proton.android.pass.data.impl.usecases.TrashItemImpl
 import me.proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import me.proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
+import me.proton.android.pass.data.impl.usecases.UpdateItemImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -60,6 +62,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCreateItem(impl: CreateItemImpl): CreateItem
+
+    @Binds
+    abstract fun bindUpdateItem(impl: UpdateItemImpl): UpdateItem
 
     @Binds
     abstract fun bindCreateVault(impl: CreateVaultImpl): CreateVault

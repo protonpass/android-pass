@@ -159,9 +159,9 @@
     <string name="field_username">Username</string>
     <string name="field_password">Password</string>
     <string name="field_websites">Websites</string>
-    <string name="delete_alias_dialog_text">Remove together with the alias item?</string>
-    <string name="delete_alias_dialog_cancel">Keep alias</string>
-    <string name="delete_alias_dialog_confirm">@string/action_remove</string>
+    <string name="delete_login_alias_dialog_text">This will delete the alias, please confirm.</string>
+    <string name="delete_login_alias_dialog_cancel">Cancel</string>
+    <string name="delete_login_alias_dialog_confirm">@string/action_remove</string>
 
     <string name="create_login_item_creation_error">Could not create Login</string>
     <string name="create_login_item_update_error">Could not update Login</string>
@@ -189,6 +189,8 @@
     <string name="field_mailbox_title">Mailbox</string>
     <string name="field_mailboxes_title">Mailboxes</string>
     <string name="alias_you_are_about_to_create_alias">You\'re about to create alias</string>
+
+    <string name="alias_action_save_fill">Save &amp; fill</string>
 
     <string name="alias_bottomsheet_suffix_title">Suffix</string>
     <string name="alias_bottomsheet_mailboxes_title">Mailboxes</string>

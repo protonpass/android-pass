@@ -18,14 +18,20 @@ enum class CommonNavArgId : NavArgId {
     }
 }
 
-sealed interface OptionalNavArgId {
-    val key: String
-    val navType: NavType<*>
+sealed interface OptionalNavArgId : NavArgId {
+    val default: Any?
+        get() = null
 }
 
 enum class AliasOptionalNavArgId : OptionalNavArgId {
     Title {
         override val key: String = "aliasTitle"
         override val navType: NavType<*> = NavType.StringType
+    },
+    IsDraft {
+        override val key: String = "isDraft"
+        override val navType: NavType<*> = NavType.BoolType
+        override val default: Any
+            get() = false
     }
 }

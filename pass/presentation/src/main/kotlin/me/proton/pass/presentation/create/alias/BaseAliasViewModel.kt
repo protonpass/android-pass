@@ -19,6 +19,7 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.uievents.AliasDraftSavedState
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -32,10 +33,12 @@ abstract class BaseAliasViewModel(
         savedStateHandle.get<String>(CommonNavArgId.ShareId.key)
             .toOption()
             .map { ShareId(it) }
-
     private val title: Option<String> = savedStateHandle
         .get<String>(AliasOptionalNavArgId.Title.key)
         .toOption()
+    protected val isDraft: Boolean = requireNotNull(
+        savedStateHandle.get<Boolean>(AliasOptionalNavArgId.IsDraft.key)
+    )
 
     private val shareIdState: Flow<Option<ShareId>> = MutableStateFlow(shareId)
 
@@ -43,13 +46,15 @@ abstract class BaseAliasViewModel(
     val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(
         AliasItem(
             title = title.value() ?: "",
-            alias = title.value() ?: ""
+            alias = AliasUtils.formatAlias(title.value() ?: "")
         )
     )
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.Loading)
     protected val isAliasSavedState: MutableStateFlow<AliasSavedState> =
         MutableStateFlow(AliasSavedState.Unknown)
+    protected val isAliasDraftSavedState: MutableStateFlow<AliasDraftSavedState> =
+        MutableStateFlow(AliasDraftSavedState.Unknown)
     protected val aliasItemValidationErrorsState: MutableStateFlow<Set<AliasItemValidationErrors>> =
         MutableStateFlow(emptySet())
     protected val isApplyButtonEnabledState: MutableStateFlow<IsButtonEnabled> =
@@ -67,19 +72,33 @@ abstract class BaseAliasViewModel(
         val aliasItemValidationErrors: Set<AliasItemValidationErrors>
     )
 
+    private val aliasSavedEventWrapperState = combine(
+        isAliasSavedState,
+        isAliasDraftSavedState
+    ) { isAliasSaved, isAliasDraftSaved ->
+        AliasSavedEventWrapper(isAliasSaved, isAliasDraftSaved)
+    }
+
+    private data class AliasSavedEventWrapper(
+        val isAliasSaved: AliasSavedState,
+        val isAliasDraftSaved: AliasDraftSavedState
+    )
+
     val aliasUiState: StateFlow<CreateUpdateAliasUiState> = combine(
         shareIdState,
         aliasItemWrapperState,
         isLoadingState,
-        isAliasSavedState,
+        aliasSavedEventWrapperState,
         isApplyButtonEnabledState
-    ) { shareId, aliasItemWrapper, isLoading, isItemSaved, isButtonEnabled ->
+    ) { shareId, aliasItemWrapper, isLoading, isAliasSavedEvent, isButtonEnabled ->
         CreateUpdateAliasUiState(
             shareId = shareId,
             aliasItem = aliasItemWrapper.aliasItem,
+            isDraft = isDraft,
             errorList = aliasItemWrapper.aliasItemValidationErrors,
             isLoadingState = isLoading,
-            isAliasSavedState = isItemSaved,
+            isAliasSavedState = isAliasSavedEvent.isAliasSaved,
+            isAliasDraftSavedState = isAliasSavedEvent.isAliasDraftSaved,
             isApplyButtonEnabled = isButtonEnabled
         )
     }

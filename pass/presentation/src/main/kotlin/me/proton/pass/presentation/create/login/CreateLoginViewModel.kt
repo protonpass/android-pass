@@ -7,16 +7,20 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.usecases.CreateAlias
 import me.proton.android.pass.data.api.usecases.CreateItem
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Some
+import me.proton.pass.common.api.map
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
+import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.PackageName
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.ItemCreationError
@@ -27,13 +31,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CreateLoginViewModel @Inject constructor(
-    private val accountManager: AccountManager,
     private val createItem: CreateItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val keyStoreCrypto: KeyStoreCrypto,
+    createAlias: CreateAlias,
+    accountManager: AccountManager,
     observeActiveShare: ObserveActiveShare,
     savedStateHandle: SavedStateHandle
-) : BaseLoginViewModel(snackbarMessageRepository, observeActiveShare, savedStateHandle) {
+) : BaseLoginViewModel(
+    createAlias,
+    accountManager,
+    snackbarMessageRepository,
+    observeActiveShare,
+    savedStateHandle
+) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -56,11 +67,20 @@ class CreateLoginViewModel @Inject constructor(
                 websites.add(initialContents.url)
             }
         }
-
+        aliasItemState.update { initialContents.aliasItem.toOption() }
         loginItemState.update {
+            val username = initialContents.username
+                ?: if (initialContents.aliasItem?.aliasToBeCreated != null) {
+                    initialContents.aliasItem.aliasToBeCreated
+                } else {
+                    currentValue.username
+                }
+            if (username.isNotEmpty()) {
+                canUpdateUsernameState.update { false }
+            }
             it.copy(
                 title = initialContents.title ?: currentValue.title,
-                username = initialContents.username ?: currentValue.username,
+                username = username,
                 password = initialContents.password ?: currentValue.password,
                 websiteAddresses = websites
             )
@@ -84,28 +104,48 @@ class CreateLoginViewModel @Inject constructor(
         val userId = accountManager.getPrimaryUserId()
             .firstOrNull { userId -> userId != null }
         if (userId != null) {
-            createItem(userId, shareId, loginItemState.value.toItemContents(), packageName)
-                .onSuccess { item ->
-                    isItemSavedState.update {
-                        ItemSavedState.Success(
-                            item.id,
-                            item.toUiModel(keyStoreCrypto)
-                        )
-                    }
-                }
-                .onError {
-                    val defaultMessage = "Could not create item"
-                    PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                    snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
-                }
+            val aliasItemOption = aliasItemState.value
+            if (aliasItemOption is Some) {
+                performCreateAlias(userId, shareId, aliasItemOption.value)
+                    .map { performCreateItem(userId, shareId) }
+            } else {
+                performCreateItem(userId, shareId)
+            }
         } else {
             snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
+    private suspend fun performCreateItem(
+        userId: UserId,
+        shareId: ShareId
+    ) {
+        createItem(
+            userId = userId,
+            shareId = shareId,
+            itemContents = loginItemState.value.toItemContents(),
+            packageName = packageName
+        )
+            .onSuccess { item ->
+                isItemSavedState.update {
+                    ItemSavedState.Success(
+                        item.id,
+                        item.toUiModel(keyStoreCrypto)
+                    )
+                }
+            }
+            .onError {
+                val defaultMessage = "Could not create item"
+                PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+            }
+    }
+
+
     fun onRemoveAlias() {
         loginItemState.update { it.copy(username = "") }
+        aliasItemState.update { None }
         canUpdateUsernameState.update { true }
     }
 

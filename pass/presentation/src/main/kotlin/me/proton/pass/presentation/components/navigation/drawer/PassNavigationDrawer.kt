@@ -2,14 +2,20 @@ package me.proton.pass.presentation.components.navigation.drawer
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.pass.presentation.R
 
 @Composable
@@ -32,6 +38,16 @@ fun PassNavigationDrawer(
             onSectionClick = { section ->
                 navDrawerNavigation.onNavHome(section)
             }
+        )
+        Divider(modifier = Modifier.fillMaxWidth())
+        Text(
+            modifier = Modifier
+                .padding(
+                    horizontal = ProtonDimens.DefaultSpacing,
+                    vertical = ProtonDimens.SmallSpacing
+                ),
+            text = stringResource(R.string.navigation_text_more),
+            style = ProtonTheme.typography.defaultSmallWeak
         )
         SettingsListItem(
             isSelected = drawerUiState.selectedSection == NavigationDrawerSection.Settings,

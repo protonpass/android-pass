@@ -205,7 +205,8 @@
     <string name="title_create_password">Generate password</string>
     <string name="special_characters">Special characters</string>
     <string name="character_count">%s characters</string>
-    <string name="generate_password_confirm">Confirm</string>
+    <string name="generate_password_copy">Copy</string>
+    <string name="bottom_sheet_generate_password_confirm">Confirm</string>
 
     <!--  Common create items  -->
     <string name="changes_saved">Changes saved</string>

@@ -28,7 +28,7 @@ fun GeneratePasswordBottomSheetContent(
         BottomSheetTitle(
             title = R.string.button_generate_password,
             button = BottomSheetTitleButton(
-                R.string.generate_password_confirm,
+                R.string.bottom_sheet_generate_password_confirm,
                 onClick = { onConfirm(state.password) },
                 enabled = true
             ),

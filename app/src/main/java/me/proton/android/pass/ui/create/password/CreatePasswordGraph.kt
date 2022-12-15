@@ -15,8 +15,7 @@ fun NavGraphBuilder.createPasswordGraph(modifier: Modifier, nav: AppNavigator) {
     composable(AppNavItem.CreatePassword) {
         CreatePassword(
             modifier = modifier,
-            onUpClick = { nav.onBackClick() },
-            onConfirm = {}
+            onUpClick = { nav.onBackClick() }
         )
     }
 }

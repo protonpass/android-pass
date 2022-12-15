@@ -19,7 +19,7 @@ import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.pass.presentation.R
 
 @Composable
-fun PassNavigationDrawer(
+fun NavigationDrawerBody(
     modifier: Modifier = Modifier,
     drawerUiState: DrawerUiState,
     navDrawerNavigation: NavDrawerNavigation,
@@ -68,23 +68,21 @@ fun PassNavigationDrawer(
             closeDrawerAction = { onCloseDrawer() },
             onClick = { onSignOutClick() }
         )
-        if (drawerUiState.internalDrawerEnabled) {
-            InternalDrawerItem(
-                closeDrawerAction = { onCloseDrawer() },
-                onClick = { navDrawerNavigation.onInternalDrawerClick() }
-            )
-        }
+        InternalDrawerItem(
+            closeDrawerAction = { onCloseDrawer() },
+            onClick = { navDrawerNavigation.onInternalDrawerClick() }
+        )
     }
 }
 
 @Preview
 @Composable
-fun PassNavigationDrawerPreview() {
+fun NavigationDrawerBodyPreview() {
     ProtonTheme(
         colors = requireNotNull(ProtonTheme.colors.sidebarColors)
     ) {
         Surface(color = ProtonTheme.colors.backgroundNorm) {
-            PassNavigationDrawer(
+            NavigationDrawerBody(
                 drawerUiState = DrawerUiState(
                     appNameResId = R.string.title_app
                 ),

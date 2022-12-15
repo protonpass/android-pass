@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
 import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.api.repositories.ItemRepository
@@ -111,7 +110,6 @@ class AppViewModel @Inject constructor(
                 appNameResId = R.string.app_name,
                 currentUser = user,
                 selectedSection = sectionState,
-                internalDrawerEnabled = BuildConfig.FLAVOR == "dev",
                 itemCountSummary = itemCount
             ),
             theme = theme

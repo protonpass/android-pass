@@ -11,8 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun CreatePassword(
     modifier: Modifier = Modifier,
-    onUpClick: () -> Unit,
-    onConfirm: (String) -> Unit
+    onUpClick: () -> Unit
 ) {
     val viewModel: CreatePasswordViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -24,7 +23,7 @@ fun CreatePassword(
         onLengthChange = { viewModel.onLengthChange(it) },
         onRegenerateClick = { viewModel.regenerate() },
         onHasSpecialCharactersChange = { viewModel.onHasSpecialCharactersChange(it) },
-        onConfirm = onConfirm
+        onConfirm = { viewModel.onConfirm() }
     )
 }
 

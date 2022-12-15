@@ -68,10 +68,6 @@ fun PassNavigationDrawer(
             closeDrawerAction = { onCloseDrawer() },
             onClick = { onSignOutClick() }
         )
-        NavigationDrawerAppVersion(
-            name = stringResource(id = drawerUiState.appNameResId),
-            version = drawerUiState.appVersion
-        )
         if (drawerUiState.internalDrawerEnabled) {
             InternalDrawerItem(
                 closeDrawerAction = { onCloseDrawer() },
@@ -90,8 +86,7 @@ fun PassNavigationDrawerPreview() {
         Surface(color = ProtonTheme.colors.backgroundNorm) {
             PassNavigationDrawer(
                 drawerUiState = DrawerUiState(
-                    appNameResId = R.string.title_app,
-                    appVersion = "1.2.3"
+                    appNameResId = R.string.title_app
                 ),
                 navDrawerNavigation = NavDrawerNavigation(
                     onNavHome = {},

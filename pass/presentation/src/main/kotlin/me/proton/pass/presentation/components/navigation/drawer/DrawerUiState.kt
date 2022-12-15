@@ -39,6 +39,5 @@ data class DrawerUiState(
     val closeOnActionEnabled: Boolean = true,
     val currentUser: User? = null,
     val selectedSection: NavigationDrawerSection? = null,
-    val internalDrawerEnabled: Boolean = false,
     val itemCountSummary: ItemCountSummary = ItemCountSummary.Initial
 )

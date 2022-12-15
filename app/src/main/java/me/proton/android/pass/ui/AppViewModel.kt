@@ -109,7 +109,6 @@ class AppViewModel @Inject constructor(
             snackbarMessage = snackbarMessage,
             drawerUiState = DrawerUiState(
                 appNameResId = R.string.app_name,
-                appVersion = BuildConfig.VERSION_NAME,
                 currentUser = user,
                 selectedSection = sectionState,
                 internalDrawerEnabled = BuildConfig.FLAVOR == "dev",

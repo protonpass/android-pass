@@ -2,7 +2,6 @@ package me.proton.android.pass.ui.onboarding
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.navigation.api.composable
@@ -13,7 +12,6 @@ import me.proton.pass.presentation.onboarding.OnBoardingScreen
     ExperimentalAnimationApi::class
 )
 fun NavGraphBuilder.onBoardingGraph(
-    modifier: Modifier,
     nav: AppNavigator,
     finishActivity: () -> Unit
 ) {
@@ -21,6 +19,6 @@ fun NavGraphBuilder.onBoardingGraph(
         BackHandler {
             finishActivity()
         }
-        OnBoardingScreen(modifier) { nav.onBackClick() }
+        OnBoardingScreen { nav.onBackClick() }
     }
 }

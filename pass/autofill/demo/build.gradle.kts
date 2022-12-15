@@ -65,6 +65,7 @@ android {
 
 dependencies {
     implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.insets)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.systemUiController)
     implementation(libs.androidx.activity.ktx)

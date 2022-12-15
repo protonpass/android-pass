@@ -2,7 +2,6 @@ package me.proton.android.pass.ui.create.login
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
@@ -18,7 +17,7 @@ import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
     ExperimentalAnimationApi::class,
     ExperimentalLifecycleComposeApi::class
 )
-fun NavGraphBuilder.createLoginGraph(modifier: Modifier, nav: AppNavigator) {
+fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
     composable(AppNavItem.CreateLogin) {
         val createdDraftAlias by nav.navState<AliasItem>(RESULT_CREATED_DRAFT_ALIAS, null)
             .collectAsStateWithLifecycle()
@@ -31,7 +30,6 @@ fun NavGraphBuilder.createLoginGraph(modifier: Modifier, nav: AppNavigator) {
             null
         }
         CreateLogin(
-            modifier = modifier,
             initialContents = initialContents,
             onClose = { nav.onBackClick() },
             onSuccess = { nav.onBackClick() },

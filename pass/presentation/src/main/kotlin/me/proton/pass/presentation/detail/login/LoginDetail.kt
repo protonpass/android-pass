@@ -1,7 +1,5 @@
 package me.proton.pass.presentation.detail.login
 
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -21,8 +19,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.domain.Item
-import me.proton.pass.presentation.components.common.bottomsheet.PassModalBottomSheetLayout
 import me.proton.pass.presentation.detail.login.bottomsheet.LoginDetailBottomSheetContents
 import me.proton.pass.presentation.utils.BrowserUtils.openWebsite
 
@@ -47,13 +45,10 @@ fun LoginDetail(
     val (selectedWebsite, setSelectedWebsite) = remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    PassModalBottomSheetLayout(
+    ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             LoginDetailBottomSheetContents(
-                modifier = Modifier
-                    .navigationBarsPadding()
-                    .imePadding(),
                 website = selectedWebsite,
                 onCopyToClipboard = { website ->
                     viewModel.copyWebsiteToClipboard(website)
@@ -67,11 +62,10 @@ fun LoginDetail(
         }
     ) {
         Scaffold(
-            modifier = modifier,
             topBar = topBar
         ) { padding ->
             LoginContent(
-                modifier = Modifier
+                modifier = modifier
                     .padding(padding)
                     .verticalScroll(rememberScrollState()),
                 model = model,

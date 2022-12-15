@@ -35,7 +35,7 @@ class MainActivity : FragmentActivity() {
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowCompat.setDecorFitsSystemWindows(window, true)
 
         // Register activities for result.
         launcherViewModel.register(this)

@@ -94,13 +94,13 @@ class CreateAliasViewModel @Inject constructor(
     }
 
     override fun onTitleChange(value: String) {
-        aliasItemState.update {
+        aliasItemState.update { aliasItem ->
             val alias = if (titleAliasInSync) {
-                value.filter { it.isLetterOrDigit() }.lowercase()
+                AliasUtils.formatAlias(value)
             } else {
-                it.alias
+                aliasItem.alias
             }
-            it.copy(
+            aliasItem.copy(
                 title = value,
                 alias = alias,
                 aliasToBeCreated = getAliasToBeCreated(

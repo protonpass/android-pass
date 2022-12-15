@@ -22,7 +22,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.DrawerState
 import androidx.compose.material.ModalDrawer
@@ -104,7 +103,7 @@ fun NavigationDrawer(
             modifier = modifier.fillMaxSize(),
             color = ProtonTheme.colors.backgroundNorm
         ) {
-            Column(Modifier.systemBarsPadding()) {
+            Column {
                 if (drawerUiState.currentUser != null) {
                     AccountPrimaryItem(
                         modifier = Modifier

@@ -75,7 +75,7 @@ class CreateLoginViewModel @Inject constructor(
                 } else {
                     currentValue.username
                 }
-            if (username.isNotEmpty()) {
+            if (initialContents.aliasItem?.aliasToBeCreated?.isNotEmpty() == true) {
                 canUpdateUsernameState.update { false }
             }
             it.copy(

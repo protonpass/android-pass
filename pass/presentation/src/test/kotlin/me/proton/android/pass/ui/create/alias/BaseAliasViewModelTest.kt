@@ -29,10 +29,12 @@ internal class BaseAliasViewModelTest {
     fun setUp() {
         baseAliasViewModel = object : BaseAliasViewModel(
             TestSnackbarMessageRepository(),
-            TestSavedStateHandle.create()
+            TestSavedStateHandle.create().apply {
+                set("isDraft", false)
+            }
         ) {
-            override fun onTitleChange(value: String) {}
-            override fun onAliasChange(value: String) {}
+            override fun onTitleChange(value: String) = Unit
+            override fun onAliasChange(value: String) = Unit
         }
     }
 

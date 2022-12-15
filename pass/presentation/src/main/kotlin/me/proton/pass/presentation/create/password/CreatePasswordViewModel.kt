@@ -2,15 +2,25 @@ package me.proton.pass.presentation.create.password
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import me.proton.android.pass.clipboard.api.ClipboardManager
+import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.presentation.PasswordGenerator
+import javax.inject.Inject
 
-class CreatePasswordViewModel : ViewModel() {
+@HiltViewModel
+class CreatePasswordViewModel @Inject constructor(
+    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val clipboardManager: ClipboardManager
+) : ViewModel() {
 
-    private val _state: MutableStateFlow<CreatePasswordUiState> = MutableStateFlow(getInitialState())
+    private val _state: MutableStateFlow<CreatePasswordUiState> =
+        MutableStateFlow(getInitialState())
     val state: StateFlow<CreatePasswordUiState> = _state
         .stateIn(
             scope = viewModelScope,
@@ -31,6 +41,11 @@ class CreatePasswordViewModel : ViewModel() {
     fun regenerate() {
         val password = generatePassword(state.value.length, state.value.hasSpecialCharacters)
         _state.value = state.value.copy(password = password)
+    }
+
+    fun onConfirm() = viewModelScope.launch {
+        clipboardManager.copyToClipboard(state.value.password, isSecure = true)
+        snackbarMessageRepository.emitSnackbarMessage(CreatePasswordSnackbarMessage.CopiedToClipboard)
     }
 
     companion object {

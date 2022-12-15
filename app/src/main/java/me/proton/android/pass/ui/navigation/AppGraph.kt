@@ -4,7 +4,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.ui.auth.authGraph
@@ -31,7 +30,6 @@ import me.proton.pass.presentation.home.HomeScreenNavigation
 @ExperimentalComposeUiApi
 @Suppress("LongParameterList")
 fun NavGraphBuilder.appGraph(
-    modifier: Modifier,
     appNavigator: AppNavigator,
     appVersion: String,
     homeFilterMode: HomeFilterMode,
@@ -40,25 +38,24 @@ fun NavGraphBuilder.appGraph(
     finishActivity: () -> Unit
 ) {
     homeGraph(
-        modifier = modifier,
         navigationDrawer = navigationDrawer,
         homeScreenNavigation = createHomeScreenNavigation(appNavigator),
         onDrawerIconClick = onDrawerIconClick,
         homeFilterMode = homeFilterMode
     )
-    trashGraph(modifier, navigationDrawer, onDrawerIconClick)
-    helpGraph(modifier, navigationDrawer, onDrawerIconClick)
-    settingsGraph(modifier, appVersion, navigationDrawer, onDrawerIconClick)
-    createLoginGraph(modifier, appNavigator)
-    updateLoginGraph(modifier, appNavigator)
-    createNoteGraph(modifier, appNavigator)
-    updateNoteGraph(modifier, appNavigator)
-    createAliasGraph(modifier, appNavigator)
-    updateAliasGraph(modifier, appNavigator)
-    createPasswordGraph(modifier, appNavigator)
-    itemDetailGraph(modifier, appNavigator)
+    trashGraph(navigationDrawer, onDrawerIconClick)
+    helpGraph(navigationDrawer, onDrawerIconClick)
+    settingsGraph(appVersion, navigationDrawer, onDrawerIconClick)
+    createLoginGraph(appNavigator)
+    updateLoginGraph(appNavigator)
+    createNoteGraph(appNavigator)
+    updateNoteGraph(appNavigator)
+    createAliasGraph(appNavigator)
+    updateAliasGraph(appNavigator)
+    createPasswordGraph(appNavigator)
+    itemDetailGraph(appNavigator)
     authGraph(appNavigator, finishActivity)
-    onBoardingGraph(modifier, appNavigator, finishActivity)
+    onBoardingGraph(appNavigator, finishActivity)
 }
 
 private fun createHomeScreenNavigation(appNavigator: AppNavigator): HomeScreenNavigation =

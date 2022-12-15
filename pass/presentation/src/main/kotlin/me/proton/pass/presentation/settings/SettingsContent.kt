@@ -1,8 +1,6 @@
 package me.proton.pass.presentation.settings
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -18,11 +16,11 @@ import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.android.pass.ui.shared.HamburgerIcon
+import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
+import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.LoadingDialog
-import me.proton.pass.presentation.components.common.bottomsheet.PassModalBottomSheetLayout
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
 
@@ -49,13 +47,10 @@ fun SettingsContent(
         scope.launch { bottomSheetState.hide() }
     }
 
-    PassModalBottomSheetLayout(
+    ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             ThemeSelectionBottomSheetContents(
-                modifier = Modifier
-                    .navigationBarsPadding()
-                    .imePadding(),
                 onThemeSelected = { theme ->
                     scope.launch {
                         bottomSheetState.hide()
@@ -66,7 +61,6 @@ fun SettingsContent(
         }
     ) {
         Scaffold(
-            modifier = modifier,
             scaffoldState = scaffoldState,
             topBar = {
                 ProtonTopAppBar(
@@ -87,7 +81,7 @@ fun SettingsContent(
                 LoadingDialog()
             }
             Settings(
-                modifier = Modifier.padding(contentPadding),
+                modifier = modifier.padding(contentPadding),
                 state = state,
                 appVersion = appVersion,
                 onOpenThemeSelection = { scope.launch { bottomSheetState.show() } },

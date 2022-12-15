@@ -1,10 +1,7 @@
 package me.proton.android.pass.ui
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DrawerState
-import androidx.compose.material.DrawerValue
 import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberDrawerState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -13,12 +10,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.accompanist.insets.ProvideWindowInsets
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.android.pass.navigation.api.rememberAppNavigator
@@ -57,29 +53,17 @@ fun PassApp(
         ThemePreference.Light -> false
         ThemePreference.System -> isNightMode()
     }
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    SystemBarColorLaunchedEffect(isDrawerOpen = drawerState.isOpen, isDarkTheme = isDark)
     ProtonTheme(isDark = isDark) {
-        PassAppContent(
-            modifier = modifier,
-            appUiState = appUiState,
-            drawerState = drawerState,
-            coreNavigation = coreNavigation,
-            onDrawerSectionChanged = { appViewModel.onDrawerSectionChanged(it) },
-            onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
-            finishActivity = finishActivity
-        )
-    }
-}
-
-@Composable
-private fun SystemBarColorLaunchedEffect(isDrawerOpen: Boolean, isDarkTheme: Boolean) {
-    val systemUiController = rememberSystemUiController()
-    LaunchedEffect(isDrawerOpen, isDarkTheme) {
-        systemUiController.setStatusBarColor(
-            color = Color.Transparent,
-            darkIcons = !isDrawerOpen && !isDarkTheme
-        )
+        ProvideWindowInsets {
+            PassAppContent(
+                modifier = modifier,
+                appUiState = appUiState,
+                coreNavigation = coreNavigation,
+                onDrawerSectionChanged = { appViewModel.onDrawerSectionChanged(it) },
+                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
+                finishActivity = finishActivity
+            )
+        }
     }
 }
 
@@ -88,7 +72,6 @@ fun PassAppContent(
     modifier: Modifier = Modifier,
     appUiState: AppUiState,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    drawerState: DrawerState,
     internalDrawerState: InternalDrawerState = rememberInternalDrawerState(InternalDrawerValue.Closed),
     coreNavigation: CoreNavigation,
     onDrawerSectionChanged: (NavigationDrawerSection) -> Unit,
@@ -156,7 +139,6 @@ fun PassAppContent(
             PassNavHost(
                 modifier = Modifier.padding(contentPadding),
                 drawerUiState = appUiState.drawerUiState,
-                drawerState = drawerState,
                 appNavigator = appNavigator,
                 homeFilterMode = homeFilterState,
                 navDrawerNavigation = navDrawerNavigation,

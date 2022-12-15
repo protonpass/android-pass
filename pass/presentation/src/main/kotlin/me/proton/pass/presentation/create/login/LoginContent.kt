@@ -1,8 +1,6 @@
 package me.proton.pass.presentation.create.login
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -16,14 +14,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
+import me.proton.pass.presentation.components.common.LoadingDialog
+import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.components.common.LoadingDialog
-import me.proton.pass.presentation.components.common.bottomsheet.PassModalBottomSheetLayout
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.EmptyShareIdError
 import me.proton.pass.presentation.create.login.bottomsheet.LoginBottomSheet
@@ -63,13 +61,10 @@ internal fun LoginContent(
     }
     val (showRemoveAliasDialog, setShowRemoveAliasDialog) = remember { mutableStateOf(false) }
 
-    PassModalBottomSheetLayout(
+    ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             LoginBottomSheet(
-                modifier = Modifier
-                    .navigationBarsPadding()
-                    .imePadding(),
                 content = bottomSheetContent,
                 regeneratePassword = regeneratePassword,
                 setRegeneratePassword = setRegeneratePassword,
@@ -85,7 +80,6 @@ internal fun LoginContent(
         }
     ) {
         Scaffold(
-            modifier = modifier,
             topBar = {
                 LoginTopBar(
                     uiState = uiState,
@@ -101,7 +95,7 @@ internal fun LoginContent(
                 LoadingDialog()
             }
             LoginItemForm(
-                modifier = Modifier.padding(padding),
+                modifier = modifier.padding(padding),
                 loginItem = uiState.loginItem,
                 showCreateAliasButton = showCreateAliasButton,
                 canUpdateUsername = uiState.canUpdateUsername,

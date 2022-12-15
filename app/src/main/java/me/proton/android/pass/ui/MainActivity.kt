@@ -1,5 +1,6 @@
 package me.proton.android.pass.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import android.view.autofill.AutofillManager
@@ -63,6 +64,9 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun applySecureFlag() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            setRecentsScreenshotEnabled(false)
+        }
         if (!BuildConfig.ALLOW_SCREENSHOTS) {
             // Release builds should secure window so that content is protected
             window.setFlags(

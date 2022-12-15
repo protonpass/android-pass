@@ -3,7 +3,6 @@ package me.proton.pass.presentation.create.alias
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
@@ -12,14 +11,13 @@ import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitl
 @ExperimentalMaterialApi
 @Composable
 fun AliasBottomSheetContents(
-    modifier: Modifier,
     modelState: AliasItem,
     contentType: AliasBottomSheetType,
     onSuffixSelect: (AliasSuffix) -> Unit,
     onMailboxSelect: (AliasMailboxUiModel) -> Unit,
     onCloseBottomSheet: () -> Unit
 ) {
-    Column(modifier) {
+    Column {
         when (contentType) {
             is AliasBottomSheetType.Mailbox -> {
                 BottomSheetTitle(

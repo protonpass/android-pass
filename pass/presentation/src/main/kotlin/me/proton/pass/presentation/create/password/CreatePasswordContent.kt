@@ -63,7 +63,7 @@ fun CreatePasswordContent(
                     .height(48.dp),
                 onClick = { onConfirm(state.password) }
             ) {
-                Text(stringResource(R.string.generate_password_confirm))
+                Text(stringResource(R.string.generate_password_copy))
             }
         }
     }

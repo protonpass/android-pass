@@ -18,9 +18,9 @@ import com.airbnb.android.showkase.models.Showkase
 
 @Composable
 fun InternalDrawerContents(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: InternalDrawerViewModel = hiltViewModel()
 ) {
-    val viewModel: InternalDrawerViewModel = hiltViewModel()
     Column(
         modifier = modifier
             .fillMaxSize()

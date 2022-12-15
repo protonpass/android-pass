@@ -16,6 +16,7 @@ import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage
 import me.proton.pass.presentation.create.alias.CreateAliasViewModel
 import me.proton.pass.presentation.create.alias.CreateUpdateAliasUiState
+import me.proton.pass.presentation.create.alias.InitialCreateAliasUiState
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.test.MainDispatcherRule
@@ -80,8 +81,8 @@ class CreateAliasViewModelTest {
         viewModel.aliasUiState.test {
             val item = awaitItem()
             assertThat(item.aliasItem.title).isEqualTo(titleInput)
-            assertThat(item.aliasItem.alias).isEqualTo("titlechanged")
-            assertThat(item.aliasItem.aliasToBeCreated).isEqualTo("titlechanged${suffix.suffix}")
+            assertThat(item.aliasItem.alias).isEqualTo("title-changed")
+            assertThat(item.aliasItem.aliasToBeCreated).isEqualTo("title-changed${suffix.suffix}")
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -151,6 +152,25 @@ class CreateAliasViewModelTest {
 
             assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
             assertThat(item.isAliasSavedState).isInstanceOf(AliasSavedState.Success::class.java)
+        }
+    }
+
+    @Test
+    fun `spaces in title are properly formatted`() = runTest {
+        val titleInput = "ThiS iS a TeSt"
+        viewModel.onTitleChange(titleInput)
+        viewModel.aliasUiState.test {
+            val item = awaitItem()
+            assertThat(item.aliasItem.alias).isEqualTo("this-is-a-test")
+        }
+    }
+
+    @Test
+    fun `setInitialState properly formats alias`() = runTest {
+        viewModel.setInitialState(InitialCreateAliasUiState(title = "ThiS iS a TeSt"))
+        viewModel.aliasUiState.test {
+            val item = awaitItem()
+            assertThat(item.aliasItem.alias).isEqualTo("this-is-a-test")
         }
     }
 

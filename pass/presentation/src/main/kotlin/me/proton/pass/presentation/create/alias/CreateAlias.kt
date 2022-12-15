@@ -2,7 +2,6 @@ package me.proton.pass.presentation.create.alias
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -12,7 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.AliasCreated
 
-const val RESULT_CREATED_ALIAS = "created_alias"
+const val RESULT_CREATED_DRAFT_ALIAS = "created_draft_alias"
 
 @OptIn(
     ExperimentalLifecycleComposeApi::class,
@@ -22,17 +21,12 @@ const val RESULT_CREATED_ALIAS = "created_alias"
 @Composable
 fun CreateAlias(
     modifier: Modifier = Modifier,
-    initialState: InitialCreateAliasUiState? = null,
     onUpClick: () -> Unit,
-    onSuccess: (String) -> Unit,
+    onAliasCreated: (String) -> Unit,
+    onAliasDraftCreated: (AliasItem) -> Unit,
     onClose: () -> Unit,
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(initialState) {
-        initialState ?: return@LaunchedEffect
-        viewModel.setInitialState(initialState)
-    }
-
     val viewState by viewModel.aliasUiState.collectAsStateWithLifecycle()
     val closeScreenState by viewModel.closeScreenEventFlow.collectAsStateWithLifecycle()
 
@@ -47,10 +41,11 @@ fun CreateAlias(
         canEdit = true,
         canDelete = false,
         onUpClick = onUpClick,
-        onSuccess = { _, _, alias ->
+        onAliasCreated = { _, _, alias ->
             viewModel.onEmitSnackbarMessage(AliasCreated)
-            onSuccess(alias)
+            onAliasCreated(alias)
         },
+        onAliasDraftCreated = { _, aliasItem -> onAliasDraftCreated(aliasItem) },
         onSubmit = { shareId -> viewModel.createAlias(shareId) },
         onSuffixChange = { viewModel.onSuffixChange(it) },
         onMailboxChange = { viewModel.onMailboxChange(it) },

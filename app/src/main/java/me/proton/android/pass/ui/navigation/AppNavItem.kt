@@ -4,6 +4,7 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.navArgument
 import me.proton.android.pass.navigation.api.AliasOptionalNavArgId
 import me.proton.android.pass.navigation.api.CommonNavArgId
+import me.proton.android.pass.navigation.api.NavArgId
 import me.proton.android.pass.navigation.api.NavItem
 import me.proton.android.pass.navigation.api.OptionalNavArgId
 import me.proton.pass.common.api.None
@@ -13,7 +14,7 @@ import me.proton.pass.domain.ShareId
 
 sealed class AppNavItem(
     val baseRoute: String,
-    private val navArgIds: List<CommonNavArgId> = emptyList(),
+    private val navArgIds: List<NavArgId> = emptyList(),
     private val optionalArgIds: List<OptionalNavArgId> = emptyList(),
     override val isTopLevel: Boolean = false
 ) : NavItem {
@@ -37,7 +38,12 @@ sealed class AppNavItem(
             .plus(
                 optionalArgIds.map {
                     navArgument(it.key) {
-                        nullable = true
+                        if (it.navType.isNullableAllowed) {
+                            nullable = true
+                        }
+                        if (it.default != null) {
+                            defaultValue = it.default
+                        }
                         type = it.navType
                     }
                 }
@@ -59,7 +65,10 @@ sealed class AppNavItem(
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
     }
 
-    object EditLogin : AppNavItem("editLogin", listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)) {
+    object EditLogin : AppNavItem(
+        baseRoute = "editLogin",
+        navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
+    ) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
@@ -67,15 +76,21 @@ sealed class AppNavItem(
     object CreateAlias : AppNavItem(
         baseRoute = "createAlias",
         navArgIds = listOf(CommonNavArgId.ShareId),
-        optionalArgIds = listOf(AliasOptionalNavArgId.Title)
+        optionalArgIds = listOf(AliasOptionalNavArgId.Title, AliasOptionalNavArgId.IsDraft)
     ) {
-        fun createNavRoute(shareId: ShareId, title: Option<String> = None) = buildString {
+        fun createNavRoute(
+            shareId: ShareId,
+            title: Option<String> = None,
+            isDraft: Boolean = false
+        ) = buildString {
             append("$baseRoute/${shareId.id}")
-            if (title.isNotEmpty()) append("?${AliasOptionalNavArgId.Title.key}=${title.value()}")
+            append("?${AliasOptionalNavArgId.IsDraft.key}=$isDraft")
+            if (title.isNotEmpty()) append("&${AliasOptionalNavArgId.Title.key}=${title.value()}")
         }
     }
 
-    object EditAlias : AppNavItem("editAlias", listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)) {
+    object EditAlias :
+        AppNavItem("editAlias", listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
@@ -84,7 +99,8 @@ sealed class AppNavItem(
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
     }
 
-    object EditNote : AppNavItem("editNote", listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)) {
+    object EditNote :
+        AppNavItem("editNote", listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
@@ -93,7 +109,8 @@ sealed class AppNavItem(
         fun createNavRoute(shareId: ShareId) = "${CreatePassword.baseRoute}/${shareId.id}"
     }
 
-    object ViewItem : AppNavItem("viewItem", listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)) {
+    object ViewItem :
+        AppNavItem("viewItem", listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =
             "$baseRoute/${shareId.id}/${itemId.id}"
     }

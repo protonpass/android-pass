@@ -33,7 +33,7 @@ fun ConfirmRemoveAliasDialog(
                 modifier = Modifier
                     .clickable { onConfirm() }
                     .padding(8.dp),
-                text = stringResource(R.string.delete_alias_dialog_confirm),
+                text = stringResource(R.string.delete_login_alias_dialog_confirm),
                 color = ProtonTheme.colors.notificationError,
                 style = ProtonTheme.typography.headlineSmall
             )
@@ -43,14 +43,14 @@ fun ConfirmRemoveAliasDialog(
                 modifier = Modifier
                     .clickable { onCancel() }
                     .padding(8.dp),
-                text = stringResource(R.string.delete_alias_dialog_cancel),
+                text = stringResource(R.string.delete_login_alias_dialog_cancel),
                 color = ProtonTheme.colors.brandNorm,
                 style = ProtonTheme.typography.headlineSmall
             )
         },
         text = {
             Text(
-                text = stringResource(R.string.delete_alias_dialog_text),
+                text = stringResource(R.string.delete_login_alias_dialog_text),
                 style = ProtonTheme.typography.default
             )
         }

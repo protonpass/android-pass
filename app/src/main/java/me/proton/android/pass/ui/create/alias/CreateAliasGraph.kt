@@ -7,7 +7,7 @@ import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.navigation.api.composable
 import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.pass.presentation.create.alias.CreateAlias
-import me.proton.pass.presentation.create.alias.RESULT_CREATED_ALIAS
+import me.proton.pass.presentation.create.alias.RESULT_CREATED_DRAFT_ALIAS
 
 @OptIn(
     ExperimentalAnimationApi::class
@@ -18,8 +18,9 @@ fun NavGraphBuilder.createAliasGraph(modifier: Modifier, nav: AppNavigator) {
             modifier = modifier,
             onClose = { nav.onBackClick() },
             onUpClick = { nav.onBackClick() },
-            onSuccess = { alias ->
-                nav.navigateUpWithResult(RESULT_CREATED_ALIAS, alias)
+            onAliasCreated = { nav.onBackClick() },
+            onAliasDraftCreated = { aliasItem ->
+                nav.navigateUpWithResult(RESULT_CREATED_DRAFT_ALIAS, aliasItem)
             }
         )
     }

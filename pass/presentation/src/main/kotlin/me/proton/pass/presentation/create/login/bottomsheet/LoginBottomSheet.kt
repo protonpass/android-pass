@@ -18,7 +18,6 @@ fun LoginBottomSheet(
     regeneratePassword: Boolean,
     setRegeneratePassword: (Boolean) -> Unit,
     onPasswordChange: (String) -> Unit,
-    onEditAliasClick: () -> Unit,
     onRemoveAliasClick: () -> Unit,
     hideBottomSheet: () -> Unit
 ) {
@@ -39,7 +38,6 @@ fun LoginBottomSheet(
         LoginBottomSheetContent.AliasOptions -> {
             AliasOptionsBottomSheet(
                 modifier = modifier,
-                onEditAliasClick = onEditAliasClick,
                 onRemoveAliasClick = onRemoveAliasClick
             )
         }

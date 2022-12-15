@@ -7,25 +7,28 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
+import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.LoginUpdated
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun UpdateLogin(
     modifier: Modifier = Modifier,
-    createdAlias: String?,
+    draftAlias: AliasItem?,
     onUpClick: () -> Unit,
     onSuccess: (ShareId, ItemId) -> Unit,
-    onCreateAliasClick: (ShareId) -> Unit
+    onCreateAliasClick: (ShareId, Option<String>) -> Unit
 ) {
     val viewModel: UpdateLoginViewModel = hiltViewModel()
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(createdAlias) {
-        createdAlias?.let { viewModel.onUsernameChange(it) }
+    LaunchedEffect(draftAlias) {
+        draftAlias ?: return@LaunchedEffect
+        viewModel.setAliasItem(draftAlias)
     }
 
     val onWebsiteChange = object : OnWebsiteChange {
@@ -54,7 +57,7 @@ fun UpdateLogin(
         onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) },
         onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
-        onCreateAliasClick = { shareId, _ -> onCreateAliasClick(shareId) },
+        onCreateAliasClick = { shareId, titleOption -> onCreateAliasClick(shareId, titleOption) },
         onRemoveAliasClick = { }
     )
 }

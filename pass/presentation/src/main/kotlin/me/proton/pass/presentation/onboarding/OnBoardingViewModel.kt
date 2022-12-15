@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
@@ -35,6 +36,7 @@ import me.proton.pass.presentation.onboarding.OnBoardingSnackbarMessage.Biometry
 import me.proton.pass.presentation.onboarding.OnBoardingSnackbarMessage.ErrorPerformingOperation
 import me.proton.pass.presentation.onboarding.OnBoardingSnackbarMessage.FingerprintLockEnabled
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.milliseconds
 
 @HiltViewModel
 class OnBoardingViewModel @Inject constructor(
@@ -106,6 +108,7 @@ class OnBoardingViewModel @Inject constructor(
     private fun onEnableAutofill() {
         viewModelScope.launch {
             autofillManager.openAutofillSelector()
+            delay(DELAY_AFTER_AUTOFILL_CLICK)
             if (_onBoardingUiState.value.enabledPages.count() > 1) {
                 _onBoardingUiState.update { it.copy(selectedPage = 1) }
             }
@@ -211,5 +214,6 @@ class OnBoardingViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "OnBoardingViewModel"
+        private val DELAY_AFTER_AUTOFILL_CLICK = 300.milliseconds
     }
 }

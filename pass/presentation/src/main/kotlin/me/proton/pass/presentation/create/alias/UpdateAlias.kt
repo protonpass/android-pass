@@ -48,10 +48,11 @@ fun UpdateAlias(
             canEdit = false,
             canDelete = true,
             onUpClick = onUpClick,
-            onSuccess = { shareId, itemId, _ ->
+            onAliasCreated = { shareId, itemId, _ ->
                 viewModel.onEmitSnackbarMessage(AliasUpdated)
                 onSuccess(shareId, itemId)
             },
+            onAliasDraftCreated = { _, _ -> },
             onSubmit = { viewModel.updateAlias() },
             onSuffixChange = { viewModel.onSuffixChange(it) },
             onMailboxChange = { viewModel.onMailboxChange(it) },

@@ -35,6 +35,7 @@ fun AliasTopBar(
     modifier: Modifier = Modifier,
     @StringRes topBarTitle: Int,
     onUpClick: () -> Unit,
+    isDraft: Boolean,
     isButtonEnabled: IsButtonEnabled,
     shareId: Option<ShareId>,
     onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit,
@@ -62,8 +63,13 @@ fun AliasTopBar(
                 },
                 modifier = Modifier.padding(end = 10.dp)
             ) {
+                val saveText = if (isDraft) {
+                    stringResource(R.string.alias_action_save_fill)
+                } else {
+                    stringResource(R.string.action_save)
+                }
                 Text(
-                    text = stringResource(R.string.action_save),
+                    text = saveText,
                     color = buttonTextColor,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.W500
@@ -85,6 +91,7 @@ fun AliasTopBarPreview(
         Surface {
             AliasTopBar(
                 topBarTitle = R.string.title_create_alias,
+                isDraft = input.second.isDraft,
                 isButtonEnabled = input.second.buttonEnabled,
                 onUpClick = {},
                 onEmitSnackbarMessage = {},

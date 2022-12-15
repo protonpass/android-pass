@@ -17,28 +17,15 @@
  */
 package me.proton.pass.presentation.components.navigation.drawer
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.DrawerState
 import androidx.compose.material.ModalDrawer
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.presentation.compose.AccountPrimaryItem
-import me.proton.core.accountmanager.presentation.compose.AccountPrimaryState
-import me.proton.core.accountmanager.presentation.compose.rememberAccountPrimaryState
-import me.proton.core.compose.theme.ProtonDimens.DefaultSpacing
-import me.proton.core.compose.theme.ProtonDimens.SmallSpacing
-import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.components.navigation.CoreNavigation
 
 @Stable
@@ -73,7 +60,7 @@ fun ModalNavigationDrawer(
         drawerState = drawerState,
         drawerShape = CutCornerShape(0.dp),
         drawerContent = {
-            NavigationDrawer(
+            NavigationDrawerContent(
                 drawerUiState = drawerUiState,
                 coreNavigation = coreNavigation,
                 navDrawerNavigation = navDrawerNavigation,
@@ -86,122 +73,3 @@ fun ModalNavigationDrawer(
         content()
     }
 }
-
-@Composable
-fun NavigationDrawer(
-    modifier: Modifier = Modifier,
-    drawerUiState: DrawerUiState,
-    accountPrimaryState: AccountPrimaryState = rememberAccountPrimaryState(),
-    navDrawerNavigation: NavDrawerNavigation,
-    coreNavigation: CoreNavigation,
-    onSignOutClick: () -> Unit = {},
-    onCloseDrawer: () -> Unit
-) {
-    val sidebarColors = requireNotNull(ProtonTheme.colors.sidebarColors)
-    ProtonTheme(colors = sidebarColors) {
-        Surface(
-            modifier = modifier.fillMaxSize(),
-            color = ProtonTheme.colors.backgroundNorm
-        ) {
-            Column {
-                if (drawerUiState.currentUser != null) {
-                    AccountPrimaryItem(
-                        modifier = Modifier
-                            .background(sidebarColors.backgroundNorm)
-                            .padding(all = SmallSpacing)
-                            .fillMaxWidth(),
-                        onRemove = { coreNavigation.onRemove(it) },
-                        onSignIn = { coreNavigation.onSignIn(it) },
-                        onSignOut = { coreNavigation.onSignOut(it) },
-                        onSwitch = { coreNavigation.onSwitch(it) },
-                        viewState = accountPrimaryState
-                    )
-                }
-                PassNavigationDrawer(
-                    modifier = Modifier
-                        .padding(top = DefaultSpacing)
-                        .weight(1f, fill = false),
-                    drawerUiState = drawerUiState,
-                    navDrawerNavigation = navDrawerNavigation,
-                    onSignOutClick = onSignOutClick,
-                    onCloseDrawer = onCloseDrawer
-                )
-            }
-        }
-    }
-}
-
-/*
-@Composable
-private fun SharesList(
-    closeDrawerAction: (() -> Unit) -> Unit,
-    viewEvent: NavigationDrawerViewEvent,
-    shares: List<ShareUiModel>,
-    modifier: Modifier = Modifier,
-) {
-    val title = stringResource(R.string.navigation_my_vaults)
-    Column {
-        Row {
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .height(ListItemHeight)
-                    .clickable(onClick = {
-                        closeDrawerAction { viewEvent.onShareSelected(ShareClickEvent.AllShares) }
-                    })
-                    .padding(
-                        top = SmallSpacing,
-                        bottom = SmallSpacing,
-                        start = DefaultSpacing,
-                        end = MediumSpacing
-                    )
-                    .semantics(mergeDescendants = true) {
-                        contentDescription = title
-                    },
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painterResource(R.drawable.ic_proton_vault),
-                    contentDescription = null,
-                    tint = ProtonTheme.colors.iconWeak
-                )
-                Text(
-                    text = title,
-                    modifier = Modifier.padding(start = ListItemTextStartPadding),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Icon(painterResource(R.drawable.ic_proton_chevron_down), "", tint = Color.White)
-            }
-        }
-
-        shares.map {
-            ShareItem(
-                closeDrawerAction = closeDrawerAction,
-                share = it,
-                viewEvent = viewEvent,
-                modifier = modifier.padding(PaddingValues(start = 22.dp))
-            )
-        }
-    }
-}
-
-@Composable
-private fun ShareItem(
-    closeDrawerAction: (() -> Unit) -> Unit,
-    share: ShareUiModel,
-    viewEvent: NavigationDrawerViewEvent,
-    modifier: Modifier = Modifier,
-) {
-    NavigationDrawerListItem(
-        title = share.name,
-        icon = R.drawable.ic_proton_vault,
-        closeDrawerAction = closeDrawerAction,
-        modifier = modifier,
-    ) {
-        viewEvent.onShareSelected(ShareClickEvent.Share(share))
-    }
-}
-*/
-

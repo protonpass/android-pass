@@ -31,7 +31,7 @@ class MainActivity : FragmentActivity() {
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
-        applySecureFlag()
+        setupSecureMode()
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
@@ -63,7 +63,7 @@ class MainActivity : FragmentActivity() {
         }
     }
 
-    private fun applySecureFlag() {
+    private fun setupSecureMode() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             setRecentsScreenshotEnabled(false)
         }

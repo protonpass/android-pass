@@ -19,12 +19,12 @@ class InitialCreateAliasUiStateTest {
 
     @Test
     fun `alias removes special characters`() {
-        assertEquals(InitialCreateAliasUiState("a_b@c#d=e%f-g").alias(), "abcdefg")
+        assertEquals(InitialCreateAliasUiState("a_b@c#d=e%f-g").alias(), "a_bcdef-g")
     }
 
     @Test
     fun `alias removes spaces characters`() {
-        assertEquals(InitialCreateAliasUiState("a b  c   d e").alias(), "abcde")
+        assertEquals(InitialCreateAliasUiState("a b  c   d e").alias(), "a-b--c---d-e")
     }
 
     @Test

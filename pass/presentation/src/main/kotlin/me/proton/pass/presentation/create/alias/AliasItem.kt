@@ -3,6 +3,7 @@ package me.proton.pass.presentation.create.alias
 import androidx.compose.runtime.Immutable
 import me.proton.pass.domain.AliasOptions
 import me.proton.pass.domain.AliasSuffix
+import me.proton.pass.presentation.create.alias.AliasUtils.areAllAliasCharactersValid
 
 @Immutable
 data class AliasItem(
@@ -29,28 +30,15 @@ data class AliasItem(
 
         if (alias.contains("..")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
 
-        if (!areAllAliasCharactersValid()) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
+        if (!areAllAliasCharactersValid(alias)) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
 
         if (mailboxes.count { it.selected } == 0) mutableSet.add(AliasItemValidationErrors.NoMailboxes)
 
         return mutableSet.toSet()
     }
 
-    private fun areAllAliasCharactersValid(): Boolean {
-        for (char in alias) {
-            // If it's not a letter or a digit, check if it's one of the allowed symbols
-            if (!char.isLetterOrDigit() && !ALLOWED_SPECIAL_CHARACTERS.contains(char)) return false
-
-            // If it's a letter, must be lowercase
-            if (char.isLetter() && char.isUpperCase()) return false
-        }
-        return true
-    }
-
-
     companion object {
         val Empty = AliasItem()
-        private val ALLOWED_SPECIAL_CHARACTERS: List<Char> = listOf('_', '-', '.')
     }
 }
 

@@ -167,10 +167,10 @@ class CreateAliasViewModelTest {
 
     @Test
     fun `setInitialState properly formats alias`() = runTest {
-        viewModel.setInitialState(InitialCreateAliasUiState(title = "ThiS iS a TeSt"))
+        viewModel.setInitialState(InitialCreateAliasUiState(title = "ThiS.iS_a TeSt"))
         viewModel.aliasUiState.test {
             val item = awaitItem()
-            assertThat(item.aliasItem.alias).isEqualTo("this-is-a-test")
+            assertThat(item.aliasItem.alias).isEqualTo("this.is_a-test")
         }
     }
 

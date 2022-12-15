@@ -7,5 +7,5 @@ value class InitialCreateAliasUiState(
 
 fun InitialCreateAliasUiState.alias(): String {
     if (title == null) return ""
-    return title.filter { it.isLetterOrDigit() }.lowercase()
+    return AliasUtils.formatAlias(title)
 }

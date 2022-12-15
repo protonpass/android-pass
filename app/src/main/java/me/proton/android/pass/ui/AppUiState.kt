@@ -1,7 +1,6 @@
 package me.proton.android.pass.ui
 
 import androidx.compose.runtime.Immutable
-import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.R
 import me.proton.android.pass.notifications.api.SnackbarMessage
 import me.proton.android.pass.preferences.ThemePreference
@@ -19,8 +18,7 @@ data class AppUiState(
         val Initial = AppUiState(
             snackbarMessage = None,
             drawerUiState = DrawerUiState(
-                appNameResId = R.string.app_name,
-                appVersion = BuildConfig.VERSION_NAME
+                appNameResId = R.string.app_name
             ),
             theme = ThemePreference.System
         )

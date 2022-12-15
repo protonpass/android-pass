@@ -35,7 +35,6 @@ enum class NavigationDrawerSection {
 @Immutable
 data class DrawerUiState(
     @StringRes val appNameResId: Int,
-    val appVersion: String,
     val closeOnBackEnabled: Boolean = true,
     val closeOnActionEnabled: Boolean = true,
     val currentUser: User? = null,

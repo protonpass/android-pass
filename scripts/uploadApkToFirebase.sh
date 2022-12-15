@@ -33,7 +33,14 @@ fi
 
 echo "Generating release notes"
 
-/bin/bash $REPO_ROOT/scripts/ci/generateReleaseNotes.sh > "${RELEASE_NOTES_PATH}"
+RELEASE_NOTES=$(git log --pretty=format:'%s' --since="1 day ago" | grep -v "Merge branch")
+
+if [[ $? -ne 0 ]]; then
+  echo "There are no changes. Not uploading the APK"
+  exit 0
+fi
+
+echo "${RELEASE_NOTES}" > "${RELEASE_NOTES_PATH}"
 
 echo "Uploading APK: ${APK_PATH}"
 

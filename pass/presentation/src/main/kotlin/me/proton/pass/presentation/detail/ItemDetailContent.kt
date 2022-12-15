@@ -1,18 +1,19 @@
 package me.proton.pass.presentation.detail
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.pass.common.api.Some
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
+import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.pass.presentation.detail.alias.AliasDetail
 import me.proton.pass.presentation.detail.login.LoginDetail
 import me.proton.pass.presentation.detail.note.NoteDetail
@@ -30,7 +31,7 @@ fun ItemDetailContent(
 ) {
     val itemToDelete = remember { mutableStateOf(false) }
 
-    Box(modifier = modifier) {
+    Box(modifier = modifier.fillMaxSize()) {
         if (uiState.isLoading == IsLoadingState.Loading) {
             LoadingDialog()
         }

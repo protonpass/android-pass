@@ -18,15 +18,12 @@
 package me.proton.pass.presentation.components.navigation.drawer
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CutCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.DrawerState
 import androidx.compose.material.ModalDrawer
 import androidx.compose.material.Surface
@@ -34,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -122,51 +118,15 @@ fun NavigationDrawer(
                         viewState = accountPrimaryState
                     )
                 }
-                Column(
+                PassNavigationDrawer(
                     modifier = Modifier
                         .padding(top = DefaultSpacing)
-                        .verticalScroll(rememberScrollState())
                         .weight(1f, fill = false),
-                    verticalArrangement = Arrangement.Top
-                ) {
-                    DrawerItemTypeSection(
-                        itemCount = drawerUiState.itemCountSummary,
-                        closeDrawerAction = { onCloseDrawer() },
-                        selectedSection = drawerUiState.selectedSection,
-                        onSectionClick = { section ->
-                            navDrawerNavigation.onNavHome(section)
-                        }
-                    )
-                    SettingsListItem(
-                        isSelected = drawerUiState.selectedSection == NavigationDrawerSection.Settings,
-                        closeDrawerAction = { onCloseDrawer() },
-                        onClick = { navDrawerNavigation.onNavSettings() }
-                    )
-                    TrashListItem(
-                        isSelected = drawerUiState.selectedSection == NavigationDrawerSection.Trash,
-                        closeDrawerAction = { onCloseDrawer() },
-                        onClick = { navDrawerNavigation.onNavTrash() }
-                    )
-                    ReportProblemItem(
-                        isSelected = false,
-                        closeDrawerAction = { onCloseDrawer() },
-                        onClick = { navDrawerNavigation.onBugReport() }
-                    )
-                    SignOutListItem(
-                        closeDrawerAction = { onCloseDrawer() },
-                        onClick = { onSignOutClick() }
-                    )
-                    NavigationDrawerAppVersion(
-                        name = stringResource(id = drawerUiState.appNameResId),
-                        version = drawerUiState.appVersion
-                    )
-                    if (drawerUiState.internalDrawerEnabled) {
-                        InternalDrawerItem(
-                            closeDrawerAction = { onCloseDrawer() },
-                            onClick = { navDrawerNavigation.onInternalDrawerClick() }
-                        )
-                    }
-                }
+                    drawerUiState = drawerUiState,
+                    navDrawerNavigation = navDrawerNavigation,
+                    onSignOutClick = onSignOutClick,
+                    onCloseDrawer = onCloseDrawer
+                )
             }
         }
     }

@@ -29,6 +29,7 @@ import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.NewAlias
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.ItemCreationError
+import me.proton.pass.presentation.uievents.AliasDraftSavedState
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
@@ -75,21 +76,6 @@ class CreateAliasViewModel @Inject constructor(
                 mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
             }
             isLoadingState.update { IsLoadingState.NotLoading }
-        }
-    }
-
-
-    fun setInitialState(state: InitialCreateAliasUiState) = viewModelScope.launch {
-        aliasItemState.update {
-            val alias = state.alias()
-            it.copy(
-                title = state.title ?: "",
-                alias = alias,
-                aliasToBeCreated = getAliasToBeCreated(
-                    alias = alias,
-                    suffix = it.selectedSuffix
-                )
-            )
         }
     }
 
@@ -147,9 +133,13 @@ class CreateAliasViewModel @Inject constructor(
             return@launch
         }
 
-        isLoadingState.update { IsLoadingState.Loading }
-        performCreateAlias(shareId, aliasItem, aliasItem.selectedSuffix, mailboxes)
-        isLoadingState.update { IsLoadingState.NotLoading }
+        if (isDraft) {
+            isAliasDraftSavedState.tryEmit(AliasDraftSavedState.Success(shareId, aliasItem))
+        } else {
+            isLoadingState.update { IsLoadingState.Loading }
+            performCreateAlias(shareId, aliasItem, aliasItem.selectedSuffix, mailboxes)
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
     }
 
     private suspend fun performCreateAlias(

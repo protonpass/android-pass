@@ -18,7 +18,7 @@ import me.proton.pass.presentation.components.model.ItemUiModel
 @Composable
 fun CreateLogin(
     modifier: Modifier = Modifier,
-    initialContents: InitialCreateLoginUiState,
+    initialContents: InitialCreateLoginUiState? = null,
     showCreateAliasButton: Boolean = true,
     onClose: () -> Unit,
     onSuccess: (ItemUiModel) -> Unit,
@@ -26,15 +26,10 @@ fun CreateLogin(
 ) {
     val viewModel: CreateLoginViewModel = hiltViewModel()
     LaunchedEffect(Unit) {
+        initialContents ?: return@LaunchedEffect
         viewModel.setInitialContents(initialContents)
     }
 
-    // Necessary for detecting alias generated
-    LaunchedEffect(initialContents.username) {
-        if (initialContents.username != null) {
-            viewModel.onAliasGenerated(initialContents.username)
-        }
-    }
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
     val onWebsiteChange = object : OnWebsiteChange {
         override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int ->

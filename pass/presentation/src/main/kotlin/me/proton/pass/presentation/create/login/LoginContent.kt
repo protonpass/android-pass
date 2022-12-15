@@ -75,7 +75,6 @@ internal fun LoginContent(
                 setRegeneratePassword = setRegeneratePassword,
                 onPasswordChange = { password -> onPasswordChange(password) },
                 hideBottomSheet = { scope.launch { bottomSheetState.hide() } },
-                onEditAliasClick = {},
                 onRemoveAliasClick = {
                     scope.launch {
                         setShowRemoveAliasDialog(true)
@@ -131,7 +130,10 @@ internal fun LoginContent(
                 },
                 onCreateAliasClick = {
                     if (uiState.shareId is Some) {
-                        onCreateAliasClick(uiState.shareId.value, uiState.loginItem.title.toOption())
+                        onCreateAliasClick(
+                            uiState.shareId.value,
+                            uiState.loginItem.title.toOption()
+                        )
                     }
                 },
                 onAliasOptionsClick = {

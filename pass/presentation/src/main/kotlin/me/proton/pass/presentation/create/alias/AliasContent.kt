@@ -27,6 +27,7 @@ import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankA
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankTitle
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.InvalidAliasContent
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.EmptyShareIdError
+import me.proton.pass.presentation.uievents.AliasDraftSavedState
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsLoadingState
 
@@ -42,7 +43,8 @@ internal fun AliasContent(
     canDelete: Boolean,
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
-    onSuccess: (ShareId, ItemId, String) -> Unit,
+    onAliasCreated: (ShareId, ItemId, String) -> Unit,
+    onAliasDraftCreated: (ShareId, AliasItem) -> Unit,
     onSuffixChange: (AliasSuffix) -> Unit,
     onMailboxChange: (AliasMailboxUiModel) -> Unit,
     onTitleChange: (String) -> Unit,
@@ -88,6 +90,7 @@ internal fun AliasContent(
                 AliasTopBar(
                     topBarTitle = topBarTitle,
                     onUpClick = onUpClick,
+                    isDraft = uiState.isDraft,
                     isButtonEnabled = uiState.isApplyButtonEnabled,
                     shareId = uiState.shareId,
                     onEmitSnackbarMessage = onEmitSnackbarMessage,
@@ -126,18 +129,48 @@ internal fun AliasContent(
                 onAliasChange = { onAliasChange(it) },
                 onDeleteAliasClick = onDeleteAlias
             )
-            LaunchedEffect(uiState.isAliasSavedState is AliasSavedState.Success) {
-                val isAliasSaved = uiState.isAliasSavedState
-                if (isAliasSaved is AliasSavedState.Success) {
-                    when (uiState.shareId) {
-                        None -> onEmitSnackbarMessage(EmptyShareIdError)
-                        is Some -> onSuccess(
-                            uiState.shareId.value,
-                            isAliasSaved.itemId,
-                            isAliasSaved.alias
-                        )
-                    }
-                }
+            IsAliasSavedLaunchedEffect(uiState, onEmitSnackbarMessage, onAliasCreated)
+            IsAliasDraftSavedLaunchedEffect(uiState, onEmitSnackbarMessage, onAliasDraftCreated)
+        }
+    }
+}
+
+@Composable
+private fun IsAliasDraftSavedLaunchedEffect(
+    uiState: CreateUpdateAliasUiState,
+    onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit,
+    onAliasDraftCreated: (ShareId, AliasItem) -> Unit
+) {
+    val isAliasDraftSaved = uiState.isAliasDraftSavedState
+    if (isAliasDraftSaved is AliasDraftSavedState.Success) {
+        LaunchedEffect(Unit) {
+            when (uiState.shareId) {
+                None -> onEmitSnackbarMessage(EmptyShareIdError)
+                is Some -> onAliasDraftCreated(
+                    uiState.shareId.value,
+                    isAliasDraftSaved.aliasItem
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun IsAliasSavedLaunchedEffect(
+    uiState: CreateUpdateAliasUiState,
+    onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit,
+    onAliasCreated: (ShareId, ItemId, String) -> Unit
+) {
+    val isAliasSaved = uiState.isAliasSavedState
+    if (isAliasSaved is AliasSavedState.Success) {
+        LaunchedEffect(Unit) {
+            when (uiState.shareId) {
+                None -> onEmitSnackbarMessage(EmptyShareIdError)
+                is Some -> onAliasCreated(
+                    uiState.shareId.value,
+                    isAliasSaved.itemId,
+                    isAliasSaved.alias
+                )
             }
         }
     }

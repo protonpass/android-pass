@@ -9,7 +9,8 @@ import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.navigation.api.composable
 import me.proton.android.pass.ui.navigation.AppNavItem
-import me.proton.pass.presentation.create.alias.RESULT_CREATED_ALIAS
+import me.proton.pass.presentation.create.alias.AliasItem
+import me.proton.pass.presentation.create.alias.RESULT_CREATED_DRAFT_ALIAS
 import me.proton.pass.presentation.create.login.UpdateLogin
 
 @OptIn(
@@ -18,12 +19,12 @@ import me.proton.pass.presentation.create.login.UpdateLogin
 )
 fun NavGraphBuilder.updateLoginGraph(modifier: Modifier, nav: AppNavigator) {
     composable(AppNavItem.EditLogin) {
-        val createdAlias by nav.navState<String>(RESULT_CREATED_ALIAS, null)
+        val createdDraftAlias by nav.navState<AliasItem>(RESULT_CREATED_DRAFT_ALIAS, null)
             .collectAsStateWithLifecycle()
 
         UpdateLogin(
             modifier = modifier,
-            createdAlias = createdAlias,
+            draftAlias = createdDraftAlias,
             onUpClick = { nav.onBackClick() },
             onSuccess = { shareId, itemId ->
                 nav.navigate(
@@ -32,8 +33,15 @@ fun NavGraphBuilder.updateLoginGraph(modifier: Modifier, nav: AppNavigator) {
                     backDestination = AppNavItem.Home
                 )
             },
-            onCreateAliasClick = { shareId ->
-                nav.navigate(AppNavItem.CreateAlias, AppNavItem.CreateAlias.createNavRoute(shareId))
+            onCreateAliasClick = { shareId, titleOption ->
+                nav.navigate(
+                    AppNavItem.CreateAlias,
+                    AppNavItem.CreateAlias.createNavRoute(
+                        shareId = shareId,
+                        title = titleOption,
+                        isDraft = true
+                    )
+                )
             }
         )
     }

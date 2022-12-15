@@ -10,13 +10,13 @@ import me.proton.android.pass.navigation.api.composable
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.ui.autofill.AutofillNavItem
 import me.proton.pass.presentation.components.model.ItemUiModel
-import me.proton.pass.presentation.create.alias.RESULT_CREATED_ALIAS
+import me.proton.pass.presentation.create.alias.AliasItem
+import me.proton.pass.presentation.create.alias.RESULT_CREATED_DRAFT_ALIAS
 import me.proton.pass.presentation.create.login.CreateLogin
 import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 
 @OptIn(
-    ExperimentalAnimationApi::class,
-    ExperimentalLifecycleComposeApi::class
+    ExperimentalAnimationApi::class, ExperimentalLifecycleComposeApi::class
 )
 fun NavGraphBuilder.createLoginGraph(
     appNavigator: AppNavigator,
@@ -24,7 +24,7 @@ fun NavGraphBuilder.createLoginGraph(
     onItemCreated: (ItemUiModel) -> Unit
 ) {
     composable(AutofillNavItem.CreateLogin) {
-        val createdAlias by appNavigator.navState<String>(RESULT_CREATED_ALIAS, null)
+        val createdDraftAlias by appNavigator.navState<AliasItem>(RESULT_CREATED_DRAFT_ALIAS, null)
             .collectAsStateWithLifecycle()
 
         val packageName = if (state.webDomain.isEmpty()) {
@@ -36,8 +36,8 @@ fun NavGraphBuilder.createLoginGraph(
         CreateLogin(
             initialContents = InitialCreateLoginUiState(
                 title = state.title,
-                username = createdAlias,
                 url = state.webDomain.value(),
+                aliasItem = createdDraftAlias,
                 packageName = packageName
             ),
             onClose = { appNavigator.onBackClick() },
@@ -45,7 +45,11 @@ fun NavGraphBuilder.createLoginGraph(
             onCreateAliasClick = { shareId, titleOption ->
                 appNavigator.navigate(
                     AutofillNavItem.CreateAlias,
-                    AutofillNavItem.CreateAlias.createNavRoute(shareId, titleOption)
+                    AutofillNavItem.CreateAlias.createNavRoute(
+                        shareId = shareId,
+                        isDraft = true,
+                        title = titleOption
+                    )
                 )
             }
         )

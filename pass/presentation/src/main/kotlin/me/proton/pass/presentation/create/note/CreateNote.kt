@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -26,8 +27,8 @@ fun CreateNote(
     NoteContent(
         modifier = modifier,
         uiState = noteUiState,
-        topBarTitle = R.string.title_create_note,
-        topBarActionName = R.string.action_save,
+        topBarTitle = stringResource(R.string.title_create_note),
+        topBarActionName = stringResource(R.string.action_save),
         onUpClick = onUpClick,
         onSuccess = { _, _ ->
             viewModel.onEmitSnackbarMessage(NoteCreated)

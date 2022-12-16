@@ -25,9 +25,11 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
+import me.proton.pass.presentation.components.common.TopBarLoading
 import me.proton.pass.presentation.components.previewproviders.AliasTopBarInput
 import me.proton.pass.presentation.components.previewproviders.AliasTopBarPreviewProvider
 import me.proton.pass.presentation.uievents.IsButtonEnabled
+import me.proton.pass.presentation.uievents.IsLoadingState
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -38,6 +40,7 @@ fun AliasTopBar(
     isDraft: Boolean,
     isButtonEnabled: IsButtonEnabled,
     shareId: Option<ShareId>,
+    isLoadingState: IsLoadingState,
     onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit,
     onSubmit: (ShareId) -> Unit
 ) {
@@ -53,7 +56,7 @@ fun AliasTopBar(
         navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
         actions = {
             IconButton(
-                enabled = buttonEnabled,
+                enabled = buttonEnabled && isLoadingState == IsLoadingState.NotLoading,
                 onClick = {
                     keyboardController?.hide()
                     when (shareId) {
@@ -63,17 +66,22 @@ fun AliasTopBar(
                 },
                 modifier = Modifier.padding(end = 10.dp)
             ) {
-                val saveText = if (isDraft) {
-                    stringResource(R.string.alias_action_save_fill)
-                } else {
-                    stringResource(R.string.action_save)
+                when (isLoadingState) {
+                    IsLoadingState.Loading -> { TopBarLoading() }
+                    IsLoadingState.NotLoading -> {
+                        val saveText = if (isDraft) {
+                            stringResource(R.string.alias_action_save_fill)
+                        } else {
+                            stringResource(R.string.action_save)
+                        }
+                        Text(
+                            text = saveText,
+                            color = buttonTextColor,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.W500
+                        )
+                    }
                 }
-                Text(
-                    text = saveText,
-                    color = buttonTextColor,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.W500
-                )
             }
         }
     )
@@ -93,6 +101,7 @@ fun AliasTopBarPreview(
                 topBarTitle = R.string.title_create_alias,
                 isDraft = input.second.isDraft,
                 isButtonEnabled = input.second.buttonEnabled,
+                isLoadingState = input.second.isLoadingState,
                 onUpClick = {},
                 onEmitSnackbarMessage = {},
                 onSubmit = {},

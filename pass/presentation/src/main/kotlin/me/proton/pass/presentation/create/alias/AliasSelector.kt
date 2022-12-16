@@ -5,8 +5,9 @@ import androidx.compose.ui.Modifier
 
 @Composable
 internal fun AliasSelector(
-    state: AliasItem,
     modifier: Modifier = Modifier,
+    state: AliasItem,
+    enabled: Boolean,
     onClick: () -> Unit
 ) {
     val value = if (state.selectedSuffix != null) {
@@ -15,8 +16,9 @@ internal fun AliasSelector(
         ""
     }
     Selector(
-        text = value,
         modifier = modifier,
+        text = value,
+        enabled = enabled,
         onClick = onClick
     )
 }

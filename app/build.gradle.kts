@@ -247,6 +247,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)
     implementation(libs.sentry)
+    implementation(libs.sentry.timber)
     implementation(libs.okhttp)
     implementation(libs.plumber)
 

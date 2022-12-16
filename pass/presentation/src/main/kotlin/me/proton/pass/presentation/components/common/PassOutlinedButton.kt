@@ -16,12 +16,15 @@ import androidx.compose.ui.unit.sp
 import me.proton.core.compose.component.ProtonButton
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
+import me.proton.pass.presentation.uievents.IsButtonEnabled
+import me.proton.pass.presentation.uievents.value
 
 @Composable
 fun PassOutlinedButton(
     modifier: Modifier = Modifier,
     text: String,
     color: Color = ProtonTheme.colors.brandNorm,
+    enabled: IsButtonEnabled = IsButtonEnabled.Enabled,
     onClick: () -> Unit
 ) {
     ProtonButton(
@@ -34,7 +37,8 @@ fun PassOutlinedButton(
             contentColor = color
         ),
         elevation = null,
-        contentPadding = PaddingValues(horizontal = 36.dp, vertical = 12.dp)
+        contentPadding = PaddingValues(horizontal = 36.dp, vertical = 12.dp),
+        enabled = enabled.value()
     ) {
         Text(
             text = text,

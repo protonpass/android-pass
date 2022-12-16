@@ -5,13 +5,15 @@ import androidx.compose.ui.Modifier
 
 @Composable
 internal fun MailboxSelector(
-    state: AliasItem,
     modifier: Modifier = Modifier,
+    state: AliasItem,
+    isEditAllowed: Boolean,
     onClick: () -> Unit
 ) {
     Selector(
-        text = state.mailboxTitle,
         modifier = modifier,
+        text = state.mailboxTitle,
+        enabled = isEditAllowed,
         onClick = onClick
     )
 }

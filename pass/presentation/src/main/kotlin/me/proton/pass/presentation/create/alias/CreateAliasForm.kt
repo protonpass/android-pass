@@ -17,6 +17,7 @@ import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.PassOutlinedButton
 import me.proton.pass.presentation.components.form.NoteInput
 import me.proton.pass.presentation.components.form.TitleInput
+import me.proton.pass.presentation.uievents.IsButtonEnabled
 
 @Composable
 internal fun CreateAliasForm(
@@ -27,6 +28,7 @@ internal fun CreateAliasForm(
     onTitleRequiredError: Boolean,
     onAliasRequiredError: Boolean,
     onInvalidAliasError: Boolean,
+    isEditAllowed: Boolean,
     onTitleChange: (String) -> Unit,
     onAliasChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
@@ -43,6 +45,7 @@ internal fun CreateAliasForm(
         TitleInput(
             value = state.title,
             onChange = onTitleChange,
+            enabled = isEditAllowed,
             onTitleRequiredError = onTitleRequiredError
         )
         Spacer(Modifier.padding(vertical = 8.dp))
@@ -52,7 +55,7 @@ internal fun CreateAliasForm(
                 state = state,
                 onChange = onAliasChange,
                 onSuffixClick = onSuffixClick,
-                canEdit = canEdit,
+                canEdit = canEdit && isEditAllowed,
                 onAliasRequiredError = onAliasRequiredError,
                 onInvalidAliasError = onInvalidAliasError
             )
@@ -64,11 +67,14 @@ internal fun CreateAliasForm(
         Spacer(Modifier.padding(vertical = 8.dp))
         MailboxSection(
             state = state,
+            isEditAllowed = isEditAllowed,
             onMailboxClick = onMailboxClick
         )
         NoteInput(
             contentModifier = Modifier.height(100.dp),
-            value = state.note, onChange = onNoteChange
+            value = state.note,
+            enabled = isEditAllowed,
+            onChange = onNoteChange
         )
 
         if (canDelete) {
@@ -77,6 +83,7 @@ internal fun CreateAliasForm(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.action_move_to_trash),
                 color = ProtonTheme.colors.notificationError,
+                enabled = IsButtonEnabled.from(isEditAllowed),
                 onClick = onDeleteAliasClick
             )
         }

@@ -20,7 +20,6 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankAlias
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankTitle
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.InvalidAliasContent
@@ -28,7 +27,6 @@ import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.EmptyShareI
 import me.proton.pass.presentation.create.alias.mailboxes.SelectMailboxesDialog
 import me.proton.pass.presentation.uievents.AliasDraftSavedState
 import me.proton.pass.presentation.uievents.AliasSavedState
-import me.proton.pass.presentation.uievents.IsLoadingState
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -39,6 +37,7 @@ internal fun AliasContent(
     @StringRes topBarTitle: Int,
     canEdit: Boolean,
     canDelete: Boolean,
+    isEditAllowed: Boolean,
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
     onAliasCreated: (ShareId, ItemId, String) -> Unit,
@@ -88,19 +87,17 @@ internal fun AliasContent(
                     isDraft = uiState.isDraft,
                     isButtonEnabled = uiState.isApplyButtonEnabled,
                     shareId = uiState.shareId,
+                    isLoadingState = uiState.isLoadingState,
                     onEmitSnackbarMessage = onEmitSnackbarMessage,
                     onSubmit = onSubmit
                 )
             }
         ) { padding ->
-            if (uiState.isLoadingState == IsLoadingState.Loading) {
-                LoadingDialog()
-            }
-
             CreateAliasForm(
                 state = uiState.aliasItem,
                 canEdit = canEdit,
                 canDelete = canDelete,
+                isEditAllowed = isEditAllowed,
                 modifier = Modifier.padding(padding),
                 onTitleRequiredError = uiState.errorList.contains(BlankTitle),
                 onAliasRequiredError = uiState.errorList.contains(BlankAlias),

@@ -16,6 +16,7 @@ import me.proton.pass.presentation.components.form.TitleInput
 @Composable
 internal fun LoginItemForm(
     modifier: Modifier = Modifier,
+    isEditAllowed: Boolean,
     loginItem: LoginItem,
     showCreateAliasButton: Boolean,
     onTitleChange: (String) -> Unit,
@@ -40,24 +41,28 @@ internal fun LoginItemForm(
         TitleInput(
             value = loginItem.title,
             onChange = onTitleChange,
-            onTitleRequiredError = onTitleRequiredError
+            onTitleRequiredError = onTitleRequiredError,
+            enabled = isEditAllowed
         )
         UsernameInput(
             value = loginItem.username,
             showCreateAliasButton = showCreateAliasButton,
             canUpdateUsername = canUpdateUsername,
+            isEditAllowed = isEditAllowed,
             onChange = onUsernameChange,
             onGenerateAliasClick = onCreateAliasClick,
             onAliasOptionsClick = onAliasOptionsClick
         )
         PasswordInput(
             value = loginItem.password,
+            isEditAllowed = isEditAllowed,
             onChange = onPasswordChange,
             onGeneratePasswordClick = onGeneratePasswordClick
         )
         Spacer(modifier = Modifier.height(20.dp))
         WebsitesSection(
             websites = loginItem.websiteAddresses,
+            isEditAllowed = isEditAllowed,
             onWebsitesChange = onWebsiteChange,
             focusLastWebsite = focusLastWebsite,
             doesWebsiteIndexHaveError = doesWebsiteIndexHaveError
@@ -65,6 +70,7 @@ internal fun LoginItemForm(
         NoteInput(
             contentModifier = Modifier.height(100.dp),
             value = loginItem.note,
+            enabled = isEditAllowed,
             onChange = onNoteChange
         )
     }

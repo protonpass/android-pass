@@ -108,7 +108,7 @@
     <string name="sort_by_type">Sort by type</string>
     <string name="empty_list_title">No items</string>
     <string name="empty_search_results_title">No results found</string>
-    <string name="empty_search_results_subtitle">Please try a different search terem.</string>
+    <string name="empty_search_results_subtitle">Please try a different search term.</string>
     <string name="title_new">New</string>
     <string name="action_login">Login</string>
     <string name="action_alias">Alias</string>

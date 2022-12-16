@@ -1,6 +1,5 @@
-package me.proton.pass.presentation.create.login
+package me.proton.pass.presentation.create.note
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -8,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,17 +27,18 @@ import me.proton.pass.presentation.uievents.IsLoadingState
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-internal fun LoginTopBar(
+fun NoteTopBar(
     modifier: Modifier = Modifier,
     shareId: ShareId?,
-    @StringRes topBarTitle: Int,
-    @StringRes topBarActionName: Int,
+    topBarTitle: String,
+    topBarActionName: String,
     isLoadingState: IsLoadingState,
     onUpClick: () -> Unit,
-    onSubmit: (ShareId) -> Unit,
-    onSnackbarMessage: (LoginSnackbarMessages) -> Unit
+    onEmitSnackbarMessage: (NoteSnackbarMessage) -> Unit,
+    onSubmit: (ShareId) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
 
     ProtonTopAppBar(
         modifier = modifier,
@@ -45,11 +46,11 @@ internal fun LoginTopBar(
         navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
         actions = {
             IconButton(
-                enabled = isLoadingState == IsLoadingState.NotLoading,
                 onClick = {
                     keyboardController?.hide()
+                    focusManager.clearFocus()
                     if (shareId == null) {
-                        onSnackbarMessage(LoginSnackbarMessages.EmptyShareIdError)
+                        onEmitSnackbarMessage(NoteSnackbarMessage.EmptyShareIdError)
                     } else {
                         onSubmit(shareId)
                     }
@@ -57,12 +58,10 @@ internal fun LoginTopBar(
                 modifier = Modifier.padding(end = 10.dp)
             ) {
                 when (isLoadingState) {
-                    IsLoadingState.Loading -> {
-                        TopBarLoading()
-                    }
+                    IsLoadingState.Loading -> { TopBarLoading() }
                     IsLoadingState.NotLoading -> {
                         Text(
-                            text = stringResource(topBarActionName),
+                            text = topBarActionName,
                             color = ProtonTheme.colors.brandNorm,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.W500
@@ -76,19 +75,19 @@ internal fun LoginTopBar(
 
 @Preview
 @Composable
-fun LoginTopBarPreview(
+fun NoteTopBarPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     ProtonTheme(isDark = input.first) {
         Surface {
-            LoginTopBar(
-                shareId = null,
-                topBarTitle = R.string.title_create_login,
-                topBarActionName = R.string.action_save,
+            NoteTopBar(
                 isLoadingState = IsLoadingState.from(input.second),
+                shareId = null,
+                topBarTitle = stringResource(R.string.title_create_note),
+                topBarActionName = stringResource(R.string.action_save),
                 onUpClick = {},
                 onSubmit = {},
-                onSnackbarMessage = {}
+                onEmitSnackbarMessage = {}
             )
         }
     }

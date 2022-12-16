@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
-import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.previewproviders.TitleInputPreviewData
 import me.proton.pass.presentation.components.previewproviders.TitleInputPreviewProvider
@@ -35,23 +34,6 @@ fun TitleInput(
         errorMessage = stringResource(id = R.string.field_title_is_blank)
     )
 }
-
-@Preview
-@Composable
-fun TitleInputThemePreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
-) {
-    ProtonTheme(isDark = isDarkMode) {
-        Surface {
-            TitleInput(
-                value = "Title input",
-                onChange = {},
-                onTitleRequiredError = false
-            )
-        }
-    }
-}
-
 class ThemeAndTitleInputProvider :
     ThemePairPreviewProvider<TitleInputPreviewData>(TitleInputPreviewProvider())
 
@@ -64,8 +46,9 @@ fun TitleInputPreview(
         Surface {
             TitleInput(
                 value = input.second.title,
-                onChange = {},
-                onTitleRequiredError = input.second.onTitleRequiredError
+                onTitleRequiredError = input.second.onTitleRequiredError,
+                enabled = input.second.enabled,
+                onChange = {}
             )
         }
     }

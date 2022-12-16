@@ -17,6 +17,7 @@ import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.dialogs.ConfirmMoveItemToTrashDialog
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.AliasUpdated
+import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemDeletedState
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -47,6 +48,7 @@ fun UpdateAlias(
             topBarTitle = R.string.title_edit_alias,
             canEdit = false,
             canDelete = true,
+            isEditAllowed = viewState.isLoadingState == IsLoadingState.NotLoading,
             onUpClick = onUpClick,
             onAliasCreated = { shareId, itemId, _ ->
                 viewModel.onEmitSnackbarMessage(AliasUpdated)

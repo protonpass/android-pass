@@ -15,6 +15,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,17 +31,23 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.form.ProtonTextField
 import me.proton.pass.presentation.components.form.ProtonTextTitle
+import me.proton.pass.presentation.components.previewproviders.WebsitesPreviewParameter
+import me.proton.pass.presentation.components.previewproviders.WebsitesSectionPreviewProvider
 
 @Composable
 internal fun WebsitesSection(
     modifier: Modifier = Modifier,
     websites: List<String>,
     focusLastWebsite: Boolean,
+    isEditAllowed: Boolean,
     onWebsitesChange: OnWebsiteChange,
     doesWebsiteIndexHaveError: (Int) -> Boolean
 ) {
@@ -76,6 +83,7 @@ internal fun WebsitesSection(
                 modifier = textFieldModifier.fillMaxWidth(1.0f),
                 isError = doesWebsiteIndexHaveError(idx),
                 value = value,
+                editable = isEditAllowed,
                 onChange = { onWebsitesChange.onWebsiteValueChanged(it, idx) },
                 onFocusChange = { isFocused = it },
                 placeholder = R.string.field_website_address_hint,
@@ -129,6 +137,34 @@ internal fun WebsitesSection(
                 Text(stringResource(R.string.field_website_add_another))
                 Spacer(modifier = Modifier.fillMaxWidth())
             }
+        }
+    }
+}
+
+class ThemedWebsitesSectionPreviewProvider :
+    ThemePairPreviewProvider<WebsitesPreviewParameter>(WebsitesSectionPreviewProvider())
+
+@Preview
+@Composable
+fun WebsitesSectionPreview(
+    @PreviewParameter(ThemedWebsitesSectionPreviewProvider::class) input: Pair<Boolean, WebsitesPreviewParameter>
+) {
+    ProtonTheme(isDark = input.first) {
+        Surface {
+            WebsitesSection(
+                websites = input.second.websites,
+                isEditAllowed = input.second.isEditAllowed,
+                focusLastWebsite = false,
+                onWebsitesChange = object : OnWebsiteChange {
+                    override val onAddWebsite: () -> Unit
+                        get() = {}
+                    override val onRemoveWebsite: (Int) -> Unit
+                        get() = {}
+                    override val onWebsiteValueChanged: (String, Int) -> Unit
+                        get() = { _, _ -> }
+                },
+                doesWebsiteIndexHaveError = { false }
+            )
         }
     }
 }

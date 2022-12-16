@@ -202,6 +202,6 @@ class CreateAliasViewModelTest {
         viewModel.onTitleChange("title")
         viewModel.onAliasChange("alias")
         viewModel.onSuffixChange(suffix)
-        viewModel.onMailboxChange(AliasMailboxUiModel(model = mailbox, selected = false))
+        viewModel.onMailboxesChanged(listOf(AliasMailboxUiModel(model = mailbox, selected = true)))
     }
 }

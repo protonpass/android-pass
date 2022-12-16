@@ -1,5 +1,6 @@
 package me.proton.pass.autofill
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -13,6 +14,7 @@ import me.proton.android.pass.autofill.api.AutofillManager
 import me.proton.android.pass.autofill.api.AutofillStatus
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus.Supported
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus.Unsupported
+import me.proton.android.pass.log.PassLogger
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 
@@ -47,12 +49,27 @@ class AutofillManagerImpl @Inject constructor(
     }
 
     override fun openAutofillSelector() {
-        val intent = Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE).apply {
-            data = Uri.parse("package:${context.packageName}")
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        try {
+            if (canOpenAutofillSelector()) {
+                val intent = Intent(Settings.ACTION_REQUEST_SET_AUTOFILL_SERVICE).apply {
+                    data = Uri.parse("package:${context.packageName}")
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }
+                context.startActivity(intent)
+            } else {
+                PassLogger.i(TAG, "Could not open autofill selector")
+            }
+        } catch (e: ActivityNotFoundException) {
+            PassLogger.i(TAG, e, "Could not open autofill selector")
         }
+    }
 
-        context.startActivity(intent)
+    private fun canOpenAutofillSelector(): Boolean {
+        val autofillManager: android.view.autofill.AutofillManager? =
+            context.getSystemService(android.view.autofill.AutofillManager::class.java)
+        val hasEnabledAutofillServices = autofillManager?.hasEnabledAutofillServices() ?: false
+        val isAutofillSupported = autofillManager?.isAutofillSupported ?: false
+        return !hasEnabledAutofillServices && isAutofillSupported
     }
 
     override fun disableAutofill() {
@@ -62,6 +79,7 @@ class AutofillManagerImpl @Inject constructor(
     }
 
     companion object {
+        private const val TAG = "AutofillManagerImpl"
         private val UPDATE_TIME = 2L.seconds
     }
 }

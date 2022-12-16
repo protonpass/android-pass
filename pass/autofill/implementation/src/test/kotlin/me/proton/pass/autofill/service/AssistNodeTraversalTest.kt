@@ -221,7 +221,8 @@ class AssistNodeTraversalTest {
             autofillHints = autofillHints,
             htmlAttributes = htmlAttributes,
             children = children,
-            url = webDomain.toOption()
+            url = webDomain.toOption(),
+            hintKeywordList = hintKeywordList
         )
 
 }

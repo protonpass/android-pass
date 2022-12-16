@@ -89,10 +89,15 @@ sealed class AppNavItem(
         }
     }
 
-    object EditAlias :
-        AppNavItem("editAlias", listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)) {
-        fun createNavRoute(shareId: ShareId, itemId: ItemId) =
-            "$baseRoute/${shareId.id}/${itemId.id}"
+    object EditAlias : AppNavItem(
+        baseRoute = "editAlias",
+        navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
+        optionalArgIds = listOf(AliasOptionalNavArgId.IsDraft)
+    ) {
+        fun createNavRoute(shareId: ShareId, itemId: ItemId) = buildString {
+            append("$baseRoute/${shareId.id}/${itemId.id}")
+            append("?${AliasOptionalNavArgId.IsDraft.key}=false")
+        }
     }
 
     object CreateNote : AppNavItem("createNote", listOf(CommonNavArgId.ShareId)) {

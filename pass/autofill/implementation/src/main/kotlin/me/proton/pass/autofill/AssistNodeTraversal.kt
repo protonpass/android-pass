@@ -20,6 +20,16 @@ class AssistNodeTraversal {
     private var autoFillNodes = mutableListOf<AssistField>()
     private var detectedUrl: Option<String> = None
 
+    private val usernameKeywords = listOf(
+        View.AUTOFILL_HINT_USERNAME,
+        View.AUTOFILL_HINT_EMAIL_ADDRESS,
+        "email",
+        "username",
+        "user name",
+        "identifier",
+        "account_name"
+    )
+
     // For testing purposes
     var visitedNodes = 0
         private set
@@ -84,7 +94,10 @@ class AssistNodeTraversal {
         // InputType.TYPE_TEXT_FLAG_CAP_SENTENCES might also be considered in the future
         return !hasMultilineFlag &&
             !hasAutoCorrectFlag &&
-            detectFieldTypeUsingInputType(node.inputType) != FieldType.Unknown
+            (
+                detectFieldTypeUsingInputType(node.inputType) != FieldType.Unknown ||
+                    detectFieldTypeUsingHintKeywordList(node.hintKeywordList) != FieldType.Unknown
+                )
     }
 
     private fun detectFieldType(node: AutofillNode): FieldType {
@@ -100,10 +113,14 @@ class AssistNodeTraversal {
         if (fieldType == FieldType.Unknown) {
             fieldType = detectFieldTypeUsingInputType(node.inputType)
         }
+        if (fieldType == FieldType.Unknown) {
+            fieldType = detectFieldTypeUsingHintKeywordList(node.hintKeywordList)
+        }
+
         return fieldType
     }
 
-    fun detectFieldTypeUsingHtmlInfo(
+    private fun detectFieldTypeUsingHtmlInfo(
         htmlAttributes: List<Pair<String, String>>
     ): FieldType {
         val typeAttribute = htmlAttributes.firstOrNull { it.first == "type" }
@@ -126,7 +143,12 @@ class AssistNodeTraversal {
         else -> FieldType.Unknown
     }
 
-    fun detectFieldTypeUsingInputType(inputType: InputTypeValue): FieldType = when {
+    private fun detectFieldTypeUsingHintKeywordList(hintKeywordList: List<CharSequence>): FieldType {
+        if (usernameKeywords.any { hintKeywordList.contains(it) }) return FieldType.Email
+        return FieldType.Unknown
+    }
+
+    private fun detectFieldTypeUsingInputType(inputType: InputTypeValue): FieldType = when {
         inputType.value == InputType.TYPE_CLASS_PHONE -> FieldType.Phone
         inputType.hasVariations(
             InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS,
@@ -153,6 +175,12 @@ class AssistNodeTraversal {
 }
 
 fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode {
+    val hintKeywordList = buildList {
+        add(text)
+        add(idEntry)
+        add(hint)
+        addAll(autofillOptions?.toList() ?: emptyList<String>())
+    }.filterNotNull()
     return AutofillNode(
         id = autofillId?.let(::AndroidAutofillFieldId),
         className = className,
@@ -160,6 +188,7 @@ fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode {
         text = text?.toString(),
         autofillValue = autofillValue,
         inputType = InputTypeValue(inputType),
+        hintKeywordList = hintKeywordList,
         autofillHints = autofillHints?.toList().orEmpty(),
         htmlAttributes = htmlInfo?.attributes?.toList()?.map { it.first to it.second }.orEmpty(),
         children = (0 until childCount).map { getChildAt(it).toAutofillNode() },

@@ -46,7 +46,10 @@ fun CreateLogin(
         topBarTitle = R.string.title_create_login,
         topBarActionName = R.string.action_save,
         onUpClick = { onClose() },
-        onSuccess = { _, _, item -> onSuccess(item) },
+        onSuccess = { _, _, item ->
+            viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.LoginCreated)
+            onSuccess(item)
+        },
         onSubmit = { viewModel.createItem() },
         onTitleChange = { viewModel.onTitleChange(it) },
         onUsernameChange = { viewModel.onUsernameChange(it) },

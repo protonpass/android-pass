@@ -21,5 +21,6 @@ data class AutofillNode(
     val autofillHints: List<String>,
     val htmlAttributes: List<Pair<String, String>>,
     val children: List<AutofillNode>,
-    val url: Option<String>
+    val url: Option<String>,
+    val hintKeywordList: List<CharSequence>
 )

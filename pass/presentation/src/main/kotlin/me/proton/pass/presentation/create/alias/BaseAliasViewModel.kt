@@ -127,20 +127,14 @@ abstract class BaseAliasViewModel(
         }
     }
 
-    open fun onMailboxChange(mailbox: AliasMailboxUiModel) {
-        val mailboxes = aliasItemState.value.mailboxes.map {
-            if (it.model.id == mailbox.model.id) {
-                it.copy(selected = !mailbox.selected)
-            } else {
-                it
-            }
-        }
+    open fun onMailboxesChanged(mailboxes: List<AliasMailboxUiModel>) {
+        val atLeastOneSelected = mailboxes.any { it.selected }
+        if (!atLeastOneSelected) return
 
         aliasItemState.update {
             it.copy(
                 mailboxes = mailboxes,
-                mailboxTitle = getMailboxTitle(mailboxes),
-                isMailboxListApplicable = mailboxes.any { it.selected }
+                mailboxTitle = getMailboxTitle(mailboxes)
             )
         }
     }

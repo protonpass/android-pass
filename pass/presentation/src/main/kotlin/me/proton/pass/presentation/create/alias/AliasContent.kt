@@ -1,5 +1,6 @@
 package me.proton.pass.presentation.create.alias
 
+import androidx.activity.compose.BackHandler
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -11,26 +12,25 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
-import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Some
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
+import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankAlias
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankTitle
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.InvalidAliasContent
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.EmptyShareIdError
+import me.proton.pass.presentation.create.alias.mailboxes.SelectMailboxesDialog
 import me.proton.pass.presentation.uievents.AliasDraftSavedState
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsLoadingState
 
-@ExperimentalMaterialApi
-@ExperimentalComposeUiApi
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 @Suppress("LongParameterList", "LongMethod")
 internal fun AliasContent(
@@ -44,7 +44,7 @@ internal fun AliasContent(
     onAliasCreated: (ShareId, ItemId, String) -> Unit,
     onAliasDraftCreated: (ShareId, AliasItem) -> Unit,
     onSuffixChange: (AliasSuffix) -> Unit,
-    onMailboxChange: (AliasMailboxUiModel) -> Unit,
+    onMailboxesChanged: (List<AliasMailboxUiModel>) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onAliasChange: (String) -> Unit,
@@ -53,29 +53,29 @@ internal fun AliasContent(
 ) {
     val scope = rememberCoroutineScope()
 
-    val (bottomSheetContentType, setBottomSheetContentType) = remember {
-        mutableStateOf<AliasBottomSheetType>(AliasBottomSheetType.Suffix)
-    }
-
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
         confirmStateChange = { false }
     )
+
+    // If the BottomSheet is visible and the user presses back, dismiss the BottomSheet
+    BackHandler(enabled = bottomSheetState.isVisible) {
+        scope.launch { bottomSheetState.hide() }
+    }
+
+    val (showMailboxDialog, setShowMailboxDialog) = remember { mutableStateOf(false) }
 
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             AliasBottomSheetContents(
                 modelState = uiState.aliasItem,
-                contentType = bottomSheetContentType,
                 onSuffixSelect = { suffix ->
                     scope.launch {
                         bottomSheetState.hide()
                         onSuffixChange(suffix)
                     }
-                },
-                onMailboxSelect = { mailbox -> scope.launch { onMailboxChange(mailbox) } },
-                onCloseBottomSheet = { scope.launch { bottomSheetState.hide() } }
+                }
             )
         }
     ) {
@@ -108,15 +108,13 @@ internal fun AliasContent(
                 onSuffixClick = {
                     scope.launch {
                         if (canEdit) {
-                            setBottomSheetContentType(AliasBottomSheetType.Suffix)
                             bottomSheetState.show()
                         }
                     }
                 },
                 onMailboxClick = {
                     scope.launch {
-                        setBottomSheetContentType(AliasBottomSheetType.Mailbox)
-                        bottomSheetState.show()
+                        setShowMailboxDialog(true)
                     }
                 },
                 onTitleChange = { onTitleChange(it) },
@@ -124,6 +122,19 @@ internal fun AliasContent(
                 onAliasChange = { onAliasChange(it) },
                 onDeleteAliasClick = onDeleteAlias
             )
+
+            SelectMailboxesDialog(
+                show = showMailboxDialog,
+                mailboxes = uiState.aliasItem.mailboxes,
+                onMailboxesChanged = {
+                    setShowMailboxDialog(false)
+                    onMailboxesChanged(it)
+                },
+                onDismiss = {
+                    setShowMailboxDialog(false)
+                }
+            )
+
             IsAliasSavedLaunchedEffect(uiState, onEmitSnackbarMessage, onAliasCreated)
             IsAliasDraftSavedLaunchedEffect(uiState, onEmitSnackbarMessage, onAliasDraftCreated)
         }

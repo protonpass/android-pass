@@ -16,8 +16,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.ProtonTypography
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.compose.theme.headline
 import me.proton.pass.presentation.R
 
@@ -51,7 +50,7 @@ fun OnBoardingPage(
             Text(
                 modifier = Modifier.padding(32.dp, 0.dp),
                 text = onBoardingPageData.subtitle,
-                style = ProtonTypography.Default.default,
+                style = ProtonTheme.typography.defaultWeak,
                 textAlign = TextAlign.Center
             )
             Spacer(

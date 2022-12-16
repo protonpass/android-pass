@@ -31,7 +31,7 @@ fun AliasMailboxesSection(
         modifier = modifier.fillMaxWidth()
     ) {
         Column {
-            DetailSectionTitle(text = stringResource(R.string.field_mailboxes_title))
+            DetailSectionTitle(text = stringResource(R.string.alias_detail_field_mailboxes_title))
             Spacer(modifier = Modifier.height(8.dp))
             mailboxes.forEachIndexed { idx, mailbox ->
                 if (idx > 0) {

@@ -11,10 +11,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
-import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
@@ -29,7 +27,7 @@ import me.proton.pass.presentation.create.login.bottomsheet.LoginBottomSheetCont
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun LoginContent(
     modifier: Modifier = Modifier,
@@ -82,18 +80,16 @@ internal fun LoginContent(
         Scaffold(
             topBar = {
                 LoginTopBar(
-                    uiState = uiState,
+                    shareId = uiState.shareId.value(),
                     topBarTitle = topBarTitle,
                     topBarActionName = topBarActionName,
+                    isLoadingState = uiState.isLoadingState,
                     onUpClick = onUpClick,
                     onSubmit = onSubmit,
                     onSnackbarMessage = onEmitSnackbarMessage
                 )
             }
         ) { padding ->
-            if (uiState.isLoadingState == IsLoadingState.Loading) {
-                LoadingDialog()
-            }
             LoginItemForm(
                 modifier = modifier.padding(padding),
                 loginItem = uiState.loginItem,
@@ -105,6 +101,7 @@ internal fun LoginContent(
                 onPasswordChange = onPasswordChange,
                 onWebsiteChange = onWebsiteChange,
                 focusLastWebsite = uiState.focusLastWebsite,
+                isEditAllowed = uiState.isLoadingState == IsLoadingState.NotLoading,
                 doesWebsiteIndexHaveError = { idx ->
                     uiState.validationErrors.any {
                         if (it is LoginItemValidationErrors.InvalidUrl) {

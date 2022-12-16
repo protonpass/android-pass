@@ -17,11 +17,14 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.components.previewproviders.SelectorPreviewProvider
+import me.proton.pass.commonui.api.applyIf
+import me.proton.pass.presentation.components.previewproviders.SelectorPreviewParameter
 
 @Composable
 internal fun Selector(
     modifier: Modifier = Modifier,
     text: String,
+    enabled: Boolean,
     onClick: () -> Unit
 ) {
     TextField(
@@ -39,7 +42,7 @@ internal fun Selector(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onClick() },
+            .applyIf(enabled, ifTrue = { clickable { onClick() } }),
         colors = TextFieldDefaults.textFieldColors(
             textColor = ProtonTheme.colors.textNorm,
             disabledTextColor = ProtonTheme.colors.textNorm,
@@ -51,17 +54,18 @@ internal fun Selector(
     )
 }
 
-class ThemedSelectorPreviewProvider : ThemePairPreviewProvider<String>(SelectorPreviewProvider())
+class ThemedSelectorPreviewProvider : ThemePairPreviewProvider<SelectorPreviewParameter>(SelectorPreviewProvider())
 
 @Preview
 @Composable
 fun SelectorPreview(
-    @PreviewParameter(ThemedSelectorPreviewProvider::class) input: Pair<Boolean, String>
+    @PreviewParameter(ThemedSelectorPreviewProvider::class) input: Pair<Boolean, SelectorPreviewParameter>
 ) {
     ProtonTheme(isDark = input.first) {
         Surface {
             Selector(
-                text = input.second,
+                text = input.second.text,
+                enabled = input.second.enabled,
                 onClick = {}
             )
         }

@@ -8,6 +8,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.AliasCreated
+import me.proton.pass.presentation.uievents.IsLoadingState
 
 const val RESULT_CREATED_DRAFT_ALIAS = "created_draft_alias"
 
@@ -34,6 +35,7 @@ fun CreateAlias(
         topBarTitle = R.string.title_create_alias,
         canEdit = true,
         canDelete = false,
+        isEditAllowed = viewState.isLoadingState == IsLoadingState.NotLoading,
         onUpClick = onUpClick,
         onAliasCreated = { _, _, alias ->
             viewModel.onEmitSnackbarMessage(AliasCreated)

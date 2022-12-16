@@ -32,6 +32,7 @@ internal fun UsernameInput(
     value: String,
     canUpdateUsername: Boolean,
     showCreateAliasButton: Boolean,
+    isEditAllowed: Boolean,
     onChange: (String) -> Unit,
     onGenerateAliasClick: () -> Unit,
     onAliasOptionsClick: () -> Unit
@@ -57,12 +58,13 @@ internal fun UsernameInput(
                     .weight(1.0f),
                 value = value,
                 onChange = onChange,
-                editable = canUpdateUsername,
+                editable = isEditAllowed && canUpdateUsername,
                 placeholder = R.string.field_username_hint
             )
             if (showCreateAliasButton) {
                 Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
                 OutlinedButton(
+                    enabled = isEditAllowed,
                     onClick = {
                         if (canUpdateUsername) {
                             onGenerateAliasClick()
@@ -98,6 +100,7 @@ fun UsernameInputCanUpdateTruePreview(
             UsernameInput(
                 value = "some value",
                 showCreateAliasButton = input.second,
+                isEditAllowed = true,
                 onChange = {},
                 onGenerateAliasClick = {},
                 onAliasOptionsClick = {},
@@ -117,6 +120,7 @@ fun UsernameInputCanUpdateFalsePreview(
             UsernameInput(
                 value = "some value",
                 showCreateAliasButton = input.second,
+                isEditAllowed = true,
                 onChange = {},
                 onGenerateAliasClick = {},
                 onAliasOptionsClick = {},

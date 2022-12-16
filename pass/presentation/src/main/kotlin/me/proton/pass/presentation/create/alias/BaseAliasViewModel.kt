@@ -146,11 +146,14 @@ abstract class BaseAliasViewModel(
 
     protected fun getMailboxTitle(mailboxes: List<AliasMailboxUiModel>): String {
         val allSelectedMailboxes = mailboxes.filter { it.selected }
-        var mailboxTitle = allSelectedMailboxes.firstOrNull()?.model?.email ?: ""
-        if (allSelectedMailboxes.size > 1) {
-            val howManyMore = allSelectedMailboxes.size - 1
-            mailboxTitle += " ($howManyMore+)"
+        if (allSelectedMailboxes.isEmpty()) return ""
+        val mailboxTitle = buildString {
+            allSelectedMailboxes.forEachIndexed { idx, mailbox ->
+                if (idx > 0) append(",\n")
+                append(mailbox.model.email)
+            }
         }
+
         return mailboxTitle
     }
 

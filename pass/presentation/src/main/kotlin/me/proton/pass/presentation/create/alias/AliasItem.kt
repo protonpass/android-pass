@@ -17,7 +17,6 @@ data class AliasItem(
     val aliasOptions: AliasOptions = AliasOptions(emptyList(), emptyList()),
     val selectedSuffix: AliasSuffix? = null,
     val mailboxes: List<AliasMailboxUiModel> = emptyList(),
-    val isMailboxListApplicable: Boolean = false,
     val aliasToBeCreated: String? = null
 ) : Parcelable {
 

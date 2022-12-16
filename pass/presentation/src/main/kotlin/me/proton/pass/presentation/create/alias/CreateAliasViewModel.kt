@@ -195,7 +195,6 @@ class CreateAliasViewModel @Inject constructor(
                         selectedSuffix = selectedSuffix,
                         mailboxes = mailboxes,
                         mailboxTitle = mailboxTitle,
-                        isMailboxListApplicable = true,
                         aliasToBeCreated = aliasToBeCreated
                     )
                 }

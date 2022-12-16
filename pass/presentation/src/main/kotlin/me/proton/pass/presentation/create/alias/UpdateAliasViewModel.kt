@@ -82,8 +82,8 @@ class UpdateAliasViewModel @Inject constructor(
         }
     }
 
-    override fun onMailboxChange(mailbox: AliasMailboxUiModel) {
-        super.onMailboxChange(mailbox)
+    override fun onMailboxesChanged(mailboxes: List<AliasMailboxUiModel>) {
+        super.onMailboxesChanged(mailboxes)
         isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
         mailboxesChanged = true
     }
@@ -174,8 +174,7 @@ class UpdateAliasViewModel @Inject constructor(
                         selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
                         mailboxes = mailboxes,
                         aliasToBeCreated = email,
-                        mailboxTitle = getMailboxTitle(mailboxes),
-                        isMailboxListApplicable = true // By default it should be applicable
+                        mailboxTitle = getMailboxTitle(mailboxes)
                     )
                 }
             }

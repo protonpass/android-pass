@@ -55,7 +55,7 @@ fun UpdateAlias(
             onAliasDraftCreated = { _, _ -> },
             onSubmit = { viewModel.updateAlias() },
             onSuffixChange = { viewModel.onSuffixChange(it) },
-            onMailboxChange = { viewModel.onMailboxChange(it) },
+            onMailboxesChanged = { viewModel.onMailboxesChanged(it) },
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
             onAliasChange = { viewModel.onAliasChange(it) },

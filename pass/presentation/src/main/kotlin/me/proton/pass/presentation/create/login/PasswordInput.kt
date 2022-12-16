@@ -29,15 +29,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.form.ProtonTextField
 import me.proton.pass.presentation.components.form.ProtonTextTitle
+import me.proton.pass.presentation.settings.ThemedBooleanPreviewProvider
 
 @Composable
 internal fun PasswordInput(
     modifier: Modifier = Modifier,
     value: String,
+    isEditAllowed: Boolean,
     onChange: (String) -> Unit,
     onGeneratePasswordClick: () -> Unit
 ) {
@@ -66,6 +67,7 @@ internal fun PasswordInput(
             ProtonTextField(
                 modifier = Modifier.weight(1.0f).fillMaxHeight(),
                 value = value,
+                editable = isEditAllowed,
                 onChange = onChange,
                 placeholder = R.string.field_password_hint,
                 trailingIcon = {
@@ -104,12 +106,13 @@ internal fun PasswordInput(
 @Preview
 @Composable
 fun PasswordInputPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    ProtonTheme(isDark = isDarkMode) {
+    ProtonTheme(isDark = input.first) {
         Surface {
             PasswordInput(
                 value = "someValue",
+                isEditAllowed = input.second,
                 onChange = {},
                 onGeneratePasswordClick = {}
             )

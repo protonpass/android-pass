@@ -40,8 +40,9 @@ internal fun CreateAliasSection(
             onInvalidAliasError = onInvalidAliasError
         )
         AliasSelector(
-            state = state,
             modifier = Modifier.padding(top = 8.dp),
+            state = state,
+            enabled = canEdit,
             onClick = onSuffixClick
         )
         if (state.aliasToBeCreated != null) {

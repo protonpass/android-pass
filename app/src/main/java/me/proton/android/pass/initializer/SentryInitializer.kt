@@ -20,8 +20,10 @@ package me.proton.android.pass.initializer
 
 import android.content.Context
 import androidx.startup.Initializer
+import io.sentry.SentryLevel
 import io.sentry.SentryOptions
 import io.sentry.android.core.SentryAndroid
+import io.sentry.android.timber.SentryTimberIntegration
 import me.proton.android.pass.BuildConfig
 
 class SentryInitializer : Initializer<Unit> {
@@ -31,6 +33,15 @@ class SentryInitializer : Initializer<Unit> {
             options.dsn = BuildConfig.SENTRY_DSN.takeIf { !BuildConfig.DEBUG }.orEmpty()
             options.release = BuildConfig.VERSION_NAME
             options.environment = BuildConfig.FLAVOR
+            if (!BuildConfig.DEBUG) {
+                // This approach doesn't respect core telemetry, a refactor is needed
+                options.addIntegration(
+                    SentryTimberIntegration(
+                        minEventLevel = SentryLevel.ERROR,
+                        minBreadcrumbLevel = SentryLevel.INFO
+                    )
+                )
+            }
         }
     }
 

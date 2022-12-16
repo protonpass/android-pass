@@ -222,7 +222,7 @@ class AssistNodeTraversalTest {
             htmlAttributes = htmlAttributes,
             children = children,
             url = webDomain.toOption(),
-            hintKeywordList = hintKeywordList
+            hintKeywordList = emptyList()
         )
 
 }

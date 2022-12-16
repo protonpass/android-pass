@@ -15,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.android.showkase.models.Showkase
+import me.proton.android.pass.log.PassLogger
 
 @Composable
 fun InternalDrawerContents(
@@ -52,5 +53,20 @@ fun InternalDrawerContents(
         ) {
             Text(text = "Share Logs")
         }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = {
+                try {
+                    throw DeveloperException("This is a test.")
+                } catch (e: DeveloperException) {
+                    PassLogger.e("Internal", e)
+                }
+            },
+        ) {
+            Text(text = "Trigger Crash")
+        }
     }
 }
+
+class DeveloperException(message: String) : Exception(message)

@@ -193,6 +193,7 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 
 # Sentry
 sentry = { module = "io.sentry:sentry-android", version.ref = "sentry" }
+sentry-timber = { module = "io.sentry:sentry-android-timber", version.ref = "sentry" }
 
 # Showkase
 showkase = { module = "com.airbnb.android:showkase", version.ref = "showkase" }

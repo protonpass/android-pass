@@ -22,7 +22,7 @@ class AppNavigator(
 ) {
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
         val destinationRoute = route ?: destination.route
-        PassLogger.d(TAG, "Navigating to $destinationRoute")
+        PassLogger.i(TAG, "Navigating to $destinationRoute")
 
         if (destination.isTopLevel) {
             navController.navigate(destinationRoute) {

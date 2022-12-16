@@ -94,10 +94,11 @@ internal class BaseAliasViewModelTest {
     fun `when there are many selected mailboxes mailboxTitle should contain an indicator`() =
         runTest {
             val firstEmail = "test"
+            val secondEmail = "test2"
 
             // Start both as false
             val aliasMailbox1 = AliasMailboxUiModel(AliasMailbox(1, firstEmail), false)
-            val aliasMailbox2 = AliasMailboxUiModel(AliasMailbox(2, "test2"), false)
+            val aliasMailbox2 = AliasMailboxUiModel(AliasMailbox(2, secondEmail), false)
             baseAliasViewModel.aliasItemState.update {
                 AliasItem(mailboxes = listOf(aliasMailbox1, aliasMailbox2))
             }
@@ -112,7 +113,12 @@ internal class BaseAliasViewModelTest {
 
             baseAliasViewModel.aliasUiState.test {
                 val item = awaitItem().aliasItem
-                assertThat(item.mailboxTitle).isEqualTo("$firstEmail (1+)")
+                assertThat(item.mailboxTitle).isEqualTo(
+                    """
+                    $firstEmail,
+                    $secondEmail
+                    """.trimIndent()
+                )
             }
         }
 }

@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -28,13 +27,11 @@ import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.HasAuthenticated
-import me.proton.android.pass.preferences.PreferenceRepository
 import me.proton.android.pass.preferences.ThemePreference
+import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.asResultWithoutLoading
-import me.proton.pass.common.api.onError
-import me.proton.pass.common.api.onSuccess
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
 import javax.inject.Inject
@@ -42,7 +39,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val preferencesRepository: PreferenceRepository,
+    private val preferencesRepository: UserPreferencesRepository,
     private val biometryManager: BiometryManager,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val autofillManager: AutofillManager,
@@ -66,7 +63,8 @@ class SettingsViewModel @Inject constructor(
         .getAutofillStatus()
         .distinctUntilChanged()
 
-    private val isLoadingState: MutableStateFlow<IsLoadingState> = MutableStateFlow(IsLoadingState.NotLoading)
+    private val isLoadingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
 
     val state: StateFlow<SettingsUiState> = combine(
         biometricLockState,
@@ -104,12 +102,9 @@ class SettingsViewModel @Inject constructor(
                     when (result) {
                         BiometryResult.Success -> {
                             preferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-                                .asResultWithoutLoading()
-                                .collect { prefResult ->
-                                    prefResult.onError {
-                                        val message = "Could not save HasAuthenticated preference"
-                                        PassLogger.e(TAG, it ?: RuntimeException(message))
-                                    }
+                                .onFailure {
+                                    val message = "Could not save HasAuthenticated preference"
+                                    PassLogger.e(TAG, it ?: RuntimeException(message))
                                 }
                             performFingerprintLockChange(state)
                         }
@@ -138,10 +133,9 @@ class SettingsViewModel @Inject constructor(
 
     fun onThemePreferenceChange(theme: ThemePreference) = viewModelScope.launch {
         PassLogger.d(TAG, "Changing theme to $theme")
-        preferencesRepository.setThemePreference(theme).asResultWithoutLoading().first()
-            .onError {
-                val errMessage = "Error setting ThemePreference"
-                PassLogger.e(TAG, it ?: Exception(errMessage), errMessage)
+        preferencesRepository.setThemePreference(theme)
+            .onFailure {
+                PassLogger.e(TAG, it, "Error setting ThemePreference")
                 snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.ErrorPerformingOperation)
             }
     }
@@ -182,13 +176,12 @@ class SettingsViewModel @Inject constructor(
         }
 
         PassLogger.d(TAG, "Changing BiometricLock to $lockState")
-        preferencesRepository.setBiometricLockState(lockState).asResultWithoutLoading().first()
+        preferencesRepository.setBiometricLockState(lockState)
             .onSuccess {
                 snackbarMessageRepository.emitSnackbarMessage(message)
             }
-            .onError {
-                val errMessage = "Error setting BiometricLockState"
-                PassLogger.e(TAG, it ?: Exception(errMessage), errMessage)
+            .onFailure {
+                PassLogger.e(TAG, it, "Error setting BiometricLockState")
                 snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.ErrorPerformingOperation)
             }
     }

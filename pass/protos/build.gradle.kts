@@ -33,10 +33,18 @@ android {
         testInstrumentationRunner = Config.testInstrumentationRunner
     }
 
+    buildTypes {
+        getByName("debug") {
+            matchingFallbacks += "release"
+            isDefault = true
+        }
+    }
+
     sourceSets {
+        getByName("debug") {
+            java.srcDirs("build/generated/source/proto/debug")
+        }
         getByName("main") {
-            java.srcDirs("src/main/kotlin")
-            java.srcDirs("build/generated/source/proto")
             proto {
                 srcDir("contents-proto-definition/protos")
             }
@@ -57,11 +65,9 @@ dependencies {
     implementation(libs.google.protobuf.lite)
 }
 
-
 protobuf {
-    val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
     protoc {
-        artifact = catalog.findLibrary("google.protobuf.protoc").get().get().toString()
+        artifact = project.libs.google.protobuf.protoc.get().toString()
     }
     generateProtoTasks {
         all().forEach { task ->
@@ -71,5 +77,11 @@ protobuf {
                 }
             }
         }
+    }
+}
+
+androidComponents {
+    beforeVariants(selector().withBuildType("debug")) { builder ->
+        builder.enable = false
     }
 }

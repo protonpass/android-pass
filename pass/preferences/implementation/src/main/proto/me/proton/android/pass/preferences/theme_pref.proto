@@ -1,0 +1,13 @@
+
+syntax = "proto3";
+
+option java_package = "me.proton.android.pass.preferences";
+option java_multiple_files = true;
+
+enum ThemePrefProto {
+  THEME_PREFERENCE_UNSPECIFIED = 0;
+  THEME_PREFERENCE_SYSTEM = 1;
+  THEME_PREFERENCE_LIGHT = 2;
+  THEME_PREFERENCE_DARK = 3;
+}
+

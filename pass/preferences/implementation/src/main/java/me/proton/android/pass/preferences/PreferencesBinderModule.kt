@@ -9,5 +9,5 @@ import dagger.hilt.components.SingletonComponent
 @InstallIn(SingletonComponent::class)
 abstract class PreferencesBinderModule {
     @Binds
-    abstract fun bindPreferenceRepository(impl: PreferenceRepositoryImpl): PreferenceRepository
+    abstract fun bindPreferenceRepository(impl: UserPreferencesRepositoryImpl): UserPreferencesRepository
 }

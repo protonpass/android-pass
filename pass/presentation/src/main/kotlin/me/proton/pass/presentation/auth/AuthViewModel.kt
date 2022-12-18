@@ -19,14 +19,12 @@ import me.proton.android.pass.biometry.ContextHolder
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.HasAuthenticated
-import me.proton.android.pass.preferences.PreferenceRepository
-import me.proton.pass.common.api.asResultWithoutLoading
-import me.proton.pass.common.api.onError
+import me.proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val preferenceRepository: PreferenceRepository,
+    private val preferenceRepository: UserPreferencesRepository,
     private val biometryManager: BiometryManager
 ) : ViewModel() {
 
@@ -65,13 +63,6 @@ class AuthViewModel @Inject constructor(
                 when (result) {
                     BiometryResult.Success -> {
                         preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-                            .asResultWithoutLoading()
-                            .collect { prefResult ->
-                                prefResult.onError {
-                                    val message = "Could not save HasAuthenticated preference"
-                                    PassLogger.e(TAG, it ?: RuntimeException(message))
-                                }
-                            }
                         _state.update { AuthStatus.Success }
                     }
                     is BiometryResult.Error -> {

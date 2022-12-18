@@ -33,7 +33,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.preferences.HasAuthenticated
-import me.proton.android.pass.preferences.PreferenceRepository
+import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
 import me.proton.core.account.domain.entity.isReady
@@ -55,9 +55,6 @@ import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.report.presentation.entity.BugReportInput
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
-import me.proton.pass.common.api.Result
-import me.proton.pass.common.api.asResultWithoutLoading
-import me.proton.pass.common.api.onError
 import javax.inject.Inject
 
 @HiltViewModel
@@ -70,18 +67,14 @@ class LauncherViewModel @Inject constructor(
     private val plansOrchestrator: PlansOrchestrator,
     private val reportOrchestrator: ReportOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
-    private val preferenceRepository: PreferenceRepository
+    private val preferenceRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     init {
         viewModelScope.launch {
             preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
-                .asResultWithoutLoading()
-                .collect { result ->
-                    result.onError {
-                        val message = "Could not save HasAuthenticated preference"
-                        PassLogger.e(TAG, it ?: RuntimeException(message))
-                    }
+                .onFailure {
+                    PassLogger.e(TAG, it, "Could not save HasAuthenticated preference")
                 }
         }
     }
@@ -154,12 +147,9 @@ class LauncherViewModel @Inject constructor(
     private suspend fun clearPreferencesIfNeeded() {
         val accounts = accountManager.getAccounts().first()
         if (accounts.isEmpty()) {
-            preferenceRepository.clearPreferences().asResultWithoutLoading()
-                .collect {
-                    if (it is Result.Error) {
-                        val message = "Error clearing preferences"
-                        PassLogger.e(TAG, it.exception ?: Exception(message), message)
-                    }
+            preferenceRepository.clearPreferences()
+                .onFailure {
+                    PassLogger.e(TAG, it, "Error clearing preferences")
                 }
         }
     }

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import me.proton.android.pass.preferences.PreferenceRepository
+import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.android.pass.preferences.value
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
@@ -20,7 +20,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NavHomeViewModel @Inject constructor(
-    preferenceRepository: PreferenceRepository
+    preferenceRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private val shouldAuthenticateState: Flow<Boolean> = combine(

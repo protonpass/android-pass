@@ -18,7 +18,7 @@ import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState
-import me.proton.android.pass.preferences.PreferenceRepository
+import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.pass.autofill.entities.AutofillAppState
@@ -31,7 +31,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AutofillAppViewModel @Inject constructor(
-    preferenceRepository: PreferenceRepository,
+    preferenceRepository: UserPreferencesRepository,
     private val biometryManager: BiometryManager,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val snackbarMessageRepository: SnackbarMessageRepository

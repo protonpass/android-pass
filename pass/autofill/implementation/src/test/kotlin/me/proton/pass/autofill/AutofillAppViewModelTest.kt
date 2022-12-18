@@ -31,13 +31,8 @@ class AutofillAppViewModelTest {
     @Before
     fun setUp() {
         preferenceRepository = TestPreferenceRepository()
-        preferenceRepository.setThemePreference(ThemePreference.System)
-        preferenceRepository.setBiometricLockState(BiometricLockState.Disabled)
-
         biometryManager = TestBiometryManager()
-
         snackbarMessageRepository = TestSnackbarMessageRepository()
-
         viewModel = AutofillAppViewModel(
             preferenceRepository,
             biometryManager,
@@ -80,6 +75,7 @@ class AutofillAppViewModelTest {
 
     @Test
     fun `if biometry is available preference is returned (Enabled)`() = runTest {
+        preferenceRepository.setThemePreference(ThemePreference.System)
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
         snackbarMessageRepository.emitSnackbarMessage(TestSnackbarMessage())

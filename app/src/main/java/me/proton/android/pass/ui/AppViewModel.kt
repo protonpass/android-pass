@@ -30,7 +30,7 @@ import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
 import me.proton.android.pass.data.api.usecases.RefreshShares
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.android.pass.preferences.PreferenceRepository
+import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
@@ -48,7 +48,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AppViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
-    preferenceRepository: PreferenceRepository,
+    preferenceRepository: UserPreferencesRepository,
     observeActiveShare: ObserveActiveShare,
     itemRepository: ItemRepository,
     private val getCurrentUserId: GetCurrentUserId,

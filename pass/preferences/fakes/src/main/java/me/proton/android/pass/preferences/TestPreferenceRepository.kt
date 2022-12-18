@@ -3,9 +3,8 @@ package me.proton.android.pass.preferences
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.flowOf
 
-class TestPreferenceRepository : PreferenceRepository {
+class TestPreferenceRepository : UserPreferencesRepository {
 
     private val biometricLockState = MutableSharedFlow<BiometricLockState>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
@@ -23,34 +22,34 @@ class TestPreferenceRepository : PreferenceRepository {
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
     )
 
-    override fun setBiometricLockState(state: BiometricLockState): Flow<Unit> {
+    override suspend fun setBiometricLockState(state: BiometricLockState): Result<Unit> {
         biometricLockState.tryEmit(state)
-        return flowOf(Unit)
+        return Result.success(Unit)
     }
 
     override fun getBiometricLockState(): Flow<BiometricLockState> = biometricLockState
 
-    override fun setHasAuthenticated(state: HasAuthenticated): Flow<Unit> {
+    override suspend fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> {
         hasAuthenticated.tryEmit(state)
-        return flowOf(Unit)
+        return Result.success(Unit)
     }
 
     override fun getHasAuthenticated(): Flow<HasAuthenticated> = hasAuthenticated
 
-    override fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Flow<Unit> {
+    override suspend fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit> {
         hasCompletedOnBoarding.tryEmit(state)
-        return flowOf(Unit)
+        return Result.success(Unit)
     }
 
     override fun getHasCompletedOnBoarding(): Flow<HasCompletedOnBoarding> = hasCompletedOnBoarding
 
-    override fun setThemePreference(theme: ThemePreference): Flow<Unit> {
+    override suspend fun setThemePreference(theme: ThemePreference): Result<Unit> {
         themePreference.tryEmit(theme)
-        return flowOf(Unit)
+        return Result.success(Unit)
     }
 
     override fun getThemePreference(): Flow<ThemePreference> = themePreference
 
-    override fun clearPreferences(): Flow<Unit> = flowOf(Unit)
+    override suspend fun clearPreferences(): Result<Unit> = Result.success(Unit)
 
 }

@@ -23,11 +23,7 @@ import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.HasAuthenticated
 import me.proton.android.pass.preferences.HasCompletedOnBoarding
-import me.proton.android.pass.preferences.PreferenceRepository
-import me.proton.pass.common.api.asResultWithoutLoading
-import me.proton.pass.common.api.logError
-import me.proton.pass.common.api.onError
-import me.proton.pass.common.api.onSuccess
+import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.pass.presentation.onboarding.OnBoardingPageName.Autofill
 import me.proton.pass.presentation.onboarding.OnBoardingPageName.Fingerprint
 import me.proton.pass.presentation.onboarding.OnBoardingPageName.Last
@@ -42,7 +38,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class OnBoardingViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val biometryManager: BiometryManager,
-    private val preferenceRepository: PreferenceRepository,
+    private val preferenceRepository: UserPreferencesRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
@@ -170,45 +166,27 @@ class OnBoardingViewModel @Inject constructor(
 
     private suspend fun saveHasAuthenticatedFlag() {
         preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
-            .asResultWithoutLoading()
-            .collect { pResult ->
-                pResult.logError(
-                    PassLogger,
-                    TAG,
-                    "Could not save HasAuthenticated preference"
-                )
-            }
     }
 
     private suspend fun saveBiometricLockStateFlag() {
         PassLogger.d(TAG, "Changing BiometricLock to ${BiometricLockState.Enabled}")
         preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
-            .asResultWithoutLoading()
-            .collect { pResult ->
-                pResult
-                    .onSuccess {
-                        snackbarMessageRepository.emitSnackbarMessage(FingerprintLockEnabled)
-                    }
-                    .logError(PassLogger, TAG, "Error setting BiometricLockState")
-                    .onError {
-                        snackbarMessageRepository.emitSnackbarMessage(ErrorPerformingOperation)
-                    }
+            .onSuccess {
+                snackbarMessageRepository.emitSnackbarMessage(FingerprintLockEnabled)
+            }
+            .onFailure {
+                PassLogger.e(TAG, it, "Error setting BiometricLockState")
+                snackbarMessageRepository.emitSnackbarMessage(ErrorPerformingOperation)
             }
     }
 
     private suspend fun saveOnBoardingCompleteFlag() {
         preferenceRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
-            .asResultWithoutLoading()
-            .collect { result ->
-                result
-                    .onSuccess {
-                        _onBoardingUiState.update { it.copy(isCompleted = true) }
-                    }
-                    .logError(
-                        PassLogger,
-                        TAG,
-                        "Could not save HasCompletedOnBoarding preference"
-                    )
+            .onSuccess {
+                _onBoardingUiState.update { it.copy(isCompleted = true) }
+            }
+            .onFailure {
+                PassLogger.e(TAG, it, "Could not save HasCompletedOnBoarding preference")
             }
     }
 

@@ -2,13 +2,13 @@ package me.proton.android.pass.preferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.core.DataStoreFactory
+import androidx.datastore.dataStoreFile
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import me.proton.android.pass.preferences.extensions.dataStore
 import javax.inject.Singleton
 
 @Module
@@ -19,5 +19,10 @@ object PreferencesProviderModule {
     @Singleton
     fun provideDataStore(
         @ApplicationContext context: Context
-    ): DataStore<Preferences> = context.dataStore
+    ): DataStore<UserPreferences> =
+        DataStoreFactory.create(
+            serializer = UserPreferencesSerializer
+        ) {
+            context.dataStoreFile("user_preferences.pb")
+        }
 }

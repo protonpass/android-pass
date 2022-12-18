@@ -109,7 +109,7 @@ androidx-compose-uiTestManifest = { module = "androidx.compose.ui:ui-test-manife
 ## Core
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-splashscreen" }
 ## Datastore
-androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "androidx-datastore" }
 ## Annotation
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
 ## Autofill

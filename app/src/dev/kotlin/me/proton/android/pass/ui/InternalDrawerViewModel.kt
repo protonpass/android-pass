@@ -10,38 +10,30 @@ import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.log.InternalLogSharing
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.android.pass.preferences.PreferenceRepository
-import me.proton.pass.common.api.asResultWithoutLoading
-import me.proton.pass.common.api.onError
-import me.proton.pass.common.api.onSuccess
+import me.proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class InternalDrawerViewModel @Inject constructor(
-    private val preferenceRepository: PreferenceRepository,
+    private val preferenceRepository: UserPreferencesRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
     fun clearPreferences() = viewModelScope.launch {
         preferenceRepository.clearPreferences()
-            .asResultWithoutLoading()
-            .collect { result ->
-                result
-                    .onSuccess {
-                        snackbarMessageRepository
-                            .emitSnackbarMessage(InternalDrawerSnackbarMessage.PreferencesCleared)
-                    }
-                    .onError {
-                        val message = "Error clearing preferences"
-                        PassLogger.e(TAG, it ?: Exception(message), message)
-                        snackbarMessageRepository
-                            .emitSnackbarMessage(InternalDrawerSnackbarMessage.PreferencesClearError)
-                    }
+            .onSuccess {
+                snackbarMessageRepository
+                    .emitSnackbarMessage(InternalDrawerSnackbarMessage.PreferencesCleared)
+            }
+            .onFailure {
+                PassLogger.e(TAG, it, "Error clearing preferences")
+                snackbarMessageRepository
+                    .emitSnackbarMessage(InternalDrawerSnackbarMessage.PreferencesClearError)
             }
     }
 
     fun shareLogCatOutput(context: Context) = viewModelScope.launch(Dispatchers.IO) {
-        InternalLogSharing.shareLogs(BuildConfig.APPLICATION_ID,context)
+        InternalLogSharing.shareLogs(BuildConfig.APPLICATION_ID, context)
     }
 
     companion object {

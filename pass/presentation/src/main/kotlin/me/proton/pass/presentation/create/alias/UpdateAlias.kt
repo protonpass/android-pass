@@ -43,7 +43,6 @@ fun UpdateAlias(
 
     Box(modifier = modifier) {
         AliasContent(
-            modifier = modifier,
             uiState = viewState,
             topBarTitle = R.string.title_edit_alias,
             canEdit = false,
@@ -65,16 +64,15 @@ fun UpdateAlias(
             onDeleteAlias = { setShowDeleteDialog(true) }
         )
 
-        if (showDeleteDialog) {
-            ConfirmMoveItemToTrashDialog(
-                itemName = viewState.aliasItem.alias,
-                onConfirm = {
-                    viewModel.onDeleteAlias()
-                    setShowDeleteDialog(false)
-                },
-                onDismiss = { setShowDeleteDialog(false) },
-                onCancel = { setShowDeleteDialog(false) }
-            )
-        }
+        ConfirmMoveItemToTrashDialog(
+            show = showDeleteDialog,
+            itemName = viewState.aliasItem.alias,
+            onConfirm = {
+                viewModel.onDeleteAlias()
+                setShowDeleteDialog(false)
+            },
+            onDismiss = { setShowDeleteDialog(false) },
+            onCancel = { setShowDeleteDialog(false) }
+        )
     }
 }

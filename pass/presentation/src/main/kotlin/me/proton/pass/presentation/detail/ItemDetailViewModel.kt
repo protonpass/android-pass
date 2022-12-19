@@ -8,13 +8,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.data.api.repositories.ItemRepository
-import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
@@ -26,13 +24,10 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.common.api.some
-import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.detail.DetailSnackbarMessages.InitError
-import me.proton.pass.presentation.detail.DetailSnackbarMessages.SendToTrashError
 import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.IsSentToTrashState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,7 +35,6 @@ class ItemDetailViewModel @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
-    private val trashItem: TrashItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -54,18 +48,14 @@ class ItemDetailViewModel @Inject constructor(
         MutableStateFlow(None)
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
-    private val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
-        MutableStateFlow(IsSentToTrashState.NotSent)
 
     val uiState: StateFlow<ItemDetailScreenUiState> = combine(
         itemModelState,
-        isLoadingState,
-        isItemSentToTrashState
-    ) { itemModel, isLoading, isItemSentToTrash ->
+        isLoadingState
+    ) { itemModel, isLoading ->
         ItemDetailScreenUiState(
             itemModel,
-            isLoading,
-            isItemSentToTrash
+            isLoading
         )
     }
         .stateIn(
@@ -100,20 +90,6 @@ class ItemDetailViewModel @Inject constructor(
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }
-    }
-
-    fun sendItemToTrash(item: Item) = viewModelScope.launch {
-        isLoadingState.update { IsLoadingState.Loading }
-
-        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        if (userId != null) {
-            trashItem(userId, item.shareId, item.id)
-            isItemSentToTrashState.update { IsSentToTrashState.Sent }
-        } else {
-            PassLogger.i(TAG, "Empty userId")
-            snackbarMessageRepository.emitSnackbarMessage(SendToTrashError)
-        }
-        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     companion object {

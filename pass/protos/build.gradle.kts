@@ -44,6 +44,9 @@ android {
         getByName("debug") {
             java.srcDirs("build/generated/source/proto/debug")
         }
+        getByName("release") {
+            java.srcDirs("build/generated/source/proto/release")
+        }
         getByName("main") {
             proto {
                 srcDir("contents-proto-definition/protos")

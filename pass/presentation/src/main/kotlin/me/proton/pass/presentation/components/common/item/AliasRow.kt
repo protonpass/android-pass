@@ -34,9 +34,10 @@ internal fun AliasRow(
         if (aliasEmailMatches.any()) {
             aliasEmail = item.itemType.aliasEmail.highlight(aliasEmailMatches)
         }
-        val noteMatches = regex.findAll(item.note)
+        val cleanNote = item.note.replace("\n", " ")
+        val noteMatches = regex.findAll(cleanNote)
         if (noteMatches.any()) {
-            note = item.note.highlight(noteMatches)
+            note = cleanNote.highlight(noteMatches)
         }
     }
 

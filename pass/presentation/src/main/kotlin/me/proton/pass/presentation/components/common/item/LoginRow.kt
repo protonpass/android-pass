@@ -35,9 +35,10 @@ fun LoginRow(
         if (usernameMatches.any()) {
             username = item.itemType.username.highlight(usernameMatches)
         }
-        val noteMatches = regex.findAll(item.note)
+        val cleanNote = item.note.replace("\n", " ")
+        val noteMatches = regex.findAll(cleanNote)
         if (noteMatches.any()) {
-            note = item.note.highlight(noteMatches)
+            note = cleanNote.highlight(noteMatches)
         }
         item.itemType.websites.forEach {
             val websiteMatch = regex.findAll(it)

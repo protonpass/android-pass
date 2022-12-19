@@ -9,12 +9,26 @@ class EncryptionContextImplTest {
     @Test
     fun isAbleToEncryptAndDecryptString() {
         val context = EncryptionContextImpl(provideKey())
+        val content = "abcàèìò+a+e+i+o¡¿✅"
 
-        val encrypted = context.encrypt("abc")
+        val encrypted = context.encrypt(content)
         val decrypted = context.decrypt(encrypted)
 
-        assertEquals("abc", decrypted)
+        assertEquals(content, decrypted)
     }
+
+    @Test
+    fun isAbleToEncryptAndDecryptByteArray() {
+        val context = EncryptionContextImpl(provideKey())
+        val content = byteArrayOf(0xca.toByte(), 0xfe.toByte())
+
+        val encrypted = context.encrypt(content)
+        val decrypted = context.decrypt(encrypted)
+
+        assertEquals(content, decrypted)
+    }
+
+
 
     fun provideKey(): EncryptionKey =
         EncryptionKey(ByteArray(32, init = { 0xab.toByte() }))

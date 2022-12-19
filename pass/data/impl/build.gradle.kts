@@ -83,6 +83,7 @@ dependencies {
 
     androidTestImplementation(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(projects.pass.test)
+    androidTestImplementation(projects.pass.data.fakes)
 
     androidTestImplementation(libs.androidx.compose.ui.test)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)

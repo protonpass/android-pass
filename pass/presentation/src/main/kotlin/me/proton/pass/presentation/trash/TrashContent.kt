@@ -26,6 +26,7 @@ fun TrashContent(
     Scaffold(
         topBar = {
             TrashTopBar(
+                showActions = uiState.items.isNotEmpty(),
                 onDrawerIconClick = onDrawerIconClick,
                 onMoreOptionsClick = onTopBarMenuClick
             )

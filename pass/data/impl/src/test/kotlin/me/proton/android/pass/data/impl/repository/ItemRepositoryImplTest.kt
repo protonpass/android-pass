@@ -1,6 +1,7 @@
 package me.proton.android.pass.data.impl.repository
 
 import kotlinx.coroutines.test.runTest
+import me.proton.android.pass.data.fakes.crypto.TestEncryptionContextProvider
 import me.proton.android.pass.data.impl.fakes.TestCreateItem
 import me.proton.android.pass.data.impl.fakes.TestKeyPacketRepository
 import me.proton.android.pass.data.impl.fakes.TestLocalItemDataSource
@@ -71,7 +72,8 @@ class ItemRepositoryImplTest {
             localItemDataSource = localItemDataSource,
             remoteItemDataSource = remoteItemDataSource,
             keyPacketRepository = TestKeyPacketRepository(),
-            openItem = openItem
+            openItem = openItem,
+            encryptionContextProvider = TestEncryptionContextProvider
         )
     }
 

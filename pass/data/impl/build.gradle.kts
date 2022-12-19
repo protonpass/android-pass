@@ -79,6 +79,7 @@ dependencies {
     testImplementation(libs.truth)
     testImplementation(libs.turbine)
     testImplementation(projects.pass.test)
+    testImplementation(projects.pass.data.fakes)
 
     androidTestImplementation(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(projects.pass.test)

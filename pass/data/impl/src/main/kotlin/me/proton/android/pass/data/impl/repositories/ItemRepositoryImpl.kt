@@ -801,18 +801,18 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     private fun entityToDomain(
-        context: EncryptionContext,
+        encryptionContext: EncryptionContext,
         entity: ItemEntity
     ): Item =
         Item(
             id = ItemId(entity.id),
             revision = entity.revision,
             shareId = ShareId(entity.shareId),
-            itemType = entity.itemType(context),
+            itemType = entity.itemType(encryptionContext),
             title = entity.encryptedTitle,
             note = entity.encryptedNote,
             content = entity.encryptedContent,
-            allowedPackageNames = entity.allowedApps(context)
+            allowedPackageNames = entity.allowedApps(encryptionContext)
         )
 
     companion object {

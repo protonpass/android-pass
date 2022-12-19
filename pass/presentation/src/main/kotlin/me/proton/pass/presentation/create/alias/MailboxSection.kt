@@ -11,7 +11,7 @@ import me.proton.pass.presentation.components.form.ProtonTextTitle
 @Composable
 internal fun MailboxSection(
     modifier: Modifier = Modifier,
-    state: AliasItem,
+    contentText: String,
     isEditAllowed: Boolean,
     onMailboxClick: () -> Unit
 ) {
@@ -19,7 +19,7 @@ internal fun MailboxSection(
         ProtonTextTitle(R.string.field_mailboxes_title)
         MailboxSelector(
             modifier = Modifier.padding(top = 8.dp),
-            state = state,
+            contentText = contentText,
             isEditAllowed = isEditAllowed,
             onClick = onMailboxClick
         )

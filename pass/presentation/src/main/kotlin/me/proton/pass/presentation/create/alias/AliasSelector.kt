@@ -6,18 +6,13 @@ import androidx.compose.ui.Modifier
 @Composable
 internal fun AliasSelector(
     modifier: Modifier = Modifier,
-    state: AliasItem,
+    contentText: String,
     enabled: Boolean,
     onClick: () -> Unit
 ) {
-    val value = if (state.selectedSuffix != null) {
-        state.selectedSuffix.suffix
-    } else {
-        ""
-    }
     Selector(
         modifier = modifier,
-        text = value,
+        text = contentText,
         enabled = enabled,
         onClick = onClick
     )

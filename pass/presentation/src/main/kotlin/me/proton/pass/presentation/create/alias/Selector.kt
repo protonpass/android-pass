@@ -16,9 +16,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
-import me.proton.pass.presentation.components.previewproviders.SelectorPreviewProvider
 import me.proton.pass.commonui.api.applyIf
 import me.proton.pass.presentation.components.previewproviders.SelectorPreviewParameter
+import me.proton.pass.presentation.components.previewproviders.SelectorPreviewProvider
 
 @Composable
 internal fun Selector(
@@ -33,11 +33,13 @@ internal fun Selector(
         value = text,
         onValueChange = {},
         trailingIcon = {
-            Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_down),
-                contentDescription = null,
-                tint = ProtonTheme.colors.iconNorm
-            )
+            if (enabled) {
+                Icon(
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_down),
+                    contentDescription = null,
+                    tint = ProtonTheme.colors.iconNorm
+                )
+            }
         },
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
@@ -54,7 +56,8 @@ internal fun Selector(
     )
 }
 
-class ThemedSelectorPreviewProvider : ThemePairPreviewProvider<SelectorPreviewParameter>(SelectorPreviewProvider())
+class ThemedSelectorPreviewProvider :
+    ThemePairPreviewProvider<SelectorPreviewParameter>(SelectorPreviewProvider())
 
 @Preview
 @Composable

@@ -35,6 +35,7 @@ internal fun LoginContent(
     @StringRes topBarActionName: Int,
     uiState: CreateUpdateLoginUiState,
     showCreateAliasButton: Boolean,
+    canDelete: Boolean,
     onUpClick: () -> Unit,
     onSuccess: (ShareId, ItemId, ItemUiModel) -> Unit,
     onSubmit: (ShareId) -> Unit,
@@ -45,7 +46,8 @@ internal fun LoginContent(
     onNoteChange: (String) -> Unit,
     onEmitSnackbarMessage: (LoginSnackbarMessages) -> Unit,
     onCreateAliasClick: (ShareId, Option<String>) -> Unit,
-    onRemoveAliasClick: () -> Unit
+    onRemoveAliasClick: () -> Unit,
+    onDeleteItemClick: () -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -95,6 +97,7 @@ internal fun LoginContent(
                 loginItem = uiState.loginItem,
                 showCreateAliasButton = showCreateAliasButton,
                 canUpdateUsername = uiState.canUpdateUsername,
+                canDelete = canDelete,
                 onTitleChange = onTitleChange,
                 onTitleRequiredError = uiState.validationErrors.contains(LoginItemValidationErrors.BlankTitle),
                 onUsernameChange = onUsernameChange,
@@ -132,7 +135,8 @@ internal fun LoginContent(
                         setBottomSheetContent(LoginBottomSheetContent.AliasOptions)
                         bottomSheetState.show()
                     }
-                }
+                },
+                onDeleteClick = onDeleteItemClick
             )
 
             if (showRemoveAliasDialog) {

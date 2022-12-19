@@ -29,6 +29,7 @@ fun CreateNote(
         uiState = noteUiState,
         topBarTitle = stringResource(R.string.title_create_note),
         topBarActionName = stringResource(R.string.action_save),
+        canDelete = false,
         onUpClick = onUpClick,
         onSuccess = { _, _ ->
             viewModel.onEmitSnackbarMessage(NoteCreated)
@@ -37,6 +38,7 @@ fun CreateNote(
         onSubmit = { shareId -> viewModel.createNote(shareId) },
         onTitleChange = { viewModel.onTitleChange(it) },
         onNoteChange = { viewModel.onNoteChange(it) },
-        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) }
+        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
+        onDelete = {} // We cannot delete a note that has not been created
     )
 }

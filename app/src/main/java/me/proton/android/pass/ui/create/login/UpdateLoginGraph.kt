@@ -40,6 +40,9 @@ fun NavGraphBuilder.updateLoginGraph(nav: AppNavigator) {
                         isDraft = true
                     )
                 )
+            },
+            onSentToTrash = {
+                nav.popUpTo(AppNavItem.Home)
             }
         )
     }

@@ -16,6 +16,7 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsSentToTrashState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
 abstract class BaseNoteViewModel(
@@ -36,6 +37,8 @@ abstract class BaseNoteViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val noteItemValidationErrorsState: MutableStateFlow<Set<NoteItemValidationErrors>> =
         MutableStateFlow(emptySet())
+    protected val isSentToTrashState: MutableStateFlow<IsSentToTrashState> =
+        MutableStateFlow(IsSentToTrashState.NotSent)
 
     private val noteItemWrapperState = combine(
         noteItemState,
@@ -53,14 +56,16 @@ abstract class BaseNoteViewModel(
         shareIdState,
         noteItemWrapperState,
         isLoadingState,
-        isItemSavedState
-    ) { shareId, noteItemWrapper, isLoading, isItemSaved ->
+        isItemSavedState,
+        isSentToTrashState
+    ) { shareId, noteItemWrapper, isLoading, isItemSaved, isSentToTrash ->
         CreateUpdateNoteUiState(
             shareId = shareId,
             noteItem = noteItemWrapper.noteItem,
             errorList = noteItemWrapper.noteItemValidationErrors,
             isLoadingState = isLoading,
-            isItemSaved = isItemSaved
+            isItemSaved = isItemSaved,
+            isSentToTrash = isSentToTrash
         )
     }
         .stateIn(

@@ -3,13 +3,18 @@ package me.proton.pass.presentation.create.login
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.presentation.R
+import me.proton.pass.presentation.components.common.PassOutlinedButton
 import me.proton.pass.presentation.components.form.NoteInput
 import me.proton.pass.presentation.components.form.TitleInput
 
@@ -19,6 +24,7 @@ internal fun LoginItemForm(
     isEditAllowed: Boolean,
     loginItem: LoginItem,
     showCreateAliasButton: Boolean,
+    canDelete: Boolean,
     onTitleChange: (String) -> Unit,
     onTitleRequiredError: Boolean,
     onUsernameChange: (String) -> Unit,
@@ -30,7 +36,8 @@ internal fun LoginItemForm(
     onGeneratePasswordClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
     canUpdateUsername: Boolean,
-    onAliasOptionsClick: () -> Unit
+    onAliasOptionsClick: () -> Unit,
+    onDeleteClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -73,5 +80,15 @@ internal fun LoginItemForm(
             enabled = isEditAllowed,
             onChange = onNoteChange
         )
+
+        if (canDelete) {
+            Spacer(Modifier.height(height = 24.dp))
+            PassOutlinedButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.action_move_to_trash),
+                color = ProtonTheme.colors.notificationError,
+                onClick = onDeleteClick
+            )
+        }
     }
 }

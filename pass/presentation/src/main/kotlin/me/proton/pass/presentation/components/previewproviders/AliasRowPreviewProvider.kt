@@ -23,6 +23,13 @@ class AliasRowPreviewProvider : PreviewParameterProvider<AliasRowParameter> {
                     "itwouldnotfit@please.ellipsize.this.alias.local",
                 note = "A note with a long text to verify that the word local is highlighted",
                 highlight = "local"
+            ),
+            with(
+                title = "With multiline content to check highlight",
+                alias = "somealias.withsuffix.thatisverylong.",
+                note = "A note \n with \n multiline \n text \n to \n verify " +
+                    "\n that the \n word \n local \n is highlighted",
+                highlight = "local"
             )
         )
 

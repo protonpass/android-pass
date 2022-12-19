@@ -12,12 +12,11 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Some
@@ -32,10 +31,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemDetailViewModel @Inject constructor(
-    private val cryptoContext: CryptoContext,
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val encryptionContextProvider: EncryptionContextProvider,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -73,10 +72,12 @@ class ItemDetailViewModel @Inject constructor(
                 itemRepository.getById(userId, shareId.value, itemId.value)
                     .onSuccess { item ->
                         itemModelState.update {
-                            ItemModelUiState(
-                                name = item.title.decrypt(cryptoContext.keyStoreCrypto),
-                                item = item
-                            ).some()
+                            encryptionContextProvider.withContext {
+                                ItemModelUiState(
+                                    name = decrypt(item.title),
+                                    item = item
+                                ).some()
+                            }
                         }
                     }
                     .onError {

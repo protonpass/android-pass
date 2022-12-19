@@ -11,18 +11,17 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.clipboard.api.ClipboardManager
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.domain.Item
 import me.proton.pass.presentation.detail.DetailSnackbarMessages
 import javax.inject.Inject
 
 @HiltViewModel
 class NoteDetailViewModel @Inject constructor(
-    private val keyStoreCrypto: KeyStoreCrypto,
     private val clipboardManager: ClipboardManager,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
     private val itemFlow: MutableStateFlow<Item?> = MutableStateFlow(null)
@@ -39,7 +38,10 @@ class NoteDetailViewModel @Inject constructor(
     }
 
     fun onCopyToClipboard() = viewModelScope.launch {
-        val decrypted = itemFlow.value?.note?.decrypt(keyStoreCrypto) ?: ""
+        val decrypted = encryptionContextProvider.withContext {
+            val note = itemFlow.value?.note ?: return@withContext ""
+            decrypt(note)
+        }
         clipboardManager.copyToClipboard(decrypted)
         snackbarMessageRepository.emitSnackbarMessage(DetailSnackbarMessages.NoteCopiedToClipboard)
     }
@@ -47,10 +49,12 @@ class NoteDetailViewModel @Inject constructor(
     private fun getUiModel(item: Item?): NoteDetailUiState {
         if (item == null) return NoteDetailUiState.Initial
 
-        return NoteDetailUiState(
-            title = item.title.decrypt(keyStoreCrypto),
-            note = item.note.decrypt(keyStoreCrypto)
-        )
+        return encryptionContextProvider.withContext {
+            NoteDetailUiState(
+                title = decrypt(item.title),
+                note = decrypt(item.note)
+            )
+        }
     }
 
 }

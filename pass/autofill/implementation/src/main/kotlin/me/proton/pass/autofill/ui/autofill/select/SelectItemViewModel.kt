@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import me.proton.android.pass.data.api.UrlSanitizer
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.usecases.GetAppNameFromPackageName
 import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import me.proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -27,7 +28,6 @@ import me.proton.android.pass.data.api.usecases.UpdateAutofillItem
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.pass.autofill.BROWSERS
 import me.proton.pass.autofill.extensions.toAutoFillItem
 import me.proton.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
@@ -48,10 +48,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectItemViewModel @Inject constructor(
-    private val keyStoreCrypto: KeyStoreCrypto,
     private val updateAutofillItem: UpdateAutofillItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val getAppNameFromPackageName: GetAppNameFromPackageName,
+    private val encryptionContextProvider: EncryptionContextProvider,
     observeActiveItems: ObserveActiveItems,
     getSuggestedLoginItems: GetSuggestedLoginItems
 ) : ViewModel() {
@@ -82,7 +82,9 @@ class SelectItemViewModel @Inject constructor(
         observeActiveItems(filter = ItemTypeFilter.Logins)
             .map { itemResult ->
                 itemResult.map { list ->
-                    list.map { it.toUiModel(keyStoreCrypto) }
+                    encryptionContextProvider.withContext {
+                        list.map { it.toUiModel(this@withContext) }
+                    }
                 }
             }
             .distinctUntilChanged()
@@ -102,7 +104,9 @@ class SelectItemViewModel @Inject constructor(
         }
         .map { itemResult ->
             itemResult.map { list ->
-                list.map { it.toUiModel(keyStoreCrypto) }
+                encryptionContextProvider.withContext {
+                    list.map { it.toUiModel(this@withContext) }
+                }
             }
         }
 
@@ -199,9 +203,12 @@ class SelectItemViewModel @Inject constructor(
             )
         }
 
-        itemClickedFlow.update {
-            ItemClickedEvent.Clicked(item.toAutoFillItem(keyStoreCrypto))
+        encryptionContextProvider.withContext {
+            itemClickedFlow.update {
+                ItemClickedEvent.Clicked(item.toAutoFillItem(this@withContext))
+            }
         }
+
     }
 
     fun onSearchQueryChange(query: String) {

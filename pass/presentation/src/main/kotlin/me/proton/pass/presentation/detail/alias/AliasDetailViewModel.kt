@@ -11,13 +11,12 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.repositories.AliasRepository
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessage
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.domain.AliasDetails
@@ -29,10 +28,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AliasDetailViewModel @Inject constructor(
-    private val cryptoContext: CryptoContext,
     private val aliasRepository: AliasRepository,
     private val accountManager: AccountManager,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
     private val loadingState: MutableStateFlow<IsLoadingState> =
@@ -77,12 +76,14 @@ class AliasDetailViewModel @Inject constructor(
             is Result.Success -> {
                 val alias = item.itemType as ItemType.Alias
                 modelState.update {
-                    AliasUiModel(
-                        title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-                        alias = alias.aliasEmail,
-                        mailboxes = result.data.mailboxes,
-                        note = item.note.decrypt(cryptoContext.keyStoreCrypto)
-                    )
+                    encryptionContextProvider.withContext {
+                        AliasUiModel(
+                            title = decrypt(item.title),
+                            alias = alias.aliasEmail,
+                            mailboxes = result.data.mailboxes,
+                            note = decrypt(item.note)
+                        )
+                    }
                 }
             }
             is Result.Error -> {

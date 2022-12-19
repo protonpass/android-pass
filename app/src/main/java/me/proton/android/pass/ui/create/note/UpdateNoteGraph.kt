@@ -1,18 +1,13 @@
 package me.proton.android.pass.ui.create.note
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.navigation.api.composable
 import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.pass.presentation.create.note.UpdateNote
 
-@OptIn(
-    ExperimentalAnimationApi::class, ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class
-)
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.updateNoteGraph(nav: AppNavigator) {
     composable(AppNavItem.EditNote) {
         UpdateNote(
@@ -23,6 +18,9 @@ fun NavGraphBuilder.updateNoteGraph(nav: AppNavigator) {
                     route = AppNavItem.ViewItem.createNavRoute(shareId, itemId),
                     backDestination = AppNavItem.Home
                 )
+            },
+            onSentToTrash = {
+                nav.popUpTo(AppNavItem.Home)
             }
         )
     }

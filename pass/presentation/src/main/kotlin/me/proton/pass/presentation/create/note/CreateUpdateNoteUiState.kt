@@ -5,6 +5,7 @@ import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsSentToTrashState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
 @Immutable
@@ -13,7 +14,8 @@ data class CreateUpdateNoteUiState(
     val noteItem: NoteItem,
     val errorList: Set<NoteItemValidationErrors>,
     val isLoadingState: IsLoadingState,
-    val isItemSaved: ItemSavedState
+    val isItemSaved: ItemSavedState,
+    val isSentToTrash: IsSentToTrashState
 ) {
     companion object {
         val Initial = CreateUpdateNoteUiState(
@@ -21,7 +23,8 @@ data class CreateUpdateNoteUiState(
             isLoadingState = IsLoadingState.NotLoading,
             noteItem = NoteItem.Empty,
             errorList = emptySet(),
-            isItemSaved = ItemSavedState.Unknown
+            isItemSaved = ItemSavedState.Unknown,
+            isSentToTrash = IsSentToTrashState.NotSent
         )
     }
 }

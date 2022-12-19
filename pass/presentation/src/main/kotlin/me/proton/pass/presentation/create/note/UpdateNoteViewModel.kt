@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.usecases.GetShareById
+import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
@@ -21,8 +22,10 @@ import me.proton.pass.domain.Item
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.InitError
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.ItemUpdateError
+import me.proton.pass.presentation.detail.DetailSnackbarMessages
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsSentToTrashState
 import me.proton.pass.presentation.uievents.ItemSavedState
 import javax.inject.Inject
 
@@ -33,6 +36,7 @@ class UpdateNoteViewModel @Inject constructor(
     private val itemRepository: ItemRepository,
     private val getShare: GetShareById,
     private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val trashItem: TrashItem,
     savedStateHandle: SavedStateHandle
 ) : BaseNoteViewModel(snackbarMessageRepository, savedStateHandle) {
 
@@ -106,6 +110,22 @@ class UpdateNoteViewModel @Inject constructor(
         } else {
             PassLogger.i(TAG, "Empty User Id")
             snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
+        }
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    fun onDelete() = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+        val userId = accountManager.getPrimaryUserId()
+            .first { userId -> userId != null }
+
+        val item = _item
+        if (userId != null && item != null) {
+            trashItem(userId, item.shareId, item.id)
+            isSentToTrashState.update { IsSentToTrashState.Sent }
+        } else {
+            PassLogger.i(TAG, "Empty userId")
+            snackbarMessageRepository.emitSnackbarMessage(DetailSnackbarMessages.SendToTrashError)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
     }

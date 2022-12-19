@@ -31,6 +31,7 @@ import me.proton.pass.domain.entity.NewAlias
 import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsSentToTrashState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
 abstract class BaseLoginViewModel(
@@ -64,12 +65,15 @@ abstract class BaseLoginViewModel(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = shareId
         )
+
     protected val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
     protected val aliasItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
+    protected val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
+        MutableStateFlow(IsSentToTrashState.NotSent)
     protected val loginItemValidationErrorsState: MutableStateFlow<Set<LoginItemValidationErrors>> =
         MutableStateFlow(emptySet())
     protected val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -78,15 +82,17 @@ abstract class BaseLoginViewModel(
     private val loginItemWrapperState = combine(
         loginItemState,
         loginItemValidationErrorsState,
-        canUpdateUsernameState
-    ) { loginItem, loginItemValidationErrors, updateUsername ->
-        LoginItemWrapper(loginItem, loginItemValidationErrors, updateUsername)
+        canUpdateUsernameState,
+        isItemSentToTrashState
+    ) { loginItem, loginItemValidationErrors, updateUsername, sentToTrash ->
+        LoginItemWrapper(loginItem, loginItemValidationErrors, updateUsername, sentToTrash)
     }
 
     private data class LoginItemWrapper(
         val loginItem: LoginItem,
         val loginItemValidationErrors: Set<LoginItemValidationErrors>,
-        val canUpdateUsername: Boolean
+        val canUpdateUsername: Boolean,
+        val itemSentToTrash: IsSentToTrashState
     )
 
     val loginUiState: StateFlow<CreateUpdateLoginUiState> = combine(
@@ -103,7 +109,8 @@ abstract class BaseLoginViewModel(
             isLoadingState = isLoading,
             isItemSaved = isItemSaved,
             focusLastWebsite = focusLastWebsite,
-            canUpdateUsername = loginItemWrapper.canUpdateUsername
+            canUpdateUsername = loginItemWrapper.canUpdateUsername,
+            isItemSentToTrash = loginItemWrapper.itemSentToTrash
         )
     }
         .stateIn(

@@ -1,7 +1,6 @@
 package me.proton.android.pass.ui.detail
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.navigation.api.composable
@@ -9,10 +8,7 @@ import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.pass.domain.ItemType
 import me.proton.pass.presentation.detail.ItemDetailScreen
 
-@OptIn(
-    ExperimentalAnimationApi::class,
-    ExperimentalComposeUiApi::class
-)
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.itemDetailGraph(nav: AppNavigator) {
     composable(AppNavItem.ViewItem) {
         ItemDetailScreen(
@@ -34,8 +30,7 @@ fun NavGraphBuilder.itemDetailGraph(nav: AppNavigator) {
                 if (destination != null && route != null) {
                     nav.navigate(destination, route)
                 }
-            },
-            onMovedToTrash = { nav.onBackClick() }
+            }
         )
     }
 }

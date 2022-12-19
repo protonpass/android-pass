@@ -79,9 +79,3 @@ protobuf {
         }
     }
 }
-
-androidComponents {
-    beforeVariants(selector().withBuildType("debug")) { builder ->
-        builder.enable = false
-    }
-}

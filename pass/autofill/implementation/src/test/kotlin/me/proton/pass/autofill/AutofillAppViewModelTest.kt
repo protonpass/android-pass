@@ -5,6 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.biometry.TestBiometryManager
+import me.proton.android.pass.data.fakes.crypto.TestEncryptionContextProvider
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessage
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState
@@ -13,7 +14,6 @@ import me.proton.android.pass.preferences.ThemePreference
 import me.proton.pass.autofill.ui.autofill.AutofillAppUiState
 import me.proton.pass.autofill.ui.autofill.AutofillAppViewModel
 import me.proton.pass.test.MainDispatcherRule
-import me.proton.pass.test.crypto.TestKeyStoreCrypto
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -36,7 +36,7 @@ class AutofillAppViewModelTest {
         viewModel = AutofillAppViewModel(
             preferenceRepository,
             biometryManager,
-            TestKeyStoreCrypto,
+            TestEncryptionContextProvider,
             snackbarMessageRepository
         )
     }

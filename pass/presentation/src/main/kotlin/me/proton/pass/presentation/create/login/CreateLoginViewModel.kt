@@ -7,13 +7,13 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.usecases.CreateAlias
 import me.proton.android.pass.data.api.usecases.CreateItem
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Some
@@ -33,7 +33,7 @@ import javax.inject.Inject
 class CreateLoginViewModel @Inject constructor(
     private val createItem: CreateItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val keyStoreCrypto: KeyStoreCrypto,
+    private val encryptionContextProvider: EncryptionContextProvider,
     createAlias: CreateAlias,
     accountManager: AccountManager,
     observeActiveShare: ObserveActiveShare,
@@ -129,10 +129,12 @@ class CreateLoginViewModel @Inject constructor(
         )
             .onSuccess { item ->
                 isItemSavedState.update {
-                    ItemSavedState.Success(
-                        item.id,
-                        item.toUiModel(keyStoreCrypto)
-                    )
+                    encryptionContextProvider.withContext {
+                        ItemSavedState.Success(
+                            item.id,
+                            item.toUiModel(this@withContext)
+                        )
+                    }
                 }
             }
             .onError {

@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.crypto.EncryptionContext
 import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import me.proton.android.pass.log.PassLogger
-import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.pass.autofill.PendingIntentUtils.getOpenAppPendingIntent
 import me.proton.pass.autofill.Utils.getWindowNodes
 import me.proton.pass.autofill.entities.AutofillData
@@ -44,7 +44,7 @@ object AutoFillHandler {
     @Suppress("LongParameterList")
     fun handleAutofill(
         context: Context,
-        cryptoContext: CryptoContext,
+        encryptionContext: EncryptionContext,
         request: FillRequest,
         callback: FillCallback,
         cancellationSignal: CancellationSignal,
@@ -63,7 +63,7 @@ object AutoFillHandler {
             .launch(handler) {
                 searchAndFill(
                     context = context,
-                    cryptoContext = cryptoContext,
+                    encryptionContext = encryptionContext,
                     windowNode = windowNode,
                     callback = callback,
                     request = request,
@@ -79,7 +79,7 @@ object AutoFillHandler {
     @Suppress("ReturnCount", "LongParameterList")
     private suspend fun searchAndFill(
         context: Context,
-        cryptoContext: CryptoContext,
+        encryptionContext: EncryptionContext,
         windowNode: AssistStructure.WindowNode,
         callback: FillCallback,
         request: FillRequest,
@@ -117,7 +117,7 @@ object AutoFillHandler {
                             .toOption()
                         responseBuilder.addItemInlineSuggestion(
                             context = context,
-                            keyStoreCrypto = cryptoContext.keyStoreCrypto,
+                            encryptionContext = encryptionContext,
                             itemOption = item,
                             inlinePresentationSpec = spec,
                             assistFields = assistInfo.fields
@@ -127,7 +127,7 @@ object AutoFillHandler {
             }
             responseBuilder.addOpenAppInlineSuggestion(
                 context = context,
-                keyStoreCrypto = cryptoContext.keyStoreCrypto,
+                encryptionContext = encryptionContext,
                 inlinePresentationSpec = inlineRequest.inlinePresentationSpecs.last(),
                 pendingIntent = getOpenAppPendingIntent(context, autofillData),
                 assistFields = assistInfo.fields

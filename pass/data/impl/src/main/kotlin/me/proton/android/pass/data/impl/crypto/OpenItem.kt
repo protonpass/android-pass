@@ -1,10 +1,9 @@
 package me.proton.android.pass.data.impl.crypto
 
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.impl.extensions.fromParsed
 import me.proton.android.pass.data.impl.responses.ItemRevision
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.PlainByteArray
-import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.key.domain.decryptData
 import me.proton.core.key.domain.entity.key.PublicKey
@@ -36,7 +35,8 @@ interface OpenItem {
 }
 
 class OpenItemImpl @Inject constructor(
-    private val cryptoContext: CryptoContext
+    private val cryptoContext: CryptoContext,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : OpenItem, BaseCryptoOperation(cryptoContext) {
 
     @Suppress("TooGenericExceptionThrown")
@@ -89,17 +89,18 @@ class OpenItemImpl @Inject constructor(
         require(isItemSignatureValid)
 
         val decoded = ItemV1.Item.parseFrom(decryptedContents)
-        val reencryptedContents = PlainByteArray(decryptedContents).encrypt(cryptoContext.keyStoreCrypto)
-        return Item(
-            id = ItemId(response.itemId),
-            revision = response.revision,
-            shareId = shareId,
-            title = decoded.metadata.name.encrypt(cryptoContext.keyStoreCrypto),
-            note = decoded.metadata.note.encrypt(cryptoContext.keyStoreCrypto),
-            content = reencryptedContents,
-            itemType = ItemType.fromParsed(cryptoContext.keyStoreCrypto, decoded, aliasEmail = response.aliasEmail),
-            allowedPackageNames = decoded.platformSpecific.android.allowedAppsList
-                .map { it.packageName }
-        )
+        return encryptionContextProvider.withContext {
+            Item(
+                id = ItemId(response.itemId),
+                revision = response.revision,
+                shareId = shareId,
+                title = encrypt(decoded.metadata.name),
+                note = encrypt(decoded.metadata.note),
+                content = encrypt(decryptedContents),
+                itemType = ItemType.fromParsed(this, decoded, aliasEmail = response.aliasEmail),
+                allowedPackageNames = decoded.platformSpecific.android.allowedAppsList
+                    .map { it.packageName }
+            )
+        }
     }
 }

@@ -26,7 +26,7 @@ class EncryptionContextImpl(private val key: EncryptionKey) : EncryptionContext 
     override fun decrypt(content: EncryptedString): String {
         val encryptedByteArray = Base64.decode(content, Base64.NO_WRAP)
         val decrypted = decrypt(EncryptedByteArray(encryptedByteArray))
-        return decrypted.decodeToString()
+        return decrypted.toString(Charsets.UTF_8)
     }
 
     override fun decrypt(content: EncryptedByteArray): ByteArray {

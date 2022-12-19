@@ -3,6 +3,9 @@ package me.proton.android.pass.ui.create.login
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import me.proton.android.pass.data.fakes.crypto.TestEncryptionContext
+import me.proton.android.pass.data.fakes.crypto.TestEncryptionContextProvider
+import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.ShareId
@@ -21,11 +24,9 @@ import me.proton.pass.test.core.TestAccountManager
 import me.proton.pass.test.core.TestSavedStateHandle
 import me.proton.pass.test.crypto.TestKeyStoreCrypto
 import me.proton.pass.test.domain.TestItem
+import me.proton.pass.test.domain.usecases.TestCreateAlias
 import me.proton.pass.test.domain.usecases.TestCreateItem
 import me.proton.pass.test.domain.usecases.TestObserveActiveShare
-import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
-import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.pass.test.domain.usecases.TestCreateAlias
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -51,7 +52,7 @@ internal class CreateLoginViewModelTest {
             observeActiveShare = observeActiveShare,
             snackbarMessageRepository = TestSnackbarMessageRepository(),
             savedStateHandle = TestSavedStateHandle.create(),
-            keyStoreCrypto = TestKeyStoreCrypto,
+            encryptionContextProvider = TestEncryptionContextProvider,
             createAlias = TestCreateAlias()
         )
     }
@@ -99,8 +100,8 @@ internal class CreateLoginViewModelTest {
                             ItemUiModel(
                                 id = item.id,
                                 shareId = item.shareId,
-                                name = item.itemName(TestKeyStoreCrypto),
-                                note = item.note.decrypt(TestKeyStoreCrypto),
+                                name = item.itemName(TestEncryptionContext),
+                                note = TestEncryptionContext.decrypt(item.note),
                                 itemType = item.itemType
                             )
                         )

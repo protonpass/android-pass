@@ -29,6 +29,13 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
                     "https://anotherrandomwebsite.com/"
                 ),
                 highlight = "proton"
+            ),
+            with(
+                title = "With multiline content to check highlight",
+                username = "username",
+                note = "A note \n with \n multiline \n text \n to \n verify \n that" +
+                    " the \n word \n local \n is highlighted",
+                highlight = "local"
             )
         )
 

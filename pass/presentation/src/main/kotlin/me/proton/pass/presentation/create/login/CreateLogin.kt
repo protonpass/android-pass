@@ -43,6 +43,7 @@ fun CreateLogin(
         modifier = modifier,
         uiState = uiState,
         showCreateAliasButton = showCreateAliasButton,
+        canDelete = false,
         topBarTitle = R.string.title_create_login,
         topBarActionName = R.string.action_save,
         onUpClick = { onClose() },
@@ -58,6 +59,7 @@ fun CreateLogin(
         onNoteChange = { viewModel.onNoteChange(it) },
         onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
         onCreateAliasClick = onCreateAliasClick,
-        onRemoveAliasClick = { viewModel.onRemoveAlias() }
+        onRemoveAliasClick = { viewModel.onRemoveAlias() },
+        onDeleteItemClick = {} // Item cannot be deleted if it has not been created
     )
 }

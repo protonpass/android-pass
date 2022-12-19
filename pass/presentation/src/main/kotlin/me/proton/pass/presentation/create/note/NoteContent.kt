@@ -22,12 +22,14 @@ internal fun NoteContent(
     topBarTitle: String,
     topBarActionName: String,
     uiState: CreateUpdateNoteUiState,
+    canDelete: Boolean,
     onUpClick: () -> Unit,
     onSuccess: (ShareId, ItemId) -> Unit,
     onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
-    onEmitSnackbarMessage: (NoteSnackbarMessage) -> Unit
+    onEmitSnackbarMessage: (NoteSnackbarMessage) -> Unit,
+    onDelete: () -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -44,12 +46,14 @@ internal fun NoteContent(
         }
     ) { padding ->
         CreateNoteItemForm(
-            state = uiState.noteItem,
             modifier = Modifier.padding(padding),
+            state = uiState.noteItem,
             onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             onTitleChange = onTitleChange,
             onNoteChange = onNoteChange,
-            enabled = uiState.isLoadingState != IsLoadingState.Loading
+            enabled = uiState.isLoadingState != IsLoadingState.Loading,
+            canDelete = canDelete,
+            onDelete = onDelete
         )
         LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {
             val isItemSaved = uiState.isItemSaved

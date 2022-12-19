@@ -55,7 +55,7 @@ internal fun CreateAliasForm(
                 state = state,
                 onChange = onAliasChange,
                 onSuffixClick = onSuffixClick,
-                canEdit = canEdit && isEditAllowed,
+                canEdit = isEditAllowed && state.aliasOptions.suffixes.size > 1,
                 onAliasRequiredError = onAliasRequiredError,
                 onInvalidAliasError = onInvalidAliasError
             )
@@ -66,8 +66,8 @@ internal fun CreateAliasForm(
         }
         Spacer(Modifier.padding(vertical = 8.dp))
         MailboxSection(
-            state = state,
-            isEditAllowed = isEditAllowed,
+            contentText = state.mailboxTitle,
+            isEditAllowed = isEditAllowed && state.mailboxes.size > 1,
             onMailboxClick = onMailboxClick
         )
         NoteInput(

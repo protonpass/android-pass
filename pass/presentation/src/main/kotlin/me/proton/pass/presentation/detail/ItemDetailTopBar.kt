@@ -44,7 +44,7 @@ internal fun ItemDetailTopBar(
     }
     ProtonTopAppBar(
         modifier = modifier,
-        title = { TopBarTitleView(title) },
+        title = { TopBarTitleView(title = title) },
         navigationIcon = { ArrowBackIcon(onUpClick = onUpClick) },
         actions = {
             IconButton(

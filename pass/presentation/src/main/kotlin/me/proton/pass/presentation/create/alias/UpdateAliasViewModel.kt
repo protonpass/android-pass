@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.repositories.AliasRepository
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.usecases.UpdateAlias
@@ -19,8 +20,6 @@ import me.proton.android.pass.data.api.usecases.UpdateAliasItemContent
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
@@ -47,11 +46,11 @@ import javax.inject.Inject
 @HiltViewModel
 class UpdateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val cryptoContext: CryptoContext,
     private val itemRepository: ItemRepository,
     private val aliasRepository: AliasRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val updateAliasUseCase: UpdateAlias,
+    private val encryptionContextProvider: EncryptionContextProvider,
     savedStateHandle: SavedStateHandle
 ) : BaseAliasViewModel(snackbarMessageRepository, savedStateHandle) {
 
@@ -166,16 +165,18 @@ class UpdateAliasViewModel @Inject constructor(
                 }
 
                 aliasItemState.update {
-                    it.copy(
-                        title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-                        note = item.note.decrypt(cryptoContext.keyStoreCrypto),
-                        alias = prefix,
-                        aliasOptions = AliasOptions(emptyList(), details.mailboxes),
-                        selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
-                        mailboxes = mailboxes,
-                        aliasToBeCreated = email,
-                        mailboxTitle = getMailboxTitle(mailboxes)
-                    )
+                    encryptionContextProvider.withContext {
+                        it.copy(
+                            title = decrypt(item.title),
+                            note = decrypt(item.note),
+                            alias = prefix,
+                            aliasOptions = AliasOptions(emptyList(), details.mailboxes),
+                            selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
+                            mailboxes = mailboxes,
+                            aliasToBeCreated = email,
+                            mailboxTitle = getMailboxTitle(mailboxes)
+                        )
+                    }
                 }
             }
             .onError {

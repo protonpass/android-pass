@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.clipboard.api.ClipboardManager
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.usecases.ApplyPendingEvents
 import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
@@ -29,7 +30,6 @@ import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
 import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
@@ -54,11 +54,11 @@ import javax.inject.Inject
 @ExperimentalMaterialApi
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val keyStoreCrypto: KeyStoreCrypto,
     private val trashItem: TrashItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val clipboardManager: ClipboardManager,
     private val applyPendingEvents: ApplyPendingEvents,
+    private val encryptionContextProvider: EncryptionContextProvider,
     observeCurrentUser: ObserveCurrentUser,
     observeActiveShare: ObserveActiveShare,
     observeActiveItems: ObserveActiveItems
@@ -95,7 +95,9 @@ class HomeViewModel @Inject constructor(
     private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = observeActiveItems()
         .map { itemResult ->
             itemResult.map { list ->
-                list.map { it.toUiModel(keyStoreCrypto) }
+                encryptionContextProvider.withContext {
+                    list.map { it.toUiModel(this@withContext) }
+                }
             }
         }
         .distinctUntilChanged()
@@ -263,10 +265,12 @@ class HomeViewModel @Inject constructor(
                 }
             }
             HomeClipboardType.Password -> {
-                clipboardManager.copyToClipboard(
-                    text = keyStoreCrypto.decrypt(text),
-                    isSecure = true
-                )
+                encryptionContextProvider.withContext {
+                    clipboardManager.copyToClipboard(
+                        text = decrypt(text),
+                        isSecure = true
+                    )
+                }
                 viewModelScope.launch {
                     snackbarMessageRepository.emitSnackbarMessage(PasswordCopied)
                 }

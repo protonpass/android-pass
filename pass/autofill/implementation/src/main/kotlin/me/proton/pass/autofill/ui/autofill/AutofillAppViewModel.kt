@@ -15,12 +15,12 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryStatus
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState
-import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.android.pass.preferences.ThemePreference
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillItem
 import me.proton.pass.autofill.extensions.toAutoFillItem
@@ -33,7 +33,7 @@ import javax.inject.Inject
 class AutofillAppViewModel @Inject constructor(
     preferenceRepository: UserPreferencesRepository,
     private val biometryManager: BiometryManager,
-    private val keyStoreCrypto: KeyStoreCrypto,
+    private val encryptionContextProvider: EncryptionContextProvider,
     private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
@@ -81,7 +81,9 @@ class AutofillAppViewModel @Inject constructor(
     }
 
     fun onItemCreated(state: AutofillAppState, item: ItemUiModel) = viewModelScope.launch {
-        onAutofillItemClicked(state, item.toAutoFillItem(keyStoreCrypto))
+        encryptionContextProvider.withContext {
+            onAutofillItemClicked(state, item.toAutoFillItem(this@withContext))
+        }
     }
 
     fun onSnackbarMessageDelivered() = viewModelScope.launch {

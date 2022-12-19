@@ -7,8 +7,8 @@ import android.service.autofill.FillRequest
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
-import me.proton.core.crypto.common.context.CryptoContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -18,21 +18,23 @@ class ProtonPassAutofillService : AutofillService() {
     lateinit var getSuggestedLoginItems: GetSuggestedLoginItems
 
     @Inject
-    lateinit var cryptoContext: CryptoContext
+    lateinit var encryptionContextProvider: EncryptionContextProvider
 
     override fun onFillRequest(
         request: FillRequest,
         cancellationSignal: CancellationSignal,
         callback: FillCallback
     ) {
-        AutoFillHandler.handleAutofill(
-            context = this,
-            cryptoContext = cryptoContext,
-            request = request,
-            callback = callback,
-            cancellationSignal = cancellationSignal,
-            getSuggestedLoginItems = getSuggestedLoginItems
-        )
+        encryptionContextProvider.withContext {
+            AutoFillHandler.handleAutofill(
+                context = this@ProtonPassAutofillService,
+                encryptionContext = this@withContext,
+                request = request,
+                callback = callback,
+                cancellationSignal = cancellationSignal,
+                getSuggestedLoginItems = getSuggestedLoginItems
+            )
+        }
     }
 
     override fun onSaveRequest(request: SaveRequest, callback: SaveCallback) {

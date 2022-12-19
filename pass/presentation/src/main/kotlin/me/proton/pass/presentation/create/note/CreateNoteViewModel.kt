@@ -7,12 +7,12 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.usecases.GetShareById
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.ShareId
@@ -28,7 +28,7 @@ class CreateNoteViewModel @Inject constructor(
     private val getShare: GetShareById,
     private val itemRepository: ItemRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val keyStoreCrypto: KeyStoreCrypto,
+    private val encryptionContextProvider: EncryptionContextProvider,
     savedStateHandle: SavedStateHandle
 ) : BaseNoteViewModel(snackbarMessageRepository, savedStateHandle) {
 
@@ -53,10 +53,12 @@ class CreateNoteViewModel @Inject constructor(
                         itemRepository.createItem(userId, share, itemContents)
                             .onSuccess { item ->
                                 isItemSavedState.update {
-                                    ItemSavedState.Success(
-                                        item.id,
-                                        item.toUiModel(keyStoreCrypto)
-                                    )
+                                    encryptionContextProvider.withContext {
+                                        ItemSavedState.Success(
+                                            item.id,
+                                            item.toUiModel(this@withContext)
+                                        )
+                                    }
                                 }
                             }
                             .onError {

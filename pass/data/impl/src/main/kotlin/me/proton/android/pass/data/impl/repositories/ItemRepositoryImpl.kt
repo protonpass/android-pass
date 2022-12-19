@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.api.PendingEventList
+import me.proton.android.pass.data.api.crypto.EncryptionContext
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.repositories.KeyPacketRepository
@@ -38,7 +40,6 @@ import me.proton.android.pass.data.impl.util.TimeUtil
 import me.proton.android.pass.log.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.extension.publicKeyRing
@@ -55,6 +56,7 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.asResult
 import me.proton.pass.common.api.map
+import me.proton.pass.common.api.transpose
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemContents
 import me.proton.pass.domain.ItemId
@@ -85,7 +87,8 @@ class ItemRepositoryImpl @Inject constructor(
     private val localItemDataSource: LocalItemDataSource,
     private val remoteItemDataSource: RemoteItemDataSource,
     private val keyPacketRepository: KeyPacketRepository,
-    private val openItem: OpenItem
+    private val openItem: OpenItem,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
     override suspend fun createItem(
@@ -103,6 +106,7 @@ class ItemRepositoryImpl @Inject constructor(
         }
         val (vaultKey, itemKey) = result.data
         val body = createItem.create(vaultKey, itemKey, userAddress, contents, packageName)
+
         remoteItemDataSource.createItem(userId, share.id, body)
             .map { itemResponse ->
                 val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
@@ -115,7 +119,10 @@ class ItemRepositoryImpl @Inject constructor(
                     listOf(itemKey)
                 )
                 localItemDataSource.upsertItem(entity)
-                entityToDomain(entity)
+
+                encryptionContextProvider.withContext {
+                    entityToDomain(this@withContext, entity)
+                }
             }
     }
 
@@ -155,7 +162,9 @@ class ItemRepositoryImpl @Inject constructor(
                     listOf(itemKey)
                 )
                 localItemDataSource.upsertItem(entity)
-                entityToDomain(entity)
+                encryptionContextProvider.withContext {
+                    entityToDomain(this@withContext, entity)
+                }
             }
     }
 
@@ -200,14 +209,18 @@ class ItemRepositoryImpl @Inject constructor(
                 val userAddress =
                     requireNotNull(userAddressRepository.getAddresses(userId).primary())
                 refreshItemsIfNeeded(userAddress, shareSelection)
-                items.map { entityToDomain(it) }
+                encryptionContextProvider.withContext {
+                    items.map { entityToDomain(this@withContext, it) }
+                }
             }
             .asResult()
 
     override suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Item> {
         val item = localItemDataSource.getById(shareId, itemId)
         requireNotNull(item)
-        return Result.Success(entityToDomain(item))
+        return encryptionContextProvider.withContext {
+            Result.Success(entityToDomain(this@withContext, item))
+        }
     }
 
     override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit> {
@@ -362,10 +375,12 @@ class ItemRepositoryImpl @Inject constructor(
         url: Option<String>
     ): Result<Item> {
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
-        val item = entityToDomain(itemEntity)
 
-        val itemContents = item.content.decrypt(cryptoContext.keyStoreCrypto)
-        val itemProto = ItemV1.Item.parseFrom(itemContents.array)
+        val (item, itemProto) = encryptionContextProvider.withContext {
+            val item = entityToDomain(this@withContext, itemEntity)
+            val itemContents = decrypt(item.content)
+            item to ItemV1.Item.parseFrom(itemContents)
+        }
 
         val (needsToUpdate, updatedContents) = updateItemContents(
             item,
@@ -632,7 +647,9 @@ class ItemRepositoryImpl @Inject constructor(
                         listOf(itemKeyResult.data)
                     )
                     localItemDataSource.upsertItem(entity)
-                    entityToDomain(entity)
+                    encryptionContextProvider.withContext {
+                        entityToDomain(this@withContext, entity)
+                    }
                 }
         }
     }
@@ -691,46 +708,64 @@ class ItemRepositoryImpl @Inject constructor(
                             )
                         publicAddress.keys.publicKeyRing().keys
                     }
-
-                items.map { item ->
-                    val verifyKeys = requireNotNull(userKeys[item.signatureEmail])
-                    val vaultKeyResult: Result<VaultKey> = vaultKeyRepository
-                        .getVaultKeyById(
-                            userAddress,
-                            share.id,
-                            share.signingKey,
-                            item.rotationId
-                        )
-                    when (vaultKeyResult) {
-                        is Result.Error -> return Result.Error(vaultKeyResult.exception)
-                        Result.Loading -> return Result.Loading
-                        is Result.Success -> Unit
-                    }
-                    val itemKeyResult: Result<ItemKey> = vaultKeyRepository
-                        .getItemKeyById(
-                            userAddress,
-                            share.id,
-                            share.signingKey,
-                            item.rotationId
-                        )
-                    when (itemKeyResult) {
-                        is Result.Error -> return Result.Error(itemKeyResult.exception)
-                        Result.Loading -> return Result.Loading
-                        is Result.Success -> Unit
-                    }
-                    val entity =
-                        itemResponseToEntity(
-                            userAddress,
-                            item,
-                            share,
-                            verifyKeys,
-                            listOf(vaultKeyResult.data),
-                            listOf(itemKeyResult.data)
-                        )
-                    localItemDataSource.upsertItem(entity)
-                    entityToDomain(entity)
-                }
+                return decryptItems(userAddress, share, items, userKeys)
             }
+
+    private suspend fun decryptItems(
+        userAddress: UserAddress,
+        share: Share,
+        items: List<ItemRevision>,
+        userKeys: Map<String, List<PublicKey>>
+    ): Result<List<Item>> =
+        encryptionContextProvider.withContextSuspendable {
+            items.map { item -> decryptItem(this, userAddress, share, item, userKeys) }
+        }.transpose()
+
+    @Suppress("ReturnCount")
+    private suspend fun decryptItem(
+        ctx: EncryptionContext,
+        userAddress: UserAddress,
+        share: Share,
+        item: ItemRevision,
+        userKeys: Map<String, List<PublicKey>>
+    ): Result<Item> {
+        val verifyKeys = requireNotNull(userKeys[item.signatureEmail])
+        val vaultKeyResult: Result<VaultKey> = vaultKeyRepository
+            .getVaultKeyById(
+                userAddress,
+                share.id,
+                share.signingKey,
+                item.rotationId
+            )
+        when (vaultKeyResult) {
+            is Result.Error -> return Result.Error(vaultKeyResult.exception)
+            Result.Loading -> return Result.Loading
+            is Result.Success -> Unit
+        }
+        val itemKeyResult: Result<ItemKey> = vaultKeyRepository
+            .getItemKeyById(
+                userAddress,
+                share.id,
+                share.signingKey,
+                item.rotationId
+            )
+        when (itemKeyResult) {
+            is Result.Error -> return Result.Error(itemKeyResult.exception)
+            Result.Loading -> return Result.Loading
+            is Result.Success -> Unit
+        }
+        val entity =
+            itemResponseToEntity(
+                userAddress,
+                item,
+                share,
+                verifyKeys,
+                listOf(vaultKeyResult.data),
+                listOf(itemKeyResult.data)
+            )
+        localItemDataSource.upsertItem(entity)
+        return Result.Success(entityToDomain(ctx, entity))
+    }
 
     private fun itemResponseToEntity(
         userAddress: UserAddress,
@@ -765,16 +800,19 @@ class ItemRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun entityToDomain(entity: ItemEntity): Item =
+    private fun entityToDomain(
+        context: EncryptionContext,
+        entity: ItemEntity
+    ): Item =
         Item(
             id = ItemId(entity.id),
             revision = entity.revision,
             shareId = ShareId(entity.shareId),
-            itemType = entity.itemType(cryptoContext.keyStoreCrypto),
+            itemType = entity.itemType(context),
             title = entity.encryptedTitle,
             note = entity.encryptedNote,
             content = entity.encryptedContent,
-            allowedPackageNames = entity.allowedApps(cryptoContext.keyStoreCrypto)
+            allowedPackageNames = entity.allowedApps(context)
         )
 
     companion object {

@@ -12,11 +12,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.clipboard.api.ClipboardManager
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
 import me.proton.pass.presentation.detail.DetailSnackbarMessages
@@ -24,9 +22,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginDetailViewModel @Inject constructor(
-    private val cryptoContext: CryptoContext,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val clipboardManager: ClipboardManager
+    private val clipboardManager: ClipboardManager,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -34,9 +32,8 @@ class LoginDetailViewModel @Inject constructor(
     }
 
     private val itemFlow: MutableStateFlow<Item?> = MutableStateFlow(null)
-    private val passwordState: MutableStateFlow<PasswordState> = MutableStateFlow(
-        PasswordState.Concealed("".encrypt(cryptoContext.keyStoreCrypto))
-    )
+    private val passwordState: MutableStateFlow<PasswordState> =
+        MutableStateFlow(getInitialPasswordState())
 
     val viewState: StateFlow<LoginUiModel> = combine(
         itemFlow,
@@ -57,8 +54,11 @@ class LoginDetailViewModel @Inject constructor(
             val itemType = item.itemType as ItemType.Login
             val text = when (val password = passwordState.value) {
                 is PasswordState.Revealed -> password.clearText
-                is PasswordState.Concealed ->
-                    itemType.password.decrypt(cryptoContext.keyStoreCrypto)
+                is PasswordState.Concealed -> {
+                    encryptionContextProvider.withContext {
+                        decrypt(itemType.password)
+                    }
+                }
             }
             clipboardManager.copyToClipboard(text = text, isSecure = true)
             snackbarMessageRepository.emitSnackbarMessage(DetailSnackbarMessages.PasswordCopiedToClipboard)
@@ -84,10 +84,12 @@ class LoginDetailViewModel @Inject constructor(
 
         when (passwordState.value) {
             is PasswordState.Concealed -> {
-                passwordState.value = PasswordState.Revealed(
-                    encrypted = itemType.password,
-                    clearText = itemType.password.decrypt(cryptoContext.keyStoreCrypto)
-                )
+                encryptionContextProvider.withContext {
+                    passwordState.value = PasswordState.Revealed(
+                        encrypted = itemType.password,
+                        clearText = decrypt(itemType.password)
+                    )
+                }
             }
             is PasswordState.Revealed -> {
                 passwordState.value = PasswordState.Concealed(itemType.password)
@@ -99,23 +101,30 @@ class LoginDetailViewModel @Inject constructor(
         if (item == null) return getInitialState()
 
         val itemContents = item.itemType as ItemType.Login
-        return LoginUiModel(
-            title = item.title.decrypt(cryptoContext.keyStoreCrypto),
-            username = itemContents.username,
-            password = password,
-            websites = itemContents.websites,
-            note = item.note.decrypt(cryptoContext.keyStoreCrypto)
-        )
+        return encryptionContextProvider.withContext {
+            LoginUiModel(
+                title = decrypt(item.title),
+                username = itemContents.username,
+                password = password,
+                websites = itemContents.websites,
+                note = decrypt(item.note)
+            )
+        }
     }
 
     private fun getInitialState(): LoginUiModel =
         LoginUiModel(
             title = "",
             username = "",
-            password = PasswordState.Concealed("".encrypt(cryptoContext.keyStoreCrypto)),
+            password = getInitialPasswordState(),
             websites = emptyList(),
             note = ""
         )
+
+    private fun getInitialPasswordState(): PasswordState =
+        encryptionContextProvider.withContext {
+            PasswordState.Concealed(encrypt(""))
+        }
 
     companion object {
         private const val TAG = "LoginDetailViewModel"

@@ -9,8 +9,8 @@ import android.service.autofill.SaveInfo
 import android.view.autofill.AutofillId
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
+import me.proton.android.pass.data.api.crypto.EncryptionContext
 import me.proton.android.pass.data.api.extensions.loginUsername
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.pass.autofill.DatasetBuilderOptions
 import me.proton.pass.autofill.DatasetUtils
 import me.proton.pass.autofill.InlinePresentationUtils
@@ -33,7 +33,7 @@ import me.proton.pass.presentation.extension.itemName
 @RequiresApi(Build.VERSION_CODES.R)
 private fun FillResponse.Builder.addInlineSuggestion(
     context: Context,
-    keyStoreCrypto: KeyStoreCrypto,
+    encryptionContext: EncryptionContext,
     itemOption: Option<Item>,
     inlinePresentation: Option<InlinePresentation>,
     pendingIntent: Option<PendingIntent>,
@@ -41,7 +41,7 @@ private fun FillResponse.Builder.addInlineSuggestion(
 ) {
     val autofillMappings: Option<AutofillMappings> = itemOption.map { item ->
         ItemFieldMapper.mapFields(
-            item.toAutofillItem(keyStoreCrypto),
+            item.toAutofillItem(encryptionContext),
             assistFields.map { it.id.asAndroid() },
             assistFields.map { it.type ?: FieldType.Unknown }
         )
@@ -62,15 +62,16 @@ private fun FillResponse.Builder.addInlineSuggestion(
 @RequiresApi(Build.VERSION_CODES.R)
 internal fun FillResponse.Builder.addItemInlineSuggestion(
     context: Context,
-    keyStoreCrypto: KeyStoreCrypto,
+    encryptionContext: EncryptionContext,
     itemOption: Option<Item>,
     inlinePresentationSpec: InlinePresentationSpec,
     assistFields: List<AssistField>
 ) {
     val inlinePresentation = itemOption
         .map { item ->
+
             InlinePresentationUtils.create(
-                title = item.itemName(keyStoreCrypto),
+                title = item.itemName(encryptionContext),
                 subtitle = item.loginUsername(),
                 inlinePresentationSpec = inlinePresentationSpec,
                 pendingIntent = PendingIntentUtils.getEmptyPendingIntent(context)
@@ -79,7 +80,7 @@ internal fun FillResponse.Builder.addItemInlineSuggestion(
 
     addInlineSuggestion(
         context = context,
-        keyStoreCrypto = keyStoreCrypto,
+        encryptionContext = encryptionContext,
         itemOption = itemOption,
         inlinePresentation = inlinePresentation,
         pendingIntent = None,
@@ -90,7 +91,7 @@ internal fun FillResponse.Builder.addItemInlineSuggestion(
 @RequiresApi(Build.VERSION_CODES.R)
 internal fun FillResponse.Builder.addOpenAppInlineSuggestion(
     context: Context,
-    keyStoreCrypto: KeyStoreCrypto,
+    encryptionContext: EncryptionContext,
     inlinePresentationSpec: InlinePresentationSpec,
     pendingIntent: PendingIntent,
     assistFields: List<AssistField>
@@ -105,7 +106,7 @@ internal fun FillResponse.Builder.addOpenAppInlineSuggestion(
         )
     addInlineSuggestion(
         context = context,
-        keyStoreCrypto = keyStoreCrypto,
+        encryptionContext = encryptionContext,
         itemOption = None,
         inlinePresentation = inlinePresentation.toOption(),
         pendingIntent = pendingIntent.toOption(),

@@ -61,6 +61,21 @@ fun <T> Flow<T>.asResultWithoutLoading(): Flow<Result<T>> =
         }
         .catch { emit(Result.Error(it)) }
 
+fun <T> List<Result<T>>.transpose(): Result<List<T>> {
+    val anyError = this.firstOrNull { it is Result.Error }
+    if (anyError != null) {
+        return anyError as Result.Error
+    }
+
+    val anyLoading = this.firstOrNull { it is Result.Loading }
+    if (anyLoading != null) {
+        return Result.Loading
+    }
+
+    val allValues = this.map { (it as Result.Success).data }
+    return Result.Success(allValues)
+}
+
 @Suppress("TooGenericExceptionCaught")
 fun <T> ApiResult<T>.toResult(): Result<T> =
     try {

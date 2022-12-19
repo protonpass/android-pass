@@ -26,8 +26,7 @@ fun ItemDetailContent(
     uiState: ItemDetailScreenUiState,
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
-    onMoveToTrash: (Item) -> Unit,
-    onEmitSnackbarMessage: (DetailSnackbarMessages) -> Unit
+    onMoveToTrash: (Item) -> Unit
 ) {
     val itemToDelete = remember { mutableStateOf(false) }
 
@@ -38,13 +37,12 @@ fun ItemDetailContent(
 
         if (uiState.model is Some) {
             val item = uiState.model.value.item
+            val itemName = uiState.model.value.name
             val topBar: @Composable () -> Unit = {
                 ItemDetailTopBar(
-                    uiState = uiState.model,
+                    title = itemName,
                     onUpClick = onUpClick,
-                    onEditClick = onEditClick,
-                    onDeleteClick = { itemToDelete.value = true },
-                    onSnackbarMessage = onEmitSnackbarMessage
+                    onEditClick = { onEditClick(item.shareId, item.id, item.itemType) }
                 )
             }
             when (item.itemType) {
@@ -66,7 +64,7 @@ fun ItemDetailContent(
             if (itemToDelete.value) {
                 ConfirmSendToTrashDialog(
                     item = item,
-                    itemName = uiState.model.value.name,
+                    itemName = itemName,
                     title = R.string.alert_confirm_item_send_to_trash_title,
                     message = R.string.alert_confirm_item_send_to_trash_message,
                     onConfirm = onMoveToTrash,

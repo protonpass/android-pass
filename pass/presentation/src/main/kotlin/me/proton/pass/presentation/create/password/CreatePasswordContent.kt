@@ -39,7 +39,7 @@ fun CreatePasswordContent(
         modifier = modifier,
         topBar = {
             ProtonTopAppBar(
-                title = { TopBarTitleView(R.string.title_create_password) },
+                title = { TopBarTitleView(title = R.string.title_create_password) },
                 navigationIcon = { ArrowBackIcon(onUpClick = onUpClick) },
                 actions = {}
             )

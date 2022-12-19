@@ -41,7 +41,7 @@ internal fun LoginTopBar(
 
     ProtonTopAppBar(
         modifier = modifier,
-        title = { TopBarTitleView(topBarTitle) },
+        title = { TopBarTitleView(title = topBarTitle) },
         navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
         actions = {
             IconButton(

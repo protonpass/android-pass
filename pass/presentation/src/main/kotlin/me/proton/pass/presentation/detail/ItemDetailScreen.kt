@@ -35,8 +35,7 @@ fun ItemDetailScreen(
         uiState = uiState,
         onUpClick = onUpClick,
         onEditClick = onEditClick,
-        onMoveToTrash = { item: Item -> viewModel.sendItemToTrash(item) },
-        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) }
+        onMoveToTrash = { item: Item -> viewModel.sendItemToTrash(item) }
     )
 }
 

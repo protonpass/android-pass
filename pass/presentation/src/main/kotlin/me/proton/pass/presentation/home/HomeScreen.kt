@@ -1,5 +1,6 @@
 package me.proton.pass.presentation.home
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
@@ -154,42 +155,43 @@ fun HomeScreen(
             }
         }
     ) {
-        HomeContent(
-            modifier = modifier,
-            uiState = uiState,
-            homeFilter = homeFilterMode,
-            shouldScrollToTop = shouldScrollToTop,
-            homeScreenNavigation = homeScreenNavigation,
-            onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
-            onEnterSearch = { viewModel.onEnterSearch() },
-            onStopSearching = { viewModel.onStopSearching() },
-            sendItemToTrash = { viewModel.sendItemToTrash(it) },
-            onDrawerIconClick = onDrawerIconClick,
-            onMoreOptionsClick = {
-                setBottomSheet(HomeBottomSheetType.Sorting)
-                scope.launch { bottomSheetState.show() }
-            },
-            onAddItemClick = {
-                setBottomSheet(HomeBottomSheetType.CreateItem)
-                scope.launch { bottomSheetState.show() }
-            },
-            onItemMenuClick = { item ->
-                setSelectedItem(item)
-                when (item.itemType) {
-                    is ItemType.Alias -> setBottomSheet(HomeBottomSheetType.AliasOptions)
-                    is ItemType.Login -> setBottomSheet(HomeBottomSheetType.LoginOptions)
-                    is ItemType.Note -> setBottomSheet(HomeBottomSheetType.NoteOptions)
-                    ItemType.Password -> {}
-                }
-                scope.launch { bottomSheetState.show() }
-            },
-            onRefresh = { viewModel.onRefresh() },
-            onScrollToTop = { setScrollToTop(false) }
-        )
+        Box(modifier = modifier) {
+            HomeContent(
+                modifier = modifier,
+                uiState = uiState,
+                homeFilter = homeFilterMode,
+                shouldScrollToTop = shouldScrollToTop,
+                homeScreenNavigation = homeScreenNavigation,
+                onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
+                onEnterSearch = { viewModel.onEnterSearch() },
+                onStopSearching = { viewModel.onStopSearching() },
+                sendItemToTrash = { viewModel.sendItemToTrash(it) },
+                onDrawerIconClick = onDrawerIconClick,
+                onMoreOptionsClick = {
+                    setBottomSheet(HomeBottomSheetType.Sorting)
+                    scope.launch { bottomSheetState.show() }
+                },
+                onAddItemClick = {
+                    setBottomSheet(HomeBottomSheetType.CreateItem)
+                    scope.launch { bottomSheetState.show() }
+                },
+                onItemMenuClick = { item ->
+                    setSelectedItem(item)
+                    when (item.itemType) {
+                        is ItemType.Alias -> setBottomSheet(HomeBottomSheetType.AliasOptions)
+                        is ItemType.Login -> setBottomSheet(HomeBottomSheetType.LoginOptions)
+                        is ItemType.Note -> setBottomSheet(HomeBottomSheetType.NoteOptions)
+                        ItemType.Password -> {}
+                    }
+                    scope.launch { bottomSheetState.show() }
+                },
+                onRefresh = { viewModel.onRefresh() },
+                onScrollToTop = { setScrollToTop(false) }
+            )
 
-        if (shouldShowDeleteDialog) {
             ConfirmMoveItemToTrashDialog(
                 itemName = selectedItem?.name ?: "",
+                show = shouldShowDeleteDialog,
                 onConfirm = {
                     viewModel.sendItemToTrash(selectedItem)
                     setShowDeleteDialog(false)

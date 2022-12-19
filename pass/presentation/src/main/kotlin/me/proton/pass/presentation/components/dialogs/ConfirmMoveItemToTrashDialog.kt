@@ -21,11 +21,14 @@ import me.proton.pass.presentation.R
 @Composable
 fun ConfirmMoveItemToTrashDialog(
     modifier: Modifier = Modifier,
+    show: Boolean,
     itemName: String,
     onConfirm: () -> Unit,
     onCancel: () -> Unit,
     onDismiss: () -> Unit
 ) {
+    if (!show) return
+
     ProtonAlertDialog(
         modifier = modifier,
         onDismissRequest = onDismiss,
@@ -77,6 +80,7 @@ fun ConfirmMoveItemToTrashDialogPreview(
         Surface {
             ConfirmMoveItemToTrashDialog(
                 itemName = "an item",
+                show = true,
                 onConfirm = {},
                 onCancel = {},
                 onDismiss = {}

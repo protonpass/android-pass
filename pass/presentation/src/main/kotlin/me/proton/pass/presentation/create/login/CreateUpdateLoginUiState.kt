@@ -5,6 +5,7 @@ import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.pass.presentation.uievents.IsSentToTrashState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
 @Immutable
@@ -15,7 +16,8 @@ data class CreateUpdateLoginUiState(
     val isLoadingState: IsLoadingState,
     val isItemSaved: ItemSavedState,
     val focusLastWebsite: Boolean,
-    val canUpdateUsername: Boolean
+    val canUpdateUsername: Boolean,
+    val isItemSentToTrash: IsSentToTrashState
 ) {
     companion object {
         val Initial = CreateUpdateLoginUiState(
@@ -25,7 +27,8 @@ data class CreateUpdateLoginUiState(
             validationErrors = emptySet(),
             isItemSaved = ItemSavedState.Unknown,
             focusLastWebsite = false,
-            canUpdateUsername = true
+            canUpdateUsername = true,
+            isItemSentToTrash = IsSentToTrashState.NotSent
         )
     }
 }

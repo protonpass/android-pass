@@ -41,7 +41,7 @@ internal fun CreateAliasSection(
         )
         AliasSelector(
             modifier = Modifier.padding(top = 8.dp),
-            state = state,
+            contentText = state.selectedSuffix?.suffix ?: "",
             enabled = canEdit,
             onClick = onSuffixClick
         )

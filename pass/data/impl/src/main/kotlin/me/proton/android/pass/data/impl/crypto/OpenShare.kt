@@ -127,8 +127,9 @@ class OpenShare @Inject constructor(
     ): Share {
         val shareType = ShareType.map[entity.targetType]
         if (shareType == null) {
-            PassLogger.i(TAG, "Unknown ShareType [shareType=${entity.targetType}]")
-            throw CryptoException("Unknown ShareType")
+            val e = CryptoException("Unknown ShareType")
+            PassLogger.e(TAG, e, "Unknown ShareType [shareType=${entity.targetType}]")
+            throw e
         }
 
         verifyAcceptanceSignature(
@@ -222,12 +223,14 @@ class OpenShare @Inject constructor(
         }
 
         if (vaultKey == null) {
-            PassLogger.i(
+            val e = KeyNotFound("VaultKey not found")
+            PassLogger.e(
                 TAG,
+                e,
                 "VaultKey not found when opening share [shareId=${response.shareId}]" +
                     "[vaultKey.contentRotationId=${response.contentRotationId}]"
             )
-            throw KeyNotFound("VaultKey not found")
+            throw e
         }
 
         // Decrypt the signatures
@@ -249,8 +252,9 @@ class OpenShare @Inject constructor(
         }
 
         if (!addressSignatureValid) {
-            PassLogger.i(TAG, "Address signature not valid [shareId=${response.shareId}]")
-            throw InvalidAddressSignature()
+            val e = InvalidAddressSignature()
+            PassLogger.e(TAG, e, "Address signature not valid [shareId=${response.shareId}]")
+            throw e
         }
 
 
@@ -261,8 +265,9 @@ class OpenShare @Inject constructor(
             publicKey = vaultKey.publicKey(cryptoContext).key
         )
         if (!vaultSignatureValid) {
-            PassLogger.i(TAG, "Vault signature is not valid [shareId=${response.shareId}]")
-            throw InvalidSignature("Vault signature is not valid")
+            val e = InvalidSignature("Vault signature is not valid")
+            PassLogger.e(TAG, e, "Vault signature is not valid [shareId=${response.shareId}]")
+            throw e
         }
     }
 
@@ -285,7 +290,7 @@ class OpenShare @Inject constructor(
                 verifyData(signingKeyFingerprint.encodeToByteArray(), armoredAcceptanceSignature)
             if (!verified) {
                 val e = InvalidSignature("Acceptance signature")
-                PassLogger.i(TAG, e, "Acceptance signature failed to verify")
+                PassLogger.e(TAG, e, "Acceptance signature failed to verify")
                 throw e
             }
 
@@ -299,8 +304,9 @@ class OpenShare @Inject constructor(
                 armoredInviterAcceptanceSignature
             )
             if (!inviterVerified) {
-                PassLogger.i(TAG, "Share inviterAcceptanceSignature failed to verify")
-                throw InvalidAddressSignature()
+                val e = InvalidAddressSignature()
+                PassLogger.e(TAG, e, "Share inviterAcceptanceSignature failed to verify")
+                throw e
             }
         }
     }

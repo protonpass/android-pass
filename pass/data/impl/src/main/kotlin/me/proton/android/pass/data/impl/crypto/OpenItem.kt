@@ -90,11 +90,13 @@ class OpenItemImpl @Inject constructor(
         val isUserSignatureValid =
             publicKeyRing.verifyData(cryptoContext, decryptedContents, armoredUserSignature)
         if (!isUserSignatureValid) {
-            PassLogger.i(
+            val e = InvalidSignature("User signature for item")
+            PassLogger.e(
                 TAG,
+                e,
                 "User signature for item not valid [shareId=${shareId.id}] [itemId=${response.itemId}]"
             )
-            throw InvalidSignature("User signature for item")
+            throw e
         }
 
         val itemPublicKey = itemKey.publicKey(cryptoContext)
@@ -104,12 +106,14 @@ class OpenItemImpl @Inject constructor(
             itemPublicKey.key
         )
         if (!isItemSignatureValid) {
-            PassLogger.i(
+            val e = InvalidSignature("ItemKey signature for item")
+            PassLogger.e(
                 TAG,
+                e,
                 "Item signature with itemKey not valid [shareId=${shareId.id}]" +
                     "[itemId=${response.itemId}] [rotationId=${response.rotationId}]"
             )
-            throw InvalidSignature("ItemKey signature for item")
+            throw e
         }
 
         val decoded = ItemV1.Item.parseFrom(decryptedContents)
@@ -135,20 +139,24 @@ class OpenItemImpl @Inject constructor(
     ): Pair<VaultKey, ItemKey> {
         val vaultKey = vaultKeys.firstOrNull { it.rotationId == response.rotationId }
         if (vaultKey == null) {
-            PassLogger.i(
+            val e = KeyNotFound("Could not find VaultKey")
+            PassLogger.e(
                 TAG,
+                e,
                 "Could not find VaultKey [itemId=${response.itemId}] [rotationId=${response.rotationId}]"
             )
-            throw KeyNotFound("Could not find VaultKey")
+            throw e
         }
 
         val itemKey = itemKeys.firstOrNull { it.rotationId == response.rotationId }
         if (itemKey == null) {
-            PassLogger.i(
+            val e = KeyNotFound("Could not find ItemKey")
+            PassLogger.e(
                 TAG,
+                e,
                 "Could not find ItemKey [itemId=${response.itemId}] [rotationId=${response.rotationId}]"
             )
-            throw KeyNotFound("Could not find ItemKey")
+            throw e
         }
 
         return vaultKey to itemKey

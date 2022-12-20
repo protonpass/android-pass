@@ -12,6 +12,7 @@ import me.proton.android.pass.data.impl.crypto.Utils
 import me.proton.android.pass.data.impl.db.PassDatabase
 import me.proton.android.pass.data.impl.db.entities.ShareEntity
 import me.proton.android.pass.data.impl.error.InvalidAddressSignature
+import me.proton.android.pass.data.impl.error.KeyNotFound
 import me.proton.android.pass.data.impl.local.LocalShareDataSource
 import me.proton.android.pass.data.impl.remote.RemoteShareDataSource
 import me.proton.android.pass.data.impl.requests.CreateVaultRequest
@@ -51,13 +52,19 @@ class ShareRepositoryImpl @Inject constructor(
     private val createVault: CreateVault
 ) : ShareRepository {
 
-    @Suppress("ReturnCount")
+    @Suppress("ReturnCount", "TooGenericExceptionCaught")
     override suspend fun createVault(
         userId: SessionUserId,
         vault: NewVault
     ): Result<Share> {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-        val (request, keyList) = createVaultRequest(vault, userAddress)
+
+        val (request, keyList) = try {
+            createVaultRequest(vault, userAddress)
+        } catch (e: RuntimeException) {
+            PassLogger.e(TAG, e, "Error in CreateVaultRequest")
+            return Result.Error(e)
+        }
         val createVaultResult = remoteShareDataSource.createVault(userAddress.userId, request)
         when (createVaultResult) {
             is Result.Error -> return Result.Error(createVaultResult.exception)
@@ -164,8 +171,15 @@ class ShareRepositoryImpl @Inject constructor(
         return shareEntityToShare(userAddress, addressKeys.keys.publicKeyRing().keys, share)
     }
 
+    @Suppress("ReturnCount")
     private suspend fun performShareRefresh(userId: UserId): Result<List<ShareEntity>> {
-        val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
+        val userAddress = userAddressRepository.getAddresses(userId).primary()
+        if (userAddress == null) {
+            val e = IllegalStateException("Could not find PrimaryAddress")
+            PassLogger.e(TAG, e, "Error in performShareRefresh")
+            return Result.Error(e)
+        }
+
         val sharesResult = remoteShareDataSource.getShares(userAddress.userId)
         when (sharesResult) {
             is Result.Error -> return Result.Error(sharesResult.exception)
@@ -175,6 +189,7 @@ class ShareRepositoryImpl @Inject constructor(
         return storeShares(userAddress, sharesResult.data)
     }
 
+    @Suppress("ReturnCount")
     private suspend fun shareEntitiesToShares(
         userId: UserId,
         entities: List<ShareEntity>
@@ -191,10 +206,24 @@ class ShareRepositoryImpl @Inject constructor(
             }
 
         val shareList: List<Share> = entities.map { entity ->
-            val userAddress =
-                requireNotNull(userAddressRepository.getAddresses(userId).primary())
-            val keys =
-                requireNotNull(userKeys[entity.inviterEmail]?.keys?.map { it.publicKey })
+            val userAddress = userAddressRepository.getAddresses(userId).primary()
+            if (userAddress == null) {
+                val e = IllegalStateException("Could not find PrimaryAddress")
+                PassLogger.e(TAG, e, "Error in performShareRefresh")
+                return Result.Error(e)
+            }
+
+            val keys = userKeys[entity.inviterEmail]?.keys?.map { it.publicKey }
+            if (keys == null) {
+                val e = KeyNotFound("UserKey for inviterEmail")
+                PassLogger.e(
+                    TAG,
+                    e,
+                    "Could not find UserKey for inviterEmail [email=${entity.inviterEmail}]" +
+                        "[shareId=${entity.id}]"
+                )
+                return Result.Error(e)
+            }
 
             when (
                 val result: Result<Share> =

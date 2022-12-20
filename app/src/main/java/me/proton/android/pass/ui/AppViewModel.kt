@@ -30,8 +30,8 @@ import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
 import me.proton.android.pass.data.api.usecases.RefreshShares
 import me.proton.android.pass.log.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.android.pass.preferences.ThemePreference
+import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
@@ -169,8 +169,9 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    private fun onInitError(throwable: Throwable?, message: String) {
-        PassLogger.i(TAG, throwable ?: Exception(message), message)
+    private suspend fun onInitError(throwable: Throwable?, message: String) {
+        PassLogger.e(TAG, throwable ?: Exception(message), message)
+        snackbarMessageRepository.emitSnackbarMessage(AppSnackbarMessage.ErrorDuringStartup)
     }
 
     fun onDrawerSectionChanged(drawerSection: NavigationDrawerSection) {

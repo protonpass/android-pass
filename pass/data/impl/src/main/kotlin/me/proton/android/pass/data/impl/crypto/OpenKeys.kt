@@ -1,7 +1,9 @@
 package me.proton.android.pass.data.impl.crypto
 
 import me.proton.android.pass.data.api.repositories.VaultItemKeyList
+import me.proton.android.pass.data.impl.error.KeyNotFound
 import me.proton.android.pass.data.impl.remote.VaultItemKeyResponseList
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
@@ -34,7 +36,12 @@ class OpenKeys @Inject constructor(
         val signingKeyPublicKey = signingKey.publicKey(cryptoContext)
         val convertedVaultKeys = keys.vaultKeys.map { vaultKey ->
             if (!validateKey(signingKeyPublicKey, vaultKey.key, vaultKey.keySignature)) {
-                throw Exception("Key signature did not match [VaultKey.RotationID=${vaultKey.rotationId}]")
+                PassLogger.i(
+                    TAG,
+                    "Error validating vaultKey [vaultKey.rotationId=${vaultKey.rotationId}]" +
+                        " [signingKey=${signingKey.keyId.id}]"
+                )
+                throw CryptoException("Key signature did not match [VaultKey.RotationID=${vaultKey.rotationId}]")
             }
             val passphrase = decryptVaultKeyPassphrase(vaultKey.keyPassphrase, userAddress)
             val isPrimary = vaultKey.rotationId == maxRotationId
@@ -48,12 +55,24 @@ class OpenKeys @Inject constructor(
 
         val convertedItemKeys = keys.itemKeys.map { itemKey ->
             if (!validateKey(signingKeyPublicKey, itemKey.key, itemKey.keySignature)) {
-                throw Exception("Key signature did not match [ItemKey.RotationID=${itemKey.rotationId}]")
+                PassLogger.i(
+                    TAG,
+                    "Error validating ItemKey [itemKey.rotationId=${itemKey.rotationId}] " +
+                        "[signingKey=${signingKey.keyId.id}]"
+                )
+                throw CryptoException("Key signature did not match [ItemKey.RotationID=${itemKey.rotationId}]")
             }
 
             val vaultKey = convertedVaultKeys.find {
                 it.rotationId == itemKey.rotationId
-            } ?: throw Exception("Cannot find VaultKey with RotationID=${itemKey.rotationId}")
+            }
+
+            if (vaultKey == null) {
+                val message = "Cannot find VaultKey [vaultKey.rotationId=${itemKey.rotationId}]"
+                PassLogger.i(TAG, message)
+                throw KeyNotFound(message)
+            }
+
             val passphrase = decryptItemKeyPassphrase(itemKey.keyPassphrase, vaultKey)
             val isPrimary = itemKey.rotationId == maxRotationId
             ItemKey(
@@ -66,7 +85,10 @@ class OpenKeys @Inject constructor(
         return VaultItemKeyList(convertedVaultKeys, convertedItemKeys)
     }
 
-    private fun decryptVaultKeyPassphrase(passphrase: String?, userAddress: UserAddress): EncryptedByteArray? =
+    private fun decryptVaultKeyPassphrase(
+        passphrase: String?,
+        userAddress: UserAddress
+    ): EncryptedByteArray? =
         passphrase?.let {
             userAddress.useKeys(cryptoContext) {
                 val decryptedPassphrase = decryptData(getArmored(getBase64Decoded(it)))
@@ -75,7 +97,10 @@ class OpenKeys @Inject constructor(
             }
         }
 
-    private fun decryptItemKeyPassphrase(passphrase: String?, vaultKey: VaultKey): EncryptedByteArray? =
+    private fun decryptItemKeyPassphrase(
+        passphrase: String?,
+        vaultKey: VaultKey
+    ): EncryptedByteArray? =
         passphrase?.let {
             vaultKey.usePrivateKey(cryptoContext) {
                 val decryptedPassphrase = decryptData(getArmored(getBase64Decoded(it)))
@@ -96,5 +121,9 @@ class OpenKeys @Inject constructor(
             signingKey.key,
             time = VerificationTime.Now
         )
+    }
+
+    companion object {
+        private const val TAG = "OpenKeys"
     }
 }

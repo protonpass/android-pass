@@ -76,7 +76,7 @@ class AliasDetailViewModel @Inject constructor(
             is Result.Success -> {
                 val alias = item.itemType as ItemType.Alias
                 modelState.update {
-                    encryptionContextProvider.withContext {
+                    encryptionContextProvider.withEncryptionContext {
                         AliasUiModel(
                             title = decrypt(item.title),
                             alias = alias.aliasEmail,

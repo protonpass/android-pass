@@ -129,10 +129,10 @@ class CreateLoginViewModel @Inject constructor(
         )
             .onSuccess { item ->
                 isItemSavedState.update {
-                    encryptionContextProvider.withContext {
+                    encryptionContextProvider.withEncryptionContext {
                         ItemSavedState.Success(
                             item.id,
-                            item.toUiModel(this@withContext)
+                            item.toUiModel(this@withEncryptionContext)
                         )
                     }
                 }

@@ -1,6 +1,6 @@
 package me.proton.android.pass.data.api.crypto
 
 interface EncryptionContextProvider {
-    fun <R> withContext(block: EncryptionContext.() -> R): R
-    suspend fun <R> withContextSuspendable(block: suspend EncryptionContext.() -> R): R
+    fun <R> withEncryptionContext(block: EncryptionContext.() -> R): R
+    suspend fun <R> withEncryptionContextSuspendable(block: suspend EncryptionContext.() -> R): R
 }

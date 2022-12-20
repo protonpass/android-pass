@@ -36,12 +36,15 @@ class OpenKeys @Inject constructor(
         val signingKeyPublicKey = signingKey.publicKey(cryptoContext)
         val convertedVaultKeys = keys.vaultKeys.map { vaultKey ->
             if (!validateKey(signingKeyPublicKey, vaultKey.key, vaultKey.keySignature)) {
-                PassLogger.i(
+                val e =
+                    CryptoException("Key signature did not match [VaultKey.RotationID=${vaultKey.rotationId}]")
+                PassLogger.e(
                     TAG,
+                    e,
                     "Error validating vaultKey [vaultKey.rotationId=${vaultKey.rotationId}]" +
                         " [signingKey=${signingKey.keyId.id}]"
                 )
-                throw CryptoException("Key signature did not match [VaultKey.RotationID=${vaultKey.rotationId}]")
+                throw e
             }
             val passphrase = decryptVaultKeyPassphrase(vaultKey.keyPassphrase, userAddress)
             val isPrimary = vaultKey.rotationId == maxRotationId
@@ -55,12 +58,15 @@ class OpenKeys @Inject constructor(
 
         val convertedItemKeys = keys.itemKeys.map { itemKey ->
             if (!validateKey(signingKeyPublicKey, itemKey.key, itemKey.keySignature)) {
-                PassLogger.i(
+                val e =
+                    CryptoException("Key signature did not match [ItemKey.RotationID=${itemKey.rotationId}]")
+                PassLogger.e(
                     TAG,
+                    e,
                     "Error validating ItemKey [itemKey.rotationId=${itemKey.rotationId}] " +
                         "[signingKey=${signingKey.keyId.id}]"
                 )
-                throw CryptoException("Key signature did not match [ItemKey.RotationID=${itemKey.rotationId}]")
+                throw e
             }
 
             val vaultKey = convertedVaultKeys.find {
@@ -68,9 +74,13 @@ class OpenKeys @Inject constructor(
             }
 
             if (vaultKey == null) {
-                val message = "Cannot find VaultKey [vaultKey.rotationId=${itemKey.rotationId}]"
-                PassLogger.i(TAG, message)
-                throw KeyNotFound(message)
+                val e = KeyNotFound("Cannot find VaultKey")
+                PassLogger.e(
+                    TAG,
+                    e,
+                    "Cannot find VaultKey [vaultKey.rotationId=${itemKey.rotationId}]"
+                )
+                throw e
             }
 
             val passphrase = decryptItemKeyPassphrase(itemKey.keyPassphrase, vaultKey)

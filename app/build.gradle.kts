@@ -91,7 +91,13 @@ android {
         release {
             isDebuggable = false
             isTestCoverageEnabled = false
-            isMinifyEnabled = false
+            postprocessing {
+                isObfuscate = false
+                isOptimizeCode = true
+                isRemoveUnusedCode = true
+                isRemoveUnusedResources = true
+                file("proguard").listFiles()?.forEach { proguardFile(it) }
+            }
             signingConfig = signingConfigs["release"]
         }
     }

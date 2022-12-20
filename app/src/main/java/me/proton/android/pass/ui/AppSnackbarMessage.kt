@@ -9,6 +9,7 @@ enum class AppSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType
 ) : SnackbarMessage {
-    CouldNotRefreshItems(R.string.snackbar_could_not_refresh_items, SnackbarType.ERROR)
+    CouldNotRefreshItems(R.string.snackbar_could_not_refresh_items, SnackbarType.ERROR),
+    ErrorDuringStartup(R.string.snackbar_error_during_startup, SnackbarType.ERROR)
 }
 

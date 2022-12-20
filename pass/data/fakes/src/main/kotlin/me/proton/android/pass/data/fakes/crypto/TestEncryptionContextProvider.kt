@@ -5,8 +5,8 @@ import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 
 object TestEncryptionContextProvider : EncryptionContextProvider {
 
-    override fun <R> withContext(block: EncryptionContext.() -> R): R = block(TestEncryptionContext)
+    override fun <R> withEncryptionContext(block: EncryptionContext.() -> R): R = block(TestEncryptionContext)
 
-    override suspend fun <R> withContextSuspendable(block: suspend EncryptionContext.() -> R): R =
+    override suspend fun <R> withEncryptionContextSuspendable(block: suspend EncryptionContext.() -> R): R =
         block(TestEncryptionContext)
 }

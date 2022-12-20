@@ -79,7 +79,7 @@ class UpdateLoginViewModel @Inject constructor(
                         _item = item
 
                         loginItemState.update {
-                            encryptionContextProvider.withContext {
+                            encryptionContextProvider.withEncryptionContext {
                                 LoginItem(
                                     title = decrypt(item.title),
                                     username = itemContents.username,
@@ -164,10 +164,10 @@ class UpdateLoginViewModel @Inject constructor(
         updateItem(userId, shareId, currentItem, loginItem.toItemContents())
             .onSuccess { item ->
                 isItemSavedState.update {
-                    encryptionContextProvider.withContext {
+                    encryptionContextProvider.withEncryptionContext {
                         ItemSavedState.Success(
                             item.id,
-                            item.toUiModel(this@withContext)
+                            item.toUiModel(this@withEncryptionContext)
                         )
                     }
                 }

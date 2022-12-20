@@ -38,8 +38,8 @@ class NoteDetailViewModel @Inject constructor(
     }
 
     fun onCopyToClipboard() = viewModelScope.launch {
-        val decrypted = encryptionContextProvider.withContext {
-            val note = itemFlow.value?.note ?: return@withContext ""
+        val decrypted = encryptionContextProvider.withEncryptionContext {
+            val note = itemFlow.value?.note ?: return@withEncryptionContext ""
             decrypt(note)
         }
         clipboardManager.copyToClipboard(decrypted)
@@ -49,7 +49,7 @@ class NoteDetailViewModel @Inject constructor(
     private fun getUiModel(item: Item?): NoteDetailUiState {
         if (item == null) return NoteDetailUiState.Initial
 
-        return encryptionContextProvider.withContext {
+        return encryptionContextProvider.withEncryptionContext {
             NoteDetailUiState(
                 title = decrypt(item.title),
                 note = decrypt(item.note)

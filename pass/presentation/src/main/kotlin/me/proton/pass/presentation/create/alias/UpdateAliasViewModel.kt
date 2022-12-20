@@ -165,7 +165,7 @@ class UpdateAliasViewModel @Inject constructor(
                 }
 
                 aliasItemState.update {
-                    encryptionContextProvider.withContext {
+                    encryptionContextProvider.withEncryptionContext {
                         it.copy(
                             title = decrypt(item.title),
                             note = decrypt(item.note),

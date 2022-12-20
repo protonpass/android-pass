@@ -81,8 +81,8 @@ class AutofillAppViewModel @Inject constructor(
     }
 
     fun onItemCreated(state: AutofillAppState, item: ItemUiModel) = viewModelScope.launch {
-        encryptionContextProvider.withContext {
-            onAutofillItemClicked(state, item.toAutoFillItem(this@withContext))
+        encryptionContextProvider.withEncryptionContext {
+            onAutofillItemClicked(state, item.toAutoFillItem(this@withEncryptionContext))
         }
     }
 

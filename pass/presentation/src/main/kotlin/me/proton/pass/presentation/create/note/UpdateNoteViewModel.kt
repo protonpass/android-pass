@@ -56,7 +56,7 @@ class UpdateNoteViewModel @Inject constructor(
                     .onSuccess { item: Item ->
                         _item = item
                         noteItemState.update {
-                            encryptionContextProvider.withContext {
+                            encryptionContextProvider.withEncryptionContext {
                                 NoteItem(
                                     title = decrypt(item.title),
                                     note = decrypt(item.note)
@@ -91,10 +91,10 @@ class UpdateNoteViewModel @Inject constructor(
                     itemRepository.updateItem(userId, share, _item!!, itemContents)
                         .onSuccess { item ->
                             isItemSavedState.update {
-                                encryptionContextProvider.withContext {
+                                encryptionContextProvider.withEncryptionContext {
                                     ItemSavedState.Success(
                                         item.id,
-                                        item.toUiModel(this@withContext)
+                                        item.toUiModel(this@withEncryptionContext)
                                     )
                                 }
                             }

@@ -2,7 +2,10 @@ package me.proton.android.pass.data.impl.crypto
 
 import me.proton.android.pass.data.impl.db.entities.ShareEntity
 import me.proton.android.pass.data.impl.error.InvalidAddressSignature
+import me.proton.android.pass.data.impl.error.InvalidSignature
+import me.proton.android.pass.data.impl.error.KeyNotFound
 import me.proton.android.pass.data.impl.responses.ShareResponse
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
@@ -56,7 +59,13 @@ class OpenShare @Inject constructor(
             targetId = response.targetId,
             permission = SharePermission(response.permission),
             vaultId = VaultId(response.vaultId),
-            signingKey = SigningKey(readSigningKey(response.signingKey, response.signingKeyPassphrase, userAddress)),
+            signingKey = SigningKey(
+                readSigningKey(
+                    response.signingKey,
+                    response.signingKeyPassphrase,
+                    userAddress
+                )
+            ),
             content = content,
             nameKeyId = response.contentRotationId,
             expirationTime = response.expirationTime?.let { Date(it) },
@@ -116,7 +125,12 @@ class OpenShare @Inject constructor(
         inviterKeys: List<PublicKey>,
         vaultKeys: List<VaultKey>
     ): Share {
-        val shareType = requireNotNull(ShareType.map[entity.targetType])
+        val shareType = ShareType.map[entity.targetType]
+        if (shareType == null) {
+            PassLogger.i(TAG, "Unknown ShareType [shareType=${entity.targetType}]")
+            throw CryptoException("Unknown ShareType")
+        }
+
         verifyAcceptanceSignature(
             entity.acceptanceSignature,
             entity.inviterAcceptanceSignature,
@@ -205,7 +219,16 @@ class OpenShare @Inject constructor(
         // Obtain the vault key
         val vaultKey = vaultKeys.find {
             it.rotationId == contentRotationId
-        } ?: throw CryptoException("VaultKey not found")
+        }
+
+        if (vaultKey == null) {
+            PassLogger.i(
+                TAG,
+                "VaultKey not found when opening share [shareId=${response.shareId}]" +
+                    "[vaultKey.contentRotationId=${response.contentRotationId}]"
+            )
+            throw KeyNotFound("VaultKey not found")
+        }
 
         // Decrypt the signatures
         val decryptWithVaultKey = { data: String ->
@@ -219,12 +242,14 @@ class OpenShare @Inject constructor(
         val decryptedContent = decryptWithVaultKey(content)
 
         // Verify address signature
-        val armoredAddressSignature = cryptoContext.pgpCrypto.getArmored(addressSignature, PGPHeader.Signature)
+        val armoredAddressSignature =
+            cryptoContext.pgpCrypto.getArmored(addressSignature, PGPHeader.Signature)
         val addressSignatureValid = contentSignatureKeys.any {
             cryptoContext.pgpCrypto.verifyData(decryptedContent, armoredAddressSignature, it.key)
         }
 
         if (!addressSignatureValid) {
+            PassLogger.i(TAG, "Address signature not valid [shareId=${response.shareId}]")
             throw InvalidAddressSignature()
         }
 
@@ -236,7 +261,8 @@ class OpenShare @Inject constructor(
             publicKey = vaultKey.publicKey(cryptoContext).key
         )
         if (!vaultSignatureValid) {
-            throw CryptoException("Vault signature is not valid")
+            PassLogger.i(TAG, "Vault signature is not valid [shareId=${response.shareId}]")
+            throw InvalidSignature("Vault signature is not valid")
         }
     }
 
@@ -255,8 +281,13 @@ class OpenShare @Inject constructor(
                 getBase64Decoded(acceptanceSignature),
                 PGPHeader.Signature
             )
-            val verified = verifyData(signingKeyFingerprint.encodeToByteArray(), armoredAcceptanceSignature)
-            require(verified)
+            val verified =
+                verifyData(signingKeyFingerprint.encodeToByteArray(), armoredAcceptanceSignature)
+            if (!verified) {
+                val e = InvalidSignature("Acceptance signature")
+                PassLogger.i(TAG, e, "Acceptance signature failed to verify")
+                throw e
+            }
 
             // Check inviter acceptance signature
             val publicKeyRing = PublicKeyRing(inviterKeys)
@@ -267,7 +298,10 @@ class OpenShare @Inject constructor(
                 signingKeyFingerprint.encodeToByteArray(),
                 armoredInviterAcceptanceSignature
             )
-            if (!inviterVerified) throw InvalidAddressSignature()
+            if (!inviterVerified) {
+                PassLogger.i(TAG, "Share inviterAcceptanceSignature failed to verify")
+                throw InvalidAddressSignature()
+            }
         }
     }
 
@@ -298,5 +332,9 @@ class OpenShare @Inject constructor(
         )
 
         return ArmoredKey.Private(signingKey, signingKeyPrivateKey)
+    }
+
+    companion object {
+        private const val TAG = "OpenShare"
     }
 }

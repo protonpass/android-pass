@@ -91,6 +91,7 @@ class ItemRepositoryImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun createItem(
         userId: UserId,
         share: Share,
@@ -105,7 +106,13 @@ class ItemRepositoryImpl @Inject constructor(
             is Result.Success -> Unit
         }
         val (vaultKey, itemKey) = result.data
-        val body = createItem.create(vaultKey, itemKey, userAddress, contents, packageName)
+
+        val body = try {
+            createItem.create(vaultKey, itemKey, userAddress, contents, packageName)
+        } catch (e: RuntimeException) {
+            PassLogger.e(TAG, e, "Error creating item")
+            return@withUserAddress Result.Error(e)
+        }
 
         remoteItemDataSource.createItem(userId, share.id, body)
             .map { itemResponse ->
@@ -246,7 +253,6 @@ class ItemRepositoryImpl @Inject constructor(
             }
     }
 
-    @Suppress("SwallowedException")
     override suspend fun untrashItem(
         userId: UserId,
         shareId: ShareId,

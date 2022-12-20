@@ -94,4 +94,8 @@ dependencies {
     androidTestImplementation(libs.androidx.test.rules)
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.kotlinTest)
+    androidTestImplementation(libs.core.test.android.instrumented) {
+        // Exclude protobuf, as it would clash with our protobuf library
+        exclude("com.google.protobuf")
+    }
 }

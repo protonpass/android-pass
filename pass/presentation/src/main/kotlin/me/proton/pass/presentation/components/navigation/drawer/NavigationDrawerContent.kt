@@ -16,7 +16,7 @@ import me.proton.pass.presentation.components.navigation.CoreNavigation
 fun NavigationDrawerContent(
     modifier: Modifier = Modifier,
     drawerUiState: DrawerUiState,
-    accountPrimaryState: AccountPrimaryState = rememberAccountPrimaryState(),
+    accountPrimaryState: AccountPrimaryState = rememberAccountPrimaryState(false),
     navDrawerNavigation: NavDrawerNavigation,
     coreNavigation: CoreNavigation,
     onSignOutClick: () -> Unit = {},

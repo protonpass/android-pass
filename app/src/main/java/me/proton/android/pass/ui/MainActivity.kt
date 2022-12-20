@@ -32,7 +32,8 @@ class MainActivity : FragmentActivity() {
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         setupSecureMode()
-        installSplashScreen()
+        val splashScreen = installSplashScreen()
+
         super.onCreate(savedInstanceState)
 
         WindowCompat.setDecorFitsSystemWindows(window, true)
@@ -42,6 +43,10 @@ class MainActivity : FragmentActivity() {
 
         setContent {
             val state by launcherViewModel.state.collectAsStateWithLifecycle()
+            splashScreen.setKeepOnScreenCondition {
+                state == Processing || state == StepNeeded
+            }
+
             when (state) {
                 AccountNeeded -> {
                     disableAutofill()

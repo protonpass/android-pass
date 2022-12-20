@@ -25,10 +25,11 @@ class EncryptionContextImplTest {
         val encrypted = context.encrypt(content)
         val decrypted = context.decrypt(encrypted)
 
-        assertEquals(content, decrypted)
+        assertEquals(decrypted.size, content.size)
+        content.indices.forEach { idx ->
+            assertEquals(decrypted[idx], content[idx])
+        }
     }
-
-
 
     fun provideKey(): EncryptionKey =
         EncryptionKey(ByteArray(32, init = { 0xab.toByte() }))

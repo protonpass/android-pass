@@ -15,12 +15,12 @@ data class AppUiState(
     val theme: ThemePreference
 ) {
     companion object {
-        val Initial = AppUiState(
+        fun Initial(theme: ThemePreference) = AppUiState(
             snackbarMessage = None,
             drawerUiState = DrawerUiState(
                 appNameResId = R.string.app_name
             ),
-            theme = ThemePreference.System
+            theme = theme
         )
     }
 }

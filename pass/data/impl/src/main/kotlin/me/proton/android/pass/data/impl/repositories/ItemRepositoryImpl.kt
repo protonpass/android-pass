@@ -1,11 +1,13 @@
 package me.proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.api.PendingEventList
 import me.proton.android.pass.data.api.crypto.EncryptionContext
@@ -55,6 +57,7 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.asResult
+import me.proton.pass.common.api.flatMap
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.transpose
 import me.proton.pass.domain.Item
@@ -701,76 +704,110 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share
     ): Result<List<Item>> =
         remoteItemDataSource.getItems(userAddress.userId, share.id)
-            .map { items ->
-                val userKeys = items
-                    .map { it.signatureEmail }
-                    .distinct()
-                    .associateWith {
-                        val publicAddress =
-                            keyRepository.getPublicAddress(
-                                userAddress.userId,
-                                it,
-                                source = Source.LocalIfAvailable
-                            )
-                        publicAddress.keys.publicKeyRing().keys
-                    }
-                return decryptItems(userAddress, share, items, userKeys)
+            .flatMap { items ->
+                decryptItems(userAddress, share, items)
             }
 
     private suspend fun decryptItems(
         userAddress: UserAddress,
         share: Share,
-        items: List<ItemRevision>,
-        userKeys: Map<String, List<PublicKey>>
-    ): Result<List<Item>> =
-        encryptionContextProvider.withContextSuspendable {
-            items.map { item -> decryptItem(this, userAddress, share, item, userKeys) }
-        }.transpose()
+        items: List<ItemRevision>
+    ): Result<List<Item>> {
+        val userEmails = items
+            .map { it.signatureEmail }
+            .distinct()
+        val userKeys = getUserKeys(userAddress.userId, userEmails)
+
+        val (vaultKeys, itemKeys) = when (val res = getVaultKeysItemKeys(userAddress, share, items)) {
+            Result.Loading -> return Result.Loading
+            is Result.Error -> return res
+            is Result.Success -> res.data
+        }
+
+        return encryptionContextProvider.withContextSuspendable {
+            val encryptionContext = this@withContextSuspendable
+            withContext(Dispatchers.IO) {
+                items.map { item ->
+                    async {
+                        decryptItem(
+                            encryptionContext = encryptionContext,
+                            userAddress = userAddress,
+                            share = share,
+                            item = item,
+                            vaultKeys = vaultKeys,
+                            itemKeys = itemKeys,
+                            userKeys = userKeys
+                        )
+                    }
+                }.awaitAll().transpose()
+            }
+        }.map { itemsEntities ->
+            val entities = itemsEntities.map { it.second }
+            localItemDataSource.upsertItems(entities)
+
+            itemsEntities.map { it.first }
+        }
+    }
 
     @Suppress("ReturnCount")
-    private suspend fun decryptItem(
-        ctx: EncryptionContext,
+    private suspend fun getVaultKeysItemKeys(
+        userAddress: UserAddress,
+        share: Share,
+        items: List<ItemRevision>
+    ): Result<Pair<Map<String, VaultKey>, Map<String, ItemKey>>> {
+        val rotations = items.map { it.rotationId }.distinct()
+        val vaultKeys = rotations.associateWith { rotation ->
+            val vaultKeyResult: Result<VaultKey> = vaultKeyRepository.getVaultKeyById(
+                userAddress,
+                share.id,
+                share.signingKey,
+                rotation
+            )
+            when (vaultKeyResult) {
+                is Result.Error -> return Result.Error(vaultKeyResult.exception)
+                Result.Loading -> return Result.Loading
+                is Result.Success -> vaultKeyResult.data
+            }
+        }
+        val itemKeys = rotations.associateWith { rotation ->
+            val itemKeyResult: Result<ItemKey> = vaultKeyRepository.getItemKeyById(
+                userAddress,
+                share.id,
+                share.signingKey,
+                rotation
+            )
+            when (itemKeyResult) {
+                is Result.Error -> return Result.Error(itemKeyResult.exception)
+                Result.Loading -> return Result.Loading
+                is Result.Success -> itemKeyResult.data
+            }
+        }
+
+        return Result.Success(vaultKeys to itemKeys)
+    }
+
+    private fun decryptItem(
+        encryptionContext: EncryptionContext,
         userAddress: UserAddress,
         share: Share,
         item: ItemRevision,
+        vaultKeys: Map<String, VaultKey>,
+        itemKeys: Map<String, ItemKey>,
         userKeys: Map<String, List<PublicKey>>
-    ): Result<Item> {
+    ): Result<Pair<Item, ItemEntity>> {
         val verifyKeys = requireNotNull(userKeys[item.signatureEmail])
-        val vaultKeyResult: Result<VaultKey> = vaultKeyRepository
-            .getVaultKeyById(
-                userAddress,
-                share.id,
-                share.signingKey,
-                item.rotationId
-            )
-        when (vaultKeyResult) {
-            is Result.Error -> return Result.Error(vaultKeyResult.exception)
-            Result.Loading -> return Result.Loading
-            is Result.Success -> Unit
-        }
-        val itemKeyResult: Result<ItemKey> = vaultKeyRepository
-            .getItemKeyById(
-                userAddress,
-                share.id,
-                share.signingKey,
-                item.rotationId
-            )
-        when (itemKeyResult) {
-            is Result.Error -> return Result.Error(itemKeyResult.exception)
-            Result.Loading -> return Result.Loading
-            is Result.Success -> Unit
-        }
-        val entity =
-            itemResponseToEntity(
-                userAddress,
-                item,
-                share,
-                verifyKeys,
-                listOf(vaultKeyResult.data),
-                listOf(itemKeyResult.data)
-            )
-        localItemDataSource.upsertItem(entity)
-        return Result.Success(entityToDomain(ctx, entity))
+        val vaultKey = requireNotNull(vaultKeys[item.rotationId])
+        val itemKey = requireNotNull(itemKeys[item.rotationId])
+
+        val entity = itemResponseToEntity(
+            userAddress = userAddress,
+            itemRevision = item,
+            share = share,
+            verifyKeys = verifyKeys,
+            vaultKeys = listOf(vaultKey),
+            itemKeys = listOf(itemKey)
+        )
+        return Result.Success(entityToDomain(encryptionContext, entity) to entity)
     }
 
     private fun itemResponseToEntity(

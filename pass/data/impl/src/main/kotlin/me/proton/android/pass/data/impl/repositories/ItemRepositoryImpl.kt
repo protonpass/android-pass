@@ -130,8 +130,8 @@ class ItemRepositoryImpl @Inject constructor(
                 )
                 localItemDataSource.upsertItem(entity)
 
-                encryptionContextProvider.withContext {
-                    entityToDomain(this@withContext, entity)
+                encryptionContextProvider.withEncryptionContext {
+                    entityToDomain(this@withEncryptionContext, entity)
                 }
             }
     }
@@ -172,8 +172,8 @@ class ItemRepositoryImpl @Inject constructor(
                     listOf(itemKey)
                 )
                 localItemDataSource.upsertItem(entity)
-                encryptionContextProvider.withContext {
-                    entityToDomain(this@withContext, entity)
+                encryptionContextProvider.withEncryptionContext {
+                    entityToDomain(this@withEncryptionContext, entity)
                 }
             }
     }
@@ -219,8 +219,8 @@ class ItemRepositoryImpl @Inject constructor(
                 val userAddress =
                     requireNotNull(userAddressRepository.getAddresses(userId).primary())
                 refreshItemsIfNeeded(userAddress, shareSelection)
-                encryptionContextProvider.withContext {
-                    items.map { entityToDomain(this@withContext, it) }
+                encryptionContextProvider.withEncryptionContext {
+                    items.map { entityToDomain(this@withEncryptionContext, it) }
                 }
             }
             .asResult()
@@ -228,8 +228,8 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Item> {
         val item = localItemDataSource.getById(shareId, itemId)
         requireNotNull(item)
-        return encryptionContextProvider.withContext {
-            Result.Success(entityToDomain(this@withContext, item))
+        return encryptionContextProvider.withEncryptionContext {
+            Result.Success(entityToDomain(this@withEncryptionContext, item))
         }
     }
 
@@ -385,8 +385,8 @@ class ItemRepositoryImpl @Inject constructor(
     ): Result<Item> {
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
 
-        val (item, itemProto) = encryptionContextProvider.withContext {
-            val item = entityToDomain(this@withContext, itemEntity)
+        val (item, itemProto) = encryptionContextProvider.withEncryptionContext {
+            val item = entityToDomain(this@withEncryptionContext, itemEntity)
             val itemContents = decrypt(item.content)
             item to ItemV1.Item.parseFrom(itemContents)
         }
@@ -656,8 +656,8 @@ class ItemRepositoryImpl @Inject constructor(
                         listOf(itemKeyResult.data)
                     )
                     localItemDataSource.upsertItem(entity)
-                    encryptionContextProvider.withContext {
-                        entityToDomain(this@withContext, entity)
+                    encryptionContextProvider.withEncryptionContext {
+                        entityToDomain(this@withEncryptionContext, entity)
                     }
                 }
         }
@@ -724,8 +724,8 @@ class ItemRepositoryImpl @Inject constructor(
             is Result.Success -> res.data
         }
 
-        return encryptionContextProvider.withContextSuspendable {
-            val encryptionContext = this@withContextSuspendable
+        return encryptionContextProvider.withEncryptionContextSuspendable {
+            val encryptionContext = this@withEncryptionContextSuspendable
             withContext(Dispatchers.Default) {
                 items.map { item ->
                     async {

@@ -82,8 +82,8 @@ class SelectItemViewModel @Inject constructor(
         observeActiveItems(filter = ItemTypeFilter.Logins)
             .map { itemResult ->
                 itemResult.map { list ->
-                    encryptionContextProvider.withContext {
-                        list.map { it.toUiModel(this@withContext) }
+                    encryptionContextProvider.withEncryptionContext {
+                        list.map { it.toUiModel(this@withEncryptionContext) }
                     }
                 }
             }
@@ -104,8 +104,8 @@ class SelectItemViewModel @Inject constructor(
         }
         .map { itemResult ->
             itemResult.map { list ->
-                encryptionContextProvider.withContext {
-                    list.map { it.toUiModel(this@withContext) }
+                encryptionContextProvider.withEncryptionContext {
+                    list.map { it.toUiModel(this@withEncryptionContext) }
                 }
             }
         }
@@ -203,9 +203,9 @@ class SelectItemViewModel @Inject constructor(
             )
         }
 
-        encryptionContextProvider.withContext {
+        encryptionContextProvider.withEncryptionContext {
             itemClickedFlow.update {
-                ItemClickedEvent.Clicked(item.toAutoFillItem(this@withContext))
+                ItemClickedEvent.Clicked(item.toAutoFillItem(this@withEncryptionContext))
             }
         }
 

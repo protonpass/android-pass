@@ -25,10 +25,10 @@ class ProtonPassAutofillService : AutofillService() {
         cancellationSignal: CancellationSignal,
         callback: FillCallback
     ) {
-        encryptionContextProvider.withContext {
+        encryptionContextProvider.withEncryptionContext {
             AutoFillHandler.handleAutofill(
                 context = this@ProtonPassAutofillService,
-                encryptionContext = this@withContext,
+                encryptionContext = this@withEncryptionContext,
                 request = request,
                 callback = callback,
                 cancellationSignal = cancellationSignal,

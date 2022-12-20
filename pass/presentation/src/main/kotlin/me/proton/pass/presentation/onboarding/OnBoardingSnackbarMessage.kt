@@ -7,7 +7,8 @@ import me.proton.pass.presentation.R
 
 enum class OnBoardingSnackbarMessage(
     @StringRes override val id: Int,
-    override val type: SnackbarType
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     BiometryFailedToStartError(R.string.error_biometry_failed_to_start, SnackbarType.ERROR),
     BiometryFailedToAuthenticateError(R.string.error_biometry_failed_to_authenticate, SnackbarType.ERROR),

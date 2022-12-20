@@ -7,14 +7,15 @@ import me.proton.pass.presentation.R
 
 enum class DetailSnackbarMessages(
     @StringRes override val id: Int,
-    override val type: SnackbarType
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     InitError(R.string.detail_init_error, SnackbarType.ERROR),
     SendToTrashError(R.string.detail_send_to_trash_error, SnackbarType.ERROR),
     ItemNotLoadedError(R.string.detail_item_not_loaded_error, SnackbarType.ERROR),
-    AliasCopiedToClipboard(R.string.alias_copied_to_clipboard, SnackbarType.NORM),
-    NoteCopiedToClipboard(R.string.note_copied_to_clipboard, SnackbarType.NORM),
-    UsernameCopiedToClipboard(R.string.username_copied_to_clipboard, SnackbarType.NORM),
-    PasswordCopiedToClipboard(R.string.password_copied_to_clipboard, SnackbarType.NORM),
-    WebsiteCopiedToClipbopard(R.string.website_copied_to_clipboard, SnackbarType.NORM)
+    AliasCopiedToClipboard(R.string.alias_copied_to_clipboard, SnackbarType.NORM, true),
+    NoteCopiedToClipboard(R.string.note_copied_to_clipboard, SnackbarType.NORM, true),
+    UsernameCopiedToClipboard(R.string.username_copied_to_clipboard, SnackbarType.NORM, true),
+    PasswordCopiedToClipboard(R.string.password_copied_to_clipboard, SnackbarType.NORM, true),
+    WebsiteCopiedToClipbopard(R.string.website_copied_to_clipboard, SnackbarType.NORM, true)
 }

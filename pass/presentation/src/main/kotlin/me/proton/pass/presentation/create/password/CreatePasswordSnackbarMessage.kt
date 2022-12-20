@@ -7,7 +7,8 @@ import me.proton.pass.presentation.R
 
 enum class CreatePasswordSnackbarMessage(
     @StringRes override val id: Int,
-    override val type: SnackbarType
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     CopiedToClipboard(R.string.password_copied_to_clipboard, SnackbarType.NORM)
 }

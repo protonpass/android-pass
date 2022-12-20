@@ -7,7 +7,8 @@ import me.proton.pass.presentation.R
 
 enum class NoteSnackbarMessage(
     @StringRes override val id: Int,
-    override val type: SnackbarType
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     EmptyShareIdError(R.string.create_note_empty_share_id, SnackbarType.ERROR),
     InitError(R.string.create_note_init_error, SnackbarType.ERROR),

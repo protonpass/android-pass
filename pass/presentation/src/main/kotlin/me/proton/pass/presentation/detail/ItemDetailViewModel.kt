@@ -72,7 +72,7 @@ class ItemDetailViewModel @Inject constructor(
                 itemRepository.getById(userId, shareId.value, itemId.value)
                     .onSuccess { item ->
                         itemModelState.update {
-                            encryptionContextProvider.withContext {
+                            encryptionContextProvider.withEncryptionContext {
                                 ItemModelUiState(
                                     name = decrypt(item.title),
                                     item = item

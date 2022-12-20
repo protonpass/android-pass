@@ -55,7 +55,7 @@ class LoginDetailViewModel @Inject constructor(
             val text = when (val password = passwordState.value) {
                 is PasswordState.Revealed -> password.clearText
                 is PasswordState.Concealed -> {
-                    encryptionContextProvider.withContext {
+                    encryptionContextProvider.withEncryptionContext {
                         decrypt(itemType.password)
                     }
                 }
@@ -84,7 +84,7 @@ class LoginDetailViewModel @Inject constructor(
 
         when (passwordState.value) {
             is PasswordState.Concealed -> {
-                encryptionContextProvider.withContext {
+                encryptionContextProvider.withEncryptionContext {
                     passwordState.value = PasswordState.Revealed(
                         encrypted = itemType.password,
                         clearText = decrypt(itemType.password)
@@ -101,7 +101,7 @@ class LoginDetailViewModel @Inject constructor(
         if (item == null) return getInitialState()
 
         val itemContents = item.itemType as ItemType.Login
-        return encryptionContextProvider.withContext {
+        return encryptionContextProvider.withEncryptionContext {
             LoginUiModel(
                 title = decrypt(item.title),
                 username = itemContents.username,
@@ -122,7 +122,7 @@ class LoginDetailViewModel @Inject constructor(
         )
 
     private fun getInitialPasswordState(): PasswordState =
-        encryptionContextProvider.withContext {
+        encryptionContextProvider.withEncryptionContext {
             PasswordState.Concealed(encrypt(""))
         }
 

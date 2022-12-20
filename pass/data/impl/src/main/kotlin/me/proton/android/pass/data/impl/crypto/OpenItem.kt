@@ -117,7 +117,7 @@ class OpenItemImpl @Inject constructor(
         }
 
         val decoded = ItemV1.Item.parseFrom(decryptedContents)
-        return encryptionContextProvider.withContext {
+        return encryptionContextProvider.withEncryptionContext {
             Item(
                 id = ItemId(response.itemId),
                 revision = response.revision,

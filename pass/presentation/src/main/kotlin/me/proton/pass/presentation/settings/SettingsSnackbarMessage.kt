@@ -7,7 +7,8 @@ import me.proton.pass.presentation.R
 
 enum class SettingsSnackbarMessage(
     @StringRes override val id: Int,
-    override val type: SnackbarType
+    override val type: SnackbarType,
+    override val isClipboard: Boolean = false
 ) : SnackbarMessage {
     BiometryFailedToStartError(R.string.error_biometry_failed_to_start, SnackbarType.ERROR),
     BiometryFailedToAuthenticateError(R.string.error_biometry_failed_to_authenticate, SnackbarType.ERROR),
@@ -16,5 +17,5 @@ enum class SettingsSnackbarMessage(
     ErrorPerformingOperation(R.string.error_performing_operation, SnackbarType.ERROR),
     ErrorPerformingSync(R.string.settings_force_sync_error, SnackbarType.ERROR),
     SyncSuccessful(R.string.settings_force_sync_success, SnackbarType.SUCCESS),
-    AppVersionCopied(R.string.settings_app_version_copied_to_clipboard, SnackbarType.SUCCESS)
+    AppVersionCopied(R.string.settings_app_version_copied_to_clipboard, SnackbarType.SUCCESS, true)
 }

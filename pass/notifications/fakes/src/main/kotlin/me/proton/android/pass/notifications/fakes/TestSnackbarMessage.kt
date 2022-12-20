@@ -8,5 +8,7 @@ class TestSnackbarMessage : SnackbarMessage {
         get() = 1
     override val type: SnackbarType
         get() = SnackbarType.SUCCESS
+    override val isClipboard: Boolean
+        get() = false
 
 }

@@ -37,11 +37,12 @@ class LoggerInitializer : Initializer<Unit> {
             LoggerInitializerEntryPoint::class.java
         )
 
-        val tree = if (BuildConfig.DEBUG) Timber.DebugTree() else null // SentryTree()
+        // Temporarily add always DebugTree to gather logs from alpha
+        val tree = Timber.DebugTree() // SentryTree()
         val handler = entryPoint.handler()
         handler.onDeviceSettingsChanged {
             if (it.isCrashReportEnabled) {
-                tree?.let { tree -> Timber.plant(tree) }
+                tree.let { tree -> Timber.plant(tree) }
             } else {
                 Timber.uprootAll()
             }

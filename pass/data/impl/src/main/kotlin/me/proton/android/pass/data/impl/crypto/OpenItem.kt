@@ -1,8 +1,11 @@
 package me.proton.android.pass.data.impl.crypto
 
 import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
+import me.proton.android.pass.data.impl.error.InvalidSignature
+import me.proton.android.pass.data.impl.error.KeyNotFound
 import me.proton.android.pass.data.impl.extensions.fromParsed
 import me.proton.android.pass.data.impl.responses.ItemRevision
+import me.proton.android.pass.log.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.key.domain.decryptData
@@ -48,7 +51,13 @@ class OpenItemImpl @Inject constructor(
         itemKeys: List<ItemKey>
     ): Item {
         return when (share.shareType) {
-            ShareType.Vault -> openItemWithVaultShare(response, share.id, verifyKeys, vaultKeys, itemKeys)
+            ShareType.Vault -> openItemWithVaultShare(
+                response,
+                share.id,
+                verifyKeys,
+                vaultKeys,
+                itemKeys
+            )
             else -> throw Exception("Not implemented yet")
         }
     }
@@ -60,8 +69,7 @@ class OpenItemImpl @Inject constructor(
         vaultKeys: List<VaultKey>,
         itemKeys: List<ItemKey>
     ): Item {
-        val vaultKey = requireNotNull(vaultKeys.first { it.rotationId == response.rotationId })
-        val itemKey = requireNotNull(itemKeys.first { it.rotationId == response.rotationId })
+        val (vaultKey, itemKey) = getKeys(response, vaultKeys, itemKeys)
 
         val (decryptedContents, decryptedUserSignature, decryptedItemSignature) =
             vaultKey.usePrivateKey(cryptoContext) {
@@ -73,12 +81,21 @@ class OpenItemImpl @Inject constructor(
                 Triple(decryptedContents, decryptedUserSignature, decryptedItemSignature)
             }
 
-        val armoredUserSignature = cryptoContext.pgpCrypto.getArmored(decryptedUserSignature, PGPHeader.Signature)
-        val armoredItemSignature = cryptoContext.pgpCrypto.getArmored(decryptedItemSignature, PGPHeader.Signature)
+        val armoredUserSignature =
+            cryptoContext.pgpCrypto.getArmored(decryptedUserSignature, PGPHeader.Signature)
+        val armoredItemSignature =
+            cryptoContext.pgpCrypto.getArmored(decryptedItemSignature, PGPHeader.Signature)
 
         val publicKeyRing = PublicKeyRing(verifyKeys)
-        val isUserSignatureValid = publicKeyRing.verifyData(cryptoContext, decryptedContents, armoredUserSignature)
-        require(isUserSignatureValid)
+        val isUserSignatureValid =
+            publicKeyRing.verifyData(cryptoContext, decryptedContents, armoredUserSignature)
+        if (!isUserSignatureValid) {
+            PassLogger.i(
+                TAG,
+                "User signature for item not valid [shareId=${shareId.id}] [itemId=${response.itemId}]"
+            )
+            throw InvalidSignature("User signature for item")
+        }
 
         val itemPublicKey = itemKey.publicKey(cryptoContext)
         val isItemSignatureValid = cryptoContext.pgpCrypto.verifyData(
@@ -86,7 +103,14 @@ class OpenItemImpl @Inject constructor(
             armoredItemSignature,
             itemPublicKey.key
         )
-        require(isItemSignatureValid)
+        if (!isItemSignatureValid) {
+            PassLogger.i(
+                TAG,
+                "Item signature with itemKey not valid [shareId=${shareId.id}]" +
+                    "[itemId=${response.itemId}] [rotationId=${response.rotationId}]"
+            )
+            throw InvalidSignature("ItemKey signature for item")
+        }
 
         val decoded = ItemV1.Item.parseFrom(decryptedContents)
         return encryptionContextProvider.withContext {
@@ -102,5 +126,35 @@ class OpenItemImpl @Inject constructor(
                     .map { it.packageName }
             )
         }
+    }
+
+    private fun getKeys(
+        response: ItemRevision,
+        vaultKeys: List<VaultKey>,
+        itemKeys: List<ItemKey>
+    ): Pair<VaultKey, ItemKey> {
+        val vaultKey = vaultKeys.firstOrNull { it.rotationId == response.rotationId }
+        if (vaultKey == null) {
+            PassLogger.i(
+                TAG,
+                "Could not find VaultKey [itemId=${response.itemId}] [rotationId=${response.rotationId}]"
+            )
+            throw KeyNotFound("Could not find VaultKey")
+        }
+
+        val itemKey = itemKeys.firstOrNull { it.rotationId == response.rotationId }
+        if (itemKey == null) {
+            PassLogger.i(
+                TAG,
+                "Could not find ItemKey [itemId=${response.itemId}] [rotationId=${response.rotationId}]"
+            )
+            throw KeyNotFound("Could not find ItemKey")
+        }
+
+        return vaultKey to itemKey
+    }
+
+    companion object {
+        private const val TAG = "OpenItemImpl"
     }
 }

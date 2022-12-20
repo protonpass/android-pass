@@ -68,8 +68,8 @@ class TrashScreenViewModel @Inject constructor(
                 emptyList()
             }
             is Result.Success -> {
-                encryptionContextProvider.withContext {
-                    itemsResult.data.map { it.toUiModel(this@withContext) }
+                encryptionContextProvider.withEncryptionContext {
+                    itemsResult.data.map { it.toUiModel(this@withEncryptionContext) }
                 }
             }
         }

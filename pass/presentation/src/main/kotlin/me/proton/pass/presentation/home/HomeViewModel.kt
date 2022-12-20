@@ -95,8 +95,8 @@ class HomeViewModel @Inject constructor(
     private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = observeActiveItems()
         .map { itemResult ->
             itemResult.map { list ->
-                encryptionContextProvider.withContext {
-                    list.map { it.toUiModel(this@withContext) }
+                encryptionContextProvider.withEncryptionContext {
+                    list.map { it.toUiModel(this@withEncryptionContext) }
                 }
             }
         }
@@ -158,7 +158,7 @@ class HomeViewModel @Inject constructor(
             is Result.Success -> itemsResult.data
             is Result.Error -> {
                 val defaultMessage = "Observe items error"
-                PassLogger.i(
+                PassLogger.e(
                     TAG,
                     itemsResult.exception ?: Exception(defaultMessage),
                     defaultMessage
@@ -173,7 +173,7 @@ class HomeViewModel @Inject constructor(
             is Result.Success -> Option.fromNullable(shareIdResult.data)
             is Result.Error -> {
                 val defaultMessage = "Observe active share error"
-                PassLogger.i(
+                PassLogger.e(
                     TAG,
                     shareIdResult.exception ?: Exception(defaultMessage),
                     defaultMessage
@@ -233,7 +233,7 @@ class HomeViewModel @Inject constructor(
             runCatching {
                 applyPendingEvents(userId, share.value)
             }.onFailure {
-                PassLogger.i(TAG, it, "Error in refresh")
+                PassLogger.e(TAG, it, "Error in refresh")
                 snackbarMessageRepository.emitSnackbarMessage(RefreshError)
             }
 
@@ -265,7 +265,7 @@ class HomeViewModel @Inject constructor(
                 }
             }
             HomeClipboardType.Password -> {
-                encryptionContextProvider.withContext {
+                encryptionContextProvider.withEncryptionContext {
                     clipboardManager.copyToClipboard(
                         text = decrypt(text),
                         isSecure = true

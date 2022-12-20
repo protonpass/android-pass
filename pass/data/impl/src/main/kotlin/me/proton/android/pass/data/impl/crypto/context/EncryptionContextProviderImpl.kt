@@ -2,6 +2,9 @@ package me.proton.android.pass.data.impl.crypto.context
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import me.proton.android.pass.data.api.crypto.EncryptionContext
 import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.crypto.EncryptionKey
@@ -17,7 +20,17 @@ class EncryptionContextProviderImpl @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto
 ) : EncryptionContextProvider {
 
-    override fun <R> withContext(block: EncryptionContext.() -> R): R {
+    override fun <R> withEncryptionContext(block: EncryptionContext.() -> R): R {
+        val key = runBlocking { getKey() }
+        val context = EncryptionContextImpl(key)
+        val res = block(context)
+        key.clear()
+        return res
+    }
+
+    override suspend fun <R> withEncryptionContextSuspendable(
+        block: suspend EncryptionContext.() -> R
+    ): R {
         val key = getKey()
         val context = EncryptionContextImpl(key)
         val res = block(context)
@@ -25,23 +38,17 @@ class EncryptionContextProviderImpl @Inject constructor(
         return res
     }
 
-    override suspend fun <R> withContextSuspendable(block: suspend EncryptionContext.() -> R): R {
-        val key = getKey()
-        val context = EncryptionContextImpl(key)
-        val res = block(context)
-        key.clear()
-        return res
-    }
-
-    private fun getKey(): EncryptionKey {
+    private suspend fun getKey(): EncryptionKey = withContext(Dispatchers.IO) {
         val file = File(context.dataDir, keyFileName)
         if (file.exists()) {
             val encryptedKey = file.readBytes()
             val decryptedKey = keyStoreCrypto.decrypt(EncryptedByteArray(encryptedKey))
-            return EncryptionKey(decryptedKey.array)
+            EncryptionKey(decryptedKey.array)
+        } else {
+            generateKey(file)
         }
-        return generateKey(file)
     }
+
 
     private fun generateKey(file: File): EncryptionKey {
         val bytes = Random.nextBytes(keySize)

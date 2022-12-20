@@ -726,7 +726,7 @@ class ItemRepositoryImpl @Inject constructor(
 
         return encryptionContextProvider.withContextSuspendable {
             val encryptionContext = this@withContextSuspendable
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.Default) {
                 items.map { item ->
                     async {
                         decryptItem(

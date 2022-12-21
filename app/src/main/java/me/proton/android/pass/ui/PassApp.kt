@@ -9,6 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -81,44 +82,34 @@ fun PassAppContent(
     val appNavigator = rememberAppNavigator()
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
-    val (homeFilterState, setHomeFilterState) = remember { mutableStateOf(HomeFilterMode.AllItems) }
+    var homeFilterState by remember { mutableStateOf(HomeFilterMode.AllItems) }
+    when (appNavigator.currentDestination?.route) {
+        AppNavItem.Home.route -> {
+            when (homeFilterState) {
+                HomeFilterMode.AllItems -> onDrawerSectionChanged(NavigationDrawerSection.Items)
+                HomeFilterMode.Logins -> onDrawerSectionChanged(NavigationDrawerSection.Logins)
+                HomeFilterMode.Aliases -> onDrawerSectionChanged(NavigationDrawerSection.Aliases)
+                HomeFilterMode.Notes -> onDrawerSectionChanged(NavigationDrawerSection.Notes)
+            }
+        }
+        AppNavItem.Settings.route -> onDrawerSectionChanged(NavigationDrawerSection.Settings)
+        AppNavItem.Trash.route -> onDrawerSectionChanged(NavigationDrawerSection.Trash)
+        else -> {}
+    }
     val navDrawerNavigation = NavDrawerNavigation(
         onNavHome = { section ->
-            when (section) {
-                HomeSection.Items -> {
-                    setHomeFilterState(HomeFilterMode.AllItems)
-                    onDrawerSectionChanged(NavigationDrawerSection.Items)
-                }
-                HomeSection.Logins -> {
-                    setHomeFilterState(HomeFilterMode.Logins)
-                    onDrawerSectionChanged(NavigationDrawerSection.Logins)
-                }
-                HomeSection.Aliases -> {
-                    setHomeFilterState(HomeFilterMode.Aliases)
-                    onDrawerSectionChanged(NavigationDrawerSection.Aliases)
-
-                }
-                HomeSection.Notes -> {
-                    setHomeFilterState(HomeFilterMode.Notes)
-                    onDrawerSectionChanged(NavigationDrawerSection.Notes)
-                }
+            homeFilterState = when (section) {
+                HomeSection.Items -> HomeFilterMode.AllItems
+                HomeSection.Logins -> HomeFilterMode.Logins
+                HomeSection.Aliases -> HomeFilterMode.Aliases
+                HomeSection.Notes -> HomeFilterMode.Notes
             }
             appNavigator.navigate(destination = AppNavItem.Home)
         },
-        onNavSettings = {
-            onDrawerSectionChanged(NavigationDrawerSection.Settings)
-            appNavigator.navigate(AppNavItem.Settings)
-        },
-        onNavTrash = {
-            onDrawerSectionChanged(NavigationDrawerSection.Trash)
-            appNavigator.navigate(AppNavItem.Trash)
-        },
-        onBugReport = {
-            coreNavigation.onReport()
-        },
-        onInternalDrawerClick = {
-            coroutineScope.launch { internalDrawerState.open() }
-        }
+        onNavSettings = { appNavigator.navigate(AppNavItem.Settings) },
+        onNavTrash = { appNavigator.navigate(AppNavItem.Trash) },
+        onBugReport = { coreNavigation.onReport() },
+        onInternalDrawerClick = { coroutineScope.launch { internalDrawerState.open() } }
     )
     if (appUiState.snackbarMessage is Some) {
         val snackbarMessage = stringResource(id = appUiState.snackbarMessage.value.id)

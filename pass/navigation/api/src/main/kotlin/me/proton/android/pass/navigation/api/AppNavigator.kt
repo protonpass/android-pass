@@ -4,8 +4,10 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import me.proton.android.pass.log.PassLogger
@@ -20,6 +22,12 @@ fun rememberAppNavigator(
 class AppNavigator(
     val navController: NavHostController
 ) {
+    val currentDestination: NavDestination?
+        @Composable get() = navController
+            .currentBackStackEntryAsState()
+            .value
+            ?.destination
+
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
         val destinationRoute = route ?: destination.route
         PassLogger.i(TAG, "Navigating to $destinationRoute")

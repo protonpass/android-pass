@@ -92,7 +92,7 @@ abstract class BaseAliasViewModel(
         isApplyButtonEnabledState
     ) { shareId, aliasItemWrapper, isLoading, isAliasSavedEvent, isButtonEnabled ->
         CreateUpdateAliasUiState(
-            shareId = shareId,
+            shareId = shareId.value(),
             aliasItem = aliasItemWrapper.aliasItem,
             isDraft = isDraft,
             errorList = aliasItemWrapper.aliasItemValidationErrors,

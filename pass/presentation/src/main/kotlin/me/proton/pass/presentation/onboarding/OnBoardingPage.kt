@@ -28,6 +28,7 @@ fun OnBoardingPage(
     onSkipButtonClick: (OnBoardingPageName) -> Unit
 ) {
     Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         onBoardingPageData.image(this)

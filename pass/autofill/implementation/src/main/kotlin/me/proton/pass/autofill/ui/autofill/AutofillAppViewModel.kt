@@ -67,7 +67,7 @@ class AutofillAppViewModel @Inject constructor(
             theme = theme,
             isFingerprintRequired = fingerprintRequired,
             itemSelected = itemSelected,
-            snackbarMessage = snackbarMessage
+            snackbarMessage = snackbarMessage.value()
         )
     }
         .stateIn(

@@ -4,6 +4,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -191,7 +192,7 @@ class HomeViewModel @Inject constructor(
             homeListUiState = HomeListUiState(
                 isLoading = isLoading,
                 isRefreshing = refreshing,
-                items = items,
+                items = items.toImmutableList(),
                 selectedShare = selectedShare,
                 sortingType = sortingType
             ),

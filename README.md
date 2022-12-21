@@ -37,3 +37,17 @@ $ ./gradlew genModule --module=:pass:my-new-module --conf=api,impl,fakes
 ```
 
 Where as a module we specify the path of the module and as configuration we pass which submodules should contain. `api` for the exposed contract, `impl` for the actual implementation and `fakes` for the exposed fake implementations for tests.
+
+## How to generate compose skippable/restartable reports
+
+Run this command in the project's root:
+
+```
+$ ./gradlew assembleDevRelease -PenableMultiModuleComposeReports=true --rerun-tasks
+```
+
+If you see an error saying `Execution failed for task ':app:uploadSentryProguardMappingsDevRelease'.`, don't worry about it.
+
+The outputs will be written in `build/compose_metrics`. If you want to have a easier time inspecting them, you can make use of a tool like [Mendable](https://github.com/jayasuryat/mendable).
+
+

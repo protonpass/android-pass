@@ -1,11 +1,13 @@
 package me.proton.pass.presentation.settings
 
+import androidx.compose.runtime.Stable
 import me.proton.android.pass.autofill.api.AutofillStatus
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
 
+@Stable
 data class SettingsUiState(
     val fingerprintSection: FingerprintSectionState,
     val themePreference: ThemePreference,

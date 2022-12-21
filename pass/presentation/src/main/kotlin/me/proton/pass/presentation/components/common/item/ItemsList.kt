@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import com.google.accompanist.swiperefresh.SwipeRefreshState
+import kotlinx.collections.immutable.ImmutableList
 import me.proton.pass.presentation.components.common.Loading
 import me.proton.pass.presentation.components.common.PassSwipeRefresh
 import me.proton.pass.presentation.components.model.ItemUiModel
@@ -22,7 +23,7 @@ private const val PLACEHOLDER_ELEMENTS = 40
 @Composable
 fun ItemsList(
     modifier: Modifier = Modifier,
-    items: List<ItemUiModel>,
+    items: ImmutableList<ItemUiModel>,
     shouldScrollToTop: Boolean,
     highlight: String = "",
     isRefreshing: IsRefreshingState,

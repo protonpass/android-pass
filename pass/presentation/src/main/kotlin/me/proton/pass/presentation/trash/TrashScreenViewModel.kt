@@ -3,6 +3,7 @@ package me.proton.pass.presentation.trash
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -77,7 +78,7 @@ class TrashScreenViewModel @Inject constructor(
         TrashUiState(
             isLoading = isLoading,
             isRefreshing = refreshing,
-            items = items
+            items = items.toImmutableList()
         )
     }
         .stateIn(

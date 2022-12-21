@@ -3,6 +3,8 @@ package me.proton.pass.presentation.create.login
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
@@ -81,11 +83,16 @@ class UpdateLoginViewModel @Inject constructor(
 
                         loginItemState.update {
                             encryptionContextProvider.withEncryptionContext {
+                                val websites = if (itemContents.websites.isEmpty()) {
+                                    persistentListOf("")
+                                } else {
+                                    itemContents.websites.toImmutableList()
+                                }
                                 LoginItem(
                                     title = decrypt(item.title),
                                     username = itemContents.username,
                                     password = decrypt(itemContents.password),
-                                    websiteAddresses = itemContents.websites.ifEmpty { listOf("") },
+                                    websiteAddresses = websites,
                                     note = decrypt(item.note)
                                 )
                             }

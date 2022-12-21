@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.toImmutableList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.domain.ItemType
@@ -52,7 +53,7 @@ fun LoginRow(
     ItemRow(
         icon = { LoginIcon() },
         title = title,
-        subtitles = listOfNotNull(username, note) + websites,
+        subtitles = (listOfNotNull(username, note) + websites).toImmutableList(),
         modifier = modifier
     )
 }

@@ -11,13 +11,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.proton.android.pass.notifications.api.SnackbarMessage
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillMappings
-import me.proton.pass.common.api.Some
 import me.proton.pass.presentation.components.common.PassSnackbarHost
 import me.proton.pass.presentation.components.common.rememberPassSnackbarHostState
 
@@ -48,8 +46,7 @@ fun AutofillApp(
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
 
-    if (uiState.snackbarMessage is Some) {
-        val snackbarMessage = (uiState.snackbarMessage as Some<SnackbarMessage>).value
+    uiState.snackbarMessage?.let { snackbarMessage ->
         val message = stringResource(id = snackbarMessage.id)
         LaunchedEffect(snackbarMessage) {
             passSnackbarHostState.showSnackbar(snackbarMessage.type, message)

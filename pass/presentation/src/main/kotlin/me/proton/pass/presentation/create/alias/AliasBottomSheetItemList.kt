@@ -3,11 +3,12 @@ package me.proton.pass.presentation.create.alias
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun <T> AliasBottomSheetItemList(
     modifier: Modifier = Modifier,
-    items: List<T>,
+    items: ImmutableList<T>,
     displayer: (T) -> String,
     isChecked: (T) -> Boolean,
     onSelect: (T) -> Unit

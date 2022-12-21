@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.toImmutableList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.PassOutlinedButton
@@ -68,7 +69,7 @@ internal fun LoginItemForm(
         )
         Spacer(modifier = Modifier.height(20.dp))
         WebsitesSection(
-            websites = loginItem.websiteAddresses,
+            websites = loginItem.websiteAddresses.toImmutableList(),
             isEditAllowed = isEditAllowed,
             onWebsitesChange = onWebsiteChange,
             focusLastWebsite = focusLastWebsite,

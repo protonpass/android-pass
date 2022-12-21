@@ -7,8 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -26,7 +26,6 @@ import me.proton.pass.common.api.some
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.detail.DetailSnackbarMessages.InitError
-import me.proton.pass.presentation.uievents.IsLoadingState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,27 +44,17 @@ class ItemDetailViewModel @Inject constructor(
 
     private val itemModelState: MutableStateFlow<Option<ItemModelUiState>> =
         MutableStateFlow(None)
-    private val isLoadingState: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.NotLoading)
 
-    val uiState: StateFlow<ItemDetailScreenUiState> = combine(
-        itemModelState,
-        isLoadingState
-    ) { itemModel, isLoading ->
-        ItemDetailScreenUiState(
-            itemModel,
-            isLoading
-        )
-    }
+    val uiState: StateFlow<ItemDetailScreenUiState> = itemModelState
+        .map { itemModel -> ItemDetailScreenUiState(itemModel.value()) }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = ItemDetailScreenUiState.Loading
+            initialValue = ItemDetailScreenUiState.Initial
         )
 
     init {
         viewModelScope.launch {
-            isLoadingState.update { IsLoadingState.Loading }
             val userId = accountManager.getPrimaryUserId()
                 .firstOrNull { userId -> userId != null }
             if (userId != null && shareId is Some && itemId is Some) {
@@ -89,7 +78,6 @@ class ItemDetailViewModel @Inject constructor(
                 PassLogger.i(TAG, "Empty user/share/item Id")
                 snackbarMessageRepository.emitSnackbarMessage(InitError)
             }
-            isLoadingState.update { IsLoadingState.NotLoading }
         }
     }
 

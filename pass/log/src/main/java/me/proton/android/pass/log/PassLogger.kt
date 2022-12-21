@@ -2,6 +2,7 @@ package me.proton.android.pass.log
 
 import android.os.Build
 import android.os.LocaleList
+import me.proton.core.network.domain.ApiException
 import me.proton.core.util.kotlin.Logger
 import me.proton.core.util.kotlin.LoggerLogTag
 import timber.log.Timber
@@ -15,7 +16,15 @@ object PassLogger : Logger {
     override fun i(tag: String, message: String) = Timber.tag(tag).i(message)
     override fun i(tag: String, e: Throwable, message: String) = Timber.tag(tag).i(e, message)
     override fun e(tag: String, e: Throwable) = Timber.tag(tag).e(e)
-    override fun e(tag: String, e: Throwable, message: String) = Timber.tag(tag).e(e, message)
+    override fun e(tag: String, e: Throwable, message: String) {
+        // Temporarily change priority of ApiException errors
+        if (e is ApiException) {
+            Timber.tag(tag).i(e, message)
+        } else {
+            Timber.tag(tag).e(e, message)
+        }
+    }
+
     override fun log(tag: LoggerLogTag, message: String) = i(tag.name, message)
 }
 

@@ -31,6 +31,7 @@ fun ItemsList(
     showMenuIcon: Boolean = true,
     enableSwipeRefresh: Boolean = true,
     header: LazyListScope.() -> Unit = {},
+    footer: LazyListScope.() -> Unit = {},
     onRefresh: () -> Unit,
     onItemClick: (ItemUiModel) -> Unit,
     onItemMenuClick: (ItemUiModel) -> Unit,
@@ -64,6 +65,7 @@ fun ItemsList(
                         onItemMenuClick = onItemMenuClick
                     )
                 }
+                footer()
             }
         } else if (isLoading == IsLoadingState.Loading) {
             Column(modifier = Modifier.fillMaxSize()) {

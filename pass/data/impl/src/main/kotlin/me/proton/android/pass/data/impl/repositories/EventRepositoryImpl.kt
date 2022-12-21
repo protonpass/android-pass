@@ -1,6 +1,8 @@
 package me.proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import me.proton.android.pass.data.impl.local.LocalEventDataSource
 import me.proton.android.pass.data.impl.remote.RemoteEventDataSource
 import me.proton.android.pass.data.impl.responses.EventList
@@ -14,7 +16,11 @@ class EventRepositoryImpl @Inject constructor(
     private val localEventDataSource: LocalEventDataSource,
     private val remoteEventDataSource: RemoteEventDataSource
 ) : EventRepository {
-    private suspend fun getLatestEventId(userId: UserId, addressId: AddressId, shareId: ShareId): String {
+    private suspend fun getLatestEventId(
+        userId: UserId,
+        addressId: AddressId,
+        shareId: ShareId
+    ): String {
         val local = localEventDataSource.getLatestEventId(userId, addressId, shareId).first()
         if (local != null) {
             PassLogger.d(TAG, "Returning local latestEventId [share=${shareId.id}]")
@@ -24,14 +30,24 @@ class EventRepositoryImpl @Inject constructor(
         return remoteEventDataSource.getLatestEventId(userId, shareId).first()
     }
 
-    override suspend fun getEvents(userId: UserId, addressId: AddressId, shareId: ShareId): EventList {
-        val latestEventId = getLatestEventId(userId, addressId, shareId)
-        PassLogger.d(TAG, "Fetching events [share=${shareId.id}][eventId=$latestEventId]")
+    override suspend fun getEvents(
+        userId: UserId,
+        addressId: AddressId,
+        shareId: ShareId
+    ): EventList =
+        withContext(Dispatchers.IO) {
+            val latestEventId = getLatestEventId(userId, addressId, shareId)
+            PassLogger.d(TAG, "Fetching events [share=${shareId.id}][eventId=$latestEventId]")
 
-        val events = remoteEventDataSource.getEvents(userId, shareId, latestEventId).first()
-        localEventDataSource.storeLatestEventId(userId, addressId, shareId, events.latestEventId)
-        return events
-    }
+            val events = remoteEventDataSource.getEvents(userId, shareId, latestEventId).first()
+            localEventDataSource.storeLatestEventId(
+                userId,
+                addressId,
+                shareId,
+                events.latestEventId
+            )
+            return@withContext events
+        }
 
     override suspend fun storeLatestEventId(
         userId: UserId,
@@ -39,7 +55,9 @@ class EventRepositoryImpl @Inject constructor(
         shareId: ShareId,
         eventId: String
     ) {
-        localEventDataSource.storeLatestEventId(userId, addressId, shareId, eventId)
+        withContext(Dispatchers.IO) {
+            localEventDataSource.storeLatestEventId(userId, addressId, shareId, eventId)
+        }
     }
 
     companion object {

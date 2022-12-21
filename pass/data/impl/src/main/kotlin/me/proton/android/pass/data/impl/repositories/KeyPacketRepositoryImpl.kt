@@ -1,5 +1,7 @@
 package me.proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import me.proton.android.pass.data.api.repositories.KeyPacketRepository
 import me.proton.android.pass.data.api.repositories.ShareRepository
 import me.proton.android.pass.data.api.repositories.VaultKeyRepository
@@ -8,6 +10,8 @@ import me.proton.android.pass.data.impl.responses.KeyPacketInfo
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.extension.primary
+import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.map
 import me.proton.pass.domain.ItemId
@@ -15,8 +19,6 @@ import me.proton.pass.domain.KeyPacket
 import me.proton.pass.domain.Share
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.key.publicKey
-import me.proton.core.user.domain.extension.primary
-import me.proton.core.user.domain.repository.UserAddressRepository
 import javax.inject.Inject
 
 class KeyPacketRepositoryImpl @Inject constructor(
@@ -31,7 +33,7 @@ class KeyPacketRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<KeyPacket> =
+    ): Result<KeyPacket> = withContext(Dispatchers.IO) {
         when (
             val result =
                 remoteKeyPacketDataSource.getLatestKeyPacketForItem(userId, shareId, itemId)
@@ -40,6 +42,7 @@ class KeyPacketRepositoryImpl @Inject constructor(
             Result.Loading -> Result.Loading
             is Result.Success -> responseToDomain(userId, shareId, result.data)
         }
+    }
 
     private suspend fun responseToDomain(
         userId: UserId,

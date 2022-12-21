@@ -1,5 +1,7 @@
 package me.proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import me.proton.android.pass.data.api.repositories.VaultItemKeyList
 import me.proton.android.pass.data.api.repositories.VaultKeyRepository
 import me.proton.android.pass.data.impl.crypto.OpenKeys
@@ -13,13 +15,13 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
+import me.proton.core.user.domain.entity.UserAddress
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.map
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.key.ItemKey
 import me.proton.pass.domain.key.SigningKey
 import me.proton.pass.domain.key.VaultKey
-import me.proton.core.user.domain.entity.UserAddress
 import javax.inject.Inject
 
 class VaultKeyRepositoryImpl @Inject constructor(
@@ -34,7 +36,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
         signingKey: SigningKey,
         forceRefresh: Boolean,
         shouldStoreLocally: Boolean
-    ): Result<List<VaultKey>> {
+    ): Result<List<VaultKey>> = withContext(Dispatchers.IO) {
         val result = getVaultItemKeys(
             userAddress,
             shareId,
@@ -42,7 +44,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
             forceRefresh,
             shouldStoreLocally
         )
-        return when (result) {
+        return@withContext when (result) {
             is Result.Error -> Result.Error(result.exception)
             Result.Loading -> Result.Loading
             is Result.Success -> Result.Success(result.data.vaultKeyList)
@@ -54,13 +56,13 @@ class VaultKeyRepositoryImpl @Inject constructor(
         shareId: ShareId,
         signingKey: SigningKey,
         keyId: String
-    ): Result<VaultKey> {
+    ): Result<VaultKey> = withContext(Dispatchers.IO) {
         val key = localDataSource.getVaultKeyById(userAddress, shareId, keyId)
         if (key != null) {
-            return Result.Success(vaultKeyEntityToDomain(key, key.rotationId))
+            return@withContext Result.Success(vaultKeyEntityToDomain(key, key.rotationId))
         }
 
-        return getVaultItemKeys(userAddress, shareId, signingKey, true)
+        return@withContext getVaultItemKeys(userAddress, shareId, signingKey, true)
             .map { keys -> requireNotNull(keys.vaultKeyList.firstOrNull { it.rotationId == keyId }) }
     }
 
@@ -69,14 +71,14 @@ class VaultKeyRepositoryImpl @Inject constructor(
         shareId: ShareId,
         signingKey: SigningKey,
         keyId: String
-    ): Result<ItemKey> {
+    ): Result<ItemKey> = withContext(Dispatchers.IO) {
         val key = localDataSource.getItemKeyById(userAddress, shareId, keyId)
         if (key != null) {
-            return Result.Success(itemKeyEntityToDomain(key, key.rotationId))
+            return@withContext Result.Success(itemKeyEntityToDomain(key, key.rotationId))
         }
 
         // We didn't find it on the local storage
-        return getVaultItemKeys(userAddress, shareId, signingKey, true)
+        return@withContext getVaultItemKeys(userAddress, shareId, signingKey, true)
             .map { keys -> requireNotNull(keys.itemKeyList.firstOrNull { it.rotationId == keyId }) }
     }
 
@@ -85,15 +87,17 @@ class VaultKeyRepositoryImpl @Inject constructor(
         shareId: ShareId,
         signingKey: SigningKey,
         forceRefresh: Boolean
-    ): Result<VaultKey> = getVaultKeys(userAddress, shareId, signingKey, forceRefresh)
-        .map { keys -> requireNotNull(keys.maxByOrNull { it.rotation }) }
+    ): Result<VaultKey> = withContext(Dispatchers.IO) {
+        getVaultKeys(userAddress, shareId, signingKey, forceRefresh)
+            .map { keys -> requireNotNull(keys.maxByOrNull { it.rotation }) }
+    }
 
     override suspend fun getLatestVaultItemKey(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         forceRefresh: Boolean
-    ): Result<Pair<VaultKey, ItemKey>> =
+    ): Result<Pair<VaultKey, ItemKey>> = withContext(Dispatchers.IO) {
         getVaultItemKeys(userAddress, shareId, signingKey, forceRefresh)
             .map { keys ->
                 val latestVaultKey = requireNotNull(keys.vaultKeyList.maxByOrNull { it.rotation })
@@ -102,6 +106,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
                 )
                 Pair(latestVaultKey, latestItemKey)
             }
+    }
 
     private suspend fun getVaultItemKeys(
         userAddress: UserAddress,

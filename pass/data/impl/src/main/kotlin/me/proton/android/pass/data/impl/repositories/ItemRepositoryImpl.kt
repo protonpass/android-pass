@@ -243,8 +243,9 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit> =
         withContext(Dispatchers.IO) {
             val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-            if (item.state == ItemState.Trashed.value)
+            if (item.state == ItemState.Trashed.value) {
                 return@withContext Result.Error(CannotRemoveNotTrashedItemError())
+            }
 
             val body = TrashItemsRequest(
                 listOf(TrashItemRevision(itemId = item.id, revision = item.revision))

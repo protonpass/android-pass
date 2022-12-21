@@ -7,6 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
@@ -34,8 +36,8 @@ fun ThemeSelectionBottomSheetContents(
 
 private fun themeItemList(
     onThemeTypeSelected: (ThemePreference) -> Unit
-): List<BottomSheetItem> =
-    ThemePreference.values().map { it.toBottomSheetItem(onThemeTypeSelected) }
+): ImmutableList<BottomSheetItem> =
+    ThemePreference.values().map { it.toBottomSheetItem(onThemeTypeSelected) }.toImmutableList()
 
 private fun ThemePreference.toBottomSheetItem(
     onThemeTypeSelected: (ThemePreference) -> Unit

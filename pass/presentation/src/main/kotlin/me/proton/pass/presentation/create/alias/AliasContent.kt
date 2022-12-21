@@ -15,8 +15,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
-import me.proton.pass.common.api.None
-import me.proton.pass.common.api.Some
 import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
@@ -148,9 +146,9 @@ private fun IsAliasDraftSavedLaunchedEffect(
     if (isAliasDraftSaved is AliasDraftSavedState.Success) {
         LaunchedEffect(Unit) {
             when (uiState.shareId) {
-                None -> onEmitSnackbarMessage(EmptyShareIdError)
-                is Some -> onAliasDraftCreated(
-                    uiState.shareId.value,
+                null -> onEmitSnackbarMessage(EmptyShareIdError)
+                else -> onAliasDraftCreated(
+                    uiState.shareId,
                     isAliasDraftSaved.aliasItem
                 )
             }
@@ -168,9 +166,9 @@ private fun IsAliasSavedLaunchedEffect(
     if (isAliasSaved is AliasSavedState.Success) {
         LaunchedEffect(Unit) {
             when (uiState.shareId) {
-                None -> onEmitSnackbarMessage(EmptyShareIdError)
-                is Some -> onAliasCreated(
-                    uiState.shareId.value,
+                null -> onEmitSnackbarMessage(EmptyShareIdError)
+                else -> onAliasCreated(
+                    uiState.shareId,
                     isAliasSaved.itemId,
                     isAliasSaved.alias
                 )

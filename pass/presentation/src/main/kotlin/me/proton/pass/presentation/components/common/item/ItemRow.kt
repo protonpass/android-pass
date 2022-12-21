@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
 import me.proton.core.compose.theme.defaultSmallWeak
@@ -19,7 +20,7 @@ internal fun ItemRow(
     modifier: Modifier = Modifier,
     icon: @Composable () -> Unit,
     title: AnnotatedString,
-    subtitles: List<AnnotatedString>
+    subtitles: ImmutableList<AnnotatedString>
 ) {
     Row(
         modifier = modifier.fillMaxWidth()

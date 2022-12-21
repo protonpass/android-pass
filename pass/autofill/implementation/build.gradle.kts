@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.core.presentation.compose)
     implementation(libs.core.user)
     implementation(libs.core.utilKotlin)
+    implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.coroutines.core)
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.common.api)

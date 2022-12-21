@@ -243,9 +243,8 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit> =
         withContext(Dispatchers.IO) {
             val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-            if (item.state == ItemState.Trashed.value) return@withContext Result.Error(
-                CannotRemoveNotTrashedItemError()
-            )
+            if (item.state == ItemState.Trashed.value)
+                return@withContext Result.Error(CannotRemoveNotTrashedItemError())
 
             val body = TrashItemsRequest(
                 listOf(TrashItemRevision(itemId = item.id, revision = item.revision))
@@ -254,16 +253,17 @@ class ItemRepositoryImpl @Inject constructor(
             return@withContext remoteItemDataSource.sendToTrash(userId, shareId, body)
                 .map { response ->
                     database.inTransaction {
-                        response.items.find { it.itemId == item.id }?.let {
-                            val updatedItem = item.copy(
-                                revision = it.revision,
-                                state = ItemState.Trashed.value
-                            )
-                            localItemDataSource.upsertItem(updatedItem)
-                        }
+                        response.items.find { it.itemId == item.id }
+                            ?.let {
+                                val updatedItem = item.copy(
+                                    revision = it.revision,
+                                    state = ItemState.Trashed.value
+                                )
+                                localItemDataSource.upsertItem(updatedItem)
+                            }
+                            ?: Unit
                     }
                 }
-                .map { }
         }
 
     override suspend fun untrashItem(

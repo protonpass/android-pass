@@ -25,16 +25,14 @@ class ProtonPassAutofillService : AutofillService() {
         cancellationSignal: CancellationSignal,
         callback: FillCallback
     ) {
-        encryptionContextProvider.withEncryptionContext {
-            AutoFillHandler.handleAutofill(
-                context = this@ProtonPassAutofillService,
-                encryptionContext = this@withEncryptionContext,
-                request = request,
-                callback = callback,
-                cancellationSignal = cancellationSignal,
-                getSuggestedLoginItems = getSuggestedLoginItems
-            )
-        }
+        AutoFillHandler.handleAutofill(
+            context = this@ProtonPassAutofillService,
+            encryptionContextProvider = encryptionContextProvider,
+            request = request,
+            callback = callback,
+            cancellationSignal = cancellationSignal,
+            getSuggestedLoginItems = getSuggestedLoginItems
+        )
     }
 
     override fun onSaveRequest(request: SaveRequest, callback: SaveCallback) {

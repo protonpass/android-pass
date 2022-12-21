@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import me.proton.android.pass.data.api.crypto.EncryptionContext
+import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import me.proton.android.pass.log.PassLogger
 import me.proton.pass.autofill.PendingIntentUtils.getOpenAppPendingIntent
@@ -44,7 +44,7 @@ object AutoFillHandler {
     @Suppress("LongParameterList")
     fun handleAutofill(
         context: Context,
-        encryptionContext: EncryptionContext,
+        encryptionContextProvider: EncryptionContextProvider,
         request: FillRequest,
         callback: FillCallback,
         cancellationSignal: CancellationSignal,
@@ -63,7 +63,7 @@ object AutoFillHandler {
             .launch(handler) {
                 searchAndFill(
                     context = context,
-                    encryptionContext = encryptionContext,
+                    encryptionContextProvider = encryptionContextProvider,
                     windowNode = windowNode,
                     callback = callback,
                     request = request,
@@ -79,7 +79,7 @@ object AutoFillHandler {
     @Suppress("ReturnCount", "LongParameterList")
     private suspend fun searchAndFill(
         context: Context,
-        encryptionContext: EncryptionContext,
+        encryptionContextProvider: EncryptionContextProvider,
         windowNode: AssistStructure.WindowNode,
         callback: FillCallback,
         request: FillRequest,
@@ -103,35 +103,38 @@ object AutoFillHandler {
                     .filterIsInstance<Result.Success<List<Item>>>()
                     .firstOrNull()
                     .toOption()
-            if (suggestedItemsResult is Some) {
-                val size: Int = getAvailableSuggestionSpots(
-                    maxSuggestion = maxSuggestion,
-                    itemsSize = suggestedItemsResult.value.data.size
-                )
-                if (size > 0) {
-                    val specs: List<InlinePresentationSpec> =
-                        inlineRequest.inlinePresentationSpecs.take(size - INLINE_SUGGESTIONS_OFFSET)
-                    for ((index, spec) in specs.withIndex()) {
-                        val item: Option<Item> = suggestedItemsResult.value.data
-                            .getOrNull(index)
-                            .toOption()
-                        responseBuilder.addItemInlineSuggestion(
-                            context = context,
-                            encryptionContext = encryptionContext,
-                            itemOption = item,
-                            inlinePresentationSpec = spec,
-                            assistFields = assistInfo.fields
-                        )
+
+            encryptionContextProvider.withEncryptionContext {
+                if (suggestedItemsResult is Some) {
+                    val size: Int = getAvailableSuggestionSpots(
+                        maxSuggestion = maxSuggestion,
+                        itemsSize = suggestedItemsResult.value.data.size
+                    )
+                    if (size > 0) {
+                        val specs: List<InlinePresentationSpec> =
+                            inlineRequest.inlinePresentationSpecs.take(size - INLINE_SUGGESTIONS_OFFSET)
+                        for ((index, spec) in specs.withIndex()) {
+                            val item: Option<Item> = suggestedItemsResult.value.data
+                                .getOrNull(index)
+                                .toOption()
+                            responseBuilder.addItemInlineSuggestion(
+                                context = context,
+                                encryptionContext = this@withEncryptionContext,
+                                itemOption = item,
+                                inlinePresentationSpec = spec,
+                                assistFields = assistInfo.fields
+                            )
+                        }
                     }
                 }
+                responseBuilder.addOpenAppInlineSuggestion(
+                    context = context,
+                    encryptionContext = this@withEncryptionContext,
+                    inlinePresentationSpec = inlineRequest.inlinePresentationSpecs.last(),
+                    pendingIntent = getOpenAppPendingIntent(context, autofillData),
+                    assistFields = assistInfo.fields
+                )
             }
-            responseBuilder.addOpenAppInlineSuggestion(
-                context = context,
-                encryptionContext = encryptionContext,
-                inlinePresentationSpec = inlineRequest.inlinePresentationSpecs.last(),
-                pendingIntent = getOpenAppPendingIntent(context, autofillData),
-                assistFields = assistInfo.fields
-            )
         } else {
             addMenuPresentationDataset(context, autofillData, responseBuilder)
         }

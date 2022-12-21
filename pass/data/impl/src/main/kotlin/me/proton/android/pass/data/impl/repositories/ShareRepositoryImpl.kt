@@ -1,8 +1,11 @@
 package me.proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.withContext
 import me.proton.android.pass.data.api.repositories.ShareRepository
 import me.proton.android.pass.data.api.repositories.VaultItemKeyList
 import me.proton.android.pass.data.api.repositories.VaultKeyRepository
@@ -56,19 +59,19 @@ class ShareRepositoryImpl @Inject constructor(
     override suspend fun createVault(
         userId: SessionUserId,
         vault: NewVault
-    ): Result<Share> {
+    ): Result<Share> = withContext(Dispatchers.IO) {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
 
         val (request, keyList) = try {
             createVaultRequest(vault, userAddress)
         } catch (e: RuntimeException) {
             PassLogger.e(TAG, e, "Error in CreateVaultRequest")
-            return Result.Error(e)
+            return@withContext Result.Error(e)
         }
         val createVaultResult = remoteShareDataSource.createVault(userAddress.userId, request)
         when (createVaultResult) {
-            is Result.Error -> return Result.Error(createVaultResult.exception)
-            Result.Loading -> return Result.Loading
+            is Result.Error -> return@withContext Result.Error(createVaultResult.exception)
+            Result.Loading -> return@withContext Result.Loading
             is Result.Success -> Unit
         }
 
@@ -94,13 +97,13 @@ class ShareRepositoryImpl @Inject constructor(
             reencryptedEntityResult
         }
         when (entityResult) {
-            is Result.Error -> return Result.Error(entityResult.exception)
-            Result.Loading -> return Result.Loading
+            is Result.Error -> return@withContext Result.Error(entityResult.exception)
+            Result.Loading -> return@withContext Result.Loading
             is Result.Success -> Unit
         }
 
         val publicKeys = userAddress.keys.map { it.privateKey.publicKey(cryptoContext) }
-        return shareEntityToShare(userAddress, publicKeys, entityResult.data)
+        return@withContext shareEntityToShare(userAddress, publicKeys, entityResult.data)
     }
 
     override fun observeShares(userId: UserId): Flow<Result<List<Share>>> =
@@ -110,53 +113,57 @@ class ShareRepositoryImpl @Inject constructor(
                 if (sharesResult.data.isEmpty()) return@mapLatest Result.Success(emptyList<Share>())
                 shareEntitiesToShares(userId, sharesResult.data)
             }
+            .flowOn(Dispatchers.IO)
 
-    override suspend fun refreshShares(userId: UserId): Result<List<Share>> {
-        val sharesResult = performShareRefresh(userId)
-        when (sharesResult) {
-            is Result.Error -> return Result.Error(sharesResult.exception)
-            Result.Loading -> return Result.Loading
-            is Result.Success -> Result.Success(Unit)
+    override suspend fun refreshShares(userId: UserId): Result<List<Share>> =
+        withContext(Dispatchers.IO) {
+            return@withContext when (val sharesResult = performShareRefresh(userId)) {
+                is Result.Error -> Result.Error(sharesResult.exception)
+                Result.Loading -> Result.Loading
+                is Result.Success -> shareEntitiesToShares(userId, sharesResult.data)
+            }
         }
-
-        return shareEntitiesToShares(userId, sharesResult.data)
-    }
 
 
     @Suppress("ReturnCount")
-    override suspend fun getById(userId: UserId, shareId: ShareId): Result<Share?> {
-        val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
+    override suspend fun getById(userId: UserId, shareId: ShareId): Result<Share?> =
+        withContext(Dispatchers.IO) {
+            val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
 
-        // Check local
-        var share: ShareEntity? = localShareDataSource.getById(userId, shareId)
-        if (share == null) {
-            // Check remote
-            val getShareResult = remoteShareDataSource.getShareById(userId, shareId)
-            when (getShareResult) {
-                is Result.Error -> return Result.Error(getShareResult.exception)
-                Result.Loading -> return Result.Loading
-                is Result.Success -> Unit
+            // Check local
+            var share: ShareEntity? = localShareDataSource.getById(userId, shareId)
+            if (share == null) {
+                // Check remote
+                val getShareResult = remoteShareDataSource.getShareById(userId, shareId)
+                when (getShareResult) {
+                    is Result.Error -> return@withContext Result.Error(getShareResult.exception)
+                    Result.Loading -> return@withContext Result.Loading
+                    is Result.Success -> Unit
+                }
+                val shareResponse = getShareResult.data
+                    ?: return@withContext Result.Error(IllegalStateException("Share Response is null"))
+
+                val storeShareResult: Result<List<ShareEntity>> =
+                    storeShares(userAddress, listOf(shareResponse))
+                when (storeShareResult) {
+                    is Result.Error -> return@withContext Result.Error(storeShareResult.exception)
+                    Result.Loading -> return@withContext Result.Loading
+                    is Result.Success -> Unit
+                }
+                share = storeShareResult.data[0]
             }
-            val shareResponse = getShareResult.data
-                ?: return Result.Error(IllegalStateException("Share Response is null"))
 
-            val storeShareResult: Result<List<ShareEntity>> =
-                storeShares(userAddress, listOf(shareResponse))
-            when (storeShareResult) {
-                is Result.Error -> return Result.Error(storeShareResult.exception)
-                Result.Loading -> return Result.Loading
-                is Result.Success -> Unit
+            return@withContext try {
+                shareEntityToShare(userAddress, share, Source.LocalIfAvailable)
+            } catch (e: InvalidAddressSignature) {
+                PassLogger.i(
+                    TAG,
+                    e,
+                    "Received InvalidAddressSignature. Retrying re-fetching the keys"
+                )
+                shareEntityToShare(userAddress, share, Source.RemoteNoCache)
             }
-            share = storeShareResult.data[0]
         }
-
-        return try {
-            shareEntityToShare(userAddress, share, Source.LocalIfAvailable)
-        } catch (e: InvalidAddressSignature) {
-            PassLogger.i(TAG, e, "Received InvalidAddressSignature. Retrying re-fetching the keys")
-            shareEntityToShare(userAddress, share, Source.RemoteNoCache)
-        }
-    }
 
     private suspend fun shareEntityToShare(
         userAddress: UserAddress,

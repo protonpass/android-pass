@@ -1,6 +1,8 @@
 package me.proton.android.pass.data.impl.repositories
 
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import me.proton.android.pass.data.api.repositories.AliasRepository
 import me.proton.android.pass.data.impl.extensions.toDomain
@@ -22,6 +24,7 @@ class AliasRepositoryImpl @Inject constructor(
     override fun getAliasOptions(userId: UserId, shareId: ShareId): Flow<AliasOptions> =
         remoteDataSource.getAliasOptions(userId, shareId)
             .map { it.toDomain() }
+            .flowOn(Dispatchers.IO)
 
     override fun getAliasDetails(
         userId: UserId,
@@ -36,6 +39,7 @@ class AliasRepositoryImpl @Inject constructor(
                     availableMailboxes = mapMailboxes(details.availableMailboxes)
                 )
             }
+            .flowOn(Dispatchers.IO)
 
     override fun updateAliasMailboxes(
         userId: UserId,
@@ -46,7 +50,9 @@ class AliasRepositoryImpl @Inject constructor(
         val request = UpdateAliasMailboxesRequest(
             mailboxIds = mailboxes.map { it.id }
         )
-        return remoteDataSource.updateAliasMailboxes(userId, shareId, itemId, request).map { }
+        return remoteDataSource.updateAliasMailboxes(userId, shareId, itemId, request)
+            .map { }
+            .flowOn(Dispatchers.IO)
     }
 
     private fun mapMailboxes(input: List<AliasMailboxResponse>): List<AliasMailbox> =

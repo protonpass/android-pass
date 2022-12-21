@@ -79,3 +79,22 @@ fun Project.kotlinCompilerArgs(vararg extraCompilerArgs: String) {
 protonDetekt {
     threshold = 0
 }
+
+allprojects {
+    tasks.withType(org.jetbrains.kotlin.gradle.dsl.KotlinCompile::class.java).configureEach {
+        kotlinOptions {
+            // Trigger this with:
+            // ./gradlew assembleRelease -PenableMultiModuleComposeReports=true --rerun-tasks
+            if (project.findProperty("enableMultiModuleComposeReports") == "true") {
+                freeCompilerArgs += listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" + rootProject.buildDir.absolutePath + "/compose_metrics/"
+                )
+                freeCompilerArgs += listOf(
+                    "-P",
+                    "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" + rootProject.buildDir.absolutePath + "/compose_metrics/"
+                )
+            }
+        }
+    }
+}

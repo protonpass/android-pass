@@ -15,5 +15,6 @@ enum class LoginSnackbarMessages(
     ItemCreationError(R.string.create_login_item_creation_error, SnackbarType.ERROR),
     ItemUpdateError(R.string.create_login_item_update_error, SnackbarType.ERROR),
     LoginCreated(R.string.login_created, SnackbarType.SUCCESS),
-    LoginUpdated(R.string.changes_saved, SnackbarType.SUCCESS)
+    LoginUpdated(R.string.changes_saved, SnackbarType.SUCCESS),
+    LoginMovedToTrash(R.string.edit_login_snackbar_login_moved_to_trash, SnackbarType.SUCCESS)
 }

@@ -21,7 +21,8 @@ import me.proton.pass.domain.Item
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.InitError
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.ItemUpdateError
-import me.proton.pass.presentation.detail.DetailSnackbarMessages
+import me.proton.pass.presentation.create.note.NoteSnackbarMessage.NoteMovedToTrash
+import me.proton.pass.presentation.detail.DetailSnackbarMessages.SendToTrashError
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsSentToTrashState
@@ -125,10 +126,11 @@ class UpdateNoteViewModel @Inject constructor(
         val item = _item
         if (userId != null && item != null) {
             trashItem(userId, item.shareId, item.id)
+                .onSuccess { snackbarMessageRepository.emitSnackbarMessage(NoteMovedToTrash) }
             isSentToTrashState.update { IsSentToTrashState.Sent }
         } else {
             PassLogger.i(TAG, "Empty userId")
-            snackbarMessageRepository.emitSnackbarMessage(DetailSnackbarMessages.SendToTrashError)
+            snackbarMessageRepository.emitSnackbarMessage(SendToTrashError)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
     }

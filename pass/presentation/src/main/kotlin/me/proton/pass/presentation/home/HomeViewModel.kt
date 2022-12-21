@@ -35,11 +35,15 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.map
+import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.ItemType
 import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.home.HomeSnackbarMessage.AliasCopied
+import me.proton.pass.presentation.home.HomeSnackbarMessage.AliasMovedToTrash
+import me.proton.pass.presentation.home.HomeSnackbarMessage.LoginMovedToTrash
 import me.proton.pass.presentation.home.HomeSnackbarMessage.NoteCopied
+import me.proton.pass.presentation.home.HomeSnackbarMessage.NoteMovedToTrash
 import me.proton.pass.presentation.home.HomeSnackbarMessage.ObserveItemsError
 import me.proton.pass.presentation.home.HomeSnackbarMessage.ObserveShareError
 import me.proton.pass.presentation.home.HomeSnackbarMessage.PasswordCopied
@@ -246,7 +250,18 @@ class HomeViewModel @Inject constructor(
 
         val userId = currentUserFlow.firstOrNull()?.userId
         if (userId != null) {
-            trashItem.invoke(userId, item.shareId, item.id)
+            trashItem(userId, item.shareId, item.id)
+                .onSuccess {
+                    when (item.itemType) {
+                        is ItemType.Alias ->
+                            snackbarMessageRepository.emitSnackbarMessage(AliasMovedToTrash)
+                        is ItemType.Login ->
+                            snackbarMessageRepository.emitSnackbarMessage(LoginMovedToTrash)
+                        is ItemType.Note ->
+                            snackbarMessageRepository.emitSnackbarMessage(NoteMovedToTrash)
+                        ItemType.Password -> {}
+                    }
+                }
         }
     }
 

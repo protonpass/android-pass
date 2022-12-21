@@ -1,6 +1,8 @@
 package me.proton.pass.presentation.home
 
 import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
@@ -26,7 +28,7 @@ data class HomeUiState(
 data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
-    val items: List<ItemUiModel>,
+    val items: ImmutableList<ItemUiModel>,
     val selectedShare: Option<ShareId> = None,
     val sortingType: SortingType = SortingType.ByName
 ) {
@@ -34,7 +36,7 @@ data class HomeListUiState(
         val Loading = HomeListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
-            items = emptyList(),
+            items = persistentListOf(),
             selectedShare = None
         )
     }

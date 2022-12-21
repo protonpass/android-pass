@@ -1,8 +1,6 @@
 package me.proton.pass.presentation.create.alias
 
 import androidx.compose.runtime.Immutable
-import me.proton.pass.common.api.None
-import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.uievents.AliasDraftSavedState
 import me.proton.pass.presentation.uievents.AliasSavedState
@@ -11,7 +9,7 @@ import me.proton.pass.presentation.uievents.IsLoadingState
 
 @Immutable
 data class CreateUpdateAliasUiState(
-    val shareId: Option<ShareId>,
+    val shareId: ShareId?,
     val aliasItem: AliasItem,
     val isDraft: Boolean,
     val errorList: Set<AliasItemValidationErrors>,
@@ -22,7 +20,7 @@ data class CreateUpdateAliasUiState(
 ) {
     companion object {
         val Initial = CreateUpdateAliasUiState(
-            shareId = None,
+            shareId = null,
             aliasItem = AliasItem.Empty,
             isDraft = false,
             errorList = emptySet(),

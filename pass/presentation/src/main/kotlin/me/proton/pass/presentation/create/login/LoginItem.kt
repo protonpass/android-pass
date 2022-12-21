@@ -1,9 +1,10 @@
 package me.proton.pass.presentation.create.login
 
 import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.persistentListOf
+import me.proton.android.pass.data.api.UrlSanitizer
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.ItemContents
-import me.proton.android.pass.data.api.UrlSanitizer
 
 @Immutable
 data class LoginItem(
@@ -45,7 +46,7 @@ data class LoginItem(
             title = "",
             username = "",
             password = "",
-            websiteAddresses = listOf(""),
+            websiteAddresses = persistentListOf(""),
             note = ""
         )
     }

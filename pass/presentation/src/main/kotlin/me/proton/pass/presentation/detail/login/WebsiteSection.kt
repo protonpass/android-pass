@@ -17,6 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
@@ -27,7 +29,7 @@ import me.proton.pass.presentation.detail.DetailSectionTitle
 @Composable
 fun WebsiteSection(
     modifier: Modifier = Modifier,
-    websites: List<String>,
+    websites: ImmutableList<String>,
     onWebsiteClicked: (String) -> Unit,
     onWebsiteLongClicked: (String) -> Unit
 ) {
@@ -63,7 +65,7 @@ fun WebsitesSectionPreview(
     ProtonTheme(isDark = input.first) {
         Surface {
             WebsiteSection(
-                websites = input.second,
+                websites = input.second.toImmutableList(),
                 onWebsiteClicked = {},
                 onWebsiteLongClicked = {}
             )

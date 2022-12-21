@@ -3,6 +3,8 @@ package me.proton.pass.presentation.detail.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -106,7 +108,7 @@ class LoginDetailViewModel @Inject constructor(
                 title = decrypt(item.title),
                 username = itemContents.username,
                 password = password,
-                websites = itemContents.websites,
+                websites = itemContents.websites.toImmutableList(),
                 note = decrypt(item.note)
             )
         }
@@ -117,7 +119,7 @@ class LoginDetailViewModel @Inject constructor(
             title = "",
             username = "",
             password = getInitialPasswordState(),
-            websites = emptyList(),
+            websites = persistentListOf(),
             note = ""
         )
 

@@ -3,6 +3,8 @@ package me.proton.pass.autofill.ui.autofill.select
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -123,8 +125,8 @@ class SelectItemViewModel @Inject constructor(
                 .map { ItemUiFilter.filterByQuery(it, searchQuery) }
                 .map { items ->
                     SelectItemListItems(
-                        suggestions = emptyList(),
-                        items = items,
+                        suggestions = persistentListOf(),
+                        items = items.toImmutableList(),
                         suggestionsForTitle = ""
                     )
                 }
@@ -132,8 +134,8 @@ class SelectItemViewModel @Inject constructor(
             result.flatMap { items ->
                 suggestionsResult.map { suggestions ->
                     SelectItemListItems(
-                        items = items,
-                        suggestions = suggestions,
+                        items = items.toImmutableList(),
+                        suggestions = suggestions.toImmutableList(),
                         suggestionsForTitle = getSuggestionsTitle()
                     )
                 }

@@ -19,9 +19,6 @@ import me.proton.android.pass.ui.shared.CrossBackIcon
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.common.api.None
-import me.proton.pass.common.api.Option
-import me.proton.pass.common.api.Some
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
@@ -39,7 +36,7 @@ fun AliasTopBar(
     onUpClick: () -> Unit,
     isDraft: Boolean,
     isButtonEnabled: IsButtonEnabled,
-    shareId: Option<ShareId>,
+    shareId: ShareId?,
     isLoadingState: IsLoadingState,
     onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit,
     onSubmit: (ShareId) -> Unit
@@ -59,9 +56,10 @@ fun AliasTopBar(
                 enabled = buttonEnabled && isLoadingState == IsLoadingState.NotLoading,
                 onClick = {
                     keyboardController?.hide()
-                    when (shareId) {
-                        None -> onEmitSnackbarMessage(AliasSnackbarMessage.EmptyShareIdError)
-                        is Some -> onSubmit(shareId.value)
+                    if (shareId == null) {
+                        onEmitSnackbarMessage(AliasSnackbarMessage.EmptyShareIdError)
+                    } else {
+                        onSubmit(shareId)
                     }
                 },
                 modifier = Modifier.padding(end = 10.dp)
@@ -105,7 +103,7 @@ fun AliasTopBarPreview(
                 onUpClick = {},
                 onEmitSnackbarMessage = {},
                 onSubmit = {},
-                shareId = None
+                shareId = null
             )
         }
     }

@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmall
 import me.proton.pass.commonui.api.ThemePreviewProvider
@@ -32,7 +33,7 @@ fun FABBottomSheetContents(
 ) {
     Column(modifier) {
         BottomSheetItemList(
-            items = listOf(
+            items = persistentListOf(
                 createLogin(onCreateLogin),
                 createAlias(onCreateAlias),
                 createNote(onCreateNote),

@@ -8,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
@@ -36,7 +38,7 @@ fun SortingBottomSheetContents(
 private fun sortingItemList(
     selectedSortingType: SortingType,
     onSortingTypeSelected: (SortingType) -> Unit
-): List<BottomSheetItem> =
+): ImmutableList<BottomSheetItem> =
     SortingType.values()
         .map {
             object : BottomSheetItem {
@@ -52,6 +54,7 @@ private fun sortingItemList(
                     get() = { onSortingTypeSelected(it) }
             }
         }
+        .toImmutableList()
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview

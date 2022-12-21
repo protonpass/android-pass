@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.domain.ItemId
@@ -47,7 +48,7 @@ fun AliasOptionsBottomSheetContents(
         )
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
-            items = listOf(
+            items = persistentListOf(
                 copyAlias(itemType.aliasEmail, onCopyAlias),
                 edit(itemUiModel, onEdit),
                 moveToTrash(itemUiModel, onMoveToTrash)

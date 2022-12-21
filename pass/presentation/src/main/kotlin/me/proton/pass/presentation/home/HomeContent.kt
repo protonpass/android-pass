@@ -1,6 +1,8 @@
 package me.proton.pass.presentation.home
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
@@ -15,6 +17,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
@@ -96,6 +99,9 @@ internal fun HomeContent(
                 } else {
                     EmptyList(emptyListMessage = stringResource(id = R.string.empty_list_home_subtitle))
                 }
+            },
+            footer = {
+                item { Spacer(Modifier.height(64.dp)) }
             }
         )
         ConfirmItemDeletionDialog(

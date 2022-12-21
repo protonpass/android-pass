@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
@@ -31,6 +32,8 @@ import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
 import me.proton.android.pass.data.api.usecases.RefreshShares
 import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.network.api.NetworkMonitor
+import me.proton.android.pass.network.api.NetworkStatus
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.android.pass.preferences.UserPreferencesRepository
@@ -53,6 +56,7 @@ class AppViewModel @Inject constructor(
     preferenceRepository: UserPreferencesRepository,
     observeActiveShare: ObserveActiveShare,
     itemRepository: ItemRepository,
+    networkMonitor: NetworkMonitor,
     private val getCurrentUserId: GetCurrentUserId,
     private val getCurrentShare: GetCurrentShare,
     private val createVault: CreateVault,
@@ -99,22 +103,42 @@ class AppViewModel @Inject constructor(
             }
         }
 
+    private val drawerStateFlow: Flow<DrawerState> = combine(
+        drawerSectionState,
+        itemCountSummaryFlow
+    ) { drawerSection, itemCountSummary ->
+        DrawerState(
+            section = drawerSection,
+            itemCountSummary = itemCountSummary
+        )
+    }
+
+    private data class DrawerState(
+        val section: NavigationDrawerSection,
+        val itemCountSummary: ItemCountSummary
+    )
+
+    private val networkStatus: Flow<NetworkStatus> = networkMonitor
+        .connectivity
+        .distinctUntilChanged()
+
     val appUiState: StateFlow<AppUiState> = combine(
         currentUserFlow,
-        drawerSectionState,
+        drawerStateFlow,
         snackbarMessageRepository.snackbarMessage,
         themePreference,
-        itemCountSummaryFlow
-    ) { user, sectionState, snackbarMessage, theme, itemCount ->
+        networkStatus
+    ) { user, drawerState, snackbarMessage, theme, network ->
         AppUiState(
             snackbarMessage = snackbarMessage,
             drawerUiState = DrawerUiState(
                 appNameResId = R.string.app_name,
                 currentUser = user,
-                selectedSection = sectionState,
-                itemCountSummary = itemCount
+                selectedSection = drawerState.section,
+                itemCountSummary = drawerState.itemCountSummary
             ),
-            theme = theme
+            theme = theme,
+            networkStatus = network
         )
     }
         .stateIn(

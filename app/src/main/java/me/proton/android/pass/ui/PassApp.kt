@@ -1,5 +1,7 @@
 package me.proton.android.pass.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
@@ -19,6 +21,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import me.proton.android.pass.navigation.api.rememberAppNavigator
+import me.proton.android.pass.network.api.NetworkStatus
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.android.pass.ui.internal.InternalDrawerState
 import me.proton.android.pass.ui.internal.InternalDrawerValue
@@ -27,6 +30,7 @@ import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.common.api.Some
+import me.proton.pass.presentation.components.OfflineIndicator
 import me.proton.pass.presentation.components.common.PassSnackbarHost
 import me.proton.pass.presentation.components.common.rememberPassSnackbarHostState
 import me.proton.pass.presentation.components.navigation.CoreNavigation
@@ -121,21 +125,29 @@ fun PassAppContent(
             onSnackbarMessageDelivered()
         }
     }
+
+
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
         snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
     ) { contentPadding ->
         InternalDrawer(drawerState = internalDrawerState) {
-            PassNavHost(
-                modifier = Modifier.padding(contentPadding),
-                drawerUiState = appUiState.drawerUiState,
-                appNavigator = appNavigator,
-                homeFilterMode = homeFilterState,
-                navDrawerNavigation = navDrawerNavigation,
-                coreNavigation = coreNavigation,
-                finishActivity = finishActivity
-            )
+            Column(modifier = Modifier.padding(contentPadding)) {
+                PassNavHost(
+                    modifier = Modifier.weight(1f),
+                    drawerUiState = appUiState.drawerUiState,
+                    appNavigator = appNavigator,
+                    homeFilterMode = homeFilterState,
+                    navDrawerNavigation = navDrawerNavigation,
+                    coreNavigation = coreNavigation,
+                    finishActivity = finishActivity
+                )
+
+                AnimatedVisibility(visible = appUiState.networkStatus == NetworkStatus.Offline) {
+                    OfflineIndicator()
+                }
+            }
         }
     }
 }

@@ -289,4 +289,7 @@
     <string name="on_boarding_last_page_title">Enjoy a spam-free inbox</string>
     <string name="on_boarding_last_page_button">Get started</string>
     <string name="on_boarding_skip">Not now</string>
+
+    <!-- Indicator that indicates lack of internet connectivity -->
+    <string name="indicator_no_network">Offline</string>
 </resources>

@@ -264,6 +264,8 @@ dependencies {
     implementation(projects.pass.data.impl)
     implementation(projects.pass.domain)
     implementation(projects.pass.navigation.api)
+    implementation(projects.pass.network.api)
+    implementation(projects.pass.network.impl)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.notifications.implementation)
     implementation(projects.pass.preferences.api)

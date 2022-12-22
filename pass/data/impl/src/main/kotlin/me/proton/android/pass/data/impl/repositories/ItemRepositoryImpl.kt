@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import me.proton.android.pass.crypto.api.context.EncryptionContext
+import me.proton.android.pass.crypto.api.context.EncryptionContextProvider
 import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.api.PendingEventList
-import me.proton.android.pass.data.api.crypto.EncryptionContext
-import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.repositories.KeyPacketRepository

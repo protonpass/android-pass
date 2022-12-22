@@ -1,6 +1,5 @@
-package me.proton.android.pass.data.impl.crypto.context
+package me.proton.android.pass.crypto.impl.context
 
-import me.proton.android.pass.data.api.crypto.EncryptionKey
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -31,7 +30,11 @@ class EncryptionContextImplTest {
         }
     }
 
-    fun provideKey(): EncryptionKey =
-        EncryptionKey(ByteArray(32, init = { 0xab.toByte() }))
+    fun provideKey(): EncryptionKey = EncryptionKey(
+        ByteArray(
+            32,
+            init = { 0xab.toByte() })
+    )
 
 }
+

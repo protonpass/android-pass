@@ -23,7 +23,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.android.pass.BuildConfig
+import me.proton.android.pass.appconfig.api.AppConfig
 import me.proton.android.pass.network.PassApiClient
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
 import me.proton.core.network.data.di.AlternativeApiPins
@@ -44,20 +44,19 @@ import javax.inject.Singleton
 @Suppress("LongParameterList")
 object NetworkModule {
 
-    const val HOST = BuildConfig.HOST
-    const val API_HOST = "api.$HOST"
-    const val BASE_URL = "https://$API_HOST"
-
     @Provides
     @BaseProtonApiUrl
-    fun provideProtonApiUrl(): HttpUrl = BASE_URL.toHttpUrl()
+    fun provideProtonApiUrl(appConfig: AppConfig): HttpUrl =
+        "https://api.${appConfig.host}".toHttpUrl()
 
     @Provides
     @Singleton
-    fun provideExtraHeaderProvider(): ExtraHeaderProvider = ExtraHeaderProviderImpl().apply {
-        val proxyToken: String? = BuildConfig.PROXY_TOKEN
-        proxyToken?.takeIfNotBlank()?.let { addHeaders("X-atlas-secret" to it) }
-    }
+    fun provideExtraHeaderProvider(appConfig: AppConfig): ExtraHeaderProvider =
+        ExtraHeaderProviderImpl().apply {
+            appConfig.proxyToken
+                ?.takeIfNotBlank()
+                ?.let { addHeaders("X-atlas-secret" to it) }
+        }
 
     @DohProviderUrls
     @Provides
@@ -65,13 +64,13 @@ object NetworkModule {
 
     @CertificatePins
     @Provides
-    fun provideCertificatePins(): Array<String> =
-        Constants.DEFAULT_SPKI_PINS.takeIf { BuildConfig.USE_DEFAULT_PINS } ?: emptyArray()
+    fun provideCertificatePins(appConfig: AppConfig): Array<String> =
+        Constants.DEFAULT_SPKI_PINS.takeIf { appConfig.useDefaultPins } ?: emptyArray()
 
     @AlternativeApiPins
     @Provides
-    fun provideAlternativeApiPins(): List<String> =
-        Constants.ALTERNATIVE_API_SPKI_PINS.takeIf { BuildConfig.USE_DEFAULT_PINS } ?: emptyList()
+    fun provideAlternativeApiPins(appConfig: AppConfig): List<String> =
+        Constants.ALTERNATIVE_API_SPKI_PINS.takeIf { appConfig.useDefaultPins } ?: emptyList()
 
     @Provides
     @Singleton

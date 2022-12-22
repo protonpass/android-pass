@@ -7,6 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import me.proton.android.pass.PassAppConfig
+import me.proton.android.pass.appconfig.api.AppConfig
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.AppStore
@@ -41,4 +43,8 @@ object ApplicationModule {
     fun provideWorkManager(
         @ApplicationContext context: Context
     ): WorkManager = WorkManager.getInstance(context)
+
+    @Provides
+    @Singleton
+    fun provideAppConfig(): AppConfig = PassAppConfig()
 }

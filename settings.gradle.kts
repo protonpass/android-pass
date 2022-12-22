@@ -40,6 +40,7 @@ includeCoreBuild {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":app")
+include(":pass:app-config:api")
 include(":pass:autofill:api")
 include(":pass:autofill:demo")
 include(":pass:autofill:fakes")

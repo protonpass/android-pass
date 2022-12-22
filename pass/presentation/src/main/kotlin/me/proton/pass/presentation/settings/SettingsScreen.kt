@@ -17,7 +17,6 @@ import me.proton.android.pass.biometry.ContextHolder
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
-    appVersion: String,
     onDrawerIconClick: () -> Unit
 ) {
     val viewModel: SettingsViewModel = hiltViewModel()
@@ -29,13 +28,12 @@ fun SettingsScreen(
         scaffoldState = scaffoldState,
         onDrawerIconClick = onDrawerIconClick,
         state = state,
-        appVersion = appVersion,
         onThemeChange = { viewModel.onThemePreferenceChange(it) },
         onFingerPrintLockChange = {
             viewModel.onFingerPrintLockChange(ContextHolder.fromContext(context), it)
         },
         onToggleAutofillChange = { viewModel.onToggleAutofill(it) },
         onForceSyncClick = { viewModel.onForceSync() },
-        onAppVersionClick = { viewModel.copyAppVersion(appVersion) }
+        onAppVersionClick = { viewModel.copyAppVersion(it) }
     )
 }

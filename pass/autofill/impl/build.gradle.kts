@@ -62,6 +62,7 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.biometry.api)
+    implementation(projects.pass.crypto.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
@@ -78,15 +79,16 @@ dependencies {
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
 
-    testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.biometry.fakes)
+    testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
 
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
+    testImplementation(libs.kotlinTest)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
-
+    testImplementation(libs.core.test.kotlin)
 }

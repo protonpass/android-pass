@@ -1,4 +1,4 @@
-package me.proton.android.pass.data.api.crypto
+package me.proton.android.pass.crypto.api.context
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString

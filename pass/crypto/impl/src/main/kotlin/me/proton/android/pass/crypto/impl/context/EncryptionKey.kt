@@ -1,4 +1,4 @@
-package me.proton.android.pass.data.api.crypto
+package me.proton.android.pass.crypto.impl.context
 
 data class EncryptionKey(val key: ByteArray) {
     fun clear() {

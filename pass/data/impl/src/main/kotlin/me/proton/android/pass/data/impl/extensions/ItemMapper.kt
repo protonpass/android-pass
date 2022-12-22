@@ -1,6 +1,6 @@
 package me.proton.android.pass.data.impl.extensions
 
-import me.proton.android.pass.data.api.crypto.EncryptionContext
+import me.proton.android.pass.crypto.api.context.EncryptionContext
 import me.proton.android.pass.data.impl.db.entities.ItemEntity
 import me.proton.pass.domain.ItemType
 import proton_pass_item_v1.ItemV1

@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
+import me.proton.android.pass.crypto.api.context.EncryptionContextProvider
 import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import me.proton.android.pass.log.api.PassLogger
 import me.proton.pass.autofill.PendingIntentUtils.getOpenAppPendingIntent

@@ -25,7 +25,7 @@ import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import me.proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import me.proton.android.pass.data.api.UrlSanitizer
-import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
+import me.proton.android.pass.crypto.api.context.EncryptionContextProvider
 import me.proton.android.pass.data.api.usecases.GetAppNameFromPackageName
 import me.proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import me.proton.android.pass.data.api.usecases.ItemTypeFilter

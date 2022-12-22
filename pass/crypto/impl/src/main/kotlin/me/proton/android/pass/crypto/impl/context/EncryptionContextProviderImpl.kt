@@ -1,13 +1,12 @@
-package me.proton.android.pass.data.impl.crypto.context
+package me.proton.android.pass.crypto.impl.context
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import me.proton.android.pass.data.api.crypto.EncryptionContext
-import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
-import me.proton.android.pass.data.api.crypto.EncryptionKey
+import me.proton.android.pass.crypto.api.context.EncryptionContext
+import me.proton.android.pass.crypto.api.context.EncryptionContextProvider
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray

@@ -9,7 +9,7 @@ import android.service.autofill.SaveInfo
 import android.view.autofill.AutofillId
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
-import me.proton.android.pass.data.api.crypto.EncryptionContext
+import me.proton.android.pass.crypto.api.context.EncryptionContext
 import me.proton.android.pass.data.api.extensions.loginUsername
 import me.proton.pass.autofill.DatasetBuilderOptions
 import me.proton.pass.autofill.DatasetUtils

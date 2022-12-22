@@ -1,4 +1,4 @@
-package me.proton.pass.test.core
+package me.proton.pass.test
 
 import androidx.lifecycle.SavedStateHandle
 

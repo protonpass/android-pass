@@ -18,6 +18,7 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.uiToolingPreview)
+    api(libs.androidx.compose.runtime)
+    api(libs.androidx.compose.ui)
+    api(libs.androidx.compose.uiToolingPreview)
 }

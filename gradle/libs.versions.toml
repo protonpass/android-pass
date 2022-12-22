@@ -7,7 +7,7 @@ accompanist = "0.25.1"
 # Android
 material = "1.7.0"
 # AndroidX
-androidx-activity = "1.4.0"
+androidx-activity = "1.5.1"
 androidx-annotation = "1.5.0"
 androidx-autofill = "1.1.0"
 androidx-biometric = "1.2.0-alpha05"
@@ -87,12 +87,14 @@ accompanist-insets = { module = "com.google.accompanist:accompanist-insets", ver
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
+accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanist" }
 accompanist-placeholder-material = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist" }
 accompanist-swipeRefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 accompanist-systemUiController = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 
 # AndroidX
 ## Activity
+androidx-activity = { module = "androidx.activity:activity", version.ref = "androidx-activity" }
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 ## Biometric
@@ -123,6 +125,7 @@ androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-com
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-viewmodel-savedstate = { module = "androidx.lifecycle:lifecycle-viewmodel-savedstate", version.ref = "androidx-lifecycle" }
 ## Navigation
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 ## Room
@@ -139,12 +142,15 @@ turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 # Core
 core-account = { module = "me.proton.core:account", version.ref = "core" }
+core-account-domain = { module = "me.proton.core:account-domain", version.ref = "core" }
 core-accountManager = { module = "me.proton.core:account-manager", version.ref = "core" }
+core-accountManager-domain = { module = "me.proton.core:account-manager-domain", version.ref = "core" }
 core-accountManager-presentation-compose = { module = "me.proton.core:account-manager-presentation-compose", version.ref = "core" }
 core-auth = { module = "me.proton.core:auth", version.ref = "core" }
 core-challenge = { module = "me.proton.core:challenge", version.ref = "core" }
 core-country = { module = "me.proton.core:country", version.ref = "core" }
 core-crypto = { module = "me.proton.core:crypto", version.ref = "core" }
+core-cryptoAndroid = { module = "me.proton.core:crypto-android", version.ref = "core" }
 core-cryptoCommon = { module = "me.proton.core:crypto-common", version.ref = "core" }
 core-cryptoValidator = { module = "me.proton.core:crypto-validator", version.ref = "core" }
 core-data = { module = "me.proton.core:data", version.ref = "core" }
@@ -154,6 +160,7 @@ core-eventManager = { module = "me.proton.core:event-manager", version.ref = "co
 core-featureFlag = { module = "me.proton.core:feature-flag", version.ref = "core" }
 core-humanVerification = { module = "me.proton.core:human-verification", version.ref = "core" }
 core-key = { module = "me.proton.core:key", version.ref = "core" }
+core-key-domain = { module = "me.proton.core:key-domain", version.ref = "core" }
 core-network = { module = "me.proton.core:network", version.ref = "core" }
 core-network-domain = { module = "me.proton.core:network-domain", version.ref = "core" }
 core-payment = { module = "me.proton.core:payment", version.ref = "core" }
@@ -166,7 +173,9 @@ core-test-android = { module = "me.proton.core:test-android", version.ref = "cor
 core-test-android-instrumented = { module = "me.proton.core:test-android-instrumented", version.ref = "core" }
 core-test-kotlin = { module = "me.proton.core:test-kotlin", version.ref = "core" }
 core-user = { module = "me.proton.core:user", version.ref = "core" }
+core-user-domain = { module = "me.proton.core:user-domain", version.ref = "core" }
 core-userSettings = { module = "me.proton.core:user-settings", version.ref = "core" }
+core-userSettings-domain = { module = "me.proton.core:user-settings-domain", version.ref = "core" }
 core-utilAndroidDagger = { module = "me.proton.core:util-android-dagger", version.ref = "core" }
 core-utilKotlin = { module = "me.proton.core:util-kotlin", version.ref = "core" }
 
@@ -177,7 +186,7 @@ dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compil
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
 
 # Google
-google-protobuf-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobuf" }
+google-protobuf-lite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
 google-protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 
 # JakeWharton
@@ -194,8 +203,9 @@ kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 material = { module = "com.google.android.material:material", version.ref = "material" }
 
 # Sentry
-sentry = { module = "io.sentry:sentry-android", version.ref = "sentry" }
-sentry-timber = { module = "io.sentry:sentry-android-timber", version.ref = "sentry" }
+sentry = { module = "io.sentry:sentry", version.ref = "sentry" }
+sentry-android-core = { module = "io.sentry:sentry-android-core", version.ref = "sentry" }
+sentry-android-timber = { module = "io.sentry:sentry-android-timber", version.ref = "sentry" }
 
 # Showkase
 showkase = { module = "com.airbnb.android:showkase", version.ref = "showkase" }

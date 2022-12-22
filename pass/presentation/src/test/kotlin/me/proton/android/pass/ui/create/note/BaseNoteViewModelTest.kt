@@ -7,7 +7,7 @@ import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import me.proton.pass.presentation.create.note.BaseNoteViewModel
 import me.proton.pass.presentation.create.note.CreateUpdateNoteUiState.Companion.Initial
 import me.proton.pass.test.MainDispatcherRule
-import me.proton.pass.test.core.TestSavedStateHandle
+import me.proton.pass.test.TestSavedStateHandle
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

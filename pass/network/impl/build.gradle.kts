@@ -16,7 +16,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.pass.network.api)
+    api(projects.pass.network.api)
 
     implementation(libs.kotlinx.coroutines.core)
 

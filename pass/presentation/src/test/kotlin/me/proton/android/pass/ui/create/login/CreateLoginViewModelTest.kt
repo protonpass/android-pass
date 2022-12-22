@@ -21,7 +21,7 @@ import me.proton.pass.presentation.uievents.ItemSavedState
 import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.TestUtils
 import me.proton.pass.test.core.TestAccountManager
-import me.proton.pass.test.core.TestSavedStateHandle
+import me.proton.pass.test.TestSavedStateHandle
 import me.proton.pass.test.crypto.TestKeyStoreCrypto
 import me.proton.pass.test.domain.TestItem
 import me.proton.pass.test.domain.usecases.TestCreateAlias

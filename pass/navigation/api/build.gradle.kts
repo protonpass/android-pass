@@ -23,11 +23,13 @@ android {
 
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
-
     implementation(libs.accompanist.navigation.animation)
-    implementation(libs.androidx.compose.foundation)
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.core.cryptoAndroid)
+    implementation(libs.core.cryptoCommon)
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.core.crypto)
-    implementation(libs.core.utilKotlin)
+
+    api(libs.androidx.compose.runtime)
+
     implementation(projects.pass.log)
 }

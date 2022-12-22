@@ -16,6 +16,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.biometric)
+    implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.dagger.hilt.android)
@@ -23,8 +25,6 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.common.api)
-    implementation(projects.pass.biometry.api)
+    api(projects.pass.biometry.api)
     implementation(projects.pass.log)
-    implementation(libs.androidx.biometric)
-    implementation(libs.core.utilKotlin)
 }

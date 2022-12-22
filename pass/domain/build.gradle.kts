@@ -39,15 +39,12 @@ android {
 }
 
 dependencies {
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.core.account)
-    implementation(libs.core.accountManager)
-    implementation(libs.core.crypto)
-    implementation(libs.core.domain)
-    implementation(libs.core.key)
-    implementation(libs.core.user)
+    implementation(libs.androidx.annotation)
+    implementation(libs.core.utilKotlin)
 
-    implementation(projects.pass.common.api)
+    api(libs.core.cryptoCommon)
+    api(libs.core.key.domain)
+
     implementation(projects.pass.log)
 
     implementation(libs.dagger.hilt.android)

@@ -20,7 +20,7 @@ import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.core.TestAccountManager
-import me.proton.pass.test.core.TestSavedStateHandle
+import me.proton.pass.test.TestSavedStateHandle
 import me.proton.pass.test.data.TestAliasRepository
 import me.proton.pass.test.domain.TestAliasMailbox
 import me.proton.pass.test.domain.TestAliasSuffix

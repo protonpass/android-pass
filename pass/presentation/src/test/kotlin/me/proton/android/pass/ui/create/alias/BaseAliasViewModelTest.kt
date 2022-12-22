@@ -11,7 +11,7 @@ import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.BaseAliasViewModel
 import me.proton.pass.presentation.create.alias.CreateUpdateAliasUiState.Companion.Initial
 import me.proton.pass.test.MainDispatcherRule
-import me.proton.pass.test.core.TestSavedStateHandle
+import me.proton.pass.test.TestSavedStateHandle
 import me.proton.pass.test.domain.TestAliasSuffix
 import org.junit.Before
 import org.junit.Rule

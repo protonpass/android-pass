@@ -12,14 +12,16 @@ data class SettingsUiState(
     val fingerprintSection: FingerprintSectionState,
     val themePreference: ThemePreference,
     val autofillStatus: AutofillSupportedStatus,
-    val isLoadingState: IsLoadingState
+    val isLoadingState: IsLoadingState,
+    val appVersion: String
 ) {
     companion object {
-        val Initial = SettingsUiState(
+        fun getInitialState(appVersion: String) = SettingsUiState(
             fingerprintSection = FingerprintSectionState.Available(IsButtonEnabled.Disabled),
             themePreference = ThemePreference.System,
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
-            isLoadingState = IsLoadingState.NotLoading
+            isLoadingState = IsLoadingState.NotLoading,
+            appVersion = appVersion
         )
     }
 }

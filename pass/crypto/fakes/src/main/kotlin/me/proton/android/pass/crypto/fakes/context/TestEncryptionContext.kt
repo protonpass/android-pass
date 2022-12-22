@@ -1,6 +1,6 @@
-package me.proton.android.pass.data.fakes.crypto
+package me.proton.android.pass.crypto.fakes.context
 
-import me.proton.android.pass.data.api.crypto.EncryptionContext
+import me.proton.android.pass.crypto.api.context.EncryptionContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 
@@ -45,3 +45,4 @@ object TestEncryptionContext : EncryptionContext {
         return newByteArray
     }
 }
+

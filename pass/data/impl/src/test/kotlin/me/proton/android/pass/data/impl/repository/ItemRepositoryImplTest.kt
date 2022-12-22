@@ -1,7 +1,7 @@
 package me.proton.android.pass.data.impl.repository
 
 import kotlinx.coroutines.test.runTest
-import me.proton.android.pass.data.fakes.crypto.TestEncryptionContextProvider
+import me.proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import me.proton.android.pass.data.impl.fakes.TestCreateItem
 import me.proton.android.pass.data.impl.fakes.TestKeyPacketRepository
 import me.proton.android.pass.data.impl.fakes.TestLocalItemDataSource

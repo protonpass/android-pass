@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.commonuimodels.api.ItemUiModel
-import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
+import me.proton.android.pass.crypto.api.context.EncryptionContextProvider
 import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState

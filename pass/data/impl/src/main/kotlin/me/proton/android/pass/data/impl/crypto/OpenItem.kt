@@ -1,6 +1,6 @@
 package me.proton.android.pass.data.impl.crypto
 
-import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
+import me.proton.android.pass.crypto.api.context.EncryptionContextProvider
 import me.proton.android.pass.data.impl.error.InvalidSignature
 import me.proton.android.pass.data.impl.error.KeyNotFound
 import me.proton.android.pass.data.impl.extensions.fromParsed

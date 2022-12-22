@@ -1,7 +1,7 @@
 package me.proton.pass.commonui.api
 
 import me.proton.android.pass.commonuimodels.api.ItemUiModel
-import me.proton.android.pass.data.api.crypto.EncryptionContext
+import me.proton.android.pass.crypto.api.context.EncryptionContext
 import me.proton.pass.domain.Item
 
 fun Item.toUiModel(context: EncryptionContext): ItemUiModel =

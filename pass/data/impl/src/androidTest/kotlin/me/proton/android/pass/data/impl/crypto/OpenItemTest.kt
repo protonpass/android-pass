@@ -1,6 +1,6 @@
 package me.proton.android.pass.data.impl.crypto
 
-import me.proton.android.pass.data.fakes.crypto.TestEncryptionContextProvider
+import me.proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import me.proton.android.pass.data.impl.responses.ItemRevision
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.android.pgp.GOpenPGPCrypto

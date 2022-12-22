@@ -1,8 +1,7 @@
-package me.proton.android.pass.data.impl.crypto.context
+package me.proton.android.pass.crypto.impl.context
 
 import android.util.Base64
-import me.proton.android.pass.data.api.crypto.EncryptionContext
-import me.proton.android.pass.data.api.crypto.EncryptionKey
+import me.proton.android.pass.crypto.api.context.EncryptionContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import javax.crypto.Cipher

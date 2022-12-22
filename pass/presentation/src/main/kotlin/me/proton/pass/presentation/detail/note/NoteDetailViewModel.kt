@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.clipboard.api.ClipboardManager
-import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
+import me.proton.android.pass.crypto.api.context.EncryptionContextProvider
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.domain.Item
 import me.proton.pass.presentation.detail.DetailSnackbarMessages

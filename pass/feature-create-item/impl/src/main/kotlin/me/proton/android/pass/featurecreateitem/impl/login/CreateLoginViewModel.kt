@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
+import me.proton.android.pass.crypto.api.context.EncryptionContextProvider
 import me.proton.android.pass.data.api.usecases.CreateAlias
 import me.proton.android.pass.data.api.usecases.CreateItem
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare

@@ -8,7 +8,7 @@ import me.proton.pass.presentation.create.login.BaseLoginViewModel
 import me.proton.pass.presentation.create.login.CreateUpdateLoginUiState.Companion.Initial
 import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.core.TestAccountManager
-import me.proton.pass.test.core.TestSavedStateHandle
+import me.proton.pass.test.TestSavedStateHandle
 import me.proton.pass.test.domain.usecases.TestCreateAlias
 import me.proton.pass.test.domain.usecases.TestObserveActiveShare
 import org.junit.Before

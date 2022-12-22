@@ -23,6 +23,6 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.common.api)
-    implementation(projects.pass.notifications.api)
 
+    api(projects.pass.notifications.api)
 }

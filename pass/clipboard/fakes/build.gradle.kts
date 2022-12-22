@@ -13,5 +13,5 @@ android {
     }
 }
 dependencies {
-    implementation(projects.pass.clipboard.api)
+    api(projects.pass.clipboard.api)
 }

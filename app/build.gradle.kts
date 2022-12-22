@@ -48,7 +48,7 @@ val privateProperties = Properties().apply {
     }
 }
 
-val sentryDSN: String = privateProperties.getProperty("SENTRY_DSN") ?: ""
+val sentryDSN: String? = privateProperties.getProperty("SENTRY_DSN")
 val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 
 android {
@@ -66,6 +66,12 @@ android {
         buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
         buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
         buildConfigField("String", "HUMAN_VERIFICATION_HOST", "verify.proton.me".toBuildConfigValue())
+    }
+
+    buildFeatures {
+        buildConfig = true
+        compose = true
+        dataBinding = true // required by Core presentation
     }
 
     signingConfigs {
@@ -144,11 +150,6 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_11.toString()
-    }
-
-    buildFeatures {
-        compose = true
-        dataBinding = true // required by Core presentation
     }
 
     composeOptions {
@@ -254,6 +255,7 @@ dependencies {
     add("devImplementation", libs.showkase)
     add("kspDev", libs.showkaseProcessor)
 
+    implementation(projects.pass.appConfig.api)
     implementation(projects.pass.autofill.implementation)
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.biometry.implementation)

@@ -76,7 +76,7 @@ object AutoFillHandler {
         }
     }
 
-    @Suppress("ReturnCount", "LongParameterList")
+    @Suppress("ReturnCount", "LongParameterList", "LongMethod")
     private suspend fun searchAndFill(
         context: Context,
         encryptionContextProvider: EncryptionContextProvider,
@@ -95,9 +95,14 @@ object AutoFillHandler {
         if (hasSupportForInlineSuggestions(request)) {
             val inlineRequest = request.inlineSuggestionsRequest ?: return
             val maxSuggestion = inlineRequest.maxSuggestionCount
+            val autofillPackageName = if (BROWSERS.contains(packageName)) {
+                None
+            } else {
+                Some(packageName)
+            }
             val suggestedItemsResult: Option<Result.Success<List<Item>>> =
                 getSuggestedLoginItems(
-                    packageName = autofillData.packageName.toOption(),
+                    packageName = autofillPackageName,
                     url = autofillData.assistInfo.url
                 )
                     .filterIsInstance<Result.Success<List<Item>>>()

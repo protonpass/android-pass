@@ -102,6 +102,7 @@ dependencies {
     add("devImplementation", libs.showkase)
     add("kspDev", libs.showkaseProcessor)
 
+    implementation(projects.pass.appConfig.api)
     implementation(projects.pass.autofill.api)
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.clipboard.api)

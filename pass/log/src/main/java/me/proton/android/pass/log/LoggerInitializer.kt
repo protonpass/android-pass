@@ -54,14 +54,7 @@ class LoggerInitializer : Initializer<Unit> {
         CoreLogger.set(PassLogger)
     }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> {
-        return if (BuildConfig.DEBUG) {
-            emptyList()
-        } else {
-            emptyList()
-            // listOf(SentryInitializer::class.java)
-        }
-    }
+    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)

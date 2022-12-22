@@ -22,7 +22,7 @@ fun AppSection(
     modifier: Modifier = Modifier,
     appVersion: String,
     onForceSyncClick: () -> Unit,
-    onAppVersionClick: () -> Unit
+    onAppVersionClick: (String) -> Unit
 ) {
     Column(modifier = modifier.padding(vertical = 12.dp)) {
         ProtonSettingsHeader(title = stringResource(R.string.settings_app_section_title))
@@ -36,7 +36,7 @@ fun AppSection(
         ProtonSettingsItem(
             name = stringResource(R.string.settings_app_version_title),
             hint = appVersion,
-            onClick = onAppVersionClick
+            onClick = { onAppVersionClick(appVersion) }
         )
     }
 }

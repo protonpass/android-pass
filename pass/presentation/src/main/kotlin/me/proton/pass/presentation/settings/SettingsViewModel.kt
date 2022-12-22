@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.appconfig.api.AppConfig
 import me.proton.android.pass.autofill.api.AutofillManager
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus
 import me.proton.android.pass.biometry.BiometryAuthError
@@ -44,7 +45,8 @@ class SettingsViewModel @Inject constructor(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val autofillManager: AutofillManager,
     private val refreshContent: RefreshContent,
-    private val clipboardManager: ClipboardManager
+    private val clipboardManager: ClipboardManager,
+    private val appConfig: AppConfig
 ) : ViewModel() {
 
     private val biometricLockState: Flow<BiometricLockState> = preferencesRepository
@@ -87,12 +89,13 @@ class SettingsViewModel @Inject constructor(
             fingerprintSection = fingerprintSection,
             themePreference = theme,
             autofillStatus = autofill,
-            isLoadingState = loading
+            isLoadingState = loading,
+            appVersion = appConfig.versionName
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = SettingsUiState.Initial
+        initialValue = SettingsUiState.getInitialState(appConfig.versionName)
     )
 
     fun onFingerPrintLockChange(contextHolder: ContextHolder, state: IsButtonEnabled) =
@@ -104,7 +107,7 @@ class SettingsViewModel @Inject constructor(
                             preferencesRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
                                 .onFailure {
                                     val message = "Could not save HasAuthenticated preference"
-                                    PassLogger.e(TAG, it ?: RuntimeException(message))
+                                    PassLogger.e(TAG, it, message)
                                 }
                             performFingerprintLockChange(state)
                         }

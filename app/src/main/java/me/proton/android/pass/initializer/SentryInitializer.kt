@@ -20,30 +20,49 @@ package me.proton.android.pass.initializer
 
 import android.content.Context
 import androidx.startup.Initializer
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import io.sentry.SentryLevel
 import io.sentry.SentryOptions
 import io.sentry.android.core.SentryAndroid
 import io.sentry.android.timber.SentryTimberIntegration
-import me.proton.android.pass.BuildConfig
+import me.proton.android.pass.appconfig.api.AppConfig
+import me.proton.android.pass.appconfig.api.BuildFlavor.Companion.toValue
 
 class SentryInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {
-        SentryAndroid.init(context) { options: SentryOptions ->
-            options.dsn = BuildConfig.SENTRY_DSN.takeIf { !BuildConfig.DEBUG }.orEmpty()
-            options.release = BuildConfig.VERSION_NAME
-            options.environment = BuildConfig.FLAVOR
-            if (!BuildConfig.DEBUG) {
-                // This approach doesn't respect core telemetry, a refactor is needed
-                options.addIntegration(
-                    SentryTimberIntegration(
-                        minEventLevel = SentryLevel.ERROR,
-                        minBreadcrumbLevel = SentryLevel.INFO
+        val entryPoint = EntryPointAccessors.fromApplication(
+            context.applicationContext,
+            SentryInitializerEntryPoint::class.java
+        )
+        val appConfig = entryPoint.appConfig()
+
+        if (appConfig.sentryDSN?.isNotBlank() == true) {
+            SentryAndroid.init(context) { options: SentryOptions ->
+                options.dsn = appConfig.sentryDSN
+                options.release = appConfig.versionName
+                options.environment = appConfig.flavor.toValue()
+                if (!appConfig.isDebug) {
+                    // This approach doesn't respect core telemetry, a refactor is needed
+                    options.addIntegration(
+                        SentryTimberIntegration(
+                            minEventLevel = SentryLevel.ERROR,
+                            minBreadcrumbLevel = SentryLevel.INFO
+                        )
                     )
-                )
+                }
             }
         }
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface SentryInitializerEntryPoint {
+        fun appConfig(): AppConfig
+    }
 }

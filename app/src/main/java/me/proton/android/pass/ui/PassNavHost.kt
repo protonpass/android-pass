@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import me.proton.android.pass.BuildConfig
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.android.pass.ui.navigation.appGraph
@@ -51,7 +50,6 @@ fun PassNavHost(
     ) {
         appGraph(
             appNavigator = appNavigator,
-            appVersion = BuildConfig.VERSION_NAME,
             homeFilterMode = homeFilterMode,
             navigationDrawer = { content ->
                 val (isSignOutDialogShown, setShowSignOutDialog) =

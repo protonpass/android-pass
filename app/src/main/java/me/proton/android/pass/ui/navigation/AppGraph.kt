@@ -31,7 +31,6 @@ import me.proton.pass.presentation.home.HomeScreenNavigation
 @Suppress("LongParameterList")
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
-    appVersion: String,
     homeFilterMode: HomeFilterMode,
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
     onDrawerIconClick: () -> Unit,
@@ -45,7 +44,7 @@ fun NavGraphBuilder.appGraph(
     )
     trashGraph(navigationDrawer, onDrawerIconClick)
     helpGraph(navigationDrawer, onDrawerIconClick)
-    settingsGraph(appVersion, navigationDrawer, onDrawerIconClick)
+    settingsGraph(navigationDrawer, onDrawerIconClick)
     createLoginGraph(appNavigator)
     updateLoginGraph(appNavigator)
     createNoteGraph(appNavigator)

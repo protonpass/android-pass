@@ -21,12 +21,21 @@ package me.proton.android.pass.initializer
 import android.content.Context
 import android.os.StrictMode
 import androidx.startup.Initializer
-import me.proton.android.pass.BuildConfig
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
+import me.proton.android.pass.appconfig.api.AppConfig
 
 class StrictModeInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {
-        if (BuildConfig.DEBUG) {
+        val entryPoint = EntryPointAccessors.fromApplication(
+            context.applicationContext,
+            StrictModeInitializerEntryPoint::class.java
+        )
+        val appConfig = entryPoint.appConfig()
+        if (appConfig.isDebug) {
             enableStrictMode()
         }
     }
@@ -44,5 +53,11 @@ class StrictModeInitializer : Initializer<Unit> {
 
         StrictMode.setThreadPolicy(threadPolicyBuilder.build())
         StrictMode.setVmPolicy(vmPolicyBuilder.build())
+    }
+
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface StrictModeInitializerEntryPoint {
+        fun appConfig(): AppConfig
     }
 }

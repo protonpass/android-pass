@@ -16,11 +16,11 @@ import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.android.pass.ui.shared.HamburgerIcon
-import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.pass.presentation.R
+import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.IsLoadingState
 
@@ -30,13 +30,12 @@ fun SettingsContent(
     modifier: Modifier = Modifier,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     state: SettingsUiState,
-    appVersion: String,
     onThemeChange: (ThemePreference) -> Unit,
     onFingerPrintLockChange: (IsButtonEnabled) -> Unit,
     onDrawerIconClick: () -> Unit,
     onToggleAutofillChange: (Boolean) -> Unit,
     onForceSyncClick: () -> Unit,
-    onAppVersionClick: () -> Unit
+    onAppVersionClick: (String) -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
@@ -83,7 +82,6 @@ fun SettingsContent(
             Settings(
                 modifier = modifier.padding(contentPadding),
                 state = state,
-                appVersion = appVersion,
                 onOpenThemeSelection = { scope.launch { bottomSheetState.show() } },
                 onFingerPrintLockChange = onFingerPrintLockChange,
                 onToggleAutofillChange = onToggleAutofillChange,

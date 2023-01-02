@@ -2,6 +2,7 @@ package me.proton.pass.presentation.home
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -99,6 +100,9 @@ internal fun HomeContent(
                 } else {
                     EmptyList(emptyListMessage = stringResource(id = R.string.empty_list_home_subtitle))
                 }
+            },
+            header = {
+                item { AutofillCard(Modifier.fillMaxWidth()) }
             },
             footer = {
                 item { Spacer(Modifier.height(64.dp)) }

@@ -125,6 +125,9 @@
     <string name="home_snackbar_alias_moved_to_trash">Alias moved to trash</string>
     <string name="home_snackbar_note_moved_to_trash">Note moved to trash</string>
 
+    <string name="home_autofill_banner_title">Log in to apps instantly ›</string>
+    <string name="home_autofill_banner_text">Let Proton Pass fill in login details for you.\nNo typing or copy-paste required</string>
+
     <!-- Trash -->
     <string name="trash_empty_list_title">Trash empty</string>
     <string name="trash_empty_list_message">Deleted items will be moved here first</string>

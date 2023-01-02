@@ -11,4 +11,5 @@ message UserPreferences {
   bool biometric_lock = 2;
   bool has_authenticated_with_biometry = 3;
   ThemePrefProto theme = 4;
+  bool has_dismissed_autofill_banner = 5;
 }

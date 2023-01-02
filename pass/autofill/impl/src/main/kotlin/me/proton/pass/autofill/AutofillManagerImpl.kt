@@ -8,10 +8,13 @@ import android.provider.Settings
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
 import me.proton.android.pass.autofill.api.AutofillManager
 import me.proton.android.pass.autofill.api.AutofillStatus
+import me.proton.android.pass.autofill.api.AutofillSupportedStatus
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus.Supported
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus.Unsupported
 import me.proton.android.pass.log.PassLogger
@@ -22,7 +25,7 @@ class AutofillManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : AutofillManager {
 
-    override fun getAutofillStatus() = flow {
+    override fun getAutofillStatus(): Flow<AutofillSupportedStatus> = flow {
         val autofillManager =
             context.getSystemService(android.view.autofill.AutofillManager::class.java)
         if (autofillManager == null) {
@@ -46,7 +49,7 @@ class AutofillManagerImpl @Inject constructor(
 
             delay(UPDATE_TIME)
         }
-    }
+    }.distinctUntilChanged()
 
     override fun openAutofillSelector() {
         try {

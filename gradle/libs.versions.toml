@@ -7,7 +7,7 @@ accompanist = "0.25.1"
 # Android
 material = "1.7.0"
 # AndroidX
-androidx-activity = "1.5.1"
+androidx-activity = "1.6.1"
 androidx-annotation = "1.5.0"
 androidx-autofill = "1.1.0"
 androidx-biometric = "1.2.0-alpha05"
@@ -24,15 +24,15 @@ androidx-lifecycle = "2.6.0-alpha02"
 androidx-navigation = "2.5.2"
 androidx-room = "2.4.3"
 androidx-startup = "1.1.1"
-androidx-test = "1.4.0"
-androidx-test-uiautomator = "2.2.0"
+androidx-test = "1.5.0"
+androidx-test-uiautomator = "2.3.0-alpha01"
 androidx-work = "2.7.1"
 # CashApp
 turbine = "0.12.1"
 # Core
 core = "9.8.0"
 # Dagger
-dagger = "2.44"
+dagger = "2.44.2"
 # Google
 protobuf = "3.21.11"
 # Gradle
@@ -40,7 +40,7 @@ gradlePlugin-android = "7.3.1"
 gradlePlugin-dependency-analysis = "1.17.0"
 gradlePlugin-doctor = "0.8.1"
 gradlePlugin-paparazzi = "1.1.0"
-gradlePlugin-ksp = "1.7.20-1.0.7"
+gradlePlugin-ksp = "1.7.20-1.0.8"
 gradlePlugin-protobuf = "0.8.19"
 gradlePlugin-proton-detekt = "1.1.1"
 gradlePlugin-sentry = "3.2.0"

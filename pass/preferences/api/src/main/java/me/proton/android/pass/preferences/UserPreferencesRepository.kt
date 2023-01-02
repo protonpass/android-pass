@@ -15,5 +15,8 @@ interface UserPreferencesRepository {
     suspend fun setThemePreference(theme: ThemePreference): Result<Unit>
     fun getThemePreference(): Flow<ThemePreference>
 
+    suspend fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit>
+    fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner>
+
     suspend fun clearPreferences(): Result<Unit>
 }

@@ -22,6 +22,10 @@ class TestPreferenceRepository : UserPreferencesRepository {
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
     )
 
+    private val hasDismissedAutofillBanner = MutableSharedFlow<HasDismissedAutofillBanner>(
+        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
+    )
+
     override suspend fun setBiometricLockState(state: BiometricLockState): Result<Unit> {
         biometricLockState.tryEmit(state)
         return Result.success(Unit)
@@ -49,6 +53,14 @@ class TestPreferenceRepository : UserPreferencesRepository {
     }
 
     override fun getThemePreference(): Flow<ThemePreference> = themePreference
+
+    override suspend fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit> {
+        hasDismissedAutofillBanner.tryEmit(state)
+        return Result.success(Unit)
+    }
+
+    override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> =
+        hasDismissedAutofillBanner
 
     override suspend fun clearPreferences(): Result<Unit> = Result.success(Unit)
 

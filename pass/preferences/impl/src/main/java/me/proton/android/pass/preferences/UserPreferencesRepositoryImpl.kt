@@ -73,6 +73,22 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 ThemePreference.from(preferences.themeValue)
             }
 
+    override suspend fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit> =
+        runCatching {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setHasDismissedAutofillBanner(state.value())
+                    .build()
+            }
+            return@runCatching
+        }
+
+    override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> =
+        dataStore.data
+            .map { preferences ->
+                HasDismissedAutofillBanner.from(preferences.hasDismissedAutofillBanner)
+            }
+
     override suspend fun clearPreferences(): Result<Unit> =
         runCatching {
             dataStore.updateData {

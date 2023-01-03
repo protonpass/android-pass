@@ -20,11 +20,10 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.asResult
+import me.proton.pass.common.api.map
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
-import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.domain.AliasOptions
-import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.NewAlias
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
@@ -49,7 +48,7 @@ class CreateAliasViewModel @Inject constructor(
     }
 
     private var titleAliasInSync = true
-    private var _aliasOptions: AliasOptions? = null
+    private var _aliasOptions: AliasOptionsUiModel? = null
 
     private val mutableCloseScreenEventFlow: MutableStateFlow<CloseScreenEvent> =
         MutableStateFlow(CloseScreenEvent.NotClose)
@@ -145,8 +144,8 @@ class CreateAliasViewModel @Inject constructor(
     private suspend fun performCreateAlias(
         shareId: ShareId,
         aliasItem: AliasItem,
-        aliasSuffix: AliasSuffix,
-        mailboxes: List<AliasMailbox>
+        aliasSuffix: AliasSuffixUiModel,
+        mailboxes: List<AliasMailboxUiModel>
     ) {
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
         if (userId != null) {
@@ -157,8 +156,8 @@ class CreateAliasViewModel @Inject constructor(
                     title = aliasItem.title,
                     note = aliasItem.note,
                     prefix = aliasItem.alias,
-                    suffix = aliasSuffix,
-                    mailboxes = mailboxes
+                    suffix = aliasSuffix.toDomain(),
+                    mailboxes = mailboxes.map(AliasMailboxUiModel::toDomain)
                 )
             )
                 .onSuccess { item ->
@@ -175,11 +174,12 @@ class CreateAliasViewModel @Inject constructor(
 
     private suspend fun onAliasOptions(result: Result<AliasOptions>) {
         result
+            .map(::AliasOptionsUiModel)
             .onSuccess { aliasOptions ->
                 _aliasOptions = aliasOptions
 
                 val mailboxes = aliasOptions.mailboxes.mapIndexed { idx, model ->
-                    AliasMailboxUiModel(model = model, selected = idx == 0)
+                    SelectedAliasMailboxUiModel(model = model, selected = idx == 0)
                 }
                 val mailboxTitle = mailboxes.first { it.selected }.model.email
 

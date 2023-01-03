@@ -1,10 +1,10 @@
 package me.proton.android.pass.ui.create.alias
 
 import com.google.common.truth.Truth.assertThat
-import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
+import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
 import org.junit.Test
 
 class AliasItemValidationTest {
@@ -100,7 +100,7 @@ class AliasItemValidationTest {
     @Test
     fun `no mailbox selected should return an error`() {
         val item = itemWithContents(
-            mailboxes = listOf(AliasMailboxUiModel(AliasMailbox(1, "email"), false))
+            mailboxes = listOf(SelectedAliasMailboxUiModel(AliasMailboxUiModel(1, "email"), false))
         )
 
         val res = item.validate()
@@ -112,12 +112,12 @@ class AliasItemValidationTest {
     private fun itemWithContents(
         title: String = "sometitle",
         alias: String = "somealias",
-        mailboxes: List<AliasMailboxUiModel>? = null
+        mailboxes: List<SelectedAliasMailboxUiModel>? = null
     ): AliasItem {
         return AliasItem(
             title = title,
             alias = alias,
-            mailboxes = mailboxes ?: listOf(AliasMailboxUiModel(AliasMailbox(1, "email"), true))
+            mailboxes = mailboxes ?: listOf(SelectedAliasMailboxUiModel(AliasMailboxUiModel(1, "email"), true))
         )
     }
 

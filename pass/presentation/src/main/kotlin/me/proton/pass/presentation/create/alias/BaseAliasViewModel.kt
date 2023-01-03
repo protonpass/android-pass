@@ -17,7 +17,6 @@ import me.proton.android.pass.navigation.api.CommonNavArgId
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.toOption
-import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.uievents.AliasDraftSavedState
 import me.proton.pass.presentation.uievents.AliasSavedState
@@ -115,7 +114,7 @@ abstract class BaseAliasViewModel(
         aliasItemState.update { it.copy(note = value) }
     }
 
-    fun onSuffixChange(suffix: AliasSuffix) {
+    fun onSuffixChange(suffix: AliasSuffixUiModel) {
         aliasItemState.update {
             it.copy(
                 selectedSuffix = suffix,
@@ -127,7 +126,7 @@ abstract class BaseAliasViewModel(
         }
     }
 
-    open fun onMailboxesChanged(mailboxes: List<AliasMailboxUiModel>) {
+    open fun onMailboxesChanged(mailboxes: List<SelectedAliasMailboxUiModel>) {
         val atLeastOneSelected = mailboxes.any { it.selected }
         if (!atLeastOneSelected) return
 
@@ -144,7 +143,7 @@ abstract class BaseAliasViewModel(
             snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
 
-    protected fun getMailboxTitle(mailboxes: List<AliasMailboxUiModel>): String {
+    protected fun getMailboxTitle(mailboxes: List<SelectedAliasMailboxUiModel>): String {
         val allSelectedMailboxes = mailboxes.filter { it.selected }
         if (allSelectedMailboxes.isEmpty()) return ""
         val mailboxTitle = buildString {
@@ -157,7 +156,7 @@ abstract class BaseAliasViewModel(
         return mailboxTitle
     }
 
-    protected fun getAliasToBeCreated(alias: String, suffix: AliasSuffix?): String? {
+    protected fun getAliasToBeCreated(alias: String, suffix: AliasSuffixUiModel?): String? {
         if (suffix != null && alias.isNotBlank()) {
             return "$alias${suffix.suffix}"
         }

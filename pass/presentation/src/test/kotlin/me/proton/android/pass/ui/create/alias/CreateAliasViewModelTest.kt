@@ -8,22 +8,20 @@ import me.proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
-import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.domain.AliasOptions
-import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage
+import me.proton.pass.presentation.create.alias.AliasSuffixUiModel
 import me.proton.pass.presentation.create.alias.CreateAliasViewModel
 import me.proton.pass.presentation.create.alias.CreateUpdateAliasUiState
+import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.test.MainDispatcherRule
-import me.proton.pass.test.core.TestAccountManager
 import me.proton.pass.test.TestSavedStateHandle
+import me.proton.pass.test.core.TestAccountManager
 import me.proton.pass.test.data.TestAliasRepository
-import me.proton.pass.test.domain.TestAliasMailbox
-import me.proton.pass.test.domain.TestAliasSuffix
 import me.proton.pass.test.domain.TestItem
 import me.proton.pass.test.domain.TestShare
 import me.proton.pass.test.domain.usecases.TestCreateAlias
@@ -36,8 +34,8 @@ class CreateAliasViewModelTest {
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
-    private lateinit var suffix: AliasSuffix
-    private lateinit var mailbox: AliasMailbox
+    private lateinit var suffix: AliasSuffixUiModel
+    private lateinit var mailbox: AliasMailboxUiModel
     private lateinit var viewModel: CreateAliasViewModel
     private lateinit var aliasRepository: TestAliasRepository
     private lateinit var createAlias: TestCreateAlias
@@ -45,14 +43,14 @@ class CreateAliasViewModelTest {
 
     @Before
     fun setUp() {
-        suffix = TestAliasSuffix.create()
-        mailbox = TestAliasMailbox.create()
+        suffix = TestAliasSuffixUiModel.create()
+        mailbox = TestAliasMailboxUiModel.create()
 
         aliasRepository = TestAliasRepository()
         aliasRepository.setAliasOptions(
             AliasOptions(
-                suffixes = listOf(suffix),
-                mailboxes = listOf(mailbox)
+                suffixes = listOf(suffix.toDomain()),
+                mailboxes = listOf(mailbox.toDomain())
             )
         )
 
@@ -194,7 +192,7 @@ class CreateAliasViewModelTest {
         viewModel.aliasItemState.update {
             AliasItem(
                 mailboxes = listOf(
-                    AliasMailboxUiModel(model = mailbox, selected = false)
+                    SelectedAliasMailboxUiModel(model = mailbox, selected = false)
                 )
             )
         }
@@ -202,6 +200,13 @@ class CreateAliasViewModelTest {
         viewModel.onTitleChange("title")
         viewModel.onAliasChange("alias")
         viewModel.onSuffixChange(suffix)
-        viewModel.onMailboxesChanged(listOf(AliasMailboxUiModel(model = mailbox, selected = true)))
+        viewModel.onMailboxesChanged(
+            listOf(
+                SelectedAliasMailboxUiModel(
+                    model = mailbox,
+                    selected = true
+                )
+            )
+        )
     }
 }

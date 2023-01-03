@@ -7,15 +7,15 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
+import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SelectMailboxesDialog(
     modifier: Modifier = Modifier,
     show: Boolean,
-    mailboxes: List<AliasMailboxUiModel>,
-    onMailboxesChanged: (List<AliasMailboxUiModel>) -> Unit,
+    mailboxes: List<SelectedAliasMailboxUiModel>,
+    onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onDismiss: () -> Unit,
     viewModel: SelectMailboxesDialogViewModel = hiltViewModel()
 ) {

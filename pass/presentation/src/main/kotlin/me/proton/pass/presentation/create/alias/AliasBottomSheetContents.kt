@@ -5,7 +5,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.toImmutableList
-import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
 
@@ -14,7 +13,7 @@ import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitl
 fun AliasBottomSheetContents(
     modifier: Modifier = Modifier,
     modelState: AliasItem,
-    onSuffixSelect: (AliasSuffix) -> Unit
+    onSuffixSelect: (AliasSuffixUiModel) -> Unit
 ) {
     Column(modifier = modifier) {
         BottomSheetTitle(title = R.string.alias_bottomsheet_suffix_title, showDivider = true)

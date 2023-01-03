@@ -2,7 +2,7 @@ package me.proton.android.pass.clipboard.impl
 
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import java.util.concurrent.TimeUnit

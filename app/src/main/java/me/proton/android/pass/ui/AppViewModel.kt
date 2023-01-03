@@ -31,7 +31,7 @@ import me.proton.android.pass.data.api.usecases.GetCurrentUserId
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
 import me.proton.android.pass.data.api.usecases.RefreshShares
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.network.api.NetworkMonitor
 import me.proton.android.pass.network.api.NetworkStatus
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository

@@ -5,7 +5,7 @@ import me.proton.android.pass.data.impl.error.InvalidSignature
 import me.proton.android.pass.data.impl.error.KeyNotFound
 import me.proton.android.pass.data.impl.extensions.fromParsed
 import me.proton.android.pass.data.impl.responses.ItemRevision
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.key.domain.decryptData

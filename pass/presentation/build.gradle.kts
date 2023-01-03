@@ -104,7 +104,7 @@ dependencies {
     add("devImplementation", libs.showkase)
     add("kspDev", libs.showkaseProcessor)
 
-    implementation(projects.pass.log)
+    implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
 
     api(projects.pass.appConfig.api)

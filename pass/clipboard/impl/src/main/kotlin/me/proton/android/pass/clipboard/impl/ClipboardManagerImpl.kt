@@ -7,7 +7,7 @@ import android.os.Build
 import android.os.PersistableBundle
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.android.pass.clipboard.api.ClipboardManager
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import android.content.ClipboardManager as AndroidClipboardManager
 

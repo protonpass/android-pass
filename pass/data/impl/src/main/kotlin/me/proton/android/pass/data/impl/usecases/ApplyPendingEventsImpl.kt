@@ -6,7 +6,7 @@ import me.proton.android.pass.data.api.usecases.ApplyPendingEvents
 import me.proton.android.pass.data.impl.extensions.toPendingEvent
 import me.proton.android.pass.data.impl.repositories.EventRepository
 import me.proton.android.pass.data.impl.responses.EventList
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository

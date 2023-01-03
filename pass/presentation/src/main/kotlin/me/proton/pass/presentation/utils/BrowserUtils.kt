@@ -4,10 +4,10 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.data.api.UrlSanitizer
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
-import me.proton.android.pass.data.api.UrlSanitizer
 
 object BrowserUtils {
     const val TAG = "BrowserUtils"

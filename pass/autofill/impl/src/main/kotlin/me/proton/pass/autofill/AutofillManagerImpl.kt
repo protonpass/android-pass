@@ -17,7 +17,7 @@ import me.proton.android.pass.autofill.api.AutofillStatus
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus.Supported
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus.Unsupported
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 

@@ -26,5 +26,5 @@ dependencies {
     implementation(libs.core.utilKotlin)
 
     api(projects.pass.clipboard.api)
-    implementation(projects.pass.log)
+    implementation(projects.pass.log.api)
 }

@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.android.showkase.models.Showkase
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 
 @Composable
 fun InternalDrawerContents(

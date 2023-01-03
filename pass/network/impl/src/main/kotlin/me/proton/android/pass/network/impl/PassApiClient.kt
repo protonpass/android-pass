@@ -2,7 +2,7 @@ package me.proton.android.pass.network.impl
 
 import android.os.Build
 import me.proton.android.pass.appconfig.api.AppConfig
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.core.network.domain.ApiClient
 import java.util.Locale
 import javax.inject.Inject

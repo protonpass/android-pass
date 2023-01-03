@@ -1,16 +1,18 @@
-package me.proton.android.pass.log
+package me.proton.android.pass.log.impl
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Process
 import androidx.core.content.FileProvider
+import me.proton.android.pass.log.api.LogSharing
+import me.proton.android.pass.log.api.PassLogger
 import java.io.File
 import java.io.IOException
+import javax.inject.Inject
 
-object InternalLogSharing {
-    const val TAG = "InternalLogSharing"
-    fun shareLogs(applicationId: String, context: Context) {
+class InternalLogSharing @Inject constructor() : LogSharing {
+    override fun shareLogs(applicationId: String, context: Context) {
         try {
             val folder = File(context.filesDir, "logs")
             folder.mkdir()
@@ -34,5 +36,9 @@ object InternalLogSharing {
         } catch (e: IOException) {
             PassLogger.e(TAG, e)
         }
+    }
+
+    companion object {
+        private const val TAG = "InternalLogSharing"
     }
 }

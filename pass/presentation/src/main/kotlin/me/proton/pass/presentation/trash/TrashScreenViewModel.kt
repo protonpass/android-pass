@@ -16,7 +16,7 @@ import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.usecases.ObserveTrashedItems
 import me.proton.android.pass.data.api.usecases.RefreshContent
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId

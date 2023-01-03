@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import me.proton.android.pass.biometry.extensions.from
 import me.proton.android.pass.biometry.implementation.R
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Some
 import javax.inject.Inject

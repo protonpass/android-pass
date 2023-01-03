@@ -26,5 +26,5 @@ dependencies {
 
     implementation(projects.pass.common.api)
     api(projects.pass.biometry.api)
-    implementation(projects.pass.log)
+    implementation(projects.pass.log.api)
 }

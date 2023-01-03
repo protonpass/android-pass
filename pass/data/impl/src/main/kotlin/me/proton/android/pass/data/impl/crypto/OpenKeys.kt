@@ -3,7 +3,7 @@ package me.proton.android.pass.data.impl.crypto
 import me.proton.android.pass.data.api.repositories.VaultItemKeyList
 import me.proton.android.pass.data.impl.error.KeyNotFound
 import me.proton.android.pass.data.impl.remote.VaultItemKeyResponseList
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray

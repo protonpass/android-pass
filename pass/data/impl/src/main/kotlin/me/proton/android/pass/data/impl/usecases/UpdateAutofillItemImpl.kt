@@ -5,7 +5,7 @@ import androidx.work.WorkManager
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItem
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import me.proton.android.pass.data.impl.work.UpdateAutofillItemWorker
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import javax.inject.Inject

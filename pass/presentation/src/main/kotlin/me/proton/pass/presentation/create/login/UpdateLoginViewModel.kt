@@ -15,7 +15,7 @@ import me.proton.android.pass.data.api.usecases.CreateAlias
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.android.pass.data.api.usecases.UpdateItem
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId

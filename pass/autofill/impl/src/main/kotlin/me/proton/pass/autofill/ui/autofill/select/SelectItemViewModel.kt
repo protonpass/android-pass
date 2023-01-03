@@ -28,7 +28,7 @@ import me.proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItem
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItemData
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.autofill.BROWSERS
 import me.proton.pass.autofill.extensions.toAutoFillItem

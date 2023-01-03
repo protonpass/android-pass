@@ -39,7 +39,7 @@ import me.proton.android.pass.data.impl.requests.TrashItemRevision
 import me.proton.android.pass.data.impl.requests.TrashItemsRequest
 import me.proton.android.pass.data.impl.responses.ItemRevision
 import me.proton.android.pass.data.impl.util.TimeUtil
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.UserId

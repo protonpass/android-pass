@@ -5,14 +5,13 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
-import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.BaseAliasViewModel
 import me.proton.pass.presentation.create.alias.CreateUpdateAliasUiState.Companion.Initial
+import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
 import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.TestSavedStateHandle
-import me.proton.pass.test.domain.TestAliasSuffix
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -57,7 +56,7 @@ internal class BaseAliasViewModelTest {
 
     @Test
     fun `given no alias when the suffix has changed the state should hold it`() = runTest {
-        val aliasSuffix = TestAliasSuffix.create()
+        val aliasSuffix = TestAliasSuffixUiModel.create()
         baseAliasViewModel.onSuffixChange(aliasSuffix)
 
         baseAliasViewModel.aliasUiState.test {
@@ -68,8 +67,8 @@ internal class BaseAliasViewModelTest {
 
     @Test
     fun `when the mailbox has changed the state should hold it`() = runTest {
-        val aliasMailbox1 = AliasMailboxUiModel(AliasMailbox(1, "1"), true)
-        val aliasMailbox2 = AliasMailboxUiModel(AliasMailbox(2, "2"), true)
+        val aliasMailbox1 = SelectedAliasMailboxUiModel(AliasMailboxUiModel(1, "1"), true)
+        val aliasMailbox2 = SelectedAliasMailboxUiModel(AliasMailboxUiModel(2, "2"), true)
         baseAliasViewModel.aliasItemState.update {
             AliasItem(mailboxes = listOf(aliasMailbox1, aliasMailbox2))
         }
@@ -97,8 +96,8 @@ internal class BaseAliasViewModelTest {
             val secondEmail = "test2"
 
             // Start both as false
-            val aliasMailbox1 = AliasMailboxUiModel(AliasMailbox(1, firstEmail), false)
-            val aliasMailbox2 = AliasMailboxUiModel(AliasMailbox(2, secondEmail), false)
+            val aliasMailbox1 = SelectedAliasMailboxUiModel(AliasMailboxUiModel(1, firstEmail), false)
+            val aliasMailbox2 = SelectedAliasMailboxUiModel(AliasMailboxUiModel(2, secondEmail), false)
             baseAliasViewModel.aliasItemState.update {
                 AliasItem(mailboxes = listOf(aliasMailbox1, aliasMailbox2))
             }

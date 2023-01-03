@@ -29,6 +29,7 @@ import me.proton.pass.domain.Item
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.NewAlias
 import me.proton.pass.presentation.create.alias.AliasItem
+import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage
 import me.proton.pass.presentation.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsSentToTrashState
@@ -186,8 +187,11 @@ abstract class BaseLoginViewModel(
                     title = aliasItem.title,
                     note = aliasItem.note,
                     prefix = aliasItem.alias,
-                    suffix = aliasItem.selectedSuffix,
-                    mailboxes = aliasItem.mailboxes.filter { it.selected }.map { it.model }
+                    suffix = aliasItem.selectedSuffix.toDomain(),
+                    mailboxes = aliasItem.mailboxes
+                        .filter { it.selected }
+                        .map { it.model }
+                        .map(AliasMailboxUiModel::toDomain)
                 )
             )
         } else {

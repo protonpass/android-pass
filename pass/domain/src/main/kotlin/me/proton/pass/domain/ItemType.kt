@@ -1,6 +1,5 @@
 package me.proton.pass.domain
 
-import androidx.annotation.StringRes
 import me.proton.core.crypto.common.keystore.EncryptedString
 
 const val ITEM_TYPE_LOGIN = 0
@@ -26,14 +25,6 @@ sealed interface ItemType {
         is Alias -> ITEM_TYPE_ALIAS
         is Note -> ITEM_TYPE_NOTE
         is Password -> ITEM_TYPE_PASSWORD
-    }
-
-    @StringRes
-    fun toStringRes(): Int = when (this) {
-        is Login -> R.string.item_type_login
-        is Note -> R.string.item_type_note
-        is Password -> R.string.item_type_password
-        is Alias -> R.string.item_type_alias
     }
 
     companion object // Needed for being able to define static extension functions

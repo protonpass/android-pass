@@ -24,7 +24,7 @@ fun AliasOptionsBottomSheet(
 ) {
     Column(modifier = modifier) {
         BottomSheetTitle(
-            title = me.proton.pass.domain.R.string.item_type_alias,
+            title = R.string.alias_bottomsheet_alias_title,
             showDivider = false
         )
         BottomSheetItemList(

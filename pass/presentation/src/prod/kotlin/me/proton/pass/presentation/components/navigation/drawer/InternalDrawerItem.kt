@@ -8,5 +8,6 @@ import androidx.compose.ui.Modifier
 fun InternalDrawerItem(
     modifier: Modifier = Modifier,
     closeDrawerAction: () -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    viewModel: InternalDrawerItemViewModel? = null
 ) = Unit

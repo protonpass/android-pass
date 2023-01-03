@@ -99,7 +99,7 @@ dependencies {
     add("devImplementation", libs.showkase)
     add("kspDev", libs.showkaseProcessor)
 
-    testImplementation(projects.pass.test)
+    testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.biometry.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)

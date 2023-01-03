@@ -24,7 +24,7 @@ import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.biometry.ContextHolder
 import me.proton.android.pass.clipboard.api.ClipboardManager
 import me.proton.android.pass.data.api.usecases.RefreshContent
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.HasAuthenticated

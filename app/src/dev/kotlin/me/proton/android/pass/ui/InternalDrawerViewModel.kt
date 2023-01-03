@@ -7,8 +7,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import me.proton.android.pass.appconfig.api.AppConfig
-import me.proton.android.pass.log.InternalLogSharing
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.LogSharing
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -17,7 +17,8 @@ import javax.inject.Inject
 class InternalDrawerViewModel @Inject constructor(
     private val appConfig: AppConfig,
     private val preferenceRepository: UserPreferencesRepository,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val logSharing: LogSharing
 ) : ViewModel() {
 
     fun clearPreferences() = viewModelScope.launch {
@@ -34,7 +35,7 @@ class InternalDrawerViewModel @Inject constructor(
     }
 
     fun shareLogCatOutput(context: Context) = viewModelScope.launch(Dispatchers.IO) {
-        InternalLogSharing.shareLogs(appConfig.applicationId, context)
+        logSharing.shareLogs(appConfig.applicationId, context)
     }
 
     companion object {

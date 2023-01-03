@@ -127,7 +127,7 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
     testImplementation(libs.core.test.kotlin)
-    testImplementation(projects.pass.test)
+    testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.autofill.fakes)
     testImplementation(projects.pass.biometry.fakes)
     testImplementation(projects.pass.data.fakes)

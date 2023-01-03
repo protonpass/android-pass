@@ -13,9 +13,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
-import me.proton.android.pass.log.InternalLogSharing
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
@@ -27,7 +27,8 @@ import me.proton.core.presentation.R
 fun InternalDrawerItem(
     modifier: Modifier = Modifier,
     closeDrawerAction: () -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    viewModel: InternalDrawerItemViewModel = hiltViewModel()
 ) {
     var showDialog by remember { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
@@ -74,10 +75,7 @@ fun InternalDrawerItem(
                                     ?.setPrimaryClip(
                                         ClipData.newPlainText("pass-contents", randomId)
                                     )
-                                InternalLogSharing.shareLogs(
-                                    "me.proton.android.pass.alpha",
-                                    context
-                                )
+                                viewModel.shareLogCatOutput(context)
                             }
                             showDialog = false
                         }

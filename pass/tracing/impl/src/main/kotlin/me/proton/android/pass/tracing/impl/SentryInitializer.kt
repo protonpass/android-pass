@@ -16,7 +16,7 @@
  * along with Proton Mail. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.pass.initializer
+package me.proton.android.pass.tracing.impl
 
 import android.content.Context
 import androidx.startup.Initializer
@@ -46,7 +46,6 @@ class SentryInitializer : Initializer<Unit> {
                 options.release = appConfig.versionName
                 options.environment = appConfig.flavor.toValue()
                 if (!appConfig.isDebug) {
-                    // This approach doesn't respect core telemetry, a refactor is needed
                     options.addIntegration(
                         SentryTimberIntegration(
                             minEventLevel = SentryLevel.ERROR,

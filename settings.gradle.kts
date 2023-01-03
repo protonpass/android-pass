@@ -72,6 +72,7 @@ include(":pass:presentation")
 include(":pass:protos")
 include(":pass:screenshot-tests")
 include(":pass:common-test")
+include(":pass:tracing:impl")
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)

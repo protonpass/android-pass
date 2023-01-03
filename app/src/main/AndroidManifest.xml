@@ -33,9 +33,6 @@
                 android:name="me.proton.android.pass.initializer.StrictModeInitializer"
                 android:value="androidx.startup" />
             <meta-data
-                android:name="me.proton.android.pass.initializer.SentryInitializer"
-                android:value="androidx.startup" />
-            <meta-data
                 android:name="me.proton.android.pass.initializer.EventManagerInitializer"
                 android:value="androidx.startup" />
             <meta-data

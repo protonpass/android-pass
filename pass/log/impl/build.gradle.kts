@@ -17,9 +17,9 @@ android {
 
 dependencies {
     api(projects.pass.log.api)
+    implementation(projects.pass.tracing.impl)
 
     implementation(libs.androidx.startup.runtime)
-    implementation(libs.core.network.domain)
     implementation(libs.timber)
 
     implementation(libs.dagger.hilt.android)

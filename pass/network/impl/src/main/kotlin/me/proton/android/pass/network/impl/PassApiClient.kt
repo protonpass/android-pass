@@ -1,4 +1,4 @@
-package me.proton.android.pass.network
+package me.proton.android.pass.network.impl
 
 import android.os.Build
 import me.proton.android.pass.appconfig.api.AppConfig

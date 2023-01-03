@@ -28,6 +28,7 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.log.api.i
+import me.proton.android.pass.tracing.impl.SentryInitializer
 import me.proton.core.usersettings.domain.DeviceSettingsHandler
 import me.proton.core.usersettings.domain.onDeviceSettingsChanged
 import me.proton.core.util.kotlin.CoreLogger
@@ -43,7 +44,7 @@ class LoggerInitializer : Initializer<Unit> {
         )
 
         // Temporarily add always DebugTree to gather logs from alpha
-        val tree = Timber.DebugTree() // SentryTree()
+        val tree = Timber.DebugTree()
         val handler = entryPoint.handler()
         handler.onDeviceSettingsChanged {
             if (it.isCrashReportEnabled) {
@@ -59,7 +60,9 @@ class LoggerInitializer : Initializer<Unit> {
         CoreLogger.set(PassLogger)
     }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+    override fun dependencies(): List<Class<out Initializer<*>>> = listOf(
+        SentryInitializer::class.java
+    )
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)

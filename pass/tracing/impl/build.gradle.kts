@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "me.proton.android.pass.log.impl"
+    namespace = "me.proton.android.pass.tracing.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
@@ -16,11 +16,12 @@ android {
 }
 
 dependencies {
-    api(projects.pass.log.api)
-    implementation(projects.pass.tracing.impl)
+    implementation(projects.pass.appConfig.api)
 
     implementation(libs.androidx.startup.runtime)
-    implementation(libs.timber)
+    implementation(libs.sentry)
+    implementation(libs.sentry.android.core)
+    implementation(libs.sentry.android.timber)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

@@ -242,9 +242,6 @@ dependencies {
     implementation(libs.core.utilAndroidDagger)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.material)
-    implementation(libs.sentry)
-    implementation(libs.sentry.android.core)
-    implementation(libs.sentry.android.timber)
     implementation(libs.okhttp)
     implementation(libs.plumber)
 
@@ -271,6 +268,7 @@ dependencies {
     implementation(projects.pass.presentation)
     implementation(projects.pass.log.api)
     implementation(projects.pass.log.impl)
+    implementation(projects.pass.tracing.impl)
 
     debugImplementation(libs.leakCanary)
     debugImplementation(libs.androidx.compose.uiTooling)

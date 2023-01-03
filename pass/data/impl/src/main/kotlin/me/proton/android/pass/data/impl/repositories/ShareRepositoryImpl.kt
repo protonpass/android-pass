@@ -20,7 +20,7 @@ import me.proton.android.pass.data.impl.local.LocalShareDataSource
 import me.proton.android.pass.data.impl.remote.RemoteShareDataSource
 import me.proton.android.pass.data.impl.requests.CreateVaultRequest
 import me.proton.android.pass.data.impl.responses.ShareResponse
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.SessionUserId

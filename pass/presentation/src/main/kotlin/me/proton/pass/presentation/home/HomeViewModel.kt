@@ -29,7 +29,7 @@ import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.android.pass.data.api.usecases.ObserveActiveShare
 import me.proton.android.pass.data.api.usecases.ObserveCurrentUser
 import me.proton.android.pass.data.api.usecases.TrashItem
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option

@@ -18,7 +18,7 @@ android {
 dependencies {
     api(projects.pass.network.api)
     implementation(projects.pass.appConfig.api)
-    implementation(projects.pass.log)
+    implementation(projects.pass.log.api)
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.core.network.data)

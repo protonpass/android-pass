@@ -269,7 +269,8 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.preferences.impl)
     implementation(projects.pass.presentation)
-    implementation(projects.pass.log)
+    implementation(projects.pass.log.api)
+    implementation(projects.pass.log.impl)
 
     debugImplementation(libs.leakCanary)
     debugImplementation(libs.androidx.compose.uiTooling)

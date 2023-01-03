@@ -31,5 +31,5 @@ dependencies {
 
     api(libs.androidx.compose.runtime)
 
-    implementation(projects.pass.log)
+    implementation(projects.pass.log.api)
 }

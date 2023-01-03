@@ -1,8 +1,8 @@
 package me.proton.pass.presentation.components.previewproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.presentation.create.alias.AliasItem
+import me.proton.pass.presentation.create.alias.AliasSuffixUiModel
 
 class CreateAliasSectionPreviewProvider :
     PreviewParameterProvider<CreateAliasSectionPreviewParameter> {
@@ -49,7 +49,7 @@ class CreateAliasSectionPreviewProvider :
 
     private fun aliasItem(alias: String) = AliasItem(
         alias = alias,
-        selectedSuffix = AliasSuffix(
+        selectedSuffix = AliasSuffixUiModel(
             suffix = "@random.suffix",
             signedSuffix = "",
             isCustom = false,

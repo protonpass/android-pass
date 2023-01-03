@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
+import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 
 class SelectMailboxesDialogViewModel : ViewModel() {
 
-    private val mailboxesState: MutableStateFlow<List<AliasMailboxUiModel>> =
+    private val mailboxesState: MutableStateFlow<List<SelectedAliasMailboxUiModel>> =
         MutableStateFlow(emptyList())
 
     val uiState: StateFlow<SelectMailboxesUiState> = mailboxesState.map { mailboxes ->
@@ -29,11 +29,11 @@ class SelectMailboxesDialogViewModel : ViewModel() {
         initialValue = SelectMailboxesUiState.Initial
     )
 
-    fun setMailboxes(mailboxes: List<AliasMailboxUiModel>) {
+    fun setMailboxes(mailboxes: List<SelectedAliasMailboxUiModel>) {
         mailboxesState.update { mailboxes }
     }
 
-    fun onMailboxChanged(mailbox: AliasMailboxUiModel) = viewModelScope.launch {
+    fun onMailboxChanged(mailbox: SelectedAliasMailboxUiModel) = viewModelScope.launch {
         val mailboxes = mailboxesState.value.map {
             if (it.model.id == mailbox.model.id) {
                 it.copy(selected = !mailbox.selected)

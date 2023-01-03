@@ -3,8 +3,8 @@ package me.proton.pass.presentation.create.alias.mailboxes
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
+import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.test.MainDispatcherRule
 import org.junit.Before
@@ -34,9 +34,9 @@ class SelectMailboxesDialogViewModelTest {
     fun `no mailboxes selected has button disabled`() = runTest {
         viewModel.setMailboxes(
             listOf(
-                AliasMailboxUiModel(
+                SelectedAliasMailboxUiModel(
                     selected = false,
-                    model = AliasMailbox(id = 1, "")
+                    model = AliasMailboxUiModel(id = 1, "")
                 )
             )
         )
@@ -50,13 +50,13 @@ class SelectMailboxesDialogViewModelTest {
     fun `at least one mailbox selected has button enabled`() = runTest {
         viewModel.setMailboxes(
             listOf(
-                AliasMailboxUiModel(
+                SelectedAliasMailboxUiModel(
                     selected = true,
-                    model = AliasMailbox(id = 1, "")
+                    model = AliasMailboxUiModel(id = 1, "")
                 ),
-                AliasMailboxUiModel(
+                SelectedAliasMailboxUiModel(
                     selected = false,
-                    model = AliasMailbox(id = 2, "")
+                    model = AliasMailboxUiModel(id = 2, "")
                 )
             )
         )
@@ -68,14 +68,14 @@ class SelectMailboxesDialogViewModelTest {
 
     @Test
     fun `onMailboxChange toggles selected`() = runTest {
-        val mailbox1 = AliasMailboxUiModel(
+        val mailbox1 = SelectedAliasMailboxUiModel(
             selected = false,
-            model = AliasMailbox(id = 1, "")
+            model = AliasMailboxUiModel(id = 1, "")
         )
 
-        val mailbox2 = AliasMailboxUiModel(
+        val mailbox2 = SelectedAliasMailboxUiModel(
             selected = false,
-            model = AliasMailbox(id = 2, "")
+            model = AliasMailboxUiModel(id = 2, "")
         )
 
         viewModel.setMailboxes(listOf(mailbox1, mailbox2))

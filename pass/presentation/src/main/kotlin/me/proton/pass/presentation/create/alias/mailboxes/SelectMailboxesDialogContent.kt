@@ -17,9 +17,9 @@ import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.headlineSmall
 import me.proton.core.compose.theme.interactionNorm
-import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
+import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
 import me.proton.pass.presentation.settings.ThemedBooleanPreviewProvider
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.value
@@ -30,7 +30,7 @@ fun SelectMailboxesDialogContent(
     state: SelectMailboxesUiState,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
-    onMailboxToggled: (AliasMailboxUiModel) -> Unit
+    onMailboxToggled: (SelectedAliasMailboxUiModel) -> Unit
 ) {
     ProtonAlertDialog(
         modifier = modifier,
@@ -81,16 +81,16 @@ fun SelectMailboxesDialogContentPreview(
             SelectMailboxesDialogContent(
                 state = SelectMailboxesUiState(
                     mailboxes = listOf(
-                        AliasMailboxUiModel(
+                        SelectedAliasMailboxUiModel(
                             selected = input.second,
-                            model = AliasMailbox(
+                            model = AliasMailboxUiModel(
                                 id = 1,
                                 email = "eric.norbert@proton.me"
                             )
                         ),
-                        AliasMailboxUiModel(
+                        SelectedAliasMailboxUiModel(
                             selected = input.second,
-                            model = AliasMailbox(
+                            model = AliasMailboxUiModel(
                                 id = 2,
                                 email = "eric.work@proton.me"
                             )

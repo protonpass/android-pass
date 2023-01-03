@@ -26,11 +26,10 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.asResultWithoutLoading
+import me.proton.pass.common.api.map
 import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.AliasDetails
-import me.proton.pass.domain.AliasOptions
-import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
@@ -61,7 +60,8 @@ class UpdateAliasViewModel @Inject constructor(
     private val itemId: Option<ItemId> =
         Option.fromNullable(savedStateHandle.get<String>("itemId")?.let { ItemId(it) })
 
-    private val _aliasDeletedState: MutableStateFlow<ItemDeletedState> = MutableStateFlow(ItemDeletedState.Unknown)
+    private val _aliasDeletedState: MutableStateFlow<ItemDeletedState> =
+        MutableStateFlow(ItemDeletedState.Unknown)
     val aliasDeletedState: StateFlow<ItemDeletedState> = _aliasDeletedState
         .stateIn(
             scope = viewModelScope,
@@ -81,7 +81,7 @@ class UpdateAliasViewModel @Inject constructor(
         }
     }
 
-    override fun onMailboxesChanged(mailboxes: List<AliasMailboxUiModel>) {
+    override fun onMailboxesChanged(mailboxes: List<SelectedAliasMailboxUiModel>) {
         super.onMailboxesChanged(mailboxes)
         isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
         mailboxesChanged = true
@@ -152,13 +152,14 @@ class UpdateAliasViewModel @Inject constructor(
 
     private suspend fun onAliasDetails(result: Result<AliasDetails>, item: Item) {
         result
+            .map(::AliasDetailsUiModel)
             .onSuccess { details ->
                 val alias = item.itemType as ItemType.Alias
                 val email = alias.aliasEmail
                 val (prefix, suffix) = AliasUtils.extractPrefixSuffix(email)
 
                 val mailboxes = details.availableMailboxes.map { mailbox ->
-                    AliasMailboxUiModel(
+                    SelectedAliasMailboxUiModel(
                         model = mailbox,
                         selected = details.mailboxes.any { it.id == mailbox.id }
                     )
@@ -170,8 +171,8 @@ class UpdateAliasViewModel @Inject constructor(
                             title = decrypt(item.title),
                             note = decrypt(item.note),
                             alias = prefix,
-                            aliasOptions = AliasOptions(emptyList(), details.mailboxes),
-                            selectedSuffix = AliasSuffix(suffix, suffix, false, ""),
+                            aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
+                            selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
                             mailboxes = mailboxes,
                             aliasToBeCreated = email,
                             mailboxTitle = getMailboxTitle(mailboxes)
@@ -255,6 +256,7 @@ class UpdateAliasViewModel @Inject constructor(
                 .mailboxes
                 .filter { it.selected }
                 .map { it.model }
+                .map(AliasMailboxUiModel::toDomain)
             Some(selectedMailboxes)
         } else None
 
@@ -268,11 +270,10 @@ class UpdateAliasViewModel @Inject constructor(
             )
         } else None
 
-        val body = UpdateAliasContent(
+        return UpdateAliasContent(
             mailboxes = mailboxes,
             itemData = itemData
         )
-        return body
     }
 
     companion object {

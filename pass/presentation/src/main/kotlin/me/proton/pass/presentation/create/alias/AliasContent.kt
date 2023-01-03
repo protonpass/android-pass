@@ -15,7 +15,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
-import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankAlias
@@ -40,8 +39,8 @@ internal fun AliasContent(
     onSubmit: (ShareId) -> Unit,
     onAliasCreated: (ShareId, ItemId, String) -> Unit,
     onAliasDraftCreated: (ShareId, AliasItem) -> Unit,
-    onSuffixChange: (AliasSuffix) -> Unit,
-    onMailboxesChanged: (List<AliasMailboxUiModel>) -> Unit,
+    onSuffixChange: (AliasSuffixUiModel) -> Unit,
+    onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onAliasChange: (String) -> Unit,

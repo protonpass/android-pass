@@ -199,6 +199,7 @@
 
     <string name="alias_action_save_fill">Save &amp; fill</string>
 
+    <string name="alias_bottomsheet_alias_title">Alias</string>
     <string name="alias_bottomsheet_suffix_title">Suffix</string>
     <string name="alias_bottomsheet_mailboxes_title">Mailboxes</string>
 

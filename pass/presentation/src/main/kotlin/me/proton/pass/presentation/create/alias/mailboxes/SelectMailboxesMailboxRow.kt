@@ -22,15 +22,15 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
-import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
+import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
 import me.proton.pass.presentation.settings.ThemedBooleanPreviewProvider
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SelectMailboxesMailboxRow(
     modifier: Modifier = Modifier,
-    item: AliasMailboxUiModel,
+    item: SelectedAliasMailboxUiModel,
     onToggle: () -> Unit
 ) {
     Row(
@@ -65,8 +65,8 @@ fun SelectMailboxesMailboxRowPreview(
     ProtonTheme(isDark = input.first) {
         Surface {
             SelectMailboxesMailboxRow(
-                item = AliasMailboxUiModel(
-                    model = AliasMailbox(id = 1, email = "some.test@email.local"),
+                item = SelectedAliasMailboxUiModel(
+                    model = AliasMailboxUiModel(id = 1, email = "some.test@email.local"),
                     selected = input.second
                 ),
                 onToggle = {}

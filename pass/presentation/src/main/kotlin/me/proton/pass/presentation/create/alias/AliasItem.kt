@@ -3,8 +3,6 @@ package me.proton.pass.presentation.create.alias
 import android.os.Parcelable
 import androidx.compose.runtime.Immutable
 import kotlinx.parcelize.Parcelize
-import me.proton.pass.domain.AliasOptions
-import me.proton.pass.domain.AliasSuffix
 import me.proton.pass.presentation.create.alias.AliasUtils.areAllAliasCharactersValid
 
 @Parcelize
@@ -14,9 +12,9 @@ data class AliasItem(
     val alias: String = "",
     val note: String = "",
     val mailboxTitle: String = "",
-    val aliasOptions: AliasOptions = AliasOptions(emptyList(), emptyList()),
-    val selectedSuffix: AliasSuffix? = null,
-    val mailboxes: List<AliasMailboxUiModel> = emptyList(),
+    val aliasOptions: AliasOptionsUiModel = AliasOptionsUiModel(emptyList(), emptyList()),
+    val selectedSuffix: AliasSuffixUiModel? = null,
+    val mailboxes: List<SelectedAliasMailboxUiModel> = emptyList(),
     val aliasToBeCreated: String? = null
 ) : Parcelable {
 

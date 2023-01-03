@@ -31,7 +31,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.preferences.HasAuthenticated
 import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.core.account.domain.entity.AccountType

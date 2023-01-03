@@ -7,7 +7,7 @@ import me.proton.android.pass.data.api.usecases.GetShareById
 import me.proton.android.pass.data.api.usecases.UpdateAlias
 import me.proton.android.pass.data.api.usecases.UpdateAliasContent
 import me.proton.android.pass.data.api.usecases.UpdateAliasItemContent
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.Some

@@ -16,17 +16,22 @@
  * along with Proton Mail. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.android.pass.log
+package me.proton.android.pass.log.impl
 
 import android.content.Context
+import android.os.Build
+import android.os.LocaleList
 import androidx.startup.Initializer
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import me.proton.android.pass.log.api.PassLogger
+import me.proton.android.pass.log.api.i
 import me.proton.core.usersettings.domain.DeviceSettingsHandler
 import me.proton.core.usersettings.domain.onDeviceSettingsChanged
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.Logger
 import timber.log.Timber
 
 class LoggerInitializer : Initializer<Unit> {
@@ -61,4 +66,15 @@ class LoggerInitializer : Initializer<Unit> {
     interface LoggerInitializerEntryPoint {
         fun handler(): DeviceSettingsHandler
     }
+}
+
+
+private fun Logger.deviceInfo() {
+    i("-----------------------------------------")
+    i("OS:          Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})")
+    i("DEVICE:      ${Build.MANUFACTURER} ${Build.MODEL}")
+    i("FINGERPRINT: ${Build.FINGERPRINT}")
+    i("ABI:         ${Build.SUPPORTED_ABIS.joinToString(",")}")
+    i("LOCALE:      ${LocaleList.getDefault().toLanguageTags()}")
+    i("-----------------------------------------")
 }

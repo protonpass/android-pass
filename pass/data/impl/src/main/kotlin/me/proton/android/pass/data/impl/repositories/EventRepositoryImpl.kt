@@ -6,7 +6,7 @@ import kotlinx.coroutines.withContext
 import me.proton.android.pass.data.impl.local.LocalEventDataSource
 import me.proton.android.pass.data.impl.remote.RemoteEventDataSource
 import me.proton.android.pass.data.impl.responses.EventList
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.pass.domain.ShareId

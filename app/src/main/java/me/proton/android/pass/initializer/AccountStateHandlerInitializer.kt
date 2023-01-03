@@ -24,7 +24,7 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import me.proton.android.pass.log.LoggerInitializer
+import me.proton.android.pass.log.impl.LoggerInitializer
 import me.proton.core.accountmanager.data.AccountStateHandler
 
 class AccountStateHandlerInitializer : Initializer<Unit> {

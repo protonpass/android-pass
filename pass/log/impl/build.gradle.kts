@@ -6,8 +6,8 @@ plugins {
 }
 
 android {
+    namespace = "me.proton.android.pass.log.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
-    namespace = "me.proton.android.pass.log"
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
@@ -16,12 +16,11 @@ android {
 }
 
 dependencies {
+    api(projects.pass.log.api)
+
     implementation(libs.androidx.startup.runtime)
     implementation(libs.core.network.domain)
     implementation(libs.timber)
-
-    api(libs.core.userSettings.domain)
-    api(libs.core.utilKotlin)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

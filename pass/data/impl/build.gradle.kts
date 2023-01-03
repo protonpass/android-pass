@@ -70,7 +70,7 @@ dependencies {
     implementation(projects.pass.common.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
-    implementation(projects.pass.log)
+    implementation(projects.pass.log.api)
     implementation(projects.pass.protos)
 
     testImplementation(libs.core.test.kotlin)

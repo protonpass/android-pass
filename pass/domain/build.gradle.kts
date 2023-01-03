@@ -45,7 +45,7 @@ dependencies {
     api(libs.core.cryptoCommon)
     api(libs.core.key.domain)
 
-    implementation(projects.pass.log)
+    implementation(projects.pass.log.api)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

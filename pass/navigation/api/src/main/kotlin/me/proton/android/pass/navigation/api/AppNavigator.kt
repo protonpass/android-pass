@@ -10,7 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import me.proton.android.pass.log.PassLogger
+import me.proton.android.pass.log.api.PassLogger
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable

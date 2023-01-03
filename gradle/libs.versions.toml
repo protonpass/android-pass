@@ -164,6 +164,7 @@ core-humanVerification = { module = "me.proton.core:human-verification", version
 core-key = { module = "me.proton.core:key", version.ref = "core" }
 core-key-domain = { module = "me.proton.core:key-domain", version.ref = "core" }
 core-network = { module = "me.proton.core:network", version.ref = "core" }
+core-network-data = { module = "me.proton.core:network-data", version.ref = "core" }
 core-network-domain = { module = "me.proton.core:network-domain", version.ref = "core" }
 core-payment = { module = "me.proton.core:payment", version.ref = "core" }
 # core-payment-iap = { module = "me.proton.core:payment-iap", version.ref = "core" }

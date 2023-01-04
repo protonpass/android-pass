@@ -97,6 +97,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.presentation)
+    implementation(projects.pass.featureAuth.impl)
 
     add("devImplementation", libs.showkase)
     add("kspDev", libs.showkaseProcessor)

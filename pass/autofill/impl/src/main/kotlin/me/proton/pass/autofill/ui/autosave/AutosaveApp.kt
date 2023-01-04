@@ -12,6 +12,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import me.proton.android.pass.featureauth.impl.AuthScreen
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
@@ -19,7 +20,6 @@ import me.proton.pass.autofill.entities.SaveInformation
 import me.proton.pass.autofill.ui.autofill.AutofillAppViewModel
 import me.proton.pass.autofill.ui.autosave.save.SAVE_ITEM_ROUTE
 import me.proton.pass.autofill.ui.autosave.save.SaveItemScreen
-import me.proton.pass.presentation.auth.AuthScreen
 
 private const val AUTH_SCREEN_ROUTE = "common/auth"
 

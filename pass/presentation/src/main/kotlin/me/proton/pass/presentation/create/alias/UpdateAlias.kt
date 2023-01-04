@@ -15,9 +15,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.dialogs.ConfirmMoveItemToTrashDialog
+import me.proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.AliasUpdated
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemDeletedState
 
 @OptIn(ExperimentalLifecycleComposeApi::class)

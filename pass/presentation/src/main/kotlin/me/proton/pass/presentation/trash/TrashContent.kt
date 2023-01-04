@@ -9,9 +9,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
+import me.proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDialog
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.model.ItemUiModel
-import me.proton.pass.presentation.shared.ConfirmItemDeletionDialog
 
 @Composable
 fun TrashContent(

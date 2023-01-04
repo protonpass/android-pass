@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.clipboard.api.ClipboardManager
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.usecases.ApplyPendingEvents
 import me.proton.android.pass.data.api.usecases.ObserveActiveItems
@@ -38,7 +39,6 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.ItemType
-import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.home.HomeSnackbarMessage.AliasCopied
 import me.proton.pass.presentation.home.HomeSnackbarMessage.AliasMovedToTrash
@@ -50,9 +50,9 @@ import me.proton.pass.presentation.home.HomeSnackbarMessage.ObserveShareError
 import me.proton.pass.presentation.home.HomeSnackbarMessage.PasswordCopied
 import me.proton.pass.presentation.home.HomeSnackbarMessage.RefreshError
 import me.proton.pass.presentation.home.HomeSnackbarMessage.UsernameCopied
-import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.IsProcessingSearchState
-import me.proton.pass.presentation.uievents.IsRefreshingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
+import me.proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import me.proton.pass.presentation.utils.ItemUiFilter
 import javax.inject.Inject
 

@@ -1,8 +1,8 @@
 package me.proton.pass.presentation.uievents
 
 import androidx.compose.runtime.Stable
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.pass.domain.ItemId
-import me.proton.pass.presentation.components.model.ItemUiModel
 
 @Stable
 sealed interface ItemSavedState {

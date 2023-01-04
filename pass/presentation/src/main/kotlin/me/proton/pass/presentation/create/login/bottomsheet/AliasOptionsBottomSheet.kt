@@ -8,14 +8,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemIcon
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemList
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
 
 @Composable
 fun AliasOptionsBottomSheet(
@@ -24,7 +24,7 @@ fun AliasOptionsBottomSheet(
 ) {
     Column(modifier = modifier) {
         BottomSheetTitle(
-            title = R.string.alias_bottomsheet_alias_title,
+            title = stringResource(id = R.string.alias_bottomsheet_alias_title),
             showDivider = false
         )
         BottomSheetItemList(

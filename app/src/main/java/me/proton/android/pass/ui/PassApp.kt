@@ -20,6 +20,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import me.proton.android.pass.composecomponents.impl.messages.OfflineIndicator
+import me.proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
+import me.proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import me.proton.android.pass.navigation.api.rememberAppNavigator
 import me.proton.android.pass.network.api.NetworkStatus
 import me.proton.android.pass.preferences.ThemePreference
@@ -30,14 +33,11 @@ import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.common.api.Some
-import me.proton.pass.presentation.components.OfflineIndicator
-import me.proton.pass.presentation.components.common.PassSnackbarHost
-import me.proton.pass.presentation.components.common.rememberPassSnackbarHostState
-import me.proton.pass.presentation.components.navigation.CoreNavigation
-import me.proton.pass.presentation.components.navigation.drawer.HomeSection
-import me.proton.pass.presentation.components.navigation.drawer.NavDrawerNavigation
-import me.proton.pass.presentation.components.navigation.drawer.NavigationDrawerSection
 import me.proton.pass.presentation.home.HomeFilterMode
+import me.proton.pass.presentation.navigation.CoreNavigation
+import me.proton.pass.presentation.navigation.drawer.HomeSection
+import me.proton.pass.presentation.navigation.drawer.NavDrawerNavigation
+import me.proton.pass.presentation.navigation.drawer.NavigationDrawerSection
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable

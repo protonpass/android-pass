@@ -255,6 +255,7 @@ dependencies {
     implementation(projects.pass.clipboard.impl)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.data.api)
     implementation(projects.pass.data.impl)
     implementation(projects.pass.domain)

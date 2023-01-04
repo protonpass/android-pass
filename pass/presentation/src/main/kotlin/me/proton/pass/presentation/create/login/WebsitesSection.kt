@@ -36,13 +36,13 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import me.proton.android.pass.composecomponents.impl.form.ProtonTextField
+import me.proton.android.pass.composecomponents.impl.form.ProtonTextTitle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.form.ProtonTextField
-import me.proton.pass.presentation.components.form.ProtonTextTitle
-import me.proton.pass.presentation.components.previewproviders.WebsitesPreviewParameter
-import me.proton.pass.presentation.components.previewproviders.WebsitesSectionPreviewProvider
+import me.proton.pass.presentation.previewproviders.WebsitesPreviewParameter
+import me.proton.pass.presentation.previewproviders.WebsitesSectionPreviewProvider
 
 @Composable
 internal fun WebsitesSection(
@@ -54,7 +54,7 @@ internal fun WebsitesSection(
     doesWebsiteIndexHaveError: (Int) -> Boolean
 ) {
     ProtonTextTitle(
-        title = R.string.field_website_address_title,
+        title = stringResource(id = R.string.field_website_address_title),
         modifier = Modifier.padding(vertical = 8.dp)
     )
 
@@ -88,7 +88,7 @@ internal fun WebsitesSection(
                 editable = isEditAllowed,
                 onChange = { onWebsitesChange.onWebsiteValueChanged(it, idx) },
                 onFocusChange = { isFocused = it },
-                placeholder = R.string.field_website_address_hint,
+                placeholder = stringResource(id = R.string.field_website_address_hint),
                 trailingIcon = {
                     if (shouldShowRemoveButton) {
                         Icon(

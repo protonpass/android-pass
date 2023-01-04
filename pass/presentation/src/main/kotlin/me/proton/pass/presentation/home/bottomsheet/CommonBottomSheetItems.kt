@@ -2,14 +2,14 @@ package me.proton.pass.presentation.home.bottomsheet
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemIcon
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
-import me.proton.pass.presentation.components.model.ItemUiModel
 
 internal fun edit(itemUiModel: ItemUiModel, onEdit: (ShareId, ItemId) -> Unit): BottomSheetItem =
     object : BottomSheetItem {

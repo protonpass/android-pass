@@ -10,14 +10,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemIcon
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemList
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
 import me.proton.pass.presentation.home.SortingType
 
 @ExperimentalMaterialApi
@@ -28,7 +28,10 @@ fun SortingBottomSheetContents(
     onSortingTypeSelected: (SortingType) -> Unit
 ) {
     Column(modifier) {
-        BottomSheetTitle(title = R.string.sorting_bottomsheet_title, showDivider = false)
+        BottomSheetTitle(
+            title = stringResource(id = R.string.sorting_bottomsheet_title),
+            showDivider = false
+        )
         BottomSheetItemList(
             items = sortingItemList(sortingType, onSortingTypeSelected)
         )
@@ -44,7 +47,7 @@ private fun sortingItemList(
             object : BottomSheetItem {
                 override val title: @Composable () -> Unit
                     get() = { BottomSheetItemTitle(text = stringResource(id = it.titleId)) }
-                override val subtitle: (() -> Unit)?
+                override val subtitle: @Composable (() -> Unit)?
                     get() = null
                 override val icon: @Composable (() -> Unit)?
                     get() = if (it == selectedSortingType) {

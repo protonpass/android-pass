@@ -8,10 +8,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.android.pass.navigation.api.rememberAppNavigator
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillItem
-import me.proton.pass.presentation.components.model.ItemUiModel
 
 @OptIn(
     ExperimentalAnimationApi::class,

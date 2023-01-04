@@ -33,9 +33,6 @@
     <string name="title_trash">Trash</string>
     <string name="title_all_shares">All vaults</string>
 
-
-    <string name="field_required_indicator">Required</string>
-
     <string name="title_empty_files">Nothing to see here</string>
     <string name="description_empty_files">This folder is empty</string>
     <string name="title_empty_offline_available">No offline files or folders</string>
@@ -79,7 +76,6 @@
     <string name="action_remove">Remove</string>
 
     <!-- Actions -->
-    <string name="action_content_description_menu">Item action menu</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_move_to_trash">Move to trash</string>
     <string name="action_edit_placeholder">Edit %s</string>
@@ -98,15 +94,12 @@
     <string name="alert_confirm_clear_trash_message">Are you sure you want to clear the trash? All your trashed items will be deleted permanently</string>
     <string name="alert_confirm_restore_all_title">Restore all items?</string>
     <string name="alert_confirm_restore_all_message">Are you sure you want to restore all the trashed items?</string>
-    <string name="alert_confirm_sign_out_title">Sign out?</string>
-    <string name="alert_confirm_sign_out_message">Are you sure you want to sign out?</string>
 
     <!-- Home -->
     <string name="placeholder_item_search">Login, alias or note</string>
     <string name="sorting_bottomsheet_title">Sorting</string>
     <string name="sort_by_name">Sort by name</string>
     <string name="sort_by_type">Sort by type</string>
-    <string name="empty_list_title">No items</string>
     <string name="empty_search_results_title">No results found</string>
     <string name="empty_search_results_subtitle">Please try a different search term.</string>
     <string name="title_new">New</string>
@@ -145,9 +138,6 @@
     <!-- Create Login -->
     <string name="title_create_login">Create login</string>
     <string name="title_edit_login">Edit login</string>
-    <string name="field_title_title">Title</string>
-    <string name="field_title_is_blank">Invalid title</string>
-    <string name="field_title_hint">Name</string>
     <string name="field_username_title">Username</string>
     <string name="field_username_hint">Add username</string>
     <string name="field_password_title">Password</string>
@@ -155,8 +145,7 @@
     <string name="field_website_address_title">Website address</string>
     <string name="field_website_address_hint">https://</string>
     <string name="field_website_add_another">Add another website</string>
-    <string name="field_note_title">Note</string>
-    <string name="field_note_hint">Add note</string>
+    <string name="field_detail_note_title">Note</string>
     <string name="button_generate_password">Generate Password</string>
 
     <string name="field_detail_password_title">Password</string>
@@ -274,7 +263,6 @@
 
 
     <!-- Common bottomsheet -->
-    <string name="bottomsheet_content_description_item_icon">BottomSheet item icon</string>
     <string name="bottomsheet_copy_password">Copy password</string>
     <string name="bottomsheet_copy_username">Copy username</string>
     <string name="bottomsheet_copy_alias">Copy email address</string>
@@ -294,6 +282,4 @@
     <string name="on_boarding_last_page_button">Get started</string>
     <string name="on_boarding_skip">Not now</string>
 
-    <!-- Indicator that indicates lack of internet connectivity -->
-    <string name="indicator_no_network">Offline</string>
 </resources>

@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.proton.android.pass.composecomponents.impl.form.ProtonFormInput
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.form.ProtonFormInput
 
 @Composable
 fun AliasInput(
@@ -28,8 +28,8 @@ fun AliasInput(
 
     ProtonFormInput(
         modifier = modifier.padding(top = 8.dp),
-        title = R.string.field_alias_title,
-        placeholder = R.string.field_alias_hint,
+        title = stringResource(id = R.string.field_alias_title),
+        placeholder = stringResource(id = R.string.field_alias_hint),
         value = value,
         onChange = onChange,
         required = true,

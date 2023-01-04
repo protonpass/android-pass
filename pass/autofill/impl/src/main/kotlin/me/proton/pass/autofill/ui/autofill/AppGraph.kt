@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillItem
@@ -11,7 +12,6 @@ import me.proton.pass.autofill.ui.autofill.navigation.authGraph
 import me.proton.pass.autofill.ui.autofill.navigation.createAliasGraph
 import me.proton.pass.autofill.ui.autofill.navigation.createLoginGraph
 import me.proton.pass.autofill.ui.autofill.navigation.selectItemGraph
-import me.proton.pass.presentation.components.model.ItemUiModel
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi

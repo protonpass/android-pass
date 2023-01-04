@@ -15,7 +15,7 @@ import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsSentToTrashState
 import me.proton.pass.presentation.uievents.ItemSavedState
 

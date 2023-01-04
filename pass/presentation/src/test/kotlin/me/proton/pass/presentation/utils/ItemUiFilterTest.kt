@@ -1,9 +1,9 @@
 package me.proton.pass.presentation.utils
 
 import com.google.common.truth.Truth.assertThat
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.pass.domain.ItemType
-import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.components.model.TestItemUiModel
 import me.proton.pass.test.TestUtils.randomString
 import me.proton.pass.test.crypto.TestKeyStoreCrypto

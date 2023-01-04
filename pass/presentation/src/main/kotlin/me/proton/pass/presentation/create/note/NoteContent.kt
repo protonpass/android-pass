@@ -12,7 +12,7 @@ import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.create.note.NoteItemValidationErrors.BlankTitle
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.EmptyShareIdError
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
 @ExperimentalComposeUiApi

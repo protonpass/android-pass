@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.RoundedCornersContainer
+import me.proton.android.pass.composecomponents.impl.container.RoundedCornersContainer
 import me.proton.pass.presentation.detail.DetailSectionSubtitle
 import me.proton.pass.presentation.detail.DetailSectionTitle
 

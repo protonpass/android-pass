@@ -1,4 +1,4 @@
-package me.proton.pass.presentation.auth
+package me.proton.android.pass.featureauth.impl
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

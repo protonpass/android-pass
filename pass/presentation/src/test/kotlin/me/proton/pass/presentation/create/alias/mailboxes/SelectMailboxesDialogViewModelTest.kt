@@ -3,9 +3,9 @@ package me.proton.pass.presentation.create.alias.mailboxes
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
-import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.test.MainDispatcherRule
 import org.junit.Before
 import org.junit.Rule

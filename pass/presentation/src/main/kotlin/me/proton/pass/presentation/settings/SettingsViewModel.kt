@@ -23,6 +23,8 @@ import me.proton.android.pass.biometry.BiometryResult
 import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.biometry.ContextHolder
 import me.proton.android.pass.clipboard.api.ClipboardManager
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.android.pass.data.api.usecases.RefreshContent
 import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -33,8 +35,6 @@ import me.proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.asResultWithoutLoading
-import me.proton.pass.presentation.uievents.IsButtonEnabled
-import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import javax.inject.Inject
 
 @HiltViewModel

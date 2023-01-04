@@ -1,4 +1,4 @@
-package me.proton.pass.presentation.uievents
+package me.proton.pass.presentation.create.alias
 
 import androidx.compose.runtime.Stable
 import me.proton.pass.domain.ItemId

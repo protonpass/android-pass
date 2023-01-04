@@ -1,11 +1,9 @@
 package me.proton.pass.presentation.create.alias
 
 import androidx.compose.runtime.Immutable
-import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.uievents.AliasDraftSavedState
-import me.proton.pass.presentation.uievents.AliasSavedState
-import me.proton.pass.presentation.uievents.IsButtonEnabled
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import me.proton.pass.domain.ShareId
 
 @Immutable
 data class CreateUpdateAliasUiState(

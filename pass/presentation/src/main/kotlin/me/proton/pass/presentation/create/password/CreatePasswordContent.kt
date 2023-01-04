@@ -22,7 +22,7 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.previewproviders.CreatePasswordStatePreviewProvider
+import me.proton.pass.presentation.detail.login.CreatePasswordStatePreviewProvider
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

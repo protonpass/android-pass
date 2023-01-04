@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.previewproviders.NoteDetailSectionPreviewProvider
+import me.proton.pass.presentation.previewproviders.NoteDetailSectionPreviewProvider
 
 @Composable
 fun DetailNoteSection(
@@ -27,7 +27,7 @@ fun DetailNoteSection(
     if (text.isBlank()) return
 
     Column(modifier = modifier.fillMaxWidth()) {
-        DetailSectionTitle(text = stringResource(R.string.field_note_title))
+        DetailSectionTitle(text = stringResource(R.string.field_detail_note_title))
         Spacer(modifier = Modifier.height(8.dp))
         Text(
             modifier = Modifier.fillMaxWidth(),
@@ -39,9 +39,8 @@ fun DetailNoteSection(
     }
 }
 
-class ThemedDetailNoteSectionPreviewProvider : ThemePairPreviewProvider<String>(
-    NoteDetailSectionPreviewProvider()
-)
+class ThemedDetailNoteSectionPreviewProvider :
+    ThemePairPreviewProvider<String>(NoteDetailSectionPreviewProvider())
 
 @Preview
 @Composable

@@ -14,15 +14,15 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
+import me.proton.android.pass.composecomponents.impl.loading.LoadingDialog
+import me.proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
+import me.proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.android.pass.preferences.ThemePreference
-import me.proton.android.pass.ui.shared.HamburgerIcon
-import me.proton.android.pass.ui.shared.TopBarTitleView
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.LoadingDialog
 import me.proton.pass.presentation.uievents.IsButtonEnabled
-import me.proton.pass.presentation.uievents.IsLoadingState
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable

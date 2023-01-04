@@ -13,12 +13,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.android.pass.composecomponents.impl.container.RoundedCornersContainer
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.RoundedCornersContainer
-import me.proton.pass.presentation.components.previewproviders.AliasMailboxesPreviewProvider
+import me.proton.pass.presentation.previewproviders.AliasMailboxesPreviewProvider
 import me.proton.pass.presentation.detail.DetailSectionSubtitle
 import me.proton.pass.presentation.detail.DetailSectionTitle
 

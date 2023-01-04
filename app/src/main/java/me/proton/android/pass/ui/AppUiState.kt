@@ -7,7 +7,7 @@ import me.proton.android.pass.notifications.api.SnackbarMessage
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
-import me.proton.pass.presentation.components.navigation.drawer.DrawerUiState
+import me.proton.pass.presentation.navigation.drawer.DrawerUiState
 
 @Immutable
 data class AppUiState(

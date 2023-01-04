@@ -6,14 +6,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
+import me.proton.android.pass.composecomponents.impl.item.EmptyList
+import me.proton.android.pass.composecomponents.impl.item.ItemsList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.autofill.service.R
 import me.proton.pass.autofill.ui.previewproviders.SelectItemUiStatePreviewProvider
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
-import me.proton.pass.presentation.components.common.EmptySearchResults
-import me.proton.pass.presentation.components.common.item.EmptyList
-import me.proton.pass.presentation.components.common.item.ItemsList
-import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.pass.presentation.home.EmptySearchResults
 
 @Composable
 fun SelectItemList(

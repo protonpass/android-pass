@@ -5,11 +5,11 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.navigation.api.composable
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.ui.autofill.AutofillNavItem
-import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.alias.RESULT_CREATED_DRAFT_ALIAS
 import me.proton.pass.presentation.create.login.CreateLogin

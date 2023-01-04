@@ -15,14 +15,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.android.pass.ui.shared.ArrowBackIcon
-import me.proton.android.pass.ui.shared.TopBarTitleView
+import me.proton.android.pass.composecomponents.impl.topbar.icon.ArrowBackIcon
+import me.proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.previewproviders.CreatePasswordStatePreviewProvider
+import me.proton.pass.presentation.previewproviders.CreatePasswordStatePreviewProvider
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

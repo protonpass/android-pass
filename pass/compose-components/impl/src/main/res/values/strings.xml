@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Bottomsheets -->
+    <string name="bottomsheet_content_description_item_icon">BottomSheet item icon</string>
+
+    <!-- Alerts -->
+    <string name="alert_confirm_move_to_trash_dialog_title">Move to trash</string>
+    <string name="alert_confirm_sign_out_title">Sign out?</string>
+    <string name="alert_confirm_sign_out_message">Are you sure you want to sign out?</string>
+
+    <!-- Actions -->
+    <string name="action_cancel_send_to_trash">Cancel</string>
+    <string name="action_accept_move_to_trash">Move to trash</string>
+    <string name="action_content_description_menu">Item action menu</string>
+
+    <!-- Empty list -->
+    <string name="empty_list_title">No items</string>
+
+    <!-- Alerts -->
+    <string name="alert_confirm_item_send_to_trash_message">Are you sure you want to send \'%s\' to the trash?</string>
+
+    <!-- Field -->
+    <string name="field_title_title">Title</string>
+    <string name="field_title_hint">Name</string>
+    <string name="field_title_is_blank">Invalid title</string>
+
+    <string name="field_note_title">Note</string>
+    <string name="field_note_hint">Add note</string>
+
+    <!-- Indicator that indicates lack of internet connectivity -->
+    <string name="indicator_no_network">Offline</string>
+
+    <!-- Indicator that indicates field is required -->
+    <string name="field_required_indicator">Required</string>
+
+</resources>

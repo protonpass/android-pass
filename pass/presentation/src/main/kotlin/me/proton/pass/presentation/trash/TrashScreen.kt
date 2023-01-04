@@ -14,8 +14,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
-import me.proton.pass.presentation.components.model.ItemUiModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class)
 @Composable

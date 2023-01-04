@@ -11,13 +11,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
+import me.proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import me.proton.pass.autofill.entities.AutofillAppState
 import me.proton.pass.autofill.entities.AutofillMappings
-import me.proton.pass.presentation.components.common.PassSnackbarHost
-import me.proton.pass.presentation.components.common.rememberPassSnackbarHostState
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable

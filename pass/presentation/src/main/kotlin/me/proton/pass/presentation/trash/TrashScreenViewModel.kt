@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.usecases.ObserveTrashedItems
@@ -22,15 +23,14 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.onError
-import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
 import me.proton.pass.presentation.trash.TrashSnackbarMessage.ClearTrashError
 import me.proton.pass.presentation.trash.TrashSnackbarMessage.DeleteItemError
 import me.proton.pass.presentation.trash.TrashSnackbarMessage.ObserveItemsError
 import me.proton.pass.presentation.trash.TrashSnackbarMessage.RefreshError
 import me.proton.pass.presentation.trash.TrashSnackbarMessage.RestoreItemsError
-import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.IsRefreshingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import javax.inject.Inject
 
 @HiltViewModel

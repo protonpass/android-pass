@@ -23,15 +23,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.android.pass.composecomponents.impl.form.ProtonTextField
+import me.proton.android.pass.composecomponents.impl.form.ProtonTextTitle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.form.ProtonTextField
-import me.proton.pass.presentation.components.form.ProtonTextTitle
 import me.proton.pass.presentation.settings.ThemedBooleanPreviewProvider
 
 @Composable
@@ -57,7 +58,7 @@ internal fun PasswordInput(
     }
 
     Column(modifier = modifier.padding(top = 28.dp)) {
-        ProtonTextTitle(R.string.field_password_title)
+        ProtonTextTitle(stringResource(id = R.string.field_password_title))
         Spacer(modifier = Modifier.height(8.dp))
         Row(
             modifier = Modifier
@@ -65,11 +66,13 @@ internal fun PasswordInput(
                 .fillMaxWidth(1.0f)
         ) {
             ProtonTextField(
-                modifier = Modifier.weight(1.0f).fillMaxHeight(),
+                modifier = Modifier
+                    .weight(1.0f)
+                    .fillMaxHeight(),
                 value = value,
                 editable = isEditAllowed,
                 onChange = onChange,
-                placeholder = R.string.field_password_hint,
+                placeholder = stringResource(id = R.string.field_password_hint),
                 trailingIcon = {
                     IconButton(
                         onClick = { isVisible = !isVisible }

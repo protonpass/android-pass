@@ -34,7 +34,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.asResultWithoutLoading
 import me.proton.pass.presentation.uievents.IsButtonEnabled
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import javax.inject.Inject
 
 @HiltViewModel

@@ -46,8 +46,8 @@ import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.Share
 import me.proton.pass.domain.entity.NewVault
-import me.proton.pass.presentation.components.navigation.drawer.DrawerUiState
-import me.proton.pass.presentation.components.navigation.drawer.NavigationDrawerSection
+import me.proton.pass.presentation.navigation.drawer.DrawerUiState
+import me.proton.pass.presentation.navigation.drawer.NavigationDrawerSection
 import javax.inject.Inject
 
 @HiltViewModel

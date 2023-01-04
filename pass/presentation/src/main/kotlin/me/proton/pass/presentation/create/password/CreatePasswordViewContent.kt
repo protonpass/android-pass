@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.previewproviders.CreatePasswordStatePreviewProvider
+import me.proton.pass.presentation.previewproviders.CreatePasswordStatePreviewProvider
 
 @Composable
 internal fun CreatePasswordViewContent(

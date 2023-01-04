@@ -1,7 +1,7 @@
 package me.proton.pass.presentation.utils
 
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.pass.domain.ItemType
-import me.proton.pass.presentation.components.model.ItemUiModel
 
 object ItemUiFilter {
     fun filterByQuery(

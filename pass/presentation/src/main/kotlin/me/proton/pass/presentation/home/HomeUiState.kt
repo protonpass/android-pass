@@ -3,13 +3,13 @@ package me.proton.pass.presentation.home
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.components.model.ItemUiModel
-import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.IsProcessingSearchState
-import me.proton.pass.presentation.uievents.IsRefreshingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
+import me.proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 
 @Immutable
 data class HomeUiState(

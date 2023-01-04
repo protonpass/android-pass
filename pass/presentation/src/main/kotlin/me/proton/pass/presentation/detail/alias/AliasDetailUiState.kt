@@ -1,6 +1,6 @@
 package me.proton.pass.presentation.detail.alias
 
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 data class AliasDetailUiState(
     val isLoadingState: IsLoadingState,

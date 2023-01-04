@@ -21,7 +21,7 @@ import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.uievents.AliasDraftSavedState
 import me.proton.pass.presentation.uievents.AliasSavedState
 import me.proton.pass.presentation.uievents.IsButtonEnabled
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 abstract class BaseAliasViewModel(
     private val snackbarMessageRepository: SnackbarMessageRepository,

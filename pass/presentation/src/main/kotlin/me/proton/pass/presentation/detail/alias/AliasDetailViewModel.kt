@@ -23,7 +23,7 @@ import me.proton.pass.domain.AliasDetails
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemType
 import me.proton.pass.presentation.detail.DetailSnackbarMessages
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import javax.inject.Inject
 
 @HiltViewModel

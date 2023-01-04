@@ -4,13 +4,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.android.pass.composecomponents.impl.form.ProtonFormInput
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.form.ProtonFormInput
 import me.proton.pass.presentation.components.previewproviders.AliasItemParameter
 import me.proton.pass.presentation.components.previewproviders.AliasItemPreviewProvider
 
@@ -20,7 +21,7 @@ internal fun DisplayAliasSection(
     state: AliasItem
 ) {
     ProtonFormInput(
-        title = R.string.field_alias_title,
+        title = stringResource(id = R.string.field_alias_title),
         value = state.aliasToBeCreated ?: "",
         onChange = {},
         editable = false,
@@ -28,7 +29,8 @@ internal fun DisplayAliasSection(
     )
 }
 
-class ThemedDisplayAliasPreviewProvider : ThemePairPreviewProvider<AliasItemParameter>(AliasItemPreviewProvider())
+class ThemedDisplayAliasPreviewProvider :
+    ThemePairPreviewProvider<AliasItemParameter>(AliasItemPreviewProvider())
 
 @Preview
 @Composable

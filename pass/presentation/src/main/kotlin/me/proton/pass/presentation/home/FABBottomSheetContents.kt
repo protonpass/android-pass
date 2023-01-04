@@ -10,17 +10,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import me.proton.android.pass.composecomponents.impl.item.icon.AliasIcon
+import me.proton.android.pass.composecomponents.impl.item.icon.LoginIcon
+import me.proton.android.pass.composecomponents.impl.item.icon.NoteIcon
+import me.proton.android.pass.composecomponents.impl.item.icon.PasswordIcon
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmall
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItem
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemList
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetItemTitle
-import me.proton.pass.presentation.components.common.item.icon.AliasIcon
-import me.proton.pass.presentation.components.common.item.icon.LoginIcon
-import me.proton.pass.presentation.components.common.item.icon.NoteIcon
-import me.proton.pass.presentation.components.common.item.icon.PasswordIcon
 
 @ExperimentalMaterialApi
 @Composable

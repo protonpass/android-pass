@@ -5,12 +5,13 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.SearchTopBar
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
@@ -29,7 +30,7 @@ internal fun HomeTopBar(
     if (inSearchMode) {
         SearchTopBar(
             modifier = modifier,
-            placeholder = R.string.placeholder_item_search,
+            placeholder = stringResource(id = R.string.placeholder_item_search),
             searchQuery = searchQuery,
             onSearchQueryChange = onSearchQueryChange,
             onStopSearch = {

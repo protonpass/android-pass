@@ -24,7 +24,7 @@ import me.proton.pass.presentation.create.note.NoteSnackbarMessage.ItemUpdateErr
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.NoteMovedToTrash
 import me.proton.pass.presentation.detail.DetailSnackbarMessages.SendToTrashError
 import me.proton.pass.presentation.extension.toUiModel
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsSentToTrashState
 import me.proton.pass.presentation.uievents.ItemSavedState
 import javax.inject.Inject

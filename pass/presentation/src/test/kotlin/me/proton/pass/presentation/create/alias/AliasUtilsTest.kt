@@ -1,5 +1,6 @@
 package me.proton.pass.presentation.create.alias
 
+import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -23,5 +24,14 @@ class AliasUtilsTest {
     @Test
     fun `alias clears capitalization`() {
         assertEquals(AliasUtils.formatAlias("aBCdEFg"), "abcdefg")
+    }
+
+    @Test
+    fun `should be able to extract the prefix and suffix`() {
+        val prefix = "some.random"
+        val suffix = "suffix@domain.tld"
+        val res = AliasUtils.extractPrefixSuffix("$prefix.$suffix")
+        assertThat(res.prefix).isEqualTo(prefix)
+        assertThat(res.suffix).isEqualTo(suffix)
     }
 }

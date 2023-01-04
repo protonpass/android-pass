@@ -14,7 +14,7 @@ import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.create.password.CreatePasswordUiState
 import me.proton.pass.presentation.create.password.CreatePasswordViewContent
-import me.proton.pass.presentation.previewproviders.CreatePasswordStatePreviewProvider
+import me.proton.pass.presentation.detail.login.CreatePasswordStatePreviewProvider
 
 @Composable
 fun GeneratePasswordBottomSheetContent(

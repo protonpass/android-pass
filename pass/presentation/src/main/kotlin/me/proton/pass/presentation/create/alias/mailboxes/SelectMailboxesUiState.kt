@@ -1,8 +1,8 @@
 package me.proton.pass.presentation.create.alias.mailboxes
 
 import androidx.compose.runtime.Stable
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
-import me.proton.pass.presentation.uievents.IsButtonEnabled
 
 @Stable
 data class SelectMailboxesUiState(

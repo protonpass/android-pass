@@ -17,9 +17,9 @@ import me.proton.pass.common.api.onError
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.ItemCreationError
-import me.proton.pass.presentation.extension.toUiModel
+import me.proton.pass.commonui.api.toUiModel
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.ItemSavedState
+import me.proton.pass.presentation.create.ItemSavedState
 import javax.inject.Inject
 
 @HiltViewModel

@@ -22,8 +22,6 @@ import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.BlankT
 import me.proton.pass.presentation.create.alias.AliasItemValidationErrors.InvalidAliasContent
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.EmptyShareIdError
 import me.proton.pass.presentation.create.alias.mailboxes.SelectMailboxesDialog
-import me.proton.pass.presentation.uievents.AliasDraftSavedState
-import me.proton.pass.presentation.uievents.AliasSavedState
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

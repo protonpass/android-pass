@@ -39,7 +39,7 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.onSuccess
 import me.proton.pass.domain.ItemType
-import me.proton.pass.presentation.extension.toUiModel
+import me.proton.pass.commonui.api.toUiModel
 import me.proton.pass.presentation.home.HomeSnackbarMessage.AliasCopied
 import me.proton.pass.presentation.home.HomeSnackbarMessage.AliasMovedToTrash
 import me.proton.pass.presentation.home.HomeSnackbarMessage.LoginMovedToTrash
@@ -53,7 +53,7 @@ import me.proton.pass.presentation.home.HomeSnackbarMessage.UsernameCopied
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import me.proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
-import me.proton.pass.presentation.utils.ItemUiFilter
+import me.proton.pass.commonui.api.ItemUiFilter
 import javax.inject.Inject
 
 @ExperimentalMaterialApi

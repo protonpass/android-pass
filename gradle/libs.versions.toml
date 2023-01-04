@@ -37,7 +37,7 @@ dagger = "2.44.2"
 protobuf = "3.21.11"
 # Gradle
 gradlePlugin-android = "7.3.1"
-gradlePlugin-dependency-analysis = "1.17.0"
+gradlePlugin-dependency-analysis = "1.18.0"
 gradlePlugin-doctor = "0.8.1"
 gradlePlugin-paparazzi = "1.1.0"
 gradlePlugin-ksp = "1.7.20-1.0.8"

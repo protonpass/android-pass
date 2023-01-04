@@ -19,15 +19,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.EmptySearchResults
-import me.proton.pass.presentation.components.common.PassFloatingActionButton
-import me.proton.pass.presentation.components.common.item.EmptyList
-import me.proton.pass.presentation.components.common.item.ItemsList
-import me.proton.pass.presentation.components.model.ItemUiModel
-import me.proton.pass.presentation.shared.ConfirmItemDeletionDialog
+import me.proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
+import me.proton.android.pass.composecomponents.impl.item.ItemsList
+import me.proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDialog
+import me.proton.android.pass.composecomponents.impl.item.EmptyList
 
 @Suppress("LongParameterList")
 @ExperimentalComposeUiApi

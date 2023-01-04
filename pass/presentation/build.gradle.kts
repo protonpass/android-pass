@@ -106,6 +106,8 @@ dependencies {
 
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
+    implementation(projects.pass.commonUiModels.api)
+    implementation(projects.pass.composeComponents.impl)
 
     api(projects.pass.appConfig.api)
     api(projects.pass.autofill.api)

@@ -1,10 +1,10 @@
 package me.proton.pass.autofill.ui.previewproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.components.model.ItemUiModel
 
 class SuggestionsPreviewProvider : PreviewParameterProvider<List<ItemUiModel>> {
     override val values: Sequence<List<ItemUiModel>>

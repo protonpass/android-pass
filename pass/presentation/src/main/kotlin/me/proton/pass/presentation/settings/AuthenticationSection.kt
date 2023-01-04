@@ -12,7 +12,7 @@ import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.previewproviders.ButtonEnabledPreviewProvider
+import me.proton.pass.presentation.previewproviders.ButtonEnabledPreviewProvider
 import me.proton.pass.presentation.uievents.IsButtonEnabled
 import me.proton.pass.presentation.uievents.value
 

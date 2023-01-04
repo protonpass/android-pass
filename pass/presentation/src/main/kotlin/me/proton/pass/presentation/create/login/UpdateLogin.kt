@@ -14,7 +14,7 @@ import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.dialogs.ConfirmMoveItemToTrashDialog
+import me.proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
 import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.LoginUpdated
 import me.proton.pass.presentation.uievents.IsSentToTrashState

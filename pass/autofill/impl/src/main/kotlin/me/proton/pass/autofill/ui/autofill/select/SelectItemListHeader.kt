@@ -15,13 +15,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
+import me.proton.android.pass.composecomponents.impl.item.ActionableItemRow
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.pass.autofill.service.R
 import me.proton.pass.autofill.ui.previewproviders.SuggestionsPreviewProvider
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
-import me.proton.pass.presentation.components.common.item.ActionableItemRow
-import me.proton.pass.presentation.components.model.ItemUiModel
 
 fun LazyListScope.SelectItemListHeader(
     suggestionsForTitle: String,

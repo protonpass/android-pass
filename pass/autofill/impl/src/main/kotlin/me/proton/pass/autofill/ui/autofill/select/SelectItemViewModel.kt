@@ -20,6 +20,10 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
+import me.proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import me.proton.android.pass.data.api.UrlSanitizer
 import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.usecases.GetAppNameFromPackageName
@@ -39,11 +43,7 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.flatMap
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.toOption
-import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.extension.toUiModel
-import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.IsProcessingSearchState
-import me.proton.pass.presentation.uievents.IsRefreshingState
 import me.proton.pass.presentation.utils.ItemUiFilter
 import java.net.URI
 import javax.inject.Inject

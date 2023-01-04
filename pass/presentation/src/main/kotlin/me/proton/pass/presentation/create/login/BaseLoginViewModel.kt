@@ -31,7 +31,7 @@ import me.proton.pass.domain.entity.NewAlias
 import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.IsSentToTrashState
 import me.proton.pass.presentation.uievents.ItemSavedState
 

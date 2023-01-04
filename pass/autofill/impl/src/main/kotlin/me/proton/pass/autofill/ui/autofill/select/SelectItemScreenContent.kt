@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.proton.pass.presentation.components.common.PassFloatingActionButton
-import me.proton.pass.presentation.components.model.ItemUiModel
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
+import me.proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
 
 @Composable
 internal fun SelectItemScreenContent(

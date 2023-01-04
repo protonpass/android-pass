@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.android.pass.biometry.BiometryManager
 import me.proton.android.pass.biometry.BiometryStatus
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.log.api.PassLogger
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -26,7 +27,6 @@ import me.proton.pass.autofill.entities.AutofillItem
 import me.proton.pass.autofill.extensions.toAutoFillItem
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.asResultWithoutLoading
-import me.proton.pass.presentation.components.model.ItemUiModel
 import javax.inject.Inject
 
 @HiltViewModel

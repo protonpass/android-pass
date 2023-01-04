@@ -1,7 +1,6 @@
-package me.proton.pass.presentation.components.previewproviders
+package me.proton.pass.presentation.create.alias
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import me.proton.pass.presentation.create.alias.AliasItem
 
 class AliasItemPreviewProvider : PreviewParameterProvider<AliasItemParameter> {
     override val values: Sequence<AliasItemParameter>

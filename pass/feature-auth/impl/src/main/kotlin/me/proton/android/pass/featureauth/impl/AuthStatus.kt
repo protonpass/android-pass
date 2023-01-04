@@ -1,4 +1,4 @@
-package me.proton.pass.presentation.auth
+package me.proton.android.pass.featureauth.impl
 
 sealed interface AuthStatus {
     object Pending : AuthStatus

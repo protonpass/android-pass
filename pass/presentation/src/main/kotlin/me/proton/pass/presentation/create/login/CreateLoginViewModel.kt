@@ -25,7 +25,7 @@ import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.PackageName
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.ItemCreationError
 import me.proton.pass.presentation.extension.toUiModel
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 import javax.inject.Inject
 

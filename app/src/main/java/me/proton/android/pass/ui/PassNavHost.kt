@@ -15,15 +15,15 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import me.proton.android.pass.composecomponents.impl.dialogs.ConfirmSignOutDialog
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.ui.navigation.AppNavItem
 import me.proton.android.pass.ui.navigation.appGraph
-import me.proton.pass.presentation.components.navigation.CoreNavigation
-import me.proton.pass.presentation.components.navigation.drawer.DrawerUiState
-import me.proton.pass.presentation.components.navigation.drawer.ModalNavigationDrawer
-import me.proton.pass.presentation.components.navigation.drawer.NavDrawerNavigation
 import me.proton.pass.presentation.home.HomeFilterMode
-import me.proton.pass.presentation.shared.ConfirmSignOutDialog
+import me.proton.pass.presentation.navigation.CoreNavigation
+import me.proton.pass.presentation.navigation.drawer.DrawerUiState
+import me.proton.pass.presentation.navigation.drawer.ModalNavigationDrawer
+import me.proton.pass.presentation.navigation.drawer.NavDrawerNavigation
 
 @OptIn(
     ExperimentalAnimationApi::class,

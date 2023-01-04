@@ -12,12 +12,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.proton.android.pass.composecomponents.impl.buttons.PassOutlinedButton
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.PassOutlinedButton
-import me.proton.pass.presentation.components.form.NoteInput
-import me.proton.pass.presentation.components.form.TitleInput
-import me.proton.pass.presentation.uievents.IsButtonEnabled
+import me.proton.android.pass.composecomponents.impl.form.NoteInput
+import me.proton.android.pass.composecomponents.impl.form.TitleInput
 
 @Composable
 internal fun CreateAliasForm(
@@ -83,7 +82,7 @@ internal fun CreateAliasForm(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.action_move_to_trash),
                 color = ProtonTheme.colors.notificationError,
-                enabled = IsButtonEnabled.from(isEditAllowed),
+                enabled = isEditAllowed,
                 onClick = onDeleteAliasClick
             )
         }

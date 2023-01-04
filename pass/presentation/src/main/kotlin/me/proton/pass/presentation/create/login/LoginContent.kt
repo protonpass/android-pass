@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
@@ -20,11 +21,10 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.EmptyShareIdError
 import me.proton.pass.presentation.create.login.bottomsheet.LoginBottomSheet
 import me.proton.pass.presentation.create.login.bottomsheet.LoginBottomSheetContent
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.pass.presentation.uievents.ItemSavedState
 
 @OptIn(ExperimentalMaterialApi::class)

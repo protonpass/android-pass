@@ -16,9 +16,6 @@ import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.settings.SettingPreferenceDescription
-import me.proton.pass.presentation.components.settings.SettingPreferenceSubtitle
-import me.proton.pass.presentation.components.settings.SettingPreferenceTitle
 
 @Composable
 fun AppearanceSection(

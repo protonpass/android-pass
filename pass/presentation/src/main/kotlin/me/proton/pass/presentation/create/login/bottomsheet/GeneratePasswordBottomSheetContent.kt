@@ -1,19 +1,20 @@
-package me.proton.pass.presentation.create.login
+package me.proton.pass.presentation.create.login.bottomsheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
+import me.proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitleButton
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitle
-import me.proton.pass.presentation.components.common.bottomsheet.BottomSheetTitleButton
-import me.proton.pass.presentation.components.previewproviders.CreatePasswordStatePreviewProvider
 import me.proton.pass.presentation.create.password.CreatePasswordUiState
 import me.proton.pass.presentation.create.password.CreatePasswordViewContent
+import me.proton.pass.presentation.previewproviders.CreatePasswordStatePreviewProvider
 
 @Composable
 fun GeneratePasswordBottomSheetContent(
@@ -26,9 +27,9 @@ fun GeneratePasswordBottomSheetContent(
 ) {
     Column(modifier = modifier) {
         BottomSheetTitle(
-            title = R.string.button_generate_password,
+            title = stringResource(id = R.string.button_generate_password),
             button = BottomSheetTitleButton(
-                R.string.bottom_sheet_generate_password_confirm,
+                title = stringResource(id = R.string.bottom_sheet_generate_password_confirm),
                 onClick = { onConfirm(state.password) },
                 enabled = true
             ),

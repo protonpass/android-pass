@@ -2,6 +2,10 @@ package me.proton.pass.autofill.ui.previewproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
+import me.proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import me.proton.pass.autofill.ui.autofill.select.ItemClickedEvent
 import me.proton.pass.autofill.ui.autofill.select.SearchUiState
 import me.proton.pass.autofill.ui.autofill.select.SelectItemListItems
@@ -10,10 +14,6 @@ import me.proton.pass.autofill.ui.autofill.select.SelectItemUiState
 import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.components.model.ItemUiModel
-import me.proton.pass.presentation.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.IsProcessingSearchState
-import me.proton.pass.presentation.uievents.IsRefreshingState
 
 class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiState> {
     override val values: Sequence<SelectItemUiState>

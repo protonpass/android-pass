@@ -16,10 +16,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import me.proton.android.pass.commonuimodels.api.ItemUiModel
+import me.proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.domain.ItemType
-import me.proton.pass.presentation.components.dialogs.ConfirmMoveItemToTrashDialog
-import me.proton.pass.presentation.components.model.ItemUiModel
 import me.proton.pass.presentation.home.bottomsheet.AliasOptionsBottomSheetContents
 import me.proton.pass.presentation.home.bottomsheet.LoginOptionsBottomSheetContents
 import me.proton.pass.presentation.home.bottomsheet.NoteOptionsBottomSheetContents

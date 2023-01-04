@@ -14,9 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.PassOutlinedButton
-import me.proton.pass.presentation.components.form.NoteInput
-import me.proton.pass.presentation.components.form.TitleInput
+import me.proton.android.pass.composecomponents.impl.buttons.PassOutlinedButton
+import me.proton.android.pass.composecomponents.impl.form.NoteInput
+import me.proton.android.pass.composecomponents.impl.form.TitleInput
 
 @Composable
 internal fun CreateNoteItemForm(

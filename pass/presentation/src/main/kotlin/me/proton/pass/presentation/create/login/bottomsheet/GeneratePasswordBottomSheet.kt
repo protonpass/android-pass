@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.proton.pass.presentation.create.login.bottomsheet.GeneratePasswordBottomSheetContent
 import me.proton.pass.presentation.create.password.CreatePasswordViewModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)

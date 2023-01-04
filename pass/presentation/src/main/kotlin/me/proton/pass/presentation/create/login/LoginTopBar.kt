@@ -15,15 +15,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.proton.android.pass.ui.shared.CrossBackIcon
-import me.proton.android.pass.ui.shared.TopBarTitleView
+import me.proton.android.pass.composecomponents.impl.topbar.icon.CrossBackIcon
+import me.proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.components.common.TopBarLoading
+import me.proton.android.pass.composecomponents.impl.topbar.TopBarLoading
 import me.proton.pass.presentation.settings.ThemedBooleanPreviewProvider
-import me.proton.pass.presentation.uievents.IsLoadingState
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

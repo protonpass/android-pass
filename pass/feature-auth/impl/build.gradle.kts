@@ -37,4 +37,13 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
+
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.biometry.fakes)
+    testImplementation(projects.pass.preferences.fakes)
+
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+
 }

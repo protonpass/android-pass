@@ -43,8 +43,8 @@ import me.proton.pass.common.api.Some
 import me.proton.pass.common.api.flatMap
 import me.proton.pass.common.api.map
 import me.proton.pass.common.api.toOption
-import me.proton.pass.presentation.extension.toUiModel
-import me.proton.pass.presentation.utils.ItemUiFilter
+import me.proton.pass.commonui.api.toUiModel
+import me.proton.pass.commonui.api.ItemUiFilter
 import java.net.URI
 import javax.inject.Inject
 

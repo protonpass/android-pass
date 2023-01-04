@@ -17,7 +17,7 @@ import me.proton.pass.presentation.R
 import me.proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
 import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.LoginUpdated
-import me.proton.pass.presentation.uievents.IsSentToTrashState
+import me.proton.pass.presentation.create.IsSentToTrashState
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable

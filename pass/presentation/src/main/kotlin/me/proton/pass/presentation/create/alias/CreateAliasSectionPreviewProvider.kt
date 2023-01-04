@@ -1,8 +1,6 @@
-package me.proton.pass.presentation.previewproviders
+package me.proton.pass.presentation.create.alias
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import me.proton.pass.presentation.create.alias.AliasItem
-import me.proton.pass.presentation.create.alias.AliasSuffixUiModel
 
 class CreateAliasSectionPreviewProvider :
     PreviewParameterProvider<CreateAliasSectionPreviewParameter> {

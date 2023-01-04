@@ -5,8 +5,8 @@ import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.domain.ShareId
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.IsSentToTrashState
-import me.proton.pass.presentation.uievents.ItemSavedState
+import me.proton.pass.presentation.create.IsSentToTrashState
+import me.proton.pass.presentation.create.ItemSavedState
 
 @Immutable
 data class CreateUpdateLoginUiState(

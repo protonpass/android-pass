@@ -32,8 +32,8 @@ import me.proton.pass.presentation.create.alias.AliasItem
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.IsSentToTrashState
-import me.proton.pass.presentation.uievents.ItemSavedState
+import me.proton.pass.presentation.create.IsSentToTrashState
+import me.proton.pass.presentation.create.ItemSavedState
 
 abstract class BaseLoginViewModel(
     private val createAlias: CreateAlias,

@@ -16,7 +16,7 @@ import me.proton.pass.presentation.create.alias.AliasSuffixUiModel
 import me.proton.pass.presentation.create.alias.CreateAliasViewModel
 import me.proton.pass.presentation.create.alias.CreateUpdateAliasUiState
 import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
-import me.proton.pass.presentation.uievents.AliasSavedState
+import me.proton.pass.presentation.create.alias.AliasSavedState
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.TestSavedStateHandle

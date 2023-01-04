@@ -17,7 +17,6 @@ import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.detail.DetailSectionSubtitle
 import me.proton.pass.presentation.detail.DetailSectionTitle
-import me.proton.pass.presentation.previewproviders.PasswordStatePreviewProvider
 
 @Suppress("UnusedPrivateMember") // Unused until design comes up with a solution for reveal/conceal
 @Composable

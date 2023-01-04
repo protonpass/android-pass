@@ -1,4 +1,4 @@
-package me.proton.pass.presentation.previewproviders
+package me.proton.pass.presentation.detail.alias
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import me.proton.pass.domain.AliasMailbox

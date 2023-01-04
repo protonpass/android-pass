@@ -1,4 +1,4 @@
-package me.proton.pass.presentation.previewproviders
+package me.proton.pass.presentation.detail.login
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import me.proton.core.util.kotlin.times

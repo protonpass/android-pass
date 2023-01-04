@@ -16,8 +16,8 @@ import me.proton.pass.presentation.create.login.CreateUpdateLoginUiState.Compani
 import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 import me.proton.pass.presentation.create.login.LoginItem
 import me.proton.pass.presentation.create.login.LoginItemValidationErrors
-import me.proton.pass.presentation.extension.itemName
-import me.proton.pass.presentation.uievents.ItemSavedState
+import me.proton.pass.commonui.api.itemName
+import me.proton.pass.presentation.create.ItemSavedState
 import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.TestSavedStateHandle
 import me.proton.pass.test.TestUtils

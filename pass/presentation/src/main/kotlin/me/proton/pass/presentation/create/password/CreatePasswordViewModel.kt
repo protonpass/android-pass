@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.android.pass.clipboard.api.ClipboardManager
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.pass.presentation.PasswordGenerator
 import javax.inject.Inject
 
 @HiltViewModel

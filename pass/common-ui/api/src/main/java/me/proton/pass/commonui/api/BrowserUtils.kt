@@ -1,4 +1,4 @@
-package me.proton.pass.presentation.utils
+package me.proton.pass.commonui.api
 
 import android.content.ActivityNotFoundException
 import android.content.Context

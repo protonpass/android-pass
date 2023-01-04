@@ -41,8 +41,6 @@ import me.proton.android.pass.composecomponents.impl.form.ProtonTextTitle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.previewproviders.WebsitesPreviewParameter
-import me.proton.pass.presentation.previewproviders.WebsitesSectionPreviewProvider
 
 @Composable
 internal fun WebsitesSection(

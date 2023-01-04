@@ -7,14 +7,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import me.proton.android.pass.composecomponents.impl.uievents.value
 import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.previewproviders.ButtonEnabledPreviewProvider
-import me.proton.pass.presentation.uievents.IsButtonEnabled
-import me.proton.pass.presentation.uievents.value
 
 @Composable
 fun AuthenticationSection(

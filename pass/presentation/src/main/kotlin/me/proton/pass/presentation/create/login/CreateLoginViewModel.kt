@@ -24,9 +24,9 @@ import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.PackageName
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.ItemCreationError
-import me.proton.pass.presentation.extension.toUiModel
+import me.proton.pass.commonui.api.toUiModel
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.ItemSavedState
+import me.proton.pass.presentation.create.ItemSavedState
 import javax.inject.Inject
 
 @HiltViewModel

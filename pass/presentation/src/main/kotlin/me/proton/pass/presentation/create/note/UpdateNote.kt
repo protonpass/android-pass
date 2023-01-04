@@ -17,7 +17,7 @@ import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.R
 import me.proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
 import me.proton.pass.presentation.create.note.NoteSnackbarMessage.NoteUpdated
-import me.proton.pass.presentation.uievents.IsSentToTrashState
+import me.proton.pass.presentation.create.IsSentToTrashState
 
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalComposeUiApi::class)
 @Composable

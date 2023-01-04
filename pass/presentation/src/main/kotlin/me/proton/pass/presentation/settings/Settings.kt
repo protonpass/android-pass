@@ -5,8 +5,8 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.proton.android.pass.autofill.api.AutofillSupportedStatus
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import me.proton.core.compose.component.ProtonSettingsList
-import me.proton.pass.presentation.uievents.IsButtonEnabled
 
 @Composable
 fun Settings(

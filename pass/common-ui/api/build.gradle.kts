@@ -21,4 +21,11 @@ dependencies {
     api(libs.androidx.compose.runtime)
     api(libs.androidx.compose.ui)
     api(libs.androidx.compose.uiToolingPreview)
+
+    implementation(projects.pass.common.api)
+    implementation(projects.pass.commonUiModels.api)
+    implementation(projects.pass.data.api)
+    implementation(projects.pass.domain)
+    implementation(projects.pass.log.api)
+    implementation(projects.pass.protos)
 }

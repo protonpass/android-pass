@@ -12,8 +12,8 @@ import me.proton.android.pass.biometry.TestBiometryManager
 import me.proton.android.pass.preferences.BiometricLockState
 import me.proton.android.pass.preferences.TestPreferenceRepository
 import me.proton.pass.common.api.None
-import me.proton.pass.presentation.auth.AuthStatus
-import me.proton.pass.presentation.auth.AuthViewModel
+import me.proton.android.pass.featureauth.impl.AuthStatus
+import me.proton.android.pass.featureauth.impl.AuthViewModel
 import me.proton.pass.test.MainDispatcherRule
 import org.junit.Before
 import org.junit.Rule

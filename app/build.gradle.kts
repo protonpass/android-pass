@@ -259,6 +259,9 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.data.impl)
     implementation(projects.pass.domain)
+    implementation(projects.pass.featureAuth.impl)
+    implementation(projects.pass.log.api)
+    implementation(projects.pass.log.impl)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.network.api)
     implementation(projects.pass.network.impl)
@@ -267,8 +270,6 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.preferences.impl)
     implementation(projects.pass.presentation)
-    implementation(projects.pass.log.api)
-    implementation(projects.pass.log.impl)
     implementation(projects.pass.tracing.impl)
 
     debugImplementation(libs.leakCanary)

@@ -17,8 +17,6 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.commonui.api.applyIf
-import me.proton.pass.presentation.previewproviders.SelectorPreviewParameter
-import me.proton.pass.presentation.previewproviders.SelectorPreviewProvider
 
 @Composable
 internal fun Selector(

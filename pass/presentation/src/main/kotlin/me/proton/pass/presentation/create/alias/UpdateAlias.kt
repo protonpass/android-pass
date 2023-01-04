@@ -18,7 +18,6 @@ import me.proton.pass.presentation.R
 import me.proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.AliasUpdated
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.ItemDeletedState
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @ExperimentalMaterialApi

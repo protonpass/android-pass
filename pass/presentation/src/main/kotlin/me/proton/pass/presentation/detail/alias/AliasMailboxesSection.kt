@@ -18,7 +18,6 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.domain.AliasMailbox
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.previewproviders.AliasMailboxesPreviewProvider
 import me.proton.pass.presentation.detail.DetailSectionSubtitle
 import me.proton.pass.presentation.detail.DetailSectionTitle
 

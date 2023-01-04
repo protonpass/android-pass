@@ -1,4 +1,4 @@
-package me.proton.pass.presentation
+package me.proton.pass.presentation.create.password
 
 import kotlin.random.Random
 
@@ -14,7 +14,13 @@ object PasswordGenerator {
     sealed class Option(characterSets: Set<CharacterSet>) {
         object Letters : Option(setOf(CharacterSet.LETTERS))
         object LettersAndNumbers : Option(setOf(CharacterSet.LETTERS, CharacterSet.NUMBERS))
-        object LettersNumbersSymbols : Option(setOf(CharacterSet.LETTERS, CharacterSet.NUMBERS, CharacterSet.SYMBOLS))
+        object LettersNumbersSymbols : Option(
+            setOf(
+                CharacterSet.LETTERS,
+                CharacterSet.NUMBERS,
+                CharacterSet.SYMBOLS
+            )
+        )
 
         val dictionary = characterSets.joinToString("") { it.value }
     }

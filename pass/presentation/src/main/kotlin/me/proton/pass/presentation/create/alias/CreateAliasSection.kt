@@ -18,8 +18,6 @@ import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.previewproviders.CreateAliasSectionPreviewParameter
-import me.proton.pass.presentation.previewproviders.CreateAliasSectionPreviewProvider
 
 @Composable
 internal fun CreateAliasSection(

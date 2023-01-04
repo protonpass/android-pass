@@ -1,4 +1,4 @@
-package me.proton.pass.presentation.uievents
+package me.proton.pass.presentation.create.alias
 
 sealed interface ItemDeletedState {
     object Unknown : ItemDeletedState

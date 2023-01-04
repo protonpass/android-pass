@@ -34,10 +34,10 @@ import me.proton.pass.presentation.create.login.LoginSnackbarMessages.InitError
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.ItemUpdateError
 import me.proton.pass.presentation.create.login.LoginSnackbarMessages.LoginMovedToTrash
 import me.proton.pass.presentation.detail.DetailSnackbarMessages.SendToTrashError
-import me.proton.pass.presentation.extension.toUiModel
+import me.proton.pass.commonui.api.toUiModel
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.IsSentToTrashState
-import me.proton.pass.presentation.uievents.ItemSavedState
+import me.proton.pass.presentation.create.IsSentToTrashState
+import me.proton.pass.presentation.create.ItemSavedState
 import javax.inject.Inject
 
 @HiltViewModel

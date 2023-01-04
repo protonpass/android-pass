@@ -1,4 +1,4 @@
-package me.proton.pass.presentation.utils
+package me.proton.pass.commonui.api
 
 import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.pass.domain.ItemType

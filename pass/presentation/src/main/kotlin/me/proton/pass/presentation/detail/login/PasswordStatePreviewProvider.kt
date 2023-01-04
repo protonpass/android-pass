@@ -1,7 +1,6 @@
-package me.proton.pass.presentation.previewproviders
+package me.proton.pass.presentation.detail.login
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import me.proton.pass.presentation.detail.login.PasswordState
 
 class PasswordStatePreviewProvider : PreviewParameterProvider<PasswordState> {
     override val values: Sequence<PasswordState>

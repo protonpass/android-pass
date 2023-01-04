@@ -25,7 +25,7 @@ import me.proton.pass.presentation.create.login.LoginSnackbarMessages.EmptyShare
 import me.proton.pass.presentation.create.login.bottomsheet.LoginBottomSheet
 import me.proton.pass.presentation.create.login.bottomsheet.LoginBottomSheetContent
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.ItemSavedState
+import me.proton.pass.presentation.create.ItemSavedState
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

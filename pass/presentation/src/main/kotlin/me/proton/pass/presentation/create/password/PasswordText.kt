@@ -10,7 +10,6 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.presentation.PasswordGenerator
 
 @Composable
 internal fun PasswordText(

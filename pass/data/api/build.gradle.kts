@@ -1,31 +1,17 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.jvm")
 }
-
-android {
-    namespace = "me.proton.android.pass.data.api"
-    compileSdk = libs.versions.compileSdk.get().toInt()
-
-    defaultConfig {
-        minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = libs.versions.targetSdk.get().toInt()
-    }
-}
-
 
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.core.account)
-    implementation(libs.core.accountManager)
-    implementation(libs.core.crypto)
+    implementation(libs.core.account.domain)
+    implementation(libs.core.cryptoCommon)
     implementation(libs.core.domain)
-    implementation(libs.core.key)
-    implementation(libs.core.user)
+    implementation(libs.core.user.domain)
+
     implementation(projects.pass.common.api)
     implementation(projects.pass.domain)
 
-    testImplementation(libs.truth)
     testImplementation(libs.kotlinTest)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)

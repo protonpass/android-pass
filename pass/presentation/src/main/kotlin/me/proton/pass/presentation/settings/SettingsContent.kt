@@ -17,12 +17,12 @@ import kotlinx.coroutines.launch
 import me.proton.android.pass.composecomponents.impl.loading.LoadingDialog
 import me.proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import me.proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.uievents.IsButtonEnabled
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable

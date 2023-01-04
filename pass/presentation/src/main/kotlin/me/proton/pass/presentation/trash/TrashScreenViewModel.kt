@@ -23,7 +23,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.pass.common.api.Result
 import me.proton.pass.common.api.onError
-import me.proton.pass.presentation.extension.toUiModel
+import me.proton.pass.commonui.api.toUiModel
 import me.proton.pass.presentation.trash.TrashSnackbarMessage.ClearTrashError
 import me.proton.pass.presentation.trash.TrashSnackbarMessage.DeleteItemError
 import me.proton.pass.presentation.trash.TrashSnackbarMessage.ObserveItemsError

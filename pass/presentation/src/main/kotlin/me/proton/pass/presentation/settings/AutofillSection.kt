@@ -12,7 +12,7 @@ import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.previewproviders.BooleanPreviewProvider
+import me.proton.pass.commonui.api.BooleanPreviewProvider
 
 @Composable
 fun AutofillSection(

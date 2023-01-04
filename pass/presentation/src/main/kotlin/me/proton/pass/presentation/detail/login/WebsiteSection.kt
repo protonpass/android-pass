@@ -23,7 +23,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
 import me.proton.pass.presentation.R
 import me.proton.pass.presentation.detail.DetailSectionTitle
-import me.proton.pass.presentation.previewproviders.WebsiteProvider
+import me.proton.pass.presentation.create.login.WebsiteProvider
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

@@ -12,16 +12,14 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.android.pass.navigation.api.AliasOptionalNavArgId
 import me.proton.android.pass.navigation.api.CommonNavArgId
 import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.toOption
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.uievents.AliasDraftSavedState
-import me.proton.pass.presentation.uievents.AliasSavedState
-import me.proton.pass.presentation.uievents.IsButtonEnabled
-import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 abstract class BaseAliasViewModel(
     private val snackbarMessageRepository: SnackbarMessageRepository,

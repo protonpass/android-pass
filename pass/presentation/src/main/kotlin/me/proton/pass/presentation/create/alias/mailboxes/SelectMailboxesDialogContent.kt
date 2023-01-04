@@ -10,6 +10,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import me.proton.android.pass.composecomponents.impl.uievents.value
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.component.ProtonAlertDialogButton
 import me.proton.core.compose.component.ProtonDialogTitle
@@ -21,8 +23,6 @@ import me.proton.pass.presentation.R
 import me.proton.pass.presentation.create.alias.AliasMailboxUiModel
 import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
 import me.proton.pass.presentation.settings.ThemedBooleanPreviewProvider
-import me.proton.pass.presentation.uievents.IsButtonEnabled
-import me.proton.pass.presentation.uievents.value
 
 @Composable
 fun SelectMailboxesDialogContent(

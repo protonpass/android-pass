@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.repositories.AliasRepository
 import me.proton.android.pass.data.api.repositories.ItemRepository
@@ -35,11 +37,6 @@ import me.proton.pass.domain.ItemId
 import me.proton.pass.domain.ItemType
 import me.proton.pass.domain.ShareId
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
-import me.proton.pass.presentation.uievents.AliasSavedState
-import me.proton.pass.presentation.uievents.IsButtonEnabled
-import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import me.proton.pass.presentation.uievents.ItemDeletedState
-import me.proton.pass.presentation.utils.AliasUtils
 import javax.inject.Inject
 
 @HiltViewModel

@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.pass.domain.Item
 import me.proton.pass.presentation.detail.login.bottomsheet.LoginDetailBottomSheetContents
-import me.proton.pass.presentation.utils.BrowserUtils.openWebsite
+import me.proton.pass.commonui.api.BrowserUtils.openWebsite
 
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class)
 @Composable

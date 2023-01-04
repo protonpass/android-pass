@@ -9,8 +9,8 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import me.proton.pass.presentation.create.alias.SelectedAliasMailboxUiModel
-import me.proton.pass.presentation.uievents.IsButtonEnabled
 
 class SelectMailboxesDialogViewModel : ViewModel() {
 

@@ -1,7 +1,7 @@
-package me.proton.pass.presentation.previewproviders
+package me.proton.pass.presentation.create.alias
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import me.proton.pass.presentation.uievents.IsButtonEnabled
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 class AliasTopBarPreviewProvider : PreviewParameterProvider<AliasTopBarInput> {

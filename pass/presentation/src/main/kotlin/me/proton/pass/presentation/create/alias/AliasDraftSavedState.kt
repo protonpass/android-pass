@@ -1,8 +1,7 @@
-package me.proton.pass.presentation.uievents
+package me.proton.pass.presentation.create.alias
 
 import androidx.compose.runtime.Stable
 import me.proton.pass.domain.ShareId
-import me.proton.pass.presentation.create.alias.AliasItem
 
 @Stable
 sealed interface AliasDraftSavedState {

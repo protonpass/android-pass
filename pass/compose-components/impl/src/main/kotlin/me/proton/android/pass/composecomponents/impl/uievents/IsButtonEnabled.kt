@@ -1,4 +1,4 @@
-package me.proton.pass.presentation.uievents
+package me.proton.android.pass.composecomponents.impl.uievents
 
 sealed interface IsButtonEnabled {
     object Enabled : IsButtonEnabled

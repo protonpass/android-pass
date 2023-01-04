@@ -1,4 +1,4 @@
-package me.proton.pass.presentation
+package me.proton.pass.presentation.create.password
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test

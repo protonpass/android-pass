@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import me.proton.android.pass.data.api.repositories.AliasRepository
 import me.proton.android.pass.data.api.usecases.CreateAlias
@@ -28,10 +30,6 @@ import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.NewAlias
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.InitError
 import me.proton.pass.presentation.create.alias.AliasSnackbarMessage.ItemCreationError
-import me.proton.pass.presentation.uievents.AliasDraftSavedState
-import me.proton.pass.presentation.uievents.AliasSavedState
-import me.proton.pass.presentation.uievents.IsButtonEnabled
-import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import javax.inject.Inject
 
 @HiltViewModel

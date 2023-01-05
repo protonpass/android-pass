@@ -5,13 +5,13 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
+import me.proton.android.pass.featurecreateitem.impl.alias.AliasItem
+import me.proton.android.pass.featurecreateitem.impl.alias.RESULT_CREATED_DRAFT_ALIAS
+import me.proton.android.pass.featurecreateitem.impl.login.CreateLogin
+import me.proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.navigation.api.composable
 import me.proton.android.pass.ui.navigation.AppNavItem
-import me.proton.pass.presentation.create.alias.AliasItem
-import me.proton.pass.presentation.create.alias.RESULT_CREATED_DRAFT_ALIAS
-import me.proton.pass.presentation.create.login.CreateLogin
-import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 
 @OptIn(
     ExperimentalAnimationApi::class,

@@ -27,6 +27,7 @@ import me.proton.android.pass.composecomponents.impl.buttons.PassFloatingActionB
 import me.proton.android.pass.composecomponents.impl.item.ItemsList
 import me.proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDialog
 import me.proton.android.pass.composecomponents.impl.item.EmptyList
+import me.proton.android.pass.composecomponents.impl.item.EmptySearchResults
 
 @Suppress("LongParameterList")
 @ExperimentalComposeUiApi

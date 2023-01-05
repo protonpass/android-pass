@@ -2,7 +2,7 @@ package me.proton.android.pass.composecomponents.impl.dialogs
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import me.proton.android.pass.compose.components.impl.R
+import me.proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun ConfirmSignOutDialog(

@@ -21,6 +21,8 @@ dependencies {
 
     implementation(libs.androidx.startup.runtime)
     implementation(libs.timber)
+    implementation(libs.core.userSettings.domain)
+    implementation(libs.core.utilKotlin)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

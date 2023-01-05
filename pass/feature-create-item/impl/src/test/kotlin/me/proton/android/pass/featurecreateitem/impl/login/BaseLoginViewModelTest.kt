@@ -7,9 +7,9 @@ import me.proton.android.pass.featurecreateitem.impl.login.CreateUpdateLoginUiSt
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.TestSavedStateHandle
-import me.proton.pass.test.core.TestAccountManager
-import me.proton.pass.test.domain.usecases.TestCreateAlias
-import me.proton.pass.test.domain.usecases.TestObserveActiveShare
+import me.proton.pass.test.TestAccountManager
+import me.proton.android.pass.data.fakes.usecases.TestCreateAlias
+import me.proton.android.pass.data.fakes.usecases.TestObserveActiveShare
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

@@ -7,6 +7,9 @@ import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import me.proton.android.pass.data.fakes.crypto.TestEncryptionContext
 import me.proton.android.pass.data.fakes.crypto.TestEncryptionContextProvider
+import me.proton.android.pass.data.fakes.usecases.TestCreateAlias
+import me.proton.android.pass.data.fakes.usecases.TestCreateItem
+import me.proton.android.pass.data.fakes.usecases.TestObserveActiveShare
 import me.proton.android.pass.featurecreateitem.impl.ItemSavedState
 import me.proton.android.pass.featurecreateitem.impl.login.CreateUpdateLoginUiState.Companion.Initial
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
@@ -15,14 +18,11 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.commonui.api.itemName
 import me.proton.pass.domain.ShareId
 import me.proton.pass.test.MainDispatcherRule
+import me.proton.pass.test.TestAccountManager
 import me.proton.pass.test.TestSavedStateHandle
 import me.proton.pass.test.TestUtils
-import me.proton.pass.test.core.TestAccountManager
 import me.proton.pass.test.crypto.TestKeyStoreCrypto
 import me.proton.pass.test.domain.TestItem
-import me.proton.pass.test.domain.usecases.TestCreateAlias
-import me.proton.pass.test.domain.usecases.TestCreateItem
-import me.proton.pass.test.domain.usecases.TestObserveActiveShare
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -48,7 +48,7 @@ internal class CreateLoginViewModelTest {
             observeActiveShare = observeActiveShare,
             snackbarMessageRepository = TestSnackbarMessageRepository(),
             savedStateHandle = TestSavedStateHandle.create(),
-            encryptionContextProvider = TestEncryptionContextProvider,
+            encryptionContextProvider = TestEncryptionContextProvider(),
             createAlias = TestCreateAlias()
         )
     }

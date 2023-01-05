@@ -8,8 +8,9 @@ import me.proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.pass.common.api.None
 import me.proton.pass.common.api.Option
 import me.proton.pass.common.api.some
+import javax.inject.Inject
 
-class TestSnackbarMessageRepository : SnackbarMessageRepository {
+class TestSnackbarMessageRepository @Inject constructor() : SnackbarMessageRepository {
     private val snackbarState = MutableSharedFlow<Option<SnackbarMessage>>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
     )

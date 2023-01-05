@@ -1,4 +1,4 @@
-package me.proton.pass.test.domain.usecases
+package me.proton.android.pass.data.fakes.usecases
 
 import me.proton.android.pass.data.api.usecases.CreateItem
 import me.proton.core.domain.entity.UserId
@@ -7,8 +7,9 @@ import me.proton.pass.domain.Item
 import me.proton.pass.domain.ItemContents
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.PackageName
+import javax.inject.Inject
 
-class TestCreateItem : CreateItem {
+class TestCreateItem @Inject constructor() : CreateItem {
 
     private var item: Result<Item> = Result.Loading
 

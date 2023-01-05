@@ -1,5 +1,18 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm")
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.kapt")
+    id("dagger.hilt.android.plugin")
+}
+
+android {
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    namespace = "me.proton.android.pass.notifications.fakes"
+
+    defaultConfig {
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
+    }
 }
 
 dependencies {
@@ -8,4 +21,8 @@ dependencies {
     api(projects.pass.notifications.api)
 
     implementation(libs.kotlinx.coroutines.core)
+
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
 }

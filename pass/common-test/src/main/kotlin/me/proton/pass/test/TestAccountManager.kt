@@ -1,4 +1,4 @@
-package me.proton.pass.test.core
+package me.proton.pass.test
 
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
@@ -11,8 +11,9 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
+import javax.inject.Inject
 
-class TestAccountManager : AccountManager(Product.Drive) {
+class TestAccountManager @Inject constructor() : AccountManager(Product.Drive) {
 
     private val primaryUserIdFlow: MutableSharedFlow<UserId?> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)

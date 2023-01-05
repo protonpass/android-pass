@@ -1,8 +1,9 @@
 package me.proton.android.pass.clipboard.fakes
 
 import me.proton.android.pass.clipboard.api.ClipboardManager
+import javax.inject.Inject
 
-class TestClipboardManager : ClipboardManager {
+class TestClipboardManager @Inject constructor() : ClipboardManager {
 
     private var contents: String = ""
     private var _clearAfterSeconds: Long? = null

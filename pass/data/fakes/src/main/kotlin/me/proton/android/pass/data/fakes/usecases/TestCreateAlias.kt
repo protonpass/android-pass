@@ -1,4 +1,4 @@
-package me.proton.pass.test.domain.usecases
+package me.proton.android.pass.data.fakes.usecases
 
 import me.proton.android.pass.data.api.usecases.CreateAlias
 import me.proton.core.domain.entity.UserId
@@ -6,8 +6,9 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.NewAlias
+import javax.inject.Inject
 
-class TestCreateAlias : CreateAlias {
+class TestCreateAlias @Inject constructor() : CreateAlias {
 
     private var result: Result<Item> = Result.Loading
 

@@ -18,9 +18,9 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.domain.ItemContents
 import me.proton.pass.domain.Share
 import me.proton.pass.test.MainDispatcherRule
+import me.proton.pass.test.TestAccountManager
 import me.proton.pass.test.TestPublicAddressRepository
 import me.proton.pass.test.TestUserAddressRepository
-import me.proton.pass.test.core.TestAccountManager
 import me.proton.pass.test.crypto.TestCryptoContext
 import me.proton.pass.test.domain.TestItem
 import me.proton.pass.test.domain.TestItemKey
@@ -73,7 +73,7 @@ class ItemRepositoryImplTest {
             remoteItemDataSource = remoteItemDataSource,
             keyPacketRepository = TestKeyPacketRepository(),
             openItem = openItem,
-            encryptionContextProvider = TestEncryptionContextProvider
+            encryptionContextProvider = TestEncryptionContextProvider()
         )
     }
 

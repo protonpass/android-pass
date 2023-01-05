@@ -14,7 +14,7 @@ android {
 }
 
 dependencies {
-    api(libs.core.userSettings.domain)
-    api(libs.core.utilKotlin)
+    implementation(libs.core.userSettings.domain)
+    implementation(libs.core.utilKotlin)
     implementation(libs.timber)
 }

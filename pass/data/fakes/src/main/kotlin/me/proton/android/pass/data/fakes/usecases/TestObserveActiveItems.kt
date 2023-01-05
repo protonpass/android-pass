@@ -1,4 +1,4 @@
-package me.proton.pass.test.domain.usecases
+package me.proton.android.pass.data.fakes.usecases
 
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
@@ -7,8 +7,9 @@ import me.proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.android.pass.data.api.usecases.ObserveActiveItems
 import me.proton.pass.common.api.Result
 import me.proton.pass.domain.Item
+import javax.inject.Inject
 
-class TestObserveActiveItems : ObserveActiveItems {
+class TestObserveActiveItems @Inject constructor() : ObserveActiveItems {
 
     private val activeItemsFlow: MutableSharedFlow<Result<List<Item>>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)

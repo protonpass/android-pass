@@ -16,31 +16,11 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
     }
 
-    sourceSets {
-        getByName("main").java.srcDirs("src/main/kotlin")
-        getByName("test").java.srcDirs("src/test/kotlin")
-        getByName("androidTest").java.srcDirs("src/androidTest/kotlin")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = true
-        }
-    }
     flavorDimensions += "default"
     productFlavors {
         maybeCreate("dev")
         maybeCreate("alpha")
         maybeCreate("prod")
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 
     buildFeatures {
@@ -49,10 +29,6 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
-    }
-
-    hilt {
-        enableAggregatingTask = true
     }
 }
 

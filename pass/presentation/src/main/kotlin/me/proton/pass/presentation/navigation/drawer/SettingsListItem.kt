@@ -8,7 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.settings.ThemedBooleanPreviewProvider
+import me.proton.pass.commonui.api.ThemedBooleanPreviewProvider
 
 @Composable
 fun SettingsListItem(

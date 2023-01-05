@@ -16,6 +16,8 @@
 
     <!-- Empty list -->
     <string name="empty_list_title">No items</string>
+    <string name="empty_search_results_title">No results found</string>
+    <string name="empty_search_results_subtitle">Please try a different search term.</string>
 
     <!-- Alerts -->
     <string name="alert_confirm_item_send_to_trash_message">Are you sure you want to send \'%s\' to the trash?</string>

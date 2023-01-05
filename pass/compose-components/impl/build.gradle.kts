@@ -2,23 +2,15 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
-
 }
 
 android {
-    namespace = "me.proton.android.pass.compose.components.impl"
+    namespace = "me.proton.android.pass.composecomponents.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-    }
-
-    flavorDimensions += "default"
-    productFlavors {
-        maybeCreate("dev")
-        maybeCreate("alpha")
-        maybeCreate("prod")
     }
 
     buildFeatures {
@@ -29,6 +21,7 @@ android {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
 }
+
 dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
@@ -53,6 +46,6 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.protos)
 
-    add("devImplementation", libs.showkase)
-    add("kspDev", libs.showkaseProcessor)
+    debugImplementation(libs.showkase)
+    kspDebug(libs.showkaseProcessor)
 }

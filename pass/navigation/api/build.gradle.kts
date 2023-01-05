@@ -27,6 +27,7 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.core.cryptoAndroid)
     implementation(libs.core.cryptoCommon)
+    implementation(libs.core.utilKotlin)
     implementation(libs.androidx.navigation.compose)
 
     api(libs.androidx.compose.runtime)

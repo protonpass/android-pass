@@ -39,7 +39,7 @@ internal class OpenItemTest {
 
     @Before
     fun setUp() {
-        instance = OpenItemImpl(cryptoContext, TestEncryptionContextProvider)
+        instance = OpenItemImpl(cryptoContext, TestEncryptionContextProvider())
     }
 
     @Test

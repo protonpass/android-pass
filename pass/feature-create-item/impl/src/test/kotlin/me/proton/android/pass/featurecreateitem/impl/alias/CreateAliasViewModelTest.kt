@@ -12,11 +12,11 @@ import me.proton.pass.common.api.Result
 import me.proton.pass.domain.AliasOptions
 import me.proton.pass.test.MainDispatcherRule
 import me.proton.pass.test.TestSavedStateHandle
-import me.proton.pass.test.core.TestAccountManager
+import me.proton.pass.test.TestAccountManager
 import me.proton.pass.test.data.TestAliasRepository
 import me.proton.pass.test.domain.TestItem
 import me.proton.pass.test.domain.TestShare
-import me.proton.pass.test.domain.usecases.TestCreateAlias
+import me.proton.android.pass.data.fakes.usecases.TestCreateAlias
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

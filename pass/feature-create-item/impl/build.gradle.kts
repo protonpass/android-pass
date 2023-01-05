@@ -34,6 +34,7 @@ dependencies {
     implementation(libs.kotlinx.collections)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
+    implementation(libs.core.userSettings.domain)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

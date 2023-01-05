@@ -27,7 +27,7 @@ android {
         debug {
             isMinifyEnabled = false
             isDebuggable = true
-            isTestCoverageEnabled = true
+            isTestCoverageEnabled = false
         }
         release {
             isMinifyEnabled = true

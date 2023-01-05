@@ -10,9 +10,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.commonui.api.ThemePairPreviewProvider
+import me.proton.pass.commonui.api.ThemedBooleanPreviewProvider
 import me.proton.pass.presentation.R
-import me.proton.pass.commonui.api.BooleanPreviewProvider
 
 @Composable
 fun AutofillSection(
@@ -30,8 +29,6 @@ fun AutofillSection(
         )
     }
 }
-
-class ThemedBooleanPreviewProvider : ThemePairPreviewProvider<Boolean>(BooleanPreviewProvider())
 
 @Preview
 @Composable

@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import me.proton.android.pass.compose.components.impl.R
+import me.proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun BottomSheetItemIcon(

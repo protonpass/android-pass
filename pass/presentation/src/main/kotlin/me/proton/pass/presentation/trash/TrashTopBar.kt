@@ -15,7 +15,7 @@ import me.proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
-import me.proton.pass.presentation.settings.ThemedBooleanPreviewProvider
+import me.proton.pass.commonui.api.ThemedBooleanPreviewProvider
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

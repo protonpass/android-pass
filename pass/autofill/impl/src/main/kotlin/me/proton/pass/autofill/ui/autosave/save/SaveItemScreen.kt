@@ -2,13 +2,12 @@ package me.proton.pass.autofill.ui.autosave.save
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import me.proton.android.pass.featurecreateitem.impl.login.CreateLogin
+import me.proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
 import me.proton.pass.autofill.entities.SaveInformation
 import me.proton.pass.autofill.entities.SaveItemType
-import me.proton.pass.presentation.create.login.CreateLogin
-import me.proton.pass.presentation.create.login.InitialCreateLoginUiState
 
 const val SAVE_ITEM_ROUTE = "save/item"
-
 
 @Composable
 fun SaveItemScreen(

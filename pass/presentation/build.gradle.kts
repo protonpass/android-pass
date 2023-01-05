@@ -101,8 +101,8 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
-    add("devImplementation", libs.showkase)
-    add("kspDev", libs.showkaseProcessor)
+    debugImplementation(libs.showkase)
+    kspDebug(libs.showkaseProcessor)
 
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
@@ -125,14 +125,11 @@ dependencies {
 
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
-    testImplementation(libs.kotlinTest)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
-    testImplementation(libs.core.test.kotlin)
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.autofill.fakes)
     testImplementation(projects.pass.biometry.fakes)
-    testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
 }

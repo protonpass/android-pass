@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import me.proton.android.pass.compose.components.impl.R
+import me.proton.android.pass.composecomponents.impl.R
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.caption
 import me.proton.pass.commonui.api.ThemePairPreviewProvider

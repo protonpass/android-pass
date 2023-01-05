@@ -36,7 +36,7 @@ class AutofillAppViewModelTest {
         viewModel = AutofillAppViewModel(
             preferenceRepository,
             biometryManager,
-            TestEncryptionContextProvider,
+            TestEncryptionContextProvider(),
             snackbarMessageRepository
         )
     }

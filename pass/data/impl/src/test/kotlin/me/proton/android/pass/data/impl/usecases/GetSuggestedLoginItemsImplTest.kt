@@ -10,7 +10,7 @@ import me.proton.pass.common.api.some
 import me.proton.pass.domain.Item
 import me.proton.pass.test.domain.TestItem
 import me.proton.pass.test.domain.TestItemType
-import me.proton.pass.test.domain.usecases.TestObserveActiveItems
+import me.proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

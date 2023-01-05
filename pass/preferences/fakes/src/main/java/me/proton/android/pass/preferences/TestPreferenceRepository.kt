@@ -3,8 +3,9 @@ package me.proton.android.pass.preferences
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import javax.inject.Inject
 
-class TestPreferenceRepository : UserPreferencesRepository {
+class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository {
 
     private val biometricLockState = MutableSharedFlow<BiometricLockState>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1

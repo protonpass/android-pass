@@ -1,84 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="title_activity">Activity</string>
     <string name="title_app">App</string>
-    <string name="title_downloading">Downloading</string>
-    <string name="title_files">Files</string>
-    <string name="title_file_type">File type</string>
-    <string name="title_last_modified">Last modified</string>
-    <string name="title_links">Links</string>
-    <string name="title_make_available_offline">Make available offline</string>
-    <string name="title_modified_with_date">Modified %1s</string>
-    <string name="title_my_files">My files</string>
-    <string name="title_name">Name</string>
-    <string name="title_not_found">Not found</string>
-    <string name="title_offline_available">Available offline</string>
-    <string name="title_online">Online</string>
-    <string name="title_percent_downloaded">%1s downloaded</string>
-    <string name="title_remove">Remove</string>
-    <string name="title_remove_account">Remove account</string>
-    <string name="title_remove_from_offline_available">Remove from offline available</string>
-    <string name="title_retry">Retry</string>
     <string name="title_help">Help</string>
-    <string name="title_items">Items</string>
     <string name="title_all_items">All items</string>
     <string name="title_all_logins">All logins</string>
     <string name="title_all_aliases">All aliases</string>
     <string name="title_all_notes">All notes</string>
     <string name="title_settings">Settings</string>
     <string name="title_sign_out">Sign out</string>
-    <string name="title_size">Size</string>
-    <string name="title_sort_by">Sort by</string>
-    <string name="title_starred">Starred</string>
     <string name="title_trash">Trash</string>
-    <string name="title_all_shares">All vaults</string>
 
-    <string name="title_empty_files">Nothing to see here</string>
-    <string name="description_empty_files">This folder is empty</string>
-    <string name="title_empty_offline_available">No offline files or folders</string>
-    <string name="description_empty_offline_available">Tap “Make available offline” in a file’s or folder’s menu to access it without an internet connection</string>
-    <string name="description_remove_account">You will sign out and remove all information associated with this account.</string>
-    <string name="description_no_drive_scope">ProtonDrive is currently in early access and only available to invited users of ProtonMail.</string>
-    <string name="description_file_download_failed">Downloading failed. Check network connection and try again.</string>
-    <string name="description_file_decryption_failed">Decryption failed.</string>
-
-    <string name="content_description_more_options">Show more options for a file</string>
-
-    <string name="navigation_my_vaults">My vaults</string>
-    <string name="navigation_more_section_header">More</string>
-    <string name="navigation_storage_section_header">Storage</string>
-
-    <string name="navigation_item_home">@string/title_my_files</string>
     <string name="navigation_item_trash">@string/title_trash</string>
-    <string name="navigation_item_offline">@string/title_offline_available</string>
     <string name="navigation_item_settings">@string/title_settings</string>
     <string name="navigation_item_items">All items</string>
     <string name="navigation_item_logins">Logins</string>
     <string name="navigation_item_aliases">Aliases</string>
     <string name="navigation_item_notes">Notes</string>
-    <string name="navigation_item_help">@string/title_help</string>
     <string name="navigation_item_bug_report">Report a problem</string>
     <string name="navigation_item_sign_out">@string/title_sign_out</string>
     <string name="navigation_text_more">More</string>
 
-    <string name="storage_total_usage">Total usage</string>
-    <string name="storage_details_format"><![CDATA[%1$s of %2$s used]]></string>
-    <string name="user_select_other_account_content_description">Select another account</string>
-
     <!-- TopBar -->
-    <string name="action_create">Create</string>
     <string name="action_search">Search</string>
-    <string name="action_delete">Delete</string>
-    <string name="action_empty_trash">Empty trash</string>
     <string name="action_save">Save</string>
-    <string name="action_apply">Apply</string>
-    <string name="action_edit">Edit</string>
     <string name="action_remove">Remove</string>
 
     <!-- Actions -->
-    <string name="action_cancel">Cancel</string>
     <string name="action_move_to_trash">Move to trash</string>
-    <string name="action_edit_placeholder">Edit %s</string>
     <string name="action_reveal_password">Reveal password</string>
     <string name="action_conceal_password">Conceal password</string>
     <string name="action_restore">Restore</string>
@@ -100,9 +48,6 @@
     <string name="sorting_bottomsheet_title">Sorting</string>
     <string name="sort_by_name">Sort by name</string>
     <string name="sort_by_type">Sort by type</string>
-    <string name="empty_search_results_title">No results found</string>
-    <string name="empty_search_results_subtitle">Please try a different search term.</string>
-    <string name="title_new">New</string>
     <string name="action_login">Login</string>
     <string name="action_alias">Alias</string>
     <string name="action_note">Note</string>
@@ -131,96 +76,24 @@
 
     <!-- Detail -->
     <string name="detail_init_error">Could not initialise the element</string>
-    <string name="detail_send_to_trash_error">Could not send the element to the trash</string>
     <string name="detail_item_not_loaded_error">The item has not been loaded</string>
 
-
-    <!-- Create Login -->
-    <string name="title_create_login">Create login</string>
-    <string name="title_edit_login">Edit login</string>
-    <string name="field_username_title">Username</string>
-    <string name="field_username_hint">Add username</string>
-    <string name="field_password_title">Password</string>
-    <string name="field_password_hint">Add password</string>
-    <string name="field_website_address_title">Website address</string>
-    <string name="field_website_address_hint">https://</string>
-    <string name="field_website_add_another">Add another website</string>
-    <string name="field_detail_note_title">Note</string>
-    <string name="button_generate_password">Generate Password</string>
-
-    <string name="field_detail_password_title">Password</string>
-    <string name="field_copied_to_clipboard">copied to the clipboard</string>
-    <string name="field_username">Username</string>
-    <string name="field_password">Password</string>
-    <string name="field_websites">Websites</string>
-    <string name="delete_login_alias_dialog_text">This will delete the alias, please confirm.</string>
-    <string name="delete_login_alias_dialog_cancel">Cancel</string>
-    <string name="delete_login_alias_dialog_confirm">@string/action_remove</string>
-
-    <string name="create_login_item_creation_error">Could not create Login</string>
-    <string name="create_login_item_update_error">Could not update Login</string>
-    <string name="create_login_init_error">Could not initialise Login</string>
-    <string name="create_login_empty_share_id">Share Id cannot be empty</string>
-    <string name="login_created">Login created</string>
-    <string name="edit_login_snackbar_login_moved_to_trash">Login moved to trash</string>
-
-    <!-- Create Note -->
-    <string name="title_create_note">Create note</string>
-    <string name="title_edit_note">Edit note</string>
-
-    <string name="create_note_item_creation_error">Could not create Note</string>
-    <string name="create_note_item_update_error">Could not update Note</string>
-    <string name="create_note_init_error">Could not initialise Note</string>
-    <string name="create_note_empty_share_id">Share Id cannot be empty</string>
-    <string name="note_created">Note created</string>
-    <string name="edit_note_snackbar_note_moved_to_trash">Note moved to trash</string>
-
-    <!-- Create Alias -->
-    <string name="title_create_alias">Create alias</string>
-    <string name="title_edit_alias">Edit alias</string>
+    <!-- Alias details -->
     <string name="field_alias_title">Alias address</string>
-    <string name="field_alias_is_blank">Alias cannot be blank</string>
-    <string name="field_alias_invalid">Invalid alias</string>
-    <string name="field_alias_hint">Alias username</string>
-    <string name="field_mailboxes_title">Destination mailbox</string>
-    <string name="alias_you_are_about_to_create_alias">Preview:</string>
+    <string name="alias_copied_to_clipboard">Alias copied</string>
     <string name="alias_detail_field_mailboxes_title">Mailboxes</string>
 
-    <string name="alias_action_save_fill">Save &amp; fill</string>
-
-    <string name="alias_bottomsheet_alias_title">Alias</string>
-    <string name="alias_bottomsheet_suffix_title">Suffix</string>
-    <string name="alias_bottomsheet_mailboxes_title">Mailboxes</string>
-
-    <string name="create_alias_item_creation_error">Could not create Alias</string>
-    <string name="create_alias_cannot_create_more_aliases_error">You cannot create any more aliases</string>
-    <string name="create_alias_item_update_error">Could not update Alias</string>
-    <string name="create_alias_init_error">Could not initialise Alias</string>
-    <string name="create_alias_empty_share_id">Share Id cannot be empty</string>
-    <string name="alias_created">Alias created</string>
-    <string name="alias_moved_to_trash">Alias moved to trash</string>
-    <string name="alias_mailbox_dialog_confirm_button">OK</string>
-    <string name="alias_mailbox_dialog_cancel_button">Cancel</string>
-    <string name="alias_mailbox_dialog_title">Destination mailbox</string>
-
-    <!--  Create password  -->
-    <string name="title_create_password">Generate password</string>
-    <string name="special_characters">Special characters</string>
-    <string name="character_count">%s characters</string>
-    <string name="generate_password_copy">Copy</string>
-    <string name="bottom_sheet_generate_password_confirm">Confirm</string>
-
-    <!--  Common create items  -->
-    <string name="changes_saved">Changes saved</string>
-
-    <!-- Alias details -->
-    <string name="alias_copied_to_clipboard">Alias copied</string>
     <!-- Note details -->
+    <string name="field_detail_note_title">Note</string>
     <string name="note_copied_to_clipboard">Note copied</string>
+
     <!-- Login details -->
     <string name="username_copied_to_clipboard">Username copied</string>
     <string name="password_copied_to_clipboard">Password copied</string>
     <string name="website_copied_to_clipboard">Website copied</string>
+    <string name="field_username">Username</string>
+    <string name="field_password">Password</string>
+    <string name="field_websites">Websites</string>
 
     <!-- Settings -->
     <string name="settings_autofill_section_title">Autofill</string>
@@ -260,7 +133,6 @@
     <string name="item_type_alias_description">Get an email alias to use on new apps</string>
     <string name="item_type_note_description">Jot down a PIN, code, or note to self</string>
     <string name="item_type_password_description">Generate a secure password</string>
-
 
     <!-- Common bottomsheet -->
     <string name="bottomsheet_copy_password">Copy password</string>

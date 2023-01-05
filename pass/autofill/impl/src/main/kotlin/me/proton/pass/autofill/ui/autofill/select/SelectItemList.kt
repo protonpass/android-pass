@@ -13,7 +13,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.autofill.service.R
 import me.proton.pass.autofill.ui.previewproviders.SelectItemUiStatePreviewProvider
 import me.proton.pass.commonui.api.ThemePairPreviewProvider
-import me.proton.pass.presentation.home.EmptySearchResults
+import me.proton.android.pass.composecomponents.impl.item.EmptySearchResults
 
 @Composable
 fun SelectItemList(

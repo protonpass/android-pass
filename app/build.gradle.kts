@@ -245,8 +245,8 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.plumber)
 
-    add("devImplementation", libs.showkase)
-    add("kspDev", libs.showkaseProcessor)
+    debugImplementation(libs.showkase)
+    kspDebug(libs.showkaseProcessor)
 
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.autofill.impl)
@@ -260,6 +260,7 @@ dependencies {
     implementation(projects.pass.data.impl)
     implementation(projects.pass.domain)
     implementation(projects.pass.featureAuth.impl)
+    implementation(projects.pass.featureCreateItem.impl)
     implementation(projects.pass.log.api)
     implementation(projects.pass.log.impl)
     implementation(projects.pass.navigation.api)

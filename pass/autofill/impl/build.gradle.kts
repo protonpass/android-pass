@@ -96,11 +96,11 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
-    implementation(projects.pass.presentation)
     implementation(projects.pass.featureAuth.impl)
+    implementation(projects.pass.featureCreateItem.impl)
 
-    add("devImplementation", libs.showkase)
-    add("kspDev", libs.showkaseProcessor)
+    debugImplementation(libs.showkase)
+    kspDebug(libs.showkaseProcessor)
 
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.biometry.fakes)

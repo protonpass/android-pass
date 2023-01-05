@@ -2,10 +2,10 @@ package me.proton.android.pass.ui.create.note
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
+import me.proton.android.pass.featurecreateitem.impl.note.UpdateNote
 import me.proton.android.pass.navigation.api.AppNavigator
 import me.proton.android.pass.navigation.api.composable
 import me.proton.android.pass.ui.navigation.AppNavItem
-import me.proton.pass.presentation.create.note.UpdateNote
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.updateNoteGraph(nav: AppNavigator) {

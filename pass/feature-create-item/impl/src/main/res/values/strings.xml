@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Actions -->
+    <string name="action_move_to_trash">Move to trash</string>
+    <string name="action_reveal_password">Reveal password</string>
+    <string name="action_conceal_password">Conceal password</string>
+    <string name="action_restore">Restore</string>
+    <string name="action_open">Open</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_save">Save</string>
+    <string name="action_remove">Remove</string>
+
+    <!-- Create Login -->
+    <string name="title_create_login">Create login</string>
+    <string name="title_edit_login">Edit login</string>
+    <string name="field_username_title">Username</string>
+    <string name="field_username_hint">Add username</string>
+    <string name="field_password_title">Password</string>
+    <string name="field_password_hint">Add password</string>
+    <string name="field_website_address_title">Website address</string>
+    <string name="field_website_address_hint">https://</string>
+    <string name="field_website_add_another">Add another website</string>
+    <string name="field_detail_note_title">Note</string>
+    <string name="button_generate_password">Generate Password</string>
+
+    <string name="field_username">Username</string>
+    <string name="field_password">Password</string>
+    <string name="field_websites">Websites</string>
+    <string name="delete_login_alias_dialog_text">This will delete the alias, please confirm.</string>
+    <string name="delete_login_alias_dialog_cancel">Cancel</string>
+    <string name="delete_login_alias_dialog_confirm">@string/action_remove</string>
+
+    <string name="create_login_item_creation_error">Could not create Login</string>
+    <string name="create_login_item_update_error">Could not update Login</string>
+    <string name="create_login_init_error">Could not initialise Login</string>
+    <string name="create_login_empty_share_id">Share Id cannot be empty</string>
+    <string name="login_created">Login created</string>
+    <string name="edit_login_snackbar_login_moved_to_trash">Login moved to trash</string>
+    <string name="edit_login_snackbar_login_moved_to_trash_error">Could not delete Login</string>
+
+    <!-- Create Note -->
+    <string name="title_create_note">Create note</string>
+    <string name="title_edit_note">Edit note</string>
+
+    <string name="create_note_item_creation_error">Could not create Note</string>
+    <string name="create_note_item_update_error">Could not update Note</string>
+    <string name="create_note_init_error">Could not initialise Note</string>
+    <string name="create_note_empty_share_id">Share Id cannot be empty</string>
+    <string name="note_created">Note created</string>
+    <string name="edit_note_snackbar_note_moved_to_trash">Note moved to trash</string>
+    <string name="edit_note_snackbar_note_moved_to_trash_error">Could not delete note</string>
+
+    <!-- Create Alias -->
+    <string name="title_create_alias">Create alias</string>
+    <string name="title_edit_alias">Edit alias</string>
+    <string name="field_alias_title">Alias address</string>
+    <string name="field_alias_is_blank">Alias cannot be blank</string>
+    <string name="field_alias_invalid">Invalid alias</string>
+    <string name="field_alias_hint">Alias username</string>
+    <string name="field_mailboxes_title">Destination mailbox</string>
+    <string name="alias_you_are_about_to_create_alias">Preview:</string>
+    <string name="alias_detail_field_mailboxes_title">Mailboxes</string>
+
+    <string name="alias_action_save_fill">Save &amp; fill</string>
+
+    <string name="alias_bottomsheet_alias_title">Alias</string>
+    <string name="alias_bottomsheet_suffix_title">Suffix</string>
+
+    <string name="create_alias_item_creation_error">Could not create Alias</string>
+    <string name="create_alias_cannot_create_more_aliases_error">You cannot create any more aliases</string>
+    <string name="create_alias_item_update_error">Could not update Alias</string>
+    <string name="create_alias_init_error">Could not initialise Alias</string>
+    <string name="create_alias_empty_share_id">Share Id cannot be empty</string>
+    <string name="alias_created">Alias created</string>
+    <string name="alias_moved_to_trash">Alias moved to trash</string>
+    <string name="alias_mailbox_dialog_confirm_button">OK</string>
+    <string name="alias_mailbox_dialog_cancel_button">Cancel</string>
+    <string name="alias_mailbox_dialog_title">Destination mailbox</string>
+
+    <!--  Create password  -->
+    <string name="title_create_password">Generate password</string>
+    <string name="special_characters">Special characters</string>
+    <string name="character_count">%s characters</string>
+    <string name="generate_password_copy">Copy</string>
+    <string name="bottom_sheet_generate_password_confirm">Confirm</string>
+    <string name="password_copied_to_clipboard">Password copied</string>
+
+    <!--  Common create items  -->
+    <string name="changes_saved">Changes saved</string>
+
+</resources>

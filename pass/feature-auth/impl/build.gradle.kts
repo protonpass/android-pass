@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -38,6 +39,9 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
+    debugImplementation(libs.showkase)
+    kspDebug(libs.showkaseProcessor)
+
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.biometry.fakes)
     testImplementation(projects.pass.preferences.fakes)
@@ -45,5 +49,4 @@ dependencies {
     testImplementation(libs.coroutines.test)
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
-
 }

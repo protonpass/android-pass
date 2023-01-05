@@ -21,6 +21,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
 import me.proton.core.compose.theme.headline
 import me.proton.core.presentation.R
+import me.proton.pass.presentation.navigation.drawer.NavigationDrawerListItem
 
 @Suppress("UnusedPrivateMember", "OptionalUnit")
 @Composable

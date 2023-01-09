@@ -40,10 +40,11 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
-    implementation(projects.pass.domain)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.composeComponents.impl)
+    implementation(projects.pass.crypto.api)
+    implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)

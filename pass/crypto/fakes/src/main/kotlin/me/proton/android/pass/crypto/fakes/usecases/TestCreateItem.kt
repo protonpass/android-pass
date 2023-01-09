@@ -1,7 +1,7 @@
-package me.proton.android.pass.data.impl.fakes
+package me.proton.android.pass.crypto.fakes.usecases
 
-import me.proton.android.pass.data.impl.crypto.CreateItem
-import me.proton.android.pass.data.impl.requests.CreateItemRequest
+import me.proton.android.pass.crypto.api.usecases.CreateItem
+import me.proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.pass.domain.ItemContents
 import me.proton.pass.domain.entity.PackageName
@@ -11,9 +11,9 @@ import me.proton.pass.test.crypto.TestKeyStoreCrypto
 
 class TestCreateItem : CreateItem {
 
-    private var request: CreateItemRequest? = null
+    private var request: EncryptedCreateItem? = null
 
-    fun setRequest(value: CreateItemRequest) {
+    fun setRequest(value: EncryptedCreateItem) {
         request = value
     }
 
@@ -23,10 +23,10 @@ class TestCreateItem : CreateItem {
         userAddress: UserAddress,
         itemContents: ItemContents,
         packageName: PackageName?
-    ): CreateItemRequest = request ?: throw IllegalStateException("request is not set")
+    ): EncryptedCreateItem = request ?: throw IllegalStateException("request is not set")
 
     companion object {
-        fun createRequest() = CreateItemRequest(
+        fun createRequest() = EncryptedCreateItem(
             rotationId = "testRotationId",
             labels = emptyList(),
             vaultKeyPacket = "vaultKeyPacket",

@@ -5,8 +5,8 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import me.proton.android.pass.data.fakes.crypto.TestEncryptionContext
-import me.proton.android.pass.data.fakes.crypto.TestEncryptionContextProvider
+import me.proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import me.proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import me.proton.android.pass.data.fakes.usecases.TestCreateAlias
 import me.proton.android.pass.data.fakes.usecases.TestCreateItem
 import me.proton.android.pass.data.fakes.usecases.TestObserveActiveShare

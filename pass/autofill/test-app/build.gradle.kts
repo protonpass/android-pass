@@ -4,6 +4,15 @@ plugins {
     id("kotlin-android")
 }
 
+val appVersionName = "0.1.0"
+val appVersionCode = versionCode(appVersionName)
+val archivesBaseName = "AutofillTestApp-$appVersionName"
+
+fun versionCode(versionName: String): Int {
+    val segment = versionName.split('.').map { it.toInt() }
+    return (segment[0] * 10000000) + (segment[1] * 100000) + (segment[2] * 1000)
+}
+
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
     namespace = "me.proton.pass.autofill.sample"
@@ -12,9 +21,9 @@ android {
         applicationId = "me.proton.pass.core.autofill.sample"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = Config.versionCode
-        versionName = Config.versionName
-        testInstrumentationRunner = Config.testInstrumentationRunner
+        versionCode = appVersionCode
+        versionName = appVersionName
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     sourceSets {

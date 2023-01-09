@@ -29,16 +29,6 @@ plugins {
     id("io.sentry.android.gradle")
 }
 
-base {
-    archivesName.set(Config.archivesBaseName)
-}
-
-tasks.register("getArchivesName") {
-    doLast {
-        println("[ARCHIVES_NAME]${Config.archivesBaseName}")
-    }
-}
-
 val privateProperties = Properties().apply {
     try {
         load(FileInputStream("private.properties"))
@@ -51,6 +41,26 @@ val privateProperties = Properties().apply {
 val sentryDSN: String? = privateProperties.getProperty("SENTRY_DSN")
 val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 
+val jobId: Int = System.getenv("CI_JOB_ID")?.take(3)?.toInt() ?: 0
+val appVersionName: String = "0.1.0"
+val appVersionCode: Int = versionCode(appVersionName)
+val archivesBaseName = "ProtonPass-$appVersionName"
+
+fun versionCode(versionName: String): Int {
+    val segment = versionName.split('.').map { it.toInt() }
+    return (segment[0] * 10000000) + (segment[1] * 100000) + (segment[2] * 1000) + jobId
+}
+
+base {
+    archivesName.set(archivesBaseName)
+}
+
+tasks.register("getArchivesName") {
+    doLast {
+        println("[ARCHIVES_NAME]${archivesBaseName}")
+    }
+}
+
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
     namespace = "me.proton.android.pass"
@@ -59,13 +69,17 @@ android {
         applicationId = "me.proton.android.pass"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        versionCode = Config.versionCode
-        versionName = Config.versionName
-        testInstrumentationRunner = Config.testInstrumentationRunner
+        versionCode = appVersionCode
+        versionName = appVersionName
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
         buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
-        buildConfigField("String", "HUMAN_VERIFICATION_HOST", "verify.proton.me".toBuildConfigValue())
+        buildConfigField(
+            "String",
+            "HUMAN_VERIFICATION_HOST",
+            "verify.proton.me".toBuildConfigValue()
+        )
     }
 
     buildFeatures {
@@ -110,11 +124,10 @@ android {
 
     flavorDimensions += "default"
     productFlavors {
-        val gitHash = "git rev-parse --short HEAD".runCommand(workingDir = rootDir)
         create("dev") {
             isDefault = true
             applicationIdSuffix = ".dev"
-            versionNameSuffix = "-dev+$gitHash"
+            versionNameSuffix = "-dev"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
             buildConfigField("String", "HOST", "\"proton.black\"")
             buildConfigField("String", "HUMAN_VERIFICATION_HOST", "\"verify.proton.black\"")
@@ -122,7 +135,7 @@ android {
         }
         create("alpha") {
             applicationIdSuffix = ".alpha"
-            versionNameSuffix = "-alpha.${Config.versionCode}+$gitHash"
+            versionNameSuffix = "-alpha.$appVersionCode"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
             buildConfigField("String", "HOST", "\"protonmail.ch\"")
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
@@ -168,32 +181,6 @@ android {
 
     kapt {
         correctErrorTypes = true
-    }
-}
-
-tasks.create("publishGeneratedReleaseNotes") {
-    doLast {
-        val releaseNotesDir = File("${project.projectDir}/src/main/play/release-notes/en-US")
-        releaseNotesDir.mkdirs()
-        val releaseNotesFile = File(releaseNotesDir, "default.txt")
-        // Limit of 500 chars on Google Play console for release notes
-        releaseNotesFile.writeText(
-            generateChangelog(
-                rootDir,
-                since = System.getenv("CI_COMMIT_BEFORE_SHA")
-            ).let { changelog ->
-                if (changelog.length <= 490) {
-                    changelog
-                } else {
-                    ("${changelog.take(490)}...")
-                }
-            })
-    }
-}
-
-tasks.create("printGeneratedChangelog") {
-    doLast {
-        println(generateChangelog(rootDir, since = System.getProperty("since")))
     }
 }
 
@@ -280,7 +267,5 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 }
-
-// configureJacoco(flavor = "dev")
 
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"

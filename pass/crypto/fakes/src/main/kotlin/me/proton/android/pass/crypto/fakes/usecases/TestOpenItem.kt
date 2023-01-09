@@ -1,7 +1,7 @@
-package me.proton.android.pass.data.impl.fakes
+package me.proton.android.pass.crypto.fakes.usecases
 
-import me.proton.android.pass.data.impl.crypto.OpenItem
-import me.proton.android.pass.data.impl.responses.ItemRevision
+import me.proton.android.pass.crypto.api.usecases.EncryptedItemRevision
+import me.proton.android.pass.crypto.api.usecases.OpenItem
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.pass.domain.Item
 import me.proton.pass.domain.Share
@@ -17,7 +17,7 @@ class TestOpenItem : OpenItem {
     }
 
     override fun open(
-        response: ItemRevision,
+        response: EncryptedItemRevision,
         share: Share,
         verifyKeys: List<PublicKey>,
         vaultKeys: List<VaultKey>,

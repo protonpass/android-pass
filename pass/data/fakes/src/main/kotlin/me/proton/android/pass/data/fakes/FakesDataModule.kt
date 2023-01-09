@@ -4,7 +4,6 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.android.pass.data.api.crypto.EncryptionContextProvider
 import me.proton.android.pass.data.api.repositories.AliasRepository
 import me.proton.android.pass.data.api.repositories.ItemRepository
 import me.proton.android.pass.data.api.usecases.CreateAlias
@@ -18,7 +17,6 @@ import me.proton.android.pass.data.api.usecases.TrashItem
 import me.proton.android.pass.data.api.usecases.UpdateAlias
 import me.proton.android.pass.data.api.usecases.UpdateAutofillItem
 import me.proton.android.pass.data.api.usecases.UpdateItem
-import me.proton.android.pass.data.fakes.crypto.TestEncryptionContextProvider
 import me.proton.android.pass.data.fakes.repositories.TestAliasRepository
 import me.proton.android.pass.data.fakes.repositories.TestItemRepository
 import me.proton.android.pass.data.fakes.usecases.TestCreateAlias
@@ -41,11 +39,6 @@ abstract class FakesDataModule {
     abstract fun bindGetSuggestedLoginItems(
         impl: TestGetSuggestedLoginItems
     ): GetSuggestedLoginItems
-
-    @Binds
-    abstract fun bindEncryptionContextProvider(
-        impl: TestEncryptionContextProvider
-    ): EncryptionContextProvider
 
     @Binds
     abstract fun bindItemRepository(

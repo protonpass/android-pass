@@ -10,6 +10,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.android.pass.crypto.api.context.EncryptionContext
 import me.proton.android.pass.crypto.api.context.EncryptionContextProvider
+import me.proton.android.pass.crypto.api.error.CryptoException
+import me.proton.android.pass.crypto.api.usecases.CreateItem
+import me.proton.android.pass.crypto.api.usecases.OpenItem
+import me.proton.android.pass.crypto.api.usecases.UpdateItem
 import me.proton.android.pass.data.api.ItemCountSummary
 import me.proton.android.pass.data.api.PendingEventList
 import me.proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
@@ -18,10 +22,6 @@ import me.proton.android.pass.data.api.repositories.KeyPacketRepository
 import me.proton.android.pass.data.api.repositories.ShareRepository
 import me.proton.android.pass.data.api.repositories.VaultKeyRepository
 import me.proton.android.pass.data.api.usecases.ItemTypeFilter
-import me.proton.android.pass.data.impl.crypto.CreateItem
-import me.proton.android.pass.data.impl.crypto.CryptoException
-import me.proton.android.pass.data.impl.crypto.OpenItem
-import me.proton.android.pass.data.impl.crypto.UpdateItem
 import me.proton.android.pass.data.impl.db.PassDatabase
 import me.proton.android.pass.data.impl.db.entities.ItemEntity
 import me.proton.android.pass.data.impl.extensions.allowedApps
@@ -29,7 +29,9 @@ import me.proton.android.pass.data.impl.extensions.hasPackageName
 import me.proton.android.pass.data.impl.extensions.hasWebsite
 import me.proton.android.pass.data.impl.extensions.itemType
 import me.proton.android.pass.data.impl.extensions.serializeToProto
+import me.proton.android.pass.data.impl.extensions.toCrypto
 import me.proton.android.pass.data.impl.extensions.toItemRevision
+import me.proton.android.pass.data.impl.extensions.toRequest
 import me.proton.android.pass.data.impl.extensions.with
 import me.proton.android.pass.data.impl.extensions.withUrl
 import me.proton.android.pass.data.impl.local.LocalItemDataSource
@@ -118,7 +120,7 @@ class ItemRepositoryImpl @Inject constructor(
                 return@withUserAddress Result.Error(e)
             }
 
-            remoteItemDataSource.createItem(userId, share.id, body)
+            remoteItemDataSource.createItem(userId, share.id, body.toRequest())
                 .map { itemResponse ->
                     val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
                     val entity = itemResponseToEntity(
@@ -160,7 +162,7 @@ class ItemRepositoryImpl @Inject constructor(
                 prefix = newAlias.prefix,
                 signedSuffix = newAlias.suffix.signedSuffix,
                 mailboxes = mailboxIds,
-                item = body
+                item = body.toRequest()
             )
 
             remoteItemDataSource.createAlias(userId, share.id, requestBody)
@@ -663,7 +665,7 @@ class ItemRepositoryImpl @Inject constructor(
                 itemContents,
                 item.revision
             )
-            remoteItemDataSource.updateItem(userId, share.id, item.id, body)
+            remoteItemDataSource.updateItem(userId, share.id, item.id, body.toRequest())
                 .map { itemResponse ->
                     val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
                     val entity = itemResponseToEntity(
@@ -840,7 +842,7 @@ class ItemRepositoryImpl @Inject constructor(
         vaultKeys: List<VaultKey>,
         itemKeys: List<ItemKey>
     ): ItemEntity {
-        val item = openItem.open(itemRevision, share, verifyKeys, vaultKeys, itemKeys)
+        val item = openItem.open(itemRevision.toCrypto(), share, verifyKeys, vaultKeys, itemKeys)
         return ItemEntity(
             id = itemRevision.itemId,
             userId = userAddress.userId.id,

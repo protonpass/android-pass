@@ -6,16 +6,20 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.withContext
+import me.proton.android.pass.crypto.api.error.InvalidAddressSignature
+import me.proton.android.pass.crypto.api.error.KeyNotFound
+import me.proton.android.pass.crypto.api.usecases.CreateVault
+import me.proton.android.pass.crypto.api.usecases.ReadKey
 import me.proton.android.pass.data.api.repositories.ShareRepository
 import me.proton.android.pass.data.api.repositories.VaultItemKeyList
 import me.proton.android.pass.data.api.repositories.VaultKeyRepository
-import me.proton.android.pass.data.impl.crypto.CreateVault
-import me.proton.android.pass.data.impl.crypto.OpenShare
-import me.proton.android.pass.data.impl.crypto.Utils
+import me.proton.android.pass.data.impl.crypto.ReencryptShareEntityContents
+import me.proton.android.pass.data.impl.crypto.ShareEntityToShare
+import me.proton.android.pass.data.impl.crypto.ShareResponseToEntity
 import me.proton.android.pass.data.impl.db.PassDatabase
 import me.proton.android.pass.data.impl.db.entities.ShareEntity
-import me.proton.android.pass.data.impl.error.InvalidAddressSignature
-import me.proton.android.pass.data.impl.error.KeyNotFound
+import me.proton.android.pass.data.impl.extensions.toRequest
+import me.proton.android.pass.data.impl.extensions.toVaultItemKeyList
 import me.proton.android.pass.data.impl.local.LocalShareDataSource
 import me.proton.android.pass.data.impl.remote.RemoteShareDataSource
 import me.proton.android.pass.data.impl.requests.CreateVaultRequest
@@ -25,7 +29,6 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.extension.publicKeyRing
 import me.proton.core.key.domain.publicKey
 import me.proton.core.key.domain.repository.PublicAddressRepository
@@ -34,7 +37,6 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.pass.common.api.Result
-import me.proton.pass.common.api.map
 import me.proton.pass.domain.Share
 import me.proton.pass.domain.ShareId
 import me.proton.pass.domain.entity.NewVault
@@ -51,7 +53,10 @@ class ShareRepositoryImpl @Inject constructor(
     private val keyRepository: PublicAddressRepository,
     private val vaultKeyRepository: VaultKeyRepository,
     private val cryptoContext: CryptoContext,
-    private val openShare: OpenShare,
+    private val shareEntityToShare: ShareEntityToShare,
+    private val reencryptShareEntityContents: ReencryptShareEntityContents,
+    private val readKey: ReadKey,
+    private val shareResponseToEntity: ShareResponseToEntity,
     private val createVault: CreateVault
 ) : ShareRepository {
 
@@ -254,7 +259,7 @@ class ShareRepositoryImpl @Inject constructor(
         // would fail, so we first store the share without the reencryption, fetch the vaultKeys, and
         // then we reencrypt the data
         val entities: List<ShareResponseEntity> = shares.map {
-            val signingKey = SigningKey(Utils.readKey(it.signingKey, isPrimary = true))
+            val signingKey = SigningKey(readKey(it.signingKey, isPrimary = true))
             val vaultKeysResult = vaultKeyRepository.getVaultKeys(
                 userAddress,
                 ShareId(it.shareId),
@@ -292,24 +297,6 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun reencryptShareEntityContents(
-        userAddress: UserAddress,
-        response: ShareResponse,
-        entity: ShareEntity
-    ): Result<ShareEntity> {
-        val signingKey = SigningKey(Utils.readKey(response.signingKey, isPrimary = true))
-        return vaultKeyRepository.getVaultKeys(userAddress, ShareId(response.shareId), signingKey)
-            .map { vaultKeys ->
-                entity.copy(
-                    keystoreEncryptedContent = openShare.reencryptContent(response, vaultKeys),
-                    keystoreEncryptedPassphrase = openShare.reencryptSigningKeyPassphrase(
-                        response.signingKeyPassphrase,
-                        userAddress
-                    )
-                )
-            }
-    }
-
     private suspend fun shareResponseToEntity(
         userAddress: UserAddress,
         shareResponse: ShareResponse,
@@ -332,7 +319,6 @@ class ShareRepositoryImpl @Inject constructor(
             )
         }
 
-
     private suspend fun innerShareResponseToEntity(
         userAddress: UserAddress,
         shareResponse: ShareResponse,
@@ -353,29 +339,13 @@ class ShareRepositoryImpl @Inject constructor(
         } else {
             emptyList()
         }
-        return openShare.responseToEntity(
+        return shareResponseToEntity(
             shareResponse,
             userAddress,
             inviterKeys,
             contentSignatureKeys,
             vaultKeys
         )
-    }
-
-    private suspend fun shareEntityToShare(
-        userAddress: UserAddress,
-        inviterKeys: List<PublicKey>,
-        entity: ShareEntity
-    ): Result<Share> {
-        val signingKey = SigningKey(Utils.readKey(entity.signingKey, isPrimary = true))
-        return vaultKeyRepository.getVaultKeys(userAddress, ShareId(entity.id), signingKey)
-            .map { vaultKeys ->
-                try {
-                    openShare.open(entity, userAddress, inviterKeys, vaultKeys)
-                } catch (e: IllegalArgumentException) {
-                    return Result.Error(e)
-                }
-            }
     }
 
     private fun createVaultRequest(
@@ -386,7 +356,8 @@ class ShareRepositoryImpl @Inject constructor(
             .setName(vault.name.decrypt(cryptoContext.keyStoreCrypto))
             .setDescription(vault.description.decrypt(cryptoContext.keyStoreCrypto))
             .build()
-        return createVault.createVaultRequest(metadata, userAddress)
+        val (request, keys) = createVault.createVaultRequest(metadata, userAddress)
+        return request.toRequest() to keys.toVaultItemKeyList()
     }
 
     internal data class ShareResponseEntity(

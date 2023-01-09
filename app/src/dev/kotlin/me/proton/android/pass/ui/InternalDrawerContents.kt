@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.airbnb.android.showkase.models.Showkase
 import me.proton.android.pass.log.api.PassLogger
 
 @Composable
@@ -30,15 +29,7 @@ fun InternalDrawerContents(
     ) {
 
         Spacer(modifier = Modifier.height(10.dp))
-        val localContext = LocalContext.current
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = {
-                localContext.startActivity(Showkase.getBrowserIntent(localContext))
-            }
-        ) {
-            Text(text = "Showkase")
-        }
+        ShowkaseDrawerButton()
         Spacer(modifier = Modifier.height(10.dp))
         Button(
             modifier = Modifier.fillMaxWidth(),
@@ -47,6 +38,7 @@ fun InternalDrawerContents(
             Text(text = "Clear preferences")
         }
         Spacer(modifier = Modifier.height(10.dp))
+        val localContext = LocalContext.current
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = { viewModel.shareLogCatOutput(localContext) },

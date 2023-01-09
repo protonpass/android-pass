@@ -1,7 +1,7 @@
-package me.proton.android.pass.data.impl.fakes
+package me.proton.android.pass.crypto.fakes.usecases
 
-import me.proton.android.pass.data.impl.crypto.UpdateItem
-import me.proton.android.pass.data.impl.requests.UpdateItemRequest
+import me.proton.android.pass.crypto.api.usecases.EncryptedUpdateItemRequest
+import me.proton.android.pass.crypto.api.usecases.UpdateItem
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.pass.domain.KeyPacket
 import me.proton.pass.domain.key.ItemKey
@@ -10,9 +10,9 @@ import proton_pass_item_v1.ItemV1
 
 class TestUpdateItem : UpdateItem {
 
-    private var request: UpdateItemRequest? = null
+    private var request: EncryptedUpdateItemRequest? = null
 
-    fun setRequest(value: UpdateItemRequest) {
+    fun setRequest(value: EncryptedUpdateItemRequest) {
         request = value
     }
 
@@ -23,5 +23,5 @@ class TestUpdateItem : UpdateItem {
         userAddress: UserAddress,
         itemContent: ItemV1.Item,
         lastRevision: Long
-    ): UpdateItemRequest = request ?: throw IllegalStateException("request is not set")
+    ): EncryptedUpdateItemRequest = request ?: throw IllegalStateException("request is not set")
 }

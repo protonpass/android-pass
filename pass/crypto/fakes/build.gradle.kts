@@ -27,4 +27,5 @@ dependencies {
     implementation(projects.pass.commonTest)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.protos)
 }

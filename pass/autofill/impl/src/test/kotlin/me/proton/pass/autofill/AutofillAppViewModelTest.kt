@@ -5,7 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import me.proton.android.pass.biometry.BiometryStatus
 import me.proton.android.pass.biometry.TestBiometryManager
-import me.proton.android.pass.data.fakes.crypto.TestEncryptionContextProvider
+import me.proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessage
 import me.proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import me.proton.android.pass.preferences.BiometricLockState

@@ -87,8 +87,6 @@ dependencies {
 
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
-    testImplementation(libs.kotlinTest)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
-    testImplementation(libs.core.test.kotlin)
 }

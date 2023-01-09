@@ -14,14 +14,31 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         testInstrumentationRunner = Config.testInstrumentationRunner
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
 }
+
 dependencies {
     compileOnly(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.core.cryptoCommon)
+    implementation(libs.core.key)
+    implementation(libs.core.user)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.google.protobuf.lite)
 
     implementation(projects.pass.crypto.api)
+    implementation(projects.pass.domain)
+    implementation(projects.pass.log.api)
+    implementation(projects.pass.protos)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
@@ -30,7 +47,9 @@ dependencies {
 
     androidTestImplementation(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(libs.core.crypto)
 
     androidTestImplementation(libs.androidx.compose.ui.test.junit)
     androidTestImplementation(libs.androidx.test.core)

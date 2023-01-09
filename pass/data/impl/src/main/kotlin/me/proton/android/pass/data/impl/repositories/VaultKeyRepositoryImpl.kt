@@ -2,11 +2,13 @@ package me.proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.proton.android.pass.crypto.api.usecases.OpenKeys
 import me.proton.android.pass.data.api.repositories.VaultItemKeyList
 import me.proton.android.pass.data.api.repositories.VaultKeyRepository
-import me.proton.android.pass.data.impl.crypto.OpenKeys
 import me.proton.android.pass.data.impl.db.entities.ItemKeyEntity
 import me.proton.android.pass.data.impl.db.entities.VaultKeyEntity
+import me.proton.android.pass.data.impl.extensions.toCrypto
+import me.proton.android.pass.data.impl.extensions.toVaultItemKeyList
 import me.proton.android.pass.data.impl.local.LocalVaultItemKeyDataSource
 import me.proton.android.pass.data.impl.local.VaultItemKeyEntityList
 import me.proton.android.pass.data.impl.remote.RemoteVaultItemKeyDataSource
@@ -124,7 +126,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
 
         return when (val result = remoteDataSource.getKeys(userAddress.userId, shareId)) {
             is Result.Success -> {
-                val open = openKeys.open(result.data, signingKey, userAddress)
+                val open = openKeys.open(result.data.toCrypto(), signingKey, userAddress)
 
                 val vaultKeyPassphrases = open.vaultKeyList
                     .associate { it.rotationId to it.encryptedKeyPassphrase }
@@ -141,7 +143,7 @@ class VaultKeyRepositoryImpl @Inject constructor(
                     )
                     localDataSource.storeKeys(userAddress, shareId, entityKeys)
                 }
-                Result.Success(open)
+                Result.Success(open.toVaultItemKeyList())
             }
             is Result.Error -> Result.Error(result.exception)
             Result.Loading -> Result.Loading

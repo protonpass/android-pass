@@ -33,7 +33,7 @@ else
   git remote add "${AUTHENTICATED_REMOTE_NAME}" "https://${GIT_SCREENSHOT_UPLOAD_USERNAME}:${GIT_SCREENSHOT_UPLOAD_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
 
   # Create a branch with the proper name
-  git checkout -b "${BRANCH_NAME}" "${AUTHENTICATED_REMOTE_NAME}/${BRANCH_NAME}"
+  git checkout -b "${BRANCH_NAME}"
 
   # Add changes, create commit and push
   git add "${SCREENSHOTS_DIR}"

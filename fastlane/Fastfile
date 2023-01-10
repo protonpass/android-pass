@@ -71,7 +71,7 @@ platform :android do
   desc "Run instrumentation tests"
   lane :instrumentationTests do
     sh("../scripts/ci/installFirebase.sh")
-    sh("../scripts/ci/setupGoogleJson.sh")
+    sh("../scripts/ci/setupGoogleJson.sh dev")
     sh("../scripts/ci/setupGoogleCloud.sh")
     sh("../scripts/launchFirebaseInstrumentedTests.sh")
   end

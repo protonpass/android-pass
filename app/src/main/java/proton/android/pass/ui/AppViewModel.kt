@@ -220,7 +220,7 @@ class AppViewModel @Inject constructor(
             is Result.Success -> state.data
             is Result.Error -> {
                 val message = "Error getting ThemePreference"
-                PassLogger.e(TAG, state.exception ?: Exception(message))
+                PassLogger.w(TAG, state.exception ?: Exception(message))
                 ThemePreference.System
             }
         }

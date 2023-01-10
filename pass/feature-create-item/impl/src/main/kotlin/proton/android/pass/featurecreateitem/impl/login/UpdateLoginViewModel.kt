@@ -183,7 +183,7 @@ class UpdateLoginViewModel @Inject constructor(
             }
             .onError {
                 val defaultMessage = "Update item error"
-                PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
                 snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
             }
     }

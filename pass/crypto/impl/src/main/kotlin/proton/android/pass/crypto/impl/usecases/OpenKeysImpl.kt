@@ -1,11 +1,5 @@
 package proton.android.pass.crypto.impl.usecases
 
-import proton.android.pass.crypto.api.error.CryptoException
-import proton.android.pass.crypto.api.error.KeyNotFound
-import proton.android.pass.crypto.api.usecases.EncryptedVaultItemKeyResponse
-import proton.android.pass.crypto.api.usecases.OpenKeys
-import proton.android.pass.crypto.api.usecases.VaultKeyList
-import proton.android.pass.log.api.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
@@ -17,6 +11,12 @@ import me.proton.core.key.domain.getArmored
 import me.proton.core.key.domain.getBase64Decoded
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.UserAddress
+import proton.android.pass.crypto.api.error.CryptoException
+import proton.android.pass.crypto.api.error.KeyNotFound
+import proton.android.pass.crypto.api.usecases.EncryptedVaultItemKeyResponse
+import proton.android.pass.crypto.api.usecases.OpenKeys
+import proton.android.pass.crypto.api.usecases.VaultKeyList
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.key.ItemKey
 import proton.pass.domain.key.SigningKey
 import proton.pass.domain.key.VaultKey
@@ -39,7 +39,7 @@ class OpenKeysImpl @Inject constructor(
             if (!validateKey(signingKeyPublicKey, vaultKey.key, vaultKey.keySignature)) {
                 val e =
                     CryptoException("Key signature did not match [VaultKey.RotationID=${vaultKey.rotationId}]")
-                PassLogger.e(
+                PassLogger.w(
                     TAG,
                     e,
                     "Error validating vaultKey [vaultKey.rotationId=${vaultKey.rotationId}]" +
@@ -61,7 +61,7 @@ class OpenKeysImpl @Inject constructor(
             if (!validateKey(signingKeyPublicKey, itemKey.key, itemKey.keySignature)) {
                 val e =
                     CryptoException("Key signature did not match [ItemKey.RotationID=${itemKey.rotationId}]")
-                PassLogger.e(
+                PassLogger.w(
                     TAG,
                     e,
                     "Error validating ItemKey [itemKey.rotationId=${itemKey.rotationId}] " +
@@ -76,7 +76,7 @@ class OpenKeysImpl @Inject constructor(
 
             if (vaultKey == null) {
                 val e = KeyNotFound("Cannot find VaultKey")
-                PassLogger.e(
+                PassLogger.w(
                     TAG,
                     e,
                     "Cannot find VaultKey [vaultKey.rotationId=${itemKey.rotationId}]"

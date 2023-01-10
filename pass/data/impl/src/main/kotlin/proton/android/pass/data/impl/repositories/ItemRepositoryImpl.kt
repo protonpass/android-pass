@@ -49,7 +49,6 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.extension.publicKeyRing
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
-import me.proton.core.network.domain.ApiException
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
@@ -287,16 +286,16 @@ class ItemRepositoryImpl @Inject constructor(
             ?: return@withContext Result.Error(IllegalStateException("UnTrash item could not be updated locally"))
 
         // Perform the network request
-        return@withContext try {
-            val body = TrashItemsRequest(
-                listOf(TrashItemRevision(originalItem.id, originalItem.revision))
-            )
-            remoteItemDataSource.untrash(userId, shareId, body)
-            Result.Success(Unit)
-        } catch (e: ApiException) {
-            // In case of an exception, restore the old version
-            localItemDataSource.upsertItem(originalItem)
-            Result.Error(e)
+        val body = TrashItemsRequest(
+            listOf(TrashItemRevision(originalItem.id, originalItem.revision))
+        )
+        return@withContext when (val res = remoteItemDataSource.untrash(userId, shareId, body)) {
+            Result.Loading -> Result.Loading
+            is Result.Error -> {
+                localItemDataSource.upsertItem(originalItem)
+                Result.Error(res.exception)
+            }
+            is Result.Success -> Result.Success(Unit)
         }
     }
 

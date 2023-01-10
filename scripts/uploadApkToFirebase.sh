@@ -5,12 +5,12 @@ set -u
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:scripts::g')
 
-if [[ -z "$FLAVOUR" ]]; then
+if [[ -z "$1" ]]; then
   echo "FLAVOUR not set"
   exit 1
 fi
 
-case "${FLAVOUR}" in
+case "$1" in
     dev)
       FIREBASE_APP_ID="${DEV_FIREBASE_APP_ID}"
       FIREBASE_TEST_GROUP="${DEV_FIREBASE_TEST_GROUP}" ;;
@@ -22,7 +22,7 @@ case "${FLAVOUR}" in
       exit 1 ;;
 esac
 
-APK_DIR="${REPO_ROOT}/app/build/outputs/apk/${FLAVOUR}/release/"
+APK_DIR="${REPO_ROOT}/app/build/outputs/apk/$1/release/"
 APK_PATH=$(find "${APK_DIR}" -type f -name '*.apk')
 RELEASE_NOTES_PATH="${REPO_ROOT}/release-notes.txt"
 

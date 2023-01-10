@@ -50,4 +50,10 @@ If you see an error saying `Execution failed for task ':app:uploadSentryProguard
 
 The outputs will be written in `build/compose_metrics`. If you want to have a easier time inspecting them, you can make use of a tool like [Mendable](https://github.com/jayasuryat/mendable).
 
+## How to run instrumentation tests
 
+Run this command to run instrumentation tests in a headless emulator
+
+```
+$ ./gradlew pixel2api30DebugAndroidTest
+```

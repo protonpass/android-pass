@@ -7,15 +7,6 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.CreateAlias
-import proton.android.pass.data.api.usecases.CreateItem
-import proton.android.pass.data.api.usecases.ObserveActiveShare
-import proton.android.pass.featurecreateitem.impl.ItemSavedState
-import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.ItemCreationError
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
@@ -25,6 +16,15 @@ import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.CreateAlias
+import proton.android.pass.data.api.usecases.CreateItem
+import proton.android.pass.data.api.usecases.ObserveActiveShare
+import proton.android.pass.featurecreateitem.impl.ItemSavedState
+import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.ItemCreationError
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.PackageName
 import javax.inject.Inject
@@ -139,7 +139,7 @@ class CreateLoginViewModel @Inject constructor(
             }
             .onError {
                 val defaultMessage = "Could not create item"
-                PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
                 snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
             }
     }

@@ -12,10 +12,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -23,9 +19,13 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.some
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.presentation.detail.DetailSnackbarMessages.InitError
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
-import proton.android.pass.presentation.detail.DetailSnackbarMessages.InitError
 import javax.inject.Inject
 
 @HiltViewModel
@@ -71,11 +71,12 @@ class ItemDetailViewModel @Inject constructor(
                     }
                     .onError {
                         val defaultMessage = "Get by id error"
-                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                        PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
                         snackbarMessageRepository.emitSnackbarMessage(InitError)
                     }
             } else {
-                PassLogger.i(TAG, "Empty user/share/item Id")
+                val message = "Empty user/share/item Id"
+                PassLogger.e(TAG, Exception(message), message)
                 snackbarMessageRepository.emitSnackbarMessage(InitError)
             }
         }

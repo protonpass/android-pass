@@ -11,16 +11,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.repositories.AliasRepository
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.UpdateAlias
-import proton.android.pass.data.api.usecases.UpdateAliasContent
-import proton.android.pass.data.api.usecases.UpdateAliasItemContent
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
@@ -31,12 +21,22 @@ import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
+import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.UpdateAlias
+import proton.android.pass.data.api.usecases.UpdateAliasContent
+import proton.android.pass.data.api.usecases.UpdateAliasItemContent
+import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.InitError
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.AliasDetails
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
-import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.InitError
 import javax.inject.Inject
 
 @HiltViewModel
@@ -187,7 +187,7 @@ class UpdateAliasViewModel @Inject constructor(
         snackbarMessage: AliasSnackbarMessage,
         it: Throwable? = null
     ) {
-        PassLogger.i(TAG, it ?: Exception(message), message)
+        PassLogger.e(TAG, it ?: Exception(message), message)
         snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
     }
 
@@ -220,7 +220,7 @@ class UpdateAliasViewModel @Inject constructor(
                 }
                 .onError {
                     val defaultMessage = "Update alias error"
-                    PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                    PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
                     snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.AliasUpdated)
                     isLoadingState.update { IsLoadingState.NotLoading }
                 }

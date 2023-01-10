@@ -70,7 +70,7 @@ class ShareRepositoryImpl @Inject constructor(
         val (request, keyList) = try {
             createVaultRequest(vault, userAddress)
         } catch (e: RuntimeException) {
-            PassLogger.e(TAG, e, "Error in CreateVaultRequest")
+            PassLogger.w(TAG, e, "Error in CreateVaultRequest")
             return@withContext Result.Error(e)
         }
         val createVaultResult = remoteShareDataSource.createVault(userAddress.userId, request)
@@ -188,7 +188,7 @@ class ShareRepositoryImpl @Inject constructor(
         val userAddress = userAddressRepository.getAddresses(userId).primary()
         if (userAddress == null) {
             val e = IllegalStateException("Could not find PrimaryAddress")
-            PassLogger.e(TAG, e, "Error in performShareRefresh")
+            PassLogger.w(TAG, e, "Error in performShareRefresh")
             return Result.Error(e)
         }
 
@@ -221,14 +221,14 @@ class ShareRepositoryImpl @Inject constructor(
             val userAddress = userAddressRepository.getAddresses(userId).primary()
             if (userAddress == null) {
                 val e = IllegalStateException("Could not find PrimaryAddress")
-                PassLogger.e(TAG, e, "Error in performShareRefresh")
+                PassLogger.w(TAG, e, "Error in performShareRefresh")
                 return Result.Error(e)
             }
 
             val keys = userKeys[entity.inviterEmail]?.keys?.map { it.publicKey }
             if (keys == null) {
                 val e = KeyNotFound("UserKey for inviterEmail")
-                PassLogger.e(
+                PassLogger.w(
                     TAG,
                     e,
                     "Could not find UserKey for inviterEmail [email=${entity.inviterEmail}]" +

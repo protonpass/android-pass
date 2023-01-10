@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillSupportedStatus
@@ -23,6 +24,8 @@ import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.RefreshContent
@@ -32,9 +35,6 @@ import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
-import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.asResultWithoutLoading
 import javax.inject.Inject
 
 @HiltViewModel
@@ -160,7 +160,7 @@ class SettingsViewModel @Inject constructor(
         }.onSuccess {
             snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.SyncSuccessful)
         }.onFailure {
-            PassLogger.i(TAG, it, "Error performing sync")
+            PassLogger.e(TAG, it, "Error performing sync")
             snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.ErrorPerformingSync)
         }
 

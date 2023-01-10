@@ -7,18 +7,16 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.GetShareById
-import proton.android.pass.data.api.usecases.TrashItem
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonui.api.toUiModel
-import proton.pass.domain.Item
-import proton.pass.domain.ShareId
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.GetShareById
+import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.InitError
@@ -27,6 +25,8 @@ import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.NoteM
 import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.NoteMovedToTrashError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.pass.domain.Item
+import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -102,13 +102,13 @@ class UpdateNoteViewModel @Inject constructor(
                         }
                         .onError {
                             val defaultMessage = "Update item error"
-                            PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                            PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
                             snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
                         }
                 }
                 .onError {
                     val defaultMessage = "Get share error"
-                    PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                    PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
                     snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
                 }
         } else {

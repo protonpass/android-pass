@@ -82,7 +82,7 @@ class OpenItemImpl @Inject constructor(
             publicKeyRing.verifyData(cryptoContext, decryptedContents, armoredUserSignature)
         if (!isUserSignatureValid) {
             val e = InvalidSignature("User signature for item")
-            PassLogger.e(
+            PassLogger.w(
                 TAG,
                 e,
                 "User signature for item not valid [shareId=${shareId.id}] [itemId=${response.itemId}]"
@@ -98,7 +98,7 @@ class OpenItemImpl @Inject constructor(
         )
         if (!isItemSignatureValid) {
             val e = InvalidSignature("ItemKey signature for item")
-            PassLogger.e(
+            PassLogger.w(
                 TAG,
                 e,
                 "Item signature with itemKey not valid [shareId=${shareId.id}]" +
@@ -131,7 +131,7 @@ class OpenItemImpl @Inject constructor(
         val vaultKey = vaultKeys.firstOrNull { it.rotationId == response.rotationId }
         if (vaultKey == null) {
             val e = KeyNotFound("Could not find VaultKey")
-            PassLogger.e(
+            PassLogger.w(
                 TAG,
                 e,
                 "Could not find VaultKey [itemId=${response.itemId}] [rotationId=${response.rotationId}]"
@@ -142,7 +142,7 @@ class OpenItemImpl @Inject constructor(
         val itemKey = itemKeys.firstOrNull { it.rotationId == response.rotationId }
         if (itemKey == null) {
             val e = KeyNotFound("Could not find ItemKey")
-            PassLogger.e(
+            PassLogger.w(
                 TAG,
                 e,
                 "Could not find ItemKey [itemId=${response.itemId}] [rotationId=${response.rotationId}]"

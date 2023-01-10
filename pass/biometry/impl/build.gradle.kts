@@ -7,7 +7,7 @@ plugins {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
-    namespace = "me.proton.android.pass.biometry.implementation"
+    namespace = "proton.android.pass.biometry.implementation"
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".simplefragment.SimpleFragmentLoginActivity">
+    tools:context="proton.android.pass.autofill.sample.simplefragment.SimpleFragmentLoginActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "me.proton.android.pass.log.api"
+    namespace = "proton.android.pass.log.api"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

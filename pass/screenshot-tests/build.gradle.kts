@@ -7,7 +7,7 @@ plugins {
 
 android {
     compileSdk = 31
-    namespace = "me.proton.android.pass.screenshottests"
+    namespace = "proton.android.pass.screenshottests"
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = 31

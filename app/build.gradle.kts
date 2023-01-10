@@ -63,10 +63,10 @@ tasks.register("getArchivesName") {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
-    namespace = "me.proton.android.pass"
+    namespace = "proton.android.pass"
 
     defaultConfig {
-        applicationId = "me.proton.android.pass"
+        applicationId = "proton.android.pass"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = appVersionCode

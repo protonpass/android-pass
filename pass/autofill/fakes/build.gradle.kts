@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "me.proton.android.pass.autofill.fakes"
+    namespace = "proton.android.pass.autofill.fakes"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

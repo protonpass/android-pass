@@ -37,19 +37,19 @@ platform :android do
     gradle(task: ":app:assembleProdDebug")
   end
 
-  desc "Assemble the devRelease bundle"
+  desc "Assemble the devRelease apk"
   lane :assembleDevRelease do
-    gradle(task: ":app:bundleDevRelease")
+    gradle(task: ":app:assembleDevRelease")
   end
 
-  desc "Assemble the alphaRelease bundle"
+  desc "Assemble the alphaRelease apk"
   lane :assembleAlphaRelease do
-    gradle(task: ":app:bundleAlphaRelease")
+    gradle(task: ":app:assembleAlphaRelease")
   end
 
-  desc "Assemble the prodRelease bundle"
+  desc "Assemble the prodRelease apk"
   lane :assembleProdRelease do
-    gradle(task: ":app:bundleProdRelease")
+    gradle(task: ":app:assembleProdRelease")
   end
 
   desc "Assemble the androidTest apks"

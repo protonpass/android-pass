@@ -13,8 +13,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.autofill.entities.AutofillAppState
+import proton.android.pass.autofill.entities.AutofillItem
+import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryStatus
+import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.log.api.PassLogger
@@ -22,11 +27,6 @@ import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.android.pass.autofill.entities.AutofillAppState
-import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.autofill.extensions.toAutoFillItem
-import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.asResultWithoutLoading
 import javax.inject.Inject
 
 @HiltViewModel
@@ -105,7 +105,7 @@ class AutofillAppViewModel @Inject constructor(
             is Result.Success -> state.data
             is Result.Error -> {
                 val message = "Error getting BiometricLockState"
-                PassLogger.e(TAG, state.exception ?: Exception(message))
+                PassLogger.w(TAG, state.exception ?: Exception(message))
                 BiometricLockState.Disabled
             }
         }
@@ -116,7 +116,7 @@ class AutofillAppViewModel @Inject constructor(
             is Result.Success -> state.data
             is Result.Error -> {
                 val message = "Error getting ThemePreference"
-                PassLogger.e(TAG, state.exception ?: Exception(message))
+                PassLogger.w(TAG, state.exception ?: Exception(message))
                 ThemePreference.System
             }
         }

@@ -8,7 +8,7 @@ REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:scripts/ci::g')
 GIT_COMMIT_AUTHOR="${GITLAB_USER_NAME}"
 GIT_COMMIT_EMAIL="${GITLAB_USER_EMAIL}"
 SCREENSHOTS_DIR="${REPO_ROOT}/pass/screenshot-tests/src/test/snapshots"
-AUTHENTICATED_REMOTE_NAME="authenticated"
+AUTHENTICATED_REMOTE_NAME="origin"
 BRANCH_NAME="${CI_COMMIT_REF_NAME}"
 
 # Make sure we are on the repo root
@@ -32,6 +32,7 @@ else
   git config --local user.email "${GIT_COMMIT_EMAIL}"
 
   # Set up gitlab remote
+  git remote remove "${AUTHENTICATED_REMOTE_NAME}" || true
   git remote add "${AUTHENTICATED_REMOTE_NAME}" "https://${GIT_SCREENSHOT_UPLOAD_USERNAME}:${GIT_SCREENSHOT_UPLOAD_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
 
   # Create a branch with the proper name

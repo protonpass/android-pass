@@ -78,25 +78,15 @@ platform :android do
 
   desc "Publish dev build to firebase group"
   lane :deployToFirebaseDevGroup do
+    sh("../scripts/ci/installFirebase.sh")
     sh("../scripts/ci/setupGoogleJson.sh dev")
-    firebase_app_distribution(
-      app: '1:406525612943:android:840f1a6ee05bbf63c931fa',
-      android_artifact_path: 'app/build/outputs/bundle/dev/release/app-dev-release.aab',
-      android_artifact_type: 'AAB',
-      service_credentials_file: 'app/google-services.json',
-      groups: 'idteam'
-    )
+    sh("../scripts/ci/uploadApkToFirebase.sh dev")
   end
 
   desc "Publish alpha build to firebase group"
   lane :deployToFirebaseAlphaGroup do
+    sh("../scripts/ci/installFirebase.sh")
     sh("../scripts/ci/setupGoogleJson.sh alpha")
-    firebase_app_distribution(
-      app: '1:406525612943:android:784e2a8e4172a910c931fa',
-      android_artifact_path: 'app/build/outputs/bundle/alpha/release/app-alpha-release.aab',
-      android_artifact_type: 'AAB',
-      service_credentials_file: 'app/google-services.json',
-      groups: 'passalpha'
-    )
+    sh("../scripts/ci/uploadApkToFirebase.sh alpha")
   end
 end

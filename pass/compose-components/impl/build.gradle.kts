@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "me.proton.android.pass.composecomponents.impl"
+    namespace = "proton.android.pass.composecomponents.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace = "me.proton.android.pass.featurecreateitem.impl"
+    namespace = "proton.android.pass.featurecreateitem.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

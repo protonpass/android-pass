@@ -7,7 +7,7 @@ plugins {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
-    namespace = "me.proton.android.pass.preferences.fakes"
+    namespace = "proton.android.pass.preferences.fakes"
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()

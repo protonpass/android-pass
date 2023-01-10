@@ -1,0 +1,15 @@
+
+syntax = "proto3";
+
+import "proton/android/pass/preferences/theme_pref.proto";
+
+option java_package = "proton.android.pass.preferences";
+option java_multiple_files = true;
+
+message UserPreferences {
+  bool completed_onboarding = 1;
+  bool biometric_lock = 2;
+  bool has_authenticated_with_biometry = 3;
+  ThemePrefProto theme = 4;
+  bool has_dismissed_autofill_banner = 5;
+}

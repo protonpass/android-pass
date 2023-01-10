@@ -25,18 +25,18 @@
 
     <application>
 
-        <activity android:name="me.proton.pass.autofill.ui.autofill.AutofillActivity"
+        <activity android:name="proton.android.pass.autofill.ui.autofill.AutofillActivity"
             android:launchMode="singleTop"
             android:clearTaskOnLaunch="true"
             android:excludeFromRecents="true"/>
 
-        <activity android:name="me.proton.pass.autofill.ui.autosave.AutosaveActivity"
+        <activity android:name="proton.android.pass.autofill.ui.autosave.AutosaveActivity"
             android:launchMode="singleTop"
             android:clearTaskOnLaunch="true"
             android:excludeFromRecents="true"/>
 
         <service
-            android:name="me.proton.pass.autofill.ProtonPassAutofillService"
+            android:name="proton.android.pass.autofill.ProtonPassAutofillService"
             android:label="@string/autofill_service_name"
             android:permission="android.permission.BIND_AUTOFILL_SERVICE"
             android:exported="true">

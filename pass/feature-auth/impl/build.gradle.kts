@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "me.proton.android.pass.featureauth.impl"
+    namespace = "proton.android.pass.featureauth.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

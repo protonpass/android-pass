@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "me.proton.android.pass.crypto.fakes"
+    namespace = "proton.android.pass.crypto.fakes"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

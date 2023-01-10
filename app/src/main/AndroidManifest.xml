@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-sdk tools:overrideLibrary="me.proton.pass.autofill.service" />
+    <uses-sdk tools:overrideLibrary="proton.android.pass.autofill.service" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="me.proton.android.pass.App"
+        android:name=".App"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -24,16 +24,16 @@
                 android:value="androidx.startup"
                 tools:node="remove" />
             <meta-data
-                android:name="me.proton.android.pass.initializer.WorkManagerInitializer"
+                android:name="proton.android.pass.initializer.WorkManagerInitializer"
                 android:value="androidx.startup" />
             <meta-data
-                android:name="me.proton.android.pass.initializer.AccountStateHandlerInitializer"
+                android:name="proton.android.pass.initializer.AccountStateHandlerInitializer"
                 android:value="androidx.startup" />
             <meta-data
-                android:name="me.proton.android.pass.initializer.StrictModeInitializer"
+                android:name="proton.android.pass.initializer.StrictModeInitializer"
                 android:value="androidx.startup" />
             <meta-data
-                android:name="me.proton.android.pass.initializer.EventManagerInitializer"
+                android:name="proton.android.pass.initializer.EventManagerInitializer"
                 android:value="androidx.startup" />
             <meta-data
                 android:name="me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer"
@@ -51,7 +51,7 @@
         </provider>
 
         <activity
-            android:name="me.proton.android.pass.ui.MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/ProtonTheme.Splash"

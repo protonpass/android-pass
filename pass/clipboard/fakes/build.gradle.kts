@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "me.proton.android.pass.clipboard.fakes"
+    namespace = "proton.android.pass.clipboard.fakes"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "me.proton.android.pass.network.impl"
+    namespace = "proton.android.pass.network.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

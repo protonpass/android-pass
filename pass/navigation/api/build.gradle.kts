@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "me.proton.android.pass.navigation.api"
+    namespace = "proton.android.pass.navigation.api"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

@@ -11,23 +11,23 @@
         android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
         <activity
-            android:name=".simplefragment.SimpleFragmentLoginActivity"
+            android:name="proton.android.pass.autofill.sample.simplefragment.SimpleFragmentLoginActivity"
             android:exported="true"
             android:label="@string/title_activity_simple_fragment_login" />
         <activity
-            android:name=".LoginResultActivity"
+            android:name="proton.android.pass.autofill.sample.LoginResultActivity"
             android:exported="true" />
         <activity
-            android:name=".simplecompose.SimpleComposeLoginActivity"
+            android:name="proton.android.pass.autofill.sample.simplecompose.SimpleComposeLoginActivity"
             android:exported="true" />
         <activity
-            android:name=".simpleactivity.SimpleLoginActivity"
+            android:name="proton.android.pass.autofill.sample.simpleactivity.SimpleLoginActivity"
             android:exported="true" />
         <activity
-            android:name=".webview.WebViewLoginActivity"
+            android:name="proton.android.pass.autofill.sample.webview.WebViewLoginActivity"
             android:exported="true" />
         <activity
-            android:name=".SampleSelectionActivity"
+            android:name="proton.android.pass.autofill.sample.SampleSelectionActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

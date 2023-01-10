@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "me.proton.android.pass.tracing.impl"
+    namespace = "proton.android.pass.tracing.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

@@ -1,0 +1,102 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+
+  desc "Run code analysis"
+  lane :analyse do
+    gradle(task: "multiModuleDetekt")
+  end
+
+  desc "Assemble the devDebug apk"
+  lane :assembleDevDebug do
+    gradle(task: ":app:assembleDevDebug")
+  end
+
+  desc "Assemble the alphaDebug apk"
+  lane :assembleAlphaDebug do
+    gradle(task: ":app:assembleAlphaDebug")
+  end
+
+  desc "Assemble the prodDebug apk"
+  lane :assembleProdDebug do
+    gradle(task: ":app:assembleProdDebug")
+  end
+
+  desc "Assemble the devRelease bundle"
+  lane :assembleDevRelease do
+    gradle(task: ":app:bundleDevRelease")
+  end
+
+  desc "Assemble the alphaRelease bundle"
+  lane :assembleAlphaRelease do
+    gradle(task: ":app:bundleAlphaRelease")
+  end
+
+  desc "Assemble the prodRelease bundle"
+  lane :assembleProdRelease do
+    gradle(task: ":app:bundleProdRelease")
+  end
+
+  desc "Assemble the androidTest apks"
+  lane :assembleDebugAndroidTest do
+    gradle(task: "assembleDebugAndroidTest")
+  end
+
+  desc "Run Unit tests"
+  lane :unitTests do
+    gradle(task: "testDebugUnitTest")
+    gradle(task: "testDevDebugUnitTest")
+  end
+
+  desc "Verify screenshot tests"
+  lane :verifyScreenshotTests do
+    gradle(task: "verifyPaparazziDevDebug")
+  end
+
+  desc "Run instrumentation tests"
+  lane :instrumentationTests do
+    sh("../scripts/ci/installFirebase.sh")
+    sh("../scripts/ci/setupGoogleJson.sh")
+    sh("../scripts/ci/setupGoogleCloud.sh")
+    sh("../scripts/launchFirebaseInstrumentedTests.sh")
+  end
+
+  desc "Publish dev build to firebase group"
+  lane :deployToFirebaseDevGroup do
+    sh("../scripts/ci/setupGoogleJson.sh dev")
+    firebase_app_distribution(
+      app: '1:406525612943:android:840f1a6ee05bbf63c931fa',
+      android_artifact_path: 'app/build/outputs/bundle/dev/release/app-dev-release.aab',
+      android_artifact_type: 'AAB',
+      service_credentials_file: 'app/google-services.json',
+      groups: 'idteam'
+    )
+  end
+
+  desc "Publish alpha build to firebase group"
+  lane :deployToFirebaseAlphaGroup do
+    sh("../scripts/ci/setupGoogleJson.sh alpha")
+    firebase_app_distribution(
+      app: '1:406525612943:android:784e2a8e4172a910c931fa',
+      android_artifact_path: 'app/build/outputs/bundle/alpha/release/app-alpha-release.aab',
+      android_artifact_type: 'AAB',
+      service_credentials_file: 'app/google-services.json',
+      groups: 'passalpha'
+    )
+  end
+end

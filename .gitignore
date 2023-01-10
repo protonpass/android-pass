@@ -36,6 +36,8 @@ config/detekt
 # Fastlane
 fastlane/README.md
 fastlane/report.xml
+vendor/
+.bundle/
 
 # Keystore
 keystore/*

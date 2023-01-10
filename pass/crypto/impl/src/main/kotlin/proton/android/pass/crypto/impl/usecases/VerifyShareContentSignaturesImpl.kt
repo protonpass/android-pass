@@ -1,5 +1,11 @@
 package proton.android.pass.crypto.impl.usecases
 
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.pgp.PGPHeader
+import me.proton.core.key.domain.decryptData
+import me.proton.core.key.domain.entity.key.PublicKey
+import me.proton.core.key.domain.getArmored
+import me.proton.core.key.domain.getBase64Decoded
 import proton.android.pass.crypto.api.error.CryptoException
 import proton.android.pass.crypto.api.error.InvalidAddressSignature
 import proton.android.pass.crypto.api.error.InvalidSignature
@@ -7,12 +13,6 @@ import proton.android.pass.crypto.api.error.KeyNotFound
 import proton.android.pass.crypto.api.usecases.EncryptedShareResponse
 import proton.android.pass.crypto.api.usecases.VerifyShareContentSignatures
 import proton.android.pass.log.api.PassLogger
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.pgp.PGPHeader
-import me.proton.core.key.domain.decryptData
-import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.key.domain.getArmored
-import me.proton.core.key.domain.getBase64Decoded
 import proton.pass.domain.ShareType
 import proton.pass.domain.key.VaultKey
 import proton.pass.domain.key.publicKey
@@ -49,7 +49,7 @@ class VerifyShareContentSignaturesImpl @Inject constructor(
 
         if (vaultKey == null) {
             val e = KeyNotFound("VaultKey not found")
-            PassLogger.e(
+            PassLogger.w(
                 TAG,
                 e,
                 "VaultKey not found when opening share [shareId=${response.shareId}]" +
@@ -78,7 +78,7 @@ class VerifyShareContentSignaturesImpl @Inject constructor(
 
         if (!addressSignatureValid) {
             val e = InvalidAddressSignature()
-            PassLogger.e(TAG, e, "Address signature not valid [shareId=${response.shareId}]")
+            PassLogger.w(TAG, e, "Address signature not valid [shareId=${response.shareId}]")
             throw e
         }
 
@@ -91,7 +91,7 @@ class VerifyShareContentSignaturesImpl @Inject constructor(
         )
         if (!vaultSignatureValid) {
             val e = InvalidSignature("Vault signature is not valid")
-            PassLogger.e(TAG, e, "Vault signature is not valid [shareId=${response.shareId}]")
+            PassLogger.w(TAG, e, "Vault signature is not valid [shareId=${response.shareId}]")
             throw e
         }
     }

@@ -31,9 +31,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.HasAuthenticated
-import proton.android.pass.preferences.UserPreferencesRepository
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
 import me.proton.core.account.domain.entity.isReady
@@ -55,6 +52,9 @@ import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.report.presentation.entity.BugReportInput
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.HasAuthenticated
+import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -153,7 +153,7 @@ class LauncherViewModel @Inject constructor(
         if (accounts.isEmpty()) {
             preferenceRepository.clearPreferences()
                 .onFailure {
-                    PassLogger.e(TAG, it, "Error clearing preferences")
+                    PassLogger.w(TAG, it, "Error clearing preferences")
                 }
         }
     }

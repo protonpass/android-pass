@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".LoginResultFragment">
+    tools:context="proton.android.pass.autofill.sample.LoginResultFragment">
 
     <Button
         android:id="@+id/goBackButton"

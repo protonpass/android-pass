@@ -9,7 +9,7 @@
             android:exported="false"
             tools:node="merge">
             <meta-data
-                android:name="me.proton.android.pass.tracing.impl.SentryInitializer"
+                android:name="proton.android.pass.tracing.impl.SentryInitializer"
                 android:value="androidx.startup" />
         </provider>
     </application>

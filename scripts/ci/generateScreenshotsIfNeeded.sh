@@ -33,7 +33,7 @@ else
   # Add changes, create commit and push
   git add "${SCREENSHOTS_DIR}"
   git commit -m "test: Update screenshots (automatic commit)"
-  git push --set-upstream gitlab_origin "${CI_COMMIT_BRANCH}"
+  git push --set-upstream gitlab_origin "${CI_COMMIT_REF_NAME}"
 
   echo "Changes have been pushed"
 fi

@@ -5,6 +5,8 @@ set -eu
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:scripts/ci::g')
 
+GIT_COMMIT_AUTHOR="${GITLAB_USER_NAME}"
+GIT_COMMIT_EMAIL="${GITLAB_USER_EMAIL}"
 SCREENSHOTS_DIR="${REPO_ROOT}/pass/screenshot-tests/src/test/snapshots"
 AUTHENTICATED_REMOTE_NAME="authenticated"
 BRANCH_NAME="${CI_COMMIT_REF_NAME}"
@@ -26,8 +28,8 @@ else
   echo ""
 
   # Set up git config
-  git config --local user.name "Proton Pass CI"
-  git config --local user.email "pass@proton.local"
+  git config --local user.name "${GIT_COMMIT_AUTHOR}"
+  git config --local user.email "${GIT_COMMIT_EMAIL}"
 
   # Set up gitlab remote
   git remote add "${AUTHENTICATED_REMOTE_NAME}" "https://${GIT_SCREENSHOT_UPLOAD_USERNAME}:${GIT_SCREENSHOT_UPLOAD_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"

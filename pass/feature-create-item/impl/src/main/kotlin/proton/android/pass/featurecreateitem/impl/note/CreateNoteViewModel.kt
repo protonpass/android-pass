@@ -7,6 +7,10 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -15,10 +19,6 @@ import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.ItemCreationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
-import proton.android.pass.commonui.api.toUiModel
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -63,7 +63,7 @@ class CreateNoteViewModel @Inject constructor(
                             }
                             .onError {
                                 val defaultMessage = "Create item error"
-                                PassLogger.i(
+                                PassLogger.e(
                                     TAG,
                                     it ?: Exception(defaultMessage),
                                     defaultMessage
@@ -73,7 +73,7 @@ class CreateNoteViewModel @Inject constructor(
                     }
                     .onError {
                         val defaultMessage = "Get share error"
-                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                        PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
                         snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
                     }
             } else {

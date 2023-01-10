@@ -11,13 +11,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
-import proton.android.pass.data.api.repositories.AliasRepository
-import proton.android.pass.data.api.usecases.CreateAlias
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.Some
@@ -25,11 +18,18 @@ import proton.android.pass.common.api.asResult
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
+import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
+import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.usecases.CreateAlias
+import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.InitError
+import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.ItemCreationError
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.AliasOptions
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.NewAlias
-import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.InitError
-import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.ItemCreationError
 import javax.inject.Inject
 
 @HiltViewModel
@@ -200,7 +200,7 @@ class CreateAliasViewModel @Inject constructor(
             }
             .onError {
                 val defaultMessage = "Could not get alias options"
-                PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
                 snackbarMessageRepository.emitSnackbarMessage(InitError)
                 mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
             }
@@ -211,7 +211,7 @@ class CreateAliasViewModel @Inject constructor(
             snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.CannotCreateMoreAliasesError)
         } else {
             val defaultMessage = "Create alias error"
-            PassLogger.i(TAG, cause ?: Exception(defaultMessage), defaultMessage)
+            PassLogger.e(TAG, cause ?: Exception(defaultMessage), defaultMessage)
             snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
         }
     }

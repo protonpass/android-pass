@@ -115,7 +115,7 @@ class ItemRepositoryImpl @Inject constructor(
             val body = try {
                 createItem.create(vaultKey, itemKey, userAddress, contents, packageName)
             } catch (e: RuntimeException) {
-                PassLogger.e(TAG, e, "Error creating item")
+                PassLogger.w(TAG, e, "Error creating item")
                 return@withUserAddress Result.Error(e)
             }
 

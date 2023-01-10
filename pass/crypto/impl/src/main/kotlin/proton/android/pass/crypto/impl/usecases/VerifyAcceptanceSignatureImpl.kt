@@ -1,9 +1,5 @@
 package proton.android.pass.crypto.impl.usecases
 
-import proton.android.pass.crypto.api.error.InvalidAddressSignature
-import proton.android.pass.crypto.api.error.InvalidSignature
-import proton.android.pass.crypto.api.usecases.VerifyAcceptanceSignature
-import proton.android.pass.log.api.PassLogger
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.PGPHeader
@@ -14,6 +10,10 @@ import me.proton.core.key.domain.getBase64Decoded
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyData
 import me.proton.core.user.domain.entity.UserAddress
+import proton.android.pass.crypto.api.error.InvalidAddressSignature
+import proton.android.pass.crypto.api.error.InvalidSignature
+import proton.android.pass.crypto.api.usecases.VerifyAcceptanceSignature
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class VerifyAcceptanceSignatureImpl @Inject constructor(
@@ -37,7 +37,7 @@ class VerifyAcceptanceSignatureImpl @Inject constructor(
                 verifyData(signingKeyFingerprint.encodeToByteArray(), armoredAcceptanceSignature)
             if (!verified) {
                 val e = InvalidSignature("Acceptance signature")
-                PassLogger.e(TAG, e, "Acceptance signature failed to verify")
+                PassLogger.w(TAG, e, "Acceptance signature failed to verify")
                 throw e
             }
 
@@ -52,7 +52,7 @@ class VerifyAcceptanceSignatureImpl @Inject constructor(
             )
             if (!inviterVerified) {
                 val e = InvalidAddressSignature()
-                PassLogger.e(TAG, e, "Share inviterAcceptanceSignature failed to verify")
+                PassLogger.w(TAG, e, "Share inviterAcceptanceSignature failed to verify")
                 throw e
             }
         }

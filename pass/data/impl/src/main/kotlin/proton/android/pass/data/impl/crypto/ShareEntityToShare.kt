@@ -1,17 +1,17 @@
 package proton.android.pass.data.impl.crypto
 
-import proton.android.pass.crypto.api.error.CryptoException
-import proton.android.pass.crypto.api.usecases.ReadKey
-import proton.android.pass.crypto.api.usecases.VerifyAcceptanceSignature
-import proton.android.pass.data.api.repositories.VaultKeyRepository
-import proton.android.pass.data.impl.db.entities.ShareEntity
-import proton.android.pass.log.api.PassLogger
 import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.map
+import proton.android.pass.crypto.api.error.CryptoException
+import proton.android.pass.crypto.api.usecases.ReadKey
+import proton.android.pass.crypto.api.usecases.VerifyAcceptanceSignature
+import proton.android.pass.data.api.repositories.VaultKeyRepository
+import proton.android.pass.data.impl.db.entities.ShareEntity
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermission
@@ -61,7 +61,7 @@ class ShareEntityToShareImpl @Inject constructor(
         val shareType = ShareType.map[entity.targetType]
         if (shareType == null) {
             val e = CryptoException("Unknown ShareType")
-            PassLogger.e(TAG, e, "Unknown ShareType [shareType=${entity.targetType}]")
+            PassLogger.w(TAG, e, "Unknown ShareType [shareType=${entity.targetType}]")
             throw e
         }
 

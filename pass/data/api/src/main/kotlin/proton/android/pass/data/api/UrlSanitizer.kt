@@ -17,7 +17,7 @@ object UrlSanitizer {
 
         return try {
             val parsed = URI(urlWithScheme)
-            val meaningfulSection = "${parsed.scheme}://${parsed.host}"
+            val meaningfulSection = "${parsed.scheme}://${parsed.host}${parsed.path}"
             Result.Success(meaningfulSection)
         } catch (e: URISyntaxException) {
             Result.Error(e)

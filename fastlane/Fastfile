@@ -80,13 +80,13 @@ platform :android do
   lane :deployToFirebaseDevGroup do
     sh("../scripts/ci/installFirebase.sh")
     sh("../scripts/ci/setupGoogleJson.sh dev")
-    sh("../scripts/ci/uploadApkToFirebase.sh dev")
+    sh("../scripts/uploadApkToFirebase.sh dev")
   end
 
   desc "Publish alpha build to firebase group"
   lane :deployToFirebaseAlphaGroup do
     sh("../scripts/ci/installFirebase.sh")
     sh("../scripts/ci/setupGoogleJson.sh alpha")
-    sh("../scripts/ci/uploadApkToFirebase.sh alpha")
+    sh("../scripts/uploadApkToFirebase.sh alpha")
   end
 end

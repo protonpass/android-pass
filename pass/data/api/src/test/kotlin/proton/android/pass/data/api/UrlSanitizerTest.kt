@@ -33,11 +33,12 @@ class UrlSanitizerTest {
     }
 
     @Test
-    fun `url with path has its path removed`() {
+    fun `url with path preserves the path`() {
         val domain = "some.domain"
-        val res = UrlSanitizer.sanitize("$domain/login")
+        val path = "login"
+        val res = UrlSanitizer.sanitize("$domain/$path")
         assertTrue(res is Result.Success)
-        assertEquals(res.data, "https://$domain")
+        assertEquals(res.data, "https://$domain/$path")
     }
 
     @Test

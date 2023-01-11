@@ -71,7 +71,7 @@ platform :android do
   desc "Run instrumentation tests"
   lane :instrumentationTests do
     sh("../scripts/ci/installFirebase.sh")
-    sh("../scripts/ci/setupGoogleJson.sh dev")
+    sh("../scripts/ci/setupGoogleJson.sh")
     sh("../scripts/ci/setupGoogleCloud.sh")
     sh("../scripts/launchFirebaseInstrumentedTests.sh")
   end
@@ -79,14 +79,14 @@ platform :android do
   desc "Publish dev build to firebase group"
   lane :deployToFirebaseDevGroup do
     sh("../scripts/ci/installFirebase.sh")
-    sh("../scripts/ci/setupGoogleJson.sh dev")
+    sh("../scripts/ci/setupGoogleJson.sh")
     sh("../scripts/uploadApkToFirebase.sh dev")
   end
 
   desc "Publish alpha build to firebase group"
   lane :deployToFirebaseAlphaGroup do
     sh("../scripts/ci/installFirebase.sh")
-    sh("../scripts/ci/setupGoogleJson.sh alpha")
+    sh("../scripts/ci/setupGoogleJson.sh")
     sh("../scripts/uploadApkToFirebase.sh alpha")
   end
 end

@@ -13,7 +13,7 @@
         android:theme="@style/Theme.AppCompat"
         tools:replace="android:theme">
         <activity
-            android:name="me.proton.pass.autofill.e2e.proton.android.pass.autofill.e2e.E2EActivity"
+            android:name="proton.android.pass.autofill.e2e.E2EActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -197,14 +197,15 @@ fun AssistStructure.ViewNode.toAutofillNode(): AutofillNode {
 }
 
 private fun AssistStructure.ViewNode.getUrl(): Option<String> {
-    if (webDomain == null) return None
+    val domain = webDomain ?: return None
+    if (domain.isBlank()) return None
     val scheme = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         webScheme ?: "https"
     } else {
         "https"
     }
 
-    return Some("$scheme://$webDomain")
+    return Some("$scheme://$domain")
 }
 
 private fun isImportantForAutofill(node: AssistStructure.ViewNode): Boolean =

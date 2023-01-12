@@ -47,9 +47,9 @@ platform :android do
     gradle(task: ":app:assembleAlphaRelease")
   end
 
-  desc "Assemble the prodRelease apk"
-  lane :assembleProdRelease do
-    gradle(task: ":app:assembleProdRelease")
+  desc "Creates the prodRelease bundle"
+  lane :bundleProdRelease do
+    gradle(task: ":app:bundleProdRelease")
   end
 
   desc "Assemble the androidTest apks"

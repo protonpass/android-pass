@@ -17,21 +17,21 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
-import proton.android.pass.log.api.PassLogger
+import me.proton.pass.autofill.service.R
 import proton.android.pass.autofill.PendingIntentUtils.getOpenAppPendingIntent
 import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.extensions.addItemInlineSuggestion
 import proton.android.pass.autofill.extensions.addOpenAppInlineSuggestion
 import proton.android.pass.autofill.extensions.addSaveInfo
-import me.proton.pass.autofill.service.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.Item
 import kotlin.coroutines.coroutineContext
 import kotlin.math.min
@@ -111,15 +111,18 @@ object AutoFillHandler {
 
             encryptionContextProvider.withEncryptionContext {
                 if (suggestedItemsResult is Some) {
+                    val suggestedItems = suggestedItemsResult.value.data
+                    PassLogger.i(TAG, "Suggested item count: ${suggestedItems.size}")
+
                     val size: Int = getAvailableSuggestionSpots(
                         maxSuggestion = maxSuggestion,
-                        itemsSize = suggestedItemsResult.value.data.size
+                        itemsSize = suggestedItems.size
                     )
                     if (size > 0) {
                         val specs: List<InlinePresentationSpec> =
                             inlineRequest.inlinePresentationSpecs.take(size - INLINE_SUGGESTIONS_OFFSET)
                         for ((index, spec) in specs.withIndex()) {
-                            val item: Option<Item> = suggestedItemsResult.value.data
+                            val item: Option<Item> = suggestedItems
                                 .getOrNull(index)
                                 .toOption()
                             responseBuilder.addItemInlineSuggestion(

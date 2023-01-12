@@ -13,6 +13,7 @@ import proton.android.pass.data.api.usecases.GetAddressesForUserId
 import proton.android.pass.data.api.usecases.GetAppNameFromPackageName
 import proton.android.pass.data.api.usecases.GetCurrentShare
 import proton.android.pass.data.api.usecases.GetCurrentUserId
+import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.ObserveAccounts
@@ -37,6 +38,7 @@ import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
 import proton.android.pass.data.impl.usecases.GetAppNameFromPackageNameImpl
 import proton.android.pass.data.impl.usecases.GetCurrentShareImpl
 import proton.android.pass.data.impl.usecases.GetCurrentUserIdImpl
+import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedLoginItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
@@ -130,5 +132,8 @@ abstract class DataUseCaseModule {
     abstract fun bindGetAppNameFromPackageName(
         impl: GetAppNameFromPackageNameImpl
     ): GetAppNameFromPackageName
+
+    @Binds
+    abstract fun bindGetPublicSuffixList(impl: GetPublicSuffixListImpl): GetPublicSuffixList
 }
 

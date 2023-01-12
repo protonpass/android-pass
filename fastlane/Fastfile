@@ -89,4 +89,14 @@ platform :android do
     sh("../scripts/ci/setupGoogleJson.sh")
     sh("../scripts/uploadApkToFirebase.sh alpha")
   end
+
+  desc "Publish internal prod bundle"
+  lane :deployToPlayInternal do
+     upload_to_play_store(
+       json_key: '../tmp/play-service-account.json',
+       track: 'internal',
+       release_status: 'draft',
+       aab: '../app/build/outputs/bundle/prodRelease/app-prod-release.aab'
+     )
+  end
 end

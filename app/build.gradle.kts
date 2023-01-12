@@ -89,11 +89,17 @@ android {
     }
 
     signingConfigs {
-        register("release") {
+        register("signingKeystore") {
             storeFile = file("$rootDir/keystore/ProtonMail.keystore")
             storePassword = "${privateProperties["keyStorePassword"]}"
             keyAlias = "ProtonMail"
             keyPassword = "${privateProperties["keyStoreKeyPassword"]}"
+        }
+        register("uploadKeystore") {
+            storeFile = file("$rootDir/keystore/upload-keystore")
+            storePassword = "${privateProperties["uploadStorePassword"]}"
+            keyAlias = "upload"
+            keyPassword = "${privateProperties["uploadStorePassword"]}"
         }
     }
 
@@ -118,7 +124,6 @@ android {
                 isRemoveUnusedResources = true
                 file("proguard").listFiles()?.forEach { proguardFile(it) }
             }
-            signingConfig = signingConfigs["release"]
         }
     }
 
@@ -132,6 +137,7 @@ android {
             buildConfigField("String", "HOST", "\"proton.black\"")
             buildConfigField("String", "HUMAN_VERIFICATION_HOST", "\"verify.proton.black\"")
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
+            signingConfig = signingConfigs["signingKeystore"]
         }
         create("alpha") {
             applicationIdSuffix = ".alpha"
@@ -139,11 +145,13 @@ android {
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
             buildConfigField("String", "HOST", "\"protonmail.ch\"")
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
+            signingConfig = signingConfigs["signingKeystore"]
         }
         create("prod") {
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
             buildConfigField("String", "HOST", "\"protonmail.ch\"")
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
+            signingConfig = signingConfigs["uploadKeystore"]
         }
     }
 

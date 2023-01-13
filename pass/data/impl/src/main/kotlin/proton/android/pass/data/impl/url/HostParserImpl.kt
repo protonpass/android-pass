@@ -32,20 +32,8 @@ class HostParserImpl @Inject constructor(
         val publicSuffixes = getPublicSuffixList()
         val parts = domain.split('.')
 
-        // Check if the domain only has 1 part
         if (parts.size == 1) {
-            val host = parts[0]
-            return if (publicSuffixes.contains(host)) {
-                Result.Error(IllegalArgumentException("host is a TLD"))
-            } else {
-                Result.Success(
-                    HostInfo.Host(
-                        subdomain = None,
-                        domain = host,
-                        tld = None
-                    )
-                )
-            }
+            return handleDomainWithSinglePart(domain, publicSuffixes)
         }
 
         // Has multiple parts, find the widest match that is a TLD
@@ -53,7 +41,6 @@ class HostParserImpl @Inject constructor(
             val portion = stringFromParts(parts, i)
             if (publicSuffixes.contains(portion)) {
                 // We found the TLD
-
                 return Result.Success(hostWithTld(parts, i, portion))
             }
         }
@@ -62,10 +49,21 @@ class HostParserImpl @Inject constructor(
         return Result.Success(hostWithoutTld(parts))
     }
 
+    private fun handleDomainWithSinglePart(domain: String, publicSuffixes: Set<String>): Result<HostInfo.Host> =
+        if (publicSuffixes.contains(domain)) {
+            Result.Error(IllegalArgumentException("host is a TLD"))
+        } else {
+            Result.Success(
+                HostInfo.Host(
+                    subdomain = None,
+                    domain = domain,
+                    tld = None
+                )
+            )
+        }
+
     private fun hostWithTld(parts: List<String>, tldStartingPart: Int, tld: String): HostInfo.Host {
         val domain = parts[tldStartingPart - 1]
-
-
         val subdomain = if (tldStartingPart == 1) {
             // It means that we have no subdomain, as the part 0 is the domain
             None

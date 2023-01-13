@@ -14,7 +14,8 @@ import proton.pass.domain.Item
 import javax.inject.Inject
 
 class GetSuggestedLoginItemsImpl @Inject constructor(
-    private val observeActiveItems: ObserveActiveItems
+    private val observeActiveItems: ObserveActiveItems,
+    private val suggestionItemFilter: SuggestionItemFilterer
 ) : GetSuggestedLoginItems {
     override fun invoke(
         packageName: Option<String>,
@@ -23,7 +24,7 @@ class GetSuggestedLoginItemsImpl @Inject constructor(
         observeActiveItems(filter = ItemTypeFilter.Logins)
             .map { result ->
                 result
-                    .map { items -> SuggestionItemFilterer.filter(items, packageName, url) }
+                    .map { items -> suggestionItemFilter.filter(items, packageName, url) }
                     .map { suggestions -> SuggestionSorter.sort(suggestions, url) }
             }
 }

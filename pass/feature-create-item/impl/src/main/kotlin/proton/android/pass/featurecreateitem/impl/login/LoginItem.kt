@@ -2,7 +2,7 @@ package proton.android.pass.featurecreateitem.impl.login
 
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.persistentListOf
-import proton.android.pass.data.api.UrlSanitizer
+import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.common.api.Result
 import proton.pass.domain.ItemContents
 

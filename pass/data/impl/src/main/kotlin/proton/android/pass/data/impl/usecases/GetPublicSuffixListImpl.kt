@@ -27,7 +27,7 @@ class GetPublicSuffixListImpl @Inject constructor(
                 .openRawResource(R.raw.public_suffix_list)
                 .bufferedReader()
                 .use { it.readText() }
-            contents.lines().toHashSet()
+            contents.lineSequence().toHashSet()
         } catch (e: IOException) {
             PassLogger.e(TAG, e, "Error reading public_suffix_list")
             emptySet()

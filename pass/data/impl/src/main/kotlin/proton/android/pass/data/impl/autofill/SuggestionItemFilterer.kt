@@ -54,20 +54,16 @@ class SuggestionItemFiltererImpl @Inject constructor(
             is Result.Success -> domain.data
             else -> return false
         }
-        val loginDomains = login.websites.map { UrlSanitizer.getDomain(it) }
+        val loginDomains = login.websites
+            .map { UrlSanitizer.getDomain(it) }
+            .filterIsInstance<Result.Success<String>>()
+            .map { it.data }
 
         return isDomainMatch(urlDomain, loginDomains)
     }
 
-    private fun isDomainMatch(urlDomain: String, itemDomains: List<Result<String>>): Boolean {
-        val successfullySanitized = itemDomains
-            .filterIsInstance<Result.Success<String>>()
-            .map { it.data }
-        val parsedItemDomains = successfullySanitized
-            .map { hostParser.parse(it) }
-            .filterIsInstance<Result.Success<HostInfo>>()
-            .map { it.data }
-
+    private fun isDomainMatch(urlDomain: String, itemDomains: List<String>): Boolean {
+        val parsedItemDomains = parseItemDomains(itemDomains)
         val parsedDomain = when (val parsed = hostParser.parse(urlDomain)) {
             is Result.Success -> parsed.data
             else -> return false
@@ -88,4 +84,10 @@ class SuggestionItemFiltererImpl @Inject constructor(
             }
         }
     }
+
+    private fun parseItemDomains(itemDomains: List<String>): List<HostInfo> =
+        itemDomains
+            .map { hostParser.parse(it) }
+            .filterIsInstance<Result.Success<HostInfo>>()
+            .map { it.data }
 }

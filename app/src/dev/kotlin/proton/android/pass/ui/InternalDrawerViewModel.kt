@@ -8,6 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.common.api.logError
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.data.api.usecases.DeleteVault
@@ -43,6 +44,7 @@ class InternalDrawerViewModel @Inject constructor(
                         .onError {
                             snackbarMessageRepository.emitSnackbarMessage(DeleteVaultError)
                         }
+                        .logError(PassLogger, TAG, "Delete Vault Failed")
                 } else {
                     snackbarMessageRepository.emitSnackbarMessage(EmptyShareError)
                 }
@@ -50,6 +52,7 @@ class InternalDrawerViewModel @Inject constructor(
             .onError {
                 snackbarMessageRepository.emitSnackbarMessage(EmptyShareError)
             }
+            .logError(PassLogger, TAG, "Get Active Share Failed")
     }
 
     fun clearPreferences() = viewModelScope.launch {

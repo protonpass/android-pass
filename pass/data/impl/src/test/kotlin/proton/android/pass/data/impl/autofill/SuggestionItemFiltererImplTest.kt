@@ -5,6 +5,8 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
+import proton.android.pass.data.fakes.usecases.TestGetPublicSuffixList
+import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestItemType
 import proton.pass.domain.Item
@@ -12,10 +14,12 @@ import proton.pass.domain.Item
 class SuggestionItemFiltererImplTest {
 
     private lateinit var instance: SuggestionItemFiltererImpl
+    private lateinit var getPublicSuffixList: TestGetPublicSuffixList
 
     @Before
     fun setup() {
-        instance = SuggestionItemFiltererImpl()
+        getPublicSuffixList = TestGetPublicSuffixList()
+        instance = SuggestionItemFiltererImpl(HostParserImpl(getPublicSuffixList))
     }
 
     @Test
@@ -82,5 +86,62 @@ class SuggestionItemFiltererImplTest {
 
         val res = instance.filter(items, None, baseDomain.some())
         assertThat(res).isEqualTo(listOf(item))
+    }
+
+    @Test
+    fun `check items with matching domain and tld are returned`() {
+        val domain = "somedomain"
+        val tld = "tld"
+        val subdomain1 = "account.login"
+        val subdomain2 = "account.register"
+
+        getPublicSuffixList.setTlds(setOf(tld))
+        val item1 = TestItem.create(
+            TestItemType.login(
+                websites = listOf(
+                    "$subdomain1.$domain.$tld",
+                    "other.random.domain"
+                )
+            )
+        )
+        val item2 = TestItem.create(
+            TestItemType.login(
+                websites = listOf(
+                    "$subdomain2.$domain.$tld",
+                    "some.other.site"
+                )
+            )
+        )
+        val item3 = TestItem.create(TestItemType.login(websites = listOf("$domain.$tld")))
+        val item4 = TestItem.create(TestItemType.login(websites = listOf("otherdomain.$tld")))
+
+        val items = listOf(item1, item2, item3, item4)
+        val res = instance.filter(items, None, "$domain.$tld".some())
+        assertThat(res).isEqualTo(listOf(item1, item2, item3))
+    }
+
+    @Test
+    fun `check items with same IP are returned`() {
+        val ip = "1.2.3.4"
+
+        val item1 = TestItem.create(TestItemType.login(websites = listOf(ip)))
+        val item2 = TestItem.create(TestItemType.login(websites = listOf(ip)))
+        val item3 = TestItem.create(TestItemType.login(websites = listOf("5.6.7.8")))
+
+        val items = listOf(item1, item2, item3)
+        val res = instance.filter(items, None, ip.some())
+        assertThat(res).isEqualTo(listOf(item1, item2))
+    }
+
+    @Test
+    fun `check items with same final IP octet are not returned`() {
+        val ip = "1.2.3.4"
+
+        val item1 = TestItem.create(TestItemType.login(websites = listOf(ip)))
+        val item2 = TestItem.create(TestItemType.login(websites = listOf("5.6.7.4")))
+
+        val items = listOf(item1, item2)
+        val res = instance.filter(items, None, ip.some())
+        assertThat(res).isEqualTo(listOf(item1))
     }
 }

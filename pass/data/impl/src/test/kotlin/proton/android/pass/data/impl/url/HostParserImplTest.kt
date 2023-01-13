@@ -1,5 +1,6 @@
 package proton.android.pass.data.impl.url
 
+import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Result
@@ -12,9 +13,18 @@ import kotlin.test.assertTrue
 
 class HostParserImplTest {
 
+    private lateinit var publicSuffixList: TestGetPublicSuffixList
+    private lateinit var instance: HostParserImpl
+
+    @Before
+    fun setup() {
+        publicSuffixList = TestGetPublicSuffixList()
+        instance = HostParserImpl(publicSuffixList)
+    }
+
     @Test
     fun `empty string should return error`() {
-        val instance = HostParserImpl(TestGetPublicSuffixList(emptySet()))
+        publicSuffixList.setTlds(emptySet())
         val res = instance.parse("")
 
         assertTrue(res is Result.Error)
@@ -22,18 +32,20 @@ class HostParserImplTest {
 
     @Test
     fun `is able to detect ipv4`() {
-        val instance = HostParserImpl(TestGetPublicSuffixList(emptySet()))
-        val res = instance.parse("127.0.0.1")
+        val ip = "127.0.0.1"
+        publicSuffixList.setTlds(emptySet())
+        val res = instance.parse(ip)
 
         assertTrue(res is Result.Success)
 
         val hostInfo = res.data
         assertTrue(hostInfo is HostInfo.Ip)
+        assertEquals(ip, hostInfo.ip)
     }
 
     @Test
     fun `wrong ipv4 is not detected as ip`() {
-        val instance = HostParserImpl(TestGetPublicSuffixList(emptySet()))
+        publicSuffixList.setTlds(emptySet())
         val res = instance.parse("300.400.500.1")
 
         assertTrue(res is Result.Success)
@@ -46,7 +58,7 @@ class HostParserImplTest {
     fun `is able to detect tld correctly`() {
         val domain = "host"
         val tld = "com"
-        val instance = HostParserImpl(TestGetPublicSuffixList(setOf(tld)))
+        publicSuffixList.setTlds(setOf(tld))
         val res = instance.parse("$domain.$tld")
 
         assertTrue(res is Result.Success)
@@ -63,7 +75,7 @@ class HostParserImplTest {
         val subdomain = "a.b.c.d"
         val domain = "host"
         val tld = "co.uk"
-        val instance = HostParserImpl(TestGetPublicSuffixList(setOf("uk", "co", tld)))
+        publicSuffixList.setTlds(setOf("uk", "co", tld))
         val res = instance.parse("$subdomain.$domain.$tld")
 
         assertTrue(res is Result.Success)
@@ -78,7 +90,7 @@ class HostParserImplTest {
     @Test
     fun `is able to detect no tld`() {
         val domain = "localhost"
-        val instance = HostParserImpl(TestGetPublicSuffixList(setOf("com")))
+        publicSuffixList.setTlds(setOf("com"))
         val res = instance.parse("localhost")
 
         assertTrue(res is Result.Success)
@@ -94,7 +106,7 @@ class HostParserImplTest {
     fun `is able to detect tlds not in the list if there are no matches`() {
         val domain = "localhost"
         val tld = "somerandomtldthatdefinitelydoesnotexist"
-        val instance = HostParserImpl(TestGetPublicSuffixList(setOf("com")))
+        publicSuffixList.setTlds(setOf("com"))
         val res = instance.parse("$domain.$tld")
 
         assertTrue(res is Result.Success)
@@ -111,7 +123,7 @@ class HostParserImplTest {
         val subdomain = "a.b"
         val domain = "domain"
         val tld = "somerandomtldthatdefinitelydoesnotexist"
-        val instance = HostParserImpl(TestGetPublicSuffixList(setOf("com")))
+        publicSuffixList.setTlds(setOf("com"))
         val res = instance.parse("$subdomain.$domain.$tld")
 
         assertTrue(res is Result.Success)
@@ -126,7 +138,7 @@ class HostParserImplTest {
     @Test
     fun `only tld is an error`() {
         val tld = "com"
-        val instance = HostParserImpl(TestGetPublicSuffixList(setOf(tld)))
+        publicSuffixList.setTlds(setOf(tld))
         val res = instance.parse(tld)
 
         assertFalse(res is Result.Success)

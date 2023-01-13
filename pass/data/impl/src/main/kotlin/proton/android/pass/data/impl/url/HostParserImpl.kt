@@ -22,7 +22,7 @@ class HostParserImpl @Inject constructor(
 
     private fun getHostInfoFromDomain(domain: String): Result<HostInfo> =
         if (isIp(domain)) {
-            Result.Success(HostInfo.Ip())
+            Result.Success(HostInfo.Ip(domain))
         } else {
             parseHostInfo(domain)
         }

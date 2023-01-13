@@ -2,6 +2,7 @@ package proton.android.pass.data.api
 
 import org.junit.Test
 import proton.android.pass.common.api.Result
+import proton.android.pass.data.api.url.UrlSanitizer
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue

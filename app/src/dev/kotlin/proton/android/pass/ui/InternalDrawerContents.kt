@@ -58,6 +58,13 @@ fun InternalDrawerContents(
         ) {
             Text(text = "Trigger Crash")
         }
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { viewModel.deleteVault() },
+        ) {
+            Text(text = "Delete vault")
+        }
     }
 }
 

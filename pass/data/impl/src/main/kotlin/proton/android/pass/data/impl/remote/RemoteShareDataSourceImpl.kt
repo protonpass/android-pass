@@ -1,13 +1,13 @@
 package proton.android.pass.data.impl.remote
 
-import proton.android.pass.data.impl.requests.CreateVaultRequest
-import proton.android.pass.data.impl.responses.ShareResponse
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toResult
-import me.proton.pass.data.api.PasswordManagerApi
+import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.requests.CreateVaultRequest
+import proton.android.pass.data.impl.responses.ShareResponse
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -22,6 +22,12 @@ class RemoteShareDataSourceImpl @Inject constructor(
             .invoke { createVault(body) }
             .toResult()
             .map { it.share }
+
+    override suspend fun deleteVault(userId: UserId, shareId: ShareId): Result<Unit> =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { deleteVault(shareId.id) }
+            .toResult()
+            .map { }
 
     override suspend fun getShares(userId: UserId): Result<List<ShareResponse>> =
         api.get<PasswordManagerApi>(userId)

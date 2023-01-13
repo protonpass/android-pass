@@ -54,6 +54,7 @@ import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.PasswordCop
 import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.UsernameCopied
 import proton.pass.domain.ItemType
+import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 @ExperimentalMaterialApi
@@ -96,6 +97,13 @@ class HomeViewModel @Inject constructor(
 
     private val sortingTypeState: MutableStateFlow<SortingType> =
         MutableStateFlow(SortingType.ByName)
+
+    private val activeShare: StateFlow<Result<ShareId?>> = observeActiveShare()
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Lazily,
+            initialValue = Result.Loading
+        )
 
     private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = observeActiveItems()
         .map { itemResult ->
@@ -147,8 +155,8 @@ class HomeViewModel @Inject constructor(
         val isProcessingSearch: IsProcessingSearchState
     )
 
-    val homeUiState: StateFlow<HomeUiState> = combine(
-        observeActiveShare(),
+    val homeUiState = combine(
+        activeShare,
         resultsFlow,
         searchWrapperWrapper,
         isRefreshing,
@@ -205,7 +213,7 @@ class HomeViewModel @Inject constructor(
     }
         .stateIn(
             scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
+            started = SharingStarted.Lazily,
             initialValue = HomeUiState.Loading
         )
 

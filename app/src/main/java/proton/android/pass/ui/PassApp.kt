@@ -28,8 +28,8 @@ import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.network.api.NetworkStatus
+import proton.android.pass.pass.featurehome.impl.HomeFilterMode
 import proton.android.pass.preferences.ThemePreference
-import proton.android.pass.presentation.home.HomeFilterMode
 import proton.android.pass.presentation.navigation.CoreNavigation
 import proton.android.pass.presentation.navigation.drawer.HomeSection
 import proton.android.pass.presentation.navigation.drawer.NavDrawerNavigation

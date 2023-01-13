@@ -3,10 +3,10 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import proton.android.pass.data.api.repositories.ShareRepository
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Result
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.NewVault
@@ -38,6 +38,9 @@ class TestShareRepository : ShareRepository {
 
     override suspend fun createVault(userId: SessionUserId, vault: NewVault): Result<Share> =
         createVaultResult
+
+    override suspend fun deleteVault(userId: UserId, shareId: ShareId): Result<Unit> =
+        Result.Success(Unit)
 
     override suspend fun refreshShares(userId: UserId): Result<List<Share>> =
         refreshSharesResult

@@ -6,6 +6,19 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.withContext
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.extension.publicKeyRing
+import me.proton.core.key.domain.publicKey
+import me.proton.core.key.domain.repository.PublicAddressRepository
+import me.proton.core.key.domain.repository.Source
+import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.extension.primary
+import me.proton.core.user.domain.repository.UserAddressRepository
+import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.map
 import proton.android.pass.crypto.api.error.InvalidAddressSignature
 import proton.android.pass.crypto.api.error.KeyNotFound
 import proton.android.pass.crypto.api.usecases.CreateVault
@@ -25,18 +38,6 @@ import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.log.api.PassLogger
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.extension.publicKeyRing
-import me.proton.core.key.domain.publicKey
-import me.proton.core.key.domain.repository.PublicAddressRepository
-import me.proton.core.key.domain.repository.Source
-import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.extension.primary
-import me.proton.core.user.domain.repository.UserAddressRepository
-import proton.android.pass.common.api.Result
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.NewVault
@@ -110,6 +111,13 @@ class ShareRepositoryImpl @Inject constructor(
         val publicKeys = userAddress.keys.map { it.privateKey.publicKey(cryptoContext) }
         return@withContext shareEntityToShare(userAddress, publicKeys, entityResult.data)
     }
+
+    override suspend fun deleteVault(userId: UserId, shareId: ShareId): Result<Unit> =
+        withContext(Dispatchers.IO) {
+            remoteShareDataSource.deleteVault(userId, shareId)
+                .map { localShareDataSource.deleteShare(shareId) }
+                .map { }
+        }
 
     override fun observeShares(userId: UserId): Flow<Result<List<Share>>> =
         localShareDataSource.getAllSharesForUser(userId)

@@ -9,6 +9,7 @@ import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateVault
+import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAddressById
 import proton.android.pass.data.api.usecases.GetAddressesForUserId
 import proton.android.pass.data.api.usecases.GetAppNameFromPackageName
@@ -37,6 +38,7 @@ import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import proton.android.pass.data.impl.usecases.CreateAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemImpl
 import proton.android.pass.data.impl.usecases.CreateVaultImpl
+import proton.android.pass.data.impl.usecases.DeleteVaultImpl
 import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
 import proton.android.pass.data.impl.usecases.GetAppNameFromPackageNameImpl
@@ -75,6 +77,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCreateVault(impl: CreateVaultImpl): CreateVault
+
+    @Binds
+    abstract fun bindDeleteVault(impl: DeleteVaultImpl): DeleteVault
 
     @Binds
     abstract fun bindGetAddressById(impl: GetAddressByIdImpl): GetAddressById

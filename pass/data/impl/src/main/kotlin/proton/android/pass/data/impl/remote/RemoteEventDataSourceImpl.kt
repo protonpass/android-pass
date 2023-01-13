@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.flow
 import proton.android.pass.data.impl.responses.EventList
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
-import me.proton.pass.data.api.PasswordManagerApi
+import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 

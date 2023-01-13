@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">(Dev) Proton Pass</string>
+    <string translatable="false" name="app_name">(Dev) Proton Pass</string>
 
-    <string name="snackbar_preferences_cleared_success">Preferences cleared</string>
-    <string name="snackbar_preferences_cleared_error">Error clearing preferences</string>
+    <string translatable="false" name="snackbar_preferences_cleared_success">Preferences cleared</string>
+    <string translatable="false" name="snackbar_preferences_cleared_error">Error clearing preferences</string>
+    <string translatable="false" name="snackbar_empty_share">Share is empty</string>
+    <string translatable="false" name="snackbar_delete_vault_success">Vault deleted</string>
+    <string translatable="false" name="snackbar_delete_vault_error">Vault not deleted</string>
 </resources>

@@ -15,7 +15,7 @@ import me.proton.core.network.domain.ApiResult
 import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toResult
-import me.proton.pass.data.api.PasswordManagerApi
+import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import javax.inject.Inject

@@ -14,7 +14,14 @@ interface ShareRepository {
         vault: NewVault
     ): Result<Share>
 
+    suspend fun deleteVault(
+        userId: UserId,
+        shareId: ShareId
+    ): Result<Unit>
+
     suspend fun refreshShares(userId: UserId): Result<List<Share>>
+
     fun observeShares(userId: SessionUserId): Flow<Result<List<Share>>>
+
     suspend fun getById(userId: UserId, shareId: ShareId): Result<Share?>
 }

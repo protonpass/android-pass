@@ -1,13 +1,13 @@
 package proton.android.pass.data.impl.remote
 
-import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
-import proton.android.pass.data.impl.responses.ItemKeyData
-import proton.android.pass.data.impl.responses.VaultKeyData
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.toResult
-import me.proton.pass.data.api.PasswordManagerApi
+import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
+import proton.android.pass.data.impl.responses.ItemKeyData
+import proton.android.pass.data.impl.responses.VaultKeyData
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 

@@ -1,5 +1,6 @@
-package me.proton.pass.data.api
+package proton.android.pass.data.impl.api
 
+import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
@@ -10,6 +11,7 @@ import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
 import proton.android.pass.data.impl.responses.CreateItemResponse
 import proton.android.pass.data.impl.responses.CreateVaultResponse
+import proton.android.pass.data.impl.responses.DeleteVaultResponse
 import proton.android.pass.data.impl.responses.GetAliasOptionsResponse
 import proton.android.pass.data.impl.responses.GetEventsResponse
 import proton.android.pass.data.impl.responses.GetItemsResponse
@@ -20,8 +22,8 @@ import proton.android.pass.data.impl.responses.GetVaultKeysResponse
 import proton.android.pass.data.impl.responses.LastEventIdResponse
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.responses.UpdateLastUsedTimeResponse
-import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.HTTP
 import retrofit2.http.POST
@@ -35,6 +37,9 @@ internal const val PREFIX = "pass/v1"
 interface PasswordManagerApi : BaseRetrofitApi {
     @POST("$PREFIX/vault")
     suspend fun createVault(@Body request: CreateVaultRequest): CreateVaultResponse
+
+    @DELETE("$PREFIX/vault/{shareId}")
+    suspend fun deleteVault(@Path("shareId") shareId: String): DeleteVaultResponse
 
     @GET("$PREFIX/share")
     suspend fun getShares(): GetSharesResponse

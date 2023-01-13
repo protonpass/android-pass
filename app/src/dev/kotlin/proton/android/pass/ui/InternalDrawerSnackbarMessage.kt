@@ -11,5 +11,8 @@ enum class InternalDrawerSnackbarMessage(
     override val isClipboard: Boolean = false
 ): SnackbarMessage {
     PreferencesCleared(R.string.snackbar_preferences_cleared_success, SnackbarType.SUCCESS),
-    PreferencesClearError(R.string.snackbar_preferences_cleared_error, SnackbarType.ERROR)
+    PreferencesClearError(R.string.snackbar_preferences_cleared_error, SnackbarType.ERROR),
+    EmptyShareError(R.string.snackbar_empty_share, SnackbarType.ERROR),
+    DeleteVaultSuccess(R.string.snackbar_delete_vault_success, SnackbarType.SUCCESS),
+    DeleteVaultError(R.string.snackbar_delete_vault_error, SnackbarType.ERROR)
 }

@@ -246,7 +246,8 @@ object TestPGPCrypto : PGPCrypto {
         plainText: String,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime
+        time: VerificationTime,
+        trimTrailingSpaces: Boolean
     ): Long? {
         throw IllegalStateException("This method should not be called")
     }
@@ -291,14 +292,19 @@ object TestPGPCrypto : PGPCrypto {
         throw IllegalStateException("This method should not be called")
     }
 
-    override fun signText(plainText: String, unlockedKey: Unarmored): Signature {
+    override fun signText(
+        plainText: String,
+        unlockedKey: Unarmored,
+        trimTrailingSpaces: Boolean
+    ): Signature {
         throw IllegalStateException("This method should not be called")
     }
 
     override fun signTextEncrypted(
         plainText: String,
         unlockedKey: Unarmored,
-        encryptionKeys: List<Armored>
+        encryptionKeys: List<Armored>,
+        trimTrailingSpaces: Boolean
     ): EncryptedSignature {
         throw IllegalStateException("This method should not be called")
     }
@@ -361,7 +367,8 @@ object TestPGPCrypto : PGPCrypto {
         plainText: String,
         signature: Armored,
         publicKey: Armored,
-        time: VerificationTime
+        time: VerificationTime,
+        trimTrailingSpaces: Boolean
     ): Boolean {
         throw IllegalStateException("This method should not be called")
     }
@@ -371,7 +378,8 @@ object TestPGPCrypto : PGPCrypto {
         encryptedSignature: EncryptedSignature,
         privateKey: Unarmored,
         publicKeys: List<Armored>,
-        time: VerificationTime
+        time: VerificationTime,
+        trimTrailingSpaces: Boolean
     ): Boolean {
         throw IllegalStateException("This method should not be called")
     }

@@ -3,13 +3,22 @@ package proton.android.pass.data.impl.autofill
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.Some
-import proton.android.pass.data.api.UrlSanitizer
+import proton.android.pass.data.api.url.UrlSanitizer
 import proton.pass.domain.Item
 import proton.pass.domain.ItemType
+import javax.inject.Inject
 
-object SuggestionItemFilterer {
-
+interface SuggestionItemFilterer {
     fun filter(
+        items: List<Item>,
+        packageName: Option<String>,
+        url: Option<String>
+    ): List<Item>
+}
+
+class SuggestionItemFiltererImpl @Inject constructor() : SuggestionItemFilterer {
+
+    override fun filter(
         items: List<Item>,
         packageName: Option<String>,
         url: Option<String>
@@ -43,8 +52,18 @@ object SuggestionItemFilterer {
         }
         val loginDomains = login.websites.map { UrlSanitizer.getDomain(it) }
 
-        return loginDomains.any {
-            it is Result.Success && it.data == urlDomain
+        return isDomainMatch(urlDomain, loginDomains)
+    }
+
+    private fun isDomainMatch(urlDomain: String, itemDomains: List<Result<String>>): Boolean {
+        val successfullySanitized = itemDomains
+            .filterIsInstance<Result.Success<String>>()
+            .map { it.data }
+
+
+
+        return successfullySanitized.any {
+            it == urlDomain
         }
     }
 }

@@ -1,6 +1,7 @@
 package proton.android.pass.data.impl.autofill
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.some
@@ -8,7 +9,14 @@ import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestItemType
 import proton.pass.domain.Item
 
-class SuggestionItemFiltererTest {
+class SuggestionItemFiltererImplTest {
+
+    private lateinit var instance: SuggestionItemFiltererImpl
+
+    @Before
+    fun setup() {
+        instance = SuggestionItemFiltererImpl()
+    }
 
     @Test
     fun `given an item with an allowed package name should return the suggested element`() {
@@ -25,7 +33,7 @@ class SuggestionItemFiltererTest {
             )
         )
 
-        val res = SuggestionItemFilterer.filter(items, packageName.some(), None)
+        val res = instance.filter(items, packageName.some(), None)
         assertThat(res).isEqualTo(listOf(firstItem))
     }
 
@@ -37,7 +45,7 @@ class SuggestionItemFiltererTest {
         )
         val items = listOf(item)
 
-        val res = SuggestionItemFilterer.filter(items, "my.incorrect.package.name".some(), None)
+        val res = instance.filter(items, "my.incorrect.package.name".some(), None)
         assertThat(res).isEqualTo(emptyList<Item>())
     }
 
@@ -50,7 +58,7 @@ class SuggestionItemFiltererTest {
             TestItem.create(TestItemType.login(websites = listOf("${website}2")))
         )
 
-        val res = SuggestionItemFilterer.filter(items, None, website.some())
+        val res = instance.filter(items, None, website.some())
         assertThat(res).isEqualTo(listOf(firstItem))
     }
 
@@ -61,7 +69,7 @@ class SuggestionItemFiltererTest {
             TestItem.create(TestItemType.login(websites = listOf(domain)))
         )
 
-        val res = SuggestionItemFilterer.filter(items, None, "${domain}2".some())
+        val res = instance.filter(items, None, "${domain}2".some())
         assertThat(res).isEqualTo(emptyList<Item>())
     }
 
@@ -72,7 +80,7 @@ class SuggestionItemFiltererTest {
         val item = TestItem.create(itemType)
         val items = listOf(item)
 
-        val res = SuggestionItemFilterer.filter(items, None, baseDomain.some())
+        val res = instance.filter(items, None, baseDomain.some())
         assertThat(res).isEqualTo(listOf(item))
     }
 }

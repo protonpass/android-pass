@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.service.autofill.FillContext
-import proton.android.pass.data.api.UrlSanitizer
+import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Result

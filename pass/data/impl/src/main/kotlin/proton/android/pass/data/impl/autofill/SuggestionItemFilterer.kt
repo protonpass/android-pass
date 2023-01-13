@@ -3,6 +3,8 @@ package proton.android.pass.data.impl.autofill
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.Some
+import proton.android.pass.data.api.url.HostInfo
+import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.pass.domain.Item
 import proton.pass.domain.ItemType
@@ -16,7 +18,9 @@ interface SuggestionItemFilterer {
     ): List<Item>
 }
 
-class SuggestionItemFiltererImpl @Inject constructor() : SuggestionItemFilterer {
+class SuggestionItemFiltererImpl @Inject constructor(
+    private val hostParser: HostParser
+) : SuggestionItemFilterer {
 
     override fun filter(
         items: List<Item>,
@@ -59,11 +63,29 @@ class SuggestionItemFiltererImpl @Inject constructor() : SuggestionItemFilterer 
         val successfullySanitized = itemDomains
             .filterIsInstance<Result.Success<String>>()
             .map { it.data }
+        val parsedItemDomains = successfullySanitized
+            .map { hostParser.parse(it) }
+            .filterIsInstance<Result.Success<HostInfo>>()
+            .map { it.data }
 
+        val parsedDomain = when (val parsed = hostParser.parse(urlDomain)) {
+            is Result.Success -> parsed.data
+            else -> return false
+        }
 
-
-        return successfullySanitized.any {
-            it == urlDomain
+        return parsedItemDomains.any {
+            when (it) {
+                is HostInfo.Ip -> when (parsedDomain) {
+                    is HostInfo.Ip -> it.ip == parsedDomain.ip
+                    else -> false
+                }
+                is HostInfo.Host -> when (parsedDomain) {
+                    is HostInfo.Host -> {
+                        parsedDomain.tld == it.tld && parsedDomain.domain == it.domain
+                    }
+                    else -> false
+                }
+            }
         }
     }
 }

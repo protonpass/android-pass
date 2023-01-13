@@ -42,6 +42,7 @@ dependencies {
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.featureCreateItem.impl)
+    implementation(projects.pass.featureHome.impl)
 
     testImplementation(libs.androidx.compose.ui)
     testImplementation(libs.androidx.compose.uiTooling)

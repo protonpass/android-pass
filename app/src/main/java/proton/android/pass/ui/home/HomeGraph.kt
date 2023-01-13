@@ -4,10 +4,10 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.pass.featurehome.impl.HomeFilterMode
+import proton.android.pass.pass.featurehome.impl.HomeScreenNavigation
+import proton.android.pass.pass.featurehome.impl.NavHome
 import proton.android.pass.ui.navigation.AppNavItem
-import proton.android.pass.presentation.home.HomeFilterMode
-import proton.android.pass.presentation.home.HomeScreenNavigation
-import proton.android.pass.presentation.home.NavHome
 
 @OptIn(
     ExperimentalAnimationApi::class

@@ -10,7 +10,7 @@ sealed interface HostInfo {
         val tld: Option<String>
     ) : HostInfo
 
-    class Ip : HostInfo
+    data class Ip(val ip: String) : HostInfo
 }
 
 interface HostParser {

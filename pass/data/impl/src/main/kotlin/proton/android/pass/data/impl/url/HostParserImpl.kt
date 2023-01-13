@@ -2,7 +2,6 @@ package proton.android.pass.data.impl.url
 
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
@@ -49,7 +48,10 @@ class HostParserImpl @Inject constructor(
         return Result.Success(hostWithoutTld(parts))
     }
 
-    private fun handleDomainWithSinglePart(domain: String, publicSuffixes: Set<String>): Result<HostInfo.Host> =
+    private fun handleDomainWithSinglePart(
+        domain: String,
+        publicSuffixes: Set<String>
+    ): Result<HostInfo.Host> =
         if (publicSuffixes.contains(domain)) {
             Result.Error(IllegalArgumentException("host is a TLD"))
         } else {
@@ -68,15 +70,14 @@ class HostParserImpl @Inject constructor(
             // It means that we have no subdomain, as the part 0 is the domain
             None
         } else {
-            // We have at least 1 subdomain portion
-            var portions = 0
-            val builder = StringBuilder()
-            for (i in 0 until tldStartingPart - 1) {
-                if (portions > 0) builder.append('.')
-                builder.append(parts[i])
-                portions++
-            }
-            Some(builder.toString())
+            buildString {
+                var portions = 0
+                for (i in 0 until tldStartingPart - 1) {
+                    if (portions > 0) append('.')
+                    append(parts[i])
+                    portions++
+                }
+            }.some()
         }
 
 
@@ -96,17 +97,18 @@ class HostParserImpl @Inject constructor(
         val tld = parts.last()
 
         val hostInfo = if (parts.size > 2) {
-            var portions = 0
-            val builder = StringBuilder()
-            for (i in 0 until parts.size - 2) {
-                if (portions > 0) builder.append('.')
-                builder.append(parts[i])
-                portions++
+            val subdomain = buildString {
+                var portions = 0
+                for (i in 0 until parts.size - 2) {
+                    if (portions > 0) append('.')
+                    append(parts[i])
+                    portions++
+                }
             }
 
 
             HostInfo.Host(
-                subdomain = builder.toString().some(),
+                subdomain = subdomain.some(),
                 domain = parts[parts.size - 2],
                 tld = tld.some()
             )
@@ -122,17 +124,15 @@ class HostParserImpl @Inject constructor(
         return hostInfo
     }
 
-    private fun stringFromParts(parts: List<String>, startingFrom: Int): String {
-        val builder = StringBuilder()
+    private fun stringFromParts(parts: List<String>, startingFrom: Int): String = buildString {
         var portions = 0
         for (i in startingFrom until parts.size) {
-            if (portions > 0) builder.append('.')
-            builder.append(parts[i])
+            if (portions > 0) append('.')
+            append(parts[i])
             portions++
         }
-
-        return builder.toString()
     }
+
 
     private fun isIp(domain: String): Boolean = ipRegex.matches(domain)
 

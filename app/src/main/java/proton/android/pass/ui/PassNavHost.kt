@@ -17,13 +17,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmSignOutDialog
 import proton.android.pass.navigation.api.AppNavigator
-import proton.android.pass.ui.navigation.AppNavItem
-import proton.android.pass.ui.navigation.appGraph
-import proton.android.pass.presentation.home.HomeFilterMode
+import proton.android.pass.pass.featurehome.impl.HomeFilterMode
 import proton.android.pass.presentation.navigation.CoreNavigation
 import proton.android.pass.presentation.navigation.drawer.DrawerUiState
 import proton.android.pass.presentation.navigation.drawer.ModalNavigationDrawer
 import proton.android.pass.presentation.navigation.drawer.NavDrawerNavigation
+import proton.android.pass.ui.navigation.AppNavItem
+import proton.android.pass.ui.navigation.appGraph
 
 @OptIn(
     ExperimentalAnimationApi::class,

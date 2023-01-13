@@ -12,25 +12,25 @@ class GetPublicSuffixListImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : GetPublicSuffixList {
 
-    private var suffixes: List<String> = emptyList()
+    private var suffixes: Set<String> = emptySet()
 
-    override fun invoke(): List<String> {
+    override fun invoke(): Set<String> {
         if (suffixes.isEmpty()) {
             suffixes = loadSuffixes()
         }
         return suffixes
     }
 
-    private fun loadSuffixes(): List<String> =
+    private fun loadSuffixes(): Set<String> =
         try {
             val contents = context.resources
                 .openRawResource(R.raw.public_suffix_list)
                 .bufferedReader()
                 .use { it.readText() }
-            contents.lines()
+            contents.lines().toHashSet()
         } catch (e: IOException) {
             PassLogger.e(TAG, e, "Error reading public_suffix_list")
-            emptyList()
+            emptySet()
         }
 
     companion object {

@@ -1,4 +1,4 @@
-package proton.android.pass.data.api
+package proton.android.pass.data.api.url
 
 import proton.android.pass.common.api.Result
 import java.net.URI

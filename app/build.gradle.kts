@@ -257,6 +257,7 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.featureCreateItem.impl)
+    implementation(projects.pass.featureHome.impl)
     implementation(projects.pass.log.api)
     implementation(projects.pass.log.impl)
     implementation(projects.pass.navigation.api)

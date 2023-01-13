@@ -29,6 +29,8 @@ import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
+import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
+import proton.android.pass.data.impl.autofill.SuggestionItemFiltererImpl
 import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import proton.android.pass.data.impl.usecases.CreateAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemImpl
@@ -55,6 +57,7 @@ import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 
+@Suppress("TooManyFunctions")
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class DataUseCaseModule {
@@ -135,5 +138,8 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetPublicSuffixList(impl: GetPublicSuffixListImpl): GetPublicSuffixList
+
+    @Binds
+    abstract fun bindSuggestionItemFilterer(impl: SuggestionItemFiltererImpl): SuggestionItemFilterer
 }
 

@@ -4,7 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import proton.android.pass.data.api.UrlSanitizer
+import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess

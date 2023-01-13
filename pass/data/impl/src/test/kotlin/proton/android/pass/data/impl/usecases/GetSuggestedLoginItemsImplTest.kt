@@ -13,6 +13,7 @@ import proton.android.pass.common.api.Result
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
+import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.android.pass.test.domain.TestItem
@@ -39,6 +40,10 @@ class FakeSuggestionItemFilterer : SuggestionItemFilterer {
     ): List<Item> = items.filter { filter.invoke(it) }
 }
 
+class FakeSuggestionSorter : SuggestionSorter {
+    override fun sort(items: List<Item>, url: Option<String>): List<Item> = items
+}
+
 @RunWith(JUnit4::class)
 class GetSuggestedLoginItemsImplTest {
 
@@ -55,7 +60,8 @@ class GetSuggestedLoginItemsImplTest {
         filter = FakeSuggestionItemFilterer()
         getSuggestedLoginItems = GetSuggestedLoginItemsImpl(
             observeActiveItems,
-            filter
+            filter,
+            FakeSuggestionSorter()
         )
     }
 

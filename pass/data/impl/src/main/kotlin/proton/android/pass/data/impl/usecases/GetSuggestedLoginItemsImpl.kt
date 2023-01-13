@@ -15,7 +15,8 @@ import javax.inject.Inject
 
 class GetSuggestedLoginItemsImpl @Inject constructor(
     private val observeActiveItems: ObserveActiveItems,
-    private val suggestionItemFilter: SuggestionItemFilterer
+    private val suggestionItemFilter: SuggestionItemFilterer,
+    private val suggestionSorter: SuggestionSorter
 ) : GetSuggestedLoginItems {
     override fun invoke(
         packageName: Option<String>,
@@ -25,6 +26,6 @@ class GetSuggestedLoginItemsImpl @Inject constructor(
             .map { result ->
                 result
                     .map { items -> suggestionItemFilter.filter(items, packageName, url) }
-                    .map { suggestions -> SuggestionSorter.sort(suggestions, url) }
+                    .map { suggestions -> suggestionSorter.sort(suggestions, url) }
             }
 }

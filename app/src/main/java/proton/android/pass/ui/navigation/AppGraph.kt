@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.AppNavigator
+import proton.android.pass.pass.featurehome.impl.HomeFilterMode
+import proton.android.pass.pass.featurehome.impl.HomeScreenNavigation
 import proton.android.pass.ui.auth.authGraph
 import proton.android.pass.ui.create.alias.createAliasGraph
 import proton.android.pass.ui.create.alias.updateAliasGraph
@@ -22,8 +24,6 @@ import proton.android.pass.ui.settings.settingsGraph
 import proton.android.pass.ui.trash.trashGraph
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
-import proton.android.pass.presentation.home.HomeFilterMode
-import proton.android.pass.presentation.home.HomeScreenNavigation
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi

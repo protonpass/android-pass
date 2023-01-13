@@ -2,10 +2,6 @@
 <resources>
     <string name="title_app">App</string>
     <string name="title_help">Help</string>
-    <string name="title_all_items">All items</string>
-    <string name="title_all_logins">All logins</string>
-    <string name="title_all_aliases">All aliases</string>
-    <string name="title_all_notes">All notes</string>
     <string name="title_settings">Settings</string>
     <string name="title_sign_out">Sign out</string>
     <string name="title_trash">Trash</string>
@@ -21,7 +17,6 @@
     <string name="navigation_text_more">More</string>
 
     <!-- TopBar -->
-    <string name="action_search">Search</string>
     <string name="action_save">Save</string>
     <string name="action_remove">Remove</string>
 
@@ -43,29 +38,6 @@
     <string name="alert_confirm_restore_all_title">Restore all items?</string>
     <string name="alert_confirm_restore_all_message">Are you sure you want to restore all the trashed items?</string>
 
-    <!-- Home -->
-    <string name="placeholder_item_search">Login, alias or note</string>
-    <string name="sorting_bottomsheet_title">Sorting</string>
-    <string name="sort_by_name">Sort by name</string>
-    <string name="sort_by_type">Sort by type</string>
-    <string name="action_login">Login</string>
-    <string name="action_alias">Alias</string>
-    <string name="action_note">Note</string>
-    <string name="action_password">Password</string>
-    <string name="empty_list_home_subtitle">Create a new item</string>
-    <string name="error_observing_items">Error observing items</string>
-    <string name="error_observing_share">Error observing share</string>
-    <string name="error_refreshing">Error performing refresh</string>
-    <string name="error_clearing_trash">Error clearing trash</string>
-    <string name="error_restoring_items">Error restoring items</string>
-    <string name="error_deleting_item">Error deleting item</string>
-    <string name="home_snackbar_login_moved_to_trash">Login moved to trash</string>
-    <string name="home_snackbar_alias_moved_to_trash">Alias moved to trash</string>
-    <string name="home_snackbar_note_moved_to_trash">Note moved to trash</string>
-
-    <string name="home_autofill_banner_title">Log in to apps instantly ›</string>
-    <string name="home_autofill_banner_text">Let Proton Pass fill in login details for you.\nNo typing or copy-paste required</string>
-
     <!-- Trash -->
     <string name="trash_empty_list_title">Trash empty</string>
     <string name="trash_empty_list_message">Deleted items will be moved here first</string>
@@ -73,6 +45,12 @@
     <string name="bottomsheet_restore_all_items">Restore all items</string>
     <string name="bottomsheet_delete_permanently">Delete permanently</string>
     <string name="bottomsheet_empty_trash">Empty trash</string>
+
+    <string name="trash_error_observing_items">Error observing items</string>
+    <string name="trash_error_refreshing">Error performing refresh</string>
+    <string name="trash_error_clearing_trash">Error clearing trash</string>
+    <string name="trash_error_restoring_items">Error restoring items</string>
+    <string name="trash_error_deleting_item">Error deleting item</string>
 
     <!-- Detail -->
     <string name="detail_init_error">Could not initialise the element</string>
@@ -127,20 +105,6 @@
     <string name="settings_force_sync_hint">Download all your items again to make sure you are in sync</string>
     <string name="settings_force_sync_success">Your items are now in sync</string>
     <string name="settings_force_sync_error">Error performing sync</string>
-
-    <!-- Create item bottomsheet -->
-    <string name="item_type_login_description">Add login details for an app or site</string>
-    <string name="item_type_alias_description">Get an email alias to use on new apps</string>
-    <string name="item_type_note_description">Jot down a PIN, code, or note to self</string>
-    <string name="item_type_password_description">Generate a secure password</string>
-
-    <!-- Common bottomsheet -->
-    <string name="bottomsheet_copy_password">Copy password</string>
-    <string name="bottomsheet_copy_username">Copy username</string>
-    <string name="bottomsheet_copy_alias">Copy email address</string>
-    <string name="bottomsheet_copy_note">Copy note</string>
-    <string name="bottomsheet_edit">Edit</string>
-    <string name="bottomsheet_move_to_trash">Move to trash</string>
 
     <!-- OnBoarding -->
     <string name="on_boarding_autofill_content">Let Proton Pass fill in login details for you. No typing or copy-paste required.</string>

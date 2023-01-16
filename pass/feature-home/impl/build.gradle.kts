@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.core.presentation.compose)
     implementation(libs.core.user.domain)
     implementation(libs.kotlinx.collections)
+    implementation(libs.kotlinx.datetime)
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)

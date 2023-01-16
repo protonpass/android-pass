@@ -5,4 +5,6 @@ plugins {
 dependencies {
     api(libs.core.cryptoCommon)
     api(libs.core.key.domain)
+
+    implementation(libs.kotlinx.datetime)
 }

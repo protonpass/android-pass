@@ -22,6 +22,7 @@ dependencies {
     api(libs.androidx.compose.ui)
     api(libs.androidx.compose.uiToolingPreview)
 
+    implementation(libs.kotlinx.datetime)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.crypto.api)

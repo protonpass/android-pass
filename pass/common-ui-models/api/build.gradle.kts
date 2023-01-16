@@ -5,4 +5,6 @@ plugins {
 dependencies {
     api(projects.pass.domain)
     api(projects.pass.protos)
+
+    implementation(libs.kotlinx.datetime)
 }

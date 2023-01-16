@@ -53,6 +53,7 @@ timber = "5.0.1"
 kotlin = "1.7.20"
 collections = "0.3.5"
 coroutines = "1.6.4"
+datetime = "0.4.0"
 serializationJson = "1.4.1"
 # Sentry
 sentry = "6.5.0"
@@ -200,6 +201,7 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 # Kotlinx
 kotlinx-collections = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "collections" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "datetime" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationJson" }
 
 # Material

@@ -41,6 +41,7 @@ dependencies {
     compileOnly(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
 
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.key)
     implementation(libs.core.user)

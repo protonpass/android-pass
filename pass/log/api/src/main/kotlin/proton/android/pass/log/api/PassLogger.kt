@@ -15,6 +15,7 @@ object PassLogger : Logger {
     override fun i(tag: String, e: Throwable, message: String) = Timber.tag(tag).i(e, message)
     fun w(tag: String, e: Throwable) = Timber.tag(tag).w(e)
     fun w(tag: String, e: Throwable, message: String) = Timber.tag(tag).w(e, message)
+    fun w(tag: String, message: String) = Timber.tag(tag).w(message)
     override fun e(tag: String, e: Throwable) = Timber.tag(tag).e(e)
     override fun e(tag: String, e: Throwable, message: String) {
         if (e is ApiException) {

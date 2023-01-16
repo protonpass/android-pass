@@ -42,7 +42,7 @@ private fun sortingItemList(
     selectedSortingType: SortingType,
     onSortingTypeSelected: (SortingType) -> Unit
 ): ImmutableList<BottomSheetItem> =
-    SortingType.values()
+    listOf(SortingType.ByModificationDate, SortingType.ByName, SortingType.ByItemType)
         .map {
             object : BottomSheetItem {
                 override val title: @Composable () -> Unit

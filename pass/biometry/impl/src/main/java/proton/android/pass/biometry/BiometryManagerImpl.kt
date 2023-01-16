@@ -10,11 +10,11 @@ import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Some
 import proton.android.pass.biometry.extensions.from
 import proton.android.pass.biometry.implementation.R
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
+import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class BiometryManagerImpl @Inject constructor(
@@ -23,7 +23,10 @@ class BiometryManagerImpl @Inject constructor(
 
     override fun getBiometryStatus(): BiometryStatus =
         when (val res = canAuthenticate()) {
-            BiometryResult.Success -> BiometryStatus.CanAuthenticate
+            BiometryResult.Success -> {
+                PassLogger.i(TAG, "Biometry")
+                BiometryStatus.CanAuthenticate
+            }
             is BiometryResult.FailedToStart -> when (res.cause) {
                 BiometryStartupError.NoneEnrolled -> BiometryStatus.NotEnrolled
                 else -> BiometryStatus.NotAvailable
@@ -74,13 +77,14 @@ class BiometryManagerImpl @Inject constructor(
                 callback
             )
             else -> {
-                PassLogger.i(TAG, "Context is not FragmentActivity")
+                PassLogger.w(TAG, "Context is not FragmentActivity")
                 trySend(BiometryResult.FailedToStart(BiometryStartupError.Unknown))
                 close()
                 return@channelFlow
             }
         }
 
+        PassLogger.i(TAG, "Starting biometry authentication")
         prompt.authenticate(getPromptInfo(ctx))
         awaitClose()
     }
@@ -106,8 +110,10 @@ class BiometryManagerImpl @Inject constructor(
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q ||
             Build.VERSION.SDK_INT == Build.VERSION_CODES.P
         ) {
+            PassLogger.i(TAG, "Allowed authenticators: AUTHENTICATORS_P_OR_Q")
             AUTHENTICATORS_P_OR_Q
         } else {
+            PassLogger.i(TAG, "Allowed authenticators: AUTHENTICATORS_NOT_P_NOT_Q")
             AUTHENTICATORS_NOT_P_NOT_Q
         }
 

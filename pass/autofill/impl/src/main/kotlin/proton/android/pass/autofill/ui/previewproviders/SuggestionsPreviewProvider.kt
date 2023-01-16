@@ -1,6 +1,7 @@
 package proton.android.pass.autofill.ui.previewproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import kotlinx.datetime.Clock
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -25,6 +26,7 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<List<ItemUiModel>> {
                 username = username,
                 password = "",
                 websites = emptyList()
-            )
+            ),
+            modificationTime = Clock.System.now()
         )
 }

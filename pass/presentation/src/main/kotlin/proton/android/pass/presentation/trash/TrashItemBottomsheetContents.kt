@@ -11,6 +11,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.Clock
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.pass.presentation.R
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
@@ -21,12 +25,9 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
-import me.proton.pass.presentation.R
 
 @ExperimentalMaterialApi
 @Composable
@@ -120,7 +121,8 @@ fun TrashItemBottomSheetContentsPreview(
                     shareId = ShareId(id = ""),
                     name = "My Alias",
                     note = "Note",
-                    itemType = ItemType.Alias("alias.email@proton.me")
+                    itemType = ItemType.Alias("alias.email@proton.me"),
+                    modificationTime = Clock.System.now()
                 ),
                 {},
                 {}

@@ -2,15 +2,16 @@ package proton.android.pass.autofill.ui.previewproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
-import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import kotlinx.datetime.Clock
 import proton.android.pass.autofill.ui.autofill.select.ItemClickedEvent
 import proton.android.pass.autofill.ui.autofill.select.SearchUiState
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListItems
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListUiState
 import proton.android.pass.autofill.ui.autofill.select.SelectItemUiState
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
+import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
@@ -69,6 +70,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
         note = "Note content",
         itemType = ItemType.Note(
             "Some very very long test that should be ellipsized as we type"
-        )
+        ),
+        modificationTime = Clock.System.now()
     )
 }

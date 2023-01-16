@@ -37,7 +37,10 @@ class AuthViewModel @Inject constructor(
         )
 
     fun init(context: ContextHolder) = viewModelScope.launch {
-        when (biometryManager.getBiometryStatus()) {
+        val status = biometryManager.getBiometryStatus()
+        PassLogger.i(TAG, "BiometryStatus: $status")
+
+        when (status) {
             BiometryStatus.CanAuthenticate -> {
                 val biometricLockState = preferenceRepository.getBiometricLockState().first()
                 if (biometricLockState == BiometricLockState.Disabled) {
@@ -60,12 +63,14 @@ class AuthViewModel @Inject constructor(
         PassLogger.i(TAG, "Launching Biometry")
         biometryManager.launch(context)
             .map { result ->
+                PassLogger.i(TAG, "Biometry result: $result")
                 when (result) {
                     BiometryResult.Success -> {
                         preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
                         _state.update { AuthStatus.Success }
                     }
                     is BiometryResult.Error -> {
+                        PassLogger.w(TAG, "BiometryResult=Error: cause ${result.cause}")
                         when (result.cause) {
                             BiometryAuthError.Canceled -> _state.update { AuthStatus.Canceled }
                             BiometryAuthError.UserCanceled -> _state.update { AuthStatus.Canceled }
@@ -77,7 +82,6 @@ class AuthViewModel @Inject constructor(
                     BiometryResult.Failed -> { }
                     is BiometryResult.FailedToStart -> _state.update { AuthStatus.Failed }
                 }
-                PassLogger.i(TAG, "Biometry result: $result")
             }
             .collect {}
     }

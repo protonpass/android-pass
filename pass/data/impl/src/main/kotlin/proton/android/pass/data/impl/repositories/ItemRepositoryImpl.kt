@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Instant
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.CryptoException
@@ -878,7 +879,8 @@ class ItemRepositoryImpl @Inject constructor(
             title = entity.encryptedTitle,
             note = entity.encryptedNote,
             content = entity.encryptedContent,
-            allowedPackageNames = entity.allowedApps(encryptionContext)
+            allowedPackageNames = entity.allowedApps(encryptionContext),
+            modificationTime = Instant.fromEpochSeconds(entity.modifyTime)
         )
 
     companion object {

@@ -1,5 +1,6 @@
 package proton.android.pass.crypto.impl.usecases
 
+import kotlinx.datetime.Instant
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.crypto.api.error.KeyNotFound
@@ -118,7 +119,8 @@ class OpenItemImpl @Inject constructor(
                 content = encrypt(decryptedContents),
                 itemType = ItemType.fromParsed(this, decoded, aliasEmail = response.aliasEmail),
                 allowedPackageNames = decoded.platformSpecific.android.allowedAppsList
-                    .map { it.packageName }
+                    .map { it.packageName },
+                modificationTime = Instant.fromEpochSeconds(response.modifyTime)
             )
         }
     }

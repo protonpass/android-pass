@@ -1,15 +1,16 @@
 package proton.android.pass.test.domain
 
+import kotlinx.datetime.Clock
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
+import proton.android.pass.test.TestUtils.randomString
+import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
-import proton.android.pass.test.TestUtils.randomString
-import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import kotlin.random.Random
 
 object TestItem {
@@ -29,7 +30,8 @@ object TestItem {
             title = keyStoreCrypto?.let { title.encrypt(it) } ?: title,
             note = keyStoreCrypto?.let { note.encrypt(it) } ?: note,
             content = EncryptedByteArray(byteArrayOf()),
-            allowedPackageNames = allowedPackageNames
+            allowedPackageNames = allowedPackageNames,
+            modificationTime = Clock.System.now()
         )
     }
 
@@ -59,7 +61,8 @@ object TestItem {
             title = TestKeyStoreCrypto.encrypt(titleParam),
             note = TestKeyStoreCrypto.encrypt(noteParam),
             content = itemContent,
-            allowedPackageNames = emptyList()
+            allowedPackageNames = emptyList(),
+            modificationTime = Clock.System.now()
         )
     }
 }

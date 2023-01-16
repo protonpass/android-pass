@@ -3,29 +3,29 @@ package proton.android.pass.featurecreateitem.impl.login
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import proton.android.pass.common.api.Result
+import proton.android.pass.commonui.api.itemName
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestObserveActiveShare
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
-import proton.android.pass.commonui.api.itemName
-import proton.pass.domain.ShareId
+import proton.android.pass.featurecreateitem.impl.ItemSavedState
+import proton.android.pass.featurecreateitem.impl.login.CreateUpdateLoginUiState.Companion.Initial
+import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestAccountManager
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.android.pass.test.domain.TestItem
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.featurecreateitem.impl.ItemSavedState
-import proton.android.pass.featurecreateitem.impl.login.CreateUpdateLoginUiState.Companion.Initial
-import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
+import proton.pass.domain.ShareId
 
 internal class CreateLoginViewModelTest {
 
@@ -98,7 +98,8 @@ internal class CreateLoginViewModelTest {
                                 shareId = item.shareId,
                                 name = item.itemName(TestEncryptionContext),
                                 note = TestEncryptionContext.decrypt(item.note),
-                                itemType = item.itemType
+                                itemType = item.itemType,
+                                modificationTime = item.modificationTime
                             )
                         )
                     )

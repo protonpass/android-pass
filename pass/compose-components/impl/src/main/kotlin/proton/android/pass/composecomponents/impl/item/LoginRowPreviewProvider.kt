@@ -1,6 +1,7 @@
 package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import kotlinx.datetime.Clock
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -57,7 +58,8 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
                         username = username,
                         password = "",
                         websites = websites
-                    )
+                    ),
+                    modificationTime = Clock.System.now()
                 ),
                 highlight = highlight
             )

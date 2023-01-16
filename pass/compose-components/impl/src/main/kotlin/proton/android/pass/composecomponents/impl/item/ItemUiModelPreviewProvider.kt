@@ -1,6 +1,7 @@
 package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import kotlinx.datetime.Clock
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -16,7 +17,8 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 note = "Note content",
                 itemType = ItemType.Note(
                     "Some very very long test that should be ellipsized as we type"
-                )
+                ),
+                modificationTime = Clock.System.now()
             ),
             ItemUiModel(
                 id = ItemId("123"),
@@ -29,7 +31,8 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 Another line
                 At some point this gets ellipsized
                     """.trimIndent()
-                )
+                ),
+                modificationTime = Clock.System.now()
             )
         )
 }

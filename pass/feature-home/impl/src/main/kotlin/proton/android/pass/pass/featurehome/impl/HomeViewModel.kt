@@ -96,7 +96,7 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(IsRefreshingState.NotRefreshing)
 
     private val sortingTypeState: MutableStateFlow<SortingType> =
-        MutableStateFlow(SortingType.ByName)
+        MutableStateFlow(SortingType.ByModificationDate)
 
     private val activeShare: StateFlow<Result<ShareId?>> = observeActiveShare()
         .stateIn(
@@ -122,6 +122,7 @@ class HomeViewModel @Inject constructor(
         when (sortingType) {
             SortingType.ByName -> result.map { list -> list.sortByTitle() }
             SortingType.ByItemType -> result.map { list -> list.sortByItemType() }
+            SortingType.ByModificationDate -> result.map { list -> list.sortByModificationTime() }
         }
     }
         .distinctUntilChanged()
@@ -319,6 +320,9 @@ class HomeViewModel @Inject constructor(
             .toSortedMap()
             .map { it.value }
             .flatten()
+
+    private fun List<ItemUiModel>.sortByModificationTime() =
+        sortedBy { it.modificationTime }.reversed()
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

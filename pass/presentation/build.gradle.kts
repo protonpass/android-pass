@@ -94,6 +94,7 @@ dependencies {
     implementation(libs.core.userSettings)
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.collections)
+    implementation(libs.kotlinx.datetime)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

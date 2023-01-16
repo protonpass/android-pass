@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

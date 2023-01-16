@@ -19,6 +19,7 @@ android {
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.coroutines.test)
+    implementation(libs.kotlinx.datetime)
 
     api(libs.androidx.lifecycle.viewmodel.savedstate)
     api(libs.core.account.domain)

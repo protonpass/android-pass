@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.kotlinx.collections)
+    implementation(libs.kotlinx.datetime)
 
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.commonUi.api)

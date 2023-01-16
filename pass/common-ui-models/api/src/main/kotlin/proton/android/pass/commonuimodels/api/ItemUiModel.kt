@@ -1,5 +1,6 @@
 package proton.android.pass.commonuimodels.api
 
+import kotlinx.datetime.Instant
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
@@ -9,5 +10,6 @@ data class ItemUiModel(
     val shareId: ShareId,
     val name: String,
     val note: String,
-    val itemType: ItemType
+    val itemType: ItemType,
+    val modificationTime: Instant
 )

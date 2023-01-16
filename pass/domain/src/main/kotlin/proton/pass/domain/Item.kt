@@ -1,5 +1,6 @@
 package proton.pass.domain
 
+import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 
@@ -13,5 +14,6 @@ data class Item(
     val title: EncryptedString,
     val note: EncryptedString,
     val content: EncryptedByteArray,
-    val allowedPackageNames: List<String>
+    val allowedPackageNames: List<String>,
+    val modificationTime: Instant
 )

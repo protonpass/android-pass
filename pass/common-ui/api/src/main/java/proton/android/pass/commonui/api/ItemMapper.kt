@@ -10,7 +10,8 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel =
         shareId = shareId,
         name = context.decrypt(title),
         note = context.decrypt(note),
-        itemType = itemType
+        itemType = itemType,
+        modificationTime = modificationTime
     )
 
 fun Item.itemName(context: EncryptionContext): String =

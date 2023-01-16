@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.Clock
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -83,7 +84,8 @@ fun AliasOptionsBottomSheetContentsPreview(
                     shareId = ShareId(id = ""),
                     name = "My Alias",
                     note = "Note content",
-                    itemType = ItemType.Alias("alias.email@proton.me")
+                    itemType = ItemType.Alias("alias.email@proton.me"),
+                    modificationTime = Clock.System.now()
                 ),
                 onCopyAlias = {},
                 onEdit = { _, _ -> },

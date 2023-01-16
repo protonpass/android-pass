@@ -1,5 +1,6 @@
 package proton.android.pass.presentation.components.model
 
+import kotlinx.datetime.Clock
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -17,7 +18,8 @@ object TestItemUiModel {
             shareId = ShareId(id = "share-id"),
             itemType = itemType,
             name = title,
-            note = note
+            note = note,
+            modificationTime = Clock.System.now()
         )
     }
 }

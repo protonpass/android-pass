@@ -21,13 +21,14 @@ import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveActiveShare
+import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
-import proton.android.pass.data.api.usecases.ObserveShares
 import proton.android.pass.data.api.usecases.ObserveTrashedItems
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshShares
 import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.data.api.usecases.UpdateActiveShare
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -51,14 +52,15 @@ import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedLoginItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
 import proton.android.pass.data.impl.usecases.ObserveActiveItemsImpl
-import proton.android.pass.data.impl.usecases.ObserveActiveShareImpl
+import proton.android.pass.data.impl.usecases.ObserveActiveShareIdImpl
+import proton.android.pass.data.impl.usecases.ObserveAllSharesImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
-import proton.android.pass.data.impl.usecases.ObserveSharesImpl
 import proton.android.pass.data.impl.usecases.ObserveTrashedItemsImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshSharesImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
+import proton.android.pass.data.impl.usecases.UpdateActiveShareImpl
 import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
@@ -108,16 +110,19 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveActiveItems(impl: ObserveActiveItemsImpl): ObserveActiveItems
 
     @Binds
-    abstract fun bindObserveActiveShare(impl: ObserveActiveShareImpl): ObserveActiveShare
+    abstract fun bindObserveActiveShare(impl: ObserveActiveShareIdImpl): ObserveActiveShare
 
     @Binds
     abstract fun bindObserveCurrentUser(impl: ObserveCurrentUserImpl): ObserveCurrentUser
 
     @Binds
+    abstract fun bindUpdateActiveShare(impl: UpdateActiveShareImpl): UpdateActiveShare
+
+    @Binds
     abstract fun bindObserveItems(impl: ObserveItemsImpl): ObserveItems
 
     @Binds
-    abstract fun bindObserveShares(impl: ObserveSharesImpl): ObserveShares
+    abstract fun bindObserveShares(impl: ObserveAllSharesImpl): ObserveAllShares
 
     @Binds
     abstract fun bindObserveTrashedItems(impl: ObserveTrashedItemsImpl): ObserveTrashedItems

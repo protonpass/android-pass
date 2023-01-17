@@ -691,7 +691,7 @@ class ItemRepositoryImpl @Inject constructor(
     ): Result<Unit> {
         val shareIds: List<Share> = when (shareSelection) {
             is ShareSelection.AllShares -> {
-                when (val result = shareRepository.observeShares(userAddress.userId).first()) {
+                when (val result = shareRepository.observeAllShares(userAddress.userId).first()) {
                     is Result.Error -> return Result.Error(result.exception)
                     Result.Loading -> return Result.Loading
                     is Result.Success -> result.data

@@ -3,8 +3,8 @@ package proton.android.pass.data.impl.db.dao
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.data.impl.db.entities.ShareEntity
 import me.proton.core.data.room.db.BaseDao
+import proton.android.pass.data.impl.db.entities.ShareEntity
 
 @Dao
 abstract class SharesDao : BaseDao<ShareEntity>() {

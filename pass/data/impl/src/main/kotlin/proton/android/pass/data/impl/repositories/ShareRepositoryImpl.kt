@@ -2,6 +2,7 @@ package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
@@ -23,6 +24,7 @@ import proton.android.pass.crypto.api.error.InvalidAddressSignature
 import proton.android.pass.crypto.api.error.KeyNotFound
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.ReadKey
+import proton.android.pass.data.api.errors.CannotDeleteCurrentVaultError
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.VaultItemKeyList
 import proton.android.pass.data.api.repositories.VaultKeyRepository
@@ -90,6 +92,7 @@ class ShareRepositoryImpl @Inject constructor(
         val responseAsEntity =
             shareResponseToEntity(userAddress, createVaultResult.data, listOf(vaultKey))
         val entityResult: Result<ShareEntity> = database.inTransaction {
+
             localShareDataSource.upsertShares(listOf(responseAsEntity))
 
             val reencryptedEntityResult: Result<ShareEntity> =
@@ -114,14 +117,32 @@ class ShareRepositoryImpl @Inject constructor(
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId): Result<Unit> =
         withContext(Dispatchers.IO) {
-            remoteShareDataSource.deleteVault(userId, shareId)
-                .map { localShareDataSource.deleteShare(shareId) }
-                .map { }
+            database.inTransaction {
+                val currentSelectedShare: ShareEntity =
+                    localShareDataSource.getSelectedSharesForUser(userId = userId).first()
+                        .first()
+                if (currentSelectedShare.id == shareId.id)
+                    return@inTransaction Result.Error(CannotDeleteCurrentVaultError())
+                remoteShareDataSource.deleteVault(userId, shareId)
+                    .map { localShareDataSource.deleteShare(shareId) }
+                    .map { }
+            }
         }
 
-    override fun observeShares(userId: UserId): Flow<Result<List<Share>>> =
-        localShareDataSource.getAllSharesForUser(userId)
-            .map { Result.Success(it) }
+    override suspend fun selectVault(userId: UserId, shareId: ShareId): Result<Unit> =
+        withContext(Dispatchers.IO) {
+            localShareDataSource.updateSelectedShare(shareId)
+            Result.Success(Unit)
+        }
+
+    override fun observeAllShares(userId: SessionUserId): Flow<Result<List<Share>>> =
+        localShareDataSource.getAllSharesForUser(userId).toShare(userId)
+
+    override fun observeSelectedShares(userId: SessionUserId): Flow<Result<List<Share>>> =
+        localShareDataSource.getSelectedSharesForUser(userId).toShare(userId)
+
+    private fun Flow<List<ShareEntity>>.toShare(userId: SessionUserId): Flow<Result<List<Share>>> =
+        this.map { Result.Success(it) }
             .mapLatest { sharesResult ->
                 if (sharesResult.data.isEmpty()) return@mapLatest Result.Success(emptyList<Share>())
                 shareEntitiesToShares(userId, sharesResult.data)
@@ -266,12 +287,12 @@ class ShareRepositoryImpl @Inject constructor(
         // the database, the vaultKey fetching would store them into the database and the shareId FK
         // would fail, so we first store the share without the reencryption, fetch the vaultKeys, and
         // then we reencrypt the data
-        val entities: List<ShareResponseEntity> = shares.map {
-            val signingKey = SigningKey(readKey(it.signingKey, isPrimary = true))
+        val entities: List<ShareResponseEntity> = shares.map { shareResponse ->
+            val signingKey = SigningKey(readKey(shareResponse.signingKey, isPrimary = true))
             val vaultKeysResult = vaultKeyRepository.getVaultKeys(
-                userAddress,
-                ShareId(it.shareId),
-                signingKey,
+                userAddress = userAddress,
+                shareId = ShareId(shareResponse.shareId),
+                signingKey = signingKey,
                 shouldStoreLocally = false
             )
             when (vaultKeysResult) {
@@ -279,7 +300,10 @@ class ShareRepositoryImpl @Inject constructor(
                 Result.Loading -> return Result.Loading
                 is Result.Success -> Unit
             }
-            ShareResponseEntity(it, shareResponseToEntity(userAddress, it, vaultKeysResult.data))
+            ShareResponseEntity(
+                response = shareResponse,
+                entity = shareResponseToEntity(userAddress, shareResponse, vaultKeysResult.data)
+            )
         }
 
         return database.inTransaction {

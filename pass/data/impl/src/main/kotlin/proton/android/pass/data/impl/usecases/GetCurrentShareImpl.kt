@@ -13,7 +13,7 @@ class GetCurrentShareImpl @Inject constructor(
     private val sharesRepository: ShareRepository
 ) : GetCurrentShare {
     override suspend operator fun invoke(userId: UserId): Result<List<Share>> =
-        sharesRepository.observeShares(userId)
+        sharesRepository.observeAllShares(userId)
             .filterNotNull()
             .firstOrNull()
             ?: Result.Error()

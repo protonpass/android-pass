@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -41,8 +43,6 @@ import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveActiveShare
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.TrashItem
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasCopied
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.LoginMovedToTrash
@@ -53,8 +53,11 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveShareErro
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.PasswordCopied
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.UsernameCopied
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareSelection
 import javax.inject.Inject
 
 @ExperimentalMaterialApi
@@ -105,15 +108,24 @@ class HomeViewModel @Inject constructor(
             initialValue = Result.Loading
         )
 
-    private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = observeActiveItems()
-        .map { itemResult ->
-            itemResult.map { list ->
-                encryptionContextProvider.withEncryptionContext {
-                    list.map { it.toUiModel(this@withEncryptionContext) }
+    private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = activeShare
+        .flatMapLatest { shareResult ->
+            when (shareResult) {
+                Result.Loading -> flowOf(Result.Loading)
+                is Result.Error -> flowOf(Result.Error(shareResult.exception))
+                is Result.Success -> {
+                    observeActiveItems(shareSelection = ShareSelection.Share(shareResult.data))
+                        .map { itemResult ->
+                            itemResult.map { list ->
+                                encryptionContextProvider.withEncryptionContext {
+                                    list.map { it.toUiModel(this@withEncryptionContext) }
+                                }
+                            }
+                        }
+                        .distinctUntilChanged()
                 }
             }
         }
-        .distinctUntilChanged()
 
     private val sortedListItemFlow: Flow<Result<List<ItemUiModel>>> = combine(
         activeItemUIModelFlow,

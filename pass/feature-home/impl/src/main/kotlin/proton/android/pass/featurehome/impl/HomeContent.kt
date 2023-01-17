@@ -1,4 +1,4 @@
-package proton.android.pass.pass.featurehome.impl
+package proton.android.pass.featurehome.impl
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Spacer

@@ -1,4 +1,4 @@
-package proton.android.pass.pass.featurehome.impl
+package proton.android.pass.featurehome.impl
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat

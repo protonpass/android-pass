@@ -162,6 +162,6 @@ open class ModuleGenTask : DefaultTask() {
     }
 
     companion object {
-        const val ROOT_PACKAGE_NAME = "proton.android.pass"
+        const val ROOT_PACKAGE_NAME = "proton.android"
     }
 }

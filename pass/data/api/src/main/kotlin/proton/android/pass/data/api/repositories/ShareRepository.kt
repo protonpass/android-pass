@@ -19,9 +19,16 @@ interface ShareRepository {
         shareId: ShareId
     ): Result<Unit>
 
+    suspend fun selectVault(
+        userId: UserId,
+        shareId: ShareId
+    ): Result<Unit>
+
     suspend fun refreshShares(userId: UserId): Result<List<Share>>
 
-    fun observeShares(userId: SessionUserId): Flow<Result<List<Share>>>
+    fun observeAllShares(userId: SessionUserId): Flow<Result<List<Share>>>
+
+    fun observeSelectedShares(userId: SessionUserId): Flow<Result<List<Share>>>
 
     suspend fun getById(userId: UserId, shareId: ShareId): Result<Share?>
 }

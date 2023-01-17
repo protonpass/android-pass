@@ -4,6 +4,8 @@ import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.dao.ItemKeysDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
+import proton.android.pass.data.impl.db.dao.SelectedShareDao
+import proton.android.pass.data.impl.db.dao.ShareSelectedShareDao
 import proton.android.pass.data.impl.db.dao.SharesDao
 import proton.android.pass.data.impl.db.dao.VaultKeysDao
 
@@ -25,6 +27,14 @@ class TestPassDatabase : PassDatabase {
     }
 
     override fun passEventsDao(): PassEventsDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun selectedShareDao(): SelectedShareDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun shareSelectedShareDao(): ShareSelectedShareDao {
         throw IllegalStateException("This method should not be called")
     }
 

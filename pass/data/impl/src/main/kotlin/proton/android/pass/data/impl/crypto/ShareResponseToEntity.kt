@@ -1,13 +1,13 @@
 package proton.android.pass.data.impl.crypto
 
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.key.domain.entity.key.PublicKey
+import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.crypto.api.usecases.VerifyAcceptanceSignature
 import proton.android.pass.crypto.api.usecases.VerifyShareContentSignatures
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.extensions.toCrypto
 import proton.android.pass.data.impl.responses.ShareResponse
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.user.domain.entity.UserAddress
 import proton.pass.domain.key.VaultKey
 import javax.inject.Inject
 

@@ -5,9 +5,9 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.featurehome.impl.HomeFilterMode
 import proton.android.pass.featurehome.impl.HomeScreenNavigation
+import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.auth.authGraph
 import proton.android.pass.ui.create.alias.createAliasGraph
 import proton.android.pass.ui.create.alias.updateAliasGraph
@@ -22,6 +22,7 @@ import proton.android.pass.ui.home.homeGraph
 import proton.android.pass.ui.onboarding.onBoardingGraph
 import proton.android.pass.ui.settings.settingsGraph
 import proton.android.pass.ui.trash.trashGraph
+import proton.android.pass.ui.vault.vaultGraph
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -55,6 +56,7 @@ fun NavGraphBuilder.appGraph(
     itemDetailGraph(appNavigator)
     authGraph(appNavigator, finishActivity)
     onBoardingGraph(appNavigator, finishActivity)
+    vaultGraph()
 }
 
 private fun createHomeScreenNavigation(appNavigator: AppNavigator): HomeScreenNavigation =

@@ -9,7 +9,8 @@ import proton.android.pass.ui.internal.InternalDrawerState
 fun InternalDrawer(
     modifier: Modifier = Modifier,
     drawerState: InternalDrawerState,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
+    onOpenVault: () -> Unit
 ) {
     content()
 }

@@ -21,7 +21,14 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.R
+import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.asResultWithoutLoading
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
@@ -37,17 +44,10 @@ import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.encrypt
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.asResultWithoutLoading
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
-import proton.pass.domain.Share
-import proton.pass.domain.entity.NewVault
 import proton.android.pass.presentation.navigation.drawer.DrawerUiState
 import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection
+import proton.pass.domain.Share
+import proton.pass.domain.entity.NewVault
 import javax.inject.Inject
 
 @HiltViewModel
@@ -93,12 +93,7 @@ class AppViewModel @Inject constructor(
                     flowOf(ItemCountSummary.Initial)
                 }
                 is Result.Success -> {
-                    val shareId = shareResult.data
-                    if (shareId != null) {
-                        itemRepository.observeItemCountSummary(userId, shareId)
-                    } else {
-                        flowOf(ItemCountSummary.Initial)
-                    }
+                    itemRepository.observeItemCountSummary(userId, shareResult.data)
                 }
             }
         }

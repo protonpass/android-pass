@@ -3,6 +3,7 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.emptyFlow
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Result
@@ -42,11 +43,17 @@ class TestShareRepository : ShareRepository {
     override suspend fun deleteVault(userId: UserId, shareId: ShareId): Result<Unit> =
         Result.Success(Unit)
 
+    override suspend fun selectVault(userId: UserId, shareId: ShareId): Result<Unit> =
+        Result.Success(Unit)
+
     override suspend fun refreshShares(userId: UserId): Result<List<Share>> =
         refreshSharesResult
 
-    override fun observeShares(userId: SessionUserId): Flow<Result<List<Share>>> =
+    override fun observeAllShares(userId: SessionUserId): Flow<Result<List<Share>>> =
         observeSharesFlow
+
+    override fun observeSelectedShares(userId: SessionUserId): Flow<Result<List<Share>>> =
+        emptyFlow()
 
     override suspend fun getById(userId: UserId, shareId: ShareId): Result<Share?> =
         getByIdResult

@@ -98,7 +98,7 @@ class HomeViewModel @Inject constructor(
     private val sortingTypeState: MutableStateFlow<SortingType> =
         MutableStateFlow(SortingType.ByModificationDate)
 
-    private val activeShare: StateFlow<Result<ShareId?>> = observeActiveShare()
+    private val activeShare: StateFlow<Result<ShareId>> = observeActiveShare()
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Lazily,

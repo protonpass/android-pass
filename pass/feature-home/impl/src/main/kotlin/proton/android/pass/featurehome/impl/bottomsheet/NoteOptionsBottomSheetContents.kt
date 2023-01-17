@@ -1,4 +1,4 @@
-package proton.android.pass.pass.featurehome.impl.bottomsheet
+package proton.android.pass.featurehome.impl.bottomsheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,36 +21,37 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
-import proton.android.pass.pass.featurehome.impl.R
+import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
+import proton.android.pass.featurehome.impl.R
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 @ExperimentalMaterialApi
 @Composable
-fun AliasOptionsBottomSheetContents(
+fun NoteOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
-    onCopyAlias: (String) -> Unit,
+    onCopyNote: (String) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit
 ) {
-    val itemType = itemUiModel.itemType as ItemType.Alias
+    val itemType = itemUiModel.itemType as ItemType.Note
     Column(modifier) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = {
+                val processedText = itemType.text.replace("\n", " ")
                 BottomSheetItemSubtitle(
-                    text = itemType.aliasEmail
+                    text = processedText
                 )
             },
-            icon = { AliasIcon() }
+            icon = { NoteIcon() }
         )
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = persistentListOf(
-                copyAlias(itemType.aliasEmail, onCopyAlias),
+                copyNote(itemType.text, onCopyNote),
                 edit(itemUiModel, onEdit),
                 moveToTrash(itemUiModel, onMoveToTrash)
             )
@@ -58,36 +59,36 @@ fun AliasOptionsBottomSheetContents(
     }
 }
 
-private fun copyAlias(aliasEmail: String, onCopyAlias: (String) -> Unit): BottomSheetItem =
+private fun copyNote(text: String, onCopyNote: (String) -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_note)) }
         override val subtitle: (@Composable () -> Unit)?
             get() = null
         override val icon: (@Composable () -> Unit)
             get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
         override val onClick: () -> Unit
-            get() = { onCopyAlias(aliasEmail) }
+            get() = { onCopyNote(text) }
     }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun AliasOptionsBottomSheetContentsPreview(
+fun NoteOptionsBottomSheetContentsPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            AliasOptionsBottomSheetContents(
+            NoteOptionsBottomSheetContents(
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
-                    name = "My Alias",
+                    name = "My Note",
                     note = "Note content",
-                    itemType = ItemType.Alias("alias.email@proton.me"),
+                    itemType = ItemType.Note("My note text"),
                     modificationTime = Clock.System.now()
                 ),
-                onCopyAlias = {},
+                onCopyNote = {},
                 onEdit = { _, _ -> },
                 onMoveToTrash = {}
             )

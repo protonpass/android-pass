@@ -1,4 +1,4 @@
-package proton.android.pass.pass.featurehome.impl.bottomsheet
+package proton.android.pass.featurehome.impl.bottomsheet
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -7,7 +7,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.pass.featurehome.impl.R
+import proton.android.pass.featurehome.impl.R
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 

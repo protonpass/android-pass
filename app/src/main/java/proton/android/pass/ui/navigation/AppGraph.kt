@@ -6,8 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.AppNavigator
-import proton.android.pass.pass.featurehome.impl.HomeFilterMode
-import proton.android.pass.pass.featurehome.impl.HomeScreenNavigation
+import proton.android.pass.featurehome.impl.HomeFilterMode
+import proton.android.pass.featurehome.impl.HomeScreenNavigation
 import proton.android.pass.ui.auth.authGraph
 import proton.android.pass.ui.create.alias.createAliasGraph
 import proton.android.pass.ui.create.alias.updateAliasGraph

@@ -1,4 +1,4 @@
-package proton.android.pass.pass.featurehome.impl.bottomsheet
+package proton.android.pass.featurehome.impl.bottomsheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,37 +21,38 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
-import proton.android.pass.pass.featurehome.impl.R
+import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
+import proton.android.pass.featurehome.impl.R
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 @ExperimentalMaterialApi
 @Composable
-fun NoteOptionsBottomSheetContents(
+fun LoginOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
-    onCopyNote: (String) -> Unit,
+    onCopyUsername: (String) -> Unit,
+    onCopyPassword: (String) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit
 ) {
-    val itemType = itemUiModel.itemType as ItemType.Note
+    val itemType = itemUiModel.itemType as ItemType.Login
     Column(modifier) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = {
-                val processedText = itemType.text.replace("\n", " ")
                 BottomSheetItemSubtitle(
-                    text = processedText
+                    text = itemType.username
                 )
             },
-            icon = { NoteIcon() }
+            icon = { LoginIcon() }
         )
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = persistentListOf(
-                copyNote(itemType.text, onCopyNote),
+                copyUsername(itemType.username, onCopyUsername),
+                copyPassword(itemType.password, onCopyPassword),
                 edit(itemUiModel, onEdit),
                 moveToTrash(itemUiModel, onMoveToTrash)
             )
@@ -59,36 +60,49 @@ fun NoteOptionsBottomSheetContents(
     }
 }
 
-private fun copyNote(text: String, onCopyNote: (String) -> Unit): BottomSheetItem =
+private fun copyUsername(username: String, onCopyUsername: (String) -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_note)) }
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_username)) }
         override val subtitle: (@Composable () -> Unit)?
             get() = null
         override val icon: (@Composable () -> Unit)
             get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
         override val onClick: () -> Unit
-            get() = { onCopyNote(text) }
+            get() = { onCopyUsername(username) }
+    }
+
+private fun copyPassword(password: String, onCopyPassword: (String) -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_password)) }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val icon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val onClick: () -> Unit
+            get() = { onCopyPassword(password) }
     }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun NoteOptionsBottomSheetContentsPreview(
+fun LoginOptionsBottomSheetContentsPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            NoteOptionsBottomSheetContents(
+            LoginOptionsBottomSheetContents(
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
-                    name = "My Note",
+                    name = "My Login",
                     note = "Note content",
-                    itemType = ItemType.Note("My note text"),
+                    itemType = ItemType.Login("My username", "My password", emptyList()),
                     modificationTime = Clock.System.now()
                 ),
-                onCopyNote = {},
+                onCopyUsername = {},
+                onCopyPassword = {},
                 onEdit = { _, _ -> },
                 onMoveToTrash = {}
             )

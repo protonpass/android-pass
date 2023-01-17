@@ -1,5 +1,6 @@
 package proton.android.pass.totp.impl
 
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.toOption
 import proton.android.pass.totp.api.MalformedOtpUri
@@ -33,50 +34,25 @@ object OtpUriParser {
         try {
             val parsed = URI(input)
             extractFields(parsed)
+        } catch (e: MalformedOtpUri) {
+            Result.Error(e)
         } catch (e: URISyntaxException) {
             Result.Error(MalformedOtpUri.InvalidUri(e))
         }
 
     @Suppress("ComplexMethod", "ReturnCount")
     private fun extractFields(parsed: URI): Result<TotpSpec> {
-        val scheme = parsed.scheme
-        if (scheme == null || scheme.isEmpty()) return Result.Error(MalformedOtpUri.MissingScheme)
-        if (scheme != SCHEME) return Result.Error(MalformedOtpUri.InvalidScheme(parsed.scheme))
+        validateScheme(parsed)
+        validateHost(parsed)
 
-        val host = parsed.host
-        if (host == null || host.isEmpty()) return Result.Error(MalformedOtpUri.MissingHost)
-        if (host != HOST) return Result.Error(MalformedOtpUri.InvalidHost(parsed.host))
-
-        if (parsed.path.isEmpty()) return Result.Error(MalformedOtpUri.MissingLabel)
-        val label = parsed.path.removePrefix("/")
-
+        val label = extractLabel(parsed)
         val parsedQuery = splitQuery(parsed.query)
 
-        val secretList =
-            parsedQuery[QUERY_SECRET] ?: return Result.Error(MalformedOtpUri.MissingSecret)
-        val secret = secretList.firstOrNull() ?: return Result.Error(MalformedOtpUri.MissingSecret)
-
-        val issuer = parsedQuery[QUERY_ISSUER]?.firstOrNull().toOption()
-
-        val algorithmString = parsedQuery[QUERY_ALGORITHM]?.firstOrNull() ?: DEFAULT_ALGORITHM
-        val algorithm = when (algorithmString) {
-            SHA1_ALGORITHM -> TotpAlgorithm.Sha1
-            SHA256_ALGORITHM -> TotpAlgorithm.Sha256
-            SHA512_ALGORITHM -> TotpAlgorithm.Sha512
-            else -> return Result.Error(MalformedOtpUri.InvalidAlgorithm(algorithmString))
-        }
-
-        val digitsString = parsedQuery[QUERY_DIGITS]?.firstOrNull() ?: DEFAULT_DIGITS
-        val digits = when (digitsString) {
-            "6" -> TotpDigits.Six
-            "8" -> TotpDigits.Eight
-            else -> return Result.Error(MalformedOtpUri.InvalidDigitCount(digitsString))
-        }
-
-        val periodString = parsedQuery[QUERY_PERIOD]?.firstOrNull() ?: DEFAULT_PERIOD
-        val period = periodString.toIntOrNull() ?: return Result.Error(
-            MalformedOtpUri.InvalidValidity(periodString)
-        )
+        val secret = extractSecret(parsedQuery)
+        val issuer = extractIssuer(parsedQuery)
+        val algorithm = extractAlgorithm(parsedQuery)
+        val digits = extractDigits(parsedQuery)
+        val period = extractPeriod(parsedQuery)
 
         val spec = TotpSpec(
             secret = secret,
@@ -87,6 +63,56 @@ object OtpUriParser {
             validPeriodSeconds = period
         )
         return Result.Success(spec)
+    }
+
+    private fun validateScheme(parsed: URI) {
+        val scheme = parsed.scheme
+        if (scheme == null || scheme.isEmpty()) throw MalformedOtpUri.MissingScheme
+        if (scheme != SCHEME) throw MalformedOtpUri.InvalidScheme(parsed.scheme)
+    }
+
+    private fun validateHost(parsed: URI) {
+        val host = parsed.host
+        if (host == null || host.isEmpty()) throw MalformedOtpUri.MissingHost
+        if (host != HOST) throw MalformedOtpUri.InvalidHost(parsed.host)
+    }
+
+    private fun extractLabel(parsed: URI): String {
+        if (parsed.path.isEmpty()) throw MalformedOtpUri.MissingLabel
+        return parsed.path.removePrefix("/")
+    }
+
+    private fun extractSecret(query: Map<String, List<String?>>): String {
+        val secretList = query[QUERY_SECRET] ?: throw MalformedOtpUri.MissingSecret
+        val secret = secretList.firstOrNull() ?: throw MalformedOtpUri.MissingSecret
+        return secret
+    }
+
+    private fun extractIssuer(query: Map<String, List<String?>>): Option<String> =
+        query[QUERY_ISSUER]?.firstOrNull().toOption()
+
+    private fun extractAlgorithm(query: Map<String, List<String?>>): TotpAlgorithm {
+        val algorithmString = query[QUERY_ALGORITHM]?.firstOrNull() ?: DEFAULT_ALGORITHM
+        return when (algorithmString) {
+            SHA1_ALGORITHM -> TotpAlgorithm.Sha1
+            SHA256_ALGORITHM -> TotpAlgorithm.Sha256
+            SHA512_ALGORITHM -> TotpAlgorithm.Sha512
+            else -> throw MalformedOtpUri.InvalidAlgorithm(algorithmString)
+        }
+    }
+
+    private fun extractDigits(query: Map<String, List<String?>>): TotpDigits {
+        val digitsString = query[QUERY_DIGITS]?.firstOrNull() ?: DEFAULT_DIGITS
+        return when (digitsString) {
+            "6" -> TotpDigits.Six
+            "8" -> TotpDigits.Eight
+            else -> throw MalformedOtpUri.InvalidDigitCount(digitsString)
+        }
+    }
+
+    private fun extractPeriod(query: Map<String, List<String?>>): Int {
+        val periodString = query[QUERY_PERIOD]?.firstOrNull() ?: DEFAULT_PERIOD
+        return periodString.toIntOrNull() ?: throw MalformedOtpUri.InvalidValidity(periodString)
     }
 
     private fun splitQuery(query: String): Map<String, List<String?>> {

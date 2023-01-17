@@ -26,9 +26,9 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
+import proton.android.pass.featurehome.impl.HomeFilterMode
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.network.api.NetworkStatus
-import proton.android.pass.featurehome.impl.HomeFilterMode
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.presentation.navigation.CoreNavigation
 import proton.android.pass.presentation.navigation.drawer.HomeSection
@@ -132,22 +132,31 @@ fun PassAppContent(
         scaffoldState = scaffoldState,
         snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
     ) { contentPadding ->
-        InternalDrawer(drawerState = internalDrawerState) {
-            Column(modifier = Modifier.padding(contentPadding)) {
-                PassNavHost(
-                    modifier = Modifier.weight(1f),
-                    drawerUiState = appUiState.drawerUiState,
-                    appNavigator = appNavigator,
-                    homeFilterMode = homeFilterState,
-                    navDrawerNavigation = navDrawerNavigation,
-                    coreNavigation = coreNavigation,
-                    finishActivity = finishActivity
-                )
+        InternalDrawer(
+            drawerState = internalDrawerState,
+            onOpenVault = {
+                coroutineScope.launch {
+                    internalDrawerState.close()
+                }
+                appNavigator.navigate(AppNavItem.VaultList)
+            },
+            content = {
+                Column(modifier = Modifier.padding(contentPadding)) {
+                    PassNavHost(
+                        modifier = Modifier.weight(1f),
+                        drawerUiState = appUiState.drawerUiState,
+                        appNavigator = appNavigator,
+                        homeFilterMode = homeFilterState,
+                        navDrawerNavigation = navDrawerNavigation,
+                        coreNavigation = coreNavigation,
+                        finishActivity = finishActivity
+                    )
 
-                AnimatedVisibility(visible = appUiState.networkStatus == NetworkStatus.Offline) {
-                    OfflineIndicator()
+                    AnimatedVisibility(visible = appUiState.networkStatus == NetworkStatus.Offline) {
+                        OfflineIndicator()
+                    }
                 }
             }
-        }
+        )
     }
 }

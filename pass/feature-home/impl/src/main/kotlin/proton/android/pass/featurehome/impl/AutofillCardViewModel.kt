@@ -1,4 +1,4 @@
-package proton.android.pass.pass.featurehome.impl
+package proton.android.pass.featurehome.impl
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

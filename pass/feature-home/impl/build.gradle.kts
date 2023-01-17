@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.pass.featurehome.impl"
+    namespace = "proton.android.pass.featurehome.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

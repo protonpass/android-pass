@@ -1,4 +1,4 @@
-package proton.android.pass.pass.featurehome.impl.bottomsheet
+package proton.android.pass.featurehome.impl.bottomsheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.ExperimentalMaterialApi
@@ -17,8 +17,8 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIco
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
-import proton.android.pass.pass.featurehome.impl.R
-import proton.android.pass.pass.featurehome.impl.SortingType
+import proton.android.pass.featurehome.impl.R
+import proton.android.pass.featurehome.impl.SortingType
 
 @ExperimentalMaterialApi
 @Composable

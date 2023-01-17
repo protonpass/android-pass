@@ -1,4 +1,4 @@
-package proton.android.pass.pass.featurehome.impl
+package proton.android.pass.featurehome.impl
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.ViewModel
@@ -43,16 +43,16 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
-import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.AliasCopied
-import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
-import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.LoginMovedToTrash
-import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.NoteCopied
-import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.NoteMovedToTrash
-import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsError
-import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.ObserveShareError
-import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.PasswordCopied
-import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
-import proton.android.pass.pass.featurehome.impl.HomeSnackbarMessage.UsernameCopied
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasCopied
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.LoginMovedToTrash
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteCopied
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteMovedToTrash
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveShareError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.PasswordCopied
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.UsernameCopied
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import javax.inject.Inject

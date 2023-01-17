@@ -4,9 +4,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.pass.featurehome.impl.HomeFilterMode
-import proton.android.pass.pass.featurehome.impl.HomeScreenNavigation
-import proton.android.pass.pass.featurehome.impl.NavHome
+import proton.android.pass.featurehome.impl.HomeFilterMode
+import proton.android.pass.featurehome.impl.HomeScreenNavigation
+import proton.android.pass.featurehome.impl.NavHome
 import proton.android.pass.ui.navigation.AppNavItem
 
 @OptIn(

@@ -1,4 +1,4 @@
-package proton.android.pass.pass.featurehome.impl
+package proton.android.pass.featurehome.impl
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.ExperimentalMaterialApi
@@ -19,10 +19,10 @@ import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
-import proton.android.pass.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
-import proton.android.pass.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
-import proton.android.pass.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
-import proton.android.pass.pass.featurehome.impl.bottomsheet.SortingBottomSheetContents
+import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
+import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
+import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
+import proton.android.pass.featurehome.impl.bottomsheet.SortingBottomSheetContents
 import proton.pass.domain.ItemType
 
 @OptIn(

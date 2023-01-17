@@ -17,7 +17,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmSignOutDialog
 import proton.android.pass.navigation.api.AppNavigator
-import proton.android.pass.pass.featurehome.impl.HomeFilterMode
+import proton.android.pass.featurehome.impl.HomeFilterMode
 import proton.android.pass.presentation.navigation.CoreNavigation
 import proton.android.pass.presentation.navigation.drawer.DrawerUiState
 import proton.android.pass.presentation.navigation.drawer.ModalNavigationDrawer

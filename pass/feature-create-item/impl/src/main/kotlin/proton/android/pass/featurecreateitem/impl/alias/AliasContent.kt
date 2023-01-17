@@ -14,12 +14,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
+import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankAlias
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.InvalidAliasContent
 import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.EmptyShareIdError
 import proton.android.pass.featurecreateitem.impl.alias.mailboxes.SelectMailboxesDialog
-import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -48,8 +48,7 @@ internal fun AliasContent(
     val scope = rememberCoroutineScope()
 
     val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        confirmStateChange = { false }
+        initialValue = ModalBottomSheetValue.Hidden
     )
 
     // If the BottomSheet is visible and the user presses back, dismiss the BottomSheet

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.pass.totp.fakes"
+    namespace = "proton.android.pass.totp.fakes"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {

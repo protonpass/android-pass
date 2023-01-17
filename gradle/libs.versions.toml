@@ -67,6 +67,8 @@ retrofit = "2.9.0"
 junit = "4.13.2"
 testParameterInjector = "1.10"
 truth = "1.1.3"
+# Turingcomplete
+onetimepassword = "2.4.0"
 
 [plugins]
 gradlePlugin-application = { id = "com.android.application", version.ref = "gradlePlugin-android" }
@@ -236,3 +238,6 @@ junit = { module = "junit:junit", version.ref = "junit" }
 kotlinTest = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 testParameterInjector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testParameterInjector" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
+
+# Turingcomplete
+onetimepassword = { module = "dev.turingcomplete:kotlin-onetimepassword", version.ref = "onetimepassword" }

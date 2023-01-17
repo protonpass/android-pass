@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="snackbar_empty_share">Share is empty</string>
+    <string name="snackbar_create_vault_success">Vault created</string>
+    <string name="snackbar_create_vault_error">Vault not created</string>
+    <string name="snackbar_delete_vault_success">Vault deleted</string>
+    <string name="snackbar_delete_vault_error">Vault not deleted</string>
+    <string name="snackbar_cannot_delete_current_vault_error">Cannot delete current vault</string>
+    <string name="snackbar_change_vault_success">Vault changed</string>
+    <string name="snackbar_change_vault_error">Vault not changed</string>
+</resources>

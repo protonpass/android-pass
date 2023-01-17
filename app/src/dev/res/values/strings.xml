@@ -4,12 +4,4 @@
 
     <string translatable="false" name="snackbar_preferences_cleared_success">Preferences cleared</string>
     <string translatable="false" name="snackbar_preferences_cleared_error">Error clearing preferences</string>
-    <string translatable="false" name="snackbar_empty_share">Share is empty</string>
-    <string translatable="false" name="snackbar_create_vault_success">Vault created</string>
-    <string translatable="false" name="snackbar_create_vault_error">Vault not created</string>
-    <string translatable="false" name="snackbar_delete_vault_success">Vault deleted</string>
-    <string translatable="false" name="snackbar_delete_vault_error">Vault not deleted</string>
-    <string translatable="false" name="snackbar_cannot_delete_current_vault_error">Cannot delete current vault</string>
-    <string translatable="false" name="snackbar_change_vault_success">Vault changed</string>
-    <string translatable="false" name="snackbar_change_vault_error">Vault not changed</string>
 </resources>

@@ -2,13 +2,13 @@ package proton.android.pass.ui.navigation
 
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.navArgument
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.OptionalNavArgId
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -60,6 +60,8 @@ sealed class AppNavItem(
     object Trash : AppNavItem("trash", isTopLevel = true)
 
     object Help : AppNavItem("help", isTopLevel = true)
+
+    object VaultList : AppNavItem("vault", isTopLevel = true)
 
     object CreateLogin : AppNavItem("createLogin", listOf(CommonNavArgId.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"

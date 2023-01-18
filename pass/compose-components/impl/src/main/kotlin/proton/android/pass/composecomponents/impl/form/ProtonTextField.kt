@@ -3,6 +3,7 @@ package proton.android.pass.composecomponents.impl.form
 import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -38,7 +39,8 @@ fun ProtonTextField(
     moveToNextOnEnter: Boolean = true,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     editable: Boolean = true,
-    isError: Boolean = false
+    isError: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
     val maxLines = if (singleLine) {
         1
@@ -83,6 +85,7 @@ fun ProtonTextField(
             onDone = { goToNextField() },
             onSend = { goToNextField() }
         ),
+        keyboardOptions = keyboardOptions,
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = ProtonTheme.colors.backgroundSecondary,
             focusedIndicatorColor = Color.Transparent,

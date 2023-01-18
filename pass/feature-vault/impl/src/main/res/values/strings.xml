@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="vault_list_top_bar_title">Vault list</string>
+    <string name="vault_create_top_bar_title">Create Vault</string>
+    <string name="vault_create_action_create">Create</string>
+    <string name="vault_create_form_title_label">Vault title</string>
+    <string name="vault_create_form_title_placeholder">Title</string>
+    <string name="vault_create_form_description_label">Vault description</string>
+    <string name="vault_create_form_description_placeholder">Description</string>
+
+
     <string name="snackbar_empty_share">Share is empty</string>
     <string name="snackbar_create_vault_success">Vault created</string>
     <string name="snackbar_create_vault_error">Vault not created</string>

@@ -62,6 +62,7 @@ sealed class AppNavItem(
     object Help : AppNavItem("help", isTopLevel = true)
 
     object VaultList : AppNavItem("vault", isTopLevel = true)
+    object CreateVault : AppNavItem("vault/new")
 
     object CreateLogin : AppNavItem("createLogin", listOf(CommonNavArgId.ShareId)) {
         fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"

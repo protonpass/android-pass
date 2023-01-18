@@ -80,7 +80,7 @@
 
     <string name="settings_authentication_section_title">Authentication</string>
     <string name="settings_authentication_preference_title">Fingerprint unlock</string>
-    <string name="settings_authentication_preference_description_enabled">Require Quickly and securely open the app with your fingerprint..</string>
+    <string name="settings_authentication_preference_description_enabled">Require Quickly and securely open the app with your fingerprint.</string>
     <string name="settings_authentication_preference_description_no_fingerprint">You cannot require your fingerprint for interacting with the app as there are no fingerprints registered on this device.</string>
 
     <string name="settings_app_section_title">App</string>
@@ -102,7 +102,7 @@
     <string name="settings_app_version_title">App version</string>
     <string name="settings_app_version_copied_to_clipboard">App version copied</string>
     <string name="settings_force_sync_title">Force sync</string>
-    <string name="settings_force_sync_hint">Download all your items again to make sure you are in sync</string>
+    <string name="settings_force_sync_hint">Download all your items again to make sure you are in sync.</string>
     <string name="settings_force_sync_success">Your items are now in sync</string>
     <string name="settings_force_sync_error">Error performing sync</string>
 

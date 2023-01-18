@@ -3,6 +3,7 @@ package proton.android.pass.composecomponents.impl.form
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -13,10 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import proton.android.pass.composecomponents.impl.R
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.caption
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun ProtonFormInput(
@@ -33,7 +34,8 @@ fun ProtonFormInput(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     editable: Boolean = true,
     isError: Boolean = false,
-    errorMessage: String = ""
+    errorMessage: String = "",
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
 ) {
     Column(modifier = modifier) {
         ProtonTextTitle(title)
@@ -49,7 +51,8 @@ fun ProtonFormInput(
                 .padding(top = 8.dp)
                 .fillMaxWidth(1.0f),
             editable = editable,
-            isError = isError
+            isError = isError,
+            keyboardOptions = keyboardOptions
         )
         if (isError) {
             Text(

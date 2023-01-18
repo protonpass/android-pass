@@ -50,3 +50,22 @@ private fun StringBuilder.appendLibraryDependency(): StringBuilder = append(
 """
         .trimIndent()
 )
+
+fun String.convertToProjectAccessor(): String {
+    val builder = StringBuilder()
+    var shouldCapitalizeNext = false
+    for (c in this) {
+        if (c == '-') {
+            shouldCapitalizeNext = true
+            continue
+        }
+
+        if (shouldCapitalizeNext) {
+            builder.append(c.toUpperCase())
+            shouldCapitalizeNext = false
+        } else {
+            builder.append(c)
+        }
+    }
+    return builder.toString()
+}

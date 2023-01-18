@@ -120,13 +120,14 @@ open class ModuleGenTask : DefaultTask() {
     ) {
         val dir = moduleList.joinToString("/")
         val subpackage = moduleList.joinToString(".")
+        val asProjectAccessor = subpackage.convertToProjectAccessor()
         configurationList
             .map { configuration ->
                 val lcConfiguration = configuration.name.toLowerCase(Locale.ROOT)
                 val stringBuilder = StringBuilder()
                 stringBuilder.appendConfiguration(configuration)
                 configuration to stringBuilder.toString()
-                    .replace("&s1", subpackage)
+                    .replace("&s1", asProjectAccessor)
                     .replace("&s2", "$ROOT_PACKAGE_NAME.$subpackage.$lcConfiguration")
             }
             .forEach { pair ->

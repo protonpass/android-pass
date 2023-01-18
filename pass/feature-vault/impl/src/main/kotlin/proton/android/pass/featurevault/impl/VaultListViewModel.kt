@@ -10,14 +10,12 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.encrypt
 import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.logError
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.data.api.errors.CannotDeleteCurrentVaultError
-import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.ObserveActiveShare
 import proton.android.pass.data.api.usecases.ObserveAllShares
@@ -25,24 +23,19 @@ import proton.android.pass.data.api.usecases.UpdateActiveShare
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CannotDeleteCurrentVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.ChangeVaultError
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.ChangeVaultSuccess
-import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CreateVaultError
-import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CreateVaultSuccess
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.DeleteVaultError
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.DeleteVaultSuccess
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.ShareId
-import proton.pass.domain.entity.NewVault
 import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
-import kotlin.random.Random
 
 @HiltViewModel
-class VaultViewModel @Inject constructor(
+class VaultListViewModel @Inject constructor(
     observeActiveShare: ObserveActiveShare,
     observeShares: ObserveAllShares,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val createVault: CreateVault,
     private val deleteVault: DeleteVault,
     private val updateActiveShare: UpdateActiveShare,
     private val cryptoContext: CryptoContext
@@ -86,22 +79,6 @@ class VaultViewModel @Inject constructor(
             .logError(PassLogger, TAG, "Change Vault Failed")
     }
 
-    fun onCreateVault() = viewModelScope.launch {
-        val id = Random.nextInt(MAX_ID)
-        val vault = NewVault(
-            name = "Personal-$id".encrypt(cryptoContext.keyStoreCrypto),
-            description = "Personal vault-$id".encrypt(cryptoContext.keyStoreCrypto)
-        )
-        createVault(vault = vault)
-            .onSuccess {
-                snackbarMessageRepository.emitSnackbarMessage(CreateVaultSuccess)
-            }
-            .onError {
-                snackbarMessageRepository.emitSnackbarMessage(CreateVaultError)
-            }
-            .logError(PassLogger, TAG, "Create Vault Failed")
-    }
-
     fun onDeleteVault(shareId: ShareId) = viewModelScope.launch {
         deleteVault(shareId)
             .onSuccess {
@@ -118,7 +95,6 @@ class VaultViewModel @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "InternalDrawerViewModel"
-        private const val MAX_ID = 10_000
+        private const val TAG = "VaultViewModel"
     }
 }

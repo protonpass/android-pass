@@ -44,7 +44,7 @@ private fun StringBuilder.appendAndroidLibraryPlugin(): StringBuilder = append(
 private fun StringBuilder.appendLibraryDependency(): StringBuilder = append(
     """
     dependencies {
-        implementation(project(":&s1:api"))
+        implementation(projects.&s1.api)
     }
     
 """

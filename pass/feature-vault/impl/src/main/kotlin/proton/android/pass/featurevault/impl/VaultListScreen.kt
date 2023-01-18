@@ -9,19 +9,21 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-fun VaultScreen(
+fun VaultListScreen(
     modifier: Modifier = Modifier,
-    viewModel: VaultViewModel = hiltViewModel()
+    viewModel: VaultListViewModel = hiltViewModel(),
+    onCreateVault: () -> Unit,
+    onEditVault: () -> Unit,
+    onUpClick: () -> Unit
 ) {
     val uiState by viewModel.shareUIState.collectAsStateWithLifecycle()
-    VaultContent(
+    VaultListContent(
         modifier = modifier,
         uiState = uiState,
-        onVaultCreate = { viewModel.onCreateVault() },
+        onVaultCreate = { onCreateVault() },
         onVaultSelect = viewModel::changeSelectedVault,
-        onVaultEdit = {
-            // navigate
-        },
-        onVaultDelete = viewModel::onDeleteVault
+        onVaultEdit = { onEditVault() },
+        onVaultDelete = viewModel::onDeleteVault,
+        onUpClick = onUpClick
     )
 }

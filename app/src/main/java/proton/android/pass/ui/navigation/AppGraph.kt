@@ -56,7 +56,7 @@ fun NavGraphBuilder.appGraph(
     itemDetailGraph(appNavigator)
     authGraph(appNavigator, finishActivity)
     onBoardingGraph(appNavigator, finishActivity)
-    vaultGraph()
+    vaultGraph(appNavigator)
 }
 
 private fun createHomeScreenNavigation(appNavigator: AppNavigator): HomeScreenNavigation =

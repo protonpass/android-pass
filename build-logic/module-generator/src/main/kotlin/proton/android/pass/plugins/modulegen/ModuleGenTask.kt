@@ -126,7 +126,7 @@ open class ModuleGenTask : DefaultTask() {
                 val stringBuilder = StringBuilder()
                 stringBuilder.appendConfiguration(configuration)
                 configuration to stringBuilder.toString()
-                    .replace("&s1", moduleList.joinToString(":"))
+                    .replace("&s1", subpackage)
                     .replace("&s2", "$ROOT_PACKAGE_NAME.$subpackage.$lcConfiguration")
             }
             .forEach { pair ->

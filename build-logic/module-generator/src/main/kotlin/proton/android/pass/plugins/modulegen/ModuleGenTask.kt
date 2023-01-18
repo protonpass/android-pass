@@ -120,6 +120,7 @@ open class ModuleGenTask : DefaultTask() {
     ) {
         val dir = moduleList.joinToString("/")
         val subpackage = moduleList.joinToString(".")
+        val subpackageWithoutHyphens = subpackage.replace("-", "")
         val asProjectAccessor = subpackage.convertToProjectAccessor()
         configurationList
             .map { configuration ->
@@ -128,7 +129,7 @@ open class ModuleGenTask : DefaultTask() {
                 stringBuilder.appendConfiguration(configuration)
                 configuration to stringBuilder.toString()
                     .replace("&s1", asProjectAccessor)
-                    .replace("&s2", "$ROOT_PACKAGE_NAME.$subpackage.$lcConfiguration")
+                    .replace("&s2", "$ROOT_PACKAGE_NAME.$subpackageWithoutHyphens.$lcConfiguration")
             }
             .forEach { pair ->
                 file("$dir/${pair.first.name.toLowerCase(Locale.ROOT)}/build.gradle.kts")

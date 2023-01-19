@@ -26,4 +26,5 @@
     <string name="vault_delete_dialog_migrate_action">Migrate</string>
     <string name="vault_delete_dialog_cancel_action">Cancel</string>
     <string name="vault_delete_dialog_delete_action">Delete</string>
+    <string name="vault_delete_bottomsheet_title">Vault to migrate to</string>
 </resources>

@@ -58,7 +58,7 @@ fun VaultListContent(
         sheetContent = {
             Text(
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                text = "Vault to migrate to",
+                text = stringResource(R.string.vault_delete_bottomsheet_title),
                 style = ProtonTheme.typography.headline
             )
             LazyColumn(

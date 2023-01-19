@@ -13,6 +13,7 @@ import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -66,16 +67,17 @@ class MigrateVaultImpl @Inject constructor(
         userId: UserId,
         origin: ShareId,
         dest: ShareId
-    ): Result<Unit> = result.map { items ->
-        shareRepository.getById(userId, dest)
-            .map { destShare: Share? ->
-                destShare ?: throw ShareNotAvailableError()
-                onDestinationVaultReceived(items, userId, destShare)
-            }
-            .map {
-                shareRepository.deleteVault(userId, origin)
-            }
-    }
+    ): Result<Unit> = result
+        .map { items ->
+            shareRepository.getById(userId, dest)
+                .flatMap { destShare: Share? ->
+                    destShare ?: throw ShareNotAvailableError()
+                    onDestinationVaultReceived(items, userId, destShare)
+                }
+        }
+        .map {
+            return shareRepository.deleteVault(userId, origin)
+        }
 
     private suspend fun onDestinationVaultReceived(
         items: List<Item>,

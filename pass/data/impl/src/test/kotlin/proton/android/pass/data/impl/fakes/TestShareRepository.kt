@@ -4,6 +4,7 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Result
@@ -19,7 +20,12 @@ class TestShareRepository : ShareRepository {
     private var observeSharesFlow = MutableSharedFlow<Result<List<Share>>>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
     )
-    private var getByIdResult: Result<Share?> = Result.Loading
+    private var deleteVaultFlow = MutableSharedFlow<Result<Unit>>(
+        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
+    )
+    private var getByIdResultFlow = MutableSharedFlow<Result<Share?>>(
+        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
+    )
 
     fun setCreateVaultResult(result: Result<Share>) {
         createVaultResult = result
@@ -29,8 +35,12 @@ class TestShareRepository : ShareRepository {
         refreshSharesResult = result
     }
 
+    fun setDeleteVaultResult(result: Result<Unit>) {
+        deleteVaultFlow.tryEmit(result)
+    }
+
     fun setGetByIdResult(result: Result<Share?>) {
-        getByIdResult = result
+        getByIdResultFlow.tryEmit(result)
     }
 
     fun emitObserveShares(value: Result<List<Share>>) {
@@ -41,7 +51,7 @@ class TestShareRepository : ShareRepository {
         createVaultResult
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId): Result<Unit> =
-        Result.Success(Unit)
+        deleteVaultFlow.first()
 
     override suspend fun selectVault(userId: UserId, shareId: ShareId): Result<Unit> =
         Result.Success(Unit)
@@ -56,5 +66,5 @@ class TestShareRepository : ShareRepository {
         emptyFlow()
 
     override suspend fun getById(userId: UserId, shareId: ShareId): Result<Share?> =
-        getByIdResult
+        getByIdResultFlow.first()
 }

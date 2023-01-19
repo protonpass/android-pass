@@ -9,6 +9,15 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.map
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -25,15 +34,6 @@ import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.Lo
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.LoginMovedToTrashError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.map
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
-import proton.android.pass.common.api.toOption
-import proton.android.pass.commonui.api.toUiModel
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -93,7 +93,8 @@ class UpdateLoginViewModel @Inject constructor(
                                     username = itemContents.username,
                                     password = decrypt(itemContents.password),
                                     websiteAddresses = websites,
-                                    note = decrypt(item.note)
+                                    note = decrypt(item.note),
+                                    packageNames = item.allowedPackageNames.toSet()
                                 )
                             }
                         }

@@ -1,13 +1,12 @@
 package proton.android.pass.crypto.fakes.usecases
 
+import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
-import me.proton.core.user.domain.entity.UserAddress
+import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.ItemContents
-import proton.pass.domain.entity.PackageName
 import proton.pass.domain.key.ItemKey
 import proton.pass.domain.key.VaultKey
-import proton.android.pass.test.crypto.TestKeyStoreCrypto
 
 class TestCreateItem : CreateItem {
 
@@ -21,8 +20,7 @@ class TestCreateItem : CreateItem {
         vaultKey: VaultKey,
         itemKey: ItemKey,
         userAddress: UserAddress,
-        itemContents: ItemContents,
-        packageName: PackageName?
+        itemContents: ItemContents
     ): EncryptedCreateItem = request ?: throw IllegalStateException("request is not set")
 
     companion object {

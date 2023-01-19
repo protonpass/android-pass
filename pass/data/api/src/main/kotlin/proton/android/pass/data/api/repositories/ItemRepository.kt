@@ -1,13 +1,13 @@
 package proton.android.pass.data.api.repositories
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.data.api.ItemCountSummary
-import proton.android.pass.data.api.PendingEventList
-import proton.android.pass.data.api.usecases.ItemTypeFilter
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Result
+import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.PendingEventList
+import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
@@ -22,8 +22,7 @@ interface ItemRepository {
     suspend fun createItem(
         userId: UserId,
         share: Share,
-        contents: ItemContents,
-        packageName: PackageName? = null
+        contents: ItemContents
     ): Result<Item>
     suspend fun createAlias(userId: UserId, share: Share, newAlias: NewAlias): Result<Item>
     suspend fun updateItem(

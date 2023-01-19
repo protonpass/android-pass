@@ -9,6 +9,25 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.entity.key.PublicKey
+import me.proton.core.key.domain.extension.publicKeyRing
+import me.proton.core.key.domain.repository.PublicAddressRepository
+import me.proton.core.key.domain.repository.Source
+import me.proton.core.user.domain.entity.AddressId
+import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.extension.primary
+import me.proton.core.user.domain.repository.UserAddressRepository
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.asResult
+import proton.android.pass.common.api.flatMap
+import proton.android.pass.common.api.map
+import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.CryptoException
@@ -43,25 +62,6 @@ import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.responses.ItemRevision
 import proton.android.pass.data.impl.util.TimeUtil
 import proton.android.pass.log.api.PassLogger
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.key.domain.extension.publicKeyRing
-import me.proton.core.key.domain.repository.PublicAddressRepository
-import me.proton.core.key.domain.repository.Source
-import me.proton.core.user.domain.entity.AddressId
-import me.proton.core.user.domain.entity.UserAddress
-import me.proton.core.user.domain.extension.primary
-import me.proton.core.user.domain.repository.UserAddressRepository
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.asResult
-import proton.android.pass.common.api.flatMap
-import proton.android.pass.common.api.map
-import proton.android.pass.common.api.transpose
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
@@ -100,8 +100,7 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun createItem(
         userId: UserId,
         share: Share,
-        contents: ItemContents,
-        packageName: PackageName?
+        contents: ItemContents
     ): Result<Item> = withContext(Dispatchers.IO) {
         withUserAddress(userId) { userAddress ->
             val result =
@@ -114,7 +113,7 @@ class ItemRepositoryImpl @Inject constructor(
             val (vaultKey, itemKey) = result.data
 
             val body = try {
-                createItem.create(vaultKey, itemKey, userAddress, contents, packageName)
+                createItem.create(vaultKey, itemKey, userAddress, contents)
             } catch (e: RuntimeException) {
                 PassLogger.w(TAG, e, "Error creating item")
                 return@withUserAddress Result.Error(e)

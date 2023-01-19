@@ -18,4 +18,12 @@
     <string name="snackbar_cannot_delete_current_vault_error">Cannot delete current vault</string>
     <string name="snackbar_change_vault_success">Vault changed</string>
     <string name="snackbar_change_vault_error">Vault not changed</string>
+    <string name="snackbar_migrate_vault_success">Vault migrated</string>
+    <string name="snackbar_migrate_vault_error">Vault not migrated</string>
+
+    <string name="vault_delete_dialog_title">Delete vault</string>
+    <string name="vault_delete_dialog_body">Do you want to permanently delete %1$s or migrate items to another vault?</string>
+    <string name="vault_delete_dialog_migrate_action">Migrate</string>
+    <string name="vault_delete_dialog_cancel_action">Cancel</string>
+    <string name="vault_delete_dialog_delete_action">Delete</string>
 </resources>

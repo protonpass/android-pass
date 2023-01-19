@@ -1,10 +1,9 @@
 package proton.android.pass.crypto.impl.extensions
 
 import proton.pass.domain.ItemContents
-import proton.pass.domain.entity.PackageName
 import proton_pass_item_v1.ItemV1
 
-fun ItemContents.serializeToProto(packageName: PackageName? = null): ItemV1.Item {
+fun ItemContents.serializeToProto(): ItemV1.Item {
     val builder = ItemV1.Item.newBuilder()
         .setMetadata(
             ItemV1.Metadata.newBuilder()
@@ -12,24 +11,23 @@ fun ItemContents.serializeToProto(packageName: PackageName? = null): ItemV1.Item
                 .setNote(note)
                 .build()
         )
-    if (packageName != null) {
-        builder.setPlatformSpecific(
-            ItemV1.PlatformSpecific.newBuilder()
-                .setAndroid(
-                    ItemV1.AndroidSpecific.newBuilder()
-                        .addAllowedApps(
-                            ItemV1.AllowedAndroidApp.newBuilder()
-                                .setPackageName(packageName.packageName)
-                                .build()
-                        )
-                        .build()
-                )
-                .build()
-        )
-    }
     val contentBuilder = ItemV1.Content.newBuilder()
     val content = when (this) {
         is ItemContents.Login -> {
+            if (packageNames.isNotEmpty()) {
+                val packageNameList = packageNames.map {
+                    ItemV1.AllowedAndroidApp.newBuilder()
+                        .setPackageName(it)
+                        .build()
+                }
+                builder.platformSpecific = ItemV1.PlatformSpecific.newBuilder()
+                    .setAndroid(
+                        ItemV1.AndroidSpecific.newBuilder()
+                            .addAllAllowedApps(packageNameList)
+                            .build()
+                    )
+                    .build()
+            }
             contentBuilder.setLogin(
                 ItemV1.ItemLogin.newBuilder()
                     .setUsername(username)

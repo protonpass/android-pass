@@ -18,6 +18,7 @@ import proton.android.pass.data.api.usecases.GetCurrentUserId
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveAccounts
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveActiveShare
@@ -50,6 +51,7 @@ import proton.android.pass.data.impl.usecases.GetCurrentUserIdImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedLoginItemsImpl
+import proton.android.pass.data.impl.usecases.MigrateVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
 import proton.android.pass.data.impl.usecases.ObserveActiveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveActiveShareIdImpl
@@ -84,6 +86,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindDeleteVault(impl: DeleteVaultImpl): DeleteVault
+
+    @Binds
+    abstract fun bindMigrateVault(impl: MigrateVaultImpl): MigrateVault
 
     @Binds
     abstract fun bindGetAddressById(impl: GetAddressByIdImpl): GetAddressById

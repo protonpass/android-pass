@@ -2,8 +2,8 @@ package proton.android.pass.featurecreateitem.impl.login
 
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.persistentListOf
-import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.common.api.Result
+import proton.android.pass.data.api.url.UrlSanitizer
 import proton.pass.domain.ItemContents
 
 @Immutable
@@ -12,6 +12,7 @@ data class LoginItem(
     val username: String,
     val password: String,
     val websiteAddresses: List<String>,
+    val packageNames: Set<String>,
     val note: String
 ) {
 
@@ -37,7 +38,8 @@ data class LoginItem(
             note = note,
             username = username,
             password = password,
-            urls = addresses
+            urls = addresses,
+            packageNames = packageNames
         )
     }
 
@@ -47,6 +49,7 @@ data class LoginItem(
             username = "",
             password = "",
             websiteAddresses = persistentListOf(""),
+            packageNames = emptySet(),
             note = ""
         )
     }

@@ -23,6 +23,9 @@ fun VaultListScreen(
         onVaultCreate = { onCreateVault() },
         onVaultSelect = viewModel::changeSelectedVault,
         onVaultEdit = { onEditVault() },
+        onVaultMigrate = { toDelete, toMigrateTo ->
+            viewModel.onMigrateVault(toDelete, toMigrateTo)
+        },
         onVaultDelete = viewModel::onDeleteVault,
         onUpClick = onUpClick
     )

@@ -1,8 +1,5 @@
 package proton.android.pass.crypto.impl.usecases
 
-import proton.android.pass.crypto.api.usecases.CreateItem
-import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
-import proton.android.pass.crypto.impl.extensions.serializeToProto
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.dataPacket
@@ -12,8 +9,10 @@ import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.signData
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.UserAddress
+import proton.android.pass.crypto.api.usecases.CreateItem
+import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
+import proton.android.pass.crypto.impl.extensions.serializeToProto
 import proton.pass.domain.ItemContents
-import proton.pass.domain.entity.PackageName
 import proton.pass.domain.key.ItemKey
 import proton.pass.domain.key.VaultKey
 import proton.pass.domain.key.publicKey
@@ -28,10 +27,9 @@ class CreateItemImpl @Inject constructor(
         vaultKey: VaultKey,
         itemKey: ItemKey,
         userAddress: UserAddress,
-        itemContents: ItemContents,
-        packageName: PackageName?
+        itemContents: ItemContents
     ): EncryptedCreateItem {
-        val serializedItem = itemContents.serializeToProto(packageName).toByteArray()
+        val serializedItem = itemContents.serializeToProto().toByteArray()
         val vaultKeyPublicKey = vaultKey.publicKey(cryptoContext)
 
         val (encryptedContents, vaultKeyPacket) = encryptContent(serializedItem, vaultKeyPublicKey)

@@ -32,14 +32,14 @@ fun VaultItem(
     modifier: Modifier = Modifier,
     share: ShareUiModel,
     isSelected: Boolean,
-    onVaultSelect: (ShareId) -> Unit,
-    onVaultEdit: (ShareId) -> Unit,
-    onVaultDelete: (ShareId) -> Unit
+    onVaultSelect: (ShareUiModel) -> Unit,
+    onVaultEdit: (ShareUiModel) -> Unit,
+    onVaultDelete: (ShareUiModel) -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onVaultSelect(share.id) }
+            .clickable { onVaultSelect(share) }
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -60,7 +60,7 @@ fun VaultItem(
         )
         Spacer(modifier = Modifier.width(16.dp))
         IconButton(
-            onClick = { onVaultEdit(share.id) },
+            onClick = { onVaultEdit(share) },
             modifier = Modifier
                 .size(24.dp)
         ) {
@@ -72,7 +72,7 @@ fun VaultItem(
         }
         Spacer(modifier = Modifier.width(16.dp))
         IconButton(
-            onClick = { onVaultDelete(share.id) },
+            onClick = { onVaultDelete(share) },
             modifier = Modifier.size(24.dp)
         ) {
             Icon(

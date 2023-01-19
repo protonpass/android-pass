@@ -2,7 +2,6 @@ package proton.android.pass.crypto.api.usecases
 
 import me.proton.core.user.domain.entity.UserAddress
 import proton.pass.domain.ItemContents
-import proton.pass.domain.entity.PackageName
 import proton.pass.domain.key.ItemKey
 import proton.pass.domain.key.VaultKey
 
@@ -22,7 +21,6 @@ interface CreateItem {
         vaultKey: VaultKey,
         itemKey: ItemKey,
         userAddress: UserAddress,
-        itemContents: ItemContents,
-        packageName: PackageName? = null
+        itemContents: ItemContents
     ): EncryptedCreateItem
 }

@@ -26,7 +26,6 @@ import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.It
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.ShareId
-import proton.pass.domain.entity.PackageName
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,10 +49,7 @@ class CreateLoginViewModel @Inject constructor(
         PassLogger.e(TAG, throwable)
     }
 
-    private var packageName: PackageName? = null
-
     fun setInitialContents(initialContents: InitialCreateLoginUiState) {
-        packageName = initialContents.packageName
 
         val currentValue = loginItemState.value
         val websites = currentValue.websiteAddresses.toMutableList()
@@ -78,11 +74,19 @@ class CreateLoginViewModel @Inject constructor(
             if (initialContents.aliasItem?.aliasToBeCreated?.isNotEmpty() == true) {
                 canUpdateUsernameState.update { false }
             }
+            val packageNames = if (initialContents.packageName != null) {
+                it.packageNames.toMutableSet()
+                    .apply { add(initialContents.packageName.packageName) }
+                    .toSet()
+            } else {
+                it.packageNames
+            }
             it.copy(
                 title = initialContents.title ?: currentValue.title,
                 username = username,
                 password = initialContents.password ?: currentValue.password,
-                websiteAddresses = websites
+                websiteAddresses = websites,
+                packageNames = packageNames
             )
         }
     }
@@ -124,8 +128,7 @@ class CreateLoginViewModel @Inject constructor(
         createItem(
             userId = userId,
             shareId = shareId,
-            itemContents = loginItemState.value.toItemContents(),
-            packageName = packageName
+            itemContents = loginItemState.value.toItemContents()
         )
             .onSuccess { item ->
                 isItemSavedState.update {

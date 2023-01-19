@@ -1,6 +1,8 @@
 package proton.android.pass.data.fakes.repositories
 
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.Option
@@ -22,6 +24,11 @@ import javax.inject.Inject
 
 @Suppress("NotImplementedDeclaration")
 class TestItemRepository @Inject constructor() : ItemRepository {
+
+    private val observeItemListFlow: MutableSharedFlow<Result<List<Item>>> =
+        MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+
+    fun sendObserveItemListResult(result: Result<List<Item>>) = observeItemListFlow.tryEmit(result)
 
     override suspend fun createItem(
         userId: UserId,
@@ -53,9 +60,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         shareSelection: ShareSelection,
         itemState: ItemState,
         itemTypeFilter: ItemTypeFilter
-    ): Flow<Result<List<Item>>> {
-        TODO("Not yet implemented")
-    }
+    ): Flow<Result<List<Item>>> = observeItemListFlow
 
     override suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Item> {
         TODO("Not yet implemented")

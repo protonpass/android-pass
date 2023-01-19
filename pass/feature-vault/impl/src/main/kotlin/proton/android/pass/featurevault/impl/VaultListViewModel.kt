@@ -17,6 +17,7 @@ import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.data.api.errors.CannotDeleteCurrentVaultError
 import proton.android.pass.data.api.usecases.DeleteVault
+import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveActiveShare
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.UpdateActiveShare
@@ -25,6 +26,8 @@ import proton.android.pass.featurevault.impl.VaultSnackbarMessage.ChangeVaultErr
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.ChangeVaultSuccess
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.DeleteVaultError
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.DeleteVaultSuccess
+import proton.android.pass.featurevault.impl.VaultSnackbarMessage.MigrateVaultError
+import proton.android.pass.featurevault.impl.VaultSnackbarMessage.MigrateVaultSuccess
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.ShareId
@@ -37,6 +40,7 @@ class VaultListViewModel @Inject constructor(
     observeShares: ObserveAllShares,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val deleteVault: DeleteVault,
+    private val migrateVault: MigrateVault,
     private val updateActiveShare: UpdateActiveShare,
     private val cryptoContext: CryptoContext
 ) : ViewModel() {
@@ -79,6 +83,20 @@ class VaultListViewModel @Inject constructor(
             .logError(PassLogger, TAG, "Change Vault Failed")
     }
 
+    fun onMigrateVault(toDelete: ShareId?, toMigrateTo: ShareId) = viewModelScope.launch {
+        PassLogger.i(TAG, "Share to delete: " + toDelete?.id)
+        PassLogger.i(TAG, "Share to migrate: " + toMigrateTo.id)
+        toDelete ?: return@launch
+        migrateVault(toDelete, toMigrateTo)
+            .onSuccess {
+                snackbarMessageRepository.emitSnackbarMessage(MigrateVaultSuccess)
+            }
+            .onError {
+                snackbarMessageRepository.emitSnackbarMessage(MigrateVaultError)
+            }
+            .logError(PassLogger, TAG, "Migrate Vault Failed")
+    }
+
     fun onDeleteVault(shareId: ShareId) = viewModelScope.launch {
         deleteVault(shareId)
             .onSuccess {
@@ -95,6 +113,6 @@ class VaultListViewModel @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "VaultViewModel"
+        private const val TAG = "VaultListViewModel"
     }
 }

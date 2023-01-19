@@ -73,12 +73,17 @@ fun VaultItem(
         Spacer(modifier = Modifier.width(16.dp))
         IconButton(
             onClick = { onVaultDelete(share) },
-            modifier = Modifier.size(24.dp)
+            modifier = Modifier.size(24.dp),
+            enabled = !isSelected
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_proton_trash),
                 contentDescription = null,
-                tint = ProtonTheme.colors.iconNorm
+                tint = if (!isSelected) {
+                    ProtonTheme.colors.iconNorm
+                } else {
+                    ProtonTheme.colors.iconDisabled
+                }
             )
         }
     }

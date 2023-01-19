@@ -2,12 +2,12 @@ package proton.android.pass.autofill.ui.autofill
 
 import androidx.navigation.NamedNavArgument
 import androidx.navigation.navArgument
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.OptionalNavArgId
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.pass.domain.ShareId
 
 sealed class AutofillNavItem(
@@ -49,10 +49,10 @@ sealed class AutofillNavItem(
             )
 
     object Auth : AutofillNavItem("auth", isTopLevel = true)
-    object SelectItem : AutofillNavItem("selectItem", isTopLevel = true)
-    object CreateLogin : AutofillNavItem("createLogin", isTopLevel = true)
+    object SelectItem : AutofillNavItem("item/select", isTopLevel = true)
+    object CreateLogin : AutofillNavItem("login/create", isTopLevel = true)
     object CreateAlias : AutofillNavItem(
-        baseRoute = "createAlias",
+        baseRoute = "alias/create",
         navArgIds = listOf(CommonNavArgId.ShareId),
         optionalArgIds = listOf(AliasOptionalNavArgId.Title, AliasOptionalNavArgId.IsDraft)
     ) {

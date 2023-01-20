@@ -11,7 +11,8 @@ fun NavHomeContent(
     state: NavHomeUiState,
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
     homeScreenNavigation: HomeScreenNavigation,
-    homeFilterMode: HomeFilterMode,
+    homeItemTypeSelection: HomeItemTypeSelection,
+    homeVaultSelection: HomeVaultSelection,
     onDrawerIconClick: () -> Unit
 ) {
     when {
@@ -29,7 +30,8 @@ fun NavHomeContent(
             navigationDrawer {
                 HomeScreen(
                     homeScreenNavigation = homeScreenNavigation,
-                    homeFilterMode = homeFilterMode,
+                    homeItemTypeSelection = homeItemTypeSelection,
+                    homeVaultSelection = homeVaultSelection,
                     onDrawerIconClick = onDrawerIconClick
                 )
             }

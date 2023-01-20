@@ -17,7 +17,6 @@
  */
 package proton.android.pass.presentation.navigation.drawer
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -25,12 +24,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextOverflow
@@ -42,7 +39,6 @@ import me.proton.core.compose.theme.ProtonTheme
 @Composable
 fun NavigationDrawerListItem(
     modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
     title: String,
     isSelected: Boolean = false,
     onClick: () -> Unit,
@@ -72,11 +68,6 @@ fun NavigationDrawerListItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         startContent()
-        Icon(
-            painter = painterResource(icon),
-            contentDescription = null,
-            tint = ProtonTheme.colors.iconWeak
-        )
         Text(
             text = title,
             modifier = Modifier.padding(start = ListItemTextStartPadding),

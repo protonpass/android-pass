@@ -10,6 +10,11 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,6 +32,12 @@ fun NavigationDrawerBody(
     onSignOutClick: () -> Unit = {},
     onCloseDrawer: () -> Unit
 ) {
+    var selectedItemTypes: SelectedItemTypes by remember { mutableStateOf(SelectedItemTypes.AllItems) }
+    var selectedVaults: SelectedVaults by remember { mutableStateOf(SelectedVaults.AllVaults) }
+
+    LaunchedEffect(selectedItemTypes to selectedVaults) {
+        navDrawerNavigation.onNavHome(selectedItemTypes, selectedVaults)
+    }
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState()),
@@ -36,9 +47,15 @@ fun NavigationDrawerBody(
             itemCount = drawerUiState.itemCountSummary,
             closeDrawerAction = { onCloseDrawer() },
             selectedSection = drawerUiState.selectedSection,
-            onSectionClick = { section ->
-                navDrawerNavigation.onNavHome(section)
-            }
+            onSectionClick = { selectedItemTypes = it }
+        )
+        Divider(modifier = Modifier.fillMaxWidth())
+        DrawerVaultSection(
+            modifier = Modifier,
+            shares = drawerUiState.shares,
+            selectedSection = drawerUiState.selectedSection,
+            closeDrawerAction = { onCloseDrawer() },
+            onVaultClick = { selectedVaults = it }
         )
         Divider(modifier = Modifier.fillMaxWidth())
         Text(
@@ -88,7 +105,7 @@ fun NavigationDrawerBodyPreview() {
                     appNameResId = R.string.title_app
                 ),
                 navDrawerNavigation = NavDrawerNavigation(
-                    onNavHome = {},
+                    onNavHome = { _, _ -> },
                     onNavSettings = {},
                     onNavTrash = {},
                     onBugReport = {},

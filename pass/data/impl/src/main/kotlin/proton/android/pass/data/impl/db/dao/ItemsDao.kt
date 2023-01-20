@@ -3,8 +3,8 @@ package proton.android.pass.data.impl.db.dao
 import androidx.room.Dao
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.data.impl.db.entities.ItemEntity
 import me.proton.core.data.room.db.BaseDao
+import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.pass.domain.ItemStateValues
 
 data class SummaryRow(
@@ -126,12 +126,12 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
             COUNT(${ItemEntity.Columns.ITEM_TYPE}) as itemCount
         FROM ${ItemEntity.TABLE}
         WHERE ${ItemEntity.Columns.USER_ID} = :userId
-          AND ${ItemEntity.Columns.SHARE_ID} = :shareId
+          AND ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
           AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE}
         GROUP BY ${ItemEntity.Columns.ITEM_TYPE}
         """
     )
-    abstract fun itemSummary(userId: String, shareId: String): Flow<List<SummaryRow>>
+    abstract fun itemSummary(userId: String, shareIds: List<String>): Flow<List<SummaryRow>>
 
     @Query(
         """

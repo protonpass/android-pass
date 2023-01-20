@@ -35,7 +35,8 @@ import proton.pass.domain.ItemType
 fun HomeScreen(
     modifier: Modifier = Modifier,
     homeScreenNavigation: HomeScreenNavigation,
-    homeFilterMode: HomeFilterMode,
+    homeItemTypeSelection: HomeItemTypeSelection,
+    homeVaultSelection: HomeVaultSelection,
     onDrawerIconClick: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -45,8 +46,11 @@ fun HomeScreen(
     val (shouldScrollToTop, setScrollToTop) = remember { mutableStateOf(false) }
     val (shouldShowDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf(false) }
 
-    LaunchedEffect(homeFilterMode) {
-        viewModel.setFilterMode(homeFilterMode)
+    LaunchedEffect(homeItemTypeSelection) {
+        viewModel.setItemTypeSelection(homeItemTypeSelection)
+    }
+    LaunchedEffect(homeVaultSelection) {
+        viewModel.setVaultSelection(homeVaultSelection)
     }
 
     val bottomSheetState = rememberModalBottomSheetState(
@@ -159,7 +163,7 @@ fun HomeScreen(
             HomeContent(
                 modifier = modifier,
                 uiState = uiState,
-                homeFilter = homeFilterMode,
+                homeFilter = homeItemTypeSelection,
                 shouldScrollToTop = shouldScrollToTop,
                 homeScreenNavigation = homeScreenNavigation,
                 onSearchQueryChange = { viewModel.onSearchQueryChange(it) },

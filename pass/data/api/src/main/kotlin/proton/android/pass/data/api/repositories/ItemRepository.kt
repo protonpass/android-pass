@@ -71,7 +71,7 @@ interface ItemRepository {
 
     fun observeItemCountSummary(
         userId: UserId,
-        shareId: ShareId
+        shareIds: List<ShareId>
     ): Flow<ItemCountSummary>
 
     suspend fun updateItemLastUsed(

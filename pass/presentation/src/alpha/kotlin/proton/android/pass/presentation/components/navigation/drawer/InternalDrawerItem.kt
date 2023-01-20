@@ -2,6 +2,7 @@ package proton.android.pass.presentation.components.navigation.drawer
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.launch
@@ -36,11 +38,17 @@ fun InternalDrawerItem(
     val context = LocalContext.current
     NavigationDrawerListItem(
         title = "(alpha) Share logs",
-        icon = R.drawable.ic_proton_cog_wheel,
         isSelected = false,
         closeDrawerAction = closeDrawerAction,
         modifier = modifier,
-        onClick = { showDialog = true }
+        onClick = { showDialog = true },
+        startContent = {
+            Icon(
+                painter = painterResource(me.proton.pass.presentation.R.drawable.ic_settings),
+                contentDescription = null,
+                tint = ProtonTheme.colors.iconWeak
+            )
+        }
     )
 
     if (showDialog) {

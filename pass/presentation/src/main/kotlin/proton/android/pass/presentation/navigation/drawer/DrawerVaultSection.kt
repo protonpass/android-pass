@@ -7,8 +7,9 @@ import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.presentation.R
+import me.proton.pass.presentation.R
 import proton.android.pass.commonuimodels.api.ShareUiModel
 
 @Composable
@@ -21,13 +22,13 @@ fun DrawerVaultSection(
 ) {
     Column(modifier = modifier) {
         NavigationDrawerListItem(
-            title = "All vaults",
+            title = stringResource(R.string.navigation_all_vaults),
             closeDrawerAction = closeDrawerAction,
             isSelected = selectedSection is ItemTypeSection && selectedSection.shareId == null,
             onClick = { onVaultClick(SelectedVaults.AllVaults) },
             startContent = {
                 Icon(
-                    painter = painterResource(R.drawable.ic_proton_list_bullets),
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_list_bullets),
                     contentDescription = null,
                     tint = ProtonTheme.colors.iconWeak
                 )
@@ -43,7 +44,7 @@ fun DrawerVaultSection(
                 startContent = {
                     Spacer(modifier = Modifier.width(horizontalSpacerWidth))
                     Icon(
-                        painter = painterResource(R.drawable.ic_proton_vault),
+                        painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_vault),
                         contentDescription = null,
                         tint = ProtonTheme.colors.iconWeak
                     )

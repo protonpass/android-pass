@@ -15,7 +15,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -29,13 +28,14 @@ import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.GetCurrentShare
 import proton.android.pass.data.api.usecases.GetCurrentUserId
-import proton.android.pass.data.api.usecases.ObserveActiveShare
+import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.RefreshShares
 import proton.android.pass.log.api.PassLogger
@@ -45,16 +45,18 @@ import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.presentation.navigation.drawer.DrawerUiState
+import proton.android.pass.presentation.navigation.drawer.ItemTypeSection
 import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection
 import proton.pass.domain.Share
 import proton.pass.domain.entity.NewVault
+import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
 
 @HiltViewModel
 class AppViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     preferenceRepository: UserPreferencesRepository,
-    observeActiveShare: ObserveActiveShare,
+    observeAllShares: ObserveAllShares,
     itemRepository: ItemRepository,
     networkMonitor: NetworkMonitor,
     private val getCurrentUserId: GetCurrentUserId,
@@ -72,45 +74,72 @@ class AppViewModel @Inject constructor(
 
     private val currentUserFlow = observeCurrentUser().filterNotNull()
     private val drawerSectionState: MutableStateFlow<NavigationDrawerSection> =
-        MutableStateFlow(NavigationDrawerSection.Items)
+        MutableStateFlow(NavigationDrawerSection.AllItems())
 
     private val themePreference: Flow<ThemePreference> = preferenceRepository
         .getThemePreference()
         .asResultWithoutLoading()
         .map { getThemePreference(it) }
 
-    private val itemCountSummaryFlow: Flow<ItemCountSummary> = combine(
-        currentUserFlow,
-        observeActiveShare()
-    ) { user, share -> user.userId to share }
-        .flatMapLatest {
-            val (userId, shareResult) = it
-            when (shareResult) {
-                Result.Loading -> flowOf(ItemCountSummary.Initial)
+    private val allShareUiModelFlow: Flow<List<ShareUiModel>> = observeAllShares()
+        .map { shares ->
+            when (shares) {
+                Result.Loading -> emptyList()
                 is Result.Error -> {
-                    val message = "Cannot retrieve ItemCountSummary"
-                    PassLogger.e(TAG, shareResult.exception ?: Exception(message), message)
-                    flowOf(ItemCountSummary.Initial)
+                    val message = "Cannot retrieve all shares"
+                    PassLogger.e(TAG, shares.exception ?: Exception(message), message)
+                    emptyList()
                 }
-                is Result.Success -> {
-                    itemRepository.observeItemCountSummary(userId, shareResult.data)
-                }
+                is Result.Success -> shares.data
             }
+        }
+        .map { list ->
+            list.mapNotNull { share ->
+                val content = share.content ?: return@mapNotNull null
+                val decrypted =
+                    cryptoContext.keyStoreCrypto.decrypt(content)
+                val parsed = VaultV1.Vault.parseFrom(decrypted.array)
+                ShareUiModel(share.id, parsed.name)
+            }
+        }
+        .distinctUntilChanged()
+
+    private val itemCountSummaryFlow = combine(
+        currentUserFlow,
+        drawerSectionState,
+        allShareUiModelFlow
+    ) { user, drawerSection, allShares ->
+        val shares: List<ShareUiModel> = when (drawerSection) {
+            is ItemTypeSection ->
+                drawerSection.shareId
+                    ?.let { selectedShare ->
+                        allShares.filter { share -> share.id == selectedShare }
+                    }
+                    ?: allShares
+            else -> allShares
+        }
+        user to shares
+    }
+        .flatMapLatest { pair ->
+            itemRepository.observeItemCountSummary(pair.first.userId, pair.second.map { it.id })
         }
 
     private val drawerStateFlow: Flow<DrawerState> = combine(
         drawerSectionState,
-        itemCountSummaryFlow
-    ) { drawerSection, itemCountSummary ->
+        itemCountSummaryFlow,
+        allShareUiModelFlow
+    ) { drawerSection, itemCountSummary, shares ->
         DrawerState(
             section = drawerSection,
-            itemCountSummary = itemCountSummary
+            itemCountSummary = itemCountSummary,
+            shares = shares
         )
     }
 
     private data class DrawerState(
         val section: NavigationDrawerSection,
-        val itemCountSummary: ItemCountSummary
+        val itemCountSummary: ItemCountSummary,
+        val shares: List<ShareUiModel>
     )
 
     private val networkStatus: Flow<NetworkStatus> = networkMonitor
@@ -130,7 +159,8 @@ class AppViewModel @Inject constructor(
                 appNameResId = R.string.app_name,
                 currentUser = user,
                 selectedSection = drawerState.section,
-                itemCountSummary = drawerState.itemCountSummary
+                itemCountSummary = drawerState.itemCountSummary,
+                shares = drawerState.shares
             ),
             theme = theme,
             networkStatus = network

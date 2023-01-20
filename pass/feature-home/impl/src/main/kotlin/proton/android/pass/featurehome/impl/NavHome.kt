@@ -11,7 +11,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun NavHome(
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
     homeScreenNavigation: HomeScreenNavigation,
-    homeFilterMode: HomeFilterMode,
+    homeItemTypeSelection: HomeItemTypeSelection,
+    homeVaultSelection: HomeVaultSelection,
     onDrawerIconClick: () -> Unit,
     viewModel: NavHomeViewModel = hiltViewModel()
 ) {
@@ -22,6 +23,7 @@ fun NavHome(
         navigationDrawer = navigationDrawer,
         homeScreenNavigation = homeScreenNavigation,
         onDrawerIconClick = onDrawerIconClick,
-        homeFilterMode = homeFilterMode
+        homeItemTypeSelection = homeItemTypeSelection,
+        homeVaultSelection = homeVaultSelection
     )
 }

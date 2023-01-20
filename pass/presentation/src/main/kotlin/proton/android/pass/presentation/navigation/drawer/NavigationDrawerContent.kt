@@ -30,7 +30,7 @@ fun NavigationDrawerContent(
         ) {
             Column {
                 NavigationDrawerHeader(
-                    drawerUiState = drawerUiState,
+                    currentUser = drawerUiState.currentUser,
                     sidebarColors = sidebarColors,
                     coreNavigation = coreNavigation,
                     accountPrimaryState = accountPrimaryState

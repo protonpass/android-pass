@@ -27,18 +27,25 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import proton.android.pass.presentation.navigation.CoreNavigation
+import proton.pass.domain.ShareId
 
 @Stable
-enum class HomeSection {
-    Items,
+enum class SelectedItemTypes {
+    AllItems,
     Logins,
     Aliases,
     Notes
 }
 
 @Stable
+sealed class SelectedVaults {
+    object AllVaults : SelectedVaults()
+    data class Vault(val shareId: ShareId) : SelectedVaults()
+}
+
+@Stable
 data class NavDrawerNavigation(
-    val onNavHome: (HomeSection) -> Unit,
+    val onNavHome: (SelectedItemTypes, SelectedVaults) -> Unit,
     val onNavSettings: () -> Unit,
     val onNavTrash: () -> Unit,
     val onInternalDrawerClick: () -> Unit,

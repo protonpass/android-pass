@@ -3,11 +3,11 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.local.LocalItemDataSource
-import me.proton.core.domain.entity.UserId
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemState
 import proton.pass.domain.ShareId
@@ -68,7 +68,7 @@ class TestLocalItemDataSource : LocalItemDataSource {
 
     override fun observeItemCountSummary(
         userId: UserId,
-        shareId: ShareId
+        shareIds: List<ShareId>
     ): Flow<ItemCountSummary> = summary
 
     override suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long) {

@@ -9,26 +9,26 @@ import me.proton.core.accountmanager.presentation.compose.AccountPrimaryItem
 import me.proton.core.accountmanager.presentation.compose.AccountPrimaryState
 import me.proton.core.compose.theme.ProtonColors
 import me.proton.core.compose.theme.ProtonDimens
+import me.proton.core.user.domain.entity.User
 import proton.android.pass.presentation.navigation.CoreNavigation
 
 @Composable
 fun NavigationDrawerHeader(
-    drawerUiState: DrawerUiState,
+    currentUser: User?,
     sidebarColors: ProtonColors,
     coreNavigation: CoreNavigation,
     accountPrimaryState: AccountPrimaryState
 ) {
-    if (drawerUiState.currentUser != null) {
-        AccountPrimaryItem(
-            modifier = Modifier
-                .background(sidebarColors.backgroundNorm)
-                .padding(all = ProtonDimens.SmallSpacing)
-                .fillMaxWidth(),
-            onRemove = { coreNavigation.onRemove(it) },
-            onSignIn = { coreNavigation.onSignIn(it) },
-            onSignOut = { coreNavigation.onSignOut(it) },
-            onSwitch = { coreNavigation.onSwitch(it) },
-            viewState = accountPrimaryState
-        )
-    }
+    currentUser ?: return
+    AccountPrimaryItem(
+        modifier = Modifier
+            .background(sidebarColors.backgroundNorm)
+            .padding(all = ProtonDimens.SmallSpacing)
+            .fillMaxWidth(),
+        onRemove = { coreNavigation.onRemove(it) },
+        onSignIn = { coreNavigation.onSignIn(it) },
+        onSignOut = { coreNavigation.onSignOut(it) },
+        onSwitch = { coreNavigation.onSwitch(it) },
+        viewState = accountPrimaryState
+    )
 }

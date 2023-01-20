@@ -35,7 +35,7 @@ import proton.pass.domain.ShareId
 internal fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
-    homeFilter: HomeFilterMode,
+    homeFilter: HomeItemTypeSelection,
     shouldScrollToTop: Boolean,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     homeScreenNavigation: HomeScreenNavigation,

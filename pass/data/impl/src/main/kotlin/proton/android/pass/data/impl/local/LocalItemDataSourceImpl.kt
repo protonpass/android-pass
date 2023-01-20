@@ -2,11 +2,11 @@ package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
-import me.proton.core.domain.entity.UserId
 import proton.pass.domain.ITEM_TYPE_ALIAS
 import proton.pass.domain.ITEM_TYPE_LOGIN
 import proton.pass.domain.ITEM_TYPE_NOTE
@@ -33,7 +33,8 @@ class LocalItemDataSourceImpl @Inject constructor(
         if (filter == ItemTypeFilter.All) {
             database.itemsDao().observerAllForShare(userId.id, shareId.id, itemState.value)
         } else {
-            database.itemsDao().observeAllForShare(userId.id, shareId.id, itemState.value, filter.value())
+            database.itemsDao()
+                .observeAllForShare(userId.id, shareId.id, itemState.value, filter.value())
         }
 
     override fun observeItems(
@@ -64,19 +65,21 @@ class LocalItemDataSourceImpl @Inject constructor(
 
     override fun observeItemCountSummary(
         userId: UserId,
-        shareId: ShareId
+        shareIds: List<ShareId>
     ): Flow<ItemCountSummary> =
-        database.itemsDao().itemSummary(userId.id, shareId.id).map { values ->
-            val logins = values.firstOrNull { it.itemKind == ITEM_TYPE_LOGIN }?.itemCount ?: 0
-            val aliases = values.firstOrNull { it.itemKind == ITEM_TYPE_ALIAS }?.itemCount ?: 0
-            val notes = values.firstOrNull { it.itemKind == ITEM_TYPE_NOTE }?.itemCount ?: 0
-            ItemCountSummary(
-                total = logins + aliases + notes,
-                login = logins,
-                alias = aliases,
-                note = notes
-            )
-        }
+        database.itemsDao()
+            .itemSummary(userId.id, shareIds.map { it.id })
+            .map { values ->
+                val logins = values.firstOrNull { it.itemKind == ITEM_TYPE_LOGIN }?.itemCount ?: 0
+                val aliases = values.firstOrNull { it.itemKind == ITEM_TYPE_ALIAS }?.itemCount ?: 0
+                val notes = values.firstOrNull { it.itemKind == ITEM_TYPE_NOTE }?.itemCount ?: 0
+                ItemCountSummary(
+                    total = logins + aliases + notes,
+                    login = logins,
+                    alias = aliases,
+                    note = notes
+                )
+            }
 
 
     override suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long) {

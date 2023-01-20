@@ -16,16 +16,16 @@ import proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon
 @Composable
 fun IdleHomeTopBar(
     modifier: Modifier = Modifier,
-    homeFilter: HomeFilterMode,
+    homeFilter: HomeItemTypeSelection,
     startSearchMode: () -> Unit,
     onDrawerIconClick: () -> Unit,
     onMoreOptionsClick: () -> Unit
 ) {
     val title = when (homeFilter) {
-        HomeFilterMode.AllItems -> R.string.title_all_items
-        HomeFilterMode.Logins -> R.string.title_all_logins
-        HomeFilterMode.Aliases -> R.string.title_all_aliases
-        HomeFilterMode.Notes -> R.string.title_all_notes
+        HomeItemTypeSelection.AllItems -> R.string.title_all_items
+        HomeItemTypeSelection.Logins -> R.string.title_all_logins
+        HomeItemTypeSelection.Aliases -> R.string.title_all_aliases
+        HomeItemTypeSelection.Notes -> R.string.title_all_notes
     }
     ProtonTopAppBar(
         modifier = modifier,

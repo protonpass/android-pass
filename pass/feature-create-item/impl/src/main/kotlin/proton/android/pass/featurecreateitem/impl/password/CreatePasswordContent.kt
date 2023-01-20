@@ -2,9 +2,12 @@ package proton.android.pass.featurecreateitem.impl.password
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -15,13 +18,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.composecomponents.impl.topbar.icon.ArrowBackIcon
-import proton.android.pass.featurecreateitem.impl.R
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
+import proton.android.pass.composecomponents.impl.topbar.icon.ArrowBackIcon
+import proton.android.pass.featurecreateitem.impl.R
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -45,7 +48,12 @@ fun CreatePasswordContent(
         }
     ) { padding ->
 
-        Column(modifier = Modifier.padding(padding)) {
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .fillMaxHeight()
+                .verticalScroll(rememberScrollState())
+        ) {
             CreatePasswordViewContent(
                 state = state,
                 onLengthChange = onLengthChange,

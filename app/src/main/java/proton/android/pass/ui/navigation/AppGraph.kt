@@ -5,8 +5,9 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featurehome.impl.HomeFilterMode
+import proton.android.pass.featurehome.impl.HomeItemTypeSelection
 import proton.android.pass.featurehome.impl.HomeScreenNavigation
+import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.auth.authGraph
 import proton.android.pass.ui.create.alias.createAliasGraph
@@ -32,7 +33,8 @@ import proton.pass.domain.ShareId
 @Suppress("LongParameterList")
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
-    homeFilterMode: HomeFilterMode,
+    homeItemTypeSelection: HomeItemTypeSelection,
+    homeVaultSelection: HomeVaultSelection,
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
     onDrawerIconClick: () -> Unit,
     finishActivity: () -> Unit
@@ -41,7 +43,8 @@ fun NavGraphBuilder.appGraph(
         navigationDrawer = navigationDrawer,
         homeScreenNavigation = createHomeScreenNavigation(appNavigator),
         onDrawerIconClick = onDrawerIconClick,
-        homeFilterMode = homeFilterMode
+        homeItemTypeSelection = homeItemTypeSelection,
+        homeVaultSelection = homeVaultSelection
     )
     trashGraph(navigationDrawer, onDrawerIconClick)
     helpGraph(navigationDrawer, onDrawerIconClick)

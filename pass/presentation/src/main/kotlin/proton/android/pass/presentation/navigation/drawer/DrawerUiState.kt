@@ -19,17 +19,29 @@ package proton.android.pass.presentation.navigation.drawer
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Immutable
-import proton.android.pass.data.api.ItemCountSummary
 import me.proton.core.user.domain.entity.User
+import proton.android.pass.commonuimodels.api.ShareUiModel
+import proton.android.pass.data.api.ItemCountSummary
+import proton.pass.domain.ShareId
 
-enum class NavigationDrawerSection {
-    Items,
-    Logins,
-    Aliases,
-    Notes,
-    Settings,
-    Trash,
-    Report
+sealed class ItemTypeSection {
+    abstract val shareId: ShareId?
+}
+sealed interface NavigationDrawerSection {
+    data class AllItems(override val shareId: ShareId? = null) :
+        ItemTypeSection(), NavigationDrawerSection
+
+    data class Logins(override val shareId: ShareId? = null) :
+        ItemTypeSection(), NavigationDrawerSection
+
+    data class Aliases(override val shareId: ShareId? = null) :
+        ItemTypeSection(), NavigationDrawerSection
+
+    data class Notes(override val shareId: ShareId? = null) :
+        ItemTypeSection(), NavigationDrawerSection
+
+    object Settings : NavigationDrawerSection
+    object Trash : NavigationDrawerSection
 }
 
 @Immutable
@@ -39,5 +51,6 @@ data class DrawerUiState(
     val closeOnActionEnabled: Boolean = true,
     val currentUser: User? = null,
     val selectedSection: NavigationDrawerSection? = null,
-    val itemCountSummary: ItemCountSummary = ItemCountSummary.Initial
+    val itemCountSummary: ItemCountSummary = ItemCountSummary.Initial,
+    val shares: List<ShareUiModel> = emptyList()
 )

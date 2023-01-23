@@ -22,7 +22,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateAlias
-import proton.android.pass.data.api.usecases.ObserveActiveShare
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
@@ -33,6 +33,7 @@ import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.It
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.LoginMovedToTrash
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.LoginMovedToTrashError
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
@@ -49,13 +50,13 @@ class UpdateLoginViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     createAlias: CreateAlias,
     accountManager: AccountManager,
-    observeActiveShare: ObserveActiveShare,
+    observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(
     createAlias,
     accountManager,
     snackbarMessageRepository,
-    observeActiveShare,
+    observeVaults,
     savedStateHandle
 ) {
 
@@ -63,8 +64,9 @@ class UpdateLoginViewModel @Inject constructor(
         PassLogger.e(TAG, throwable)
     }
 
-    private val itemId: Option<ItemId> =
-        Option.fromNullable(savedStateHandle.get<String>("itemId")?.let { ItemId(it) })
+    private val itemId: Option<ItemId> = savedStateHandle.get<String>(CommonNavArgId.ItemId.key)
+        .toOption()
+        .map { ItemId(it) }
 
     private var _item: Item? = null
 
@@ -75,8 +77,8 @@ class UpdateLoginViewModel @Inject constructor(
             isLoadingState.update { IsLoadingState.Loading }
             val userId = accountManager.getPrimaryUserId()
                 .first { userId -> userId != null }
-            if (userId != null && shareId is Some && itemId is Some) {
-                itemRepository.getById(userId, shareId.value, itemId.value)
+            if (userId != null && navShareId is Some && itemId is Some) {
+                itemRepository.getById(userId, navShareId.value, itemId.value)
                     .onSuccess { item ->
                         val itemContents = item.itemType as ItemType.Login
                         _item = item

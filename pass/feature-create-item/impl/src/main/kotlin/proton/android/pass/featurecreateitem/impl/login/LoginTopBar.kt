@@ -15,27 +15,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.topbar.TopBarLoading
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import proton.android.pass.composecomponents.impl.topbar.icon.CrossBackIcon
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.R
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun LoginTopBar(
     modifier: Modifier = Modifier,
-    shareId: ShareId?,
     @StringRes topBarTitle: Int,
     @StringRes topBarActionName: Int,
+    shareUiModel: ShareUiModel?,
     isLoadingState: IsLoadingState,
     onUpClick: () -> Unit,
-    onSubmit: (ShareId) -> Unit,
-    onSnackbarMessage: (LoginSnackbarMessages) -> Unit
+    onSubmit: (ShareId) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -45,13 +45,11 @@ internal fun LoginTopBar(
         navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
         actions = {
             IconButton(
-                enabled = isLoadingState == IsLoadingState.NotLoading,
+                enabled = isLoadingState == IsLoadingState.NotLoading && shareUiModel != null,
                 onClick = {
-                    keyboardController?.hide()
-                    if (shareId == null) {
-                        onSnackbarMessage(LoginSnackbarMessages.EmptyShareIdError)
-                    } else {
-                        onSubmit(shareId)
+                    shareUiModel?.id?.let {
+                        keyboardController?.hide()
+                        onSubmit(it)
                     }
                 },
                 modifier = Modifier.padding(end = 10.dp)
@@ -82,13 +80,12 @@ fun LoginTopBarPreview(
     ProtonTheme(isDark = input.first) {
         Surface {
             LoginTopBar(
-                shareId = null,
                 topBarTitle = R.string.title_create_login,
                 topBarActionName = R.string.action_save,
+                shareUiModel = ShareUiModel(ShareId(""), ""),
                 isLoadingState = IsLoadingState.from(input.second),
                 onUpClick = {},
-                onSubmit = {},
-                onSnackbarMessage = {}
+                onSubmit = {}
             )
         }
     }

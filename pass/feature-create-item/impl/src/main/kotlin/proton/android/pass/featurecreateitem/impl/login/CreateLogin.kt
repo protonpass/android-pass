@@ -7,9 +7,9 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.featurecreateitem.impl.R
-import proton.android.pass.common.api.Option
 import proton.pass.domain.ShareId
 
 @OptIn(
@@ -43,7 +43,7 @@ fun CreateLogin(
         modifier = modifier,
         uiState = uiState,
         showCreateAliasButton = showCreateAliasButton,
-        canDelete = false,
+        isUpdate = false,
         topBarTitle = R.string.title_create_login,
         topBarActionName = R.string.action_save,
         onUpClick = { onClose() },
@@ -60,6 +60,7 @@ fun CreateLogin(
         onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
         onCreateAliasClick = onCreateAliasClick,
         onRemoveAliasClick = { viewModel.onRemoveAlias() },
-        onDeleteItemClick = {} // Item cannot be deleted if it has not been created
+        onDeleteItemClick = {}, // Item cannot be deleted if it has not been created
+        onVaultSelect = { viewModel.changeVault(it) }
     )
 }

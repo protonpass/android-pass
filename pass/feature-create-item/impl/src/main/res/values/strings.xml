@@ -88,5 +88,7 @@
 
     <!--  Common create items  -->
     <string name="changes_saved">Changes saved</string>
+    <string name="vault_title">Vault</string>
+    <string name="vault_bottomsheet_title">Vaults</string>
 
 </resources>

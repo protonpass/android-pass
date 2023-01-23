@@ -15,7 +15,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
 import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.R
-import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.NoteUpdated
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -45,15 +44,12 @@ fun UpdateNote(
             topBarActionName = stringResource(R.string.action_save),
             canDelete = true,
             onUpClick = onUpClick,
-            onSuccess = { shareId, itemId ->
-                viewModel.onEmitSnackbarMessage(NoteUpdated)
-                onSuccess(shareId, itemId)
-            },
+            onSuccess = { shareId, itemId -> onSuccess(shareId, itemId) },
             onSubmit = { shareId -> viewModel.updateItem(shareId) },
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
-            onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
-            onDelete = { setShowDeleteDialog(true) }
+            onDelete = { setShowDeleteDialog(true) },
+            onVaultSelect = {}
         )
 
         ConfirmMoveItemToTrashDialog(

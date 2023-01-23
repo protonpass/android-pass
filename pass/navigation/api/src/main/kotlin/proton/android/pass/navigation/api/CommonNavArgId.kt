@@ -7,13 +7,15 @@ sealed interface NavArgId {
     val navType: NavType<*>
 }
 
+private const val SHARE_ID_KEY = "shareId"
+
 enum class CommonNavArgId : NavArgId {
     ItemId {
         override val key: String = "itemId"
         override val navType: NavType<*> = NavType.StringType
     },
     ShareId {
-        override val key: String = "shareId"
+        override val key: String = SHARE_ID_KEY
         override val navType: NavType<*> = NavType.StringType
     }
 }
@@ -21,6 +23,13 @@ enum class CommonNavArgId : NavArgId {
 sealed interface OptionalNavArgId : NavArgId {
     val default: Any?
         get() = null
+}
+
+enum class CommonOptionalNavArgId : OptionalNavArgId {
+    ShareId {
+        override val key: String = SHARE_ID_KEY
+        override val navType: NavType<*> = NavType.StringType
+    }
 }
 
 enum class AliasOptionalNavArgId : OptionalNavArgId {

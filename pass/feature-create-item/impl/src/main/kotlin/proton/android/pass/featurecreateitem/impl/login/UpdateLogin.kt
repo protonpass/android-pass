@@ -10,12 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
 import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.R
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.LoginUpdated
-import proton.android.pass.common.api.Option
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -60,7 +60,7 @@ fun UpdateLogin(
             showCreateAliasButton = true,
             topBarTitle = R.string.title_edit_login,
             topBarActionName = R.string.action_save,
-            canDelete = true,
+            isUpdate = true,
             onUpClick = onUpClick,
             onSuccess = { shareId, itemId, _ ->
                 viewModel.onEmitSnackbarMessage(LoginUpdated)
@@ -75,7 +75,10 @@ fun UpdateLogin(
             onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
             onCreateAliasClick = { shareId, titleOption -> onCreateAliasClick(shareId, titleOption) },
             onRemoveAliasClick = { },
-            onDeleteItemClick = { setShowDeleteDialog(true) }
+            onDeleteItemClick = { setShowDeleteDialog(true) },
+            onVaultSelect = {
+                // Migrate element
+            }
         )
 
         ConfirmMoveItemToTrashDialog(

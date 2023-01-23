@@ -8,29 +8,29 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.toOption
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.CreateAlias
-import proton.android.pass.data.api.usecases.ObserveActiveShare
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarMessageRepository
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.Some
 import proton.pass.domain.Item
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.NewAlias
@@ -39,33 +39,15 @@ abstract class BaseLoginViewModel(
     private val createAlias: CreateAlias,
     protected val accountManager: AccountManager,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    observeActiveShare: ObserveActiveShare,
+    observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    protected val shareId: Option<ShareId> =
-        Option.fromNullable(savedStateHandle.get<String>("shareId")?.let { ShareId(it) })
-
-    private val activeShareIdState: StateFlow<Option<ShareId>> = MutableStateFlow(shareId)
-        .flatMapLatest { option ->
-            when (option) {
-                None -> observeActiveShare()
-                    .distinctUntilChanged()
-                    .map { result: Result<ShareId?> ->
-                        when (result) {
-                            is Result.Error -> None
-                            Result.Loading -> None
-                            is Result.Success -> Option.fromNullable(result.data)
-                        }
-                    }
-                is Some -> flowOf(option)
-            }
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = shareId
-        )
+    protected val navShareId = savedStateHandle.get<String>(CommonNavArgId.ShareId.key)
+        .toOption()
+        .map { ShareId(it) }
+    private val navShareIdState = MutableStateFlow(navShareId)
+    private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
 
     protected val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
     protected val aliasItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
@@ -75,10 +57,43 @@ abstract class BaseLoginViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
         MutableStateFlow(IsSentToTrashState.NotSent)
-    protected val loginItemValidationErrorsState: MutableStateFlow<Set<LoginItemValidationErrors>> =
+    private val loginItemValidationErrorsState: MutableStateFlow<Set<LoginItemValidationErrors>> =
         MutableStateFlow(emptySet())
-    protected val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val canUpdateUsernameState: MutableStateFlow<Boolean> = MutableStateFlow(true)
+
+    private val observeAllSharesFlow = observeVaults()
+        .map { shares ->
+            when (shares) {
+                Result.Loading -> emptyList()
+                is Result.Error -> {
+                    val message = "Cannot retrieve all shares"
+                    PassLogger.e(TAG, shares.exception ?: Exception(message), message)
+                    emptyList()
+                }
+                is Result.Success ->
+                    shares.data
+                        .map { ShareUiModel(it.shareId, it.name) }
+            }
+        }
+        .distinctUntilChanged()
+
+    private val sharesWrapperState = combine(
+        navShareIdState,
+        selectedShareIdState,
+        observeAllSharesFlow
+    ) { navShareId, selectedShareId, allShares ->
+        val selectedShare = allShares
+            .firstOrNull { it.id == selectedShareId.value() }
+            ?: allShares.firstOrNull { it.id == navShareId.value() }
+            ?: allShares.first()
+        SharesWrapper(allShares, selectedShare)
+    }
+
+    private data class SharesWrapper(
+        val shareList: List<ShareUiModel>,
+        val currentShare: ShareUiModel
+    )
 
     private val loginItemWrapperState = combine(
         loginItemState,
@@ -97,14 +112,15 @@ abstract class BaseLoginViewModel(
     )
 
     val loginUiState: StateFlow<CreateUpdateLoginUiState> = combine(
-        activeShareIdState,
+        sharesWrapperState,
         loginItemWrapperState,
         isLoadingState,
         isItemSavedState,
         focusLastWebsiteState
-    ) { shareId, loginItemWrapper, isLoading, isItemSaved, focusLastWebsite ->
+    ) { shareWrapper, loginItemWrapper, isLoading, isItemSaved, focusLastWebsite ->
         CreateUpdateLoginUiState(
-            shareId = shareId,
+            shareList = shareWrapper.shareList,
+            selectedShareId = shareWrapper.currentShare,
             loginItem = loginItemWrapper.loginItem,
             validationErrors = loginItemWrapper.loginItemValidationErrors,
             isLoadingState = isLoading,
@@ -225,6 +241,10 @@ abstract class BaseLoginViewModel(
                 }
             }
         }
+
+    fun changeVault(shareId: ShareId) = viewModelScope.launch {
+        selectedShareIdState.update { shareId.toOption() }
+    }
 
     companion object {
         private const val TAG = "BaseLoginViewModel"

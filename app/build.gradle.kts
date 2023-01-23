@@ -272,7 +272,6 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.preferences.impl)
     implementation(projects.pass.presentation)
-    implementation(projects.pass.protos)
     implementation(projects.pass.totp.impl)
     implementation(projects.pass.tracing.impl)
 

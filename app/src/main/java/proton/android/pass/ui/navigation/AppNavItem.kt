@@ -4,8 +4,10 @@ import androidx.navigation.NamedNavArgument
 import androidx.navigation.navArgument
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.OptionalNavArgId
@@ -64,8 +66,19 @@ sealed class AppNavItem(
     object VaultList : AppNavItem("vault", isTopLevel = true)
     object CreateVault : AppNavItem("vault/create")
 
-    object CreateLogin : AppNavItem("login/create", listOf(CommonNavArgId.ShareId)) {
-        fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
+    object CreateLogin : AppNavItem(
+        baseRoute = "login/create",
+        optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
+    ) {
+        fun createNavRoute(shareId: Option<ShareId>) = buildString {
+            append(baseRoute)
+            val map = mutableMapOf<String, Any>()
+            if (shareId is Some) {
+                map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
+            }
+            val path = map.toPath()
+            append(path)
+        }
     }
 
     object EditLogin : AppNavItem(
@@ -78,17 +91,28 @@ sealed class AppNavItem(
 
     object CreateAlias : AppNavItem(
         baseRoute = "alias/create",
-        navArgIds = listOf(CommonNavArgId.ShareId),
-        optionalArgIds = listOf(AliasOptionalNavArgId.Title, AliasOptionalNavArgId.IsDraft)
+        optionalArgIds = listOf(
+            CommonOptionalNavArgId.ShareId,
+            AliasOptionalNavArgId.Title,
+            AliasOptionalNavArgId.IsDraft
+        )
     ) {
         fun createNavRoute(
-            shareId: ShareId,
+            shareId: Option<ShareId> = None,
             title: Option<String> = None,
             isDraft: Boolean = false
         ) = buildString {
-            append("$baseRoute/${shareId.id}")
-            append("?${AliasOptionalNavArgId.IsDraft.key}=$isDraft")
-            if (title.isNotEmpty()) append("&${AliasOptionalNavArgId.Title.key}=${title.value()}")
+            append(baseRoute)
+            val map = mutableMapOf<String, Any>()
+            if (shareId is Some) {
+                map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
+            }
+            if (title is Some) {
+                map[AliasOptionalNavArgId.Title.key] = title.value
+            }
+            map[AliasOptionalNavArgId.IsDraft.key] = isDraft
+            val path = map.toPath()
+            append(path)
         }
     }
 
@@ -103,8 +127,19 @@ sealed class AppNavItem(
         }
     }
 
-    object CreateNote : AppNavItem("note/create", listOf(CommonNavArgId.ShareId)) {
-        fun createNavRoute(shareId: ShareId) = "$baseRoute/${shareId.id}"
+    object CreateNote : AppNavItem(
+        baseRoute = "note/create",
+        optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
+    ) {
+        fun createNavRoute(shareId: Option<ShareId>) = buildString {
+            append(baseRoute)
+            val map = mutableMapOf<String, Any>()
+            if (shareId is Some) {
+                map[CommonOptionalNavArgId.ShareId.key] = shareId.value.id
+            }
+            val path = map.toPath()
+            append(path)
+        }
     }
 
     object EditNote :
@@ -113,13 +148,18 @@ sealed class AppNavItem(
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
 
-    object CreatePassword : AppNavItem("password/create", listOf(CommonNavArgId.ShareId)) {
-        fun createNavRoute(shareId: ShareId) = "${CreatePassword.baseRoute}/${shareId.id}"
-    }
+    object CreatePassword : AppNavItem("password/create")
 
     object ViewItem :
         AppNavItem("item", listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
+
+    fun Map<String, Any>.toPath() = this
+        .map { "${it.key}=${it.value}" }
+        .joinToString(
+            prefix = "?",
+            separator = "&"
+        )
 }

@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.common.api.toOption
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.RESULT_CREATED_DRAFT_ALIAS
 import proton.android.pass.featurecreateitem.impl.login.CreateLogin
@@ -37,7 +38,7 @@ fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
                 nav.navigate(
                     destination = AppNavItem.CreateAlias,
                     route = AppNavItem.CreateAlias.createNavRoute(
-                        shareId = shareId,
+                        shareId = shareId.toOption(),
                         title = titleOption,
                         isDraft = true
                     )

@@ -107,13 +107,6 @@ private fun createHomeScreenNavigation(appNavigator: AppNavigator): HomeScreenNa
             )
         },
         toAuth = { appNavigator.navigate(AppNavItem.Auth) },
-        toOnBoarding = {
-            appNavigator.navigate(AppNavItem.OnBoarding)
-        },
-        toCreatePassword = { shareId ->
-            appNavigator.navigate(
-                AppNavItem.CreatePassword,
-                AppNavItem.CreatePassword.createNavRoute(shareId)
-            )
-        }
+        toOnBoarding = { appNavigator.navigate(AppNavItem.OnBoarding) },
+        toCreatePassword = { appNavigator.navigate(AppNavItem.CreatePassword) }
     )

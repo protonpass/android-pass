@@ -10,12 +10,13 @@ import org.junit.Test
 import proton.android.pass.common.api.Result
 import proton.android.pass.commonui.api.itemName
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
-import proton.android.pass.data.fakes.usecases.TestObserveActiveShare
+import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.login.CreateUpdateLoginUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
@@ -26,6 +27,7 @@ import proton.android.pass.test.TestUtils
 import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.android.pass.test.domain.TestItem
 import proton.pass.domain.ShareId
+import proton.pass.domain.Vault
 
 internal class CreateLoginViewModelTest {
 
@@ -34,54 +36,75 @@ internal class CreateLoginViewModelTest {
 
     private lateinit var accountManager: TestAccountManager
     private lateinit var createItem: TestCreateItem
-    private lateinit var observeActiveShare: TestObserveActiveShare
+    private lateinit var observeVaults: TestObserveVaults
     private lateinit var createLoginViewModel: CreateLoginViewModel
 
     @Before
     fun setUp() {
         accountManager = TestAccountManager()
         createItem = TestCreateItem()
-        observeActiveShare = TestObserveActiveShare()
+        observeVaults = TestObserveVaults()
         createLoginViewModel = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,
-            observeActiveShare = observeActiveShare,
             snackbarMessageRepository = TestSnackbarMessageRepository(),
             savedStateHandle = TestSavedStateHandle.create(),
             encryptionContextProvider = TestEncryptionContextProvider(),
-            createAlias = TestCreateAlias()
+            createAlias = TestCreateAlias(),
+            observeVaults = observeVaults
         )
     }
 
     @Test
     fun `when a create item event without title should return a BlankTitle validation error`() =
         runTest {
-            val shareId = ShareId("id")
+            val vault = Vault(ShareId("shareId"), "Share")
+            observeVaults.sendResult(Result.Success(listOf(vault)))
 
-            createLoginViewModel.createItem(shareId)
+            createLoginViewModel.createItem()
 
             createLoginViewModel.loginUiState.test {
                 assertThat(awaitItem())
-                    .isEqualTo(Initial.copy(validationErrors = setOf(LoginItemValidationErrors.BlankTitle)))
+                    .isEqualTo(
+                        Initial.copy(
+                            shareList = listOf(ShareUiModel(vault.shareId, vault.name)),
+                            selectedShareId = ShareUiModel(vault.shareId, vault.name),
+                            validationErrors = setOf(LoginItemValidationErrors.BlankTitle)
+                        )
+                    )
             }
         }
 
     @Test
     fun `given valid data when a create item event should return a success event`() = runTest {
+        val item = TestItem.create(keyStoreCrypto = TestKeyStoreCrypto)
+
+        val vault = Vault(item.shareId, "Share")
+        observeVaults.sendResult(Result.Success(listOf(vault)))
+
         val titleInput = "Title input"
         createLoginViewModel.onTitleChange(titleInput)
 
         val userId = UserId("user-id")
         accountManager.sendPrimaryUserId(userId)
-        val item = TestItem.create(keyStoreCrypto = TestKeyStoreCrypto)
         createItem.sendItem(Result.Success(item))
 
-        createLoginViewModel.createItem(item.shareId)
-
         createLoginViewModel.loginUiState.test {
+            createLoginViewModel.createItem()
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
+                        shareList = listOf(ShareUiModel(vault.shareId, vault.name)),
+                        selectedShareId = ShareUiModel(vault.shareId, vault.name),
+                        loginItem = LoginItem.Empty.copy(title = titleInput),
+                        isLoadingState = IsLoadingState.NotLoading
+                    )
+                )
+            assertThat(awaitItem())
+                .isEqualTo(
+                    Initial.copy(
+                        shareList = listOf(ShareUiModel(vault.shareId, vault.name)),
+                        selectedShareId = ShareUiModel(vault.shareId, vault.name),
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.Loading
                     )
@@ -89,6 +112,8 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
+                        shareList = listOf(ShareUiModel(vault.shareId, vault.name)),
+                        selectedShareId = ShareUiModel(vault.shareId, vault.name),
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.NotLoading,
                         isItemSaved = ItemSavedState.Success(
@@ -109,6 +134,8 @@ internal class CreateLoginViewModelTest {
 
     @Test
     fun `setting initial data emits the proper contents`() = runTest {
+        val vault = Vault(ShareId("shareId"), "Share")
+        observeVaults.sendResult(Result.Success(listOf(vault)))
         val initialContents = InitialCreateLoginUiState(
             title = TestUtils.randomString(),
             username = TestUtils.randomString(),
@@ -121,6 +148,8 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
+                        shareList = listOf(ShareUiModel(vault.shareId, vault.name)),
+                        selectedShareId = ShareUiModel(vault.shareId, vault.name),
                         loginItem = LoginItem.Empty.copy(
                             title = initialContents.title!!,
                             username = initialContents.username!!,

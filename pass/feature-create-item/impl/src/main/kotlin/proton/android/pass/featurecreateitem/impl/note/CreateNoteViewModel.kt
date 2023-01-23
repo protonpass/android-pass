@@ -15,8 +15,10 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetShareById
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.ItemCreationError
+import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.NoteCreated
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.ShareId
@@ -29,8 +31,9 @@ class CreateNoteViewModel @Inject constructor(
     private val itemRepository: ItemRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
+    observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
-) : BaseNoteViewModel(snackbarMessageRepository, savedStateHandle) {
+) : BaseNoteViewModel(observeVaults, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -60,6 +63,7 @@ class CreateNoteViewModel @Inject constructor(
                                         )
                                     }
                                 }
+                                snackbarMessageRepository.emitSnackbarMessage(NoteCreated)
                             }
                             .onError {
                                 val defaultMessage = "Create item error"

@@ -10,7 +10,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.featurecreateitem.impl.R
-import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.NoteCreated
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @ExperimentalMaterialApi
@@ -31,14 +30,11 @@ fun CreateNote(
         topBarActionName = stringResource(R.string.action_save),
         canDelete = false,
         onUpClick = onUpClick,
-        onSuccess = { _, _ ->
-            viewModel.onEmitSnackbarMessage(NoteCreated)
-            onSuccess()
-        },
+        onSuccess = { _, _ -> onSuccess() },
         onSubmit = { shareId -> viewModel.createNote(shareId) },
         onTitleChange = { viewModel.onTitleChange(it) },
         onNoteChange = { viewModel.onNoteChange(it) },
-        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
-        onDelete = {} // We cannot delete a note that has not been created
+        onDelete = {}, // We cannot delete a note that has not been created
+        onVaultSelect = { viewModel.changeVault(it) }
     )
 }

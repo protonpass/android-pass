@@ -3,33 +3,45 @@ package proton.android.pass.featurecreateitem.impl.note
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.toOption
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
-import proton.android.pass.notifications.api.SnackbarMessageRepository
-import proton.android.pass.common.api.Option
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
 abstract class BaseNoteViewModel(
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    protected val shareId: Option<ShareId> =
-        Option.fromNullable(savedStateHandle.get<String>("shareId")?.let { ShareId(it) })
-    protected val itemId: Option<ItemId> =
-        Option.fromNullable(savedStateHandle.get<String>("itemId")?.let { ItemId(it) })
+    protected val navShareId = savedStateHandle.get<String>(CommonNavArgId.ShareId.key)
+        .toOption()
+        .map { ShareId(it) }
+    private val navShareIdState = MutableStateFlow(navShareId)
+    private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
 
-    private val shareIdState: Flow<Option<ShareId>> = MutableStateFlow(shareId)
+    protected val itemId: Option<ItemId> =
+        savedStateHandle.get<String>(CommonNavArgId.ItemId.key)
+            .toOption()
+            .map { ItemId(it) }
+
     protected val noteItemState: MutableStateFlow<NoteItem> = MutableStateFlow(NoteItem.Empty)
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -39,6 +51,37 @@ abstract class BaseNoteViewModel(
         MutableStateFlow(emptySet())
     protected val isSentToTrashState: MutableStateFlow<IsSentToTrashState> =
         MutableStateFlow(IsSentToTrashState.NotSent)
+
+    private val observeAllVaultsFlow = observeVaults()
+        .map { shares ->
+            when (shares) {
+                Result.Loading -> emptyList()
+                is Result.Error -> {
+                    val message = "Cannot retrieve all shares"
+                    PassLogger.e(TAG, shares.exception ?: Exception(message), message)
+                    emptyList()
+                }
+                is Result.Success -> shares.data.map { ShareUiModel(it.shareId, it.name) }
+            }
+        }
+        .distinctUntilChanged()
+
+    private val sharesWrapperState = combine(
+        navShareIdState,
+        selectedShareIdState,
+        observeAllVaultsFlow
+    ) { navShareId, selectedShareId, allShares ->
+        val selectedShare = allShares
+            .firstOrNull { it.id == selectedShareId.value() }
+            ?: allShares.firstOrNull { it.id == navShareId.value() }
+            ?: allShares.first()
+        SharesWrapper(allShares, selectedShare)
+    }
+
+    private data class SharesWrapper(
+        val shareList: List<ShareUiModel>,
+        val currentShare: ShareUiModel
+    )
 
     private val noteItemWrapperState = combine(
         noteItemState,
@@ -53,14 +96,15 @@ abstract class BaseNoteViewModel(
     )
 
     val noteUiState: StateFlow<CreateUpdateNoteUiState> = combine(
-        shareIdState,
+        sharesWrapperState,
         noteItemWrapperState,
         isLoadingState,
         isItemSavedState,
         isSentToTrashState
-    ) { shareId, noteItemWrapper, isLoading, isItemSaved, isSentToTrash ->
+    ) { shareWrapper, noteItemWrapper, isLoading, isItemSaved, isSentToTrash ->
         CreateUpdateNoteUiState(
-            shareId = shareId,
+            shareList = shareWrapper.shareList,
+            selectedShareId = shareWrapper.currentShare,
             noteItem = noteItemWrapper.noteItem,
             errorList = noteItemWrapper.noteItemValidationErrors,
             isLoadingState = isLoading,
@@ -85,8 +129,11 @@ abstract class BaseNoteViewModel(
         noteItemState.update { it.copy(note = value) }
     }
 
-    fun onEmitSnackbarMessage(snackbarMessage: NoteSnackbarMessage) =
-        viewModelScope.launch {
-            snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
-        }
+    fun changeVault(shareId: ShareId) = viewModelScope.launch {
+        selectedShareIdState.update { shareId.toOption() }
+    }
+
+    companion object {
+        private const val TAG = "BaseNoteViewModel"
+    }
 }

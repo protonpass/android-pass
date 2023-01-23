@@ -15,26 +15,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.topbar.TopBarLoading
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import proton.android.pass.composecomponents.impl.topbar.icon.CrossBackIcon
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.R
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun NoteTopBar(
     modifier: Modifier = Modifier,
-    shareId: ShareId?,
+    shareUiModel: ShareUiModel?,
     topBarTitle: String,
     topBarActionName: String,
     isLoadingState: IsLoadingState,
     onUpClick: () -> Unit,
-    onEmitSnackbarMessage: (NoteSnackbarMessage) -> Unit,
     onSubmit: (ShareId) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -46,13 +46,12 @@ fun NoteTopBar(
         navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
         actions = {
             IconButton(
+                enabled = isLoadingState == IsLoadingState.NotLoading && shareUiModel != null,
                 onClick = {
-                    keyboardController?.hide()
-                    focusManager.clearFocus()
-                    if (shareId == null) {
-                        onEmitSnackbarMessage(NoteSnackbarMessage.EmptyShareIdError)
-                    } else {
-                        onSubmit(shareId)
+                    shareUiModel?.id?.let {
+                        keyboardController?.hide()
+                        focusManager.clearFocus()
+                        onSubmit(it)
                     }
                 },
                 modifier = Modifier.padding(end = 10.dp)
@@ -82,12 +81,11 @@ fun NoteTopBarPreview(
         Surface {
             NoteTopBar(
                 isLoadingState = IsLoadingState.from(input.second),
-                shareId = null,
+                shareUiModel = ShareUiModel(ShareId(""), ""),
                 topBarTitle = stringResource(R.string.title_create_note),
                 topBarActionName = stringResource(R.string.action_save),
                 onUpClick = {},
-                onSubmit = {},
-                onEmitSnackbarMessage = {}
+                onSubmit = {}
             )
         }
     }

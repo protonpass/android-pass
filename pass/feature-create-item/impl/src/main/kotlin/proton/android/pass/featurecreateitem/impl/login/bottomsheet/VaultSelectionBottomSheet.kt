@@ -18,7 +18,7 @@ import proton.pass.domain.ShareId
 fun VaultSelectionBottomSheet(
     modifier: Modifier = Modifier,
     shareList: List<ShareUiModel>,
-    selectedShare: ShareUiModel,
+    selectedShare: ShareUiModel?,
     onVaultClick: (ShareId) -> Unit
 ) {
     Column(modifier = modifier) {
@@ -31,7 +31,7 @@ fun VaultSelectionBottomSheet(
                 .map {
                     createVaultBottomSheetItem(
                         shareUiModel = it,
-                        isSelected = it.id == selectedShare.id,
+                        isSelected = it.id == selectedShare?.id,
                         onVaultClick = onVaultClick
                     )
                 }

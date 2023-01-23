@@ -1,16 +1,15 @@
 package proton.android.pass.featurecreateitem.impl.note
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.pass.domain.ShareId
 
 @Immutable
 data class CreateUpdateNoteUiState(
-    val shareId: Option<ShareId>,
+    val shareList: List<ShareUiModel>,
+    val selectedShareId: ShareUiModel?,
     val noteItem: NoteItem,
     val errorList: Set<NoteItemValidationErrors>,
     val isLoadingState: IsLoadingState,
@@ -19,7 +18,8 @@ data class CreateUpdateNoteUiState(
 ) {
     companion object {
         val Initial = CreateUpdateNoteUiState(
-            shareId = None,
+            shareList = emptyList(),
+            selectedShareId = null,
             isLoadingState = IsLoadingState.NotLoading,
             noteItem = NoteItem.Empty,
             errorList = emptySet(),

@@ -16,6 +16,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetShareById
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
@@ -23,6 +24,7 @@ import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.InitE
 import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.ItemUpdateError
 import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.NoteMovedToTrash
 import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.NoteMovedToTrashError
+import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.NoteUpdated
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.Item
@@ -37,8 +39,9 @@ class UpdateNoteViewModel @Inject constructor(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val trashItem: TrashItem,
     private val encryptionContextProvider: EncryptionContextProvider,
+    observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
-) : BaseNoteViewModel(snackbarMessageRepository, savedStateHandle) {
+) : BaseNoteViewModel(observeVaults, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -52,8 +55,8 @@ class UpdateNoteViewModel @Inject constructor(
             isLoadingState.update { IsLoadingState.Loading }
             val userId = accountManager.getPrimaryUserId()
                 .first { userId -> userId != null }
-            if (userId != null && shareId is Some && itemId is Some) {
-                itemRepository.getById(userId, shareId.value, itemId.value)
+            if (userId != null && navShareId is Some && itemId is Some) {
+                itemRepository.getById(userId, navShareId.value, itemId.value)
                     .onSuccess { item: Item ->
                         _item = item
                         noteItemState.update {
@@ -99,6 +102,7 @@ class UpdateNoteViewModel @Inject constructor(
                                     )
                                 }
                             }
+                            snackbarMessageRepository.emitSnackbarMessage(NoteUpdated)
                         }
                         .onError {
                             val defaultMessage = "Update item error"

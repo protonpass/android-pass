@@ -13,19 +13,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableList
+import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.buttons.PassOutlinedButton
 import proton.android.pass.composecomponents.impl.form.NoteInput
 import proton.android.pass.composecomponents.impl.form.TitleInput
 import proton.android.pass.featurecreateitem.impl.R
-import me.proton.core.compose.theme.ProtonTheme
 
 @Composable
 internal fun LoginItemForm(
     modifier: Modifier = Modifier,
     isEditAllowed: Boolean,
     loginItem: LoginItem,
+    selectedShare: ShareUiModel?,
     showCreateAliasButton: Boolean,
-    canDelete: Boolean,
+    isUpdate: Boolean,
     onTitleChange: (String) -> Unit,
     onTitleRequiredError: Boolean,
     onUsernameChange: (String) -> Unit,
@@ -38,6 +40,7 @@ internal fun LoginItemForm(
     onCreateAliasClick: () -> Unit,
     canUpdateUsername: Boolean,
     onAliasOptionsClick: () -> Unit,
+    onVaultSelectorClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
     Column(
@@ -81,8 +84,17 @@ internal fun LoginItemForm(
             enabled = isEditAllowed,
             onChange = onNoteChange
         )
-
-        if (canDelete) {
+        if (!isUpdate) {
+            selectedShare?.name?.let {
+                Spacer(Modifier.height(height = 20.dp))
+                VaultSelector(
+                    contentText = it,
+                    isEditAllowed = true,
+                    onClick = onVaultSelectorClick
+                )
+            }
+        }
+        if (isUpdate) {
             Spacer(Modifier.height(height = 24.dp))
             PassOutlinedButton(
                 modifier = Modifier.fillMaxWidth(),

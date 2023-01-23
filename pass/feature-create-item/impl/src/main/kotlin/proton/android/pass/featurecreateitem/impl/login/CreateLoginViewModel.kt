@@ -20,7 +20,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
-import proton.android.pass.data.api.usecases.ObserveActiveShare
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.ItemCreationError
 import proton.android.pass.log.api.PassLogger
@@ -35,13 +35,13 @@ class CreateLoginViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     createAlias: CreateAlias,
     accountManager: AccountManager,
-    observeActiveShare: ObserveActiveShare,
+    observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(
     createAlias,
     accountManager,
     snackbarMessageRepository,
-    observeActiveShare,
+    observeVaults,
     savedStateHandle
 ) {
 
@@ -91,29 +91,21 @@ class CreateLoginViewModel @Inject constructor(
         }
     }
 
-    fun createItem() {
-        when (val shareId = loginUiState.value.shareId) {
-            None -> viewModelScope.launch {
-                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
-            }
-            is Some -> createItem(shareId.value)
-        }
-    }
-
-    fun createItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
+    fun createItem() = viewModelScope.launch(coroutineExceptionHandler) {
         val shouldCreate = validateItem()
         if (!shouldCreate) return@launch
 
         isLoadingState.update { IsLoadingState.Loading }
+        val shareId = loginUiState.value.selectedShareId
         val userId = accountManager.getPrimaryUserId()
             .firstOrNull { userId -> userId != null }
-        if (userId != null) {
+        if (userId != null && shareId != null) {
             val aliasItemOption = aliasItemState.value
             if (aliasItemOption is Some) {
-                performCreateAlias(userId, shareId, aliasItemOption.value)
-                    .map { performCreateItem(userId, shareId) }
+                performCreateAlias(userId, shareId.id, aliasItemOption.value)
+                    .map { performCreateItem(userId, shareId.id) }
             } else {
-                performCreateItem(userId, shareId)
+                performCreateItem(userId, shareId.id)
             }
         } else {
             snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
@@ -146,7 +138,6 @@ class CreateLoginViewModel @Inject constructor(
                 snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
             }
     }
-
 
     fun onRemoveAlias() {
         loginItemState.update { it.copy(username = "") }

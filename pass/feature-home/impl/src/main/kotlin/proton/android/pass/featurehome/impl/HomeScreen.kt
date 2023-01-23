@@ -67,33 +67,25 @@ fun HomeScreen(
                     onCreateLogin = {
                         scope.launch {
                             bottomSheetState.hide()
-                            uiState.homeListUiState.selectedShare.value()?.let {
-                                homeScreenNavigation.toCreateLogin(it)
-                            }
+                            homeScreenNavigation.toCreateLogin(uiState.homeListUiState.selectedShare)
                         }
                     },
                     onCreateAlias = {
                         scope.launch {
                             bottomSheetState.hide()
-                            uiState.homeListUiState.selectedShare.value()?.let {
-                                homeScreenNavigation.toCreateAlias(it)
-                            }
+                            homeScreenNavigation.toCreateAlias(uiState.homeListUiState.selectedShare)
                         }
                     },
                     onCreateNote = {
                         scope.launch {
                             bottomSheetState.hide()
-                            uiState.homeListUiState.selectedShare.value()?.let {
-                                homeScreenNavigation.toCreateNote(it)
-                            }
+                            homeScreenNavigation.toCreateNote(uiState.homeListUiState.selectedShare)
                         }
                     },
                     onCreatePassword = {
                         scope.launch {
                             bottomSheetState.hide()
-                            uiState.homeListUiState.selectedShare.value()?.let {
-                                homeScreenNavigation.toCreatePassword(it)
-                            }
+                            homeScreenNavigation.toCreatePassword()
                         }
                     }
                 )

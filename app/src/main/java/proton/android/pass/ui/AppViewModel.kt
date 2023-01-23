@@ -35,8 +35,8 @@ import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.GetCurrentShare
 import proton.android.pass.data.api.usecases.GetCurrentUserId
-import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.RefreshShares
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
@@ -49,14 +49,13 @@ import proton.android.pass.presentation.navigation.drawer.ItemTypeSection
 import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection
 import proton.pass.domain.Share
 import proton.pass.domain.entity.NewVault
-import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
 
 @HiltViewModel
 class AppViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     preferenceRepository: UserPreferencesRepository,
-    observeAllShares: ObserveAllShares,
+    observeVaults: ObserveVaults,
     itemRepository: ItemRepository,
     networkMonitor: NetworkMonitor,
     private val getCurrentUserId: GetCurrentUserId,
@@ -81,7 +80,7 @@ class AppViewModel @Inject constructor(
         .asResultWithoutLoading()
         .map { getThemePreference(it) }
 
-    private val allShareUiModelFlow: Flow<List<ShareUiModel>> = observeAllShares()
+    private val allShareUiModelFlow: Flow<List<ShareUiModel>> = observeVaults()
         .map { shares ->
             when (shares) {
                 Result.Loading -> emptyList()
@@ -90,16 +89,9 @@ class AppViewModel @Inject constructor(
                     PassLogger.e(TAG, shares.exception ?: Exception(message), message)
                     emptyList()
                 }
-                is Result.Success -> shares.data
-            }
-        }
-        .map { list ->
-            list.mapNotNull { share ->
-                val content = share.content ?: return@mapNotNull null
-                val decrypted =
-                    cryptoContext.keyStoreCrypto.decrypt(content)
-                val parsed = VaultV1.Vault.parseFrom(decrypted.array)
-                ShareUiModel(share.id, parsed.name)
+                is Result.Success ->
+                    shares.data
+                        .map { ShareUiModel(it.shareId, it.name) }
             }
         }
         .distinctUntilChanged()

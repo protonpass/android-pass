@@ -22,34 +22,39 @@ platform :android do
     gradle(task: "multiModuleDetekt")
   end
 
-  desc "Assemble the devDebug apk"
-  lane :assembleDevDebug do
-    gradle(task: ":app:assembleDevDebug")
+  desc "Assemble the DevBlackDebug apk"
+  lane :assembleDevBlackDebug do
+    gradle(task: ":app:assembleDevBlackDebug")
   end
 
-  desc "Assemble the alphaDebug apk"
-  lane :assembleAlphaDebug do
-    gradle(task: ":app:assembleAlphaDebug")
+  desc "Assemble the DevBlackRelease apk"
+  lane :assembleDevBlackRelease do
+    gradle(task: ":app:assembleDevBlackRelease")
   end
 
-  desc "Assemble the prodDebug apk"
-  lane :assembleProdDebug do
-    gradle(task: ":app:assembleProdDebug")
+  desc "Assemble the AlphaProdDebug apk"
+  lane :assembleAlphaProdDebug do
+    gradle(task: ":app:assembleAlphaProdDebug")
   end
 
-  desc "Assemble the devRelease apk"
-  lane :assembleDevRelease do
-    gradle(task: ":app:assembleDevRelease")
+  desc "Assemble the AlphaProdRelease apk"
+  lane :assembleAlphaProdRelease do
+    gradle(task: ":app:assembleAlphaProdRelease")
   end
 
-  desc "Assemble the alphaRelease apk"
-  lane :assembleAlphaRelease do
-    gradle(task: ":app:assembleAlphaRelease")
+  desc "Assemble the PlayProdDebug apk"
+  lane :assemblePlayProdDebug do
+    gradle(task: ":app:assemblePlayProdDebug")
   end
 
-  desc "Creates the prodRelease bundle"
-  lane :bundleProdRelease do
-    gradle(task: ":app:bundleProdRelease")
+  desc "Assemble the PlayBlackRelease apk"
+  lane :assemblePlayBlackRelease do
+    gradle(task: ":app:assemblePlayBlackRelease")
+  end
+
+  desc "Creates the PlayProdRelease bundle"
+  lane :bundlePlayProdRelease do
+    gradle(task: ":app:bundlePlayProdRelease")
   end
 
   desc "Assemble the androidTest apks"
@@ -80,14 +85,21 @@ platform :android do
   lane :deployToFirebaseDevGroup do
     sh("../scripts/ci/installFirebase.sh")
     sh("../scripts/ci/setupGoogleJson.sh")
-    sh("../scripts/uploadApkToFirebase.sh dev")
+    sh("../scripts/uploadApkToFirebase.sh devBlack")
   end
 
   desc "Publish alpha build to firebase group"
   lane :deployToFirebaseAlphaGroup do
     sh("../scripts/ci/installFirebase.sh")
     sh("../scripts/ci/setupGoogleJson.sh")
-    sh("../scripts/uploadApkToFirebase.sh alpha")
+    sh("../scripts/uploadApkToFirebase.sh alphaProd")
+  end
+
+  desc "Publish prod black build to firebase group"
+  lane :deployToFirebaseProdGroup do
+    sh("../scripts/ci/installFirebase.sh")
+    sh("../scripts/ci/setupGoogleJson.sh")
+    sh("../scripts/uploadApkToFirebase.sh playBlack")
   end
 
   desc "Publish internal prod bundle"
@@ -96,7 +108,7 @@ platform :android do
        json_key: '../tmp/play-service-account.json',
        track: 'internal',
        release_status: 'draft',
-       aab: '../app/build/outputs/bundle/prodRelease/app-prod-release.aab'
+       aab: '../app/build/outputs/bundle/playProdRelease/app-play-prod-release.aab'
      )
   end
 end

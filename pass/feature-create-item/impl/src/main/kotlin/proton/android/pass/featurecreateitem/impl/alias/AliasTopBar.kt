@@ -15,15 +15,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.topbar.TopBarLoading
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import proton.android.pass.composecomponents.impl.topbar.icon.CrossBackIcon
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.R
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -31,12 +32,11 @@ import proton.pass.domain.ShareId
 fun AliasTopBar(
     modifier: Modifier = Modifier,
     @StringRes topBarTitle: Int,
-    onUpClick: () -> Unit,
+    shareUiModel: ShareUiModel?,
     isDraft: Boolean,
     isButtonEnabled: IsButtonEnabled,
-    shareId: ShareId?,
     isLoadingState: IsLoadingState,
-    onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit,
+    onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -51,19 +51,17 @@ fun AliasTopBar(
         navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
         actions = {
             IconButton(
-                enabled = buttonEnabled && isLoadingState == IsLoadingState.NotLoading,
+                enabled = buttonEnabled && isLoadingState == IsLoadingState.NotLoading && shareUiModel != null,
                 onClick = {
-                    keyboardController?.hide()
-                    if (shareId == null) {
-                        onEmitSnackbarMessage(AliasSnackbarMessage.EmptyShareIdError)
-                    } else {
-                        onSubmit(shareId)
+                    shareUiModel?.id?.let {
+                        keyboardController?.hide()
+                        onSubmit(it)
                     }
                 },
                 modifier = Modifier.padding(end = 10.dp)
             ) {
                 when (isLoadingState) {
-                    IsLoadingState.Loading -> { TopBarLoading() }
+                    IsLoadingState.Loading -> TopBarLoading()
                     IsLoadingState.NotLoading -> {
                         val saveText = if (isDraft) {
                             stringResource(R.string.alias_action_save_fill)
@@ -99,9 +97,8 @@ fun AliasTopBarPreview(
                 isButtonEnabled = input.second.buttonEnabled,
                 isLoadingState = input.second.isLoadingState,
                 onUpClick = {},
-                onEmitSnackbarMessage = {},
                 onSubmit = {},
-                shareId = null
+                shareUiModel = ShareUiModel(ShareId(""), "")
             )
         }
     }

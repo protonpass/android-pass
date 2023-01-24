@@ -9,17 +9,21 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
+import proton.android.pass.featurecreateitem.impl.alias.AliasBottomSheetContentType.AliasOptions
+import proton.android.pass.featurecreateitem.impl.alias.AliasBottomSheetContentType.VaultSelection
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankAlias
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.InvalidAliasContent
-import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.EmptyShareIdError
 import proton.android.pass.featurecreateitem.impl.alias.mailboxes.SelectMailboxesDialog
+import proton.android.pass.featurecreateitem.impl.login.bottomsheet.VaultSelectionBottomSheet
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -31,7 +35,7 @@ internal fun AliasContent(
     uiState: CreateUpdateAliasUiState,
     @StringRes topBarTitle: Int,
     canEdit: Boolean,
-    canDelete: Boolean,
+    isUpdate: Boolean,
     isEditAllowed: Boolean,
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
@@ -42,34 +46,48 @@ internal fun AliasContent(
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onAliasChange: (String) -> Unit,
-    onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit,
-    onDeleteAlias: () -> Unit
+    onDeleteAlias: () -> Unit,
+    onVaultSelect: (ShareId) -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
+    var currentBottomSheet by remember { mutableStateOf(AliasOptions) }
 
     // If the BottomSheet is visible and the user presses back, dismiss the BottomSheet
     BackHandler(enabled = bottomSheetState.isVisible) {
         scope.launch { bottomSheetState.hide() }
     }
 
-    val (showMailboxDialog, setShowMailboxDialog) = remember { mutableStateOf(false) }
+    var showMailboxDialog by remember { mutableStateOf(false) }
 
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
-            AliasBottomSheetContents(
-                modelState = uiState.aliasItem,
-                onSuffixSelect = { suffix ->
-                    scope.launch {
-                        bottomSheetState.hide()
-                        onSuffixChange(suffix)
+            when (currentBottomSheet) {
+                AliasOptions -> AliasBottomSheetContents(
+                    modelState = uiState.aliasItem,
+                    onSuffixSelect = { suffix ->
+                        scope.launch {
+                            bottomSheetState.hide()
+                            onSuffixChange(suffix)
+                        }
                     }
-                }
-            )
+                )
+                VaultSelection -> VaultSelectionBottomSheet(
+                    shareList = uiState.shareList,
+                    selectedShare = uiState.selectedShareId!!,
+                    onVaultClick = {
+                        onVaultSelect(it)
+                        scope.launch {
+                            bottomSheetState.hide()
+                        }
+                    }
+                )
+            }
+
         }
     ) {
         Scaffold(
@@ -80,17 +98,17 @@ internal fun AliasContent(
                     onUpClick = onUpClick,
                     isDraft = uiState.isDraft,
                     isButtonEnabled = uiState.isApplyButtonEnabled,
-                    shareId = uiState.shareId,
+                    shareUiModel = uiState.selectedShareId,
                     isLoadingState = uiState.isLoadingState,
-                    onEmitSnackbarMessage = onEmitSnackbarMessage,
                     onSubmit = onSubmit
                 )
             }
         ) { padding ->
             CreateAliasForm(
-                state = uiState.aliasItem,
+                aliasItem = uiState.aliasItem,
+                selectedShare = uiState.selectedShareId,
                 canEdit = canEdit,
-                canDelete = canDelete,
+                isUpdate = isUpdate,
                 isEditAllowed = isEditAllowed,
                 modifier = Modifier.padding(padding),
                 onTitleRequiredError = uiState.errorList.contains(BlankTitle),
@@ -99,35 +117,39 @@ internal fun AliasContent(
                 onSuffixClick = {
                     scope.launch {
                         if (canEdit) {
+                            currentBottomSheet = AliasOptions
                             bottomSheetState.show()
                         }
                     }
                 },
                 onMailboxClick = {
                     scope.launch {
-                        setShowMailboxDialog(true)
+                        showMailboxDialog = true
                     }
                 },
                 onTitleChange = { onTitleChange(it) },
                 onNoteChange = { onNoteChange(it) },
                 onAliasChange = { onAliasChange(it) },
-                onDeleteAliasClick = onDeleteAlias
+                onDeleteAliasClick = onDeleteAlias,
+                onVaultSelectorClick = {
+                    scope.launch {
+                        currentBottomSheet = VaultSelection
+                        bottomSheetState.show()
+                    }
+                }
             )
 
             SelectMailboxesDialog(
                 show = showMailboxDialog,
                 mailboxes = uiState.aliasItem.mailboxes,
                 onMailboxesChanged = {
-                    setShowMailboxDialog(false)
+                    showMailboxDialog = false
                     onMailboxesChanged(it)
                 },
-                onDismiss = {
-                    setShowMailboxDialog(false)
-                }
+                onDismiss = { showMailboxDialog = false }
             )
-
-            IsAliasSavedLaunchedEffect(uiState, onEmitSnackbarMessage, onAliasCreated)
-            IsAliasDraftSavedLaunchedEffect(uiState, onEmitSnackbarMessage, onAliasDraftCreated)
+            IsAliasSavedLaunchedEffect(uiState, onAliasCreated)
+            IsAliasDraftSavedLaunchedEffect(uiState, onAliasDraftCreated)
         }
     }
 }
@@ -135,18 +157,13 @@ internal fun AliasContent(
 @Composable
 private fun IsAliasDraftSavedLaunchedEffect(
     uiState: CreateUpdateAliasUiState,
-    onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit,
     onAliasDraftCreated: (ShareId, AliasItem) -> Unit
 ) {
     val isAliasDraftSaved = uiState.isAliasDraftSavedState
     if (isAliasDraftSaved is AliasDraftSavedState.Success) {
-        LaunchedEffect(Unit) {
-            when (uiState.shareId) {
-                null -> onEmitSnackbarMessage(EmptyShareIdError)
-                else -> onAliasDraftCreated(
-                    uiState.shareId,
-                    isAliasDraftSaved.aliasItem
-                )
+        LaunchedEffect(uiState.selectedShareId) {
+            uiState.selectedShareId?.let {
+                onAliasDraftCreated(it.id, isAliasDraftSaved.aliasItem)
             }
         }
     }
@@ -155,19 +172,13 @@ private fun IsAliasDraftSavedLaunchedEffect(
 @Composable
 private fun IsAliasSavedLaunchedEffect(
     uiState: CreateUpdateAliasUiState,
-    onEmitSnackbarMessage: (AliasSnackbarMessage) -> Unit,
     onAliasCreated: (ShareId, ItemId, String) -> Unit
 ) {
     val isAliasSaved = uiState.isAliasSavedState
     if (isAliasSaved is AliasSavedState.Success) {
-        LaunchedEffect(Unit) {
-            when (uiState.shareId) {
-                null -> onEmitSnackbarMessage(EmptyShareIdError)
-                else -> onAliasCreated(
-                    uiState.shareId,
-                    isAliasSaved.itemId,
-                    isAliasSaved.alias
-                )
+        LaunchedEffect(uiState.selectedShareId) {
+            uiState.selectedShareId?.let {
+                onAliasCreated(it.id, isAliasSaved.itemId, isAliasSaved.alias)
             }
         }
     }

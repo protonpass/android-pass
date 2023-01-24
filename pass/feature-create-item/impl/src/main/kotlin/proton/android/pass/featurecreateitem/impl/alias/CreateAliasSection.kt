@@ -15,15 +15,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import proton.android.pass.featurecreateitem.impl.R
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.featurecreateitem.impl.R
 
 @Composable
 internal fun CreateAliasSection(
     modifier: Modifier = Modifier,
     state: AliasItem,
     canEdit: Boolean,
+    canSelect: Boolean,
     onAliasRequiredError: Boolean,
     onInvalidAliasError: Boolean,
     onChange: (String) -> Unit,
@@ -40,7 +41,7 @@ internal fun CreateAliasSection(
         AliasSelector(
             modifier = Modifier.padding(top = 8.dp),
             contentText = state.selectedSuffix?.suffix ?: "",
-            enabled = canEdit,
+            enabled = canSelect,
             onClick = onSuffixClick
         )
         if (state.aliasToBeCreated != null) {
@@ -78,6 +79,7 @@ fun CreateAliasSectionPreview(
             CreateAliasSection(
                 state = param.aliasItem,
                 canEdit = param.canEdit,
+                canSelect = true,
                 onAliasRequiredError = param.onAliasRequiredError,
                 onInvalidAliasError = param.onInvalidAliasError,
                 onChange = {},

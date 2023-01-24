@@ -1,11 +1,13 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.user.domain.UserManager
 import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.map
 import proton.android.pass.data.api.errors.ShareContentNotAvailableError
@@ -18,15 +20,18 @@ import javax.inject.Inject
 
 class ObserveVaultsImpl @Inject constructor(
     private val accountManager: AccountManager,
+    private val userManager: UserManager,
     private val shareRepository: ShareRepository,
     private val cryptoContext: CryptoContext
 ) : ObserveVaults {
 
     override fun invoke(): Flow<Result<List<Vault>>> =
         accountManager.getPrimaryUserId()
+            .filterNotNull()
+            .flatMapLatest { userManager.observeUser(it) }
             .flatMapLatest { primaryUserId ->
                 if (primaryUserId != null) {
-                    shareRepository.observeAllShares(primaryUserId)
+                    shareRepository.observeAllShares(primaryUserId.userId)
                 } else {
                     flowOf(Result.Error(UserIdNotAvailableError()))
                 }

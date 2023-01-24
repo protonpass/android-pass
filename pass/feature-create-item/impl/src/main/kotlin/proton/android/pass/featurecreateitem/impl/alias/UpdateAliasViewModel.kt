@@ -21,16 +21,23 @@ import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
+import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.ObserveAliasOptions
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
+import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.AliasUpdated
 import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.InitError
+import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.ItemCreationError
+import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.ItemUpdateError
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.AliasDetails
 import proton.pass.domain.Item
@@ -47,15 +54,19 @@ class UpdateAliasViewModel @Inject constructor(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val updateAliasUseCase: UpdateAlias,
     private val encryptionContextProvider: EncryptionContextProvider,
+    observeAliasOptions: ObserveAliasOptions,
+    observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
-) : BaseAliasViewModel(snackbarMessageRepository, savedStateHandle) {
+) : BaseAliasViewModel(observeAliasOptions, observeVaults, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
 
     private val itemId: Option<ItemId> =
-        Option.fromNullable(savedStateHandle.get<String>("itemId")?.let { ItemId(it) })
+        savedStateHandle.get<String>(CommonNavArgId.ItemId.key)
+            .toOption()
+            .map { ItemId(it) }
 
     private val _aliasDeletedState: MutableStateFlow<ItemDeletedState> =
         MutableStateFlow(ItemDeletedState.Unknown)
@@ -112,8 +123,8 @@ class UpdateAliasViewModel @Inject constructor(
     fun onDeleteAlias() = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        if (userId != null && shareId is Some && itemId is Some) {
-            itemRepository.trashItem(userId, shareId.value, itemId.value)
+        if (userId != null && navShareId is Some && itemId is Some) {
+            itemRepository.trashItem(userId, navShareId.value, itemId.value)
             snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.AliasMovedToTrash)
             _aliasDeletedState.update { ItemDeletedState.Deleted }
         } else {
@@ -127,8 +138,8 @@ class UpdateAliasViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.Loading }
 
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        if (userId != null && shareId is Some && itemId is Some) {
-            fetchInitialData(userId, shareId.value, itemId.value)
+        if (userId != null && navShareId is Some && itemId is Some) {
+            fetchInitialData(userId, navShareId.value, itemId.value)
         } else {
             showError("Empty user/share/item Id", InitError)
         }
@@ -217,16 +228,17 @@ class UpdateAliasViewModel @Inject constructor(
                         )
                     }
                     isLoadingState.update { IsLoadingState.NotLoading }
+                    snackbarMessageRepository.emitSnackbarMessage(AliasUpdated)
                 }
                 .onError {
                     val defaultMessage = "Update alias error"
                     PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
-                    snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.AliasUpdated)
+                    snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
                     isLoadingState.update { IsLoadingState.NotLoading }
                 }
         } else {
             PassLogger.i(TAG, "Empty User Id")
-            snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.ItemCreationError)
+            snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
             isLoadingState.update { IsLoadingState.NotLoading }
         }
     }

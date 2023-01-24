@@ -31,11 +31,11 @@ android {
             isMinifyEnabled = true
         }
     }
-    flavorDimensions += "default"
+    flavorDimensions += "version"
     productFlavors {
         maybeCreate("dev")
         maybeCreate("alpha")
-        maybeCreate("prod")
+        maybeCreate("play")
     }
 
     compileOptions {

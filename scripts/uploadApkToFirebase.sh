@@ -11,12 +11,15 @@ if [[ -z "$1" ]]; then
 fi
 
 case "$1" in
-    dev)
+    devBlack)
       FIREBASE_APP_ID="${DEV_FIREBASE_APP_ID}"
       FIREBASE_TEST_GROUP="${DEV_FIREBASE_TEST_GROUP}" ;;
-    alpha)
+    alphaProd)
       FIREBASE_APP_ID="${ALPHA_FIREBASE_APP_ID}"
       FIREBASE_TEST_GROUP="${ALPHA_FIREBASE_TEST_GROUP}" ;;
+    playBlack)
+      FIREBASE_APP_ID="${PLAY_FIREBASE_APP_ID}"
+      FIREBASE_TEST_GROUP="${PLAY_FIREBASE_TEST_GROUP}" ;;
     *)
       echo "Unsupported flavour"
       exit 1 ;;

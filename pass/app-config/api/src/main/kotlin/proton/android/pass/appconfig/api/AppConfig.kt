@@ -13,23 +13,40 @@ interface AppConfig {
     val sentryDSN: String?
 }
 
-enum class BuildFlavor {
-    DEV,
-    ALPHA,
-    PROD;
+enum class BuildEnv {
+    BLACK,
+    PROD
+}
+
+sealed class BuildFlavor(val env: BuildEnv) {
+    class Dev(env: BuildEnv) : BuildFlavor(env)
+    class Alpha(env: BuildEnv) : BuildFlavor(env)
+    class Play(env: BuildEnv) : BuildFlavor(env)
 
     companion object {
         fun from(string: String): BuildFlavor = when (string) {
-            "dev" -> DEV
-            "alpha" -> ALPHA
-            "prod" -> PROD
+            "devBlack" -> Dev(BuildEnv.BLACK)
+            "devProd" -> Dev(BuildEnv.PROD)
+            "alphaBlack" -> Alpha(BuildEnv.BLACK)
+            "alphaProd" -> Alpha(BuildEnv.PROD)
+            "playBlack" -> Play(BuildEnv.BLACK)
+            "playProd" -> Play(BuildEnv.PROD)
             else -> throw UnsupportedOperationException("Unsupported flavour")
         }
 
         fun BuildFlavor.toValue(): String = when (this) {
-            DEV -> "dev"
-            ALPHA -> "alpha"
-            PROD -> "prod"
+            is Dev -> when (this.env) {
+                BuildEnv.BLACK -> "devBlack"
+                BuildEnv.PROD -> "devProd"
+            }
+            is Alpha -> when (this.env) {
+                BuildEnv.BLACK -> "alphaBlack"
+                BuildEnv.PROD -> "alphaProd"
+            }
+            is Play -> when (this.env) {
+                BuildEnv.BLACK -> "playBlack"
+                BuildEnv.PROD -> "playProd"
+            }
         }
     }
 }

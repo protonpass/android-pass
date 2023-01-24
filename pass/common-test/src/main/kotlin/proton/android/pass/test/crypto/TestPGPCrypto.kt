@@ -4,6 +4,7 @@ import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DataPacket
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
+import me.proton.core.crypto.common.pgp.DecryptedMimeMessage
 import me.proton.core.crypto.common.pgp.DecryptedText
 import me.proton.core.crypto.common.pgp.EncryptedFile
 import me.proton.core.crypto.common.pgp.EncryptedMessage
@@ -58,6 +59,15 @@ object TestPGPCrypto : PGPCrypto {
         throw IllegalStateException("This method should not be called")
     }
 
+    override fun decryptAndVerifyMimeMessage(
+        message: EncryptedMessage,
+        publicKeys: List<Armored>,
+        unlockedKeys: List<Unarmored>,
+        time: VerificationTime
+    ): DecryptedMimeMessage {
+        throw IllegalStateException("This method should not be called")
+    }
+
     override fun decryptData(data: DataPacket, sessionKey: SessionKey): ByteArray {
         throw IllegalStateException("This method should not be called")
     }
@@ -86,6 +96,13 @@ object TestPGPCrypto : PGPCrypto {
     }
 
     override fun decryptText(message: EncryptedMessage, unlockedKey: Unarmored): String {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun decryptMimeMessage(
+        message: EncryptedMessage,
+        unlockedKeys: List<Unarmored>
+    ): DecryptedMimeMessage {
         throw IllegalStateException("This method should not be called")
     }
 

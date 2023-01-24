@@ -10,7 +10,6 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.PassAppConfig
 import proton.android.pass.appconfig.api.AppConfig
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.domain.ClientSecret
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import javax.inject.Singleton
@@ -28,10 +27,6 @@ object ApplicationModule {
     @Singleton
     fun provideAppStore() =
         AppStore.GooglePlay
-
-    @Provides
-    @ClientSecret
-    fun provideClientSecret(): String = ""
 
     @Provides
     @Singleton

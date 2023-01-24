@@ -27,11 +27,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-    flavorDimensions += "default"
+    flavorDimensions += "version"
     productFlavors {
         maybeCreate("dev")
         maybeCreate("alpha")
-        maybeCreate("prod")
+        maybeCreate("play")
     }
 
     buildFeatures {

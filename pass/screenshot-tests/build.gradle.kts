@@ -12,11 +12,11 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = 31
     }
-    flavorDimensions += "default"
+    flavorDimensions += "version"
     productFlavors {
         maybeCreate("dev")
         maybeCreate("alpha")
-        maybeCreate("prod")
+        maybeCreate("play")
     }
     buildFeatures {
         compose = true

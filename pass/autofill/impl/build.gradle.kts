@@ -16,11 +16,11 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
     }
 
-    flavorDimensions += "default"
+    flavorDimensions += "version"
     productFlavors {
         maybeCreate("dev")
         maybeCreate("alpha")
-        maybeCreate("prod")
+        maybeCreate("play")
     }
 
     buildFeatures {

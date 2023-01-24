@@ -118,13 +118,14 @@ abstract class AppDatabase :
     UserSettingsDatabase {
 
     companion object {
-        const val VERSION = 7
+        const val VERSION = 8
         const val DB_NAME = "db-passkey"
 
         val migrations: List<Migration> = listOf(
             AppDatabaseMigrations.MIGRATION_1_2,
             AppDatabaseMigrations.MIGRATION_2_3,
-            AppDatabaseMigrations.MIGRATION_3_4
+            AppDatabaseMigrations.MIGRATION_3_4,
+            AppDatabaseMigrations.MIGRATION_7_8,
         )
 
         fun buildDatabase(context: Context): AppDatabase =

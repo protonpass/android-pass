@@ -6,7 +6,6 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.AliasCreated
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.R
 
@@ -34,13 +33,10 @@ fun CreateAlias(
         uiState = viewState,
         topBarTitle = R.string.title_create_alias,
         canEdit = true,
-        canDelete = false,
+        isUpdate = false,
         isEditAllowed = viewState.isLoadingState == IsLoadingState.NotLoading,
         onUpClick = onUpClick,
-        onAliasCreated = { _, _, alias ->
-            viewModel.onEmitSnackbarMessage(AliasCreated)
-            onAliasCreated(alias)
-        },
+        onAliasCreated = { _, _, alias -> onAliasCreated(alias) },
         onAliasDraftCreated = { _, aliasItem -> onAliasDraftCreated(aliasItem) },
         onSubmit = { shareId -> viewModel.createAlias(shareId) },
         onSuffixChange = { viewModel.onSuffixChange(it) },
@@ -48,7 +44,7 @@ fun CreateAlias(
         onTitleChange = { viewModel.onTitleChange(it) },
         onNoteChange = { viewModel.onNoteChange(it) },
         onAliasChange = { viewModel.onAliasChange(it) },
-        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
-        onDeleteAlias = {} // We cannot delete alias from the Create screen
+        onDeleteAlias = {}, // We cannot delete alias from the Create screen
+        onVaultSelect = { viewModel.changeVault(it) }
     )
 }

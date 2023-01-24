@@ -30,7 +30,7 @@ androidx-work = "2.7.1"
 # CashApp
 turbine = "0.12.1"
 # Core
-core = "9.8.1"
+core = "9.9.0"
 # Dagger
 dagger = "2.44.2"
 # Google

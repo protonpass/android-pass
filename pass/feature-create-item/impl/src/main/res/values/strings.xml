@@ -74,6 +74,7 @@
     <string name="create_alias_empty_share_id">Share Id cannot be empty</string>
     <string name="alias_created">Alias created</string>
     <string name="alias_moved_to_trash">Alias moved to trash</string>
+    <string name="cannot_retrieve_alias_options">Cannot retrieve alias options</string>
     <string name="alias_mailbox_dialog_confirm_button">OK</string>
     <string name="alias_mailbox_dialog_cancel_button">Cancel</string>
     <string name="alias_mailbox_dialog_title">Destination mailbox</string>

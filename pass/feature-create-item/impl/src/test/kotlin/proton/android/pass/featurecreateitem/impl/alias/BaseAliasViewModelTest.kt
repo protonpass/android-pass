@@ -10,6 +10,7 @@ import proton.android.pass.common.api.Result
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.featurecreateitem.impl.alias.CreateUpdateAliasUiState.Companion.Initial
+import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.pass.domain.AliasMailbox
@@ -24,15 +25,18 @@ internal class BaseAliasViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
 
+    private lateinit var snackbarMessageRepository: TestSnackbarMessageRepository
     private lateinit var observeVaults: TestObserveVaults
     private lateinit var observeAliasOptions: TestObserveAliasOptions
     private lateinit var baseAliasViewModel: BaseAliasViewModel
 
     @Before
     fun setUp() {
+        snackbarMessageRepository = TestSnackbarMessageRepository()
         observeVaults = TestObserveVaults()
         observeAliasOptions = TestObserveAliasOptions()
         baseAliasViewModel = object : BaseAliasViewModel(
+            snackbarMessageRepository,
             observeAliasOptions,
             observeVaults,
             TestSavedStateHandle.create().apply {

@@ -9,27 +9,41 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.asResult
+import proton.android.pass.common.api.toOption
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.ObserveAliasOptions
+import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.api.SnackbarMessageRepository
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
 import proton.pass.domain.ShareId
 
 abstract class BaseAliasViewModel(
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    observeAliasOptions: ObserveAliasOptions,
+    observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    protected val shareId: Option<ShareId> =
-        savedStateHandle.get<String>(CommonNavArgId.ShareId.key)
-            .toOption()
-            .map { ShareId(it) }
+    protected val navShareId = savedStateHandle.get<String>(CommonNavArgId.ShareId.key)
+        .toOption()
+        .map { ShareId(it) }
+    private val navShareIdState = MutableStateFlow(navShareId)
+    private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
+
     private val title: Option<String> = savedStateHandle
         .get<String>(AliasOptionalNavArgId.Title.key)
         .toOption()
@@ -37,7 +51,36 @@ abstract class BaseAliasViewModel(
         savedStateHandle.get<Boolean>(AliasOptionalNavArgId.IsDraft.key)
     )
 
-    private val shareIdState: Flow<Option<ShareId>> = MutableStateFlow(shareId)
+    private val observeAllVaultsFlow = observeVaults()
+        .map { shares ->
+            when (shares) {
+                Result.Loading -> emptyList()
+                is Result.Error -> {
+                    val message = "Cannot retrieve all shares"
+                    PassLogger.e(TAG, shares.exception ?: Exception(message), message)
+                    emptyList()
+                }
+                is Result.Success -> shares.data.map { ShareUiModel(it.shareId, it.name) }
+            }
+        }
+        .distinctUntilChanged()
+
+    private val sharesWrapperState = combine(
+        navShareIdState,
+        selectedShareIdState,
+        observeAllVaultsFlow
+    ) { navShareId, selectedShareId, allShares ->
+        val selectedShare = allShares
+            .firstOrNull { it.id == selectedShareId.value() }
+            ?: allShares.firstOrNull { it.id == navShareId.value() }
+            ?: allShares.first()
+        SharesWrapper(allShares, selectedShare)
+    }
+
+    protected data class SharesWrapper(
+        val shareList: List<ShareUiModel>,
+        val currentShare: ShareUiModel
+    )
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(
@@ -56,12 +99,81 @@ abstract class BaseAliasViewModel(
         MutableStateFlow(emptySet())
     protected val isApplyButtonEnabledState: MutableStateFlow<IsButtonEnabled> =
         MutableStateFlow(IsButtonEnabled.Disabled)
+    protected val mutableCloseScreenEventFlow: MutableStateFlow<CloseScreenEvent> =
+        MutableStateFlow(CloseScreenEvent.NotClose)
+    private val selectedMailboxListState: MutableStateFlow<List<Int>> =
+        MutableStateFlow(emptyList())
+    private val selectedSuffixState: MutableStateFlow<Option<AliasSuffixUiModel>> =
+        MutableStateFlow(None)
+    private val aliasOptionsState: Flow<Result<AliasOptionsUiModel>> = sharesWrapperState
+        .flatMapLatest { observeAliasOptions(it.currentShare.id) }
+        .map(::AliasOptionsUiModel)
+        .asResult()
+        .onEach {
+            when (it) {
+                is Result.Error -> {
+                    isLoadingState.update { IsLoadingState.NotLoading }
+                    mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
+                }
+                Result.Loading -> isLoadingState.update { IsLoadingState.Loading }
+                is Result.Success -> {
+                    isLoadingState.update { IsLoadingState.NotLoading }
+                    isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
+                }
+            }
+        }
+        .distinctUntilChanged()
 
     private val aliasItemWrapperState = combine(
         aliasItemState,
+        aliasOptionsState,
+        selectedMailboxListState,
+        selectedSuffixState,
         aliasItemValidationErrorsState
-    ) { aliasItem, aliasItemValidationErrors ->
-        AliasItemWrapper(aliasItem, aliasItemValidationErrors)
+    ) { aliasItem, aliasOptionsResult, selectedMailboxes, selectedSuffix, aliasItemValidationErrors ->
+        val aliasItemWithOptions =
+            if (aliasOptionsResult is Result.Success) {
+                val aliasOptions = aliasOptionsResult.data
+
+                val mailboxes = aliasOptions.mailboxes
+                    .map { model ->
+                        SelectedAliasMailboxUiModel(
+                            model = model,
+                            selected = selectedMailboxes.contains(model.id)
+                        )
+                    }
+                    .toMutableList()
+                if (mailboxes.none { it.selected } && mailboxes.isNotEmpty()) {
+                    val mailbox = mailboxes.removeAt(0)
+                    mailboxes.add(0, mailbox.copy(selected = true))
+                        .also { selectedMailboxListState.update { listOf(mailbox.model.id) } }
+                }
+
+                val mailboxTitle = getMailboxTitle(mailboxes)
+
+                val suffix =
+                    if (selectedSuffix is Some && aliasOptions.suffixes.contains(selectedSuffix.value)) {
+                        selectedSuffix.value
+                    } else {
+                        aliasOptions.suffixes.first()
+                            .also { selectedSuffixState.update { it } }
+                    }
+                val aliasToBeCreated = if (aliasItem.alias.isNotBlank()) {
+                    getAliasToBeCreated(aliasItem.alias, suffix)
+                } else {
+                    null
+                }
+                aliasItem.copy(
+                    aliasOptions = aliasOptions,
+                    selectedSuffix = suffix,
+                    mailboxes = mailboxes,
+                    mailboxTitle = mailboxTitle,
+                    aliasToBeCreated = aliasToBeCreated
+                )
+            } else {
+                aliasItem
+            }
+        AliasItemWrapper(aliasItemWithOptions, aliasItemValidationErrors)
     }
 
     private data class AliasItemWrapper(
@@ -82,14 +194,15 @@ abstract class BaseAliasViewModel(
     )
 
     val aliasUiState: StateFlow<CreateUpdateAliasUiState> = combine(
-        shareIdState,
+        sharesWrapperState,
         aliasItemWrapperState,
         isLoadingState,
         aliasSavedEventWrapperState,
         isApplyButtonEnabledState
-    ) { shareId, aliasItemWrapper, isLoading, isAliasSavedEvent, isButtonEnabled ->
+    ) { shareWrapper, aliasItemWrapper, isLoading, isAliasSavedEvent, isButtonEnabled ->
         CreateUpdateAliasUiState(
-            shareId = shareId.value(),
+            shareList = shareWrapper.shareList,
+            selectedShareId = shareWrapper.currentShare,
             aliasItem = aliasItemWrapper.aliasItem,
             isDraft = isDraft,
             errorList = aliasItemWrapper.aliasItemValidationErrors,
@@ -113,33 +226,14 @@ abstract class BaseAliasViewModel(
     }
 
     fun onSuffixChange(suffix: AliasSuffixUiModel) {
-        aliasItemState.update {
-            it.copy(
-                selectedSuffix = suffix,
-                aliasToBeCreated = getAliasToBeCreated(
-                    alias = aliasItemState.value.alias,
-                    suffix = suffix
-                )
-            )
-        }
+        selectedSuffixState.update { suffix.toOption() }
     }
 
     open fun onMailboxesChanged(mailboxes: List<SelectedAliasMailboxUiModel>) {
         val atLeastOneSelected = mailboxes.any { it.selected }
         if (!atLeastOneSelected) return
-
-        aliasItemState.update {
-            it.copy(
-                mailboxes = mailboxes,
-                mailboxTitle = getMailboxTitle(mailboxes)
-            )
-        }
+        selectedMailboxListState.update { mailboxes.filter { it.selected }.map { it.model.id } }
     }
-
-    fun onEmitSnackbarMessage(snackbarMessage: AliasSnackbarMessage) =
-        viewModelScope.launch {
-            snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
-        }
 
     protected fun getMailboxTitle(mailboxes: List<SelectedAliasMailboxUiModel>): String {
         val allSelectedMailboxes = mailboxes.filter { it.selected }
@@ -159,5 +253,13 @@ abstract class BaseAliasViewModel(
             return "$alias${suffix.suffix}"
         }
         return null
+    }
+
+    fun changeVault(shareId: ShareId) = viewModelScope.launch {
+        selectedShareIdState.update { shareId.toOption() }
+    }
+
+    companion object {
+        private const val TAG = "BaseAliasViewModel"
     }
 }

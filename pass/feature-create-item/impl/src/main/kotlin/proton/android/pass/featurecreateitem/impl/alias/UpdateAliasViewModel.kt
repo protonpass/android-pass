@@ -57,7 +57,7 @@ class UpdateAliasViewModel @Inject constructor(
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
-) : BaseAliasViewModel(observeAliasOptions, observeVaults, savedStateHandle) {
+) : BaseAliasViewModel(snackbarMessageRepository, observeAliasOptions, observeVaults, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)

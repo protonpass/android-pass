@@ -27,12 +27,15 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage.CannotRetrieveAliasOptions
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.ShareId
 
 abstract class BaseAliasViewModel(
+    snackbarMessageRepository: SnackbarMessageRepository,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
@@ -113,6 +116,7 @@ abstract class BaseAliasViewModel(
             when (it) {
                 is Result.Error -> {
                     isLoadingState.update { IsLoadingState.NotLoading }
+                    snackbarMessageRepository.emitSnackbarMessage(CannotRetrieveAliasOptions)
                     mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
                 }
                 Result.Loading -> isLoadingState.update { IsLoadingState.Loading }
@@ -256,6 +260,7 @@ abstract class BaseAliasViewModel(
     }
 
     fun changeVault(shareId: ShareId) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
         selectedShareIdState.update { shareId.toOption() }
     }
 

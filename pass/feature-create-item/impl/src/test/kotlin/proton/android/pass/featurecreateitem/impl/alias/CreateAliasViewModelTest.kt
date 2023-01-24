@@ -4,22 +4,25 @@ import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.test.runTest
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
-import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
-import proton.pass.domain.AliasOptions
-import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
-import proton.android.pass.test.TestAccountManager
-import proton.android.pass.test.data.TestAliasRepository
-import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestShare
-import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.common.api.Result
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
+import proton.android.pass.data.fakes.usecases.TestCreateAlias
+import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
+import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
+import proton.android.pass.test.MainDispatcherRule
+import proton.android.pass.test.TestAccountManager
+import proton.android.pass.test.TestSavedStateHandle
+import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.TestShare
+import proton.pass.domain.AliasOptions
+import proton.pass.domain.ShareId
+import proton.pass.domain.Vault
 
 class CreateAliasViewModelTest {
 
@@ -29,7 +32,8 @@ class CreateAliasViewModelTest {
     private lateinit var suffix: AliasSuffixUiModel
     private lateinit var mailbox: AliasMailboxUiModel
     private lateinit var viewModel: CreateAliasViewModel
-    private lateinit var aliasRepository: TestAliasRepository
+    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var observeAliasOptions: TestObserveAliasOptions
     private lateinit var createAlias: TestCreateAlias
     private lateinit var snackbarRepository: TestSnackbarMessageRepository
 
@@ -38,14 +42,8 @@ class CreateAliasViewModelTest {
         suffix = TestAliasSuffixUiModel.create()
         mailbox = TestAliasMailboxUiModel.create()
 
-        aliasRepository = TestAliasRepository()
-        aliasRepository.setAliasOptions(
-            AliasOptions(
-                suffixes = listOf(suffix.toDomain()),
-                mailboxes = listOf(mailbox.toDomain())
-            )
-        )
-
+        observeVaults = TestObserveVaults()
+        observeAliasOptions = TestObserveAliasOptions()
         createAlias = TestCreateAlias()
         snackbarRepository = TestSnackbarMessageRepository()
     }
@@ -54,7 +52,7 @@ class CreateAliasViewModelTest {
     @Test
     fun `title alias sync`() = runTest {
         viewModel = createAliasViewModel()
-
+        setupAliasOptions()
         val titleInput = "Title changed"
         viewModel.onSuffixChange(suffix)
         viewModel.onTitleChange(titleInput)
@@ -96,7 +94,7 @@ class CreateAliasViewModelTest {
     @Test
     fun `given no suffix when the alias has changed the state should hold it`() = runTest {
         viewModel = createAliasViewModel()
-
+        setupVaults()
         val aliasInput = "aliasInput"
         viewModel.onAliasChange(aliasInput)
 
@@ -111,11 +109,12 @@ class CreateAliasViewModelTest {
     @Test
     fun `is able to handle CannotCreateMoreAliases`() = runTest {
         viewModel = createAliasViewModel()
-
+        setupAliasOptions()
         createAlias.setResult(Result.Error(CannotCreateMoreAliasesError()))
         setupContentsForCreation()
-
+        viewModel.aliasUiState.test { awaitItem() }
         viewModel.createAlias(TestShare.create().id)
+
         snackbarRepository.snackbarMessage.test {
             val message = awaitItem()
             assertThat(message.isNotEmpty()).isTrue()
@@ -128,13 +127,14 @@ class CreateAliasViewModelTest {
     @Test
     fun `emits success when alias is created successfully`() = runTest {
         viewModel = createAliasViewModel()
-
+        setupAliasOptions()
         createAlias.setResult(Result.Success(TestItem.random()))
         setupContentsForCreation()
 
+        viewModel.aliasUiState.test { awaitItem() }
         viewModel.createAlias(TestShare.create().id)
         viewModel.aliasUiState.test {
-            skipItems(2)
+            skipItems(1)
             val item = awaitItem()
 
             assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
@@ -145,7 +145,7 @@ class CreateAliasViewModelTest {
     @Test
     fun `spaces in title are properly formatted`() = runTest {
         viewModel = createAliasViewModel()
-
+        setupAliasOptions()
         val titleInput = "ThiS iS a TeSt"
         viewModel.onTitleChange(titleInput)
         viewModel.aliasUiState.test {
@@ -157,6 +157,7 @@ class CreateAliasViewModelTest {
     @Test
     fun `setInitialState properly formats alias`() = runTest {
         viewModel = createAliasViewModel(title = "ThiS.iS_a TeSt")
+        setupAliasOptions()
         viewModel.aliasUiState.test {
             val item = awaitItem()
             assertThat(item.aliasItem.alias).isEqualTo("this.is_a-test")
@@ -168,7 +169,8 @@ class CreateAliasViewModelTest {
             accountManager = TestAccountManager().apply {
                 sendPrimaryUserId(UserId("123"))
             },
-            aliasRepository = aliasRepository,
+            observeAliasOptions = observeAliasOptions,
+            observeVaults = observeVaults,
             createAlias = createAlias,
             snackbarMessageRepository = snackbarRepository,
             savedStateHandle = TestSavedStateHandle.create().apply {
@@ -198,6 +200,20 @@ class CreateAliasViewModelTest {
                     model = mailbox,
                     selected = true
                 )
+            )
+        )
+    }
+
+    private fun setupVaults() {
+        observeVaults.sendResult(Result.Success(listOf(Vault(ShareId("ShareId"), "name"))))
+    }
+
+    private fun setupAliasOptions() {
+        setupVaults()
+        observeAliasOptions.sendAliasOptions(
+            AliasOptions(
+                suffixes = listOf(suffix.toDomain()),
+                mailboxes = listOf(mailbox.toDomain())
             )
         )
     }

@@ -1,13 +1,14 @@
 package proton.android.pass.featurecreateitem.impl.alias
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.pass.domain.ShareId
 
 @Immutable
 data class CreateUpdateAliasUiState(
-    val shareId: ShareId?,
+    val shareList: List<ShareUiModel>,
+    val selectedShareId: ShareUiModel?,
     val aliasItem: AliasItem,
     val isDraft: Boolean,
     val errorList: Set<AliasItemValidationErrors>,
@@ -18,7 +19,8 @@ data class CreateUpdateAliasUiState(
 ) {
     companion object {
         val Initial = CreateUpdateAliasUiState(
-            shareId = null,
+            shareList = emptyList(),
+            selectedShareId = null,
             aliasItem = AliasItem.Empty,
             isDraft = false,
             errorList = emptySet(),

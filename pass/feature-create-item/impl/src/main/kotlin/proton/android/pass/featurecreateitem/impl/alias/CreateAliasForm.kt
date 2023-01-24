@@ -12,18 +12,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.buttons.PassOutlinedButton
 import proton.android.pass.composecomponents.impl.form.NoteInput
 import proton.android.pass.composecomponents.impl.form.TitleInput
 import proton.android.pass.featurecreateitem.impl.R
-import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.featurecreateitem.impl.login.VaultSelector
 
 @Composable
 internal fun CreateAliasForm(
     modifier: Modifier = Modifier,
-    state: AliasItem,
+    aliasItem: AliasItem,
+    selectedShare: ShareUiModel?,
     canEdit: Boolean,
-    canDelete: Boolean,
+    isUpdate: Boolean,
     onTitleRequiredError: Boolean,
     onAliasRequiredError: Boolean,
     onInvalidAliasError: Boolean,
@@ -33,7 +36,8 @@ internal fun CreateAliasForm(
     onNoteChange: (String) -> Unit,
     onSuffixClick: () -> Unit,
     onMailboxClick: () -> Unit,
-    onDeleteAliasClick: () -> Unit
+    onDeleteAliasClick: () -> Unit,
+    onVaultSelectorClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -42,7 +46,7 @@ internal fun CreateAliasForm(
             .padding(16.dp)
     ) {
         TitleInput(
-            value = state.title,
+            value = aliasItem.title,
             onChange = onTitleChange,
             enabled = isEditAllowed,
             onTitleRequiredError = onTitleRequiredError
@@ -51,32 +55,40 @@ internal fun CreateAliasForm(
 
         if (canEdit) {
             CreateAliasSection(
-                state = state,
+                state = aliasItem,
                 onChange = onAliasChange,
                 onSuffixClick = onSuffixClick,
-                canEdit = isEditAllowed && state.aliasOptions.suffixes.size > 1,
+                canEdit = isEditAllowed,
+                canSelect = aliasItem.aliasOptions.suffixes.size > 1,
                 onAliasRequiredError = onAliasRequiredError,
                 onInvalidAliasError = onInvalidAliasError
             )
         } else {
             DisplayAliasSection(
-                state = state
+                state = aliasItem
             )
         }
         Spacer(Modifier.padding(vertical = 8.dp))
         MailboxSection(
-            contentText = state.mailboxTitle,
-            isEditAllowed = isEditAllowed && state.mailboxes.size > 1,
+            contentText = aliasItem.mailboxTitle,
+            isEditAllowed = isEditAllowed && aliasItem.mailboxes.size > 1,
             onMailboxClick = onMailboxClick
         )
         NoteInput(
             contentModifier = Modifier.height(100.dp),
-            value = state.note,
+            value = aliasItem.note,
             enabled = isEditAllowed,
             onChange = onNoteChange
         )
-
-        if (canDelete) {
+        if (!isUpdate && selectedShare?.name != null) {
+            Spacer(Modifier.height(height = 20.dp))
+            VaultSelector(
+                contentText = selectedShare.name,
+                isEditAllowed = isEditAllowed,
+                onClick = onVaultSelectorClick
+            )
+        }
+        if (isUpdate) {
             Spacer(Modifier.height(height = 24.dp))
             PassOutlinedButton(
                 modifier = Modifier.fillMaxWidth(),

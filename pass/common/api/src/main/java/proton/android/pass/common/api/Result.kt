@@ -85,3 +85,10 @@ fun <T> ApiResult<T>.toResult(): Result<T> =
     }
 
 fun <T> T?.toResult(): Result<T> = this?.let { Result.Success(it) } ?: Result.Error()
+
+@Suppress("TooGenericExceptionCaught")
+inline fun <T, R> T.runCatching(block: T.() -> R): Result<R> = try {
+    Result.Success(block())
+} catch (e: Throwable) {
+    Result.Error(e)
+}

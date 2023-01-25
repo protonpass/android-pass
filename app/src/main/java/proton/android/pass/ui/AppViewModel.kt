@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -47,6 +45,7 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.presentation.navigation.drawer.DrawerUiState
 import proton.android.pass.presentation.navigation.drawer.ItemTypeSection
 import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection
+import proton.android.pass.ui.AppSnackbarMessage.CouldNotRefreshItems
 import proton.pass.domain.Share
 import proton.pass.domain.entity.NewVault
 import javax.inject.Inject
@@ -194,26 +193,16 @@ class AppViewModel @Inject constructor(
             createVault(userId, vault)
                 .onError { onInitError(it, "Create Vault error") }
         } else {
-            applyEvents(list, userId)
+            applyEvents()
         }
     }
 
-    private fun applyEvents(list: List<Share>, userId: UserId) = viewModelScope.launch {
-        val results = list.map { share ->
-            async {
-                val res = kotlin.runCatching {
-                    applyPendingEvents(userId, share.id)
-                }.onFailure {
-                    onInitError(it, "Error refreshing share [share_id=${share.id}]")
-                }
-
-                res.isSuccess
+    private fun applyEvents() = viewModelScope.launch {
+        applyPendingEvents()
+            .onError { t ->
+                PassLogger.e(TAG, t ?: Exception("Apply pending events failed"))
+                snackbarMessageRepository.emitSnackbarMessage(CouldNotRefreshItems)
             }
-        }.awaitAll()
-        val anyError = results.any { !it }
-        if (anyError) {
-            snackbarMessageRepository.emitSnackbarMessage(AppSnackbarMessage.CouldNotRefreshItems)
-        }
     }
 
     private suspend fun onInitError(throwable: Throwable?, message: String) {

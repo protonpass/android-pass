@@ -49,7 +49,7 @@ protobuf {
 dependencies {
     implementation(libs.androidx.datastore)
     implementation(libs.core.utilKotlin)
-    implementation(libs.google.protobuf.lite)
+    implementation(libs.google.protobuf.kotlin.lite)
     implementation(libs.kotlinx.coroutines.core)
 
     implementation(libs.dagger.hilt.android)

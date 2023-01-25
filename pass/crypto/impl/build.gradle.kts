@@ -46,7 +46,6 @@ dependencies {
     implementation(libs.core.key)
     implementation(libs.core.user)
     implementation(libs.kotlinx.serialization.json)
-    implementation(libs.google.protobuf.lite)
 
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.domain)

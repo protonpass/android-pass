@@ -513,11 +513,7 @@ class ItemRepositoryImpl @Inject constructor(
     private suspend fun getShare(userId: UserId, shareId: ShareId): Share =
         when (val share = shareRepository.getById(userId, shareId)) {
             is Result.Success -> share.data
-            is Result.Error -> {
-                val error =
-                    share.exception ?: IllegalStateException("Got error in shareRepository.getById")
-                throw error
-            }
+            is Result.Error -> throw share.exception
             Result.Loading -> throw IllegalStateException("shareRepository.getById cannot return Loading")
         } ?: throw IllegalStateException("Could not find share [shareId=${shareId.id}]")
 
@@ -542,11 +538,7 @@ class ItemRepositoryImpl @Inject constructor(
             vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, rotationId)
         val vaultKey = when (vaultKeyResult) {
             is Result.Success -> vaultKeyResult.data
-            is Result.Error -> {
-                val error = vaultKeyResult.exception
-                    ?: IllegalStateException("Got error in vaultKeyRepository.getVaultKeyById")
-                throw error
-            }
+            is Result.Error -> throw vaultKeyResult.exception
             Result.Loading -> throw IllegalStateException("vaultKeyRepository.getVaultKeyById cannot return Loading")
         }
 
@@ -554,11 +546,7 @@ class ItemRepositoryImpl @Inject constructor(
             vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, rotationId)
         val itemKey = when (itemKeyResult) {
             is Result.Success -> itemKeyResult.data
-            is Result.Error -> {
-                val error = itemKeyResult.exception
-                    ?: IllegalStateException("Got error in vaultKeyRepository.getItemKeyById")
-                throw error
-            }
+            is Result.Error -> throw itemKeyResult.exception
             Result.Loading -> throw IllegalStateException("vaultKeyRepository.getItemKeyById cannot return Loading")
         }
 

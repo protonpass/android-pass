@@ -69,8 +69,7 @@ class UpdateNoteViewModel @Inject constructor(
                         }
                     }
                     .onError {
-                        val defaultMessage = "Get by id error"
-                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                        PassLogger.i(TAG, it, "Get by id error")
                         snackbarMessageRepository.emitSnackbarMessage(InitError)
                     }
             } else {
@@ -105,14 +104,12 @@ class UpdateNoteViewModel @Inject constructor(
                             snackbarMessageRepository.emitSnackbarMessage(NoteUpdated)
                         }
                         .onError {
-                            val defaultMessage = "Update item error"
-                            PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                            PassLogger.e(TAG, it, "Update item error")
                             snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
                         }
                 }
                 .onError {
-                    val defaultMessage = "Get share error"
-                    PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                    PassLogger.e(TAG, it, "Get share error")
                     snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
                 }
         } else {

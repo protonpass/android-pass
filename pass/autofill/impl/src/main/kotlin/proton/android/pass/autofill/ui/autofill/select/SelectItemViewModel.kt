@@ -20,20 +20,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
-import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
-import proton.android.pass.data.api.url.UrlSanitizer
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetAppNameFromPackageName
-import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
-import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.api.usecases.ObserveActiveItems
-import proton.android.pass.data.api.usecases.UpdateAutofillItem
-import proton.android.pass.data.api.usecases.UpdateAutofillItemData
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.autofill.BROWSERS
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
@@ -43,8 +29,22 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonui.api.ItemUiFilter
+import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
+import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.url.UrlSanitizer
+import proton.android.pass.data.api.usecases.GetAppNameFromPackageName
+import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveActiveItems
+import proton.android.pass.data.api.usecases.UpdateAutofillItem
+import proton.android.pass.data.api.usecases.UpdateAutofillItemData
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarMessageRepository
 import java.net.URI
 import javax.inject.Inject
 
@@ -160,11 +160,10 @@ class SelectItemViewModel @Inject constructor(
             Result.Loading -> SelectItemListItems.Initial
             is Result.Success -> itemsResult.data
             is Result.Error -> {
-                val defaultMessage = "Could not load autofill items"
                 PassLogger.i(
                     TAG,
-                    itemsResult.exception ?: Exception(defaultMessage),
-                    defaultMessage
+                    itemsResult.exception,
+                    "Could not load autofill items"
                 )
                 snackbarMessageRepository.emitSnackbarMessage(LoadItemsError)
                 SelectItemListItems.Initial
@@ -252,8 +251,7 @@ class SelectItemViewModel @Inject constructor(
         when (val sanitized = UrlSanitizer.sanitize(domain)) {
             Result.Loading -> ""
             is Result.Error -> {
-                val message = "Error sanitizing URL [url=$domain]"
-                PassLogger.i(TAG, sanitized.exception ?: Exception(message), message)
+                PassLogger.i(TAG, sanitized.exception, "Error sanitizing URL [url=$domain]")
                 ""
             }
             is Result.Success -> {

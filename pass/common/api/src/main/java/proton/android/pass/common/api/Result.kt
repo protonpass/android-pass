@@ -9,7 +9,7 @@ import me.proton.core.util.kotlin.Logger
 
 sealed interface Result<out T> {
     data class Success<T>(val data: T) : Result<T>
-    data class Error(val exception: Throwable? = null) : Result<Nothing>
+    data class Error(val exception: Throwable) : Result<Nothing>
     object Loading : Result<Nothing>
 }
 
@@ -20,7 +20,7 @@ inline fun <R, T> Result<T>.map(transform: (value: T) -> R): Result<R> =
         Result.Loading -> Result.Loading
     }
 
-inline fun <T> Result<T>.onError(action: (exception: Throwable?) -> Unit): Result<T> {
+inline fun <T> Result<T>.onError(action: (exception: Throwable) -> Unit): Result<T> {
     if (this is Result.Error) {
         action(exception)
     }
@@ -36,7 +36,7 @@ inline fun <T> Result<T>.onSuccess(action: (value: T) -> Unit): Result<T> {
 
 fun <T> Result<T>.logError(logger: Logger, tag: String, defaultMessage: String): Result<T> {
     if (this is Result.Error) {
-        logger.e(tag, exception ?: RuntimeException(defaultMessage), defaultMessage)
+        logger.e(tag, exception, defaultMessage)
     }
     return this
 }
@@ -84,7 +84,8 @@ fun <T> ApiResult<T>.toResult(): Result<T> =
         Result.Error(e)
     }
 
-fun <T> T?.toResult(): Result<T> = this?.let { Result.Success(it) } ?: Result.Error()
+fun <T> T?.toResult(): Result<T> =
+    this?.let { Result.Success(it) } ?: Result.Error(NullPointerException())
 
 @Suppress("TooGenericExceptionCaught")
 inline fun <T, R> T.runCatching(block: T.() -> R): Result<R> = try {

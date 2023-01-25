@@ -211,9 +211,10 @@ abstract class BaseLoginViewModel(
                 )
             )
         } else {
-            PassLogger.i(TAG, "Empty suffix on create alias")
+            val message = "Empty suffix on create alias"
+            PassLogger.i(TAG, message)
             snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.ItemCreationError)
-            Result.Error()
+            Result.Error(Exception(message))
         }
 
     protected fun validateItem(): Boolean {

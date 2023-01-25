@@ -168,12 +168,7 @@ class HomeViewModel @Inject constructor(
             Result.Loading -> emptyList()
             is Result.Success -> itemsResult.data
             is Result.Error -> {
-                val defaultMessage = "Observe items error"
-                PassLogger.e(
-                    TAG,
-                    itemsResult.exception ?: Exception(defaultMessage),
-                    defaultMessage
-                )
+                PassLogger.e(TAG, itemsResult.exception, "Observe items error")
                 snackbarMessageRepository.emitSnackbarMessage(ObserveItemsError)
                 emptyList()
             }
@@ -230,7 +225,7 @@ class HomeViewModel @Inject constructor(
         isRefreshing.update { IsRefreshingState.Refreshing }
         applyPendingEvents()
             .onError { t ->
-                PassLogger.e(TAG, t ?: Exception("Apply pending events failed"))
+                PassLogger.e(TAG, t, "Apply pending events failed")
                 snackbarMessageRepository.emitSnackbarMessage(RefreshError)
             }
 

@@ -231,8 +231,7 @@ class UpdateAliasViewModel @Inject constructor(
                     snackbarMessageRepository.emitSnackbarMessage(AliasUpdated)
                 }
                 .onError {
-                    val defaultMessage = "Update alias error"
-                    PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                    PassLogger.e(TAG, it, "Update alias error")
                     snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
                     isLoadingState.update { IsLoadingState.NotLoading }
                 }

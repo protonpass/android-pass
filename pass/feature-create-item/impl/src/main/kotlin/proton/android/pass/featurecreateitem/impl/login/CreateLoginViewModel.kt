@@ -133,8 +133,7 @@ class CreateLoginViewModel @Inject constructor(
                 }
             }
             .onError {
-                val defaultMessage = "Could not create item"
-                PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                PassLogger.e(TAG, it, "Could not create item")
                 snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
             }
     }

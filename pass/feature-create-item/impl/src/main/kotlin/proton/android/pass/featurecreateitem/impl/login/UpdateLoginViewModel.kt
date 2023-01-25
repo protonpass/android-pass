@@ -102,8 +102,7 @@ class UpdateLoginViewModel @Inject constructor(
                         }
                     }
                     .onError {
-                        val defaultMessage = "Get by id error"
-                        PassLogger.i(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                        PassLogger.i(TAG, it, "Get by id error")
                         snackbarMessageRepository.emitSnackbarMessage(InitError)
                     }
             } else {
@@ -185,8 +184,7 @@ class UpdateLoginViewModel @Inject constructor(
                 }
             }
             .onError {
-                val defaultMessage = "Update item error"
-                PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                PassLogger.e(TAG, it, "Update item error")
                 snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
             }
     }

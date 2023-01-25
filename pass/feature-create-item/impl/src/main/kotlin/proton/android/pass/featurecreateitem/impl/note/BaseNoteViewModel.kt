@@ -57,8 +57,7 @@ abstract class BaseNoteViewModel(
             when (shares) {
                 Result.Loading -> emptyList()
                 is Result.Error -> {
-                    val message = "Cannot retrieve all shares"
-                    PassLogger.e(TAG, shares.exception ?: Exception(message), message)
+                    PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
                     emptyList()
                 }
                 is Result.Success -> shares.data.map { ShareUiModel(it.shareId, it.name) }

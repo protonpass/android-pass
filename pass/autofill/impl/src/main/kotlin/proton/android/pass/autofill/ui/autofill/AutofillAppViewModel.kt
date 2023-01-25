@@ -104,8 +104,7 @@ class AutofillAppViewModel @Inject constructor(
             Result.Loading -> BiometricLockState.Disabled
             is Result.Success -> state.data
             is Result.Error -> {
-                val message = "Error getting BiometricLockState"
-                PassLogger.w(TAG, state.exception ?: Exception(message))
+                PassLogger.w(TAG, state.exception, "Error getting BiometricLockState")
                 BiometricLockState.Disabled
             }
         }
@@ -115,8 +114,7 @@ class AutofillAppViewModel @Inject constructor(
             Result.Loading -> ThemePreference.System
             is Result.Success -> state.data
             is Result.Error -> {
-                val message = "Error getting ThemePreference"
-                PassLogger.w(TAG, state.exception ?: Exception(message))
+                PassLogger.w(TAG, state.exception, "Error getting ThemePreference")
                 ThemePreference.System
             }
         }

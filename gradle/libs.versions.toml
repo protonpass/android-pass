@@ -34,7 +34,7 @@ core = "9.8.1"
 # Dagger
 dagger = "2.44.2"
 # Google
-protobuf = "3.21.11"
+protobuf = "3.21.12"
 # Gradle
 gradlePlugin-android = "7.3.1"
 gradlePlugin-dependency-analysis = "1.18.0"
@@ -192,7 +192,7 @@ dagger-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compil
 dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "dagger" }
 
 # Google
-google-protobuf-lite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf" }
+google-protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobuf" }
 google-protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 
 # JakeWharton

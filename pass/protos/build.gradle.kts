@@ -1,6 +1,6 @@
 import com.google.protobuf.gradle.builtins
 import com.google.protobuf.gradle.generateProtoTasks
-import com.google.protobuf.gradle.ofSourceSet
+import com.google.protobuf.gradle.id
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.protoc
 
@@ -10,18 +10,25 @@ plugins {
 }
 
 sourceSets {
-    main {
+    getByName("main") {
         proto {
             srcDir("contents-proto-definition/protos")
         }
-        java {
-            srcDirs("build/generated/source/proto/main")
-        }
+        java.srcDirs(
+            "${protobuf.protobuf.generatedFilesBaseDir}/main/java",
+            "${protobuf.protobuf.generatedFilesBaseDir}/main/kotlin"
+        )
+    }
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
     }
 }
 
 dependencies {
-    api(libs.google.protobuf.lite)
+    api(libs.google.protobuf.kotlin.lite)
 }
 
 protobuf {
@@ -29,10 +36,13 @@ protobuf {
         artifact = project.libs.google.protobuf.protoc.get().toString()
     }
     generateProtoTasks {
-        ofSourceSet("main")
-            .first()
-            .builtins {
-                getByName("java").option("lite")
+        all().configureEach {
+            builtins {
+                named("java") {
+                    option("lite")
+                }
+                id("kotlin")
             }
+        }
     }
 }

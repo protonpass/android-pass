@@ -4,5 +4,5 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.user.domain.entity.User
 
 interface ObserveCurrentUser {
-    operator fun invoke(): Flow<User?>
+    operator fun invoke(): Flow<User>
 }

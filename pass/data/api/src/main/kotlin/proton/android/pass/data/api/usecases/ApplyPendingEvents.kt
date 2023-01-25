@@ -1,11 +1,7 @@
 package proton.android.pass.data.api.usecases
 
-import me.proton.core.domain.entity.UserId
-import proton.pass.domain.ShareId
+import proton.android.pass.common.api.Result
 
 interface ApplyPendingEvents {
-    suspend operator fun invoke(
-        userId: UserId,
-        shareId: ShareId
-    )
+    suspend operator fun invoke(): Result<Unit>
 }

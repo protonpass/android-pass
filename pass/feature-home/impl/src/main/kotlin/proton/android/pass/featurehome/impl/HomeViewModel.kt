@@ -25,8 +25,8 @@ import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.map
+import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.ItemUiFilter
@@ -227,19 +227,14 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
-        val userId = currentUserFlow.firstOrNull()?.userId
-        val share = homeUiState.value.homeListUiState.selectedShare
-        if (userId != null && share is Some) {
-            isRefreshing.update { IsRefreshingState.Refreshing }
-            runCatching {
-                applyPendingEvents(userId, share.value)
-            }.onFailure {
-                PassLogger.e(TAG, it, "Error in refresh")
+        isRefreshing.update { IsRefreshingState.Refreshing }
+        applyPendingEvents()
+            .onError { t ->
+                PassLogger.e(TAG, t ?: Exception("Apply pending events failed"))
                 snackbarMessageRepository.emitSnackbarMessage(RefreshError)
             }
 
-            isRefreshing.update { IsRefreshingState.NotRefreshing }
-        }
+        isRefreshing.update { IsRefreshingState.NotRefreshing }
     }
 
     fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch(coroutineExceptionHandler) {

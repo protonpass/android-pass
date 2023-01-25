@@ -84,8 +84,7 @@ class AppViewModel @Inject constructor(
             when (shares) {
                 Result.Loading -> emptyList()
                 is Result.Error -> {
-                    val message = "Cannot retrieve all shares"
-                    PassLogger.e(TAG, shares.exception ?: Exception(message), message)
+                    PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
                     emptyList()
                 }
                 is Result.Success ->
@@ -200,7 +199,7 @@ class AppViewModel @Inject constructor(
     private fun applyEvents() = viewModelScope.launch {
         applyPendingEvents()
             .onError { t ->
-                PassLogger.e(TAG, t ?: Exception("Apply pending events failed"))
+                PassLogger.e(TAG, t, "Apply pending events failed")
                 snackbarMessageRepository.emitSnackbarMessage(CouldNotRefreshItems)
             }
     }
@@ -225,8 +224,7 @@ class AppViewModel @Inject constructor(
             Result.Loading -> ThemePreference.System
             is Result.Success -> state.data
             is Result.Error -> {
-                val message = "Error getting ThemePreference"
-                PassLogger.w(TAG, state.exception ?: Exception(message))
+                PassLogger.w(TAG, state.exception, "Error getting ThemePreference")
                 ThemePreference.System
             }
         }

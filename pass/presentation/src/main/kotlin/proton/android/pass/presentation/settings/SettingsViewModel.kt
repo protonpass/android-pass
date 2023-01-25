@@ -194,8 +194,7 @@ class SettingsViewModel @Inject constructor(
             Result.Loading -> BiometricLockState.Disabled
             is Result.Success -> biometricLock.data
             is Result.Error -> {
-                val message = "Error getting BiometricLock preference"
-                PassLogger.e(TAG, biometricLock.exception ?: Exception(message), message)
+                PassLogger.e(TAG, biometricLock.exception, "Error getting BiometricLock preference")
                 BiometricLockState.Disabled
             }
         }
@@ -205,8 +204,7 @@ class SettingsViewModel @Inject constructor(
             Result.Loading -> ThemePreference.System
             is Result.Success -> theme.data
             is Result.Error -> {
-                val message = "Error getting ThemePreference"
-                PassLogger.e(TAG, theme.exception ?: Exception(message), message)
+                PassLogger.e(TAG, theme.exception, "Error getting ThemePreference")
                 ThemePreference.System
             }
         }

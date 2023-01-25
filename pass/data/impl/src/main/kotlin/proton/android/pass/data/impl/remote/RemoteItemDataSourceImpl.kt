@@ -1,6 +1,13 @@
 package proton.android.pass.data.impl.remote
 
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.ApiResult
+import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.map
+import proton.android.pass.common.api.toResult
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
+import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
@@ -9,13 +16,6 @@ import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
 import proton.android.pass.data.impl.responses.ItemRevision
 import proton.android.pass.data.impl.responses.TrashItemsResponse
-import me.proton.core.domain.entity.UserId
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiResult
-import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.map
-import proton.android.pass.common.api.toResult
-import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
@@ -41,7 +41,8 @@ class RemoteItemDataSourceImpl @Inject constructor(
         shareId: ShareId,
         body: CreateAliasRequest
     ): Result<ItemRevision> {
-        val res = api.get<PasswordManagerApi>(userId).invoke { createAlias(shareId.id, body) }
+        val res = api.get<PasswordManagerApi>(userId)
+            .invoke { createAlias(shareId.id, body) }
         when (res) {
             is ApiResult.Success -> return Result.Success(res.value.item)
             is ApiResult.Error -> {
@@ -50,7 +51,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
                         return Result.Error(CannotCreateMoreAliasesError())
                     }
                 }
-                return Result.Error(res.cause)
+                return Result.Error(res.cause ?: Exception("Create alias failed"))
             }
         }
     }

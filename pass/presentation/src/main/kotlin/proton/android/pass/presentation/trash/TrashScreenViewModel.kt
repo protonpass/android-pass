@@ -60,12 +60,7 @@ class TrashScreenViewModel @Inject constructor(
         val items = when (itemsResult) {
             Result.Loading -> emptyList()
             is Result.Error -> {
-                val defaultMessage = "Observe trash items error"
-                PassLogger.e(
-                    TAG,
-                    itemsResult.exception ?: Exception(defaultMessage),
-                    defaultMessage
-                )
+                PassLogger.e(TAG, itemsResult.exception, "Observe trash items error")
                 snackbarMessageRepository.emitSnackbarMessage(ObserveItemsError)
                 emptyList()
             }
@@ -94,9 +89,8 @@ class TrashScreenViewModel @Inject constructor(
                 .onSuccess {
                     PassLogger.i(TAG, "Item restored successfully")
                 }
-                .onError {
-                    val message = "Error restoring item"
-                    PassLogger.e(TAG, it ?: Exception(message), message)
+                .onError { t ->
+                    PassLogger.e(TAG, t, "Error restoring item")
                     snackbarMessageRepository.emitSnackbarMessage(RestoreItemsError)
                 }
         }
@@ -105,9 +99,8 @@ class TrashScreenViewModel @Inject constructor(
     fun deleteItem(item: ItemUiModel) = viewModelScope.launch {
         withUserId {
             itemRepository.deleteItem(it, item.shareId, item.id)
-                .onError {
-                    val message = "Error deleting item"
-                    PassLogger.e(TAG, it ?: Exception(message), message)
+                .onError { t ->
+                    PassLogger.e(TAG, t, "Error deleting item")
                     snackbarMessageRepository.emitSnackbarMessage(DeleteItemError)
                 }
         }
@@ -117,9 +110,8 @@ class TrashScreenViewModel @Inject constructor(
         withUserId {
             isLoading.update { IsLoadingState.Loading }
             itemRepository.clearTrash(it)
-                .onError {
-                    val message = "Error clearing trash"
-                    PassLogger.e(TAG, it ?: Exception(message), message)
+                .onError { t ->
+                    PassLogger.e(TAG, t, "Error clearing trash")
                     snackbarMessageRepository.emitSnackbarMessage(ClearTrashError)
                 }
             isLoading.update { IsLoadingState.NotLoading }
@@ -130,9 +122,8 @@ class TrashScreenViewModel @Inject constructor(
         withUserId {
             isLoading.update { IsLoadingState.Loading }
             itemRepository.restoreItems(it)
-                .onError {
-                    val message = "Error restoring items"
-                    PassLogger.e(TAG, it ?: Exception(message), message)
+                .onError { t ->
+                    PassLogger.e(TAG, t, "Error restoring items")
                     snackbarMessageRepository.emitSnackbarMessage(RestoreItemsError)
                 }
             isLoading.update { IsLoadingState.NotLoading }
@@ -143,9 +134,8 @@ class TrashScreenViewModel @Inject constructor(
         withUserId {
             isRefreshing.update { IsRefreshingState.Refreshing }
             refreshContent(it)
-                .onError {
-                    val message = "Error in refresh"
-                    PassLogger.e(TAG, it ?: Exception(message), message)
+                .onError { t ->
+                    PassLogger.e(TAG, t, "Error in refresh")
                     snackbarMessageRepository.emitSnackbarMessage(RefreshError)
                 }
             isRefreshing.update { IsRefreshingState.NotRefreshing }

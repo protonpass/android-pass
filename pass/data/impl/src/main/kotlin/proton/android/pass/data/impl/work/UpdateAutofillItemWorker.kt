@@ -7,18 +7,21 @@ import androidx.work.Data
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.UpdateAutofillItemData
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
+import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.usecases.UpdateAutofillItemData
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.PackageName
+import kotlin.IllegalStateException
+import kotlin.String
+import kotlin.to
 import proton.android.pass.common.api.Result as KResult
 
 @HiltWorker
@@ -36,7 +39,7 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
             is KResult.Error -> {
                 PassLogger.e(
                     TAG,
-                    res.exception!!,
+                    res.exception,
                     "Error adding package to item"
                 )
                 Result.failure()

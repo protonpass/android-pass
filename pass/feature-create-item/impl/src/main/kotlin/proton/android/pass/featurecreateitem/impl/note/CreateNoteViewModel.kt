@@ -66,18 +66,12 @@ class CreateNoteViewModel @Inject constructor(
                                 snackbarMessageRepository.emitSnackbarMessage(NoteCreated)
                             }
                             .onError {
-                                val defaultMessage = "Create item error"
-                                PassLogger.e(
-                                    TAG,
-                                    it ?: Exception(defaultMessage),
-                                    defaultMessage
-                                )
+                                PassLogger.e(TAG, it, "Create item error")
                                 snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
                             }
                     }
                     .onError {
-                        val defaultMessage = "Get share error"
-                        PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                        PassLogger.e(TAG, it, "Get share error")
                         snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
                     }
             } else {

@@ -70,8 +70,7 @@ class ItemDetailViewModel @Inject constructor(
                         }
                     }
                     .onError {
-                        val defaultMessage = "Get by id error"
-                        PassLogger.e(TAG, it ?: Exception(defaultMessage), defaultMessage)
+                        PassLogger.e(TAG, it, "Get by id error")
                         snackbarMessageRepository.emitSnackbarMessage(InitError)
                     }
             } else {

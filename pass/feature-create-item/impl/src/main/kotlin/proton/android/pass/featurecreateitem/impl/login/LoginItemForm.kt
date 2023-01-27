@@ -41,6 +41,7 @@ internal fun LoginItemForm(
     canUpdateUsername: Boolean,
     onAliasOptionsClick: () -> Unit,
     onVaultSelectorClick: () -> Unit,
+    onAddTotpClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
     Column(
@@ -83,6 +84,12 @@ internal fun LoginItemForm(
             value = loginItem.note,
             enabled = isEditAllowed,
             onChange = onNoteChange
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        TotpInput(
+            modifier = Modifier.fillMaxWidth(),
+            value = loginItem.primaryTotp,
+            onAddTotpClick = onAddTotpClick,
         )
         if (!isUpdate) {
             selectedShare?.name?.let {

@@ -125,6 +125,15 @@ class UpdateLoginViewModel @Inject constructor(
         }
     }
 
+    fun setTotp(uri: String?) {
+        val currentValue = loginItemState.value
+        loginItemState.update {
+            it.copy(
+                primaryTotp = uri ?: currentValue.primaryTotp
+            )
+        }
+    }
+
     fun updateItem(shareId: ShareId) =
         viewModelScope.launch(coroutineExceptionHandler) {
             val currentItem = _item

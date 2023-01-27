@@ -6,26 +6,22 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.getOrNull
-import proton.android.pass.common.api.logError
-import proton.android.pass.common.api.map
+import proton.android.pass.common.api.Result
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -34,6 +30,7 @@ import proton.android.pass.presentation.detail.DetailSnackbarMessages.TotpCopied
 import proton.android.pass.presentation.detail.DetailSnackbarMessages.UsernameCopiedToClipboard
 import proton.android.pass.presentation.detail.DetailSnackbarMessages.WebsiteCopiedToClipbopard
 import proton.android.pass.totp.api.TotpManager
+import proton.android.pass.totp.api.TotpSpec
 import proton.pass.domain.Item
 import proton.pass.domain.ItemType
 import javax.inject.Inject
@@ -53,41 +50,33 @@ class LoginDetailViewModel @Inject constructor(
     private val itemFlow: MutableStateFlow<Item?> = MutableStateFlow(null)
     private val passwordState: MutableStateFlow<PasswordState> =
         MutableStateFlow(getInitialPasswordState())
-    private val timerCompletedFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val totpCodeFlow: Flow<TotpUiState> = itemFlow
+
+    private val totsCodeGeneratorFlow: Flow<Pair<String, Int>> = itemFlow
         .filterNotNull()
         .map { item ->
             val itemContents = item.itemType as ItemType.Login
-            encryptionContextProvider.withEncryptionContext {
+            val decrypted = encryptionContextProvider.withEncryptionContext {
                 decrypt(itemContents.primaryTotp)
             }
+            totpManager.parse(decrypted)
         }
         .distinctUntilChanged()
-        .combine(timerCompletedFlow) { decrypted, _ ->
-            if (decrypted.isNotBlank()) {
-                val parsed = totpManager.parse(decrypted)
-                val time = parsed.getOrNull()?.validPeriodSeconds
-                val code = parsed.map { totpManager.calculateCode(it) }
-                    .logError(PassLogger, TAG, "Failed to get totp code")
-                    .getOrNull()
-                if (time != null && code != null) {
-                    code to time
-                } else null
-            } else null
+        .onEach {
+            if (it is Result.Error) {
+                PassLogger.w(TAG, it.exception, "Could not parse totp")
+            }
         }
-        .filterNotNull()
-        .flatMapLatest { pair ->
-            (pair.second - 1 downTo 0).asFlow()
-                .onEach { delay(1000) }
-                .map { TotpUiState(pair.first, it, pair.second) }
-                .onCompletion { timerCompletedFlow.value = !timerCompletedFlow.value }
+        .filterIsInstance<Result.Success<TotpSpec>>()
+        .map { it.data }
+        .flatMapLatest { specs ->
+            totpManager.observeCode(specs)
         }
 
     val viewState: StateFlow<LoginDetailUiState> = combine(
         itemFlow.filterNotNull(),
         passwordState,
-        totpCodeFlow,
-    ) { item, password, totpUiState ->
+        totsCodeGeneratorFlow
+    ) { item, password, test ->
         val itemContents = item.itemType as ItemType.Login
         encryptionContextProvider.withEncryptionContext {
             LoginDetailUiState(
@@ -96,7 +85,7 @@ class LoginDetailViewModel @Inject constructor(
                 password = password,
                 websites = itemContents.websites.toImmutableList(),
                 note = decrypt(item.note),
-                totpUiState = totpUiState
+                totpUiState = TotpUiState(test.first, test.second)
             )
         }
     }

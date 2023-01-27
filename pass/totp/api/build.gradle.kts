@@ -4,4 +4,5 @@ plugins {
 
 dependencies {
     implementation(projects.pass.common.api)
+    implementation(libs.kotlinx.coroutines.core)
 }

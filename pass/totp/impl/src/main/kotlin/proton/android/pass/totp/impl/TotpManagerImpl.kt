@@ -6,6 +6,7 @@ import dev.turingcomplete.kotlinonetimepassword.TimeBasedOneTimePasswordConfig
 import dev.turingcomplete.kotlinonetimepassword.TimeBasedOneTimePasswordGenerator
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
+import proton.android.pass.common.api.Result
 import proton.android.pass.totp.api.TotpAlgorithm
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.api.TotpSpec
@@ -46,4 +47,6 @@ class TotpManagerImpl @Inject constructor(
         val generator = TimeBasedOneTimePasswordGenerator(spec.secret.encodeToByteArray(), config)
         return generator.generate(clock.now().toJavaInstant())
     }
+
+    override fun parse(uri: String): Result<TotpSpec> = OtpUriParser.parse(uri)
 }

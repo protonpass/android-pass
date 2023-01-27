@@ -12,29 +12,30 @@ import proton.android.pass.presentation.detail.DetailNoteSection
 @Composable
 fun LoginContent(
     modifier: Modifier = Modifier,
-    model: LoginUiModel,
+    state: LoginDetailUiState,
     onTogglePasswordClick: () -> Unit,
     onUsernameClick: () -> Unit,
     onCopyPasswordClick: () -> Unit,
     onWebsiteClicked: (String) -> Unit,
-    onWebsiteLongClicked: (String) -> Unit
+    onWebsiteLongClicked: (String) -> Unit,
+    onCopyTotpClick: (Int) -> Unit
 ) {
     Column(modifier.padding(horizontal = 16.dp)) {
         LoginUsernameRow(
-            username = model.username,
+            username = state.username,
             onUsernameClick = onUsernameClick
         )
         Spacer(modifier = Modifier.height(12.dp))
         LoginPasswordRow(
-            password = model.password,
+            password = state.password,
             onTogglePasswordClick = onTogglePasswordClick,
             onCopyPasswordClick = onCopyPasswordClick
         )
-        if (model.websites.isNotEmpty()) {
+        if (state.websites.isNotEmpty()) {
             Spacer(modifier = Modifier.height(12.dp))
             WebsiteSection(
                 modifier = Modifier.padding(start = 16.dp),
-                websites = model.websites,
+                websites = state.websites,
                 onWebsiteClicked = onWebsiteClicked,
                 onWebsiteLongClicked = onWebsiteLongClicked
             )
@@ -42,7 +43,10 @@ fun LoginContent(
         Spacer(modifier = Modifier.height(28.dp))
         DetailNoteSection(
             modifier = Modifier.padding(start = 16.dp),
-            text = model.note
+            text = state.note
         )
+        if (state.totpUiState != null) {
+            TotpSection(state = state.totpUiState) { onCopyTotpClick(it) }
+        }
     }
 }

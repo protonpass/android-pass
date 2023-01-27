@@ -20,9 +20,9 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
-import proton.pass.domain.Item
-import proton.android.pass.presentation.detail.login.bottomsheet.LoginDetailBottomSheetContents
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
+import proton.android.pass.presentation.detail.login.bottomsheet.LoginDetailBottomSheetContents
+import proton.pass.domain.Item
 
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class)
 @Composable
@@ -68,7 +68,7 @@ fun LoginDetail(
                 modifier = modifier
                     .padding(padding)
                     .verticalScroll(rememberScrollState()),
-                model = model,
+                state = model,
                 onTogglePasswordClick = { viewModel.togglePassword() },
                 onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },
                 onUsernameClick = { viewModel.copyUsernameToClipboard() },
@@ -76,6 +76,9 @@ fun LoginDetail(
                 onWebsiteLongClicked = { website ->
                     setSelectedWebsite(website)
                     scope.launch { bottomSheetState.show() }
+                },
+                onCopyTotpClick = {
+                    viewModel.copyTotpCodeToClipboard(it)
                 }
             )
         }

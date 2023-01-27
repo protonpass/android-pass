@@ -57,7 +57,8 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
                     itemType = ItemType.Login(
                         username = username,
                         password = "",
-                        websites = websites
+                        websites = websites,
+                        primaryTotp = ""
                     ),
                     modificationTime = Clock.System.now()
                 ),

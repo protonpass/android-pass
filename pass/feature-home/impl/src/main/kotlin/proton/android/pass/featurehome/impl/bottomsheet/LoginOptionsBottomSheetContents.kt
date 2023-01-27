@@ -98,7 +98,7 @@ fun LoginOptionsBottomSheetContentsPreview(
                     shareId = ShareId(id = ""),
                     name = "My Login",
                     note = "Note content",
-                    itemType = ItemType.Login("My username", "My password", emptyList()),
+                    itemType = ItemType.Login("My username", "My password", emptyList(), ""),
                     modificationTime = Clock.System.now()
                 ),
                 onCopyUsername = {},

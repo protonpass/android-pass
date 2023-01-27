@@ -86,7 +86,8 @@ class CreateLoginViewModel @Inject constructor(
                 username = username,
                 password = initialContents.password ?: currentValue.password,
                 websiteAddresses = websites,
-                packageNames = packageNames
+                packageNames = packageNames,
+                primaryTotp = initialContents.primaryTotp ?: currentValue.primaryTotp
             )
         }
     }

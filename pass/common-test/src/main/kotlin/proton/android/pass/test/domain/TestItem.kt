@@ -44,7 +44,8 @@ object TestItem {
         val itemTypeParam = itemType ?: ItemType.Login(
             randomString(),
             randomString().encrypt(TestKeyStoreCrypto),
-            emptyList()
+            emptyList(),
+            randomString()
         )
         val titleParam = title ?: randomString()
         val noteParam = note ?: randomString()

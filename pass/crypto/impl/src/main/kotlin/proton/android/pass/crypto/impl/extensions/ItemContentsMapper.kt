@@ -2,6 +2,8 @@ package proton.android.pass.crypto.impl.extensions
 
 import proton.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
+import proton_pass_item_v1.extraField
+import proton_pass_item_v1.extraTotp
 
 fun ItemContents.serializeToProto(): ItemV1.Item {
     val builder = ItemV1.Item.newBuilder()
@@ -28,11 +30,19 @@ fun ItemContents.serializeToProto(): ItemV1.Item {
                     )
                     .build()
             }
+            for (entry in extraTotpSet) {
+                builder.addExtraFields(
+                    extraField {
+                        totp = extraTotp { totpUri = entry }
+                    }
+                )
+            }
             contentBuilder.setLogin(
                 ItemV1.ItemLogin.newBuilder()
                     .setUsername(username)
                     .setPassword(password)
                     .addAllUrls(urls)
+                    .setTotpUri(primaryTotp)
                     .build()
             )
         }

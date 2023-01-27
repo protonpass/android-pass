@@ -23,7 +23,7 @@ fun TotpIssuerInput(
         editable = enabled,
         value = value,
         onChange = { onChange(it) },
-        required = true,
+        required = false,
         isError = fieldRequiredError,
     )
 }

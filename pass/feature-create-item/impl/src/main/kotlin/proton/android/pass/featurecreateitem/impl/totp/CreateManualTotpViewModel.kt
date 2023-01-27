@@ -53,7 +53,7 @@ class CreateManualTotpViewModel @Inject constructor(
     fun onSecretChange(value: String) {
         _state.update { state ->
             state.copy(
-                totpSpec = state.totpSpec.copy(secret = value)
+                totpSpec = state.totpSpec.copy(secret = value.trim())
             )
         }
     }
@@ -85,7 +85,7 @@ class CreateManualTotpViewModel @Inject constructor(
     fun onIssuerChange(value: String) {
         _state.update { state ->
             state.copy(
-                totpSpec = state.totpSpec.copy(issuer = value)
+                totpSpec = state.totpSpec.copy(issuer = value.trim())
             )
         }
     }
@@ -93,7 +93,7 @@ class CreateManualTotpViewModel @Inject constructor(
     fun onLabelChange(value: String) {
         _state.update { state ->
             state.copy(
-                totpSpec = state.totpSpec.copy(label = value)
+                totpSpec = state.totpSpec.copy(label = value.trim())
             )
         }
     }

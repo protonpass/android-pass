@@ -11,9 +11,9 @@ import proton.android.pass.featurecreateitem.impl.alias.RESULT_CREATED_DRAFT_ALI
 import proton.android.pass.featurecreateitem.impl.login.CreateLogin
 import proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpType
+import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.ui.create.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.ui.navigation.AppNavItem
 
 @OptIn(

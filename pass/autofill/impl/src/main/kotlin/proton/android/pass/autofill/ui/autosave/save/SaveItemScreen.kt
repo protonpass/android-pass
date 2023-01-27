@@ -2,10 +2,10 @@ package proton.android.pass.autofill.ui.autosave.save
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import proton.android.pass.featurecreateitem.impl.login.CreateLogin
-import proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
 import proton.android.pass.autofill.entities.SaveInformation
 import proton.android.pass.autofill.entities.SaveItemType
+import proton.android.pass.featurecreateitem.impl.login.CreateLogin
+import proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
 
 const val SAVE_ITEM_ROUTE = "save/item"
 
@@ -32,6 +32,7 @@ fun SaveItemScreen(
         initialContents = initialContents,
         onClose = onSaved, // For now we consider close to be the same as success
         onSuccess = { onSaved() },
-        onCreateAliasClick = { _, _ -> } // We don't support creating alias from autosave
+        onCreateAliasClick = { _, _ -> }, // We don't support creating alias from autosave
+        onAddTotp = {}
     )
 }

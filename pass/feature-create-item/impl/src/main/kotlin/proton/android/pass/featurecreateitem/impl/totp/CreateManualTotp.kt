@@ -8,6 +8,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
+const val TOTP_NAV_PARAMETER_KEY = "totp"
+
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun CreateManualTotp(

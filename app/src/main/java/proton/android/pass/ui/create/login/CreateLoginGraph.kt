@@ -10,8 +10,10 @@ import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.RESULT_CREATED_DRAFT_ALIAS
 import proton.android.pass.featurecreateitem.impl.login.CreateLogin
 import proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
+import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpType
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.ui.create.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.ui.navigation.AppNavItem
 
 @OptIn(
@@ -22,14 +24,12 @@ fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
     composable(AppNavItem.CreateLogin) {
         val createdDraftAlias by nav.navState<AliasItem>(RESULT_CREATED_DRAFT_ALIAS, null)
             .collectAsStateWithLifecycle()
-
-        val initialContents = if (createdDraftAlias != null) {
-            InitialCreateLoginUiState(
-                aliasItem = createdDraftAlias
-            )
-        } else {
-            null
-        }
+        val primaryTotp by nav.navState<String>(TOTP_NAV_PARAMETER_KEY, null)
+            .collectAsStateWithLifecycle()
+        val initialContents = InitialCreateLoginUiState(
+            aliasItem = createdDraftAlias,
+            primaryTotp = primaryTotp
+        )
         CreateLogin(
             initialContents = initialContents,
             onClose = { nav.onBackClick() },
@@ -43,6 +43,13 @@ fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
                         isDraft = true
                     )
                 )
+            },
+            onAddTotp = {
+                when (it) {
+                    AddTotpType.Camera -> {}
+                    AddTotpType.File -> {}
+                    AddTotpType.Manual -> nav.navigate(AppNavItem.CreateTotp)
+                }
             }
         )
     }

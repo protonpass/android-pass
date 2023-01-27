@@ -13,6 +13,8 @@ data class LoginItem(
     val password: String,
     val websiteAddresses: List<String>,
     val packageNames: Set<String>,
+    val primaryTotp: String,
+    val extraTotpSet: Set<String>,
     val note: String
 ) {
 
@@ -39,7 +41,9 @@ data class LoginItem(
             username = username,
             password = password,
             urls = addresses,
-            packageNames = packageNames
+            packageNames = packageNames,
+            primaryTotp = primaryTotp,
+            extraTotpSet = extraTotpSet,
         )
     }
 
@@ -50,6 +54,8 @@ data class LoginItem(
             password = "",
             websiteAddresses = persistentListOf(""),
             packageNames = emptySet(),
+            primaryTotp = "",
+            extraTotpSet = emptySet(),
             note = ""
         )
     }

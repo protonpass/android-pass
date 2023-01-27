@@ -1,14 +1,14 @@
 package proton.android.pass.presentation.utils
 
 import com.google.common.truth.Truth.assertThat
-import proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.core.crypto.common.keystore.encrypt
+import org.junit.Test
 import proton.android.pass.commonui.api.ItemUiFilter
-import proton.pass.domain.ItemType
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.presentation.components.model.TestItemUiModel
 import proton.android.pass.test.TestUtils.randomString
 import proton.android.pass.test.crypto.TestKeyStoreCrypto
-import org.junit.Test
-import proton.android.pass.presentation.components.model.TestItemUiModel
+import proton.pass.domain.ItemType
 
 internal class ItemFilterImplTest {
 
@@ -73,7 +73,8 @@ internal class ItemFilterImplTest {
                 itemType = ItemType.Login(
                     username = randomString(),
                     password = randomString().encrypt(TestKeyStoreCrypto),
-                    websites = emptyList()
+                    websites = emptyList(),
+                    primaryTotp = randomString()
                 )
             ),
             query = title
@@ -89,7 +90,8 @@ internal class ItemFilterImplTest {
                 itemType = ItemType.Login(
                     username = randomString(),
                     password = randomString().encrypt(TestKeyStoreCrypto),
-                    websites = emptyList()
+                    websites = emptyList(),
+                    primaryTotp = randomString()
                 )
             ),
             query = note
@@ -104,7 +106,8 @@ internal class ItemFilterImplTest {
                 itemType = ItemType.Login(
                     username = randomString(),
                     password = randomString().encrypt(TestKeyStoreCrypto),
-                    websites = listOf(website)
+                    websites = listOf(website),
+                    primaryTotp = randomString()
                 )
             ),
             query = website

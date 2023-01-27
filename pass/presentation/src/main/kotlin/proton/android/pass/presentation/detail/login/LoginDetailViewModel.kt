@@ -70,7 +70,6 @@ class LoginDetailViewModel @Inject constructor(
                 val code = parsed.map { totpManager.calculateCode(it) }
                     .logError(PassLogger, TAG, "Failed to get totp code")
                     .getOrNull()
-                    ?.toInt()
                 if (time != null && code != null) {
                     code to time
                 } else null
@@ -140,8 +139,8 @@ class LoginDetailViewModel @Inject constructor(
         snackbarMessageRepository.emitSnackbarMessage(WebsiteCopiedToClipbopard)
     }
 
-    fun copyTotpCodeToClipboard(code: Int) = viewModelScope.launch {
-        clipboardManager.copyToClipboard(code.toString())
+    fun copyTotpCodeToClipboard(code: String) = viewModelScope.launch {
+        clipboardManager.copyToClipboard(code)
         snackbarMessageRepository.emitSnackbarMessage(TotpCopiedToClipbopard)
     }
 

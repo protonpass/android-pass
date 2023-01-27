@@ -9,5 +9,6 @@ data class InitialCreateLoginUiState(
     val password: String? = null,
     val url: String? = null,
     val packageName: PackageName? = null,
-    val aliasItem: AliasItem? = null
+    val aliasItem: AliasItem? = null,
+    val primaryTotp: String? = null
 )

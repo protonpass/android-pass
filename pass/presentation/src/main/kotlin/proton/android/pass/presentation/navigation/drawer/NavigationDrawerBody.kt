@@ -10,7 +10,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,9 +34,6 @@ fun NavigationDrawerBody(
     var selectedItemTypes: SelectedItemTypes by remember { mutableStateOf(SelectedItemTypes.AllItems) }
     var selectedVaults: SelectedVaults by remember { mutableStateOf(SelectedVaults.AllVaults) }
 
-    LaunchedEffect(selectedItemTypes to selectedVaults) {
-        navDrawerNavigation.onNavHome(selectedItemTypes, selectedVaults)
-    }
     Column(
         modifier = modifier
             .verticalScroll(rememberScrollState()),
@@ -47,7 +43,10 @@ fun NavigationDrawerBody(
             itemCount = drawerUiState.itemCountSummary,
             closeDrawerAction = { onCloseDrawer() },
             selectedSection = drawerUiState.selectedSection,
-            onSectionClick = { selectedItemTypes = it }
+            onSectionClick = {
+                selectedItemTypes = it
+                navDrawerNavigation.onNavHome(selectedItemTypes, selectedVaults)
+            }
         )
         Divider(modifier = Modifier.fillMaxWidth())
         DrawerVaultSection(
@@ -55,7 +54,10 @@ fun NavigationDrawerBody(
             shares = drawerUiState.shares,
             selectedSection = drawerUiState.selectedSection,
             closeDrawerAction = { onCloseDrawer() },
-            onVaultClick = { selectedVaults = it }
+            onVaultClick = {
+                selectedVaults = it
+                navDrawerNavigation.onNavHome(selectedItemTypes, selectedVaults)
+            }
         )
         Divider(modifier = Modifier.fillMaxWidth())
         Text(

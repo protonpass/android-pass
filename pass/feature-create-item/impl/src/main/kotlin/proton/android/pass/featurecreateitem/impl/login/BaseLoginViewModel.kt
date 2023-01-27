@@ -246,6 +246,10 @@ abstract class BaseLoginViewModel(
         selectedShareIdState.update { shareId.toOption() }
     }
 
+    fun onDeleteTotp() {
+        loginItemState.update { it.copy(primaryTotp = "") }
+    }
+
     companion object {
         private const val TAG = "BaseLoginViewModel"
     }

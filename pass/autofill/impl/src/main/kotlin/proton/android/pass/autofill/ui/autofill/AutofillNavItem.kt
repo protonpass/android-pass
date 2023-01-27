@@ -66,4 +66,6 @@ sealed class AutofillNavItem(
             if (title.isNotEmpty()) append("&${AliasOptionalNavArgId.Title.key}=${title.value()}")
         }
     }
+
+    object CreateTotp : AutofillNavItem(baseRoute = "totp/create")
 }

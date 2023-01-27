@@ -1,7 +1,7 @@
 package proton.android.pass.test.domain
 
-import proton.pass.domain.ItemType
 import proton.android.pass.test.TestUtils
+import proton.pass.domain.ItemType
 
 object TestItemType {
     fun login(
@@ -12,6 +12,7 @@ object TestItemType {
         ItemType.Login(
             username = username ?: TestUtils.randomString(),
             password = password ?: TestUtils.randomString(),
-            websites = websites
+            websites = websites,
+            primaryTotp = TestUtils.randomString()
         )
 }

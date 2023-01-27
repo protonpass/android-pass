@@ -120,6 +120,11 @@ class MigrateVaultImpl @Inject constructor(
                                 urls = parsed.content.login.urlsList,
                                 packageNames = parsed.platformSpecific.android.allowedAppsList
                                     .map { it.packageName }
+                                    .toSet(),
+                                primaryTotp = parsed.content.login.totpUri,
+                                extraTotpSet = parsed.extraFieldsList
+                                    .filter { it.hasTotp() }
+                                    .map { it.totp.totpUri }
                                     .toSet()
                             )
                         }

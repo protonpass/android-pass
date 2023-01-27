@@ -1,9 +1,9 @@
 package proton.android.pass.presentation.detail
 
 import androidx.annotation.StringRes
+import me.proton.pass.presentation.R
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
-import me.proton.pass.presentation.R
 
 enum class DetailSnackbarMessages(
     @StringRes override val id: Int,
@@ -16,5 +16,6 @@ enum class DetailSnackbarMessages(
     NoteCopiedToClipboard(R.string.note_copied_to_clipboard, SnackbarType.NORM, true),
     UsernameCopiedToClipboard(R.string.username_copied_to_clipboard, SnackbarType.NORM, true),
     PasswordCopiedToClipboard(R.string.password_copied_to_clipboard, SnackbarType.NORM, true),
-    WebsiteCopiedToClipbopard(R.string.website_copied_to_clipboard, SnackbarType.NORM, true)
+    WebsiteCopiedToClipbopard(R.string.website_copied_to_clipboard, SnackbarType.NORM, true),
+    TotpCopiedToClipbopard(R.string.totp_copied_to_clipboard, SnackbarType.NORM, true)
 }

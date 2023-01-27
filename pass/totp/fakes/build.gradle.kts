@@ -16,6 +16,7 @@ android {
 }
 dependencies {
     implementation(projects.pass.totp.api)
+    implementation(projects.pass.common.api)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

@@ -48,6 +48,14 @@ inline fun <R, T> Result<T>.flatMap(transform: (value: T) -> Result<R>): Result<
         Result.Loading -> Result.Loading
     }
 
+
+fun <T> Result<T>.getOrNull(): T? =
+    when (this) {
+        is Result.Error -> null
+        is Result.Loading -> null
+        is Result.Success -> this.data
+    }
+
 fun <T> Flow<T>.asResult(): Flow<Result<T>> =
     this
         .asResultWithoutLoading()

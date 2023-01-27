@@ -70,9 +70,11 @@
     <string name="username_copied_to_clipboard">Username copied</string>
     <string name="password_copied_to_clipboard">Password copied</string>
     <string name="website_copied_to_clipboard">Website copied</string>
+    <string name="totp_copied_to_clipboard">TOTP copied</string>
     <string name="field_username">Username</string>
     <string name="field_password">Password</string>
     <string name="field_websites">Websites</string>
+    <string name="totp_section_title">TOTP</string>
 
     <!-- Settings -->
     <string name="settings_autofill_section_title">Autofill</string>

@@ -12,7 +12,8 @@ sealed interface ItemType {
     data class Login(
         val username: String,
         val password: EncryptedString,
-        val websites: List<String>
+        val websites: List<String>,
+        val primaryTotp: EncryptedString,
     ) : ItemType
 
     data class Note(val text: String) : ItemType

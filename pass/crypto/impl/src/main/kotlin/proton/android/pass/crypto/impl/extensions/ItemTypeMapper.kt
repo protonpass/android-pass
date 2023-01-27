@@ -15,7 +15,8 @@ fun ItemType.Companion.fromParsed(
         ItemV1.Content.ContentCase.LOGIN -> ItemType.Login(
             username = parsed.content.login.username,
             password = context.encrypt(parsed.content.login.password),
-            websites = parsed.content.login.urlsList
+            websites = parsed.content.login.urlsList,
+            primaryTotp = context.encrypt(parsed.content.login.totpUri)
         )
         ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)
         ItemV1.Content.ContentCase.ALIAS -> {

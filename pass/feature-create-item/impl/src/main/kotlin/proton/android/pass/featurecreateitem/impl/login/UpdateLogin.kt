@@ -88,7 +88,8 @@ fun UpdateLogin(
             onVaultSelect = {
                 // Migrate element
             },
-            onAddTotp = onAddTotp
+            onAddTotp = onAddTotp,
+            onDeleteTotp = viewModel::onDeleteTotp
         )
 
         ConfirmMoveItemToTrashDialog(

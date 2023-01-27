@@ -27,8 +27,14 @@ import proton.android.pass.featurecreateitem.impl.R
 internal fun TotpInput(
     modifier: Modifier = Modifier,
     value: String,
-    onAddTotpClick: () -> Unit
+    onAddTotpClick: () -> Unit,
+    onDeleteTotpClick: () -> Unit
 ) {
+    val buttonIcon = if (value.isNotBlank()) {
+        me.proton.core.presentation.R.drawable.ic_proton_trash
+    } else {
+        me.proton.core.presentation.R.drawable.ic_proton_plus
+    }
     Column(modifier = modifier) {
         ProtonTextTitle(stringResource(R.string.totp_create_login_field_title))
         Spacer(modifier = Modifier.height(8.dp))
@@ -49,7 +55,13 @@ internal fun TotpInput(
             )
             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             OutlinedButton(
-                onClick = { onAddTotpClick() },
+                onClick = {
+                    if (value.isNotBlank()) {
+                        onDeleteTotpClick()
+                    } else {
+                        onAddTotpClick()
+                    }
+                },
                 shape = ProtonTheme.shapes.medium,
                 modifier = Modifier
                     .fillMaxHeight()
@@ -57,7 +69,7 @@ internal fun TotpInput(
                     .align(Alignment.CenterVertically)
             ) {
                 Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
+                    painter = painterResource(buttonIcon),
                     contentDescription = null,
                     tint = ProtonTheme.colors.iconNorm,
                     modifier = Modifier.align(Alignment.CenterVertically)

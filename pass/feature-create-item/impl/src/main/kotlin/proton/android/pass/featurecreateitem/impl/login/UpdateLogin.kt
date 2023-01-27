@@ -78,7 +78,8 @@ fun UpdateLogin(
             onDeleteItemClick = { setShowDeleteDialog(true) },
             onVaultSelect = {
                 // Migrate element
-            }
+            },
+            onAddTotp = {}
         )
 
         ConfirmMoveItemToTrashDialog(

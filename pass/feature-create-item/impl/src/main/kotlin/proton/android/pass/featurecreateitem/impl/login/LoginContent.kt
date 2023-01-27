@@ -22,8 +22,11 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.EmptyShareIdError
+import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpBottomSheet
+import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpType
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AliasOptionsBottomSheet
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.GeneratePasswordBottomSheet
+import proton.android.pass.featurecreateitem.impl.login.bottomsheet.LoginBottomSheetContentType.AddTotp
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.LoginBottomSheetContentType.AliasOptions
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.LoginBottomSheetContentType.GeneratePassword
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.LoginBottomSheetContentType.VaultSelection
@@ -52,7 +55,8 @@ internal fun LoginContent(
     onCreateAliasClick: (ShareId, Option<String>) -> Unit,
     onRemoveAliasClick: () -> Unit,
     onDeleteItemClick: () -> Unit,
-    onVaultSelect: (ShareId) -> Unit
+    onVaultSelect: (ShareId) -> Unit,
+    onAddTotp: (AddTotpType) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
@@ -68,42 +72,44 @@ internal fun LoginContent(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {
-                GeneratePassword -> {
-                    GeneratePasswordBottomSheet(
-                        modifier = modifier,
-                        regeneratePassword = regeneratePassword,
-                        onPasswordRegenerated = {
-                            regeneratePassword = false
-                        },
-                        onConfirm = { password ->
-                            onPasswordChange(password)
-                            scope.launch { bottomSheetState.hide() }
+                GeneratePassword -> GeneratePasswordBottomSheet(
+                    modifier = modifier,
+                    regeneratePassword = regeneratePassword,
+                    onPasswordRegenerated = {
+                        regeneratePassword = false
+                    },
+                    onConfirm = { password ->
+                        onPasswordChange(password)
+                        scope.launch { bottomSheetState.hide() }
+                    }
+                )
+                AliasOptions -> AliasOptionsBottomSheet(
+                    modifier = modifier,
+                    onRemoveAliasClick = {
+                        scope.launch {
+                            showRemoveAliasDialog = true
+                            bottomSheetState.hide()
                         }
-                    )
-                }
-                AliasOptions -> {
-                    AliasOptionsBottomSheet(
-                        modifier = modifier,
-                        onRemoveAliasClick = {
-                            scope.launch {
-                                showRemoveAliasDialog = true
-                                bottomSheetState.hide()
-                            }
+                    }
+                )
+                VaultSelection -> VaultSelectionBottomSheet(
+                    shareList = uiState.shareList,
+                    selectedShare = uiState.selectedShareId!!,
+                    onVaultClick = {
+                        onVaultSelect(it)
+                        scope.launch {
+                            bottomSheetState.hide()
                         }
-                    )
-                }
-                VaultSelection -> {
-                    VaultSelectionBottomSheet(
-                        shareList = uiState.shareList,
-                        selectedShare = uiState.selectedShareId!!,
-                        onVaultClick = {
-                            onVaultSelect(it)
-                            scope.launch {
-                                bottomSheetState.hide()
-                            }
+                    }
+                )
+                AddTotp -> AddTotpBottomSheet(
+                    onAddTotp = {
+                        onAddTotp(it)
+                        scope.launch {
+                            bottomSheetState.hide()
                         }
-                    )
-                }
+                    }
+                )
             }
         }
     ) {
@@ -168,6 +174,12 @@ internal fun LoginContent(
                 onVaultSelectorClick = {
                     scope.launch {
                         currentBottomSheet = VaultSelection
+                        bottomSheetState.show()
+                    }
+                },
+                onAddTotpClick = {
+                    scope.launch {
+                        currentBottomSheet = AddTotp
                         bottomSheetState.show()
                     }
                 }

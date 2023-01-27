@@ -23,6 +23,6 @@ data class TotpSpec(
     val validPeriodSeconds: Int = DEFAULT_VALID_PERIOD_SECONDS
 ) {
     companion object {
-        private const val DEFAULT_VALID_PERIOD_SECONDS = 30
+        const val DEFAULT_VALID_PERIOD_SECONDS = 30
     }
 }

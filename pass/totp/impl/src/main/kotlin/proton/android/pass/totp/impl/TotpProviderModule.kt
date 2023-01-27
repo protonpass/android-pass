@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.datetime.Clock
-import proton.android.pass.totp.api.TotpCalculator
+import proton.android.pass.totp.api.TotpManager
 import javax.inject.Singleton
 
 @Module
@@ -14,5 +14,5 @@ object TotpProviderModule {
 
     @Provides
     @Singleton
-    fun provideTotpCalculatorImpl(): TotpCalculator = TotpCalculatorImpl(Clock.System)
+    fun provideTotpManager(): TotpManager = TotpManagerImpl(Clock.System)
 }

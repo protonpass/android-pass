@@ -15,7 +15,7 @@ data class LoginDetailUiState(
 
 @Stable
 data class TotpUiState(
-    val code: Int,
+    val code: String,
     val remainingSeconds: Int,
     val totalSeconds: Int
 )

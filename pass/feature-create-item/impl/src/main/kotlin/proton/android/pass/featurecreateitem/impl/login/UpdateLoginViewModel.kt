@@ -96,7 +96,9 @@ class UpdateLoginViewModel @Inject constructor(
                                     password = decrypt(itemContents.password),
                                     websiteAddresses = websites,
                                     note = decrypt(item.note),
-                                    packageNames = item.allowedPackageNames.toSet()
+                                    packageNames = item.allowedPackageNames.toSet(),
+                                    primaryTotp = decrypt(itemContents.primaryTotp),
+                                    extraTotpSet = emptySet()
                                 )
                             }
                         }

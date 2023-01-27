@@ -156,6 +156,8 @@ sealed class AppNavItem(
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
 
+    object CreateTotp : AppNavItem(baseRoute = "totp/create")
+
     fun Map<String, Any>.toPath() = this
         .map { "${it.key}=${it.value}" }
         .joinToString(

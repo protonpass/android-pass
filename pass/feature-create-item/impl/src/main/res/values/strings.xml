@@ -92,4 +92,28 @@
     <string name="vault_title">Vault</string>
     <string name="vault_bottomsheet_title">Vaults</string>
 
+    <!--  Totp  -->
+
+    <string name="totp_bottom_sheet_title">Select method</string>
+    <string name="totp_add_via_camera">Scan QR</string>
+    <string name="totp_add_via_manual">Write data manually</string>
+    <string name="totp_add_via_file">Choose an image</string>
+
+    <string name="totp_top_bar_manual_title">Write data</string>
+    <string name="totp_top_bar_manual_save_action">Save</string>
+
+    <string name="totp_digits_field_title">Digits</string>
+    <string name="totp_label_field_title">Label</string>
+    <string name="totp_secret_field_title">Secret</string>
+    <string name="totp_issuer_field_title">Issuer</string>
+    <string name="totp_algorithm_field_title">Algorithm</string>
+    <string name="totp_valid_time_field_title">Valid time</string>
+
+    <string name="totp_label_field_placeholder">Add label</string>
+    <string name="totp_secret_field_placeholder">Add secret</string>
+    <string name="totp_issuer_field_placeholder">Add issuer</string>
+    <string name="totp_valid_time_field_placeholder">0</string>
+    <string name="totp_create_login_field_title">TOTP</string>
+    <string name="totp_create_login_field_placeholder">Add TOTP</string>
+
 </resources>

@@ -42,6 +42,7 @@ internal fun LoginItemForm(
     onAliasOptionsClick: () -> Unit,
     onVaultSelectorClick: () -> Unit,
     onAddTotpClick: () -> Unit,
+    onDeleteTotpClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
     Column(
@@ -90,6 +91,7 @@ internal fun LoginItemForm(
             modifier = Modifier.fillMaxWidth(),
             value = loginItem.primaryTotp,
             onAddTotpClick = onAddTotpClick,
+            onDeleteTotpClick = onDeleteTotpClick
         )
         if (!isUpdate) {
             selectedShare?.name?.let {

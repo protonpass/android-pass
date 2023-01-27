@@ -64,6 +64,7 @@ fun CreateLogin(
         onRemoveAliasClick = { viewModel.onRemoveAlias() },
         onDeleteItemClick = {}, // Item cannot be deleted if it has not been created
         onVaultSelect = { viewModel.changeVault(it) },
-        onAddTotp = onAddTotp
+        onAddTotp = onAddTotp,
+        onDeleteTotp = { viewModel.onDeleteTotp() }
     )
 }

@@ -21,7 +21,7 @@ import proton.android.pass.presentation.detail.DetailSectionTitle
 fun TotpSection(
     modifier: Modifier = Modifier,
     state: TotpUiState,
-    onCopyTotpClick: (Int) -> Unit
+    onCopyTotpClick: (String) -> Unit
 ) {
     RoundedCornersContainer(
         modifier = modifier.fillMaxWidth(),
@@ -34,7 +34,7 @@ fun TotpSection(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = state.code.toString())
+                Text(text = state.code)
                 Spacer(modifier = Modifier.width(20.dp))
                 Text(
                     modifier = Modifier.weight(1f),

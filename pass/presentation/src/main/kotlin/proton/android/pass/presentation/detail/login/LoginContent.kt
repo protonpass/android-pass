@@ -18,7 +18,7 @@ fun LoginContent(
     onCopyPasswordClick: () -> Unit,
     onWebsiteClicked: (String) -> Unit,
     onWebsiteLongClicked: (String) -> Unit,
-    onCopyTotpClick: (Int) -> Unit
+    onCopyTotpClick: (String) -> Unit
 ) {
     Column(modifier.padding(horizontal = 16.dp)) {
         LoginUsernameRow(

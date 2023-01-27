@@ -119,6 +119,7 @@ dependencies {
     api(projects.pass.domain)
     api(projects.pass.notifications.api)
     api(projects.pass.preferences.api)
+    implementation(projects.pass.totp.api)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     debugImplementation(libs.androidx.compose.uiTestManifest)

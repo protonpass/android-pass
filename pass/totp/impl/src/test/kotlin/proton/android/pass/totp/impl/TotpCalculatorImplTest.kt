@@ -13,11 +13,11 @@ import proton.android.pass.totp.api.TotpSpec
 
 class TotpCalculatorImplTest {
 
-    private lateinit var instance: TotpCalculatorImpl
+    private lateinit var instance: TotpManagerImpl
 
     @Before
     fun setup() {
-        instance = TotpCalculatorImpl(FixedClock(Instant.fromEpochMilliseconds(TIMESTAMP)))
+        instance = TotpManagerImpl(FixedClock(Instant.fromEpochMilliseconds(TIMESTAMP)))
     }
 
     @Test
@@ -31,7 +31,7 @@ class TotpCalculatorImplTest {
             validPeriodSeconds = 20
         )
 
-        val code = instance.calculate(spec)
+        val code = instance.calculateCode(spec)
         assertThat(code).isEqualTo("91687215")
     }
 
@@ -45,7 +45,7 @@ class TotpCalculatorImplTest {
             digits = TotpDigits.Six,
             validPeriodSeconds = 10
         )
-        val code = instance.calculate(spec)
+        val code = instance.calculateCode(spec)
         assertThat(code).isEqualTo("846277")
     }
 

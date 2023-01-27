@@ -7,7 +7,9 @@ sealed class ItemContents(open val title: String, open val note: String) {
         val username: String,
         val password: String,
         val urls: List<String>,
-        val packageNames: Set<String>
+        val packageNames: Set<String>,
+        val primaryTotp: String,
+        val extraTotpSet: Set<String>
     ) : ItemContents(title, note)
 
     data class Note(

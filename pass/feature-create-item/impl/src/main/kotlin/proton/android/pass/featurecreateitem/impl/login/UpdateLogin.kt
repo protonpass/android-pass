@@ -16,6 +16,7 @@ import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.R
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.LoginUpdated
+import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpType
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -24,10 +25,12 @@ import proton.pass.domain.ShareId
 fun UpdateLogin(
     modifier: Modifier = Modifier,
     draftAlias: AliasItem?,
+    primaryTotp: String?,
     onUpClick: () -> Unit,
     onSuccess: (ShareId, ItemId) -> Unit,
     onCreateAliasClick: (ShareId, Option<String>) -> Unit,
-    onSentToTrash: () -> Unit
+    onSentToTrash: () -> Unit,
+    onAddTotp: (AddTotpType) -> Unit
 ) {
     val viewModel: UpdateLoginViewModel = hiltViewModel()
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
@@ -35,6 +38,10 @@ fun UpdateLogin(
     LaunchedEffect(draftAlias) {
         draftAlias ?: return@LaunchedEffect
         viewModel.setAliasItem(draftAlias)
+    }
+    LaunchedEffect(primaryTotp) {
+        primaryTotp ?: return@LaunchedEffect
+        viewModel.setTotp(primaryTotp)
     }
 
     LaunchedEffect(uiState.isItemSentToTrash) {
@@ -73,13 +80,15 @@ fun UpdateLogin(
             onWebsiteChange = onWebsiteChange,
             onNoteChange = { viewModel.onNoteChange(it) },
             onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
-            onCreateAliasClick = { shareId, titleOption -> onCreateAliasClick(shareId, titleOption) },
+            onCreateAliasClick = { shareId, titleOption ->
+                onCreateAliasClick(shareId, titleOption)
+            },
             onRemoveAliasClick = { },
             onDeleteItemClick = { setShowDeleteDialog(true) },
             onVaultSelect = {
                 // Migrate element
             },
-            onAddTotp = {}
+            onAddTotp = onAddTotp
         )
 
         ConfirmMoveItemToTrashDialog(

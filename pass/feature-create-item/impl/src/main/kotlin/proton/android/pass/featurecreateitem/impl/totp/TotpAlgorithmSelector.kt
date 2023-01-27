@@ -16,12 +16,12 @@ fun TotpAlgorithmSelector(
     enabled: Boolean = true
 ) {
     val options: List<String> = remember {
-        TotpAlgorithm.values().map { it.name }.toList()
+        TotpAlgorithm.values().map { it.name.uppercase() }.toList()
     }
     ProtonFormDropdown(
         modifier = modifier,
         enabled = enabled,
-        selectedValue = value.name,
+        selectedValue = value.name.uppercase(),
         valueList = options,
         label = stringResource(id = R.string.totp_algorithm_field_title),
         onChange = {

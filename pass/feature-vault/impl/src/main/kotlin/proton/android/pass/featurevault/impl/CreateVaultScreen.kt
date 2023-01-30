@@ -30,4 +30,3 @@ fun CreateVaultScreen(
         onUpClick = onUpClick
     )
 }
-

@@ -35,20 +35,22 @@ class CreateVaultViewModel @Inject constructor(
         MutableStateFlow(VaultSavedState.Unknown)
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
-    private val draftVaultState: MutableStateFlow<DraftVault> =
-        MutableStateFlow(DraftVault("", ""))
-
-    data class DraftVault(val title: String, val description: String)
+    private val validationErrorsState: MutableStateFlow<Set<DraftVaultValidationErrors>> =
+        MutableStateFlow(emptySet())
+    private val draftVaultState: MutableStateFlow<DraftVaultUiState> =
+        MutableStateFlow(DraftVaultUiState("", ""))
 
     val createVaultUIState: StateFlow<CreateVaultUIState> = combine(
         draftVaultState,
         isLoadingState,
-        vaultSavedState
-    ) { draftVault, isLoadingState, vaultSaved ->
+        vaultSavedState,
+        validationErrorsState
+    ) { draftVault, isLoadingState, vaultSaved, validationErrors ->
         CreateVaultUIState(
             draftVault = draftVault,
             isLoadingState = isLoadingState,
-            vaultSavedState = vaultSaved
+            vaultSavedState = vaultSaved,
+            validationErrors = validationErrors
         )
     }
         .stateIn(
@@ -65,24 +67,29 @@ class CreateVaultViewModel @Inject constructor(
         draftVaultState.update { it.copy(description = value) }
     }
 
-    fun onCreateVault(draftVault: DraftVault) = viewModelScope.launch {
-        if (draftVault.title.isBlank() || draftVault.description.isBlank()) return@launch
-        isLoadingState.update { IsLoadingState.Loading }
-        val vault = NewVault(
-            name = draftVault.title.encrypt(cryptoContext.keyStoreCrypto),
-            description = draftVault.description.encrypt(cryptoContext.keyStoreCrypto)
-        )
-        createVault(vault = vault)
-            .onSuccess {
-                snackbarMessageRepository.emitSnackbarMessage(CreateVaultSuccess)
-                isLoadingState.update { IsLoadingState.NotLoading }
-                vaultSavedState.update { VaultSavedState.Success }
-            }
-            .onError {
-                snackbarMessageRepository.emitSnackbarMessage(CreateVaultError)
-                isLoadingState.update { IsLoadingState.NotLoading }
-            }
-            .logError(PassLogger, TAG, "Create Vault Failed")
+    fun onCreateVault(draftVault: DraftVaultUiState) = viewModelScope.launch {
+        val validationErrors = draftVault.validate()
+        if (validationErrors.isEmpty()) {
+            validationErrorsState.value = emptySet()
+            isLoadingState.update { IsLoadingState.Loading }
+            val vault = NewVault(
+                name = draftVault.title.encrypt(cryptoContext.keyStoreCrypto),
+                description = draftVault.description.encrypt(cryptoContext.keyStoreCrypto)
+            )
+            createVault(vault = vault)
+                .onSuccess {
+                    snackbarMessageRepository.emitSnackbarMessage(CreateVaultSuccess)
+                    isLoadingState.update { IsLoadingState.NotLoading }
+                    vaultSavedState.update { VaultSavedState.Success }
+                }
+                .onError {
+                    snackbarMessageRepository.emitSnackbarMessage(CreateVaultError)
+                    isLoadingState.update { IsLoadingState.NotLoading }
+                }
+                .logError(PassLogger, TAG, "Create Vault Failed")
+        } else {
+            validationErrorsState.update { validationErrors }
+        }
     }
 
     companion object {

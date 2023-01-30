@@ -19,6 +19,7 @@ import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import proton.android.pass.composecomponents.impl.topbar.icon.CrossBackIcon
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.feature.vault.impl.R
+import proton.android.pass.featurevault.impl.DraftVaultValidationErrors.BlankTitle
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -27,7 +28,7 @@ fun CreateVaultContent(
     uiState: CreateVaultUIState,
     onTitleChange: (String) -> Unit,
     onDescriptionChange: (String) -> Unit,
-    onCreate: (CreateVaultViewModel.DraftVault) -> Unit,
+    onCreate: (DraftVaultUiState) -> Unit,
     onUpClick: () -> Unit
 ) {
     Scaffold(
@@ -66,6 +67,7 @@ fun CreateVaultContent(
                 placeholder = stringResource(id = R.string.vault_create_form_title_placeholder),
                 value = uiState.draftVault.title,
                 onChange = onTitleChange,
+                isError = uiState.validationErrors.contains(BlankTitle),
                 required = true
             )
             ProtonFormInput(
@@ -74,7 +76,7 @@ fun CreateVaultContent(
                 placeholder = stringResource(id = R.string.vault_create_form_description_placeholder),
                 value = uiState.draftVault.description,
                 onChange = onDescriptionChange,
-                required = true
+                required = false
             )
         }
     }

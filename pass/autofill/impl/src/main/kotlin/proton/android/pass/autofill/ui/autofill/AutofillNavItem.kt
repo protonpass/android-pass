@@ -68,4 +68,5 @@ sealed class AutofillNavItem(
     }
 
     object CreateTotp : AutofillNavItem(baseRoute = "totp/create")
+    object CameraTotp : AutofillNavItem(baseRoute = "totp/camera")
 }

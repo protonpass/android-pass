@@ -59,7 +59,7 @@ fun NavGraphBuilder.createLoginGraph(
             },
             onAddTotp = {
                 when (it) {
-                    AddTotpType.Camera -> {}
+                    AddTotpType.Camera -> appNavigator.navigate(AutofillNavItem.CameraTotp)
                     AddTotpType.File -> {}
                     AddTotpType.Manual -> appNavigator.navigate(AutofillNavItem.CreateTotp)
                 }

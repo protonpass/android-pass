@@ -3,7 +3,7 @@ minSdk = "27" # Minimum SDK for AutofillService
 compileSdk = "33"
 targetSdk = "33"
 # Accompanist
-accompanist = "0.28.0"
+accompanist = "0.25.1"
 # Android
 material = "1.7.0"
 # AndroidX
@@ -95,7 +95,7 @@ accompanist-insets = { module = "com.google.accompanist:accompanist-insets", ver
 accompanist-navigation-animation = { module = "com.google.accompanist:accompanist-navigation-animation", version.ref = "accompanist" }
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
-accompanist-permissionss = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
 accompanist-placeholder = { module = "com.google.accompanist:accompanist-placeholder", version.ref = "accompanist" }
 accompanist-placeholder-material = { module = "com.google.accompanist:accompanist-placeholder-material", version.ref = "accompanist" }
 accompanist-swipeRefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }

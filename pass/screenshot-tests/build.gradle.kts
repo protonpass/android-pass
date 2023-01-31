@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    compileSdk = 31
+    compileSdk = libs.versions.compileSdk.get().toInt()
     namespace = "proton.android.pass.screenshottests"
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
-        targetSdk = 31
+        targetSdk = libs.versions.targetSdk.get().toInt()
     }
     flavorDimensions += "version"
     productFlavors {

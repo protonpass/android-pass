@@ -1,6 +1,8 @@
 package proton.android.pass.totp.impl
 
+import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import org.junit.Before
 import org.junit.Test
@@ -21,9 +23,9 @@ class TotpCalculatorImplTest {
     }
 
     @Test
-    fun `can generate the correct code`() {
+    fun `can generate the correct code`() = runTest {
         val spec = TotpSpec(
-            secret = "someRandomSecret",
+            secret = "ORUGS43JON2GQZLTMVRXEZLU", // thisisthesecret
             label = "someRandomLabel",
             issuer = "issuer".some(),
             algorithm = TotpAlgorithm.Sha256,
@@ -31,22 +33,26 @@ class TotpCalculatorImplTest {
             validPeriodSeconds = 20
         )
 
-        val code = instance.calculateCode(spec)
-        assertThat(code).isEqualTo("91687215")
+        instance.observeCode(spec)
+            .test {
+                assertThat(awaitItem().first).isEqualTo("86058600")
+            }
     }
 
     @Test
-    fun `reference qr code`() {
+    fun `reference qr code`() = runTest {
         val spec = TotpSpec(
-            secret = "thisisthesecret",
+            secret = "ORUGS43JON2GQZLTMVRXEZLU", // thisisthesecret
             label = "thisisthelabel",
             issuer = None,
             algorithm = TotpAlgorithm.Sha1,
             digits = TotpDigits.Six,
             validPeriodSeconds = 10
         )
-        val code = instance.calculateCode(spec)
-        assertThat(code).isEqualTo("846277")
+        instance.observeCode(spec)
+            .test {
+                assertThat(awaitItem().first).isEqualTo("846277")
+            }
     }
 
     companion object {

@@ -19,7 +19,6 @@ data class TotpSpecUi(
     fun validate(): Set<TotpSpecValidationErrors> {
         val mutableSet = mutableSetOf<TotpSpecValidationErrors>()
         if (secret.isBlank()) mutableSet.add(TotpSpecValidationErrors.BlankSecret)
-        if (label.isBlank()) mutableSet.add(TotpSpecValidationErrors.BlankLabel)
         if (validPeriodSeconds == null) mutableSet.add(TotpSpecValidationErrors.BlankValidTime)
         return mutableSet.toSet()
     }

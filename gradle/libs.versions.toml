@@ -30,6 +30,8 @@ androidx-test-uiautomator = "2.3.0-alpha01"
 androidx-work = "2.7.1"
 # CashApp
 turbine = "0.12.1"
+# Commons codec
+commons-codec = "1.15"
 # Core
 core = "9.9.1"
 # Dagger
@@ -154,6 +156,9 @@ androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version
 
 # CashApp
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+
+# Commons codec
+commons-codec = { module = "commons-codec:commons-codec", version.ref = "commons-codec" }
 
 # Core
 core-account = { module = "me.proton.core:account", version.ref = "core" }

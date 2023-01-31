@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
+import org.apache.commons.codec.binary.Base32
 import proton.android.pass.common.api.Result
 import proton.android.pass.totp.api.TotpAlgorithm
 import proton.android.pass.totp.api.TotpManager
@@ -37,22 +38,6 @@ class TotpManagerImpl @Inject constructor(
         return builder.buildToString()
     }
 
-    override fun calculateCode(spec: TotpSpec): String {
-        val config = TimeBasedOneTimePasswordConfig(
-            timeStep = spec.validPeriodSeconds.toLong(),
-            timeStepUnit = TimeUnit.SECONDS,
-            codeDigits = spec.digits.digits,
-            hmacAlgorithm = when (spec.algorithm) {
-                TotpAlgorithm.Sha1 -> HmacAlgorithm.SHA1
-                TotpAlgorithm.Sha256 -> HmacAlgorithm.SHA256
-                TotpAlgorithm.Sha512 -> HmacAlgorithm.SHA512
-            }
-        )
-
-        val generator = TimeBasedOneTimePasswordGenerator(spec.secret.encodeToByteArray(), config)
-        return generator.generate(clock.now().toJavaInstant())
-    }
-
     override fun observeCode(spec: TotpSpec): Flow<Pair<String, Int>> {
         val config = TimeBasedOneTimePasswordConfig(
             timeStep = spec.validPeriodSeconds.toLong(),
@@ -64,17 +49,19 @@ class TotpManagerImpl @Inject constructor(
                 TotpAlgorithm.Sha512 -> HmacAlgorithm.SHA512
             }
         )
-        val generator = TimeBasedOneTimePasswordGenerator(spec.secret.encodeToByteArray(), config)
+        val generator = TimeBasedOneTimePasswordGenerator(Base32().decode(spec.secret), config)
         return flow {
             while (currentCoroutineContext().isActive) {
-                val timestamp = clock.now().toJavaInstant().toEpochMilli()
-                val code = generator.generate(timestamp)
-                val counter = generator.counter()
+                val startTimestamp = clock.now().toJavaInstant().toEpochMilli()
+                val code = generator.generate(startTimestamp)
+                val counter = generator.counter(startTimestamp)
                 val endEpochMillis = generator.timeslotStart(counter + 1) - 1
-                while (generator.isValid(code)) {
-                    val millisValid = endEpochMillis - clock.now().toJavaInstant().toEpochMilli()
+                var now = clock.now().toJavaInstant().toEpochMilli()
+                while (generator.isValid(code, now)) {
+                    val millisValid = endEpochMillis - now
                     emit(code to (millisValid / ONE_SECOND_MILLISECONDS).toInt())
                     delay(ONE_SECOND_MILLISECONDS)
+                    now = clock.now().toJavaInstant().toEpochMilli()
                 }
             }
         }

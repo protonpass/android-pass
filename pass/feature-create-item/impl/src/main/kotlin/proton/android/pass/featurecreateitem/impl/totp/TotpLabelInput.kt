@@ -23,7 +23,7 @@ fun TotpLabelInput(
         editable = enabled,
         value = value,
         onChange = onChange,
-        required = true,
+        required = false,
         isError = fieldRequiredError,
     )
 }

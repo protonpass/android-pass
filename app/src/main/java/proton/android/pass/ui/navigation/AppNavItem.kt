@@ -158,6 +158,7 @@ sealed class AppNavItem(
 
     object CreateTotp : AppNavItem(baseRoute = "totp/create")
     object CameraTotp : AppNavItem(baseRoute = "totp/camera")
+    object PhotoPickerTotp : AppNavItem(baseRoute = "totp/photopicker")
 
     fun Map<String, Any>.toPath() = this
         .map { "${it.key}=${it.value}" }

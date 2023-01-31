@@ -53,7 +53,7 @@ fun NavGraphBuilder.updateLoginGraph(nav: AppNavigator) {
             onAddTotp = {
                 when (it) {
                     AddTotpType.Camera -> nav.navigate(AppNavItem.CameraTotp)
-                    AddTotpType.File -> {}
+                    AddTotpType.File -> nav.navigate(AppNavItem.PhotoPickerTotp)
                     AddTotpType.Manual -> nav.navigate(AutofillNavItem.CreateTotp)
                 }
             }

@@ -27,7 +27,7 @@ fun CreateLogin(
     onAddTotp: (AddTotpType) -> Unit
 ) {
     val viewModel: CreateLoginViewModel = hiltViewModel()
-    LaunchedEffect(Unit) {
+    LaunchedEffect(initialContents) {
         initialContents ?: return@LaunchedEffect
         viewModel.setInitialContents(initialContents)
     }

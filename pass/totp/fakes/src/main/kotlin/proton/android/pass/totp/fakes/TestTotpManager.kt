@@ -11,8 +11,6 @@ class TestTotpManager @Inject constructor() : TotpManager {
 
     override fun generateUri(spec: TotpSpec): String = ""
 
-    override fun calculateCode(spec: TotpSpec): String = ""
-
     override fun observeCode(spec: TotpSpec): Flow<Pair<String, Int>> = emptyFlow()
 
     override fun parse(uri: String): Result<TotpSpec> = Result.Loading

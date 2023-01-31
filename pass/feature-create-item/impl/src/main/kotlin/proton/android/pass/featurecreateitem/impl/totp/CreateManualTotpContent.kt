@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.R
-import proton.android.pass.featurecreateitem.impl.totp.TotpSpecValidationErrors.BlankLabel
 import proton.android.pass.featurecreateitem.impl.totp.TotpSpecValidationErrors.BlankSecret
 import proton.android.pass.featurecreateitem.impl.totp.TotpSpecValidationErrors.BlankValidTime
 import proton.android.pass.totp.api.TotpAlgorithm
@@ -51,17 +50,18 @@ fun CreateManualTotpContent(
                 .padding(contentPadding)
                 .padding(16.dp)
         ) {
-            TotpLabelInput(
-                value = totpSpec.label,
-                onChange = onLabelChange,
-                fieldRequiredError = validationErrors.contains(BlankLabel)
-            )
-            TotpIssuerInput(value = totpSpec.issuer, onChange = onIssuerChange)
             TotpSecretInput(
                 value = totpSpec.secret,
                 onChange = onSecretChange,
                 fieldRequiredError = validationErrors.contains(BlankSecret)
             )
+            TotpLabelInput(
+                value = totpSpec.label,
+                onChange = onLabelChange,
+                fieldRequiredError = validationErrors.contains(TotpSpecValidationErrors.BlankLabel)
+            )
+            TotpIssuerInput(value = totpSpec.issuer, onChange = onIssuerChange)
+            Spacer(modifier = Modifier.height(5.dp))
             TotpAlgorithmSelector(value = totpSpec.algorithm, onChange = onAlgorithmChange)
             Spacer(modifier = Modifier.height(5.dp))
             TotpDigitsSelector(value = totpSpec.digits, onChange = onDigitsChange)

@@ -19,6 +19,7 @@ dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.onetimepassword)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.commons.codec)
 
     implementation(projects.pass.common.api)
     implementation(projects.pass.totp.api)
@@ -29,6 +30,7 @@ dependencies {
 
     testImplementation(projects.pass.commonTest)
     testImplementation(libs.truth)
+    testImplementation(libs.turbine)
     testImplementation(libs.coroutines.test)
     testImplementation(libs.junit)
 }

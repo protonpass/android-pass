@@ -36,15 +36,16 @@ fun NavGraphBuilder.createLoginGraph(
         } else {
             null
         }
+        val initialContents = InitialCreateLoginUiState(
+            title = state.title,
+            url = state.webDomain.value(),
+            aliasItem = createdDraftAlias,
+            packageName = packageName,
+            primaryTotp = primaryTotp
+        )
 
         CreateLogin(
-            initialContents = InitialCreateLoginUiState(
-                title = state.title,
-                url = state.webDomain.value(),
-                aliasItem = createdDraftAlias,
-                packageName = packageName,
-                primaryTotp = primaryTotp
-            ),
+            initialContents = initialContents,
             onClose = { appNavigator.onBackClick() },
             onSuccess = onItemCreated,
             onCreateAliasClick = { shareId, titleOption ->
@@ -60,7 +61,7 @@ fun NavGraphBuilder.createLoginGraph(
             onAddTotp = {
                 when (it) {
                     AddTotpType.Camera -> appNavigator.navigate(AutofillNavItem.CameraTotp)
-                    AddTotpType.File -> {}
+                    AddTotpType.File -> appNavigator.navigate(AutofillNavItem.PhotoPickerTotp)
                     AddTotpType.Manual -> appNavigator.navigate(AutofillNavItem.CreateTotp)
                 }
             }

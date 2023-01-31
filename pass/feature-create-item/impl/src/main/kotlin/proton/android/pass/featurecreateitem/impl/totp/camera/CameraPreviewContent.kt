@@ -16,39 +16,12 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.asExecutor
+import proton.android.pass.log.api.PassLogger
 
 @Composable
 fun CameraPreviewContent(modifier: Modifier = Modifier, onSuccess: (String) -> Unit) {
-    val imageAnalysis = remember {
-        ImageAnalysis.Builder()
-            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-            .build()
-            .apply {
-                setAnalyzer(
-                    Dispatchers.Main.asExecutor(),
-                    QrCodeImageAnalyzer(
-                        onSuccess = { result -> onSuccess(result.text) },
-                        onError = {}
-                    )
-                )
-            }
-    }
-    val context = LocalContext.current
-    val processCameraProvider = remember(context) {
-        ProcessCameraProvider.getInstance(context).get()
-    }
     val preview = remember { Preview.Builder().build() }
-    val lifecycleOwner = LocalLifecycleOwner.current
-    DisposableEffect(lifecycleOwner) {
-        processCameraProvider.unbindAll()
-        processCameraProvider.bindToLifecycle(
-            lifecycleOwner,
-            CameraSelector.DEFAULT_BACK_CAMERA,
-            preview,
-            imageAnalysis
-        )
-        onDispose { processCameraProvider.unbindAll() }
-    }
+    CameraPreviewBindingDisposableEffect(preview, onSuccess)
     Box(modifier = modifier) {
         AndroidView(
             factory = { context ->
@@ -68,3 +41,47 @@ fun CameraPreviewContent(modifier: Modifier = Modifier, onSuccess: (String) -> U
         )
     }
 }
+
+@Composable
+private fun CameraPreviewBindingDisposableEffect(
+    preview: Preview,
+    onSuccess: (String) -> Unit
+) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val processCameraProvider = remember(context) {
+        ProcessCameraProvider.getInstance(context).get()
+    }
+    val imageAnalysis = remember {
+        ImageAnalysis.Builder()
+            .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+            .build()
+            .apply {
+                setAnalyzer(
+                    Dispatchers.Main.asExecutor(),
+                    QrCodeImageAnalyzer(
+                        onSuccess = { onSuccess(it) },
+                        onError = {}
+                    )
+                )
+            }
+    }
+    DisposableEffect(lifecycleOwner) {
+        try {
+            processCameraProvider.unbindAll()
+            processCameraProvider.bindToLifecycle(
+                lifecycleOwner,
+                CameraSelector.DEFAULT_BACK_CAMERA,
+                preview,
+                imageAnalysis
+            )
+        } catch (e: IllegalStateException) {
+            PassLogger.e(TAG, e)
+        } catch (e: IllegalArgumentException) {
+            PassLogger.e(TAG, e, "Cannot resolve camera")
+        }
+        onDispose { processCameraProvider.unbindAll() }
+    }
+}
+
+private const val TAG = "CameraPreviewBindingDisposableEffect"

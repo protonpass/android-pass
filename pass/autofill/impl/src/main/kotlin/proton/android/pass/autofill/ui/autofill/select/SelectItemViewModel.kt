@@ -24,7 +24,7 @@ import proton.android.pass.autofill.BROWSERS
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
@@ -80,7 +80,7 @@ class SelectItemViewModel @Inject constructor(
         val isProcessingSearch: IsProcessingSearchState
     )
 
-    private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> =
+    private val activeItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> =
         observeActiveItems(filter = ItemTypeFilter.Logins)
             .map { itemResult ->
                 itemResult.map { list ->
@@ -91,10 +91,10 @@ class SelectItemViewModel @Inject constructor(
             }
             .distinctUntilChanged()
 
-    private val suggestionsItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = initialState
+    private val suggestionsItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = initialState
         .flatMapLatest { state ->
             if (state == null) {
-                flowOf(Result.Loading)
+                flowOf(LoadingResult.Loading)
             } else {
                 val packageName = if (BROWSERS.contains(state.packageName.packageName)) {
                     None
@@ -114,7 +114,7 @@ class SelectItemViewModel @Inject constructor(
 
 
     @OptIn(FlowPreview::class)
-    private val listItems: Flow<Result<SelectItemListItems>> = combine(
+    private val listItems: Flow<LoadingResult<SelectItemListItems>> = combine(
         activeItemUIModelFlow,
         suggestionsItemUIModelFlow,
         searchQueryState.debounce(DEBOUNCE_TIMEOUT)
@@ -155,11 +155,11 @@ class SelectItemViewModel @Inject constructor(
         itemClickedFlow,
         searchWrapper
     ) { itemsResult, isRefreshing, itemClicked, search ->
-        val isLoading = IsLoadingState.from(itemsResult is Result.Loading)
+        val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
         val items = when (itemsResult) {
-            Result.Loading -> SelectItemListItems.Initial
-            is Result.Success -> itemsResult.data
-            is Result.Error -> {
+            LoadingResult.Loading -> SelectItemListItems.Initial
+            is LoadingResult.Success -> itemsResult.data
+            is LoadingResult.Error -> {
                 PassLogger.i(
                     TAG,
                     itemsResult.exception,
@@ -249,12 +249,12 @@ class SelectItemViewModel @Inject constructor(
 
     private fun getSuggestionsTitleForDomain(domain: String): String =
         when (val sanitized = UrlSanitizer.sanitize(domain)) {
-            Result.Loading -> ""
-            is Result.Error -> {
+            LoadingResult.Loading -> ""
+            is LoadingResult.Error -> {
                 PassLogger.i(TAG, sanitized.exception, "Error sanitizing URL [url=$domain]")
                 ""
             }
-            is Result.Success -> {
+            is LoadingResult.Success -> {
                 runCatching {
                     val parsed = URI(sanitized.data)
                     parsed.host

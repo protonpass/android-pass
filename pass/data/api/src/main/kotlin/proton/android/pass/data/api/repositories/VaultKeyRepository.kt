@@ -1,6 +1,6 @@
 package proton.android.pass.data.api.repositories
 
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.pass.domain.ShareId
 import proton.pass.domain.key.ItemKey
 import proton.pass.domain.key.SigningKey
@@ -19,33 +19,33 @@ interface VaultKeyRepository {
         signingKey: SigningKey,
         forceRefresh: Boolean = false,
         shouldStoreLocally: Boolean = true
-    ): Result<List<VaultKey>>
+    ): LoadingResult<List<VaultKey>>
 
     suspend fun getVaultKeyById(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         keyId: String
-    ): Result<VaultKey>
+    ): LoadingResult<VaultKey>
 
     suspend fun getItemKeyById(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         keyId: String
-    ): Result<ItemKey>
+    ): LoadingResult<ItemKey>
 
     suspend fun getLatestVaultKey(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         forceRefresh: Boolean = false
-    ): Result<VaultKey>
+    ): LoadingResult<VaultKey>
 
     suspend fun getLatestVaultItemKey(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         forceRefresh: Boolean = false
-    ): Result<Pair<VaultKey, ItemKey>>
+    ): LoadingResult<Pair<VaultKey, ItemKey>>
 }

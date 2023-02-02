@@ -6,7 +6,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.featurecreateitem.impl.alias.CreateUpdateAliasUiState.Companion.Initial
@@ -150,7 +150,7 @@ internal class BaseAliasViewModelTest {
         }
 
     private fun setupVaults() {
-        observeVaults.sendResult(Result.Success(listOf(Vault(ShareId("ShareId"), "name"))))
+        observeVaults.sendResult(LoadingResult.Success(listOf(Vault(ShareId("ShareId"), "name"))))
     }
 
     private fun setupAliasOptions(

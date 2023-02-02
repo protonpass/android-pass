@@ -1,7 +1,7 @@
 package proton.android.pass.data.api.usecases
 
 import kotlinx.coroutines.flow.Flow
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.pass.domain.Item
 import proton.pass.domain.ShareSelection
 
@@ -16,5 +16,5 @@ interface ObserveActiveItems {
     operator fun invoke(
         filter: ItemTypeFilter = ItemTypeFilter.All,
         shareSelection: ShareSelection = ShareSelection.AllShares
-    ): Flow<Result<List<Item>>>
+    ): Flow<LoadingResult<List<Item>>>
 }

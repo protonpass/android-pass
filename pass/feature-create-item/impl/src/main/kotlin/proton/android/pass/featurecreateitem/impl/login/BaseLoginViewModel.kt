@@ -16,7 +16,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -65,12 +65,12 @@ abstract class BaseLoginViewModel(
     private val observeAllSharesFlow = observeVaults()
         .map { shares ->
             when (shares) {
-                Result.Loading -> emptyList()
-                is Result.Error -> {
+                LoadingResult.Loading -> emptyList()
+                is LoadingResult.Error -> {
                     PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
                     emptyList()
                 }
-                is Result.Success ->
+                is LoadingResult.Success ->
                     shares.data
                         .map { ShareUiModel(it.shareId, it.name) }
             }
@@ -193,7 +193,7 @@ abstract class BaseLoginViewModel(
         userId: UserId,
         shareId: ShareId,
         aliasItem: AliasItem
-    ): Result<Item> =
+    ): LoadingResult<Item> =
         if (aliasItem.selectedSuffix != null) {
             createAlias(
                 userId = userId,
@@ -213,7 +213,7 @@ abstract class BaseLoginViewModel(
             val message = "Empty suffix on create alias"
             PassLogger.i(TAG, message)
             snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.ItemCreationError)
-            Result.Error(Exception(message))
+            LoadingResult.Error(Exception(message))
         }
 
     protected fun validateItem(): Boolean {
@@ -236,7 +236,7 @@ abstract class BaseLoginViewModel(
                 ""
             } else {
                 when (val res = UrlSanitizer.sanitize(url)) {
-                    is Result.Success -> res.data
+                    is LoadingResult.Success -> res.data
                     else -> url
                 }
             }

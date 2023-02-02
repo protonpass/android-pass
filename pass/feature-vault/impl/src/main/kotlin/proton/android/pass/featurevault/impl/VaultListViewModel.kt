@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.crypto.common.context.CryptoContext
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.logError
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
@@ -49,7 +49,7 @@ class VaultListViewModel @Inject constructor(
         observeShares(),
         observeActiveShare()
     ) { shareResult, activeShareResult ->
-        if (shareResult is Result.Success && activeShareResult is Result.Success) {
+        if (shareResult is LoadingResult.Success && activeShareResult is LoadingResult.Success) {
             VaultListUIState(
                 shareResult.data
                     .map { share ->

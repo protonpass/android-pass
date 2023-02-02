@@ -12,7 +12,7 @@ import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
 import proton.pass.domain.ItemId
 import proton.pass.domain.KeyPacket
@@ -33,14 +33,14 @@ class KeyPacketRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<KeyPacket> = withContext(Dispatchers.IO) {
+    ): LoadingResult<KeyPacket> = withContext(Dispatchers.IO) {
         when (
             val result =
                 remoteKeyPacketDataSource.getLatestKeyPacketForItem(userId, shareId, itemId)
         ) {
-            is Result.Error -> Result.Error(result.exception)
-            Result.Loading -> Result.Loading
-            is Result.Success -> responseToDomain(userId, shareId, result.data)
+            is LoadingResult.Error -> LoadingResult.Error(result.exception)
+            LoadingResult.Loading -> LoadingResult.Loading
+            is LoadingResult.Success -> responseToDomain(userId, shareId, result.data)
         }
     }
 
@@ -48,12 +48,12 @@ class KeyPacketRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         data: KeyPacketInfo
-    ): Result<KeyPacket> {
+    ): LoadingResult<KeyPacket> {
         val shareResult = shareRepository.getById(userId, shareId)
         when (shareResult) {
-            is Result.Error -> return Result.Error(shareResult.exception)
-            Result.Loading -> return Result.Loading
-            is Result.Success -> Unit
+            is LoadingResult.Error -> return LoadingResult.Error(shareResult.exception)
+            LoadingResult.Loading -> return LoadingResult.Loading
+            is LoadingResult.Success -> Unit
         }
         val share: Share? = shareResult.data
         requireNotNull(share)

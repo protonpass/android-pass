@@ -4,7 +4,7 @@ import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
 import proton.android.pass.crypto.api.error.CryptoException
 import proton.android.pass.crypto.api.usecases.ReadKey
@@ -27,7 +27,7 @@ interface ShareEntityToShare {
         userAddress: UserAddress,
         inviterKeys: List<PublicKey>,
         entity: ShareEntity
-    ): Result<Share>
+    ): LoadingResult<Share>
 }
 
 class ShareEntityToShareImpl @Inject constructor(
@@ -40,14 +40,14 @@ class ShareEntityToShareImpl @Inject constructor(
         userAddress: UserAddress,
         inviterKeys: List<PublicKey>,
         entity: ShareEntity
-    ): Result<Share> {
+    ): LoadingResult<Share> {
         val signingKey = SigningKey(readKey(entity.signingKey, isPrimary = true))
         return vaultKeyRepository.getVaultKeys(userAddress, ShareId(entity.id), signingKey)
             .map { vaultKeys ->
                 try {
                     convert(entity, userAddress, inviterKeys, vaultKeys)
                 } catch (e: IllegalArgumentException) {
-                    return Result.Error(e)
+                    return LoadingResult.Error(e)
                 }
             }
     }

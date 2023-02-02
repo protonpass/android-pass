@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -25,16 +25,16 @@ import javax.inject.Inject
 @Suppress("NotImplementedDeclaration")
 class TestItemRepository @Inject constructor() : ItemRepository {
 
-    private val observeItemListFlow: MutableSharedFlow<Result<List<Item>>> =
+    private val observeItemListFlow: MutableSharedFlow<LoadingResult<List<Item>>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
-    fun sendObserveItemListResult(result: Result<List<Item>>) = observeItemListFlow.tryEmit(result)
+    fun sendObserveItemListResult(result: LoadingResult<List<Item>>) = observeItemListFlow.tryEmit(result)
 
     override suspend fun createItem(
         userId: UserId,
         share: Share,
         contents: ItemContents
-    ): Result<Item> {
+    ): LoadingResult<Item> {
         TODO("Not yet implemented")
     }
 
@@ -42,7 +42,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         share: Share,
         newAlias: NewAlias
-    ): Result<Item> {
+    ): LoadingResult<Item> {
         TODO("Not yet implemented")
     }
 
@@ -51,7 +51,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         share: Share,
         item: Item,
         contents: ItemContents
-    ): Result<Item> {
+    ): LoadingResult<Item> {
         TODO("Not yet implemented")
     }
 
@@ -60,13 +60,13 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         shareSelection: ShareSelection,
         itemState: ItemState,
         itemTypeFilter: ItemTypeFilter
-    ): Flow<Result<List<Item>>> = observeItemListFlow
+    ): Flow<LoadingResult<List<Item>>> = observeItemListFlow
 
-    override suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Item> {
+    override suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): LoadingResult<Item> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit> {
+    override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): LoadingResult<Unit> {
         TODO("Not yet implemented")
     }
 
@@ -74,7 +74,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<Unit> {
+    ): LoadingResult<Unit> {
         TODO("Not yet implemented")
     }
 
@@ -82,15 +82,15 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<Unit> {
+    ): LoadingResult<Unit> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun clearTrash(userId: UserId): Result<Unit> {
+    override suspend fun clearTrash(userId: UserId): LoadingResult<Unit> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun restoreItems(userId: UserId): Result<Unit> {
+    override suspend fun restoreItems(userId: UserId): LoadingResult<Unit> {
         TODO("Not yet implemented")
     }
 
@@ -99,15 +99,15 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         itemId: ItemId,
         packageName: Option<PackageName>,
         url: Option<String>
-    ): Result<Item> {
+    ): LoadingResult<Item> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun refreshItems(userId: UserId, share: Share): Result<List<Item>> {
+    override suspend fun refreshItems(userId: UserId, share: Share): LoadingResult<List<Item>> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun refreshItems(userId: UserId, shareId: ShareId): Result<List<Item>> {
+    override suspend fun refreshItems(userId: UserId, shareId: ShareId): LoadingResult<List<Item>> {
         TODO("Not yet implemented")
     }
 

@@ -1,7 +1,7 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
@@ -10,15 +10,15 @@ import javax.inject.Inject
 
 class TestCreateItem @Inject constructor() : CreateItem {
 
-    private var item: Result<Item> = Result.Loading
+    private var item: LoadingResult<Item> = LoadingResult.Loading
 
     override suspend fun invoke(
         userId: UserId,
         shareId: ShareId,
         itemContents: ItemContents
-    ): Result<Item> = item
+    ): LoadingResult<Item> = item
 
-    fun sendItem(item: Result<Item>) {
+    fun sendItem(item: LoadingResult<Item>) {
         this.item = item
     }
 }

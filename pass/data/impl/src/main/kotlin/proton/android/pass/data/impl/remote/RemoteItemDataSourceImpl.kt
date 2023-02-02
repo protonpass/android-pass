@@ -3,9 +3,9 @@ package proton.android.pass.data.impl.remote
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
-import proton.android.pass.common.api.toResult
+import proton.android.pass.common.api.toLoadingResult
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
@@ -30,28 +30,28 @@ class RemoteItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         body: CreateItemRequest
-    ): Result<ItemRevision> =
+    ): LoadingResult<ItemRevision> =
         api.get<PasswordManagerApi>(userId)
             .invoke { createItem(shareId.id, body) }
-            .toResult()
+            .toLoadingResult()
             .map { it.item }
 
     override suspend fun createAlias(
         userId: UserId,
         shareId: ShareId,
         body: CreateAliasRequest
-    ): Result<ItemRevision> {
+    ): LoadingResult<ItemRevision> {
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { createAlias(shareId.id, body) }
         when (res) {
-            is ApiResult.Success -> return Result.Success(res.value.item)
+            is ApiResult.Success -> return LoadingResult.Success(res.value.item)
             is ApiResult.Error -> {
                 if (res is ApiResult.Error.Http) {
                     if (res.proton?.code == CODE_CANNOT_CREATE_MORE_ALIASES) {
-                        return Result.Error(CannotCreateMoreAliasesError())
+                        return LoadingResult.Error(CannotCreateMoreAliasesError())
                     }
                 }
-                return Result.Error(res.cause ?: Exception("Create alias failed"))
+                return LoadingResult.Error(res.cause ?: Exception("Create alias failed"))
             }
         }
     }
@@ -61,13 +61,13 @@ class RemoteItemDataSourceImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         body: UpdateItemRequest
-    ): Result<ItemRevision> =
+    ): LoadingResult<ItemRevision> =
         api.get<PasswordManagerApi>(userId)
             .invoke { updateItem(shareId.id, itemId.id, body) }
-            .toResult()
+            .toLoadingResult()
             .map { it.item }
 
-    override suspend fun getItems(userId: UserId, shareId: ShareId): Result<List<ItemRevision>> =
+    override suspend fun getItems(userId: UserId, shareId: ShareId): LoadingResult<List<ItemRevision>> =
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 var page = 0
@@ -83,43 +83,43 @@ class RemoteItemDataSourceImpl @Inject constructor(
                 }
                 items
             }
-            .toResult()
+            .toLoadingResult()
 
     override suspend fun sendToTrash(
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): Result<TrashItemsResponse> =
+    ): LoadingResult<TrashItemsResponse> =
         api.get<PasswordManagerApi>(userId)
             .invoke { trashItems(shareId.id, body) }
-            .toResult()
+            .toLoadingResult()
 
     override suspend fun untrash(
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): Result<TrashItemsResponse> =
+    ): LoadingResult<TrashItemsResponse> =
         api.get<PasswordManagerApi>(userId)
             .invoke { untrashItems(shareId.id, body) }
-            .toResult()
+            .toLoadingResult()
 
     override suspend fun delete(
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): Result<Unit> =
+    ): LoadingResult<Unit> =
         api.get<PasswordManagerApi>(userId)
             .invoke { deleteItems(shareId.id, body) }
-            .toResult()
+            .toLoadingResult()
 
     override suspend fun updateLastUsedTime(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
         now: Long
-    ): Result<Unit> =
+    ): LoadingResult<Unit> =
         api.get<PasswordManagerApi>(userId)
             .invoke { updateLastUsedTime(shareId.id, itemId.id, UpdateLastUsedTimeRequest(now)) }
-            .toResult()
+            .toLoadingResult()
             .map { }
 }

@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -62,11 +62,11 @@ class LoginDetailViewModel @Inject constructor(
         }
         .distinctUntilChanged()
         .onEach {
-            if (it is Result.Error) {
+            if (it is LoadingResult.Error) {
                 PassLogger.w(TAG, it.exception, "Could not parse totp")
             }
         }
-        .filterIsInstance<Result.Success<TotpSpec>>()
+        .filterIsInstance<LoadingResult.Success<TotpSpec>>()
         .map { it.data }
         .flatMapLatest { specs ->
             totpManager.observeCode(specs)

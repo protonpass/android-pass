@@ -24,17 +24,17 @@ import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.presentation.settings.SettingsSnackbarMessage.ErrorPerformingOperation
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,15 +51,16 @@ class SettingsViewModel @Inject constructor(
 
     private val biometricLockState: Flow<BiometricLockState> = preferencesRepository
         .getBiometricLockState()
-        .asResultWithoutLoading()
-        .map { getFingerprintSection(it) }
         .distinctUntilChanged()
 
     private val themeState: Flow<ThemePreference> = preferencesRepository
         .getThemePreference()
-        .asResultWithoutLoading()
-        .map { getTheme(it) }
         .distinctUntilChanged()
+
+    private val copyTotpToClipboardState: Flow<CopyTotpToClipboard> =
+        preferencesRepository
+            .getCopyTotpToClipboardEnabled()
+            .distinctUntilChanged()
 
     private val autofillState: Flow<AutofillSupportedStatus> = autofillManager
         .getAutofillStatus()
@@ -72,8 +73,9 @@ class SettingsViewModel @Inject constructor(
         biometricLockState,
         themeState,
         autofillState,
+        copyTotpToClipboardState,
         isLoadingState
-    ) { biometricLock, theme, autofill, loading ->
+    ) { biometricLock, theme, autofill, copyTotpToClipboardEnabled, loading ->
         val fingerprintSection = when (biometryManager.getBiometryStatus()) {
             BiometryStatus.NotEnrolled -> FingerprintSectionState.NoFingerprintRegistered
             BiometryStatus.NotAvailable -> FingerprintSectionState.NotAvailable
@@ -89,6 +91,7 @@ class SettingsViewModel @Inject constructor(
             fingerprintSection = fingerprintSection,
             themePreference = theme,
             autofillStatus = autofill,
+            copyTotpToClipboard = copyTotpToClipboardEnabled,
             isLoadingState = loading,
             appVersion = appConfig.versionName
         )
@@ -139,7 +142,7 @@ class SettingsViewModel @Inject constructor(
         preferencesRepository.setThemePreference(theme)
             .onFailure {
                 PassLogger.e(TAG, it, "Error setting ThemePreference")
-                snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.ErrorPerformingOperation)
+                snackbarMessageRepository.emitSnackbarMessage(ErrorPerformingOperation)
             }
     }
 
@@ -149,6 +152,15 @@ class SettingsViewModel @Inject constructor(
         } else {
             autofillManager.disableAutofill()
         }
+    }
+
+    fun onCopyToClipboardChange(value: Boolean) = viewModelScope.launch {
+        PassLogger.d(TAG, "Changing CopyTotpToClipboard to $value")
+        preferencesRepository.setCopyTotpToClipboardEnabled(CopyTotpToClipboard.from(value))
+            .onFailure {
+                PassLogger.e(TAG, it, "Error setting CopyTotpToClipboard")
+                snackbarMessageRepository.emitSnackbarMessage(ErrorPerformingOperation)
+            }
     }
 
     fun onForceSync() = viewModelScope.launch {
@@ -185,29 +197,9 @@ class SettingsViewModel @Inject constructor(
             }
             .onFailure {
                 PassLogger.e(TAG, it, "Error setting BiometricLockState")
-                snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.ErrorPerformingOperation)
+                snackbarMessageRepository.emitSnackbarMessage(ErrorPerformingOperation)
             }
     }
-
-    private fun getFingerprintSection(biometricLock: Result<BiometricLockState>): BiometricLockState =
-        when (biometricLock) {
-            Result.Loading -> BiometricLockState.Disabled
-            is Result.Success -> biometricLock.data
-            is Result.Error -> {
-                PassLogger.e(TAG, biometricLock.exception, "Error getting BiometricLock preference")
-                BiometricLockState.Disabled
-            }
-        }
-
-    private fun getTheme(theme: Result<ThemePreference>): ThemePreference =
-        when (theme) {
-            Result.Loading -> ThemePreference.System
-            is Result.Success -> theme.data
-            is Result.Error -> {
-                PassLogger.e(TAG, theme.exception, "Error getting ThemePreference")
-                ThemePreference.System
-            }
-        }
 
     companion object {
         private const val TAG = "SettingsViewModel"

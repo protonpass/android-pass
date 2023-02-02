@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
@@ -97,7 +97,7 @@ class HomeViewModel @Inject constructor(
     private val sortingTypeState: MutableStateFlow<SortingType> =
         MutableStateFlow(SortingType.ByModificationDate)
 
-    private val activeItemUIModelFlow: Flow<Result<List<ItemUiModel>>> = vaultSelectionFlow
+    private val activeItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = vaultSelectionFlow
         .flatMapLatest { selectedVault ->
             val shareSelection = when (selectedVault) {
                 HomeVaultSelection.AllVaults -> ShareSelection.AllShares
@@ -114,7 +114,7 @@ class HomeViewModel @Inject constructor(
                 .distinctUntilChanged()
         }
 
-    private val sortedListItemFlow: Flow<Result<List<ItemUiModel>>> = combine(
+    private val sortedListItemFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
         activeItemUIModelFlow,
         sortingTypeState
     ) { result, sortingType ->
@@ -127,7 +127,7 @@ class HomeViewModel @Inject constructor(
         .distinctUntilChanged()
 
     @OptIn(FlowPreview::class)
-    private val resultsFlow: Flow<Result<List<ItemUiModel>>> = combine(
+    private val resultsFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
         sortedListItemFlow,
         searchQueryState.debounce(DEBOUNCE_TIMEOUT),
         itemTypeSelectionFlow
@@ -162,12 +162,12 @@ class HomeViewModel @Inject constructor(
         isRefreshing,
         sortingTypeState
     ) { vaultSelection, itemsResult, searchWrapper, refreshing, sortingType ->
-        val isLoading = IsLoadingState.from(itemsResult is Result.Loading)
+        val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val items = when (itemsResult) {
-            Result.Loading -> emptyList()
-            is Result.Success -> itemsResult.data
-            is Result.Error -> {
+            LoadingResult.Loading -> emptyList()
+            is LoadingResult.Success -> itemsResult.data
+            is LoadingResult.Error -> {
                 PassLogger.e(TAG, itemsResult.exception, "Observe items error")
                 snackbarMessageRepository.emitSnackbarMessage(ObserveItemsError)
                 emptyList()

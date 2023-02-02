@@ -3,7 +3,7 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.crypto.common.context.CryptoContext
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
 import proton.android.pass.data.api.errors.ShareContentNotAvailableError
 import proton.android.pass.data.api.usecases.ObserveAllShares
@@ -17,7 +17,7 @@ class ObserveVaultsImpl @Inject constructor(
     private val cryptoContext: CryptoContext
 ) : ObserveVaults {
 
-    override fun invoke(): Flow<Result<List<Vault>>> =
+    override fun invoke(): Flow<LoadingResult<List<Vault>>> =
         observeAllShares()
             .map { result ->
                 result.map { list ->

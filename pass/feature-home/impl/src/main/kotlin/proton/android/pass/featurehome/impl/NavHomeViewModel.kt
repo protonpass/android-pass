@@ -15,7 +15,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.some
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,11 +36,11 @@ class NavHomeViewModel @Inject constructor(
     ) { shouldAuthenticate, hasCompletedOnBoarding ->
         NavHomeUiState(
             shouldAuthenticate = when (shouldAuthenticate) {
-                is Result.Success -> shouldAuthenticate.data.some()
+                is LoadingResult.Success -> shouldAuthenticate.data.some()
                 else -> None
             },
             hasCompletedOnBoarding = when (hasCompletedOnBoarding) {
-                is Result.Success -> hasCompletedOnBoarding.data.value().some()
+                is LoadingResult.Success -> hasCompletedOnBoarding.data.value().some()
                 else -> None
             }
         )

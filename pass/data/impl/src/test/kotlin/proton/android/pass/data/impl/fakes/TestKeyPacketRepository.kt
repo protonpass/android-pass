@@ -2,16 +2,16 @@ package proton.android.pass.data.impl.fakes
 
 import proton.android.pass.data.api.repositories.KeyPacketRepository
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.pass.domain.ItemId
 import proton.pass.domain.KeyPacket
 import proton.pass.domain.ShareId
 
 class TestKeyPacketRepository : KeyPacketRepository {
 
-    private var result: Result<KeyPacket> = Result.Loading
+    private var result: LoadingResult<KeyPacket> = LoadingResult.Loading
 
-    fun setResult(value: Result<KeyPacket>) {
+    fun setResult(value: LoadingResult<KeyPacket>) {
         result = value
     }
 
@@ -19,5 +19,5 @@ class TestKeyPacketRepository : KeyPacketRepository {
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<KeyPacket> = result
+    ): LoadingResult<KeyPacket> = result
 }

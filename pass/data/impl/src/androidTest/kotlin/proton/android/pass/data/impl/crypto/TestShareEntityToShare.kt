@@ -10,7 +10,7 @@ import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.pass.domain.SharePermissionFlag
 import proton.pass.domain.flags
 import proton.pass.domain.hasFlag
@@ -31,7 +31,7 @@ class TestShareEntityToShare {
 
         val vaultKeyRepository = TestVaultKeyRepository()
         vaultKeyRepository.setVaultKeys(
-            Result.Success(listOf(
+            LoadingResult.Success(listOf(
             VaultKey(
                 rotationId = TestData.createVaultResponse.contentRotationId!!,
                 rotation = 1,
@@ -79,7 +79,7 @@ class TestShareEntityToShare {
             entity = getEntity(userAddress)
         )
 
-        assertTrue(res is Result.Success)
+        assertTrue(res is LoadingResult.Success)
 
         val share = res.data
         assertTrue(share.permission.hasFlag(SharePermissionFlag.Admin))

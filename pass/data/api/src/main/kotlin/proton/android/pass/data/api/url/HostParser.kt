@@ -1,7 +1,7 @@
 package proton.android.pass.data.api.url
 
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 
 sealed interface HostInfo {
     data class Host(
@@ -14,5 +14,5 @@ sealed interface HostInfo {
 }
 
 interface HostParser {
-    fun parse(url: String): Result<HostInfo>
+    fun parse(url: String): LoadingResult<HostInfo>
 }

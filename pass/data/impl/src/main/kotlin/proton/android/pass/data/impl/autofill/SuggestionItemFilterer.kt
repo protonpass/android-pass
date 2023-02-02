@@ -1,7 +1,7 @@
 package proton.android.pass.data.impl.autofill
 
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
@@ -51,12 +51,12 @@ class SuggestionItemFiltererImpl @Inject constructor(
 
     private fun isUrlMatch(url: String, login: ItemType.Login): Boolean {
         val urlDomain = when (val domain = UrlSanitizer.getDomain(url)) {
-            is Result.Success -> domain.data
+            is LoadingResult.Success -> domain.data
             else -> return false
         }
         val loginDomains = login.websites
             .map { UrlSanitizer.getDomain(it) }
-            .filterIsInstance<Result.Success<String>>()
+            .filterIsInstance<LoadingResult.Success<String>>()
             .map { it.data }
 
         return isDomainMatch(urlDomain, loginDomains)
@@ -65,7 +65,7 @@ class SuggestionItemFiltererImpl @Inject constructor(
     private fun isDomainMatch(urlDomain: String, itemDomains: List<String>): Boolean {
         val parsedItemDomains = parseItemDomains(itemDomains)
         val parsedDomain = when (val parsed = hostParser.parse(urlDomain)) {
-            is Result.Success -> parsed.data
+            is LoadingResult.Success -> parsed.data
             else -> return false
         }
 
@@ -88,6 +88,6 @@ class SuggestionItemFiltererImpl @Inject constructor(
     private fun parseItemDomains(itemDomains: List<String>): List<HostInfo> =
         itemDomains
             .map { hostParser.parse(it) }
-            .filterIsInstance<Result.Success<HostInfo>>()
+            .filterIsInstance<LoadingResult.Success<HostInfo>>()
             .map { it.data }
 }

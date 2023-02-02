@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonui.api.toUiModel
@@ -56,15 +56,15 @@ class TrashScreenViewModel @Inject constructor(
     ) { itemsResult, refreshing, loading ->
 
         val isLoading =
-            IsLoadingState.from(itemsResult is Result.Loading || loading is IsLoadingState.Loading)
+            IsLoadingState.from(itemsResult is LoadingResult.Loading || loading is IsLoadingState.Loading)
         val items = when (itemsResult) {
-            Result.Loading -> emptyList()
-            is Result.Error -> {
+            LoadingResult.Loading -> emptyList()
+            is LoadingResult.Error -> {
                 PassLogger.e(TAG, itemsResult.exception, "Observe trash items error")
                 snackbarMessageRepository.emitSnackbarMessage(ObserveItemsError)
                 emptyList()
             }
-            is Result.Success -> {
+            is LoadingResult.Success -> {
                 encryptionContextProvider.withEncryptionContext {
                     itemsResult.data.map { it.toUiModel(this@withEncryptionContext) }
                 }

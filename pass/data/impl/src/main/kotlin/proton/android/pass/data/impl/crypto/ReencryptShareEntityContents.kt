@@ -13,7 +13,7 @@ import me.proton.core.key.domain.getArmored
 import me.proton.core.key.domain.getBase64Decoded
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
 import proton.pass.domain.ShareId
 import proton.pass.domain.key.SigningKey
@@ -26,7 +26,7 @@ interface ReencryptShareEntityContents {
         userAddress: UserAddress,
         response: ShareResponse,
         entity: ShareEntity
-    ): Result<ShareEntity>
+    ): LoadingResult<ShareEntity>
 }
 
 class ReencryptShareEntityContentsImpl @Inject constructor(
@@ -38,7 +38,7 @@ class ReencryptShareEntityContentsImpl @Inject constructor(
         userAddress: UserAddress,
         response: ShareResponse,
         entity: ShareEntity
-    ): Result<ShareEntity> {
+    ): LoadingResult<ShareEntity> {
         val signingKey = SigningKey(readKey(response.signingKey, isPrimary = true))
         return vaultKeyRepository.getVaultKeys(userAddress, ShareId(response.shareId), signingKey)
             .map { vaultKeys ->

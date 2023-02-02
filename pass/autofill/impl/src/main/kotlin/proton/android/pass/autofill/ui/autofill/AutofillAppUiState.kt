@@ -9,6 +9,7 @@ data class AutofillAppUiState(
     val theme: ThemePreference,
     val isFingerprintRequired: Boolean,
     val itemSelected: AutofillItemSelectedState,
+    val copyTotpToClipboard: Boolean,
     val snackbarMessage: SnackbarMessage?
 ) {
     companion object {
@@ -16,6 +17,7 @@ data class AutofillAppUiState(
             theme = ThemePreference.System,
             isFingerprintRequired = false,
             itemSelected = AutofillItemSelectedState.Unknown,
+            copyTotpToClipboard = false,
             snackbarMessage = null
         )
     }

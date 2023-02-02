@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -18,15 +18,21 @@ import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryStatus
-import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.asResultWithoutLoading
+import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.logError
+import proton.android.pass.common.api.map
+import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.preferences.BiometricLockState
+import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
+import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,6 +40,9 @@ class AutofillAppViewModel @Inject constructor(
     preferenceRepository: UserPreferencesRepository,
     private val biometryManager: BiometryManager,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val clipboardManager: ClipboardManager,
+    private val totpManager: TotpManager,
+    private val notificationManager: NotificationManager,
     private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
@@ -42,22 +51,23 @@ class AutofillAppViewModel @Inject constructor(
 
     private val themeState: Flow<ThemePreference> = preferenceRepository
         .getThemePreference()
-        .asResultWithoutLoading()
-        .map { getThemePreference(it) }
         .distinctUntilChanged()
 
     private val biometricLockState: Flow<BiometricLockState> = preferenceRepository
         .getBiometricLockState()
-        .asResultWithoutLoading()
-        .map { getBiometricLockState(it) }
+        .distinctUntilChanged()
+
+    private val copyTotpToClipboardState: Flow<CopyTotpToClipboard> = preferenceRepository
+        .getCopyTotpToClipboardEnabled()
         .distinctUntilChanged()
 
     val state: StateFlow<AutofillAppUiState> = combine(
         themeState,
         biometricLockState,
         itemSelectedState,
+        copyTotpToClipboardState,
         snackbarMessageRepository.snackbarMessage
-    ) { theme, fingerprint, itemSelected, snackbarMessage ->
+    ) { theme, fingerprint, itemSelected, copyTotpToClipboard, snackbarMessage ->
         val fingerprintRequired = when (biometryManager.getBiometryStatus()) {
             BiometryStatus.CanAuthenticate -> fingerprint is BiometricLockState.Enabled
             else -> false
@@ -67,6 +77,7 @@ class AutofillAppViewModel @Inject constructor(
             theme = theme,
             isFingerprintRequired = fingerprintRequired,
             itemSelected = itemSelected,
+            copyTotpToClipboard = copyTotpToClipboard.value(),
             snackbarMessage = snackbarMessage.value()
         )
     }
@@ -76,48 +87,52 @@ class AutofillAppViewModel @Inject constructor(
             initialValue = AutofillAppUiState.Initial
         )
 
-    fun onAutofillItemClicked(state: AutofillAppState, autofillItem: AutofillItem) = viewModelScope.launch {
-        updateAutofillItemState(state, autofillItem)
+    fun onAutofillItemClicked(
+        autofillAppState: AutofillAppState,
+        autofillItem: AutofillItem
+    ) = viewModelScope.launch {
+        when (autofillItem) {
+            is AutofillItem.Login -> {
+                if (autofillItem.totp.isNotBlank() && state.value.copyTotpToClipboard) {
+                    totpManager.parse(autofillItem.totp)
+                        .map { totpManager.observeCode(it).first().first }
+                        .onSuccess { code ->
+                            clipboardManager.copyToClipboard(code)
+                        }
+                        .logError(PassLogger, TAG, "Could not copy totp code")
+                    notificationManager.sendNotification()
+                }
+            }
+            AutofillItem.Unknown -> {}
+        }
+        updateAutofillItemState(autofillAppState, autofillItem)
     }
 
-    fun onItemCreated(state: AutofillAppState, item: ItemUiModel) = viewModelScope.launch {
-        encryptionContextProvider.withEncryptionContext {
-            onAutofillItemClicked(state, item.toAutoFillItem(this@withEncryptionContext))
+    fun onItemCreated(autofillAppState: AutofillAppState, item: ItemUiModel) =
+        viewModelScope.launch {
+            encryptionContextProvider.withEncryptionContext {
+                onAutofillItemClicked(
+                    autofillAppState = autofillAppState,
+                    autofillItem = item.toAutoFillItem(this@withEncryptionContext)
+                )
+            }
         }
-    }
 
     fun onSnackbarMessageDelivered() = viewModelScope.launch {
         snackbarMessageRepository.snackbarMessageDelivered()
     }
 
-    private fun updateAutofillItemState(state: AutofillAppState, autofillItem: AutofillItem) {
+    private fun updateAutofillItemState(
+        autofillAppState: AutofillAppState,
+        autofillItem: AutofillItem
+    ) {
         val response = ItemFieldMapper.mapFields(
             item = autofillItem,
-            androidAutofillFieldIds = state.androidAutofillIds,
-            autofillTypes = state.fieldTypes
+            androidAutofillFieldIds = autofillAppState.androidAutofillIds,
+            autofillTypes = autofillAppState.fieldTypes
         )
         itemSelectedState.update { AutofillItemSelectedState.Selected(response) }
     }
-
-    private fun getBiometricLockState(state: Result<BiometricLockState>): BiometricLockState =
-        when (state) {
-            Result.Loading -> BiometricLockState.Disabled
-            is Result.Success -> state.data
-            is Result.Error -> {
-                PassLogger.w(TAG, state.exception, "Error getting BiometricLockState")
-                BiometricLockState.Disabled
-            }
-        }
-
-    private fun getThemePreference(state: Result<ThemePreference>): ThemePreference =
-        when (state) {
-            Result.Loading -> ThemePreference.System
-            is Result.Success -> state.data
-            is Result.Error -> {
-                PassLogger.w(TAG, state.exception, "Error getting ThemePreference")
-                ThemePreference.System
-            }
-        }
 
     companion object {
         private const val TAG = "AutofillAppViewModel"

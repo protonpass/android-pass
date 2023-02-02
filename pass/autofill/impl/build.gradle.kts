@@ -36,6 +36,7 @@ dependencies {
     implementation(projects.pass.autofill.api)
 
     implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.permissions)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.annotation)
@@ -64,6 +65,8 @@ dependencies {
 
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.crypto.api)
+    implementation(projects.pass.clipboard.api)
+    implementation(projects.pass.totp.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
@@ -82,8 +85,10 @@ dependencies {
 
     testImplementation(projects.pass.biometry.fakes)
     testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.clipboard.fakes)
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.totp.fakes)
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
 

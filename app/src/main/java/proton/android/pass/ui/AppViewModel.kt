@@ -22,7 +22,7 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.R
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
@@ -82,12 +82,12 @@ class AppViewModel @Inject constructor(
     private val allShareUiModelFlow: Flow<List<ShareUiModel>> = observeVaults()
         .map { shares ->
             when (shares) {
-                Result.Loading -> emptyList()
-                is Result.Error -> {
+                LoadingResult.Loading -> emptyList()
+                is LoadingResult.Error -> {
                     PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
                     emptyList()
                 }
-                is Result.Success ->
+                is LoadingResult.Success ->
                     shares.data
                         .map { ShareUiModel(it.shareId, it.name) }
             }
@@ -167,7 +167,7 @@ class AppViewModel @Inject constructor(
         )
 
     fun onStart() = viewModelScope.launch(coroutineExceptionHandler) {
-        val userIdResult: Result<UserId> = getCurrentUserId()
+        val userIdResult: LoadingResult<UserId> = getCurrentUserId()
         userIdResult
             .onSuccess { userId ->
                 refreshShares(userId)
@@ -219,11 +219,11 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    private fun getThemePreference(state: Result<ThemePreference>): ThemePreference =
+    private fun getThemePreference(state: LoadingResult<ThemePreference>): ThemePreference =
         when (state) {
-            Result.Loading -> ThemePreference.System
-            is Result.Success -> state.data
-            is Result.Error -> {
+            LoadingResult.Loading -> ThemePreference.System
+            is LoadingResult.Success -> state.data
+            is LoadingResult.Error -> {
                 PassLogger.w(TAG, state.exception, "Error getting ThemePreference")
                 ThemePreference.System
             }

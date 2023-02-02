@@ -9,7 +9,7 @@ import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
 import proton.android.pass.log.api.PassLogger
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.pass.domain.AliasMailbox
@@ -29,7 +29,7 @@ class UpdateAliasImpl @Inject constructor(
         userId: UserId,
         item: Item,
         content: UpdateAliasContent
-    ): Result<Item> {
+    ): LoadingResult<Item> {
         if (content.mailboxes is Some) {
             val mailboxes = (content.mailboxes as Some<List<AliasMailbox>>).value
             val res = aliasRepository.updateAliasMailboxes(
@@ -40,8 +40,8 @@ class UpdateAliasImpl @Inject constructor(
             )
                 .asResultWithoutLoading()
                 .first()
-            if (res is Result.Error) {
-                return Result.Error(res.exception)
+            if (res is LoadingResult.Error) {
+                return LoadingResult.Error(res.exception)
             }
         }
 
@@ -50,18 +50,18 @@ class UpdateAliasImpl @Inject constructor(
             return updateItemContent(userId, item, itemData)
         }
 
-        return Result.Success(item)
+        return LoadingResult.Success(item)
     }
 
     private suspend fun updateItemContent(
         userId: UserId,
         item: Item,
         content: UpdateAliasItemContent
-    ): Result<Item> {
+    ): LoadingResult<Item> {
         val share = when (val res = getShare(userId, item.shareId)) {
-            is Result.Success -> res.data
-            is Result.Error -> return Result.Error(res.exception)
-            is Result.Loading -> return Result.Loading
+            is LoadingResult.Success -> res.data
+            is LoadingResult.Error -> return LoadingResult.Error(res.exception)
+            is LoadingResult.Loading -> return LoadingResult.Loading
         }
         val itemContents = ItemContents.Alias(
             title = content.title,
@@ -70,20 +70,20 @@ class UpdateAliasImpl @Inject constructor(
         return itemRepository.updateItem(userId, share, item, itemContents)
     }
 
-    private suspend fun getShare(userId: UserId, shareId: ShareId): Result<Share> =
+    private suspend fun getShare(userId: UserId, shareId: ShareId): LoadingResult<Share> =
         when (val res = getShareById(userId, shareId)) {
-            is Result.Success -> {
+            is LoadingResult.Success -> {
                 val share = res.data
                 if (share == null) {
                     val message = "Cannot find share [share_id=$shareId]"
                     PassLogger.i(TAG, message)
-                    Result.Error(IllegalStateException(message))
+                    LoadingResult.Error(IllegalStateException(message))
                 } else {
-                    Result.Success(share)
+                    LoadingResult.Success(share)
                 }
             }
-            is Result.Error -> Result.Error(res.exception)
-            is Result.Loading -> Result.Loading
+            is LoadingResult.Error -> LoadingResult.Error(res.exception)
+            is LoadingResult.Loading -> LoadingResult.Loading
         }
 
     companion object {

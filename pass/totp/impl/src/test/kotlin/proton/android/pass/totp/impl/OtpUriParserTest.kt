@@ -3,7 +3,7 @@ package proton.android.pass.totp.impl
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.some
 import proton.android.pass.totp.api.MalformedOtpUri
 import proton.android.pass.totp.api.TotpAlgorithm
@@ -26,7 +26,7 @@ class OtpUriParserTest {
         )
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Success(expected))
+        assertThat(parsed).isEqualTo(LoadingResult.Success(expected))
     }
 
     @Test
@@ -43,7 +43,7 @@ class OtpUriParserTest {
         )
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Success(expected))
+        assertThat(parsed).isEqualTo(LoadingResult.Success(expected))
     }
 
     @Test
@@ -59,7 +59,7 @@ class OtpUriParserTest {
         )
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Success(expected))
+        assertThat(parsed).isEqualTo(LoadingResult.Success(expected))
     }
 
     @Test
@@ -67,7 +67,7 @@ class OtpUriParserTest {
         val input = "totp/thisisthelabel?secret=thisisthesecret"
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Error(MalformedOtpUri.MissingScheme))
+        assertThat(parsed).isEqualTo(LoadingResult.Error(MalformedOtpUri.MissingScheme))
     }
 
     @Test
@@ -75,7 +75,7 @@ class OtpUriParserTest {
         val input = "wrong://totp/thisisthelabel?secret=thisisthesecret"
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Error(MalformedOtpUri.InvalidScheme("wrong")))
+        assertThat(parsed).isEqualTo(LoadingResult.Error(MalformedOtpUri.InvalidScheme("wrong")))
     }
 
     @Test
@@ -83,7 +83,7 @@ class OtpUriParserTest {
         val input = "otpauth:///thisisthelabel?secret=thisisthesecret"
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Error(MalformedOtpUri.MissingHost))
+        assertThat(parsed).isEqualTo(LoadingResult.Error(MalformedOtpUri.MissingHost))
     }
 
     @Test
@@ -91,7 +91,7 @@ class OtpUriParserTest {
         val input = "otpauth://invalid/thisisthelabel?secret=thisisthesecret"
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Error(MalformedOtpUri.InvalidHost("invalid")))
+        assertThat(parsed).isEqualTo(LoadingResult.Error(MalformedOtpUri.InvalidHost("invalid")))
     }
 
     @Test
@@ -99,7 +99,7 @@ class OtpUriParserTest {
         val input = "otpauth://totp?secret=thisisthesecret"
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Error(MalformedOtpUri.MissingLabel))
+        assertThat(parsed).isEqualTo(LoadingResult.Error(MalformedOtpUri.MissingLabel))
     }
 
     @Test
@@ -107,7 +107,7 @@ class OtpUriParserTest {
         val input = "otpauth://totp/thisisthelabel?digits=6"
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Error(MalformedOtpUri.MissingSecret))
+        assertThat(parsed).isEqualTo(LoadingResult.Error(MalformedOtpUri.MissingSecret))
     }
 
     @Test
@@ -115,7 +115,7 @@ class OtpUriParserTest {
         val input = "otpauth://totp/thisisthelabel?secret=thisisthesecret&algorithm=wrong"
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Error(MalformedOtpUri.InvalidAlgorithm("wrong")))
+        assertThat(parsed).isEqualTo(LoadingResult.Error(MalformedOtpUri.InvalidAlgorithm("wrong")))
     }
 
     @Test
@@ -123,7 +123,7 @@ class OtpUriParserTest {
         val input = "otpauth://totp/thisisthelabel?secret=thisisthesecret&digits=300"
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Error(MalformedOtpUri.InvalidDigitCount("300")))
+        assertThat(parsed).isEqualTo(LoadingResult.Error(MalformedOtpUri.InvalidDigitCount("300")))
     }
 
     @Test
@@ -131,7 +131,7 @@ class OtpUriParserTest {
         val input = "otpauth://totp/thisisthelabel?secret=thisisthesecret&digits=notanumber"
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Error(MalformedOtpUri.InvalidDigitCount("notanumber")))
+        assertThat(parsed).isEqualTo(LoadingResult.Error(MalformedOtpUri.InvalidDigitCount("notanumber")))
     }
 
     @Test
@@ -139,6 +139,6 @@ class OtpUriParserTest {
         val input = "otpauth://totp/thisisthelabel?secret=thisisthesecret&period=notanumber"
 
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.Error(MalformedOtpUri.InvalidValidity("notanumber")))
+        assertThat(parsed).isEqualTo(LoadingResult.Error(MalformedOtpUri.InvalidValidity("notanumber")))
     }
 }

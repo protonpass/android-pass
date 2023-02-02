@@ -9,7 +9,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.data.api.PendingEventList
@@ -32,7 +32,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val observeVaults: ObserveVaults
 ) : ApplyPendingEvents {
 
-    override suspend fun invoke(): Result<Unit> =
+    override suspend fun invoke(): LoadingResult<Unit> =
         runCatching {
             withContext(Dispatchers.IO) {
                 val user = observeCurrentUser().first()

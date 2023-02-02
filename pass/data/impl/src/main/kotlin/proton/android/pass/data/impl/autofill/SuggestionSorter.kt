@@ -2,7 +2,7 @@ package proton.android.pass.data.impl.autofill
 
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
@@ -27,7 +27,7 @@ class SuggestionSorterImpl @Inject constructor(
 
     private fun sortWithUrl(items: List<Item>, url: String): List<Item> {
         val parsed = when (val res = hostParser.parse(url)) {
-            is Result.Success -> res.data
+            is LoadingResult.Success -> res.data
             else -> return items
         }
 
@@ -60,7 +60,7 @@ class SuggestionSorterImpl @Inject constructor(
         items.forEach { loginItem ->
             val parsedWebsites = loginItem.login.websites
                 .map { url -> hostParser.parse(url) }
-                .filterIsInstance<Result.Success<HostInfo>>()
+                .filterIsInstance<LoadingResult.Success<HostInfo>>()
                 .map { it.data }
                 .filterIsInstance<HostInfo.Host>()
 
@@ -101,7 +101,7 @@ class SuggestionSorterImpl @Inject constructor(
         items.forEach { loginItem ->
             val parsedWebsites = loginItem.login.websites
                 .map { url -> hostParser.parse(url) }
-                .filterIsInstance<Result.Success<HostInfo>>()
+                .filterIsInstance<LoadingResult.Success<HostInfo>>()
                 .map { it.data }
                 .filterIsInstance<HostInfo.Host>()
 

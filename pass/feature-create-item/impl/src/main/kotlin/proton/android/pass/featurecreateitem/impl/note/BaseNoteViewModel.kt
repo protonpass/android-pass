@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -55,12 +55,12 @@ abstract class BaseNoteViewModel(
     private val observeAllVaultsFlow = observeVaults()
         .map { shares ->
             when (shares) {
-                Result.Loading -> emptyList()
-                is Result.Error -> {
+                LoadingResult.Loading -> emptyList()
+                is LoadingResult.Error -> {
                     PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
                     emptyList()
                 }
-                is Result.Success -> shares.data.map { ShareUiModel(it.shareId, it.name) }
+                is LoadingResult.Success -> shares.data.map { ShareUiModel(it.shareId, it.name) }
             }
         }
         .distinctUntilChanged()

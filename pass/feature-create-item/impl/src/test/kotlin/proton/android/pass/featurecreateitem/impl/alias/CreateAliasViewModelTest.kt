@@ -8,7 +8,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
@@ -110,7 +110,7 @@ class CreateAliasViewModelTest {
     fun `is able to handle CannotCreateMoreAliases`() = runTest {
         viewModel = createAliasViewModel()
         setupAliasOptions()
-        createAlias.setResult(Result.Error(CannotCreateMoreAliasesError()))
+        createAlias.setResult(LoadingResult.Error(CannotCreateMoreAliasesError()))
         setupContentsForCreation()
         viewModel.aliasUiState.test { awaitItem() }
         viewModel.createAlias(TestShare.create().id)
@@ -128,7 +128,7 @@ class CreateAliasViewModelTest {
     fun `emits success when alias is created successfully`() = runTest {
         viewModel = createAliasViewModel()
         setupAliasOptions()
-        createAlias.setResult(Result.Success(TestItem.random()))
+        createAlias.setResult(LoadingResult.Success(TestItem.random()))
         setupContentsForCreation()
 
         viewModel.aliasUiState.test { awaitItem() }
@@ -205,7 +205,7 @@ class CreateAliasViewModelTest {
     }
 
     private fun setupVaults() {
-        observeVaults.sendResult(Result.Success(listOf(Vault(ShareId("ShareId"), "name"))))
+        observeVaults.sendResult(LoadingResult.Success(listOf(Vault(ShareId("ShareId"), "name"))))
     }
 
     private fun setupAliasOptions() {

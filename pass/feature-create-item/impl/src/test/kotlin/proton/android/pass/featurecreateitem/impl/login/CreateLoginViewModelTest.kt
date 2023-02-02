@@ -7,7 +7,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.commonui.api.itemName
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
@@ -59,7 +59,7 @@ internal class CreateLoginViewModelTest {
     fun `when a create item event without title should return a BlankTitle validation error`() =
         runTest {
             val vault = Vault(ShareId("shareId"), "Share")
-            observeVaults.sendResult(Result.Success(listOf(vault)))
+            observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
 
             createLoginViewModel.createItem()
 
@@ -80,14 +80,14 @@ internal class CreateLoginViewModelTest {
         val item = TestItem.create(keyStoreCrypto = TestKeyStoreCrypto)
 
         val vault = Vault(item.shareId, "Share")
-        observeVaults.sendResult(Result.Success(listOf(vault)))
+        observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
 
         val titleInput = "Title input"
         createLoginViewModel.onTitleChange(titleInput)
 
         val userId = UserId("user-id")
         accountManager.sendPrimaryUserId(userId)
-        createItem.sendItem(Result.Success(item))
+        createItem.sendItem(LoadingResult.Success(item))
 
         createLoginViewModel.loginUiState.test {
             createLoginViewModel.createItem()
@@ -135,7 +135,7 @@ internal class CreateLoginViewModelTest {
     @Test
     fun `setting initial data emits the proper contents`() = runTest {
         val vault = Vault(ShareId("shareId"), "Share")
-        observeVaults.sendResult(Result.Success(listOf(vault)))
+        observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
         val initialContents = InitialCreateLoginUiState(
             title = TestUtils.randomString(),
             username = TestUtils.randomString(),

@@ -8,7 +8,7 @@ import android.service.autofill.FillContext
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 
 object Utils {
@@ -43,9 +43,9 @@ object Utils {
         when (assistInfo.url) {
             None -> getApplicationName(context, packageName)
             is Some -> when (val res = UrlSanitizer.getDomain(assistInfo.url.value)) {
-                Result.Loading -> ""
-                is Result.Error -> ""
-                is Result.Success -> res.data
+                LoadingResult.Loading -> ""
+                is LoadingResult.Error -> ""
+                is LoadingResult.Success -> res.data
             }
         }
 }

@@ -1,7 +1,7 @@
 package proton.android.pass.data.impl.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.CreateItem
@@ -20,15 +20,15 @@ class CreateItemImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemContents: ItemContents
-    ): Result<Item> = when (val shareResult = shareRepository.getById(userId, shareId)) {
-        is Result.Error -> Result.Error(shareResult.exception)
-        Result.Loading -> Result.Loading
-        is Result.Success -> {
+    ): LoadingResult<Item> = when (val shareResult = shareRepository.getById(userId, shareId)) {
+        is LoadingResult.Error -> LoadingResult.Error(shareResult.exception)
+        LoadingResult.Loading -> LoadingResult.Loading
+        is LoadingResult.Success -> {
             val share: Share? = shareResult.data
             if (share != null) {
                 itemRepository.createItem(userId, share, itemContents)
             } else {
-                Result.Error(IllegalStateException("CreateItem has invalid share"))
+                LoadingResult.Error(IllegalStateException("CreateItem has invalid share"))
             }
         }
     }

@@ -18,9 +18,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.asResult
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
@@ -57,12 +57,12 @@ abstract class BaseAliasViewModel(
     private val observeAllVaultsFlow = observeVaults()
         .map { shares ->
             when (shares) {
-                Result.Loading -> emptyList()
-                is Result.Error -> {
+                LoadingResult.Loading -> emptyList()
+                is LoadingResult.Error -> {
                     PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
                     emptyList()
                 }
-                is Result.Success -> shares.data.map { ShareUiModel(it.shareId, it.name) }
+                is LoadingResult.Success -> shares.data.map { ShareUiModel(it.shareId, it.name) }
             }
         }
         .distinctUntilChanged()
@@ -107,19 +107,19 @@ abstract class BaseAliasViewModel(
         MutableStateFlow(emptyList())
     private val selectedSuffixState: MutableStateFlow<Option<AliasSuffixUiModel>> =
         MutableStateFlow(None)
-    private val aliasOptionsState: Flow<Result<AliasOptionsUiModel>> = sharesWrapperState
+    private val aliasOptionsState: Flow<LoadingResult<AliasOptionsUiModel>> = sharesWrapperState
         .flatMapLatest { observeAliasOptions(it.currentShare.id) }
         .map(::AliasOptionsUiModel)
-        .asResult()
+        .asLoadingResult()
         .onEach {
             when (it) {
-                is Result.Error -> {
+                is LoadingResult.Error -> {
                     isLoadingState.update { IsLoadingState.NotLoading }
                     snackbarMessageRepository.emitSnackbarMessage(CannotRetrieveAliasOptions)
                     mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
                 }
-                Result.Loading -> isLoadingState.update { IsLoadingState.Loading }
-                is Result.Success -> {
+                LoadingResult.Loading -> isLoadingState.update { IsLoadingState.Loading }
+                is LoadingResult.Success -> {
                     isLoadingState.update { IsLoadingState.NotLoading }
                     isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
                 }
@@ -135,7 +135,7 @@ abstract class BaseAliasViewModel(
         aliasItemValidationErrorsState
     ) { aliasItem, aliasOptionsResult, selectedMailboxes, selectedSuffix, aliasItemValidationErrors ->
         val aliasItemWithOptions =
-            if (aliasOptionsResult is Result.Success) {
+            if (aliasOptionsResult is LoadingResult.Success) {
                 val aliasOptions = aliasOptionsResult.data
 
                 val mailboxes = aliasOptions.mailboxes

@@ -14,7 +14,7 @@ import proton.android.pass.data.impl.fakes.TestVaultKeyRepository
 import proton.android.pass.data.impl.generator.TestProtoItemGenerator
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.pass.domain.ItemContents
 import proton.pass.domain.Share
 import proton.android.pass.test.MainDispatcherRule
@@ -80,7 +80,7 @@ class ItemRepositoryImplTest {
     @Test
     fun `createItem stores into remote and local datasource`() = runTest {
         vaultKeyRepository.setLatestVaultItemKey(
-            Result.Success(
+            LoadingResult.Success(
                 TestVaultKey.createPrivate() to TestItemKey.createPrivate()
             )
         )
@@ -91,12 +91,12 @@ class ItemRepositoryImplTest {
         val protoItem = TestProtoItemGenerator.generate(name, note)
         val item = TestItem.random(content = protoItem.toByteArray())
         remoteItemDataSource.setCreateItemResponse {
-            Result.Success(TestRemoteItemDataSource.createItemRevision(item))
+            LoadingResult.Success(TestRemoteItemDataSource.createItemRevision(item))
         }
         openItem.setItem(item)
 
         val res = repository.createItem(userId, share, ItemContents.Note(name, note))
-        assertTrue(res is Result.Success)
+        assertTrue(res is LoadingResult.Success)
 
         val remoteMemory = remoteItemDataSource.getCreateItemMemory()
         assertEquals(1, remoteMemory.size)

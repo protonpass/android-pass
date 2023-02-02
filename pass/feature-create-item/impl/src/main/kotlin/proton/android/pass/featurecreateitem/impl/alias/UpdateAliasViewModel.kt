@@ -15,7 +15,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
@@ -158,7 +158,7 @@ class UpdateAliasViewModel @Inject constructor(
             .onError { showError("Error getting item by id", InitError, it) }
     }
 
-    private suspend fun onAliasDetails(result: Result<AliasDetails>, item: Item) {
+    private suspend fun onAliasDetails(result: LoadingResult<AliasDetails>, item: Item) {
         result
             .map(::AliasDetailsUiModel)
             .onSuccess { details ->

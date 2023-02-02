@@ -9,7 +9,7 @@ import proton.android.pass.data.impl.responses.ItemRevision
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemStateValues
@@ -18,12 +18,12 @@ import proton.android.pass.test.crypto.TestKeyStoreCrypto
 
 class TestRemoteItemDataSource : RemoteItemDataSource {
 
-    private var createItemResponse: () -> Result<ItemRevision> = { Result.Loading }
+    private var createItemResponse: () -> LoadingResult<ItemRevision> = { LoadingResult.Loading }
     private var createItemMemory: MutableList<CreateItemParams> = mutableListOf()
 
     fun getCreateItemMemory(): List<CreateItemParams> = createItemMemory
 
-    fun setCreateItemResponse(delegate: () -> Result<ItemRevision>) {
+    fun setCreateItemResponse(delegate: () -> LoadingResult<ItemRevision>) {
         createItemResponse = delegate
     }
 
@@ -31,7 +31,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         userId: UserId,
         shareId: ShareId,
         body: CreateItemRequest
-    ): Result<ItemRevision> {
+    ): LoadingResult<ItemRevision> {
         createItemMemory.add(CreateItemParams(userId, shareId, body))
         return createItemResponse()
     }
@@ -40,7 +40,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         userId: UserId,
         shareId: ShareId,
         body: CreateAliasRequest
-    ): Result<ItemRevision> {
+    ): LoadingResult<ItemRevision> {
         throw IllegalStateException("Not yet implemented")
     }
 
@@ -49,11 +49,11 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         shareId: ShareId,
         itemId: ItemId,
         body: UpdateItemRequest
-    ): Result<ItemRevision> {
+    ): LoadingResult<ItemRevision> {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override suspend fun getItems(userId: UserId, shareId: ShareId): Result<List<ItemRevision>> {
+    override suspend fun getItems(userId: UserId, shareId: ShareId): LoadingResult<List<ItemRevision>> {
         throw IllegalStateException("Not yet implemented")
     }
 
@@ -61,7 +61,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): Result<TrashItemsResponse> {
+    ): LoadingResult<TrashItemsResponse> {
         throw IllegalStateException("Not yet implemented")
     }
 
@@ -69,7 +69,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): Result<TrashItemsResponse> {
+    ): LoadingResult<TrashItemsResponse> {
         throw IllegalStateException("Not yet implemented")
     }
 
@@ -77,7 +77,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): Result<Unit> {
+    ): LoadingResult<Unit> {
         throw IllegalStateException("Not yet implemented")
     }
 
@@ -86,7 +86,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         shareId: ShareId,
         itemId: ItemId,
         now: Long
-    ): Result<Unit> {
+    ): LoadingResult<Unit> {
         throw IllegalStateException("Not yet implemented")
     }
 

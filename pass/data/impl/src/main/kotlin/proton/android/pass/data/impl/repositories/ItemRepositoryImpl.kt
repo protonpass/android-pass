@@ -20,11 +20,11 @@ import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.asResult
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.transpose
@@ -101,14 +101,14 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         contents: ItemContents
-    ): Result<Item> = withContext(Dispatchers.IO) {
+    ): LoadingResult<Item> = withContext(Dispatchers.IO) {
         withUserAddress(userId) { userAddress ->
             val result =
                 vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
             when (result) {
-                is Result.Error -> return@withUserAddress Result.Error(result.exception)
-                Result.Loading -> return@withUserAddress Result.Loading
-                is Result.Success -> Unit
+                is LoadingResult.Error -> return@withUserAddress LoadingResult.Error(result.exception)
+                LoadingResult.Loading -> return@withUserAddress LoadingResult.Loading
+                is LoadingResult.Success -> Unit
             }
             val (vaultKey, itemKey) = result.data
 
@@ -116,7 +116,7 @@ class ItemRepositoryImpl @Inject constructor(
                 createItem.create(vaultKey, itemKey, userAddress, contents)
             } catch (e: RuntimeException) {
                 PassLogger.w(TAG, e, "Error creating item")
-                return@withUserAddress Result.Error(e)
+                return@withUserAddress LoadingResult.Error(e)
             }
 
             remoteItemDataSource.createItem(userId, share.id, body.toRequest())
@@ -143,14 +143,14 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         newAlias: NewAlias
-    ): Result<Item> = withContext(Dispatchers.IO) {
+    ): LoadingResult<Item> = withContext(Dispatchers.IO) {
         withUserAddress(userId) { userAddress ->
             val result =
                 vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
             when (result) {
-                is Result.Error -> return@withUserAddress Result.Error(result.exception)
-                Result.Loading -> return@withUserAddress Result.Loading
-                is Result.Success -> Unit
+                is LoadingResult.Error -> return@withUserAddress LoadingResult.Error(result.exception)
+                LoadingResult.Loading -> return@withUserAddress LoadingResult.Loading
+                is LoadingResult.Success -> Unit
             }
             val (vaultKey, itemKey) = result.data
             val itemContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
@@ -188,7 +188,7 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         item: Item,
         contents: ItemContents
-    ): Result<Item> = withContext(Dispatchers.IO) {
+    ): LoadingResult<Item> = withContext(Dispatchers.IO) {
         performUpdate(
             userId,
             share,
@@ -202,7 +202,7 @@ class ItemRepositoryImpl @Inject constructor(
         shareSelection: ShareSelection,
         itemState: ItemState,
         itemTypeFilter: ItemTypeFilter
-    ): Flow<Result<List<Item>>> =
+    ): Flow<LoadingResult<List<Item>>> =
         when (shareSelection) {
             is ShareSelection.Share -> localItemDataSource.observeItemsForShare(
                 userId = userId,
@@ -229,23 +229,31 @@ class ItemRepositoryImpl @Inject constructor(
                     items.map { entityToDomain(this@withEncryptionContext, it) }
                 }
             }
-            .asResult()
+            .asLoadingResult()
             .flowOn(Dispatchers.IO)
 
-    override suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Item> =
+    override suspend fun getById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): LoadingResult<Item> =
         withContext(Dispatchers.IO) {
             val item = localItemDataSource.getById(shareId, itemId)
             requireNotNull(item)
             encryptionContextProvider.withEncryptionContext {
-                Result.Success(entityToDomain(this@withEncryptionContext, item))
+                LoadingResult.Success(entityToDomain(this@withEncryptionContext, item))
             }
         }
 
-    override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): Result<Unit> =
+    override suspend fun trashItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): LoadingResult<Unit> =
         withContext(Dispatchers.IO) {
             val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
             if (item.state == ItemState.Trashed.value) {
-                return@withContext Result.Error(CannotRemoveNotTrashedItemError())
+                return@withContext LoadingResult.Error(CannotRemoveNotTrashedItemError())
             }
 
             val body = TrashItemsRequest(
@@ -272,7 +280,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<Unit> = withContext(Dispatchers.IO) {
+    ): LoadingResult<Unit> = withContext(Dispatchers.IO) {
         // Optimistically update the local database
         val originalItem: ItemEntity = database.inTransaction {
             val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
@@ -282,108 +290,111 @@ class ItemRepositoryImpl @Inject constructor(
             )
             localItemDataSource.upsertItem(updatedItem)
             item
-        }
-            ?: return@withContext Result.Error(IllegalStateException("UnTrash item could not be updated locally"))
+        } ?: return@withContext LoadingResult.Error(
+            IllegalStateException("UnTrash item could not be updated locally")
+        )
 
         // Perform the network request
         val body = TrashItemsRequest(
             listOf(TrashItemRevision(originalItem.id, originalItem.revision))
         )
         return@withContext when (val res = remoteItemDataSource.untrash(userId, shareId, body)) {
-            Result.Loading -> Result.Loading
-            is Result.Error -> {
+            LoadingResult.Loading -> LoadingResult.Loading
+            is LoadingResult.Error -> {
                 localItemDataSource.upsertItem(originalItem)
-                Result.Error(res.exception)
+                LoadingResult.Error(res.exception)
             }
-            is Result.Success -> Result.Success(Unit)
+            is LoadingResult.Success -> LoadingResult.Success(Unit)
         }
     }
 
-    override suspend fun clearTrash(userId: UserId): Result<Unit> = withContext(Dispatchers.IO) {
-        val trashedItems = localItemDataSource.getTrashedItems(userId)
-        val trashedPerShare = trashedItems.groupBy { it.shareId }
-        trashedPerShare
-            .map { entry ->
-                async {
-                    val shareId = ShareId(entry.key)
-                    val shareItems = entry.value
-                    shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).forEach { items ->
-                        val body =
-                            TrashItemsRequest(
-                                items.map {
-                                    TrashItemRevision(
-                                        it.id,
-                                        it.revision
+    override suspend fun clearTrash(userId: UserId): LoadingResult<Unit> =
+        withContext(Dispatchers.IO) {
+            val trashedItems = localItemDataSource.getTrashedItems(userId)
+            val trashedPerShare = trashedItems.groupBy { it.shareId }
+            trashedPerShare
+                .map { entry ->
+                    async {
+                        val shareId = ShareId(entry.key)
+                        val shareItems = entry.value
+                        shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).forEach { items ->
+                            val body =
+                                TrashItemsRequest(
+                                    items.map {
+                                        TrashItemRevision(
+                                            it.id,
+                                            it.revision
+                                        )
+                                    }
+                                )
+                            remoteItemDataSource.delete(userId, shareId, body)
+                            database.inTransaction {
+                                items.forEach { item ->
+                                    localItemDataSource.delete(
+                                        shareId,
+                                        ItemId(item.id)
                                     )
                                 }
-                            )
-                        remoteItemDataSource.delete(userId, shareId, body)
-                        database.inTransaction {
-                            items.forEach { item ->
-                                localItemDataSource.delete(
-                                    shareId,
-                                    ItemId(item.id)
-                                )
                             }
                         }
                     }
                 }
-            }
-            .awaitAll()
-        Result.Success(Unit)
-    }
+                .awaitAll()
+            LoadingResult.Success(Unit)
+        }
 
-    override suspend fun restoreItems(userId: UserId): Result<Unit> = withContext(Dispatchers.IO) {
-        val trashedItems = localItemDataSource.getTrashedItems(userId)
-        val trashedPerShare = trashedItems.groupBy { it.shareId }
-        trashedPerShare
-            .map { entry ->
-                async {
-                    val shareId = ShareId(entry.key)
-                    val shareItems = entry.value
-                    shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).forEach { items ->
-                        val body =
-                            TrashItemsRequest(
-                                items.map {
-                                    TrashItemRevision(
-                                        it.id,
-                                        it.revision
+    override suspend fun restoreItems(userId: UserId): LoadingResult<Unit> =
+        withContext(Dispatchers.IO) {
+            val trashedItems = localItemDataSource.getTrashedItems(userId)
+            val trashedPerShare = trashedItems.groupBy { it.shareId }
+            trashedPerShare
+                .map { entry ->
+                    async {
+                        val shareId = ShareId(entry.key)
+                        val shareItems = entry.value
+                        shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).forEach { items ->
+                            val body =
+                                TrashItemsRequest(
+                                    items.map {
+                                        TrashItemRevision(
+                                            it.id,
+                                            it.revision
+                                        )
+                                    }
+                                )
+                            remoteItemDataSource.untrash(userId, shareId, body)
+                            database.inTransaction {
+                                items.forEach { item ->
+                                    localItemDataSource.setItemState(
+                                        shareId,
+                                        ItemId(item.id),
+                                        ItemState.Active
                                     )
                                 }
-                            )
-                        remoteItemDataSource.untrash(userId, shareId, body)
-                        database.inTransaction {
-                            items.forEach { item ->
-                                localItemDataSource.setItemState(
-                                    shareId,
-                                    ItemId(item.id),
-                                    ItemState.Active
-                                )
                             }
                         }
                     }
                 }
-            }
-            .awaitAll()
-        Result.Success(Unit)
-    }
+                .awaitAll()
+            LoadingResult.Success(Unit)
+        }
 
     override suspend fun deleteItem(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<Unit> = withContext(Dispatchers.IO) {
+    ): LoadingResult<Unit> = withContext(Dispatchers.IO) {
         val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-        if (item.state != ItemState.Trashed.value) return@withContext Result.Success(Unit)
+        if (item.state != ItemState.Trashed.value) return@withContext LoadingResult.Success(Unit)
 
         val body =
             TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
         return@withContext when (val result = remoteItemDataSource.delete(userId, shareId, body)) {
-            is Result.Error -> Result.Error(result.exception)
-            Result.Loading -> Result.Loading
-            is Result.Success -> {
+            is LoadingResult.Error -> LoadingResult.Error(result.exception)
+            LoadingResult.Loading -> LoadingResult.Loading
+            is LoadingResult.Success -> {
                 localItemDataSource.delete(shareId, itemId)
-                Result.Success(Unit)
+                LoadingResult.Success(Unit)
             }
         }
     }
@@ -394,7 +405,7 @@ class ItemRepositoryImpl @Inject constructor(
         itemId: ItemId,
         packageName: Option<PackageName>,
         url: Option<String>
-    ): Result<Item> = withContext(Dispatchers.IO) {
+    ): LoadingResult<Item> = withContext(Dispatchers.IO) {
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
 
         val (item, itemProto) = encryptionContextProvider.withEncryptionContext {
@@ -412,29 +423,29 @@ class ItemRepositoryImpl @Inject constructor(
 
         if (!needsToUpdate) {
             PassLogger.i(TAG, "Did not need to perform any update")
-            return@withContext Result.Success(item)
+            return@withContext LoadingResult.Success(item)
         }
 
         val userId = accountManager.getPrimaryUserId().first()
             ?: throw CryptoException("UserId cannot be null")
         val shareResult = shareRepository.getById(userId, shareId)
         when (shareResult) {
-            is Result.Error -> return@withContext Result.Error(shareResult.exception)
-            Result.Loading -> return@withContext Result.Loading
-            is Result.Success -> Unit
+            is LoadingResult.Error -> return@withContext LoadingResult.Error(shareResult.exception)
+            LoadingResult.Loading -> return@withContext LoadingResult.Loading
+            is LoadingResult.Success -> Unit
         }
         val share = shareResult.data ?: throw CryptoException("Share cannot be null")
 
         return@withContext performUpdate(userId, share, item, updatedContents)
     }
 
-    override suspend fun refreshItems(userId: UserId, share: Share): Result<List<Item>> =
+    override suspend fun refreshItems(userId: UserId, share: Share): LoadingResult<List<Item>> =
         withContext(Dispatchers.IO) {
             val address = requireNotNull(userAddressRepository.getAddresses(userId).primary())
             fetchItemsForShare(address, share)
         }
 
-    override suspend fun refreshItems(userId: UserId, shareId: ShareId): Result<List<Item>> =
+    override suspend fun refreshItems(userId: UserId, shareId: ShareId): LoadingResult<List<Item>> =
         withContext(Dispatchers.IO) {
             val share = getShare(userId, shareId)
             refreshItems(userId, share)
@@ -512,9 +523,9 @@ class ItemRepositoryImpl @Inject constructor(
 
     private suspend fun getShare(userId: UserId, shareId: ShareId): Share =
         when (val share = shareRepository.getById(userId, shareId)) {
-            is Result.Success -> share.data
-            is Result.Error -> throw share.exception
-            Result.Loading -> throw IllegalStateException("shareRepository.getById cannot return Loading")
+            is LoadingResult.Success -> share.data
+            is LoadingResult.Error -> throw share.exception
+            LoadingResult.Loading -> throw IllegalStateException("shareRepository.getById cannot return Loading")
         } ?: throw IllegalStateException("Could not find share [shareId=${shareId.id}]")
 
     private suspend fun getUserKeys(userId: UserId, emails: List<String>) = emails
@@ -537,17 +548,19 @@ class ItemRepositoryImpl @Inject constructor(
         val vaultKeyResult =
             vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, rotationId)
         val vaultKey = when (vaultKeyResult) {
-            is Result.Success -> vaultKeyResult.data
-            is Result.Error -> throw vaultKeyResult.exception
-            Result.Loading -> throw IllegalStateException("vaultKeyRepository.getVaultKeyById cannot return Loading")
+            is LoadingResult.Success -> vaultKeyResult.data
+            is LoadingResult.Error -> throw vaultKeyResult.exception
+            LoadingResult.Loading ->
+                throw IllegalStateException("vaultKeyRepository.getVaultKeyById cannot return Loading")
         }
 
         val itemKeyResult =
             vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, rotationId)
         val itemKey = when (itemKeyResult) {
-            is Result.Success -> itemKeyResult.data
-            is Result.Error -> throw itemKeyResult.exception
-            Result.Loading -> throw IllegalStateException("vaultKeyRepository.getItemKeyById cannot return Loading")
+            is LoadingResult.Success -> itemKeyResult.data
+            is LoadingResult.Error -> throw itemKeyResult.exception
+            LoadingResult.Loading ->
+                throw IllegalStateException("vaultKeyRepository.getItemKeyById cannot return Loading")
         }
 
         return Pair(vaultKey, itemKey)
@@ -613,36 +626,36 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         item: Item,
         itemContents: ItemV1.Item
-    ): Result<Item> {
-        val keyPacketResult: Result<KeyPacket> =
+    ): LoadingResult<Item> {
+        val keyPacketResult: LoadingResult<KeyPacket> =
             keyPacketRepository.getLatestKeyPacketForItem(userId, share.id, item.id)
         when (keyPacketResult) {
-            is Result.Error -> return Result.Error(keyPacketResult.exception)
-            Result.Loading -> return Result.Loading
-            is Result.Success -> Unit
+            is LoadingResult.Error -> return LoadingResult.Error(keyPacketResult.exception)
+            LoadingResult.Loading -> return LoadingResult.Loading
+            is LoadingResult.Success -> Unit
         }
         return withUserAddress(userId) { userAddress ->
-            val vaultKeyResult: Result<VaultKey> = vaultKeyRepository.getVaultKeyById(
+            val vaultKeyResult: LoadingResult<VaultKey> = vaultKeyRepository.getVaultKeyById(
                 userAddress,
                 share.id,
                 share.signingKey,
                 keyPacketResult.data.rotationId
             )
             when (vaultKeyResult) {
-                is Result.Error -> return@withUserAddress Result.Error(vaultKeyResult.exception)
-                Result.Loading -> return@withUserAddress Result.Loading
-                is Result.Success -> Unit
+                is LoadingResult.Error -> return@withUserAddress LoadingResult.Error(vaultKeyResult.exception)
+                LoadingResult.Loading -> return@withUserAddress LoadingResult.Loading
+                is LoadingResult.Success -> Unit
             }
-            val itemKeyResult: Result<ItemKey> = vaultKeyRepository.getItemKeyById(
+            val itemKeyResult: LoadingResult<ItemKey> = vaultKeyRepository.getItemKeyById(
                 userAddress,
                 share.id,
                 share.signingKey,
                 keyPacketResult.data.rotationId
             )
             when (itemKeyResult) {
-                is Result.Error -> return@withUserAddress Result.Error(itemKeyResult.exception)
-                Result.Loading -> return@withUserAddress Result.Loading
-                is Result.Success -> Unit
+                is LoadingResult.Error -> return@withUserAddress LoadingResult.Error(itemKeyResult.exception)
+                LoadingResult.Loading -> return@withUserAddress LoadingResult.Loading
+                is LoadingResult.Success -> Unit
             }
             val body = updateItem.createRequest(
                 vaultKeyResult.data,
@@ -675,23 +688,23 @@ class ItemRepositoryImpl @Inject constructor(
     private suspend fun refreshItemsIfNeeded(
         userAddress: UserAddress,
         shareSelection: ShareSelection
-    ): Result<Unit> {
+    ): LoadingResult<Unit> {
         val shareIds: List<Share> = when (shareSelection) {
             is ShareSelection.AllShares -> {
                 when (val result = shareRepository.observeAllShares(userAddress.userId).first()) {
-                    is Result.Error -> return Result.Error(result.exception)
-                    Result.Loading -> return Result.Loading
-                    is Result.Success -> result.data
+                    is LoadingResult.Error -> return LoadingResult.Error(result.exception)
+                    LoadingResult.Loading -> return LoadingResult.Loading
+                    is LoadingResult.Success -> result.data
                 }
             }
             is ShareSelection.Share -> {
                 when (
-                    val result: Result<Share?> =
+                    val result: LoadingResult<Share?> =
                         shareRepository.getById(userAddress.userId, shareSelection.shareId)
                 ) {
-                    is Result.Error -> return Result.Error(result.exception)
-                    Result.Loading -> return Result.Loading
-                    is Result.Success -> listOf(requireNotNull(result.data))
+                    is LoadingResult.Error -> return LoadingResult.Error(result.exception)
+                    LoadingResult.Loading -> return LoadingResult.Loading
+                    is LoadingResult.Success -> listOf(requireNotNull(result.data))
                 }
             }
         }
@@ -704,13 +717,13 @@ class ItemRepositoryImpl @Inject constructor(
                 }
             }
         }
-        return Result.Success(Unit)
+        return LoadingResult.Success(Unit)
     }
 
     private suspend fun fetchItemsForShare(
         userAddress: UserAddress,
         share: Share
-    ): Result<List<Item>> =
+    ): LoadingResult<List<Item>> =
         remoteItemDataSource.getItems(userAddress.userId, share.id)
             .flatMap { items ->
                 decryptItems(userAddress, share, items)
@@ -720,7 +733,7 @@ class ItemRepositoryImpl @Inject constructor(
         userAddress: UserAddress,
         share: Share,
         items: List<ItemRevision>
-    ): Result<List<Item>> {
+    ): LoadingResult<List<Item>> {
         val userEmails = items
             .map { it.signatureEmail }
             .distinct()
@@ -730,9 +743,9 @@ class ItemRepositoryImpl @Inject constructor(
             val res =
                 getVaultKeysItemKeys(userAddress, share, items)
         ) {
-            Result.Loading -> return Result.Loading
-            is Result.Error -> return res
-            is Result.Success -> res.data
+            LoadingResult.Loading -> return LoadingResult.Loading
+            is LoadingResult.Error -> return res
+            is LoadingResult.Success -> res.data
         }
 
         return encryptionContextProvider.withEncryptionContextSuspendable {
@@ -765,36 +778,36 @@ class ItemRepositoryImpl @Inject constructor(
         userAddress: UserAddress,
         share: Share,
         items: List<ItemRevision>
-    ): Result<Pair<Map<String, VaultKey>, Map<String, ItemKey>>> {
+    ): LoadingResult<Pair<Map<String, VaultKey>, Map<String, ItemKey>>> {
         val rotations = items.map { it.rotationId }.distinct()
         val vaultKeys = rotations.associateWith { rotation ->
-            val vaultKeyResult: Result<VaultKey> = vaultKeyRepository.getVaultKeyById(
+            val vaultKeyResult: LoadingResult<VaultKey> = vaultKeyRepository.getVaultKeyById(
                 userAddress,
                 share.id,
                 share.signingKey,
                 rotation
             )
             when (vaultKeyResult) {
-                is Result.Error -> return Result.Error(vaultKeyResult.exception)
-                Result.Loading -> return Result.Loading
-                is Result.Success -> vaultKeyResult.data
+                is LoadingResult.Error -> return LoadingResult.Error(vaultKeyResult.exception)
+                LoadingResult.Loading -> return LoadingResult.Loading
+                is LoadingResult.Success -> vaultKeyResult.data
             }
         }
         val itemKeys = rotations.associateWith { rotation ->
-            val itemKeyResult: Result<ItemKey> = vaultKeyRepository.getItemKeyById(
+            val itemKeyResult: LoadingResult<ItemKey> = vaultKeyRepository.getItemKeyById(
                 userAddress,
                 share.id,
                 share.signingKey,
                 rotation
             )
             when (itemKeyResult) {
-                is Result.Error -> return Result.Error(itemKeyResult.exception)
-                Result.Loading -> return Result.Loading
-                is Result.Success -> itemKeyResult.data
+                is LoadingResult.Error -> return LoadingResult.Error(itemKeyResult.exception)
+                LoadingResult.Loading -> return LoadingResult.Loading
+                is LoadingResult.Success -> itemKeyResult.data
             }
         }
 
-        return Result.Success(vaultKeys to itemKeys)
+        return LoadingResult.Success(vaultKeys to itemKeys)
     }
 
     private fun decryptItem(
@@ -805,7 +818,7 @@ class ItemRepositoryImpl @Inject constructor(
         vaultKeys: Map<String, VaultKey>,
         itemKeys: Map<String, ItemKey>,
         userKeys: Map<String, List<PublicKey>>
-    ): Result<Pair<Item, ItemEntity>> {
+    ): LoadingResult<Pair<Item, ItemEntity>> {
         val verifyKeys = requireNotNull(userKeys[item.signatureEmail])
         val vaultKey = requireNotNull(vaultKeys[item.rotationId])
         val itemKey = requireNotNull(itemKeys[item.rotationId])
@@ -818,7 +831,7 @@ class ItemRepositoryImpl @Inject constructor(
             vaultKeys = listOf(vaultKey),
             itemKeys = listOf(itemKey)
         )
-        return Result.Success(entityToDomain(encryptionContext, entity) to entity)
+        return LoadingResult.Success(entityToDomain(encryptionContext, entity) to entity)
     }
 
     private fun itemResponseToEntity(

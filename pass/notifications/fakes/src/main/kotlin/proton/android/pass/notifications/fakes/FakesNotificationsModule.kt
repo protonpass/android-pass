@@ -4,6 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 
 @Module
@@ -12,4 +13,7 @@ abstract class FakesNotificationsModule {
 
     @Binds
     abstract fun bindSnackbarMessageRepository(impl: TestSnackbarMessageRepository): SnackbarMessageRepository
+
+    @Binds
+    abstract fun bindNotificationManager(impl: TestNotificationManager): NotificationManager
 }

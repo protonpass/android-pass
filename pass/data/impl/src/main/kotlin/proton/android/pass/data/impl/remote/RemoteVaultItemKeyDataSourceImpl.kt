@@ -2,8 +2,8 @@ package proton.android.pass.data.impl.remote
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
-import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.toResult
+import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.toLoadingResult
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
 import proton.android.pass.data.impl.responses.ItemKeyData
@@ -17,7 +17,7 @@ class RemoteVaultItemKeyDataSourceImpl @Inject constructor(
     override suspend fun getKeys(
         userId: UserId,
         shareId: ShareId
-    ): Result<VaultItemKeyResponseList> =
+    ): LoadingResult<VaultItemKeyResponseList> =
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 var page = 0
@@ -38,5 +38,5 @@ class RemoteVaultItemKeyDataSourceImpl @Inject constructor(
 
                 VaultItemKeyResponseList(vaultKeys, itemKeys)
             }
-            .toResult()
+            .toLoadingResult()
 }

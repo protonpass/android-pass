@@ -2,7 +2,7 @@ package proton.android.pass.featurecreateitem.impl.login
 
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.persistentListOf
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.pass.domain.ItemContents
 
@@ -24,7 +24,7 @@ data class LoginItem(
         websiteAddresses.forEachIndexed { idx, url ->
             if (url.isNotBlank()) {
                 val validation = UrlSanitizer.sanitize(url)
-                if (validation is Result.Error) {
+                if (validation is LoadingResult.Error) {
                     mutableSet.add(LoginItemValidationErrors.InvalidUrl(idx))
                 }
             }

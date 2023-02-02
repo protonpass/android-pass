@@ -3,8 +3,8 @@ package proton.android.pass.data.impl.remote
 import proton.android.pass.data.impl.responses.KeyPacketInfo
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
-import proton.android.pass.common.api.Result
-import proton.android.pass.common.api.toResult
+import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.toLoadingResult
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
@@ -17,10 +17,10 @@ class RemoteKeyPacketDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Result<KeyPacketInfo> =
+    ): LoadingResult<KeyPacketInfo> =
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 getLatestKeyPacket(shareId.id, itemId.id).keyPacketInfo
             }
-            .toResult()
+            .toLoadingResult()
 }

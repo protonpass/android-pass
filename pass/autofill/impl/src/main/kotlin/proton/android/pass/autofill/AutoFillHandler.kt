@@ -26,7 +26,7 @@ import proton.android.pass.autofill.extensions.addOpenAppInlineSuggestion
 import proton.android.pass.autofill.extensions.addSaveInfo
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -100,12 +100,12 @@ object AutoFillHandler {
             } else {
                 Some(packageName)
             }
-            val suggestedItemsResult: Option<Result.Success<List<Item>>> =
+            val suggestedItemsResult: Option<LoadingResult.Success<List<Item>>> =
                 getSuggestedLoginItems(
                     packageName = autofillPackageName,
                     url = autofillData.assistInfo.url
                 )
-                    .filterIsInstance<Result.Success<List<Item>>>()
+                    .filterIsInstance<LoadingResult.Success<List<Item>>>()
                     .firstOrNull()
                     .toOption()
 

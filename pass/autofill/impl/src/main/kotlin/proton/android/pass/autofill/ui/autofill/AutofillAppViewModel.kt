@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -20,7 +19,6 @@ import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.logError
-import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -32,7 +30,7 @@ import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
-import proton.android.pass.totp.api.TotpManager
+import proton.android.pass.totp.api.GetTotpCodeFromUri
 import javax.inject.Inject
 
 @HiltViewModel
@@ -41,7 +39,7 @@ class AutofillAppViewModel @Inject constructor(
     private val biometryManager: BiometryManager,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
-    private val totpManager: TotpManager,
+    private val getTotpCodeFromUri: GetTotpCodeFromUri,
     private val notificationManager: NotificationManager,
     private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
@@ -94,8 +92,7 @@ class AutofillAppViewModel @Inject constructor(
         when (autofillItem) {
             is AutofillItem.Login -> {
                 if (autofillItem.totp.isNotBlank() && state.value.copyTotpToClipboard) {
-                    totpManager.parse(autofillItem.totp)
-                        .map { totpManager.observeCode(it).first().first }
+                    getTotpCodeFromUri(autofillItem.totp)
                         .onSuccess { code ->
                             clipboardManager.copyToClipboard(code)
                         }

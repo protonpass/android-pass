@@ -89,6 +89,22 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 HasDismissedAutofillBanner.from(preferences.hasDismissedAutofillBanner)
             }
 
+    override suspend fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> =
+        runCatching {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setCopyTotpToClipboardEnabled(state.value())
+                    .build()
+            }
+            return@runCatching
+        }
+
+    override fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard> =
+        dataStore.data
+            .map { preferences ->
+                CopyTotpToClipboard.from(preferences.copyTotpToClipboardEnabled)
+            }
+
     override suspend fun clearPreferences(): Result<Unit> =
         runCatching {
             dataStore.updateData {

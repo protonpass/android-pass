@@ -4,9 +4,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import me.proton.core.compose.component.ProtonSettingsList
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import me.proton.core.compose.component.ProtonSettingsList
+import proton.android.pass.preferences.value
 
 @Composable
 fun Settings(
@@ -15,6 +16,7 @@ fun Settings(
     onOpenThemeSelection: () -> Unit,
     onFingerPrintLockChange: (IsButtonEnabled) -> Unit,
     onToggleAutofillChange: (Boolean) -> Unit,
+    onCopyToClipboardChange: (Boolean) -> Unit,
     onForceSyncClick: () -> Unit,
     onAppVersionClick: (String) -> Unit
 ) {
@@ -27,6 +29,13 @@ fun Settings(
                 )
                 Divider(modifier = Modifier.fillMaxWidth())
             }
+        }
+        item {
+            CopyTotpToClipboardSection(
+                state = state.copyTotpToClipboard.value(),
+                onToggleChange = onCopyToClipboardChange
+            )
+            Divider(modifier = Modifier.fillMaxWidth())
         }
 
         if (state.fingerprintSection != FingerprintSectionState.NotAvailable) {

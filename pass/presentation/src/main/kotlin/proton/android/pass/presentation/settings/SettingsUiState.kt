@@ -22,7 +22,7 @@ data class SettingsUiState(
             fingerprintSection = FingerprintSectionState.Available(IsButtonEnabled.Disabled),
             themePreference = ThemePreference.System,
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
-            copyTotpToClipboard = CopyTotpToClipboard.Not,
+            copyTotpToClipboard = CopyTotpToClipboard.NotEnabled,
             isLoadingState = IsLoadingState.NotLoading,
             appVersion = appVersion
         )

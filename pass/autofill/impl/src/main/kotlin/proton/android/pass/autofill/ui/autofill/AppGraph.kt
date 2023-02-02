@@ -19,14 +19,14 @@ import proton.android.pass.navigation.api.AppNavigator
 @ExperimentalComposeUiApi
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
-    state: AutofillAppState,
+    autofillAppState: AutofillAppState,
     onAutofillItemClicked: (AutofillItem) -> Unit,
     onItemCreated: (ItemUiModel) -> Unit,
     onFinished: () -> Unit
 ) {
     authGraph(appNavigator, onFinished)
-    selectItemGraph(appNavigator, state, onAutofillItemClicked, onFinished)
-    createLoginGraph(appNavigator, state, onItemCreated)
+    selectItemGraph(appNavigator, autofillAppState, onAutofillItemClicked, onFinished)
+    createLoginGraph(appNavigator, autofillAppState, onItemCreated)
     createAliasGraph(appNavigator)
     createAliasGraph(appNavigator)
     createTotpGraph(appNavigator)

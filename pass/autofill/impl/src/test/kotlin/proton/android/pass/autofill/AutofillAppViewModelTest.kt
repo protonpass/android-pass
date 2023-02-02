@@ -22,8 +22,8 @@ import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.totp.api.TotpManager
-import proton.android.pass.totp.fakes.TestTotpManager
+import proton.android.pass.totp.api.GetTotpCodeFromUri
+import proton.android.pass.totp.fakes.TestGetTotpCodeFromUri
 
 class AutofillAppViewModelTest {
 
@@ -35,7 +35,7 @@ class AutofillAppViewModelTest {
     private lateinit var biometryManager: TestBiometryManager
     private lateinit var snackbarMessageRepository: TestSnackbarMessageRepository
     private lateinit var clipboardManager: ClipboardManager
-    private lateinit var totpManager: TotpManager
+    private lateinit var getTotpCodeFromUri: GetTotpCodeFromUri
     private lateinit var notificationManager: NotificationManager
 
     @Before
@@ -44,14 +44,14 @@ class AutofillAppViewModelTest {
         biometryManager = TestBiometryManager()
         snackbarMessageRepository = TestSnackbarMessageRepository()
         clipboardManager = TestClipboardManager()
-        totpManager = TestTotpManager()
+        getTotpCodeFromUri = TestGetTotpCodeFromUri()
         notificationManager = TestNotificationManager()
         viewModel = AutofillAppViewModel(
             preferenceRepository,
             biometryManager,
             TestEncryptionContextProvider(),
             clipboardManager,
-            totpManager,
+            getTotpCodeFromUri,
             notificationManager,
             snackbarMessageRepository
         )

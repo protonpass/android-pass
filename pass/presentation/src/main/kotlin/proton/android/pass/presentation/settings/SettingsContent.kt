@@ -14,15 +14,15 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
+import me.proton.core.compose.component.ProtonModalBottomSheetLayout
+import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.pass.presentation.R
 import proton.android.pass.composecomponents.impl.loading.LoadingDialog
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.preferences.ThemePreference
-import me.proton.core.compose.component.ProtonModalBottomSheetLayout
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import me.proton.pass.presentation.R
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -34,6 +34,7 @@ fun SettingsContent(
     onFingerPrintLockChange: (IsButtonEnabled) -> Unit,
     onDrawerIconClick: () -> Unit,
     onToggleAutofillChange: (Boolean) -> Unit,
+    onCopyToClipboardChange: (Boolean) -> Unit,
     onForceSyncClick: () -> Unit,
     onAppVersionClick: (String) -> Unit
 ) {
@@ -85,6 +86,7 @@ fun SettingsContent(
                 onOpenThemeSelection = { scope.launch { bottomSheetState.show() } },
                 onFingerPrintLockChange = onFingerPrintLockChange,
                 onToggleAutofillChange = onToggleAutofillChange,
+                onCopyToClipboardChange = onCopyToClipboardChange,
                 onForceSyncClick = onForceSyncClick,
                 onAppVersionClick = onAppVersionClick
             )

@@ -1,7 +1,7 @@
 package proton.android.pass.data.fakes.repositories
 
 import me.proton.core.user.domain.entity.UserAddress
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.VaultKeyRepository
 import proton.pass.domain.ShareId
 import proton.pass.domain.key.ItemKey
@@ -10,29 +10,29 @@ import proton.pass.domain.key.VaultKey
 
 class TestVaultKeyRepository : VaultKeyRepository {
 
-    private var vaultKeys: Result<List<VaultKey>> = Result.Loading
-    private var vaultKeyById: Result<VaultKey> = Result.Loading
-    private var itemKeyById: Result<ItemKey> = Result.Loading
-    private var latestVaultKey: Result<VaultKey> = Result.Loading
-    private var latestVaultKeyItemKey: Result<Pair<VaultKey, ItemKey>> = Result.Loading
+    private var vaultKeys: LoadingResult<List<VaultKey>> = LoadingResult.Loading
+    private var vaultKeyById: LoadingResult<VaultKey> = LoadingResult.Loading
+    private var itemKeyById: LoadingResult<ItemKey> = LoadingResult.Loading
+    private var latestVaultKey: LoadingResult<VaultKey> = LoadingResult.Loading
+    private var latestVaultKeyItemKey: LoadingResult<Pair<VaultKey, ItemKey>> = LoadingResult.Loading
 
-    fun setVaultKeys(value: Result<List<VaultKey>>) {
+    fun setVaultKeys(value: LoadingResult<List<VaultKey>>) {
         vaultKeys = value
     }
 
-    fun setVaultKeyById(value: Result<VaultKey>) {
+    fun setVaultKeyById(value: LoadingResult<VaultKey>) {
         vaultKeyById = value
     }
 
-    fun setItemKeyById(value: Result<ItemKey>) {
+    fun setItemKeyById(value: LoadingResult<ItemKey>) {
         itemKeyById = value
     }
 
-    fun setLatestVaultKey(value: Result<VaultKey>) {
+    fun setLatestVaultKey(value: LoadingResult<VaultKey>) {
         latestVaultKey = value
     }
 
-    fun setLatestVaultKeyItemKey(value: Result<Pair<VaultKey, ItemKey>>) {
+    fun setLatestVaultKeyItemKey(value: LoadingResult<Pair<VaultKey, ItemKey>>) {
         latestVaultKeyItemKey = value
     }
 
@@ -42,33 +42,33 @@ class TestVaultKeyRepository : VaultKeyRepository {
         signingKey: SigningKey,
         forceRefresh: Boolean,
         shouldStoreLocally: Boolean
-    ): Result<List<VaultKey>> = vaultKeys
+    ): LoadingResult<List<VaultKey>> = vaultKeys
 
     override suspend fun getVaultKeyById(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         keyId: String
-    ): Result<VaultKey> = vaultKeyById
+    ): LoadingResult<VaultKey> = vaultKeyById
 
     override suspend fun getItemKeyById(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         keyId: String
-    ): Result<ItemKey> = itemKeyById
+    ): LoadingResult<ItemKey> = itemKeyById
 
     override suspend fun getLatestVaultKey(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         forceRefresh: Boolean
-    ): Result<VaultKey> = latestVaultKey
+    ): LoadingResult<VaultKey> = latestVaultKey
 
     override suspend fun getLatestVaultItemKey(
         userAddress: UserAddress,
         shareId: ShareId,
         signingKey: SigningKey,
         forceRefresh: Boolean
-    ): Result<Pair<VaultKey, ItemKey>> = latestVaultKeyItemKey
+    ): LoadingResult<Pair<VaultKey, ItemKey>> = latestVaultKeyItemKey
 }

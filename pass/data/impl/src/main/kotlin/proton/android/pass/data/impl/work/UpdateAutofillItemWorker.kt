@@ -22,7 +22,7 @@ import proton.pass.domain.entity.PackageName
 import kotlin.IllegalStateException
 import kotlin.String
 import kotlin.to
-import proton.android.pass.common.api.Result as KResult
+import proton.android.pass.common.api.LoadingResult as KResult
 
 @HiltWorker
 class UpdateAutofillItemWorker @AssistedInject constructor(

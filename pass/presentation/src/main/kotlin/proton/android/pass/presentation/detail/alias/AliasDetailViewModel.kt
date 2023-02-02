@@ -17,7 +17,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.pass.domain.AliasDetails
 import proton.pass.domain.Item
@@ -71,9 +71,9 @@ class AliasDetailViewModel @Inject constructor(
         snackbarMessageRepository.emitSnackbarMessage(message)
     }
 
-    private suspend fun onAliasDetails(result: Result<AliasDetails>, item: Item) {
+    private suspend fun onAliasDetails(result: LoadingResult<AliasDetails>, item: Item) {
         when (result) {
-            is Result.Success -> {
+            is LoadingResult.Success -> {
                 val alias = item.itemType as ItemType.Alias
                 modelState.update {
                     encryptionContextProvider.withEncryptionContext {
@@ -86,7 +86,7 @@ class AliasDetailViewModel @Inject constructor(
                     }
                 }
             }
-            is Result.Error -> {
+            is LoadingResult.Error -> {
                 showError(
                     "Error getting alias details",
                     DetailSnackbarMessages.InitError,

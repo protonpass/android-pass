@@ -5,7 +5,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.fakes.repositories.TestItemRepository
@@ -45,10 +45,10 @@ class MigrateVaultImplTest {
         val originShare = ShareId("origin")
         val destShare = ShareId("dest")
         accountManager.sendPrimaryUserId(UserId("userId"))
-        itemRepository.sendObserveItemListResult(Result.Success(emptyList()))
-        shareRepository.setGetByIdResult(Result.Success(TestShare.create()))
-        shareRepository.setDeleteVaultResult(Result.Success(Unit))
+        itemRepository.sendObserveItemListResult(LoadingResult.Success(emptyList()))
+        shareRepository.setGetByIdResult(LoadingResult.Success(TestShare.create()))
+        shareRepository.setDeleteVaultResult(LoadingResult.Success(Unit))
         val result = migrateVault(originShare, destShare)
-        assert(result is Result.Success)
+        assert(result is LoadingResult.Success)
     }
 }

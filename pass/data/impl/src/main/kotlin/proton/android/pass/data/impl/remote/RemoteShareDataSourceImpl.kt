@@ -2,9 +2,9 @@ package proton.android.pass.data.impl.remote
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
-import proton.android.pass.common.api.toResult
+import proton.android.pass.common.api.toLoadingResult
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
@@ -17,28 +17,28 @@ class RemoteShareDataSourceImpl @Inject constructor(
     override suspend fun createVault(
         userId: UserId,
         body: CreateVaultRequest
-    ): Result<ShareResponse> =
+    ): LoadingResult<ShareResponse> =
         api.get<PasswordManagerApi>(userId)
             .invoke { createVault(body) }
-            .toResult()
+            .toLoadingResult()
             .map { it.share }
 
-    override suspend fun deleteVault(userId: UserId, shareId: ShareId): Result<Unit> =
+    override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
         api.get<PasswordManagerApi>(userId)
             .invoke { deleteVault(shareId.id) }
-            .toResult()
+            .toLoadingResult()
             .map { }
 
-    override suspend fun getShares(userId: UserId): Result<List<ShareResponse>> =
+    override suspend fun getShares(userId: UserId): LoadingResult<List<ShareResponse>> =
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 val shares = getShares()
                 val shareList = shares.shares.map { getShare(it.shareId) }
                 shareList.map { it.share }
             }
-            .toResult()
+            .toLoadingResult()
 
-    override suspend fun getShareById(userId: UserId, shareId: ShareId): Result<ShareResponse?> =
+    override suspend fun getShareById(userId: UserId, shareId: ShareId): LoadingResult<ShareResponse?> =
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 val res = getShare(shareId.id)
@@ -48,7 +48,7 @@ class RemoteShareDataSourceImpl @Inject constructor(
                     null
                 }
             }
-            .toResult()
+            .toLoadingResult()
 
     companion object {
         private const val PROTON_RESPONSE_OK = 1000

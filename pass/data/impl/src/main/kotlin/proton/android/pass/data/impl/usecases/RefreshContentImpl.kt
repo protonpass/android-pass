@@ -8,7 +8,7 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.log.api.PassLogger
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
 import javax.inject.Inject
 
@@ -17,7 +17,7 @@ class RefreshContentImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : RefreshContent {
 
-    override suspend fun invoke(userId: UserId): Result<Unit> {
+    override suspend fun invoke(userId: UserId): LoadingResult<Unit> {
         PassLogger.i(TAG, "Refreshing shares")
         return shareRepository.refreshShares(userId)
             .map { shares ->
@@ -27,12 +27,12 @@ class RefreshContentImpl @Inject constructor(
                         async { itemRepository.refreshItems(userId, share) }
                     }.awaitAll()
 
-                    val firstError = refreshItemsResults.firstOrNull { it is Result.Error }
+                    val firstError = refreshItemsResults.firstOrNull { it is LoadingResult.Error }
                     PassLogger.i(TAG, "Items refreshed [success=${firstError == null}]")
                     if (firstError != null) {
-                        firstError as Result.Error
+                        firstError as LoadingResult.Error
                     } else {
-                        Result.Success(Unit)
+                        LoadingResult.Success(Unit)
                     }
                 }
             }

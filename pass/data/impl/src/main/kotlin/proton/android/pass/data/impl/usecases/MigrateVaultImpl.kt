@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
 import proton.android.pass.crypto.api.context.EncryptionContext
@@ -39,7 +39,7 @@ class MigrateVaultImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : MigrateVault {
 
-    override suspend fun invoke(origin: ShareId, dest: ShareId): Result<Unit> =
+    override suspend fun invoke(origin: ShareId, dest: ShareId): LoadingResult<Unit> =
         accountManager.getPrimaryUserId()
             .filterNotNull()
             .flatMapLatest { userId ->
@@ -57,17 +57,17 @@ class MigrateVaultImpl @Inject constructor(
         itemState = ItemState.Active,
         itemTypeFilter = ItemTypeFilter.All
     )
-        .filterIsInstance<Result.Success<List<Item>>>()
+        .filterIsInstance<LoadingResult.Success<List<Item>>>()
         .map { result ->
             onObserveItemsResultReceived(result, userId, origin, dest)
         }
 
     private suspend fun onObserveItemsResultReceived(
-        result: Result<List<Item>>,
+        result: LoadingResult<List<Item>>,
         userId: UserId,
         origin: ShareId,
         dest: ShareId
-    ): Result<Unit> = result
+    ): LoadingResult<Unit> = result
         .map { items ->
             shareRepository.getById(userId, dest)
                 .flatMap { destShare: Share? ->
@@ -101,7 +101,7 @@ class MigrateVaultImpl @Inject constructor(
         encryptionContext: EncryptionContext,
         userId: UserId,
         destShare: Share
-    ): Result<Unit> {
+    ): LoadingResult<Unit> {
         val results = items
             // Filter Aliases due to not being implemented in BE currently
             .filter { it.itemType !is ItemType.Alias }
@@ -142,10 +142,10 @@ class MigrateVaultImpl @Inject constructor(
                 }
             }
             .awaitAll()
-        return if (results.any { it is Result.Error }) {
-            results.filterIsInstance<Result.Error>().first()
+        return if (results.any { it is LoadingResult.Error }) {
+            results.filterIsInstance<LoadingResult.Error>().first()
         } else {
-            Result.Success(Unit)
+            LoadingResult.Success(Unit)
         }
     }
 }

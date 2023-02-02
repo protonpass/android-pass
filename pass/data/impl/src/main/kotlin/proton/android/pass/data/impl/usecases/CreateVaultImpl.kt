@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.Result
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.errors.UserIdNotAvailableError
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.CreateVault
@@ -17,19 +17,19 @@ class CreateVaultImpl @Inject constructor(
     private val shareRepository: ShareRepository
 ) : CreateVault {
 
-    override suspend fun invoke(userId: SessionUserId?, vault: NewVault): Result<Share> =
+    override suspend fun invoke(userId: SessionUserId?, vault: NewVault): LoadingResult<Share> =
         if (userId == null) {
             val primaryUserId = accountManager.getPrimaryUserId().firstOrNull()
             if (primaryUserId != null) {
                 createVault(primaryUserId, vault)
             } else {
-                Result.Error(UserIdNotAvailableError())
+                LoadingResult.Error(UserIdNotAvailableError())
             }
         } else {
             createVault(userId, vault)
         }
 
 
-    private suspend fun createVault(userId: UserId, vault: NewVault): Result<Share> =
+    private suspend fun createVault(userId: UserId, vault: NewVault): LoadingResult<Share> =
         shareRepository.createVault(userId, vault)
 }

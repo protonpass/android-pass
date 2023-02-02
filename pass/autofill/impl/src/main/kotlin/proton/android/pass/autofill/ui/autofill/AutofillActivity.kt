@@ -37,7 +37,7 @@ class AutofillActivity : FragmentActivity() {
 
         setContent {
             AutofillApp(
-                state = appState,
+                autofillAppState = appState,
                 onAutofillResponse = { onAutofillResponse(it) },
                 onFinished = { finish() }
             )

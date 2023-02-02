@@ -8,10 +8,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.navigation.api.rememberAppNavigator
 
 @OptIn(
     ExperimentalAnimationApi::class,
@@ -21,7 +21,7 @@ import proton.android.pass.autofill.entities.AutofillItem
 @Composable
 fun AutofillAppContent(
     modifier: Modifier = Modifier,
-    appState: AutofillAppState,
+    autofillAppState: AutofillAppState,
     uiState: AutofillAppUiState,
     onFinished: () -> Unit,
     onAutofillItemClicked: (AutofillItem) -> Unit,
@@ -41,7 +41,7 @@ fun AutofillAppContent(
     ) {
         appGraph(
             appNavigator = appNavigator,
-            state = appState,
+            autofillAppState = autofillAppState,
             onAutofillItemClicked = onAutofillItemClicked,
             onItemCreated = onItemCreated,
             onFinished = onFinished

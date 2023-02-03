@@ -9,8 +9,7 @@ import android.service.autofill.SaveInfo
 import android.view.autofill.AutofillId
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
-import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.android.pass.data.api.extensions.loginUsername
+import me.proton.pass.autofill.service.R
 import proton.android.pass.autofill.DatasetBuilderOptions
 import proton.android.pass.autofill.DatasetUtils
 import proton.android.pass.autofill.InlinePresentationUtils
@@ -21,13 +20,14 @@ import proton.android.pass.autofill.entities.AssistInfo
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.asAndroid
-import me.proton.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
-import proton.pass.domain.Item
 import proton.android.pass.commonui.api.itemName
+import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.data.api.extensions.loginUsername
+import proton.pass.domain.Item
 
 @Suppress("LongParameterList")
 @RequiresApi(Build.VERSION_CODES.R)
@@ -74,7 +74,7 @@ internal fun FillResponse.Builder.addItemInlineSuggestion(
                 title = item.itemName(encryptionContext),
                 subtitle = item.loginUsername(),
                 inlinePresentationSpec = inlinePresentationSpec,
-                pendingIntent = PendingIntentUtils.getEmptyPendingIntent(context)
+                pendingIntent = PendingIntentUtils.getLongPressInlinePendingIntent(context)
             )
         }
 
@@ -102,7 +102,7 @@ internal fun FillResponse.Builder.addOpenAppInlineSuggestion(
             title = defaultTitle,
             subtitle = None,
             inlinePresentationSpec = inlinePresentationSpec,
-            pendingIntent = pendingIntent
+            pendingIntent = PendingIntentUtils.getLongPressInlinePendingIntent(context)
         )
     addInlineSuggestion(
         context = context,

@@ -13,7 +13,9 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.runCatching
 import proton.android.pass.data.api.PendingEventList
+import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -27,6 +29,7 @@ import javax.inject.Inject
 class ApplyPendingEventsImpl @Inject constructor(
     private val eventRepository: EventRepository,
     private val addressRepository: UserAddressRepository,
+    private val shareRepository: ShareRepository,
     private val itemRepository: ItemRepository,
     private val observeCurrentUser: ObserveCurrentUser,
     private val observeVaults: ObserveVaults
@@ -42,7 +45,16 @@ class ApplyPendingEventsImpl @Inject constructor(
                     .map { vaults ->
                         vaults.map { vault ->
                             async {
-                                applyPendingEvents(address.addressId, user.userId, vault.shareId)
+                                try {
+                                    applyPendingEvents(
+                                        address.addressId,
+                                        user.userId,
+                                        vault.shareId
+                                    )
+                                } catch (e: ShareNotAvailableError) {
+                                    PassLogger.d(TAG, e, "Triggering a share refresh")
+                                    shareRepository.refreshShares(user.userId)
+                                }
                             }
                         }.awaitAll()
                     }

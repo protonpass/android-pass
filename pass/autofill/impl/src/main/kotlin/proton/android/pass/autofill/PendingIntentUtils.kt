@@ -25,7 +25,7 @@ object PendingIntentUtils {
         autofillPendingIntentFlags
     )
 
-    internal fun getEmptyPendingIntent(context: Context) =
+    internal fun getLongPressInlinePendingIntent(context: Context) =
         PendingIntent.getService(
             context,
             0,

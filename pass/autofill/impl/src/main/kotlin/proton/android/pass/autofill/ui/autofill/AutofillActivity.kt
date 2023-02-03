@@ -73,13 +73,13 @@ class AutofillActivity : FragmentActivity() {
     private fun prepareAutofillResult(autofillMappings: AutofillMappings) {
         val remoteView = RemoteViews(packageName, android.R.layout.simple_list_item_1).toOption()
         val dataset = DatasetUtils.buildDataset(
-            this,
-            DatasetBuilderOptions(
+            context = this,
+            dsbOptions = DatasetBuilderOptions(
                 // Autofill presentations cannot be empty on 33, or it will throw an IllegalStateException
                 authenticateView = remoteView
             ),
-            autofillMappings.toOption(),
-            emptyList()
+            autofillMappings = autofillMappings.toOption(),
+            assistFields = emptyList()
         )
         val replyIntent = Intent().apply {
             putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, dataset)
@@ -88,7 +88,6 @@ class AutofillActivity : FragmentActivity() {
     }
 
     companion object {
-        const val REQUEST_CODE = 1
         const val ARG_AUTOFILL_IDS = "arg_autofill_ids"
         const val ARG_AUTOFILL_TYPES = "arg_autofill_types"
         const val ARG_PACKAGE_NAME = "arg_package_name"

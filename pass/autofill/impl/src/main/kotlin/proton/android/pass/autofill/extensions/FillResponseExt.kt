@@ -17,10 +17,6 @@ import proton.android.pass.autofill.PendingIntentUtils
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AssistInfo
-import proton.android.pass.autofill.entities.AutofillMappings
-import proton.android.pass.autofill.entities.FieldType
-import proton.android.pass.autofill.entities.asAndroid
-import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
@@ -33,23 +29,13 @@ import proton.pass.domain.Item
 @RequiresApi(Build.VERSION_CODES.R)
 private fun FillResponse.Builder.addInlineSuggestion(
     context: Context,
-    encryptionContext: EncryptionContext,
-    itemOption: Option<Item>,
     inlinePresentation: Option<InlinePresentation>,
     pendingIntent: Option<PendingIntent>,
     assistFields: List<AssistField>
 ) {
-    val autofillMappings: Option<AutofillMappings> = itemOption.map { item ->
-        ItemFieldMapper.mapFields(
-            item.toAutofillItem(encryptionContext),
-            assistFields.map { it.id.asAndroid() },
-            assistFields.map { it.type ?: FieldType.Unknown }
-        )
-    }
-
     val dataset = DatasetUtils.buildDataset(
         context = context,
-        autofillMappings = autofillMappings,
+        autofillMappings = None,
         dsbOptions = DatasetBuilderOptions(
             inlinePresentation = inlinePresentation,
             pendingIntent = pendingIntent
@@ -59,17 +45,18 @@ private fun FillResponse.Builder.addInlineSuggestion(
     addDataset(dataset)
 }
 
+@Suppress("LongParameterList")
 @RequiresApi(Build.VERSION_CODES.R)
 internal fun FillResponse.Builder.addItemInlineSuggestion(
     context: Context,
     encryptionContext: EncryptionContext,
     itemOption: Option<Item>,
     inlinePresentationSpec: InlinePresentationSpec,
-    assistFields: List<AssistField>
+    assistFields: List<AssistField>,
+    pendingIntent: PendingIntent
 ) {
     val inlinePresentation = itemOption
         .map { item ->
-
             InlinePresentationUtils.create(
                 title = item.itemName(encryptionContext),
                 subtitle = item.loginUsername(),
@@ -80,10 +67,8 @@ internal fun FillResponse.Builder.addItemInlineSuggestion(
 
     addInlineSuggestion(
         context = context,
-        encryptionContext = encryptionContext,
-        itemOption = itemOption,
         inlinePresentation = inlinePresentation,
-        pendingIntent = None,
+        pendingIntent = pendingIntent.toOption(),
         assistFields = assistFields
     )
 }
@@ -91,7 +76,6 @@ internal fun FillResponse.Builder.addItemInlineSuggestion(
 @RequiresApi(Build.VERSION_CODES.R)
 internal fun FillResponse.Builder.addOpenAppInlineSuggestion(
     context: Context,
-    encryptionContext: EncryptionContext,
     inlinePresentationSpec: InlinePresentationSpec,
     pendingIntent: PendingIntent,
     assistFields: List<AssistField>
@@ -106,8 +90,6 @@ internal fun FillResponse.Builder.addOpenAppInlineSuggestion(
         )
     addInlineSuggestion(
         context = context,
-        encryptionContext = encryptionContext,
-        itemOption = None,
         inlinePresentation = inlinePresentation.toOption(),
         pendingIntent = pendingIntent.toOption(),
         assistFields = assistFields

@@ -24,9 +24,9 @@ import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.extensions.addItemInlineSuggestion
 import proton.android.pass.autofill.extensions.addOpenAppInlineSuggestion
 import proton.android.pass.autofill.extensions.addSaveInfo
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -40,6 +40,8 @@ object AutoFillHandler {
 
     private const val TAG = "AutoFillHandler"
     private const val INLINE_SUGGESTIONS_OFFSET = 1
+    private const val OPEN_PASS_SUGGESTION_REQUEST_CODE = 1000
+    private const val OPEN_PASS_MENU_REQUEST_CODE = 1001
 
     @Suppress("LongParameterList")
     fun handleAutofill(
@@ -130,16 +132,24 @@ object AutoFillHandler {
                                 encryptionContext = this@withEncryptionContext,
                                 itemOption = item,
                                 inlinePresentationSpec = spec,
-                                assistFields = assistInfo.fields
+                                assistFields = assistInfo.fields,
+                                pendingIntent = getOpenAppPendingIntent(
+                                    context = context,
+                                    autofillData = autofillData,
+                                    intentRequestCode = index
+                                )
                             )
                         }
                     }
                 }
                 responseBuilder.addOpenAppInlineSuggestion(
                     context = context,
-                    encryptionContext = this@withEncryptionContext,
                     inlinePresentationSpec = inlineRequest.inlinePresentationSpecs.last(),
-                    pendingIntent = getOpenAppPendingIntent(context, autofillData),
+                    pendingIntent = getOpenAppPendingIntent(
+                        context = context,
+                        autofillData = autofillData,
+                        intentRequestCode = OPEN_PASS_SUGGESTION_REQUEST_CODE
+                    ),
                     assistFields = assistInfo.fields
                 )
             }
@@ -164,7 +174,11 @@ object AutoFillHandler {
             autofillMappings = None,
             dsbOptions = DatasetBuilderOptions(
                 authenticateView = getMenuPresentationView(context).toOption(),
-                pendingIntent = getOpenAppPendingIntent(context, autofillData).toOption()
+                pendingIntent = getOpenAppPendingIntent(
+                    context = context,
+                    autofillData = autofillData,
+                    intentRequestCode = OPEN_PASS_MENU_REQUEST_CODE
+                ).toOption()
             ),
             assistFields = autofillData.assistInfo.fields
         )
@@ -203,4 +217,5 @@ object AutoFillHandler {
         )
         return view
     }
+
 }

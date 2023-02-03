@@ -8,6 +8,7 @@ import proton.pass.domain.ShareId
 
 interface LocalShareDataSource {
     suspend fun upsertShares(shares: List<ShareEntity>)
+    suspend fun evictAndUpsertShares(userId: UserId, shares: List<ShareEntity>)
     suspend fun getById(userId: UserId, shareId: ShareId): ShareEntity?
     fun getSelectedSharesForUser(userId: UserId): Flow<List<ShareEntity>>
     fun getAllSharesForUser(userId: UserId): Flow<List<ShareEntity>>

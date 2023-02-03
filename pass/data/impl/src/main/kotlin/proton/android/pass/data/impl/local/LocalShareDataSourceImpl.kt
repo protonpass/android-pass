@@ -16,6 +16,9 @@ class LocalShareDataSourceImpl @Inject constructor(
     override suspend fun upsertShares(shares: List<ShareEntity>) =
         database.sharesDao().insertOrUpdate(*shares.toTypedArray())
 
+    override suspend fun evictAndUpsertShares(userId: UserId, shares: List<ShareEntity>) =
+        database.sharesDao().evictAndUpsertShares(userId, *shares.toTypedArray())
+
     override suspend fun getById(userId: UserId, shareId: ShareId): ShareEntity? =
         database.sharesDao().getById(userId.id, shareId.id)
 

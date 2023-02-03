@@ -17,10 +17,11 @@ object PendingIntentUtils {
 
     internal fun getOpenAppPendingIntent(
         context: Context,
-        autofillData: AutofillData
+        autofillData: AutofillData,
+        intentRequestCode: Int,
     ): PendingIntent = PendingIntent.getActivity(
         context,
-        AutofillActivity.REQUEST_CODE,
+        intentRequestCode,
         AutofillActivity.newIntent(context, autofillData),
         autofillPendingIntentFlags
     )

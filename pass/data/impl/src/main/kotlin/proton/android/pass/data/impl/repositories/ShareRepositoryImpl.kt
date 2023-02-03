@@ -98,7 +98,9 @@ class ShareRepositoryImpl @Inject constructor(
             val reencryptedEntityResult: LoadingResult<ShareEntity> =
                 reencryptShareEntityContents(userAddress, createVaultResult.data, responseAsEntity)
             when (reencryptedEntityResult) {
-                is LoadingResult.Error -> return@inTransaction LoadingResult.Error(reencryptedEntityResult.exception)
+                is LoadingResult.Error -> return@inTransaction LoadingResult.Error(
+                    reencryptedEntityResult.exception
+                )
                 LoadingResult.Loading -> return@inTransaction LoadingResult.Loading
                 is LoadingResult.Success -> Unit
             }
@@ -119,7 +121,8 @@ class ShareRepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             database.inTransaction {
                 val currentSelectedShare: ShareEntity =
-                    localShareDataSource.getSelectedSharesForUser(userId = userId).first()
+                    localShareDataSource.getSelectedSharesForUser(userId = userId)
+                        .first()
                         .first()
                 if (currentSelectedShare.id == shareId.id)
                     return@inTransaction LoadingResult.Error(CannotDeleteCurrentVaultError())
@@ -178,9 +181,11 @@ class ShareRepositoryImpl @Inject constructor(
                     ?: return@withContext LoadingResult.Error(IllegalStateException("Share Response is null"))
 
                 val storeShareResult: LoadingResult<List<ShareEntity>> =
-                    storeShares(userAddress, listOf(shareResponse))
+                    storeShares(userAddress, userId, false, listOf(shareResponse))
                 when (storeShareResult) {
-                    is LoadingResult.Error -> return@withContext LoadingResult.Error(storeShareResult.exception)
+                    is LoadingResult.Error -> return@withContext LoadingResult.Error(
+                        storeShareResult.exception
+                    )
                     LoadingResult.Loading -> return@withContext LoadingResult.Loading
                     is LoadingResult.Success -> Unit
                 }
@@ -227,7 +232,7 @@ class ShareRepositoryImpl @Inject constructor(
             LoadingResult.Loading -> return LoadingResult.Loading
             is LoadingResult.Success -> Unit
         }
-        return storeShares(userAddress, sharesResult.data)
+        return storeShares(userAddress, userId, true, sharesResult.data)
     }
 
     @Suppress("ReturnCount")
@@ -280,6 +285,8 @@ class ShareRepositoryImpl @Inject constructor(
 
     private suspend fun storeShares(
         userAddress: UserAddress,
+        userId: UserId,
+        cleanUp: Boolean,
         shares: List<ShareResponse>
     ): LoadingResult<List<ShareEntity>> {
         // The ShareEntity will still not contain the reencrypted contents and signing key passphrase,
@@ -307,7 +314,11 @@ class ShareRepositoryImpl @Inject constructor(
         }
 
         return database.inTransaction {
-            localShareDataSource.upsertShares(entities.map { it.entity })
+            if (cleanUp) {
+                localShareDataSource.evictAndUpsertShares(userId, entities.map { it.entity })
+            } else {
+                localShareDataSource.upsertShares(entities.map { it.entity })
+            }
 
             // We have now inserted the shares without the reencrypted content
             // Now we fetch the vaultKeys for each share, reencrypt the contents and prepare the entities

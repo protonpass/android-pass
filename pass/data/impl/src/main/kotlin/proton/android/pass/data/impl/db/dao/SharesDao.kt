@@ -2,8 +2,10 @@ package proton.android.pass.data.impl.db.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.ShareEntity
 
 @Dao
@@ -36,6 +38,14 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
 
     @Query(
         """
+        SELECT * FROM ${ShareEntity.TABLE} 
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract fun getAllForUser(userId: String): List<ShareEntity>
+
+    @Query(
+        """
         DELETE FROM ${ShareEntity.TABLE} 
         WHERE ${ShareEntity.Columns.ID} = :shareId
         """
@@ -50,4 +60,14 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         """
     )
     abstract suspend fun countShares(userId: String): Int
+
+    @Transaction
+    open suspend fun evictAndUpsertShares(userId: UserId, vararg entities: ShareEntity) {
+        val insertOrUpdateShares = entities.asList().map { it.id }
+        val toDelete = getAllForUser(userId.id)
+            .filterNot { insertOrUpdateShares.contains(it.id) }
+        delete(*toDelete.toTypedArray())
+        update(*entities)
+        insertOrIgnore(*entities)
+    }
 }

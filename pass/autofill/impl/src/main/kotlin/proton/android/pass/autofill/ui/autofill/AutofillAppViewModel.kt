@@ -18,8 +18,6 @@ import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.logError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.log.api.PassLogger
@@ -96,7 +94,9 @@ class AutofillAppViewModel @Inject constructor(
                         .onSuccess { code ->
                             clipboardManager.copyToClipboard(code)
                         }
-                        .logError(PassLogger, TAG, "Could not copy totp code")
+                        .onFailure {
+                            PassLogger.w(TAG, "Could not copy totp code")
+                        }
                     notificationManager.sendNotification()
                 }
             }

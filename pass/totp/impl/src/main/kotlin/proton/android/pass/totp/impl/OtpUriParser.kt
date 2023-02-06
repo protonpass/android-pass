@@ -1,7 +1,6 @@
 package proton.android.pass.totp.impl
 
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.totp.api.MalformedOtpUri
 import proton.android.pass.totp.api.TotpAlgorithm
@@ -30,18 +29,18 @@ object OtpUriParser {
     private const val DEFAULT_DIGITS = "6"
     private const val DEFAULT_PERIOD = "30"
 
-    fun parse(input: String): LoadingResult<TotpSpec> =
+    fun parse(input: String): Result<TotpSpec> =
         try {
             val parsed = URI(input)
             extractFields(parsed)
         } catch (e: MalformedOtpUri) {
-            LoadingResult.Error(e)
+            Result.failure(e)
         } catch (e: URISyntaxException) {
-            LoadingResult.Error(MalformedOtpUri.InvalidUri(e))
+            Result.failure(MalformedOtpUri.InvalidUri(e))
         }
 
     @Suppress("ComplexMethod", "ReturnCount")
-    private fun extractFields(parsed: URI): LoadingResult<TotpSpec> {
+    private fun extractFields(parsed: URI): Result<TotpSpec> {
         validateScheme(parsed)
         validateHost(parsed)
 
@@ -62,7 +61,7 @@ object OtpUriParser {
             digits = digits,
             validPeriodSeconds = period
         )
-        return LoadingResult.Success(spec)
+        return Result.success(spec)
     }
 
     private fun validateScheme(parsed: URI) {

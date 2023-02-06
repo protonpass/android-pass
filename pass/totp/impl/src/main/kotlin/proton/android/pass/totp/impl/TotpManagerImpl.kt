@@ -12,7 +12,6 @@ import kotlinx.coroutines.isActive
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
 import org.apache.commons.codec.binary.Base32
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.totp.api.TotpAlgorithm
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.api.TotpSpec
@@ -67,7 +66,7 @@ class TotpManagerImpl @Inject constructor(
         }
     }
 
-    override fun parse(uri: String): LoadingResult<TotpSpec> = OtpUriParser.parse(uri)
+    override fun parse(uri: String): Result<TotpSpec> = OtpUriParser.parse(uri)
 
     companion object {
         private const val ONE_SECOND_MILLISECONDS = 1000L

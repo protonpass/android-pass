@@ -6,22 +6,21 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -29,8 +28,7 @@ import proton.android.pass.presentation.detail.DetailSnackbarMessages.PasswordCo
 import proton.android.pass.presentation.detail.DetailSnackbarMessages.TotpCopiedToClipbopard
 import proton.android.pass.presentation.detail.DetailSnackbarMessages.UsernameCopiedToClipboard
 import proton.android.pass.presentation.detail.DetailSnackbarMessages.WebsiteCopiedToClipbopard
-import proton.android.pass.totp.api.TotpManager
-import proton.android.pass.totp.api.TotpSpec
+import proton.android.pass.totp.api.ObserveTotpFromUri
 import proton.pass.domain.Item
 import proton.pass.domain.ItemType
 import javax.inject.Inject
@@ -40,7 +38,7 @@ class LoginDetailViewModel @Inject constructor(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val clipboardManager: ClipboardManager,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val totpManager: TotpManager
+    private val observeTotpFromUri: ObserveTotpFromUri
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -51,32 +49,24 @@ class LoginDetailViewModel @Inject constructor(
     private val passwordState: MutableStateFlow<PasswordState> =
         MutableStateFlow(getInitialPasswordState())
 
-    private val totsCodeGeneratorFlow: Flow<Pair<String, Int>> = itemFlow
+    private val observeTotpOptionFlow = itemFlow
         .filterNotNull()
-        .map { item ->
+        .flatMapLatest { item ->
             val itemContents = item.itemType as ItemType.Login
             val decrypted = encryptionContextProvider.withEncryptionContext {
                 decrypt(itemContents.primaryTotp)
             }
-            totpManager.parse(decrypted)
+            observeTotpFromUri(decrypted)
+                .map { flow -> flow.map { it.toOption() } }
+                .getOrDefault(flowOf(None))
         }
         .distinctUntilChanged()
-        .onEach {
-            if (it is LoadingResult.Error) {
-                PassLogger.w(TAG, it.exception, "Could not parse totp")
-            }
-        }
-        .filterIsInstance<LoadingResult.Success<TotpSpec>>()
-        .map { it.data }
-        .flatMapLatest { specs ->
-            totpManager.observeCode(specs)
-        }
 
     val viewState: StateFlow<LoginDetailUiState> = combine(
         itemFlow.filterNotNull(),
         passwordState,
-        totsCodeGeneratorFlow
-    ) { item, password, test ->
+        observeTotpOptionFlow
+    ) { item, password, totpOption ->
         val itemContents = item.itemType as ItemType.Login
         encryptionContextProvider.withEncryptionContext {
             LoginDetailUiState(
@@ -85,7 +75,7 @@ class LoginDetailViewModel @Inject constructor(
                 password = password,
                 websites = itemContents.websites.toImmutableList(),
                 note = decrypt(item.note),
-                totpUiState = TotpUiState(test.first, test.second)
+                totpUiState = totpOption.map { TotpUiState(it.code, it.remainingSeconds) }.value()
             )
         }
     }

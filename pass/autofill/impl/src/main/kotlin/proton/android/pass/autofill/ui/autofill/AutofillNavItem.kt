@@ -48,7 +48,7 @@ sealed class AutofillNavItem(
                 }
             )
 
-    object Auth : AutofillNavItem("auth", isTopLevel = true)
+    object Auth : AutofillNavItem("auth")
     object SelectItem : AutofillNavItem("item/select", isTopLevel = true)
     object CreateLogin : AutofillNavItem("login/create", isTopLevel = true)
     object CreateAlias : AutofillNavItem(

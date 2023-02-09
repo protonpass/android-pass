@@ -11,6 +11,7 @@ import androidx.annotation.RequiresApi
 import proton.android.pass.autofill.entities.AssistField
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.asAndroid
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 
@@ -19,7 +20,7 @@ object DatasetUtils {
     internal fun buildDataset(
         context: Context,
         dsbOptions: DatasetBuilderOptions,
-        autofillMappings: Option<AutofillMappings>,
+        autofillMappings: Option<AutofillMappings> = None,
         assistFields: List<AssistField>
     ): Dataset = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         buildDatasetGTE33(

@@ -23,6 +23,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.accompanist.drawablepainter)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
     implementation(libs.accompanist.placeholder)
@@ -42,6 +43,7 @@ dependencies {
     implementation(libs.kotlinx.datetime)
 
     implementation(projects.pass.notifications.api)
+    implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.domain)

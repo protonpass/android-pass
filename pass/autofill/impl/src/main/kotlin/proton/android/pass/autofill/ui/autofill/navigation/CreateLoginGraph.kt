@@ -6,8 +6,11 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.entities.AutofillAppState
+import proton.android.pass.autofill.entities.AutofillItem
+import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.ui.autofill.AutofillNavItem
-import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.RESULT_CREATED_DRAFT_ALIAS
 import proton.android.pass.featurecreateitem.impl.login.CreateLogin
@@ -23,7 +26,7 @@ import proton.android.pass.navigation.api.composable
 fun NavGraphBuilder.createLoginGraph(
     appNavigator: AppNavigator,
     state: AutofillAppState,
-    onItemCreated: (ItemUiModel) -> Unit
+    onAutofillItemReceived: (AutofillItem) -> Unit
 ) {
     composable(AutofillNavItem.CreateLogin) {
         val createdDraftAlias by appNavigator.navState<AliasItem>(RESULT_CREATED_DRAFT_ALIAS, null)
@@ -47,7 +50,12 @@ fun NavGraphBuilder.createLoginGraph(
         CreateLogin(
             initialContents = initialContents,
             onClose = { appNavigator.onBackClick() },
-            onSuccess = onItemCreated,
+            onSuccess = {
+                when (val autofillItem = it.toAutoFillItem()) {
+                    None -> {}
+                    is Some -> onAutofillItemReceived(autofillItem.value)
+                }
+            },
             onCreateAliasClick = { shareId, titleOption ->
                 appNavigator.navigate(
                     AutofillNavItem.CreateAlias,

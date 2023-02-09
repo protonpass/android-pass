@@ -7,18 +7,13 @@ import android.service.autofill.FillRequest
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
 import dagger.hilt.android.AndroidEntryPoint
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class ProtonPassAutofillService : AutofillService() {
 
     @Inject
-    lateinit var getSuggestedLoginItems: GetSuggestedLoginItems
-
-    @Inject
-    lateinit var encryptionContextProvider: EncryptionContextProvider
+    lateinit var autofillServiceManager: AutofillServiceManager
 
     override fun onFillRequest(
         request: FillRequest,
@@ -27,11 +22,10 @@ class ProtonPassAutofillService : AutofillService() {
     ) {
         AutoFillHandler.handleAutofill(
             context = this@ProtonPassAutofillService,
-            encryptionContextProvider = encryptionContextProvider,
             request = request,
             callback = callback,
             cancellationSignal = cancellationSignal,
-            getSuggestedLoginItems = getSuggestedLoginItems
+            autofillServiceManager = autofillServiceManager
         )
     }
 

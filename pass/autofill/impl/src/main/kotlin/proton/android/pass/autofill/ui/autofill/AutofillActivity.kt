@@ -3,88 +3,92 @@ package proton.android.pass.autofill.ui.autofill
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.autofill.AutofillId
 import android.view.autofill.AutofillManager
 import android.widget.RemoteViews
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import proton.android.pass.autofill.DatasetBuilderOptions
 import proton.android.pass.autofill.DatasetUtils
-import proton.android.pass.autofill.entities.AndroidAutofillFieldId
-import proton.android.pass.autofill.entities.AutofillAppState
+import proton.android.pass.autofill.Utils
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.AutofillMappings
-import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.asAndroid
-import proton.android.pass.autofill.entities.isEmpty
+import proton.android.pass.autofill.extensions.marshalParcelable
+import proton.android.pass.autofill.extensions.toAutofillItem
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
-import proton.pass.domain.entity.PackageName
+import proton.pass.domain.Item
 
 @AndroidEntryPoint
 class AutofillActivity : FragmentActivity() {
 
+    private val viewModel: AutofillActivityViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val appState = extractAppState()
-        if (appState.isEmpty()) {
-            finish()
-            return
-        }
-
-        setContent {
-            AutofillApp(
-                autofillAppState = appState,
-                onAutofillResponse = { onAutofillResponse(it) },
-                onFinished = { finish() }
-            )
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collectLatest(::onStateReceived)
+            }
         }
     }
 
-    private fun extractAppState(): AutofillAppState {
-        val ids: List<AndroidAutofillFieldId> =
-            intent.extras?.getParcelableArrayList<AutofillId>(ARG_AUTOFILL_IDS)
-                ?.map { AndroidAutofillFieldId(it) }
-                ?: emptyList()
-        val types: List<FieldType> = intent.extras?.getStringArrayList(ARG_AUTOFILL_TYPES)
-            ?.map {
-                try {
-                    FieldType.valueOf(it)
-                } catch (_: Exception) {
-                    FieldType.Unknown
+    private fun onStateReceived(autofillUiState: AutofillUiState) {
+        when (autofillUiState) {
+            AutofillUiState.NotValidAutofillUiState -> onAutofillCancel()
+            is AutofillUiState.StartAutofillUiState -> {
+                setContent {
+                    AutofillApp(
+                        autofillUiState = autofillUiState,
+                        onAutofillSuccess = ::onAutofillSuccess,
+                        onAutofillCancel = ::onAutofillCancel
+                    )
                 }
             }
-            ?: emptyList()
-        val packageName = intent.extras?.getString(ARG_PACKAGE_NAME) ?: ""
-        val webDomain = intent.extras?.getString(ARG_WEB_DOMAIN).toOption()
-        val title = intent.extras?.getString(ARG_TITLE) ?: ""
-
-        return AutofillAppState(PackageName(packageName), ids, types, webDomain, title)
+            AutofillUiState.UninitialisedAutofillUiState -> {}
+        }
     }
 
-    private fun onAutofillResponse(autofillMappings: AutofillMappings?) {
-        autofillMappings?.let { prepareAutofillResult(it) }
+    private fun onAutofillCancel() {
+        setResult(RESULT_CANCELED)
+        finishApp()
+    }
+
+    private fun onAutofillSuccess(autofillMappings: AutofillMappings) {
+        val intent = prepareAutofillSuccessIntent(autofillMappings)
+        setResult(RESULT_OK, intent)
+        finishApp()
+    }
+
+    private fun finishApp() {
         finish()
     }
 
-    private fun prepareAutofillResult(autofillMappings: AutofillMappings) {
+    private fun prepareAutofillSuccessIntent(autofillMappings: AutofillMappings): Intent {
         val remoteView = RemoteViews(packageName, android.R.layout.simple_list_item_1).toOption()
+        val datasetBuilderOptions = DatasetBuilderOptions(
+            // Autofill presentations cannot be empty on 33, or it will throw an IllegalStateException
+            authenticateView = remoteView
+        )
         val dataset = DatasetUtils.buildDataset(
             context = this,
-            dsbOptions = DatasetBuilderOptions(
-                // Autofill presentations cannot be empty on 33, or it will throw an IllegalStateException
-                authenticateView = remoteView
-            ),
+            dsbOptions = datasetBuilderOptions,
             autofillMappings = autofillMappings.toOption(),
             assistFields = emptyList()
         )
-        val replyIntent = Intent().apply {
+        return Intent().apply {
             putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, dataset)
         }
-        setResult(RESULT_OK, replyIntent)
     }
 
     companion object {
@@ -93,22 +97,35 @@ class AutofillActivity : FragmentActivity() {
         const val ARG_PACKAGE_NAME = "arg_package_name"
         const val ARG_WEB_DOMAIN = "arg_web_domain"
         const val ARG_TITLE = "arg_title"
+        const val ARG_INLINE_SUGGESTION_AUTOFILL_ITEM = "arg_inline_suggestion_autofill_item"
 
-        fun newIntent(context: Context, data: AutofillData): Intent =
+        fun newIntent(
+            context: Context,
+            data: AutofillData,
+            itemOption: Option<Item> = None
+        ): Intent =
             Intent(context, AutofillActivity::class.java).apply {
                 if (data.assistInfo.url is Some) {
                     putExtra(ARG_WEB_DOMAIN, data.assistInfo.url.value)
                 }
-
                 val fields = data.assistInfo.fields
                 putExtras(
                     bundleOf(
                         ARG_AUTOFILL_IDS to fields.map { it.id.asAndroid().autofillId },
                         ARG_AUTOFILL_TYPES to fields.map { it.type?.toString() },
-                        ARG_PACKAGE_NAME to data.packageName,
-                        ARG_TITLE to data.title
+                        ARG_PACKAGE_NAME to data.packageName.value(),
+                        ARG_TITLE to Utils.getTitle(context, data.assistInfo.url, data.packageName)
                     )
                 )
+                if (itemOption is Some) {
+                    val autofillItem = itemOption.value.toAutofillItem()
+                    if (autofillItem is Some) {
+                        putExtra(
+                            ARG_INLINE_SUGGESTION_AUTOFILL_ITEM,
+                            marshalParcelable(autofillItem.value)
+                        )
+                    }
+                }
             }
     }
 }

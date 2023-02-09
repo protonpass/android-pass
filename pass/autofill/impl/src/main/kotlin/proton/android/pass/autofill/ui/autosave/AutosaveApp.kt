@@ -12,32 +12,31 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import proton.android.pass.featureauth.impl.AuthScreen
-import proton.android.pass.preferences.ThemePreference
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.autofill.entities.SaveInformation
-import proton.android.pass.autofill.ui.autofill.AutofillAppViewModel
 import proton.android.pass.autofill.ui.autosave.save.SAVE_ITEM_ROUTE
 import proton.android.pass.autofill.ui.autosave.save.SaveItemScreen
+import proton.android.pass.featureauth.impl.AuthScreen
+import proton.android.pass.preferences.ThemePreference
 
 private const val AUTH_SCREEN_ROUTE = "common/auth"
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalLifecycleComposeApi::class)
 @Composable
-fun AutosaveApp(
+fun AutoSaveApp(
     info: SaveInformation,
-    onFinished: () -> Unit
+    onAutoSaveSuccess: () -> Unit,
+    onAutoSaveCancel: () -> Unit
 ) {
     val navController = rememberAnimatedNavController()
-    val viewModel: AutofillAppViewModel = hiltViewModel()
-    val uiState by viewModel.state.collectAsStateWithLifecycle()
-    val isDark = when (uiState.theme) {
+    val viewModel = hiltViewModel<AutoSaveAppViewModel>()
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val isDark = when (state) {
         ThemePreference.Light -> false
         ThemePreference.Dark -> true
         ThemePreference.System -> isNightMode()
     }
-
     ProtonTheme(isDark = isDark) {
         AnimatedNavHost(
             navController,
@@ -51,14 +50,14 @@ fun AutosaveApp(
                             popUpTo(0)
                         }
                     },
-                    onAuthFailed = { onFinished() },
-                    onAuthDismissed = { onFinished() }
+                    onAuthFailed = { onAutoSaveCancel() },
+                    onAuthDismissed = { onAutoSaveCancel() }
                 )
             }
             composable(SAVE_ITEM_ROUTE) {
                 SaveItemScreen(
                     info = info,
-                    onSaved = { onFinished() }
+                    onSaved = { onAutoSaveSuccess() }
                 )
             }
         }

@@ -4,13 +4,15 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.navigation.api.rememberAppNavigator
 
 @OptIn(
@@ -22,17 +24,20 @@ import proton.android.pass.navigation.api.rememberAppNavigator
 fun AutofillAppContent(
     modifier: Modifier = Modifier,
     autofillAppState: AutofillAppState,
-    uiState: AutofillAppUiState,
-    onFinished: () -> Unit,
-    onAutofillItemClicked: (AutofillItem) -> Unit,
-    onItemCreated: (ItemUiModel) -> Unit
+    selectedAutofillItem: AutofillItem?,
+    isFingerprintRequired: Boolean,
+    onAutofillSuccess: (AutofillMappings) -> Unit,
+    onAutofillCancel: () -> Unit,
 ) {
-    val startDestination = if (uiState.isFingerprintRequired) {
-        AutofillNavItem.Auth.route
-    } else {
-        AutofillNavItem.SelectItem.route
+    val startDestination = remember {
+        if (isFingerprintRequired) {
+            AutofillNavItem.Auth.route
+        } else {
+            AutofillNavItem.SelectItem.route
+        }
     }
 
+    val viewModel = hiltViewModel<AutofillAppViewModel>()
     val appNavigator = rememberAppNavigator()
     AnimatedNavHost(
         modifier = modifier.defaultMinSize(minHeight = 200.dp),
@@ -42,9 +47,12 @@ fun AutofillAppContent(
         appGraph(
             appNavigator = appNavigator,
             autofillAppState = autofillAppState,
-            onAutofillItemClicked = onAutofillItemClicked,
-            onItemCreated = onItemCreated,
-            onFinished = onFinished
+            selectedAutofillItem = selectedAutofillItem,
+            onAutofillSuccess = onAutofillSuccess,
+            onAutofillCancel = onAutofillCancel,
+            onAutofillItemReceived = { autofillItem ->
+                onAutofillSuccess(viewModel.getMappings(autofillItem, autofillAppState))
+            }
         )
     }
 }

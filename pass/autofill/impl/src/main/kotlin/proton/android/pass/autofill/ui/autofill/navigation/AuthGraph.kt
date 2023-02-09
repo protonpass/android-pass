@@ -1,5 +1,6 @@
 package proton.android.pass.autofill.ui.autofill.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.entities.AutofillItem
@@ -16,6 +17,9 @@ fun NavGraphBuilder.authGraph(
     onAutofillCancel: () -> Unit
 ) {
     composable(AutofillNavItem.Auth) {
+        BackHandler {
+            onAutofillCancel()
+        }
         AuthScreen(
             onAuthSuccessful = {
                 if (selectedAutofillItem != null) {

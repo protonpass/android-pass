@@ -57,7 +57,8 @@ internal fun LoginContent(
     onDeleteItemClick: () -> Unit,
     onVaultSelect: (ShareId) -> Unit,
     onAddTotp: (AddTotpType) -> Unit,
-    onDeleteTotp: () -> Unit
+    onDeleteTotp: () -> Unit,
+    onLinkedAppDelete: (String) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
@@ -184,7 +185,8 @@ internal fun LoginContent(
                         bottomSheetState.show()
                     }
                 },
-                onDeleteTotpClick = onDeleteTotp
+                onDeleteTotpClick = onDeleteTotp,
+                onLinkedAppDelete = onLinkedAppDelete
             )
 
             if (showRemoveAliasDialog) {

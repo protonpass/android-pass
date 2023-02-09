@@ -30,7 +30,11 @@ fun SelectItemScreen(
     SelectItemScreenContent(
         modifier = modifier,
         uiState = uiState,
-        onItemClicked = { viewModel.onItemClicked(it, autofillAppState) },
+        packageName = autofillAppState.packageName.value()?.packageName,
+        webDomain = autofillAppState.webDomain.value(),
+        onItemClicked = { item, shouldAssociate ->
+            viewModel.onItemClicked(item, autofillAppState, shouldAssociate)
+        },
         onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
         onEnterSearch = { viewModel.onEnterSearch() },
         onStopSearching = { viewModel.onStopSearching() },

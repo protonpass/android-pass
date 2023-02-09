@@ -14,4 +14,10 @@
     <!-- Placeholder will contain the domain / app name we are trying to autofill -->
     <string name="autofill_suggestions_for_placeholder">Suggestions for %s</string>
     <string name="autofill_suggestions_other_items">Other items</string>
+
+    <string name="autofill_associate_web_app_name_dialog_title">Would you want to associate "%1$s" with "%2$s"?</string>
+    <string name="autofill_dialog_associate_and_autofill">Associate and autofill</string>
+    <string name="autofill_dialog_just_autofill">Autofill</string>
+    <string name="autofill_dialog_cancel">Cancel</string>
+
 </resources>

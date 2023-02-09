@@ -6,19 +6,17 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.data.impl.work.UpdateAutofillItemWorker
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 class UpdateAutofillItemImpl @Inject constructor(
     private val workManager: WorkManager
 ) : UpdateAutofillItem {
 
-    override fun invoke(shareId: ShareId, itemId: ItemId, data: UpdateAutofillItemData) {
+    override fun invoke(data: UpdateAutofillItemData) {
         workManager.enqueue(
             OneTimeWorkRequestBuilder<UpdateAutofillItemWorker>()
                 .setInputData(
-                    UpdateAutofillItemWorker.create(shareId, itemId, data)
+                    UpdateAutofillItemWorker.create(data)
                 )
                 .build()
         )

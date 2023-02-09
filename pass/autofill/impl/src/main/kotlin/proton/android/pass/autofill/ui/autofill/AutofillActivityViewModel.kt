@@ -44,6 +44,7 @@ class AutofillActivityViewModel @Inject constructor(
 
     private val packageName = savedStateHandle.get<String>(ARG_PACKAGE_NAME)
         .toOption()
+        .map { PackageName(it) }
     private val webDomain = savedStateHandle.get<String>(ARG_WEB_DOMAIN)
         .toOption()
     private val title = savedStateHandle.get<String>(ARG_TITLE)
@@ -58,7 +59,7 @@ class AutofillActivityViewModel @Inject constructor(
     private val autofillAppState: MutableStateFlow<AutofillAppState> =
         MutableStateFlow(
             AutofillAppState(
-                packageName = PackageName(packageName = packageName.value() ?: ""),
+                packageName = packageName,
                 androidAutofillIds = ids.value() ?: emptyList(),
                 fieldTypes = types.value() ?: emptyList(),
                 webDomain = webDomain,

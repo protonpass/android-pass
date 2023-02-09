@@ -13,6 +13,7 @@ sealed interface ItemType {
         val username: String,
         val password: EncryptedString,
         val websites: List<String>,
+        val packageNames: List<String>,
         val primaryTotp: EncryptedString,
     ) : ItemType
 

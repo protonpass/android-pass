@@ -74,6 +74,7 @@ internal class ItemFilterImplTest {
                     username = randomString(),
                     password = randomString().encrypt(TestKeyStoreCrypto),
                     websites = emptyList(),
+                    packageNames = emptyList(),
                     primaryTotp = randomString()
                 )
             ),
@@ -91,6 +92,7 @@ internal class ItemFilterImplTest {
                     username = randomString(),
                     password = randomString().encrypt(TestKeyStoreCrypto),
                     websites = emptyList(),
+                    packageNames = emptyList(),
                     primaryTotp = randomString()
                 )
             ),
@@ -107,6 +109,7 @@ internal class ItemFilterImplTest {
                     username = randomString(),
                     password = randomString().encrypt(TestKeyStoreCrypto),
                     websites = listOf(website),
+                    packageNames = emptyList(),
                     primaryTotp = randomString()
                 )
             ),

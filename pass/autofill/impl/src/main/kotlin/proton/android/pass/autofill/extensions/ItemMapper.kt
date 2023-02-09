@@ -1,31 +1,37 @@
 package proton.android.pass.autofill.extensions
 
 import proton.android.pass.autofill.entities.AutofillItem
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.pass.domain.Item
 import proton.pass.domain.ItemType
 
-fun ItemUiModel.toAutoFillItem(encryptionContext: EncryptionContext): AutofillItem =
+fun ItemUiModel.toAutoFillItem(): Option<AutofillItem> =
     if (itemType is ItemType.Login) {
         val asLogin = itemType as ItemType.Login
-        AutofillItem.Login(
+        AutofillItem(
+            shareId = shareId.id,
+            itemId = id.id,
             username = asLogin.username,
-            password = encryptionContext.decrypt(asLogin.password),
-            totp = encryptionContext.decrypt(asLogin.primaryTotp)
-        )
+            password = asLogin.password,
+            totp = asLogin.primaryTotp
+        ).toOption()
     } else {
-        AutofillItem.Unknown
+        None
     }
 
-fun Item.toAutofillItem(encryptionContext: EncryptionContext): AutofillItem =
+fun Item.toAutofillItem(): Option<AutofillItem> =
     if (itemType is ItemType.Login) {
         val asLogin = itemType as ItemType.Login
-        AutofillItem.Login(
+        AutofillItem(
+            shareId = shareId.id,
+            itemId = id.id,
             username = asLogin.username,
-            password = encryptionContext.decrypt(asLogin.password),
-            totp = encryptionContext.decrypt(asLogin.primaryTotp)
-        )
+            password = asLogin.password,
+            totp = asLogin.primaryTotp
+        ).toOption()
     } else {
-        AutofillItem.Unknown
+        None
     }

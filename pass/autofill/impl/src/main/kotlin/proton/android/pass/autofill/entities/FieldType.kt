@@ -11,5 +11,13 @@ enum class FieldType : Parcelable {
     Password,
     Phone,
     Other,
-    Unknown
+    Unknown;
+
+    companion object {
+        fun from(value: String): FieldType = try {
+            FieldType.valueOf(value)
+        } catch (_: Exception) {
+            Unknown
+        }
+    }
 }

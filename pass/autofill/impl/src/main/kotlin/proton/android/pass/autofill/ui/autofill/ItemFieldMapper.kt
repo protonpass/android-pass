@@ -5,29 +5,15 @@ import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.DatasetMapping
 import proton.android.pass.autofill.entities.FieldType
+import proton.android.pass.crypto.api.context.EncryptionContext
 
 object ItemFieldMapper {
     fun mapFields(
-        item: AutofillItem,
+        encryptionContext: EncryptionContext,
+        autofillItem: AutofillItem,
         androidAutofillFieldIds: List<AndroidAutofillFieldId>,
         autofillTypes: List<FieldType>
     ): AutofillMappings {
-        val mappings = when (item) {
-            is AutofillItem.Login -> getMappingsForLoginItem(
-                item,
-                androidAutofillFieldIds,
-                autofillTypes
-            )
-            is AutofillItem.Unknown -> emptyList()
-        }
-        return AutofillMappings(mappings)
-    }
-
-    private fun getMappingsForLoginItem(
-        item: AutofillItem.Login,
-        androidAutofillFieldIds: List<AndroidAutofillFieldId>,
-        autofillTypes: List<FieldType>
-    ): List<DatasetMapping> {
         val mappingList = mutableListOf<DatasetMapping>()
         var loginIndex = autofillTypes.indexOfFirst { it == FieldType.Email }
         if (loginIndex == -1) {
@@ -37,23 +23,21 @@ object ItemFieldMapper {
             mappingList.add(
                 DatasetMapping(
                     autofillFieldId = androidAutofillFieldIds[loginIndex],
-                    contents = item.username,
-                    displayValue = item.username
+                    contents = autofillItem.username,
+                    displayValue = autofillItem.username
                 )
             )
         }
-
         val passwordIndex = autofillTypes.indexOfFirst { it == FieldType.Password }
         if (passwordIndex != -1) {
             mappingList.add(
                 DatasetMapping(
                     autofillFieldId = androidAutofillFieldIds[passwordIndex],
-                    contents = item.password,
+                    contents = encryptionContext.decrypt(autofillItem.password),
                     displayValue = ""
                 )
             )
         }
-
-        return mappingList
+        return AutofillMappings(mappingList)
     }
 }

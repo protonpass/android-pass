@@ -14,17 +14,23 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import proton.android.pass.autofill.BROWSERS
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.extensions.toAutoFillItem
+import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
 import proton.android.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
-import proton.android.pass.common.api.None
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
@@ -44,7 +50,13 @@ import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
+import proton.android.pass.totp.api.GetTotpCodeFromUri
+import proton.pass.domain.ItemId
+import proton.pass.domain.ShareId
 import java.net.URI
 import javax.inject.Inject
 
@@ -54,12 +66,16 @@ class SelectItemViewModel @Inject constructor(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val getAppNameFromPackageName: GetAppNameFromPackageName,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val clipboardManager: ClipboardManager,
+    private val getTotpCodeFromUri: GetTotpCodeFromUri,
+    private val notificationManager: NotificationManager,
+    private val preferenceRepository: UserPreferencesRepository,
     observeActiveItems: ObserveActiveItems,
     getSuggestedLoginItems: GetSuggestedLoginItems
 ) : ViewModel() {
 
-    private val initialState: MutableStateFlow<SelectItemInitialState?> =
-        MutableStateFlow(null)
+    private val autofillAppState: MutableStateFlow<Option<AutofillAppState>> =
+        MutableStateFlow(None)
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -91,34 +107,34 @@ class SelectItemViewModel @Inject constructor(
             }
             .distinctUntilChanged()
 
-    private val suggestionsItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = initialState
-        .flatMapLatest { state ->
-            if (state == null) {
-                flowOf(LoadingResult.Loading)
-            } else {
-                val packageName = if (BROWSERS.contains(state.packageName.packageName)) {
-                    None
+    private val suggestionsItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> =
+        autofillAppState
+            .flatMapLatest { state ->
+                if (state is Some) {
+                    getSuggestedLoginItems(
+                        packageName = state.value.packageName.packageName.toOption(),
+                        url = state.value.webDomain
+                    )
                 } else {
-                    Some(state.packageName.packageName)
-                }
-                getSuggestedLoginItems(packageName, state.webDomain)
-            }
-        }
-        .map { itemResult ->
-            itemResult.map { list ->
-                encryptionContextProvider.withEncryptionContext {
-                    list.map { it.toUiModel(this@withEncryptionContext) }
+                    flowOf(LoadingResult.Loading)
                 }
             }
-        }
+            .map { itemResult ->
+                itemResult.map { list ->
+                    encryptionContextProvider.withEncryptionContext {
+                        list.map { it.toUiModel(this@withEncryptionContext) }
+                    }
+                }
+            }
 
 
     @OptIn(FlowPreview::class)
     private val listItems: Flow<LoadingResult<SelectItemListItems>> = combine(
+        autofillAppState,
         activeItemUIModelFlow,
         suggestionsItemUIModelFlow,
         searchQueryState.debounce(DEBOUNCE_TIMEOUT)
-    ) { result, suggestionsResult, searchQuery ->
+    ) { autofillAppState, result, suggestionsResult, searchQuery ->
         isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
         if (searchQuery.isNotBlank()) {
             result
@@ -136,7 +152,9 @@ class SelectItemViewModel @Inject constructor(
                     SelectItemListItems(
                         items = items.toImmutableList(),
                         suggestions = suggestions.toImmutableList(),
-                        suggestionsForTitle = getSuggestionsTitle()
+                        suggestionsForTitle = autofillAppState.value()
+                            ?.let { getSuggestionsTitle(it) }
+                            ?: ""
                     )
                 }
             }
@@ -146,8 +164,8 @@ class SelectItemViewModel @Inject constructor(
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
         MutableStateFlow(IsRefreshingState.NotRefreshing)
-    private val itemClickedFlow: MutableStateFlow<ItemClickedEvent> =
-        MutableStateFlow(ItemClickedEvent.None)
+    private val itemClickedFlow: MutableStateFlow<AutofillItemClickedEvent> =
+        MutableStateFlow(AutofillItemClickedEvent.None)
 
     val uiState: StateFlow<SelectItemUiState> = combine(
         listItems,
@@ -190,23 +208,46 @@ class SelectItemViewModel @Inject constructor(
             initialValue = SelectItemUiState.Loading
         )
 
-    fun onItemClicked(item: ItemUiModel) {
-        val state = initialState.value ?: return
-
-        val packageNameOption = state.packageName
-            .takeIf { !BROWSERS.contains(state.packageName.packageName) }
-            .toOption()
-        if (packageNameOption is Some || state.webDomain is Some) {
-            updateAutofillItem(
-                shareId = item.shareId,
-                itemId = item.id,
-                data = UpdateAutofillItemData(packageNameOption, state.webDomain)
-            )
-        }
-
+    fun onItemClicked(item: ItemUiModel, autofillAppState: AutofillAppState) {
         encryptionContextProvider.withEncryptionContext {
-            itemClickedFlow.update {
-                ItemClickedEvent.Clicked(item.toAutoFillItem(this@withEncryptionContext))
+            when (val autofillItemOption = item.toAutoFillItem()) {
+                None -> {}
+                is Some -> {
+                    val totpUri = decrypt(autofillItemOption.value.totp)
+                    val copyTotpToClipboard = runBlocking {
+                        preferenceRepository.getCopyTotpToClipboardEnabled().first()
+                    }
+                    if (totpUri.isNotBlank() && copyTotpToClipboard.value()) {
+                        viewModelScope.launch {
+                            getTotpCodeFromUri(totpUri)
+                                .onSuccess {
+                                    clipboardManager.copyToClipboard(it)
+                                    notificationManager.sendNotification()
+                                }
+                                .onFailure {
+                                    PassLogger.w(TAG, "Could not copy totp code")
+                                }
+                        }
+                    }
+                    updateAutofillItem(
+                        shareId = ShareId(autofillItemOption.value.shareId),
+                        itemId = ItemId(autofillItemOption.value.itemId),
+                        data = UpdateAutofillItemData(
+                            autofillAppState.packageName.toOption(),
+                            autofillAppState.webDomain
+                        )
+                    )
+
+                    val mappings = ItemFieldMapper.mapFields(
+                        encryptionContext = this@withEncryptionContext,
+                        autofillItem = autofillItemOption.value,
+                        androidAutofillFieldIds = autofillAppState.androidAutofillIds,
+                        autofillTypes = autofillAppState.fieldTypes
+                    )
+                    itemClickedFlow.update {
+                        AutofillItemClickedEvent.Clicked(mappings)
+                    }
+                }
             }
         }
 
@@ -229,23 +270,16 @@ class SelectItemViewModel @Inject constructor(
         isInSearchModeState.update { true }
     }
 
-    fun setInitialState(state: SelectItemInitialState) {
-        initialState.update { state }
+    fun setInitialState(autofillAppState: AutofillAppState) {
+        this.autofillAppState.update { autofillAppState.toOption() }
     }
 
-    private fun getSuggestionsTitle(): String {
-        val state = initialState.value ?: return ""
-        return if (BROWSERS.contains(state.packageName.packageName)) {
-            if (state.webDomain is Some) {
-                getSuggestionsTitleForDomain(state.webDomain.value)
-            } else {
-                PassLogger.i(TAG, "Received autofill suggestion with only browser package name and no domain")
-                ""
-            }
+    private fun getSuggestionsTitle(autofillAppState: AutofillAppState): String =
+        if (autofillAppState.webDomain is Some) {
+            getSuggestionsTitleForDomain(autofillAppState.webDomain.value)
         } else {
-            getAppNameFromPackageName(state.packageName)
+            getAppNameFromPackageName(autofillAppState.packageName)
         }
-    }
 
     private fun getSuggestionsTitleForDomain(domain: String): String =
         when (val sanitized = UrlSanitizer.sanitize(domain)) {

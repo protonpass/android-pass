@@ -1,11 +1,10 @@
-package proton.android.pass.autofill.ui.autofill
+package proton.android.pass.autofill.ui.autofill.inlinesuggestions
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.autofill.AutofillManager
 import android.widget.RemoteViews
-import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentActivity
@@ -23,16 +22,14 @@ import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.asAndroid
 import proton.android.pass.autofill.extensions.marshalParcelable
 import proton.android.pass.autofill.extensions.toAutofillItem
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.pass.domain.Item
 
 @AndroidEntryPoint
-class AutofillActivity : FragmentActivity() {
+class InlineSuggestionsNoUiActivity : FragmentActivity() {
 
-    private val viewModel: AutofillActivityViewModel by viewModels()
+    private val viewModel: InlineSuggestionsActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,23 +40,15 @@ class AutofillActivity : FragmentActivity() {
         }
     }
 
-    private fun onStateReceived(autofillUiState: AutofillUiState) {
-        when (autofillUiState) {
-            AutofillUiState.NotValidAutofillUiState -> onAutofillCancel()
-            is AutofillUiState.StartAutofillUiState -> {
-                setContent {
-                    AutofillApp(
-                        autofillUiState = autofillUiState,
-                        onAutofillSuccess = ::onAutofillSuccess,
-                        onAutofillCancel = ::onAutofillCancel
-                    )
-                }
-            }
-            AutofillUiState.UninitialisedAutofillUiState -> {}
+    private fun onStateReceived(state: InlineSuggestionAutofillNoUiState) {
+        when (state) {
+            InlineSuggestionAutofillNoUiState.Error -> onAutofillError()
+            InlineSuggestionAutofillNoUiState.NotInitialised -> {}
+            is InlineSuggestionAutofillNoUiState.Success -> onAutofillSuccess(state.autofillMappings)
         }
     }
 
-    private fun onAutofillCancel() {
+    private fun onAutofillError() {
         setResult(RESULT_CANCELED)
         finishApp()
     }
@@ -102,30 +91,27 @@ class AutofillActivity : FragmentActivity() {
         fun newIntent(
             context: Context,
             data: AutofillData,
-            itemOption: Option<Item> = None
-        ): Intent =
-            Intent(context, AutofillActivity::class.java).apply {
-                if (data.assistInfo.url is Some) {
-                    putExtra(ARG_WEB_DOMAIN, data.assistInfo.url.value)
-                }
-                val fields = data.assistInfo.fields
-                putExtras(
-                    bundleOf(
-                        ARG_AUTOFILL_IDS to fields.map { it.id.asAndroid().autofillId },
-                        ARG_AUTOFILL_TYPES to fields.map { it.type?.toString() },
-                        ARG_PACKAGE_NAME to data.packageName.value(),
-                        ARG_TITLE to Utils.getTitle(context, data.assistInfo.url, data.packageName)
-                    )
-                )
-                if (itemOption is Some) {
-                    val autofillItem = itemOption.value.toAutofillItem()
-                    if (autofillItem is Some) {
-                        putExtra(
-                            ARG_INLINE_SUGGESTION_AUTOFILL_ITEM,
-                            marshalParcelable(autofillItem.value)
-                        )
-                    }
-                }
+            item: Item
+        ): Intent = Intent(context, InlineSuggestionsNoUiActivity::class.java).apply {
+            if (data.assistInfo.url is Some) {
+                putExtra(ARG_WEB_DOMAIN, data.assistInfo.url.value)
             }
+            val fields = data.assistInfo.fields
+            putExtras(
+                bundleOf(
+                    ARG_AUTOFILL_IDS to fields.map { it.id.asAndroid().autofillId },
+                    ARG_AUTOFILL_TYPES to fields.map { it.type?.toString() },
+                    ARG_PACKAGE_NAME to data.packageName.value(),
+                    ARG_TITLE to Utils.getTitle(context, data.assistInfo.url, data.packageName)
+                )
+            )
+            val autofillItem = item.toAutofillItem()
+            if (autofillItem is Some) {
+                putExtra(
+                    ARG_INLINE_SUGGESTION_AUTOFILL_ITEM,
+                    marshalParcelable(autofillItem.value)
+                )
+            }
+        }
     }
 }

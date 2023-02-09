@@ -13,5 +13,4 @@ data class AutofillAppState(
     val title: String
 )
 
-fun AutofillAppState.isEmpty(): Boolean =
-    androidAutofillIds.isEmpty() || fieldTypes.isEmpty() || packageName.packageName.isEmpty()
+fun AutofillAppState.isValid(): Boolean = androidAutofillIds.isEmpty() || fieldTypes.isEmpty()

@@ -5,11 +5,11 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import android.service.autofill.FillContext
-import proton.android.pass.data.api.url.UrlSanitizer
-import proton.android.pass.autofill.entities.AssistInfo
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.data.api.url.UrlSanitizer
 
 object Utils {
 
@@ -39,13 +39,19 @@ object Utils {
             emptyList()
     }
 
-    fun getTitle(context: Context, assistInfo: AssistInfo, packageName: String): String =
-        when (assistInfo.url) {
-            None -> getApplicationName(context, packageName)
-            is Some -> when (val res = UrlSanitizer.getDomain(assistInfo.url.value)) {
-                LoadingResult.Loading -> ""
-                is LoadingResult.Error -> ""
-                is LoadingResult.Success -> res.data
-            }
+    fun getTitle(
+        context: Context,
+        urlOption: Option<String>,
+        packageNameOption: Option<String>
+    ): String = when (urlOption) {
+        None -> when (packageNameOption) {
+            None -> ""
+            is Some -> getApplicationName(context, packageNameOption.value)
         }
+        is Some -> when (val res = UrlSanitizer.getDomain(urlOption.value)) {
+            LoadingResult.Loading -> ""
+            is LoadingResult.Error -> ""
+            is LoadingResult.Success -> res.data
+        }
+    }
 }

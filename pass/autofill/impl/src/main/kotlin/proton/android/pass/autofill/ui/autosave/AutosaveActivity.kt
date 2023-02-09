@@ -11,20 +11,21 @@ import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.extensions.marshalParcelable
 
 @AndroidEntryPoint
-class AutosaveActivity : FragmentActivity() {
+class AutoSaveActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val saveInformation = getSaveInformation() ?: run {
-            finish()
+            finishApp()
             return
         }
 
         setContent {
-            AutosaveApp(
+            AutoSaveApp(
                 info = saveInformation,
-                onFinished = { onFinished() }
+                onAutoSaveSuccess = { finishApp() },
+                onAutoSaveCancel = { finishApp() }
             )
         }
     }
@@ -32,7 +33,7 @@ class AutosaveActivity : FragmentActivity() {
     private fun getSaveInformation(): SaveInformation? =
         intent?.extras?.getByteArray(ARG_SAVE_INFORMATION)?.deserializeParcelable()
 
-    private fun onFinished() {
+    private fun finishApp() {
         finish()
     }
 
@@ -44,7 +45,7 @@ class AutosaveActivity : FragmentActivity() {
                 putByteArray(ARG_SAVE_INFORMATION, marshalParcelable(saveInformation))
             }
 
-            val intent = Intent(context, AutosaveActivity::class.java).apply {
+            val intent = Intent(context, AutoSaveActivity::class.java).apply {
                 putExtras(extras)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or
                     Intent.FLAG_ACTIVITY_CLEAR_TASK or

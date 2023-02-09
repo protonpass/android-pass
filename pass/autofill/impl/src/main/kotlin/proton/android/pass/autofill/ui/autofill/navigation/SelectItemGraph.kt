@@ -1,5 +1,6 @@
 package proton.android.pass.autofill.ui.autofill.navigation
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.entities.AutofillAppState
@@ -14,16 +15,19 @@ fun NavGraphBuilder.selectItemGraph(
     appNavigator: AppNavigator,
     state: AutofillAppState,
     onAutofillItemClicked: (AutofillMappings) -> Unit,
-    onClose: () -> Unit
+    onAutofillCancel: () -> Unit
 ) {
     composable(AutofillNavItem.SelectItem) {
+        BackHandler {
+            onAutofillCancel()
+        }
         SelectItemScreen(
             autofillAppState = state,
             onItemSelected = onAutofillItemClicked,
             onCreateLoginClicked = {
                 appNavigator.navigate(AutofillNavItem.CreateLogin)
             },
-            onClose = onClose
+            onClose = onAutofillCancel
         )
     }
 }

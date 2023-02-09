@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.toImmutableSet
+import proton.android.pass.composecomponents.impl.form.LinkedAppsList
 import proton.android.pass.presentation.detail.DetailNoteSection
 
 @Composable
@@ -48,5 +50,11 @@ fun LoginContent(
         if (state.totpUiState != null) {
             TotpSection(state = state.totpUiState) { onCopyTotpClick(it) }
         }
+        Spacer(modifier = Modifier.height(28.dp))
+        LinkedAppsList(
+            list = state.packageNames.toImmutableSet(),
+            isEditable = false,
+            onLinkedAppDelete = {}
+        )
     }
 }

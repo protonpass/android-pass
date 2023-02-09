@@ -9,6 +9,7 @@ data class LoginDetailUiState(
     val username: String,
     val password: PasswordState,
     val websites: ImmutableList<String>,
+    val packageNames: ImmutableList<String>,
     val note: String,
     val totpUiState: TotpUiState?
 )

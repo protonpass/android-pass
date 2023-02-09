@@ -65,6 +65,7 @@ fun CreateLogin(
         onDeleteItemClick = {}, // Item cannot be deleted if it has not been created
         onVaultSelect = { viewModel.changeVault(it) },
         onAddTotp = onAddTotp,
-        onDeleteTotp = { viewModel.onDeleteTotp() }
+        onDeleteTotp = { viewModel.onDeleteTotp() },
+        onLinkedAppDelete = {}
     )
 }

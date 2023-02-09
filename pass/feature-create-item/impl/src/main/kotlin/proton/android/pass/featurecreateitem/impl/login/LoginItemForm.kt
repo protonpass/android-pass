@@ -13,9 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableSet
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.buttons.PassOutlinedButton
+import proton.android.pass.composecomponents.impl.form.LinkedAppsList
 import proton.android.pass.composecomponents.impl.form.NoteInput
 import proton.android.pass.composecomponents.impl.form.TitleInput
 import proton.android.pass.featurecreateitem.impl.R
@@ -43,7 +45,8 @@ internal fun LoginItemForm(
     onVaultSelectorClick: () -> Unit,
     onAddTotpClick: () -> Unit,
     onDeleteTotpClick: () -> Unit,
-    onDeleteClick: () -> Unit
+    onDeleteClick: () -> Unit,
+    onLinkedAppDelete: (String) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -93,6 +96,14 @@ internal fun LoginItemForm(
             onAddTotpClick = onAddTotpClick,
             onDeleteTotpClick = onDeleteTotpClick
         )
+        if (isUpdate) {
+            Spacer(modifier = Modifier.height(20.dp))
+            LinkedAppsList(
+                list = loginItem.packageNames.toImmutableSet(),
+                isEditable = true,
+                onLinkedAppDelete = onLinkedAppDelete
+            )
+        }
         if (!isUpdate) {
             selectedShare?.name?.let {
                 Spacer(Modifier.height(height = 20.dp))

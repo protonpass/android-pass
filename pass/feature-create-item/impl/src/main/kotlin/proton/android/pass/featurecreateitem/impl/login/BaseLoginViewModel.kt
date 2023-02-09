@@ -14,9 +14,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -248,6 +248,10 @@ abstract class BaseLoginViewModel(
 
     fun onDeleteTotp() {
         loginItemState.update { it.copy(primaryTotp = "") }
+    }
+
+    fun onDeleteLinkedApp(packageName: String) {
+        loginItemState.update { it.copy(packageNames = it.packageNames.minus(packageName)) }
     }
 
     companion object {

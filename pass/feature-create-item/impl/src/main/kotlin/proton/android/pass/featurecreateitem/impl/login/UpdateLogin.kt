@@ -89,7 +89,8 @@ fun UpdateLogin(
                 // Migrate element
             },
             onAddTotp = onAddTotp,
-            onDeleteTotp = viewModel::onDeleteTotp
+            onDeleteTotp = viewModel::onDeleteTotp,
+            onLinkedAppDelete = viewModel::onDeleteLinkedApp
         )
 
         ConfirmMoveItemToTrashDialog(

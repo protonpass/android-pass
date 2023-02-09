@@ -4,12 +4,12 @@ import android.app.assist.AssistStructure
 import android.content.Context
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
-import proton.android.pass.autofill.Utils.getApplicationName
+import me.proton.pass.autofill.service.R
 import proton.android.pass.autofill.Utils.getApplicationPackageName
 import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.SaveInformation
-import me.proton.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autosave.AutoSaveActivity
+import proton.android.pass.commonui.api.AndroidUtils.getApplicationName
 
 object AutoSaveHandler {
     fun handleOnSave(context: Context, request: SaveRequest, callback: SaveCallback) {
@@ -36,14 +36,14 @@ object AutoSaveHandler {
 
         val packageName = getApplicationPackageName(windowNode)
         val applicationName = getApplicationName(context, packageName)
-        val saveInformations = SaveFieldExtractor.extract(
+        val saveInformation = SaveFieldExtractor.extract(
             assistInfo.fields,
             packageName,
-            applicationName
+            applicationName.value() ?: ""
         )
 
         // We should handle what happens if there are multiple credentials
-        saveInformations.firstOrNull()?.let { launchSaveCredentialScreen(context, it) }
+        saveInformation.firstOrNull()?.let { launchSaveCredentialScreen(context, it) }
     }
 
     private fun launchSaveCredentialScreen(context: Context, saveInformation: SaveInformation) {

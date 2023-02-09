@@ -3,7 +3,7 @@ package proton.android.pass.autofill.ui.previewproviders
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
-import proton.android.pass.autofill.ui.autofill.select.ItemClickedEvent
+import proton.android.pass.autofill.ui.autofill.select.AutofillItemClickedEvent
 import proton.android.pass.autofill.ui.autofill.select.SearchUiState
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListItems
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListUiState
@@ -28,7 +28,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                         items = persistentListOf(item("Item with long text")),
                         suggestionsForTitle = ""
                     ),
-                    itemClickedEvent = ItemClickedEvent.None
+                    itemClickedEvent = AutofillItemClickedEvent.None
                 ),
                 SearchUiState.Initial
             ),
@@ -44,7 +44,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                         ),
                         suggestionsForTitle = "some.website.local"
                     ),
-                    itemClickedEvent = ItemClickedEvent.None
+                    itemClickedEvent = AutofillItemClickedEvent.None
                 ),
                 SearchUiState.Initial
             ),
@@ -53,7 +53,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     isLoading = IsLoadingState.NotLoading,
                     isRefreshing = IsRefreshingState.NotRefreshing,
                     items = SelectItemListItems.Initial,
-                    itemClickedEvent = ItemClickedEvent.None
+                    itemClickedEvent = AutofillItemClickedEvent.None
                 ),
                 SearchUiState(
                     searchQuery = "query",

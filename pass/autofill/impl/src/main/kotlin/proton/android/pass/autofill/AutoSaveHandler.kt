@@ -9,7 +9,7 @@ import proton.android.pass.autofill.Utils.getApplicationPackageName
 import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.SaveInformation
 import me.proton.pass.autofill.service.R
-import proton.android.pass.autofill.ui.autosave.AutosaveActivity
+import proton.android.pass.autofill.ui.autosave.AutoSaveActivity
 
 object AutoSaveHandler {
     fun handleOnSave(context: Context, request: SaveRequest, callback: SaveCallback) {
@@ -47,7 +47,7 @@ object AutoSaveHandler {
     }
 
     private fun launchSaveCredentialScreen(context: Context, saveInformation: SaveInformation) {
-        val intent = AutosaveActivity.newIntent(context, saveInformation)
+        val intent = AutoSaveActivity.newIntent(context, saveInformation)
         context.startActivity(intent)
     }
 }

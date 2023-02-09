@@ -6,10 +6,13 @@ import proton.pass.domain.ShareId
 import proton.pass.domain.entity.PackageName
 
 data class UpdateAutofillItemData(
+    val shareId: ShareId,
+    val itemId: ItemId,
     val packageName: Option<PackageName>,
-    val url: Option<String>
+    val url: Option<String>,
+    val shouldAssociate: Boolean
 )
 
 interface UpdateAutofillItem {
-    operator fun invoke(shareId: ShareId, itemId: ItemId, data: UpdateAutofillItemData)
+    operator fun invoke(data: UpdateAutofillItemData)
 }

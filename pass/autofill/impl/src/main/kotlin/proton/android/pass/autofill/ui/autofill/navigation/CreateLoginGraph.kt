@@ -37,13 +37,13 @@ fun NavGraphBuilder.createLoginGraph(
         val packageName = if (state.webDomain.isEmpty()) {
             state.packageName
         } else {
-            null
+            None
         }
         val initialContents = InitialCreateLoginUiState(
             title = state.title,
             url = state.webDomain.value(),
             aliasItem = createdDraftAlias,
-            packageName = packageName,
+            packageName = packageName.value(),
             primaryTotp = primaryTotp
         )
 

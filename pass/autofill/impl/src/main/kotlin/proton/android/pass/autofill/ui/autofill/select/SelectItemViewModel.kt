@@ -112,7 +112,7 @@ class SelectItemViewModel @Inject constructor(
             .flatMapLatest { state ->
                 if (state is Some) {
                     getSuggestedLoginItems(
-                        packageName = state.value.packageName.packageName.toOption(),
+                        packageName = state.value.packageName.map { it.packageName },
                         url = state.value.webDomain
                     )
                 } else {
@@ -208,12 +208,15 @@ class SelectItemViewModel @Inject constructor(
             initialValue = SelectItemUiState.Loading
         )
 
-    fun onItemClicked(item: ItemUiModel, autofillAppState: AutofillAppState) {
-        encryptionContextProvider.withEncryptionContext {
-            when (val autofillItemOption = item.toAutoFillItem()) {
-                None -> {}
-                is Some -> {
-                    val totpUri = decrypt(autofillItemOption.value.totp)
+    fun onItemClicked(
+        item: ItemUiModel,
+        autofillAppState: AutofillAppState,
+        shouldAssociate: Boolean
+    ) {
+        item.toAutoFillItem()
+            .map { autofillItem ->
+                encryptionContextProvider.withEncryptionContext {
+                    val totpUri = decrypt(autofillItem.totp)
                     val copyTotpToClipboard = runBlocking {
                         preferenceRepository.getCopyTotpToClipboardEnabled().first()
                     }
@@ -230,17 +233,18 @@ class SelectItemViewModel @Inject constructor(
                         }
                     }
                     updateAutofillItem(
-                        shareId = ShareId(autofillItemOption.value.shareId),
-                        itemId = ItemId(autofillItemOption.value.itemId),
-                        data = UpdateAutofillItemData(
-                            autofillAppState.packageName.toOption(),
-                            autofillAppState.webDomain
+                        UpdateAutofillItemData(
+                            shareId = ShareId(autofillItem.shareId),
+                            itemId = ItemId(autofillItem.itemId),
+                            packageName = autofillAppState.packageName,
+                            url = autofillAppState.webDomain,
+                            shouldAssociate = shouldAssociate
                         )
                     )
 
                     val mappings = ItemFieldMapper.mapFields(
                         encryptionContext = this@withEncryptionContext,
-                        autofillItem = autofillItemOption.value,
+                        autofillItem = autofillItem,
                         androidAutofillFieldIds = autofillAppState.androidAutofillIds,
                         autofillTypes = autofillAppState.fieldTypes
                     )
@@ -249,8 +253,6 @@ class SelectItemViewModel @Inject constructor(
                     }
                 }
             }
-        }
-
     }
 
     fun onSearchQueryChange(query: String) {
@@ -277,8 +279,10 @@ class SelectItemViewModel @Inject constructor(
     private fun getSuggestionsTitle(autofillAppState: AutofillAppState): String =
         if (autofillAppState.webDomain is Some) {
             getSuggestionsTitleForDomain(autofillAppState.webDomain.value)
+        } else if (autofillAppState.packageName is Some) {
+            getAppNameFromPackageName(autofillAppState.packageName.value)
         } else {
-            getAppNameFromPackageName(autofillAppState.packageName)
+            ""
         }
 
     private fun getSuggestionsTitleForDomain(domain: String): String =

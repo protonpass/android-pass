@@ -57,6 +57,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
 
     private val packageName = savedStateHandle.get<String>(ARG_PACKAGE_NAME)
         .toOption()
+        .map { PackageName(it) }
     private val webDomain = savedStateHandle.get<String>(ARG_WEB_DOMAIN)
         .toOption()
     private val title = savedStateHandle.get<String>(ARG_TITLE)
@@ -71,7 +72,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
     private val autofillAppState: MutableStateFlow<AutofillAppState> =
         MutableStateFlow(
             AutofillAppState(
-                packageName = PackageName(packageName = packageName.value() ?: ""),
+                packageName = packageName,
                 androidAutofillIds = ids.value() ?: emptyList(),
                 fieldTypes = types.value() ?: emptyList(),
                 webDomain = webDomain,
@@ -129,11 +130,12 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
                 }
             }
             updateAutofillItem(
-                shareId = ShareId(autofillItem.shareId),
-                itemId = ItemId(autofillItem.itemId),
-                data = UpdateAutofillItemData(
-                    autofillAppState.packageName.toOption(),
-                    autofillAppState.webDomain
+                UpdateAutofillItemData(
+                    shareId = ShareId(autofillItem.shareId),
+                    itemId = ItemId(autofillItem.itemId),
+                    packageName = autofillAppState.packageName,
+                    url = autofillAppState.webDomain,
+                    shouldAssociate = false
                 )
             )
 

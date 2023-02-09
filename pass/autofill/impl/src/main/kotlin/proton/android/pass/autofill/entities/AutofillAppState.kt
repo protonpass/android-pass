@@ -6,9 +6,9 @@ import proton.pass.domain.entity.PackageName
 
 @Immutable
 data class AutofillAppState(
-    val packageName: PackageName,
     val androidAutofillIds: List<AndroidAutofillFieldId>,
     val fieldTypes: List<FieldType>,
+    val packageName: Option<PackageName>,
     val webDomain: Option<String>,
     val title: String
 )

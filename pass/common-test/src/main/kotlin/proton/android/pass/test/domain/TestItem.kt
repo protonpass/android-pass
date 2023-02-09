@@ -42,10 +42,11 @@ object TestItem {
         content: ByteArray? = null
     ): Item {
         val itemTypeParam = itemType ?: ItemType.Login(
-            randomString(),
-            randomString().encrypt(TestKeyStoreCrypto),
-            emptyList(),
-            randomString()
+            username = randomString(),
+            password = randomString().encrypt(TestKeyStoreCrypto),
+            websites = emptyList(),
+            packageNames = emptyList(),
+            primaryTotp = randomString()
         )
         val titleParam = title ?: randomString()
         val noteParam = note ?: randomString()

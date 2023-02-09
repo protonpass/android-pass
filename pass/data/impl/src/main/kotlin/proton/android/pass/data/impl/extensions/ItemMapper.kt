@@ -16,6 +16,7 @@ fun ItemType.Companion.fromParsed(
             username = parsed.content.login.username,
             password = context.encrypt(parsed.content.login.password),
             websites = parsed.content.login.urlsList,
+            packageNames = parsed.platformSpecific.android.allowedAppsList.map { it.packageName },
             primaryTotp = context.encrypt(parsed.content.login.totpUri)
         )
         ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)

@@ -26,6 +26,7 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<List<ItemUiModel>> {
                 username = username,
                 password = "",
                 websites = emptyList(),
+                packageNames = emptyList(),
                 primaryTotp = ""
             ),
             modificationTime = Clock.System.now()

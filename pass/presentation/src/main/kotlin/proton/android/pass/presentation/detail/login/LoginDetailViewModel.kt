@@ -74,6 +74,7 @@ class LoginDetailViewModel @Inject constructor(
                 username = itemContents.username,
                 password = password,
                 websites = itemContents.websites.toImmutableList(),
+                packageNames = itemContents.packageNames.toImmutableList(),
                 note = decrypt(item.note),
                 totpUiState = totpOption.map { TotpUiState(it.code, it.remainingSeconds) }.value()
             )
@@ -148,6 +149,7 @@ class LoginDetailViewModel @Inject constructor(
             username = "",
             password = getInitialPasswordState(),
             websites = persistentListOf(),
+            packageNames = persistentListOf(),
             note = "",
             totpUiState = null
         )

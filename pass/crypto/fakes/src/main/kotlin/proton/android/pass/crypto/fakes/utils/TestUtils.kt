@@ -11,8 +11,10 @@ import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.user.domain.entity.AddressId
+import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
+import me.proton.core.user.domain.entity.UserKey
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.key.ItemKey
@@ -25,6 +27,48 @@ object TestUtils {
         keyStoreCrypto = TestKeyStoreCrypto,
         pgpCrypto = GOpenPGPCrypto()
     )
+
+    fun createUser(): User {
+        val passphrase = TestUtils.randomString()
+        val encodedPassphrase = passphrase.encodeToByteArray()
+        val userKey = cryptoContext.pgpCrypto.generateNewPrivateKey("test", "test@test", encodedPassphrase)
+        val encryptedPassphrase = cryptoContext.keyStoreCrypto.encrypt(PlainByteArray(encodedPassphrase))
+
+        val userId = UserId("123")
+        return User(
+            userId = userId,
+            email = "test@test",
+            name = "test name",
+            displayName = "Display name",
+            currency = "EUR",
+            credit = 0,
+            usedSpace = 0,
+            maxSpace = 10_000,
+            maxUpload = 8_000,
+            role = null,
+            private = false,
+            services = 123,
+            subscribed = 1,
+            delinquent = null,
+            keys = listOf(
+                UserKey(
+                    userId = userId,
+                    version = 1,
+                    activation = null,
+                    active = true,
+                    keyId = KeyId("123"),
+                    privateKey = PrivateKey(
+                        key = userKey,
+                        isPrimary = true,
+                        isActive = true,
+                        canEncrypt = true,
+                        canVerify = true,
+                        passphrase = encryptedPassphrase
+                    )
+                )
+            )
+        )
+    }
 
     fun createUserAddress(
         cryptoContext: CryptoContext,

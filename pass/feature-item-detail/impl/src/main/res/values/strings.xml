@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="action_open">Open</string>
+    <string name="action_copy">Copy</string>
+    <string name="action_reveal_password">Reveal password</string>
+    <string name="action_conceal_password">Conceal password</string>
+
+    <!-- Detail -->
+    <string name="detail_init_error">Could not initialise the element</string>
+    <string name="detail_item_not_loaded_error">The item has not been loaded</string>
+
+    <!-- Alias details -->
+    <string name="field_alias_title">Alias address</string>
+    <string name="alias_copied_to_clipboard">Alias copied</string>
+    <string name="alias_detail_field_mailboxes_title">Mailboxes</string>
+
+    <!-- Note details -->
+    <string name="field_detail_note_title">Note</string>
+    <string name="note_copied_to_clipboard">Note copied</string>
+
+    <!-- Login details -->
+    <string name="username_copied_to_clipboard">Username copied</string>
+    <string name="password_copied_to_clipboard">Password copied</string>
+    <string name="website_copied_to_clipboard">Website copied</string>
+    <string name="totp_copied_to_clipboard">TOTP copied</string>
+    <string name="field_username">Username</string>
+    <string name="field_password">Password</string>
+    <string name="field_websites">Websites</string>
+    <string name="totp_section_title">TOTP</string>
+</resources>

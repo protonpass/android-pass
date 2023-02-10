@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.onboarding
+package proton.android.pass.featureonboarding.impl
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,19 +18,19 @@ import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
+import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.BiometryFailedToAuthenticateError
+import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.BiometryFailedToStartError
+import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.ErrorPerformingOperation
+import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.FingerprintLockEnabled
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Autofill
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Fingerprint
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Last
-import proton.android.pass.presentation.onboarding.OnBoardingSnackbarMessage.BiometryFailedToAuthenticateError
-import proton.android.pass.presentation.onboarding.OnBoardingSnackbarMessage.BiometryFailedToStartError
-import proton.android.pass.presentation.onboarding.OnBoardingSnackbarMessage.ErrorPerformingOperation
-import proton.android.pass.presentation.onboarding.OnBoardingSnackbarMessage.FingerprintLockEnabled
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.milliseconds
 

@@ -1,8 +1,11 @@
-package proton.android.pass.presentation.onboarding
+package proton.android.pass.featureonboarding.impl
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
@@ -10,19 +13,16 @@ import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.biometry.TestBiometryManager
-import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import proton.android.pass.common.api.None
-import proton.android.pass.test.MainDispatcherRule
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
+import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.TestPreferenceRepository
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Autofill
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Fingerprint
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Last
+import proton.android.pass.test.MainDispatcherRule
 
 class OnBoardingViewModelTest {
 

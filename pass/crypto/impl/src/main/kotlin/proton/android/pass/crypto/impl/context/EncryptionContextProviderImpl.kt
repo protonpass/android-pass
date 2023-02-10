@@ -5,14 +5,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import java.io.File
 import javax.inject.Inject
-import kotlin.random.Random
 
 class EncryptionContextProviderImpl @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -50,15 +49,14 @@ class EncryptionContextProviderImpl @Inject constructor(
 
 
     private fun generateKey(file: File): EncryptionKey {
-        val bytes = Random.nextBytes(keySize)
-        val encrypted = keyStoreCrypto.encrypt(PlainByteArray(bytes.clone()))
+        val key = EncryptionKey.generate()
+        val encrypted = keyStoreCrypto.encrypt(PlainByteArray(key.key.clone()))
         file.writeBytes(encrypted.array)
 
-        return EncryptionKey(bytes)
+        return key
     }
 
     companion object {
-        private const val keySize = 32
         private const val keyFileName = "pass.key"
     }
 }

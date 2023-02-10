@@ -6,7 +6,7 @@ import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.ui.navigation.AppNavItem
 import proton.pass.domain.ItemType
-import proton.android.pass.presentation.detail.ItemDetailScreen
+import proton.android.pass.featureitemdetail.impl.ItemDetailScreen
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.itemDetailGraph(nav: AppNavigator) {

@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.onboarding
+package proton.android.pass.featureonboarding.impl
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,10 +32,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import me.proton.pass.presentation.R
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Autofill
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Fingerprint
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Last
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable

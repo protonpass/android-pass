@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.settings
+package proton.android.pass.featuresettings.impl
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
@@ -11,7 +11,6 @@ import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import me.proton.pass.presentation.R
 
 @Composable
 fun AutofillSection(

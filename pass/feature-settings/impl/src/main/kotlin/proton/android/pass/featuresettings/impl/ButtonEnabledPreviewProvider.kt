@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.settings
+package proton.android.pass.featuresettings.impl
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled

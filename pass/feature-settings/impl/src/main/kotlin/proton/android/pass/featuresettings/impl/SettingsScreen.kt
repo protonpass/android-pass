@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.settings
+package proton.android.pass.featuresettings.impl
 
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState

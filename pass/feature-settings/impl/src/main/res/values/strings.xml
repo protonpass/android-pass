@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="title_settings">Settings</string>
+
+    <string name="settings_autofill_section_title">Autofill</string>
+    <string name="settings_autofill_preference_title">Autofill</string>
+    <string name="settings_autofill_preference_description">For fast, easy logins, let Proton Pass fill in your usernames and passwords.</string>
+
+    <string name="settings_authentication_section_title">Authentication</string>
+    <string name="settings_authentication_preference_title">Fingerprint unlock</string>
+    <string name="settings_authentication_preference_description_enabled">Require Quickly and securely open the app with your fingerprint.</string>
+    <string name="settings_authentication_preference_description_no_fingerprint">You cannot require your fingerprint for interacting with the app as there are no fingerprints registered on this device.</string>
+
+    <string name="settings_copy_to_clipboard_section_title">Copy TOTP to clipboard</string>
+    <string name="settings_copy_to_clipboard_name">Automatically copy TOTP code</string>
+    <string name="settings_copy_to_clipboard_hint">When autofilling a password we will copy the TOTP code if present</string>
+
+    <string name="settings_app_section_title">App</string>
+
+    <string name="settings_appearance_section_title">Appearance</string>
+    <string name="settings_appearance_preference_title">Theme</string>
+    <string name="settings_appearance_preference_subtitle_match_system">Match system</string>
+    <string name="settings_appearance_preference_subtitle_light">Light</string>
+    <string name="settings_appearance_preference_subtitle_dark">Dark</string>
+    <string name="settings_appearance_preference_description">Select a color theme for the app.</string>
+    <string name="settings_theme_selector_title">Select the theme</string>
+
+    <string name="settings_app_version_title">App version</string>
+    <string name="settings_app_version_copied_to_clipboard">App version copied</string>
+    <string name="settings_force_sync_title">Force sync</string>
+    <string name="settings_force_sync_hint">Download all your items again to make sure you are in sync.</string>
+    <string name="settings_force_sync_success">Your items are now in sync</string>
+    <string name="settings_force_sync_error">Error performing sync</string>
+
+
+    <string name="settings_error_biometry_failed_to_start">Could not start the biometric authentication</string>
+    <string name="settings_error_biometry_failed_to_authenticate">Failed to authenticate</string>
+    <string name="settings_fingerprint_lock_enabled">Fingerprint unlock enabled</string>
+    <string name="settings_fingerprint_lock_disabled">Fingerprint unlock disabled</string>
+    <string name="settings_error_performing_operation">Error performing operation</string>
+</resources>

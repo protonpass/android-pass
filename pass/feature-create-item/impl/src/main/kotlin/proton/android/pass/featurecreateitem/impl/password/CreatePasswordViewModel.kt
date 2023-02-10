@@ -3,11 +3,13 @@ package proton.android.pass.featurecreateitem.impl.password
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import javax.inject.Inject
@@ -43,7 +45,9 @@ class CreatePasswordViewModel @Inject constructor(
     }
 
     fun onConfirm() = viewModelScope.launch {
-        clipboardManager.copyToClipboard(state.value.password, isSecure = true)
+        withContext(Dispatchers.IO) {
+            clipboardManager.copyToClipboard(state.value.password, isSecure = true)
+        }
         snackbarMessageRepository.emitSnackbarMessage(CreatePasswordSnackbarMessage.CopiedToClipboard)
     }
 

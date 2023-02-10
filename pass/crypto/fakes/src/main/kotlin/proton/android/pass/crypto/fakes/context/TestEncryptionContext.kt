@@ -1,8 +1,9 @@
 package proton.android.pass.crypto.fakes.context
 
-import proton.android.pass.crypto.api.context.EncryptionContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.crypto.api.context.EncryptionTag
 
 class TestException(override val message: String) : IllegalStateException(message)
 
@@ -11,7 +12,7 @@ object TestEncryptionContext : EncryptionContext {
     private val ENCRYPTED_TRAIL = listOf(0xCA.toByte(), 0xFE.toByte())
 
     override fun encrypt(content: String): EncryptedString = "${content}$ENCRYPTED_SUFFIX"
-    override fun encrypt(content: ByteArray): EncryptedByteArray {
+    override fun encrypt(content: ByteArray, tag: EncryptionTag?): EncryptedByteArray {
         val cloned = content.clone().toMutableList()
         ENCRYPTED_TRAIL.forEach {
             cloned.add(it)
@@ -26,7 +27,7 @@ object TestEncryptionContext : EncryptionContext {
         return content.replace(ENCRYPTED_SUFFIX, "")
     }
 
-    override fun decrypt(content: EncryptedByteArray): ByteArray {
+    override fun decrypt(content: EncryptedByteArray, tag: EncryptionTag?): ByteArray {
         if (content.array.size < ENCRYPTED_TRAIL.size) {
             throw TestException("Cannot decrypt. Array does not end with the expected trail")
         }

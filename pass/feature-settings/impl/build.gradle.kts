@@ -39,6 +39,9 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
+    debugImplementation(libs.showkase)
+    kspDebug(libs.showkaseProcessor)
+
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.autofill.api)
     implementation(projects.pass.biometry.api)

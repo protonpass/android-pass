@@ -42,6 +42,7 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.commons.codec)
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.key)
     implementation(libs.core.user)
@@ -56,6 +57,8 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinTest)
 
     androidTestImplementation(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(projects.pass.commonTest)

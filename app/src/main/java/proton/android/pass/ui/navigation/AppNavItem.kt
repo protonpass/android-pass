@@ -61,8 +61,6 @@ sealed class AppNavItem(
 
     object Trash : AppNavItem("trash", isTopLevel = true)
 
-    object Help : AppNavItem("help", isTopLevel = true)
-
     object VaultList : AppNavItem("vault", isTopLevel = true)
     object CreateVault : AppNavItem("vault/create")
 

@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.settings
+package proton.android.pass.featuresettings.impl
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -15,7 +15,6 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.usersettings.presentation.compose.view.CrashReportSettingToggleItem
 import me.proton.core.usersettings.presentation.compose.view.TelemetrySettingToggleItem
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import me.proton.pass.presentation.R
 
 @Composable
 fun AppSection(

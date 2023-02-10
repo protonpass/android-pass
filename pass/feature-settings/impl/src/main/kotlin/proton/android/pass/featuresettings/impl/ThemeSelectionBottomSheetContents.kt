@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.settings
+package proton.android.pass.featuresettings.impl
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
@@ -9,15 +9,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.preferences.ThemePreference
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
-import me.proton.pass.presentation.R
 
 @Composable
 fun ThemeSelectionBottomSheetContents(

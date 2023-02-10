@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.settings
+package proton.android.pass.featuresettings.impl
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,7 +34,7 @@ import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.android.pass.presentation.settings.SettingsSnackbarMessage.ErrorPerformingOperation
+import proton.android.pass.featuresettings.impl.SettingsSnackbarMessage.ErrorPerformingOperation
 import javax.inject.Inject
 
 @HiltViewModel

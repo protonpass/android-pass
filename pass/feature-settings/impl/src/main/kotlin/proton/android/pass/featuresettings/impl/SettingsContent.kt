@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.settings
+package proton.android.pass.featuresettings.impl
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import me.proton.pass.presentation.R
 import proton.android.pass.composecomponents.impl.loading.LoadingDialog
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon

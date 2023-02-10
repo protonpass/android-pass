@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.settings
+package proton.android.pass.featuresettings.impl
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.component.ProtonSettingsToggleItem
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.presentation.R
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 
 @Composable

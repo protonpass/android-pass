@@ -198,6 +198,7 @@ core-user = { module = "me.proton.core:user", version.ref = "core" }
 core-user-domain = { module = "me.proton.core:user-domain", version.ref = "core" }
 core-userSettings = { module = "me.proton.core:user-settings", version.ref = "core" }
 core-userSettings-domain = { module = "me.proton.core:user-settings-domain", version.ref = "core" }
+core-userSettings-presentation-compose = { module = "me.proton.core:user-settings-presentation-compose", version.ref = "core" }
 core-utilAndroidDagger = { module = "me.proton.core:util-android-dagger", version.ref = "core" }
 core-utilKotlin = { module = "me.proton.core:util-kotlin", version.ref = "core" }
 

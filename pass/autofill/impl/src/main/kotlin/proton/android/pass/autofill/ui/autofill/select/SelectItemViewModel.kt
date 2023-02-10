@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
@@ -224,7 +225,9 @@ class SelectItemViewModel @Inject constructor(
                         viewModelScope.launch {
                             getTotpCodeFromUri(totpUri)
                                 .onSuccess {
-                                    clipboardManager.copyToClipboard(it)
+                                    withContext(Dispatchers.IO) {
+                                        clipboardManager.copyToClipboard(it)
+                                    }
                                     notificationManager.sendNotification()
                                 }
                                 .onFailure {

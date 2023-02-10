@@ -15,14 +15,14 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.compose.component.ProtonCenteredProgress
 import proton.android.pass.BuildConfig
+import proton.android.pass.presentation.navigation.CoreNavigation
 import proton.android.pass.ui.launcher.LauncherViewModel
 import proton.android.pass.ui.launcher.LauncherViewModel.State.AccountNeeded
 import proton.android.pass.ui.launcher.LauncherViewModel.State.PrimaryExist
 import proton.android.pass.ui.launcher.LauncherViewModel.State.Processing
 import proton.android.pass.ui.launcher.LauncherViewModel.State.StepNeeded
-import me.proton.core.compose.component.ProtonCenteredProgress
-import proton.android.pass.presentation.navigation.CoreNavigation
 
 @AndroidEntryPoint
 class MainActivity : FragmentActivity() {
@@ -36,7 +36,7 @@ class MainActivity : FragmentActivity() {
 
         super.onCreate(savedInstanceState)
 
-        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         // Register activities for result.
         launcherViewModel.register(this)

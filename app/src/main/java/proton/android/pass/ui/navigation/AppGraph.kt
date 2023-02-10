@@ -13,13 +13,12 @@ import proton.android.pass.ui.auth.authGraph
 import proton.android.pass.ui.create.alias.createAliasGraph
 import proton.android.pass.ui.create.alias.updateAliasGraph
 import proton.android.pass.ui.create.login.createLoginGraph
-import proton.android.pass.ui.create.totp.createTotpGraph
 import proton.android.pass.ui.create.login.updateLoginGraph
 import proton.android.pass.ui.create.note.createNoteGraph
 import proton.android.pass.ui.create.note.updateNoteGraph
 import proton.android.pass.ui.create.password.createPasswordGraph
+import proton.android.pass.ui.create.totp.createTotpGraph
 import proton.android.pass.ui.detail.itemDetailGraph
-import proton.android.pass.ui.help.helpGraph
 import proton.android.pass.ui.home.homeGraph
 import proton.android.pass.ui.onboarding.onBoardingGraph
 import proton.android.pass.ui.settings.settingsGraph
@@ -48,7 +47,6 @@ fun NavGraphBuilder.appGraph(
         homeVaultSelection = homeVaultSelection
     )
     trashGraph(navigationDrawer, onDrawerIconClick)
-    helpGraph(navigationDrawer, onDrawerIconClick)
     settingsGraph(navigationDrawer, onDrawerIconClick)
     createLoginGraph(appNavigator)
     updateLoginGraph(appNavigator)

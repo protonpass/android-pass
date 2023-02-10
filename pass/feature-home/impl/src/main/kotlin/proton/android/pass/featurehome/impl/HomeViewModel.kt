@@ -22,9 +22,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
@@ -40,15 +41,11 @@ import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.TrashItem
-import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasCopied
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.LoginMovedToTrash
-import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteCopied
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsError
-import proton.android.pass.featurehome.impl.HomeSnackbarMessage.PasswordCopied
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
-import proton.android.pass.featurehome.impl.HomeSnackbarMessage.UsernameCopied
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.ItemType
@@ -253,34 +250,34 @@ class HomeViewModel @Inject constructor(
     }
 
     fun copyToClipboard(text: String, homeClipboardType: HomeClipboardType) {
-        when (homeClipboardType) {
-            HomeClipboardType.Alias -> {
-                clipboardManager.copyToClipboard(text = text)
-                viewModelScope.launch {
-                    snackbarMessageRepository.emitSnackbarMessage(AliasCopied)
+        viewModelScope.launch {
+            when (homeClipboardType) {
+                HomeClipboardType.Alias -> {
+                    withContext(Dispatchers.IO) {
+                        clipboardManager.copyToClipboard(text = text)
+                    }
+                    snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.AliasCopied)
                 }
-            }
-            HomeClipboardType.Note -> {
-                clipboardManager.copyToClipboard(text = text)
-                viewModelScope.launch {
-                    snackbarMessageRepository.emitSnackbarMessage(NoteCopied)
+                HomeClipboardType.Note -> {
+                    withContext(Dispatchers.IO) {
+                        clipboardManager.copyToClipboard(text = text)
+                    }
+                    snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.NoteCopied)
                 }
-            }
-            HomeClipboardType.Password -> {
-                encryptionContextProvider.withEncryptionContext {
-                    clipboardManager.copyToClipboard(
-                        text = decrypt(text),
-                        isSecure = true
-                    )
+                HomeClipboardType.Password -> {
+                    withContext(Dispatchers.IO) {
+                        clipboardManager.copyToClipboard(
+                            text = encryptionContextProvider.withEncryptionContext { decrypt(text) },
+                            isSecure = true
+                        )
+                    }
+                    snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.PasswordCopied)
                 }
-                viewModelScope.launch {
-                    snackbarMessageRepository.emitSnackbarMessage(PasswordCopied)
-                }
-            }
-            HomeClipboardType.Username -> {
-                clipboardManager.copyToClipboard(text = text)
-                viewModelScope.launch {
-                    snackbarMessageRepository.emitSnackbarMessage(UsernameCopied)
+                HomeClipboardType.Username -> {
+                    withContext(Dispatchers.IO) {
+                        clipboardManager.copyToClipboard(text = text)
+                    }
+                    snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.UsernameCopied)
                 }
             }
         }

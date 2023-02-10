@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.toOption
@@ -101,7 +103,9 @@ class LoginDetailViewModel @Inject constructor(
                     }
                 }
             }
-            clipboardManager.copyToClipboard(text = text, isSecure = true)
+            withContext(Dispatchers.IO) {
+                clipboardManager.copyToClipboard(text = text, isSecure = true)
+            }
             snackbarMessageRepository.emitSnackbarMessage(PasswordCopiedToClipboard)
         }
     }
@@ -109,18 +113,24 @@ class LoginDetailViewModel @Inject constructor(
     fun copyUsernameToClipboard() = viewModelScope.launch {
         itemFlow.value?.let { item ->
             val itemType = item.itemType as ItemType.Login
-            clipboardManager.copyToClipboard(itemType.username, clearAfterSeconds = null)
+            withContext(Dispatchers.IO) {
+                clipboardManager.copyToClipboard(itemType.username, clearAfterSeconds = null)
+            }
             snackbarMessageRepository.emitSnackbarMessage(UsernameCopiedToClipboard)
         }
     }
 
     fun copyWebsiteToClipboard(website: String) = viewModelScope.launch {
-        clipboardManager.copyToClipboard(website, clearAfterSeconds = null)
+        withContext(Dispatchers.IO) {
+            clipboardManager.copyToClipboard(website, clearAfterSeconds = null)
+        }
         snackbarMessageRepository.emitSnackbarMessage(WebsiteCopiedToClipbopard)
     }
 
     fun copyTotpCodeToClipboard(code: String) = viewModelScope.launch {
-        clipboardManager.copyToClipboard(code)
+        withContext(Dispatchers.IO) {
+            clipboardManager.copyToClipboard(code)
+        }
         snackbarMessageRepository.emitSnackbarMessage(TotpCopiedToClipbopard)
     }
 

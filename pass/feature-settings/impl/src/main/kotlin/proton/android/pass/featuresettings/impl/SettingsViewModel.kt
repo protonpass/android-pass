@@ -3,6 +3,7 @@ package proton.android.pass.featuresettings.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.autofill.api.AutofillManager
@@ -27,6 +29,7 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.featuresettings.impl.SettingsSnackbarMessage.ErrorPerformingOperation
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.preferences.BiometricLockState
@@ -34,7 +37,6 @@ import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.android.pass.featuresettings.impl.SettingsSnackbarMessage.ErrorPerformingOperation
 import javax.inject.Inject
 
 @HiltViewModel
@@ -180,7 +182,9 @@ class SettingsViewModel @Inject constructor(
     }
 
     fun copyAppVersion(appVersion: String) = viewModelScope.launch {
-        clipboardManager.copyToClipboard(appVersion, clearAfterSeconds = null)
+        withContext(Dispatchers.IO) {
+            clipboardManager.copyToClipboard(appVersion, clearAfterSeconds = null)
+        }
         snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.AppVersionCopied)
     }
 

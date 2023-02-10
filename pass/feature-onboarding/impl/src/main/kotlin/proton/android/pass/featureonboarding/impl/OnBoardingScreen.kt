@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.onboarding
+package proton.android.pass.featureonboarding.impl
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

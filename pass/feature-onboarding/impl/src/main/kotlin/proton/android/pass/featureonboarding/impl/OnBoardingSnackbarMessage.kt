@@ -1,9 +1,8 @@
-package proton.android.pass.presentation.onboarding
+package proton.android.pass.featureonboarding.impl
 
 import androidx.annotation.StringRes
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
-import me.proton.pass.presentation.R
 
 enum class OnBoardingSnackbarMessage(
     @StringRes override val id: Int,

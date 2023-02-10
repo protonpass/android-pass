@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.onboarding
+package proton.android.pass.featureonboarding.impl
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable

@@ -44,6 +44,7 @@ dependencies {
     implementation(projects.pass.featureCreateItem.impl)
     implementation(projects.pass.featureHome.impl)
     implementation(projects.pass.featureVault.impl)
+    implementation(projects.pass.featureOnboarding.impl)
 
     testImplementation(libs.androidx.compose.ui)
     testImplementation(libs.androidx.compose.uiTooling)

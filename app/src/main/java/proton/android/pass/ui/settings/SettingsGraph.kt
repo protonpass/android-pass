@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.ui.navigation.AppNavItem
-import proton.android.pass.presentation.settings.SettingsScreen
+import proton.android.pass.featuresettings.impl.SettingsScreen
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.settingsGraph(

@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.trash
+package proton.android.pass.featuretrash.impl
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,11 +27,11 @@ import proton.android.pass.data.api.usecases.ObserveTrashedItems
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
-import proton.android.pass.presentation.trash.TrashSnackbarMessage.ClearTrashError
-import proton.android.pass.presentation.trash.TrashSnackbarMessage.DeleteItemError
-import proton.android.pass.presentation.trash.TrashSnackbarMessage.ObserveItemsError
-import proton.android.pass.presentation.trash.TrashSnackbarMessage.RefreshError
-import proton.android.pass.presentation.trash.TrashSnackbarMessage.RestoreItemsError
+import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.ClearTrashError
+import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.DeleteItemError
+import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.ObserveItemsError
+import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.RefreshError
+import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.RestoreItemsError
 import javax.inject.Inject
 
 @HiltViewModel

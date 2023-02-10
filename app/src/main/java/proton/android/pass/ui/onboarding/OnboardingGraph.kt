@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.ui.navigation.AppNavItem
-import proton.android.pass.presentation.onboarding.OnBoardingScreen
+import proton.android.pass.featureonboarding.impl.OnBoardingScreen
 
 @OptIn(
     ExperimentalAnimationApi::class

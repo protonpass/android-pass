@@ -1,10 +1,10 @@
-package proton.android.pass.presentation.onboarding
+package proton.android.pass.featureonboarding.impl
 
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Autofill
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Fingerprint
-import proton.android.pass.presentation.onboarding.OnBoardingPageName.Last
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
+import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
 
 @Stable
 data class OnBoardingUiState(

@@ -1,7 +1,6 @@
-package proton.android.pass.presentation.trash
+package proton.android.pass.featuretrash.impl
 
 import androidx.annotation.StringRes
-import me.proton.pass.presentation.R
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
 

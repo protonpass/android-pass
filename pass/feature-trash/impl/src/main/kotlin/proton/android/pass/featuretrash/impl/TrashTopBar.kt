@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.trash
+package proton.android.pass.featuretrash.impl
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -14,7 +14,6 @@ import proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.presentation.R
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 
 @OptIn(ExperimentalComposeUiApi::class)

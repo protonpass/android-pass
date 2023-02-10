@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.trash
+package proton.android.pass.featuretrash.impl
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.ExperimentalMaterialApi
@@ -9,14 +9,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
+import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
-import me.proton.pass.presentation.R
 
 @ExperimentalMaterialApi
 @Composable

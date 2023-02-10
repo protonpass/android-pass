@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.trash
+package proton.android.pass.featuretrash.impl
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.pass.presentation.R
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem

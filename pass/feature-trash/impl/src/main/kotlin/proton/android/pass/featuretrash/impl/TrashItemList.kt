@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.trash
+package proton.android.pass.featuretrash.impl
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

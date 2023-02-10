@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.trash
+package proton.android.pass.featuretrash.impl
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -11,7 +11,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDialog
-import me.proton.pass.presentation.R
 
 @Composable
 fun TrashContent(

@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.trash
+package proton.android.pass.featuretrash.impl
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -14,8 +14,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
-import proton.android.pass.commonuimodels.api.ItemUiModel
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
+import proton.android.pass.commonuimodels.api.ItemUiModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class)
 @Composable

@@ -8,6 +8,7 @@ import android.widget.RemoteViews
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -47,6 +48,7 @@ class AutofillActivity : FragmentActivity() {
         when (autofillUiState) {
             AutofillUiState.NotValidAutofillUiState -> onAutofillCancel()
             is AutofillUiState.StartAutofillUiState -> {
+                WindowCompat.setDecorFitsSystemWindows(window, false)
                 setContent {
                     AutofillApp(
                         autofillUiState = autofillUiState,

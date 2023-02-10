@@ -1,5 +1,7 @@
 package proton.android.pass.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -8,6 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.preferences.ThemePreference
@@ -32,10 +35,16 @@ fun PassApp(
         ThemePreference.Light -> false
         ThemePreference.System -> isNightMode()
     }
+    val systemUiController = rememberSystemUiController()
+    LaunchedEffect(systemUiController, isDark) {
+        systemUiController.systemBarsDarkContentEnabled = !isDark
+    }
     ProtonTheme(isDark = isDark) {
         ProvideWindowInsets {
             PassAppContent(
-                modifier = modifier,
+                modifier = modifier
+                    .background(ProtonTheme.colors.backgroundNorm)
+                    .systemBarsPadding(),
                 appUiState = appUiState,
                 coreNavigation = coreNavigation,
                 onDrawerSectionChanged = { appViewModel.onDrawerSectionChanged(it) },

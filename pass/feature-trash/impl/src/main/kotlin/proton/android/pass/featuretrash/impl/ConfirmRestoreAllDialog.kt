@@ -1,4 +1,4 @@
-package proton.android.pass.presentation.trash
+package proton.android.pass.featuretrash.impl
 
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Surface
@@ -10,7 +10,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import me.proton.pass.presentation.R
 
 @Composable
 internal fun ConfirmRestoreAllDialog(

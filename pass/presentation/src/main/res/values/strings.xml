@@ -4,9 +4,8 @@
     <string name="title_help">Help</string>
     <string name="title_settings">Settings</string>
     <string name="title_sign_out">Sign out</string>
-    <string name="title_trash">Trash</string>
 
-    <string name="navigation_item_trash">@string/title_trash</string>
+    <string name="navigation_item_trash">Trash</string>
     <string name="navigation_item_settings">@string/title_settings</string>
     <string name="navigation_item_items">All items</string>
     <string name="navigation_item_logins">Logins</string>
@@ -25,33 +24,8 @@
     <string name="action_move_to_trash">Move to trash</string>
     <string name="action_reveal_password">Reveal password</string>
     <string name="action_conceal_password">Conceal password</string>
-    <string name="action_restore">Restore</string>
     <string name="action_open">Open</string>
     <string name="action_copy">Copy</string>
-
-    <!-- Alerts -->
-    <string name="alert_confirm_item_send_to_trash_title">Send item to trash?</string>
-    <string name="alert_confirm_item_send_to_trash_message">Are you sure you want to send \'%s\' to the trash?</string>
-    <string name="alert_confirm_item_deletion_title">Delete item?</string>
-    <string name="alert_confirm_item_deletion_message">Are you sure you want to permanently delete \'%s\'?</string>
-    <string name="alert_confirm_clear_trash_title">Clear trash?</string>
-    <string name="alert_confirm_clear_trash_message">Are you sure you want to clear the trash? All your trashed items will be deleted permanently</string>
-    <string name="alert_confirm_restore_all_title">Restore all items?</string>
-    <string name="alert_confirm_restore_all_message">Are you sure you want to restore all the trashed items?</string>
-
-    <!-- Trash -->
-    <string name="trash_empty_list_title">Trash empty</string>
-    <string name="trash_empty_list_message">Deleted items will be moved here first</string>
-    <string name="bottomsheet_trash_all_items_title">Trash</string>
-    <string name="bottomsheet_restore_all_items">Restore all items</string>
-    <string name="bottomsheet_delete_permanently">Delete permanently</string>
-    <string name="bottomsheet_empty_trash">Empty trash</string>
-
-    <string name="trash_error_observing_items">Error observing items</string>
-    <string name="trash_error_refreshing">Error performing refresh</string>
-    <string name="trash_error_clearing_trash">Error clearing trash</string>
-    <string name="trash_error_restoring_items">Error restoring items</string>
-    <string name="trash_error_deleting_item">Error deleting item</string>
 
     <!-- Detail -->
     <string name="detail_init_error">Could not initialise the element</string>

@@ -41,14 +41,14 @@ dagger = "2.44.2"
 # Google
 protobuf = "3.21.12"
 # Gradle
-gradlePlugin-android = "7.4.0"
+gradlePlugin-android = "7.4.1"
 gradlePlugin-dependency-analysis = "1.18.0"
 gradlePlugin-doctor = "0.8.1"
 gradlePlugin-paparazzi = "1.2.0"
 gradlePlugin-ksp = "1.7.20-1.0.8"
 gradlePlugin-protobuf = "0.8.19"
 gradlePlugin-proton-detekt = "1.1.1"
-gradlePlugin-sentry = "3.4.1"
+gradlePlugin-sentry = "3.4.2"
 gradlePlugin-test-logger = "3.2.0"
 # Jacoco
 jacoco = "0.8.7"

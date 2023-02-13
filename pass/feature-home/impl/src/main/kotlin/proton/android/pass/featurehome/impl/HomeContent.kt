@@ -2,7 +2,6 @@ package proton.android.pass.featurehome.impl
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -26,6 +25,7 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDia
 import proton.android.pass.composecomponents.impl.item.EmptyList
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.pass.domain.ShareId
 
 @Suppress("LongParameterList")
@@ -101,7 +101,7 @@ internal fun HomeContent(
                 }
             },
             header = {
-                item { AutofillCard(Modifier.fillMaxWidth()) }
+                item { OnBoardingTips() }
             },
             footer = {
                 item { Spacer(Modifier.height(64.dp)) }

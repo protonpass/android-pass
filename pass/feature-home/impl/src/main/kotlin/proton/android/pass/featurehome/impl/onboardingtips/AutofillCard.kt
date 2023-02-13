@@ -1,8 +1,5 @@
-package proton.android.pass.featurehome.impl
+package proton.android.pass.featurehome.impl.onboardingtips
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,7 +15,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -33,40 +29,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmall
 import me.proton.core.compose.theme.defaultStrong
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.featurehome.impl.R
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Suppress("MagicNumber")
 @Composable
 fun AutofillCard(
-    modifier: Modifier = Modifier,
-    viewModel: AutofillCardViewModel = hiltViewModel()
-) {
-
-    val shouldShowAutofillCard by viewModel.state.collectAsStateWithLifecycle()
-
-    AnimatedVisibility(
-        visible = shouldShowAutofillCard,
-        enter = expandVertically(),
-        exit = shrinkVertically()
-    ) {
-        AutofillCardContent(
-            modifier = modifier,
-            onClick = viewModel::onClick,
-            onDismiss = viewModel::onDismiss
-        )
-    }
-}
-
-@Suppress("MagicNumber")
-@Composable
-fun AutofillCardContent(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
     onDismiss: () -> Unit
@@ -87,8 +58,7 @@ fun AutofillCardContent(
     }
 
     Card(
-        modifier = modifier
-            .padding(16.dp),
+        modifier = modifier,
         elevation = 10.dp
     ) {
         Box(
@@ -142,7 +112,7 @@ fun AutofillCardContentPreview(
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            AutofillCardContent(onClick = {}, onDismiss = {})
+            AutofillCard(onClick = {}, onDismiss = {})
         }
     }
 }

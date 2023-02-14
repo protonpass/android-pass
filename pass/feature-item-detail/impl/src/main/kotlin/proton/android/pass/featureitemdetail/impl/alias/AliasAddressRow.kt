@@ -1,13 +1,11 @@
-package proton.android.pass.featureitemdetail.impl.login
+package proton.android.pass.featureitemdetail.impl.alias
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,28 +19,29 @@ import proton.android.pass.featureitemdetail.impl.SectionSubtitle
 import proton.android.pass.featureitemdetail.impl.SectionTitle
 
 @Composable
-fun LoginUsernameRow(
+fun AliasAddressRow(
     modifier: Modifier = Modifier,
-    username: String,
-    onUsernameClick: () -> Unit
+    alias: String,
+    onCopyAlias: (String) -> Unit
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onUsernameClick() }
+            .clickable { onCopyAlias(alias) }
             .padding(16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Icon(
-            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_user),
-            contentDescription = stringResource(R.string.username_icon_content_description),
-            tint = PassColors.PurpleAccent
+            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
+            contentDescription = stringResource(R.string.alias_address_icon_content_description),
+            tint = PassColors.GreenAccent
         )
-        Spacer(modifier = Modifier.width(16.dp))
-        Column {
-            SectionTitle(text = stringResource(R.string.field_username))
-            Spacer(modifier = Modifier.height(8.dp))
-            SectionSubtitle(text = username)
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            SectionTitle(text = stringResource(R.string.field_alias_title))
+            SectionSubtitle(text = alias)
         }
     }
 }

@@ -8,15 +8,15 @@ import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
 
 @Composable
-fun DetailSectionTitle(
+fun SectionTitle(
     modifier: Modifier = Modifier,
     text: String
 ) {
     Text(
         modifier = modifier,
         text = text,
-        fontWeight = FontWeight.W500,
+        fontWeight = FontWeight.W400,
         fontSize = 14.sp,
-        color = ProtonTheme.colors.textNorm
+        color = ProtonTheme.colors.textWeak
     )
 }

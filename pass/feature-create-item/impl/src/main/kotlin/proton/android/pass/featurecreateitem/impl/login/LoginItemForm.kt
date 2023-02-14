@@ -17,7 +17,7 @@ import kotlinx.collections.immutable.toImmutableSet
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.buttons.PassOutlinedButton
-import proton.android.pass.composecomponents.impl.form.LinkedAppsList
+import proton.android.pass.composecomponents.impl.form.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.form.NoteInput
 import proton.android.pass.composecomponents.impl.form.TitleInput
 import proton.android.pass.featurecreateitem.impl.R
@@ -98,7 +98,7 @@ internal fun LoginItemForm(
         )
         if (isUpdate) {
             Spacer(modifier = Modifier.height(20.dp))
-            LinkedAppsList(
+            LinkedAppsListSection(
                 list = loginItem.packageNames.toImmutableSet(),
                 isEditable = true,
                 onLinkedAppDelete = onLinkedAppDelete

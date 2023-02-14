@@ -7,7 +7,7 @@ import org.junit.Test
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.error.BadTagException
 import proton.android.pass.crypto.impl.context.EncryptionContextImpl
-import proton.android.pass.crypto.impl.context.EncryptionKey
+import proton.android.pass.crypto.api.EncryptionKey
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 

@@ -8,6 +8,7 @@ import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import java.io.File
@@ -20,9 +21,17 @@ class EncryptionContextProviderImpl @Inject constructor(
 
     override fun <R> withEncryptionContext(block: EncryptionContext.() -> R): R {
         val key = runBlocking { getKey() }
-        val context = EncryptionContextImpl(key)
+        return withEncryptionContext(key, block)
+    }
+
+    override fun <R> withEncryptionContext(
+        key: EncryptionKey,
+        block: EncryptionContext.() -> R
+    ): R {
+        val cloned = key.clone()
+        val context = EncryptionContextImpl(cloned)
         val res = block(context)
-        key.clear()
+        cloned.clear()
         return res
     }
 
@@ -30,9 +39,17 @@ class EncryptionContextProviderImpl @Inject constructor(
         block: suspend EncryptionContext.() -> R
     ): R {
         val key = getKey()
-        val context = EncryptionContextImpl(key)
+        return withEncryptionContextSuspendable(key, block)
+    }
+
+    override suspend fun <R> withEncryptionContextSuspendable(
+        key: EncryptionKey,
+        block: suspend EncryptionContext.() -> R
+    ): R {
+        val cloned = key.clone()
+        val context = EncryptionContextImpl(cloned)
         val res = block(context)
-        key.clear()
+        cloned.clear()
         return res
     }
 
@@ -46,7 +63,6 @@ class EncryptionContextProviderImpl @Inject constructor(
             generateKey(file)
         }
     }
-
 
     private fun generateKey(file: File): EncryptionKey {
         val key = EncryptionKey.generate()

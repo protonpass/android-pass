@@ -1,22 +1,24 @@
 package proton.android.pass.featureitemdetail.impl.login
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.Surface
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.container.RoundedCornersContainer
-import proton.android.pass.featureitemdetail.impl.DetailSectionSubtitle
-import proton.android.pass.featureitemdetail.impl.DetailSectionTitle
+import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.featureitemdetail.impl.R
+import proton.android.pass.featureitemdetail.impl.SectionSubtitle
+import proton.android.pass.featureitemdetail.impl.SectionTitle
 
 @Composable
 fun LoginUsernameRow(
@@ -24,29 +26,23 @@ fun LoginUsernameRow(
     username: String,
     onUsernameClick: () -> Unit
 ) {
-    RoundedCornersContainer(
-        modifier = modifier.fillMaxWidth(),
-        onClick = onUsernameClick
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onUsernameClick() }
+            .padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
+        Icon(
+            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_user),
+            contentDescription = stringResource(R.string.username_icon_content_description),
+            tint = PassColors.PurpleAccent
+        )
+        Spacer(modifier = Modifier.width(16.dp))
         Column {
-            DetailSectionTitle(text = stringResource(R.string.field_username))
+            SectionTitle(text = stringResource(R.string.field_username))
             Spacer(modifier = Modifier.height(8.dp))
-            DetailSectionSubtitle(text = username)
-        }
-    }
-}
-
-@Preview
-@Composable
-fun LoginUsernameRowPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
-) {
-    ProtonTheme(isDark = isDark) {
-        Surface {
-            LoginUsernameRow(
-                username = "some.username",
-                onUsernameClick = {}
-            )
+            SectionSubtitle(text = username)
         }
     }
 }

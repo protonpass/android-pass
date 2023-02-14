@@ -40,36 +40,20 @@ data class ShareEntity(
     val targetId: String,
     @ColumnInfo(name = Columns.PERMISSION)
     val permission: Int,
-    @ColumnInfo(name = Columns.INVITER_EMAIL)
-    val inviterEmail: String,
-    @ColumnInfo(name = Columns.ACCEPTANCE_SIGNATURE)
-    val acceptanceSignature: String,
-    @ColumnInfo(name = Columns.INVITER_ACCEPTANCE_SIGNATURE)
-    val inviterAcceptanceSignature: String,
-    @ColumnInfo(name = Columns.SIGNING_KEY)
-    val signingKey: String,
-    @ColumnInfo(name = Columns.SIGNING_KEY_PASSPHRASE)
-    val signingKeyPassphrase: String?,
     @ColumnInfo(name = Columns.CONTENT)
     val content: String?,
+    @ColumnInfo(name = Columns.CONTENT_KEY_ROTATION)
+    val contentKeyRotation: Long?,
     @ColumnInfo(name = Columns.CONTENT_FORMAT_VERSION)
     val contentFormatVersion: Int?,
-    @ColumnInfo(name = Columns.CONTENT_ENCRYPTED_ADDRESS_SIGNATURE)
-    val contentEncryptedAddressSignature: String?,
-    @ColumnInfo(name = Columns.CONTENT_ENCRYPTED_VAULT_SIGNATURE)
-    val contentEncryptedVaultSignature: String?,
-    @ColumnInfo(name = Columns.CONTENT_SIGNATURE_EMAIL)
-    val contentSignatureEmail: String?,
-    @ColumnInfo(name = Columns.KEYSTORE_ENCRYPTED_CONTENT)
-    val keystoreEncryptedContent: EncryptedByteArray?,
-    @ColumnInfo(name = Columns.KEYSTORE_ENCRYPTED_PASSPHRASE)
-    val keystoreEncryptedPassphrase: EncryptedByteArray?,
-    @ColumnInfo(name = Columns.NAME_KEY_ID)
-    val nameKeyId: String?,
     @ColumnInfo(name = Columns.EXPIRATION_TIME)
     val expirationTime: Long?,
     @ColumnInfo(name = Columns.CREATE_TIME)
-    val createTime: Long
+    val createTime: Long,
+
+    // Keystore Encrypted contents
+    @ColumnInfo(name = Columns.ENCRYPTED_CONTENT)
+    val encryptedContent: EncryptedByteArray?
 ) {
     object Columns {
         const val ID = "id"
@@ -77,23 +61,14 @@ data class ShareEntity(
         const val ADDRESS_ID = "address_id"
         const val SHARE_TYPE = "share_type"
         const val TARGET_ID = "target_id"
-        const val INVITER_EMAIL = "inviter_email"
-        const val ACCEPTANCE_SIGNATURE = "acceptance_signature"
-        const val INVITER_ACCEPTANCE_SIGNATURE = "inviter_acceptance_signature"
         const val PERMISSION = "permission"
         const val VAULT_ID = "vault_id"
-        const val SIGNING_KEY = "signing_key"
-        const val SIGNING_KEY_PASSPHRASE = "signing_key_passphrase"
         const val CONTENT = "content"
+        const val CONTENT_KEY_ROTATION = "content_key_rotation"
         const val CONTENT_FORMAT_VERSION = "content_format_version"
-        const val CONTENT_ENCRYPTED_ADDRESS_SIGNATURE = "content_encrypted_address_signature"
-        const val CONTENT_ENCRYPTED_VAULT_SIGNATURE = "content_encrypted_vault_signature"
-        const val CONTENT_SIGNATURE_EMAIL = "content_signature_email"
-        const val KEYSTORE_ENCRYPTED_CONTENT = "keystore_encrypted_content"
-        const val KEYSTORE_ENCRYPTED_PASSPHRASE = "keystore_encrypted_passphrase"
-        const val NAME_KEY_ID = "name_key_id"
         const val EXPIRATION_TIME = "expiration_time"
         const val CREATE_TIME = "create_time"
+        const val ENCRYPTED_CONTENT = "encrypted_content"
     }
 
     companion object {

@@ -27,7 +27,7 @@ import me.proton.core.user.data.entity.UserEntity
         ForeignKey(
             entity = ShareEntity::class,
             parentColumns = [ShareEntity.Columns.ID],
-            childColumns = [VaultKeyEntity.Columns.SHARE_ID],
+            childColumns = [ItemEntity.Columns.SHARE_ID],
             onDelete = ForeignKey.CASCADE
         )
     ]
@@ -45,20 +45,16 @@ data class ItemEntity(
     val revision: Long,
     @ColumnInfo(name = Columns.CONTENT_FORMAT_VERSION)
     val contentFormatVersion: Int,
-    @ColumnInfo(name = Columns.ROTATION_ID)
-    val rotationId: String,
+    @ColumnInfo(name = Columns.KEY_ROTATION)
+    val keyRotation: String,
     @ColumnInfo(name = Columns.CONTENT)
     val content: String,
-    @ColumnInfo(name = Columns.USER_SIGNATURE)
-    val userSignature: String,
-    @ColumnInfo(name = Columns.ITEM_KEY_SIGNATURE)
-    val itemKeySignature: String,
+    @ColumnInfo(name = Columns.KEY)
+    val key: String?,
     @ColumnInfo(name = Columns.STATE)
     val state: Int,
     @ColumnInfo(name = Columns.ITEM_TYPE)
     val itemType: Int,
-    @ColumnInfo(name = Columns.SIGNATURE_EMAIL)
-    val signatureEmail: String,
     @ColumnInfo(name = Columns.ALIAS_EMAIL)
     val aliasEmail: String?,
     @ColumnInfo(name = Columns.CREATE_TIME)
@@ -74,7 +70,9 @@ data class ItemEntity(
     @ColumnInfo(name = Columns.ENCRYPTED_NOTE)
     val encryptedNote: EncryptedString,
     @ColumnInfo(name = Columns.ENCRYPTED_CONTENT)
-    val encryptedContent: EncryptedByteArray
+    val encryptedContent: EncryptedByteArray,
+    @ColumnInfo(name = Columns.ENCRYPTED_KEY)
+    val encryptedKey: EncryptedByteArray?,
 ) {
     object Columns {
         const val ID = "id"
@@ -83,13 +81,11 @@ data class ItemEntity(
         const val SHARE_ID = "share_id"
         const val REVISION = "revision"
         const val CONTENT_FORMAT_VERSION = "content_format_version"
-        const val ROTATION_ID = "rotation_id"
+        const val KEY_ROTATION = "key_rotation"
         const val CONTENT = "content"
-        const val USER_SIGNATURE = "user_signature"
-        const val ITEM_KEY_SIGNATURE = "item_key_signature"
+        const val KEY = "key"
         const val STATE = "state"
         const val ITEM_TYPE = "item_type"
-        const val SIGNATURE_EMAIL = "signature_email"
         const val ALIAS_EMAIL = "alias_email"
         const val CREATE_TIME = "create_time"
         const val MODIFY_TIME = "modify_time"
@@ -97,6 +93,7 @@ data class ItemEntity(
         const val ENCRYPTED_TITLE = "encrypted_title"
         const val ENCRYPTED_CONTENT = "encrypted_content"
         const val ENCRYPTED_NOTE = "encrypted_note"
+        const val ENCRYPTED_KEY = "encrypted_key"
     }
 
     companion object {

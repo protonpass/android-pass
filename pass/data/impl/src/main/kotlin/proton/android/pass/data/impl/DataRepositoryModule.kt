@@ -6,14 +6,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.repositories.KeyPacketRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.repositories.VaultKeyRepository
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.repositories.EventRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
-import proton.android.pass.data.impl.repositories.KeyPacketRepositoryImpl
+import proton.android.pass.data.impl.repositories.ShareKeyRepository
+import proton.android.pass.data.impl.repositories.ShareKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.repositories.VaultKeyRepositoryImpl
 
@@ -28,7 +28,7 @@ abstract class DataRepositoryModule {
     abstract fun bindItemRepository(impl: ItemRepositoryImpl): ItemRepository
 
     @Binds
-    abstract fun bindKeyPacketRepository(impl: KeyPacketRepositoryImpl): KeyPacketRepository
+    abstract fun bindShareKeyRepository(impl: ShareKeyRepositoryImpl): ShareKeyRepository
 
     @Binds
     abstract fun bindShareRepository(impl: ShareRepositoryImpl): ShareRepository

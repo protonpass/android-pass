@@ -11,30 +11,24 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.extension.publicKeyRing
-import me.proton.core.key.domain.publicKey
-import me.proton.core.key.domain.repository.PublicAddressRepository
-import me.proton.core.key.domain.repository.Source
+import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
+import me.proton.core.user.domain.repository.UserRepository
+import org.apache.commons.codec.binary.Base64
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
-import proton.android.pass.crypto.api.error.InvalidAddressSignature
-import proton.android.pass.crypto.api.error.KeyNotFound
+import proton.android.pass.crypto.api.EncryptionKey
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.CreateVault
-import proton.android.pass.crypto.api.usecases.ReadKey
 import proton.android.pass.data.api.errors.CannotDeleteCurrentVaultError
 import proton.android.pass.data.api.repositories.ShareRepository
-import proton.android.pass.data.api.repositories.VaultItemKeyList
-import proton.android.pass.data.api.repositories.VaultKeyRepository
-import proton.android.pass.data.impl.crypto.ReencryptShareEntityContents
-import proton.android.pass.data.impl.crypto.ShareEntityToShare
-import proton.android.pass.data.impl.crypto.ShareResponseToEntity
+import proton.android.pass.data.impl.crypto.ReencryptShareContents
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
+import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.extensions.toRequest
-import proton.android.pass.data.impl.extensions.toVaultItemKeyList
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
@@ -42,25 +36,25 @@ import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
+import proton.pass.domain.SharePermission
+import proton.pass.domain.ShareType
+import proton.pass.domain.VaultId
 import proton.pass.domain.entity.NewVault
-import proton.pass.domain.key.SigningKey
-import proton.pass.domain.key.VaultKey
 import proton_pass_vault_v1.VaultV1
+import java.sql.Date
 import javax.inject.Inject
 
 class ShareRepositoryImpl @Inject constructor(
     private val database: PassDatabase,
+    private val userRepository: UserRepository,
     private val userAddressRepository: UserAddressRepository,
     private val remoteShareDataSource: RemoteShareDataSource,
     private val localShareDataSource: LocalShareDataSource,
-    private val keyRepository: PublicAddressRepository,
-    private val vaultKeyRepository: VaultKeyRepository,
     private val cryptoContext: CryptoContext,
-    private val shareEntityToShare: ShareEntityToShare,
-    private val reencryptShareEntityContents: ReencryptShareEntityContents,
-    private val readKey: ReadKey,
-    private val shareResponseToEntity: ShareResponseToEntity,
-    private val createVault: CreateVault
+    private val reencryptShareContents: ReencryptShareContents,
+    private val createVault: CreateVault,
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val shareKeyRepository: ShareKeyRepository
 ) : ShareRepository {
 
     @Suppress("ReturnCount", "TooGenericExceptionCaught")
@@ -69,52 +63,42 @@ class ShareRepositoryImpl @Inject constructor(
         vault: NewVault
     ): LoadingResult<Share> = withContext(Dispatchers.IO) {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
+        val user = requireNotNull(userRepository.getUser(userId))
 
-        val (request, keyList) = try {
-            createVaultRequest(vault, userAddress)
+        val (request, shareKey) = try {
+            createVaultRequest(user, vault, userAddress)
         } catch (e: RuntimeException) {
             PassLogger.w(TAG, e, "Error in CreateVaultRequest")
             return@withContext LoadingResult.Error(e)
         }
+
         val createVaultResult = remoteShareDataSource.createVault(userAddress.userId, request)
-        when (createVaultResult) {
+        val createVaultResponse = when (createVaultResult) {
             is LoadingResult.Error -> return@withContext LoadingResult.Error(createVaultResult.exception)
             LoadingResult.Loading -> return@withContext LoadingResult.Loading
-            is LoadingResult.Success -> Unit
+            is LoadingResult.Success -> createVaultResult.data
         }
 
-        // We replace manually the vaultKey.rotationId so it has the right value for performing the validation
-        val rotationId = createVaultResult.data.contentRotationId
-            ?: throw IllegalStateException("ContentRotationID cannot be null")
-        val vaultKey = keyList.vaultKeyList.first().copy(rotationId = rotationId)
+        val responseAsEntity = shareResponseToEntity(userAddress, createVaultResponse, shareKey)
+        val symmetricallyEncryptedKey = encryptionContextProvider.withEncryptionContext {
+            encrypt(shareKey.key)
+        }
 
-        // Replace the temporary rotationId we placed on the vaultKey with the actual rotationId
-        val responseAsEntity =
-            shareResponseToEntity(userAddress, createVaultResult.data, listOf(vaultKey))
-        val entityResult: LoadingResult<ShareEntity> = database.inTransaction {
-
+        val shareKeyEntity = ShareKeyEntity(
+            rotation = 1,
+            userId = userId.id,
+            addressId = userAddress.addressId.id,
+            shareId = createVaultResponse.shareId,
+            key = Base64.encodeBase64String(shareKey.key),
+            createTime = createVaultResponse.createTime,
+            symmetricallyEncryptedKey = symmetricallyEncryptedKey
+        )
+        database.inTransaction {
             localShareDataSource.upsertShares(listOf(responseAsEntity))
-
-            val reencryptedEntityResult: LoadingResult<ShareEntity> =
-                reencryptShareEntityContents(userAddress, createVaultResult.data, responseAsEntity)
-            when (reencryptedEntityResult) {
-                is LoadingResult.Error -> return@inTransaction LoadingResult.Error(
-                    reencryptedEntityResult.exception
-                )
-                LoadingResult.Loading -> return@inTransaction LoadingResult.Loading
-                is LoadingResult.Success -> Unit
-            }
-            localShareDataSource.upsertShares(listOf(reencryptedEntityResult.data))
-            reencryptedEntityResult
-        }
-        when (entityResult) {
-            is LoadingResult.Error -> return@withContext LoadingResult.Error(entityResult.exception)
-            LoadingResult.Loading -> return@withContext LoadingResult.Loading
-            is LoadingResult.Success -> Unit
+            shareKeyRepository.saveShareKeys(listOf(shareKeyEntity))
         }
 
-        val publicKeys = userAddress.keys.map { it.privateKey.publicKey(cryptoContext) }
-        return@withContext shareEntityToShare(userAddress, publicKeys, entityResult.data)
+        return@withContext shareEntityToShare(responseAsEntity)
     }
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
@@ -139,16 +123,16 @@ class ShareRepositoryImpl @Inject constructor(
         }
 
     override fun observeAllShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =
-        localShareDataSource.getAllSharesForUser(userId).toShare(userId)
+        localShareDataSource.getAllSharesForUser(userId).toShare()
 
     override fun observeSelectedShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =
-        localShareDataSource.getSelectedSharesForUser(userId).toShare(userId)
+        localShareDataSource.getSelectedSharesForUser(userId).toShare()
 
-    private fun Flow<List<ShareEntity>>.toShare(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =
+    private fun Flow<List<ShareEntity>>.toShare(): Flow<LoadingResult<List<Share>>> =
         this.map { LoadingResult.Success(it) }
             .mapLatest { sharesResult ->
                 if (sharesResult.data.isEmpty()) return@mapLatest LoadingResult.Success(emptyList<Share>())
-                shareEntitiesToShares(userId, sharesResult.data)
+                shareEntitiesToShares(sharesResult.data)
             }
             .flowOn(Dispatchers.IO)
 
@@ -157,10 +141,9 @@ class ShareRepositoryImpl @Inject constructor(
             return@withContext when (val sharesResult = performShareRefresh(userId)) {
                 is LoadingResult.Error -> LoadingResult.Error(sharesResult.exception)
                 LoadingResult.Loading -> LoadingResult.Loading
-                is LoadingResult.Success -> shareEntitiesToShares(userId, sharesResult.data)
+                is LoadingResult.Success -> shareEntitiesToShares(sharesResult.data)
             }
         }
-
 
     @Suppress("ReturnCount")
     override suspend fun getById(userId: UserId, shareId: ShareId): LoadingResult<Share?> =
@@ -180,42 +163,13 @@ class ShareRepositoryImpl @Inject constructor(
                 val shareResponse = getShareResult.data
                     ?: return@withContext LoadingResult.Error(IllegalStateException("Share Response is null"))
 
-                val storeShareResult: LoadingResult<List<ShareEntity>> =
-                    storeShares(userAddress, userId, false, listOf(shareResponse))
-                when (storeShareResult) {
-                    is LoadingResult.Error -> return@withContext LoadingResult.Error(
-                        storeShareResult.exception
-                    )
-                    LoadingResult.Loading -> return@withContext LoadingResult.Loading
-                    is LoadingResult.Success -> Unit
-                }
-                share = storeShareResult.data[0]
+                val storedShares: List<ShareEntity> =
+                    storeShares(userAddress, false, listOf(shareResponse))
+                share = storedShares.first()
             }
 
-            return@withContext try {
-                shareEntityToShare(userAddress, share, Source.LocalIfAvailable)
-            } catch (e: InvalidAddressSignature) {
-                PassLogger.i(
-                    TAG,
-                    e,
-                    "Received InvalidAddressSignature. Retrying re-fetching the keys"
-                )
-                shareEntityToShare(userAddress, share, Source.RemoteNoCache)
-            }
+            return@withContext shareEntityToShare(share)
         }
-
-    private suspend fun shareEntityToShare(
-        userAddress: UserAddress,
-        share: ShareEntity,
-        source: Source
-    ): LoadingResult<Share?> {
-        val addressKeys = keyRepository.getPublicAddress(
-            userAddress.userId,
-            share.inviterEmail,
-            source = source
-        )
-        return shareEntityToShare(userAddress, addressKeys.keys.publicKeyRing().keys, share)
-    }
 
     @Suppress("ReturnCount")
     private suspend fun performShareRefresh(userId: UserId): LoadingResult<List<ShareEntity>> {
@@ -232,175 +186,146 @@ class ShareRepositoryImpl @Inject constructor(
             LoadingResult.Loading -> return LoadingResult.Loading
             is LoadingResult.Success -> Unit
         }
-        return storeShares(userAddress, userId, true, sharesResult.data)
+        return LoadingResult.Success(storeShares(userAddress, true, sharesResult.data))
     }
 
     @Suppress("ReturnCount")
-    private suspend fun shareEntitiesToShares(
-        userId: UserId,
-        entities: List<ShareEntity>
-    ): LoadingResult<List<Share>> {
-        val userKeys = entities
-            .map { it.inviterEmail }
-            .distinct()
-            .associateWith {
-                keyRepository.getPublicAddress(
-                    sessionUserId = userId,
-                    email = it,
-                    source = Source.LocalIfAvailable
-                )
-            }
-
-        val shareList: List<Share> = entities.map { entity ->
-            val userAddress = userAddressRepository.getAddresses(userId).primary()
-            if (userAddress == null) {
-                val e = IllegalStateException("Could not find PrimaryAddress")
-                PassLogger.w(TAG, e, "Error in performShareRefresh")
-                return LoadingResult.Error(e)
-            }
-
-            val keys = userKeys[entity.inviterEmail]?.keys?.map { it.publicKey }
-            if (keys == null) {
-                val e = KeyNotFound("UserKey for inviterEmail")
-                PassLogger.w(
-                    TAG,
-                    e,
-                    "Could not find UserKey for inviterEmail [email=${entity.inviterEmail}]" +
-                        "[shareId=${entity.id}]"
-                )
-                return LoadingResult.Error(e)
-            }
-
-            when (
-                val result: LoadingResult<Share> =
-                    shareEntityToShare(userAddress, keys, entity)
-            ) {
-                is LoadingResult.Error -> return LoadingResult.Error(result.exception)
+    private fun shareEntitiesToShares(entities: List<ShareEntity>): LoadingResult<List<Share>> {
+        val mapped = entities.map {
+            when (val res = shareEntityToShare(it)) {
+                is LoadingResult.Error -> return LoadingResult.Error(res.exception)
                 LoadingResult.Loading -> return LoadingResult.Loading
-                is LoadingResult.Success -> result.data
+                is LoadingResult.Success -> res.data
             }
         }
-        return LoadingResult.Success(shareList)
+        return LoadingResult.Success(mapped)
     }
 
     private suspend fun storeShares(
         userAddress: UserAddress,
-        userId: UserId,
         cleanUp: Boolean,
         shares: List<ShareResponse>
-    ): LoadingResult<List<ShareEntity>> {
-        // The ShareEntity will still not contain the reencrypted contents and signing key passphrase,
-        // because for doing so we need the vault keys, and as the share has not yet been persisted to
-        // the database, the vaultKey fetching would store them into the database and the shareId FK
-        // would fail, so we first store the share without the reencryption, fetch the vaultKeys, and
-        // then we reencrypt the data
-        val entities: List<ShareResponseEntity> = shares.map { shareResponse ->
-            val signingKey = SigningKey(readKey(shareResponse.signingKey, isPrimary = true))
-            val vaultKeysResult = vaultKeyRepository.getVaultKeys(
-                userAddress = userAddress,
-                shareId = ShareId(shareResponse.shareId),
-                signingKey = signingKey,
+    ): List<ShareEntity> {
+        val entities: List<Pair<ShareResponseEntity, List<ShareKey>>> = shares.map { shareResponse ->
+            val shareId = ShareId(shareResponse.shareId)
+
+            // First we fetch the shareKeys and not save them, in case the share has not been
+            // inserted yet, as it would cause a FK mismatch in teh database
+            val shareKeys = shareKeyRepository.getShareKeys(
+                userId = userAddress.userId,
+                addressId = userAddress.addressId,
+                shareId = shareId,
+                forceRefresh = true,
                 shouldStoreLocally = false
-            )
-            when (vaultKeysResult) {
-                is LoadingResult.Error -> return LoadingResult.Error(vaultKeysResult.exception)
-                LoadingResult.Loading -> return LoadingResult.Loading
-                is LoadingResult.Success -> Unit
-            }
+            ).first()
+
+            // Reencrypt the share contents
+            val encryptionKey = getEncryptionKey(shareResponse.contentKeyRotation, shareKeys)
             ShareResponseEntity(
                 response = shareResponse,
-                entity = shareResponseToEntity(userAddress, shareResponse, vaultKeysResult.data)
-            )
+                entity = shareResponseToEntity(userAddress, shareResponse, encryptionKey)
+            ) to shareKeys
         }
 
         return database.inTransaction {
+            // First, store the shares
+            val shareEntities = entities.map { it.first.entity }
             if (cleanUp) {
-                localShareDataSource.evictAndUpsertShares(userId, entities.map { it.entity })
+                localShareDataSource.evictAndUpsertShares(userAddress.userId, shareEntities)
             } else {
-                localShareDataSource.upsertShares(entities.map { it.entity })
+                localShareDataSource.upsertShares(shareEntities)
             }
 
-            // We have now inserted the shares without the reencrypted content
-            // Now we fetch the vaultKeys for each share, reencrypt the contents and prepare the entities
-            // with reencrypted contents
-            val updatedEntities: List<ShareEntity> = entities
-                .map { reencryptShareEntityContents(userAddress, it.response, it.entity) }
-                .map {
-                    when (it) {
-                        is LoadingResult.Error -> return@inTransaction LoadingResult.Error(it.exception)
-                        LoadingResult.Loading -> return@inTransaction LoadingResult.Loading
-                        is LoadingResult.Success -> it.data
+            // Now that we have inserted the shares, we can safely insert the shareKeys
+            val shareKeyEntities = entities
+                .map { responsePair ->
+                    responsePair.second.map { shareKey ->
+                        ShareKeyEntity(
+                            rotation = shareKey.rotation,
+                            userId = userAddress.userId.id,
+                            addressId = userAddress.addressId.id,
+                            shareId = responsePair.first.response.shareId,
+                            key = shareKey.responseKey,
+                            createTime = shareKey.createTime,
+                            symmetricallyEncryptedKey = shareKey.key
+                        )
                     }
                 }
+                .flatten()
+            shareKeyRepository.saveShareKeys(shareKeyEntities)
 
-
-            // Persist the updates into the database
-            localShareDataSource.upsertShares(updatedEntities)
-            LoadingResult.Success(updatedEntities)
+            shareEntities
         }
     }
 
-    private suspend fun shareResponseToEntity(
-        userAddress: UserAddress,
-        shareResponse: ShareResponse,
-        vaultKeys: List<VaultKey>
-    ): ShareEntity =
-        try {
-            innerShareResponseToEntity(
-                userAddress = userAddress,
-                shareResponse = shareResponse,
-                vaultKeys = vaultKeys,
-                keyAddressSource = Source.LocalIfAvailable
-            )
-        } catch (e: InvalidAddressSignature) {
-            PassLogger.i(TAG, e, "Received InvalidAddressSignature. Retrying re-fetching the keys")
-            innerShareResponseToEntity(
-                userAddress = userAddress,
-                shareResponse = shareResponse,
-                vaultKeys = vaultKeys,
-                keyAddressSource = Source.RemoteNoCache
-            )
-        }
+    private fun getEncryptionKey(keyRotation: Long?, keys: List<ShareKey>): EncryptionKey? {
+        if (keyRotation == null) return null
 
-    private suspend fun innerShareResponseToEntity(
+        val encryptionKey = keys.firstOrNull { it.rotation == keyRotation } ?: return null
+        val decrypted = encryptionContextProvider.withEncryptionContext { decrypt(encryptionKey.key) }
+        return EncryptionKey(decrypted)
+    }
+
+    private fun shareResponseToEntity(
         userAddress: UserAddress,
         shareResponse: ShareResponse,
-        vaultKeys: List<VaultKey>,
-        keyAddressSource: Source
+        key: EncryptionKey?
     ): ShareEntity {
-        val inviterKeys = keyRepository.getPublicAddress(
-            userAddress.userId,
-            shareResponse.inviterEmail,
-            source = keyAddressSource
-        ).keys.publicKeyRing().keys
-        val contentSignatureKeys = if (shareResponse.contentSignatureEmail != null) {
-            keyRepository.getPublicAddress(
-                userAddress.userId,
-                shareResponse.contentSignatureEmail,
-                source = keyAddressSource
-            ).keys.publicKeyRing().keys
+        val encryptedContent = if (shareResponse.content != null && key != null) {
+            reencryptShareContents(shareResponse.content, key)
         } else {
-            emptyList()
+            null
         }
-        return shareResponseToEntity(
-            shareResponse,
-            userAddress,
-            inviterKeys,
-            contentSignatureKeys,
-            vaultKeys
+        return ShareEntity(
+            id = shareResponse.shareId,
+            userId = userAddress.userId.id,
+            addressId = userAddress.addressId.id,
+            vaultId = shareResponse.vaultId,
+            targetType = shareResponse.targetType,
+            targetId = shareResponse.targetId,
+            permission = shareResponse.permission,
+            content = shareResponse.content,
+            contentKeyRotation = shareResponse.contentKeyRotation,
+            contentFormatVersion = shareResponse.contentFormatVersion,
+            expirationTime = shareResponse.expirationTime,
+            createTime = shareResponse.createTime,
+            encryptedContent = encryptedContent
         )
     }
 
+
+    private fun shareEntityToShare(entity: ShareEntity): LoadingResult<Share> {
+        val shareType = ShareType.map[entity.targetType]
+        if (shareType == null) {
+            val e = IllegalStateException("Unknown ShareType")
+            PassLogger.w(TAG, e, "Unknown ShareType [shareType=${entity.targetType}]")
+            return LoadingResult.Error(e)
+        }
+
+        val share = Share(
+            id = ShareId(entity.id),
+            shareType = shareType,
+            targetId = entity.targetId,
+            permission = SharePermission(entity.permission),
+            vaultId = VaultId(entity.vaultId),
+            content = entity.encryptedContent,
+            expirationTime = entity.expirationTime?.let { Date(it) },
+            createTime = Date(entity.createTime),
+        )
+        return LoadingResult.Success(share)
+    }
+
     private fun createVaultRequest(
+        user: User,
         vault: NewVault,
         userAddress: UserAddress
-    ): Pair<CreateVaultRequest, VaultItemKeyList> {
+    ): Pair<CreateVaultRequest, EncryptionKey> {
         val metadata = VaultV1.Vault.newBuilder()
             .setName(vault.name.decrypt(cryptoContext.keyStoreCrypto))
             .setDescription(vault.description.decrypt(cryptoContext.keyStoreCrypto))
             .build()
-        val (request, keys) = createVault.createVaultRequest(metadata, userAddress)
-        return request.toRequest() to keys.toVaultItemKeyList()
+        val (request, shareKey) = createVault.createVaultRequest(user, userAddress, metadata)
+        return request.toRequest() to shareKey
     }
 
     internal data class ShareResponseEntity(

@@ -17,34 +17,20 @@ data class ShareResponse(
     val shareId: String,
     @SerialName("VaultID")
     val vaultId: String,
+    @SerialName("AddressID")
+    val addressId: String,
     @SerialName("TargetType")
     val targetType: Int,
     @SerialName("TargetID")
     val targetId: String,
     @SerialName("Permission")
     val permission: Int,
-    @SerialName("AcceptanceSignature")
-    val acceptanceSignature: String,
-    @SerialName("InviterEmail")
-    val inviterEmail: String,
-    @SerialName("InviterAcceptanceSignature")
-    val inviterAcceptanceSignature: String,
-    @SerialName("SigningKey")
-    val signingKey: String,
-    @SerialName("SigningKeyPassphrase")
-    val signingKeyPassphrase: String?,
     @SerialName("Content")
     val content: String?,
+    @SerialName("ContentKeyRotation")
+    val contentKeyRotation: Long?,
     @SerialName("ContentFormatVersion")
     val contentFormatVersion: Int?,
-    @SerialName("ContentRotationID")
-    val contentRotationId: String?,
-    @SerialName("ContentEncryptedAddressSignature")
-    val contentEncryptedAddressSignature: String?,
-    @SerialName("ContentEncryptedVaultSignature")
-    val contentEncryptedVaultSignature: String?,
-    @SerialName("ContentSignatureEmail")
-    val contentSignatureEmail: String?,
     @SerialName("ExpireTime")
     val expirationTime: Long?,
     @SerialName("CreateTime")

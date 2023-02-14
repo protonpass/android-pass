@@ -1,8 +1,5 @@
 package proton.android.pass.crypto.impl.usecases
 
-import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
-import proton.android.pass.crypto.api.usecases.OpenItem
-import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
 import me.proton.core.crypto.common.context.CryptoContext
@@ -12,6 +9,12 @@ import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.key.domain.entity.key.ArmoredKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PublicKey
+import org.junit.Before
+import org.junit.Test
+import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
+import proton.android.pass.crypto.api.usecases.OpenItem
+import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.ItemType
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
@@ -22,9 +25,6 @@ import proton.pass.domain.VaultId
 import proton.pass.domain.key.ItemKey
 import proton.pass.domain.key.SigningKey
 import proton.pass.domain.key.VaultKey
-import proton.android.pass.test.crypto.TestKeyStoreCrypto
-import org.junit.Before
-import org.junit.Test
 import java.sql.Date
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
@@ -74,10 +74,9 @@ class OpenItemImplTest {
             vaultId = VaultId(VAULT_ID),
             signingKey = getSigningKey(),
             content = null,
-            nameKeyId = ROTATION_ID,
+            contentRotationId = ROTATION_ID,
             expirationTime = null,
             createTime = Date(1664195804),
-            keys = listOf(getVaultKey())
         )
     }
 

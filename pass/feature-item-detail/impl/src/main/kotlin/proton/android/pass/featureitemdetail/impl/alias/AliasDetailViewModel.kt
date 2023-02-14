@@ -3,6 +3,7 @@ package proton.android.pass.featureitemdetail.impl.alias
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -11,13 +12,16 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.AliasCopiedToClipboard
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -30,6 +34,7 @@ import javax.inject.Inject
 class AliasDetailViewModel @Inject constructor(
     private val aliasRepository: AliasRepository,
     private val accountManager: AccountManager,
+    private val clipboardManager: ClipboardManager,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
@@ -65,10 +70,6 @@ class AliasDetailViewModel @Inject constructor(
             showError("UserId is null", DetailSnackbarMessages.InitError, null)
             loadingState.update { IsLoadingState.NotLoading }
         }
-    }
-
-    fun emitSnackbarMessage(message: SnackbarMessage) = viewModelScope.launch {
-        snackbarMessageRepository.emitSnackbarMessage(message)
     }
 
     private suspend fun onAliasDetails(result: LoadingResult<AliasDetails>, item: Item) {
@@ -107,6 +108,15 @@ class AliasDetailViewModel @Inject constructor(
     ) {
         PassLogger.e(TAG, throwable ?: Exception(message), message)
         snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
+    }
+
+    fun onCopyAlias(alias: String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                clipboardManager.copyToClipboard(alias)
+            }
+            snackbarMessageRepository.emitSnackbarMessage(AliasCopiedToClipboard)
+        }
     }
 
     companion object {

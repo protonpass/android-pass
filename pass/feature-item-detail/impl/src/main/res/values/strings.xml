@@ -3,17 +3,15 @@
 
     <string name="action_open">Open</string>
     <string name="action_copy">Copy</string>
-    <string name="action_reveal_password">Reveal password</string>
-    <string name="action_conceal_password">Conceal password</string>
-
     <!-- Detail -->
     <string name="detail_init_error">Could not initialise the element</string>
     <string name="detail_item_not_loaded_error">The item has not been loaded</string>
+    <string name="top_bar_edit_button_text">Edit</string>
 
     <!-- Alias details -->
     <string name="field_alias_title">Alias address</string>
     <string name="alias_copied_to_clipboard">Alias copied</string>
-    <string name="alias_detail_field_mailboxes_title">Mailboxes</string>
+    <string name="alias_detail_field_mailboxes_title">Forwarded to</string>
 
     <!-- Note details -->
     <string name="field_detail_note_title">Note</string>
@@ -27,5 +25,24 @@
     <string name="field_username">Username</string>
     <string name="field_password">Password</string>
     <string name="field_websites">Websites</string>
-    <string name="totp_section_title">TOTP</string>
+    <string name="totp_section_title">OTP</string>
+
+    <string name="action_reveal_password">Reveal password</string>
+    <string name="action_conceal_password">Conceal password</string>
+
+    <string name="more_info_created">Created:</string>
+    <string name="more_info_modified">Modified:</string>
+    <string name="more_info_autofilled">Auto-filled:</string>
+    <string name="more_info_title">More info</string>
+    <string name="more_info_icon">More info icon</string>
+
+    <string name="top_bar_edit_icon_content_description">Edit icon</string>
+    <string name="alias_mailbox_forward_icon_content_description">Arrow forward icon</string>
+    <string name="alias_address_icon_content_description">Alias address icon</string>
+    <string name="alias_title_icon_content_description">Alias title icon</string>
+    <string name="note_section_icon_content_description">Note section icon</string>
+    <string name="password_key_icon_content_description">Password icon</string>
+    <string name="username_icon_content_description">Username icon</string>
+    <string name="totp_icon_content_description">OTP icon</string>
+    <string name="website_icon_content_description">Website icon</string>
 </resources>

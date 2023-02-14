@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -21,16 +22,25 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
+import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.login.bottomsheet.LoginDetailBottomSheetContents
 import proton.pass.domain.Item
+import proton.pass.domain.ItemId
+import proton.pass.domain.ItemType
+import proton.pass.domain.ShareId
 
-@OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class)
+@OptIn(
+    ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class,
+    ExperimentalComposeUiApi::class
+)
 @Composable
 fun LoginDetail(
     modifier: Modifier = Modifier,
-    topBar: @Composable () -> Unit,
     item: Item,
-    viewModel: LoginDetailViewModel = hiltViewModel()
+    viewModel: LoginDetailViewModel = hiltViewModel(),
+    onUpClick: () -> Unit,
+    onEditClick: (ShareId, ItemId, ItemType) -> Unit
 ) {
     LaunchedEffect(item) {
         viewModel.setItem(item)
@@ -62,7 +72,14 @@ fun LoginDetail(
         }
     ) {
         Scaffold(
-            topBar = topBar
+            topBar = {
+                ItemDetailTopBar(
+                    color = PassColors.PurpleAccent,
+                    onUpClick = onUpClick,
+                    onEditClick = { onEditClick(item.shareId, item.id, item.itemType) },
+                    onOptionsClick = {}
+                )
+            }
         ) { padding ->
             LoginContent(
                 modifier = modifier

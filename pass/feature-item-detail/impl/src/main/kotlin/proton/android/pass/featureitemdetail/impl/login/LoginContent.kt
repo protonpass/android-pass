@@ -1,15 +1,16 @@
 package proton.android.pass.featureitemdetail.impl.login
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableSet
-import proton.android.pass.composecomponents.impl.form.LinkedAppsList
-import proton.android.pass.featureitemdetail.impl.DetailNoteSection
+import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.composecomponents.impl.form.LinkedAppsListSection
+import proton.android.pass.featureitemdetail.impl.common.MoreInfo
+import proton.android.pass.featureitemdetail.impl.common.NoteSection
 
 @Composable
 fun LoginContent(
@@ -22,39 +23,32 @@ fun LoginContent(
     onWebsiteLongClicked: (String) -> Unit,
     onCopyTotpClick: (String) -> Unit
 ) {
-    Column(modifier.padding(horizontal = 16.dp)) {
-        LoginUsernameRow(
-            username = state.username,
-            onUsernameClick = onUsernameClick
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        LoginPasswordRow(
-            password = state.password,
+    Column(
+        modifier = modifier.padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        LoginTitle(title = state.title)
+        MainLoginSection(
+            state = state,
+            onUsernameClick = onUsernameClick,
             onTogglePasswordClick = onTogglePasswordClick,
-            onCopyPasswordClick = onCopyPasswordClick
+            onCopyPasswordClick = onCopyPasswordClick,
+            onCopyTotpClick = onCopyTotpClick
         )
-        if (state.websites.isNotEmpty()) {
-            Spacer(modifier = Modifier.height(12.dp))
-            WebsiteSection(
-                modifier = Modifier.padding(start = 16.dp),
-                websites = state.websites,
-                onWebsiteClicked = onWebsiteClicked,
-                onWebsiteLongClicked = onWebsiteLongClicked
-            )
-        }
-        Spacer(modifier = Modifier.height(28.dp))
-        DetailNoteSection(
-            modifier = Modifier.padding(start = 16.dp),
-            text = state.note
+        WebsiteSection(
+            websites = state.websites,
+            onWebsiteClicked = onWebsiteClicked,
+            onWebsiteLongClicked = onWebsiteLongClicked
         )
-        if (state.totpUiState != null) {
-            TotpSection(state = state.totpUiState) { onCopyTotpClick(it) }
-        }
-        Spacer(modifier = Modifier.height(28.dp))
-        LinkedAppsList(
+        NoteSection(
+            text = state.note,
+            accentColor = PassColors.PurpleAccent
+        )
+        LinkedAppsListSection(
             list = state.packageNames.toImmutableSet(),
             isEditable = false,
             onLinkedAppDelete = {}
         )
+        MoreInfo()
     }
 }

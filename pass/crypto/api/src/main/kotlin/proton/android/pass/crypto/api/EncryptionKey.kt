@@ -1,4 +1,4 @@
-package proton.android.pass.crypto.impl.context
+package proton.android.pass.crypto.api
 
 import kotlin.random.Random
 
@@ -9,9 +9,11 @@ data class EncryptionKey(val key: ByteArray) {
         }
     }
 
+    fun clone(): EncryptionKey = EncryptionKey(key.clone())
+
     companion object {
         private const val keySize = 32
 
-        fun generate(): EncryptionKey = EncryptionKey(Random.Default.nextBytes(keySize))
+        fun generate(): EncryptionKey = EncryptionKey(Random.nextBytes(keySize))
     }
 }

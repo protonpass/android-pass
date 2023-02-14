@@ -32,9 +32,8 @@ object TestShare {
                 )
             ),
             content = null,
-            nameKeyId = null,
+            contentRotationId = null,
             expirationTime = null,
             createTime = Date(),
-            keys = emptyList()
         )
 }

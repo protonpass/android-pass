@@ -1,6 +1,7 @@
 package proton.android.pass.crypto.impl.context
 
 import org.junit.Test
+import proton.android.pass.crypto.api.EncryptionKey
 import kotlin.test.assertEquals
 
 class EncryptionContextImplTest {

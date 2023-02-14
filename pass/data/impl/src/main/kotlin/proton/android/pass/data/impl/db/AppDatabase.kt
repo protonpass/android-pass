@@ -1,7 +1,6 @@
 package proton.android.pass.data.impl.db
 
 import android.content.Context
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.TypeConverters
 import androidx.room.migration.Migration
@@ -46,11 +45,10 @@ import me.proton.core.usersettings.data.entity.OrganizationEntity
 import me.proton.core.usersettings.data.entity.OrganizationKeysEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
-import proton.android.pass.data.impl.db.entities.ItemKeyEntity
 import proton.android.pass.data.impl.db.entities.PassEventEntity
 import proton.android.pass.data.impl.db.entities.SelectedShareEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
-import proton.android.pass.data.impl.db.entities.VaultKeyEntity
+import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 
 @Database(
     entities = [
@@ -76,17 +74,12 @@ import proton.android.pass.data.impl.db.entities.VaultKeyEntity
         UserSettingsEntity::class,
         // Pass
         ItemEntity::class,
-        ItemKeyEntity::class,
         ShareEntity::class,
-        VaultKeyEntity::class,
+        ShareKeyEntity::class,
         PassEventEntity::class,
         SelectedShareEntity::class
     ],
-    autoMigrations = [
-        AutoMigration(from = 4, to = 5),
-        AutoMigration(from = 5, to = 6),
-        AutoMigration(from = 6, to = 7)
-    ],
+    autoMigrations = [],
     version = AppDatabase.VERSION,
     exportSchema = true
 )
@@ -118,15 +111,10 @@ abstract class AppDatabase :
     UserSettingsDatabase {
 
     companion object {
-        const val VERSION = 8
+        const val VERSION = 1
         const val DB_NAME = "db-passkey"
 
-        val migrations: List<Migration> = listOf(
-            AppDatabaseMigrations.MIGRATION_1_2,
-            AppDatabaseMigrations.MIGRATION_2_3,
-            AppDatabaseMigrations.MIGRATION_3_4,
-            AppDatabaseMigrations.MIGRATION_7_8,
-        )
+        val migrations: List<Migration> = listOf()
 
         fun buildDatabase(context: Context): AppDatabase =
             databaseBuilder<AppDatabase>(context, DB_NAME)

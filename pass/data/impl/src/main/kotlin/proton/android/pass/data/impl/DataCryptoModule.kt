@@ -4,6 +4,8 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.data.impl.crypto.ReencryptShareContents
+import proton.android.pass.data.impl.crypto.ReencryptShareContentsImpl
 import proton.android.pass.data.impl.crypto.ReencryptShareEntityContents
 import proton.android.pass.data.impl.crypto.ReencryptShareEntityContentsImpl
 import proton.android.pass.data.impl.crypto.ShareEntityToShare
@@ -26,4 +28,8 @@ abstract class DataCryptoModule {
         impl: ReencryptShareEntityContentsImpl
     ): ReencryptShareEntityContents
 
+    @Binds
+    abstract fun bindReencryptShareContents(
+        impl: ReencryptShareContentsImpl
+    ): ReencryptShareContents
 }

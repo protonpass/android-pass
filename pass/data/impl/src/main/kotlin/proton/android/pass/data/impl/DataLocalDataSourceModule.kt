@@ -10,8 +10,8 @@ import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.local.LocalShareDataSourceImpl
-import proton.android.pass.data.impl.local.LocalVaultItemKeyDataSource
-import proton.android.pass.data.impl.local.LocalVaultItemKeyDataSourceImpl
+import proton.android.pass.data.impl.local.LocalShareKeyDataSource
+import proton.android.pass.data.impl.local.LocalShareKeyDataSourceImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -24,7 +24,7 @@ abstract class DataLocalDataSourceModule {
     abstract fun bindLocalShareDataSource(impl: LocalShareDataSourceImpl): LocalShareDataSource
 
     @Binds
-    abstract fun bindLocalVaultItemKeyDataSource(impl: LocalVaultItemKeyDataSourceImpl): LocalVaultItemKeyDataSource
+    abstract fun bindLocalShareKeyDataSource(impl: LocalShareKeyDataSourceImpl): LocalShareKeyDataSource
 
     @Binds
     abstract fun bindLocalEventDataSource(impl: LocalEventDataSourceImpl): LocalEventDataSource

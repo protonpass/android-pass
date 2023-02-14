@@ -8,32 +8,32 @@ import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.UserEntity
 
 @Entity(
-    tableName = ItemKeyEntity.TABLE,
-    primaryKeys = [ItemKeyEntity.Columns.ID, ItemKeyEntity.Columns.SHARE_ID],
+    tableName = ShareKeyEntity.TABLE,
+    primaryKeys = [ShareKeyEntity.Columns.ROTATION, ShareKeyEntity.Columns.SHARE_ID],
     foreignKeys = [
         ForeignKey(
             entity = AddressEntity::class,
             parentColumns = [ExternalColumns.ADDRESS_ID],
-            childColumns = [ItemEntity.Columns.ADDRESS_ID],
+            childColumns = [ShareKeyEntity.Columns.ADDRESS_ID],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = UserEntity::class,
             parentColumns = [ExternalColumns.USER_ID],
-            childColumns = [ItemEntity.Columns.USER_ID],
+            childColumns = [ShareKeyEntity.Columns.USER_ID],
             onDelete = ForeignKey.CASCADE
         ),
         ForeignKey(
             entity = ShareEntity::class,
             parentColumns = [ShareEntity.Columns.ID],
-            childColumns = [ItemKeyEntity.Columns.SHARE_ID],
+            childColumns = [ShareKeyEntity.Columns.SHARE_ID],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
-data class ItemKeyEntity(
-    @ColumnInfo(name = Columns.ID)
-    val rotationId: String,
+data class ShareKeyEntity(
+    @ColumnInfo(name = Columns.ROTATION)
+    val rotation: Long,
     @ColumnInfo(name = Columns.USER_ID)
     val userId: String,
     @ColumnInfo(name = Columns.ADDRESS_ID)
@@ -42,30 +42,25 @@ data class ItemKeyEntity(
     val shareId: String,
     @ColumnInfo(name = Columns.KEY)
     val key: String,
-    @ColumnInfo(name = Columns.KEY_PASSPHRASE)
-    val keyPassphrase: String?,
-    @ColumnInfo(name = Columns.KEY_SIGNATURE)
-    val keySignature: String,
     @ColumnInfo(name = Columns.CREATE_TIME)
     val createTime: Long,
 
-    // Keystore Encrypted contents
-    @ColumnInfo(name = Columns.ENCRYPTED_KEY_PASSPHRASE)
-    val encryptedKeyPassphrase: EncryptedByteArray?
+    // Keystore Encrypted key
+    @ColumnInfo(name = Columns.SYMMETRICALLY_ENCRYPTED_KEY)
+    val symmetricallyEncryptedKey: EncryptedByteArray
 ) {
     object Columns {
         const val ID = "id"
         const val USER_ID = "user_id"
         const val ADDRESS_ID = "address_id"
         const val SHARE_ID = "share_id"
+        const val ROTATION = "rotation"
         const val KEY = "key"
-        const val KEY_PASSPHRASE = "key_passphrase"
-        const val KEY_SIGNATURE = "key_signature"
         const val CREATE_TIME = "create_time"
-        const val ENCRYPTED_KEY_PASSPHRASE = "encrypted_passphrase"
+        const val SYMMETRICALLY_ENCRYPTED_KEY = "symmetrically_encrypted_key"
     }
 
     companion object {
-        const val TABLE = "ItemKeyEntity"
+        const val TABLE = "ShareKeyEntity"
     }
 }

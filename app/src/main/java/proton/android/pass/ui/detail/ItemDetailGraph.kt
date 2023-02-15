@@ -1,16 +1,35 @@
 package proton.android.pass.ui.detail
 
+import androidx.compose.animation.AnimatedContentScope.SlideDirection.Companion.Left
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.featureitemdetail.impl.ItemDetailScreen
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.ui.navigation.AppNavItem
 import proton.pass.domain.ItemType
-import proton.android.pass.featureitemdetail.impl.ItemDetailScreen
+
+private const val TRANSITION_TIME_MILLIS = 500
+private const val FADE_DELAY_TIME_MILLIS = 100
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.itemDetailGraph(nav: AppNavigator) {
-    composable(AppNavItem.ViewItem) {
+    composable(
+        navItem = AppNavItem.ViewItem,
+        enterTransition = {
+            fadeIn(tween(TRANSITION_TIME_MILLIS, delayMillis = FADE_DELAY_TIME_MILLIS)) +
+                slideIntoContainer(Left, tween(TRANSITION_TIME_MILLIS))
+        },
+        exitTransition = {
+            fadeOut(tween(TRANSITION_TIME_MILLIS, delayMillis = FADE_DELAY_TIME_MILLIS)) +
+                slideOutOfContainer(Left, tween(TRANSITION_TIME_MILLIS))
+        },
+        popEnterTransition = null,
+        popExitTransition = null
+    ) {
         ItemDetailScreen(
             onUpClick = { nav.onBackClick() },
             onEditClick = { shareId, itemId, itemType ->

@@ -23,6 +23,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.accompanist.drawablepainter)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)

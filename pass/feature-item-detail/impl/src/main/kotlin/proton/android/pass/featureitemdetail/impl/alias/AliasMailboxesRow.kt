@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.SectionSubtitle
-import proton.android.pass.featureitemdetail.impl.SectionTitle
+import proton.android.pass.featureitemdetail.impl.common.SectionTitle
 import proton.pass.domain.AliasMailbox
 
 @Composable

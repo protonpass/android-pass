@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemdetail.impl
+package proton.android.pass.featureitemdetail.impl.common
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

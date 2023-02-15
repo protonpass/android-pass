@@ -35,22 +35,16 @@ data class ItemRevision(
     val revision: Long,
     @SerialName("ContentFormatVersion")
     val contentFormatVersion: Int,
-    @SerialName("RotationID")
-    val rotationId: String,
+    @SerialName("KeyRotation")
+    val keyRotation: Long,
     @SerialName("Content")
     val content: String,
-    @SerialName("UserSignature")
-    val userSignature: String,
-    @SerialName("ItemKeySignature")
-    val itemKeySignature: String,
+    @SerialName("ItemKey")
+    val itemKey: String?,
     @SerialName("State")
     val state: Int,
-    @SerialName("SignatureEmail")
-    val signatureEmail: String,
     @SerialName("AliasEmail")
     val aliasEmail: String?,
-    @SerialName("Labels")
-    val labels: List<String>,
     @SerialName("CreateTime")
     val createTime: Long,
     @SerialName("ModifyTime")

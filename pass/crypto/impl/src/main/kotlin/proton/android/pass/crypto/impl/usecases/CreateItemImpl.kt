@@ -1,71 +1,52 @@
 package proton.android.pass.crypto.impl.usecases
 
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.pgp.Unarmored
-import me.proton.core.crypto.common.pgp.dataPacket
-import me.proton.core.crypto.common.pgp.keyPacket
-import me.proton.core.key.domain.decryptSessionKey
-import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.key.domain.signData
-import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.UserAddress
+import org.apache.commons.codec.binary.Base64
+import proton.android.pass.crypto.api.EncryptionKey
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.CreateItem
+import proton.android.pass.crypto.api.usecases.CreateItemPayload
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.crypto.impl.extensions.serializeToProto
 import proton.pass.domain.ItemContents
-import proton.pass.domain.key.ItemKey
-import proton.pass.domain.key.VaultKey
-import proton.pass.domain.key.publicKey
-import proton.pass.domain.key.usePrivateKey
+import proton.pass.domain.key.ShareKey
 import javax.inject.Inject
 
 class CreateItemImpl @Inject constructor(
-    private val cryptoContext: CryptoContext
-) : CreateItem, BaseCryptoOperation(cryptoContext) {
+    private val encryptionContextProvider: EncryptionContextProvider,
+) : CreateItem {
 
     override fun create(
-        vaultKey: VaultKey,
-        itemKey: ItemKey,
         userAddress: UserAddress,
+        shareKey: ShareKey,
         itemContents: ItemContents
-    ): EncryptedCreateItem {
+    ): CreateItemPayload {
         val serializedItem = itemContents.serializeToProto().toByteArray()
-        val vaultKeyPublicKey = vaultKey.publicKey(cryptoContext)
+        val itemKey = EncryptionKey.generate()
 
-        val (encryptedContents, vaultKeyPacket) = encryptContent(serializedItem, vaultKeyPublicKey)
-        val sessionKey = vaultKey.usePrivateKey(cryptoContext) {
-            decryptSessionKey(vaultKeyPacket)
+        val encryptedContents = encryptionContextProvider.withEncryptionContext(itemKey) {
+            encrypt(serializedItem, EncryptionTag.ItemContent)
         }
 
-        val userSignature = userAddress.useKeys(cryptoContext) { signData(serializedItem) }
-        val (vaultKeyPacketSignature, itemKeySignature) = itemKey.usePrivateKey(cryptoContext) {
-            Pair(signData(vaultKeyPacket), signData(serializedItem))
+        val decryptedShareKey = encryptionContextProvider.withEncryptionContext {
+            EncryptionKey(decrypt(shareKey.key))
         }
 
-        val encryptedUserSignature =
-            cryptoContext.pgpCrypto.encryptData(unarmor(userSignature), sessionKey)
-        val encryptedItemSignature =
-            cryptoContext.pgpCrypto.encryptData(unarmor(itemKeySignature), sessionKey)
+        val encryptedItemKey = encryptionContextProvider.withEncryptionContext(decryptedShareKey) {
+            encrypt(itemKey.key, EncryptionTag.ItemKey)
+        }
 
-        return EncryptedCreateItem(
-            rotationId = vaultKey.rotationId,
-            labels = emptyList(),
-            vaultKeyPacket = b64(vaultKeyPacket),
-            vaultKeyPacketSignature = b64(unarmor(vaultKeyPacketSignature)),
+        val request = EncryptedCreateItem(
+            keyRotation = shareKey.rotation,
             contentFormatVersion = CONTENT_FORMAT_VERSION,
-            userSignature = b64(encryptedUserSignature),
-            itemKeySignature = b64(encryptedItemSignature),
-            content = b64(encryptedContents)
+            content = Base64.encodeBase64String(encryptedContents.array),
+            itemKey = Base64.encodeBase64String(encryptedItemKey.array)
         )
-    }
-
-    private fun encryptContent(
-        serializedItem: ByteArray,
-        vaultPublicKey: PublicKey
-    ): Pair<Unarmored, Unarmored> {
-        val encrypted = cryptoContext.pgpCrypto.encryptData(serializedItem, vaultPublicKey.key)
-        val packets = cryptoContext.pgpCrypto.getEncryptedPackets(encrypted)
-        return Pair(packets.dataPacket(), packets.keyPacket())
+        return CreateItemPayload(
+            request = request,
+            itemKey = itemKey
+        )
     }
 
     companion object {

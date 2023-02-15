@@ -13,15 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toImmutableSet
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.buttons.PassOutlinedButton
-import proton.android.pass.composecomponents.impl.form.LinkedAppsListSection
 import proton.android.pass.composecomponents.impl.form.NoteInput
 import proton.android.pass.composecomponents.impl.form.TitleInput
 import proton.android.pass.featurecreateitem.impl.R
 
+@Suppress("UnusedPrivateMember")
 @Composable
 internal fun LoginItemForm(
     modifier: Modifier = Modifier,
@@ -98,11 +97,11 @@ internal fun LoginItemForm(
         )
         if (isUpdate) {
             Spacer(modifier = Modifier.height(20.dp))
-            LinkedAppsListSection(
+/*            LinkedAppsListSection(
                 list = loginItem.packageNames.toImmutableSet(),
                 isEditable = true,
                 onLinkedAppDelete = onLinkedAppDelete
-            )
+            )*/
         }
         if (!isUpdate) {
             selectedShare?.name?.let {

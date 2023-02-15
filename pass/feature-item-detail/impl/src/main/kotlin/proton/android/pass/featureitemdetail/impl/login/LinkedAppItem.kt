@@ -15,15 +15,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
-import me.proton.core.presentation.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationIcon
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationName
+import proton.android.pass.featureitemdetail.impl.R
 
 @Composable
 fun LinkedAppItem(
@@ -41,11 +42,11 @@ fun LinkedAppItem(
         val iconDrawable = remember(packageName) { getApplicationIcon(context, packageName) }
         val appName = remember(packageName) { getApplicationName(context, packageName) }
         when (iconDrawable) {
-            None -> Spacer(modifier = Modifier.width(24.dp))
+            None -> Spacer(modifier = Modifier.width(40.dp))
             is Some -> Image(
-                modifier = Modifier.width(24.dp),
+                modifier = Modifier.width(40.dp),
                 painter = rememberDrawablePainter(drawable = iconDrawable.value),
-                contentDescription = null
+                contentDescription = stringResource(R.string.linked_app_icon_content_description)
             )
         }
         Text(
@@ -56,7 +57,7 @@ fun LinkedAppItem(
         if (isEditable) {
             IconButton(onClick = { onLinkedAppDelete(packageName) }) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_proton_minus_circle),
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_minus_circle),
                     contentDescription = null,
                     tint = ProtonTheme.colors.iconNorm
                 )

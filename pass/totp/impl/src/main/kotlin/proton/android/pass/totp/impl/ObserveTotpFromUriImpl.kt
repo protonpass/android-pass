@@ -10,10 +10,9 @@ class ObserveTotpFromUriImpl @Inject constructor(
     private val totpManager: TotpManager
 ) : ObserveTotpFromUri {
 
-    override fun invoke(uri: String): Result<Flow<ObserveTotpFromUri.TotpWrapper>> =
+    override fun invoke(uri: String): Result<Flow<TotpManager.TotpWrapper>> =
         totpManager.parse(uri)
             .mapCatching { spec ->
-                totpManager.observeCode(spec)
-                    .map { ObserveTotpFromUri.TotpWrapper(it.first, it.second) }
+                totpManager.observeCode(spec).map { it }
             }
 }

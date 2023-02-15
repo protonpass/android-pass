@@ -59,7 +59,7 @@ coroutines = "1.6.4"
 datetime = "0.4.0"
 serializationJson = "1.4.1"
 # Sentry
-sentry = "6.13.0"
+sentry = "6.13.1"
 # Showkase
 showkase = "1.0.0-beta13"
 # Squareup

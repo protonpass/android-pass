@@ -238,7 +238,7 @@ AAC2QAD/YpITra4HaZZ3NBDmWhYjD32FTD1flWv9Y+eGMjT20bwA/2oVIexv
             itemId = "EHVloycgIIycr6hFVQCEMcV5nUTALVPL38U3GbrRJMRRq90byv35G31JchJFv_9LvMhIF3lYDLSD-KMg4eGWDw==",
             revision = 1,
             contentFormatVersion = 1,
-            rotationId = ROTATION_ID,
+            keyRotation = ROTATION_ID,
             content = "wV4Doovy8bj7oowSAQdAw/FIEiFiaoR6xLQUs3bPrajvTco4kvSxTCLfnTlVGkowS3wo2JUJjZfgN206Bsr3VY3Yt293z80pk5dK86STnVqmzzY1KI3TKlfsKVdo2KTB0mcB8fRtRuK1OQSbzZUk7RAYJpJKjdS7QogJT9hrvD0LKhl53m0SiYXVjyX+C2PL1K8l1K6oDz3GKluiVhvSnJ0jTgfQhqnW7eF9b8+tyb8VtOdLk+P+hQrSVdr/beAj8DugK6+Ipq+X",
             userSignature = "wV4Doovy8bj7oowSAQdAw/FIEiFiaoR6xLQUs3bPrajvTco4kvSxTCLfnTlVGkowS3wo2JUJjZfgN206Bsr3VY3Yt293z80pk5dK86STnVqmzzY1KI3TKlfsKVdo2KTB0qgBhRabYOMWtD4Cx36hYBvBtFhZUcl0ChrzOsf01F3cwjALjgjrzUC2ehVkW+TqTd+E5D71jSHt+WInUtk8h6Hc9W8Lk4FTAHnQQtUSFhKZqriGktTKBsUL0J35f8YJunQ/fq1JdPjZDxRdWPIv45pnusdcQhVxEGC1CWuMnGV+x6aeAecjmMvVKkKEp2xZJHkDpmRzpdDUH61Ark7V6IWvTRsDrvHxzdQ=",
             itemKeySignature = "wV4Doovy8bj7oowSAQdAw/FIEiFiaoR6xLQUs3bPrajvTco4kvSxTCLfnTlVGkowS3wo2JUJjZfgN206Bsr3VY3Yt293z80pk5dK86STnVqmzzY1KI3TKlfsKVdo2KTB0qgBcp4cYQJ77OR3/zwchup55UqL1AHxa06BRojLlvvCr/WRp4wTmGf7wFuAQPbwTrm4GUVNp4zBuDo+vqwvJAWJE8FFhdqf78CvDaSVBodX1Sjou3aH95wEOfLMuYnpoqSwhn8y8jvhDr86XaZfIvtqWDW5R9Tl8NSIwYuVhgSn8YCiGOZQwn5c2ryF78r8Y0Vpp9QX6A+rzdzUVF8uWV/cPV6bokyIM0Y=",

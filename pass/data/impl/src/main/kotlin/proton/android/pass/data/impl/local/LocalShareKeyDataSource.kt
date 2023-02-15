@@ -12,5 +12,6 @@ interface LocalShareKeyDataSource {
         shareId: ShareId,
         rotation: Long
     ): Flow<ShareKeyEntity?>
+    fun getLatestKeyForShare(shareId: ShareId): Flow<ShareKeyEntity>
     suspend fun storeShareKeys(entities: List<ShareKeyEntity>)
 }

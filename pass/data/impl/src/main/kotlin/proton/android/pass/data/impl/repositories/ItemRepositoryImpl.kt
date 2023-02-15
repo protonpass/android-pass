@@ -10,12 +10,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.entity.key.PublicKey
-import me.proton.core.key.domain.extension.publicKeyRing
-import me.proton.core.key.domain.repository.PublicAddressRepository
-import me.proton.core.key.domain.repository.Source
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
@@ -38,9 +33,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.repositories.KeyPacketRepository
 import proton.android.pass.data.api.repositories.ShareRepository
-import proton.android.pass.data.api.repositories.VaultKeyRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -67,32 +60,28 @@ import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemState
 import proton.pass.domain.ItemType
-import proton.pass.domain.KeyPacket
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
 import proton.pass.domain.entity.NewAlias
 import proton.pass.domain.entity.PackageName
-import proton.pass.domain.key.ItemKey
-import proton.pass.domain.key.VaultKey
+import proton.pass.domain.key.ShareKey
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
 @Suppress("LongParameterList", "TooManyFunctions", "LargeClass")
 class ItemRepositoryImpl @Inject constructor(
     private val database: PassDatabase,
-    private val cryptoContext: CryptoContext,
     private val accountManager: AccountManager,
     override val userAddressRepository: UserAddressRepository,
-    private val keyRepository: PublicAddressRepository,
-    private val vaultKeyRepository: VaultKeyRepository,
     private val shareRepository: ShareRepository,
     private val createItem: CreateItem,
     private val updateItem: UpdateItem,
     private val localItemDataSource: LocalItemDataSource,
     private val remoteItemDataSource: RemoteItemDataSource,
-    private val keyPacketRepository: KeyPacketRepository,
+    private val shareKeyRepository: ShareKeyRepository,
     private val openItem: OpenItem,
+    private val itemKeyRepository: ItemKeyRepository,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : BaseRepository(userAddressRepository), ItemRepository {
 
@@ -103,32 +92,22 @@ class ItemRepositoryImpl @Inject constructor(
         contents: ItemContents
     ): LoadingResult<Item> = withContext(Dispatchers.IO) {
         withUserAddress(userId) { userAddress ->
-            val result =
-                vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
-            when (result) {
-                is LoadingResult.Error -> return@withUserAddress LoadingResult.Error(result.exception)
-                LoadingResult.Loading -> return@withUserAddress LoadingResult.Loading
-                is LoadingResult.Success -> Unit
-            }
-            val (vaultKey, itemKey) = result.data
+            val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
 
             val body = try {
-                createItem.create(vaultKey, itemKey, userAddress, contents)
+                createItem.create(userAddress, shareKey, contents)
             } catch (e: RuntimeException) {
                 PassLogger.w(TAG, e, "Error creating item")
                 return@withUserAddress LoadingResult.Error(e)
             }
 
-            remoteItemDataSource.createItem(userId, share.id, body.toRequest())
+            remoteItemDataSource.createItem(userId, share.id, body.request.toRequest())
                 .map { itemResponse ->
-                    val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
                     val entity = itemResponseToEntity(
                         userAddress,
                         itemResponse,
                         share,
-                        userPublicKeys,
-                        listOf(vaultKey),
-                        listOf(itemKey)
+                        listOf(shareKey)
                     )
                     localItemDataSource.upsertItem(entity)
 
@@ -145,35 +124,25 @@ class ItemRepositoryImpl @Inject constructor(
         newAlias: NewAlias
     ): LoadingResult<Item> = withContext(Dispatchers.IO) {
         withUserAddress(userId) { userAddress ->
-            val result =
-                vaultKeyRepository.getLatestVaultItemKey(userAddress, share.id, share.signingKey)
-            when (result) {
-                is LoadingResult.Error -> return@withUserAddress LoadingResult.Error(result.exception)
-                LoadingResult.Loading -> return@withUserAddress LoadingResult.Loading
-                is LoadingResult.Success -> Unit
-            }
-            val (vaultKey, itemKey) = result.data
+            val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
             val itemContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
-            val body = createItem.create(vaultKey, itemKey, userAddress, itemContents)
+            val body = createItem.create(userAddress, shareKey, itemContents)
 
             val mailboxIds = newAlias.mailboxes.map { it.id }
             val requestBody = CreateAliasRequest(
                 prefix = newAlias.prefix,
                 signedSuffix = newAlias.suffix.signedSuffix,
                 mailboxes = mailboxIds,
-                item = body.toRequest()
+                item = body.request.toRequest()
             )
 
             remoteItemDataSource.createAlias(userId, share.id, requestBody)
                 .map { itemResponse ->
-                    val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
                     val entity = itemResponseToEntity(
                         userAddress,
                         itemResponse,
                         share,
-                        userPublicKeys,
-                        listOf(vaultKey),
-                        listOf(itemKey)
+                        listOf(shareKey)
                     )
                     localItemDataSource.upsertItem(entity)
                     encryptionContextProvider.withEncryptionContext {
@@ -465,27 +434,14 @@ class ItemRepositoryImpl @Inject constructor(
 
             val userAddress = requireNotNull(userAddressRepository.getAddress(userId, addressId))
             val share = getShare(userId, shareId)
-
-            val userEmails = events.updatedItems
-                .map { it.signatureEmail }
-                .distinct()
-            val userKeys = getUserKeys(userId, userEmails)
-
-            val keys = events.updatedItems
-                .map { it.rotationId }
-                .distinct()
-                .associateWith { rotationId -> getVaultKeyItemKey(userAddress, share, rotationId) }
+            val shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
 
             val updateAsEntities = events.updatedItems.map {
-                val verifyKeys = requireNotNull(userKeys[it.signatureEmail])
-                val (vaultKey, itemKey) = requireNotNull(keys[it.rotationId])
                 itemResponseToEntity(
                     userAddress,
                     it.toItemRevision(),
                     share,
-                    verifyKeys,
-                    listOf(vaultKey),
-                    listOf(itemKey)
+                    shareKeys
                 )
             }
 
@@ -527,44 +483,6 @@ class ItemRepositoryImpl @Inject constructor(
             is LoadingResult.Error -> throw share.exception
             LoadingResult.Loading -> throw IllegalStateException("shareRepository.getById cannot return Loading")
         } ?: throw IllegalStateException("Could not find share [shareId=${shareId.id}]")
-
-    private suspend fun getUserKeys(userId: UserId, emails: List<String>) = emails
-        .associateWith {
-            val publicAddress =
-                keyRepository.getPublicAddress(
-                    userId,
-                    it,
-                    source = Source.LocalIfAvailable
-                )
-            publicAddress.keys.publicKeyRing().keys
-        }
-
-    @Suppress("ThrowsCount")
-    private suspend fun getVaultKeyItemKey(
-        userAddress: UserAddress,
-        share: Share,
-        rotationId: String
-    ): Pair<VaultKey, ItemKey> {
-        val vaultKeyResult =
-            vaultKeyRepository.getVaultKeyById(userAddress, share.id, share.signingKey, rotationId)
-        val vaultKey = when (vaultKeyResult) {
-            is LoadingResult.Success -> vaultKeyResult.data
-            is LoadingResult.Error -> throw vaultKeyResult.exception
-            LoadingResult.Loading ->
-                throw IllegalStateException("vaultKeyRepository.getVaultKeyById cannot return Loading")
-        }
-
-        val itemKeyResult =
-            vaultKeyRepository.getItemKeyById(userAddress, share.id, share.signingKey, rotationId)
-        val itemKey = when (itemKeyResult) {
-            is LoadingResult.Success -> itemKeyResult.data
-            is LoadingResult.Error -> throw itemKeyResult.exception
-            LoadingResult.Loading ->
-                throw IllegalStateException("vaultKeyRepository.getItemKeyById cannot return Loading")
-        }
-
-        return Pair(vaultKey, itemKey)
-    }
 
     private fun updateItemContents(
         item: Item,
@@ -627,54 +545,22 @@ class ItemRepositoryImpl @Inject constructor(
         item: Item,
         itemContents: ItemV1.Item
     ): LoadingResult<Item> {
-        val keyPacketResult: LoadingResult<KeyPacket> =
-            keyPacketRepository.getLatestKeyPacketForItem(userId, share.id, item.id)
-        when (keyPacketResult) {
-            is LoadingResult.Error -> return LoadingResult.Error(keyPacketResult.exception)
-            LoadingResult.Loading -> return LoadingResult.Loading
-            is LoadingResult.Success -> Unit
-        }
         return withUserAddress(userId) { userAddress ->
-            val vaultKeyResult: LoadingResult<VaultKey> = vaultKeyRepository.getVaultKeyById(
-                userAddress,
-                share.id,
-                share.signingKey,
-                keyPacketResult.data.rotationId
-            )
-            when (vaultKeyResult) {
-                is LoadingResult.Error -> return@withUserAddress LoadingResult.Error(vaultKeyResult.exception)
-                LoadingResult.Loading -> return@withUserAddress LoadingResult.Loading
-                is LoadingResult.Success -> Unit
-            }
-            val itemKeyResult: LoadingResult<ItemKey> = vaultKeyRepository.getItemKeyById(
-                userAddress,
-                share.id,
-                share.signingKey,
-                keyPacketResult.data.rotationId
-            )
-            when (itemKeyResult) {
-                is LoadingResult.Error -> return@withUserAddress LoadingResult.Error(itemKeyResult.exception)
-                LoadingResult.Loading -> return@withUserAddress LoadingResult.Loading
-                is LoadingResult.Success -> Unit
-            }
+            val (shareKey, itemKey) = itemKeyRepository
+                .getLatestItemKey(userId, userAddress.addressId, share.id, item.id)
+                .first()
             val body = updateItem.createRequest(
-                vaultKeyResult.data,
-                itemKeyResult.data,
-                keyPacketResult.data,
-                userAddress,
+                itemKey,
                 itemContents,
                 item.revision
             )
             remoteItemDataSource.updateItem(userId, share.id, item.id, body.toRequest())
                 .map { itemResponse ->
-                    val userPublicKeys = userAddress.publicKeyRing(cryptoContext).keys
                     val entity = itemResponseToEntity(
                         userAddress,
                         itemResponse,
                         share,
-                        userPublicKeys,
-                        listOf(vaultKeyResult.data),
-                        listOf(itemKeyResult.data)
+                        listOf(shareKey)
                     )
                     localItemDataSource.upsertItem(entity)
                     encryptionContextProvider.withEncryptionContext {
@@ -734,20 +620,7 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         items: List<ItemRevision>
     ): LoadingResult<List<Item>> {
-        val userEmails = items
-            .map { it.signatureEmail }
-            .distinct()
-        val userKeys = getUserKeys(userAddress.userId, userEmails)
-
-        val (vaultKeys, itemKeys) = when (
-            val res =
-                getVaultKeysItemKeys(userAddress, share, items)
-        ) {
-            LoadingResult.Loading -> return LoadingResult.Loading
-            is LoadingResult.Error -> return res
-            is LoadingResult.Success -> res.data
-        }
-
+        val shareKeys = shareKeyRepository.getShareKeys(userAddress.userId, userAddress.addressId, share.id).first()
         return encryptionContextProvider.withEncryptionContextSuspendable {
             val encryptionContext = this@withEncryptionContextSuspendable
             withContext(Dispatchers.Default) {
@@ -758,9 +631,7 @@ class ItemRepositoryImpl @Inject constructor(
                             userAddress = userAddress,
                             share = share,
                             item = item,
-                            vaultKeys = vaultKeys,
-                            itemKeys = itemKeys,
-                            userKeys = userKeys
+                            shareKeys = shareKeys
                         )
                     }
                 }.awaitAll().transpose()
@@ -773,63 +644,18 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    @Suppress("ReturnCount")
-    private suspend fun getVaultKeysItemKeys(
-        userAddress: UserAddress,
-        share: Share,
-        items: List<ItemRevision>
-    ): LoadingResult<Pair<Map<String, VaultKey>, Map<String, ItemKey>>> {
-        val rotations = items.map { it.rotationId }.distinct()
-        val vaultKeys = rotations.associateWith { rotation ->
-            val vaultKeyResult: LoadingResult<VaultKey> = vaultKeyRepository.getVaultKeyById(
-                userAddress,
-                share.id,
-                share.signingKey,
-                rotation
-            )
-            when (vaultKeyResult) {
-                is LoadingResult.Error -> return LoadingResult.Error(vaultKeyResult.exception)
-                LoadingResult.Loading -> return LoadingResult.Loading
-                is LoadingResult.Success -> vaultKeyResult.data
-            }
-        }
-        val itemKeys = rotations.associateWith { rotation ->
-            val itemKeyResult: LoadingResult<ItemKey> = vaultKeyRepository.getItemKeyById(
-                userAddress,
-                share.id,
-                share.signingKey,
-                rotation
-            )
-            when (itemKeyResult) {
-                is LoadingResult.Error -> return LoadingResult.Error(itemKeyResult.exception)
-                LoadingResult.Loading -> return LoadingResult.Loading
-                is LoadingResult.Success -> itemKeyResult.data
-            }
-        }
-
-        return LoadingResult.Success(vaultKeys to itemKeys)
-    }
-
     private fun decryptItem(
         encryptionContext: EncryptionContext,
         userAddress: UserAddress,
         share: Share,
         item: ItemRevision,
-        vaultKeys: Map<String, VaultKey>,
-        itemKeys: Map<String, ItemKey>,
-        userKeys: Map<String, List<PublicKey>>
+        shareKeys: List<ShareKey>
     ): LoadingResult<Pair<Item, ItemEntity>> {
-        val verifyKeys = requireNotNull(userKeys[item.signatureEmail])
-        val vaultKey = requireNotNull(vaultKeys[item.rotationId])
-        val itemKey = requireNotNull(itemKeys[item.rotationId])
-
         val entity = itemResponseToEntity(
             userAddress = userAddress,
             itemRevision = item,
             share = share,
-            verifyKeys = verifyKeys,
-            vaultKeys = listOf(vaultKey),
-            itemKeys = listOf(itemKey)
+            shareKeys = shareKeys
         )
         return LoadingResult.Success(entityToDomain(encryptionContext, entity) to entity)
     }
@@ -838,11 +664,9 @@ class ItemRepositoryImpl @Inject constructor(
         userAddress: UserAddress,
         itemRevision: ItemRevision,
         share: Share,
-        verifyKeys: List<PublicKey>,
-        vaultKeys: List<VaultKey>,
-        itemKeys: List<ItemKey>
+        shareKeys: List<ShareKey>
     ): ItemEntity {
-        val item = openItem.open(itemRevision.toCrypto(), share, verifyKeys, vaultKeys, itemKeys)
+        val output = openItem.open(itemRevision.toCrypto(), share, shareKeys)
         return ItemEntity(
             id = itemRevision.itemId,
             userId = userAddress.userId.id,
@@ -850,20 +674,19 @@ class ItemRepositoryImpl @Inject constructor(
             shareId = share.id.id,
             revision = itemRevision.revision,
             contentFormatVersion = itemRevision.contentFormatVersion,
-            rotationId = itemRevision.rotationId,
             content = itemRevision.content,
-            userSignature = itemRevision.userSignature,
-            itemKeySignature = itemRevision.itemKeySignature,
             state = itemRevision.state,
-            itemType = item.itemType.toWeightedInt(),
-            signatureEmail = itemRevision.signatureEmail,
+            itemType = output.item.itemType.toWeightedInt(),
             createTime = itemRevision.createTime,
             modifyTime = itemRevision.modifyTime,
             lastUsedTime = itemRevision.lastUseTime,
-            encryptedContent = item.content,
-            encryptedTitle = item.title,
-            encryptedNote = item.note,
-            aliasEmail = itemRevision.aliasEmail
+            encryptedContent = output.item.content,
+            encryptedTitle = output.item.title,
+            encryptedNote = output.item.note,
+            aliasEmail = itemRevision.aliasEmail,
+            keyRotation = itemRevision.keyRotation,
+            key = itemRevision.itemKey,
+            encryptedKey = output.itemKey
         )
     }
 

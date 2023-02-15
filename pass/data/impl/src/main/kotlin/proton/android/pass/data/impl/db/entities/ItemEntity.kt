@@ -46,7 +46,7 @@ data class ItemEntity(
     @ColumnInfo(name = Columns.CONTENT_FORMAT_VERSION)
     val contentFormatVersion: Int,
     @ColumnInfo(name = Columns.KEY_ROTATION)
-    val keyRotation: String,
+    val keyRotation: Long,
     @ColumnInfo(name = Columns.CONTENT)
     val content: String,
     @ColumnInfo(name = Columns.KEY)

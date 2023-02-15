@@ -3,6 +3,7 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.repository.UserRepository
@@ -12,6 +13,7 @@ import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
 import proton.pass.domain.ShareId
+import proton.pass.domain.key.ShareKey
 import javax.inject.Inject
 
 class ShareKeyRepositoryImpl @Inject constructor(
@@ -37,12 +39,61 @@ class ShareKeyRepositoryImpl @Inject constructor(
             }
         }
 
+        val keys = requestRemoteKeys(userId, addressId, shareId)
+        if (shouldStoreLocally) {
+            localDataSource.storeShareKeys(keys)
+        }
+
+        emit(keys.map(::entityToDomain))
+    }
+
+    override suspend fun saveShareKeys(shareKeyEntities: List<ShareKeyEntity>) {
+        localDataSource.storeShareKeys(shareKeyEntities)
+    }
+
+    override fun getLatestKeyForShare(shareId: ShareId): Flow<ShareKey> =
+        localDataSource.getLatestKeyForShare(shareId).map(::entityToDomain)
+
+    override fun getShareKeyForRotation(
+        userId: UserId,
+        addressId: AddressId,
+        shareId: ShareId,
+        keyRotation: Long
+    ): Flow<ShareKey?> = flow {
+        val localKeys = localDataSource.getAllShareKeysForShare(userId, shareId).first()
+        val key = localKeys.firstOrNull { it.rotation == keyRotation }
+        if (key != null) {
+            val mapped = entityToDomain(key)
+            emit(mapped)
+            return@flow
+        }
+
+        // Key was not present, force a refresh
+        val retrievedKeys = requestRemoteKeys(userId, addressId, shareId)
+        localDataSource.storeShareKeys(retrievedKeys)
+
+        val retrievedKey = retrievedKeys.firstOrNull { it.rotation == keyRotation }
+        if (retrievedKey != null) {
+            val mapped = entityToDomain(retrievedKey)
+            emit(mapped)
+            return@flow
+        }
+
+        emit(null)
+    }
+
+    private suspend fun requestRemoteKeys(
+        userId: UserId,
+        addressId: AddressId,
+        shareId: ShareId
+    ): List<ShareKeyEntity> {
         val remoteKeys = remoteDataSource.getShareKeys(userId, shareId).first()
         val user = userRepository.getUser(userId)
 
-        val mapped = encryptionContextProvider.withEncryptionContext {
+        return encryptionContextProvider.withEncryptionContext {
             remoteKeys.map { response ->
-                val reencryptedKey = reencryptShareKey(this@withEncryptionContext, user, response.key)
+                val reencryptedKey =
+                    reencryptShareKey(this@withEncryptionContext, user, response.key)
                 ShareKeyEntity(
                     rotation = response.keyRotation,
                     userId = userId.id,
@@ -54,15 +105,6 @@ class ShareKeyRepositoryImpl @Inject constructor(
                 )
             }
         }
-
-        if (shouldStoreLocally) {
-            localDataSource.storeShareKeys(mapped)
-        }
-        emit(mapped.map(::entityToDomain))
-    }
-
-    override suspend fun saveShareKeys(shareKeyEntities: List<ShareKeyEntity>) {
-        localDataSource.storeShareKeys(shareKeyEntities)
     }
 
     private fun entityToDomain(entity: ShareKeyEntity): ShareKey =

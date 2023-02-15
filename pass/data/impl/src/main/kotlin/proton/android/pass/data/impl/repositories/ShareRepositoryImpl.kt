@@ -40,6 +40,7 @@ import proton.pass.domain.SharePermission
 import proton.pass.domain.ShareType
 import proton.pass.domain.VaultId
 import proton.pass.domain.entity.NewVault
+import proton.pass.domain.key.ShareKey
 import proton_pass_vault_v1.VaultV1
 import java.sql.Date
 import javax.inject.Inject

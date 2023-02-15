@@ -1,10 +1,12 @@
 package proton.android.pass.crypto.impl.usecases
 
+import com.proton.gopenpgp.armor.Armor.unarmor
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.key.domain.encryptAndSignData
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
+import org.apache.commons.codec.binary.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
@@ -17,7 +19,7 @@ import javax.inject.Inject
 class CreateVaultImpl @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val encryptionContextProvider: EncryptionContextProvider
-) : CreateVault, BaseCryptoOperation(cryptoContext) {
+) : CreateVault {
 
     override fun createVaultRequest(
         user: User,
@@ -35,9 +37,9 @@ class CreateVaultImpl @Inject constructor(
         return CreateVaultOutput(
             request = EncryptedCreateVault(
                 addressId = userAddress.addressId.id,
-                content = b64(encryptedVaultContents.array),
+                content = Base64.encodeBase64String(encryptedVaultContents.array),
                 contentFormatVersion = CONTENT_FORMAT_VERSION,
-                encryptedVaultKey = b64(unarmor(encryptedVaultKey))
+                encryptedVaultKey = Base64.encodeBase64String(unarmor(encryptedVaultKey))
 
             ),
             shareKey = vaultKey

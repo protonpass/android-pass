@@ -5,16 +5,12 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UpdateItemRequest(
-    @SerialName("RotationID")
-    val rotationId: String,
+    @SerialName("KeyRotation")
+    val keyRotation: Long,
     @SerialName("LastRevision")
     val lastRevision: Long,
     @SerialName("ContentFormatVersion")
     val contentFormatVersion: Int,
     @SerialName("Content")
     val content: String,
-    @SerialName("UserSignature")
-    val userSignature: String,
-    @SerialName("ItemKeySignature")
-    val itemKeySignature: String
 )

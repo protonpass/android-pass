@@ -14,8 +14,8 @@ import proton.android.pass.data.impl.responses.CreateVaultResponse
 import proton.android.pass.data.impl.responses.DeleteVaultResponse
 import proton.android.pass.data.impl.responses.GetAliasOptionsResponse
 import proton.android.pass.data.impl.responses.GetEventsResponse
+import proton.android.pass.data.impl.responses.GetItemLatestKeyResponse
 import proton.android.pass.data.impl.responses.GetItemsResponse
-import proton.android.pass.data.impl.responses.GetKeyPacketResponse
 import proton.android.pass.data.impl.responses.GetShareKeysResponse
 import proton.android.pass.data.impl.responses.GetShareResponse
 import proton.android.pass.data.impl.responses.GetSharesResponse
@@ -104,12 +104,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Body request: TrashItemsRequest
     ): TrashItemsResponse
 
-    // KeyPacket
-    @GET("$PREFIX/share/{shareId}/item/{itemId}/keypacket")
-    suspend fun getLatestKeyPacket(
+    // ItemKey
+    @GET("$PREFIX/share/{shareId}/item/{itemId}/key/latest")
+    suspend fun getItemLatestKey(
         @Path("shareId") shareId: String,
         @Path("itemId") itemId: String
-    ): GetKeyPacketResponse
+    ): GetItemLatestKeyResponse
 
     // Alias
     @GET("$PREFIX/share/{shareId}/alias/options")

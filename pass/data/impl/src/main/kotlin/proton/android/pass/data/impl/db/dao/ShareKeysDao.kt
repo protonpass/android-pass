@@ -20,9 +20,20 @@ abstract class ShareKeysDao : BaseDao<ShareKeyEntity>() {
     @Query(
         """
         SELECT * FROM ${ShareKeyEntity.TABLE}
+        WHERE ${ShareKeyEntity.Columns.SHARE_ID} = :shareId
+        ORDER BY ${ShareKeyEntity.Columns.ROTATION} DESC
+        LIMIT 1
+        """
+    )
+    abstract fun getLatestKeyForShare(shareId: String): Flow<ShareKeyEntity>
+
+    @Query(
+        """
+        SELECT * FROM ${ShareKeyEntity.TABLE}
         WHERE ${ShareKeyEntity.Columns.USER_ID} = :userId
           AND ${ShareKeyEntity.Columns.SHARE_ID} = :shareId
           AND ${ShareKeyEntity.Columns.ROTATION} = :rotation
+        LIMIT 1
         """
     )
     abstract fun getByShareAndRotation(

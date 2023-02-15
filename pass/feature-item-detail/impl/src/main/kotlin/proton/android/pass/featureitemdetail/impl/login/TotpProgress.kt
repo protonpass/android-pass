@@ -27,7 +27,7 @@ fun TotpProgress(
             strokeWidth = 3.dp
         )
         Text(
-            text = remainingSeconds.toInt().toString(),
+            text = remainingSeconds.toString(),
             style = ProtonTheme.typography.defaultSmallWeak
         )
     }

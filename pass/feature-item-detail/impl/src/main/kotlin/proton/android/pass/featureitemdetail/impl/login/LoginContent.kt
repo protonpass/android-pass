@@ -8,7 +8,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableSet
 import proton.android.pass.commonui.api.PassColors
-import proton.android.pass.composecomponents.impl.form.LinkedAppsListSection
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 
@@ -45,7 +44,7 @@ fun LoginContent(
             accentColor = PassColors.PurpleAccent
         )
         LinkedAppsListSection(
-            list = state.packageNames.toImmutableSet(),
+            linkedAppsSet = state.packageNames.toImmutableSet(),
             isEditable = false,
             onLinkedAppDelete = {}
         )

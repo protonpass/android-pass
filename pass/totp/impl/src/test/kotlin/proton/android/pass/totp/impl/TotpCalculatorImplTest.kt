@@ -35,7 +35,7 @@ class TotpCalculatorImplTest {
 
         instance.observeCode(spec)
             .test {
-                assertThat(awaitItem().first).isEqualTo("86058600")
+                assertThat(awaitItem().code).isEqualTo("86058600")
             }
     }
 
@@ -51,7 +51,7 @@ class TotpCalculatorImplTest {
         )
         instance.observeCode(spec)
             .test {
-                assertThat(awaitItem().first).isEqualTo("846277")
+                assertThat(awaitItem().code).isEqualTo("846277")
             }
     }
 

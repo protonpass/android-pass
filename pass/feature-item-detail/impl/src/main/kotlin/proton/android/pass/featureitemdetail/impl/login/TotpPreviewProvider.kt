@@ -32,7 +32,7 @@ class LoginDetailUiStatePreviewProvider : PreviewParameterProvider<LoginDetailUi
                 websites = persistentListOf(),
                 packageNames = persistentListOf(),
                 note = "",
-                totpUiState = TotpUiState("123456", 12)
+                totpUiState = TotpUiState("123456", 12, 20)
             )
         )
 }

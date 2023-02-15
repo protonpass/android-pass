@@ -78,7 +78,9 @@ class LoginDetailViewModel @Inject constructor(
                 websites = itemContents.websites.toImmutableList(),
                 packageNames = itemContents.packageNames.toImmutableList(),
                 note = decrypt(item.note),
-                totpUiState = totpOption.map { TotpUiState(it.code, it.remainingSeconds) }.value()
+                totpUiState = totpOption.map {
+                    TotpUiState(it.code, it.remainingSeconds, it.totalSeconds)
+                }.value()
             )
         }
     }

@@ -1,56 +1,38 @@
 package proton.android.pass.crypto.impl.usecases
 
-import com.proton.gopenpgp.armor.Armor
+import org.apache.commons.codec.binary.Base64
+import proton.android.pass.crypto.api.EncryptionKey
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedUpdateItemRequest
 import proton.android.pass.crypto.api.usecases.UpdateItem
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.key.domain.decryptSessionKey
-import me.proton.core.key.domain.encryptData
-import me.proton.core.key.domain.signData
-import me.proton.core.key.domain.useKeys
-import me.proton.core.user.domain.entity.UserAddress
-import proton.pass.domain.KeyPacket
 import proton.pass.domain.key.ItemKey
-import proton.pass.domain.key.VaultKey
-import proton.pass.domain.key.usePrivateKey
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
 class UpdateItemImpl @Inject constructor(
-    private val cryptoContext: CryptoContext
-) : UpdateItem, BaseCryptoOperation(cryptoContext) {
+    private val encryptionContextProvider: EncryptionContextProvider
+) : UpdateItem {
 
     override fun createRequest(
-        vaultKey: VaultKey,
         itemKey: ItemKey,
-        keyPacket: KeyPacket,
-        userAddress: UserAddress,
         itemContent: ItemV1.Item,
         lastRevision: Long
     ): EncryptedUpdateItemRequest {
         val serializedItem = itemContent.toByteArray()
-        val sessionKey = vaultKey.usePrivateKey(cryptoContext) {
-            decryptSessionKey(keyPacket.keyPacket)
-        }
-        val encryptedContents = cryptoContext.pgpCrypto.encryptData(serializedItem, sessionKey)
-
-        val userSignature = userAddress.useKeys(cryptoContext) {
-            val signature = signData(serializedItem)
-            encryptData(Armor.unarmor(signature), sessionKey)
+        val decryptedItemKey = encryptionContextProvider.withEncryptionContext {
+            EncryptionKey(decrypt(itemKey.key))
         }
 
-        val itemKeySignature = itemKey.usePrivateKey(cryptoContext) {
-            val signature = signData(serializedItem)
-            encryptData(Armor.unarmor(signature), sessionKey)
+        val encryptedContents = encryptionContextProvider.withEncryptionContext(decryptedItemKey) {
+            encrypt(serializedItem, EncryptionTag.ItemContent)
         }
 
         return EncryptedUpdateItemRequest(
-            rotationId = vaultKey.rotationId,
+            keyRotation = itemKey.rotation,
+            lastRevision = lastRevision,
             contentFormatVersion = CONTENT_FORMAT_VERSION,
-            content = b64(encryptedContents),
-            userSignature = b64(userSignature),
-            itemKeySignature = b64(itemKeySignature),
-            lastRevision = lastRevision
+            content = Base64.encodeBase64String(encryptedContents.array)
         )
     }
 

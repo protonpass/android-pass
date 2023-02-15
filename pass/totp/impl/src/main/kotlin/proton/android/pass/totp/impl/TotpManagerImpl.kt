@@ -37,7 +37,7 @@ class TotpManagerImpl @Inject constructor(
         return builder.buildToString()
     }
 
-    override fun observeCode(spec: TotpSpec): Flow<Pair<String, Int>> {
+    override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> {
         val config = TimeBasedOneTimePasswordConfig(
             timeStep = spec.validPeriodSeconds.toLong(),
             timeStepUnit = TimeUnit.SECONDS,
@@ -58,7 +58,12 @@ class TotpManagerImpl @Inject constructor(
                 var now = clock.now().toJavaInstant().toEpochMilli()
                 while (generator.isValid(code, now)) {
                     val millisValid = endEpochMillis - now
-                    emit(code to (millisValid / ONE_SECOND_MILLISECONDS).toInt())
+                    val wrapper = TotpManager.TotpWrapper(
+                        code = code,
+                        remainingSeconds = (millisValid / ONE_SECOND_MILLISECONDS).toInt(),
+                        totalSeconds = spec.validPeriodSeconds
+                    )
+                    emit(wrapper)
                     delay(ONE_SECOND_MILLISECONDS)
                     now = clock.now().toJavaInstant().toEpochMilli()
                 }

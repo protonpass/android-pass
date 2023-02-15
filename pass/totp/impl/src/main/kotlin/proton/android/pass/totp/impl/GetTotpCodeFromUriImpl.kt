@@ -10,5 +10,5 @@ class GetTotpCodeFromUriImpl @Inject constructor(
 ) : GetTotpCodeFromUri {
     override suspend fun invoke(uri: String): Result<String> =
         totpManager.parse(uri)
-            .map { totpManager.observeCode(it).first().first }
+            .map { totpManager.observeCode(it).first().code }
 }

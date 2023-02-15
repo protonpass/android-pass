@@ -23,6 +23,9 @@ class LocalShareKeyDataSourceImpl @Inject constructor(
     ): Flow<ShareKeyEntity?> =
         passDatabase.shareKeysDao().getByShareAndRotation(userId.id, shareId.id, rotation)
 
+    override fun getLatestKeyForShare(shareId: ShareId): Flow<ShareKeyEntity> =
+        passDatabase.shareKeysDao().getLatestKeyForShare(shareId.id)
+
     override suspend fun storeShareKeys(entities: List<ShareKeyEntity>) {
         passDatabase.shareKeysDao().insertOrUpdate(*entities.toTypedArray())
     }

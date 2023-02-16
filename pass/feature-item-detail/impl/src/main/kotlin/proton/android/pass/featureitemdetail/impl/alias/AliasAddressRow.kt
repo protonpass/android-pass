@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
 import proton.android.pass.featureitemdetail.impl.common.SectionTitle
@@ -41,7 +42,7 @@ fun AliasAddressRow(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             SectionTitle(text = stringResource(R.string.field_alias_title))
-            SectionSubtitle(text = alias)
+            SectionSubtitle(text = alias.asAnnotatedString())
         }
     }
 }

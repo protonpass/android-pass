@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.featureitemdetail.impl.NoteDetailSectionPreviewProvider
 import proton.android.pass.featureitemdetail.impl.R
@@ -50,7 +51,7 @@ fun NoteSection(
             Column {
                 SectionTitle(text = stringResource(R.string.field_detail_note_title))
                 Spacer(modifier = Modifier.height(8.dp))
-                SectionSubtitle(text = text)
+                SectionSubtitle(text = text.asAnnotatedString())
             }
         }
     }

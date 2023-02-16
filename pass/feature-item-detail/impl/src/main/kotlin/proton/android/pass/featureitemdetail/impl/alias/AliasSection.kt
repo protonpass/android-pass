@@ -26,7 +26,9 @@ fun AliasSection(
             alias = model?.alias ?: "",
             onCopyAlias = { onCopyAlias(it) }
         )
-        Divider()
+        if (!model?.mailboxes.isNullOrEmpty() || isLoading) {
+            Divider()
+        }
         AliasMailboxesRow(
             mailboxes = model?.mailboxes ?: emptyList(),
             isLoading = isLoading

@@ -36,7 +36,7 @@ class ItemKeyRepositoryImpl @Inject constructor(
             throw KeyNotFound("Could not find ShareKey [shareId=${shareId.id}] [keyRotation=${response.keyRotation}]")
         }
 
-        val open = openItemKey(shareKey, response.toCrypto())
-        emit(shareKey to open)
+        val itemKey = openItemKey(shareKey, response.toCrypto())
+        emit(shareKey to itemKey)
     }
 }

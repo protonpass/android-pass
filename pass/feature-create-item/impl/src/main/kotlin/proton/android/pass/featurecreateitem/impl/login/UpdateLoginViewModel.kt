@@ -25,7 +25,7 @@ import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateItem
-import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
+import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.InitError

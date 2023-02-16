@@ -1,38 +1,40 @@
 package proton.android.pass.crypto.fakes.usecases
 
-import me.proton.core.user.domain.entity.UserAddress
+import org.apache.commons.codec.binary.Base64
+import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.usecases.CreateItem
+import proton.android.pass.crypto.api.usecases.CreateItemPayload
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.ItemContents
-import proton.pass.domain.key.ItemKey
-import proton.pass.domain.key.VaultKey
+import proton.pass.domain.key.ShareKey
 
 class TestCreateItem : CreateItem {
 
-    private var request: EncryptedCreateItem? = null
+    private var payload: CreateItemPayload? = null
 
-    fun setRequest(value: EncryptedCreateItem) {
-        request = value
+    fun setPayload(value: CreateItemPayload) {
+        payload = value
     }
 
     override fun create(
-        vaultKey: VaultKey,
-        itemKey: ItemKey,
-        userAddress: UserAddress,
+        shareKey: ShareKey,
         itemContents: ItemContents
-    ): EncryptedCreateItem = request ?: throw IllegalStateException("request is not set")
+    ): CreateItemPayload = payload ?: throw IllegalStateException("payload is not set")
 
     companion object {
-        fun createRequest() = EncryptedCreateItem(
-            rotationId = "testRotationId",
-            labels = emptyList(),
-            vaultKeyPacket = "vaultKeyPacket",
-            vaultKeyPacketSignature = "vaultKeyPacketSignature",
-            contentFormatVersion = 1,
-            content = TestKeyStoreCrypto.encrypt("content"),
-            userSignature = "userSignature",
-            itemKeySignature = "itemKeySignature"
-        )
+        fun createPayload(): CreateItemPayload {
+            val key = EncryptionKey.generate()
+            return CreateItemPayload(
+                request = EncryptedCreateItem(
+                    contentFormatVersion = 1,
+                    content = TestKeyStoreCrypto.encrypt("content"),
+                    keyRotation = 1,
+                    itemKey = Base64.encodeBase64String(TestEncryptionContext.encrypt(key.key).array)
+                ),
+                itemKey = key
+            )
+        }
     }
 }

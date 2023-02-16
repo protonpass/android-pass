@@ -34,7 +34,7 @@ fun LoadingCircleButton(
         modifier = modifier
             .fillMaxHeight()
             .clip(CircleShape)
-            .applyIf(condition = isLoading, ifTrue = { clickable { onClick() } })
+            .applyIf(condition = !isLoading, ifTrue = { clickable { onClick() } })
             .background(color)
     ) {
         AnimatedContent(modifier = Modifier.padding(16.dp, 10.dp), targetState = isLoading) {

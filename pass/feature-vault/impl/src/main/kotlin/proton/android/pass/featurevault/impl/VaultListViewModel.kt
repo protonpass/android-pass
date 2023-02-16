@@ -32,6 +32,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareType
 import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
 
@@ -111,9 +112,16 @@ class VaultListViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             shares
                 .map { share ->
-                    val decrypted = decrypt(share.content!!)
-                    val parsed = VaultV1.Vault.parseFrom(decrypted)
-                    ShareUiModel(share.id, parsed.name)
+                    when (share.shareType) {
+                        ShareType.Vault -> {
+                            val decrypted = decrypt(share.content!!)
+                            val parsed = VaultV1.Vault.parseFrom(decrypted)
+                            ShareUiModel(share.id, parsed.name)
+                        }
+                        ShareType.Item -> {
+                            throw NotImplementedError("Item shares are not implemented yet")
+                        }
+                    }
                 }
         }
 

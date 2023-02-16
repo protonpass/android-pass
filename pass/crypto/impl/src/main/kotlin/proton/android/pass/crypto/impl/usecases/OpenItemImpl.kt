@@ -25,7 +25,6 @@ class OpenItemImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : OpenItem {
 
-    @Suppress("TooGenericExceptionThrown")
     override fun open(
         response: EncryptedItemRevision,
         share: Share,

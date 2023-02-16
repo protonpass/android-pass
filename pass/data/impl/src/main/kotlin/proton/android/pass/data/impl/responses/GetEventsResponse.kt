@@ -17,13 +17,11 @@ data class EventList(
     val updatedItems: List<ItemRevision>,
     @SerialName("DeletedItemIDs")
     val deletedItemIds: List<String>,
-    @SerialName("NewRotationID")
-    val newRotationId: String?,
+    @SerialName("NewKeyRotation")
+    val newRotationId: Long?,
     @SerialName("LatestEventID")
     val latestEventId: String,
     @SerialName("EventsPending")
     val eventsPending: Boolean,
-    @SerialName("FullRefresh")
-    val fullRefresh: Boolean
 )
 

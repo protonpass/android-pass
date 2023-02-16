@@ -4,6 +4,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.apache.commons.codec.binary.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.context.EncryptionTag
 import javax.inject.Inject
 
 interface ReencryptShareContents {
@@ -18,7 +19,7 @@ class ReencryptShareContentsImpl @Inject constructor(
 
         val decoded = Base64.decodeBase64(contents)
         val decrypted = encryptionContextProvider.withEncryptionContext(key) {
-            decrypt(EncryptedByteArray(decoded))
+            decrypt(EncryptedByteArray(decoded), EncryptionTag.VaultContent)
         }
 
         // Using our default key

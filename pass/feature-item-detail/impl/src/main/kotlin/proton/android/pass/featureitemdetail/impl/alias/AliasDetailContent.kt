@@ -7,29 +7,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassColors
-import proton.android.pass.composecomponents.impl.loading.LoadingDialog
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 
 @Composable
 fun AliasDetailContent(
     modifier: Modifier = Modifier,
-    state: AliasDetailUiState,
+    model: AliasUiModel?,
+    isLoading: Boolean,
     onCopyAlias: (String) -> Unit
 ) {
-    if (state.isLoadingState == IsLoadingState.Loading) {
-        LoadingDialog()
-    }
-
-    val model = state.model ?: return
     Column(
         modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        AliasTitle(title = model.title)
-        AliasSection(Modifier, model, onCopyAlias)
-        NoteSection(text = model.note, accentColor = PassColors.GreenAccent)
+        AliasTitle(title = model?.title ?: "")
+        AliasSection(Modifier, model, isLoading, onCopyAlias)
+        NoteSection(text = model?.note ?: "", accentColor = PassColors.GreenAccent)
         MoreInfo()
     }
 }

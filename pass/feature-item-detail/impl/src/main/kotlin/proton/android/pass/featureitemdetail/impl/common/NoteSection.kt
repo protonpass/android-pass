@@ -24,7 +24,6 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.featureitemdetail.impl.NoteDetailSectionPreviewProvider
 import proton.android.pass.featureitemdetail.impl.R
-import proton.android.pass.featureitemdetail.impl.SectionSubtitle
 
 @Composable
 fun NoteSection(

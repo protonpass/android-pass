@@ -1,5 +1,7 @@
 package proton.android.pass.data.impl.fakes
 
+import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
@@ -8,13 +10,11 @@ import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.responses.ItemRevision
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemStateValues
 import proton.pass.domain.ShareId
-import proton.android.pass.test.crypto.TestKeyStoreCrypto
 
 class TestRemoteItemDataSource : RemoteItemDataSource {
 
@@ -103,18 +103,15 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
                 itemId = item.id.id,
                 revision = item.revision,
                 contentFormatVersion = 1,
-                rotationId = "rotation",
+                keyRotation = 1,
                 content = TestKeyStoreCrypto.encrypt("content"),
-                userSignature = "userSignature",
-                itemKeySignature = "itemKeySignature",
                 state = ItemStateValues.ACTIVE,
-                signatureEmail = "signatureEmail",
                 aliasEmail = null,
-                labels = emptyList(),
                 createTime = now,
                 modifyTime = now,
                 lastUseTime = now,
-                revisionTime = now
+                revisionTime = now,
+                itemKey = null
             )
         }
     }

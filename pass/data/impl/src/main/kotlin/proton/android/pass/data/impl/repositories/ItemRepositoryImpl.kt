@@ -95,7 +95,7 @@ class ItemRepositoryImpl @Inject constructor(
             val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
 
             val body = try {
-                createItem.create(userAddress, shareKey, contents)
+                createItem.create(shareKey, contents)
             } catch (e: RuntimeException) {
                 PassLogger.w(TAG, e, "Error creating item")
                 return@withUserAddress LoadingResult.Error(e)
@@ -126,7 +126,7 @@ class ItemRepositoryImpl @Inject constructor(
         withUserAddress(userId) { userAddress ->
             val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
             val itemContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
-            val body = createItem.create(userAddress, shareKey, itemContents)
+            val body = createItem.create(shareKey, itemContents)
 
             val mailboxIds = newAlias.mailboxes.map { it.id }
             val requestBody = CreateAliasRequest(

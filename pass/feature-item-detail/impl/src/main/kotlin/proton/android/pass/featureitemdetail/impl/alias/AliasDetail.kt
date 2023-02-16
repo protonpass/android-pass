@@ -37,6 +37,7 @@ fun AliasDetail(
         modifier = modifier,
         topBar = {
             ItemDetailTopBar(
+                isLoading = false,
                 color = PassColors.GreenAccent,
                 onUpClick = onUpClick,
                 onEditClick = { onEditClick(item.shareId, item.id, item.itemType) },

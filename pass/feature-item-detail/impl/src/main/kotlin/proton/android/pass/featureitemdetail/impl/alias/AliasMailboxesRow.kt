@@ -13,15 +13,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.featureitemdetail.impl.R
-import proton.android.pass.featureitemdetail.impl.SectionSubtitle
+import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
 import proton.android.pass.featureitemdetail.impl.common.SectionTitle
 import proton.pass.domain.AliasMailbox
 
 @Composable
 fun AliasMailboxesRow(
     modifier: Modifier = Modifier,
-    mailboxes: List<AliasMailbox>
+    mailboxes: List<AliasMailbox>,
+    isLoading: Boolean
 ) {
     Row(
         modifier = modifier
@@ -39,8 +41,17 @@ fun AliasMailboxesRow(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             SectionTitle(text = stringResource(R.string.alias_detail_field_mailboxes_title))
-            mailboxes.forEach { mailbox ->
-                SectionSubtitle(text = mailbox.email)
+            if (mailboxes.isEmpty() && isLoading) {
+                SectionSubtitle(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .placeholder(),
+                    text = ""
+                )
+            } else {
+                mailboxes.forEach { mailbox ->
+                    SectionSubtitle(text = mailbox.email)
+                }
             }
         }
     }

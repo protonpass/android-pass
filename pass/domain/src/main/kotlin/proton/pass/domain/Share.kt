@@ -3,8 +3,11 @@ package proton.pass.domain
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import java.util.Date
 
-data class ShareId(val id: String)
-data class VaultId(val id: String)
+@JvmInline
+value class ShareId(val id: String)
+
+@JvmInline
+value class VaultId(val id: String)
 
 data class Share(
     val id: ShareId,

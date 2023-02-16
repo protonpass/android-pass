@@ -11,7 +11,9 @@ data class LoginDetailUiState(
     val websites: ImmutableList<String>,
     val packageNames: ImmutableList<String>,
     val note: String,
-    val totpUiState: TotpUiState?
+    val totpUiState: TotpUiState?,
+    val isLoading: Boolean,
+    val isItemSentToTrash: Boolean
 )
 
 @Stable

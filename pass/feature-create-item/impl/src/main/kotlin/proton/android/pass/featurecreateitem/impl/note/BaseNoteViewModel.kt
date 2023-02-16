@@ -19,7 +19,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveVaults
-import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
+import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId

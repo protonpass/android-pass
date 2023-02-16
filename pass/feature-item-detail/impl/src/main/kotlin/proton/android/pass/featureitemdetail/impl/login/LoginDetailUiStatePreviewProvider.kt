@@ -14,7 +14,9 @@ class LoginDetailUiStatePreviewProvider : PreviewParameterProvider<LoginDetailUi
                 websites = persistentListOf(),
                 packageNames = persistentListOf(),
                 note = "",
-                totpUiState = null
+                totpUiState = null,
+                isLoading = false,
+                isItemSentToTrash = false
             ),
             LoginDetailUiState(
                 title = "",
@@ -23,7 +25,9 @@ class LoginDetailUiStatePreviewProvider : PreviewParameterProvider<LoginDetailUi
                 websites = persistentListOf(),
                 packageNames = persistentListOf(),
                 note = "",
-                totpUiState = null
+                totpUiState = null,
+                isLoading = false,
+                isItemSentToTrash = false
             ),
             LoginDetailUiState(
                 title = "",
@@ -32,7 +36,9 @@ class LoginDetailUiStatePreviewProvider : PreviewParameterProvider<LoginDetailUi
                 websites = persistentListOf(),
                 packageNames = persistentListOf(),
                 note = "",
-                totpUiState = TotpUiState("123456", 12, 20)
+                totpUiState = TotpUiState("123456", 12, 20),
+                isLoading = false,
+                isItemSentToTrash = false
             )
         )
 }

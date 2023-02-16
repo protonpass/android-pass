@@ -22,17 +22,26 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.onError
+import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotMovedToTrash
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.PasswordCopiedToClipboard
-import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.TotpCopiedToClipbopard
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.TotpCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.UsernameCopiedToClipboard
-import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.WebsiteCopiedToClipbopard
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.WebsiteCopiedToClipboard
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.totp.api.ObserveTotpFromUri
 import proton.pass.domain.Item
+import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
+import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,7 +49,8 @@ class LoginDetailViewModel @Inject constructor(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val clipboardManager: ClipboardManager,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val observeTotpFromUri: ObserveTotpFromUri
+    private val observeTotpFromUri: ObserveTotpFromUri,
+    private val trashItem: TrashItem
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -50,6 +60,10 @@ class LoginDetailViewModel @Inject constructor(
     private val itemFlow: MutableStateFlow<Item?> = MutableStateFlow(null)
     private val passwordState: MutableStateFlow<PasswordState> =
         MutableStateFlow(getInitialPasswordState())
+    private val isLoadingState: MutableStateFlow<IsLoadingState> =
+        MutableStateFlow(IsLoadingState.NotLoading)
+    private val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
+        MutableStateFlow(IsSentToTrashState.NotSent)
 
     private val observeTotpOptionFlow = itemFlow
         .filterNotNull()
@@ -64,11 +78,13 @@ class LoginDetailViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    val viewState: StateFlow<LoginDetailUiState> = combine(
+    val uiState: StateFlow<LoginDetailUiState> = combine(
         itemFlow.filterNotNull(),
         passwordState,
-        observeTotpOptionFlow
-    ) { item, password, totpOption ->
+        observeTotpOptionFlow,
+        isLoadingState,
+        isItemSentToTrashState
+    ) { item, password, totpOption, isLoading, isItemSentToTrash ->
         val itemContents = item.itemType as ItemType.Login
         encryptionContextProvider.withEncryptionContext {
             LoginDetailUiState(
@@ -80,7 +96,9 @@ class LoginDetailViewModel @Inject constructor(
                 note = decrypt(item.note),
                 totpUiState = totpOption.map {
                     TotpUiState(it.code, it.remainingSeconds, it.totalSeconds)
-                }.value()
+                }.value(),
+                isLoading = isLoading.value(),
+                isItemSentToTrash = isItemSentToTrash.value()
             )
         }
     }
@@ -126,14 +144,14 @@ class LoginDetailViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             clipboardManager.copyToClipboard(website, clearAfterSeconds = null)
         }
-        snackbarMessageRepository.emitSnackbarMessage(WebsiteCopiedToClipbopard)
+        snackbarMessageRepository.emitSnackbarMessage(WebsiteCopiedToClipboard)
     }
 
     fun copyTotpCodeToClipboard(code: String) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
             clipboardManager.copyToClipboard(code)
         }
-        snackbarMessageRepository.emitSnackbarMessage(TotpCopiedToClipbopard)
+        snackbarMessageRepository.emitSnackbarMessage(TotpCopiedToClipboard)
     }
 
     fun togglePassword() {
@@ -155,6 +173,20 @@ class LoginDetailViewModel @Inject constructor(
         }
     }
 
+    fun onDelete(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+        trashItem(shareId = shareId, itemId = itemId)
+            .onSuccess {
+                isItemSentToTrashState.update { IsSentToTrashState.Sent }
+                snackbarMessageRepository.emitSnackbarMessage(ItemMovedToTrash)
+            }
+            .onError {
+                snackbarMessageRepository.emitSnackbarMessage(ItemNotMovedToTrash)
+                PassLogger.d(TAG, it, "Could not delete item")
+            }
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
     private fun getInitialState(): LoginDetailUiState =
         LoginDetailUiState(
             title = "",
@@ -163,7 +195,9 @@ class LoginDetailViewModel @Inject constructor(
             websites = persistentListOf(),
             packageNames = persistentListOf(),
             note = "",
-            totpUiState = null
+            totpUiState = null,
+            isLoading = false,
+            isItemSentToTrash = false
         )
 
     private fun getInitialPasswordState(): PasswordState =

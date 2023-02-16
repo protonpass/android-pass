@@ -1,6 +1,5 @@
 package proton.android.pass.featureitemdetail.impl.login.bottomsheet
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,20 +16,19 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.featureitemdetail.impl.R
 
 @Composable
-fun LoginDetailBottomSheetContents(
+fun WebsiteOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     website: String,
     onCopyToClipboard: (String) -> Unit,
     onOpenWebsite: (String) -> Unit
 ) {
-    Column(modifier) {
-        BottomSheetItemList(
-            items = persistentListOf(
-                openWebsite(onClick = { onOpenWebsite(website) }),
-                copyWebsite(onClick = { onCopyToClipboard(website) })
-            )
+    BottomSheetItemList(
+        modifier = modifier,
+        items = persistentListOf(
+            openWebsite(onClick = { onOpenWebsite(website) }),
+            copyWebsite(onClick = { onCopyToClipboard(website) })
         )
-    }
+    )
 }
 
 private fun openWebsite(onClick: () -> Unit): BottomSheetItem =
@@ -64,7 +62,7 @@ fun LoginDetailBottomSheetContentsPreview(
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            LoginDetailBottomSheetContents(
+            WebsiteOptionsBottomSheetContents(
                 website = "https://example.local",
                 onCopyToClipboard = {},
                 onOpenWebsite = {}

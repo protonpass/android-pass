@@ -13,7 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
-import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
+import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.R
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId

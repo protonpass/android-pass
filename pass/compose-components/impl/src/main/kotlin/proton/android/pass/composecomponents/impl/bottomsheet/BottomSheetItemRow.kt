@@ -30,7 +30,7 @@ fun ColumnScope.BottomSheetItemRow(
                 condition = onClick != null,
                 ifTrue = { clickable { onClick?.invoke() } }
             )
-            .padding(horizontal = 20.dp, vertical = 16.dp),
+            .padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (alignIconLeft) {

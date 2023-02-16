@@ -16,8 +16,10 @@ class OpenItemKeyImpl @Inject constructor(
 ) : OpenItemKey {
     override fun invoke(shareKey: ShareKey, key: EncryptedItemKey): ItemKey {
         if (shareKey.rotation != key.keyRotation) {
-            throw IllegalStateException("Received ShareKey with rotation not matching ItemKey " +
-                "rotation [shareKey=${shareKey.rotation}] [itemKey=${key.keyRotation}]")
+            throw IllegalStateException(
+                "Received ShareKey with rotation not matching ItemKey " +
+                    "rotation [shareKey=${shareKey.rotation}] [itemKey=${key.keyRotation}]"
+            )
         }
 
         val decryptedShareKey = encryptionContextProvider.withEncryptionContext {

@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.crypto.common.context.CryptoContext
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.logError
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonuimodels.api.ShareUiModel
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotDeleteCurrentVaultError
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.MigrateVault
@@ -30,6 +30,7 @@ import proton.android.pass.featurevault.impl.VaultSnackbarMessage.MigrateVaultEr
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.MigrateVaultSuccess
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
@@ -42,7 +43,7 @@ class VaultListViewModel @Inject constructor(
     private val deleteVault: DeleteVault,
     private val migrateVault: MigrateVault,
     private val updateActiveShare: UpdateActiveShare,
-    private val cryptoContext: CryptoContext
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
     val shareUIState: StateFlow<VaultListUIState> = combine(
@@ -50,16 +51,10 @@ class VaultListViewModel @Inject constructor(
         observeActiveShare()
     ) { shareResult, activeShareResult ->
         if (shareResult is LoadingResult.Success && activeShareResult is LoadingResult.Success) {
+            val shareList = decryptShares(shareResult.data)
             VaultListUIState(
-                shareResult.data
-                    .map { share ->
-                        val decrypted =
-                            cryptoContext.keyStoreCrypto.decrypt(share.content!!)
-                        val parsed = VaultV1.Vault.parseFrom(decrypted.array)
-                        ShareUiModel(share.id, parsed.name)
-                    }
-                    .toPersistentList(),
-                activeShareResult.data
+                list = shareList.toPersistentList(),
+                currentShare = activeShareResult.data
             )
 
         } else {
@@ -111,6 +106,16 @@ class VaultListViewModel @Inject constructor(
             }
             .logError(PassLogger, TAG, "Delete Vault Failed")
     }
+
+    private fun decryptShares(shares: List<Share>): List<ShareUiModel> =
+        encryptionContextProvider.withEncryptionContext {
+            shares
+                .map { share ->
+                    val decrypted = decrypt(share.content!!)
+                    val parsed = VaultV1.Vault.parseFrom(decrypted)
+                    ShareUiModel(share.id, parsed.name)
+                }
+        }
 
     companion object {
         private const val TAG = "VaultListViewModel"

@@ -18,7 +18,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.TrashItem
-import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
+import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.InitError
 import proton.android.pass.featurecreateitem.impl.note.NoteSnackbarMessage.ItemUpdateError

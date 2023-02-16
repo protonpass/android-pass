@@ -6,5 +6,9 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
 interface TrashItem {
-    suspend operator fun invoke(userId: UserId, shareId: ShareId, itemId: ItemId): LoadingResult<Unit>
+    suspend operator fun invoke(
+        userId: UserId? = null,
+        shareId: ShareId,
+        itemId: ItemId
+    ): LoadingResult<Unit>
 }

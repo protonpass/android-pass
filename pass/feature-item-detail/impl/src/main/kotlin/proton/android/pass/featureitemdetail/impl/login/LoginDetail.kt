@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -24,7 +25,10 @@ import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
-import proton.android.pass.featureitemdetail.impl.login.bottomsheet.LoginDetailBottomSheetContents
+import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
+import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.TopBarOptions
+import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.WebsiteOptions
+import proton.android.pass.featureitemdetail.impl.login.bottomsheet.WebsiteOptionsBottomSheetContents
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -46,38 +50,58 @@ fun LoginDetail(
         viewModel.setItem(item)
     }
 
-    val model by viewModel.viewState.collectAsStateWithLifecycle()
+    val model by viewModel.uiState.collectAsStateWithLifecycle()
 
+    if (model.isItemSentToTrash) {
+        LaunchedEffect(Unit) { onUpClick() }
+    }
     val bottomSheetState = rememberModalBottomSheetState(
-        ModalBottomSheetValue.Hidden,
+        initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
     )
-    val (selectedWebsite, setSelectedWebsite) = remember { mutableStateOf("") }
+    var currentBottomSheet by remember { mutableStateOf(TopBarOptions) }
+    var selectedWebsite by remember { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     ProtonModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
-            LoginDetailBottomSheetContents(
-                website = selectedWebsite,
-                onCopyToClipboard = { website ->
-                    viewModel.copyWebsiteToClipboard(website)
-                    scope.launch { bottomSheetState.hide() }
-                },
-                onOpenWebsite = { website ->
-                    openWebsite(context, website)
-                    scope.launch { bottomSheetState.hide() }
+            when (currentBottomSheet) {
+                WebsiteOptions -> {
+                    WebsiteOptionsBottomSheetContents(
+                        website = selectedWebsite,
+                        onCopyToClipboard = { website ->
+                            viewModel.copyWebsiteToClipboard(website)
+                            scope.launch { bottomSheetState.hide() }
+                        },
+                        onOpenWebsite = { website ->
+                            openWebsite(context, website)
+                            scope.launch { bottomSheetState.hide() }
+                        }
+                    )
                 }
-            )
+                TopBarOptions -> {
+                    TopBarOptionsBottomSheetContents(
+                        onMoveToTrash = {
+                            viewModel.onDelete(item.shareId, item.id)
+                            scope.launch { bottomSheetState.hide() }
+                        }
+                    )
+                }
+            }
         }
     ) {
         Scaffold(
             topBar = {
                 ItemDetailTopBar(
+                    isLoading = model.isLoading,
                     color = PassColors.PurpleAccent,
                     onUpClick = onUpClick,
                     onEditClick = { onEditClick(item.shareId, item.id, item.itemType) },
-                    onOptionsClick = {}
+                    onOptionsClick = {
+                        currentBottomSheet = TopBarOptions
+                        scope.launch { bottomSheetState.show() }
+                    }
                 )
             }
         ) { padding ->
@@ -91,7 +115,8 @@ fun LoginDetail(
                 onUsernameClick = { viewModel.copyUsernameToClipboard() },
                 onWebsiteClicked = { website -> openWebsite(context, website) },
                 onWebsiteLongClicked = { website ->
-                    setSelectedWebsite(website)
+                    selectedWebsite = website
+                    currentBottomSheet = WebsiteOptions
                     scope.launch { bottomSheetState.show() }
                 },
                 onCopyTotpClick = {

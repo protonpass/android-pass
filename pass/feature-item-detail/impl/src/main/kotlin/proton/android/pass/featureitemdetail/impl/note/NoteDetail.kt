@@ -37,6 +37,7 @@ fun NoteDetail(
         modifier = modifier,
         topBar = {
             ItemDetailTopBar(
+                isLoading = false,
                 color = PassColors.YellowAccent,
                 onUpClick = onUpClick,
                 onEditClick = { onEditClick(item.shareId, item.id, item.itemType) },

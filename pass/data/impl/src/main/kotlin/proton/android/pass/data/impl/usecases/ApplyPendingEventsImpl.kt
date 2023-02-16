@@ -64,29 +64,25 @@ class ApplyPendingEventsImpl @Inject constructor(
     private suspend fun applyPendingEvents(addressId: AddressId, userId: UserId, shareId: ShareId) {
         while (true) {
             val events = eventRepository.getEvents(userId, addressId, shareId)
-            if (events.fullRefresh) {
-                PassLogger.i(TAG, "Performing full refresh with share id :$shareId")
-                itemRepository.refreshItems(userId, shareId)
-                PassLogger.i(TAG, "Finished full refresh with share id :$shareId")
-            } else {
-                PassLogger.i(TAG, "Applying events with share id :$shareId")
-                itemRepository.applyEvents(
-                    userId,
-                    addressId,
-                    shareId,
-                    events.toDomain()
-                )
-                PassLogger.i(
-                    TAG,
-                    "Applied events with share id :$shareId. Storing latest event ID"
-                )
-                eventRepository.storeLatestEventId(
-                    userId,
-                    addressId,
-                    shareId,
-                    events.latestEventId
-                )
-            }
+
+            PassLogger.i(TAG, "Applying events with share id :$shareId")
+            itemRepository.applyEvents(
+                userId,
+                addressId,
+                shareId,
+                events.toDomain()
+            )
+            PassLogger.i(
+                TAG,
+                "Applied events with share id :$shareId. Storing latest event ID"
+            )
+            eventRepository.storeLatestEventId(
+                userId,
+                addressId,
+                shareId,
+                events.latestEventId
+            )
+
             if (!events.eventsPending) break
         }
     }

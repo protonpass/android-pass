@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GetShareKeysResponse(
-    @SerialName("Keys")
+    @SerialName("ShareKeys")
     val keys: ShareKeysListResponse
 )
 

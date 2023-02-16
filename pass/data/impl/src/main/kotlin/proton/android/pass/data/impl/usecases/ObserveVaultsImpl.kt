@@ -2,9 +2,9 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import me.proton.core.crypto.common.context.CryptoContext
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.ShareContentNotAvailableError
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class ObserveVaultsImpl @Inject constructor(
     private val observeAllShares: ObserveAllShares,
-    private val cryptoContext: CryptoContext
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ObserveVaults {
 
     override fun invoke(): Flow<LoadingResult<List<Vault>>> =
@@ -23,8 +23,10 @@ class ObserveVaultsImpl @Inject constructor(
                 result.map { list ->
                     list.map { share ->
                         val content = share.content ?: throw ShareContentNotAvailableError()
-                        val decrypted = cryptoContext.keyStoreCrypto.decrypt(content)
-                        val parsed = VaultV1.Vault.parseFrom(decrypted.array)
+                        val decrypted = encryptionContextProvider.withEncryptionContext {
+                            decrypt(content)
+                        }
+                        val parsed = VaultV1.Vault.parseFrom(decrypted)
                         Vault(share.id, parsed.name)
                     }
                 }

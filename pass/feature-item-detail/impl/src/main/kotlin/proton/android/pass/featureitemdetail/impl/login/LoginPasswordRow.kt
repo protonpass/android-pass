@@ -16,7 +16,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.asAnnotatedString
+import proton.android.pass.commonui.api.toPasswordAnnotatedString
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
@@ -61,7 +64,18 @@ internal fun LoginPasswordRow(
         Column(modifier = Modifier.weight(1f)) {
             SectionTitle(text = stringResource(R.string.field_password))
             Spacer(modifier = Modifier.height(8.dp))
-            SectionSubtitle(text = sectionContent)
+            when (password) {
+                is PasswordState.Concealed -> SectionSubtitle(text = sectionContent.asAnnotatedString())
+                is PasswordState.Revealed -> {
+                    SectionSubtitle(
+                        text = sectionContent.toPasswordAnnotatedString(
+                            digitColor = ProtonTheme.colors.notificationError,
+                            symbolColor = ProtonTheme.colors.notificationSuccess,
+                            letterColor = ProtonTheme.colors.textNorm
+                        )
+                    )
+                }
+            }
         }
         Circle(
             backgroundColor = PassColors.PurpleAccent,

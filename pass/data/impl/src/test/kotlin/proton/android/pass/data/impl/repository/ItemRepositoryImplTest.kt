@@ -1,32 +1,32 @@
 package proton.android.pass.data.impl.repository
 
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.TestCreateItem
 import proton.android.pass.crypto.fakes.usecases.TestOpenItem
 import proton.android.pass.crypto.fakes.usecases.TestUpdateItem
+import proton.android.pass.data.impl.fakes.TestItemKeyRepository
 import proton.android.pass.data.impl.fakes.TestLocalItemDataSource
 import proton.android.pass.data.impl.fakes.TestPassDatabase
 import proton.android.pass.data.impl.fakes.TestRemoteItemDataSource
+import proton.android.pass.data.impl.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.fakes.TestShareRepository
-import proton.android.pass.data.impl.fakes.TestVaultKeyRepository
 import proton.android.pass.data.impl.generator.TestProtoItemGenerator
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
-import proton.pass.domain.ItemContents
-import proton.pass.domain.Share
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestAccountManager
 import proton.android.pass.test.TestUserAddressRepository
 import proton.android.pass.test.domain.TestItem
-import proton.android.pass.test.domain.TestItemKey
 import proton.android.pass.test.domain.TestShare
 import proton.android.pass.test.domain.TestShareKey
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-import proton.android.pass.crypto.api.usecases.OpenItemOutput
+import proton.pass.domain.ItemContents
+import proton.pass.domain.Share
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -40,7 +40,8 @@ class ItemRepositoryImplTest {
     private lateinit var openItem: TestOpenItem
     private lateinit var localItemDataSource: TestLocalItemDataSource
     private lateinit var remoteItemDataSource: TestRemoteItemDataSource
-    private lateinit var vaultKeyRepository: TestVaultKeyRepository
+    private lateinit var shareKeyRepository: TestShareKeyRepository
+    private lateinit var itemKeyRepository: TestItemKeyRepository
 
     private val userId = UserId("test-123")
     private lateinit var share: Share
@@ -51,7 +52,8 @@ class ItemRepositoryImplTest {
         openItem = TestOpenItem()
         localItemDataSource = TestLocalItemDataSource()
         remoteItemDataSource = TestRemoteItemDataSource()
-        vaultKeyRepository = TestVaultKeyRepository()
+        shareKeyRepository = TestShareKeyRepository()
+        itemKeyRepository = TestItemKeyRepository()
 
         share = TestShare.create()
 
@@ -68,17 +70,14 @@ class ItemRepositoryImplTest {
             remoteItemDataSource = remoteItemDataSource,
             openItem = openItem,
             encryptionContextProvider = TestEncryptionContextProvider(),
-            shareKeyRepository =
+            shareKeyRepository = shareKeyRepository,
+            itemKeyRepository = itemKeyRepository
         )
     }
 
     @Test
     fun `createItem stores into remote and local datasource`() = runTest {
-        vaultKeyRepository.setLatestVaultItemKey(
-            LoadingResult.Success(
-                TestShareKey.createPrivate() to TestItemKey.createPrivate()
-            )
-        )
+        shareKeyRepository.emitGetLatestKeyForShare(TestShareKey.createPrivate())
         createItem.setPayload(TestCreateItem.createPayload())
 
         val name = "title"

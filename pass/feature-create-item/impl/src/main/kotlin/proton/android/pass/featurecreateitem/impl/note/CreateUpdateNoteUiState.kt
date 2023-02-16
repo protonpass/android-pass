@@ -3,7 +3,7 @@ package proton.android.pass.featurecreateitem.impl.note
 import androidx.compose.runtime.Immutable
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.featurecreateitem.impl.IsSentToTrashState
+import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 
 @Immutable

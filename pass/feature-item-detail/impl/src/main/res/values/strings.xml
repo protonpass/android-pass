@@ -22,6 +22,8 @@
     <string name="password_copied_to_clipboard">Password copied</string>
     <string name="website_copied_to_clipboard">Website copied</string>
     <string name="totp_copied_to_clipboard">TOTP copied</string>
+    <string name="move_item_to_trash_message">Item moved to trash</string>
+    <string name="error_move_item_to_trash_message">Error moving to trash</string>
     <string name="field_username">Username</string>
     <string name="field_password">Password</string>
     <string name="field_websites">Websites</string>
@@ -47,5 +49,6 @@
     <string name="totp_icon_content_description">OTP icon</string>
     <string name="website_icon_content_description">Website icon</string>
     <string name="linked_app_icon_content_description">App icon</string>
+    <string name="open_menu_icon_content_description">Open menu icon</string>
 
 </resources>

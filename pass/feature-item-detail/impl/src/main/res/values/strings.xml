@@ -51,4 +51,7 @@
     <string name="linked_app_icon_content_description">App icon</string>
     <string name="open_menu_icon_content_description">Open menu icon</string>
 
+    <!-- Bottomsheet -->
+    <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>
+
 </resources>

@@ -15,21 +15,24 @@ import proton.pass.domain.AliasMailbox
 @Composable
 fun AliasSection(
     modifier: Modifier = Modifier,
-    model: AliasUiModel,
+    model: AliasUiModel?,
+    isLoading: Boolean,
     onCopyAlias: (String) -> Unit
 ) {
     RoundedCornersColumn(
         modifier = modifier.fillMaxWidth()
     ) {
         AliasAddressRow(
-            alias = model.alias,
+            alias = model?.alias ?: "",
             onCopyAlias = { onCopyAlias(it) }
         )
         Divider()
-        AliasMailboxesRow(mailboxes = model.mailboxes)
+        AliasMailboxesRow(
+            mailboxes = model?.mailboxes ?: emptyList(),
+            isLoading = isLoading
+        )
     }
 }
-
 
 class ThemedAliasMailboxesPreviewProvider :
     ThemePairPreviewProvider<List<AliasMailbox>>(AliasMailboxesPreviewProvider())
@@ -48,8 +51,8 @@ fun AliasSectionPreview(
                     mailboxes = input.second,
                     note = ""
                 ),
-                onCopyAlias = {}
-            )
+                isLoading = false
+            ) {}
         }
     }
 }

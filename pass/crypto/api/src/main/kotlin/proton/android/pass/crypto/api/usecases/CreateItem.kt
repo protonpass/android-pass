@@ -1,6 +1,5 @@
 package proton.android.pass.crypto.api.usecases
 
-import me.proton.core.user.domain.entity.UserAddress
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.pass.domain.ItemContents
 import proton.pass.domain.key.ShareKey
@@ -19,7 +18,6 @@ data class CreateItemPayload(
 
 interface CreateItem {
     fun create(
-        userAddress: UserAddress,
         shareKey: ShareKey,
         itemContents: ItemContents
     ): CreateItemPayload

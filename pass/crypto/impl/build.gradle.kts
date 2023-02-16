@@ -59,6 +59,9 @@ dependencies {
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinTest)
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.crypto.fakes)
+    testImplementation(projects.pass.data.fakes)
 
     androidTestImplementation(files("../../../../proton-libs/gopenpgp/gopenpgp.aar"))
     androidTestImplementation(projects.pass.commonTest)

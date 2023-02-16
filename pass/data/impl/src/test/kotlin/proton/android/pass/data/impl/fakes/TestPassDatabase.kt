@@ -1,13 +1,12 @@
 package proton.android.pass.data.impl.fakes
 
 import proton.android.pass.data.impl.db.PassDatabase
-import proton.android.pass.data.impl.db.dao.ItemKeysDao
 import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
 import proton.android.pass.data.impl.db.dao.SelectedShareDao
+import proton.android.pass.data.impl.db.dao.ShareKeysDao
 import proton.android.pass.data.impl.db.dao.ShareSelectedShareDao
 import proton.android.pass.data.impl.db.dao.SharesDao
-import proton.android.pass.data.impl.db.dao.VaultKeysDao
 
 class TestPassDatabase : PassDatabase {
     override fun sharesDao(): SharesDao {
@@ -18,11 +17,7 @@ class TestPassDatabase : PassDatabase {
         throw IllegalStateException("This method should not be called")
     }
 
-    override fun vaultKeysDao(): VaultKeysDao {
-        throw IllegalStateException("This method should not be called")
-    }
-
-    override fun itemKeysDao(): ItemKeysDao {
+    override fun shareKeysDao(): ShareKeysDao {
         throw IllegalStateException("This method should not be called")
     }
 

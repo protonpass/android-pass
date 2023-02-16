@@ -1,6 +1,5 @@
 package proton.android.pass.crypto.impl.usecases
 
-import me.proton.core.user.domain.entity.UserAddress
 import org.apache.commons.codec.binary.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -18,7 +17,6 @@ class CreateItemImpl @Inject constructor(
 ) : CreateItem {
 
     override fun create(
-        userAddress: UserAddress,
         shareKey: ShareKey,
         itemContents: ItemContents
     ): CreateItemPayload {

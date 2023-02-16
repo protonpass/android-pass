@@ -6,27 +6,20 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.toPasswordAnnotatedString
 
 @Composable
-internal fun PasswordText(
+fun PasswordText(
     modifier: Modifier = Modifier,
-    password: String
+    text: String
 ) {
-    val annotatedString = password
-        .map {
-            val color = when {
-                PasswordGenerator.CharacterSet.NUMBERS.value.contains(it) -> ProtonTheme.colors.notificationError
-                PasswordGenerator.CharacterSet.SYMBOLS.value.contains(it) -> ProtonTheme.colors.notificationSuccess
-                else -> ProtonTheme.colors.textNorm
-            }
-            AnnotatedString(it.toString(), SpanStyle(color))
-        }
-        .reduceOrNull { acc, next -> acc.plus(next) }
-        ?: AnnotatedString("")
+    val annotatedString = text.toPasswordAnnotatedString(
+        digitColor = ProtonTheme.colors.notificationError,
+        symbolColor = ProtonTheme.colors.notificationSuccess,
+        letterColor = ProtonTheme.colors.textNorm
+    )
 
     Box(
         modifier = modifier,

@@ -26,9 +26,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import proton.android.pass.featurecreateitem.impl.R
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.featurecreateitem.impl.R
 
 @Composable
 internal fun CreatePasswordViewContent(
@@ -52,7 +52,7 @@ internal fun CreatePasswordViewContent(
                 modifier = Modifier
                     .weight(1f)
                     .height(72.dp),
-                password = state.password
+                text = state.password
             )
             Spacer(modifier = Modifier.size(8.dp))
             IconButton(

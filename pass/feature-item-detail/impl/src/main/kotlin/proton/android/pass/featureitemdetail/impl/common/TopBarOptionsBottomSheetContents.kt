@@ -3,6 +3,7 @@ package proton.android.pass.featureitemdetail.impl.common
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
@@ -12,6 +13,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.featureitemdetail.impl.R
 
 @Composable
 fun TopBarOptionsBottomSheetContents(
@@ -29,7 +31,7 @@ fun TopBarOptionsBottomSheetContents(
 private fun moveToTrash(onClick: () -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = "Move to trash") }
+            get() = { BottomSheetItemTitle(text = stringResource(R.string.move_to_trash_item_detail_bottom_sheet)) }
         override val subtitle: @Composable (() -> Unit)?
             get() = null
         override val icon: @Composable (() -> Unit)

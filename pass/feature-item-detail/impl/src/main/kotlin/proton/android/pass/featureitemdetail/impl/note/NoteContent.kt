@@ -50,7 +50,9 @@ fun NoteContentPreview(
             NoteContent(
                 model = NoteDetailUiState(
                     title = "Note title",
-                    note = "Note body"
+                    note = "Note body",
+                    isLoading = false,
+                    isItemSentToTrash = false
                 ),
                 onCopyToClipboard = {}
             )

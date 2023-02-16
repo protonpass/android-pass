@@ -76,10 +76,9 @@ class ShareKeyRepositoryImpl @Inject constructor(
         if (retrievedKey != null) {
             val mapped = entityToDomain(retrievedKey)
             emit(mapped)
-            return@flow
+        } else {
+            emit(null)
         }
-
-        emit(null)
     }
 
     private suspend fun requestRemoteKeys(

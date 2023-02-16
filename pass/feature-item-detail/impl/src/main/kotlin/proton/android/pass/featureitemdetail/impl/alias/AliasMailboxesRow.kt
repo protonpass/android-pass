@@ -11,8 +11,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
@@ -25,6 +27,7 @@ fun AliasMailboxesRow(
     mailboxes: List<AliasMailbox>,
     isLoading: Boolean
 ) {
+    if (!isLoading && mailboxes.isEmpty()) return
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -46,11 +49,11 @@ fun AliasMailboxesRow(
                     modifier = Modifier
                         .fillMaxWidth()
                         .placeholder(),
-                    text = ""
+                    text = AnnotatedString("")
                 )
             } else {
                 mailboxes.forEach { mailbox ->
-                    SectionSubtitle(text = mailbox.email)
+                    SectionSubtitle(text = mailbox.email.asAnnotatedString())
                 }
             }
         }

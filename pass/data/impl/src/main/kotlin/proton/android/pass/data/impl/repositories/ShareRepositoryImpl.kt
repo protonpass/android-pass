@@ -19,6 +19,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import org.apache.commons.codec.binary.Base64
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
+import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.CreateVault
@@ -309,7 +310,7 @@ class ShareRepositoryImpl @Inject constructor(
             targetId = entity.targetId,
             permission = SharePermission(entity.permission),
             vaultId = VaultId(entity.vaultId),
-            content = entity.encryptedContent,
+            content = entity.encryptedContent.toOption(),
             expirationTime = entity.expirationTime?.let { Date(it) },
             createTime = Date(entity.createTime),
         )

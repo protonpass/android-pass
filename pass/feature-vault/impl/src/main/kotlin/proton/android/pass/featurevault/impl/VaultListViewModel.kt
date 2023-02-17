@@ -10,12 +10,16 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.logError
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonuimodels.api.ShareUiModel
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotDeleteCurrentVaultError
+import proton.android.pass.data.api.errors.ShareContentNotAvailableError
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveActiveShare
@@ -110,20 +114,27 @@ class VaultListViewModel @Inject constructor(
 
     private fun decryptShares(shares: List<Share>): List<ShareUiModel> =
         encryptionContextProvider.withEncryptionContext {
-            shares
-                .map { share ->
-                    when (share.shareType) {
-                        ShareType.Vault -> {
-                            val decrypted = decrypt(share.content!!)
-                            val parsed = VaultV1.Vault.parseFrom(decrypted)
-                            ShareUiModel(share.id, parsed.name)
-                        }
-                        ShareType.Item -> {
-                            throw NotImplementedError("Item shares are not implemented yet")
-                        }
-                    }
-                }
+            shares.map { share -> decryptShare(this@withEncryptionContext, share) }
         }
+
+    @Suppress("NotImplementedDeclaration")
+    private fun decryptShare(encryptionContext: EncryptionContext, share: Share): ShareUiModel =
+        when (share.shareType) {
+            ShareType.Vault -> {
+                when (val content = share.content) {
+                    is Some -> {
+                        val decrypted = encryptionContext.decrypt(content.value)
+                        val parsed = VaultV1.Vault.parseFrom(decrypted)
+                        ShareUiModel(share.id, parsed.name)
+                    }
+                    None -> throw ShareContentNotAvailableError()
+                }
+            }
+            ShareType.Item -> {
+                throw NotImplementedError("Item shares are not implemented yet")
+            }
+        }
+
 
     companion object {
         private const val TAG = "VaultListViewModel"

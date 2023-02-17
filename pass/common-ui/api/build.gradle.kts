@@ -30,4 +30,8 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
     implementation(projects.pass.protos)
+
+    testImplementation(libs.truth)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.junit)
 }

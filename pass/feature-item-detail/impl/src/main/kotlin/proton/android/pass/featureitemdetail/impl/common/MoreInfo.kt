@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,22 +18,31 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import kotlinx.datetime.Instant
 import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.commonui.api.DateFormatUtils
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featureitemdetail.impl.R
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Suppress("MagicNumber")
 @Composable
 fun MoreInfo(
     modifier: Modifier = Modifier,
+    moreInfoUiState: MoreInfoUiState,
     shouldShowMoreInfoInitially: Boolean = false
 ) {
+    moreInfoUiState.createdTime
     Column(modifier = modifier.fillMaxWidth()) {
         var showMoreInfo by remember { mutableStateOf(shouldShowMoreInfoInitially) }
         Row(
@@ -59,33 +69,108 @@ fun MoreInfo(
                     horizontalAlignment = Alignment.End,
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    MoreInfoText(text = stringResource(R.string.more_info_autofilled))
-                    MoreInfoText(text = stringResource(R.string.more_info_modified))
-                    Spacer(modifier = Modifier.height(14.dp))
+                    MoreInfoLastAutofilledTitle(lastAutofilled = moreInfoUiState.lastAutofilled)
+                    MoreInfoModifiedTitle(numRevisions = moreInfoUiState.numRevisions)
+                    // Created
                     MoreInfoText(text = stringResource(R.string.more_info_created))
                 }
                 Column(
                     modifier = Modifier.weight(0.7f),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    MoreInfoText(text = "(Placeholder) Today 11:19")
-                    MoreInfoText(text = "(Placeholder) 3 time(s)")
-                    MoreInfoText(text = "(Placeholder) Last time, yesterday at 10:10 (-14s)")
-                    MoreInfoText(text = "(Placeholder) 6 February at 11:07")
+                    MoreInfoLastAutofilledContent(moreInfoUiState = moreInfoUiState)
+                    MoreInfoModifiedContent(moreInfoUiState = moreInfoUiState)
+                    // Created
+                    MoreInfoText(
+                        text = DateFormatUtils.formatInstantText(
+                            now = moreInfoUiState.now,
+                            toFormat = moreInfoUiState.createdTime
+                        )
+                    )
                 }
             }
         }
     }
 }
 
+@Composable
+private fun MoreInfoLastAutofilledTitle(
+    modifier: Modifier = Modifier,
+    lastAutofilled: Option<Instant>
+) {
+    if (lastAutofilled.isNotEmpty()) {
+        MoreInfoText(modifier = modifier, text = stringResource(R.string.more_info_autofilled))
+    }
+}
+
+@Composable
+private fun MoreInfoModifiedTitle(
+    modifier: Modifier = Modifier,
+    numRevisions: Long
+) {
+    if (numRevisions > 1) {
+        MoreInfoText(modifier = modifier, text = stringResource(R.string.more_info_modified))
+        Spacer(modifier = Modifier.height(14.dp))
+    }
+}
+
+@Composable
+private fun MoreInfoLastAutofilledContent(
+    modifier: Modifier = Modifier,
+    moreInfoUiState: MoreInfoUiState
+) {
+    if (moreInfoUiState.lastAutofilled is Some) {
+        MoreInfoText(
+            modifier = modifier,
+            text = DateFormatUtils.formatInstantText(
+                now = moreInfoUiState.now,
+                toFormat = moreInfoUiState.lastAutofilled.value
+            )
+        )
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun ColumnScope.MoreInfoModifiedContent(
+    modifier: Modifier = Modifier,
+    moreInfoUiState: MoreInfoUiState
+) {
+    val modifiedTimes = moreInfoUiState.numRevisions - 1
+    if (modifiedTimes > 0) {
+        val lastUpdateString = DateFormatUtils.formatInstantText(
+            now = moreInfoUiState.now,
+            toFormat = moreInfoUiState.lastModified
+        )
+
+        MoreInfoText(
+            modifier = modifier,
+            text = pluralStringResource(
+                id = R.plurals.more_info_modified_times,
+                count = modifiedTimes.toInt()
+            )
+        )
+        MoreInfoText(
+            modifier = modifier,
+            text = stringResource(R.string.more_info_last_time_modified, lastUpdateString)
+        )
+    }
+}
+
+class ThemedMoreInfoPreviewProvider :
+    ThemePairPreviewProvider<MoreInfoPreview>(MoreInfoPreviewProvider())
+
 @Preview
 @Composable
 fun MoreInfoPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemedMoreInfoPreviewProvider::class) input: Pair<Boolean, MoreInfoPreview>
 ) {
     ProtonTheme(isDark = input.first) {
         Surface {
-            MoreInfo(shouldShowMoreInfoInitially = input.second)
+            MoreInfo(
+                shouldShowMoreInfoInitially = input.second.showMoreInfo,
+                moreInfoUiState = input.second.uiState
+            )
         }
     }
 }

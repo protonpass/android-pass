@@ -40,6 +40,7 @@
     <string name="more_info_icon">More info icon</string>
     <plurals name="more_info_modified_times">
         <item quantity="one">Once</item>
+        <item quantity="two">Twice</item>
         <item quantity="other">%d times</item>
     </plurals>
     <string name="more_info_last_time_modified">Last time, %s</string>

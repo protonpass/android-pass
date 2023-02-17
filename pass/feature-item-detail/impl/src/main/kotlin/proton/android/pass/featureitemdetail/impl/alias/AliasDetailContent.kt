@@ -8,12 +8,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
+import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 
 @Composable
 fun AliasDetailContent(
     modifier: Modifier = Modifier,
     model: AliasUiModel?,
+    moreInfoUiState: MoreInfoUiState,
     isLoading: Boolean,
     onCopyAlias: (String) -> Unit
 ) {
@@ -24,7 +26,7 @@ fun AliasDetailContent(
         AliasTitle(title = model?.title ?: "")
         AliasSection(Modifier, model, isLoading, onCopyAlias)
         NoteSection(text = model?.note ?: "", accentColor = PassColors.GreenAccent)
-        MoreInfo()
+        MoreInfo(moreInfoUiState = moreInfoUiState)
     }
 }
 

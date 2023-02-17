@@ -34,7 +34,6 @@ object TestItem {
             content = EncryptedByteArray(byteArrayOf()),
             allowedPackageNames = allowedPackageNames,
             modificationTime = now,
-            revisionCount = 1,
             createTime = now,
             lastAutofillTime = None
         )
@@ -73,7 +72,6 @@ object TestItem {
             createTime = now,
             modificationTime = now,
             lastAutofillTime = None,
-            revisionCount = 1
         )
     }
 }

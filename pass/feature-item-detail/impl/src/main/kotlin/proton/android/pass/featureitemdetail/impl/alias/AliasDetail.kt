@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
+import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
@@ -34,6 +35,7 @@ import proton.pass.domain.ShareId
 fun AliasDetail(
     modifier: Modifier = Modifier,
     item: Item,
+    moreInfoUiState: MoreInfoUiState,
     viewModel: AliasDetailViewModel = hiltViewModel(),
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit
@@ -83,7 +85,8 @@ fun AliasDetail(
                     .verticalScroll(rememberScrollState()),
                 model = uiState.model,
                 isLoading = uiState.isLoadingState,
-                onCopyAlias = { viewModel.onCopyAlias(it) }
+                onCopyAlias = { viewModel.onCopyAlias(it) },
+                moreInfoUiState = moreInfoUiState
             )
         }
     }

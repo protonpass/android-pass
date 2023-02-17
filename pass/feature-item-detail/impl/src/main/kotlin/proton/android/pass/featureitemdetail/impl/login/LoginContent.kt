@@ -9,12 +9,14 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableSet
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
+import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 
 @Composable
 fun LoginContent(
     modifier: Modifier = Modifier,
     state: LoginDetailUiState,
+    moreInfoUiState: MoreInfoUiState,
     onTogglePasswordClick: () -> Unit,
     onUsernameClick: () -> Unit,
     onCopyPasswordClick: () -> Unit,
@@ -48,6 +50,6 @@ fun LoginContent(
             isEditable = false,
             onLinkedAppDelete = {}
         )
-        MoreInfo()
+        MoreInfo(moreInfoUiState = moreInfoUiState)
     }
 }

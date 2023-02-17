@@ -19,21 +19,24 @@ fun ItemDetailContent(
     onEditClick: (ShareId, ItemId, ItemType) -> Unit
 ) {
     Box(modifier = modifier.fillMaxSize()) {
-        if (uiState.model != null) {
+        if (uiState.model != null && uiState.moreInfoUiState != null) {
             val item = uiState.model.item
             when (item.itemType) {
                 is ItemType.Login -> LoginDetail(
                     item = item,
+                    moreInfoUiState = uiState.moreInfoUiState,
                     onUpClick = onUpClick,
                     onEditClick = onEditClick
                 )
                 is ItemType.Note -> NoteDetail(
                     item = item,
+                    moreInfoUiState = uiState.moreInfoUiState,
                     onUpClick = onUpClick,
                     onEditClick = onEditClick
                 )
                 is ItemType.Alias -> AliasDetail(
                     item = item,
+                    moreInfoUiState = uiState.moreInfoUiState,
                     onUpClick = onUpClick,
                     onEditClick = onEditClick
                 )

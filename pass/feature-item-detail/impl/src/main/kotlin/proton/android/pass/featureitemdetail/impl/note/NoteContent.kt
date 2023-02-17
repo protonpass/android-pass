@@ -17,11 +17,13 @@ import me.proton.core.compose.theme.default
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
+import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 
 @Composable
 fun NoteContent(
     modifier: Modifier = Modifier,
     model: NoteDetailUiState,
+    moreInfoUiState: MoreInfoUiState,
     onCopyToClipboard: () -> Unit
 ) {
     Column(
@@ -36,7 +38,7 @@ fun NoteContent(
             text = model.note,
             style = ProtonTheme.typography.default
         )
-        MoreInfo()
+        MoreInfo(moreInfoUiState = moreInfoUiState)
     }
 }
 
@@ -54,7 +56,10 @@ fun NoteContentPreview(
                     isLoading = false,
                     isItemSentToTrash = false
                 ),
-                onCopyToClipboard = {}
+                onCopyToClipboard = {},
+
+                // We don't care about the MoreInfo as we are not showing it
+                moreInfoUiState = MoreInfoUiState.Initial
             )
         }
     }

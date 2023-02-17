@@ -25,6 +25,7 @@ import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
+import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.TopBarOptions
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.WebsiteOptions
@@ -42,6 +43,7 @@ import proton.pass.domain.ShareId
 fun LoginDetail(
     modifier: Modifier = Modifier,
     item: Item,
+    moreInfoUiState: MoreInfoUiState,
     viewModel: LoginDetailViewModel = hiltViewModel(),
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit
@@ -110,6 +112,7 @@ fun LoginDetail(
                     .padding(padding)
                     .verticalScroll(rememberScrollState()),
                 state = model,
+                moreInfoUiState = moreInfoUiState,
                 onTogglePasswordClick = { viewModel.togglePassword() },
                 onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },
                 onUsernameClick = { viewModel.copyUsernameToClipboard() },

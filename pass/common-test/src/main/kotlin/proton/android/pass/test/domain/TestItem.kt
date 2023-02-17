@@ -5,6 +5,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
+import proton.android.pass.common.api.None
 import proton.android.pass.test.TestUtils.randomString
 import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.Item
@@ -22,6 +23,7 @@ object TestItem {
     ): Item {
         val title = "item-title"
         val note = "item-note"
+        val now = Clock.System.now()
         return Item(
             id = ItemId(id = "item-id"),
             revision = 0,
@@ -31,7 +33,10 @@ object TestItem {
             note = keyStoreCrypto?.let { note.encrypt(it) } ?: note,
             content = EncryptedByteArray(byteArrayOf()),
             allowedPackageNames = allowedPackageNames,
-            modificationTime = Clock.System.now()
+            modificationTime = now,
+            revisionCount = 1,
+            createTime = now,
+            lastAutofillTime = None
         )
     }
 
@@ -55,6 +60,7 @@ object TestItem {
         } else {
             TestKeyStoreCrypto.encrypt(PlainByteArray(byteArrayOf(0x00)))
         }
+        val now = Clock.System.now()
         return Item(
             id = ItemId(randomString()),
             revision = Random.nextLong(),
@@ -64,7 +70,10 @@ object TestItem {
             note = TestKeyStoreCrypto.encrypt(noteParam),
             content = itemContent,
             allowedPackageNames = emptyList(),
-            modificationTime = Clock.System.now()
+            createTime = now,
+            modificationTime = now,
+            lastAutofillTime = None,
+            revisionCount = 1
         )
     }
 }

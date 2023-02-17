@@ -50,7 +50,7 @@ data class ItemRevision(
     @SerialName("ModifyTime")
     val modifyTime: Long,
     @SerialName("LastUseTime")
-    val lastUseTime: Long,
+    val lastUseTime: Long?,
     @SerialName("RevisionTime")
     val revisionTime: Long
 )

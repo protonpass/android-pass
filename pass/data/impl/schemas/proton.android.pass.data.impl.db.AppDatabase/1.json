@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "3868ada8410c6766c0b741774036476e",
+    "identityHash": "df658e0194d7a8f661f2cf15cdb94b45",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -1704,7 +1704,7 @@
       },
       {
         "tableName": "ItemEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `revision` INTEGER NOT NULL, `content_format_version` INTEGER NOT NULL, `key_rotation` INTEGER NOT NULL, `content` TEXT NOT NULL, `key` TEXT, `state` INTEGER NOT NULL, `item_type` INTEGER NOT NULL, `alias_email` TEXT, `create_time` INTEGER NOT NULL, `modify_time` INTEGER NOT NULL, `last_used_time` INTEGER NOT NULL DEFAULT 0, `encrypted_title` TEXT NOT NULL, `encrypted_note` TEXT NOT NULL, `encrypted_content` BLOB NOT NULL, `encrypted_key` BLOB, PRIMARY KEY(`id`, `share_id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `ShareEntity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `share_id` TEXT NOT NULL, `revision` INTEGER NOT NULL, `content_format_version` INTEGER NOT NULL, `key_rotation` INTEGER NOT NULL, `content` TEXT NOT NULL, `key` TEXT, `state` INTEGER NOT NULL, `item_type` INTEGER NOT NULL, `alias_email` TEXT, `create_time` INTEGER NOT NULL, `modify_time` INTEGER NOT NULL, `last_used_time` INTEGER, `encrypted_title` TEXT NOT NULL, `encrypted_note` TEXT NOT NULL, `encrypted_content` BLOB NOT NULL, `encrypted_key` BLOB, PRIMARY KEY(`id`, `share_id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`share_id`) REFERENCES `ShareEntity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -1794,8 +1794,7 @@
             "fieldPath": "lastUsedTime",
             "columnName": "last_used_time",
             "affinity": "INTEGER",
-            "notNull": true,
-            "defaultValue": "0"
+            "notNull": false
           },
           {
             "fieldPath": "encryptedTitle",
@@ -2194,7 +2193,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3868ada8410c6766c0b741774036476e')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'df658e0194d7a8f661f2cf15cdb94b45')"
     ]
   }
 }

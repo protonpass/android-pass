@@ -61,8 +61,8 @@ data class ItemEntity(
     val createTime: Long,
     @ColumnInfo(name = Columns.MODIFY_TIME)
     val modifyTime: Long,
-    @ColumnInfo(name = Columns.LAST_USED_TIME, defaultValue = "0")
-    val lastUsedTime: Long,
+    @ColumnInfo(name = Columns.LAST_USED_TIME)
+    val lastUsedTime: Long?,
 
     // Keystore Encrypted contents
     @ColumnInfo(name = Columns.ENCRYPTED_TITLE)

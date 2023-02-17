@@ -38,6 +38,11 @@
     <string name="more_info_autofilled">Auto-filled:</string>
     <string name="more_info_title">More info</string>
     <string name="more_info_icon">More info icon</string>
+    <plurals name="more_info_modified_times">
+        <item quantity="one">Once</item>
+        <item quantity="other">%d times</item>
+    </plurals>
+    <string name="more_info_last_time_modified">Last time, %s</string>
 
     <string name="top_bar_edit_icon_content_description">Edit icon</string>
     <string name="alias_mailbox_forward_icon_content_description">Arrow forward icon</string>

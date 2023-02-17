@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -21,9 +22,11 @@ import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.some
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
+import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
-import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
+import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
@@ -34,6 +37,7 @@ class ItemDetailViewModel @Inject constructor(
     private val itemRepository: ItemRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val clock: Clock,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -46,7 +50,16 @@ class ItemDetailViewModel @Inject constructor(
         MutableStateFlow(None)
 
     val uiState: StateFlow<ItemDetailScreenUiState> = itemModelState
-        .map { itemModel -> ItemDetailScreenUiState(itemModel.value()) }
+        .map { itemModel ->
+            val moreInfoUiState = when (itemModel) {
+                None -> null
+                is Some -> getMoreInfoUiState(itemModel.value.item)
+            }
+            ItemDetailScreenUiState(
+                model = itemModel.value(),
+                moreInfoUiState = moreInfoUiState
+            )
+        }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
@@ -80,6 +93,14 @@ class ItemDetailViewModel @Inject constructor(
             }
         }
     }
+
+    private fun getMoreInfoUiState(item: Item): MoreInfoUiState = MoreInfoUiState(
+        now = clock.now(),
+        createdTime = item.createTime,
+        lastAutofilled = item.lastAutofillTime,
+        lastModified = item.modificationTime,
+        numRevisions = item.revision
+    )
 
     companion object {
         private const val TAG = "ItemDetailViewModel"

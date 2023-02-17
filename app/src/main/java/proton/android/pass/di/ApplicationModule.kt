@@ -7,11 +7,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.PassAppConfig
-import proton.android.pass.appconfig.api.AppConfig
+import kotlinx.datetime.Clock
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
+import proton.android.pass.PassAppConfig
+import proton.android.pass.appconfig.api.AppConfig
 import javax.inject.Singleton
 
 @Module
@@ -42,4 +43,8 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun provideAppConfig(): AppConfig = PassAppConfig()
+
+    @Provides
+    @Singleton
+    fun provideClock(): Clock = Clock.System
 }

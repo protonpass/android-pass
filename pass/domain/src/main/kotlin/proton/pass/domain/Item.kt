@@ -17,7 +17,6 @@ data class Item(
     val note: EncryptedString,
     val content: EncryptedByteArray,
     val allowedPackageNames: List<String>,
-    val revisionCount: Long,
     val createTime: Instant,
     val modificationTime: Instant,
     val lastAutofillTime: Option<Instant>

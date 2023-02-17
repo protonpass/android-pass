@@ -4,6 +4,7 @@ import me.proton.android.pass.crypto.impl.context.TestEncryptionContextProvider
 import org.apache.commons.codec.binary.Base64
 import org.junit.Before
 import org.junit.Test
+import proton.android.pass.common.api.None
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
@@ -62,7 +63,7 @@ class OpenItemImplTest {
             targetId = VAULT_ID,
             permission = SharePermission(SharePermissionFlag.Admin.value),
             vaultId = VaultId(VAULT_ID),
-            content = null,
+            content = None,
             expirationTime = null,
             createTime = Date(1664195804),
         )

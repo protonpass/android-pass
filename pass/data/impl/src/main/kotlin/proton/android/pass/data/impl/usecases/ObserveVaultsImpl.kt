@@ -3,6 +3,8 @@ package proton.android.pass.data.impl.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.map
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.ShareContentNotAvailableError
@@ -22,12 +24,16 @@ class ObserveVaultsImpl @Inject constructor(
             .map { result ->
                 result.map { list ->
                     list.map { share ->
-                        val content = share.content ?: throw ShareContentNotAvailableError()
-                        val decrypted = encryptionContextProvider.withEncryptionContext {
-                            decrypt(content)
+                        when (val content = share.content) {
+                            is Some -> {
+                                val decrypted = encryptionContextProvider.withEncryptionContext {
+                                    decrypt(content.value)
+                                }
+                                val parsed = VaultV1.Vault.parseFrom(decrypted)
+                                Vault(share.id, parsed.name)
+                            }
+                            None -> throw ShareContentNotAvailableError()
                         }
-                        val parsed = VaultV1.Vault.parseFrom(decrypted)
-                        Vault(share.id, parsed.name)
                     }
                 }
             }

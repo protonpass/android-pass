@@ -1,5 +1,6 @@
 package proton.android.pass.test.domain
 
+import proton.android.pass.common.api.None
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermission
@@ -16,7 +17,7 @@ object TestShare {
             targetId = "456",
             permission = SharePermission(SharePermissionFlag.Admin.value),
             vaultId = VaultId("456"),
-            content = null,
+            content = None,
             expirationTime = null,
             createTime = Date(),
         )

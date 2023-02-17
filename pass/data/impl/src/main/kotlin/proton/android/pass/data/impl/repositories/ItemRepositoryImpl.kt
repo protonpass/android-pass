@@ -22,6 +22,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
+import proton.android.pass.common.api.toOption
 import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -703,8 +704,12 @@ class ItemRepositoryImpl @Inject constructor(
             note = entity.encryptedNote,
             content = entity.encryptedContent,
             allowedPackageNames = entity.allowedApps(encryptionContext),
-            modificationTime = Instant.fromEpochSeconds(entity.modifyTime)
+            modificationTime = Instant.fromEpochSeconds(entity.modifyTime),
+            revisionCount = entity.revision,
+            createTime = Instant.fromEpochSeconds(entity.createTime),
+            lastAutofillTime = entity.lastUsedTime.toOption().map(Instant::fromEpochSeconds)
         )
+
 
     companion object {
         const val MAX_TRASH_ITEMS_PER_REQUEST = 50

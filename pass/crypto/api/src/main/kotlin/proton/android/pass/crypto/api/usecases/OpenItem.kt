@@ -16,7 +16,7 @@ data class EncryptedItemRevision(
     val aliasEmail: String?,
     val createTime: Long,
     val modifyTime: Long,
-    val lastUseTime: Long,
+    val lastUseTime: Long?,
     val revisionTime: Long
 )
 

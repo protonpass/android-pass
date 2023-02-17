@@ -3,6 +3,7 @@ package proton.android.pass.crypto.impl.usecases
 import kotlinx.datetime.Instant
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.apache.commons.codec.binary.Base64
+import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag
@@ -118,7 +119,10 @@ class OpenItemImpl @Inject constructor(
             itemType = ItemType.fromParsed(this, decoded, aliasEmail = response.aliasEmail),
             allowedPackageNames = decoded.platformSpecific.android.allowedAppsList
                 .map { it.packageName },
-            modificationTime = Instant.fromEpochSeconds(response.modifyTime)
+            createTime = Instant.fromEpochSeconds(response.createTime),
+            modificationTime = Instant.fromEpochSeconds(response.modifyTime),
+            lastAutofillTime = response.lastUseTime.toOption().map(Instant::fromEpochSeconds),
+            revisionCount = response.revision
         )
     }
 }

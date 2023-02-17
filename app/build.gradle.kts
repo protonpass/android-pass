@@ -254,6 +254,7 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.plumber)
     implementation(libs.kotlinx.collections)
+    implementation(libs.kotlinx.datetime)
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)

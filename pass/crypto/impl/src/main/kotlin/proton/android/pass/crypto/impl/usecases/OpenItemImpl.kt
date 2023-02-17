@@ -122,7 +122,6 @@ class OpenItemImpl @Inject constructor(
             createTime = Instant.fromEpochSeconds(response.createTime),
             modificationTime = Instant.fromEpochSeconds(response.modifyTime),
             lastAutofillTime = response.lastUseTime.toOption().map(Instant::fromEpochSeconds),
-            revisionCount = response.revision
         )
     }
 }

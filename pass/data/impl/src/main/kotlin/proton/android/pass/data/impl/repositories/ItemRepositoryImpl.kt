@@ -705,7 +705,6 @@ class ItemRepositoryImpl @Inject constructor(
             content = entity.encryptedContent,
             allowedPackageNames = entity.allowedApps(encryptionContext),
             modificationTime = Instant.fromEpochSeconds(entity.modifyTime),
-            revisionCount = entity.revision,
             createTime = Instant.fromEpochSeconds(entity.createTime),
             lastAutofillTime = entity.lastUsedTime.toOption().map(Instant::fromEpochSeconds)
         )

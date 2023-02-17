@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -34,7 +36,6 @@ import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featureitemdetail.impl.R
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Suppress("MagicNumber")
 @Composable
 fun MoreInfo(
@@ -46,7 +47,9 @@ fun MoreInfo(
     Column(modifier = modifier.fillMaxWidth()) {
         var showMoreInfo by remember { mutableStateOf(shouldShowMoreInfoInitially) }
         Row(
-            modifier = Modifier.clickable { showMoreInfo = !showMoreInfo },
+            modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .clickable { showMoreInfo = !showMoreInfo },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -147,7 +150,8 @@ private fun ColumnScope.MoreInfoModifiedContent(
             modifier = modifier,
             text = pluralStringResource(
                 id = R.plurals.more_info_modified_times,
-                count = modifiedTimes.toInt()
+                count = modifiedTimes.toInt(),
+                modifiedTimes.toInt()
             )
         )
         MoreInfoText(

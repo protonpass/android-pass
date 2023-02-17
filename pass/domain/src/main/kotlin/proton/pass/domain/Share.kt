@@ -1,6 +1,7 @@
 package proton.pass.domain
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import proton.android.pass.common.api.Option
 import java.util.Date
 
 @JvmInline
@@ -15,7 +16,7 @@ data class Share(
     val targetId: String,
     val permission: SharePermission,
     val vaultId: VaultId,
-    val content: EncryptedByteArray?, // Can be null if targetType is Item
+    val content: Option<EncryptedByteArray>, // Can be None if targetType is Item
     val expirationTime: Date?,
     val createTime: Date,
 )

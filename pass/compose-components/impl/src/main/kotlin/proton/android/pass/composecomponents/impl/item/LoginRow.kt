@@ -7,10 +7,10 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toImmutableList
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.pass.domain.ItemType
 
 @Composable
@@ -49,7 +49,7 @@ fun LoginRow(
         }
 
         ItemRow(
-            icon = { LoginIcon() },
+            icon = { LoginIcon(text = title.text) },
             title = title,
             subtitles = (listOfNotNull(username, note) + websites).toImmutableList(),
             modifier = modifier

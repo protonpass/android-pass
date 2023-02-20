@@ -46,7 +46,7 @@ fun LoginOptionsBottomSheetContents(
                     text = itemType.username
                 )
             },
-            icon = { LoginIcon() }
+            icon = { LoginIcon(text = itemUiModel.name) }
         )
         Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(

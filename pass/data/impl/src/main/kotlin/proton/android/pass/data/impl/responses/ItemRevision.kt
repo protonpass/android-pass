@@ -24,7 +24,9 @@ data class ItemsList(
     @SerialName("Total")
     val total: Long,
     @SerialName("RevisionsData")
-    val revisions: List<ItemRevision>
+    val revisions: List<ItemRevision>,
+    @SerialName("LastToken")
+    val lastToken: String?
 )
 
 @Serializable

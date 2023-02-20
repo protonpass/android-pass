@@ -2,14 +2,14 @@ package proton.android.pass.composecomponents.impl.form
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 
-class TitleInputPreviewProvider :
-    PreviewParameterProvider<TitleInputPreviewData> {
-    override val values: Sequence<TitleInputPreviewData>
+class TitleSectionPreviewProvider :
+    PreviewParameterProvider<TitleSectionPreviewData> {
+    override val values: Sequence<TitleSectionPreviewData>
         get() = sequence {
             for (isEditAllowed in listOf(true, false)) {
                 for (data in previewData) {
                     yield(
-                        TitleInputPreviewData(
+                        TitleSectionPreviewData(
                             title = data.first,
                             onTitleRequiredError = data.second,
                             enabled = isEditAllowed
@@ -26,7 +26,7 @@ class TitleInputPreviewProvider :
     )
 }
 
-data class TitleInputPreviewData(
+data class TitleSectionPreviewData(
     val title: String,
     val onTitleRequiredError: Boolean,
     val enabled: Boolean

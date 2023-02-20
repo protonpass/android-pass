@@ -1,80 +1,71 @@
 package proton.android.pass.featurecreateitem.impl.login
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.ButtonDefaults
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
-import androidx.compose.material.OutlinedButton
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.default
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
-import proton.android.pass.composecomponents.impl.form.ProtonTextTitle
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.featurecreateitem.impl.R
 
 @Composable
 internal fun TotpInput(
     modifier: Modifier = Modifier,
     value: String,
+    enabled: Boolean,
     onAddTotpClick: () -> Unit,
     onDeleteTotpClick: () -> Unit
 ) {
-    val buttonIcon = if (value.isNotBlank()) {
-        me.proton.core.presentation.R.drawable.ic_proton_trash
-    } else {
-        me.proton.core.presentation.R.drawable.ic_proton_plus
-    }
-    Column(modifier = modifier) {
-        ProtonTextTitle(stringResource(R.string.totp_create_login_field_title))
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(1.0f)
-                .height(IntrinsicSize.Min),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            ProtonTextField(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .weight(1.0f),
-                value = value,
-                onChange = { },
-                editable = false,
-                placeholder = stringResource(R.string.totp_create_login_field_placeholder)
+    ProtonTextField(
+        modifier = modifier.padding(0.dp, 16.dp),
+        value = value,
+        onChange = { },
+        editable = false,
+        textStyle = ProtonTheme.typography.default,
+        label = { ProtonTextFieldLabel(text = stringResource(R.string.totp_create_login_field_title)) },
+        placeholder = {
+            ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.totp_create_login_field_placeholder))
+        },
+        leadingIcon = {
+            Icon(
+                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
+                contentDescription = "",
+                tint = ProtonTheme.colors.iconWeak
             )
-            Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-            OutlinedButton(
+        },
+        trailingIcon = {
+            IconButton(
+                enabled = enabled,
                 onClick = {
                     if (value.isNotBlank()) {
                         onDeleteTotpClick()
                     } else {
                         onAddTotpClick()
                     }
-                },
-                shape = ProtonTheme.shapes.medium,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .aspectRatio(1.0f)
-                    .align(Alignment.CenterVertically)
+                }
             ) {
+                val buttonIcon = if (value.isNotBlank()) {
+                    me.proton.core.presentation.R.drawable.ic_proton_trash
+                } else {
+                    me.proton.core.presentation.R.drawable.ic_proton_plus
+                }
                 Icon(
                     painter = painterResource(buttonIcon),
                     contentDescription = null,
-                    tint = ProtonTheme.colors.iconNorm,
-                    modifier = Modifier.align(Alignment.CenterVertically)
+                    tint = if (enabled) {
+                        ProtonTheme.colors.iconNorm
+                    } else {
+                        ProtonTheme.colors.iconDisabled
+                    }
                 )
             }
         }
-    }
+    )
 }

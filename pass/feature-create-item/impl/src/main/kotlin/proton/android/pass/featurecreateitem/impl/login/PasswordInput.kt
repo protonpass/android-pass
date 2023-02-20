@@ -1,19 +1,9 @@
 package proton.android.pass.featurecreateitem.impl.login
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,11 +19,13 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import proton.android.pass.composecomponents.impl.form.ProtonTextField
-import proton.android.pass.composecomponents.impl.form.ProtonTextTitle
-import proton.android.pass.featurecreateitem.impl.R
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.default
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.form.ProtonTextField
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
+import proton.android.pass.featurecreateitem.impl.R
 
 @Composable
 internal fun PasswordInput(
@@ -57,53 +49,57 @@ internal fun PasswordInput(
         )
     }
 
-    Column(modifier = modifier.padding(top = 28.dp)) {
-        ProtonTextTitle(stringResource(id = R.string.field_password_title))
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            modifier = Modifier
-                .height(IntrinsicSize.Min)
-                .fillMaxWidth(1.0f)
-        ) {
-            ProtonTextField(
-                modifier = Modifier
-                    .weight(1.0f)
-                    .fillMaxHeight(),
-                value = value,
-                editable = isEditAllowed,
-                onChange = onChange,
-                placeholder = stringResource(id = R.string.field_password_hint),
-                trailingIcon = {
-                    IconButton(
-                        onClick = { isVisible = !isVisible }
-                    ) {
-                        Icon(
-                            painter = icon,
-                            contentDescription = null,
-                            tint = ProtonTheme.colors.iconNorm
-                        )
-                    }
-                },
-                visualTransformation = visualTransformation
+    ProtonTextField(
+        modifier = modifier.padding(0.dp, 16.dp),
+        value = value,
+        editable = isEditAllowed,
+        textStyle = ProtonTheme.typography.default(isEditAllowed),
+        onChange = onChange,
+        label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_password_title)) },
+        placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_password_hint)) },
+        leadingIcon = {
+            Icon(
+                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
+                contentDescription = "",
+                tint = ProtonTheme.colors.iconWeak
             )
-            Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-            OutlinedButton(
-                onClick = onGeneratePasswordClick,
-                shape = ProtonTheme.shapes.medium,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .aspectRatio(1.0f)
-                    .align(Alignment.CenterVertically)
-            ) {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_arrows_rotate),
-                    contentDescription = null,
-                    tint = ProtonTheme.colors.iconNorm,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
+        },
+        trailingIcon = {
+            Row {
+                IconButton(
+                    enabled = isEditAllowed,
+                    onClick = { onGeneratePasswordClick() }
+                ) {
+                    Icon(
+                        painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_arrows_rotate),
+                        contentDescription = null,
+                        tint = if (isEditAllowed) {
+                            ProtonTheme.colors.iconNorm
+                        } else {
+                            ProtonTheme.colors.iconDisabled
+                        },
+                        modifier = Modifier.align(Alignment.CenterVertically)
+                    )
+                }
+                IconButton(
+                    enabled = isEditAllowed,
+                    onClick = { isVisible = !isVisible }
+                ) {
+                    Icon(
+                        painter = icon,
+                        contentDescription = null,
+                        tint = if (isEditAllowed) {
+                            ProtonTheme.colors.iconNorm
+                        } else {
+                            ProtonTheme.colors.iconDisabled
+                        }
+                    )
+                }
             }
-        }
-    }
+
+        },
+        visualTransformation = visualTransformation
+    )
 }
 
 @Preview

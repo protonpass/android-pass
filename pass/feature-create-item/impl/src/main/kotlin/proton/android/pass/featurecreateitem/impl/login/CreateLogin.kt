@@ -62,7 +62,6 @@ fun CreateLogin(
         onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
         onCreateAliasClick = onCreateAliasClick,
         onRemoveAliasClick = { viewModel.onRemoveAlias() },
-        onDeleteItemClick = {}, // Item cannot be deleted if it has not been created
         onVaultSelect = { viewModel.changeVault(it) },
         onAddTotp = onAddTotp,
         onDeleteTotp = { viewModel.onDeleteTotp() },

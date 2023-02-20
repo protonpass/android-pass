@@ -12,14 +12,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveVaults
-import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -49,8 +48,6 @@ abstract class BaseNoteViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val noteItemValidationErrorsState: MutableStateFlow<Set<NoteItemValidationErrors>> =
         MutableStateFlow(emptySet())
-    protected val isSentToTrashState: MutableStateFlow<IsSentToTrashState> =
-        MutableStateFlow(IsSentToTrashState.NotSent)
 
     private val observeAllVaultsFlow = observeVaults()
         .map { shares ->
@@ -98,17 +95,15 @@ abstract class BaseNoteViewModel(
         sharesWrapperState,
         noteItemWrapperState,
         isLoadingState,
-        isItemSavedState,
-        isSentToTrashState
-    ) { shareWrapper, noteItemWrapper, isLoading, isItemSaved, isSentToTrash ->
+        isItemSavedState
+    ) { shareWrapper, noteItemWrapper, isLoading, isItemSaved ->
         CreateUpdateNoteUiState(
             shareList = shareWrapper.shareList,
             selectedShareId = shareWrapper.currentShare,
             noteItem = noteItemWrapper.noteItem,
             errorList = noteItemWrapper.noteItemValidationErrors,
             isLoadingState = isLoading,
-            isItemSaved = isItemSaved,
-            isSentToTrash = isSentToTrash
+            isItemSaved = isItemSaved
         )
     }
         .stateIn(

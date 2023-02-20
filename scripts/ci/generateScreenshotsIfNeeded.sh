@@ -15,6 +15,7 @@ BRANCH_NAME="${CI_COMMIT_REF_NAME}"
 pushd $REPO_ROOT || exit 1
 
 # Regenerate screenshots
+rm -rf "${SCREENSHOTS_DIR}"
 ./gradlew recordPaparazziDevDebug --rerun-tasks
 
 # Check if there has been any difference

@@ -18,9 +18,6 @@ fun NavGraphBuilder.updateNoteGraph(nav: AppNavigator) {
                     route = AppNavItem.ViewItem.createNavRoute(shareId, itemId),
                     backDestination = AppNavItem.Home
                 )
-            },
-            onSentToTrash = {
-                nav.popUpTo(AppNavItem.Home)
             }
         )
     }

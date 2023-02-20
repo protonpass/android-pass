@@ -12,8 +12,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.default
 import me.proton.core.compose.theme.defaultStrong
-import proton.android.pass.composecomponents.impl.form.ProtonFormInput
+import proton.android.pass.composecomponents.impl.form.ProtonTextField
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.topbar.TopBarLoading
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import proton.android.pass.composecomponents.impl.topbar.icon.CrossBackIcon
@@ -61,22 +64,30 @@ fun CreateVaultContent(
                 .padding(padding)
                 .padding(horizontal = 16.dp, vertical = 12.dp)
         ) {
-            ProtonFormInput(
+            ProtonTextField(
                 modifier = Modifier.padding(top = 8.dp),
-                title = stringResource(id = R.string.vault_create_form_title_label),
-                placeholder = stringResource(id = R.string.vault_create_form_title_placeholder),
+                textStyle = ProtonTheme.typography.default,
+                label = { ProtonTextFieldLabel(text = stringResource(id = R.string.vault_create_form_title_label)) },
+                placeholder = {
+                    ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.vault_create_form_title_placeholder))
+                },
                 value = uiState.draftVault.title,
                 onChange = onTitleChange,
-                isError = uiState.validationErrors.contains(BlankTitle),
-                required = true
+                isError = uiState.validationErrors.contains(BlankTitle)
             )
-            ProtonFormInput(
+            ProtonTextField(
                 modifier = Modifier.padding(top = 8.dp),
-                title = stringResource(id = R.string.vault_create_form_description_label),
-                placeholder = stringResource(id = R.string.vault_create_form_description_placeholder),
+                textStyle = ProtonTheme.typography.default,
+                label = {
+                    ProtonTextFieldLabel(text = stringResource(id = R.string.vault_create_form_description_label))
+                },
+                placeholder = {
+                    ProtonTextFieldPlaceHolder(
+                        text = stringResource(id = R.string.vault_create_form_description_placeholder)
+                    )
+                },
                 value = uiState.draftVault.description,
-                onChange = onDescriptionChange,
-                required = false
+                onChange = onDescriptionChange
             )
         }
     }

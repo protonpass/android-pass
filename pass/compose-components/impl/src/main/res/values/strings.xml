@@ -24,8 +24,8 @@
 
     <!-- Field -->
     <string name="field_title_title">Title</string>
-    <string name="field_title_hint">Name</string>
-    <string name="field_title_is_blank">Invalid title</string>
+    <string name="field_title_hint">Untitled</string>
+    <string name="clear_title_icon_content_description">Clear title icon</string>
 
     <string name="field_note_title">Note</string>
     <string name="field_note_hint">Add note</string>

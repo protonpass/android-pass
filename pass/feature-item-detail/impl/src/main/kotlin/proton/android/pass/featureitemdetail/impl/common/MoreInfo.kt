@@ -46,7 +46,7 @@ fun MoreInfo(
     moreInfoUiState: MoreInfoUiState,
     shouldShowMoreInfoInitially: Boolean = false
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth().padding(horizontal = 8.dp)) {
         var showMoreInfo by remember { mutableStateOf(shouldShowMoreInfoInitially) }
         var rotation by remember { mutableStateOf(0f) }
         val displayRotation by animateFloatAsState(targetValue = rotation)

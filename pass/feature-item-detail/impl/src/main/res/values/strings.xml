@@ -57,6 +57,7 @@
     <string name="linked_app_icon_content_description">App icon</string>
     <string name="open_menu_icon_content_description">Open menu icon</string>
     <string name="navigate_back_icon_content_description">Navigate back icon</string>
+    <string name="missing_app_icon_content_description">Missing app icon</string>
 
     <!-- Bottomsheet -->
     <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>

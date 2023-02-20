@@ -2,6 +2,7 @@ package proton.android.pass.featurehome.impl.bottomsheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
@@ -10,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
 import me.proton.core.compose.theme.ProtonTheme
@@ -39,6 +41,7 @@ fun NoteOptionsBottomSheetContents(
     val itemType = itemUiModel.itemType as ItemType.Note
     Column(modifier) {
         BottomSheetItemRow(
+            modifier = Modifier.padding(horizontal = 16.dp),
             title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = {
                 val processedText = itemType.text.replace("\n", " ")

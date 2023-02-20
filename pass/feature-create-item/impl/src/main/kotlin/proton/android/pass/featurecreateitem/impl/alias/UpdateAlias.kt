@@ -9,6 +9,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -42,7 +43,7 @@ fun UpdateAlias(
     Box(modifier = modifier) {
         AliasContent(
             uiState = viewState,
-            topBarTitle = R.string.title_edit_alias,
+            topBarActionName = stringResource(id = R.string.action_save),
             canEdit = false,
             isUpdate = true,
             isEditAllowed = viewState.isLoadingState == IsLoadingState.NotLoading,

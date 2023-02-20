@@ -26,8 +26,7 @@ fun CreateNote(
     NoteContent(
         modifier = modifier,
         uiState = noteUiState,
-        topBarTitle = stringResource(R.string.title_create_note),
-        topBarActionName = stringResource(R.string.action_save),
+        topBarActionName = stringResource(R.string.title_create_note),
         canDelete = false,
         onUpClick = onUpClick,
         onSuccess = { _, _ -> onSuccess() },

@@ -1,9 +1,8 @@
-package proton.android.pass.composecomponents.impl.form
+package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
@@ -24,6 +23,8 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationIcon
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationName
+import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.featureitemdetail.impl.R
 
 @Composable
@@ -42,7 +43,13 @@ fun LinkedAppItem(
         val iconDrawable = remember(packageName) { getApplicationIcon(context, packageName) }
         val appName = remember(packageName) { getApplicationName(context, packageName) }
         when (iconDrawable) {
-            None -> Spacer(modifier = Modifier.width(40.dp))
+            None -> Circle(backgroundColor = PassColors.PurpleAccent) {
+                Icon(
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_grid_3),
+                    contentDescription = stringResource(R.string.missing_app_icon_content_description),
+                    tint = PassColors.PurpleAccent
+                )
+            }
             is Some -> Image(
                 modifier = Modifier.width(40.dp),
                 painter = rememberDrawablePainter(drawable = iconDrawable.value),

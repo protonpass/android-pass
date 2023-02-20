@@ -47,9 +47,6 @@ fun NavGraphBuilder.updateLoginGraph(nav: AppNavigator) {
                     )
                 )
             },
-            onSentToTrash = {
-                nav.popUpTo(AppNavItem.Home)
-            },
             onAddTotp = {
                 when (it) {
                     AddTotpType.Camera -> nav.navigate(AppNavItem.CameraTotp)

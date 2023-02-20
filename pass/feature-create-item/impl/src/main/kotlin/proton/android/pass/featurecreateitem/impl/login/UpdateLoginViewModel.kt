@@ -23,15 +23,11 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveVaults
-import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateItem
-import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.InitError
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.ItemUpdateError
-import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.LoginMovedToTrash
-import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.LoginMovedToTrashError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -45,7 +41,6 @@ import javax.inject.Inject
 class UpdateLoginViewModel @Inject constructor(
     private val itemRepository: ItemRepository,
     private val updateItem: UpdateItem,
-    private val trashItem: TrashItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     createAlias: CreateAlias,
@@ -159,23 +154,6 @@ class UpdateLoginViewModel @Inject constructor(
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }
-
-    fun onDelete() = viewModelScope.launch {
-        isLoadingState.update { IsLoadingState.Loading }
-        val userId = accountManager.getPrimaryUserId()
-            .first { userId -> userId != null }
-
-        val item = _item
-        if (userId != null && item != null) {
-            trashItem(userId, item.shareId, item.id)
-                .onSuccess { snackbarMessageRepository.emitSnackbarMessage(LoginMovedToTrash) }
-            isItemSentToTrashState.update { IsSentToTrashState.Sent }
-        } else {
-            PassLogger.i(TAG, "Empty userId")
-            snackbarMessageRepository.emitSnackbarMessage(LoginMovedToTrashError)
-        }
-        isLoadingState.update { IsLoadingState.NotLoading }
-    }
 
     private suspend fun performUpdateItem(
         userId: UserId,

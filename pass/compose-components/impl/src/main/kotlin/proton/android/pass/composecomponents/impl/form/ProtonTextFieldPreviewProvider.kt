@@ -10,14 +10,22 @@ import me.proton.core.presentation.R
 class ProtonTextFieldPreviewProvider : PreviewParameterProvider<ProtonTextFieldPreviewData> {
     override val values: Sequence<ProtonTextFieldPreviewData>
         get() = sequenceOf(
-            ProtonTextFieldPreviewData(value = ""),
+            ProtonTextFieldPreviewData(value = "", placeholder = ""),
             ProtonTextFieldPreviewData(
                 value = "",
                 placeholder = "Name"
             ),
-            ProtonTextFieldPreviewData(value = "", isError = true),
-            ProtonTextFieldPreviewData(value = "contents with error", isError = true),
-            ProtonTextFieldPreviewData(value = "not editable", isEditable = false),
+            ProtonTextFieldPreviewData(value = "", isError = true, placeholder = ""),
+            ProtonTextFieldPreviewData(
+                value = "contents with error",
+                isError = true,
+                placeholder = ""
+            ),
+            ProtonTextFieldPreviewData(
+                value = "not editable",
+                isEditable = false,
+                placeholder = ""
+            ),
             ProtonTextFieldPreviewData(
                 value = "with icon",
                 icon = {
@@ -28,14 +36,15 @@ class ProtonTextFieldPreviewProvider : PreviewParameterProvider<ProtonTextFieldP
                         contentDescription = null,
                         tint = ProtonTheme.colors.iconNorm
                     )
-                }
+                },
+                placeholder = ""
             )
         )
 }
 
 data class ProtonTextFieldPreviewData(
     val value: String = "",
-    val placeholder: String? = null,
+    val placeholder: String,
     val isError: Boolean = false,
     val isEditable: Boolean = true,
     val icon: (@Composable () -> Unit)? = null

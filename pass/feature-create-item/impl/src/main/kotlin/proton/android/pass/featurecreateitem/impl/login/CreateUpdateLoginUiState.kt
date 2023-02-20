@@ -3,7 +3,6 @@ package proton.android.pass.featurecreateitem.impl.login
 import androidx.compose.runtime.Immutable
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 
 @Immutable
@@ -15,8 +14,7 @@ data class CreateUpdateLoginUiState(
     val isLoadingState: IsLoadingState,
     val isItemSaved: ItemSavedState,
     val focusLastWebsite: Boolean,
-    val canUpdateUsername: Boolean,
-    val isItemSentToTrash: IsSentToTrashState
+    val canUpdateUsername: Boolean
 ) {
     companion object {
         val Initial = CreateUpdateLoginUiState(
@@ -27,8 +25,7 @@ data class CreateUpdateLoginUiState(
             validationErrors = emptySet(),
             isItemSaved = ItemSavedState.Unknown,
             focusLastWebsite = false,
-            canUpdateUsername = true,
-            isItemSentToTrash = IsSentToTrashState.NotSent
+            canUpdateUsername = true
         )
     }
 }

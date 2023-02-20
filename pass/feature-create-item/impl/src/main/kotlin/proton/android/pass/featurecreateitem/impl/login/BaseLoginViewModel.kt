@@ -20,7 +20,6 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -55,8 +54,6 @@ abstract class BaseLoginViewModel(
         MutableStateFlow(IsLoadingState.NotLoading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
-    protected val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
-        MutableStateFlow(IsSentToTrashState.NotSent)
     private val loginItemValidationErrorsState: MutableStateFlow<Set<LoginItemValidationErrors>> =
         MutableStateFlow(emptySet())
     private val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -97,17 +94,15 @@ abstract class BaseLoginViewModel(
     private val loginItemWrapperState = combine(
         loginItemState,
         loginItemValidationErrorsState,
-        canUpdateUsernameState,
-        isItemSentToTrashState
-    ) { loginItem, loginItemValidationErrors, updateUsername, sentToTrash ->
-        LoginItemWrapper(loginItem, loginItemValidationErrors, updateUsername, sentToTrash)
+        canUpdateUsernameState
+    ) { loginItem, loginItemValidationErrors, updateUsername ->
+        LoginItemWrapper(loginItem, loginItemValidationErrors, updateUsername)
     }
 
     private data class LoginItemWrapper(
         val loginItem: LoginItem,
         val loginItemValidationErrors: Set<LoginItemValidationErrors>,
-        val canUpdateUsername: Boolean,
-        val itemSentToTrash: IsSentToTrashState
+        val canUpdateUsername: Boolean
     )
 
     val loginUiState: StateFlow<CreateUpdateLoginUiState> = combine(
@@ -125,8 +120,7 @@ abstract class BaseLoginViewModel(
             isLoadingState = isLoading,
             isItemSaved = isItemSaved,
             focusLastWebsite = focusLastWebsite,
-            canUpdateUsername = loginItemWrapper.canUpdateUsername,
-            isItemSentToTrash = loginItemWrapper.itemSentToTrash
+            canUpdateUsername = loginItemWrapper.canUpdateUsername
         )
     }
         .stateIn(

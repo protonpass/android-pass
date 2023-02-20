@@ -4,18 +4,14 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
@@ -57,7 +53,12 @@ class UpdateAliasViewModel @Inject constructor(
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
-) : BaseAliasViewModel(snackbarMessageRepository, observeAliasOptions, observeVaults, savedStateHandle) {
+) : BaseAliasViewModel(
+    snackbarMessageRepository,
+    observeAliasOptions,
+    observeVaults,
+    savedStateHandle
+) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -67,15 +68,6 @@ class UpdateAliasViewModel @Inject constructor(
         savedStateHandle.get<String>(CommonNavArgId.ItemId.key)
             .toOption()
             .map { ItemId(it) }
-
-    private val _aliasDeletedState: MutableStateFlow<ItemDeletedState> =
-        MutableStateFlow(ItemDeletedState.Unknown)
-    val aliasDeletedState: StateFlow<ItemDeletedState> = _aliasDeletedState
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000L),
-            initialValue = ItemDeletedState.Unknown
-        )
 
     private var _item: Item? = null
 
@@ -118,19 +110,6 @@ class UpdateAliasViewModel @Inject constructor(
             TAG,
             IllegalStateException("UpdateAliasViewModel.onAliasChange should never be called")
         )
-    }
-
-    fun onDeleteAlias() = viewModelScope.launch {
-        isLoadingState.update { IsLoadingState.Loading }
-        val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        if (userId != null && navShareId is Some && itemId is Some) {
-            itemRepository.trashItem(userId, navShareId.value, itemId.value)
-            snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.AliasMovedToTrash)
-            _aliasDeletedState.update { ItemDeletedState.Deleted }
-        } else {
-            showError("Empty user/share/item Id", InitError)
-        }
-        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     private suspend fun setupInitialState() {

@@ -45,7 +45,6 @@ fun CreateAlias(
         onTitleChange = { viewModel.onTitleChange(it) },
         onNoteChange = { viewModel.onNoteChange(it) },
         onAliasChange = { viewModel.onAliasChange(it) },
-        onDeleteAlias = {}, // We cannot delete alias from the Create screen
         onVaultSelect = { viewModel.changeVault(it) }
     )
 }

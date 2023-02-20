@@ -33,7 +33,6 @@ fun CreateNote(
         onSubmit = { shareId -> viewModel.createNote(shareId) },
         onTitleChange = { viewModel.onTitleChange(it) },
         onNoteChange = { viewModel.onNoteChange(it) },
-        onDelete = {}, // We cannot delete a note that has not been created
         onVaultSelect = { viewModel.changeVault(it) }
     )
 }

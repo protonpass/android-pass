@@ -48,7 +48,6 @@ internal fun AliasContent(
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onAliasChange: (String) -> Unit,
-    onDeleteAlias: () -> Unit,
     onVaultSelect: (ShareId) -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -130,7 +129,6 @@ internal fun AliasContent(
                 onTitleChange = { onTitleChange(it) },
                 onNoteChange = { onNoteChange(it) },
                 onAliasChange = { onAliasChange(it) },
-                onDeleteAliasClick = onDeleteAlias,
                 onVaultSelectorClick = {
                     scope.launch {
                         currentBottomSheet = VaultSelection

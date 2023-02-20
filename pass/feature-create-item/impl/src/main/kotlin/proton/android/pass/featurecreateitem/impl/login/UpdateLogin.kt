@@ -4,16 +4,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.common.api.Option
-import proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
-import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.featurecreateitem.impl.R
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.LoginUpdated
@@ -30,7 +26,6 @@ fun UpdateLogin(
     onUpClick: () -> Unit,
     onSuccess: (ShareId, ItemId) -> Unit,
     onCreateAliasClick: (ShareId, Option<String>) -> Unit,
-    onSentToTrash: () -> Unit,
     onAddTotp: (AddTotpType) -> Unit
 ) {
     val viewModel: UpdateLoginViewModel = hiltViewModel()
@@ -45,12 +40,6 @@ fun UpdateLogin(
         viewModel.setTotp(primaryTotp)
     }
 
-    LaunchedEffect(uiState.isItemSentToTrash) {
-        if (uiState.isItemSentToTrash == IsSentToTrashState.Sent) {
-            onSentToTrash()
-        }
-    }
-
     val onWebsiteChange = object : OnWebsiteChange {
         override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int ->
             viewModel.onWebsiteChange(value, idx)
@@ -58,8 +47,6 @@ fun UpdateLogin(
         override val onAddWebsite: () -> Unit = { viewModel.onAddWebsite() }
         override val onRemoveWebsite: (Int) -> Unit = { idx: Int -> viewModel.onRemoveWebsite(idx) }
     }
-
-    val (showDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf(false) }
 
     Box(modifier = modifier) {
         LoginContent(
@@ -84,24 +71,12 @@ fun UpdateLogin(
                 onCreateAliasClick(shareId, titleOption)
             },
             onRemoveAliasClick = { },
-            onDeleteItemClick = { setShowDeleteDialog(true) },
             onVaultSelect = {
                 // Migrate element
             },
             onAddTotp = onAddTotp,
             onDeleteTotp = viewModel::onDeleteTotp,
             onLinkedAppDelete = viewModel::onDeleteLinkedApp
-        )
-
-        ConfirmMoveItemToTrashDialog(
-            show = showDeleteDialog,
-            itemName = uiState.loginItem.title,
-            onConfirm = {
-                viewModel.onDelete()
-                setShowDeleteDialog(false)
-            },
-            onDismiss = { setShowDeleteDialog(false) },
-            onCancel = { setShowDeleteDialog(false) }
         )
     }
 }

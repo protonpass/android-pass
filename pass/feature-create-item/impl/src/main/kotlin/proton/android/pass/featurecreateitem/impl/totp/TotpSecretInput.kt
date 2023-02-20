@@ -7,7 +7,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import proton.android.pass.composecomponents.impl.form.ProtonFormInput
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.default
+import proton.android.pass.composecomponents.impl.form.ProtonTextField
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.featurecreateitem.impl.R
 
 @Composable
@@ -18,14 +22,16 @@ fun TotpSecretInput(
     fieldRequiredError: Boolean = false,
     enabled: Boolean = true
 ) {
-    ProtonFormInput(
+    ProtonTextField(
         modifier = modifier.padding(top = 8.dp),
-        title = stringResource(id = R.string.totp_secret_field_title),
-        placeholder = stringResource(id = R.string.totp_secret_field_placeholder),
+        textStyle = ProtonTheme.typography.default(enabled),
+        label = { ProtonTextFieldLabel(text = stringResource(id = R.string.totp_secret_field_title)) },
+        placeholder = {
+            ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.totp_secret_field_placeholder))
+        },
         editable = enabled,
         value = value,
         onChange = onChange,
-        required = true,
         isError = fieldRequiredError,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password)
     )

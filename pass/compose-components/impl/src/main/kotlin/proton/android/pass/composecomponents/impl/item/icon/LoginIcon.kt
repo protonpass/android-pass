@@ -6,17 +6,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.presentation.R
+import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 
 @Composable
 fun LoginIcon(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    text: String,
+    size: Int = 40,
 ) {
-    RoundedTintedIcon(
+    CircleTextIcon(
         modifier = modifier,
-        color = ProtonTheme.colors.brandNorm,
-        icon = R.drawable.ic_proton_key
+        text = text,
+        color = PassColors.PurpleAccent,
+        size = size
     )
 }
 
@@ -27,7 +31,7 @@ fun LoginIconPreview(
 ) {
     ProtonTheme(isDark = isDark) {
         Surface {
-            LoginIcon()
+            LoginIcon(text = "login text")
         }
     }
 }

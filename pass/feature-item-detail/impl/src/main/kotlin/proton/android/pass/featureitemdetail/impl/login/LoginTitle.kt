@@ -4,19 +4,15 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
-import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.container.Circle
+import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 
 @Composable
@@ -26,14 +22,7 @@ fun LoginTitle(modifier: Modifier = Modifier, title: String) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Circle(backgroundColor = PassColors.PurpleAccent, size = 60) {
-            Text(
-                text = title.filter { !it.isWhitespace() }.take(2).uppercase(),
-                color = PassColors.PurpleAccent,
-                style = ProtonTheme.typography.default,
-                textAlign = TextAlign.Center
-            )
-        }
+        LoginIcon(size = 60, text = title)
         ItemTitleText(text = title)
     }
 }

@@ -54,7 +54,7 @@ fun WebsiteSection(
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {
-                SectionTitle(text = stringResource(R.string.field_websites))
+                SectionTitle(text = stringResource(R.string.websites_section_title))
                 Spacer(modifier = Modifier.height(8.dp))
                 websites.forEach { website ->
                     Text(
@@ -66,7 +66,7 @@ fun WebsiteSection(
                             )
                             .padding(vertical = 8.dp),
                         text = website,
-                        color = ProtonTheme.colors.interactionNorm,
+                        color = PassColors.PurpleAccent,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W400
                     )

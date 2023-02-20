@@ -40,13 +40,13 @@ internal fun ItemDetailTopBar(
         title = { },
         navigationIcon = {
             Circle(
-                modifier = Modifier.padding(4.dp),
+                modifier = Modifier.padding(12.dp, 4.dp),
                 backgroundColor = color,
                 onClick = { onUpClick() }
             ) {
                 Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_left),
-                    contentDescription = null,
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_arrow_back),
+                    contentDescription = stringResource(R.string.navigate_back_icon_content_description),
                     tint = color
                 )
             }
@@ -55,7 +55,7 @@ internal fun ItemDetailTopBar(
             Row(
                 modifier = Modifier
                     .height(48.dp)
-                    .padding(4.dp),
+                    .padding(12.dp, 4.dp),
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {

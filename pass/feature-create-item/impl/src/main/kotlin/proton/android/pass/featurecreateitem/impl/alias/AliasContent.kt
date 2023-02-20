@@ -1,7 +1,6 @@
 package proton.android.pass.featurecreateitem.impl.alias
 
 import androidx.activity.compose.BackHandler
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -14,26 +13,29 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
+import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.featurecreateitem.impl.alias.AliasBottomSheetContentType.AliasOptions
 import proton.android.pass.featurecreateitem.impl.alias.AliasBottomSheetContentType.VaultSelection
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankAlias
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.InvalidAliasContent
 import proton.android.pass.featurecreateitem.impl.alias.mailboxes.SelectMailboxesDialog
+import proton.android.pass.featurecreateitem.impl.common.CreateUpdateTopBar
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.VaultSelectionBottomSheet
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 @Suppress("LongParameterList", "LongMethod")
 internal fun AliasContent(
     modifier: Modifier = Modifier,
     uiState: CreateUpdateAliasUiState,
-    @StringRes topBarTitle: Int,
+    topBarActionName: String,
     canEdit: Boolean,
     isUpdate: Boolean,
     isEditAllowed: Boolean,
@@ -93,14 +95,12 @@ internal fun AliasContent(
         Scaffold(
             modifier = modifier,
             topBar = {
-                AliasTopBar(
-                    topBarTitle = topBarTitle,
-                    onUpClick = onUpClick,
-                    isDraft = uiState.isDraft,
-                    isButtonEnabled = uiState.isApplyButtonEnabled,
-                    shareUiModel = uiState.selectedShareId,
-                    isLoadingState = uiState.isLoadingState,
-                    onSubmit = onSubmit
+                CreateUpdateTopBar(
+                    text = topBarActionName,
+                    isLoading = uiState.isLoadingState.value(),
+                    color = PassColors.GreenAccent,
+                    onCloseClick = onUpClick,
+                    onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
                 )
             }
         ) { padding ->

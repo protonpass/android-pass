@@ -3,6 +3,7 @@ package proton.android.pass.featurecreateitem.impl.alias
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,7 +32,7 @@ fun CreateAlias(
     AliasContent(
         modifier = modifier,
         uiState = viewState,
-        topBarTitle = R.string.title_create_alias,
+        topBarActionName = stringResource(id = R.string.title_create_alias),
         canEdit = true,
         isUpdate = false,
         isEditAllowed = viewState.isLoadingState == IsLoadingState.NotLoading,

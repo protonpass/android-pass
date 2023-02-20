@@ -36,11 +36,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
-import proton.android.pass.composecomponents.impl.topbar.icon.ArrowBackIcon
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
+import proton.android.pass.composecomponents.impl.topbar.icon.ArrowBackIcon
 
 @ExperimentalComposeUiApi
 @Composable
@@ -60,7 +60,7 @@ fun SearchTopBar(
                 modifier = Modifier.focusRequester(focusRequester),
                 value = searchQuery,
                 onValueChange = onSearchQueryChange,
-                placeholder = { ProtonTextFieldPlaceHolder(placeholder) }
+                placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) }
             )
         },
         navigationIcon = { ArrowBackIcon { onStopSearch() } },

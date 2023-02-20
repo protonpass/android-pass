@@ -55,7 +55,6 @@ internal fun LoginContent(
     onEmitSnackbarMessage: (LoginSnackbarMessages) -> Unit,
     onCreateAliasClick: (ShareId, Option<String>) -> Unit,
     onRemoveAliasClick: () -> Unit,
-    onDeleteItemClick: () -> Unit,
     onVaultSelect: (ShareId) -> Unit,
     onAddTotp: (AddTotpType) -> Unit,
     onDeleteTotp: () -> Unit,
@@ -134,13 +133,13 @@ internal fun LoginContent(
                 showCreateAliasButton = showCreateAliasButton,
                 canUpdateUsername = uiState.canUpdateUsername,
                 isUpdate = isUpdate,
+                isEditAllowed = uiState.isLoadingState == IsLoadingState.NotLoading,
                 onTitleChange = onTitleChange,
                 onTitleRequiredError = uiState.validationErrors.contains(LoginItemValidationErrors.BlankTitle),
                 onUsernameChange = onUsernameChange,
                 onPasswordChange = onPasswordChange,
                 onWebsiteChange = onWebsiteChange,
                 focusLastWebsite = uiState.focusLastWebsite,
-                isEditAllowed = uiState.isLoadingState == IsLoadingState.NotLoading,
                 doesWebsiteIndexHaveError = { idx ->
                     uiState.validationErrors.any {
                         if (it is LoginItemValidationErrors.InvalidUrl) {
@@ -172,7 +171,6 @@ internal fun LoginContent(
                         bottomSheetState.show()
                     }
                 },
-                onDeleteClick = onDeleteItemClick,
                 onVaultSelectorClick = {
                     scope.launch {
                         currentBottomSheet = VaultSelection

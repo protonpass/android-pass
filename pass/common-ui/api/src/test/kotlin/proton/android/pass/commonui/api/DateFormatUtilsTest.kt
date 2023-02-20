@@ -36,13 +36,31 @@ class DateFormatUtilsTest {
         val now = Instant.fromEpochSeconds(NOW)
         val nowMinusOneWeek = now.minus(24 * 7, DateTimeUnit.HOUR)
         val res = DateFormatUtils.formatInstant(now, nowMinusOneWeek)
+        assertThat(res).isInstanceOf(DateFormatUtils.FormatResult.DateOfSameYear::class.java)
+
+        val asDate = res as DateFormatUtils.FormatResult.DateOfSameYear
+        val date = asDate.localDateTime
+        assertThat(date.dayOfMonth).isEqualTo(10)
+        assertThat(date.month).isEqualTo(Month.FEBRUARY)
+        assertThat(date.year).isEqualTo(2023)
+        assertThat(date.time.hour).isEqualTo(13)
+        assertThat(date.time.minute).isEqualTo(48)
+    }
+
+    @Test
+    fun canFormatOneYearAgo() {
+        val now = Instant.fromEpochSeconds(NOW)
+        val nowMinusOneYear = now.minus(24 * 365, DateTimeUnit.HOUR)
+        val res = DateFormatUtils.formatInstant(now, nowMinusOneYear)
         assertThat(res).isInstanceOf(DateFormatUtils.FormatResult.Date::class.java)
 
         val asDate = res as DateFormatUtils.FormatResult.Date
-        assertThat(asDate.day).isEqualTo(10)
-        assertThat(asDate.month).isEqualTo(Month.FEBRUARY)
-        assertThat(asDate.year).isEqualTo(2023)
-        assertThat(asDate.time).isEqualTo("13:48")
+        val date = asDate.localDateTime
+        assertThat(date.dayOfMonth).isEqualTo(17)
+        assertThat(date.month).isEqualTo(Month.FEBRUARY)
+        assertThat(date.year).isEqualTo(2022)
+        assertThat(date.time.hour).isEqualTo(13)
+        assertThat(date.time.minute).isEqualTo(48)
     }
 
     @Suppress("UnderscoresInNumericLiterals")

@@ -1,23 +1,35 @@
 package proton.android.pass.composecomponents.impl.item.icon
 
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.presentation.R
+import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.container.Circle
 
 @Composable
 fun AliasIcon(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    size: Int = 40
 ) {
-    RoundedTintedIcon(
+    Circle(
         modifier = modifier,
-        color = ProtonTheme.colors.textNorm,
-        icon = R.drawable.ic_proton_alias
-    )
+        backgroundColor = PassColors.GreenAccent,
+        size = size,
+    ) {
+        Icon(
+            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
+            contentDescription = stringResource(R.string.alias_title_icon_content_description),
+            tint = PassColors.GreenAccent
+        )
+    }
 }
 
 @Preview

@@ -51,7 +51,7 @@ fun TrashItemBottomSheetContents(
             icon = {
                 when (itemUiModel.itemType) {
                     is ItemType.Alias -> AliasIcon()
-                    is ItemType.Login -> LoginIcon()
+                    is ItemType.Login -> LoginIcon(text = itemUiModel.name)
                     is ItemType.Note -> NoteIcon()
                     else -> {}
                 }

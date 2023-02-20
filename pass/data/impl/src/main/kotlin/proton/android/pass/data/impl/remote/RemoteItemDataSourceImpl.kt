@@ -70,16 +70,21 @@ class RemoteItemDataSourceImpl @Inject constructor(
     override suspend fun getItems(userId: UserId, shareId: ShareId): LoadingResult<List<ItemRevision>> =
         api.get<PasswordManagerApi>(userId)
             .invoke {
-                var page = 0
+                var sinceToken: String? = null
                 val items = mutableListOf<ItemRevision>()
                 while (true) {
-                    val pageItems = getItems(shareId.id, page, PAGE_SIZE)
-                    items.addAll(pageItems.items.revisions)
-                    if (pageItems.items.revisions.size < PAGE_SIZE) {
+                    val response = getItems(
+                        shareId = shareId.id,
+                        sinceToken = sinceToken,
+                        pageSize = PAGE_SIZE
+                    )
+
+                    val pageItems = response.items.revisions
+                    items.addAll(pageItems)
+                    if (pageItems.size < PAGE_SIZE || response.items.lastToken == null) {
                         break
-                    } else {
-                        page++
                     }
+                    sinceToken = response.items.lastToken
                 }
                 items
             }

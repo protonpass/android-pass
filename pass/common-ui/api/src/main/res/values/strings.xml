@@ -2,16 +2,6 @@
 <resources>
     <string name="date_today">Today</string>
     <string name="date_yesterday">Yesterday</string>
-    <string name="month_january">January</string>
-    <string name="month_february">February</string>
-    <string name="month_march">March</string>
-    <string name="month_april">April</string>
-    <string name="month_may">May</string>
-    <string name="month_june">June</string>
-    <string name="month_july">July</string>
-    <string name="month_august">August</string>
-    <string name="month_september">September</string>
-    <string name="month_october">October</string>
-    <string name="month_november">November</string>
-    <string name="month_december">December</string>
+    <string name="date_full_date_format">dd LLLL HH:mm</string>
+    <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
 </resources>

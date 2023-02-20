@@ -1,6 +1,5 @@
 package proton.android.pass.featurecreateitem.impl.login
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -13,14 +12,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
+import proton.android.pass.featurecreateitem.impl.common.CreateUpdateTopBar
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.EmptyShareIdError
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpBottomSheet
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpType
@@ -34,12 +36,11 @@ import proton.android.pass.featurecreateitem.impl.login.bottomsheet.VaultSelecti
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 internal fun LoginContent(
     modifier: Modifier = Modifier,
-    @StringRes topBarTitle: Int,
-    @StringRes topBarActionName: Int,
+    topBarActionName: String,
     uiState: CreateUpdateLoginUiState,
     showCreateAliasButton: Boolean,
     isUpdate: Boolean,
@@ -117,13 +118,12 @@ internal fun LoginContent(
     ) {
         Scaffold(
             topBar = {
-                LoginTopBar(
-                    topBarTitle = topBarTitle,
-                    topBarActionName = topBarActionName,
-                    shareUiModel = uiState.selectedShareId,
-                    isLoadingState = uiState.isLoadingState,
-                    onUpClick = onUpClick,
-                    onSubmit = onSubmit
+                CreateUpdateTopBar(
+                    text = topBarActionName,
+                    isLoading = uiState.isLoadingState.value(),
+                    color = PassColors.PurpleAccent,
+                    onCloseClick = onUpClick,
+                    onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
                 )
             }
         ) { padding ->

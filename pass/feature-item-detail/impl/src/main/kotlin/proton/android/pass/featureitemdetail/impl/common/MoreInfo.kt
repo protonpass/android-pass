@@ -1,6 +1,7 @@
 package proton.android.pass.featureitemdetail.impl.common
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -22,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -45,10 +48,20 @@ fun MoreInfo(
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         var showMoreInfo by remember { mutableStateOf(shouldShowMoreInfoInitially) }
+        var rotation by remember { mutableStateOf(0f) }
+        val displayRotation by animateFloatAsState(targetValue = rotation)
+
         Row(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
-                .clickable { showMoreInfo = !showMoreInfo },
+                .clickable {
+                    showMoreInfo = !showMoreInfo
+                    rotation = if (rotation == 0f) {
+                        180f
+                    } else {
+                        0f
+                    }
+                },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
@@ -59,6 +72,13 @@ fun MoreInfo(
             MoreInfoText(
                 modifier = Modifier.padding(8.dp),
                 text = stringResource(R.string.more_info_title)
+            )
+
+            Icon(
+                modifier = Modifier.size(16.dp).rotate(displayRotation),
+                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_down),
+                contentDescription = stringResource(R.string.more_info_icon),
+                tint = ProtonTheme.colors.iconWeak,
             )
         }
         AnimatedVisibility(visible = showMoreInfo) {

@@ -36,4 +36,9 @@
     <!-- Indicator that indicates field is required -->
     <string name="field_required_indicator">Required</string>
 
+    <!-- Icon content description -->
+    <string name="alias_title_icon_content_description">Alias icon</string>
+    <string name="note_title_icon_content_description">Note icon</string>
+    <string name="password_title_icon_content_description">Password icon</string>
+
 </resources>

@@ -34,7 +34,6 @@ internal fun NoteContent(
     onSubmit: (ShareId) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
-    onDelete: () -> Unit,
     onVaultSelect: (ShareId) -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -78,7 +77,6 @@ internal fun NoteContent(
                 onNoteChange = onNoteChange,
                 enabled = uiState.isLoadingState != IsLoadingState.Loading,
                 isUpdate = canDelete,
-                onDelete = onDelete,
                 onVaultSelectorClick = {
                     scope.launch {
                         bottomSheetState.show()

@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import proton.android.pass.composecomponents.impl.form.ProtonTextTitle
+import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.featurecreateitem.impl.R
 
 @Composable
@@ -17,7 +17,7 @@ internal fun MailboxSection(
     onMailboxClick: () -> Unit
 ) {
     Column(modifier = modifier) {
-        ProtonTextTitle(stringResource(id = R.string.field_mailboxes_title))
+        ProtonTextFieldLabel(text = stringResource(id = R.string.field_mailboxes_title))
         MailboxSelector(
             modifier = Modifier.padding(top = 8.dp),
             contentText = contentText,

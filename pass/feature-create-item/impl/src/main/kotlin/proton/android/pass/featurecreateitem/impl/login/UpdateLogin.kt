@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -65,8 +66,7 @@ fun UpdateLogin(
             modifier = modifier,
             uiState = uiState,
             showCreateAliasButton = true,
-            topBarTitle = R.string.title_edit_login,
-            topBarActionName = R.string.action_save,
+            topBarActionName = stringResource(id = R.string.action_save),
             isUpdate = true,
             onUpClick = onUpClick,
             onSuccess = { shareId, itemId, _ ->

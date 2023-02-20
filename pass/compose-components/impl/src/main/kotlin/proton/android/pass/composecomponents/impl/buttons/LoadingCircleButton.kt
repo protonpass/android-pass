@@ -25,7 +25,7 @@ import proton.android.pass.commonui.api.applyIf
 fun LoadingCircleButton(
     modifier: Modifier = Modifier,
     text: @Composable () -> Unit,
-    icon: @Composable () -> Unit,
+    leadingIcon: (@Composable () -> Unit)? = null,
     color: Color,
     isLoading: Boolean,
     onClick: () -> Unit
@@ -50,7 +50,7 @@ fun LoadingCircleButton(
                     horizontalArrangement = Arrangement.spacedBy(5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    icon()
+                    leadingIcon?.invoke()
                     text()
                 }
             }

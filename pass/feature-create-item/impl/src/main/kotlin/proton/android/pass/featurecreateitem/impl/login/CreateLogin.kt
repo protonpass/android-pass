@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -46,8 +47,7 @@ fun CreateLogin(
         uiState = uiState,
         showCreateAliasButton = showCreateAliasButton,
         isUpdate = false,
-        topBarTitle = R.string.title_create_login,
-        topBarActionName = R.string.action_save,
+        topBarActionName = stringResource(id = R.string.title_create_login),
         onUpClick = { onClose() },
         onSuccess = { _, _, item ->
             viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.LoginCreated)

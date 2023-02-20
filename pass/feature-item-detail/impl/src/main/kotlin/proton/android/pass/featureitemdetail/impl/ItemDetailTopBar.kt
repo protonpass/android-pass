@@ -68,7 +68,7 @@ internal fun ItemDetailTopBar(
                             style = ProtonTheme.typography.defaultSmallInverted
                         )
                     },
-                    icon = {
+                    leadingIcon = {
                         Icon(
                             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_pencil),
                             contentDescription = stringResource(R.string.top_bar_edit_icon_content_description),

@@ -12,8 +12,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 import me.proton.core.compose.component.ProtonModalBottomSheetLayout
+import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
+import proton.android.pass.featurecreateitem.impl.common.CreateUpdateTopBar
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.VaultSelectionBottomSheet
 import proton.android.pass.featurecreateitem.impl.note.NoteItemValidationErrors.BlankTitle
 import proton.pass.domain.ItemId
@@ -24,7 +26,6 @@ import proton.pass.domain.ShareId
 @Composable
 internal fun NoteContent(
     modifier: Modifier = Modifier,
-    topBarTitle: String,
     topBarActionName: String,
     uiState: CreateUpdateNoteUiState,
     canDelete: Boolean,
@@ -59,13 +60,12 @@ internal fun NoteContent(
         Scaffold(
             modifier = modifier,
             topBar = {
-                NoteTopBar(
-                    shareUiModel = uiState.selectedShareId,
-                    topBarActionName = topBarActionName,
-                    topBarTitle = topBarTitle,
-                    isLoadingState = uiState.isLoadingState,
-                    onUpClick = onUpClick,
-                    onSubmit = onSubmit
+                CreateUpdateTopBar(
+                    text = topBarActionName,
+                    isLoading = uiState.isLoadingState.value(),
+                    color = PassColors.YellowAccent,
+                    onCloseClick = onUpClick,
+                    onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
                 )
             }
         ) { padding ->

@@ -40,7 +40,6 @@ fun UpdateNote(
     Box(modifier = modifier) {
         NoteContent(
             uiState = noteUiState,
-            topBarTitle = stringResource(R.string.title_edit_note),
             topBarActionName = stringResource(R.string.action_save),
             canDelete = true,
             onUpClick = onUpClick,
@@ -63,5 +62,4 @@ fun UpdateNote(
             onCancel = { setShowDeleteDialog(false) }
         )
     }
-
 }

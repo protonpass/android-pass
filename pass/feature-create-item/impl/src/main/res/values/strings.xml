@@ -115,5 +115,6 @@
     <string name="totp_valid_time_field_placeholder">0</string>
     <string name="totp_create_login_field_title">TOTP</string>
     <string name="totp_create_login_field_placeholder">Add TOTP</string>
+    <string name="close_scree_icon_content_description">Close screen icon</string>
 
 </resources>

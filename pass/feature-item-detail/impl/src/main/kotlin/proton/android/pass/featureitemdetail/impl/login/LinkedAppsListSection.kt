@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableSet
-import proton.android.pass.composecomponents.impl.form.LinkedAppItem
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionTitle
 

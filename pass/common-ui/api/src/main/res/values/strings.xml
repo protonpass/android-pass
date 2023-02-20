@@ -2,6 +2,17 @@
 <resources>
     <string name="date_today">Today</string>
     <string name="date_yesterday">Yesterday</string>
+    <!--
+    Pattern used when displaying a date in the same year as we are.
+    It would translate to
+    12 February 12:34
+    -->
     <string name="date_full_date_format">dd LLLL HH:mm</string>
+
+    <!--
+    Pattern used when displaying a date including the year.
+    It would translate to
+    12 February 2023 12:34
+    -->
     <string name="date_full_date_format_with_year">dd LLLL yyyy HH:mm</string>
 </resources>

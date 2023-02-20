@@ -43,7 +43,6 @@ fun MoreInfo(
     moreInfoUiState: MoreInfoUiState,
     shouldShowMoreInfoInitially: Boolean = false
 ) {
-    moreInfoUiState.createdTime
     Column(modifier = modifier.fillMaxWidth()) {
         var showMoreInfo by remember { mutableStateOf(shouldShowMoreInfoInitially) }
         Row(

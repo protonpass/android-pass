@@ -16,8 +16,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
-import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featurecreateitem.impl.alias.AliasBottomSheetContentType.AliasOptions
 import proton.android.pass.featurecreateitem.impl.alias.AliasBottomSheetContentType.VaultSelection
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankAlias
@@ -64,7 +64,7 @@ internal fun AliasContent(
 
     var showMailboxDialog by remember { mutableStateOf(false) }
 
-    ProtonModalBottomSheetLayout(
+    PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {

@@ -16,8 +16,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
-import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
 import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
@@ -59,7 +59,7 @@ fun HomeScreen(
     )
     val scope = rememberCoroutineScope()
 
-    ProtonModalBottomSheetLayout(
+    PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {

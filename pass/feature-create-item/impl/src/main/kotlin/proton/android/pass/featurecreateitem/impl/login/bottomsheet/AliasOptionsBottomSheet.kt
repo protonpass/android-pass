@@ -55,6 +55,7 @@ private fun createRemoveAlias(onRemoveAlias: () -> Unit): BottomSheetItem =
             }
         override val onClick: () -> Unit
             get() = onRemoveAlias
+        override val isDivider = false
     }
 
 @Preview

@@ -55,6 +55,7 @@ private fun sortingItemList(
                     } else null
                 override val onClick: () -> Unit
                     get() = { onSortingTypeSelected(it) }
+                override val isDivider = false
             }
         }
         .toImmutableList()

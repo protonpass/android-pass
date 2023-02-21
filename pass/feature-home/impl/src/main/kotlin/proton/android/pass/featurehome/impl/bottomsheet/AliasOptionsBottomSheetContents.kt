@@ -1,9 +1,6 @@
 package proton.android.pass.featurehome.impl.bottomsheet
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -11,12 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.PassDimens.bottomSheetPadding
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetDivider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -39,9 +37,8 @@ fun AliasOptionsBottomSheetContents(
     onMoveToTrash: (ItemUiModel) -> Unit
 ) {
     val itemType = itemUiModel.itemType as ItemType.Alias
-    Column(modifier) {
+    Column(modifier.bottomSheetPadding()) {
         BottomSheetItemRow(
-            modifier = Modifier.padding(horizontal = 16.dp),
             title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = {
                 BottomSheetItemSubtitle(
@@ -50,10 +47,10 @@ fun AliasOptionsBottomSheetContents(
             },
             icon = { AliasIcon() }
         )
-        Divider(modifier = Modifier.fillMaxWidth())
         BottomSheetItemList(
             items = persistentListOf(
                 copyAlias(itemType.aliasEmail, onCopyAlias),
+                BottomSheetDivider(),
                 edit(itemUiModel, onEdit),
                 moveToTrash(itemUiModel, onMoveToTrash)
             )
@@ -71,6 +68,7 @@ private fun copyAlias(aliasEmail: String, onCopyAlias: (String) -> Unit): Bottom
             get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
         override val onClick: () -> Unit
             get() = { onCopyAlias(aliasEmail) }
+        override val isDivider = false
     }
 
 @OptIn(ExperimentalMaterialApi::class)

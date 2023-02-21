@@ -16,6 +16,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmall
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.PassDimens.bottomSheetPadding
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
@@ -33,7 +34,7 @@ fun FABBottomSheetContents(
     onCreateNote: () -> Unit,
     onCreatePassword: () -> Unit
 ) {
-    Column(modifier) {
+    Column(modifier.bottomSheetPadding()) {
         BottomSheetItemList(
             items = persistentListOf(
                 createLogin(onCreateLogin),
@@ -68,6 +69,7 @@ private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : B
         }
     override val onClick: () -> Unit
         get() = onCreateLogin
+    override val isDivider = false
 }
 
 private fun createAlias(onCreateAlias: () -> Unit): BottomSheetItem = object : BottomSheetItem {
@@ -85,6 +87,7 @@ private fun createAlias(onCreateAlias: () -> Unit): BottomSheetItem = object : B
         get() = { AliasIcon() }
     override val onClick: () -> Unit
         get() = onCreateAlias
+    override val isDivider = false
 }
 
 private fun createNote(onCreateNote: () -> Unit): BottomSheetItem = object : BottomSheetItem {
@@ -102,6 +105,7 @@ private fun createNote(onCreateNote: () -> Unit): BottomSheetItem = object : Bot
         get() = { NoteIcon() }
     override val onClick: () -> Unit
         get() = onCreateNote
+    override val isDivider = false
 }
 
 private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
@@ -120,6 +124,7 @@ private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
             get() = { PasswordIcon() }
         override val onClick: () -> Unit
             get() = onCreatePassword
+        override val isDivider = false
     }
 
 @OptIn(ExperimentalMaterialApi::class)

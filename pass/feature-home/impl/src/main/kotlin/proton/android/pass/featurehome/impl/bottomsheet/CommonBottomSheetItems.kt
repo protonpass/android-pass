@@ -21,6 +21,7 @@ internal fun edit(itemUiModel: ItemUiModel, onEdit: (ShareId, ItemId) -> Unit): 
             get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_pencil) }
         override val onClick: () -> Unit
             get() = { onEdit(itemUiModel.shareId, itemUiModel.id) }
+        override val isDivider = false
     }
 
 internal fun moveToTrash(itemUiModel: ItemUiModel, onMoveToTrash: (ItemUiModel) -> Unit): BottomSheetItem =
@@ -43,4 +44,5 @@ internal fun moveToTrash(itemUiModel: ItemUiModel, onMoveToTrash: (ItemUiModel) 
             }
         override val onClick: () -> Unit
             get() = { onMoveToTrash(itemUiModel) }
+        override val isDivider = false
     }

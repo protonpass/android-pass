@@ -38,6 +38,7 @@ private fun moveToTrash(onClick: () -> Unit): BottomSheetItem =
             get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_trash) }
         override val onClick: () -> Unit
             get() = { onClick() }
+        override val isDivider = false
     }
 
 @Preview

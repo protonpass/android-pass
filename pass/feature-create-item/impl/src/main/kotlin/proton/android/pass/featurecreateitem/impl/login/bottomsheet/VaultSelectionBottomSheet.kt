@@ -55,4 +55,5 @@ private fun createVaultBottomSheetItem(
                 { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark) }
             } else null
         override val onClick: () -> Unit = { onVaultClick(shareUiModel.id) }
+        override val isDivider = false
     }

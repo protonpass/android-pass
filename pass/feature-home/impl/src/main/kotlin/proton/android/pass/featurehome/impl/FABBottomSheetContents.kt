@@ -16,7 +16,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmall
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.PassDimens.bottomSheetPadding
+import proton.android.pass.commonui.api.PassDimens.bottomSheetPadding
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle

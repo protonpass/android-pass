@@ -1,8 +1,7 @@
 package proton.android.pass.featurehome.impl.bottomsheet
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -31,12 +30,14 @@ fun SortingBottomSheetContents(
     sortingType: SortingType = SortingType.ByName,
     onSortingTypeSelected: (SortingType) -> Unit
 ) {
-    Column(modifier.bottomSheetPadding()) {
+    Column(
+        modifier = modifier.bottomSheetPadding(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
         BottomSheetTitle(
             title = stringResource(id = R.string.sorting_bottomsheet_title),
             showDivider = false
         )
-        Spacer(modifier = Modifier.height(12.dp))
         BottomSheetItemList(
             items = sortingItemList(sortingType, onSortingTypeSelected)
         )

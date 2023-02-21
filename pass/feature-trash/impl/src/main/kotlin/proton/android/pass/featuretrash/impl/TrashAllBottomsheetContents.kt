@@ -1,8 +1,7 @@
 package proton.android.pass.featuretrash.impl
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -28,12 +27,14 @@ fun TrashAllBottomSheetContents(
     onEmptyTrash: () -> Unit,
     onRestoreAll: () -> Unit
 ) {
-    Column(modifier.bottomSheetPadding()) {
+    Column(
+        modifier = modifier.bottomSheetPadding(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
         BottomSheetTitle(
             title = stringResource(id = R.string.bottomsheet_trash_all_items_title),
             showDivider = false
         )
-        Spacer(modifier = Modifier.height(12.dp))
         BottomSheetItemList(
             items = persistentListOf(
                 restoreAll(onRestoreAll),

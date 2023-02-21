@@ -1,8 +1,7 @@
 package proton.android.pass.featurecreateitem.impl.login.bottomsheet
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,12 +24,14 @@ fun VaultSelectionBottomSheet(
     selectedShare: ShareUiModel?,
     onVaultClick: (ShareId) -> Unit
 ) {
-    Column(modifier = modifier.bottomSheetPadding()) {
+    Column(
+        modifier = modifier.bottomSheetPadding(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
         BottomSheetTitle(
             title = stringResource(R.string.vault_title),
             showDivider = false
         )
-        Spacer(modifier = Modifier.height(12.dp))
         BottomSheetItemList(
             items = shareList
                 .map {

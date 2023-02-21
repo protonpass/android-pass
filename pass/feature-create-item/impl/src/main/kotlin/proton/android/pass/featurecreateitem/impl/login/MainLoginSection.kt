@@ -12,14 +12,13 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 fun MainLoginSection(
     modifier: Modifier = Modifier,
     loginItem: LoginItem,
-    showCreateAliasButton: Boolean,
     canUpdateUsername: Boolean,
     isEditAllowed: Boolean,
     onUsernameChange: (String) -> Unit,
-    onCreateAliasClick: () -> Unit,
+    onUsernameFocus: (Boolean) -> Unit,
     onAliasOptionsClick: () -> Unit,
     onPasswordChange: (String) -> Unit,
-    onGeneratePasswordClick: () -> Unit,
+    onPasswordFocus: (Boolean) -> Unit,
     onAddTotpClick: () -> Unit,
     onDeleteTotpClick: () -> Unit
 ) {
@@ -28,19 +27,18 @@ fun MainLoginSection(
     ) {
         UsernameInput(
             value = loginItem.username,
-            showCreateAliasButton = showCreateAliasButton,
             canUpdateUsername = canUpdateUsername,
             isEditAllowed = isEditAllowed,
             onChange = onUsernameChange,
-            onGenerateAliasClick = onCreateAliasClick,
-            onAliasOptionsClick = onAliasOptionsClick
+            onAliasOptionsClick = onAliasOptionsClick,
+            onFocus = onUsernameFocus
         )
         Divider()
         PasswordInput(
             value = loginItem.password,
             isEditAllowed = isEditAllowed,
             onChange = onPasswordChange,
-            onGeneratePasswordClick = onGeneratePasswordClick
+            onFocus = onPasswordFocus
         )
         Divider()
         TotpInput(

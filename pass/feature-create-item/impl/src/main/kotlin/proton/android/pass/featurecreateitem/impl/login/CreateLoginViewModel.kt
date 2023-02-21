@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
@@ -20,6 +19,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.ItemCreationError
@@ -35,6 +35,7 @@ class CreateLoginViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     createAlias: CreateAlias,
     accountManager: AccountManager,
+    observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(
@@ -42,6 +43,7 @@ class CreateLoginViewModel @Inject constructor(
     accountManager,
     snackbarMessageRepository,
     observeVaults,
+    observeCurrentUser,
     savedStateHandle
 ) {
 
@@ -137,12 +139,6 @@ class CreateLoginViewModel @Inject constructor(
                 PassLogger.e(TAG, it, "Could not create item")
                 snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
             }
-    }
-
-    fun onRemoveAlias() {
-        loginItemState.update { it.copy(username = "") }
-        aliasItemState.update { None }
-        canUpdateUsernameState.update { true }
     }
 
     companion object {

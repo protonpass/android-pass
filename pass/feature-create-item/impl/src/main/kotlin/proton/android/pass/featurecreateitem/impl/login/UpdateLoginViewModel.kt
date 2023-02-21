@@ -22,6 +22,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateAlias
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
@@ -45,6 +46,7 @@ class UpdateLoginViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     createAlias: CreateAlias,
     accountManager: AccountManager,
+    observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(
@@ -52,6 +54,7 @@ class UpdateLoginViewModel @Inject constructor(
     accountManager,
     snackbarMessageRepository,
     observeVaults,
+    observeCurrentUser,
     savedStateHandle
 ) {
 

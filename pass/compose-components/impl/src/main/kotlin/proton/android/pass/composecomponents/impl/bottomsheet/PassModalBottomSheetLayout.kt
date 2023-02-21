@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.composecomponents.impl.PassDimens
+import proton.android.pass.commonui.api.PassDimens
 
 @ExperimentalMaterialApi
 @Composable

@@ -14,8 +14,8 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
-import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.loading.LoadingDialog
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon
@@ -46,7 +46,7 @@ fun SettingsContent(
         scope.launch { bottomSheetState.hide() }
     }
 
-    ProtonModalBottomSheetLayout(
+    PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             ThemeSelectionBottomSheetContents(

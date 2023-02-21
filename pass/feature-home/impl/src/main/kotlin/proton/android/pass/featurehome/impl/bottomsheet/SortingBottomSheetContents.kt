@@ -1,6 +1,8 @@
 package proton.android.pass.featurehome.impl.bottomsheet
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -8,10 +10,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.PassDimens.bottomSheetPadding
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -27,11 +31,12 @@ fun SortingBottomSheetContents(
     sortingType: SortingType = SortingType.ByName,
     onSortingTypeSelected: (SortingType) -> Unit
 ) {
-    Column(modifier) {
+    Column(modifier.bottomSheetPadding()) {
         BottomSheetTitle(
             title = stringResource(id = R.string.sorting_bottomsheet_title),
             showDivider = false
         )
+        Spacer(modifier = Modifier.height(12.dp))
         BottomSheetItemList(
             items = sortingItemList(sortingType, onSortingTypeSelected)
         )

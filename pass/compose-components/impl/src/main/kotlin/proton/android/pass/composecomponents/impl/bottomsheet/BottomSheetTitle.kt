@@ -33,9 +33,7 @@ fun BottomSheetTitle(
     showDivider: Boolean = true
 ) {
     Row(
-        modifier = modifier
-            .padding(horizontal = 16.dp, vertical = 12.dp)
-            .height(40.dp),
+        modifier = modifier.height(40.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(

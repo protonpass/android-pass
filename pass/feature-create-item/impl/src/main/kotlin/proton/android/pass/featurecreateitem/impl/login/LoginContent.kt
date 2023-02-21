@@ -15,11 +15,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
-import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.common.CreateUpdateTopBar
@@ -70,7 +70,7 @@ internal fun LoginContent(
     var currentBottomSheet by remember { mutableStateOf(GeneratePassword) }
     var showRemoveAliasDialog by remember { mutableStateOf(false) }
 
-    ProtonModalBottomSheetLayout(
+    PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {

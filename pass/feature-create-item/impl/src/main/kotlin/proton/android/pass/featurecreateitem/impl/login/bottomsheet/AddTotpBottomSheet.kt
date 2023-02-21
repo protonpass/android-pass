@@ -39,4 +39,5 @@ private fun createTotpBottomSheetItem(
         override val subtitle: @Composable (() -> Unit)? = null
         override val icon: @Composable (() -> Unit)? = null
         override val onClick: () -> Unit = { onTotpClick(totpType) }
+        override val isDivider = false
     }

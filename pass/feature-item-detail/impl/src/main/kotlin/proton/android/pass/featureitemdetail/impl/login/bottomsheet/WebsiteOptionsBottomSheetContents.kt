@@ -41,6 +41,7 @@ private fun openWebsite(onClick: () -> Unit): BottomSheetItem =
             get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_arrow_out_square) }
         override val onClick: () -> Unit
             get() = { onClick() }
+        override val isDivider = false
     }
 
 private fun copyWebsite(onClick: () -> Unit): BottomSheetItem =
@@ -53,6 +54,7 @@ private fun copyWebsite(onClick: () -> Unit): BottomSheetItem =
             get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_squares) }
         override val onClick: () -> Unit
             get() = { onClick() }
+        override val isDivider = false
     }
 
 @Preview

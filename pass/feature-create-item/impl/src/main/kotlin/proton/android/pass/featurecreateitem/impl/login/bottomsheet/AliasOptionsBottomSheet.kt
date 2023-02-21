@@ -1,8 +1,7 @@
 package proton.android.pass.featurecreateitem.impl.login.bottomsheet
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -26,12 +25,14 @@ fun AliasOptionsBottomSheet(
     modifier: Modifier = Modifier,
     onRemoveAliasClick: () -> Unit
 ) {
-    Column(modifier = modifier.bottomSheetPadding()) {
+    Column(
+        modifier = modifier.bottomSheetPadding(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
         BottomSheetTitle(
             title = stringResource(id = R.string.alias_bottomsheet_alias_title),
             showDivider = false
         )
-        Spacer(modifier = Modifier.height(12.dp))
         BottomSheetItemList(
             items = persistentListOf(
                 createRemoveAlias(onRemoveAliasClick)

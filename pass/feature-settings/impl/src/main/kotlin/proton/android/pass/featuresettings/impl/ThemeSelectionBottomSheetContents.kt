@@ -1,8 +1,7 @@
 package proton.android.pass.featuresettings.impl
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -27,9 +26,11 @@ fun ThemeSelectionBottomSheetContents(
     modifier: Modifier = Modifier,
     onThemeSelected: (ThemePreference) -> Unit
 ) {
-    Column(modifier = modifier.bottomSheetPadding()) {
+    Column(
+        modifier = modifier.bottomSheetPadding(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
         BottomSheetTitle(title = stringResource(id = R.string.settings_theme_selector_title), showDivider = false)
-        Spacer(modifier = Modifier.height(12.dp))
         BottomSheetItemList(
             items = themeItemList(
                 onThemeTypeSelected = onThemeSelected

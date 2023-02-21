@@ -1,8 +1,7 @@
 package proton.android.pass.featurecreateitem.impl.alias
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -25,12 +24,14 @@ fun AliasBottomSheetContents(
     modelState: AliasItem,
     onSuffixSelect: (AliasSuffixUiModel) -> Unit
 ) {
-    Column(modifier = modifier.bottomSheetPadding()) {
+    Column(
+        modifier = modifier.bottomSheetPadding(),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
         BottomSheetTitle(
             title = stringResource(id = R.string.alias_bottomsheet_suffix_title),
             showDivider = false
         )
-        Spacer(modifier = Modifier.height(12.dp))
         AliasBottomSheetItemList(
             items = modelState.aliasOptions.suffixes.toImmutableList(),
             displayer = { it.suffix },

@@ -1,5 +1,6 @@
 package proton.android.pass.featurevault.impl
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,7 +10,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,14 +23,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import me.proton.core.compose.component.ProtonModalBottomSheetLayout
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.headline
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ShareUiModel
+import proton.android.pass.composecomponents.impl.PassDimens.bottomSheetPadding
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import proton.android.pass.composecomponents.impl.topbar.icon.CrossBackIcon
 import proton.android.pass.feature.vault.impl.R
@@ -53,27 +54,27 @@ fun VaultListContent(
     var vaultToDelete: Option<ShareUiModel> by remember { mutableStateOf(None) }
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
-    ProtonModalBottomSheetLayout(
+    PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
-            Text(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                text = stringResource(R.string.vault_delete_bottomsheet_title),
-                style = ProtonTheme.typography.headline
-            )
-            LazyColumn(
-                modifier = modifier.fillMaxSize()
-            ) {
-                items(items = uiState.list.filter { it.id != vaultToMigrate.value()?.id }) { item ->
-                    MigrateVaultItem(
-                        share = item,
-                        onVaultSelect = {
-                            onVaultMigrate(vaultToMigrate.value()?.id, item.id)
-                            scope.launch {
-                                bottomSheetState.hide()
+            Column(modifier = Modifier.bottomSheetPadding()) {
+                BottomSheetTitle(title = stringResource(R.string.vault_delete_bottomsheet_title), showDivider = false)
+                LazyColumn(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .bottomSheetPadding()
+                ) {
+                    items(items = uiState.list.filter { it.id != vaultToMigrate.value()?.id }) { item ->
+                        MigrateVaultItem(
+                            share = item,
+                            onVaultSelect = {
+                                onVaultMigrate(vaultToMigrate.value()?.id, item.id)
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }

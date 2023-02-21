@@ -25,6 +25,7 @@ class AutofillManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context
 ) : AutofillManager {
 
+    @Suppress("TooGenericExceptionCaught")
     override fun getAutofillStatus(): Flow<AutofillSupportedStatus> = flow {
         val autofillManager =
             context.getSystemService(android.view.autofill.AutofillManager::class.java)
@@ -39,12 +40,18 @@ class AutofillManagerImpl @Inject constructor(
         }
 
         while (currentCoroutineContext().isActive) {
-            if (autofillManager.hasEnabledAutofillServices()) {
-                emit(Supported(AutofillStatus.EnabledByOurService))
-            } else if (autofillManager.isEnabled) {
-                emit(Supported(AutofillStatus.EnabledByOtherService))
-            } else {
-                emit(Supported(AutofillStatus.Disabled))
+            try {
+                if (autofillManager.hasEnabledAutofillServices()) {
+                    emit(Supported(AutofillStatus.EnabledByOurService))
+                } else if (autofillManager.isEnabled) {
+                    emit(Supported(AutofillStatus.EnabledByOtherService))
+                } else {
+                    emit(Supported(AutofillStatus.Disabled))
+                }
+            } catch (e: RuntimeException) {
+                PassLogger.w(TAG, e, "Exception while retrieving hasEnabledAutofillServices")
+                emit(Unsupported)
+                return@flow
             }
 
             delay(UPDATE_TIME)

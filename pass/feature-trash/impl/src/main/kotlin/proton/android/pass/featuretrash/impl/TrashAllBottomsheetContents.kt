@@ -49,6 +49,7 @@ private fun restoreAll(
         get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_clock_rotate_left) }
     override val onClick: () -> Unit
         get() = onRestoreAll
+    override val isDivider = false
 }
 
 private fun emptyTrash(
@@ -72,6 +73,7 @@ private fun emptyTrash(
         }
     override val onClick: () -> Unit
         get() = onEmptyTrash
+    override val isDivider = false
 }
 
 @OptIn(ExperimentalMaterialApi::class)

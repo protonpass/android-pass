@@ -1,20 +1,24 @@
 package proton.android.pass.featurecreateitem.impl.login.bottomsheet
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.PassDimens.bottomSheetPadding
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitleButton
 import proton.android.pass.featurecreateitem.impl.R
 import proton.android.pass.featurecreateitem.impl.password.CreatePasswordStatePreviewProvider
 import proton.android.pass.featurecreateitem.impl.password.CreatePasswordUiState
 import proton.android.pass.featurecreateitem.impl.password.CreatePasswordViewContent
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
 
 @Composable
 fun GeneratePasswordBottomSheetContent(
@@ -25,7 +29,7 @@ fun GeneratePasswordBottomSheetContent(
     onHasSpecialCharactersChange: (Boolean) -> Unit,
     onConfirm: (String) -> Unit
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.bottomSheetPadding()) {
         BottomSheetTitle(
             title = stringResource(id = R.string.button_generate_password),
             button = BottomSheetTitleButton(
@@ -35,6 +39,7 @@ fun GeneratePasswordBottomSheetContent(
             ),
             showDivider = false
         )
+        Spacer(modifier = Modifier.height(12.dp))
         CreatePasswordViewContent(
             state = state,
             onLengthChange = onLengthChange,

@@ -14,8 +14,7 @@ fun BottomSheetItemList(
     items: ImmutableList<BottomSheetItem>
 ) {
     Column(
-        modifier = modifier
-            .verticalScroll(rememberScrollState())
+        modifier = modifier.verticalScroll(rememberScrollState())
     ) {
         items.forEach { item ->
             if (item.isDivider) {

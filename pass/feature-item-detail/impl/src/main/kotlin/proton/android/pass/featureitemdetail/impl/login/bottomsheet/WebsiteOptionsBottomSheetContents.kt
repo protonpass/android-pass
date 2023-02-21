@@ -9,6 +9,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.PassDimens.bottomSheetPadding
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -23,7 +24,7 @@ fun WebsiteOptionsBottomSheetContents(
     onOpenWebsite: (String) -> Unit
 ) {
     BottomSheetItemList(
-        modifier = modifier,
+        modifier = modifier.bottomSheetPadding(),
         items = persistentListOf(
             openWebsite(onClick = { onOpenWebsite(website) }),
             copyWebsite(onClick = { onCopyToClipboard(website) })

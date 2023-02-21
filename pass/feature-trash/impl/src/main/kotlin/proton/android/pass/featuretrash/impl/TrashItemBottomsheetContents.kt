@@ -79,6 +79,7 @@ private fun restoreItem(
         get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_clock_rotate_left) }
     override val onClick: () -> Unit
         get() = { onRestoreItem(itemUiModel) }
+    override val isDivider = false
 }
 
 private fun deleteItem(
@@ -103,6 +104,7 @@ private fun deleteItem(
         }
     override val onClick: () -> Unit
         get() = { onDeleteItem(itemUiModel) }
+    override val isDivider = false
 }
 
 @OptIn(ExperimentalMaterialApi::class)

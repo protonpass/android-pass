@@ -59,7 +59,6 @@ fun CreateLogin(
         onPasswordChange = { viewModel.onPasswordChange(it) },
         onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) },
-        onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
         onCreateAliasClick = onCreateAliasClick,
         onRemoveAliasClick = { viewModel.onRemoveAlias() },
         onVaultSelect = { viewModel.changeVault(it) },

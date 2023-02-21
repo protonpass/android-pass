@@ -9,12 +9,14 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
+import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.featurecreateitem.impl.login.CreateUpdateLoginUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestAccountManager
 import proton.android.pass.test.TestSavedStateHandle
+import proton.android.pass.test.domain.TestUser
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 
@@ -24,18 +26,21 @@ internal class BaseLoginViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
     private lateinit var observeVaults: TestObserveVaults
+    private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var baseLoginViewModel: BaseLoginViewModel
 
     @Before
     fun setUp() {
         observeVaults = TestObserveVaults()
+        observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
         savedStateHandle = TestSavedStateHandle.create()
         baseLoginViewModel = object : BaseLoginViewModel(
             TestCreateAlias(),
             TestAccountManager(),
             TestSnackbarMessageRepository(),
             observeVaults,
+            observeCurrentUser,
             savedStateHandle
         ) {}
     }

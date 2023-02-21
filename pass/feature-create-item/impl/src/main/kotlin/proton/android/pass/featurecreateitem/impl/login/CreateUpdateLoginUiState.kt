@@ -14,7 +14,8 @@ data class CreateUpdateLoginUiState(
     val isLoadingState: IsLoadingState,
     val isItemSaved: ItemSavedState,
     val focusLastWebsite: Boolean,
-    val canUpdateUsername: Boolean
+    val canUpdateUsername: Boolean,
+    val primaryEmail: String?,
 ) {
     companion object {
         val Initial = CreateUpdateLoginUiState(
@@ -25,7 +26,8 @@ data class CreateUpdateLoginUiState(
             validationErrors = emptySet(),
             isItemSaved = ItemSavedState.Unknown,
             focusLastWebsite = false,
-            canUpdateUsername = true
+            canUpdateUsername = true,
+            primaryEmail = null
         )
     }
 }

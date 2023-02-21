@@ -16,6 +16,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
+import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.login.CreateUpdateLoginUiState.Companion.Initial
@@ -26,6 +27,7 @@ import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.android.pass.test.domain.TestItem
+import proton.android.pass.test.domain.TestUser
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 
@@ -51,7 +53,8 @@ internal class CreateLoginViewModelTest {
             savedStateHandle = TestSavedStateHandle.create(),
             encryptionContextProvider = TestEncryptionContextProvider(),
             createAlias = TestCreateAlias(),
-            observeVaults = observeVaults
+            observeVaults = observeVaults,
+            observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
         )
     }
 

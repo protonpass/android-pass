@@ -1,6 +1,5 @@
 package proton.android.pass.featurecreateitem.impl.login
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -48,35 +47,32 @@ fun UpdateLogin(
         override val onRemoveWebsite: (Int) -> Unit = { idx: Int -> viewModel.onRemoveWebsite(idx) }
     }
 
-    Box(modifier = modifier) {
-        LoginContent(
-            modifier = modifier,
-            uiState = uiState,
-            showCreateAliasButton = true,
-            topBarActionName = stringResource(id = R.string.action_save),
-            isUpdate = true,
-            onUpClick = onUpClick,
-            onSuccess = { shareId, itemId, _ ->
-                viewModel.onEmitSnackbarMessage(LoginUpdated)
-                onSuccess(shareId, itemId)
-            },
-            onSubmit = { shareId -> viewModel.updateItem(shareId) },
-            onTitleChange = { viewModel.onTitleChange(it) },
-            onUsernameChange = { viewModel.onUsernameChange(it) },
-            onPasswordChange = { viewModel.onPasswordChange(it) },
-            onWebsiteChange = onWebsiteChange,
-            onNoteChange = { viewModel.onNoteChange(it) },
-            onEmitSnackbarMessage = { viewModel.onEmitSnackbarMessage(it) },
-            onCreateAliasClick = { shareId, titleOption ->
-                onCreateAliasClick(shareId, titleOption)
-            },
-            onRemoveAliasClick = { },
-            onVaultSelect = {
-                // Migrate element
-            },
-            onAddTotp = onAddTotp,
-            onDeleteTotp = viewModel::onDeleteTotp,
-            onLinkedAppDelete = viewModel::onDeleteLinkedApp
-        )
-    }
+    LoginContent(
+        modifier = modifier,
+        uiState = uiState,
+        showCreateAliasButton = true,
+        topBarActionName = stringResource(id = R.string.action_save),
+        isUpdate = true,
+        onUpClick = onUpClick,
+        onSuccess = { shareId, itemId, _ ->
+            viewModel.onEmitSnackbarMessage(LoginUpdated)
+            onSuccess(shareId, itemId)
+        },
+        onSubmit = { shareId -> viewModel.updateItem(shareId) },
+        onTitleChange = { viewModel.onTitleChange(it) },
+        onUsernameChange = { viewModel.onUsernameChange(it) },
+        onPasswordChange = { viewModel.onPasswordChange(it) },
+        onWebsiteChange = onWebsiteChange,
+        onNoteChange = { viewModel.onNoteChange(it) },
+        onCreateAliasClick = { shareId, titleOption ->
+            onCreateAliasClick(shareId, titleOption)
+        },
+        onRemoveAliasClick = { viewModel.onRemoveAlias() },
+        onVaultSelect = {
+            // Migrate element
+        },
+        onAddTotp = onAddTotp,
+        onDeleteTotp = viewModel::onDeleteTotp,
+        onLinkedAppDelete = viewModel::onDeleteLinkedApp
+    )
 }

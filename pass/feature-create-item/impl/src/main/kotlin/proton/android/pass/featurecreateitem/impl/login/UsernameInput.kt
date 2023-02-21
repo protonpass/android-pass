@@ -24,11 +24,10 @@ internal fun UsernameInput(
     modifier: Modifier = Modifier,
     value: String,
     canUpdateUsername: Boolean,
-    showCreateAliasButton: Boolean,
     isEditAllowed: Boolean,
     onChange: (String) -> Unit,
-    onGenerateAliasClick: () -> Unit,
-    onAliasOptionsClick: () -> Unit
+    onAliasOptionsClick: () -> Unit,
+    onFocus: (Boolean) -> Unit
 ) {
     ProtonTextField(
         modifier = modifier.padding(0.dp, 16.dp),
@@ -46,38 +45,37 @@ internal fun UsernameInput(
             )
         },
         trailingIcon = {
-            if (showCreateAliasButton) {
+            if (canUpdateUsername) {
+                if (value.isNotEmpty()) {
+                    IconButton(
+                        enabled = isEditAllowed,
+                        onClick = { onChange("") }
+                    ) {
+                        Icon(
+                            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_small),
+                            contentDescription = null,
+                            tint = ProtonTheme.colors.iconWeak
+                        )
+                    }
+                }
+            } else {
                 IconButton(
                     enabled = isEditAllowed,
-                    onClick = {
-                        if (canUpdateUsername) {
-                            onGenerateAliasClick()
-                        } else {
-                            onAliasOptionsClick()
-                        }
-                    }
+                    onClick = { onAliasOptionsClick() }
                 ) {
-                    val buttonIcon = if (canUpdateUsername) {
-                        me.proton.core.presentation.R.drawable.ic_proton_alias
-                    } else {
-                        me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical
-                    }
                     Icon(
-                        painter = painterResource(buttonIcon),
+                        painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical),
                         contentDescription = null,
-                        tint = if (isEditAllowed) {
-                            ProtonTheme.colors.iconNorm
-                        } else {
-                            ProtonTheme.colors.iconDisabled
-                        }
+                        tint = ProtonTheme.colors.iconWeak
                     )
                 }
             }
-        }
+        },
+        onFocusChange = onFocus
     )
 }
 
-@Preview(showBackground = true)
+@Preview
 @Composable
 fun UsernameInputCanUpdateTruePreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
@@ -86,32 +84,11 @@ fun UsernameInputCanUpdateTruePreview(
         Surface {
             UsernameInput(
                 value = "some value",
-                showCreateAliasButton = input.second,
                 isEditAllowed = true,
                 onChange = {},
-                onGenerateAliasClick = {},
                 onAliasOptionsClick = {},
+                onFocus = {},
                 canUpdateUsername = true
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun UsernameInputCanUpdateFalsePreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
-) {
-    ProtonTheme(isDark = input.first) {
-        Surface {
-            UsernameInput(
-                value = "some value",
-                showCreateAliasButton = input.second,
-                isEditAllowed = true,
-                onChange = {},
-                onGenerateAliasClick = {},
-                onAliasOptionsClick = {},
-                canUpdateUsername = false
             )
         }
     }

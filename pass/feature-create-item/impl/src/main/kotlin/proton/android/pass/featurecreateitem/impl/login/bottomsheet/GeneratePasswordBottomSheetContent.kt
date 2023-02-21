@@ -33,7 +33,7 @@ fun GeneratePasswordBottomSheetContent(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         BottomSheetTitle(
-            title = stringResource(id = R.string.button_generate_password),
+            title = stringResource(id = R.string.bottomsheet_generate_password_title),
             button = BottomSheetTitleButton(
                 title = stringResource(id = R.string.bottom_sheet_generate_password_confirm),
                 onClick = { onConfirm(state.password) },

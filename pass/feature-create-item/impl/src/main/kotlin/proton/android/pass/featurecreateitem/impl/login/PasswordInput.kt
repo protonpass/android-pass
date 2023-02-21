@@ -1,6 +1,5 @@
 package proton.android.pass.featurecreateitem.impl.login
 
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -10,7 +9,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,7 +31,7 @@ internal fun PasswordInput(
     value: String,
     isEditAllowed: Boolean,
     onChange: (String) -> Unit,
-    onGeneratePasswordClick: () -> Unit
+    onFocus: (Boolean) -> Unit
 ) {
     var isVisible: Boolean by rememberSaveable { mutableStateOf(false) }
 
@@ -65,40 +63,23 @@ internal fun PasswordInput(
             )
         },
         trailingIcon = {
-            Row {
-                IconButton(
-                    enabled = isEditAllowed,
-                    onClick = { onGeneratePasswordClick() }
-                ) {
-                    Icon(
-                        painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_arrows_rotate),
-                        contentDescription = null,
-                        tint = if (isEditAllowed) {
-                            ProtonTheme.colors.iconNorm
-                        } else {
-                            ProtonTheme.colors.iconDisabled
-                        },
-                        modifier = Modifier.align(Alignment.CenterVertically)
-                    )
-                }
-                IconButton(
-                    enabled = isEditAllowed,
-                    onClick = { isVisible = !isVisible }
-                ) {
-                    Icon(
-                        painter = icon,
-                        contentDescription = null,
-                        tint = if (isEditAllowed) {
-                            ProtonTheme.colors.iconNorm
-                        } else {
-                            ProtonTheme.colors.iconDisabled
-                        }
-                    )
-                }
+            IconButton(
+                enabled = isEditAllowed,
+                onClick = { isVisible = !isVisible }
+            ) {
+                Icon(
+                    painter = icon,
+                    contentDescription = null,
+                    tint = if (isEditAllowed) {
+                        ProtonTheme.colors.iconNorm
+                    } else {
+                        ProtonTheme.colors.iconDisabled
+                    }
+                )
             }
-
         },
-        visualTransformation = visualTransformation
+        visualTransformation = visualTransformation,
+        onFocusChange = { onFocus(it) }
     )
 }
 
@@ -113,7 +94,7 @@ fun PasswordInputPreview(
                 value = "someValue",
                 isEditAllowed = input.second,
                 onChange = {},
-                onGeneratePasswordClick = {}
+                onFocus = {}
             )
         }
     }

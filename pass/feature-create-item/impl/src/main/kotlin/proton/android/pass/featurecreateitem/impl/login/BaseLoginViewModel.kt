@@ -22,6 +22,7 @@ import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.CreateAlias
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
@@ -39,6 +40,7 @@ abstract class BaseLoginViewModel(
     protected val accountManager: AccountManager,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     observeVaults: ObserveVaults,
+    observeCurrentUser: ObserveCurrentUser,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -94,15 +96,17 @@ abstract class BaseLoginViewModel(
     private val loginItemWrapperState = combine(
         loginItemState,
         loginItemValidationErrorsState,
-        canUpdateUsernameState
-    ) { loginItem, loginItemValidationErrors, updateUsername ->
-        LoginItemWrapper(loginItem, loginItemValidationErrors, updateUsername)
+        canUpdateUsernameState,
+        observeCurrentUser().map { it.email }
+    ) { loginItem, loginItemValidationErrors, updateUsername, primaryEmail ->
+        LoginItemWrapper(loginItem, loginItemValidationErrors, updateUsername, primaryEmail)
     }
 
     private data class LoginItemWrapper(
         val loginItem: LoginItem,
         val loginItemValidationErrors: Set<LoginItemValidationErrors>,
-        val canUpdateUsername: Boolean
+        val canUpdateUsername: Boolean,
+        val primaryEmail: String?
     )
 
     val loginUiState: StateFlow<CreateUpdateLoginUiState> = combine(
@@ -120,7 +124,8 @@ abstract class BaseLoginViewModel(
             isLoadingState = isLoading,
             isItemSaved = isItemSaved,
             focusLastWebsite = focusLastWebsite,
-            canUpdateUsername = loginItemWrapper.canUpdateUsername
+            canUpdateUsername = loginItemWrapper.canUpdateUsername,
+            primaryEmail = loginItemWrapper.primaryEmail
         )
     }
         .stateIn(
@@ -246,6 +251,12 @@ abstract class BaseLoginViewModel(
 
     fun onDeleteLinkedApp(packageName: String) {
         loginItemState.update { it.copy(packageNames = it.packageNames.minus(packageName)) }
+    }
+
+    fun onRemoveAlias() {
+        loginItemState.update { it.copy(username = "") }
+        aliasItemState.update { None }
+        canUpdateUsernameState.update { true }
     }
 
     companion object {

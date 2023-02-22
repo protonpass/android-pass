@@ -47,7 +47,10 @@ class AutofillServiceManager @Inject constructor(
         val maxSuggestion = requestOption.value()?.maxSuggestionCount.toOption()
         return if (maxSuggestion is Some && maxSuggestion.value > 0 && requestOption is Some) {
             val suggestedItemsResult =
-                getSuggestedLoginItems(autofillData.packageName, autofillData.assistInfo.url)
+                getSuggestedLoginItems(
+                    packageName = autofillData.packageInfo.map { it.packageName.value },
+                    url = autofillData.assistInfo.url
+                )
                     .filterIsInstance<LoadingResult.Success<List<Item>>>()
                     .map { it.data }
                     .firstOrNull()

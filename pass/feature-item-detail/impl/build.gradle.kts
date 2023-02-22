@@ -23,7 +23,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.accompanist.drawablepainter)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
@@ -45,6 +44,7 @@ dependencies {
     implementation(projects.pass.clipboard.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)

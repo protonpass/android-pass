@@ -3,6 +3,9 @@ package proton.android.pass.data.impl.extensions
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.pass.domain.ItemType
+import proton.pass.domain.entity.AppName
+import proton.pass.domain.entity.PackageInfo
+import proton.pass.domain.entity.PackageName
 import proton_pass_item_v1.ItemV1
 
 @Suppress("TooGenericExceptionThrown")
@@ -16,7 +19,9 @@ fun ItemType.Companion.fromParsed(
             username = parsed.content.login.username,
             password = context.encrypt(parsed.content.login.password),
             websites = parsed.content.login.urlsList,
-            packageNames = parsed.platformSpecific.android.allowedAppsList.map { it.packageName },
+            packageInfoSet = parsed.platformSpecific.android.allowedAppsList.map {
+                PackageInfo(PackageName(it.packageName), AppName(it.appName))
+            }.toSet(),
             primaryTotp = context.encrypt(parsed.content.login.totpUri)
         )
         ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)
@@ -34,14 +39,10 @@ fun ItemEntity.itemType(context: EncryptionContext): ItemType {
     return ItemType.fromParsed(context, parsed, aliasEmail)
 }
 
-fun ItemEntity.itemUuid(context: EncryptionContext): ItemType {
+fun ItemEntity.allowedApps(context: EncryptionContext): Set<PackageInfo> {
     val decrypted = context.decrypt(encryptedContent)
     val parsed = ItemV1.Item.parseFrom(decrypted)
-    return ItemType.fromParsed(context, parsed, aliasEmail)
-}
-
-fun ItemEntity.allowedApps(context: EncryptionContext): List<String> {
-    val decrypted = context.decrypt(encryptedContent)
-    val parsed = ItemV1.Item.parseFrom(decrypted)
-    return parsed.platformSpecific.android.allowedAppsList.map { it.packageName }
+    return parsed.platformSpecific.android.allowedAppsList.map {
+        PackageInfo(PackageName(it.packageName), AppName(it.appName))
+    }.toSet()
 }

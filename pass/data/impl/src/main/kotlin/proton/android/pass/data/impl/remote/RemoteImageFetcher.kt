@@ -26,13 +26,7 @@ class RemoteImageFetcherImpl @Inject constructor(
             throw ApiException(ApiResult.Error.Http(res.code(), "Should return 200"))
         }
 
-        val body = res.body()?.bytes()
-            ?: throw ApiException(
-                error = ApiResult.Error.Connection(
-                    potentialBlock = false,
-                    cause = IllegalStateException("Cannot read body")
-                )
-            )
+        val body = checkNotNull(res.body()?.bytes())
         emit(body)
     }
 

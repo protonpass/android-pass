@@ -1,12 +1,11 @@
 package proton.android.pass.data.api.url
 
-import proton.android.pass.common.api.LoadingResult
 import java.net.URI
 import java.net.URISyntaxException
 
 object UrlSanitizer {
-    fun sanitize(url: String): LoadingResult<String> {
-        if (url.isEmpty()) return LoadingResult.Error(IllegalArgumentException("url cannot be empty"))
+    fun sanitize(url: String): Result<String> {
+        if (url.isEmpty()) return Result.failure(IllegalArgumentException("url cannot be empty"))
 
         // If it doesn't have a scheme, add https://
         val urlWithScheme = if (!url.contains("://")) {
@@ -18,24 +17,21 @@ object UrlSanitizer {
         return try {
             val parsed = URI(urlWithScheme)
             val meaningfulSection = "${parsed.scheme}://${parsed.host}${parsed.path}"
-            LoadingResult.Success(meaningfulSection)
+            Result.success(meaningfulSection)
         } catch (e: URISyntaxException) {
-            LoadingResult.Error(e)
+            Result.failure(e)
         }
     }
 
-    fun getDomain(url: String): LoadingResult<String> =
-        when (val res = sanitize(url)) {
-            LoadingResult.Loading -> LoadingResult.Loading
-            is LoadingResult.Error -> res
-            is LoadingResult.Success -> {
-                try {
-                    val parsed = URI(res.data)
-                    LoadingResult.Success(parsed.host)
-                } catch (e: URISyntaxException) {
-                    LoadingResult.Error(e)
-                }
+    fun getDomain(url: String): Result<String> = sanitize(url).fold(
+        onSuccess = {
+            try {
+                val parsed = URI(it)
+                Result.success(parsed.host)
+            } catch (e: URISyntaxException) {
+                Result.failure(e)
             }
-        }
-
+        },
+        onFailure = { Result.failure(it) }
+    )
 }

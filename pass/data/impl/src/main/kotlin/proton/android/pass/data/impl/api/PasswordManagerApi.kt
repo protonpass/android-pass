@@ -139,4 +139,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Path("lastEventId") lastEventId: String
     ): GetEventsResponse
+
+    // Favicon
+    @GET("core/v4/images/logo")
+    suspend fun getFavicon(
+        @Query("Address") address: String,
+        @Query("Size") size: Int = 64,
+        @Query("Mode") mode: String = "light"
+    ): retrofit2.Response<okhttp3.ResponseBody>
 }

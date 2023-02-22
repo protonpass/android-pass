@@ -1,10 +1,12 @@
 package proton.android.pass.data.impl
 
 import com.google.common.truth.Truth.assertThat
+import org.junit.Test
 import proton.android.pass.data.impl.extensions.hasPackageName
 import proton.android.pass.data.impl.extensions.with
+import proton.pass.domain.entity.AppName
+import proton.pass.domain.entity.PackageInfo
 import proton.pass.domain.entity.PackageName
-import org.junit.Test
 import proton_pass_item_v1.ItemV1
 
 internal class TestAddPackageToItem {
@@ -24,17 +26,20 @@ internal class TestAddPackageToItem {
 
     @Test
     fun `addPackageName should add package name`() {
-        val originalPackageName = "original.package"
-        val newPackageName = "new.package.name"
 
+        val originalPackageName = "original.package"
+        val newPackageInfo = PackageInfo(
+            PackageName("new.package.name"),
+            AppName("")
+        )
         val source = createItemWithPackageName(originalPackageName)
-        val updated = source.with(PackageName(newPackageName))
+        val updated = source.with(newPackageInfo)
 
         val allowedApps = updated.platformSpecific.android.allowedAppsList
         assertThat(allowedApps.size).isEqualTo(2)
 
         assertThat(allowedApps[0].packageName).isEqualTo(originalPackageName)
-        assertThat(allowedApps[1].packageName).isEqualTo(newPackageName)
+        assertThat(allowedApps[1].packageName).isEqualTo(newPackageInfo.packageName.value)
 
         // Ensure source has not been updated
         assertThat(source.platformSpecific.android.allowedAppsList.size).isEqualTo(1)

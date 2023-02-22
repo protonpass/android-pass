@@ -18,6 +18,9 @@ import proton.pass.domain.ItemType
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareType
+import proton.pass.domain.entity.AppName
+import proton.pass.domain.entity.PackageInfo
+import proton.pass.domain.entity.PackageName
 import proton.pass.domain.key.ShareKey
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
@@ -118,8 +121,9 @@ class OpenItemImpl @Inject constructor(
             note = encrypt(decoded.metadata.note),
             content = encrypt(decryptedContents),
             itemType = ItemType.fromParsed(this, decoded, aliasEmail = response.aliasEmail),
-            allowedPackageNames = decoded.platformSpecific.android.allowedAppsList
-                .map { it.packageName },
+            packageInfoSet = decoded.platformSpecific.android.allowedAppsList
+                .map { PackageInfo(PackageName(it.packageName), AppName(it.appName)) }
+                .toSet(),
             createTime = Instant.fromEpochSeconds(response.createTime),
             modificationTime = Instant.fromEpochSeconds(response.modifyTime),
             lastAutofillTime = response.lastUseTime.toOption().map(Instant::fromEpochSeconds),

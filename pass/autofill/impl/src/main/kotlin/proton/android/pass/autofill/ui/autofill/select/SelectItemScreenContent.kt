@@ -12,6 +12,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
 import proton.pass.domain.ItemType
 
@@ -19,7 +20,7 @@ import proton.pass.domain.ItemType
 internal fun SelectItemScreenContent(
     modifier: Modifier = Modifier,
     uiState: SelectItemUiState,
-    packageName: String?,
+    packageInfo: PackageInfoUi?,
     webDomain: String?,
     onItemClicked: (ItemUiModel, Boolean) -> Unit,
     onSearchQueryChange: (String) -> Unit,
@@ -33,7 +34,7 @@ internal fun SelectItemScreenContent(
     if (showAssociateDialog) {
         AssociateAutofillItemDialog(
             itemUiModel = itemClicked.value(),
-            packageName = packageName,
+            appName = packageInfo?.appName,
             webDomain = webDomain,
             onAssociateAndAutofill = {
                 onItemClicked(it, true)
@@ -74,7 +75,7 @@ internal fun SelectItemScreenContent(
             uiState = uiState,
             onItemClicked = {
                 val item = it.itemType as? ItemType.Login ?: return@SelectItemList
-                if (shouldAskForAssociation(item, packageName, webDomain)) {
+                if (shouldAskForAssociation(item, packageInfo?.packageName, webDomain)) {
                     itemClicked = it.toOption()
                     showAssociateDialog = true
                 } else {
@@ -89,5 +90,6 @@ private fun shouldAskForAssociation(
     item: ItemType.Login,
     packageName: String?,
     webDomain: String?
-): Boolean = !packageName.isNullOrBlank() && !item.packageNames.contains(packageName) ||
+): Boolean = !packageName.isNullOrBlank() &&
+    !item.packageInfoSet.map { it.packageName.value }.contains(packageName) ||
     !webDomain.isNullOrBlank() && !item.websites.contains(webDomain)

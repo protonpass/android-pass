@@ -2,6 +2,8 @@ package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableSet
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 
 @Stable
 data class LoginDetailUiState(
@@ -9,7 +11,7 @@ data class LoginDetailUiState(
     val username: String,
     val password: PasswordState,
     val websites: ImmutableList<String>,
-    val packageNames: ImmutableList<String>,
+    val packageInfoSet: ImmutableSet<PackageInfoUi>,
     val note: String,
     val totpUiState: TotpUiState?,
     val isLoading: Boolean,

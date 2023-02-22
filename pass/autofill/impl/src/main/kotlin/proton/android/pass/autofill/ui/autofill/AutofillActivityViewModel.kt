@@ -18,6 +18,7 @@ import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.isValid
 import proton.android.pass.autofill.extensions.deserializeParcelable
+import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_APP_NAME
 import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_IDS
 import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_AUTOFILL_TYPES
 import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_INLINE_SUGGESTION_AUTOFILL_ITEM
@@ -29,11 +30,11 @@ import proton.android.pass.autofill.ui.autofill.AutofillUiState.StartAutofillUiS
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
-import proton.pass.domain.entity.PackageName
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,9 +43,14 @@ class AutofillActivityViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val packageName = savedStateHandle.get<String>(ARG_PACKAGE_NAME)
+    private val packageInfo = savedStateHandle.get<String>(ARG_PACKAGE_NAME)
         .toOption()
-        .map { PackageName(it) }
+        .map { packageName ->
+            PackageInfoUi(
+                packageName = packageName,
+                appName = savedStateHandle.get<String>(ARG_APP_NAME) ?: packageName
+            )
+        }
     private val webDomain = savedStateHandle.get<String>(ARG_WEB_DOMAIN)
         .toOption()
     private val title = savedStateHandle.get<String>(ARG_TITLE)
@@ -59,7 +65,7 @@ class AutofillActivityViewModel @Inject constructor(
     private val autofillAppState: MutableStateFlow<AutofillAppState> =
         MutableStateFlow(
             AutofillAppState(
-                packageName = packageName,
+                packageInfoUi = packageInfo.value(),
                 androidAutofillIds = ids.value() ?: emptyList(),
                 fieldTypes = types.value() ?: emptyList(),
                 webDomain = webDomain,

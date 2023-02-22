@@ -30,6 +30,8 @@
     <string name="field_note_title">Note</string>
     <string name="field_note_hint">Add note</string>
 
+    <string name="linked_apps_title">Linked apps</string>
+
     <!-- Indicator that indicates lack of internet connectivity -->
     <string name="indicator_no_network">Offline</string>
 
@@ -40,5 +42,8 @@
     <string name="alias_title_icon_content_description">Alias icon</string>
     <string name="note_title_icon_content_description">Note icon</string>
     <string name="password_title_icon_content_description">Password icon</string>
+    <string name="missing_app_icon_content_description">Missing app icon</string>
+    <string name="linked_app_icon_content_description">App icon</string>
+    <string name="linked_app_cross_icon_content_description">Remove linked app icon</string>
 
 </resources>

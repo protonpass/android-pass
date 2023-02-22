@@ -12,13 +12,14 @@ import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
+import proton.pass.domain.entity.PackageInfo
 import kotlin.random.Random
 
 object TestItem {
 
     fun create(
         itemType: ItemType = ItemType.Password,
-        allowedPackageNames: List<String> = emptyList(),
+        packageInfoSet: Set<PackageInfo> = emptySet(),
         keyStoreCrypto: KeyStoreCrypto? = null
     ): Item {
         val title = "item-title"
@@ -33,7 +34,7 @@ object TestItem {
             title = keyStoreCrypto?.let { title.encrypt(it) } ?: title,
             note = keyStoreCrypto?.let { note.encrypt(it) } ?: note,
             content = EncryptedByteArray(byteArrayOf()),
-            allowedPackageNames = allowedPackageNames,
+            packageInfoSet = packageInfoSet,
             modificationTime = now,
             createTime = now,
             lastAutofillTime = None
@@ -50,7 +51,7 @@ object TestItem {
             username = randomString(),
             password = randomString().encrypt(TestKeyStoreCrypto),
             websites = emptyList(),
-            packageNames = emptyList(),
+            packageInfoSet = emptySet(),
             primaryTotp = randomString()
         )
         val titleParam = title ?: randomString()
@@ -70,7 +71,7 @@ object TestItem {
             title = TestKeyStoreCrypto.encrypt(titleParam),
             note = TestKeyStoreCrypto.encrypt(noteParam),
             content = itemContent,
-            allowedPackageNames = emptyList(),
+            packageInfoSet = emptySet(),
             createTime = now,
             modificationTime = now,
             lastAutofillTime = None,

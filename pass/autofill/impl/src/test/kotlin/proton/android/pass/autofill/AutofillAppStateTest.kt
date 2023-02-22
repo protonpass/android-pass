@@ -6,15 +6,14 @@ import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.autofill.entities.isValid
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.toOption
-import proton.pass.domain.entity.PackageName
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 
 class AutofillAppStateTest {
 
     @Test
     fun `empty androidAutofillIds returns isEmpty true`() {
         val state = AutofillAppState(
-            packageName = PackageName("").toOption(),
+            packageInfoUi = PackageInfoUi("", ""),
             androidAutofillIds = listOf(),
             fieldTypes = listOf(FieldType.Email),
             webDomain = None,

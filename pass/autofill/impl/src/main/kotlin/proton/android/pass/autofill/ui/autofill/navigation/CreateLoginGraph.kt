@@ -34,16 +34,11 @@ fun NavGraphBuilder.createLoginGraph(
         val primaryTotp by appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null)
             .collectAsStateWithLifecycle()
 
-        val packageName = if (state.webDomain.isEmpty()) {
-            state.packageName
-        } else {
-            None
-        }
         val initialContents = InitialCreateLoginUiState(
             title = state.title,
             url = state.webDomain.value(),
             aliasItem = createdDraftAlias,
-            packageName = packageName.value(),
+            packageInfoUi = state.packageInfoUi.takeIf { state.webDomain.isEmpty() },
             primaryTotp = primaryTotp
         )
 

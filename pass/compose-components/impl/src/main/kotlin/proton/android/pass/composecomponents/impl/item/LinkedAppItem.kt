@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemdetail.impl.login
+package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -24,15 +24,16 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationIcon
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationName
 import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.Circle
-import proton.android.pass.featureitemdetail.impl.R
 
 @Composable
 fun LinkedAppItem(
     modifier: Modifier = Modifier,
-    packageName: String,
+    packageInfoUi: PackageInfoUi,
     isEditable: Boolean,
-    onLinkedAppDelete: (String) -> Unit
+    onLinkedAppDelete: (PackageInfoUi) -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -40,8 +41,15 @@ fun LinkedAppItem(
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         val context = LocalContext.current
-        val iconDrawable = remember(packageName) { getApplicationIcon(context, packageName) }
-        val appName = remember(packageName) { getApplicationName(context, packageName) }
+        val iconDrawable = remember(packageInfoUi.packageName) {
+            getApplicationIcon(context, packageInfoUi.packageName)
+        }
+        val appName = remember(packageInfoUi.packageName) {
+            packageInfoUi.appName.ifBlank {
+                getApplicationName(context, packageInfoUi.packageName).value()
+                    ?: packageInfoUi.packageName
+            }
+        }
         when (iconDrawable) {
             None -> Circle(backgroundColor = PassColors.PurpleAccent) {
                 Icon(
@@ -58,15 +66,15 @@ fun LinkedAppItem(
         }
         Text(
             modifier = Modifier.weight(1f),
-            text = appName.value() ?: packageName,
+            text = appName,
             style = ProtonTheme.typography.default
         )
         if (isEditable) {
-            IconButton(onClick = { onLinkedAppDelete(packageName) }) {
+            IconButton(onClick = { onLinkedAppDelete(packageInfoUi) }) {
                 Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_minus_circle),
-                    contentDescription = null,
-                    tint = ProtonTheme.colors.iconNorm
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_small),
+                    contentDescription = stringResource(R.string.linked_app_cross_icon_content_description),
+                    tint = ProtonTheme.colors.iconWeak
                 )
             }
         }

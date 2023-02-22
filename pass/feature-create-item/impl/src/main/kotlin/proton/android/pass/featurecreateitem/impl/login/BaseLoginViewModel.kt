@@ -3,6 +3,7 @@ package proton.android.pass.featurecreateitem.impl.login
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +19,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.url.UrlSanitizer
@@ -249,8 +251,10 @@ abstract class BaseLoginViewModel(
         loginItemState.update { it.copy(primaryTotp = "") }
     }
 
-    fun onDeleteLinkedApp(packageName: String) {
-        loginItemState.update { it.copy(packageNames = it.packageNames.minus(packageName)) }
+    fun onDeleteLinkedApp(packageInfo: PackageInfoUi) {
+        loginItemState.update {
+            it.copy(packageInfoSet = it.packageInfoSet.minus(packageInfo).toImmutableSet())
+        }
     }
 
     fun onRemoveAlias() {

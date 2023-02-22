@@ -65,7 +65,7 @@ import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
 import proton.pass.domain.entity.NewAlias
-import proton.pass.domain.entity.PackageName
+import proton.pass.domain.entity.PackageInfo
 import proton.pass.domain.key.ShareKey
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
@@ -373,7 +373,7 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun addPackageAndUrlToItem(
         shareId: ShareId,
         itemId: ItemId,
-        packageName: Option<PackageName>,
+        packageInfoOption: Option<PackageInfo>,
         url: Option<String>
     ): LoadingResult<Item> = withContext(Dispatchers.IO) {
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
@@ -387,7 +387,7 @@ class ItemRepositoryImpl @Inject constructor(
         val (needsToUpdate, updatedContents) = updateItemContents(
             item,
             itemProto,
-            packageName,
+            packageInfoOption,
             url
         )
 
@@ -488,24 +488,24 @@ class ItemRepositoryImpl @Inject constructor(
     private fun updateItemContents(
         item: Item,
         itemProto: ItemV1.Item,
-        packageName: Option<PackageName>,
+        packageInfoOption: Option<PackageInfo>,
         url: Option<String>
     ): Pair<Boolean, ItemV1.Item> {
         var needsToUpdate = false
 
-        val itemContentsWithPackageName = when (packageName) {
+        val itemContentsWithPackageName = when (packageInfoOption) {
             None -> itemProto
             is Some -> {
-                if (itemProto.hasPackageName(packageName.value)) {
+                if (itemProto.hasPackageName(packageInfoOption.value.packageName)) {
                     PassLogger.i(
                         TAG,
                         "Item already has this package name " +
-                            "[shareId=${item.shareId}] [itemId=${item.id}] [packageName=$packageName]"
+                            "[shareId=${item.shareId}] [itemId=${item.id}] [packageName=$packageInfoOption]"
                     )
                     itemProto
                 } else {
                     needsToUpdate = true
-                    itemProto.with(packageName.value)
+                    itemProto.with(packageInfoOption.value)
                 }
             }
         }
@@ -621,7 +621,9 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         items: List<ItemRevision>
     ): LoadingResult<List<Item>> {
-        val shareKeys = shareKeyRepository.getShareKeys(userAddress.userId, userAddress.addressId, share.id).first()
+        val shareKeys =
+            shareKeyRepository.getShareKeys(userAddress.userId, userAddress.addressId, share.id)
+                .first()
         return encryptionContextProvider.withEncryptionContextSuspendable {
             val encryptionContext = this@withEncryptionContextSuspendable
             withContext(Dispatchers.Default) {
@@ -707,7 +709,7 @@ class ItemRepositoryImpl @Inject constructor(
             title = entity.encryptedTitle,
             note = entity.encryptedNote,
             content = entity.encryptedContent,
-            allowedPackageNames = entity.allowedApps(encryptionContext),
+            packageInfoSet = entity.allowedApps(encryptionContext),
             modificationTime = Instant.fromEpochSeconds(entity.modifyTime),
             createTime = Instant.fromEpochSeconds(entity.createTime),
             lastAutofillTime = entity.lastUsedTime.toOption().map(Instant::fromEpochSeconds)

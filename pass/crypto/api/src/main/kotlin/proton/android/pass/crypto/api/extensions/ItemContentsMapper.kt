@@ -19,10 +19,11 @@ fun ItemContents.serializeToProto(itemUuid: String? = null): ItemV1.Item {
     val contentBuilder = ItemV1.Content.newBuilder()
     val content = when (this) {
         is ItemContents.Login -> {
-            if (packageNames.isNotEmpty()) {
-                val packageNameList = packageNames.map {
+            if (packageInfoSet.isNotEmpty()) {
+                val packageNameList = packageInfoSet.map {
                     ItemV1.AllowedAndroidApp.newBuilder()
-                        .setPackageName(it)
+                        .setPackageName(it.packageName.value)
+                        .setAppName(it.appName.value)
                         .build()
                 }
                 builder.platformSpecific = ItemV1.PlatformSpecific.newBuilder()

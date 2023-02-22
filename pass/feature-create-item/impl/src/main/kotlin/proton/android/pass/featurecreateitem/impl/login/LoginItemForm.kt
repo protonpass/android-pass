@@ -23,9 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableList
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.form.NoteSection
 import proton.android.pass.composecomponents.impl.form.TitleSection
+import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.featurecreateitem.impl.login.LoginStickyFormOptionsContentType.AddTotp
 import proton.android.pass.featurecreateitem.impl.login.LoginStickyFormOptionsContentType.AliasOptions
 import proton.android.pass.featurecreateitem.impl.login.LoginStickyFormOptionsContentType.GeneratePassword
@@ -57,7 +59,7 @@ internal fun LoginItemForm(
     onVaultSelectorClick: () -> Unit,
     onAddTotpClick: () -> Unit,
     onDeleteTotpClick: () -> Unit,
-    onLinkedAppDelete: (String) -> Unit
+    onLinkedAppDelete: (PackageInfoUi) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -116,11 +118,11 @@ internal fun LoginItemForm(
                 onChange = onNoteChange
             )
             if (isUpdate) {
-/*            LinkedAppsListSection(
-                list = loginItem.packageNames.toImmutableSet(),
-                isEditable = true,
-                onLinkedAppDelete = onLinkedAppDelete
-            )*/
+                LinkedAppsListSection(
+                    packageInfoUiSet = loginItem.packageInfoSet,
+                    isEditable = true,
+                    onLinkedAppDelete = onLinkedAppDelete
+                )
             }
             if (!isUpdate) {
                 selectedShare?.name?.let {

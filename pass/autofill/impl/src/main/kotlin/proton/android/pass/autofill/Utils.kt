@@ -1,12 +1,10 @@
 package proton.android.pass.autofill
 
 import android.app.assist.AssistStructure
-import android.content.Context
 import android.service.autofill.FillContext
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.commonui.api.AndroidUtils.getApplicationName
 import proton.android.pass.data.api.url.UrlSanitizer
 
 object Utils {
@@ -25,13 +23,12 @@ object Utils {
     }
 
     fun getTitle(
-        context: Context,
         urlOption: Option<String>,
-        packageNameOption: Option<String>
+        appNameOption: Option<String>
     ): String = when (urlOption) {
-        None -> when (packageNameOption) {
+        None -> when (appNameOption) {
             None -> ""
-            is Some -> getApplicationName(context, packageNameOption.value).value() ?: ""
+            is Some -> appNameOption.value() ?: ""
         }
         is Some -> UrlSanitizer.getDomain(urlOption.value).getOrDefault("")
     }

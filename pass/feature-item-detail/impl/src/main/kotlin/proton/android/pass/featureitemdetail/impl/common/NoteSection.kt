@@ -23,6 +23,7 @@ import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.featureitemdetail.impl.NoteDetailSectionPreviewProvider
 import proton.android.pass.featureitemdetail.impl.R
 

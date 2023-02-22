@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemdetail.impl.login
+package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,27 +9,27 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableSet
-import proton.android.pass.featureitemdetail.impl.R
-import proton.android.pass.featureitemdetail.impl.common.SectionTitle
+import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun LinkedAppsListSection(
     modifier: Modifier = Modifier,
-    linkedAppsSet: ImmutableSet<String>,
+    packageInfoUiSet: ImmutableSet<PackageInfoUi>,
     isEditable: Boolean,
-    onLinkedAppDelete: (String) -> Unit
+    onLinkedAppDelete: (PackageInfoUi) -> Unit
 ) {
-    if (linkedAppsSet.isEmpty()) return
+    if (packageInfoUiSet.isEmpty()) return
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp),
+            .padding(8.dp, 12.dp, 0.dp, 12.dp),
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         SectionTitle(text = stringResource(R.string.linked_apps_title))
-        linkedAppsSet.forEach { packageName ->
+        packageInfoUiSet.forEach { packageInfoUi ->
             LinkedAppItem(
-                packageName = packageName,
+                packageInfoUi = packageInfoUi,
                 isEditable = isEditable,
                 onLinkedAppDelete = onLinkedAppDelete
             )

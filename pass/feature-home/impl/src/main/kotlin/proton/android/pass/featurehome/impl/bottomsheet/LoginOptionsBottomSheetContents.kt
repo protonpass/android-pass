@@ -11,9 +11,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassDimens.bottomSheetPadding
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.commonui.api.PassDimens.bottomSheetPadding
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetDivider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
@@ -101,7 +101,7 @@ fun LoginOptionsBottomSheetContentsPreview(
                         username = "My username",
                         password = "My password",
                         websites = emptyList(),
-                        packageNames = emptyList(),
+                        packageInfoSet = emptySet(),
                         primaryTotp = ""
                     ),
                     modificationTime = Clock.System.now()

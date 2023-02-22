@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
@@ -18,6 +19,7 @@ import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -94,7 +96,8 @@ class UpdateLoginViewModel @Inject constructor(
                                     password = decrypt(itemContents.password),
                                     websiteAddresses = websites,
                                     note = decrypt(item.note),
-                                    packageNames = item.allowedPackageNames.toSet(),
+                                    packageInfoSet = item.packageInfoSet.map(::PackageInfoUi)
+                                        .toImmutableSet(),
                                     primaryTotp = decrypt(itemContents.primaryTotp),
                                     extraTotpSet = emptySet()
                                 )

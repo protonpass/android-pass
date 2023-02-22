@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +27,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -92,7 +95,7 @@ class LoginDetailViewModel @Inject constructor(
                 username = itemContents.username,
                 password = password,
                 websites = itemContents.websites.toImmutableList(),
-                packageNames = itemContents.packageNames.toImmutableList(),
+                packageInfoSet = itemContents.packageInfoSet.map(::PackageInfoUi).toImmutableSet(),
                 note = decrypt(item.note),
                 totpUiState = totpOption.map {
                     TotpUiState(it.code, it.remainingSeconds, it.totalSeconds)
@@ -193,7 +196,7 @@ class LoginDetailViewModel @Inject constructor(
             username = "",
             password = getInitialPasswordState(),
             websites = persistentListOf(),
-            packageNames = persistentListOf(),
+            packageInfoSet = persistentSetOf(),
             note = "",
             totpUiState = null,
             isLoading = false,

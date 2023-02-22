@@ -3,6 +3,7 @@ package proton.android.pass.featurecreateitem.impl.login
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
@@ -76,19 +77,19 @@ class CreateLoginViewModel @Inject constructor(
             if (initialContents.aliasItem?.aliasToBeCreated?.isNotEmpty() == true) {
                 canUpdateUsernameState.update { false }
             }
-            val packageNames = if (initialContents.packageName != null) {
-                it.packageNames.toMutableSet()
-                    .apply { add(initialContents.packageName.packageName) }
-                    .toSet()
+            val packageInfoSet = if (initialContents.packageInfoUi != null) {
+                it.packageInfoSet.toMutableSet()
+                    .apply { add(initialContents.packageInfoUi) }
+                    .toImmutableSet()
             } else {
-                it.packageNames
+                it.packageInfoSet
             }
             it.copy(
                 title = initialContents.title ?: currentValue.title,
                 username = username,
                 password = initialContents.password ?: currentValue.password,
                 websiteAddresses = websites,
-                packageNames = packageNames,
+                packageInfoSet = packageInfoSet,
                 primaryTotp = initialContents.primaryTotp ?: currentValue.primaryTotp
             )
         }

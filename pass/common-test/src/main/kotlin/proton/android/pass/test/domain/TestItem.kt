@@ -26,6 +26,7 @@ object TestItem {
         val now = Clock.System.now()
         return Item(
             id = ItemId(id = "item-id"),
+            itemUuid = "uuid",
             revision = 0,
             shareId = ShareId(id = "share-id"),
             itemType = itemType,
@@ -62,6 +63,7 @@ object TestItem {
         val now = Clock.System.now()
         return Item(
             id = ItemId(randomString()),
+            itemUuid = java.util.UUID.randomUUID().toString(),
             revision = Random.nextLong(),
             shareId = ShareId(randomString()),
             itemType = itemTypeParam,

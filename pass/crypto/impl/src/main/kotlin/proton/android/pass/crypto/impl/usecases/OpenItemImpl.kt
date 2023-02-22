@@ -111,6 +111,7 @@ class OpenItemImpl @Inject constructor(
     ): Item = encryptionContextProvider.withEncryptionContext {
         Item(
             id = ItemId(response.itemId),
+            itemUuid = decoded.metadata.itemUuid,
             revision = response.revision,
             shareId = shareId,
             title = encrypt(decoded.metadata.name),

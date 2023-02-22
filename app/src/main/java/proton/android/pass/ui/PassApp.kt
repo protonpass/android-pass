@@ -1,6 +1,7 @@
 package proton.android.pass.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,7 +45,8 @@ fun PassApp(
             PassAppContent(
                 modifier = modifier
                     .background(ProtonTheme.colors.backgroundNorm)
-                    .systemBarsPadding(),
+                    .systemBarsPadding()
+                    .imePadding(),
                 appUiState = appUiState,
                 coreNavigation = coreNavigation,
                 onDrawerSectionChanged = { appViewModel.onDrawerSectionChanged(it) },

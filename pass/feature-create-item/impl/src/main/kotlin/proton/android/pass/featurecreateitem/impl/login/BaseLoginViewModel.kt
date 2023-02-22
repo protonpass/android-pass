@@ -234,10 +234,10 @@ abstract class BaseLoginViewModel(
             if (url.isBlank()) {
                 ""
             } else {
-                when (val res = UrlSanitizer.sanitize(url)) {
-                    is LoadingResult.Success -> res.data
-                    else -> url
-                }
+                UrlSanitizer.sanitize(url).fold(
+                    onSuccess = { it },
+                    onFailure = { url }
+                )
             }
         }
 

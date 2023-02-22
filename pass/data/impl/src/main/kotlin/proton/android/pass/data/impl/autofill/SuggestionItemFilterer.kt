@@ -1,7 +1,7 @@
 package proton.android.pass.data.impl.autofill
 
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
@@ -50,24 +50,24 @@ class SuggestionItemFiltererImpl @Inject constructor(
         item.allowedPackageNames.contains(packageName)
 
     private fun isUrlMatch(url: String, login: ItemType.Login): Boolean {
-        val urlDomain = when (val domain = UrlSanitizer.getDomain(url)) {
-            is LoadingResult.Success -> domain.data
-            else -> return false
-        }
+        val urlDomain = UrlSanitizer.getDomain(url).fold(
+            onSuccess = { it },
+            onFailure = { return false }
+        )
         val loginDomains = login.websites
             .map { UrlSanitizer.getDomain(it) }
-            .filterIsInstance<LoadingResult.Success<String>>()
-            .map { it.data }
+            .filter { it.isSuccess }
+            .mapNotNull { it.getOrNull() }
 
         return isDomainMatch(urlDomain, loginDomains)
     }
 
     private fun isDomainMatch(urlDomain: String, itemDomains: List<String>): Boolean {
         val parsedItemDomains = parseItemDomains(itemDomains)
-        val parsedDomain = when (val parsed = hostParser.parse(urlDomain)) {
-            is LoadingResult.Success -> parsed.data
-            else -> return false
-        }
+        val parsedDomain = hostParser.parse(urlDomain).fold(
+            onSuccess = { it },
+            onFailure = { return false }
+        )
 
         return parsedItemDomains.any {
             when (it) {

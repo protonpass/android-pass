@@ -1,6 +1,5 @@
 package proton.android.pass.data.impl.autofill
 
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -60,8 +59,8 @@ class SuggestionSorterImpl @Inject constructor(
         items.forEach { loginItem ->
             val parsedWebsites = loginItem.login.websites
                 .map { url -> hostParser.parse(url) }
-                .filterIsInstance<LoadingResult.Success<HostInfo>>()
-                .map { it.data }
+                .filter { it.isSuccess }
+                .mapNotNull { it.getOrNull() }
                 .filterIsInstance<HostInfo.Host>()
 
             val shouldGoToSameSubdomain = parsedWebsites.any {
@@ -101,8 +100,8 @@ class SuggestionSorterImpl @Inject constructor(
         items.forEach { loginItem ->
             val parsedWebsites = loginItem.login.websites
                 .map { url -> hostParser.parse(url) }
-                .filterIsInstance<LoadingResult.Success<HostInfo>>()
-                .map { it.data }
+                .filter { it.isSuccess }
+                .mapNotNull { it.getOrNull() }
                 .filterIsInstance<HostInfo.Host>()
 
             val shouldGoToDomain = parsedWebsites.any {

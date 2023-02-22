@@ -3,7 +3,6 @@ package proton.android.pass.autofill
 import android.app.assist.AssistStructure
 import android.content.Context
 import android.service.autofill.FillContext
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -34,10 +33,6 @@ object Utils {
             None -> ""
             is Some -> getApplicationName(context, packageNameOption.value).value() ?: ""
         }
-        is Some -> when (val res = UrlSanitizer.getDomain(urlOption.value)) {
-            LoadingResult.Loading -> ""
-            is LoadingResult.Error -> ""
-            is LoadingResult.Success -> res.data
-        }
+        is Some -> UrlSanitizer.getDomain(urlOption.value).getOrDefault("")
     }
 }

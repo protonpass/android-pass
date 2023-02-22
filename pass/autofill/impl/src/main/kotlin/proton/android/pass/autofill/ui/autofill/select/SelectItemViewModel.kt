@@ -289,19 +289,18 @@ class SelectItemViewModel @Inject constructor(
         }
 
     private fun getSuggestionsTitleForDomain(domain: String): String =
-        when (val sanitized = UrlSanitizer.sanitize(domain)) {
-            LoadingResult.Loading -> ""
-            is LoadingResult.Error -> {
-                PassLogger.i(TAG, sanitized.exception, "Error sanitizing URL [url=$domain]")
-                ""
-            }
-            is LoadingResult.Success -> {
+        UrlSanitizer.sanitize(domain).fold(
+            onSuccess = {
                 runCatching {
-                    val parsed = URI(sanitized.data)
+                    val parsed = URI(it)
                     parsed.host
                 }.getOrDefault("")
+            },
+            onFailure = {
+                PassLogger.i(TAG, it, "Error sanitizing URL [url=$domain]")
+                ""
             }
-        }
+        )
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

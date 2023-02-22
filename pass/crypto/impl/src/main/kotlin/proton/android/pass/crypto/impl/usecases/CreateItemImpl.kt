@@ -7,7 +7,8 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.CreateItemPayload
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
-import proton.android.pass.crypto.impl.extensions.serializeToProto
+import proton.android.pass.crypto.api.extensions.serializeToProto
+import proton.android.pass.crypto.impl.usecases.Utils.generateUuid
 import proton.pass.domain.ItemContents
 import proton.pass.domain.key.ShareKey
 import javax.inject.Inject
@@ -20,7 +21,7 @@ class CreateItemImpl @Inject constructor(
         shareKey: ShareKey,
         itemContents: ItemContents
     ): CreateItemPayload {
-        val serializedItem = itemContents.serializeToProto().toByteArray()
+        val serializedItem = itemContents.serializeToProto(itemUuid = generateUuid()).toByteArray()
         val itemKey = EncryptionKey.generate()
 
         val encryptedContents = encryptionContextProvider.withEncryptionContext(itemKey) {

@@ -27,6 +27,7 @@ import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.CryptoException
+import proton.android.pass.crypto.api.extensions.serializeToProto
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.UpdateItem
@@ -39,10 +40,9 @@ import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.extensions.allowedApps
+import proton.android.pass.data.impl.extensions.fromParsed
 import proton.android.pass.data.impl.extensions.hasPackageName
 import proton.android.pass.data.impl.extensions.hasWebsite
-import proton.android.pass.data.impl.extensions.itemType
-import proton.android.pass.data.impl.extensions.serializeToProto
 import proton.android.pass.data.impl.extensions.toCrypto
 import proton.android.pass.data.impl.extensions.toItemRevision
 import proton.android.pass.data.impl.extensions.toRequest
@@ -163,7 +163,7 @@ class ItemRepositoryImpl @Inject constructor(
             userId,
             share,
             item,
-            contents.serializeToProto()
+            contents.serializeToProto(itemUuid = item.itemUuid)
         )
     }
 
@@ -694,12 +694,16 @@ class ItemRepositoryImpl @Inject constructor(
     private fun entityToDomain(
         encryptionContext: EncryptionContext,
         entity: ItemEntity
-    ): Item =
-        Item(
+    ): Item {
+        val decrypted = encryptionContext.decrypt(entity.encryptedContent)
+        val parsed = ItemV1.Item.parseFrom(decrypted)
+
+        return Item(
             id = ItemId(entity.id),
+            itemUuid = parsed.metadata.itemUuid,
             revision = entity.revision,
             shareId = ShareId(entity.shareId),
-            itemType = entity.itemType(encryptionContext),
+            itemType = ItemType.fromParsed(encryptionContext, parsed, entity.aliasEmail),
             title = entity.encryptedTitle,
             note = entity.encryptedNote,
             content = entity.encryptedContent,
@@ -708,7 +712,7 @@ class ItemRepositoryImpl @Inject constructor(
             createTime = Instant.fromEpochSeconds(entity.createTime),
             lastAutofillTime = entity.lastUsedTime.toOption().map(Instant::fromEpochSeconds)
         )
-
+    }
 
     companion object {
         const val MAX_TRASH_ITEMS_PER_REQUEST = 50

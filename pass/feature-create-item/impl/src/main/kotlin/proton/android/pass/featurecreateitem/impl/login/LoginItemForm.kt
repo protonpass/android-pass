@@ -5,7 +5,9 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -61,7 +63,9 @@ internal fun LoginItemForm(
 
     Box(modifier = modifier) {
         var currentStickyFormOption by remember { mutableStateOf(None) }
-
+        val isCurrentStickyVisible by remember(currentStickyFormOption) {
+            mutableStateOf(currentStickyFormOption != None)
+        }
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -127,9 +131,9 @@ internal fun LoginItemForm(
                     )
                 }
             }
-        }
-        val isCurrentStickyVisible by remember(currentStickyFormOption) {
-            mutableStateOf(currentStickyFormOption != None)
+            if (isCurrentStickyVisible) {
+                Spacer(modifier = Modifier.height(48.dp))
+            }
         }
         AnimatedVisibility(
             modifier = Modifier

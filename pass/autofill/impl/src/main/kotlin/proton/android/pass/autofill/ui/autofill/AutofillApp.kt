@@ -2,6 +2,7 @@ package proton.android.pass.autofill.ui.autofill
 
 import android.os.Build
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
@@ -60,6 +61,7 @@ fun AutofillApp(
                 modifier = Modifier
                     .background(ProtonTheme.colors.backgroundNorm)
                     .systemBarsPadding()
+                    .imePadding()
                     .padding(padding),
                 autofillAppState = autofillUiState.autofillAppState,
                 selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),

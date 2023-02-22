@@ -1,6 +1,5 @@
 package proton.android.pass.data.impl.autofill
 
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.url.HostInfo
@@ -88,6 +87,6 @@ class SuggestionItemFiltererImpl @Inject constructor(
     private fun parseItemDomains(itemDomains: List<String>): List<HostInfo> =
         itemDomains
             .map { hostParser.parse(it) }
-            .filterIsInstance<LoadingResult.Success<HostInfo>>()
-            .map { it.data }
+            .filter { it.isSuccess }
+            .mapNotNull { it.getOrNull() }
 }

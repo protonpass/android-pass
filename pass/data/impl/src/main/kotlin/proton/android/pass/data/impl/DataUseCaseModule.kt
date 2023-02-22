@@ -12,7 +12,6 @@ import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAddressById
 import proton.android.pass.data.api.usecases.GetAddressesForUserId
-import proton.android.pass.data.api.usecases.GetAppNameFromPackageName
 import proton.android.pass.data.api.usecases.GetCurrentShare
 import proton.android.pass.data.api.usecases.GetCurrentUserId
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
@@ -48,7 +47,6 @@ import proton.android.pass.data.impl.usecases.CreateVaultImpl
 import proton.android.pass.data.impl.usecases.DeleteVaultImpl
 import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
-import proton.android.pass.data.impl.usecases.GetAppNameFromPackageNameImpl
 import proton.android.pass.data.impl.usecases.GetCurrentShareImpl
 import proton.android.pass.data.impl.usecases.GetCurrentUserIdImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
@@ -161,11 +159,6 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindApplyPendingEvents(impl: ApplyPendingEventsImpl): ApplyPendingEvents
-
-    @Binds
-    abstract fun bindGetAppNameFromPackageName(
-        impl: GetAppNameFromPackageNameImpl
-    ): GetAppNameFromPackageName
 
     @Binds
     abstract fun bindGetPublicSuffixList(impl: GetPublicSuffixListImpl): GetPublicSuffixList

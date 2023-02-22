@@ -19,7 +19,11 @@ import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.extensions.addSaveInfo
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.log.api.PassLogger
+import proton.pass.domain.entity.AppName
+import proton.pass.domain.entity.PackageInfo
+import proton.pass.domain.entity.PackageName
 
 object AutoFillHandler {
 
@@ -67,10 +71,18 @@ object AutoFillHandler {
     ) {
         val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
         if (assistInfo.fields.isEmpty()) return
-        val packageName = Utils.getApplicationPackageName(windowNode)
+        val packageNameOption = Utils.getApplicationPackageName(windowNode)
             .takeIf { !BROWSERS.contains(it) }
             .toOption()
-        val autofillData = AutofillData(assistInfo, packageName)
+        val packageInfoOption = packageNameOption.map {
+            PackageInfo(
+                packageName = PackageName(it),
+                appName = AndroidUtils.getApplicationName(context, it).value()
+                    ?.let { appName -> AppName(appName) }
+                    ?: AppName(it)
+            )
+        }
+        val autofillData = AutofillData(assistInfo, packageInfoOption)
         val responseBuilder = FillResponse.Builder()
         val datasetList = if (hasSupportForInlineSuggestions(request)) {
             autofillServiceManager.createSuggestedItemsDatasetList(

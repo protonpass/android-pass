@@ -1,5 +1,7 @@
 package proton.pass.domain
 
+import proton.pass.domain.entity.PackageInfo
+
 sealed class ItemContents(open val title: String, open val note: String) {
     data class Login(
         override val title: String,
@@ -7,7 +9,7 @@ sealed class ItemContents(open val title: String, open val note: String) {
         val username: String,
         val password: String,
         val urls: List<String>,
-        val packageNames: Set<String>,
+        val packageInfoSet: Set<PackageInfo>,
         val primaryTotp: String,
         val extraTotpSet: Set<String>
     ) : ItemContents(title, note)

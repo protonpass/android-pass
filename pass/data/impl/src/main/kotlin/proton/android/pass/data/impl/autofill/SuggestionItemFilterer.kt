@@ -46,7 +46,7 @@ class SuggestionItemFiltererImpl @Inject constructor(
         } else false
 
     private fun isPackageNameMatch(packageName: String, item: Item): Boolean =
-        item.allowedPackageNames.contains(packageName)
+        item.packageInfoSet.map { it.packageName.value }.contains(packageName)
 
     private fun isUrlMatch(url: String, login: ItemType.Login): Boolean {
         val urlDomain = UrlSanitizer.getDomain(url).fold(

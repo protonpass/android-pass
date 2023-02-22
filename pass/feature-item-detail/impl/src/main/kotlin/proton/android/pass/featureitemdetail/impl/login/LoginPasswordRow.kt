@@ -23,7 +23,7 @@ import proton.android.pass.commonui.api.toPasswordAnnotatedString
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
-import proton.android.pass.featureitemdetail.impl.common.SectionTitle
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 
 @Composable
 internal fun LoginPasswordRow(

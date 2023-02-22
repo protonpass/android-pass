@@ -17,6 +17,8 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
+import proton.pass.domain.entity.AppName
+import proton.pass.domain.entity.PackageInfo
 import proton.pass.domain.entity.PackageName
 import java.io.IOException
 
@@ -51,14 +53,14 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
         inputData: InputData
     ): Result {
         val message = "Adding package and url to item [itemId=${inputData.itemId}]" +
-            " [packageName=${inputData.packageName}] " +
+            " [packageInfo=${inputData.packageInfo}] " +
             " [url=${inputData.url}]"
         PassLogger.d(TAG, message)
         val result = itemRepository
             .addPackageAndUrlToItem(
                 shareId = inputData.shareId,
                 itemId = inputData.itemId,
-                packageName = inputData.packageName,
+                packageInfo = inputData.packageInfo,
                 url = inputData.url
             )
             .map { updateLastUsed(inputData) }
@@ -95,9 +97,13 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
             IllegalStateException("Missing $ARG_ITEM_ID")
         )
         val packageName = inputData.getString(ARG_PACKAGE_NAME).toOption().map { PackageName(it) }
+        val appName = inputData.getString(ARG_APP_NAME).toOption().map { AppName(it) }
+        val packageInfo = packageName.map {
+            PackageInfo(it, appName.value() ?: AppName(it.value))
+        }
         val url = inputData.getString(ARG_URL).toOption()
         val shouldAssociate = inputData.getBoolean(ARG_SHOULD_ASSOCIATE, false)
-        if (url.isEmpty() && packageName.isEmpty()) {
+        if (url.isEmpty() && packageName.isEmpty() && appName.isEmpty()) {
             return kotlin.Result.failure(
                 IllegalStateException("Did not receive neither package name nor url")
             )
@@ -107,7 +113,7 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
             InputData(
                 shareId = ShareId(shareId),
                 itemId = ItemId(itemId),
-                packageName = packageName,
+                packageInfo = packageInfo,
                 url = url,
                 shouldAssociate = shouldAssociate
             )
@@ -117,7 +123,7 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
     internal data class InputData(
         val shareId: ShareId,
         val itemId: ItemId,
-        val packageName: Option<PackageName>,
+        val packageInfo: Option<PackageInfo>,
         val url: Option<String>,
         val shouldAssociate: Boolean
     )
@@ -129,6 +135,7 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
         private const val ARG_SHARE_ID = "arg_share_id"
         private const val ARG_ITEM_ID = "arg_item_id"
         private const val ARG_PACKAGE_NAME = "arg_package_name"
+        private const val ARG_APP_NAME = "arg_app_name"
         private const val ARG_URL = "arg_url"
         private const val ARG_SHOULD_ASSOCIATE = "arg_should_associate"
 
@@ -139,9 +146,10 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
                 ARG_SHOULD_ASSOCIATE to data.shouldAssociate,
             )
 
-            val packageName = data.packageName
-            if (packageName is Some && packageName.value.packageName.isNotBlank()) {
-                extras[ARG_PACKAGE_NAME] = packageName.value.packageName
+            val packageInfoOption = data.packageInfo
+            if (packageInfoOption is Some && packageInfoOption.value.packageName.value.isNotBlank()) {
+                extras[ARG_PACKAGE_NAME] = packageInfoOption.value.packageName.value
+                extras[ARG_APP_NAME] = packageInfoOption.value.appName.value
             }
 
             val url = data.url

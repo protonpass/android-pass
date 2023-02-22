@@ -10,6 +10,9 @@ import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestItemType
 import proton.pass.domain.Item
+import proton.pass.domain.entity.AppName
+import proton.pass.domain.entity.PackageInfo
+import proton.pass.domain.entity.PackageName
 
 class SuggestionItemFiltererImplTest {
 
@@ -24,32 +27,47 @@ class SuggestionItemFiltererImplTest {
 
     @Test
     fun `given an item with an allowed package name should return the suggested element`() {
-        val packageName = "my.first.package.name"
+        val firstPackageInfo = PackageInfo(
+            PackageName("my.first.package.name"),
+            AppName("")
+        )
+        val secondPackageInfo = PackageInfo(
+            PackageName("my.second.package.name"),
+            AppName("")
+        )
         val firstItem = TestItem.create(
             itemType = TestItemType.login(),
-            allowedPackageNames = listOf(packageName)
+            packageInfoSet = setOf(firstPackageInfo)
         )
         val items = listOf(
             firstItem,
             TestItem.create(
                 itemType = TestItemType.login(),
-                allowedPackageNames = listOf("my.second.package.name")
+                packageInfoSet = setOf(secondPackageInfo)
             )
         )
 
-        val res = instance.filter(items, packageName.some(), None)
+        val res = instance.filter(items, firstPackageInfo.packageName.value.some(), None)
         assertThat(res).isEqualTo(listOf(firstItem))
     }
 
     @Test
     fun `given an item with an allowed package name should return empty list on no matches`() {
+        val firstPackageInfo = PackageInfo(
+            PackageName("my.first.package.name"),
+            AppName("")
+        )
+        val secondPackageInfo = PackageInfo(
+            PackageName("my.second.package.name"),
+            AppName("")
+        )
         val item = TestItem.create(
             itemType = TestItemType.login(),
-            allowedPackageNames = listOf("my.package.name")
+            packageInfoSet = setOf(firstPackageInfo)
         )
         val items = listOf(item)
 
-        val res = instance.filter(items, "my.incorrect.package.name".some(), None)
+        val res = instance.filter(items, secondPackageInfo.packageName.value.some(), None)
         assertThat(res).isEqualTo(emptyList<Item>())
     }
 

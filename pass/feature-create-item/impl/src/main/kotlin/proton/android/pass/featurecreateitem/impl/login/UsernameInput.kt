@@ -13,7 +13,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -75,20 +75,23 @@ internal fun UsernameInput(
     )
 }
 
+class ThemedUsernameInputPreviewProvider :
+    ThemePairPreviewProvider<UsernameInputPreview>(UsernameInputPreviewProvider())
+
 @Preview
 @Composable
 fun UsernameInputCanUpdateTruePreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemedUsernameInputPreviewProvider::class) input: Pair<Boolean, UsernameInputPreview>
 ) {
     ProtonTheme(isDark = input.first) {
         Surface {
             UsernameInput(
-                value = "some value",
-                isEditAllowed = true,
+                value = input.second.text,
+                isEditAllowed = input.second.isEditAllowed,
+                canUpdateUsername = input.second.canUpdateUsername,
                 onChange = {},
                 onAliasOptionsClick = {},
-                onFocus = {},
-                canUpdateUsername = true
+                onFocus = {}
             )
         }
     }

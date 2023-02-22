@@ -1,16 +1,19 @@
-package proton.android.pass.crypto.impl.extensions
+package proton.android.pass.crypto.api.extensions
 
 import proton.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
 import proton_pass_item_v1.extraField
 import proton_pass_item_v1.extraTotp
+import java.util.UUID
 
-fun ItemContents.serializeToProto(): ItemV1.Item {
+fun ItemContents.serializeToProto(itemUuid: String? = null): ItemV1.Item {
+    val uuid = itemUuid ?: UUID.randomUUID().toString()
     val builder = ItemV1.Item.newBuilder()
         .setMetadata(
             ItemV1.Metadata.newBuilder()
                 .setName(title)
                 .setNote(note)
+                .setItemUuid(uuid)
                 .build()
         )
     val contentBuilder = ItemV1.Content.newBuilder()

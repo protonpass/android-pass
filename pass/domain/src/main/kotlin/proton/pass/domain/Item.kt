@@ -10,6 +10,7 @@ value class ItemId(val id: String)
 
 data class Item(
     val id: ItemId,
+    val itemUuid: String,
     val revision: Long,
     val shareId: ShareId,
     val itemType: ItemType,

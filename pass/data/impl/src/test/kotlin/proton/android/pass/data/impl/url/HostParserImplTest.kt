@@ -3,12 +3,12 @@ package proton.android.pass.data.impl.url
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.fakes.usecases.TestGetPublicSuffixList
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class HostParserImplTest {
@@ -27,7 +27,7 @@ class HostParserImplTest {
         publicSuffixList.setTlds(emptySet())
         val res = instance.parse("")
 
-        assertTrue(res is LoadingResult.Error)
+        assertTrue(res.isFailure)
     }
 
     @Test
@@ -36,9 +36,10 @@ class HostParserImplTest {
         publicSuffixList.setTlds(emptySet())
         val res = instance.parse(ip)
 
-        assertTrue(res is LoadingResult.Success)
+        assertTrue(res.isSuccess)
 
-        val hostInfo = res.data
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
         assertTrue(hostInfo is HostInfo.Ip)
         assertEquals(ip, hostInfo.ip)
     }
@@ -48,9 +49,10 @@ class HostParserImplTest {
         publicSuffixList.setTlds(emptySet())
         val res = instance.parse("300.400.500.1")
 
-        assertTrue(res is LoadingResult.Success)
+        assertTrue(res.isSuccess)
 
-        val hostInfo = res.data
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
         assertFalse(hostInfo is HostInfo.Ip)
     }
 
@@ -61,9 +63,10 @@ class HostParserImplTest {
         publicSuffixList.setTlds(setOf(tld))
         val res = instance.parse("$domain.$tld")
 
-        assertTrue(res is LoadingResult.Success)
+        assertTrue(res.isSuccess)
 
-        val hostInfo = res.data
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
         assertTrue(hostInfo is HostInfo.Host)
         assertTrue(hostInfo.subdomain is None)
         assertEquals(domain, hostInfo.domain)
@@ -78,9 +81,10 @@ class HostParserImplTest {
         publicSuffixList.setTlds(setOf("uk", "co", tld))
         val res = instance.parse("$subdomain.$domain.$tld")
 
-        assertTrue(res is LoadingResult.Success)
+        assertTrue(res.isSuccess)
 
-        val hostInfo = res.data
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
         assertTrue(hostInfo is HostInfo.Host)
         assertEquals(subdomain.some(), hostInfo.subdomain)
         assertEquals(domain, hostInfo.domain)
@@ -93,9 +97,10 @@ class HostParserImplTest {
         publicSuffixList.setTlds(setOf("com"))
         val res = instance.parse("localhost")
 
-        assertTrue(res is LoadingResult.Success)
+        assertTrue(res.isSuccess)
 
-        val hostInfo = res.data
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
         assertTrue(hostInfo is HostInfo.Host)
         assertTrue(hostInfo.subdomain is None)
         assertEquals(domain, hostInfo.domain)
@@ -109,9 +114,10 @@ class HostParserImplTest {
         publicSuffixList.setTlds(setOf("com"))
         val res = instance.parse("$domain.$tld")
 
-        assertTrue(res is LoadingResult.Success)
+        assertTrue(res.isSuccess)
 
-        val hostInfo = res.data
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
         assertTrue(hostInfo is HostInfo.Host)
         assertTrue(hostInfo.subdomain is None)
         assertEquals(domain, hostInfo.domain)
@@ -126,9 +132,10 @@ class HostParserImplTest {
         publicSuffixList.setTlds(setOf("com"))
         val res = instance.parse("$subdomain.$domain.$tld")
 
-        assertTrue(res is LoadingResult.Success)
+        assertTrue(res.isSuccess)
 
-        val hostInfo = res.data
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
         assertTrue(hostInfo is HostInfo.Host)
         assertEquals(subdomain.some(), hostInfo.subdomain)
         assertEquals(domain, hostInfo.domain)
@@ -141,6 +148,6 @@ class HostParserImplTest {
         publicSuffixList.setTlds(setOf(tld))
         val res = instance.parse(tld)
 
-        assertFalse(res is LoadingResult.Success)
+        assertFalse(res.isSuccess)
     }
 }

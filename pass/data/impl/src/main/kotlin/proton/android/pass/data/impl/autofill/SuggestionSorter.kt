@@ -1,8 +1,8 @@
 package proton.android.pass.data.impl.autofill
 
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
@@ -26,10 +26,10 @@ class SuggestionSorterImpl @Inject constructor(
         }
 
     private fun sortWithUrl(items: List<Item>, url: String): List<Item> {
-        val parsed = when (val res = hostParser.parse(url)) {
-            is LoadingResult.Success -> res.data
-            else -> return items
-        }
+        val parsed = hostParser.parse(url).fold(
+            onSuccess = { it },
+            onFailure = { return items }
+        )
 
         return when (parsed) {
             is HostInfo.Ip -> items // If it's an IP, there's no sorting that we can perform

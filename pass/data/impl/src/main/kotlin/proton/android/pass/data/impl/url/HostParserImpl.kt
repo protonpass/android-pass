@@ -1,7 +1,6 @@
 package proton.android.pass.data.impl.url
 
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
@@ -13,21 +12,19 @@ class HostParserImpl @Inject constructor(
     private val getPublicSuffixList: GetPublicSuffixList
 ) : HostParser {
 
-    override fun parse(url: String): LoadingResult<HostInfo> =
-        when (val res = UrlSanitizer.getDomain(url)) {
-            LoadingResult.Loading -> LoadingResult.Loading
-            is LoadingResult.Error -> LoadingResult.Error(res.exception)
-            is LoadingResult.Success -> getHostInfoFromDomain(res.data)
-        }
+    override fun parse(url: String): Result<HostInfo> = UrlSanitizer.getDomain(url).fold(
+        onSuccess = { getHostInfoFromDomain(it) },
+        onFailure = { Result.failure(it) }
+    )
 
-    private fun getHostInfoFromDomain(domain: String): LoadingResult<HostInfo> =
+    private fun getHostInfoFromDomain(domain: String): Result<HostInfo> =
         if (isIp(domain)) {
-            LoadingResult.Success(HostInfo.Ip(domain))
+            Result.success(HostInfo.Ip(domain))
         } else {
             parseHostInfo(domain)
         }
 
-    private fun parseHostInfo(domain: String): LoadingResult<HostInfo.Host> {
+    private fun parseHostInfo(domain: String): Result<HostInfo.Host> {
         val publicSuffixes = getPublicSuffixList()
         val parts = domain.split('.')
 
@@ -40,22 +37,22 @@ class HostParserImpl @Inject constructor(
             val portion = stringFromParts(parts, i)
             if (publicSuffixes.contains(portion)) {
                 // We found the TLD
-                return LoadingResult.Success(hostWithTld(parts, i, portion))
+                return Result.success(hostWithTld(parts, i, portion))
             }
         }
 
         // We did not find a TLD
-        return LoadingResult.Success(hostWithoutTld(parts))
+        return Result.success(hostWithoutTld(parts))
     }
 
     private fun handleDomainWithSinglePart(
         domain: String,
         publicSuffixes: Set<String>
-    ): LoadingResult<HostInfo.Host> =
+    ): Result<HostInfo.Host> =
         if (publicSuffixes.contains(domain)) {
-            LoadingResult.Error(IllegalArgumentException("host is a TLD"))
+            Result.failure(IllegalArgumentException("host is a TLD"))
         } else {
-            LoadingResult.Success(
+            Result.success(
                 HostInfo.Host(
                     subdomain = None,
                     domain = domain,

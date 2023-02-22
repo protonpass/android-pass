@@ -8,6 +8,8 @@ import proton.android.pass.data.impl.remote.RemoteAliasDataSource
 import proton.android.pass.data.impl.remote.RemoteAliasDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteEventDataSource
 import proton.android.pass.data.impl.remote.RemoteEventDataSourceImpl
+import proton.android.pass.data.impl.remote.RemoteImageFetcher
+import proton.android.pass.data.impl.remote.RemoteImageFetcherImpl
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
@@ -38,5 +40,8 @@ abstract class DataRemoteDataSourceModule {
 
     @Binds
     abstract fun bindRemoteShareKeyDataSource(impl: RemoteShareKeyDataSourceImpl): RemoteShareKeyDataSource
+
+    @Binds
+    abstract fun bindRemoteImageFetcher(impl: RemoteImageFetcherImpl): RemoteImageFetcher
 }
 

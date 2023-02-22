@@ -4,6 +4,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import javax.inject.Inject
 
@@ -21,10 +23,16 @@ class RemoteImageFetcherImpl @Inject constructor(
         }.valueOrThrow
 
         if (res.code() != HTTP_OK) {
-            throw IllegalStateException("Should return 200")
+            throw ApiException(ApiResult.Error.Http(res.code(), "Should return 200"))
         }
 
-        val body = res.body()?.bytes() ?: throw IllegalStateException("Cannot read body")
+        val body = res.body()?.bytes()
+            ?: throw ApiException(
+                error = ApiResult.Error.Connection(
+                    potentialBlock = false,
+                    cause = IllegalStateException("Cannot read body")
+                )
+            )
         emit(body)
     }
 

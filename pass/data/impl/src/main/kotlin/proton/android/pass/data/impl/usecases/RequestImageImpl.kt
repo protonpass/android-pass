@@ -14,13 +14,7 @@ class RequestImageImpl @Inject constructor(
     private val accountManager: AccountManager
 ) : RequestImage {
     override fun invoke(domain: String): Flow<ByteArray> = flow {
-        val parsed = UrlSanitizer.getDomain(domain).fold(
-            onSuccess = { it },
-            onFailure = {
-                throw IllegalStateException("Could not get domain")
-            }
-        )
-
+        val parsed = UrlSanitizer.getDomain(domain).getOrThrow()
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
         val res = fetcher.fetchFavicon(userId, "something@$parsed").first()
         emit(res)

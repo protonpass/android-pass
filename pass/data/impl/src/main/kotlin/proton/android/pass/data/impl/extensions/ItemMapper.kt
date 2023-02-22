@@ -34,6 +34,12 @@ fun ItemEntity.itemType(context: EncryptionContext): ItemType {
     return ItemType.fromParsed(context, parsed, aliasEmail)
 }
 
+fun ItemEntity.itemUuid(context: EncryptionContext): ItemType {
+    val decrypted = context.decrypt(encryptedContent)
+    val parsed = ItemV1.Item.parseFrom(decrypted)
+    return ItemType.fromParsed(context, parsed, aliasEmail)
+}
+
 fun ItemEntity.allowedApps(context: EncryptionContext): List<String> {
     val decrypted = context.decrypt(encryptedContent)
     val parsed = ItemV1.Item.parseFrom(decrypted)

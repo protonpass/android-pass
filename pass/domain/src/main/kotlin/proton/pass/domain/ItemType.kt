@@ -1,6 +1,7 @@
 package proton.pass.domain
 
 import me.proton.core.crypto.common.keystore.EncryptedString
+import proton.pass.domain.entity.PackageInfo
 
 const val ITEM_TYPE_LOGIN = 0
 const val ITEM_TYPE_ALIAS = 1
@@ -13,7 +14,7 @@ sealed interface ItemType {
         val username: String,
         val password: EncryptedString,
         val websites: List<String>,
-        val packageNames: List<String>,
+        val packageInfoSet: Set<PackageInfo>,
         val primaryTotp: EncryptedString,
     ) : ItemType
 

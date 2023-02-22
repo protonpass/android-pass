@@ -28,7 +28,6 @@
     <string name="field_password">Password</string>
     <string name="websites_section_title">Forwarded to</string>
     <string name="totp_section_title">OTP</string>
-    <string name="linked_apps_title">Linked apps</string>
 
     <string name="action_reveal_password">Reveal password</string>
     <string name="action_conceal_password">Conceal password</string>
@@ -53,10 +52,8 @@
     <string name="username_icon_content_description">Username icon</string>
     <string name="totp_icon_content_description">OTP icon</string>
     <string name="website_icon_content_description">Website icon</string>
-    <string name="linked_app_icon_content_description">App icon</string>
     <string name="open_menu_icon_content_description">Open menu icon</string>
     <string name="navigate_back_icon_content_description">Navigate back icon</string>
-    <string name="missing_app_icon_content_description">Missing app icon</string>
 
     <!-- Bottomsheet -->
     <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>

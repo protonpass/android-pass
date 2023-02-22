@@ -39,12 +39,12 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.ItemUiFilter
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.url.UrlSanitizer
-import proton.android.pass.data.api.usecases.GetAppNameFromPackageName
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
@@ -65,7 +65,6 @@ import javax.inject.Inject
 class SelectItemViewModel @Inject constructor(
     private val updateAutofillItem: UpdateAutofillItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val getAppNameFromPackageName: GetAppNameFromPackageName,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
     private val getTotpCodeFromUri: GetTotpCodeFromUri,
@@ -113,7 +112,7 @@ class SelectItemViewModel @Inject constructor(
             .flatMapLatest { state ->
                 if (state is Some) {
                     getSuggestedLoginItems(
-                        packageName = state.value.packageName.map { it.packageName },
+                        packageName = state.value.packageInfoUi?.packageName.toOption(),
                         url = state.value.webDomain
                     )
                 } else {
@@ -239,7 +238,8 @@ class SelectItemViewModel @Inject constructor(
                         UpdateAutofillItemData(
                             shareId = ShareId(autofillItem.shareId),
                             itemId = ItemId(autofillItem.itemId),
-                            packageName = autofillAppState.packageName,
+                            packageInfo = autofillAppState.packageInfoUi.toOption()
+                                .map(PackageInfoUi::toPackageInfo),
                             url = autofillAppState.webDomain,
                             shouldAssociate = shouldAssociate
                         )
@@ -282,8 +282,8 @@ class SelectItemViewModel @Inject constructor(
     private fun getSuggestionsTitle(autofillAppState: AutofillAppState): String =
         if (autofillAppState.webDomain is Some) {
             getSuggestionsTitleForDomain(autofillAppState.webDomain.value)
-        } else if (autofillAppState.packageName is Some) {
-            getAppNameFromPackageName(autofillAppState.packageName.value)
+        } else if (autofillAppState.packageInfoUi != null) {
+            autofillAppState.packageInfoUi.appName
         } else {
             ""
         }

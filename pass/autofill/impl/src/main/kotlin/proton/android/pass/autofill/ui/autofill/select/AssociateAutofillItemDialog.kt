@@ -23,7 +23,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 internal fun AssociateAutofillItemDialog(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel?,
-    packageName: String?,
+    appName: String?,
     webDomain: String?,
     onAssociateAndAutofill: (ItemUiModel) -> Unit,
     onAutofill: (ItemUiModel) -> Unit,
@@ -39,7 +39,7 @@ internal fun AssociateAutofillItemDialog(
                 modifier = modifier.padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                val associated = webDomain ?: packageName ?: ""
+                val associated = webDomain ?: appName ?: ""
                 Text(
                     text = stringResource(
                         R.string.autofill_associate_web_app_name_dialog_title,

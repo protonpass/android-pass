@@ -1,16 +1,18 @@
 package proton.android.pass.data.impl.extensions
 
+import proton.pass.domain.entity.PackageInfo
 import proton.pass.domain.entity.PackageName
 import proton_pass_item_v1.ItemV1
 
 fun ItemV1.Item.hasPackageName(packageName: PackageName): Boolean =
-    platformSpecific.android.allowedAppsList.any { it.packageName == packageName.packageName }
+    platformSpecific.android.allowedAppsList.any { it.packageName == packageName.value }
 
-fun ItemV1.Item.with(packageName: PackageName): ItemV1.Item {
+fun ItemV1.Item.with(packageInfo: PackageInfo): ItemV1.Item {
     val allowedApps = platformSpecific.android.allowedAppsList.toMutableList()
     allowedApps.add(
         ItemV1.AllowedAndroidApp.newBuilder()
-            .setPackageName(packageName.packageName)
+            .setAppName(packageInfo.appName.value)
+            .setPackageName(packageInfo.packageName.value)
             .build()
     )
 

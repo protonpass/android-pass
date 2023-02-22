@@ -3,8 +3,8 @@ package proton.android.pass.data.api.repositories
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -16,7 +16,7 @@ import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
 import proton.pass.domain.entity.NewAlias
-import proton.pass.domain.entity.PackageName
+import proton.pass.domain.entity.PackageInfo
 
 interface ItemRepository {
     suspend fun createItem(
@@ -48,7 +48,7 @@ interface ItemRepository {
     suspend fun addPackageAndUrlToItem(
         shareId: ShareId,
         itemId: ItemId,
-        packageName: Option<PackageName>,
+        packageInfo: Option<PackageInfo>,
         url: Option<String>
     ): LoadingResult<Item>
 

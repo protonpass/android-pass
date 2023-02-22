@@ -8,7 +8,6 @@ import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
-import proton.android.pass.data.api.usecases.GetAppNameFromPackageName
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.ObserveActiveItems
@@ -24,7 +23,6 @@ import proton.android.pass.data.fakes.repositories.TestAliasRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
-import proton.android.pass.data.fakes.usecases.TestGetAppNameFromPackageName
 import proton.android.pass.data.fakes.usecases.TestGetShareById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
@@ -115,9 +113,4 @@ abstract class FakesDataModule {
     abstract fun bindTrashItem(
         impl: TestTrashItem
     ): TrashItem
-
-    @Binds
-    abstract fun bindGetAppNameFromPackageName(
-        impl: TestGetAppNameFromPackageName
-    ): GetAppNameFromPackageName
 }

@@ -84,6 +84,7 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
         const val ARG_AUTOFILL_IDS = "arg_autofill_ids"
         const val ARG_AUTOFILL_TYPES = "arg_autofill_types"
         const val ARG_PACKAGE_NAME = "arg_package_name"
+        const val ARG_APP_NAME = "arg_app_name"
         const val ARG_WEB_DOMAIN = "arg_web_domain"
         const val ARG_TITLE = "arg_title"
         const val ARG_INLINE_SUGGESTION_AUTOFILL_ITEM = "arg_inline_suggestion_autofill_item"
@@ -101,8 +102,12 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
                 bundleOf(
                     ARG_AUTOFILL_IDS to fields.map { it.id.asAndroid().autofillId },
                     ARG_AUTOFILL_TYPES to fields.map { it.type?.toString() },
-                    ARG_PACKAGE_NAME to data.packageName.value(),
-                    ARG_TITLE to Utils.getTitle(context, data.assistInfo.url, data.packageName)
+                    ARG_PACKAGE_NAME to data.packageInfo.map { it.packageName.value }.value(),
+                    ARG_APP_NAME to data.packageInfo.map { it.appName.value }.value(),
+                    ARG_TITLE to Utils.getTitle(
+                        data.assistInfo.url,
+                        data.packageInfo.map { it.appName.value }
+                    )
                 )
             )
             val autofillItem = item.toAutofillItem()

@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
@@ -40,23 +41,21 @@ class AutofillManagerImpl @Inject constructor(
         }
 
         while (currentCoroutineContext().isActive) {
-            try {
-                if (autofillManager.hasEnabledAutofillServices()) {
-                    emit(Supported(AutofillStatus.EnabledByOurService))
-                } else if (autofillManager.isEnabled) {
-                    emit(Supported(AutofillStatus.EnabledByOtherService))
-                } else {
-                    emit(Supported(AutofillStatus.Disabled))
-                }
-            } catch (e: RuntimeException) {
-                PassLogger.w(TAG, e, "Exception while retrieving hasEnabledAutofillServices")
-                emit(Unsupported)
-                return@flow
+            if (autofillManager.hasEnabledAutofillServices()) {
+                emit(Supported(AutofillStatus.EnabledByOurService))
+            } else if (autofillManager.isEnabled) {
+                emit(Supported(AutofillStatus.EnabledByOtherService))
+            } else {
+                emit(Supported(AutofillStatus.Disabled))
             }
-
             delay(UPDATE_TIME)
         }
-    }.distinctUntilChanged()
+    }
+        .catch {
+            PassLogger.w(TAG, it, "Exception while retrieving hasEnabledAutofillServices")
+            emit(Unsupported)
+        }
+        .distinctUntilChanged()
 
     override fun openAutofillSelector() {
         try {

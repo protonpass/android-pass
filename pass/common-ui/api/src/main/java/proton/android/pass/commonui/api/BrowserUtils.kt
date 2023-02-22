@@ -4,8 +4,6 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.log.api.PassLogger
 
@@ -25,7 +23,7 @@ object BrowserUtils {
                     PassLogger.i(TAG, e, message)
                 }
             }
-            .onError {
+            .onFailure {
                 PassLogger.i(TAG, it, "Could not find a suitable url")
             }
     }

@@ -19,6 +19,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -54,7 +55,7 @@ internal fun LoginContent(
     onVaultSelect: (ShareId) -> Unit,
     onAddTotp: (AddTotpType) -> Unit,
     onDeleteTotp: () -> Unit,
-    onLinkedAppDelete: (String) -> Unit
+    onLinkedAppDelete: (PackageInfoUi) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(

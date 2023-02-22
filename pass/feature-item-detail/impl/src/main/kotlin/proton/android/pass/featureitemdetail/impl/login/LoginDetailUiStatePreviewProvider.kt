@@ -2,6 +2,7 @@ package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentSetOf
 
 @Suppress("MagicNumber")
 class LoginDetailUiStatePreviewProvider : PreviewParameterProvider<LoginDetailUiState> {
@@ -12,7 +13,7 @@ class LoginDetailUiStatePreviewProvider : PreviewParameterProvider<LoginDetailUi
                 username = "MyUsername",
                 password = PasswordState.Concealed("encrypted"),
                 websites = persistentListOf(),
-                packageNames = persistentListOf(),
+                packageInfoSet = persistentSetOf(),
                 note = "",
                 totpUiState = null,
                 isLoading = false,
@@ -23,7 +24,7 @@ class LoginDetailUiStatePreviewProvider : PreviewParameterProvider<LoginDetailUi
                 username = "MyUsername",
                 password = PasswordState.Revealed("encrypted", "clearText"),
                 websites = persistentListOf(),
-                packageNames = persistentListOf(),
+                packageInfoSet = persistentSetOf(),
                 note = "",
                 totpUiState = null,
                 isLoading = false,
@@ -34,7 +35,7 @@ class LoginDetailUiStatePreviewProvider : PreviewParameterProvider<LoginDetailUi
                 username = "MyUsername",
                 password = PasswordState.Revealed("encrypted", "clearText"),
                 websites = persistentListOf(),
-                packageNames = persistentListOf(),
+                packageInfoSet = persistentSetOf(),
                 note = "",
                 totpUiState = TotpUiState("123456", 12, 20),
                 isLoading = false,

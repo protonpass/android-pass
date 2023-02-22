@@ -2,13 +2,13 @@ package proton.android.pass.autofill.entities
 
 import androidx.compose.runtime.Immutable
 import proton.android.pass.common.api.Option
-import proton.pass.domain.entity.PackageName
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 
 @Immutable
 data class AutofillAppState(
     val androidAutofillIds: List<AndroidAutofillFieldId>,
     val fieldTypes: List<FieldType>,
-    val packageName: Option<PackageName>,
+    val packageInfoUi: PackageInfoUi?,
     val webDomain: Option<String>,
     val title: String
 )

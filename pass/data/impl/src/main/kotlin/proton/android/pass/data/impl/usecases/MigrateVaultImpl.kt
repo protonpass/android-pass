@@ -29,6 +29,9 @@ import proton.pass.domain.ItemType
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
+import proton.pass.domain.entity.AppName
+import proton.pass.domain.entity.PackageInfo
+import proton.pass.domain.entity.PackageName
 import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 
@@ -118,8 +121,13 @@ class MigrateVaultImpl @Inject constructor(
                                 username = parsed.content.login.username,
                                 password = parsed.content.login.password,
                                 urls = parsed.content.login.urlsList,
-                                packageNames = parsed.platformSpecific.android.allowedAppsList
-                                    .map { it.packageName }
+                                packageInfoSet = parsed.platformSpecific.android.allowedAppsList
+                                    .map {
+                                        PackageInfo(
+                                            packageName = PackageName(it.packageName),
+                                            appName = AppName(it.appName)
+                                        )
+                                    }
                                     .toSet(),
                                 primaryTotp = parsed.content.login.totpUri,
                                 extraTotpSet = parsed.extraFieldsList

@@ -29,7 +29,7 @@ import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.featureitemdetail.impl.R
-import proton.android.pass.featureitemdetail.impl.common.SectionTitle
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

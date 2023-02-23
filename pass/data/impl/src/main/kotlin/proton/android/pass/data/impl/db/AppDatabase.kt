@@ -29,6 +29,8 @@ import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.entity.KeySaltEntity
 import me.proton.core.key.data.entity.PublicAddressEntity
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
+import me.proton.core.observability.data.db.ObservabilityDatabase
+import me.proton.core.observability.data.entity.ObservabilityEventEntity
 import me.proton.core.payment.data.local.db.PaymentDatabase
 import me.proton.core.payment.data.local.entity.GooglePurchaseEntity
 import me.proton.core.user.data.db.AddressDatabase
@@ -65,6 +67,7 @@ import proton.android.pass.data.impl.db.entities.ShareKeyEntity
         KeySaltEntity::class,
         OrganizationEntity::class,
         OrganizationKeysEntity::class,
+        ObservabilityEventEntity::class,
         PublicAddressEntity::class,
         PublicAddressKeyEntity::class,
         SessionDetailsEntity::class,
@@ -104,6 +107,7 @@ abstract class AppDatabase :
     HumanVerificationDatabase,
     KeySaltDatabase,
     OrganizationDatabase,
+    ObservabilityDatabase,
     PassDatabase,
     PaymentDatabase,
     PublicAddressDatabase,
@@ -111,10 +115,12 @@ abstract class AppDatabase :
     UserSettingsDatabase {
 
     companion object {
-        const val VERSION = 1
+        const val VERSION = 2
         const val DB_NAME = "db-passkey"
 
-        val migrations: List<Migration> = listOf()
+        val migrations: List<Migration> = listOf(
+            AppDatabaseMigrations.MIGRATION_1_2
+        )
 
         fun buildDatabase(context: Context): AppDatabase =
             databaseBuilder<AppDatabase>(context, DB_NAME)

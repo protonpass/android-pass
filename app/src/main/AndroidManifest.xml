@@ -24,20 +24,19 @@
                 android:value="androidx.startup"
                 tools:node="remove" />
             <meta-data
-                android:name="proton.android.pass.initializer.WorkManagerInitializer"
-                android:value="androidx.startup" />
-            <meta-data
                 android:name="proton.android.pass.initializer.AccountStateHandlerInitializer"
                 android:value="androidx.startup" />
             <meta-data
                 android:name="proton.android.pass.initializer.StrictModeInitializer"
                 android:value="androidx.startup" />
             <meta-data
-                android:name="proton.android.pass.initializer.EventManagerInitializer"
-                android:value="androidx.startup" />
-            <meta-data
                 android:name="me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer"
                 android:value="androidx.startup" />
+            <!-- Disable some Initializers. See MainInitializer. -->
+            <meta-data
+                android:name="me.proton.core.humanverification.presentation.HumanVerificationInitializer"
+                android:value="androidx.startup"
+                tools:node="remove"/>
         </provider>
 
         <provider

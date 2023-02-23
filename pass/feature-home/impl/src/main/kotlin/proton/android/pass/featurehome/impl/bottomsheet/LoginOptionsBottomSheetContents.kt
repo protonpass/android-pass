@@ -42,7 +42,7 @@ fun LoginOptionsBottomSheetContents(
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = { BottomSheetItemSubtitle(text = itemType.username) },
-            icon = { LoginIcon(text = itemUiModel.name) }
+            icon = { LoginIcon(text = itemUiModel.name, itemType = itemType) }
         )
         BottomSheetItemList(
             items = persistentListOf(

@@ -51,9 +51,12 @@ fun TrashItemBottomSheetContents(
                 BottomSheetItemSubtitle(text = text)
             },
             icon = {
-                when (itemUiModel.itemType) {
+                when (val itemType = itemUiModel.itemType) {
                     is ItemType.Alias -> AliasIcon()
-                    is ItemType.Login -> LoginIcon(text = itemUiModel.name)
+                    is ItemType.Login -> LoginIcon(
+                        text = itemUiModel.name,
+                        itemType = itemType
+                    )
                     is ItemType.Note -> NoteIcon()
                     else -> {}
                 }

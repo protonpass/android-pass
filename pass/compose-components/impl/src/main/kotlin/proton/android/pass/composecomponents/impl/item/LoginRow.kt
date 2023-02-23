@@ -1,21 +1,15 @@
 package proton.android.pass.composecomponents.impl.item
 
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import coil.compose.AsyncImage
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.pass.domain.ItemType
 
@@ -55,35 +49,11 @@ fun LoginRow(
         }
 
         ItemRow(
-            icon = { LoginRowIcon(title = title.text, item = this) },
+            icon = { LoginIcon(text = title.text, itemType = this) },
             title = title,
             subtitles = (listOfNotNull(username, note) + websites).toImmutableList(),
             modifier = modifier
         )
-    }
-}
-
-@Composable
-fun LoginRowIcon(
-    modifier: Modifier = Modifier,
-    title: String,
-    item: ItemType.Login
-) {
-    val firstWebsite = item.websites.firstOrNull()
-    if (firstWebsite == null) {
-        LoginIcon(modifier = modifier, text = title)
-    } else {
-        Circle(
-            modifier = modifier,
-            backgroundColor = Color.Transparent
-        ) {
-            AsyncImage(
-                modifier = Modifier.clip(CircleShape),
-                model = firstWebsite,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-            )
-        }
     }
 }
 

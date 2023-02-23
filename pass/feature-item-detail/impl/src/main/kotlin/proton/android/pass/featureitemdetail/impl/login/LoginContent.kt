@@ -24,6 +24,7 @@ fun LoginContent(
     onWebsiteLongClicked: (String) -> Unit,
     onCopyTotpClick: (String) -> Unit
 ) {
+    val sortedPackageNames = state.packageInfoSet.sortedBy { it.packageName }
     Column(
         modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -31,7 +32,7 @@ fun LoginContent(
         LoginTitle(
             title = state.title,
             website = state.websites.firstOrNull(),
-            packageName = state.packageInfoSet.firstOrNull()?.packageName
+            packageName = sortedPackageNames.firstOrNull()?.packageName
         )
         MainLoginSection(
             state = state,

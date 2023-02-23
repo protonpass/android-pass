@@ -14,11 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.asAnnotatedString
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
-import proton.android.pass.composecomponents.impl.item.SectionTitle
 
 @Composable
 fun TotpRow(
@@ -37,7 +37,7 @@ fun TotpRow(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
             contentDescription = stringResource(R.string.totp_icon_content_description),
-            tint = PassColors.PurpleAccent
+            tint = PassTheme.colors.accentPurpleOpaque
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)

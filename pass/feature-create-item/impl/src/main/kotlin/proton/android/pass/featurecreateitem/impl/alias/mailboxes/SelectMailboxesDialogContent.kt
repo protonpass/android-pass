@@ -10,9 +10,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.composecomponents.impl.uievents.value
-import proton.android.pass.featurecreateitem.impl.R
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.component.ProtonAlertDialogButton
 import me.proton.core.compose.component.ProtonDialogTitle
@@ -20,7 +17,11 @@ import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.headlineSmall
 import me.proton.core.compose.theme.interactionNorm
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import proton.android.pass.composecomponents.impl.uievents.value
+import proton.android.pass.featurecreateitem.impl.R
 import proton.android.pass.featurecreateitem.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featurecreateitem.impl.alias.SelectedAliasMailboxUiModel
 
@@ -76,7 +77,7 @@ fun SelectMailboxesDialogContent(
 fun SelectMailboxesDialogContentPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             SelectMailboxesDialogContent(
                 state = SelectMailboxesUiState(

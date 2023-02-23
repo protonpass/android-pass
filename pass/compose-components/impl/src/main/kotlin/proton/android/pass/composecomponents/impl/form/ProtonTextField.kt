@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -123,7 +124,7 @@ fun ProtonTextFieldPreview(
     @PreviewParameter(ThemeAndProtonTextFieldProvider::class)
     input: Pair<Boolean, ProtonTextFieldPreviewData>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             ProtonTextField(
                 value = input.second.value,

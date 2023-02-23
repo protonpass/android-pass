@@ -2,34 +2,34 @@ package proton.android.pass.featurecreateitem.impl.common
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassPalette
 
 class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateTopBarPreview> {
     override val values: Sequence<CreateUpdateTopBarPreview>
         get() = sequenceOf(
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                color = PassColors.PurpleAccent
+                color = PassPalette.Purple100
             ),
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                color = PassColors.GreenAccent
+                color = PassPalette.Green100
             ),
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                color = PassColors.YellowAccent
+                color = PassPalette.Yellow100
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                color = PassColors.PurpleAccent
+                color = PassPalette.Purple100
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                color = PassColors.GreenAccent
+                color = PassPalette.Green100
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                color = PassColors.YellowAccent
+                color = PassPalette.Yellow100
             )
         )
 }

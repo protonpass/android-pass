@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.applyIf
 
@@ -65,7 +66,7 @@ class ThemedSelectorPreviewProvider :
 fun SelectorPreview(
     @PreviewParameter(ThemedSelectorPreviewProvider::class) input: Pair<Boolean, SelectorPreviewParameter>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             Selector(
                 text = input.second.text,

@@ -10,13 +10,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import proton.android.pass.composecomponents.impl.R
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.component.ProtonAlertDialogText
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.headline
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun ConfirmMoveItemToTrashDialog(
@@ -81,7 +82,7 @@ fun ConfirmMoveItemToTrashDialog(
 fun ConfirmMoveItemToTrashDialogPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             ConfirmMoveItemToTrashDialog(
                 itemName = "an item",

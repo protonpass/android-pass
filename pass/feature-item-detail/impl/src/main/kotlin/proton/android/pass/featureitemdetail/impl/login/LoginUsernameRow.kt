@@ -15,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.asAnnotatedString
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
-import proton.android.pass.composecomponents.impl.item.SectionTitle
 
 @Composable
 fun LoginUsernameRow(
@@ -37,7 +37,7 @@ fun LoginUsernameRow(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_user),
             contentDescription = stringResource(R.string.username_icon_content_description),
-            tint = PassColors.PurpleAccent
+            tint = PassTheme.colors.accentPurpleOpaque
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column {

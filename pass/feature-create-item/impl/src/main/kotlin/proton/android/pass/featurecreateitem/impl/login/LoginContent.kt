@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.ShareUiModel
@@ -118,7 +118,7 @@ internal fun LoginContent(
                 CreateUpdateTopBar(
                     text = topBarActionName,
                     isLoading = uiState.isLoadingState.value(),
-                    color = PassColors.PurpleAccent,
+                    color = PassTheme.colors.accentPurpleOpaque,
                     onCloseClick = onUpClick,
                     onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
                 )

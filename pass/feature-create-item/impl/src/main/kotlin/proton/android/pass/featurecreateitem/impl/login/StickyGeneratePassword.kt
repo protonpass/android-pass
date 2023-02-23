@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featurecreateitem.impl.R
 
@@ -44,12 +44,12 @@ fun StickyGeneratePassword(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
             contentDescription = stringResource(R.string.sticky_button_generate_password_key_icon_content_description),
-            tint = PassColors.PurpleAccent
+            tint = PassTheme.colors.accentPurpleOpaque
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
             text = stringResource(id = R.string.sticky_button_generate_password),
-            color = PassColors.PurpleAccent,
+            color = PassTheme.colors.accentPurpleOpaque,
             style = ProtonTheme.typography.default,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
@@ -62,7 +62,7 @@ fun StickyGeneratePassword(
 fun StickyGeneratePasswordPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             StickyGeneratePassword {}
         }

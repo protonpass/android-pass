@@ -7,10 +7,10 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toImmutableList
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.pass.domain.ItemType
 
 @Composable
@@ -57,7 +57,7 @@ class ThemedAliasItemPreviewProvider :
 fun AliasRowPreview(
     @PreviewParameter(ThemedAliasItemPreviewProvider::class) input: Pair<Boolean, AliasRowParameter>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             AliasRow(
                 item = input.second.model,

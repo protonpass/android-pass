@@ -1,0 +1,36 @@
+package proton.android.pass.commonui.api
+
+import androidx.compose.ui.graphics.Color
+
+object PassPalette {
+    val Brand100 = Color(0xFF6160FD)
+    val Brand80 = Color(0xCC6160FD)
+    val Brand24 = Color(0x3D6160FD)
+    val Brand8 = Color(0x146160FD)
+    val BrandDark = Color(0xFF1C1C30)
+    val Purple100 = Color(0xFFA779FF)
+    val Purple80 = Color(0xCCA779FF)
+    val Purple40 = Color(0x66A779FF)
+    val Purple24 = Color(0x3DA779FF)
+    val Purple8 = Color(0x14A779FF)
+    val Green100 = Color(0xFF6ABDB3)
+    val Green80 = Color(0xCC6ABDB3)
+    val Green24 = Color(0x3D6ABDB3)
+    val Green8 = Color(0x146ABDB3)
+    val Yellow100 = Color(0xFFFFCA8A)
+    val Yellow80 = Color(0xCCFFCA8A)
+    val Yellow24 = Color(0x3DFFCA8A)
+    val Yellow8 = Color(0x14FFCA8A)
+    val Red100 = Color(0xFFFC9C9F)
+    val Red80 = Color(0xCCFC9C9F)
+    val Red24 = Color(0x3DFC9C9F)
+    val Red8 = Color(0x14FC9C9F)
+    val White80 = Color(0xCCFFFFFF)
+    val White40 = Color(0x66FFFFFF)
+    val White24 = Color(0x3DFFFFFF)
+    val White8 = Color(0x14FFFFFF)
+    val White4 = Color(0x0AFFFFFF)
+    val BackgroundNorm = Color(0xFF191927)
+    val SearchBar = Color(0xFF0E0E0E)
+    val TabBar = Color(0xCC12121B)
+}

@@ -6,14 +6,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.item.EmptyList
-import proton.android.pass.composecomponents.impl.item.ItemsList
-import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.autofill.service.R
 import proton.android.pass.autofill.ui.previewproviders.SelectItemUiStatePreviewProvider
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.item.EmptyList
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
+import proton.android.pass.composecomponents.impl.item.ItemsList
 
 @Composable
 fun SelectItemList(
@@ -64,7 +64,7 @@ class ThemeAndSelectItemUiStateProvider :
 fun SelectItemListPreview(
     @PreviewParameter(ThemeAndSelectItemUiStateProvider::class) input: Pair<Boolean, SelectItemUiState>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             SelectItemList(
                 uiState = input.second,

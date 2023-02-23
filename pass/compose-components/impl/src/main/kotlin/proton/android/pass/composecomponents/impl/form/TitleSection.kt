@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.applyIf
@@ -80,7 +81,7 @@ class ThemeAndTitleInputProvider :
 fun TitleInputPreview(
     @PreviewParameter(ThemeAndTitleInputProvider::class) input: Pair<Boolean, TitleSectionPreviewData>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             TitleSection(
                 value = input.second.title,

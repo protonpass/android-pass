@@ -17,13 +17,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.commonui.api.toPasswordAnnotatedString
 import proton.android.pass.composecomponents.impl.container.Circle
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
-import proton.android.pass.composecomponents.impl.item.SectionTitle
 
 @Composable
 internal fun LoginPasswordRow(
@@ -42,7 +42,7 @@ internal fun LoginPasswordRow(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
             contentDescription = stringResource(R.string.password_key_icon_content_description),
-            tint = PassColors.PurpleAccent
+            tint = PassTheme.colors.accentPurpleOpaque
         )
         val sectionContent = remember(password) {
             when (password) {
@@ -78,14 +78,14 @@ internal fun LoginPasswordRow(
             }
         }
         Circle(
-            backgroundColor = PassColors.PurpleAccent,
+            backgroundColor = PassTheme.colors.accentPurpleOpaque,
             backgroundAlpha = 0.1f,
             onClick = { onTogglePasswordClick() }
         ) {
             Icon(
                 painter = painterResource(icon),
                 contentDescription = actionContent,
-                tint = PassColors.PurpleAccent
+                tint = PassTheme.colors.accentPurpleOpaque
             )
         }
     }

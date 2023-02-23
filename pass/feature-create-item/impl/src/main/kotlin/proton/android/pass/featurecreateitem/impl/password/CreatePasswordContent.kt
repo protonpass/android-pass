@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
-import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import proton.android.pass.composecomponents.impl.topbar.icon.ArrowBackIcon
@@ -84,7 +84,7 @@ class ThemeAndCreatePasswordUiStateProvider :
 fun CreatePasswordContentPreview(
     @PreviewParameter(ThemeAndCreatePasswordUiStateProvider::class) input: Pair<Boolean, CreatePasswordUiState>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             CreatePasswordContent(
                 state = input.second,

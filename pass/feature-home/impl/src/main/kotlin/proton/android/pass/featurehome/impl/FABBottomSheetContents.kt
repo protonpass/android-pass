@@ -14,9 +14,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmall
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.PassDimens.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheetPadding
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
@@ -59,11 +59,11 @@ private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : B
         }
     override val icon: (@Composable () -> Unit)
         get() = {
-            Circle(backgroundColor = PassColors.PurpleAccent) {
+            Circle(backgroundColor = PassTheme.colors.accentPurpleOpaque) {
                 Icon(
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_user),
                     contentDescription = stringResource(R.string.item_type_login_create_content_description),
-                    tint = PassColors.PurpleAccent
+                    tint = PassTheme.colors.accentPurpleOpaque
                 )
             }
         }
@@ -133,7 +133,7 @@ private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
 fun FABBottomSheetContentsPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             FABBottomSheetContents(
                 onCreateLogin = {},

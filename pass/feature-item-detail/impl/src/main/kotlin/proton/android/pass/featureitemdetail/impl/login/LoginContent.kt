@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -43,7 +43,7 @@ fun LoginContent(
         )
         NoteSection(
             text = state.note,
-            accentColor = PassColors.PurpleAccent
+            accentColor = PassTheme.colors.accentPurpleOpaque
         )
         LinkedAppsListSection(
             packageInfoUiSet = state.packageInfoSet,

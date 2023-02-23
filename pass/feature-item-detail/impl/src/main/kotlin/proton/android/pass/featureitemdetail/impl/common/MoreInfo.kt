@@ -36,6 +36,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.DateFormatUtils
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featureitemdetail.impl.R
 
@@ -188,7 +189,7 @@ class ThemedMoreInfoPreviewProvider :
 fun MoreInfoPreview(
     @PreviewParameter(ThemedMoreInfoPreviewProvider::class) input: Pair<Boolean, MoreInfoPreview>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             MoreInfo(
                 shouldShowMoreInfoInitially = input.second.showMoreInfo,

@@ -16,7 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featurecreateitem.impl.alias.AliasBottomSheetContentType.AliasOptions
 import proton.android.pass.featurecreateitem.impl.alias.AliasBottomSheetContentType.VaultSelection
@@ -97,7 +97,7 @@ internal fun AliasContent(
                 CreateUpdateTopBar(
                     text = topBarActionName,
                     isLoading = uiState.isLoadingState.value(),
-                    color = PassColors.GreenAccent,
+                    color = PassTheme.colors.accentGreenOpaque,
                     onCloseClick = onUpClick,
                     onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
                 )

@@ -10,11 +10,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon
-import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
+import proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -51,7 +52,7 @@ internal fun TrashTopBar(
 fun TrashTopBarPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             TrashTopBar(
                 showActions = input.second,

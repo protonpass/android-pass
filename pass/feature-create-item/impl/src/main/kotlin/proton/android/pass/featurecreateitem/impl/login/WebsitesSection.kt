@@ -36,6 +36,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
@@ -172,7 +173,7 @@ class ThemedWebsitesSectionPreviewProvider :
 fun WebsitesSectionPreview(
     @PreviewParameter(ThemedWebsitesSectionPreviewProvider::class) input: Pair<Boolean, WebsitesPreviewParameter>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             WebsitesSection(
                 websites = input.second.websites.toImmutableList(),

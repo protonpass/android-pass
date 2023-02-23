@@ -7,10 +7,10 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.pass.domain.ItemType
 
 @Composable
@@ -52,7 +52,7 @@ class ThemedNoteItemPreviewProvider :
 fun NoteRowPreview(
     @PreviewParameter(ThemedNoteItemPreviewProvider::class) input: Pair<Boolean, NoteRowParameter>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             NoteRow(
                 item = input.second.model,

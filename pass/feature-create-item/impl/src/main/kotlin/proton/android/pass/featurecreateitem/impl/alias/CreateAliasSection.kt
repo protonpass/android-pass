@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featurecreateitem.impl.R
 
@@ -74,7 +75,7 @@ fun CreateAliasSectionPreview(
     input: Pair<Boolean, CreateAliasSectionPreviewParameter>
 ) {
     val param = input.second
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             CreateAliasSection(
                 state = param.aliasItem,

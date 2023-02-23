@@ -11,9 +11,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableList
-import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.PassDimens.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheetPadding
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.featurecreateitem.impl.R
 
@@ -59,7 +59,7 @@ fun AliasBottomSheetContentsPreview(
         isCustom = false,
         domain = "alias.suffix"
     )
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             AliasBottomSheetContents(
                 modelState = AliasItem(

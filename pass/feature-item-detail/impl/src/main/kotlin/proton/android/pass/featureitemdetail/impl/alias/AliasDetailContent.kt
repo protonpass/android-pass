@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
@@ -25,7 +25,7 @@ fun AliasDetailContent(
     ) {
         AliasTitle(title = model?.title ?: "")
         AliasSection(Modifier, model, isLoading, onCopyAlias)
-        NoteSection(text = model?.note ?: "", accentColor = PassColors.GreenAccent)
+        NoteSection(text = model?.note ?: "", accentColor = PassTheme.colors.accentGreenOpaque)
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }
 }

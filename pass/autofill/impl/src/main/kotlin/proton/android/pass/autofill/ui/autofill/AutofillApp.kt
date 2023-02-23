@@ -17,6 +17,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.autofill.entities.AutofillMappings
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.preferences.ThemePreference
@@ -52,7 +53,7 @@ fun AutofillApp(
             }
         }
     }
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Scaffold(
             modifier = modifier,
             snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }

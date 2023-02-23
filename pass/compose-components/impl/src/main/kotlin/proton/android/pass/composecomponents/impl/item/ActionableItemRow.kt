@@ -19,10 +19,10 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.R
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.ThemePairPreviewProvider
 
 @Composable
 fun ActionableItemRow(
@@ -68,7 +68,7 @@ class ThemeAndItemUiModelProvider :
 fun ActionableItemRowPreviewWithMenuIcon(
     @PreviewParameter(ThemeAndItemUiModelProvider::class) input: Pair<Boolean, ItemUiModel>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             ActionableItemRow(
                 item = input.second,
@@ -83,7 +83,7 @@ fun ActionableItemRowPreviewWithMenuIcon(
 fun ActionableItemRowPreviewWithoutMenuIcon(
     @PreviewParameter(ThemeAndItemUiModelProvider::class) input: Pair<Boolean, ItemUiModel>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             ActionableItemRow(
                 item = input.second,

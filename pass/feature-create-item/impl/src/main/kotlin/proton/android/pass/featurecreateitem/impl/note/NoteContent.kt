@@ -11,7 +11,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
@@ -62,7 +62,7 @@ internal fun NoteContent(
                 CreateUpdateTopBar(
                     text = topBarActionName,
                     isLoading = uiState.isLoadingState.value(),
-                    color = PassColors.YellowAccent,
+                    color = PassTheme.colors.accentYellowOpaque,
                     onCloseClick = onUpClick,
                     onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
                 )

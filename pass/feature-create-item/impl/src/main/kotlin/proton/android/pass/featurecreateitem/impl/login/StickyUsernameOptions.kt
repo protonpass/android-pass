@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
 import proton.android.pass.common.api.Option
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featurecreateitem.impl.R
 
@@ -57,12 +57,12 @@ fun StickyUsernameOptions(
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
                 contentDescription = stringResource(R.string.sticky_button_create_alias_icon_content_description),
-                tint = PassColors.PurpleAccent
+                tint = PassTheme.colors.accentPurpleOpaque
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = stringResource(id = R.string.sticky_button_create_alias),
-                color = PassColors.PurpleAccent,
+                color = PassTheme.colors.accentPurpleOpaque,
                 style = ProtonTheme.typography.default,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
@@ -89,7 +89,7 @@ fun StickyUsernameOptions(
                         id = R.string.sticky_button_use_account_email,
                         primaryEmail
                     ),
-                    color = PassColors.PurpleAccent,
+                    color = PassTheme.colors.accentPurpleOpaque,
                     style = ProtonTheme.typography.default,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
@@ -107,7 +107,7 @@ class ThemedStickyUsernamePreviewProvider :
 fun StickyUsernameOptionsPreview(
     @PreviewParameter(ThemedStickyUsernamePreviewProvider::class) input: Pair<Boolean, Option<String>>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             StickyUsernameOptions(
                 primaryEmail = input.second.value(),

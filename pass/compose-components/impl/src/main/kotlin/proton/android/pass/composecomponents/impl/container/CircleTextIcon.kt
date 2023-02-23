@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
 @Composable
@@ -41,9 +41,9 @@ fun CircleTextIcon(
 fun CircleTextIconPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
-            CircleTextIcon(text = "This is an example", color = PassColors.PurpleAccent)
+            CircleTextIcon(text = "This is an example", color = PassTheme.colors.accentPurpleOpaque)
         }
     }
 }

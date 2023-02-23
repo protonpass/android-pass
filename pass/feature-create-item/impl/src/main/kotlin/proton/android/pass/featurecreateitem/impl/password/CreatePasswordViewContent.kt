@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featurecreateitem.impl.R
 
@@ -109,7 +110,7 @@ internal fun CreatePasswordViewContent(
 fun CreatePasswordViewContentThemePreview(
     @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
 ) {
-    ProtonTheme(isDark = isDarkMode) {
+    PassTheme(isDark = isDarkMode) {
         Surface {
             CreatePasswordViewContent(
                 state = CreatePasswordUiState(

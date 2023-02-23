@@ -21,6 +21,7 @@ import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.pass.presentation.R
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.presentation.components.navigation.drawer.InternalDrawerItem
 
 @Composable
@@ -98,8 +99,8 @@ fun NavigationDrawerBody(
 @Preview
 @Composable
 fun NavigationDrawerBodyPreview() {
-    ProtonTheme(
-        colors = requireNotNull(ProtonTheme.colors.sidebarColors)
+    PassTheme(
+        protonColors = requireNotNull(ProtonTheme.colors.sidebarColors)
     ) {
         Surface(color = ProtonTheme.colors.backgroundNorm) {
             NavigationDrawerBody(

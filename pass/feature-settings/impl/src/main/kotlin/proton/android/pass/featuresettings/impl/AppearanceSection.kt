@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.theme.ProtonDimens
-import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.preferences.ThemePreference
 
@@ -56,7 +56,7 @@ fun AppearanceSection(
 fun AppearanceSectionPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             AppearanceSection(
                 theme = ThemePreference.System,

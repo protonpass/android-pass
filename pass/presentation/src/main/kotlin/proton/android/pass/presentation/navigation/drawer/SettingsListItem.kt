@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 
 @Composable
@@ -40,7 +41,7 @@ fun SettingsListItem(
 fun SettingsListItemPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             SettingsListItem(
                 isSelected = input.second,

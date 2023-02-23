@@ -11,9 +11,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.component.ProtonSettingsItem
-import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.usersettings.presentation.compose.view.CrashReportSettingToggleItem
 import me.proton.core.usersettings.presentation.compose.view.TelemetrySettingToggleItem
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
 @Composable
@@ -45,7 +45,7 @@ fun AppSection(
 fun AppSectionPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             AppSection(
                 appVersion = "1.2.3",

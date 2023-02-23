@@ -22,7 +22,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -97,7 +97,7 @@ fun LoginDetail(
             topBar = {
                 ItemDetailTopBar(
                     isLoading = model.isLoading,
-                    color = PassColors.PurpleAccent,
+                    color = PassTheme.colors.accentPurpleOpaque,
                     onUpClick = onUpClick,
                     onEditClick = { onEditClick(item.shareId, item.id, item.itemType) },
                     onOptionsClick = {

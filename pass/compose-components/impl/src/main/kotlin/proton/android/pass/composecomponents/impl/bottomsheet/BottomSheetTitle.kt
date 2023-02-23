@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 
 data class BottomSheetTitleButton(
@@ -76,7 +77,7 @@ fun BottomSheetTitlePreview(
     @PreviewParameter(ThemeAndBottomSheetProvider::class)
     input: Pair<Boolean, BottomSheetTitleButton?>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             BottomSheetTitle(
                 title = "Generate Password",

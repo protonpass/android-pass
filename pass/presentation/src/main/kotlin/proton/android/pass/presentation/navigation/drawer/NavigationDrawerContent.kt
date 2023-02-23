@@ -10,6 +10,7 @@ import me.proton.core.accountmanager.presentation.compose.AccountPrimaryState
 import me.proton.core.accountmanager.presentation.compose.rememberAccountPrimaryState
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.presentation.navigation.CoreNavigation
 
 @Composable
@@ -23,7 +24,7 @@ fun NavigationDrawerContent(
     onCloseDrawer: () -> Unit
 ) {
     val sidebarColors = requireNotNull(ProtonTheme.colors.sidebarColors)
-    ProtonTheme(colors = sidebarColors) {
+    PassTheme(protonColors = sidebarColors) {
         Surface(
             modifier = modifier.fillMaxSize(),
             color = ProtonTheme.colors.backgroundNorm

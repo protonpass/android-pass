@@ -10,12 +10,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.composecomponents.impl.topbar.icon.ArrowBackIcon
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.autofill.service.R
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
+import proton.android.pass.composecomponents.impl.topbar.icon.ArrowBackIcon
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -49,7 +50,7 @@ fun IdleSelectItemTopBar(
 fun IdleSelectItemTopBarPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             IdleSelectItemTopBar(
                 startSearchMode = {},

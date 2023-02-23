@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.topbar.icon.ArrowBackIcon
@@ -176,7 +177,7 @@ class ThemeAndSearchTopBarProvider :
 fun SearchHomeTopBarPreview(
     @PreviewParameter(ThemeAndSearchTopBarProvider::class) input: Pair<Boolean, SearchTopBarData>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             SearchTopBar(
                 placeholder = "Search",

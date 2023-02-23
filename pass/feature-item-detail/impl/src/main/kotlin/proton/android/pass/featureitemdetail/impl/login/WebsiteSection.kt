@@ -24,12 +24,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
-import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.composecomponents.impl.item.SectionTitle
+import proton.android.pass.featureitemdetail.impl.R
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -50,7 +49,7 @@ fun WebsiteSection(
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_earth),
                 contentDescription = stringResource(R.string.website_icon_content_description),
-                tint = PassColors.PurpleAccent
+                tint = PassTheme.colors.accentPurpleOpaque
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {
@@ -66,7 +65,7 @@ fun WebsiteSection(
                             )
                             .padding(vertical = 8.dp),
                         text = website,
-                        color = PassColors.PurpleAccent,
+                        color = PassTheme.colors.accentPurpleOpaque,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W400
                     )
@@ -84,7 +83,7 @@ class ThemedWebsiteSectionPreviewProvider :
 fun WebsitesSectionPreview(
     @PreviewParameter(ThemedWebsiteSectionPreviewProvider::class) input: Pair<Boolean, List<String>>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             WebsiteSection(
                 websites = input.second.toImmutableList(),

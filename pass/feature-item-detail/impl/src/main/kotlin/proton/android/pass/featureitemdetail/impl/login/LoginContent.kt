@@ -28,7 +28,11 @@ fun LoginContent(
         modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        LoginTitle(title = state.title)
+        LoginTitle(
+            title = state.title,
+            website = state.websites.firstOrNull(),
+            packageName = state.packageInfoSet.firstOrNull()?.packageName
+        )
         MainLoginSection(
             state = state,
             onUsernameClick = onUsernameClick,

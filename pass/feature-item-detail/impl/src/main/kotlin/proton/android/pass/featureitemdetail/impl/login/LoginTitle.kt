@@ -16,13 +16,18 @@ import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 
 @Composable
-fun LoginTitle(modifier: Modifier = Modifier, title: String) {
+fun LoginTitle(
+    modifier: Modifier = Modifier,
+    title: String,
+    website: String?,
+    packageName: String?
+) {
     Row(
         modifier = modifier.height(75.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        LoginIcon(size = 60, text = title)
+        LoginIcon(size = 60, text = title, website = website, packageName = packageName)
         ItemTitleText(text = title)
     }
 }
@@ -34,7 +39,11 @@ fun LoginTitlePreview(
 ) {
     PassTheme(isDark = input) {
         Surface {
-            LoginTitle(title = "A really long title to check if the element is multiline")
+            LoginTitle(
+                title = "A really long title to check if the element is multiline",
+                website = null,
+                packageName = null
+            )
         }
     }
 }

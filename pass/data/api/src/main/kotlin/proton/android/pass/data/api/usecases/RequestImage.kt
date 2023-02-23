@@ -7,6 +7,12 @@ data class ImageResponse(
     val mimeType: String?
 )
 
+sealed interface ImageResponseResult {
+    data class Data(val content: ByteArray, val mimeType: String?) : ImageResponseResult
+    object Empty : ImageResponseResult
+    data class Error(val throwable: Throwable) : ImageResponseResult
+}
+
 interface RequestImage {
-    operator fun invoke(domain: String): Flow<ImageResponse?>
+    operator fun invoke(domain: String): Flow<ImageResponseResult>
 }

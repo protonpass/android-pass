@@ -19,12 +19,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import proton.android.pass.featurecreateitem.impl.alias.AliasMailboxUiModel
-import proton.android.pass.featurecreateitem.impl.alias.SelectedAliasMailboxUiModel
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.featurecreateitem.impl.alias.AliasMailboxUiModel
+import proton.android.pass.featurecreateitem.impl.alias.SelectedAliasMailboxUiModel
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -62,7 +63,7 @@ fun SelectMailboxesMailboxRow(
 fun SelectMailboxesMailboxRowPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             SelectMailboxesMailboxRow(
                 item = SelectedAliasMailboxUiModel(

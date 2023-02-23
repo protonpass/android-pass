@@ -8,8 +8,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.Circle
@@ -21,13 +20,13 @@ fun NoteIcon(
 ) {
     Circle(
         modifier = modifier,
-        backgroundColor = PassColors.YellowAccent,
+        backgroundColor = PassTheme.colors.accentYellowOpaque,
         size = size,
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_note),
             contentDescription = stringResource(R.string.alias_title_icon_content_description),
-            tint = PassColors.YellowAccent
+            tint = PassTheme.colors.accentYellowOpaque
         )
     }
 }
@@ -37,7 +36,7 @@ fun NoteIcon(
 fun NoteIconPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             NoteIcon()
         }

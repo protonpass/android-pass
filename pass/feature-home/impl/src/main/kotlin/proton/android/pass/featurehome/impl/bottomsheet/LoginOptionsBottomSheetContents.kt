@@ -10,9 +10,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.datetime.Clock
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonui.api.PassDimens.bottomSheetPadding
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.bottomSheetPadding
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetDivider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
@@ -89,7 +89,7 @@ private fun copyPassword(password: String, onCopyPassword: (String) -> Unit): Bo
 fun LoginOptionsBottomSheetContentsPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             LoginOptionsBottomSheetContents(
                 itemUiModel = ItemUiModel(

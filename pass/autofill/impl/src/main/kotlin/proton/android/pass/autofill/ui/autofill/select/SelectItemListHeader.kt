@@ -15,13 +15,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.item.ActionableItemRow
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.pass.autofill.service.R
 import proton.android.pass.autofill.ui.previewproviders.SuggestionsPreviewProvider
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.item.ActionableItemRow
 
 fun LazyListScope.SelectItemListHeader(
     suggestionsForTitle: String,
@@ -72,7 +73,7 @@ class ThemedSuggestionsPreviewProvider :
 fun SelectItemListHeaderPreview(
     @PreviewParameter(ThemedSuggestionsPreviewProvider::class) input: Pair<Boolean, List<ItemUiModel>>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 SelectItemListHeader(

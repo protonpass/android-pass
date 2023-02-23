@@ -241,6 +241,7 @@ dependencies {
     implementation(libs.core.featureFlag)
     implementation(libs.core.humanVerification)
     implementation(libs.core.key)
+    implementation(libs.core.observability)
     implementation(libs.core.payment)
     implementation(libs.core.plan)
     implementation(libs.core.presentation)

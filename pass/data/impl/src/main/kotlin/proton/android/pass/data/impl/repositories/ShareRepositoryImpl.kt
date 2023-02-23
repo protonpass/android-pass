@@ -217,7 +217,7 @@ class ShareRepositoryImpl @Inject constructor(
                 userId = userAddress.userId,
                 addressId = userAddress.addressId,
                 shareId = shareId,
-                forceRefresh = true,
+                forceRefresh = false,
                 shouldStoreLocally = false
             ).first()
 

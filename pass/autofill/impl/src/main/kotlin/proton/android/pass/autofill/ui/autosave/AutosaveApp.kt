@@ -12,11 +12,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.autofill.entities.SaveInformation
 import proton.android.pass.autofill.ui.autosave.save.SAVE_ITEM_ROUTE
 import proton.android.pass.autofill.ui.autosave.save.SaveItemScreen
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.featureauth.impl.AuthScreen
 import proton.android.pass.preferences.ThemePreference
 
@@ -37,7 +37,7 @@ fun AutoSaveApp(
         ThemePreference.Dark -> true
         ThemePreference.System -> isNightMode()
     }
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         AnimatedNavHost(
             navController,
             startDestination = AUTH_SCREEN_ROUTE,

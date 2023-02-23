@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.component.ProtonSettingsHeader
 import me.proton.core.compose.component.ProtonSettingsToggleItem
-import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.value
@@ -52,7 +52,7 @@ class ThemedButtonEnabledPreviewProvider :
 fun AuthenticationSectionPreview(
     @PreviewParameter(ThemedButtonEnabledPreviewProvider::class) input: Pair<Boolean, IsButtonEnabled>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             AuthenticationSection(
                 isToggleChecked = input.second,

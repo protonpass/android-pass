@@ -13,12 +13,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.asAnnotatedString
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
-import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.pass.domain.AliasMailbox
 
 @Composable
@@ -38,7 +38,7 @@ fun AliasMailboxesRow(
         Icon(
             painter = painterResource(R.drawable.ic_forward),
             contentDescription = stringResource(R.string.alias_mailbox_forward_icon_content_description),
-            tint = PassColors.GreenAccent
+            tint = PassTheme.colors.accentGreenOpaque
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)

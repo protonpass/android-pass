@@ -13,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.asAnnotatedString
+import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
-import proton.android.pass.composecomponents.impl.item.SectionTitle
 
 @Composable
 fun AliasAddressRow(
@@ -36,7 +36,7 @@ fun AliasAddressRow(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
             contentDescription = stringResource(R.string.alias_address_icon_content_description),
-            tint = PassColors.GreenAccent
+            tint = PassTheme.colors.accentGreenOpaque
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)

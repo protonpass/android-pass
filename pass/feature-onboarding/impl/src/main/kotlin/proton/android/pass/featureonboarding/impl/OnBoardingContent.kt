@@ -31,6 +31,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
@@ -182,7 +183,7 @@ fun OnBoardingContentPreview(
     @PreviewParameter(ThemeAndOnBoardingUiStatePreviewProvider::class)
     input: Pair<Boolean, OnBoardingUiState>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             OnBoardingContent(Modifier, input.second, {}, {}, {})
         }

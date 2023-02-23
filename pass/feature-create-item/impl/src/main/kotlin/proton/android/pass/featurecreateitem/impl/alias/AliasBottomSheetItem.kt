@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
 import me.proton.core.presentation.R
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 
 @Composable
@@ -54,7 +55,7 @@ fun AliasBottomSheetItem(
 fun AliasBottomSheetItemPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             AliasBottomSheetItem(
                 text = "some.random.item@that.is.very.long",

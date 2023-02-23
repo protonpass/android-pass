@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.data.api.ItemCountSummary
 
@@ -116,7 +117,7 @@ fun DrawerItemTypeSection(
 fun ItemsListSectionPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             DrawerItemTypeSection(
                 selectedSection = NavigationDrawerSection.AllItems(),

@@ -20,6 +20,7 @@ dependencies {
     implementation(libs.coil.gif)
     implementation(libs.coil.svg)
     implementation(libs.core.utilKotlin)
+    implementation(libs.kotlinx.datetime)
 
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)

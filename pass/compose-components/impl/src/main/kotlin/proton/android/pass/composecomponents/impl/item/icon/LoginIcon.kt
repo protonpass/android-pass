@@ -39,7 +39,8 @@ fun LoginIcon(
     itemType: ItemType.Login,
     size: Int = 40
 ) {
-    val packageName = itemType.packageInfoSet.firstOrNull()?.packageName?.value
+    val sortedPackages = itemType.packageInfoSet.sortedBy { it.packageName.value }
+    val packageName = sortedPackages.firstOrNull()?.packageName?.value
     val website = itemType.websites.firstOrNull()
     LoginIcon(
         modifier = modifier,

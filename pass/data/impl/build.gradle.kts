@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.core.humanVerification)
     implementation(libs.core.key)
     implementation(libs.core.network)
+    implementation(libs.core.observability)
     implementation(libs.core.payment)
     implementation(libs.core.user)
     implementation(libs.core.userSettings)

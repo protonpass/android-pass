@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmall
 import me.proton.core.compose.theme.defaultStrong
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featurehome.impl.R
 
@@ -110,7 +111,7 @@ fun AutofillCard(
 fun AutofillCardContentPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             AutofillCard(onClick = {}, onDismiss = {})
         }

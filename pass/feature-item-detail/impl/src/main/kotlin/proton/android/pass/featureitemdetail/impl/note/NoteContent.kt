@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
@@ -47,7 +48,7 @@ fun NoteContent(
 fun NoteContentPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             NoteContent(
                 model = NoteDetailUiState(

@@ -14,6 +14,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.presentation.navigation.CoreNavigation
 
@@ -40,7 +41,7 @@ fun PassApp(
     LaunchedEffect(systemUiController, isDark) {
         systemUiController.systemBarsDarkContentEnabled = !isDark
     }
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         ProvideWindowInsets {
             PassAppContent(
                 modifier = modifier

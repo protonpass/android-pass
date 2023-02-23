@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallInverted
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.container.Circle
@@ -105,7 +106,7 @@ class ThemeAndAccentColorProvider :
 fun ItemDetailTopBarPreview(
     @PreviewParameter(ThemeAndAccentColorProvider::class) input: Pair<Boolean, ItemDetailTopBarPreview>
 ) {
-    ProtonTheme(isDark = input.first) {
+    PassTheme(isDark = input.first) {
         Surface {
             ItemDetailTopBar(
                 isLoading = input.second.isLoading,

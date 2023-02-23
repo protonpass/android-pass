@@ -12,7 +12,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
 @Composable
@@ -34,7 +34,7 @@ fun LoadingDialog(modifier: Modifier = Modifier) {
 fun LoadingDialogPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
-    ProtonTheme(isDark = isDark) {
+    PassTheme(isDark = isDark) {
         Surface {
             LoadingDialog()
         }

@@ -23,7 +23,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationIcon
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationName
-import proton.android.pass.commonui.api.PassColors
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.Circle
@@ -51,11 +51,11 @@ fun LinkedAppItem(
             }
         }
         when (iconDrawable) {
-            None -> Circle(backgroundColor = PassColors.PurpleAccent) {
+            None -> Circle(backgroundColor = PassTheme.colors.accentPurpleOpaque) {
                 Icon(
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_grid_3),
                     contentDescription = stringResource(R.string.missing_app_icon_content_description),
-                    tint = PassColors.PurpleAccent
+                    tint = PassTheme.colors.accentPurpleOpaque
                 )
             }
             is Some -> Image(

@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
@@ -32,7 +32,7 @@ fun LoginTitle(modifier: Modifier = Modifier, title: String) {
 fun LoginTitlePreview(
     @PreviewParameter(ThemePreviewProvider::class) input: Boolean
 ) {
-    ProtonTheme(isDark = input) {
+    PassTheme(isDark = input) {
         Surface {
             LoginTitle(title = "A really long title to check if the element is multiline")
         }

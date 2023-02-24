@@ -15,6 +15,5 @@ data class HomeScreenNavigation(
     val toEditAlias: (ShareId, ItemId) -> Unit,
     val toItemDetail: (ShareId, ItemId) -> Unit,
     val toAuth: () -> Unit,
-    val toOnBoarding: () -> Unit,
-    val toCreatePassword: () -> Unit
+    val toOnBoarding: () -> Unit
 )

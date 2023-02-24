@@ -23,6 +23,7 @@ import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetC
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.SortingBottomSheetContents
+import proton.android.pass.featurehome.impl.bottomsheet.password.GeneratePasswordBottomSheet
 import proton.pass.domain.ItemType
 
 @OptIn(
@@ -82,12 +83,7 @@ fun HomeScreen(
                             homeScreenNavigation.toCreateNote(uiState.homeListUiState.selectedShare)
                         }
                     },
-                    onCreatePassword = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeScreenNavigation.toCreatePassword()
-                        }
-                    }
+                    onCreatePassword = { setBottomSheet(HomeBottomSheetType.GeneratePassword) }
                 )
                 HomeBottomSheetType.Sorting -> SortingBottomSheetContents(
                     sortingType = uiState.homeListUiState.sortingType
@@ -148,12 +144,15 @@ fun HomeScreen(
                         setShowDeleteDialog(true)
                     }
                 )
+                HomeBottomSheetType.GeneratePassword -> GeneratePasswordBottomSheet {
+                    scope.launch { bottomSheetState.hide() }
+                }
             }
         }
     ) {
         Box(modifier = modifier) {
             HomeContent(
-                modifier = modifier,
+                modifier = Modifier,
                 uiState = uiState,
                 homeFilter = homeItemTypeSelection,
                 shouldScrollToTop = shouldScrollToTop,

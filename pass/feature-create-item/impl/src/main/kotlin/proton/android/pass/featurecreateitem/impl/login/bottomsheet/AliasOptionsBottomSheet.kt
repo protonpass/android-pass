@@ -30,10 +30,7 @@ fun AliasOptionsBottomSheet(
         modifier = modifier.bottomSheetPadding(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        BottomSheetTitle(
-            title = stringResource(id = R.string.alias_bottomsheet_alias_title),
-            showDivider = false
-        )
+        BottomSheetTitle(title = stringResource(id = R.string.alias_bottomsheet_alias_title))
         BottomSheetItemList(
             items = persistentListOf(
                 createRemoveAlias(onRemoveAliasClick)

@@ -12,7 +12,6 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.featurecreateitem.impl.R
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.LoginUpdated
-import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpType
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -25,7 +24,7 @@ fun UpdateLogin(
     onUpClick: () -> Unit,
     onSuccess: (ShareId, ItemId) -> Unit,
     onCreateAliasClick: (ShareId, Option<String>) -> Unit,
-    onAddTotp: (AddTotpType) -> Unit
+    onScanTotp: () -> Unit
 ) {
     val viewModel: UpdateLoginViewModel = hiltViewModel()
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
@@ -71,8 +70,9 @@ fun UpdateLogin(
         onVaultSelect = {
             // Migrate element
         },
-        onAddTotp = onAddTotp,
-        onDeleteTotp = viewModel::onDeleteTotp,
-        onLinkedAppDelete = viewModel::onDeleteLinkedApp
+        onLinkedAppDelete = viewModel::onDeleteLinkedApp,
+        onTotpChange = viewModel::onTotpChange,
+        onPasteTotpClick = viewModel::onPasteTotp,
+        onScanTotpClick = onScanTotp
     )
 }

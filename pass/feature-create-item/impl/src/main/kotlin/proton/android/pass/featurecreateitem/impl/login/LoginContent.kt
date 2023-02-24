@@ -25,12 +25,10 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.common.CreateUpdateTopBar
-import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpBottomSheet
-import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpType
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AliasOptionsBottomSheet
-import proton.android.pass.featurecreateitem.impl.login.bottomsheet.password.GeneratePasswordBottomSheet
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.LoginBottomSheetContentType
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.VaultSelectionBottomSheet
+import proton.android.pass.featurecreateitem.impl.login.bottomsheet.password.GeneratePasswordBottomSheet
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -50,11 +48,12 @@ internal fun LoginContent(
     onPasswordChange: (String) -> Unit,
     onWebsiteChange: OnWebsiteChange,
     onNoteChange: (String) -> Unit,
+    onTotpChange: (String) -> Unit,
     onCreateAliasClick: (ShareId, Option<String>) -> Unit,
     onRemoveAliasClick: () -> Unit,
     onVaultSelect: (ShareId) -> Unit,
-    onAddTotp: (AddTotpType) -> Unit,
-    onDeleteTotp: () -> Unit,
+    onPasteTotpClick: () -> Unit,
+    onScanTotpClick: () -> Unit,
     onLinkedAppDelete: (PackageInfoUi) -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -97,14 +96,6 @@ internal fun LoginContent(
                     selectedShare = uiState.selectedShareId!!,
                     onVaultClick = {
                         onVaultSelect(it)
-                        scope.launch {
-                            bottomSheetState.hide()
-                        }
-                    }
-                )
-                LoginBottomSheetContentType.AddTotp -> AddTotpBottomSheet(
-                    onAddTotp = {
-                        onAddTotp(it)
                         scope.launch {
                             bottomSheetState.hide()
                         }
@@ -178,13 +169,9 @@ internal fun LoginContent(
                         bottomSheetState.show()
                     }
                 },
-                onAddTotpClick = {
-                    scope.launch {
-                        currentBottomSheet = LoginBottomSheetContentType.AddTotp
-                        bottomSheetState.show()
-                    }
-                },
-                onDeleteTotpClick = onDeleteTotp,
+                onTotpChange = onTotpChange,
+                onPasteTotpClick = onPasteTotpClick,
+                onScanTotpClick = onScanTotpClick,
                 onLinkedAppDelete = onLinkedAppDelete
             )
 

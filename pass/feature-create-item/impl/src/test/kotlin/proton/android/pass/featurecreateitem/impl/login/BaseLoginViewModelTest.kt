@@ -7,6 +7,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
@@ -17,6 +18,7 @@ import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestAccountManager
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestUser
+import proton.android.pass.totp.fakes.TestTotpManager
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 
@@ -25,6 +27,8 @@ internal class BaseLoginViewModelTest {
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
+    private lateinit var totpManager: TestTotpManager
+    private lateinit var clipboardManager: TestClipboardManager
     private lateinit var observeVaults: TestObserveVaults
     private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var savedStateHandle: SavedStateHandle
@@ -32,6 +36,8 @@ internal class BaseLoginViewModelTest {
 
     @Before
     fun setUp() {
+        totpManager = TestTotpManager()
+        clipboardManager = TestClipboardManager()
         observeVaults = TestObserveVaults()
         observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
         savedStateHandle = TestSavedStateHandle.create()
@@ -39,6 +45,8 @@ internal class BaseLoginViewModelTest {
             TestCreateAlias(),
             TestAccountManager(),
             TestSnackbarMessageRepository(),
+            clipboardManager,
+            totpManager,
             observeVaults,
             observeCurrentUser,
             savedStateHandle

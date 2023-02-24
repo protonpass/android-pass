@@ -146,8 +146,6 @@ sealed class AppNavItem(
             "$baseRoute/${shareId.id}/${itemId.id}"
     }
 
-    object CreatePassword : AppNavItem("password/create")
-
     object ViewItem :
         AppNavItem("item", listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)) {
         fun createNavRoute(shareId: ShareId, itemId: ItemId) =

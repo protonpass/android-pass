@@ -34,10 +34,7 @@ fun SortingBottomSheetContents(
         modifier = modifier.bottomSheetPadding(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        BottomSheetTitle(
-            title = stringResource(id = R.string.sorting_bottomsheet_title),
-            showDivider = false
-        )
+        BottomSheetTitle(title = stringResource(id = R.string.sorting_bottomsheet_title))
         BottomSheetItemList(
             items = sortingItemList(sortingType, onSortingTypeSelected)
         )

@@ -28,10 +28,7 @@ fun VaultSelectionBottomSheet(
         modifier = modifier.bottomSheetPadding(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        BottomSheetTitle(
-            title = stringResource(R.string.vault_title),
-            showDivider = false
-        )
+        BottomSheetTitle(title = stringResource(R.string.vault_title))
         BottomSheetItemList(
             items = shareList
                 .map {

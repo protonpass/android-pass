@@ -1,4 +1,4 @@
-package proton.android.pass.featurecreateitem.impl.password
+package proton.android.pass.commonui.api
 
 import kotlin.random.Random
 

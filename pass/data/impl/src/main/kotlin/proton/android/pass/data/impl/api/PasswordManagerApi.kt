@@ -59,7 +59,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     @GET("$PREFIX/share/{shareId}/item")
     suspend fun getItems(
         @Path("shareId") shareId: String,
-        @Query("SinceToken") sinceToken: String?,
+        @Query("Since") sinceToken: String?,
         @Query("PageSize") pageSize: Int
     ): GetItemsResponse
 

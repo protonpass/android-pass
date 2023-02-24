@@ -1,4 +1,4 @@
-package proton.android.pass.featurecreateitem.impl.password
+package proton.android.pass.featurehome.impl.bottomsheet.password
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,18 +11,20 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.commonui.api.PasswordGenerator
+import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordUiState
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class CreatePasswordViewModel @Inject constructor(
+class GeneratePasswordViewModel @Inject constructor(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val clipboardManager: ClipboardManager
 ) : ViewModel() {
 
-    private val _state: MutableStateFlow<CreatePasswordUiState> =
+    private val _state: MutableStateFlow<GeneratePasswordUiState> =
         MutableStateFlow(getInitialState())
-    val state: StateFlow<CreatePasswordUiState> = _state
+    val state: StateFlow<GeneratePasswordUiState> = _state
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
@@ -48,11 +50,10 @@ class CreatePasswordViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             clipboardManager.copyToClipboard(state.value.password, isSecure = true)
         }
-        snackbarMessageRepository.emitSnackbarMessage(CreatePasswordSnackbarMessage.CopiedToClipboard)
+        snackbarMessageRepository.emitSnackbarMessage(GeneratePasswordSnackbarMessage.CopiedToClipboard)
     }
 
     companion object {
-        val LENGTH_RANGE = 4.toFloat()..64.toFloat()
 
         private fun generatePassword(length: Int, hasSpecialCharacters: Boolean): String {
             val option = when {
@@ -62,8 +63,8 @@ class CreatePasswordViewModel @Inject constructor(
             return PasswordGenerator.generatePassword(length, option)
         }
 
-        private fun getInitialState(): CreatePasswordUiState =
-            CreatePasswordUiState(
+        private fun getInitialState(): GeneratePasswordUiState =
+            GeneratePasswordUiState(
                 password = generatePassword(
                     PasswordGenerator.DEFAULT_LENGTH,
                     true

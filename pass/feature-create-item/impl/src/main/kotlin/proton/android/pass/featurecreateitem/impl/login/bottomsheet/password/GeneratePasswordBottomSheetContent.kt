@@ -1,52 +1,43 @@
-package proton.android.pass.featurecreateitem.impl.login.bottomsheet
+package proton.android.pass.featurecreateitem.impl.login.bottomsheet.password
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheetPadding
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitleButton
-import proton.android.pass.featurecreateitem.impl.R
-import proton.android.pass.featurecreateitem.impl.password.CreatePasswordStatePreviewProvider
-import proton.android.pass.featurecreateitem.impl.password.CreatePasswordUiState
-import proton.android.pass.featurecreateitem.impl.password.CreatePasswordViewContent
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
+import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordBottomSheetTitle
+import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordStatePreviewProvider
+import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordUiState
+import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordViewContent
 
 @Composable
 fun GeneratePasswordBottomSheetContent(
     modifier: Modifier = Modifier,
-    state: CreatePasswordUiState,
+    state: GeneratePasswordUiState,
     onLengthChange: (Int) -> Unit,
     onRegenerateClick: () -> Unit,
     onHasSpecialCharactersChange: (Boolean) -> Unit,
-    onConfirm: (String) -> Unit
+    onConfirm: (String) -> Unit,
+    onDismiss: () -> Unit
 ) {
     Column(
         modifier = modifier.bottomSheetPadding(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        BottomSheetTitle(
-            title = stringResource(id = R.string.bottomsheet_generate_password_title),
-            button = BottomSheetTitleButton(
-                title = stringResource(id = R.string.bottom_sheet_generate_password_confirm),
-                onClick = { onConfirm(state.password) },
-                enabled = true
-            ),
-            showDivider = false
-        )
-        CreatePasswordViewContent(
+        GeneratePasswordBottomSheetTitle(onRegenerate = { onRegenerateClick() })
+        GeneratePasswordViewContent(
             state = state,
             onLengthChange = onLengthChange,
-            onRegenerateClick = onRegenerateClick,
             onSpecialCharactersChange = onHasSpecialCharactersChange
         )
+        BottomSheetCancelConfirm(onCancel = onDismiss, onConfirm = { onConfirm(state.password) })
     }
 }
 
@@ -59,7 +50,7 @@ fun GeneratePasswordBottomSheetContentThemePreview(
     PassTheme(isDark = isDark) {
         Surface {
             GeneratePasswordBottomSheetContent(
-                state = CreatePasswordUiState(
+                state = GeneratePasswordUiState(
                     password = "a1b!c_d3e#fg",
                     length = 12,
                     hasSpecialCharacters = true
@@ -67,7 +58,8 @@ fun GeneratePasswordBottomSheetContentThemePreview(
                 onLengthChange = {},
                 onRegenerateClick = {},
                 onHasSpecialCharactersChange = {},
-                onConfirm = {}
+                onConfirm = {},
+                onDismiss = {}
             )
         }
     }
@@ -77,7 +69,7 @@ fun GeneratePasswordBottomSheetContentThemePreview(
 @Composable
 @Suppress("FunctionMaxLength")
 fun GeneratePasswordBottomSheetContentPreview(
-    @PreviewParameter(CreatePasswordStatePreviewProvider::class) state: CreatePasswordUiState
+    @PreviewParameter(GeneratePasswordStatePreviewProvider::class) state: GeneratePasswordUiState
 ) {
     PassTheme {
         Surface {
@@ -86,7 +78,8 @@ fun GeneratePasswordBottomSheetContentPreview(
                 onLengthChange = {},
                 onRegenerateClick = {},
                 onHasSpecialCharactersChange = {},
-                onConfirm = {}
+                onConfirm = {},
+                onDismiss = {}
             )
         }
     }

@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.image.impl.ClearIconCache
 import proton.android.pass.log.api.LogSharing
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -18,7 +19,8 @@ class InternalDrawerViewModel @Inject constructor(
     private val appConfig: AppConfig,
     private val preferenceRepository: UserPreferencesRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val logSharing: LogSharing
+    private val logSharing: LogSharing,
+    private val clearCache: ClearIconCache
 ) : ViewModel() {
 
     fun clearPreferences() = viewModelScope.launch {
@@ -36,6 +38,10 @@ class InternalDrawerViewModel @Inject constructor(
 
     fun shareLogCatOutput(context: Context) = viewModelScope.launch(Dispatchers.IO) {
         logSharing.shareLogs(appConfig.applicationId, context)
+    }
+
+    fun clearIconCache() = viewModelScope.launch {
+        clearCache()
     }
 
     companion object {

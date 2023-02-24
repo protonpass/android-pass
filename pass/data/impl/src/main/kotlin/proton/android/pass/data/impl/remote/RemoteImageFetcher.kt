@@ -17,36 +17,72 @@ interface RemoteImageFetcher {
 class RemoteImageFetcherImpl @Inject constructor(
     private val api: ApiProvider
 ) : RemoteImageFetcher {
+
+    @Suppress("MagicNumber")
     override fun fetchFavicon(userId: UserId, domain: String): Flow<ImageResponse?> = flow {
         api.get<PasswordManagerApi>(userId).invoke {
-            try {
-                val res = getFavicon(domain)
-                val body = checkNotNull(res.body()?.bytes())
-                val mimeType = res.headers().get("Content-Type")
-                emit(ImageResponse(content = body, mimeType = mimeType))
-            } catch (e: ProtonErrorException) {
-                if (e.response.code == HTTP_UNPROCESSABLE_CONTENT) {
-                    val protonCode = e.protonData.code
-                    if (protonCode == PROTON_CODE_NOT_TRUSTED) {
-                        PassLogger.d(TAG, "Received NotTrusted for domain $domain")
-                        emit(null)
-                        return@invoke
-                    }
-                    if (protonCode == PROTON_CODE_INVALID_ADDRESS) {
-                        PassLogger.d(TAG, "Received InvalidAddress for domain $domain")
-                        emit(null)
-                        return@invoke
+            for (size in listOf(128, 64, 32, 16)) {
+                try {
+                    val res = getFavicon(domain, size = size)
+                    val body = checkNotNull(res.body()?.bytes())
+                    val mimeType = res.headers().get("Content-Type")
+                    emit(ImageResponse(content = body, mimeType = mimeType))
+                    return@invoke
+                } catch (e: ProtonErrorException) {
+                    when (handleError(e, domain, size)) {
+                        ExceptionHandleResult.EmitNull -> {
+                            emit(null)
+                            return@invoke
+                        }
+                        ExceptionHandleResult.Continue -> {
+                            continue
+                        }
                     }
                 }
-                throw e
             }
         }
     }
 
+    private fun handleError(
+        e: ProtonErrorException,
+        domain: String,
+        size: Int
+    ): ExceptionHandleResult {
+        if (e.response.code != HTTP_UNPROCESSABLE_CONTENT) throw e
+
+        val knownError = FetchImageError.values()
+            .firstOrNull { it.code == e.protonData.code }
+
+        when (knownError) {
+            FetchImageError.FailedToFindForAppropriateSize -> {
+                PassLogger.d(TAG, "Received ${knownError.name} for domain $domain with size $size")
+                return ExceptionHandleResult.Continue
+            }
+            null -> {
+                PassLogger.d(TAG, "Received unknown ProtonErrorCode: ${e.protonData.code}")
+                throw e
+            }
+            else -> {
+                PassLogger.d(TAG, "Received ${knownError.name} for domain $domain")
+                return ExceptionHandleResult.EmitNull
+            }
+        }
+    }
+
+    private sealed interface ExceptionHandleResult {
+        object Continue : ExceptionHandleResult
+        object EmitNull : ExceptionHandleResult
+    }
+
+    private enum class FetchImageError(val code: Int) {
+        NotTrusted(2011),
+        InvalidAddress(-1),
+        FailedToFindForAppropriateSize(2511),
+        FailedToFind(2902)
+    }
+
     companion object {
         private const val HTTP_UNPROCESSABLE_CONTENT = 422
-        private const val PROTON_CODE_NOT_TRUSTED = 2011
-        private const val PROTON_CODE_INVALID_ADDRESS = -1
 
         private const val TAG = "RemoteImageFetcherImpl"
     }

@@ -1,10 +1,9 @@
 package proton.android.pass.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Text
@@ -20,25 +19,23 @@ import proton.android.pass.log.api.PassLogger
 fun InternalDrawerContents(
     modifier: Modifier = Modifier,
     viewModel: InternalDrawerViewModel = hiltViewModel(),
-    onOpenVault: () -> Unit
+    onOpenVault: () -> Unit,
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
 
-        Spacer(modifier = Modifier.height(10.dp))
         ShowkaseDrawerButton()
-        Spacer(modifier = Modifier.height(10.dp))
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = { viewModel.clearPreferences() },
         ) {
             Text(text = "Clear preferences")
         }
-        Spacer(modifier = Modifier.height(10.dp))
         val localContext = LocalContext.current
         Button(
             modifier = Modifier.fillMaxWidth(),
@@ -46,7 +43,6 @@ fun InternalDrawerContents(
         ) {
             Text(text = "Share Logs")
         }
-        Spacer(modifier = Modifier.height(10.dp))
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
@@ -59,13 +55,25 @@ fun InternalDrawerContents(
         ) {
             Text(text = "Trigger Crash")
         }
-        Spacer(modifier = Modifier.height(10.dp))
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = { onOpenVault() },
         ) {
             Text(text = "Manage vaults")
         }
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { onOpenVault() },
+        ) {
+            Text(text = "Manage vaults")
+        }
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = { viewModel.clearIconCache() },
+        ) {
+            Text(text = "Clear icon cache")
+        }
+
     }
 }
 

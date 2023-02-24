@@ -5,8 +5,10 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -32,7 +34,7 @@ fun LoadingCircleButton(
 ) {
     Row(
         modifier = modifier
-            .fillMaxHeight()
+            .height(IntrinsicSize.Min)
             .clip(CircleShape)
             .applyIf(condition = !isLoading, ifTrue = { clickable { onClick() } })
             .background(color)

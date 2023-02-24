@@ -58,7 +58,7 @@ fun VaultListContent(
         sheetState = bottomSheetState,
         sheetContent = {
             Column(modifier = Modifier.bottomSheetPadding()) {
-                BottomSheetTitle(title = stringResource(R.string.vault_delete_bottomsheet_title), showDivider = false)
+                BottomSheetTitle(title = stringResource(R.string.vault_delete_bottomsheet_title))
                 LazyColumn(
                     modifier = modifier
                         .fillMaxSize()

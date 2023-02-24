@@ -30,7 +30,7 @@ fun ThemeSelectionBottomSheetContents(
         modifier = modifier.bottomSheetPadding(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        BottomSheetTitle(title = stringResource(id = R.string.settings_theme_selector_title), showDivider = false)
+        BottomSheetTitle(title = stringResource(id = R.string.settings_theme_selector_title))
         BottomSheetItemList(
             items = themeItemList(
                 onThemeTypeSelected = onThemeSelected

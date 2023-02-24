@@ -29,8 +29,7 @@ fun AliasBottomSheetContents(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         BottomSheetTitle(
-            title = stringResource(id = R.string.alias_bottomsheet_suffix_title),
-            showDivider = false
+            title = stringResource(id = R.string.alias_bottomsheet_suffix_title)
         )
         AliasBottomSheetItemList(
             items = modelState.aliasOptions.suffixes.toImmutableList(),

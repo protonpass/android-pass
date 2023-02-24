@@ -16,7 +16,6 @@
  * along with Proton Mail. If not, see <https://www.gnu.org/licenses/>.
  */
 
-import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
@@ -31,7 +30,7 @@ plugins {
 
 val privateProperties = Properties().apply {
     try {
-        load(FileInputStream("private.properties"))
+        load(rootDir.resolve("private.properties").inputStream())
     } catch (exception: java.io.FileNotFoundException) {
         // Provide empty properties to allow the app to be built without secrets
         Properties()

@@ -16,7 +16,6 @@ import proton.android.pass.ui.create.login.createLoginGraph
 import proton.android.pass.ui.create.login.updateLoginGraph
 import proton.android.pass.ui.create.note.createNoteGraph
 import proton.android.pass.ui.create.note.updateNoteGraph
-import proton.android.pass.ui.create.password.createPasswordGraph
 import proton.android.pass.ui.create.totp.createTotpGraph
 import proton.android.pass.ui.detail.itemDetailGraph
 import proton.android.pass.ui.home.homeGraph
@@ -55,7 +54,6 @@ fun NavGraphBuilder.appGraph(
     updateNoteGraph(appNavigator)
     createAliasGraph(appNavigator)
     updateAliasGraph(appNavigator)
-    createPasswordGraph(appNavigator)
     itemDetailGraph(appNavigator)
     authGraph(appNavigator, finishActivity)
     onBoardingGraph(appNavigator, finishActivity)
@@ -108,5 +106,4 @@ private fun createHomeScreenNavigation(appNavigator: AppNavigator): HomeScreenNa
         },
         toAuth = { appNavigator.navigate(AppNavItem.Auth) },
         toOnBoarding = { appNavigator.navigate(AppNavItem.OnBoarding) },
-        toCreatePassword = { appNavigator.navigate(AppNavItem.CreatePassword) }
     )

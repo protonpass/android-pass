@@ -1,7 +1,6 @@
 package proton.android.pass.featurecreateitem.impl.login
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -42,6 +41,7 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
+import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featurecreateitem.impl.R
 
 @Composable
@@ -99,19 +99,13 @@ internal fun WebsitesSection(
                     },
                     trailingIcon = if (websites[idx].isNotEmpty() && isEditAllowed) {
                         {
-                            Icon(
-                                painter = painterResource(
-                                    me.proton.core.presentation.R.drawable.ic_proton_cross_small
-                                ),
-                                contentDescription = stringResource(R.string.clear_website_icon_content_description),
-                                modifier = Modifier.clickable {
-                                    if (websites[idx].isNotBlank() && websites.size > 1) {
-                                        onWebsitesChange.onRemoveWebsite(idx)
-                                    } else {
-                                        onWebsitesChange.onWebsiteValueChanged("", idx)
-                                    }
+                            SmallCrossIconButton {
+                                if (websites[idx].isNotBlank() && websites.size > 1) {
+                                    onWebsitesChange.onRemoveWebsite(idx)
+                                } else {
+                                    onWebsitesChange.onWebsiteValueChanged("", idx)
                                 }
-                            )
+                            }
                         }
                     } else {
                         null

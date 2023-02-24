@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -27,6 +26,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.Circle
+import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 
 @Composable
 fun LinkedAppItem(
@@ -70,13 +70,7 @@ fun LinkedAppItem(
             style = ProtonTheme.typography.default
         )
         if (isEditable) {
-            IconButton(onClick = { onLinkedAppDelete(packageInfoUi) }) {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_small),
-                    contentDescription = stringResource(R.string.linked_app_cross_icon_content_description),
-                    tint = ProtonTheme.colors.iconWeak
-                )
-            }
+            SmallCrossIconButton { onLinkedAppDelete(packageInfoUi) }
         }
     }
 }

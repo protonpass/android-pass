@@ -41,7 +41,7 @@ fun GeneratePasswordViewContent(
         val annotatedString = state.password.toPasswordAnnotatedString(
             digitColor = PassTheme.colors.accentPurpleOpaque,
             symbolColor = PassTheme.colors.accentGreenOpaque,
-            letterColor = PassTheme.colors.textNorm
+            letterColor = ProtonTheme.colors.textNorm
         )
         Text(
             modifier = Modifier.height(100.dp),

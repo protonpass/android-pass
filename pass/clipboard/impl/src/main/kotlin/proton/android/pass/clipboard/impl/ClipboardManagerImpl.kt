@@ -9,7 +9,7 @@ import android.os.PersistableBundle
 import dagger.hilt.android.qualifiers.ApplicationContext
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.clipboard.api.CouldNotAccessClipboard
-import proton.android.pass.clipboard.api.CouldNoyGetClipboardContent
+import proton.android.pass.clipboard.api.CouldNotGetClipboardContent
 import proton.android.pass.clipboard.api.EmptyClipboardContent
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -44,7 +44,7 @@ class ClipboardManagerImpl @Inject constructor(
             androidClipboard.primaryClipDescription?.hasMimeType(MIMETYPE_TEXT_PLAIN) != true
         ) {
             PassLogger.i(TAG, "Could not get clipboard content")
-            return Result.failure(CouldNoyGetClipboardContent())
+            return Result.failure(CouldNotGetClipboardContent())
         }
 
         return androidClipboard.primaryClip?.getItemAt(0)?.text?.toString()

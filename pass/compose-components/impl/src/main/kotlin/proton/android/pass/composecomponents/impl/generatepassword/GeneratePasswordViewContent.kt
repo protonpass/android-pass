@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Slider
 import androidx.compose.material.Surface
 import androidx.compose.material.Switch
@@ -41,10 +42,11 @@ fun GeneratePasswordViewContent(
         val annotatedString = state.password.toPasswordAnnotatedString(
             digitColor = PassTheme.colors.accentPurpleOpaque,
             symbolColor = PassTheme.colors.accentGreenOpaque,
-            letterColor = ProtonTheme.colors.textNorm
+            letterColor = PassTheme.colors.textNorm
         )
         Text(
-            modifier = Modifier.height(100.dp),
+            modifier = Modifier.height(100.dp)
+                .wrapContentHeight(align = Alignment.CenterVertically),
             text = annotatedString,
             style = ProtonTheme.typography.subheadline
         )

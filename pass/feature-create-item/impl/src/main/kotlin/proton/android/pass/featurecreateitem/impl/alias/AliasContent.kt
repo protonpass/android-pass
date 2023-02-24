@@ -97,7 +97,8 @@ internal fun AliasContent(
                 CreateUpdateTopBar(
                     text = topBarActionName,
                     isLoading = uiState.isLoadingState.value(),
-                    color = PassTheme.colors.accentGreenOpaque,
+                    opaqueColor = PassTheme.colors.accentGreenOpaque,
+                    weakestColor = PassTheme.colors.accentGreenWeakest,
                     onCloseClick = onUpClick,
                     onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
                 )

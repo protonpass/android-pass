@@ -11,7 +11,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.featurecreateitem.impl.R
-import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpType
 import proton.pass.domain.ShareId
 
 @OptIn(
@@ -25,7 +24,7 @@ fun CreateLogin(
     onClose: () -> Unit,
     onSuccess: (ItemUiModel) -> Unit,
     onCreateAliasClick: (ShareId, Option<String>) -> Unit,
-    onAddTotp: (AddTotpType) -> Unit
+    onScanTotp: () -> Unit
 ) {
     val viewModel: CreateLoginViewModel = hiltViewModel()
     LaunchedEffect(initialContents) {
@@ -62,8 +61,9 @@ fun CreateLogin(
         onCreateAliasClick = onCreateAliasClick,
         onRemoveAliasClick = { viewModel.onRemoveAlias() },
         onVaultSelect = { viewModel.changeVault(it) },
-        onAddTotp = onAddTotp,
-        onDeleteTotp = { viewModel.onDeleteTotp() },
-        onLinkedAppDelete = {}
+        onLinkedAppDelete = {},
+        onTotpChange = viewModel::onTotpChange,
+        onPasteTotpClick = viewModel::onPasteTotp,
+        onScanTotpClick = onScanTotp
     )
 }

@@ -33,8 +33,7 @@ fun TrashAllBottomSheetContents(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         BottomSheetTitle(
-            title = stringResource(id = R.string.bottomsheet_trash_all_items_title),
-            showDivider = false
+            title = stringResource(id = R.string.bottomsheet_trash_all_items_title)
         )
         BottomSheetItemList(
             items = persistentListOf(

@@ -30,10 +30,7 @@ fun AddTotpBottomSheet(
         modifier = modifier.bottomSheetPadding(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        BottomSheetTitle(
-            title = stringResource(R.string.totp_bottom_sheet_title),
-            showDivider = false
-        )
+        BottomSheetTitle(title = stringResource(R.string.totp_bottom_sheet_title))
         BottomSheetItemList(
             items = AddTotpType.values()
                 .map { createTotpBottomSheetItem(it, onAddTotp) }

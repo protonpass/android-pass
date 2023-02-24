@@ -28,7 +28,7 @@ import proton.android.pass.featurecreateitem.impl.common.CreateUpdateTopBar
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpBottomSheet
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpType
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AliasOptionsBottomSheet
-import proton.android.pass.featurecreateitem.impl.login.bottomsheet.GeneratePasswordBottomSheet
+import proton.android.pass.featurecreateitem.impl.login.bottomsheet.password.GeneratePasswordBottomSheet
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.LoginBottomSheetContentType
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.VaultSelectionBottomSheet
 import proton.pass.domain.ItemId
@@ -80,7 +80,8 @@ internal fun LoginContent(
                     onConfirm = { password ->
                         onPasswordChange(password)
                         scope.launch { bottomSheetState.hide() }
-                    }
+                    },
+                    onDismiss = { scope.launch { bottomSheetState.hide() } }
                 )
                 LoginBottomSheetContentType.AliasOptions -> AliasOptionsBottomSheet(
                     modifier = modifier,
@@ -118,7 +119,8 @@ internal fun LoginContent(
                 CreateUpdateTopBar(
                     text = topBarActionName,
                     isLoading = uiState.isLoadingState.value(),
-                    color = PassTheme.colors.accentPurpleOpaque,
+                    opaqueColor = PassTheme.colors.accentPurpleOpaque,
+                    weakestColor = PassTheme.colors.accentPurpleWeakest,
                     onCloseClick = onUpClick,
                     onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
                 )

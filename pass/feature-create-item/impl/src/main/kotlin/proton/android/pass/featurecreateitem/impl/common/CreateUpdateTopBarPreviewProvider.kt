@@ -9,32 +9,39 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
         get() = sequenceOf(
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                color = PassPalette.Purple100
+                opaqueColor = PassPalette.Purple100,
+                weakestColor = PassPalette.Purple8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                color = PassPalette.Green100
+                opaqueColor = PassPalette.Green100,
+                weakestColor = PassPalette.Green8
             ),
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                color = PassPalette.Yellow100
+                opaqueColor = PassPalette.Yellow100,
+                weakestColor = PassPalette.Yellow8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                color = PassPalette.Purple100
+                opaqueColor = PassPalette.Purple100,
+                weakestColor = PassPalette.Purple8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                color = PassPalette.Green100
+                opaqueColor = PassPalette.Green100,
+                weakestColor = PassPalette.Green8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                color = PassPalette.Yellow100
+                opaqueColor = PassPalette.Yellow100,
+                weakestColor = PassPalette.Yellow8
             )
         )
 }
 
 data class CreateUpdateTopBarPreview(
     val isLoading: Boolean,
-    val color: Color
+    val opaqueColor: Color,
+    val weakestColor: Color
 )

@@ -3,6 +3,14 @@
 
     <!-- Bottomsheets -->
     <string name="bottomsheet_content_description_item_icon">BottomSheet item icon</string>
+    <string name="bottomsheet_confirm_button">Confirm</string>
+    <string name="bottomsheet_cancel_button">Cancel</string>
+
+    <!-- Generate password bottomsheet -->
+    <string name="bottomsheet_generate_password_title">Generate Password</string>
+    <string name="special_characters">Special characters (!&amp;*)</string>
+    <string name="character_count">%s characters</string>
+    <string name="regenerate_password_icon_content_description">Regenerate pass icon</string>
 
     <!-- Alerts -->
     <string name="alert_confirm_move_to_trash_dialog_title">Move to trash</string>
@@ -25,7 +33,7 @@
     <!-- Field -->
     <string name="field_title_title">Title</string>
     <string name="field_title_hint">Untitled</string>
-    <string name="clear_title_icon_content_description">Clear title icon</string>
+    <string name="small_cross_icon_content_description">Small cross icon</string>
 
     <string name="field_note_title">Note</string>
     <string name="field_note_hint">Add note</string>

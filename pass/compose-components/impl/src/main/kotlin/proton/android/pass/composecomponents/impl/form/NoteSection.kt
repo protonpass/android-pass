@@ -3,7 +3,6 @@ package proton.android.pass.composecomponents.impl.form
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -58,15 +57,7 @@ fun NoteSection(
             null
         },
         trailingIcon = if (!isRounded && value.isNotBlank() && enabled) {
-            {
-                IconButton(onClick = { onChange("") }) {
-                    Icon(
-                        painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_small),
-                        contentDescription = null,
-                        tint = ProtonTheme.colors.iconWeak,
-                    )
-                }
-            }
+            { SmallCrossIconButton { onChange("") } }
         } else {
             null
         },

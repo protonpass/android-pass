@@ -12,7 +12,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -32,7 +31,7 @@ fun BottomSheetCancelConfirm(
     ) {
         CircleButton(
             modifier = Modifier.weight(1f),
-            color = ProtonTheme.colors.textDisabled,
+            color = PassTheme.colors.textDisabled,
             onClick = onCancel
         ) {
             Text(

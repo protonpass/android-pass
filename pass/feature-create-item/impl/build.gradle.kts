@@ -70,7 +70,9 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.datetime)
     testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.clipboard.fakes)
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.totp.fakes)
 }

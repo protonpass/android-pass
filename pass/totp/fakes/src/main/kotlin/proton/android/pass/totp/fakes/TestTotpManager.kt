@@ -10,6 +10,8 @@ class TestTotpManager @Inject constructor() : TotpManager {
 
     override fun generateUri(spec: TotpSpec): String = ""
 
+    override fun generateUriWithDefaults(secret: String): String = ""
+
     override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> = emptyFlow()
 
     override fun parse(uri: String): Result<TotpSpec> = Result.failure(NotImplementedError())

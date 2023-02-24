@@ -37,6 +37,14 @@ class TotpManagerImpl @Inject constructor(
         return builder.buildToString()
     }
 
+    @Suppress("MagicNumber")
+    override fun generateUriWithDefaults(secret: String): String =
+        OtpAuthUriBuilder.forTotp(secret.encodeToByteArray())
+            .digits(6)
+            .algorithm(HmacAlgorithm.SHA1)
+            .period(30, TimeUnit.SECONDS)
+            .buildToString()
+
     override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> {
         val config = TimeBasedOneTimePasswordConfig(
             timeStep = spec.validPeriodSeconds.toLong(),

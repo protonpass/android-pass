@@ -6,4 +6,7 @@ interface ClipboardManager {
 
     @WorkerThread
     fun copyToClipboard(text: String, clearAfterSeconds: Long? = 120, isSecure: Boolean = false)
+
+    @WorkerThread
+    fun getClipboardContent(): Result<String>
 }

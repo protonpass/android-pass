@@ -60,7 +60,7 @@ private fun CameraPreviewBindingDisposableEffect(
                 setAnalyzer(
                     Dispatchers.Main.asExecutor(),
                     QrCodeImageAnalyzer(
-                        onSuccess = { onSuccess(it) },
+                        onSuccess = onSuccess,
                         onError = {}
                     )
                 )

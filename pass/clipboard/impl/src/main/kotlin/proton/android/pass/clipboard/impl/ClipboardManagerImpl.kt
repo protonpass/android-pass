@@ -2,11 +2,15 @@ package proton.android.pass.clipboard.impl
 
 import android.content.ClipData
 import android.content.ClipDescription
+import android.content.ClipDescription.MIMETYPE_TEXT_PLAIN
 import android.content.Context
 import android.os.Build
 import android.os.PersistableBundle
 import dagger.hilt.android.qualifiers.ApplicationContext
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.clipboard.api.CouldNotAccessClipboard
+import proton.android.pass.clipboard.api.CouldNoyGetClipboardContent
+import proton.android.pass.clipboard.api.EmptyClipboardContent
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import android.content.ClipboardManager as AndroidClipboardManager
@@ -28,6 +32,24 @@ class ClipboardManagerImpl @Inject constructor(
         }
         androidClipboard.setPrimaryClip(clipData)
         clearAfterSeconds?.let { scheduler.schedule(it, text) }
+    }
+
+    override fun getClipboardContent(): Result<String> {
+        val androidClipboard = context.getSystemService(AndroidClipboardManager::class.java)
+        if (androidClipboard == null) {
+            PassLogger.i(TAG, "Could not get ClipboardManager")
+            return Result.failure(CouldNotAccessClipboard())
+        }
+        if (!androidClipboard.hasPrimaryClip() ||
+            androidClipboard.primaryClipDescription?.hasMimeType(MIMETYPE_TEXT_PLAIN) != true
+        ) {
+            PassLogger.i(TAG, "Could not get clipboard content")
+            return Result.failure(CouldNoyGetClipboardContent())
+        }
+
+        return androidClipboard.primaryClip?.getItemAt(0)?.text?.toString()
+            ?.let { Result.success(it) }
+            ?: Result.failure(EmptyClipboardContent())
     }
 
     private fun applySecureFlag(clipData: ClipData) {

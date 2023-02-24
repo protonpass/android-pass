@@ -8,7 +8,7 @@ import java.nio.ByteBuffer
 
 class QrCodeImageAnalyzer(
     val onSuccess: (String) -> Unit,
-    val onError: () -> Unit
+    val onError: (Throwable) -> Unit
 ) : ImageAnalysis.Analyzer {
 
     override fun analyze(image: ImageProxy) {
@@ -32,7 +32,7 @@ class QrCodeImageAnalyzer(
         )
         ZxingWrapper.tryReadingQrCode(source)
             .onSuccess { onSuccess(it) }
-            .onFailure { onError() }
+            .onFailure { onError(it) }
         image.close()
     }
 

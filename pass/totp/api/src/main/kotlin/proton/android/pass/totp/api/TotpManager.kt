@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface TotpManager {
     fun generateUri(spec: TotpSpec): String
+    fun generateUriWithDefaults(secret: String): String
     fun observeCode(spec: TotpSpec): Flow<TotpWrapper>
     fun parse(uri: String): Result<TotpSpec>
 

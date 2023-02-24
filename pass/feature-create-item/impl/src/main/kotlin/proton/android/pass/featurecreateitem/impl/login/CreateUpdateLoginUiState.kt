@@ -4,6 +4,7 @@ import androidx.compose.runtime.Immutable
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
+import proton.android.pass.featurecreateitem.impl.OpenScanState
 
 @Immutable
 data class CreateUpdateLoginUiState(
@@ -13,6 +14,7 @@ data class CreateUpdateLoginUiState(
     val validationErrors: Set<LoginItemValidationErrors>,
     val isLoadingState: IsLoadingState,
     val isItemSaved: ItemSavedState,
+    val openScanState: OpenScanState,
     val focusLastWebsite: Boolean,
     val canUpdateUsername: Boolean,
     val primaryEmail: String?,
@@ -25,6 +27,7 @@ data class CreateUpdateLoginUiState(
             loginItem = LoginItem.Empty,
             validationErrors = emptySet(),
             isItemSaved = ItemSavedState.Unknown,
+            openScanState = OpenScanState.Unknown,
             focusLastWebsite = false,
             canUpdateUsername = true,
             primaryEmail = null

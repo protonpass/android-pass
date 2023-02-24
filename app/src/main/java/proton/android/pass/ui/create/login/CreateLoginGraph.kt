@@ -10,7 +10,6 @@ import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.RESULT_CREATED_DRAFT_ALIAS
 import proton.android.pass.featurecreateitem.impl.login.CreateLogin
 import proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
-import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AddTotpType
 import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
@@ -44,13 +43,7 @@ fun NavGraphBuilder.createLoginGraph(nav: AppNavigator) {
                     )
                 )
             },
-            onAddTotp = {
-                when (it) {
-                    AddTotpType.Camera -> nav.navigate(AppNavItem.CameraTotp)
-                    AddTotpType.File -> nav.navigate(AppNavItem.PhotoPickerTotp)
-                    AddTotpType.Manual -> nav.navigate(AppNavItem.CreateTotp)
-                }
-            }
+            onScanTotp = { nav.navigate(AppNavItem.CameraTotp) }
         )
     }
 }

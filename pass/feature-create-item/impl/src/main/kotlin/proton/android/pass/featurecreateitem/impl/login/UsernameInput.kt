@@ -18,6 +18,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
+import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featurecreateitem.impl.R
 
 @Composable
@@ -48,16 +49,7 @@ internal fun UsernameInput(
         trailingIcon = {
             if (canUpdateUsername) {
                 if (value.isNotEmpty()) {
-                    IconButton(
-                        enabled = isEditAllowed,
-                        onClick = { onChange("") }
-                    ) {
-                        Icon(
-                            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_small),
-                            contentDescription = null,
-                            tint = ProtonTheme.colors.iconWeak
-                        )
-                    }
+                    SmallCrossIconButton(enabled = isEditAllowed) { onChange("") }
                 }
             } else {
                 IconButton(

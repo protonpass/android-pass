@@ -2,12 +2,9 @@ package proton.android.pass.composecomponents.impl.form
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,15 +50,7 @@ fun TitleSection(
             )
         },
         trailingIcon = if (!isRounded && value.isNotBlank() && enabled) {
-            {
-                IconButton(onClick = { onChange("") }) {
-                    Icon(
-                        painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_small),
-                        contentDescription = stringResource(R.string.clear_title_icon_content_description),
-                        tint = ProtonTheme.colors.iconWeak,
-                    )
-                }
-            }
+            { SmallCrossIconButton { onChange("") } }
         } else {
             null
         },

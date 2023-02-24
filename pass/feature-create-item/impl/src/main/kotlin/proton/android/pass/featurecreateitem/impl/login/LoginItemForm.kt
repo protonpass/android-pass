@@ -48,6 +48,7 @@ internal fun LoginItemForm(
     onTitleRequiredError: Boolean,
     onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
+    onTotpChange: (String) -> Unit,
     onWebsiteChange: OnWebsiteChange,
     doesWebsiteIndexHaveError: (Int) -> Boolean,
     focusLastWebsite: Boolean,
@@ -57,8 +58,8 @@ internal fun LoginItemForm(
     canUpdateUsername: Boolean,
     onAliasOptionsClick: () -> Unit,
     onVaultSelectorClick: () -> Unit,
-    onAddTotpClick: () -> Unit,
-    onDeleteTotpClick: () -> Unit,
+    onPasteTotpClick: () -> Unit,
+    onScanTotpClick: () -> Unit,
     onLinkedAppDelete: (PackageInfoUi) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -102,8 +103,14 @@ internal fun LoginItemForm(
                         None
                     }
                 },
-                onAddTotpClick = onAddTotpClick,
-                onDeleteTotpClick = onDeleteTotpClick
+                onTotpChanged = onTotpChange,
+                onTotpFocus = { isFocused ->
+                    currentStickyFormOption = if (isFocused) {
+                        AddTotp
+                    } else {
+                        None
+                    }
+                }
             )
             WebsitesSection(
                 websites = loginItem.websiteAddresses.toImmutableList(),
@@ -163,7 +170,16 @@ internal fun LoginItemForm(
                         keyboardController?.hide()
                     }
                 )
-                AddTotp -> TODO()
+                AddTotp -> StickyTotpOptions(
+                    onPasteCode = {
+                        onPasteTotpClick()
+                        keyboardController?.hide()
+                    },
+                    onScanCode = {
+                        onScanTotpClick()
+                        keyboardController?.hide()
+                    }
+                )
                 None -> {}
             }
         }

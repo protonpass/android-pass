@@ -33,6 +33,6 @@ fun SaveItemScreen(
         onClose = onSaved, // For now we consider close to be the same as success
         onSuccess = { onSaved() },
         onCreateAliasClick = { _, _ -> }, // We don't support creating alias from autosave
-        onAddTotp = {}
+        onScanTotp = {}
     )
 }

@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.toImmutableSet
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -13,8 +15,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -27,12 +31,14 @@ import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
+import proton.android.pass.featurecreateitem.impl.OpenScanState
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.Item
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.NewAlias
@@ -41,6 +47,8 @@ abstract class BaseLoginViewModel(
     private val createAlias: CreateAlias,
     protected val accountManager: AccountManager,
     private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val clipboardManager: ClipboardManager,
+    private val totpManager: TotpManager,
     observeVaults: ObserveVaults,
     observeCurrentUser: ObserveCurrentUser,
     savedStateHandle: SavedStateHandle
@@ -58,6 +66,19 @@ abstract class BaseLoginViewModel(
         MutableStateFlow(IsLoadingState.NotLoading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
         MutableStateFlow(ItemSavedState.Unknown)
+    private val openScanState: MutableStateFlow<OpenScanState> =
+        MutableStateFlow(OpenScanState.Unknown)
+
+    private val eventsFlow: Flow<Events> = combine(
+        isItemSavedState,
+        openScanState
+    ) { isItemSaved, openScan -> Events(isItemSaved, openScan) }
+
+    data class Events(
+        val itemSavedState: ItemSavedState,
+        val openScanState: OpenScanState,
+    )
+
     private val loginItemValidationErrorsState: MutableStateFlow<Set<LoginItemValidationErrors>> =
         MutableStateFlow(emptySet())
     private val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -115,16 +136,17 @@ abstract class BaseLoginViewModel(
         sharesWrapperState,
         loginItemWrapperState,
         isLoadingState,
-        isItemSavedState,
+        eventsFlow,
         focusLastWebsiteState
-    ) { shareWrapper, loginItemWrapper, isLoading, isItemSaved, focusLastWebsite ->
+    ) { shareWrapper, loginItemWrapper, isLoading, events, focusLastWebsite ->
         CreateUpdateLoginUiState(
             shareList = shareWrapper.shareList,
             selectedShareId = shareWrapper.currentShare,
             loginItem = loginItemWrapper.loginItem,
             validationErrors = loginItemWrapper.loginItemValidationErrors,
             isLoadingState = isLoading,
-            isItemSaved = isItemSaved,
+            isItemSaved = events.itemSavedState,
+            openScanState = events.openScanState,
             focusLastWebsite = focusLastWebsite,
             canUpdateUsername = loginItemWrapper.canUpdateUsername,
             primaryEmail = loginItemWrapper.primaryEmail
@@ -149,6 +171,11 @@ abstract class BaseLoginViewModel(
 
     fun onPasswordChange(value: String) {
         loginItemState.update { it.copy(password = value) }
+    }
+
+    fun onTotpChange(value: String) {
+        val newValue = value.replace(" ", "").replace("\n", "")
+        loginItemState.update { it.copy(primaryTotp = newValue) }
     }
 
     fun onWebsiteChange(value: String, index: Int) {
@@ -220,7 +247,12 @@ abstract class BaseLoginViewModel(
     protected fun validateItem(): Boolean {
         loginItemState.update {
             val websites = sanitizeWebsites(it.websiteAddresses)
-            it.copy(websiteAddresses = websites)
+            val otp = if (it.primaryTotp.isNotBlank()) {
+                sanitizeOTP(it.primaryTotp)
+            } else {
+                ""
+            }
+            it.copy(websiteAddresses = websites, primaryTotp = otp)
         }
         val loginItem = loginItemState.value
         val loginItemValidationErrors = loginItem.validate()
@@ -243,18 +275,34 @@ abstract class BaseLoginViewModel(
             }
         }
 
+    private fun sanitizeOTP(otp: String): String =
+        totpManager.parse(otp).fold(
+            onSuccess = { otp },
+            onFailure = { totpManager.generateUriWithDefaults(otp) }
+        )
+
     fun changeVault(shareId: ShareId) = viewModelScope.launch {
         selectedShareIdState.update { shareId.toOption() }
-    }
-
-    fun onDeleteTotp() {
-        loginItemState.update { it.copy(primaryTotp = "") }
     }
 
     fun onDeleteLinkedApp(packageInfo: PackageInfoUi) {
         loginItemState.update {
             it.copy(packageInfoSet = it.packageInfoSet.minus(packageInfo).toImmutableSet())
         }
+    }
+
+    fun onPasteTotp() = viewModelScope.launch(Dispatchers.IO) {
+        clipboardManager.getClipboardContent()
+            .onSuccess { clipboardContent ->
+                withContext(Dispatchers.Main) {
+                    loginItemState.update {
+                        it.copy(
+                            primaryTotp = clipboardContent
+                        )
+                    }
+                }
+            }
+            .onFailure { PassLogger.d(TAG, it, "Failed on getting clipboard content") }
     }
 
     fun onRemoveAlias() {

@@ -1,7 +1,6 @@
 package proton.android.pass.featurecreateitem.impl.login
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -19,8 +18,8 @@ fun MainLoginSection(
     onAliasOptionsClick: () -> Unit,
     onPasswordChange: (String) -> Unit,
     onPasswordFocus: (Boolean) -> Unit,
-    onAddTotpClick: () -> Unit,
-    onDeleteTotpClick: () -> Unit
+    onTotpChanged: (String) -> Unit,
+    onTotpFocus: (Boolean) -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
@@ -42,11 +41,10 @@ fun MainLoginSection(
         )
         Divider()
         TotpInput(
-            modifier = Modifier.fillMaxWidth(),
             value = loginItem.primaryTotp,
             enabled = isEditAllowed,
-            onAddTotpClick = onAddTotpClick,
-            onDeleteTotpClick = onDeleteTotpClick
+            onTotpChanged = onTotpChanged,
+            onFocus = onTotpFocus
         )
     }
 }

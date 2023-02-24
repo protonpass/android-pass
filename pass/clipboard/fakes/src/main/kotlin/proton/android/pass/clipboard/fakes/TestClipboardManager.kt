@@ -15,4 +15,6 @@ class TestClipboardManager @Inject constructor() : ClipboardManager {
         contents = text
         _clearAfterSeconds = clearAfterSeconds
     }
+
+    override fun getClipboardContent(): Result<String> = Result.success("")
 }

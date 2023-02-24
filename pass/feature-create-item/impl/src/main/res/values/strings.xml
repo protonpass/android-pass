@@ -22,7 +22,6 @@
     <string name="field_website_address_hint">https://</string>
     <string name="field_website_add_another">Add</string>
     <string name="field_detail_note_title">Note</string>
-    <string name="bottomsheet_generate_password_title">Generate Password</string>
     <string name="sticky_button_generate_password">Generate a new password</string>
     <string name="sticky_button_generate_password_key_icon_content_description">Generate password icon</string>
     <string name="sticky_button_create_alias">Hide my username</string>
@@ -86,9 +85,6 @@
 
     <!--  Create password  -->
     <string name="title_create_password">Generate password</string>
-    <string name="special_characters">Special characters</string>
-    <string name="character_count">%s characters</string>
-    <string name="generate_password_copy">Copy</string>
     <string name="bottom_sheet_generate_password_confirm">Confirm</string>
     <string name="password_copied_to_clipboard">Password copied</string>
 

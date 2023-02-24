@@ -1,4 +1,4 @@
-package proton.android.pass.featurecreateitem.impl.password
+package proton.android.pass.composecomponents.impl.generatepassword
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,12 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.Divider
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Slider
 import androidx.compose.material.Surface
 import androidx.compose.material.Switch
@@ -21,53 +16,38 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.subheadline
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.featurecreateitem.impl.R
+import proton.android.pass.commonui.api.toPasswordAnnotatedString
+import proton.android.pass.composecomponents.impl.R
 
 @Composable
-internal fun CreatePasswordViewContent(
+fun GeneratePasswordViewContent(
     modifier: Modifier = Modifier,
-    state: CreatePasswordUiState,
+    state: GeneratePasswordUiState,
     onSpecialCharactersChange: (Boolean) -> Unit,
-    onLengthChange: (Int) -> Unit,
-    onRegenerateClick: () -> Unit
+    onLengthChange: (Int) -> Unit
 ) {
     Column(
-        modifier = modifier.padding(horizontal = 16.dp)
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp, bottom = 48.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            PasswordText(
-                modifier = Modifier
-                    .weight(1f)
-                    .height(72.dp),
-                text = state.password
-            )
-            Spacer(modifier = Modifier.size(8.dp))
-            IconButton(
-                onClick = { onRegenerateClick() }
-            ) {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_arrows_rotate),
-                    contentDescription = null
-                )
-            }
-        }
-
-        Divider()
-
+        val annotatedString = state.password.toPasswordAnnotatedString(
+            digitColor = PassTheme.colors.accentPurpleOpaque,
+            symbolColor = PassTheme.colors.accentGreenOpaque,
+            letterColor = PassTheme.colors.textNorm
+        )
+        Text(
+            modifier = Modifier.height(100.dp),
+            text = annotatedString,
+            style = ProtonTheme.typography.subheadline
+        )
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -81,7 +61,7 @@ internal fun CreatePasswordViewContent(
             val (length, setLength) = remember { mutableStateOf(state.length.toFloat()) }
             Slider(
                 value = length,
-                valueRange = CreatePasswordViewModel.LENGTH_RANGE,
+                valueRange = 4.toFloat()..64.toFloat(),
                 onValueChange = { newLength ->
                     if (length.toInt() != newLength.toInt()) {
                         setLength(newLength)
@@ -107,38 +87,19 @@ internal fun CreatePasswordViewContent(
 
 @Preview
 @Composable
-fun CreatePasswordViewContentThemePreview(
+fun GeneratePasswordViewContentThemePreview(
     @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
 ) {
     PassTheme(isDark = isDarkMode) {
         Surface {
-            CreatePasswordViewContent(
-                state = CreatePasswordUiState(
+            GeneratePasswordViewContent(
+                state = GeneratePasswordUiState(
                     password = "a1b!c_d3e#fg",
                     length = 12,
                     hasSpecialCharacters = true
                 ),
                 onSpecialCharactersChange = {},
-                onLengthChange = {},
-                onRegenerateClick = {}
-            )
-        }
-    }
-}
-
-
-@Preview
-@Composable
-fun CreatePasswordViewContentPreview(
-    @PreviewParameter(CreatePasswordStatePreviewProvider::class) state: CreatePasswordUiState
-) {
-    ProtonTheme {
-        Surface {
-            CreatePasswordViewContent(
-                state = state,
-                onSpecialCharactersChange = {},
-                onLengthChange = {},
-                onRegenerateClick = {}
+                onLengthChange = {}
             )
         }
     }

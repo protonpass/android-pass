@@ -1,6 +1,7 @@
-package proton.android.pass.featurecreateitem.impl.password
+package proton.android.pass.featurecreateitem.impl.login.bottomsheet.password
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -9,21 +10,30 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-fun CreatePassword(
+fun GeneratePasswordBottomSheet(
     modifier: Modifier = Modifier,
-    onUpClick: () -> Unit
+    regeneratePassword: Boolean,
+    onPasswordRegenerated: () -> Unit,
+    onConfirm: (String) -> Unit,
+    onDismiss: () -> Unit,
 ) {
-    val viewModel: CreatePasswordViewModel = hiltViewModel()
+    val viewModel = hiltViewModel<GeneratePasswordViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    CreatePasswordContent(
+    LaunchedEffect(regeneratePassword) {
+        if (regeneratePassword) {
+            viewModel.regenerate()
+            onPasswordRegenerated()
+        }
+    }
+
+    GeneratePasswordBottomSheetContent(
         modifier = modifier,
         state = state,
-        onUpClick = onUpClick,
         onLengthChange = { viewModel.onLengthChange(it) },
         onRegenerateClick = { viewModel.regenerate() },
         onHasSpecialCharactersChange = { viewModel.onHasSpecialCharactersChange(it) },
-        onConfirm = { viewModel.onConfirm() }
+        onConfirm = onConfirm,
+        onDismiss = onDismiss
     )
 }
-

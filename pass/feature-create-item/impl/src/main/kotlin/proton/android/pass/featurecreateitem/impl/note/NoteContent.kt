@@ -62,7 +62,8 @@ internal fun NoteContent(
                 CreateUpdateTopBar(
                     text = topBarActionName,
                     isLoading = uiState.isLoadingState.value(),
-                    color = PassTheme.colors.accentYellowOpaque,
+                    opaqueColor = PassTheme.colors.accentYellowOpaque,
+                    weakestColor = PassTheme.colors.accentYellowWeakest,
                     onCloseClick = onUpClick,
                     onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
                 )

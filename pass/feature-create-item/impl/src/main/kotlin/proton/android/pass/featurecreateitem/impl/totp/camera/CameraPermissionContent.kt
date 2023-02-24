@@ -1,32 +1,78 @@
 package proton.android.pass.featurecreateitem.impl.totp.camera
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.width
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionState
-import com.google.accompanist.permissions.shouldShowRationale
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.default
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.buttons.CircleButton
+import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
+import proton.android.pass.featurecreateitem.impl.R
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun CameraPermissionContent(modifier: Modifier = Modifier, cameraPermissionState: PermissionState) {
-    Column(modifier) {
-        val textToShow = if (cameraPermissionState.status.shouldShowRationale) {
-            // If the user has denied the permission but the rationale can be shown,
-            // then gently explain why the app requires this permission
-            "The camera is important for this app. Please grant the permission."
-        } else {
-            // If it's the first time the user lands on this feature, or the user
-            // doesn't want to be asked again for this permission, explain that the
-            // permission is required
-            "Camera permission required for this feature to be available. " +
-                "Please grant the permission"
+fun CameraPermissionContent(
+    modifier: Modifier = Modifier,
+    onRequestPermission: () -> Unit,
+    onOpenAppSettings: () -> Unit,
+    onDismiss: () -> Unit,
+) {
+    LaunchedEffect(Unit) { onRequestPermission() }
+    Box(modifier = modifier.fillMaxSize()) {
+        SmallCrossIconButton(modifier = Modifier.align(Alignment.TopEnd)) { onDismiss() }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(60.dp, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                modifier = Modifier.width(250.dp),
+                text = stringResource(R.string.camera_permission_explanation),
+                style = ProtonTheme.typography.default,
+                textAlign = TextAlign.Center
+            )
+            CircleButton(
+                modifier = Modifier.width(250.dp),
+                color = PassTheme.colors.accentPurpleOpaque,
+                onClick = { onOpenAppSettings() }
+            ) {
+                Text(
+                    text = stringResource(R.string.camera_permission_open_settings),
+                    style = PassTypography.body3RegularInverted
+                )
+            }
         }
-        Text(textToShow)
-        Button(onClick = { cameraPermissionState.launchPermissionRequest() }) {
-            Text("Request permission")
+    }
+
+}
+
+@Preview
+@Composable
+fun CameraPermissionContentPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            CameraPermissionContent(
+                onRequestPermission = {},
+                onOpenAppSettings = {},
+                onDismiss = {}
+            )
         }
     }
 }

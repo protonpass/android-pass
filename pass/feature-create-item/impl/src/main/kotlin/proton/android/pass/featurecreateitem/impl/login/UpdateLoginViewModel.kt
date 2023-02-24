@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.map
@@ -34,6 +35,7 @@ import proton.android.pass.featurecreateitem.impl.login.LoginSnackbarMessages.It
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -48,6 +50,8 @@ class UpdateLoginViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     createAlias: CreateAlias,
     accountManager: AccountManager,
+    clipboardManager: ClipboardManager,
+    totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
@@ -55,6 +59,8 @@ class UpdateLoginViewModel @Inject constructor(
     createAlias,
     accountManager,
     snackbarMessageRepository,
+    clipboardManager,
+    totpManager,
     observeVaults,
     observeCurrentUser,
     savedStateHandle

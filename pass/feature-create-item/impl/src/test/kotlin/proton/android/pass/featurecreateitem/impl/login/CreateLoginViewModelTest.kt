@@ -7,6 +7,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.commonui.api.itemName
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -28,6 +29,7 @@ import proton.android.pass.test.TestUtils
 import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
+import proton.android.pass.totp.fakes.TestTotpManager
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 
@@ -36,6 +38,8 @@ internal class CreateLoginViewModelTest {
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
+    private lateinit var totpManager: TestTotpManager
+    private lateinit var clipboardManager: TestClipboardManager
     private lateinit var accountManager: TestAccountManager
     private lateinit var createItem: TestCreateItem
     private lateinit var observeVaults: TestObserveVaults
@@ -43,12 +47,16 @@ internal class CreateLoginViewModelTest {
 
     @Before
     fun setUp() {
+        totpManager = TestTotpManager()
+        clipboardManager = TestClipboardManager()
         accountManager = TestAccountManager()
         createItem = TestCreateItem()
         observeVaults = TestObserveVaults()
         createLoginViewModel = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,
+            clipboardManager = clipboardManager,
+            totpManager = totpManager,
             snackbarMessageRepository = TestSnackbarMessageRepository(),
             savedStateHandle = TestSavedStateHandle.create(),
             encryptionContextProvider = TestEncryptionContextProvider(),

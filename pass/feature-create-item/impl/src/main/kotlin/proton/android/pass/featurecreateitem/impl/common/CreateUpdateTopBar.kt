@@ -1,6 +1,5 @@
 package proton.android.pass.featurecreateitem.impl.common
 
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -30,7 +29,8 @@ internal fun CreateUpdateTopBar(
     modifier: Modifier = Modifier,
     text: String,
     isLoading: Boolean,
-    color: Color,
+    opaqueColor: Color,
+    weakestColor: Color,
     onCloseClick: () -> Unit,
     onActionClick: () -> Unit
 ) {
@@ -41,7 +41,7 @@ internal fun CreateUpdateTopBar(
         navigationIcon = {
             Circle(
                 modifier = Modifier.padding(12.dp, 4.dp),
-                backgroundColor = color,
+                backgroundColor = weakestColor,
                 onClick = {
                     keyboardController?.hide()
                     onCloseClick()
@@ -50,16 +50,14 @@ internal fun CreateUpdateTopBar(
                 Icon(
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_small),
                     contentDescription = stringResource(R.string.close_scree_icon_content_description),
-                    tint = color
+                    tint = opaqueColor
                 )
             }
         },
         actions = {
             LoadingCircleButton(
-                modifier = Modifier
-                    .height(48.dp)
-                    .padding(12.dp, 4.dp),
-                color = color,
+                modifier = Modifier.padding(12.dp, 4.dp),
+                color = opaqueColor,
                 isLoading = isLoading,
                 text = {
                     Text(
@@ -90,7 +88,8 @@ fun CreateUpdateTopBarPreview(
             CreateUpdateTopBar(
                 text = "Save",
                 isLoading = input.second.isLoading,
-                color = input.second.color,
+                opaqueColor = input.second.opaqueColor,
+                weakestColor = input.second.weakestColor,
                 onCloseClick = {},
                 onActionClick = {}
             )

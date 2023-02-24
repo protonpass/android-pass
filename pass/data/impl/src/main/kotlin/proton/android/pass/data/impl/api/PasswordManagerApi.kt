@@ -145,6 +145,6 @@ interface PasswordManagerApi : BaseRetrofitApi {
     suspend fun getFavicon(
         @Query("Address") address: String,
         @Query("Size") size: Int = 64,
-        @Query("Mode") mode: String = "light"
+        @Query("Mode") mode: String = "dark"
     ): retrofit2.Response<okhttp3.ResponseBody>
 }

@@ -4,6 +4,7 @@ import android.content.Context
 import coil.ImageLoader
 import coil.decode.ImageDecoderDecoder
 import coil.decode.SvgDecoder
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,4 +28,12 @@ object ImageModule {
             add(ImageDecoderDecoder.Factory())
         }
         .build()
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+abstract class ImageBindingModule {
+
+    @Binds
+    abstract fun bindClearIconCache(impl: ClearIconCacheImpl): ClearIconCache
 }

@@ -53,5 +53,6 @@
     <string name="missing_app_icon_content_description">Missing app icon</string>
     <string name="linked_app_icon_content_description">App icon</string>
     <string name="linked_app_cross_icon_content_description">Remove linked app icon</string>
+    <string name="forward_icon_content_description">Arrow forward icon</string>
 
 </resources>

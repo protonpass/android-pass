@@ -62,9 +62,14 @@
     <string name="field_alias_is_blank">Alias cannot be blank</string>
     <string name="field_alias_invalid">Invalid alias</string>
     <string name="field_alias_hint">Alias username</string>
-    <string name="field_mailboxes_title">Destination mailbox</string>
+    <string name="field_mailboxes_title">Forwarded to</string>
     <string name="alias_you_are_about_to_create_alias">Preview:</string>
     <string name="alias_detail_field_mailboxes_title">Mailboxes</string>
+    <string name="field_alias_you_are_about_to_create">You are about to create</string>
+    <string name="field_alias_show_advanced_options">Show advanced options</string>
+    <string name="field_alias_hide_advanced_options">Hide advanced options</string>
+    <string name="field_alias_prefix">Prefix</string>
+    <string name="field_alias_suffix">Suffix</string>
 
     <string name="alias_action_save_fill">Save &amp; fill</string>
 

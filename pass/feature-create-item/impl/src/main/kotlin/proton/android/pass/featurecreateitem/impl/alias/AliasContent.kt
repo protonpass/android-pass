@@ -105,12 +105,13 @@ internal fun AliasContent(
             }
         ) { padding ->
             CreateAliasForm(
+                modifier = Modifier.padding(padding),
                 aliasItem = uiState.aliasItem,
                 selectedShare = uiState.selectedShareId,
                 canEdit = canEdit,
                 isUpdate = isUpdate,
                 isEditAllowed = isEditAllowed,
-                modifier = Modifier.padding(padding),
+                isLoading = uiState.isLoadingState.value(),
                 onTitleRequiredError = uiState.errorList.contains(BlankTitle),
                 onAliasRequiredError = uiState.errorList.contains(BlankAlias),
                 onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),

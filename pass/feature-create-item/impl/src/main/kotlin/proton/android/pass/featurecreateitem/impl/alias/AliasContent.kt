@@ -15,6 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
@@ -140,7 +141,7 @@ internal fun AliasContent(
 
             SelectSuffixDialog(
                 show = showSuffixDialog,
-                suffixes = uiState.aliasItem.aliasOptions.suffixes,
+                suffixes = uiState.aliasItem.aliasOptions.suffixes.toImmutableList(),
                 selectedSuffix = uiState.aliasItem.selectedSuffix,
                 onSuffixChanged = { suffix ->
                     scope.launch {

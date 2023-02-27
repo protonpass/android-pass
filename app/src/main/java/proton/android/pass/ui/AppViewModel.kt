@@ -29,7 +29,6 @@ import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.GetCurrentShare
 import proton.android.pass.data.api.usecases.GetCurrentUserId
@@ -45,7 +44,6 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.presentation.navigation.drawer.DrawerUiState
 import proton.android.pass.presentation.navigation.drawer.ItemTypeSection
 import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection
-import proton.android.pass.ui.AppSnackbarMessage.CouldNotRefreshItems
 import proton.pass.domain.Share
 import proton.pass.domain.entity.NewVault
 import javax.inject.Inject
@@ -62,8 +60,7 @@ class AppViewModel @Inject constructor(
     private val createVault: CreateVault,
     private val refreshShares: RefreshShares,
     private val cryptoContext: CryptoContext,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val applyPendingEvents: ApplyPendingEvents
+    private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -191,17 +188,7 @@ class AppViewModel @Inject constructor(
             )
             createVault(userId, vault)
                 .onError { onInitError(it, "Create Vault error") }
-        } else {
-            applyEvents()
         }
-    }
-
-    private fun applyEvents() = viewModelScope.launch {
-        applyPendingEvents()
-            .onError { t ->
-                PassLogger.e(TAG, t, "Apply pending events failed")
-                snackbarMessageRepository.emitSnackbarMessage(CouldNotRefreshItems)
-            }
     }
 
     private suspend fun onInitError(throwable: Throwable?, message: String) {

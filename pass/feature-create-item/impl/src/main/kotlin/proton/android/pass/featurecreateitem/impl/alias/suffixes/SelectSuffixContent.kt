@@ -22,7 +22,7 @@ fun SelectSuffixContent(
     LazyColumn(modifier = modifier) {
         items(items = suffixes, key = { it.suffix }) { item ->
             SelectSuffixItemRow(
-                item = item,
+                suffix = item.suffix,
                 isSelected = selected == item.suffix,
                 onSelect = { onSuffixChanged(item) }
             )

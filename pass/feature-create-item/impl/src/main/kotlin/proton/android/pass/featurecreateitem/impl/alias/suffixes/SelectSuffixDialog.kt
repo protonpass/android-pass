@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import kotlinx.collections.immutable.ImmutableList
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.component.ProtonTextButton
@@ -16,7 +17,7 @@ import proton.android.pass.featurecreateitem.impl.alias.AliasSuffixUiModel
 fun SelectSuffixDialog(
     modifier: Modifier = Modifier,
     show: Boolean,
-    suffixes: List<AliasSuffixUiModel>,
+    suffixes: ImmutableList<AliasSuffixUiModel>,
     selectedSuffix: AliasSuffixUiModel?,
     onSuffixChanged: (AliasSuffixUiModel) -> Unit,
     onDismiss: () -> Unit,

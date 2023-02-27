@@ -17,13 +17,11 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.featurecreateitem.impl.alias.AliasSuffixUiModel
-
 
 @Composable
 fun SelectSuffixItemRow(
     modifier: Modifier = Modifier,
-    item: AliasSuffixUiModel,
+    suffix: String,
     isSelected: Boolean,
     onSelect: () -> Unit
 ) {
@@ -41,7 +39,7 @@ fun SelectSuffixItemRow(
                 selectedColor = PassColors.Dark.accentGreenNorm
             )
         )
-        Text(text = item.suffix)
+        Text(text = suffix)
     }
 }
 
@@ -53,12 +51,7 @@ fun SelectSuffixItemRowPreview(
     PassTheme(isDark = input.first) {
         Surface {
             SelectSuffixItemRow(
-                item = AliasSuffixUiModel(
-                    suffix = ".some@suffix.test",
-                    signedSuffix = "",
-                    isCustom = false,
-                    domain = ""
-                ),
+                suffix = ".some@suffix.test",
                 isSelected = input.second,
                 onSelect = {}
             )

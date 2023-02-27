@@ -1,12 +1,11 @@
 package proton.android.pass.featurecreateitem.impl.alias
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -47,14 +46,14 @@ fun AliasToBeCreated(
             .roundedContainer(ProtonTheme.colors.separatorNorm)
             .background(PassTheme.colors.backgroundNorm)
             .padding(horizontal = 16.dp, vertical = 16.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
             contentDescription = null,
             tint = PassTheme.colors.accentGreenNorm
         )
-        Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.fillMaxWidth()) {
             ProtonTextFieldLabel(text = stringResource(id = R.string.field_alias_you_are_about_to_create))
             Text(value)

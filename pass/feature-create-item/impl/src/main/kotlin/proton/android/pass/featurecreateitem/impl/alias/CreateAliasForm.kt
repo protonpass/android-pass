@@ -25,6 +25,7 @@ internal fun CreateAliasForm(
     onAliasRequiredError: Boolean,
     onInvalidAliasError: Boolean,
     isEditAllowed: Boolean,
+    isLoading: Boolean,
     onTitleChange: (String) -> Unit,
     onAliasChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
@@ -51,18 +52,20 @@ internal fun CreateAliasForm(
                 onChange = onAliasChange,
                 onSuffixClick = onSuffixClick,
                 canEdit = isEditAllowed,
-                canSelect = aliasItem.aliasOptions.suffixes.size > 1,
+                canSelectSuffix = aliasItem.aliasOptions.suffixes.size > 1,
                 onAliasRequiredError = onAliasRequiredError,
                 onInvalidAliasError = onInvalidAliasError
             )
         } else {
             DisplayAliasSection(
-                state = aliasItem
+                state = aliasItem,
+                isLoading = isLoading
             )
         }
         MailboxSection(
-            contentText = aliasItem.mailboxTitle,
+            mailboxes = aliasItem.mailboxes,
             isEditAllowed = isEditAllowed && aliasItem.mailboxes.size > 1,
+            isLoading = isLoading,
             onMailboxClick = onMailboxClick
         )
         NoteSection(

@@ -45,7 +45,6 @@
     <string name="more_info_last_time_modified">Last time, %s</string>
 
     <string name="top_bar_edit_icon_content_description">Edit icon</string>
-    <string name="alias_mailbox_forward_icon_content_description">Arrow forward icon</string>
     <string name="alias_address_icon_content_description">Alias address icon</string>
     <string name="note_section_icon_content_description">Note section icon</string>
     <string name="password_key_icon_content_description">Password icon</string>

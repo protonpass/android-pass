@@ -15,6 +15,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -23,15 +26,22 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
-import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.featurecreateitem.impl.R
+import proton.android.pass.featurecreateitem.impl.alias.mailboxes.AliasToBeCreatedInput
+import proton.android.pass.featurecreateitem.impl.alias.mailboxes.AliasToBeCreatedPreviewProvider
 
 @Composable
-internal fun DisplayAliasSection(
+fun AliasToBeCreated(
     modifier: Modifier = Modifier,
-    state: AliasItem,
-    isLoading: Boolean
+    prefix: String,
+    suffix: AliasSuffixUiModel?
 ) {
+    val value = buildAnnotatedString {
+        append(AnnotatedString(prefix, SpanStyle(PassTheme.colors.textNorm)))
+        if (suffix != null) {
+            append(AnnotatedString(suffix.suffix, SpanStyle(PassTheme.colors.accentGreenNorm)))
+        }
+    }
     Row(
         modifier = modifier
             .roundedContainer(ProtonTheme.colors.separatorNorm)
@@ -46,27 +56,26 @@ internal fun DisplayAliasSection(
         )
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.fillMaxWidth()) {
-            ProtonTextFieldLabel(text = stringResource(id = R.string.field_alias_title))
-            if (isLoading) {
-                Text(modifier = Modifier.fillMaxWidth().placeholder(), text = "")
-            } else {
-                Text(state.aliasToBeCreated ?: "")
-            }
+            ProtonTextFieldLabel(text = stringResource(id = R.string.field_alias_you_are_about_to_create))
+            Text(value)
         }
     }
 }
 
-class ThemedDisplayAliasPreviewProvider :
-    ThemePairPreviewProvider<AliasItemParameter>(AliasItemPreviewProvider())
+class ThemedAliasToBeCreatedPreviewProvider :
+    ThemePairPreviewProvider<AliasToBeCreatedInput>(AliasToBeCreatedPreviewProvider())
 
 @Preview
 @Composable
-fun DisplayAliasSectionPreview(
-    @PreviewParameter(ThemedDisplayAliasPreviewProvider::class) input: Pair<Boolean, AliasItemParameter>
+fun AliasToBeCreatedPreview(
+    @PreviewParameter(ThemedAliasToBeCreatedPreviewProvider::class) input: Pair<Boolean, AliasToBeCreatedInput>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
-            DisplayAliasSection(state = input.second.item, isLoading = false)
+            AliasToBeCreated(
+                prefix = input.second.prefix,
+                suffix = input.second.suffix
+            )
         }
     }
 }

@@ -24,6 +24,7 @@ import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationError
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.InvalidAliasContent
 import proton.android.pass.featurecreateitem.impl.alias.mailboxes.SelectMailboxesDialog
+import proton.android.pass.featurecreateitem.impl.alias.suffixes.SelectSuffixDialog
 import proton.android.pass.featurecreateitem.impl.common.CreateUpdateTopBar
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.VaultSelectionBottomSheet
 import proton.pass.domain.ItemId
@@ -63,6 +64,7 @@ internal fun AliasContent(
     }
 
     var showMailboxDialog by remember { mutableStateOf(false) }
+    var showSuffixDialog by remember { mutableStateOf(false) }
 
     PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
@@ -117,10 +119,7 @@ internal fun AliasContent(
                 onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),
                 onSuffixClick = {
                     scope.launch {
-                        if (canEdit) {
-                            currentBottomSheet = AliasOptions
-                            bottomSheetState.show()
-                        }
+                        showSuffixDialog = true
                     }
                 },
                 onMailboxClick = {
@@ -135,6 +134,23 @@ internal fun AliasContent(
                     scope.launch {
                         currentBottomSheet = VaultSelection
                         bottomSheetState.show()
+                    }
+                }
+            )
+
+            SelectSuffixDialog(
+                show = showSuffixDialog,
+                suffixes = uiState.aliasItem.aliasOptions.suffixes,
+                selectedSuffix = uiState.aliasItem.selectedSuffix,
+                onSuffixChanged = { suffix ->
+                    scope.launch {
+                        showSuffixDialog = false
+                        onSuffixChange(suffix)
+                    }
+                },
+                onDismiss = {
+                    scope.launch {
+                        showSuffixDialog = false
                     }
                 }
             )

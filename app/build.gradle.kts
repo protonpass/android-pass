@@ -159,7 +159,7 @@ android {
         create("black") {
             dimension = "env"
             applicationIdSuffix = ".black"
-            buildConfigField("String", "HOST", "\"banks.proton.black\"")
+            buildConfigField("String", "HOST", "\"barkla.proton.black\"")
         }
         create("prod") {
             dimension = "env"

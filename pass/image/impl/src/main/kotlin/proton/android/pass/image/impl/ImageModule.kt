@@ -1,7 +1,10 @@
 package proton.android.pass.image.impl
 
 import android.content.Context
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
 import coil.ImageLoader
+import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.decode.SvgDecoder
 import dagger.Binds
@@ -25,7 +28,11 @@ object ImageModule {
         .components {
             add(fetcher)
             add(SvgDecoder.Factory())
-            add(ImageDecoderDecoder.Factory())
+            if (SDK_INT >= Build.VERSION_CODES.P) {
+                add(ImageDecoderDecoder.Factory())
+            } else {
+                add(GifDecoder.Factory())
+            }
         }
         .build()
 }

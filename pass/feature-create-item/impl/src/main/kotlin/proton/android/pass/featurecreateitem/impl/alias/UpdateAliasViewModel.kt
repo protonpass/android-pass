@@ -228,7 +228,7 @@ class UpdateAliasViewModel @Inject constructor(
         }
 
         val aliasItem = aliasItemState.value
-        val aliasItemValidationErrors = aliasItem.validate()
+        val aliasItemValidationErrors = aliasItem.validate(allowEmptyTitle = false)
         if (aliasItemValidationErrors.isNotEmpty()) {
             PassLogger.i(TAG, "alias item validation has failed: $aliasItemValidationErrors")
             aliasItemValidationErrorsState.update { aliasItemValidationErrors }

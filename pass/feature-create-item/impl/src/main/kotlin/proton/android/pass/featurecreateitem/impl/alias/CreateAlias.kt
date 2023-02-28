@@ -14,7 +14,7 @@ const val RESULT_CREATED_DRAFT_ALIAS = "created_draft_alias"
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-fun CreateAlias(
+fun CreateAliasScreen(
     modifier: Modifier = Modifier,
     onUpClick: () -> Unit,
     onAliasCreated: (String) -> Unit,

@@ -7,11 +7,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.autofill.ui.autofill.AutofillNavItem
+import proton.android.pass.autofill.ui.autofill.CameraTotp
+import proton.android.pass.autofill.ui.autofill.CreateTotp
+import proton.android.pass.autofill.ui.autofill.PhotoPickerTotp
 import proton.android.pass.featurecreateitem.impl.totp.CreateManualTotp
 import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featurecreateitem.impl.totp.camera.CameraPreviewTotp
-import proton.android.pass.featurecreateitem.impl.totp.photopicker.PhotoPickerTotp
+import proton.android.pass.featurecreateitem.impl.totp.photopicker.PhotoPickerTotpScreen
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
 
@@ -19,13 +21,13 @@ import proton.android.pass.navigation.api.composable
     ExperimentalAnimationApi::class
 )
 fun NavGraphBuilder.createTotpGraph(nav: AppNavigator) {
-    composable(AutofillNavItem.CreateTotp) {
+    composable(CreateTotp) {
         CreateManualTotp(
             onAddManualTotp = { totp -> nav.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
             onCloseManualTotp = { nav.onBackClick() }
         )
     }
-    composable(AutofillNavItem.CameraTotp) {
+    composable(CameraTotp) {
         var uriFound: String? by remember { mutableStateOf(null) }
         uriFound?.let { uri ->
             LaunchedEffect(Unit) {
@@ -37,8 +39,8 @@ fun NavGraphBuilder.createTotpGraph(nav: AppNavigator) {
             onClosePreview = { nav.onBackClick() }
         )
     }
-    composable(AutofillNavItem.PhotoPickerTotp) {
-        PhotoPickerTotp(
+    composable(PhotoPickerTotp) {
+        PhotoPickerTotpScreen(
             onQrReceived = { uri -> nav.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, uri) },
             onQrNotDetected = { nav.onBackClick() },
             onPhotoPickerDismissed = { nav.onBackClick() }

@@ -12,14 +12,18 @@ import proton.android.pass.featurecreateitem.impl.login.UpdateLogin
 import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.ui.navigation.AppNavItem
+import proton.android.pass.ui.navigation.CameraTotp
+import proton.android.pass.ui.navigation.CreateAlias
+import proton.android.pass.ui.navigation.EditLogin
+import proton.android.pass.ui.navigation.Home
+import proton.android.pass.ui.navigation.ViewItem
 
 @OptIn(
     ExperimentalAnimationApi::class,
     ExperimentalLifecycleComposeApi::class
 )
 fun NavGraphBuilder.updateLoginGraph(nav: AppNavigator) {
-    composable(AppNavItem.EditLogin) {
+    composable(EditLogin) {
         val createdDraftAlias by nav.navState<AliasItem>(RESULT_CREATED_DRAFT_ALIAS, null)
             .collectAsStateWithLifecycle()
         val primaryTotp by nav.navState<String>(TOTP_NAV_PARAMETER_KEY, null)
@@ -30,22 +34,22 @@ fun NavGraphBuilder.updateLoginGraph(nav: AppNavigator) {
             onUpClick = { nav.onBackClick() },
             onSuccess = { shareId, itemId ->
                 nav.navigate(
-                    destination = AppNavItem.ViewItem,
-                    route = AppNavItem.ViewItem.createNavRoute(shareId, itemId),
-                    backDestination = AppNavItem.Home
+                    destination = ViewItem,
+                    route = ViewItem.createNavRoute(shareId, itemId),
+                    backDestination = Home
                 )
             },
             onCreateAliasClick = { shareId, titleOption ->
                 nav.navigate(
-                    AppNavItem.CreateAlias,
-                    AppNavItem.CreateAlias.createNavRoute(
+                    CreateAlias,
+                    CreateAlias.createNavRoute(
                         shareId = shareId.toOption(),
                         title = titleOption,
                         isDraft = true
                     )
                 )
             },
-            onScanTotp = { nav.navigate(AppNavItem.CameraTotp) }
+            onScanTotp = { nav.navigate(CameraTotp) }
         )
     }
 }

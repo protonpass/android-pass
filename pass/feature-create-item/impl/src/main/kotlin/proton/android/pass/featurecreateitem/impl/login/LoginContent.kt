@@ -15,8 +15,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -24,6 +22,8 @@ import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
+import proton.android.pass.featurecreateitem.impl.alias.AliasItem
+import proton.android.pass.featurecreateitem.impl.alias.bottomsheet.CreateAliasBottomSheet
 import proton.android.pass.featurecreateitem.impl.common.CreateUpdateTopBar
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AliasOptionsBottomSheet
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.LoginBottomSheetContentType
@@ -49,12 +49,12 @@ internal fun LoginContent(
     onWebsiteChange: OnWebsiteChange,
     onNoteChange: (String) -> Unit,
     onTotpChange: (String) -> Unit,
-    onCreateAliasClick: (ShareId, Option<String>) -> Unit,
     onRemoveAliasClick: () -> Unit,
     onVaultSelect: (ShareId) -> Unit,
     onPasteTotpClick: () -> Unit,
     onScanTotpClick: () -> Unit,
-    onLinkedAppDelete: (PackageInfoUi) -> Unit
+    onLinkedAppDelete: (PackageInfoUi) -> Unit,
+    onAliasCreated: (AliasItem) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
@@ -96,6 +96,20 @@ internal fun LoginContent(
                     selectedShare = uiState.selectedShareId!!,
                     onVaultClick = {
                         onVaultSelect(it)
+                        scope.launch {
+                            bottomSheetState.hide()
+                        }
+                    }
+                )
+                LoginBottomSheetContentType.CreateAlias -> CreateAliasBottomSheet(
+                    itemTitle = uiState.loginItem.title,
+                    onAliasCreated = {
+                        scope.launch {
+                            onAliasCreated(it)
+                            bottomSheetState.hide()
+                        }
+                    },
+                    onCancel = {
                         scope.launch {
                             bottomSheetState.hide()
                         }
@@ -150,12 +164,16 @@ internal fun LoginContent(
                     }
                 },
                 onCreateAliasClick = {
-                    if (uiState.selectedShareId != null) {
-                        onCreateAliasClick(
-                            uiState.selectedShareId.id,
-                            uiState.loginItem.title.toOption()
-                        )
+                    scope.launch {
+                        currentBottomSheet = LoginBottomSheetContentType.CreateAlias
+                        bottomSheetState.show()
                     }
+//                    if (uiState.selectedShareId != null) {
+//                        onCreateAliasClick(
+//                            uiState.selectedShareId.id,
+//                            uiState.loginItem.title.toOption()
+//                        )
+//                    }
                 },
                 onAliasOptionsClick = {
                     scope.launch {

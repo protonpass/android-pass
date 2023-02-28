@@ -22,6 +22,7 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.ShareUiModel
@@ -163,6 +164,11 @@ abstract class BaseLoginViewModel(
         loginItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(LoginItemValidationErrors.BlankTitle) }
         }
+
+        val aliasItem = aliasItemState.value
+        if (aliasItem is Some) {
+            aliasItemState.update { aliasItem.value.copy(title = value).toOption() }
+        }
     }
 
     fun onUsernameChange(value: String) {
@@ -216,6 +222,15 @@ abstract class BaseLoginViewModel(
         viewModelScope.launch {
             snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
         }
+
+    fun onAliasCreated(aliasItem: AliasItem) {
+        aliasItemState.update { aliasItem.toOption() }
+        val alias = aliasItem.aliasToBeCreated
+        if (alias != null) {
+            loginItemState.update { it.copy(username = alias) }
+            canUpdateUsernameState.update { false }
+        }
+    }
 
     suspend fun performCreateAlias(
         userId: UserId,

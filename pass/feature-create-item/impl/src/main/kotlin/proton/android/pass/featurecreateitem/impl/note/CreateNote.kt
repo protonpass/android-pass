@@ -15,7 +15,7 @@ import proton.android.pass.featurecreateitem.impl.R
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
 @Composable
-fun CreateNote(
+fun CreateNoteScreen(
     modifier: Modifier = Modifier,
     onUpClick: () -> Unit,
     onSuccess: () -> Unit,

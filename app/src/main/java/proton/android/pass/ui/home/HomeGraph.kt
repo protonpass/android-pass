@@ -8,7 +8,7 @@ import proton.android.pass.featurehome.impl.HomeScreenNavigation
 import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.featurehome.impl.NavHome
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.ui.navigation.AppNavItem
+import proton.android.pass.ui.navigation.Home
 
 @OptIn(
     ExperimentalAnimationApi::class
@@ -20,7 +20,7 @@ fun NavGraphBuilder.homeGraph(
     homeItemTypeSelection: HomeItemTypeSelection,
     homeVaultSelection: HomeVaultSelection
 ) {
-    composable(AppNavItem.Home) {
+    composable(Home) {
         NavHome(
             navigationDrawer = navigationDrawer,
             homeScreenNavigation = homeScreenNavigation,

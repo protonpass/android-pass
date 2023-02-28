@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.common.api.toOption
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.RESULT_CREATED_DRAFT_ALIAS
 import proton.android.pass.featurecreateitem.impl.login.UpdateLogin
@@ -37,16 +36,6 @@ fun NavGraphBuilder.updateLoginGraph(nav: AppNavigator) {
                     destination = ViewItem,
                     route = ViewItem.createNavRoute(shareId, itemId),
                     backDestination = Home
-                )
-            },
-            onCreateAliasClick = { shareId, titleOption ->
-                nav.navigate(
-                    CreateAlias,
-                    CreateAlias.createNavRoute(
-                        shareId = shareId.toOption(),
-                        title = titleOption,
-                        isDraft = true
-                    )
                 )
             },
             onScanTotp = { nav.navigate(CameraTotp) }

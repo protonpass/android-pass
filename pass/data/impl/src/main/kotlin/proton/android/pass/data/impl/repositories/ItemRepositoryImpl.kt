@@ -19,7 +19,6 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
@@ -172,7 +171,7 @@ class ItemRepositoryImpl @Inject constructor(
         shareSelection: ShareSelection,
         itemState: ItemState,
         itemTypeFilter: ItemTypeFilter
-    ): Flow<LoadingResult<List<Item>>> =
+    ): Flow<List<Item>> =
         when (shareSelection) {
             is ShareSelection.Share -> localItemDataSource.observeItemsForShare(
                 userId = userId,
@@ -199,7 +198,6 @@ class ItemRepositoryImpl @Inject constructor(
                     items.map { entityToDomain(this@withEncryptionContext, it) }
                 }
             }
-            .asLoadingResult()
             .flowOn(Dispatchers.IO)
 
     override suspend fun getById(

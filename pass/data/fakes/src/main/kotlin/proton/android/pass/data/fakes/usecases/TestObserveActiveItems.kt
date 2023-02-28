@@ -3,7 +3,11 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import proton.android.pass.common.api.LoadingResult
+import kotlinx.coroutines.flow.onSubscription
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.pass.domain.Item
@@ -12,14 +16,23 @@ import javax.inject.Inject
 
 class TestObserveActiveItems @Inject constructor() : ObserveActiveItems {
 
-    private val activeItemsFlow: MutableSharedFlow<LoadingResult<List<Item>>> =
+    private var exceptionOption: Option<Exception> = None
+    private val itemsFlow: MutableSharedFlow<List<Item>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
     override fun invoke(
         filter: ItemTypeFilter,
         shareSelection: ShareSelection
-    ): Flow<LoadingResult<List<Item>>> = activeItemsFlow
+    ): Flow<List<Item>> = itemsFlow.onSubscription {
+        when (val exception = exceptionOption) {
+            None -> {}
+            is Some -> throw exception.value
+        }
+    }
 
-    fun sendItemList(result: LoadingResult<List<Item>>) = activeItemsFlow.tryEmit(result)
+    fun sendItemList(items: List<Item>) = itemsFlow.tryEmit(items)
 
+    fun sendException(exception: Exception) {
+        exceptionOption = exception.toOption()
+    }
 }

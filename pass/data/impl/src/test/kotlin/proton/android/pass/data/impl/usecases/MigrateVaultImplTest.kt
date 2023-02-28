@@ -45,7 +45,7 @@ class MigrateVaultImplTest {
         val originShare = ShareId("origin")
         val destShare = ShareId("dest")
         accountManager.sendPrimaryUserId(UserId("userId"))
-        itemRepository.sendObserveItemListResult(LoadingResult.Success(emptyList()))
+        itemRepository.sendObserveItemList(emptyList())
         shareRepository.setGetByIdResult(LoadingResult.Success(TestShare.create()))
         shareRepository.setDeleteVaultResult(LoadingResult.Success(Unit))
         val result = migrateVault(originShare, destShare)

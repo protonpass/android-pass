@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonui.api.toUiModel
@@ -25,13 +26,13 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveTrashedItems
 import proton.android.pass.data.api.usecases.RefreshContent
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.ClearTrashError
 import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.DeleteItemError
 import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.ObserveItemsError
 import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.RefreshError
 import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.RestoreItemsError
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarMessageRepository
 import javax.inject.Inject
 
 @HiltViewModel
@@ -50,7 +51,7 @@ class TrashScreenViewModel @Inject constructor(
         MutableStateFlow(IsRefreshingState.NotRefreshing)
 
     val uiState: StateFlow<TrashUiState> = combine(
-        observeTrashedItems(),
+        observeTrashedItems().asResultWithoutLoading(),
         isRefreshing,
         isLoading
     ) { itemsResult, refreshing, loading ->

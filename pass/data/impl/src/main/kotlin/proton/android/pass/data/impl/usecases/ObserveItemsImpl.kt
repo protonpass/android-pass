@@ -1,10 +1,9 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveItems
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
 import proton.pass.domain.Item
 import proton.pass.domain.ItemState
 import proton.pass.domain.ShareSelection
@@ -18,7 +17,7 @@ class ObserveItemsImpl @Inject constructor(
         userId: UserId,
         selection: ShareSelection,
         itemState: ItemState
-    ): Flow<LoadingResult<List<Item>>> = itemRepository.observeItems(
+    ): Flow<List<Item>> = itemRepository.observeItems(
         userId = userId,
         shareSelection = selection,
         itemState = itemState

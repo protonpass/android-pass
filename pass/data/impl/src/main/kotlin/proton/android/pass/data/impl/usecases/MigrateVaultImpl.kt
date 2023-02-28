@@ -4,7 +4,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
@@ -60,27 +59,24 @@ class MigrateVaultImpl @Inject constructor(
         itemState = ItemState.Active,
         itemTypeFilter = ItemTypeFilter.All
     )
-        .filterIsInstance<LoadingResult.Success<List<Item>>>()
         .map { result ->
             onObserveItemsResultReceived(result, userId, origin, dest)
         }
 
     private suspend fun onObserveItemsResultReceived(
-        result: LoadingResult<List<Item>>,
+        items: List<Item>,
         userId: UserId,
         origin: ShareId,
         dest: ShareId
-    ): LoadingResult<Unit> = result
-        .map { items ->
-            shareRepository.getById(userId, dest)
-                .flatMap { destShare: Share? ->
-                    destShare ?: throw ShareNotAvailableError()
-                    onDestinationVaultReceived(items, userId, destShare)
-                }
-        }
-        .map {
-            return shareRepository.deleteVault(userId, origin)
-        }
+    ): LoadingResult<Unit> =
+        shareRepository.getById(userId, dest)
+            .flatMap { destShare: Share? ->
+                destShare ?: throw ShareNotAvailableError()
+                onDestinationVaultReceived(items, userId, destShare)
+            }
+            .map {
+                return shareRepository.deleteVault(userId, origin)
+            }
 
     private suspend fun onDestinationVaultReceived(
         items: List<Item>,

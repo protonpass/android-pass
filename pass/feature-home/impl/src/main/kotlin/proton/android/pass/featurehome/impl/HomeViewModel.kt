@@ -26,6 +26,7 @@ import kotlinx.coroutines.withContext
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
@@ -101,6 +102,7 @@ class HomeViewModel @Inject constructor(
                 is HomeVaultSelection.Vault -> ShareSelection.Share(selectedVault.shareId)
             }
             observeActiveItems(shareSelection = shareSelection)
+                .asResultWithoutLoading()
                 .map { itemResult ->
                     itemResult.map { list ->
                         encryptionContextProvider.withEncryptionContext {

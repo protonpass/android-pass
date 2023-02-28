@@ -25,10 +25,10 @@ import javax.inject.Inject
 @Suppress("NotImplementedDeclaration")
 class TestItemRepository @Inject constructor() : ItemRepository {
 
-    private val observeItemListFlow: MutableSharedFlow<LoadingResult<List<Item>>> =
+    private val observeItemListFlow: MutableSharedFlow<List<Item>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
-    fun sendObserveItemListResult(result: LoadingResult<List<Item>>) = observeItemListFlow.tryEmit(result)
+    fun sendObserveItemList(items: List<Item>) = observeItemListFlow.tryEmit(items)
 
     override suspend fun createItem(
         userId: UserId,
@@ -60,13 +60,21 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         shareSelection: ShareSelection,
         itemState: ItemState,
         itemTypeFilter: ItemTypeFilter
-    ): Flow<LoadingResult<List<Item>>> = observeItemListFlow
+    ): Flow<List<Item>> = observeItemListFlow
 
-    override suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): LoadingResult<Item> {
+    override suspend fun getById(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): LoadingResult<Item> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): LoadingResult<Unit> {
+    override suspend fun trashItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): LoadingResult<Unit> {
         TODO("Not yet implemented")
     }
 

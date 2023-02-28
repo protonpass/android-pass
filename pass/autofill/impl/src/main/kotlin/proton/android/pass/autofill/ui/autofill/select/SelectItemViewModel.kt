@@ -33,6 +33,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
@@ -98,6 +99,7 @@ class SelectItemViewModel @Inject constructor(
 
     private val activeItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> =
         observeActiveItems(filter = ItemTypeFilter.Logins)
+            .asResultWithoutLoading()
             .map { itemResult ->
                 itemResult.map { list ->
                     encryptionContextProvider.withEncryptionContext {
@@ -114,7 +116,7 @@ class SelectItemViewModel @Inject constructor(
                     getSuggestedLoginItems(
                         packageName = state.value.packageInfoUi?.packageName.toOption(),
                         url = state.value.webDomain
-                    )
+                    ).asResultWithoutLoading()
                 } else {
                     flowOf(LoadingResult.Loading)
                 }

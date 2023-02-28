@@ -26,9 +26,6 @@ fun PassApp(
     finishActivity: () -> Unit,
     appViewModel: AppViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(Unit) {
-        appViewModel.onStart()
-    }
 
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
 

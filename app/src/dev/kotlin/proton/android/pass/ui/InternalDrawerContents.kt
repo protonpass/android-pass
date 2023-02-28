@@ -63,12 +63,6 @@ fun InternalDrawerContents(
         }
         Button(
             modifier = Modifier.fillMaxWidth(),
-            onClick = { onOpenVault() },
-        ) {
-            Text(text = "Manage vaults")
-        }
-        Button(
-            modifier = Modifier.fillMaxWidth(),
             onClick = { viewModel.clearIconCache() },
         ) {
             Text(text = "Clear icon cache")

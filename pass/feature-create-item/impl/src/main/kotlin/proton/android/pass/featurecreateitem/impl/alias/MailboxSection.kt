@@ -27,7 +27,7 @@ import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.android.pass.featurecreateitem.impl.R
 
 @Composable
-internal fun MailboxSection(
+fun MailboxSection(
     modifier: Modifier = Modifier,
     mailboxes: List<SelectedAliasMailboxUiModel>,
     isEditAllowed: Boolean,

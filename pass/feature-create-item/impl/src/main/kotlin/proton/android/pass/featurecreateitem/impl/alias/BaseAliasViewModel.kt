@@ -16,9 +16,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
@@ -50,9 +50,7 @@ abstract class BaseAliasViewModel(
     private val title: Option<String> = savedStateHandle
         .get<String>(AliasOptionalNavArgId.Title.key)
         .toOption()
-    protected val isDraft: Boolean = requireNotNull(
-        savedStateHandle.get<Boolean>(AliasOptionalNavArgId.IsDraft.key)
-    )
+    protected var isDraft: Boolean = false
 
     private val observeAllVaultsFlow = observeVaults()
         .map { shares ->

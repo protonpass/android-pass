@@ -52,16 +52,6 @@ fun NavGraphBuilder.createLoginGraph(
                     is Some -> onAutofillItemReceived(autofillItem.value)
                 }
             },
-            onCreateAliasClick = { shareId, titleOption ->
-                appNavigator.navigate(
-                    CreateAlias,
-                    CreateAlias.createNavRoute(
-                        shareId = shareId,
-                        isDraft = true,
-                        title = titleOption
-                    )
-                )
-            },
             onScanTotp = { appNavigator.navigate(CameraTotp) }
         )
     }

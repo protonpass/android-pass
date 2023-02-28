@@ -17,10 +17,10 @@ fun SelectMailboxesDialog(
     mailboxes: List<SelectedAliasMailboxUiModel>,
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onDismiss: () -> Unit,
-    viewModel: SelectMailboxesDialogViewModel = hiltViewModel()
 ) {
     if (!show) return
 
+    val viewModel: SelectMailboxesDialogViewModel = hiltViewModel()
     LaunchedEffect(Unit) {
         viewModel.setMailboxes(mailboxes)
     }

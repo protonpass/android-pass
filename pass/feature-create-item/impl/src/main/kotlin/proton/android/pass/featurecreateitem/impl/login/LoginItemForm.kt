@@ -160,6 +160,7 @@ internal fun LoginItemForm(
                         }
                     )
                 AliasOptions -> StickyUsernameOptions(
+                    showCreateAliasButton = showCreateAliasButton,
                     primaryEmail = primaryEmail,
                     onCreateAliasClick = {
                         onCreateAliasClick()

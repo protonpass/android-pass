@@ -71,7 +71,7 @@ open class ModuleGenTask : DefaultTask() {
             when (conf) {
                 Configuration.IMPL,
                 Configuration.FAKES -> {
-                    val lcConfiguration = conf.name.toLowerCase(Locale.ROOT)
+                    val lcConfiguration = conf.name.lowercase()
                     val dir = modulePath.joinToString("/")
                     val manifestFile = "AndroidManifest.xml"
                     val manifestContent = """
@@ -87,7 +87,7 @@ open class ModuleGenTask : DefaultTask() {
     }
 
     private fun sanitizeModuleInput(path: String, regex: Regex): List<String> = path.split(":")
-        .map { segment -> regex.replace(segment.toLowerCase(Locale.ROOT), "") }
+        .map { segment -> regex.replace(segment.lowercase(), "") }
         .filter(String::isNotEmpty)
 
     private fun detectConfigurations(input: String): List<Configuration> = input
@@ -102,7 +102,7 @@ open class ModuleGenTask : DefaultTask() {
         val subpackage = modulePath.joinToString(".")
         configurationList
             .forEach { configuration ->
-                val lcConfiguration = configuration.name.toLowerCase(Locale.ROOT)
+                val lcConfiguration = configuration.name.lowercase()
                 val configurationPath = "$ROOT_PACKAGE_NAME.$subpackage.$lcConfiguration"
                     .replace('.', '/')
                     .replace("-", "")
@@ -124,7 +124,7 @@ open class ModuleGenTask : DefaultTask() {
         val asProjectAccessor = subpackage.convertToProjectAccessor()
         configurationList
             .map { configuration ->
-                val lcConfiguration = configuration.name.toLowerCase(Locale.ROOT)
+                val lcConfiguration = configuration.name.lowercase()
                 val stringBuilder = StringBuilder()
                 stringBuilder.appendConfiguration(configuration)
                 configuration to stringBuilder.toString()
@@ -132,7 +132,7 @@ open class ModuleGenTask : DefaultTask() {
                     .replace("&s2", "$ROOT_PACKAGE_NAME.$subpackageWithoutHyphens.$lcConfiguration")
             }
             .forEach { pair ->
-                file("$dir/${pair.first.name.toLowerCase(Locale.ROOT)}/build.gradle.kts")
+                file("$dir/${pair.first.name.lowercase()}/build.gradle.kts")
                     .writeText(pair.second)
             }
     }
@@ -151,7 +151,7 @@ open class ModuleGenTask : DefaultTask() {
         val includeModulesPath = moduleList.joinToString(":")
         configurationList
             .forEach { configuration ->
-                val lcConfiguration = configuration.name.toLowerCase(Locale.ROOT)
+                val lcConfiguration = configuration.name.lowercase()
                 val include = "$includePrefix\":$includeModulesPath:$lcConfiguration\")"
                 if (!includeList.contains(include)) {
                     includeList.add(include)

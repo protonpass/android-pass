@@ -21,7 +21,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
-import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featurecreateitem.impl.R
@@ -30,31 +29,36 @@ import proton.android.pass.featurecreateitem.impl.R
 fun StickyUsernameOptions(
     modifier: Modifier = Modifier,
     primaryEmail: String?,
+    showCreateAliasButton: Boolean,
     onCreateAliasClick: () -> Unit,
     onPrefillCurrentEmailClick: (String) -> Unit
 ) {
+    if (!showCreateAliasButton && primaryEmail == null) return
+
     StickyImeRow(modifier) {
-        Row(
-            modifier = Modifier
-                .weight(1f)
-                .clickable { onCreateAliasClick() }
-                .fillMaxHeight()
-                .padding(6.dp, 0.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
-        ) {
-            Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
-                contentDescription = stringResource(R.string.sticky_button_create_alias_icon_content_description),
-                tint = PassTheme.colors.accentPurpleOpaque
-            )
-            Text(
-                text = stringResource(id = R.string.sticky_button_create_alias),
-                color = PassTheme.colors.accentPurpleOpaque,
-                style = ProtonTheme.typography.default,
-                overflow = TextOverflow.Ellipsis,
-                maxLines = 1
-            )
+        if (showCreateAliasButton) {
+            Row(
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable { onCreateAliasClick() }
+                    .fillMaxHeight()
+                    .padding(6.dp, 0.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally)
+            ) {
+                Icon(
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
+                    contentDescription = stringResource(R.string.sticky_button_create_alias_icon_content_description),
+                    tint = PassTheme.colors.accentPurpleOpaque
+                )
+                Text(
+                    text = stringResource(id = R.string.sticky_button_create_alias),
+                    color = PassTheme.colors.accentPurpleOpaque,
+                    style = ProtonTheme.typography.default,
+                    overflow = TextOverflow.Ellipsis,
+                    maxLines = 1
+                )
+            }
         }
         if (primaryEmail != null) {
             Divider(
@@ -88,17 +92,18 @@ fun StickyUsernameOptions(
 }
 
 class ThemedStickyUsernamePreviewProvider :
-    ThemePairPreviewProvider<Option<String>>(StickyUsernameOptionsPreviewProvider())
+    ThemePairPreviewProvider<StickyUsernameInput>(StickyUsernameOptionsPreviewProvider())
 
 @Preview
 @Composable
 fun StickyUsernameOptionsPreview(
-    @PreviewParameter(ThemedStickyUsernamePreviewProvider::class) input: Pair<Boolean, Option<String>>
+    @PreviewParameter(ThemedStickyUsernamePreviewProvider::class) input: Pair<Boolean, StickyUsernameInput>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             StickyUsernameOptions(
-                primaryEmail = input.second.value(),
+                primaryEmail = input.second.primaryEmail.value(),
+                showCreateAliasButton = input.second.showCreateAlias,
                 onCreateAliasClick = {},
                 onPrefillCurrentEmailClick = {}
             )

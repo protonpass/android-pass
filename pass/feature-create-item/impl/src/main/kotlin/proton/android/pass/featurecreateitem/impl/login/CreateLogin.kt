@@ -17,7 +17,7 @@ import proton.pass.domain.ShareId
     ExperimentalLifecycleComposeApi::class
 )
 @Composable
-fun CreateLogin(
+fun CreateLoginScreen(
     modifier: Modifier = Modifier,
     initialContents: InitialCreateLoginUiState? = null,
     showCreateAliasButton: Boolean = true,

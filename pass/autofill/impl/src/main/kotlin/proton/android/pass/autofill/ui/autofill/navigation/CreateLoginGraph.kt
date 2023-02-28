@@ -8,12 +8,14 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.extensions.toAutoFillItem
-import proton.android.pass.autofill.ui.autofill.AutofillNavItem
+import proton.android.pass.autofill.ui.autofill.CameraTotp
+import proton.android.pass.autofill.ui.autofill.CreateAlias
+import proton.android.pass.autofill.ui.autofill.CreateLogin
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.RESULT_CREATED_DRAFT_ALIAS
-import proton.android.pass.featurecreateitem.impl.login.CreateLogin
+import proton.android.pass.featurecreateitem.impl.login.CreateLoginScreen
 import proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
 import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.navigation.api.AppNavigator
@@ -27,7 +29,7 @@ fun NavGraphBuilder.createLoginGraph(
     state: AutofillAppState,
     onAutofillItemReceived: (AutofillItem) -> Unit
 ) {
-    composable(AutofillNavItem.CreateLogin) {
+    composable(CreateLogin) {
         val createdDraftAlias by appNavigator.navState<AliasItem>(RESULT_CREATED_DRAFT_ALIAS, null)
             .collectAsStateWithLifecycle()
         val primaryTotp by appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null)
@@ -41,7 +43,7 @@ fun NavGraphBuilder.createLoginGraph(
             primaryTotp = primaryTotp
         )
 
-        CreateLogin(
+        CreateLoginScreen(
             initialContents = initialContents,
             onClose = { appNavigator.onBackClick() },
             onSuccess = {
@@ -52,15 +54,15 @@ fun NavGraphBuilder.createLoginGraph(
             },
             onCreateAliasClick = { shareId, titleOption ->
                 appNavigator.navigate(
-                    AutofillNavItem.CreateAlias,
-                    AutofillNavItem.CreateAlias.createNavRoute(
+                    CreateAlias,
+                    CreateAlias.createNavRoute(
                         shareId = shareId,
                         isDraft = true,
                         title = titleOption
                     )
                 )
             },
-            onScanTotp = { appNavigator.navigate(AutofillNavItem.CameraTotp) }
+            onScanTotp = { appNavigator.navigate(CameraTotp) }
         )
     }
 }

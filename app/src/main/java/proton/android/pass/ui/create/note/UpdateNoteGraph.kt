@@ -5,18 +5,20 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featurecreateitem.impl.note.UpdateNote
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.ui.navigation.AppNavItem
+import proton.android.pass.ui.navigation.EditNote
+import proton.android.pass.ui.navigation.Home
+import proton.android.pass.ui.navigation.ViewItem
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.updateNoteGraph(nav: AppNavigator) {
-    composable(AppNavItem.EditNote) {
+    composable(EditNote) {
         UpdateNote(
             onUpClick = { nav.onBackClick() },
             onSuccess = { shareId, itemId ->
                 nav.navigate(
-                    destination = AppNavItem.ViewItem,
-                    route = AppNavItem.ViewItem.createNavRoute(shareId, itemId),
-                    backDestination = AppNavItem.Home
+                    destination = ViewItem,
+                    route = ViewItem.createNavRoute(shareId, itemId),
+                    backDestination = Home
                 )
             }
         )

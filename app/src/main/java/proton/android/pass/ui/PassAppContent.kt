@@ -22,24 +22,21 @@ import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection
 import proton.android.pass.featurehome.impl.HomeVaultSelection
+import proton.android.pass.featurevault.impl.VaultList
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.presentation.navigation.CoreNavigation
 import proton.android.pass.presentation.navigation.drawer.NavDrawerNavigation
 import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection
-import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection.Aliases
-import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection.AllItems
-import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection.Logins
-import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection.Notes
-import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection.Settings
-import proton.android.pass.presentation.navigation.drawer.NavigationDrawerSection.Trash
 import proton.android.pass.presentation.navigation.drawer.SelectedItemTypes
 import proton.android.pass.presentation.navigation.drawer.SelectedVaults
 import proton.android.pass.ui.internal.InternalDrawerState
 import proton.android.pass.ui.internal.InternalDrawerValue
 import proton.android.pass.ui.internal.rememberInternalDrawerState
-import proton.android.pass.ui.navigation.AppNavItem
+import proton.android.pass.ui.navigation.Home
+import proton.android.pass.ui.navigation.Settings
+import proton.android.pass.ui.navigation.Trash
 
 @Composable
 fun PassAppContent(
@@ -77,10 +74,10 @@ fun PassAppContent(
                 SelectedVaults.AllVaults -> HomeVaultSelection.AllVaults
                 is SelectedVaults.Vault -> HomeVaultSelection.Vault(selectedVault.shareId)
             }
-            appNavigator.navigate(destination = AppNavItem.Home)
+            appNavigator.navigate(destination = Home)
         },
-        onNavSettings = { appNavigator.navigate(AppNavItem.Settings) },
-        onNavTrash = { appNavigator.navigate(AppNavItem.Trash) },
+        onNavSettings = { appNavigator.navigate(Settings) },
+        onNavTrash = { appNavigator.navigate(Trash) },
         onBugReport = { coreNavigation.onReport() },
         onInternalDrawerClick = { coroutineScope.launch { internalDrawerState.open() } }
     )
@@ -101,7 +98,7 @@ fun PassAppContent(
                 coroutineScope.launch {
                     internalDrawerState.close()
                 }
-                appNavigator.navigate(AppNavItem.VaultList)
+                appNavigator.navigate(VaultList)
             },
             content = {
                 Column(modifier = Modifier.padding(contentPadding)) {
@@ -133,20 +130,28 @@ private fun CurrentRouteDrawerSelection(
     onDrawerSectionChanged: (NavigationDrawerSection) -> Unit
 ) {
     when (currentRoute) {
-        AppNavItem.Home.route -> {
+        Home.route -> {
             val shareId = when (homeVaultSelection) {
                 HomeVaultSelection.AllVaults -> null
                 is HomeVaultSelection.Vault -> homeVaultSelection.shareId
             }
             when (homeItemTypeSelection) {
-                HomeItemTypeSelection.AllItems -> onDrawerSectionChanged(AllItems(shareId))
-                HomeItemTypeSelection.Logins -> onDrawerSectionChanged(Logins(shareId))
-                HomeItemTypeSelection.Aliases -> onDrawerSectionChanged(Aliases(shareId))
-                HomeItemTypeSelection.Notes -> onDrawerSectionChanged(Notes(shareId))
+                HomeItemTypeSelection.AllItems -> onDrawerSectionChanged(
+                    NavigationDrawerSection.AllItems(shareId)
+                )
+                HomeItemTypeSelection.Logins -> onDrawerSectionChanged(
+                    NavigationDrawerSection.Logins(shareId)
+                )
+                HomeItemTypeSelection.Aliases -> onDrawerSectionChanged(
+                    NavigationDrawerSection.Aliases(shareId)
+                )
+                HomeItemTypeSelection.Notes -> onDrawerSectionChanged(
+                    NavigationDrawerSection.Notes(shareId)
+                )
             }
         }
-        AppNavItem.Settings.route -> onDrawerSectionChanged(Settings)
-        AppNavItem.Trash.route -> onDrawerSectionChanged(Trash)
+        Settings.route -> onDrawerSectionChanged(NavigationDrawerSection.Settings)
+        Trash.route -> onDrawerSectionChanged(NavigationDrawerSection.Trash)
         else -> {}
     }
 }

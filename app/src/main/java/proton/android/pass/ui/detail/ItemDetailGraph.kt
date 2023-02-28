@@ -8,7 +8,10 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featureitemdetail.impl.ItemDetailScreen
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.ui.navigation.AppNavItem
+import proton.android.pass.ui.navigation.EditAlias
+import proton.android.pass.ui.navigation.EditLogin
+import proton.android.pass.ui.navigation.EditNote
+import proton.android.pass.ui.navigation.ViewItem
 import proton.pass.domain.ItemType
 
 private const val TRANSITION_TIME_MILLIS = 500
@@ -17,7 +20,7 @@ private const val FADE_DELAY_TIME_MILLIS = 100
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.itemDetailGraph(nav: AppNavigator) {
     composable(
-        navItem = AppNavItem.ViewItem,
+        navItem = ViewItem,
         enterTransition = {
             fadeIn(tween(TRANSITION_TIME_MILLIS, delayMillis = FADE_DELAY_TIME_MILLIS)) +
                 slideIntoContainer(Left, tween(TRANSITION_TIME_MILLIS))
@@ -30,15 +33,15 @@ fun NavGraphBuilder.itemDetailGraph(nav: AppNavigator) {
             onUpClick = { nav.onBackClick() },
             onEditClick = { shareId, itemId, itemType ->
                 val destination = when (itemType) {
-                    is ItemType.Login -> AppNavItem.EditLogin
-                    is ItemType.Note -> AppNavItem.EditNote
-                    is ItemType.Alias -> AppNavItem.EditAlias
+                    is ItemType.Login -> EditLogin
+                    is ItemType.Note -> EditNote
+                    is ItemType.Alias -> EditAlias
                     is ItemType.Password -> null // Edit password does not exist yet
                 }
                 val route = when (itemType) {
-                    is ItemType.Login -> AppNavItem.EditLogin.createNavRoute(shareId, itemId)
-                    is ItemType.Note -> AppNavItem.EditNote.createNavRoute(shareId, itemId)
-                    is ItemType.Alias -> AppNavItem.EditAlias.createNavRoute(shareId, itemId)
+                    is ItemType.Login -> EditLogin.createNavRoute(shareId, itemId)
+                    is ItemType.Note -> EditNote.createNavRoute(shareId, itemId)
+                    is ItemType.Alias -> EditAlias.createNavRoute(shareId, itemId)
                     is ItemType.Password -> null // Edit password does not exist yet
                 }
 

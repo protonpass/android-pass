@@ -17,7 +17,7 @@ import java.io.FileNotFoundException
 import java.io.IOException
 
 @Composable
-fun PhotoPickerTotp(
+fun PhotoPickerTotpScreen(
     onQrReceived: (String) -> Unit,
     onQrNotDetected: () -> Unit,
     onPhotoPickerDismissed: () -> Unit

@@ -22,6 +22,7 @@ import android.content.Context
 import androidx.startup.AppInitializer
 import androidx.startup.Initializer
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
+import proton.android.pass.data.impl.sync.SyncInitializer
 
 class MainInitializer : Initializer<Unit> {
 
@@ -30,6 +31,7 @@ class MainInitializer : Initializer<Unit> {
     }
 
     override fun dependencies() = listOf(
+        SyncInitializer::class.java,
         EventManagerInitializer::class.java,
         HumanVerificationInitializer::class.java,
     )

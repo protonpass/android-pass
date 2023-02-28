@@ -37,6 +37,14 @@
                 android:name="me.proton.core.humanverification.presentation.HumanVerificationInitializer"
                 android:value="androidx.startup"
                 tools:node="remove"/>
+            <meta-data
+                android:name="proton.android.pass.initializer.MainInitializer"
+                android:value="androidx.startup"
+                tools:node="remove"/>
+            <meta-data
+                android:name="proton.android.pass.data.impl.sync.SyncInitializer"
+                android:value="androidx.startup"
+                tools:node="remove"/>
         </provider>
 
         <provider

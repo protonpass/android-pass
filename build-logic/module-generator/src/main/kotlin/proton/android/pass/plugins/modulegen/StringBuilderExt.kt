@@ -4,10 +4,8 @@ package proton.android.pass.plugins.modulegen
 fun StringBuilder.appendConfiguration(configuration: Configuration): StringBuilder =
     when (configuration) {
         Configuration.API -> appendJvmPlugin()
-        Configuration.IMPL -> appendAndroidLibraryPlugin()
-            .appendLibraryDependency()
-        Configuration.FAKES -> appendAndroidLibraryPlugin()
-            .appendLibraryDependency()
+        Configuration.IMPL -> appendAndroidLibraryPlugin().appendLibraryDependency()
+        Configuration.FAKES -> appendAndroidLibraryPlugin().appendLibraryDependency()
     }
 
 private fun StringBuilder.appendJvmPlugin(): StringBuilder = append(
@@ -16,8 +14,7 @@ private fun StringBuilder.appendJvmPlugin(): StringBuilder = append(
         id("org.jetbrains.kotlin.jvm")
     }
     
-"""
-        .trimIndent()
+""".trimIndent()
 )
 
 private fun StringBuilder.appendAndroidLibraryPlugin(): StringBuilder = append(
@@ -37,8 +34,7 @@ private fun StringBuilder.appendAndroidLibraryPlugin(): StringBuilder = append(
         }
     }
     
-"""
-        .trimIndent()
+""".trimIndent()
 )
 
 private fun StringBuilder.appendLibraryDependency(): StringBuilder = append(
@@ -47,8 +43,7 @@ private fun StringBuilder.appendLibraryDependency(): StringBuilder = append(
         implementation(projects.&s1.api)
     }
     
-"""
-        .trimIndent()
+""".trimIndent()
 )
 
 fun String.convertToProjectAccessor(): String {
@@ -61,7 +56,7 @@ fun String.convertToProjectAccessor(): String {
         }
 
         if (shouldCapitalizeNext) {
-            builder.append(c.toUpperCase())
+            builder.append(c.uppercase())
             shouldCapitalizeNext = false
         } else {
             builder.append(c)

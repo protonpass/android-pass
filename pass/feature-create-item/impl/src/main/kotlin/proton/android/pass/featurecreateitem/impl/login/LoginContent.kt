@@ -168,12 +168,6 @@ internal fun LoginContent(
                         currentBottomSheet = LoginBottomSheetContentType.CreateAlias
                         bottomSheetState.show()
                     }
-//                    if (uiState.selectedShareId != null) {
-//                        onCreateAliasClick(
-//                            uiState.selectedShareId.id,
-//                            uiState.loginItem.title.toOption()
-//                        )
-//                    }
                 },
                 onAliasOptionsClick = {
                     scope.launch {

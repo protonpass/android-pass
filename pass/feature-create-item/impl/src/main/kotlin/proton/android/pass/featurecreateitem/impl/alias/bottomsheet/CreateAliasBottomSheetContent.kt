@@ -122,6 +122,7 @@ fun CreateAliasBottomSheetContent(
             show = showSuffixDialog,
             suffixes = state.aliasItem.aliasOptions.suffixes.toImmutableList(),
             selectedSuffix = state.aliasItem.selectedSuffix,
+            color = PassTheme.colors.accentPurpleNorm,
             onSuffixChanged = {
                 onSuffixChanged(it)
                 showSuffixDialog = false

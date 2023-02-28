@@ -143,6 +143,7 @@ internal fun AliasContent(
                 show = showSuffixDialog,
                 suffixes = uiState.aliasItem.aliasOptions.suffixes.toImmutableList(),
                 selectedSuffix = uiState.aliasItem.selectedSuffix,
+                color = PassTheme.colors.accentGreenNorm,
                 onSuffixChanged = { suffix ->
                     scope.launch {
                         showSuffixDialog = false

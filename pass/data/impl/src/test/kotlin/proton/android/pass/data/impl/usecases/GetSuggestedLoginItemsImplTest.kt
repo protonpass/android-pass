@@ -9,7 +9,6 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
@@ -19,7 +18,6 @@ import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.android.pass.test.domain.TestItem
 import proton.pass.domain.Item
 import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 private typealias Filter = (Item) -> Boolean
@@ -72,13 +70,11 @@ class GetSuggestedLoginItemsImplTest {
         val item2 = TestItem.random()
 
 
-        observeActiveItems.sendItemList(LoadingResult.Success(listOf(item1, item2)))
+        observeActiveItems.sendItemList(listOf(item1, item2))
         filter.setFilter { TestKeyStoreCrypto.decrypt(it.title) == fixedTitle }
 
         getSuggestedLoginItems.invoke(None, None).test {
-            val res = awaitItem()
-            assertTrue(res is LoadingResult.Success)
-            assertEquals(res.data, listOf(item1))
+            assertEquals(awaitItem(), listOf(item1))
         }
     }
 
@@ -87,14 +83,11 @@ class GetSuggestedLoginItemsImplTest {
         val message = "test exception"
 
         filter.setFilter { true }
-        observeActiveItems.sendItemList(LoadingResult.Error(Exception(message)))
+        observeActiveItems.sendException(Exception(message))
 
         getSuggestedLoginItems.invoke(None, None).test {
-            val res = awaitItem()
-            assertTrue(res is LoadingResult.Error)
-
-            val e = res.exception
-            assertNotNull(e)
+            val e = awaitError()
+            assertTrue(e is Exception)
             assertEquals(e.message, message)
         }
     }

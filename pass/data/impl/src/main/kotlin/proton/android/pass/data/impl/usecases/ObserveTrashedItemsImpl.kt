@@ -4,11 +4,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import proton.android.pass.data.api.usecases.ObserveItems
-import proton.android.pass.data.api.usecases.ObserveTrashedItems
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.user.domain.UserManager
-import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.ObserveTrashedItems
 import proton.pass.domain.Item
 import proton.pass.domain.ItemState
 import proton.pass.domain.ShareSelection
@@ -24,7 +23,7 @@ class ObserveTrashedItemsImpl @Inject constructor(
         .flatMapLatest { userManager.observeUser(it) }
         .distinctUntilChanged()
 
-    override fun invoke(): Flow<LoadingResult<List<Item>>> = getCurrentUserIdFlow
+    override fun invoke(): Flow<List<Item>> = getCurrentUserIdFlow
         .filterNotNull()
         .flatMapLatest { user ->
             observeItems(user.userId, ShareSelection.AllShares, ItemState.Trashed)

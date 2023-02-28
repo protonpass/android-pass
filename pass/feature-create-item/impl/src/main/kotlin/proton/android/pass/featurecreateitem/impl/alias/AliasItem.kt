@@ -18,9 +18,11 @@ data class AliasItem(
     val aliasToBeCreated: String? = null
 ) : Parcelable {
 
-    fun validate(): Set<AliasItemValidationErrors> {
+    fun validate(allowEmptyTitle: Boolean): Set<AliasItemValidationErrors> {
         val mutableSet = mutableSetOf<AliasItemValidationErrors>()
-        if (title.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankTitle)
+        if (!allowEmptyTitle) {
+            if (title.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankTitle)
+        }
 
         if (alias.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankAlias)
 

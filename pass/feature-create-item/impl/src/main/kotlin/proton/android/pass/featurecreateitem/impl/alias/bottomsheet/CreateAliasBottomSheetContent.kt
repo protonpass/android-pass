@@ -112,14 +112,20 @@ fun CreateAliasBottomSheetContent(
         SelectMailboxesDialog(
             show = showMailboxesDialog,
             mailboxes = state.aliasItem.mailboxes,
-            onMailboxesChanged = onMailboxesChanged,
+            onMailboxesChanged = {
+                onMailboxesChanged(it)
+                showMailboxesDialog = false
+            },
             onDismiss = { showMailboxesDialog = false }
         )
         SelectSuffixDialog(
             show = showSuffixDialog,
             suffixes = state.aliasItem.aliasOptions.suffixes.toImmutableList(),
             selectedSuffix = state.aliasItem.selectedSuffix,
-            onSuffixChanged = onSuffixChanged,
+            onSuffixChanged = {
+                onSuffixChanged(it)
+                showSuffixDialog = false
+            },
             onDismiss = { showSuffixDialog = false }
         )
     }

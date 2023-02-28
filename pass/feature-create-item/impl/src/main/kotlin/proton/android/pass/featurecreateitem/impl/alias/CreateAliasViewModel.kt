@@ -27,7 +27,7 @@ import proton.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
 @HiltViewModel
-class CreateAliasViewModel @Inject constructor(
+open class CreateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val createAlias: CreateAlias,
     private val snackbarMessageRepository: SnackbarMessageRepository,
@@ -40,7 +40,7 @@ class CreateAliasViewModel @Inject constructor(
         PassLogger.e(TAG, throwable)
     }
 
-    private var titleAliasInSync = true
+    protected var titleAliasInSync = true
 
     val closeScreenEventFlow: StateFlow<CloseScreenEvent> = mutableCloseScreenEventFlow
         .stateIn(
@@ -97,7 +97,7 @@ class CreateAliasViewModel @Inject constructor(
         if (aliasItem.selectedSuffix == null) return@launch
 
         val mailboxes = aliasItem.mailboxes.filter { it.selected }.map { it.model }
-        val aliasItemValidationErrors = aliasItem.validate()
+        val aliasItemValidationErrors = aliasItem.validate(allowEmptyTitle = isDraft)
         if (aliasItemValidationErrors.isNotEmpty()) {
             aliasItemValidationErrorsState.update { aliasItemValidationErrors }
             return@launch

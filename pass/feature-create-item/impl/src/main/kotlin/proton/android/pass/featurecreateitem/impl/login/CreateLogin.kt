@@ -8,10 +8,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.featurecreateitem.impl.R
-import proton.pass.domain.ShareId
 
 @OptIn(
     ExperimentalLifecycleComposeApi::class
@@ -23,7 +21,6 @@ fun CreateLoginScreen(
     showCreateAliasButton: Boolean = true,
     onClose: () -> Unit,
     onSuccess: (ItemUiModel) -> Unit,
-    onCreateAliasClick: (ShareId, Option<String>) -> Unit,
     onScanTotp: () -> Unit
 ) {
     val viewModel: CreateLoginViewModel = hiltViewModel()
@@ -58,7 +55,7 @@ fun CreateLoginScreen(
         onPasswordChange = { viewModel.onPasswordChange(it) },
         onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) },
-        onCreateAliasClick = onCreateAliasClick,
+        onAliasCreated = { viewModel.onAliasCreated(it) },
         onRemoveAliasClick = { viewModel.onRemoveAlias() },
         onVaultSelect = { viewModel.changeVault(it) },
         onLinkedAppDelete = {},

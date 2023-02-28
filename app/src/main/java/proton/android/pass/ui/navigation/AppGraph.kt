@@ -5,11 +5,14 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.featureauth.impl.Auth
+import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection
 import proton.android.pass.featurehome.impl.HomeScreenNavigation
 import proton.android.pass.featurehome.impl.HomeVaultSelection
+import proton.android.pass.featurevault.impl.CreateVault
+import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
-import proton.android.pass.ui.auth.authGraph
 import proton.android.pass.ui.create.alias.createAliasGraph
 import proton.android.pass.ui.create.alias.updateAliasGraph
 import proton.android.pass.ui.create.login.createLoginGraph
@@ -22,7 +25,6 @@ import proton.android.pass.ui.home.homeGraph
 import proton.android.pass.ui.onboarding.onBoardingGraph
 import proton.android.pass.ui.settings.settingsGraph
 import proton.android.pass.ui.trash.trashGraph
-import proton.android.pass.ui.vault.vaultGraph
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -55,55 +57,63 @@ fun NavGraphBuilder.appGraph(
     createAliasGraph(appNavigator)
     updateAliasGraph(appNavigator)
     itemDetailGraph(appNavigator)
-    authGraph(appNavigator, finishActivity)
+    authGraph(
+        onNavigateBack = finishActivity,
+        onAuthSuccessful = { appNavigator.onBackClick() },
+        onAuthDismissed = finishActivity,
+        onAuthFailed = { appNavigator.onBackClick() }
+    )
     onBoardingGraph(appNavigator, finishActivity)
-    vaultGraph(appNavigator)
+    vaultGraph(
+        onNavigateToCreateVault = { appNavigator.navigate(CreateVault) },
+        onNavigateUp = { appNavigator.onBackClick() }
+    )
 }
 
 private fun createHomeScreenNavigation(appNavigator: AppNavigator): HomeScreenNavigation =
     HomeScreenNavigation(
         toCreateLogin = { shareId ->
             appNavigator.navigate(
-                AppNavItem.CreateLogin,
-                AppNavItem.CreateLogin.createNavRoute(shareId)
+                CreateLogin,
+                CreateLogin.createNavRoute(shareId)
             )
         },
         toEditLogin = { shareId: ShareId, itemId: ItemId ->
             appNavigator.navigate(
-                AppNavItem.EditLogin,
-                AppNavItem.EditLogin.createNavRoute(shareId, itemId)
+                EditLogin,
+                EditLogin.createNavRoute(shareId, itemId)
             )
         },
         toCreateNote = { shareId ->
             appNavigator.navigate(
-                AppNavItem.CreateNote,
-                AppNavItem.CreateNote.createNavRoute(shareId)
+                CreateNote,
+                CreateNote.createNavRoute(shareId)
             )
         },
         toEditNote = { shareId: ShareId, itemId: ItemId ->
             appNavigator.navigate(
-                AppNavItem.EditNote,
-                AppNavItem.EditNote.createNavRoute(shareId, itemId)
+                EditNote,
+                EditNote.createNavRoute(shareId, itemId)
             )
         },
         toCreateAlias = { shareId ->
             appNavigator.navigate(
-                AppNavItem.CreateAlias,
-                AppNavItem.CreateAlias.createNavRoute(shareId)
+                CreateAlias,
+                CreateAlias.createNavRoute(shareId)
             )
         },
         toEditAlias = { shareId: ShareId, itemId: ItemId ->
             appNavigator.navigate(
-                AppNavItem.EditAlias,
-                AppNavItem.EditAlias.createNavRoute(shareId, itemId)
+                EditAlias,
+                EditAlias.createNavRoute(shareId, itemId)
             )
         },
         toItemDetail = { shareId: ShareId, itemId: ItemId ->
             appNavigator.navigate(
-                AppNavItem.ViewItem,
-                AppNavItem.ViewItem.createNavRoute(shareId, itemId)
+                ViewItem,
+                ViewItem.createNavRoute(shareId, itemId)
             )
         },
-        toAuth = { appNavigator.navigate(AppNavItem.Auth) },
-        toOnBoarding = { appNavigator.navigate(AppNavItem.OnBoarding) },
+        toAuth = { appNavigator.navigate(Auth) },
+        toOnBoarding = { appNavigator.navigate(OnBoarding) },
     )

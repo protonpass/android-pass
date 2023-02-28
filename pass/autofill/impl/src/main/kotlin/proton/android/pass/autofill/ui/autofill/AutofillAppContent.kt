@@ -13,6 +13,7 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
+import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.navigation.api.rememberAppNavigator
 
 @OptIn(
@@ -31,9 +32,9 @@ fun AutofillAppContent(
 ) {
     val startDestination = remember {
         if (isFingerprintRequired) {
-            AutofillNavItem.Auth.route
+            Auth.route
         } else {
-            AutofillNavItem.SelectItem.route
+            SelectItem.route
         }
     }
 

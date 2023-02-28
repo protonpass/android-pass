@@ -33,6 +33,7 @@ dependencies {
 
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.biometry.api)
+    implementation(projects.pass.navigation.api)
     implementation(projects.pass.log.api)
 
     implementation(libs.dagger.hilt.android)

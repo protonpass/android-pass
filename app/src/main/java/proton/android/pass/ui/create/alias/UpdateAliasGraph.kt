@@ -7,21 +7,23 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featurecreateitem.impl.alias.UpdateAlias
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.ui.navigation.AppNavItem
+import proton.android.pass.ui.navigation.EditAlias
+import proton.android.pass.ui.navigation.Home
+import proton.android.pass.ui.navigation.ViewItem
 
 @OptIn(
     ExperimentalAnimationApi::class, ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class
 )
 fun NavGraphBuilder.updateAliasGraph(nav: AppNavigator) {
-    composable(AppNavItem.EditAlias) {
+    composable(EditAlias) {
         UpdateAlias(
             onUpClick = { nav.onBackClick() },
             onSuccess = { shareId, itemId ->
                 nav.navigate(
-                    destination = AppNavItem.ViewItem,
-                    route = AppNavItem.ViewItem.createNavRoute(shareId, itemId),
-                    backDestination = AppNavItem.Home
+                    destination = ViewItem,
+                    route = ViewItem.createNavRoute(shareId, itemId),
+                    backDestination = Home
                 )
             }
         )

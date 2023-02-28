@@ -11,10 +11,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonui.api.PassColors
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 
@@ -23,6 +23,7 @@ fun SelectSuffixItemRow(
     modifier: Modifier = Modifier,
     suffix: String,
     isSelected: Boolean,
+    color: Color,
     onSelect: () -> Unit
 ) {
     Row(
@@ -36,7 +37,7 @@ fun SelectSuffixItemRow(
             selected = isSelected,
             onClick = null,
             colors = RadioButtonDefaults.colors(
-                selectedColor = PassColors.Dark.accentGreenNorm
+                selectedColor = color
             )
         )
         Text(text = suffix)
@@ -53,6 +54,7 @@ fun SelectSuffixItemRowPreview(
             SelectSuffixItemRow(
                 suffix = ".some@suffix.test",
                 isSelected = input.second,
+                color = PassTheme.colors.accentPurpleNorm,
                 onSelect = {}
             )
         }

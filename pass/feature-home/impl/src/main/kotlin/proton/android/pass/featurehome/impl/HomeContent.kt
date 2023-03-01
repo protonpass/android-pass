@@ -97,7 +97,12 @@ internal fun HomeContent(
                 if (uiState.searchUiState.inSearchMode) {
                     EmptySearchResults()
                 } else {
-                    EmptyList(emptyListMessage = stringResource(id = R.string.empty_list_home_subtitle))
+                    EmptyList(
+                        emptyListMessage = stringResource(id = R.string.empty_list_home_subtitle),
+                        onCreateItemClick = {
+                            onAddItemClick(uiState.homeListUiState.selectedShare)
+                        }
+                    )
                 }
             },
             header = {

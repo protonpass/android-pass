@@ -22,8 +22,10 @@ dependencies {
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.datetime)
 
+    implementation(projects.pass.commonUi.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
+    implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
 
     implementation(libs.dagger.hilt.android)

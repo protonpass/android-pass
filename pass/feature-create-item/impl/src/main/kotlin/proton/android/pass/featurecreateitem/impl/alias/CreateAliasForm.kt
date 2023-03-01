@@ -27,7 +27,7 @@ internal fun CreateAliasForm(
     isEditAllowed: Boolean,
     isLoading: Boolean,
     onTitleChange: (String) -> Unit,
-    onAliasChange: (String) -> Unit,
+    onPrefixChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onSuffixClick: () -> Unit,
     onMailboxClick: () -> Unit,
@@ -49,7 +49,7 @@ internal fun CreateAliasForm(
         if (canEdit) {
             CreateAliasSection(
                 state = aliasItem,
-                onChange = onAliasChange,
+                onChange = onPrefixChange,
                 onSuffixClick = onSuffixClick,
                 canEdit = isEditAllowed,
                 canSelectSuffix = aliasItem.aliasOptions.suffixes.size > 1,

@@ -35,7 +35,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
 
     fun setInitialTitle(title: String) {
         if (title.isBlank()) {
-            onAliasChange(randomPrefix())
+            onPrefixChange(randomPrefix())
         } else {
             titleAliasInSync = true
             onTitleChange(title)

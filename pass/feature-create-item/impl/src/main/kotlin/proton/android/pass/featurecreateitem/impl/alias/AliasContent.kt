@@ -21,7 +21,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featurecreateitem.impl.alias.AliasBottomSheetContentType.AliasOptions
 import proton.android.pass.featurecreateitem.impl.alias.AliasBottomSheetContentType.VaultSelection
-import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankAlias
+import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankPrefix
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.InvalidAliasContent
 import proton.android.pass.featurecreateitem.impl.alias.mailboxes.SelectMailboxesDialog
@@ -49,7 +49,7 @@ internal fun AliasContent(
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
-    onAliasChange: (String) -> Unit,
+    onPrefixChange: (String) -> Unit,
     onVaultSelect: (ShareId) -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -116,7 +116,7 @@ internal fun AliasContent(
                 isEditAllowed = isEditAllowed,
                 isLoading = uiState.isLoadingState.value(),
                 onTitleRequiredError = uiState.errorList.contains(BlankTitle),
-                onAliasRequiredError = uiState.errorList.contains(BlankAlias),
+                onAliasRequiredError = uiState.errorList.contains(BlankPrefix),
                 onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),
                 onSuffixClick = {
                     scope.launch {
@@ -130,7 +130,7 @@ internal fun AliasContent(
                 },
                 onTitleChange = { onTitleChange(it) },
                 onNoteChange = { onNoteChange(it) },
-                onAliasChange = { onAliasChange(it) },
+                onPrefixChange = { onPrefixChange(it) },
                 onVaultSelectorClick = {
                     scope.launch {
                         currentBottomSheet = VaultSelection

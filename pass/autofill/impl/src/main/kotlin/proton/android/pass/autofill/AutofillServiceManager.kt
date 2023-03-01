@@ -8,14 +8,11 @@ import android.widget.RemoteViews
 import android.widget.inline.InlinePresentationSpec
 import androidx.annotation.RequiresApi
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import me.proton.pass.autofill.service.R
 import proton.android.pass.autofill.entities.AutofillData
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -51,8 +48,6 @@ class AutofillServiceManager @Inject constructor(
                     packageName = autofillData.packageInfo.map { it.packageName.value },
                     url = autofillData.assistInfo.url
                 )
-                    .filterIsInstance<LoadingResult.Success<List<Item>>>()
-                    .map { it.data }
                     .firstOrNull()
                     .toOption()
 

@@ -134,7 +134,6 @@ android {
             isDefault = true
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
             buildConfigField("String", "HUMAN_VERIFICATION_HOST", "\"verify.proton.black\"")
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
             signingConfig = signingConfigs["signingKeystore"]
@@ -143,13 +142,11 @@ android {
             dimension = "version"
             applicationIdSuffix = ".alpha"
             versionNameSuffix = "-alpha.$appVersionCode"
-            buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
             signingConfig = signingConfigs["signingKeystore"]
         }
         create("play") {
             dimension = "version"
-            buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
             signingConfig = signingConfigs["uploadKeystore"]
         }
@@ -159,10 +156,12 @@ android {
         create("black") {
             dimension = "env"
             applicationIdSuffix = ".black"
+            buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
             buildConfigField("String", "HOST", "\"proton.black\"")
         }
         create("prod") {
             dimension = "env"
+            buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
             buildConfigField("String", "HOST", "\"protonmail.ch\"")
         }
     }

@@ -244,7 +244,7 @@ abstract class BaseLoginViewModel(
                 newAlias = NewAlias(
                     title = aliasItem.title,
                     note = aliasItem.note,
-                    prefix = aliasItem.alias,
+                    prefix = aliasItem.prefix,
                     suffix = aliasItem.selectedSuffix.toDomain(),
                     mailboxes = aliasItem.mailboxes
                         .filter { it.selected }

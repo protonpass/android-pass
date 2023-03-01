@@ -54,11 +54,11 @@ open class CreateAliasViewModel @Inject constructor(
             val alias = if (titleAliasInSync) {
                 AliasUtils.formatAlias(value)
             } else {
-                aliasItem.alias
+                aliasItem.prefix
             }
             aliasItem.copy(
                 title = value,
-                alias = alias,
+                prefix = alias,
                 aliasToBeCreated = getAliasToBeCreated(
                     alias = alias,
                     suffix = aliasItemState.value.selectedSuffix
@@ -71,11 +71,11 @@ open class CreateAliasViewModel @Inject constructor(
         }
     }
 
-    override fun onAliasChange(value: String) {
+    override fun onPrefixChange(value: String) {
         if (value.contains(" ") || value.contains("\n")) return
         aliasItemState.update {
             it.copy(
-                alias = value,
+                prefix = value,
                 aliasToBeCreated = getAliasToBeCreated(
                     alias = value,
                     suffix = aliasItemState.value.selectedSuffix
@@ -85,7 +85,7 @@ open class CreateAliasViewModel @Inject constructor(
         aliasItemValidationErrorsState.update {
             it.toMutableSet()
                 .apply {
-                    remove(AliasItemValidationErrors.BlankAlias)
+                    remove(AliasItemValidationErrors.BlankPrefix)
                     remove(AliasItemValidationErrors.InvalidAliasContent)
                 }
         }
@@ -126,14 +126,14 @@ open class CreateAliasViewModel @Inject constructor(
                 newAlias = NewAlias(
                     title = aliasItem.title,
                     note = aliasItem.note,
-                    prefix = aliasItem.alias,
+                    prefix = aliasItem.prefix,
                     suffix = aliasSuffix.toDomain(),
                     mailboxes = mailboxes.map(AliasMailboxUiModel::toDomain)
                 )
             )
                 .onSuccess { item ->
                     val generatedAlias =
-                        getAliasToBeCreated(aliasItem.alias, aliasSuffix) ?: ""
+                        getAliasToBeCreated(aliasItem.prefix, aliasSuffix) ?: ""
                     isAliasSavedState.update { AliasSavedState.Success(item.id, generatedAlias) }
                     snackbarMessageRepository.emitSnackbarMessage(AliasCreated)
                 }

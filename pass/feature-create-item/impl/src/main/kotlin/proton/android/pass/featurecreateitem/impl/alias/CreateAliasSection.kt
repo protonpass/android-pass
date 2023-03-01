@@ -22,12 +22,12 @@ internal fun CreateAliasSection(
 ) {
     Column(modifier) {
         AliasToBeCreated(
-            prefix = state.alias,
+            prefix = state.prefix,
             suffix = state.selectedSuffix
         )
         AliasAdvancedOptions(
             enabled = canEdit,
-            prefix = state.alias,
+            prefix = state.prefix,
             suffix = state.selectedSuffix,
             isError = onAliasRequiredError && onInvalidAliasError,
             canSelectSuffix = canSelectSuffix,

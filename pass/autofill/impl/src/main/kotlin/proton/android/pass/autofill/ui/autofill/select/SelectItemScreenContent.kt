@@ -81,7 +81,8 @@ internal fun SelectItemScreenContent(
                 } else {
                     onItemClicked(it, false)
                 }
-            }
+            },
+            onCreateItemClick = onCreateLoginClicked
         )
     }
 }

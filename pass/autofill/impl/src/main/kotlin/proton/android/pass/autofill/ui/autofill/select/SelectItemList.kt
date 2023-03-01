@@ -19,6 +19,7 @@ import proton.android.pass.composecomponents.impl.item.ItemsList
 fun SelectItemList(
     modifier: Modifier = Modifier,
     uiState: SelectItemUiState,
+    onCreateItemClick: () -> Unit,
     onItemClicked: (ItemUiModel) -> Unit
 ) {
     val searchUiState = uiState.searchUiState
@@ -42,7 +43,10 @@ fun SelectItemList(
             if (searchUiState.inSearchMode) {
                 EmptySearchResults()
             } else {
-                EmptyList(emptyListMessage = stringResource(id = R.string.error_credentials_not_found))
+                EmptyList(
+                    emptyListMessage = stringResource(id = R.string.error_credentials_not_found),
+                    onCreateItemClick = onCreateItemClick
+                )
             }
         },
         header = {
@@ -68,7 +72,8 @@ fun SelectItemListPreview(
         Surface {
             SelectItemList(
                 uiState = input.second,
-                onItemClicked = {}
+                onItemClicked = {},
+                onCreateItemClick = {}
             )
         }
     }

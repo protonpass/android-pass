@@ -47,13 +47,11 @@ object CreateAlias : NavItem(
     optionalArgIds = listOf(
         CommonOptionalNavArgId.ShareId,
         AliasOptionalNavArgId.Title,
-        AliasOptionalNavArgId.IsDraft
     )
 ) {
     fun createNavRoute(
         shareId: Option<ShareId> = None,
         title: Option<String> = None,
-        isDraft: Boolean = false
     ) = buildString {
         append(baseRoute)
         val map = mutableMapOf<String, Any>()
@@ -63,7 +61,6 @@ object CreateAlias : NavItem(
         if (title is Some) {
             map[AliasOptionalNavArgId.Title.key] = title.value
         }
-        map[AliasOptionalNavArgId.IsDraft.key] = isDraft
         val path = map.toPath()
         append(path)
     }
@@ -72,11 +69,10 @@ object CreateAlias : NavItem(
 object EditAlias : NavItem(
     baseRoute = "alias/edit",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
-    optionalArgIds = listOf(AliasOptionalNavArgId.IsDraft)
+    optionalArgIds = emptyList()
 ) {
     fun createNavRoute(shareId: ShareId, itemId: ItemId) = buildString {
         append("$baseRoute/${shareId.id}/${itemId.id}")
-        append("?${AliasOptionalNavArgId.IsDraft.key}=false")
     }
 }
 

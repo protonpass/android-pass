@@ -16,7 +16,7 @@
     <string name="action_alias">Alias</string>
     <string name="action_note">Note</string>
     <string name="action_password">Password</string>
-    <string name="empty_list_home_subtitle">Create a new item</string>
+    <string name="empty_list_home_subtitle">Or use the Proton Pass web extension to import items from another password manager. </string>
 
     <string name="error_observing_items">Error observing items</string>
     <string name="error_observing_share">Error observing share</string>

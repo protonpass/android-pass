@@ -18,12 +18,13 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 fun CircleButton(
     modifier: Modifier = Modifier,
     color: Color,
+    contentPadding: PaddingValues = PaddingValues(),
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
     Button(
         modifier = modifier,
-        contentPadding = PaddingValues(),
+        contentPadding = contentPadding,
         colors = ButtonDefaults.buttonColors(backgroundColor = color),
         shape = CircleShape,
         onClick = onClick
@@ -42,7 +43,7 @@ fun CircleButtonTextPreview(
             CircleButton(
                 color = PassTheme.colors.accentGreenOpaque,
                 content = {
-                    Text(text = "Label")
+                    Text(text = "A long Label")
                 },
                 onClick = {}
             )

@@ -23,9 +23,12 @@
     <string name="action_content_description_menu">Item action menu</string>
 
     <!-- Empty list -->
-    <string name="empty_list_title">No items</string>
+    <string name="empty_list_title">Add your first item</string>
     <string name="empty_search_results_title">No results found</string>
     <string name="empty_search_results_subtitle">Please try a different search term.</string>
+    <string name="empty_list_open_extension">Visit web extension</string>
+    <string name="empty_list_create_item_button">Create new item</string>
+    <string name="empty_list_image_content_description">Empty list image</string>
 
     <!-- Alerts -->
     <string name="alert_confirm_item_send_to_trash_message">Are you sure you want to send \'%s\' to the trash?</string>

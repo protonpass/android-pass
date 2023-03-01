@@ -103,7 +103,7 @@ class UpdateAliasViewModel @Inject constructor(
         itemDataChanged = true
     }
 
-    override fun onAliasChange(value: String) {
+    override fun onPrefixChange(value: String) {
         // no-op as alias cannot be changed from Update view
         // should never be called
         PassLogger.e(
@@ -157,7 +157,7 @@ class UpdateAliasViewModel @Inject constructor(
                         it.copy(
                             title = decrypt(item.title),
                             note = decrypt(item.note),
-                            alias = prefix,
+                            prefix = prefix,
                             aliasOptions = AliasOptionsUiModel(emptyList(), details.mailboxes),
                             selectedSuffix = AliasSuffixUiModel(suffix, suffix, false, ""),
                             mailboxes = mailboxes,

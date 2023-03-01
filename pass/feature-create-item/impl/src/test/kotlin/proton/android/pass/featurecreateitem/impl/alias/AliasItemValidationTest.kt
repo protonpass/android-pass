@@ -24,16 +24,16 @@ class AliasItemValidationTest {
 
     @Test
     fun `empty alias should return an error`() {
-        val item = itemWithContents(alias = "")
+        val item = itemWithContents(prefix = "")
 
         val res = item.validate(allowEmptyTitle = false)
         assertThat(res.size).isEqualTo(1)
-        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.BlankAlias)
+        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.BlankPrefix)
     }
 
     @Test
     fun `alias with invalid characters return an error`() {
-        val item = itemWithContents(alias = "abc!=()")
+        val item = itemWithContents(prefix = "abc!=()")
 
         val res = item.validate(allowEmptyTitle = false)
         assertThat(res.size).isEqualTo(1)
@@ -42,7 +42,7 @@ class AliasItemValidationTest {
 
     @Test
     fun `alias with valid special characters should not return error`() {
-        val item = itemWithContents(alias = "a.b_c-d")
+        val item = itemWithContents(prefix = "a.b_c-d")
 
         val res = item.validate(allowEmptyTitle = false)
         assertThat(res.isEmpty()).isTrue()
@@ -50,7 +50,7 @@ class AliasItemValidationTest {
 
     @Test
     fun `alias starting with dot should return error`() {
-        val item = itemWithContents(alias = ".somealias")
+        val item = itemWithContents(prefix = ".somealias")
 
         val res = item.validate(allowEmptyTitle = false)
         assertThat(res.size).isEqualTo(1)
@@ -59,7 +59,7 @@ class AliasItemValidationTest {
 
     @Test
     fun `alias ending with dot should return error`() {
-        val item = itemWithContents(alias = "somealias.")
+        val item = itemWithContents(prefix = "somealias.")
 
         val res = item.validate(allowEmptyTitle = false)
         assertThat(res.size).isEqualTo(1)
@@ -68,7 +68,7 @@ class AliasItemValidationTest {
 
     @Test
     fun `alias containing two dots should return error`() {
-        val item = itemWithContents(alias = "some..alias")
+        val item = itemWithContents(prefix = "some..alias")
 
         val res = item.validate(allowEmptyTitle = false)
         assertThat(res.size).isEqualTo(1)
@@ -77,7 +77,7 @@ class AliasItemValidationTest {
 
     @Test
     fun `alias containing two non-consecutive dots should not return error`() {
-        val item = itemWithContents(alias = "so.me.alias")
+        val item = itemWithContents(prefix = "so.me.alias")
 
         val res = item.validate(allowEmptyTitle = false)
         assertThat(res.isEmpty()).isTrue()
@@ -85,7 +85,7 @@ class AliasItemValidationTest {
 
     @Test
     fun `alias containing uppercase should return error`() {
-        val item = itemWithContents(alias = "someAlias")
+        val item = itemWithContents(prefix = "someAlias")
 
         val res = item.validate(allowEmptyTitle = false)
         assertThat(res.size).isEqualTo(1)
@@ -115,12 +115,12 @@ class AliasItemValidationTest {
 
     private fun itemWithContents(
         title: String = "sometitle",
-        alias: String = "somealias",
+        prefix: String = "somealias",
         mailboxes: List<SelectedAliasMailboxUiModel>? = null
     ): AliasItem {
         return AliasItem(
             title = title,
-            alias = alias,
+            prefix = prefix,
             mailboxes = mailboxes ?: listOf(SelectedAliasMailboxUiModel(AliasMailboxUiModel(1, "email"), true))
         )
     }

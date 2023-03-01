@@ -44,7 +44,7 @@ internal class BaseAliasViewModelTest {
             }
         ) {
             override fun onTitleChange(value: String) = Unit
-            override fun onAliasChange(value: String) = Unit
+            override fun onPrefixChange(value: String) = Unit
         }
     }
 

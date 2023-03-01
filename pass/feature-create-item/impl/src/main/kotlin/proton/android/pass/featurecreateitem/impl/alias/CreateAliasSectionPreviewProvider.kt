@@ -46,7 +46,7 @@ class CreateAliasSectionPreviewProvider :
 
 
     private fun aliasItem(alias: String) = AliasItem(
-        alias = alias,
+        prefix = alias,
         selectedSuffix = AliasSuffixUiModel(
             suffix = "@random.suffix",
             signedSuffix = "",

@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -57,15 +57,15 @@ internal fun AliasContent(
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
-    var currentBottomSheet by remember { mutableStateOf(AliasOptions) }
+    var currentBottomSheet by rememberSaveable { mutableStateOf(AliasOptions) }
 
     // If the BottomSheet is visible and the user presses back, dismiss the BottomSheet
     BackHandler(enabled = bottomSheetState.isVisible) {
         scope.launch { bottomSheetState.hide() }
     }
 
-    var showMailboxDialog by remember { mutableStateOf(false) }
-    var showSuffixDialog by remember { mutableStateOf(false) }
+    var showMailboxDialog by rememberSaveable { mutableStateOf(false) }
+    var showSuffixDialog by rememberSaveable { mutableStateOf(false) }
 
     PassModalBottomSheetLayout(
         sheetState = bottomSheetState,

@@ -10,6 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -42,10 +43,10 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
-    val (currentBottomSheet, setBottomSheet) = remember { mutableStateOf(HomeBottomSheetType.CreateItem) }
-    val (selectedItem, setSelectedItem) = remember { mutableStateOf<ItemUiModel?>(null) }
+    val (currentBottomSheet, setBottomSheet) = rememberSaveable { mutableStateOf(HomeBottomSheetType.CreateItem) }
+    val (selectedItem, setSelectedItem) = rememberSaveable { mutableStateOf<ItemUiModel?>(null) }
     val (shouldScrollToTop, setScrollToTop) = remember { mutableStateOf(false) }
-    val (shouldShowDeleteDialog, setShowDeleteDialog) = remember { mutableStateOf(false) }
+    val (shouldShowDeleteDialog, setShowDeleteDialog) = rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(homeItemTypeSelection) {
         viewModel.setItemTypeSelection(homeItemTypeSelection)

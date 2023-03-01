@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,7 +24,7 @@ fun AliasAdvancedOptions(
     onPrefixChanged: (String) -> Unit,
     onSuffixClicked: () -> Unit
 ) {
-    var showAdvancedOptions by remember { mutableStateOf(showAdvancedOptionsInitially) }
+    var showAdvancedOptions by rememberSaveable { mutableStateOf(showAdvancedOptionsInitially) }
     Column(modifier = modifier) {
         Box(
             modifier = Modifier

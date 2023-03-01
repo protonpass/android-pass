@@ -1,33 +1,23 @@
 package proton.android.pass.composecomponents.impl.item.icon
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import com.google.accompanist.drawablepainter.rememberDrawablePainter
 import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Some
-import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.pass.domain.ItemType
@@ -60,10 +50,10 @@ fun LoginIcon(
     size: Int = 40,
 ) {
     if (website == null) {
-        TwoLetterLoginIcon(
-            modifier = modifier,
+        FallbackLoginIcon(
             text = text,
-            size = size,
+            packageName = packageName,
+            size = size
         )
     } else {
         SubcomposeAsyncImage(
@@ -112,26 +102,17 @@ private fun FallbackLoginIcon(
             size = size,
         )
     } else {
-        val context = LocalContext.current
-        val iconDrawable = remember(packageName) {
-            AndroidUtils.getApplicationIcon(context, packageName)
-        }
-        when (iconDrawable) {
-            None -> {
+        LinkedAppIcon(
+            packageName = packageName,
+            size = size,
+            emptyContent = {
                 TwoLetterLoginIcon(
                     modifier = modifier,
                     text = text,
                     size = size,
                 )
             }
-            is Some -> {
-                Image(
-                    modifier = Modifier.width(size.dp),
-                    painter = rememberDrawablePainter(drawable = iconDrawable.value),
-                    contentDescription = stringResource(R.string.linked_app_icon_content_description)
-                )
-            }
-        }
+        )
     }
 }
 

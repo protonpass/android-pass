@@ -1,6 +1,7 @@
 package proton.android.pass.featurecreateitem.impl.alias
 
 import com.google.common.truth.Truth.assertThat
+import me.proton.core.util.kotlin.times
 import org.junit.Test
 
 class AliasItemValidationTest {
@@ -112,6 +113,22 @@ class AliasItemValidationTest {
         assertThat(res.first()).isEqualTo(AliasItemValidationErrors.NoMailboxes)
     }
 
+    @Test
+    fun `prefix too long should return an error`() {
+        val item = itemWithContents(prefix = "a".times(AliasItem.MAX_PREFIX_LENGTH + 1))
+
+        val res = item.validate(allowEmptyTitle = false)
+        assertThat(res.size).isEqualTo(1)
+        assertThat(res.first()).isEqualTo(AliasItemValidationErrors.InvalidAliasContent)
+    }
+
+    @Test
+    fun `prefix exactly MAX_PREFIX_LENGTH long should not return error`() {
+        val item = itemWithContents(prefix = "a".times(AliasItem.MAX_PREFIX_LENGTH))
+
+        val res = item.validate(allowEmptyTitle = false)
+        assertThat(res).isEmpty()
+    }
 
     private fun itemWithContents(
         title: String = "sometitle",

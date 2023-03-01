@@ -40,7 +40,7 @@ open class CreateAliasViewModel @Inject constructor(
         PassLogger.e(TAG, throwable)
     }
 
-    protected var titleAliasInSync = true
+    protected var titlePrefixInSync = true
 
     val closeScreenEventFlow: StateFlow<CloseScreenEvent> = mutableCloseScreenEventFlow
         .stateIn(
@@ -51,16 +51,16 @@ open class CreateAliasViewModel @Inject constructor(
 
     override fun onTitleChange(value: String) {
         aliasItemState.update { aliasItem ->
-            val alias = if (titleAliasInSync) {
+            val prefix = if (titlePrefixInSync) {
                 AliasUtils.formatAlias(value)
             } else {
                 aliasItem.prefix
-            }
+            }.take(AliasItem.MAX_PREFIX_LENGTH)
             aliasItem.copy(
                 title = value,
-                prefix = alias,
+                prefix = prefix,
                 aliasToBeCreated = getAliasToBeCreated(
-                    alias = alias,
+                    alias = prefix,
                     suffix = aliasItemState.value.selectedSuffix
                 )
             )
@@ -73,11 +73,12 @@ open class CreateAliasViewModel @Inject constructor(
 
     override fun onPrefixChange(value: String) {
         if (value.contains(" ") || value.contains("\n")) return
+        val prefix = value.take(AliasItem.MAX_PREFIX_LENGTH)
         aliasItemState.update {
             it.copy(
-                prefix = value,
+                prefix = prefix,
                 aliasToBeCreated = getAliasToBeCreated(
-                    alias = value,
+                    alias = prefix,
                     suffix = aliasItemState.value.selectedSuffix
                 )
             )
@@ -89,7 +90,7 @@ open class CreateAliasViewModel @Inject constructor(
                     remove(AliasItemValidationErrors.InvalidAliasContent)
                 }
         }
-        titleAliasInSync = false
+        titlePrefixInSync = false
     }
 
     fun createAlias(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {

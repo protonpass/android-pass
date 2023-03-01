@@ -32,6 +32,8 @@ data class AliasItem(
 
         if (prefix.contains("..")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
 
+        if (prefix.length > MAX_PREFIX_LENGTH) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
+
         if (!areAllAliasCharactersValid(prefix)) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
 
         if (mailboxes.count { it.selected } == 0) mutableSet.add(AliasItemValidationErrors.NoMailboxes)
@@ -40,6 +42,8 @@ data class AliasItem(
     }
 
     companion object {
+        const val MAX_PREFIX_LENGTH: Int = 40
+
         val Empty = AliasItem()
     }
 }

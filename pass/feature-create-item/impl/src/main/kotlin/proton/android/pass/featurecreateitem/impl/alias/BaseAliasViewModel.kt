@@ -86,7 +86,7 @@ abstract class BaseAliasViewModel(
     val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(
         AliasItem(
             title = title.value() ?: "",
-            alias = AliasUtils.formatAlias(title.value() ?: "")
+            prefix = AliasUtils.formatAlias(title.value() ?: "")
         )
     )
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
@@ -159,8 +159,8 @@ abstract class BaseAliasViewModel(
                         aliasOptions.suffixes.first()
                             .also { selectedSuffixState.update { it } }
                     }
-                val aliasToBeCreated = if (aliasItem.alias.isNotBlank()) {
-                    getAliasToBeCreated(aliasItem.alias, suffix)
+                val aliasToBeCreated = if (aliasItem.prefix.isNotBlank()) {
+                    getAliasToBeCreated(aliasItem.prefix, suffix)
                 } else {
                     null
                 }
@@ -220,7 +220,7 @@ abstract class BaseAliasViewModel(
         )
 
     abstract fun onTitleChange(value: String)
-    abstract fun onAliasChange(value: String)
+    abstract fun onPrefixChange(value: String)
 
     open fun onNoteChange(value: String) {
         aliasItemState.update { it.copy(note = value) }

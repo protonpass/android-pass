@@ -23,10 +23,12 @@ object ImageModule {
     @Singleton
     fun providesImageLoader(
         @ApplicationContext context: Context,
-        fetcher: ImageFetcherFactory
+        remoteImageFetcher: RemoteImageFetcherFactory,
+        appImageFetcher: AppImageFetcherFactory
     ): ImageLoader = ImageLoader.Builder(context)
         .components {
-            add(fetcher)
+            add(remoteImageFetcher)
+            add(appImageFetcher)
             add(SvgDecoder.Factory())
             if (SDK_INT >= Build.VERSION_CODES.P) {
                 add(ImageDecoderDecoder.Factory())

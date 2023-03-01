@@ -27,16 +27,16 @@ import javax.inject.Singleton
 import kotlin.random.Random
 
 @Singleton
-class ImageFetcherFactory @Inject constructor(
+class RemoteImageFetcherFactory @Inject constructor(
     private val requestImage: RequestImage,
     @ApplicationContext private val context: Context,
     private val clock: Clock
 ) : Fetcher.Factory<Uri> {
     override fun create(data: Uri, options: Options, imageLoader: ImageLoader): Fetcher =
-        ImageFetcher(requestImage, context, clock, data)
+        RemoteImageFetcher(requestImage, context, clock, data)
 }
 
-class ImageFetcher(
+class RemoteImageFetcher(
     private val requestImage: RequestImage,
     private val context: Context,
     private val clock: Clock,
@@ -177,6 +177,6 @@ class ImageFetcher(
 
         private const val CACHE_EXPIRATION_DAYS = 14
 
-        private const val TAG = "ImageFetcher"
+        private const val TAG = "RemoteImageFetcher"
     }
 }

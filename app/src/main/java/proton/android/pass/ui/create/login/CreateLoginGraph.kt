@@ -13,7 +13,6 @@ import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.ui.navigation.CameraTotp
-import proton.android.pass.ui.navigation.CreateAlias
 import proton.android.pass.ui.navigation.CreateLogin
 
 @OptIn(

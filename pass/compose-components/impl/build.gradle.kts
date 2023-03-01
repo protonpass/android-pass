@@ -23,7 +23,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.accompanist.drawablepainter)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)
     implementation(libs.accompanist.placeholder)

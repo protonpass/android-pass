@@ -9,7 +9,6 @@ import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.ui.autofill.CameraTotp
-import proton.android.pass.autofill.ui.autofill.CreateAlias
 import proton.android.pass.autofill.ui.autofill.CreateLogin
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some

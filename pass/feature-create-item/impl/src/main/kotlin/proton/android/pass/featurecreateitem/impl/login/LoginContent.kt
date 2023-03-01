@@ -2,6 +2,7 @@ package proton.android.pass.featurecreateitem.impl.login
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberModalBottomSheetState
@@ -14,12 +15,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
+import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
@@ -65,7 +71,19 @@ internal fun LoginContent(
     var regeneratePassword by remember { mutableStateOf(true) }
     var currentBottomSheet by remember { mutableStateOf(LoginBottomSheetContentType.GeneratePassword) }
     var showRemoveAliasDialog by remember { mutableStateOf(false) }
+    var showBottomSheetWhenKeyboardDisappears by remember { mutableStateOf(false) }
 
+    val keyboardState by keyboardAsState()
+    LaunchedEffect(keyboardState, showBottomSheetWhenKeyboardDisappears) {
+        if (!keyboardState && showBottomSheetWhenKeyboardDisappears) {
+            scope.launch {
+                bottomSheetState.forceExpand()
+                showBottomSheetWhenKeyboardDisappears = false // Clear flag
+            }
+        }
+    }
+
+    val keyboardController = LocalSoftwareKeyboardController.current
     PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
@@ -166,7 +184,14 @@ internal fun LoginContent(
                 onCreateAliasClick = {
                     scope.launch {
                         currentBottomSheet = LoginBottomSheetContentType.CreateAlias
-                        bottomSheetState.show()
+                        if (!keyboardState) {
+                            // If keyboard is hidden, display the bottomsheet
+                            bottomSheetState.show()
+                        } else {
+                            // If keyboard is present, do it in a deferred way
+                            showBottomSheetWhenKeyboardDisappears = true
+                            keyboardController?.hide()
+                        }
                     }
                 },
                 onAliasOptionsClick = {
@@ -221,5 +246,16 @@ private fun ItemSavedLaunchedEffect(
             isItemSaved.itemId,
             isItemSaved.item
         )
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Suppress("SwallowedException")
+suspend fun ModalBottomSheetState.forceExpand() {
+    try {
+        animateTo(ModalBottomSheetValue.Expanded)
+    } catch (e: CancellationException) {
+        currentCoroutineContext().ensureActive()
+        forceExpand()
     }
 }

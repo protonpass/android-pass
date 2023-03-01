@@ -12,16 +12,14 @@ object CreateLogin : NavItem(baseRoute = "login/create", isTopLevel = true)
 object CreateAlias : NavItem(
     baseRoute = "alias/create",
     navArgIds = listOf(CommonNavArgId.ShareId),
-    optionalArgIds = listOf(AliasOptionalNavArgId.Title, AliasOptionalNavArgId.IsDraft)
+    optionalArgIds = listOf(AliasOptionalNavArgId.Title)
 ) {
     fun createNavRoute(
         shareId: ShareId,
-        isDraft: Boolean = false,
         title: Option<String> = None
     ) = buildString {
         append("$baseRoute/${shareId.id}")
-        append("?${AliasOptionalNavArgId.IsDraft.key}=$isDraft")
-        if (title.isNotEmpty()) append("&${AliasOptionalNavArgId.Title.key}=${title.value()}")
+        if (title.isNotEmpty()) append("?${AliasOptionalNavArgId.Title.key}=${title.value()}")
     }
 }
 

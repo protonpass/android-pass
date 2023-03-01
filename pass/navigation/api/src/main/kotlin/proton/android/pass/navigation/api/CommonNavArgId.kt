@@ -37,10 +37,4 @@ enum class AliasOptionalNavArgId : OptionalNavArgId {
         override val key: String = "aliasTitle"
         override val navType: NavType<*> = NavType.StringType
     },
-    IsDraft {
-        override val key: String = "isDraft"
-        override val navType: NavType<*> = NavType.BoolType
-        override val default: Any
-            get() = false
-    }
 }

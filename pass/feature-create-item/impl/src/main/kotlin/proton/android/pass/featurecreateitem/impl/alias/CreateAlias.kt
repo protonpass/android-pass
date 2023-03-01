@@ -44,7 +44,7 @@ fun CreateAliasScreen(
         onMailboxesChanged = { viewModel.onMailboxesChanged(it) },
         onTitleChange = { viewModel.onTitleChange(it) },
         onNoteChange = { viewModel.onNoteChange(it) },
-        onAliasChange = { viewModel.onAliasChange(it) },
+        onPrefixChange = { viewModel.onPrefixChange(it) },
         onVaultSelect = { viewModel.changeVault(it) }
     )
 }

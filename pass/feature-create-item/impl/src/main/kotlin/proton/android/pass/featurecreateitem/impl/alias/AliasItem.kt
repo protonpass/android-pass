@@ -9,7 +9,7 @@ import proton.android.pass.featurecreateitem.impl.alias.AliasUtils.areAllAliasCh
 @Immutable
 data class AliasItem(
     val title: String = "",
-    val alias: String = "",
+    val prefix: String = "",
     val note: String = "",
     val mailboxTitle: String = "",
     val aliasOptions: AliasOptionsUiModel = AliasOptionsUiModel(emptyList(), emptyList()),
@@ -24,15 +24,15 @@ data class AliasItem(
             if (title.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankTitle)
         }
 
-        if (alias.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankAlias)
+        if (prefix.isBlank()) mutableSet.add(AliasItemValidationErrors.BlankPrefix)
 
-        if (alias.startsWith(".")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
+        if (prefix.startsWith(".")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
 
-        if (alias.endsWith(".")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
+        if (prefix.endsWith(".")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
 
-        if (alias.contains("..")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
+        if (prefix.contains("..")) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
 
-        if (!areAllAliasCharactersValid(alias)) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
+        if (!areAllAliasCharactersValid(prefix)) mutableSet.add(AliasItemValidationErrors.InvalidAliasContent)
 
         if (mailboxes.count { it.selected } == 0) mutableSet.add(AliasItemValidationErrors.NoMailboxes)
 
@@ -46,7 +46,7 @@ data class AliasItem(
 
 sealed interface AliasItemValidationErrors {
     object BlankTitle : AliasItemValidationErrors
-    object BlankAlias : AliasItemValidationErrors
+    object BlankPrefix : AliasItemValidationErrors
     object InvalidAliasContent : AliasItemValidationErrors
     object NoMailboxes : AliasItemValidationErrors
 }

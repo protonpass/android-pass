@@ -54,7 +54,7 @@ fun CreateAliasBottomSheetContent(
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     showAdvancedOptionsInitially: Boolean = false
 ) {
-    val isBlankAliasError = state.errorList.contains(AliasItemValidationErrors.BlankAlias)
+    val isBlankAliasError = state.errorList.contains(AliasItemValidationErrors.BlankPrefix)
     val isInvalidAliasError =
         state.errorList.contains(AliasItemValidationErrors.InvalidAliasContent)
 
@@ -71,7 +71,7 @@ fun CreateAliasBottomSheetContent(
         BottomSheetTitle(title = stringResource(R.string.field_alias_you_are_about_to_create))
         AliasPrefixSuffixText(
             modifier = Modifier.align(Alignment.CenterHorizontally),
-            prefix = state.aliasItem.alias,
+            prefix = state.aliasItem.prefix,
             suffix = state.aliasItem.selectedSuffix?.suffix ?: "",
             suffixColor = PassTheme.colors.accentPurpleNorm,
             fontSize = 20.sp
@@ -79,7 +79,7 @@ fun CreateAliasBottomSheetContent(
         AnimatedVisibility(visible = showAdvancedOptions) {
             AliasAdvancedOptionsSection(
                 enabled = true,
-                prefix = state.aliasItem.alias,
+                prefix = state.aliasItem.prefix,
                 suffix = state.aliasItem.selectedSuffix,
                 isError = isBlankAliasError || isInvalidAliasError,
                 canSelectSuffix = state.aliasItem.aliasOptions.suffixes.size > 1,
@@ -145,7 +145,7 @@ fun CreateAliasBottomSheetContentPreview(
                     selectedShareId = null,
                     aliasItem = AliasItem(
                         title = "some title",
-                        alias = "some alias",
+                        prefix = "some alias",
                         note = "",
                         mailboxTitle = "mailbox title",
                         aliasOptions = AliasOptionsUiModel(

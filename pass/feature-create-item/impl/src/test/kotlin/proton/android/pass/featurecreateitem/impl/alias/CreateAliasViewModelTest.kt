@@ -60,19 +60,19 @@ class CreateAliasViewModelTest {
         viewModel.aliasUiState.test {
             val item = awaitItem()
             assertThat(item.aliasItem.title).isEqualTo(titleInput)
-            assertThat(item.aliasItem.alias).isEqualTo("title-changed")
+            assertThat(item.aliasItem.prefix).isEqualTo("title-changed")
             assertThat(item.aliasItem.aliasToBeCreated).isEqualTo("title-changed${suffix.suffix}")
 
             cancelAndIgnoreRemainingEvents()
         }
 
         val newAlias = "myalias"
-        viewModel.onAliasChange(newAlias)
+        viewModel.onPrefixChange(newAlias)
 
         viewModel.aliasUiState.test {
             val item = awaitItem()
             assertThat(item.aliasItem.title).isEqualTo(titleInput)
-            assertThat(item.aliasItem.alias).isEqualTo(newAlias)
+            assertThat(item.aliasItem.prefix).isEqualTo(newAlias)
             assertThat(item.aliasItem.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
 
             cancelAndIgnoreRemainingEvents()
@@ -84,7 +84,7 @@ class CreateAliasViewModelTest {
         viewModel.aliasUiState.test {
             val item = awaitItem()
             assertThat(item.aliasItem.title).isEqualTo(newTitle)
-            assertThat(item.aliasItem.alias).isEqualTo(newAlias)
+            assertThat(item.aliasItem.prefix).isEqualTo(newAlias)
             assertThat(item.aliasItem.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
 
             cancelAndIgnoreRemainingEvents()
@@ -96,11 +96,11 @@ class CreateAliasViewModelTest {
         viewModel = createAliasViewModel()
         setupVaults()
         val aliasInput = "aliasInput"
-        viewModel.onAliasChange(aliasInput)
+        viewModel.onPrefixChange(aliasInput)
 
         viewModel.aliasUiState.test {
             assertThat(awaitItem().aliasItem)
-                .isEqualTo(CreateUpdateAliasUiState.Initial.aliasItem.copy(alias = aliasInput))
+                .isEqualTo(CreateUpdateAliasUiState.Initial.aliasItem.copy(prefix = aliasInput))
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -150,7 +150,7 @@ class CreateAliasViewModelTest {
         viewModel.onTitleChange(titleInput)
         viewModel.aliasUiState.test {
             val item = awaitItem()
-            assertThat(item.aliasItem.alias).isEqualTo("this-is-a-test")
+            assertThat(item.aliasItem.prefix).isEqualTo("this-is-a-test")
         }
     }
 
@@ -160,7 +160,7 @@ class CreateAliasViewModelTest {
         setupAliasOptions()
         viewModel.aliasUiState.test {
             val item = awaitItem()
-            assertThat(item.aliasItem.alias).isEqualTo("this.is_a-test")
+            assertThat(item.aliasItem.prefix).isEqualTo("this.is_a-test")
         }
     }
 
@@ -192,7 +192,7 @@ class CreateAliasViewModelTest {
         }
 
         viewModel.onTitleChange("title")
-        viewModel.onAliasChange("alias")
+        viewModel.onPrefixChange("alias")
         viewModel.onSuffixChange(suffix)
         viewModel.onMailboxesChanged(
             listOf(

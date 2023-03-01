@@ -185,7 +185,14 @@ internal fun LoginContent(
                     scope.launch {
                         currentBottomSheet = LoginBottomSheetContentType.GeneratePassword
                         regeneratePassword = true
-                        bottomSheetState.show()
+                        if (!keyboardState) {
+                            // If keyboard is hidden, display the bottomsheet
+                            bottomSheetState.show()
+                        } else {
+                            // If keyboard is present, do it in a deferred way
+                            showBottomSheetWhenKeyboardDisappears = true
+                            keyboardController?.hide()
+                        }
                     }
                 },
                 onCreateAliasClick = {

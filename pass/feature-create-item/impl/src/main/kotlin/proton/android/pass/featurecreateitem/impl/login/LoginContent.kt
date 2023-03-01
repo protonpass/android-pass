@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -76,9 +77,9 @@ internal fun LoginContent(
     }
 
     var regeneratePassword by remember { mutableStateOf(true) }
-    var currentBottomSheet by remember { mutableStateOf(LoginBottomSheetContentType.GeneratePassword) }
-    var showRemoveAliasDialog by remember { mutableStateOf(false) }
-    var showBottomSheetWhenKeyboardDisappears by remember { mutableStateOf(false) }
+    var currentBottomSheet by rememberSaveable { mutableStateOf(LoginBottomSheetContentType.GeneratePassword) }
+    var showRemoveAliasDialog by rememberSaveable { mutableStateOf(false) }
+    var showBottomSheetWhenKeyboardDisappears by rememberSaveable { mutableStateOf(false) }
 
     val keyboardState by keyboardAsState()
     LaunchedEffect(keyboardState, showBottomSheetWhenKeyboardDisappears) {

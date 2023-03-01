@@ -34,11 +34,13 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     }
 
     fun setInitialTitle(title: String) {
-        if (title.isBlank()) {
-            onPrefixChange(randomPrefix())
-        } else {
-            titlePrefixInSync = true
-            onTitleChange(title)
+        if (aliasItemState.value.prefix.isBlank()) {
+            if (title.isBlank()) {
+                onPrefixChange(randomPrefix())
+            } else {
+                titlePrefixInSync = true
+                onTitleChange(title)
+            }
         }
     }
 

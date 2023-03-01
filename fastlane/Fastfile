@@ -105,10 +105,10 @@ platform :android do
   desc "Publish internal prod bundle"
   lane :deployToPlayInternal do
      upload_to_play_store(
-       json_key: '../tmp/play-service-account.json',
+       json_key: './tmp/play-service-account.json',
        track: 'internal',
        release_status: 'draft',
-       aab: '../app/build/outputs/bundle/playProdRelease/app-play-prod-release.aab'
+       aab: './app/build/outputs/bundle/playProdRelease/app-play-prod-release.aab'
      )
   end
 end

@@ -1,5 +1,6 @@
 package proton.android.pass.featurecreateitem.impl.login
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
@@ -67,6 +68,12 @@ internal fun LoginContent(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
     )
+
+    BackHandler(enabled = bottomSheetState.isVisible) {
+        scope.launch {
+            bottomSheetState.hide()
+        }
+    }
 
     var regeneratePassword by remember { mutableStateOf(true) }
     var currentBottomSheet by remember { mutableStateOf(LoginBottomSheetContentType.GeneratePassword) }

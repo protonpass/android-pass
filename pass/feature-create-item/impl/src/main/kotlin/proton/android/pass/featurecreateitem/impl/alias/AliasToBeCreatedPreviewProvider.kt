@@ -10,7 +10,10 @@ class AliasToBeCreatedPreviewProvider : PreviewParameterProvider<AliasToBeCreate
             AliasToBeCreatedInput(prefix = "prefix", suffix = null),
             AliasToBeCreatedInput(prefix = "", suffix = suffix(".some@suffix.test")),
             AliasToBeCreatedInput(prefix = "prefix", suffix = suffix(".some@suffix.test")),
-
+            AliasToBeCreatedInput(
+                prefix = "prefix.that.is.super.long.in.order.to.trigger.newlines",
+                suffix = suffix(".some@suffix.test")
+            ),
         )
 
     private fun suffix(suffix: String) = AliasSuffixUiModel(

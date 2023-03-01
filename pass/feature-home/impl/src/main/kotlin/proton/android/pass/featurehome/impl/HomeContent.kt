@@ -11,7 +11,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -76,7 +76,7 @@ internal fun HomeContent(
             )
         }
     ) { contentPadding ->
-        var itemToDelete by remember { mutableStateOf<ItemUiModel?>(null) }
+        var itemToDelete by rememberSaveable { mutableStateOf<ItemUiModel?>(null) }
         val keyboardController = LocalSoftwareKeyboardController.current
         ItemsList(
             modifier = Modifier.padding(contentPadding),

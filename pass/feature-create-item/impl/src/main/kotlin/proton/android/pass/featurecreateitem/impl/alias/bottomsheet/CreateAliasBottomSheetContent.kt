@@ -9,7 +9,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,9 +58,9 @@ fun CreateAliasBottomSheetContent(
     val isInvalidAliasError =
         state.errorList.contains(AliasItemValidationErrors.InvalidAliasContent)
 
-    var showAdvancedOptions by remember { mutableStateOf(showAdvancedOptionsInitially) }
-    var showMailboxesDialog by remember { mutableStateOf(false) }
-    var showSuffixDialog by remember { mutableStateOf(false) }
+    var showAdvancedOptions by rememberSaveable { mutableStateOf(showAdvancedOptionsInitially) }
+    var showMailboxesDialog by rememberSaveable { mutableStateOf(false) }
+    var showSuffixDialog by rememberSaveable { mutableStateOf(false) }
 
     Column(
         modifier = modifier

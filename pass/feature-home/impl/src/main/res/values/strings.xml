@@ -31,6 +31,10 @@
     <string name="home_autofill_banner_title">Log in to apps instantly ›</string>
     <string name="home_autofill_banner_text">Let Proton Pass fill in login details for you.\nNo typing or copy-paste required</string>
 
+    <string name="bottom_bar_list_items_icon_content_description">List items icon</string>
+    <string name="bottom_bar_add_item_icon_content_description">Add item icon</string>
+    <string name="bottom_bar_profile_icon_content_description">Profile icon</string>
+
     <!-- Common bottomsheet -->
     <string name="bottomsheet_copy_password">Copy password</string>
     <string name="bottomsheet_copy_username">Copy username</string>

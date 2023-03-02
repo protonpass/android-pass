@@ -110,6 +110,13 @@ internal fun LoginContent(
                 )
                 LoginBottomSheetContentType.AliasOptions -> AliasOptionsBottomSheet(
                     modifier = modifier,
+                    onEditAliasClick = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            currentBottomSheet = LoginBottomSheetContentType.CreateAlias
+                            bottomSheetState.show()
+                        }
+                    },
                     onRemoveAliasClick = {
                         scope.launch {
                             showRemoveAliasDialog = true
@@ -129,6 +136,7 @@ internal fun LoginContent(
                 )
                 LoginBottomSheetContentType.CreateAlias -> CreateAliasBottomSheet(
                     itemTitle = uiState.loginItem.title,
+                    aliasItem = uiState.aliasItem,
                     onAliasCreated = {
                         scope.launch {
                             onAliasCreated(it)
@@ -227,16 +235,15 @@ internal fun LoginContent(
                 onLinkedAppDelete = onLinkedAppDelete
             )
 
-            if (showRemoveAliasDialog) {
-                ConfirmRemoveAliasDialog(
-                    onDismiss = { showRemoveAliasDialog = false },
-                    onCancel = { showRemoveAliasDialog = false },
-                    onConfirm = {
-                        showRemoveAliasDialog = false
-                        onRemoveAliasClick()
-                    }
-                )
-            }
+            ConfirmRemoveAliasDialog(
+                show = showRemoveAliasDialog,
+                onDismiss = { showRemoveAliasDialog = false },
+                onCancel = { showRemoveAliasDialog = false },
+                onConfirm = {
+                    showRemoveAliasDialog = false
+                    onRemoveAliasClick()
+                }
+            )
 
             ItemSavedLaunchedEffect(
                 isItemSaved = uiState.isItemSaved,

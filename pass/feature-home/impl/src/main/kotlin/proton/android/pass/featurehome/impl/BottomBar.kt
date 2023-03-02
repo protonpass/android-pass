@@ -52,7 +52,7 @@ fun BottomBar(
             onClick = onProfileClick,
             icon = {
                 Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_user),
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_user),
                     contentDescription = stringResource(R.string.bottom_bar_profile_icon_content_description),
                     tint = Color.White
                 )

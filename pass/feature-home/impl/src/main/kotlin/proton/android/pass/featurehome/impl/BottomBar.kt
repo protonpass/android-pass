@@ -11,7 +11,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
@@ -31,10 +30,8 @@ fun BottomBar(
             onClick = onListClick,
             icon = {
                 Icon(
-                    painter = painterResource(R.drawable.ic_proton_list_bullets),
-                    contentDescription = stringResource(
-                        proton.android.pass.composecomponents.impl.R.string.alias_title_icon_content_description
-                    ),
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_list_bullets),
+                    contentDescription = stringResource(R.string.bottom_bar_list_items_icon_content_description),
                     tint = PassTheme.colors.accentBrandNorm
                 )
             }
@@ -44,10 +41,8 @@ fun BottomBar(
             onClick = onCreateClick,
             icon = {
                 Icon(
-                    painter = painterResource(R.drawable.ic_proton_plus),
-                    contentDescription = stringResource(
-                        proton.android.pass.composecomponents.impl.R.string.alias_title_icon_content_description
-                    ),
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_plus),
+                    contentDescription = stringResource(R.string.bottom_bar_add_item_icon_content_description),
                     tint = Color.White
                 )
             }
@@ -57,10 +52,8 @@ fun BottomBar(
             onClick = onProfileClick,
             icon = {
                 Icon(
-                    painter = painterResource(R.drawable.ic_user),
-                    contentDescription = stringResource(
-                        proton.android.pass.composecomponents.impl.R.string.alias_title_icon_content_description
-                    ),
+                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_user),
+                    contentDescription = stringResource(R.string.bottom_bar_profile_icon_content_description),
                     tint = Color.White
                 )
             }

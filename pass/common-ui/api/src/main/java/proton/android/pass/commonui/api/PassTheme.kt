@@ -22,7 +22,9 @@ fun PassTheme(
     ) {
         ProtonTheme(
             isDark = isDark,
-            colors = protonColors,
+            colors = protonColors.copy(
+                backgroundNorm = PassTheme.colors.backgroundNorm
+            ),
             content = content
         )
     }

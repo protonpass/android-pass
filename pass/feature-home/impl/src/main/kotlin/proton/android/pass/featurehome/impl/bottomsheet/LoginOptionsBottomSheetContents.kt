@@ -14,13 +14,13 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheetPadding
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetDivider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.featurehome.impl.R
 import proton.pass.domain.ItemId
@@ -42,14 +42,14 @@ fun LoginOptionsBottomSheetContents(
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = { BottomSheetItemSubtitle(text = itemType.username) },
-            icon = { LoginIcon(text = itemUiModel.name, itemType = itemType) }
+            leftIcon = { LoginIcon(text = itemUiModel.name, itemType = itemType) }
         )
         BottomSheetItemList(
             items = persistentListOf(
                 copyUsername(itemType.username, onCopyUsername),
-                BottomSheetDivider(),
+                bottomSheetDivider(),
                 copyPassword(itemType.password, onCopyPassword),
-                BottomSheetDivider(),
+                bottomSheetDivider(),
                 edit(itemUiModel, onEdit),
                 moveToTrash(itemUiModel, onMoveToTrash)
             )
@@ -63,8 +63,10 @@ private fun copyUsername(username: String, onCopyUsername: (String) -> Unit): Bo
             get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_username)) }
         override val subtitle: (@Composable () -> Unit)?
             get() = null
-        override val icon: (@Composable () -> Unit)
+        override val leftIcon: (@Composable () -> Unit)
             get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = { onCopyUsername(username) }
         override val isDivider = false
@@ -76,8 +78,10 @@ private fun copyPassword(password: String, onCopyPassword: (String) -> Unit): Bo
             get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_password)) }
         override val subtitle: (@Composable () -> Unit)?
             get() = null
-        override val icon: (@Composable () -> Unit)
+        override val leftIcon: (@Composable () -> Unit)
             get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = { onCopyPassword(password) }
         override val isDivider = false
@@ -104,6 +108,7 @@ fun LoginOptionsBottomSheetContentsPreview(
                         packageInfoSet = emptySet(),
                         primaryTotp = ""
                     ),
+                    createTime = Clock.System.now(),
                     modificationTime = Clock.System.now()
                 ),
                 onCopyUsername = {},

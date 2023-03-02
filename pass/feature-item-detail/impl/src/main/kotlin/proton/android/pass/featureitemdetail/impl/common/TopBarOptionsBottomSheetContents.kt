@@ -35,8 +35,10 @@ private fun moveToTrash(onClick: () -> Unit): BottomSheetItem =
             get() = { BottomSheetItemTitle(text = stringResource(R.string.move_to_trash_item_detail_bottom_sheet)) }
         override val subtitle: @Composable (() -> Unit)?
             get() = null
-        override val icon: @Composable (() -> Unit)
+        override val leftIcon: @Composable (() -> Unit)
             get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_trash) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = { onClick() }
         override val isDivider = false

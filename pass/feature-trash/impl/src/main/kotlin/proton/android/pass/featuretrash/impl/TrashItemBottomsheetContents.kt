@@ -50,7 +50,7 @@ fun TrashItemBottomSheetContents(
                 }
                 BottomSheetItemSubtitle(text = text)
             },
-            icon = {
+            leftIcon = {
                 when (val itemType = itemUiModel.itemType) {
                     is ItemType.Alias -> AliasIcon()
                     is ItemType.Login -> LoginIcon(
@@ -80,8 +80,10 @@ private fun restoreItem(
         get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_restore)) }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
-    override val icon: (@Composable () -> Unit)
+    override val leftIcon: (@Composable () -> Unit)
         get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_clock_rotate_left) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
     override val onClick: () -> Unit
         get() = { onRestoreItem(itemUiModel) }
     override val isDivider = false
@@ -95,18 +97,20 @@ private fun deleteItem(
         get() = {
             BottomSheetItemTitle(
                 text = stringResource(id = R.string.bottomsheet_delete_permanently),
-                textcolor = ProtonTheme.colors.notificationError
+                color = ProtonTheme.colors.notificationError
             )
         }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
-    override val icon: (@Composable () -> Unit)
+    override val leftIcon: (@Composable () -> Unit)
         get() = {
             BottomSheetItemIcon(
                 iconId = me.proton.core.presentation.R.drawable.ic_proton_trash_cross,
                 tint = ProtonTheme.colors.notificationError
             )
         }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
     override val onClick: () -> Unit
         get() = { onDeleteItem(itemUiModel) }
     override val isDivider = false
@@ -128,6 +132,7 @@ fun TrashItemBottomSheetContentsPreview(
                     name = "My Alias",
                     note = "Note",
                     itemType = ItemType.Alias("alias.email@proton.me"),
+                    createTime = Clock.System.now(),
                     modificationTime = Clock.System.now()
                 ),
                 {},

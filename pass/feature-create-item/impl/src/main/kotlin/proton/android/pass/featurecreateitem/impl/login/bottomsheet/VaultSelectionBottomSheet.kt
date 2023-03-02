@@ -53,10 +53,12 @@ private fun createVaultBottomSheetItem(
             get() = { BottomSheetItemTitle(text = shareUiModel.name) }
         override val subtitle: @Composable (() -> Unit)?
             get() = null
-        override val icon: @Composable (() -> Unit)?
+        override val leftIcon: @Composable (() -> Unit)?
             get() = if (isSelected) {
                 { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark) }
             } else null
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit = { onVaultClick(shareUiModel.id) }
         override val isDivider = false
     }

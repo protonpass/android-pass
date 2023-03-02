@@ -14,13 +14,13 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheetPadding
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetDivider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.featurehome.impl.R
 import proton.pass.domain.ItemId
@@ -45,12 +45,12 @@ fun AliasOptionsBottomSheetContents(
                     text = itemType.aliasEmail
                 )
             },
-            icon = { AliasIcon() }
+            leftIcon = { AliasIcon() }
         )
         BottomSheetItemList(
             items = persistentListOf(
                 copyAlias(itemType.aliasEmail, onCopyAlias),
-                BottomSheetDivider(),
+                bottomSheetDivider(),
                 edit(itemUiModel, onEdit),
                 moveToTrash(itemUiModel, onMoveToTrash)
             )
@@ -64,8 +64,10 @@ private fun copyAlias(aliasEmail: String, onCopyAlias: (String) -> Unit): Bottom
             get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_alias)) }
         override val subtitle: (@Composable () -> Unit)?
             get() = null
-        override val icon: (@Composable () -> Unit)
+        override val leftIcon: (@Composable () -> Unit)
             get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = { onCopyAlias(aliasEmail) }
         override val isDivider = false
@@ -86,6 +88,7 @@ fun AliasOptionsBottomSheetContentsPreview(
                     name = "My Alias",
                     note = "Note content",
                     itemType = ItemType.Alias("alias.email@proton.me"),
+                    createTime = Clock.System.now(),
                     modificationTime = Clock.System.now()
                 ),
                 onCopyAlias = {},

@@ -117,28 +117,30 @@ abstract class BaseLoginViewModel(
         val currentShare: ShareUiModel
     )
 
-    private val loginItemWrapperState = combine(
+    private val loginAliasItemWrapperState = combine(
         loginItemState,
         loginItemValidationErrorsState,
         canUpdateUsernameState,
-        observeCurrentUser().map { it.email }
-    ) { loginItem, loginItemValidationErrors, updateUsername, primaryEmail ->
-        LoginItemWrapper(loginItem, loginItemValidationErrors, updateUsername, primaryEmail)
+        observeCurrentUser().map { it.email },
+        aliasItemState
+    ) { loginItem, loginItemValidationErrors, updateUsername, primaryEmail, aliasItem ->
+        LoginAliasItemWrapper(loginItem, loginItemValidationErrors, updateUsername, primaryEmail, aliasItem)
     }
 
-    private data class LoginItemWrapper(
+    private data class LoginAliasItemWrapper(
         val loginItem: LoginItem,
         val loginItemValidationErrors: Set<LoginItemValidationErrors>,
         val canUpdateUsername: Boolean,
-        val primaryEmail: String?
+        val primaryEmail: String?,
+        val aliasItem: Option<AliasItem>
     )
 
     val loginUiState: StateFlow<CreateUpdateLoginUiState> = combine(
         sharesWrapperState,
-        loginItemWrapperState,
+        loginAliasItemWrapperState,
         isLoadingState,
         eventsFlow,
-        focusLastWebsiteState
+        focusLastWebsiteState,
     ) { shareWrapper, loginItemWrapper, isLoading, events, focusLastWebsite ->
         CreateUpdateLoginUiState(
             shareList = shareWrapper.shareList,
@@ -150,7 +152,8 @@ abstract class BaseLoginViewModel(
             openScanState = events.openScanState,
             focusLastWebsite = focusLastWebsite,
             canUpdateUsername = loginItemWrapper.canUpdateUsername,
-            primaryEmail = loginItemWrapper.primaryEmail
+            primaryEmail = loginItemWrapper.primaryEmail,
+            aliasItem = loginItemWrapper.aliasItem.value()
         )
     }
         .stateIn(

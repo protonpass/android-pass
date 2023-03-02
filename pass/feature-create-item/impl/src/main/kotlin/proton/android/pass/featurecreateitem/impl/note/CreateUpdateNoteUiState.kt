@@ -12,7 +12,8 @@ data class CreateUpdateNoteUiState(
     val noteItem: NoteItem,
     val errorList: Set<NoteItemValidationErrors>,
     val isLoadingState: IsLoadingState,
-    val isItemSaved: ItemSavedState
+    val isItemSaved: ItemSavedState,
+    val showVaultSelector: Boolean
 ) {
     companion object {
         val Initial = CreateUpdateNoteUiState(
@@ -22,6 +23,7 @@ data class CreateUpdateNoteUiState(
             noteItem = NoteItem.Empty,
             errorList = emptySet(),
             isItemSaved = ItemSavedState.Unknown,
+            showVaultSelector = false
         )
     }
 }

@@ -14,13 +14,13 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheetPadding
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetDivider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.featurehome.impl.R
 import proton.pass.domain.ItemId
@@ -46,12 +46,12 @@ fun NoteOptionsBottomSheetContents(
                     text = processedText
                 )
             },
-            icon = { NoteIcon() }
+            leftIcon = { NoteIcon() }
         )
         BottomSheetItemList(
             items = persistentListOf(
                 copyNote(itemType.text, onCopyNote),
-                BottomSheetDivider(),
+                bottomSheetDivider(),
                 edit(itemUiModel, onEdit),
                 moveToTrash(itemUiModel, onMoveToTrash)
             )
@@ -65,8 +65,10 @@ private fun copyNote(text: String, onCopyNote: (String) -> Unit): BottomSheetIte
             get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_note)) }
         override val subtitle: (@Composable () -> Unit)?
             get() = null
-        override val icon: (@Composable () -> Unit)
+        override val leftIcon: (@Composable () -> Unit)
             get() = { BottomSheetItemIcon(iconId = R.drawable.ic_squares) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = { onCopyNote(text) }
         override val isDivider = false
@@ -87,6 +89,7 @@ fun NoteOptionsBottomSheetContentsPreview(
                     name = "My Note",
                     note = "Note content",
                     itemType = ItemType.Note("My note text"),
+                    createTime = Clock.System.now(),
                     modificationTime = Clock.System.now()
                 ),
                 onCopyNote = {},

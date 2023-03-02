@@ -18,8 +18,7 @@ fun IdleHomeTopBar(
     modifier: Modifier = Modifier,
     homeFilter: HomeItemTypeSelection,
     startSearchMode: () -> Unit,
-    onDrawerIconClick: () -> Unit,
-    onMoreOptionsClick: () -> Unit
+    onDrawerIconClick: () -> Unit
 ) {
     val title = when (homeFilter) {
         HomeItemTypeSelection.AllItems -> R.string.title_all_items
@@ -42,13 +41,6 @@ fun IdleHomeTopBar(
                 Icon(
                     painterResource(me.proton.core.presentation.R.drawable.ic_proton_magnifier),
                     contentDescription = stringResource(R.string.action_search),
-                    tint = ProtonTheme.colors.iconNorm
-                )
-            }
-            IconButton(onClick = onMoreOptionsClick) {
-                Icon(
-                    painterResource(me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical),
-                    contentDescription = null,
                     tint = ProtonTheme.colors.iconNorm
                 )
             }

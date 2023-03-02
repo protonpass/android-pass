@@ -93,7 +93,7 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(IsRefreshingState.NotRefreshing)
 
     private val sortingTypeState: MutableStateFlow<SortingType> =
-        MutableStateFlow(SortingType.ByModificationDate)
+        MutableStateFlow(SortingType.ModificationDate)
 
     private val activeItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = vaultSelectionFlow
         .flatMapLatest { selectedVault ->
@@ -118,9 +118,11 @@ class HomeViewModel @Inject constructor(
         sortingTypeState
     ) { result, sortingType ->
         when (sortingType) {
-            SortingType.ByName -> result.map { list -> list.sortByTitle() }
-            SortingType.ByItemType -> result.map { list -> list.sortByItemType() }
-            SortingType.ByModificationDate -> result.map { list -> list.sortByModificationTime() }
+            SortingType.TitleAsc -> result.map { list -> list.sortByTitleAsc() }
+            SortingType.TitleDesc -> result.map { list -> list.sortByTitleDesc() }
+            SortingType.CreationAsc -> result.map { list -> list.sortByCreationAsc() }
+            SortingType.CreationDesc -> result.map { list -> list.sortByCreationDesc() }
+            SortingType.ModificationDate -> result.map { list -> list.sortByModificationTime() }
         }
     }
         .distinctUntilChanged()
@@ -293,16 +295,12 @@ class HomeViewModel @Inject constructor(
         vaultSelectionFlow.update { homeVaultSelection }
     }
 
-    private fun List<ItemUiModel>.sortByTitle() = sortedBy { it.name.lowercase() }
-
-    private fun List<ItemUiModel>.sortByItemType() =
-        groupBy { it.itemType.toWeightedInt() }
-            .toSortedMap()
-            .map { it.value }
-            .flatten()
-
+    private fun List<ItemUiModel>.sortByTitleAsc() = sortedBy { it.name.lowercase() }
+    private fun List<ItemUiModel>.sortByTitleDesc() = sortedByDescending { it.name.lowercase() }
+    private fun List<ItemUiModel>.sortByCreationAsc() = sortedBy { it.createTime }
+    private fun List<ItemUiModel>.sortByCreationDesc() = sortedByDescending { it.createTime }
     private fun List<ItemUiModel>.sortByModificationTime() =
-        sortedBy { it.modificationTime }.reversed()
+        sortedByDescending { it.modificationTime }
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

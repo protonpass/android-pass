@@ -17,8 +17,10 @@ internal fun edit(itemUiModel: ItemUiModel, onEdit: (ShareId, ItemId) -> Unit): 
             get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_edit)) }
         override val subtitle: (@Composable () -> Unit)?
             get() = null
-        override val icon: (@Composable () -> Unit)
+        override val leftIcon: (@Composable () -> Unit)
             get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_pencil) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = { onEdit(itemUiModel.shareId, itemUiModel.id) }
         override val isDivider = false
@@ -30,18 +32,20 @@ internal fun moveToTrash(itemUiModel: ItemUiModel, onMoveToTrash: (ItemUiModel) 
             get() = {
                 BottomSheetItemTitle(
                     text = stringResource(id = R.string.bottomsheet_move_to_trash),
-                    textcolor = ProtonTheme.colors.notificationError
+                    color = ProtonTheme.colors.notificationError
                 )
             }
         override val subtitle: (@Composable () -> Unit)?
             get() = null
-        override val icon: (@Composable () -> Unit)
+        override val leftIcon: (@Composable () -> Unit)
             get() = {
                 BottomSheetItemIcon(
                     iconId = me.proton.core.presentation.R.drawable.ic_proton_trash,
                     tint = ProtonTheme.colors.notificationError
                 )
             }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = { onMoveToTrash(itemUiModel) }
         override val isDivider = false

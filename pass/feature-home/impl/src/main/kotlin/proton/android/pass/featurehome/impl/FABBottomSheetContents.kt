@@ -57,7 +57,7 @@ private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : B
                 color = ProtonTheme.colors.textWeak
             )
         }
-    override val icon: (@Composable () -> Unit)
+    override val leftIcon: (@Composable () -> Unit)
         get() = {
             Circle(backgroundColor = PassTheme.colors.accentPurpleOpaque) {
                 Icon(
@@ -67,6 +67,8 @@ private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : B
                 )
             }
         }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
     override val onClick: () -> Unit
         get() = onCreateLogin
     override val isDivider = false
@@ -83,8 +85,10 @@ private fun createAlias(onCreateAlias: () -> Unit): BottomSheetItem = object : B
                 color = ProtonTheme.colors.textWeak
             )
         }
-    override val icon: (@Composable () -> Unit)
+    override val leftIcon: (@Composable () -> Unit)
         get() = { AliasIcon() }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
     override val onClick: () -> Unit
         get() = onCreateAlias
     override val isDivider = false
@@ -101,8 +105,10 @@ private fun createNote(onCreateNote: () -> Unit): BottomSheetItem = object : Bot
                 color = ProtonTheme.colors.textWeak
             )
         }
-    override val icon: (@Composable () -> Unit)
+    override val leftIcon: (@Composable () -> Unit)
         get() = { NoteIcon() }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
     override val onClick: () -> Unit
         get() = onCreateNote
     override val isDivider = false
@@ -120,8 +126,10 @@ private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
                     color = ProtonTheme.colors.textWeak
                 )
             }
-        override val icon: (@Composable () -> Unit)
+        override val leftIcon: (@Composable () -> Unit)
             get() = { PasswordIcon() }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = onCreatePassword
         override val isDivider = false

@@ -14,12 +14,12 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheetPadding
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetDivider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.featurecreateitem.impl.R
 
 @Composable
@@ -36,7 +36,7 @@ fun AliasOptionsBottomSheet(
         BottomSheetItemList(
             items = persistentListOf(
                 editAlias(onEditAliasClick),
-                BottomSheetDivider(),
+                bottomSheetDivider(),
                 createRemoveAlias(onRemoveAliasClick)
             )
         )
@@ -49,18 +49,20 @@ private fun editAlias(onEditAlias: () -> Unit): BottomSheetItem =
             get() = {
                 BottomSheetItemTitle(
                     text = stringResource(id = R.string.bottomsheet_modify_alias_title),
-                    textcolor = ProtonTheme.colors.textNorm
+                    color = ProtonTheme.colors.textNorm
                 )
             }
         override val subtitle: (@Composable () -> Unit)?
             get() = null
-        override val icon: (@Composable () -> Unit)
+        override val leftIcon: (@Composable () -> Unit)
             get() = {
                 BottomSheetItemIcon(
                     iconId = me.proton.core.presentation.R.drawable.ic_proton_pencil,
                     tint = ProtonTheme.colors.textNorm
                 )
             }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = onEditAlias
         override val isDivider = false
@@ -72,18 +74,20 @@ private fun createRemoveAlias(onRemoveAlias: () -> Unit): BottomSheetItem =
             get() = {
                 BottomSheetItemTitle(
                     text = stringResource(id = R.string.action_remove),
-                    textcolor = ProtonTheme.colors.notificationError
+                    color = ProtonTheme.colors.notificationError
                 )
             }
         override val subtitle: (@Composable () -> Unit)?
             get() = null
-        override val icon: (@Composable () -> Unit)
+        override val leftIcon: (@Composable () -> Unit)
             get() = {
                 BottomSheetItemIcon(
                     iconId = me.proton.core.presentation.R.drawable.ic_proton_trash,
                     tint = ProtonTheme.colors.notificationError
                 )
             }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = onRemoveAlias
         override val isDivider = false

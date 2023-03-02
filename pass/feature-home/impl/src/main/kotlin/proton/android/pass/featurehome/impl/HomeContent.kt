@@ -1,7 +1,11 @@
 package proton.android.pass.featurehome.impl
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -42,7 +46,7 @@ internal fun HomeContent(
     onStopSearching: () -> Unit,
     sendItemToTrash: (ItemUiModel) -> Unit,
     onDrawerIconClick: () -> Unit,
-    onMoreOptionsClick: () -> Unit,
+    onSortingOptionsClick: () -> Unit,
     onAddItemClick: (Option<ShareId>) -> Unit,
     onItemMenuClick: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit,
@@ -69,44 +73,55 @@ internal fun HomeContent(
                 onSearchQueryChange = onSearchQueryChange,
                 onEnterSearch = onEnterSearch,
                 onStopSearching = onStopSearching,
-                onDrawerIconClick = onDrawerIconClick,
-                onMoreOptionsClick = onMoreOptionsClick
+                onDrawerIconClick = onDrawerIconClick
             )
         }
     ) { contentPadding ->
         var itemToDelete by rememberSaveable { mutableStateOf<ItemUiModel?>(null) }
         val keyboardController = LocalSoftwareKeyboardController.current
-        ItemsList(
-            modifier = Modifier.padding(contentPadding),
-            items = uiState.homeListUiState.items,
-            shouldScrollToTop = shouldScrollToTop,
-            highlight = uiState.searchUiState.searchQuery,
-            onItemClick = { item ->
-                keyboardController?.hide()
-                homeScreenNavigation.toItemDetail(item.shareId, item.id)
-            },
-            onItemMenuClick = onItemMenuClick,
-            isLoading = uiState.homeListUiState.isLoading,
-            isProcessingSearch = uiState.searchUiState.isProcessingSearch,
-            isRefreshing = uiState.homeListUiState.isRefreshing,
-            onRefresh = onRefresh,
-            onScrollToTop = onScrollToTop,
-            emptyContent = {
-                if (uiState.searchUiState.inSearchMode) {
-                    EmptySearchResults()
-                } else {
-                    HomeEmptyList(
-                        onCreateItemClick = { onAddItemClick(uiState.homeListUiState.selectedShare) }
-                    )
-                }
-            },
-            header = {
-                item { OnBoardingTips() }
-            },
-            footer = {
-                item { Spacer(Modifier.height(64.dp)) }
+
+        Column(
+            modifier = Modifier.padding(contentPadding)
+        ) {
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                SortingButton(
+                    sortingType = uiState.homeListUiState.sortingType,
+                    onSortingOptionsClick = onSortingOptionsClick
+                )
             }
-        )
+            ItemsList(
+                items = uiState.homeListUiState.items,
+                shouldScrollToTop = shouldScrollToTop,
+                highlight = uiState.searchUiState.searchQuery,
+                onItemClick = { item ->
+                    keyboardController?.hide()
+                    homeScreenNavigation.toItemDetail(item.shareId, item.id)
+                },
+                onItemMenuClick = onItemMenuClick,
+                isLoading = uiState.homeListUiState.isLoading,
+                isProcessingSearch = uiState.searchUiState.isProcessingSearch,
+                isRefreshing = uiState.homeListUiState.isRefreshing,
+                onRefresh = onRefresh,
+                onScrollToTop = onScrollToTop,
+                emptyContent = {
+                    if (uiState.searchUiState.inSearchMode) {
+                        EmptySearchResults()
+                    } else {
+                        HomeEmptyList(
+                            onCreateItemClick = {
+                                onAddItemClick(uiState.homeListUiState.selectedShare)
+                            }
+                        )
+                    }
+                },
+                header = {
+                    item { OnBoardingTips() }
+                },
+                footer = {
+                    item { Spacer(Modifier.height(64.dp)) }
+                }
+            )
+        }
         ConfirmItemDeletionDialog(
             state = itemToDelete,
             onDismiss = { itemToDelete = null },

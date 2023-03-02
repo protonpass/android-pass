@@ -210,7 +210,8 @@ abstract class BaseAliasViewModel(
             isLoadingState = isLoading,
             isAliasSavedState = isAliasSavedEvent.isAliasSaved,
             isAliasDraftSavedState = isAliasSavedEvent.isAliasDraftSaved,
-            isApplyButtonEnabled = isButtonEnabled
+            isApplyButtonEnabled = isButtonEnabled,
+            showVaultSelector = shareWrapper.shareList.size > 1
         )
     }
         .stateIn(

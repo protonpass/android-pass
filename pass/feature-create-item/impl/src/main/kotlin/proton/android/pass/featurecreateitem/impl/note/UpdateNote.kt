@@ -25,9 +25,8 @@ fun UpdateNote(
     NoteContent(
         modifier = modifier,
         uiState = noteUiState,
-
         topBarActionName = stringResource(R.string.action_save),
-        canDelete = true,
+        showVaultSelector = false,
         onUpClick = onUpClick,
         onSuccess = { shareId, itemId -> onSuccess(shareId, itemId) },
         onSubmit = { shareId -> viewModel.updateItem(shareId) },

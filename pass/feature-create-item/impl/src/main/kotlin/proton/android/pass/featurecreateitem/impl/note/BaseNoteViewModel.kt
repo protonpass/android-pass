@@ -103,7 +103,8 @@ abstract class BaseNoteViewModel(
             noteItem = noteItemWrapper.noteItem,
             errorList = noteItemWrapper.noteItemValidationErrors,
             isLoadingState = isLoading,
-            isItemSaved = isItemSaved
+            isItemSaved = isItemSaved,
+            showVaultSelector = shareWrapper.shareList.size > 1
         )
     }
         .stateIn(

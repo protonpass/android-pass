@@ -12,8 +12,6 @@ import proton.pass.domain.ShareId
 
 object OnBoarding : NavItem(baseRoute = "onboarding")
 
-object Home : NavItem(baseRoute = "home", isTopLevel = true)
-
 object Settings : NavItem(baseRoute = "settings", isTopLevel = true)
 
 object Trash : NavItem(baseRoute = "trash", isTopLevel = true)

@@ -5,10 +5,10 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featurecreateitem.impl.alias.UpdateAlias
+import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.ui.navigation.EditAlias
-import proton.android.pass.ui.navigation.Home
 import proton.android.pass.ui.navigation.ViewItem
 
 @OptIn(

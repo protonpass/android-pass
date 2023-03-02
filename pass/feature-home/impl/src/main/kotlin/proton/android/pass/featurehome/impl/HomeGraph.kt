@@ -1,14 +1,12 @@
-package proton.android.pass.ui.home
+package proton.android.pass.featurehome.impl
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featurehome.impl.HomeItemTypeSelection
-import proton.android.pass.featurehome.impl.HomeScreenNavigation
-import proton.android.pass.featurehome.impl.HomeVaultSelection
-import proton.android.pass.featurehome.impl.NavHome
+import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.ui.navigation.Home
+
+object Home : NavItem(baseRoute = "home", isTopLevel = true)
 
 @OptIn(
     ExperimentalAnimationApi::class

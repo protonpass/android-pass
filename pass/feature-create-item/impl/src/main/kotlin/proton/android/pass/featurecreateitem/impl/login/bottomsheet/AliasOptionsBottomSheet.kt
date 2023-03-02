@@ -14,6 +14,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetDivider
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -24,6 +25,7 @@ import proton.android.pass.featurecreateitem.impl.R
 @Composable
 fun AliasOptionsBottomSheet(
     modifier: Modifier = Modifier,
+    onEditAliasClick: () -> Unit,
     onRemoveAliasClick: () -> Unit
 ) {
     Column(
@@ -33,11 +35,36 @@ fun AliasOptionsBottomSheet(
         BottomSheetTitle(title = stringResource(id = R.string.alias_bottomsheet_alias_title))
         BottomSheetItemList(
             items = persistentListOf(
+                editAlias(onEditAliasClick),
+                BottomSheetDivider(),
                 createRemoveAlias(onRemoveAliasClick)
             )
         )
     }
 }
+
+private fun editAlias(onEditAlias: () -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = {
+                BottomSheetItemTitle(
+                    text = stringResource(id = R.string.bottomsheet_modify_alias_title),
+                    textcolor = ProtonTheme.colors.textNorm
+                )
+            }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val icon: (@Composable () -> Unit)
+            get() = {
+                BottomSheetItemIcon(
+                    iconId = me.proton.core.presentation.R.drawable.ic_proton_pencil,
+                    tint = ProtonTheme.colors.textNorm
+                )
+            }
+        override val onClick: () -> Unit
+            get() = onEditAlias
+        override val isDivider = false
+    }
 
 private fun createRemoveAlias(onRemoveAlias: () -> Unit): BottomSheetItem =
     object : BottomSheetItem {
@@ -70,6 +97,7 @@ fun AliasOptionsBottomSheetPreview(
     PassTheme(isDark = isDark) {
         Surface {
             AliasOptionsBottomSheet(
+                onEditAliasClick = {},
                 onRemoveAliasClick = {}
             )
         }

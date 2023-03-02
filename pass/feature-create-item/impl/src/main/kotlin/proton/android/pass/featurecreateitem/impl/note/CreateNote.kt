@@ -27,7 +27,7 @@ fun CreateNoteScreen(
         modifier = modifier,
         uiState = noteUiState,
         topBarActionName = stringResource(R.string.title_create_note),
-        canDelete = false,
+        showVaultSelector = noteUiState.showVaultSelector,
         onUpClick = onUpClick,
         onSuccess = { _, _ -> onSuccess() },
         onSubmit = { shareId -> viewModel.createNote(shareId) },

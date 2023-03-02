@@ -153,7 +153,8 @@ abstract class BaseLoginViewModel(
             focusLastWebsite = focusLastWebsite,
             canUpdateUsername = loginItemWrapper.canUpdateUsername,
             primaryEmail = loginItemWrapper.primaryEmail,
-            aliasItem = loginItemWrapper.aliasItem.value()
+            aliasItem = loginItemWrapper.aliasItem.value(),
+            showVaultSelector = shareWrapper.shareList.size > 1
         )
     }
         .stateIn(

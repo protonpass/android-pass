@@ -5,6 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.PassTypography
 
 @Composable
 fun ProtonTextFieldLabel(
@@ -15,10 +17,15 @@ fun ProtonTextFieldLabel(
     Text(
         modifier = modifier,
         text = text,
+        color = if (isError) {
+            ProtonTheme.colors.notificationError
+        } else {
+            PassTheme.colors.textWeak
+        },
         style = if (isError) {
             ProtonTheme.typography.defaultSmallWeak.copy(color = ProtonTheme.colors.notificationError)
         } else {
-            ProtonTheme.typography.defaultSmallWeak
+            PassTypography.body3Regular
         }
     )
 }

@@ -50,6 +50,7 @@ fun UpdateLogin(
         showCreateAliasButton = true,
         topBarActionName = stringResource(id = R.string.action_save),
         isUpdate = true,
+        showVaultSelector = false,
         onUpClick = onUpClick,
         onSuccess = { shareId, itemId, _ ->
             viewModel.onEmitSnackbarMessage(LoginUpdated)

@@ -43,6 +43,7 @@ fun CreateLoginScreen(
         uiState = uiState,
         showCreateAliasButton = showCreateAliasButton,
         isUpdate = false,
+        showVaultSelector = uiState.showVaultSelector,
         topBarActionName = stringResource(id = R.string.title_create_login),
         onUpClick = { onClose() },
         onSuccess = { _, _, item ->

@@ -21,10 +21,13 @@ import proton.android.pass.featurecreateitem.impl.R
 @Composable
 fun ConfirmRemoveAliasDialog(
     modifier: Modifier = Modifier,
+    show: Boolean,
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
+    if (!show) return
+
     ProtonAlertDialog(
         modifier = modifier,
         onDismissRequest = onDismiss,
@@ -66,6 +69,7 @@ fun ConfirmRemoveAliasDialogPreview(
     PassTheme(isDark = isDark) {
         Surface {
             ConfirmRemoveAliasDialog(
+                show = true,
                 onCancel = {},
                 onConfirm = {},
                 onDismiss = {}

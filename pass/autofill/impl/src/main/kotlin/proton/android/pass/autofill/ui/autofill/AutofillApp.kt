@@ -14,7 +14,6 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.commonui.api.PassTheme
@@ -60,7 +59,7 @@ fun AutofillApp(
         ) { padding ->
             AutofillAppContent(
                 modifier = Modifier
-                    .background(ProtonTheme.colors.backgroundNorm)
+                    .background(PassTheme.colors.backgroundNorm)
                     .systemBarsPadding()
                     .imePadding()
                     .padding(padding),

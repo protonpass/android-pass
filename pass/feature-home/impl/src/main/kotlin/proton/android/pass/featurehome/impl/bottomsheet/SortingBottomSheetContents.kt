@@ -19,22 +19,19 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
-import proton.android.pass.featurehome.impl.R
 import proton.android.pass.featurehome.impl.SortingType
 
 @ExperimentalMaterialApi
 @Composable
 fun SortingBottomSheetContents(
     modifier: Modifier = Modifier,
-    sortingType: SortingType = SortingType.ByName,
+    sortingType: SortingType = SortingType.TitleAsc,
     onSortingTypeSelected: (SortingType) -> Unit
 ) {
     Column(
         modifier = modifier.bottomSheetPadding(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        BottomSheetTitle(title = stringResource(id = R.string.sorting_bottomsheet_title))
         BottomSheetItemList(
             items = sortingItemList(sortingType, onSortingTypeSelected)
         )
@@ -45,16 +42,36 @@ private fun sortingItemList(
     selectedSortingType: SortingType,
     onSortingTypeSelected: (SortingType) -> Unit
 ): ImmutableList<BottomSheetItem> =
-    listOf(SortingType.ByModificationDate, SortingType.ByName, SortingType.ByItemType)
+    listOf(
+        SortingType.ModificationDate,
+        SortingType.TitleAsc,
+        SortingType.TitleDesc,
+        SortingType.CreationAsc,
+        SortingType.CreationDesc
+    )
         .map {
             object : BottomSheetItem {
                 override val title: @Composable () -> Unit
-                    get() = { BottomSheetItemTitle(text = stringResource(id = it.titleId)) }
+                    get() = {
+                        val color = if (it == selectedSortingType) {
+                            PassTheme.colors.accentBrandNorm
+                        } else {
+                            PassTheme.colors.textNorm
+                        }
+                        BottomSheetItemTitle(text = stringResource(id = it.titleId), color = color)
+                    }
                 override val subtitle: @Composable (() -> Unit)?
                     get() = null
-                override val icon: @Composable (() -> Unit)?
+                override val leftIcon: @Composable (() -> Unit)?
+                    get() = null
+                override val endIcon: @Composable (() -> Unit)?
                     get() = if (it == selectedSortingType) {
-                        { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark) }
+                        {
+                            BottomSheetItemIcon(
+                                iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
+                                tint = PassTheme.colors.accentBrandOpaque
+                            )
+                        }
                     } else null
                 override val onClick: () -> Unit
                     get() = { onSortingTypeSelected(it) }

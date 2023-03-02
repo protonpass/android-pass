@@ -23,7 +23,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDialog
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
@@ -60,11 +59,6 @@ internal fun HomeContent(
     Scaffold(
         modifier = modifier,
         scaffoldState = scaffoldState,
-        floatingActionButton = {
-            PassFloatingActionButton(
-                onClick = { onAddItemClick(uiState.homeListUiState.selectedShare) }
-            )
-        },
         topBar = {
             HomeTopBar(
                 searchQuery = uiState.searchUiState.searchQuery,
@@ -74,6 +68,13 @@ internal fun HomeContent(
                 onEnterSearch = onEnterSearch,
                 onStopSearching = onStopSearching,
                 onDrawerIconClick = onDrawerIconClick
+            )
+        },
+        bottomBar = {
+            BottomBar(
+                onListClick = {},
+                onCreateClick = { onAddItemClick(uiState.homeListUiState.selectedShare) },
+                onProfileClick = {}
             )
         }
     ) { contentPadding ->

@@ -11,8 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.form.NoteSection
-import proton.android.pass.composecomponents.impl.form.TitleSection
-import proton.android.pass.featurecreateitem.impl.login.VaultSelector
+import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 
 @Composable
 internal fun CreateNoteItemForm(
@@ -20,7 +19,7 @@ internal fun CreateNoteItemForm(
     noteItem: NoteItem,
     selectedShare: ShareUiModel?,
     enabled: Boolean,
-    isUpdate: Boolean,
+    showVaultSelector: Boolean,
     onTitleRequiredError: Boolean,
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
@@ -33,12 +32,14 @@ internal fun CreateNoteItemForm(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        TitleSection(
+        TitleVaultSelectionSection(
             enabled = enabled,
-            isRounded = true,
-            value = noteItem.title,
-            onChange = onTitleChange,
-            onTitleRequiredError = onTitleRequiredError
+            titleValue = noteItem.title,
+            showVaultSelector = showVaultSelector,
+            vaultName = selectedShare?.name,
+            onTitleChanged = onTitleChange,
+            onTitleRequiredError = onTitleRequiredError,
+            onVaultClicked = onVaultSelectorClick
         )
         NoteSection(
             enabled = enabled,
@@ -46,14 +47,5 @@ internal fun CreateNoteItemForm(
             value = noteItem.note,
             onChange = onNoteChange
         )
-        if (!isUpdate) {
-            selectedShare?.name?.let {
-                VaultSelector(
-                    contentText = it,
-                    isEditAllowed = true,
-                    onClick = onVaultSelectorClick
-                )
-            }
-        }
     }
 }

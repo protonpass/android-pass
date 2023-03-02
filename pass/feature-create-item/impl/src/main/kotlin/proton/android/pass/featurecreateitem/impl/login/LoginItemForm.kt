@@ -26,7 +26,7 @@ import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.form.NoteSection
-import proton.android.pass.composecomponents.impl.form.TitleSection
+import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.featurecreateitem.impl.login.LoginStickyFormOptionsContentType.AddTotp
 import proton.android.pass.featurecreateitem.impl.login.LoginStickyFormOptionsContentType.AliasOptions
@@ -44,18 +44,19 @@ internal fun LoginItemForm(
     showCreateAliasButton: Boolean,
     primaryEmail: String?,
     isUpdate: Boolean,
-    onTitleChange: (String) -> Unit,
+    showVaultSelector: Boolean,
     onTitleRequiredError: Boolean,
+    focusLastWebsite: Boolean,
+    canUpdateUsername: Boolean,
+    onTitleChange: (String) -> Unit,
     onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onTotpChange: (String) -> Unit,
     onWebsiteChange: OnWebsiteChange,
     doesWebsiteIndexHaveError: (Int) -> Boolean,
-    focusLastWebsite: Boolean,
     onNoteChange: (String) -> Unit,
     onGeneratePasswordClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
-    canUpdateUsername: Boolean,
     onAliasOptionsClick: () -> Unit,
     onVaultSelectorClick: () -> Unit,
     onPasteTotpClick: () -> Unit,
@@ -76,11 +77,14 @@ internal fun LoginItemForm(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            TitleSection(
-                value = loginItem.title,
-                onChange = onTitleChange,
+            TitleVaultSelectionSection(
+                titleValue = loginItem.title,
+                onTitleChanged = onTitleChange,
                 onTitleRequiredError = onTitleRequiredError,
-                enabled = isEditAllowed
+                enabled = isEditAllowed,
+                showVaultSelector = showVaultSelector,
+                vaultName = selectedShare?.name,
+                onVaultClicked = onVaultSelectorClick
             )
             MainLoginSection(
                 loginItem = loginItem,
@@ -130,15 +134,6 @@ internal fun LoginItemForm(
                     isEditable = true,
                     onLinkedAppDelete = onLinkedAppDelete
                 )
-            }
-            if (!isUpdate) {
-                selectedShare?.name?.let {
-                    VaultSelector(
-                        contentText = it,
-                        isEditAllowed = true,
-                        onClick = onVaultSelectorClick
-                    )
-                }
             }
             if (isCurrentStickyVisible) {
                 Spacer(modifier = Modifier.height(48.dp))

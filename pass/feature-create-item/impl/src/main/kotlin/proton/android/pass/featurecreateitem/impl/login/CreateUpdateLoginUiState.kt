@@ -20,6 +20,7 @@ data class CreateUpdateLoginUiState(
     val focusLastWebsite: Boolean,
     val canUpdateUsername: Boolean,
     val primaryEmail: String?,
+    val showVaultSelector: Boolean,
 ) {
     companion object {
         val Initial = CreateUpdateLoginUiState(
@@ -33,7 +34,8 @@ data class CreateUpdateLoginUiState(
             openScanState = OpenScanState.Unknown,
             focusLastWebsite = false,
             canUpdateUsername = true,
-            primaryEmail = null
+            primaryEmail = null,
+            showVaultSelector = false
         )
     }
 }

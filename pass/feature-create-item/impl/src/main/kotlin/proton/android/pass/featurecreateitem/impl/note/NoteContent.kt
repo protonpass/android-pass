@@ -28,7 +28,7 @@ internal fun NoteContent(
     modifier: Modifier = Modifier,
     topBarActionName: String,
     uiState: CreateUpdateNoteUiState,
-    canDelete: Boolean,
+    showVaultSelector: Boolean,
     onUpClick: () -> Unit,
     onSuccess: (ShareId, ItemId) -> Unit,
     onSubmit: (ShareId) -> Unit,
@@ -77,7 +77,7 @@ internal fun NoteContent(
                 onTitleChange = onTitleChange,
                 onNoteChange = onNoteChange,
                 enabled = uiState.isLoadingState != IsLoadingState.Loading,
-                isUpdate = canDelete,
+                showVaultSelector = showVaultSelector,
                 onVaultSelectorClick = {
                     scope.launch {
                         bottomSheetState.show()

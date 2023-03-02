@@ -12,7 +12,6 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.preferences.ThemePreference
@@ -42,7 +41,7 @@ fun PassApp(
         ProvideWindowInsets {
             PassAppContent(
                 modifier = modifier
-                    .background(ProtonTheme.colors.backgroundNorm)
+                    .background(PassTheme.colors.backgroundNorm)
                     .systemBarsPadding()
                     .imePadding(),
                 appUiState = appUiState,

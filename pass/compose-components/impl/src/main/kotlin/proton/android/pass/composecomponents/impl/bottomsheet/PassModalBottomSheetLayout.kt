@@ -24,7 +24,7 @@ fun PassModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = sheetContent,
         sheetShape = PassTheme.shapes.bottomsheetShape,
-        sheetBackgroundColor = ProtonTheme.colors.backgroundNorm,
+        sheetBackgroundColor = PassTheme.colors.accentBrandDark,
         sheetContentColor = ProtonTheme.colors.textNorm,
         scrimColor = ProtonTheme.colors.blenderNorm,
         content = content

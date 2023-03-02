@@ -34,7 +34,8 @@
         <activity android:name="proton.android.pass.autofill.ui.autosave.AutoSaveActivity"
             android:launchMode="singleTop"
             android:clearTaskOnLaunch="true"
-            android:excludeFromRecents="true"/>
+            android:excludeFromRecents="true"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity android:name="proton.android.pass.autofill.ui.autofill.inlinesuggestions.InlineSuggestionsNoUiActivity"
             android:theme="@android:style/Theme.NoDisplay"

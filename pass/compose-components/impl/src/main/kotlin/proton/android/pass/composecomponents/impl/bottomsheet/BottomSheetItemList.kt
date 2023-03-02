@@ -23,7 +23,8 @@ fun BottomSheetItemList(
                 BottomSheetItemRow(
                     title = item.title,
                     subtitle = item.subtitle,
-                    icon = item.icon,
+                    leftIcon = item.leftIcon,
+                    endIcon = item.endIcon,
                     onClick = item.onClick?.let { { it.invoke() } }
                 )
             }

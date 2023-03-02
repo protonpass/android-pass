@@ -1,6 +1,7 @@
 package proton.android.pass.composecomponents.impl.bottomsheet
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
@@ -19,8 +20,8 @@ fun ColumnScope.BottomSheetItemRow(
     modifier: Modifier = Modifier,
     title: @Composable () -> Unit,
     subtitle: (@Composable () -> Unit)? = null,
-    icon: (@Composable () -> Unit)? = null,
-    alignIconLeft: Boolean = true,
+    leftIcon: (@Composable () -> Unit)? = null,
+    endIcon: (@Composable () -> Unit)? = null,
     onClick: (() -> Unit)? = null
 ) {
     Row(
@@ -31,22 +32,17 @@ fun ColumnScope.BottomSheetItemRow(
                 ifTrue = { clickable { onClick?.invoke() } }
             )
             .padding(vertical = 16.dp),
+        horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        if (alignIconLeft) {
-            if (icon != null) {
-                icon()
-                Spacer(modifier = Modifier.width(16.dp))
-            } else {
-                Spacer(modifier = Modifier.width(40.dp))
-            }
+        leftIcon?.let {
+            it()
+            Spacer(modifier = Modifier.width(16.dp))
         }
-        Column {
+        Column(Modifier.weight(1f)) {
             title()
             subtitle?.invoke()
         }
-        if (!alignIconLeft) {
-            icon?.invoke()
-        }
+        endIcon?.invoke()
     }
 }

@@ -8,6 +8,7 @@ import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.featurecreateitem.impl.alias.AliasDraftSavedState
+import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.CreateAliasViewModel
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import javax.inject.Inject
@@ -33,13 +34,17 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
         isDraft = true
     }
 
-    fun setInitialTitle(title: String) {
-        if (aliasItemState.value.prefix.isBlank()) {
-            if (title.isBlank()) {
-                onPrefixChange(randomPrefix())
-            } else {
-                titlePrefixInSync = true
-                onTitleChange(title)
+    fun setInitialState(title: String, aliasItem: AliasItem?) {
+        if (aliasItem != null) {
+            aliasItemState.update { aliasItem }
+        } else {
+            if (aliasItemState.value.prefix.isBlank()) {
+                if (title.isBlank()) {
+                    onPrefixChange(randomPrefix())
+                } else {
+                    titlePrefixInSync = true
+                    onTitleChange(title)
+                }
             }
         }
     }

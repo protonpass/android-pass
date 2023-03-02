@@ -16,13 +16,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDialog
-import proton.android.pass.composecomponents.impl.item.EmptyList
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
@@ -97,11 +95,8 @@ internal fun HomeContent(
                 if (uiState.searchUiState.inSearchMode) {
                     EmptySearchResults()
                 } else {
-                    EmptyList(
-                        emptyListMessage = stringResource(id = R.string.empty_list_home_subtitle),
-                        onCreateItemClick = {
-                            onAddItemClick(uiState.homeListUiState.selectedShare)
-                        }
+                    HomeEmptyList(
+                        onCreateItemClick = { onAddItemClick(uiState.homeListUiState.selectedShare) }
                     )
                 }
             },

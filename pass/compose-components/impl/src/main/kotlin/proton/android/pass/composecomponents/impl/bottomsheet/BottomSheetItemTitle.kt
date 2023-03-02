@@ -6,17 +6,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
+import proton.android.pass.commonui.api.PassTheme
 
 @Composable
 fun BottomSheetItemTitle(
     modifier: Modifier = Modifier,
     text: String,
-    textcolor: Color = Color.Unspecified
+    color: Color = PassTheme.colors.textNorm
 ) {
     Text(
         modifier = modifier,
         text = text,
         style = ProtonTheme.typography.default,
-        color = textcolor
+        color = color
     )
 }

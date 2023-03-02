@@ -5,19 +5,22 @@ import androidx.compose.runtime.Composable
 interface BottomSheetItem {
     val title: @Composable () -> Unit
     val subtitle: @Composable (() -> Unit)?
-    val icon: @Composable (() -> Unit)?
+    val leftIcon: @Composable (() -> Unit)?
+    val endIcon: @Composable (() -> Unit)?
     val onClick: (() -> Unit)?
     val isDivider: Boolean
 }
 
-fun BottomSheetDivider(): BottomSheetItem = object : BottomSheetItem {
+fun bottomSheetDivider(): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = {}
-    override val subtitle: (() -> Unit)?
+    override val subtitle: (@Composable () -> Unit)?
         get() = null
-    override val icon: (() -> Unit)?
+    override val leftIcon: (@Composable () -> Unit)?
         get() = null
-    override val onClick: (() -> Unit)?
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
+    override val onClick: (@Composable () -> Unit)?
         get() = null
     override val isDivider = true
 }

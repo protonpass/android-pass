@@ -30,7 +30,7 @@ data class HomeListUiState(
     val isRefreshing: IsRefreshingState,
     val items: ImmutableList<ItemUiModel>,
     val selectedShare: Option<ShareId> = None,
-    val sortingType: SortingType = SortingType.ByName
+    val sortingType: SortingType = SortingType.ModificationDate
 ) {
     companion object {
         val Loading = HomeListUiState(

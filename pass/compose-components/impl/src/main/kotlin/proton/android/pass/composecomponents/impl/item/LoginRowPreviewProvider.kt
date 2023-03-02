@@ -61,6 +61,7 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
                         packageInfoSet = emptySet(),
                         primaryTotp = ""
                     ),
+                    createTime = Clock.System.now(),
                     modificationTime = Clock.System.now()
                 ),
                 highlight = highlight

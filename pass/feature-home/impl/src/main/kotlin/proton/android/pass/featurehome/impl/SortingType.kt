@@ -5,7 +5,9 @@ import androidx.compose.runtime.Stable
 
 @Stable
 enum class SortingType(@StringRes val titleId: Int) {
-    ByName(R.string.sort_by_name),
-    ByItemType(R.string.sort_by_type),
-    ByModificationDate(R.string.sort_by_modified)
+    ModificationDate(R.string.sort_by_modification_date),
+    TitleAsc(R.string.sort_by_title_asc),
+    TitleDesc(R.string.sort_by_title_desc),
+    CreationAsc(R.string.sort_by_creation_asc),
+    CreationDesc(R.string.sort_by_creation_desc),
 }

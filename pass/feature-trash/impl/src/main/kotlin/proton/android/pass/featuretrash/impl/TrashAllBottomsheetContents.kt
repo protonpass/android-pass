@@ -51,8 +51,10 @@ private fun restoreAll(
         get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_restore_all_items)) }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
-    override val icon: (@Composable () -> Unit)
+    override val leftIcon: (@Composable () -> Unit)
         get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_clock_rotate_left) }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
     override val onClick: () -> Unit
         get() = onRestoreAll
     override val isDivider = false
@@ -65,18 +67,20 @@ private fun emptyTrash(
         get() = {
             BottomSheetItemTitle(
                 text = stringResource(id = R.string.bottomsheet_empty_trash),
-                textcolor = ProtonTheme.colors.notificationError
+                color = ProtonTheme.colors.notificationError
             )
         }
     override val subtitle: (@Composable () -> Unit)?
         get() = null
-    override val icon: (@Composable () -> Unit)
+    override val leftIcon: (@Composable () -> Unit)
         get() = {
             BottomSheetItemIcon(
                 iconId = me.proton.core.presentation.R.drawable.ic_proton_trash_cross,
                 tint = ProtonTheme.colors.notificationError
             )
         }
+    override val endIcon: (@Composable () -> Unit)?
+        get() = null
     override val onClick: () -> Unit
         get() = onEmptyTrash
     override val isDivider = false

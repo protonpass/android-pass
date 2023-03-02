@@ -163,7 +163,7 @@ fun HomeScreen(
                 onStopSearching = { viewModel.onStopSearching() },
                 sendItemToTrash = { viewModel.sendItemToTrash(it) },
                 onDrawerIconClick = onDrawerIconClick,
-                onMoreOptionsClick = {
+                onSortingOptionsClick = {
                     setBottomSheet(HomeBottomSheetType.Sorting)
                     scope.launch { bottomSheetState.show() }
                 },

@@ -29,6 +29,7 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<List<ItemUiModel>> {
                 packageInfoSet = emptySet(),
                 primaryTotp = ""
             ),
+            createTime = Clock.System.now(),
             modificationTime = Clock.System.now()
         )
 }

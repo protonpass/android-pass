@@ -57,8 +57,10 @@ private fun ThemePreference.toBottomSheetItem(
                 )
             }
         override val subtitle: @Composable (() -> Unit)? = null
-        override val icon: @Composable (() -> Unit)
+        override val leftIcon: @Composable (() -> Unit)
             get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_sun) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = { onThemeTypeSelected(this@toBottomSheetItem) }
         override val isDivider = false
@@ -71,8 +73,10 @@ private fun ThemePreference.toBottomSheetItem(
                 )
             }
         override val subtitle: @Composable (() -> Unit)? = null
-        override val icon: @Composable (() -> Unit)
+        override val leftIcon: @Composable (() -> Unit)
             get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_moon) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = { onThemeTypeSelected(this@toBottomSheetItem) }
         override val isDivider = false
@@ -85,8 +89,10 @@ private fun ThemePreference.toBottomSheetItem(
                 )
             }
         override val subtitle: @Composable (() -> Unit)? = null
-        override val icon: @Composable (() -> Unit)
+        override val leftIcon: @Composable (() -> Unit)
             get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_cog_wheel) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
         override val onClick: () -> Unit
             get() = { onThemeTypeSelected(this@toBottomSheetItem) }
         override val isDivider = false

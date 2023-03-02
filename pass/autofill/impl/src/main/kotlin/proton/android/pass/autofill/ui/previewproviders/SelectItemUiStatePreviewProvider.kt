@@ -71,6 +71,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
         itemType = ItemType.Note(
             "Some very very long test that should be ellipsized as we type"
         ),
+        createTime = Clock.System.now(),
         modificationTime = Clock.System.now()
     )
 }

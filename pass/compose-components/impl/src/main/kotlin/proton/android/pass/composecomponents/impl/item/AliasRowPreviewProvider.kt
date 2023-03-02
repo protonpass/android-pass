@@ -42,6 +42,7 @@ class AliasRowPreviewProvider : PreviewParameterProvider<AliasRowParameter> {
                     name = title,
                     note = note,
                     itemType = ItemType.Alias(aliasEmail = alias),
+                    createTime = Clock.System.now(),
                     modificationTime = Clock.System.now()
                 ),
                 highlight = highlight

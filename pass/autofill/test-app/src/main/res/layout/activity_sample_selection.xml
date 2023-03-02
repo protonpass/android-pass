@@ -21,18 +21,21 @@
                 android:id="@+id/simpleActivityLoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:text="Activity Login" />
 
             <Button
                 android:id="@+id/simpleFragmentLoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:text="Fragment Login" />
 
             <Button
                 android:id="@+id/simpleComposeLoginButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:text="Compose Login" />
 
             <Button

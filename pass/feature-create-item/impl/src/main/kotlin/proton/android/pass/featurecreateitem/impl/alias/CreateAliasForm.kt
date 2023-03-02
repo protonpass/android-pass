@@ -11,8 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.form.NoteSection
-import proton.android.pass.composecomponents.impl.form.TitleSection
-import proton.android.pass.featurecreateitem.impl.login.VaultSelector
+import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 
 @Composable
 internal fun CreateAliasForm(
@@ -20,12 +19,12 @@ internal fun CreateAliasForm(
     aliasItem: AliasItem,
     selectedShare: ShareUiModel?,
     canEdit: Boolean,
-    isUpdate: Boolean,
     onTitleRequiredError: Boolean,
     onAliasRequiredError: Boolean,
     onInvalidAliasError: Boolean,
     isEditAllowed: Boolean,
     isLoading: Boolean,
+    showVaultSelector: Boolean,
     onTitleChange: (String) -> Unit,
     onPrefixChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
@@ -40,11 +39,14 @@ internal fun CreateAliasForm(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        TitleSection(
-            value = aliasItem.title,
-            onChange = onTitleChange,
+        TitleVaultSelectionSection(
+            titleValue = aliasItem.title,
+            onTitleChanged = onTitleChange,
+            onTitleRequiredError = onTitleRequiredError,
             enabled = isEditAllowed,
-            onTitleRequiredError = onTitleRequiredError
+            showVaultSelector = showVaultSelector,
+            vaultName = selectedShare?.name,
+            onVaultClicked = onVaultSelectorClick
         )
         if (canEdit) {
             CreateAliasSection(
@@ -73,13 +75,6 @@ internal fun CreateAliasForm(
             enabled = isEditAllowed,
             onChange = onNoteChange
         )
-        if (!isUpdate && selectedShare?.name != null) {
-            VaultSelector(
-                contentText = selectedShare.name,
-                isEditAllowed = isEditAllowed,
-                onClick = onVaultSelectorClick
-            )
-        }
     }
 }
 

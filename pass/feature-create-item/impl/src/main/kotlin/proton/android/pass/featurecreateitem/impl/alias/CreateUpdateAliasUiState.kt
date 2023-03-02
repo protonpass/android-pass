@@ -15,7 +15,8 @@ data class CreateUpdateAliasUiState(
     val isLoadingState: IsLoadingState,
     val isAliasSavedState: AliasSavedState,
     val isAliasDraftSavedState: AliasDraftSavedState,
-    val isApplyButtonEnabled: IsButtonEnabled
+    val isApplyButtonEnabled: IsButtonEnabled,
+    val showVaultSelector: Boolean
 ) {
     companion object {
         val Initial = CreateUpdateAliasUiState(
@@ -27,7 +28,8 @@ data class CreateUpdateAliasUiState(
             isLoadingState = IsLoadingState.Loading,
             isAliasSavedState = AliasSavedState.Unknown,
             isAliasDraftSavedState = AliasDraftSavedState.Unknown,
-            isApplyButtonEnabled = IsButtonEnabled.Disabled
+            isApplyButtonEnabled = IsButtonEnabled.Disabled,
+            showVaultSelector = false
         )
     }
 }

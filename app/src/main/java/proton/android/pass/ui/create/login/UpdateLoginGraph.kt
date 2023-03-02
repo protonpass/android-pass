@@ -9,11 +9,11 @@ import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.RESULT_CREATED_DRAFT_ALIAS
 import proton.android.pass.featurecreateitem.impl.login.UpdateLogin
 import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
+import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.ui.navigation.CameraTotp
 import proton.android.pass.ui.navigation.EditLogin
-import proton.android.pass.ui.navigation.Home
 import proton.android.pass.ui.navigation.ViewItem
 
 @OptIn(

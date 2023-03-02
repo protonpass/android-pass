@@ -3,10 +3,10 @@ package proton.android.pass.ui.create.note
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featurecreateitem.impl.note.UpdateNote
+import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.ui.navigation.EditNote
-import proton.android.pass.ui.navigation.Home
 import proton.android.pass.ui.navigation.ViewItem
 
 @OptIn(ExperimentalAnimationApi::class)

@@ -10,6 +10,7 @@ import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection
 import proton.android.pass.featurehome.impl.HomeScreenNavigation
 import proton.android.pass.featurehome.impl.HomeVaultSelection
+import proton.android.pass.featurehome.impl.homeGraph
 import proton.android.pass.featurevault.impl.CreateVault
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
@@ -21,7 +22,6 @@ import proton.android.pass.ui.create.note.createNoteGraph
 import proton.android.pass.ui.create.note.updateNoteGraph
 import proton.android.pass.ui.create.totp.createTotpGraph
 import proton.android.pass.ui.detail.itemDetailGraph
-import proton.android.pass.ui.home.homeGraph
 import proton.android.pass.ui.onboarding.onBoardingGraph
 import proton.android.pass.ui.settings.settingsGraph
 import proton.android.pass.ui.trash.trashGraph

@@ -1,5 +1,6 @@
 package proton.pass.domain
 
+import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.pass.domain.entity.PackageInfo
 
@@ -8,8 +9,10 @@ const val ITEM_TYPE_ALIAS = 1
 const val ITEM_TYPE_NOTE = 2
 const val ITEM_TYPE_PASSWORD = 3
 
+@Serializable
 sealed interface ItemType {
 
+    @Serializable
     data class Login(
         val username: String,
         val password: EncryptedString,
@@ -18,8 +21,13 @@ sealed interface ItemType {
         val primaryTotp: EncryptedString,
     ) : ItemType
 
+    @Serializable
     data class Note(val text: String) : ItemType
+
+    @Serializable
     data class Alias(val aliasEmail: String) : ItemType
+
+    @Serializable
     object Password : ItemType
 
     @Suppress("MagicNumber")

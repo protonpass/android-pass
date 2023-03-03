@@ -1,5 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.jvm")
+    kotlin("plugin.serialization")
 }
 
 dependencies {
@@ -8,4 +9,5 @@ dependencies {
     api(projects.pass.common.api)
 
     implementation(libs.kotlinx.datetime)
+    implementation(libs.kotlinx.serialization.json)
 }

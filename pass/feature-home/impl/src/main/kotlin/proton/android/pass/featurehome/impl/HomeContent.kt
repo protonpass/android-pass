@@ -23,6 +23,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.bottombar.BottomBar
+import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDialog
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
@@ -49,7 +51,8 @@ internal fun HomeContent(
     onAddItemClick: (Option<ShareId>) -> Unit,
     onItemMenuClick: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit,
-    onScrollToTop: () -> Unit
+    onScrollToTop: () -> Unit,
+    onProfileClick: () -> Unit
 ) {
     // Only enable the backhandler if we are in search mode
     BackHandler(enabled = uiState.searchUiState.inSearchMode) {
@@ -72,9 +75,10 @@ internal fun HomeContent(
         },
         bottomBar = {
             BottomBar(
+                bottomBarSelected = BottomBarSelected.Home,
                 onListClick = {},
                 onCreateClick = { onAddItemClick(uiState.homeListUiState.selectedShare) },
-                onProfileClick = {}
+                onProfileClick = onProfileClick
             )
         }
     ) { contentPadding ->

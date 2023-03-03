@@ -282,6 +282,7 @@ dependencies {
     implementation(projects.pass.featureTrash.impl)
     implementation(projects.pass.featureVault.impl)
     implementation(projects.pass.featureItemDetail.impl)
+    implementation(projects.pass.featureProfile.impl)
     implementation(projects.pass.log.api)
     implementation(projects.pass.log.impl)
     implementation(projects.pass.navigation.api)

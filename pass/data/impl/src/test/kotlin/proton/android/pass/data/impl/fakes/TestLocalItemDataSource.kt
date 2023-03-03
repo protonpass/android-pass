@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.local.LocalItemDataSource
@@ -16,11 +17,16 @@ class TestLocalItemDataSource : LocalItemDataSource {
 
     private val memory: MutableList<ItemEntity> = mutableListOf()
     private var summary: MutableStateFlow<ItemCountSummary> = MutableStateFlow(ItemCountSummary.Initial)
+    private var itemCount: MutableStateFlow<Map<ShareId, ShareItemCount>> = MutableStateFlow(emptyMap())
 
     fun getMemory(): List<ItemEntity> = memory
 
     fun emitSummary(value: ItemCountSummary) {
         summary.tryEmit(value)
+    }
+
+    fun emitItemCount(value: Map<ShareId, ShareItemCount>) {
+        itemCount.tryEmit(value)
     }
 
     override suspend fun upsertItem(item: ItemEntity) {
@@ -74,4 +80,6 @@ class TestLocalItemDataSource : LocalItemDataSource {
     override suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long) {
         throw IllegalStateException("Not yet implemented")
     }
+
+    override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> = itemCount
 }

@@ -27,7 +27,7 @@ fun NavigationDrawerContent(
     PassTheme(protonColors = sidebarColors) {
         Surface(
             modifier = modifier.fillMaxSize(),
-            color = ProtonTheme.colors.backgroundNorm
+            color = PassTheme.colors.accentBrandDark
         ) {
             Column {
                 NavigationDrawerHeader(
@@ -35,6 +35,15 @@ fun NavigationDrawerContent(
                     sidebarColors = sidebarColors,
                     coreNavigation = coreNavigation,
                     accountPrimaryState = accountPrimaryState
+                )
+                NavigationDrawerVaultSection(
+                    modifier = Modifier
+                        .padding(top = ProtonDimens.DefaultSpacing)
+                        .weight(1f, fill = true),
+                    drawerUiState = drawerUiState,
+                    navDrawerNavigation = navDrawerNavigation,
+                    onVaultOptionsClick = {}, // To be implemented
+                    onCloseDrawer = onCloseDrawer
                 )
                 NavigationDrawerBody(
                     modifier = Modifier

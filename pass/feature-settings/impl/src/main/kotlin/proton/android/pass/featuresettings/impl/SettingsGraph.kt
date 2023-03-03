@@ -1,11 +1,12 @@
-package proton.android.pass.ui.settings
+package proton.android.pass.featuresettings.impl
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featuresettings.impl.SettingsScreen
+import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
-import proton.android.pass.ui.navigation.Settings
+
+object Settings : NavItem(baseRoute = "settings", isTopLevel = true)
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.settingsGraph(

@@ -23,6 +23,7 @@ import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarH
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection
 import proton.android.pass.featurehome.impl.HomeVaultSelection
+import proton.android.pass.featuresettings.impl.Settings
 import proton.android.pass.featurevault.impl.VaultList
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.network.api.NetworkStatus
@@ -35,7 +36,6 @@ import proton.android.pass.presentation.navigation.drawer.SelectedVaults
 import proton.android.pass.ui.internal.InternalDrawerState
 import proton.android.pass.ui.internal.InternalDrawerValue
 import proton.android.pass.ui.internal.rememberInternalDrawerState
-import proton.android.pass.ui.navigation.Settings
 import proton.android.pass.ui.navigation.Trash
 
 @Composable

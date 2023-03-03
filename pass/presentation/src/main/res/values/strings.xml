@@ -27,4 +27,8 @@
     <string name="action_open">Open</string>
     <string name="action_copy">Copy</string>
 
+    <!-- Navigation drawer -->
+    <string name="navdrawer_vaults_title">Vaults</string>
+    <string name="navdrawer_vaults_item_count">%1$d items</string>
+
 </resources>

@@ -12,6 +12,12 @@ data class SummaryRow(
     val itemCount: Long
 )
 
+data class ShareItemCountRow(
+    val shareId: String,
+    val activeItemCount: Long,
+    val trashedItemCount: Long
+)
+
 @Dao
 abstract class ItemsDao : BaseDao<ItemEntity>() {
     @Query(
@@ -132,6 +138,29 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun itemSummary(userId: String, shareIds: List<String>): Flow<List<SummaryRow>>
+
+    @Query(
+        """
+        SELECT
+            ${ItemEntity.Columns.SHARE_ID} as shareId,
+            (
+                SELECT COUNT(*)
+                FROM ${ItemEntity.TABLE}
+                WHERE ${ItemEntity.Columns.SHARE_ID} = o.${ItemEntity.Columns.SHARE_ID}
+                  AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE}
+            ) as activeItemCount,
+            (
+                SELECT COUNT(*)
+                FROM ${ItemEntity.TABLE}
+                WHERE ${ItemEntity.Columns.SHARE_ID} = o.${ItemEntity.Columns.SHARE_ID}
+                  AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.TRASHED}
+            ) as trashedItemCount
+        FROM ${ItemEntity.TABLE} o
+        WHERE o.${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+        GROUP BY o.${ItemEntity.Columns.SHARE_ID}
+        """
+    )
+    abstract fun countItemsForShares(shareIds: List<String>): Flow<List<ShareItemCountRow>>
 
     @Query(
         """

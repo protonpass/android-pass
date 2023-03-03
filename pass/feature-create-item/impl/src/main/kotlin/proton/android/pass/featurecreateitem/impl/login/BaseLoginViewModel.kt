@@ -124,7 +124,13 @@ abstract class BaseLoginViewModel(
         observeCurrentUser().map { it.email },
         aliasItemState
     ) { loginItem, loginItemValidationErrors, updateUsername, primaryEmail, aliasItem ->
-        LoginAliasItemWrapper(loginItem, loginItemValidationErrors, updateUsername, primaryEmail, aliasItem)
+        LoginAliasItemWrapper(
+            loginItem,
+            loginItemValidationErrors,
+            updateUsername,
+            primaryEmail,
+            aliasItem
+        )
     }
 
     private data class LoginAliasItemWrapper(
@@ -317,6 +323,8 @@ abstract class BaseLoginViewModel(
                     loginItemState.update {
                         it.copy(
                             primaryTotp = clipboardContent
+                                .replace(" ", "")
+                                .replace("\n", "")
                         )
                     }
                 }

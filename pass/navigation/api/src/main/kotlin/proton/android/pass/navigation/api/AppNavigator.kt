@@ -49,6 +49,10 @@ class AppNavigator(
         }
     }
 
+    fun hasDestinationInStack(destination: NavItem): Boolean =
+        navController.backQueue.map { it.destination.route }
+            .contains(destination.route)
+
     fun popUpTo(destination: NavItem) {
         navController.popBackStack(route = destination.route, inclusive = false, saveState = false)
     }

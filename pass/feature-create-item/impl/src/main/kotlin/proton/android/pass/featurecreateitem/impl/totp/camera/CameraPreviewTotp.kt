@@ -19,12 +19,18 @@ import proton.android.pass.log.api.PassLogger
 fun CameraPreviewTotp(
     modifier: Modifier = Modifier,
     onUriReceived: (String) -> Unit,
+    onOpenImagePicker: () -> Unit,
     onClosePreview: () -> Unit
 ) {
     val cameraPermissionState: PermissionState =
         rememberPermissionState(android.Manifest.permission.CAMERA)
     if (cameraPermissionState.status.isGranted) {
-        CameraPreviewContent(modifier, onUriReceived)
+        CameraPreviewContent(
+            modifier = modifier,
+            onOpenImagePicker = onOpenImagePicker,
+            onSuccess = onUriReceived,
+            onDismiss = onClosePreview
+        )
     } else {
         val activity = LocalContext.current as Activity
         CameraPermissionContent(

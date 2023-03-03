@@ -1,6 +1,5 @@
 package proton.android.pass.featurehome.impl
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -27,23 +26,22 @@ import proton.android.pass.composecomponents.impl.item.icon.PasswordIcon
 
 @ExperimentalMaterialApi
 @Composable
-fun FABBottomSheetContents(
+fun CreateItemBottomSheetContents(
     modifier: Modifier = Modifier,
     onCreateLogin: () -> Unit,
     onCreateAlias: () -> Unit,
     onCreateNote: () -> Unit,
     onCreatePassword: () -> Unit
 ) {
-    Column(modifier.bottomSheetPadding()) {
-        BottomSheetItemList(
-            items = persistentListOf(
-                createLogin(onCreateLogin),
-                createAlias(onCreateAlias),
-                createNote(onCreateNote),
-                createPassword(onCreatePassword)
-            )
+    BottomSheetItemList(
+        modifier = modifier.bottomSheetPadding(),
+        items = persistentListOf(
+            createLogin(onCreateLogin),
+            createAlias(onCreateAlias),
+            createNote(onCreateNote),
+            createPassword(onCreatePassword)
         )
-    }
+    )
 }
 
 private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : BottomSheetItem {
@@ -138,12 +136,12 @@ private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
-fun FABBottomSheetContentsPreview(
+fun CreateItemBottomSheetContentsPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            FABBottomSheetContents(
+            CreateItemBottomSheetContents(
                 onCreateLogin = {},
                 onCreateAlias = {},
                 onCreateNote = {},

@@ -7,6 +7,12 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.authGraph
+import proton.android.pass.featurecreateitem.impl.CreateLogin
+import proton.android.pass.featurecreateitem.impl.createLoginGraph
+import proton.android.pass.featurecreateitem.impl.totp.CameraTotp
+import proton.android.pass.featurecreateitem.impl.totp.PhotoPickerTotp
+import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
+import proton.android.pass.featurecreateitem.impl.totp.createTotpGraph
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection
 import proton.android.pass.featurehome.impl.HomeScreenNavigation
 import proton.android.pass.featurehome.impl.HomeVaultSelection
@@ -16,11 +22,9 @@ import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.create.alias.createAliasGraph
 import proton.android.pass.ui.create.alias.updateAliasGraph
-import proton.android.pass.ui.create.login.createLoginGraph
 import proton.android.pass.ui.create.login.updateLoginGraph
 import proton.android.pass.ui.create.note.createNoteGraph
 import proton.android.pass.ui.create.note.updateNoteGraph
-import proton.android.pass.ui.create.totp.createTotpGraph
 import proton.android.pass.ui.detail.itemDetailGraph
 import proton.android.pass.ui.onboarding.onBoardingGraph
 import proton.android.pass.ui.settings.settingsGraph
@@ -49,9 +53,28 @@ fun NavGraphBuilder.appGraph(
     )
     trashGraph(navigationDrawer, onDrawerIconClick)
     settingsGraph(navigationDrawer, onDrawerIconClick)
-    createLoginGraph(appNavigator)
+    createLoginGraph(
+        getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
+        onClose = { appNavigator.onBackClick() },
+        onSuccess = { appNavigator.onBackClick() },
+        onScanTotp = { appNavigator.navigate(CameraTotp) }
+    )
     updateLoginGraph(appNavigator)
-    createTotpGraph(appNavigator)
+    createTotpGraph(
+        onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
+        onCloseTotp = { appNavigator.onBackClick() },
+        onOpenImagePicker = {
+            val backDestination = when {
+                appNavigator.hasDestinationInStack(CreateLogin) -> CreateLogin
+                appNavigator.hasDestinationInStack(EditLogin) -> EditLogin
+                else -> null
+            }
+            appNavigator.navigate(
+                destination = PhotoPickerTotp,
+                backDestination = backDestination
+            )
+        }
+    )
     createNoteGraph(appNavigator)
     updateNoteGraph(appNavigator)
     createAliasGraph(appNavigator)

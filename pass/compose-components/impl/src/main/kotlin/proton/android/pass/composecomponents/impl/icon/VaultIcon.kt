@@ -34,7 +34,7 @@ fun VaultIcon(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
             .size(size.dp)
-            .background(color.copy(alpha = 0.16f))
+            .background(color.copy(alpha = 0.4f))
             .padding(8.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -42,7 +42,7 @@ fun VaultIcon(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(id = icon),
             contentDescription = stringResource(R.string.vault_selector_icon_content_description),
-            tint = PassTheme.colors.accentYellowNorm
+            tint = color
         )
     }
 }

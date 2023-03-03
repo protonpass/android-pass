@@ -58,6 +58,7 @@
     <string name="linked_app_cross_icon_content_description">Remove linked app icon</string>
     <string name="forward_icon_content_description">Arrow forward icon</string>
     <string name="vault_selector_icon_content_description">Vault selector icon</string>
+    <string name="add_item_icon_content_description">Add item icon</string>
 
     <!-- Vault selector -->
     <string name="vault_selector_title">Vault</string>

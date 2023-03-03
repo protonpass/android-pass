@@ -49,6 +49,7 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.log.api)
     implementation(projects.pass.notifications.api)
+    implementation(projects.pass.navigation.api)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     debugImplementation(libs.androidx.compose.uiTestManifest)

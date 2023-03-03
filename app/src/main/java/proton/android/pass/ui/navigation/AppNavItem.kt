@@ -11,8 +11,6 @@ import proton.android.pass.navigation.api.toPath
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
-object OnBoarding : NavItem(baseRoute = "onboarding")
-
 object Settings : NavItem(baseRoute = "settings", isTopLevel = true)
 
 object Trash : NavItem(baseRoute = "trash", isTopLevel = true)

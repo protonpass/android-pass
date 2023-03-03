@@ -4,6 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
@@ -81,10 +82,26 @@ class LocalItemDataSourceImpl @Inject constructor(
                 )
             }
 
-
     override suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long) {
         database.itemsDao().updateLastUsedTime(shareId.id, itemId.id, now)
     }
+
+    override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> =
+        database.itemsDao()
+            .countItemsForShares(shareIds.map { it.id })
+            .map { values ->
+                shareIds.associate { shareId ->
+                    val rowForShare = values.firstOrNull { it.shareId == shareId.id }
+                    if (rowForShare == null) {
+                        shareId to ShareItemCount(0, 0)
+                    } else {
+                        shareId to ShareItemCount(
+                            activeItems = rowForShare.activeItemCount,
+                            trashedItems = rowForShare.trashedItemCount
+                        )
+                    }
+                }
+            }
 
     private fun ItemTypeFilter.value(): Int = when (this) {
         ItemTypeFilter.Logins -> ITEM_TYPE_LOGIN

@@ -3,6 +3,7 @@ package proton.android.pass.data.impl.local
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.ItemCountSummary
+import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.pass.domain.ItemId
@@ -33,4 +34,5 @@ interface LocalItemDataSource {
         shareIds: List<ShareId>
     ): Flow<ItemCountSummary>
     suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long)
+    fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>
 }

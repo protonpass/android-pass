@@ -20,7 +20,7 @@ import kotlinx.coroutines.runBlocking
 import proton.android.pass.R
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
-import proton.android.pass.commonuimodels.api.ShareUiModel
+import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -55,17 +55,38 @@ class AppViewModel @Inject constructor(
         .asResultWithoutLoading()
         .map { getThemePreference(it) }
 
-    private val allShareUiModelFlow: Flow<List<ShareUiModel>> = observeVaults()
+
+    data class ShareUiModelsWithTrashedCount(
+        val models: List<ShareUiModelWithItemCount>,
+        val trashedCount: Long
+    )
+
+    private val allShareUiModelFlow: Flow<ShareUiModelsWithTrashedCount> = observeVaults()
         .map { shares ->
             when (shares) {
-                LoadingResult.Loading -> emptyList()
+                LoadingResult.Loading -> ShareUiModelsWithTrashedCount(emptyList(), 0)
                 is LoadingResult.Error -> {
                     PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
-                    emptyList()
+                    ShareUiModelsWithTrashedCount(emptyList(), 0)
                 }
-                is LoadingResult.Success ->
-                    shares.data
-                        .map { ShareUiModel(it.shareId, it.name) }
+                is LoadingResult.Success -> {
+                    var totalTrashed = 0L
+                    val res = shares.data
+                        .map {
+                            totalTrashed += it.trashedItemCount
+                            ShareUiModelWithItemCount(
+                                id = it.shareId,
+                                name = it.name,
+                                activeItemCount = it.activeItemCount,
+                                trashedItemCount = it.trashedItemCount
+                            )
+                        }
+
+                    ShareUiModelsWithTrashedCount(
+                        models = res,
+                        trashedCount = totalTrashed
+                    )
+                }
             }
         }
         .distinctUntilChanged()
@@ -75,14 +96,14 @@ class AppViewModel @Inject constructor(
         drawerSectionState,
         allShareUiModelFlow
     ) { user, drawerSection, allShares ->
-        val shares: List<ShareUiModel> = when (drawerSection) {
+        val shares: List<ShareUiModelWithItemCount> = when (drawerSection) {
             is ItemTypeSection ->
                 drawerSection.shareId
                     ?.let { selectedShare ->
-                        allShares.filter { share -> share.id == selectedShare }
+                        allShares.models.filter { share -> share.id == selectedShare }
                     }
-                    ?: allShares
-            else -> allShares
+                    ?: allShares.models
+            else -> allShares.models
         }
         user to shares
     }
@@ -98,14 +119,16 @@ class AppViewModel @Inject constructor(
         DrawerState(
             section = drawerSection,
             itemCountSummary = itemCountSummary,
-            shares = shares
+            shares = shares.models,
+            totalTrashedItems = shares.trashedCount
         )
     }
 
     private data class DrawerState(
         val section: NavigationDrawerSection,
         val itemCountSummary: ItemCountSummary,
-        val shares: List<ShareUiModel>
+        val shares: List<ShareUiModelWithItemCount>,
+        val totalTrashedItems: Long
     )
 
     private val networkStatus: Flow<NetworkStatus> = networkMonitor
@@ -126,7 +149,8 @@ class AppViewModel @Inject constructor(
                 currentUser = user,
                 selectedSection = drawerState.section,
                 itemCountSummary = drawerState.itemCountSummary,
-                shares = drawerState.shares
+                shares = drawerState.shares,
+                trashedItemCount = drawerState.totalTrashedItems
             ),
             theme = theme,
             networkStatus = network

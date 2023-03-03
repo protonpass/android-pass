@@ -10,6 +10,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
@@ -132,6 +133,10 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         shareIds: List<ShareId>
     ): Flow<ItemCountSummary> {
+        TODO("Not yet implemented")
+    }
+
+    override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> {
         TODO("Not yet implemented")
     }
 

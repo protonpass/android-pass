@@ -34,6 +34,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
@@ -475,6 +476,9 @@ class ItemRepositoryImpl @Inject constructor(
             PassLogger.i(TAG, "Updated last used time [shareId=$shareId][itemId=$itemId]")
         }
     }
+
+    override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> =
+        localItemDataSource.observeItemCount(shareIds)
 
     private suspend fun getShare(userId: UserId, shareId: ShareId): Share =
         when (val share = shareRepository.getById(userId, shareId)) {

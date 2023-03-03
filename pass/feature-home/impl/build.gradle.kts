@@ -36,6 +36,7 @@ dependencies {
     implementation(libs.core.user.domain)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
+    implementation(libs.kotlinx.serialization.json)
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)

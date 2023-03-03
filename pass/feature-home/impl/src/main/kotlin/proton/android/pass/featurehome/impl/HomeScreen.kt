@@ -44,7 +44,9 @@ fun HomeScreen(
 ) {
     val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
     val (currentBottomSheet, setBottomSheet) = rememberSaveable { mutableStateOf(HomeBottomSheetType.CreateItem) }
-    val (selectedItem, setSelectedItem) = rememberSaveable { mutableStateOf<ItemUiModel?>(null) }
+    val (selectedItem, setSelectedItem) = rememberSaveable(stateSaver = ItemUiModelSaver) {
+        mutableStateOf<ItemUiModel?>(null)
+    }
     val (shouldScrollToTop, setScrollToTop) = remember { mutableStateOf(false) }
     val (shouldShowDeleteDialog, setShowDeleteDialog) = rememberSaveable { mutableStateOf(false) }
 

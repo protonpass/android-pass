@@ -13,12 +13,16 @@ import proton.android.pass.featurecreateitem.impl.totp.CameraTotp
 import proton.android.pass.featurecreateitem.impl.totp.PhotoPickerTotp
 import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featurecreateitem.impl.totp.createTotpGraph
+import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection
 import proton.android.pass.featurehome.impl.HomeScreenNavigation
 import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.featurehome.impl.homeGraph
 import proton.android.pass.featureonboarding.impl.OnBoarding
 import proton.android.pass.featureonboarding.impl.onBoardingGraph
+import proton.android.pass.featureprofile.impl.Profile
+import proton.android.pass.featureprofile.impl.profileGraph
+import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featurevault.impl.CreateVault
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
@@ -28,7 +32,6 @@ import proton.android.pass.ui.create.login.updateLoginGraph
 import proton.android.pass.ui.create.note.createNoteGraph
 import proton.android.pass.ui.create.note.updateNoteGraph
 import proton.android.pass.ui.detail.itemDetailGraph
-import proton.android.pass.ui.settings.settingsGraph
 import proton.android.pass.ui.trash.trashGraph
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
@@ -53,7 +56,13 @@ fun NavGraphBuilder.appGraph(
         homeVaultSelection = homeVaultSelection
     )
     trashGraph(navigationDrawer, onDrawerIconClick)
-    settingsGraph(navigationDrawer, onDrawerIconClick)
+    profileGraph(
+        onListClick = { appNavigator.navigate(Home) }
+    )
+    settingsGraph(
+        navigationDrawer = navigationDrawer,
+        onDrawerIconClick = onDrawerIconClick
+    )
     createLoginGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
         onClose = { appNavigator.onBackClick() },
@@ -142,5 +151,6 @@ private fun createHomeScreenNavigation(appNavigator: AppNavigator): HomeScreenNa
             )
         },
         toAuth = { appNavigator.navigate(Auth) },
+        toProfile = { appNavigator.navigate(Profile) },
         toOnBoarding = { appNavigator.navigate(OnBoarding) },
     )

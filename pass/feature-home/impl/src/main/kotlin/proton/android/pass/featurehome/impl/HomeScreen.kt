@@ -17,7 +17,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
-import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
 import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
@@ -45,7 +44,7 @@ fun HomeScreen(
     val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
     val (currentBottomSheet, setBottomSheet) = rememberSaveable { mutableStateOf(HomeBottomSheetType.CreateItem) }
     val (selectedItem, setSelectedItem) = rememberSaveable(stateSaver = ItemUiModelSaver) {
-        mutableStateOf<ItemUiModel?>(null)
+        mutableStateOf(null)
     }
     val (shouldScrollToTop, setScrollToTop) = remember { mutableStateOf(false) }
     val (shouldShowDeleteDialog, setShowDeleteDialog) = rememberSaveable { mutableStateOf(false) }
@@ -67,7 +66,7 @@ fun HomeScreen(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {
-                HomeBottomSheetType.CreateItem -> FABBottomSheetContents(
+                HomeBottomSheetType.CreateItem -> CreateItemBottomSheetContents(
                     onCreateLogin = {
                         scope.launch {
                             bottomSheetState.hide()
@@ -184,7 +183,8 @@ fun HomeScreen(
                     scope.launch { bottomSheetState.show() }
                 },
                 onRefresh = { viewModel.onRefresh() },
-                onScrollToTop = { setScrollToTop(false) }
+                onScrollToTop = { setScrollToTop(false) },
+                onProfileClick = { homeScreenNavigation.toProfile() }
             )
 
             ConfirmMoveItemToTrashDialog(

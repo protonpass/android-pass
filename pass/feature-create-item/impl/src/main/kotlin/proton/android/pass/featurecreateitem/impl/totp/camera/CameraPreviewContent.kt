@@ -19,7 +19,12 @@ import kotlinx.coroutines.asExecutor
 import proton.android.pass.log.api.PassLogger
 
 @Composable
-fun CameraPreviewContent(modifier: Modifier = Modifier, onSuccess: (String) -> Unit) {
+fun CameraPreviewContent(
+    modifier: Modifier = Modifier,
+    onOpenImagePicker: () -> Unit,
+    onSuccess: (String) -> Unit,
+    onDismiss: () -> Unit
+) {
     val preview = remember { Preview.Builder().build() }
     CameraPreviewBindingDisposableEffect(preview, onSuccess)
     Box(modifier = modifier) {
@@ -39,6 +44,7 @@ fun CameraPreviewContent(modifier: Modifier = Modifier, onSuccess: (String) -> U
                 preview.setSurfaceProvider(previewView.surfaceProvider)
             }
         )
+        CameraPreviewTopBar(onOpenImagePicker = onOpenImagePicker, onDismiss = onDismiss)
     }
 }
 

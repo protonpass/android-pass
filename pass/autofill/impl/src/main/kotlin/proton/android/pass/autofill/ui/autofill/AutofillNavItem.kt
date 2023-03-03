@@ -8,7 +8,6 @@ import proton.android.pass.navigation.api.NavItem
 import proton.pass.domain.ShareId
 
 object SelectItem : NavItem(baseRoute = "item/select", isTopLevel = true)
-object CreateLogin : NavItem(baseRoute = "login/create", isTopLevel = true)
 object CreateAlias : NavItem(
     baseRoute = "alias/create",
     navArgIds = listOf(CommonNavArgId.ShareId),
@@ -22,8 +21,3 @@ object CreateAlias : NavItem(
         if (title.isNotEmpty()) append("?${AliasOptionalNavArgId.Title.key}=${title.value()}")
     }
 }
-
-object CreateTotp : NavItem(baseRoute = "totp/create")
-object CameraTotp : NavItem(baseRoute = "totp/camera")
-object PhotoPickerTotp : NavItem(baseRoute = "totp/photopicker")
-

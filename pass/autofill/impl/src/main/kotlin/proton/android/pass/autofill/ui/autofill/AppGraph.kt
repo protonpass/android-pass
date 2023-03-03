@@ -7,11 +7,19 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
+import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.ui.autofill.navigation.createAliasGraph
-import proton.android.pass.autofill.ui.autofill.navigation.createLoginGraph
-import proton.android.pass.autofill.ui.autofill.navigation.createTotpGraph
 import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.featureauth.impl.authGraph
+import proton.android.pass.featurecreateitem.impl.CreateLogin
+import proton.android.pass.featurecreateitem.impl.createLoginGraph
+import proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
+import proton.android.pass.featurecreateitem.impl.totp.CameraTotp
+import proton.android.pass.featurecreateitem.impl.totp.PhotoPickerTotp
+import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
+import proton.android.pass.featurecreateitem.impl.totp.createTotpGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 @Suppress("LongParameterList")
@@ -39,8 +47,32 @@ fun NavGraphBuilder.appGraph(
         onAuthFailed = onAutofillCancel
     )
     selectItemGraph(appNavigator, autofillAppState, onAutofillSuccess, onAutofillCancel)
-    createLoginGraph(appNavigator, autofillAppState, onAutofillItemReceived)
+    createLoginGraph(
+        initialCreateLoginUiState = InitialCreateLoginUiState(
+            title = autofillAppState.title,
+            url = autofillAppState.webDomain.value(),
+            aliasItem = null,
+            packageInfoUi = autofillAppState.packageInfoUi.takeIf { autofillAppState.webDomain.isEmpty() },
+        ),
+        getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
+        onClose = { appNavigator.onBackClick() },
+        onSuccess = {
+            when (val autofillItem = it.toAutoFillItem()) {
+                None -> {}
+                is Some -> onAutofillItemReceived(autofillItem.value)
+            }
+        },
+        onScanTotp = { appNavigator.navigate(CameraTotp) }
+    )
     createAliasGraph(appNavigator)
-    createAliasGraph(appNavigator)
-    createTotpGraph(appNavigator)
+    createTotpGraph(
+        onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
+        onCloseTotp = { appNavigator.onBackClick() },
+        onOpenImagePicker = {
+            appNavigator.navigate(
+                destination = PhotoPickerTotp,
+                backDestination = CreateLogin
+            )
+        }
+    )
 }

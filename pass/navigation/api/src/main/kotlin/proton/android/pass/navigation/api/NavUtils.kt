@@ -30,3 +30,9 @@ fun NavGraphBuilder.composable(
     }
 }
 
+fun Map<String, Any>.toPath() = this
+    .map { "${it.key}=${it.value}" }
+    .joinToString(
+        prefix = "?",
+        separator = "&"
+    )

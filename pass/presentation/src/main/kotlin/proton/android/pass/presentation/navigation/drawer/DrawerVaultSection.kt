@@ -10,12 +10,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.pass.presentation.R
-import proton.android.pass.commonuimodels.api.ShareUiModel
+import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 
 @Composable
 fun DrawerVaultSection(
     modifier: Modifier = Modifier,
-    shares: List<ShareUiModel>,
+    shares: List<ShareUiModelWithItemCount>,
     selectedSection: NavigationDrawerSection?,
     closeDrawerAction: () -> Unit,
     onVaultClick: (SelectedVaults) -> Unit

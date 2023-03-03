@@ -18,6 +18,11 @@ import proton.pass.domain.ShareSelection
 import proton.pass.domain.entity.NewAlias
 import proton.pass.domain.entity.PackageInfo
 
+data class ShareItemCount(
+    val activeItems: Long,
+    val trashedItems: Long
+)
+
 interface ItemRepository {
     suspend fun createItem(
         userId: UserId,
@@ -73,6 +78,10 @@ interface ItemRepository {
         userId: UserId,
         shareIds: List<ShareId>
     ): Flow<ItemCountSummary>
+
+    fun observeItemCount(
+        shareIds: List<ShareId>
+    ): Flow<Map<ShareId, ShareItemCount>>
 
     suspend fun updateItemLastUsed(
         shareId: ShareId,

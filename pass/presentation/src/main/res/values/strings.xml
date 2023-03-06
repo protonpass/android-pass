@@ -30,5 +30,6 @@
     <!-- Navigation drawer -->
     <string name="navdrawer_vaults_title">Vaults</string>
     <string name="navdrawer_vaults_item_count">%1$d items</string>
+    <string name="navdrawer_create_vault">Create vault</string>
 
 </resources>

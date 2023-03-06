@@ -34,7 +34,6 @@ fun UpdateAlias(
         showVaultSelector = false,
         onUpClick = onUpClick,
         onAliasCreated = { shareId, itemId, _ -> onSuccess(shareId, itemId) },
-        onAliasDraftCreated = { _, _ -> },
         onSubmit = { viewModel.updateAlias() },
         onSuffixChange = { viewModel.onSuffixChange(it) },
         onMailboxesChanged = { viewModel.onMailboxesChanged(it) },

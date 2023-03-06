@@ -9,7 +9,6 @@ import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurecreateitem.impl.alias.CreateAlias
 import proton.android.pass.featurecreateitem.impl.alias.EditAlias
-import proton.android.pass.featurecreateitem.impl.alias.RESULT_CREATED_DRAFT_ALIAS
 import proton.android.pass.featurecreateitem.impl.alias.createAliasGraph
 import proton.android.pass.featurecreateitem.impl.alias.updateAliasGraph
 import proton.android.pass.featurecreateitem.impl.bottomsheets.createitem.CreateItemBottomsheet
@@ -168,9 +167,6 @@ fun NavGraphBuilder.appGraph(
     )
     createAliasGraph(
         onAliasCreatedSuccess = { appNavigator.onBackClick() },
-        onAliasDraftCreatedSuccess = {
-            appNavigator.navigateUpWithResult(RESULT_CREATED_DRAFT_ALIAS, it)
-        },
         onBackClick = { appNavigator.onBackClick() }
     )
     updateAliasGraph(

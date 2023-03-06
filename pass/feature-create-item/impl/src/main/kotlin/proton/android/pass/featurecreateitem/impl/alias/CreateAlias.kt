@@ -10,15 +10,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.R
 
-const val RESULT_CREATED_DRAFT_ALIAS = "created_draft_alias"
-
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun CreateAliasScreen(
     modifier: Modifier = Modifier,
     onUpClick: () -> Unit,
     onAliasCreated: (String) -> Unit,
-    onAliasDraftCreated: (AliasItem) -> Unit,
     onClose: () -> Unit,
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
@@ -38,7 +35,6 @@ fun CreateAliasScreen(
         showVaultSelector = viewState.showVaultSelector,
         onUpClick = onUpClick,
         onAliasCreated = { _, _, alias -> onAliasCreated(alias) },
-        onAliasDraftCreated = { _, aliasItem -> onAliasDraftCreated(aliasItem) },
         onSubmit = { shareId -> viewModel.createAlias(shareId) },
         onSuffixChange = { viewModel.onSuffixChange(it) },
         onMailboxesChanged = { viewModel.onMailboxesChanged(it) },

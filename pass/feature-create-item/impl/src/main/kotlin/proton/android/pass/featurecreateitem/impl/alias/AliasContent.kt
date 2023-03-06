@@ -44,7 +44,6 @@ internal fun AliasContent(
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
     onAliasCreated: (ShareId, ItemId, String) -> Unit,
-    onAliasDraftCreated: (ShareId, AliasItem) -> Unit,
     onSuffixChange: (AliasSuffixUiModel) -> Unit,
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onTitleChange: (String) -> Unit,
@@ -167,22 +166,6 @@ internal fun AliasContent(
                 onDismiss = { showMailboxDialog = false }
             )
             IsAliasSavedLaunchedEffect(uiState, onAliasCreated)
-            IsAliasDraftSavedLaunchedEffect(uiState, onAliasDraftCreated)
-        }
-    }
-}
-
-@Composable
-private fun IsAliasDraftSavedLaunchedEffect(
-    uiState: CreateUpdateAliasUiState,
-    onAliasDraftCreated: (ShareId, AliasItem) -> Unit
-) {
-    val isAliasDraftSaved = uiState.isAliasDraftSavedState
-    if (isAliasDraftSaved is AliasDraftSavedState.Success) {
-        LaunchedEffect(uiState.selectedShareId) {
-            uiState.selectedShareId?.let {
-                onAliasDraftCreated(it.id, isAliasDraftSaved.aliasItem)
-            }
         }
     }
 }

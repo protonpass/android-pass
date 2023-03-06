@@ -205,7 +205,18 @@ class CreateAliasViewModelTest {
     }
 
     private fun setupVaults() {
-        observeVaults.sendResult(LoadingResult.Success(listOf(Vault(ShareId("ShareId"), "name"))))
+        observeVaults.sendResult(
+            LoadingResult.Success(
+                listOf(
+                    Vault(
+                        shareId = ShareId("ShareId"),
+                        name = "name",
+                        activeItemCount = 1,
+                        trashedItemCount = 0
+                    )
+                )
+            )
+        )
     }
 
     private fun setupAliasOptions() {

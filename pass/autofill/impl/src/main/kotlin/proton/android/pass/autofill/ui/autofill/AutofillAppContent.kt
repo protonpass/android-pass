@@ -14,6 +14,7 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
+import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.navigation.api.rememberAppNavigator
 

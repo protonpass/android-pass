@@ -8,7 +8,7 @@ import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.extensions.toAutoFillItem
-import proton.android.pass.autofill.ui.autofill.navigation.createAliasGraph
+import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
 import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
@@ -46,7 +46,12 @@ fun NavGraphBuilder.appGraph(
         onAuthDismissed = onAutofillCancel,
         onAuthFailed = onAutofillCancel
     )
-    selectItemGraph(appNavigator, autofillAppState, onAutofillSuccess, onAutofillCancel)
+    selectItemGraph(
+        state = autofillAppState,
+        onCreateLoginClicked = { appNavigator.navigate(CreateLogin) },
+        onAutofillItemClicked = onAutofillSuccess,
+        onAutofillCancel = onAutofillCancel
+    )
     createLoginGraph(
         initialCreateLoginUiState = InitialCreateLoginUiState(
             title = autofillAppState.title,
@@ -64,7 +69,6 @@ fun NavGraphBuilder.appGraph(
         },
         onScanTotp = { appNavigator.navigate(CameraTotp) }
     )
-    createAliasGraph(appNavigator)
     createTotpGraph(
         onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
         onCloseTotp = { appNavigator.onBackClick() },

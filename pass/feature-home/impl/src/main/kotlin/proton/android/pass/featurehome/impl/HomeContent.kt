@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,7 +38,6 @@ internal fun HomeContent(
     uiState: HomeUiState,
     homeFilter: HomeItemTypeSelection,
     shouldScrollToTop: Boolean,
-    scaffoldState: ScaffoldState = rememberScaffoldState(),
     homeScreenNavigation: HomeScreenNavigation,
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
@@ -61,7 +58,6 @@ internal fun HomeContent(
 
     Scaffold(
         modifier = modifier,
-        scaffoldState = scaffoldState,
         topBar = {
             HomeTopBar(
                 searchQuery = uiState.searchUiState.searchQuery,

@@ -8,6 +8,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.pass.presentation.R
@@ -15,6 +16,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 
+@Suppress("MagicNumber")
 @Composable
 fun NavigationDrawerVaultSection(
     modifier: Modifier = Modifier,
@@ -39,7 +41,8 @@ fun NavigationDrawerVaultSection(
                 name = share.name,
                 itemCount = share.activeItemCount,
                 icon = me.proton.core.presentation.R.drawable.ic_proton_house,
-                color = PassTheme.colors.accentYellowNorm,
+                iconColor = Color(0xFFF7D775),
+                iconBackgroundColor = Color(0x10F7D775),
                 isShared = false,
                 isSelected = drawerUiState.selectedSection == NavigationDrawerSection.AllItems(share.id),
                 showMenuIcon = true,
@@ -56,7 +59,7 @@ fun NavigationDrawerVaultSection(
                 name = stringResource(R.string.navigation_item_trash),
                 itemCount = drawerUiState.trashedItemCount,
                 icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
-                color = PassTheme.colors.textDisabled,
+                iconBackgroundColor = PassTheme.colors.textDisabled,
                 iconColor = PassTheme.colors.textWeak,
                 isSelected = drawerUiState.selectedSection == NavigationDrawerSection.Trash,
                 isShared = false,

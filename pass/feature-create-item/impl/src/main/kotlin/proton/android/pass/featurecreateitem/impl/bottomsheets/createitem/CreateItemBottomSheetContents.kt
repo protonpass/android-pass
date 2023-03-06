@@ -1,4 +1,4 @@
-package proton.android.pass.featurehome.impl
+package proton.android.pass.featurecreateitem.impl.bottomsheets.createitem
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -13,6 +13,8 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmall
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheetPadding
@@ -23,28 +25,34 @@ import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.composecomponents.impl.item.icon.PasswordIcon
+import proton.android.pass.featurecreateitem.impl.R
+import proton.pass.domain.ShareId
 
 @ExperimentalMaterialApi
 @Composable
 fun CreateItemBottomSheetContents(
     modifier: Modifier = Modifier,
-    onCreateLogin: () -> Unit,
-    onCreateAlias: () -> Unit,
-    onCreateNote: () -> Unit,
+    shareId: ShareId? = null,
+    onCreateLogin: (Option<ShareId>) -> Unit,
+    onCreateAlias: (Option<ShareId>) -> Unit,
+    onCreateNote: (Option<ShareId>) -> Unit,
     onCreatePassword: () -> Unit
 ) {
     BottomSheetItemList(
         modifier = modifier.bottomSheetPadding(),
         items = persistentListOf(
-            createLogin(onCreateLogin),
-            createAlias(onCreateAlias),
-            createNote(onCreateNote),
+            createLogin(shareId, onCreateLogin),
+            createAlias(shareId, onCreateAlias),
+            createNote(shareId, onCreateNote),
             createPassword(onCreatePassword)
         )
     )
 }
 
-private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : BottomSheetItem {
+private fun createLogin(
+    shareId: ShareId?,
+    onCreateLogin: (Option<ShareId>) -> Unit
+): BottomSheetItem = object : BottomSheetItem {
     override val title: @Composable () -> Unit
         get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_login)) }
     override val subtitle: (@Composable () -> Unit)
@@ -68,49 +76,57 @@ private fun createLogin(onCreateLogin: () -> Unit): BottomSheetItem = object : B
     override val endIcon: (@Composable () -> Unit)?
         get() = null
     override val onClick: () -> Unit
-        get() = onCreateLogin
+        get() = { onCreateLogin(shareId.toOption()) }
     override val isDivider = false
 }
 
-private fun createAlias(onCreateAlias: () -> Unit): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_alias)) }
-    override val subtitle: (@Composable () -> Unit)
-        get() = {
-            Text(
-                text = stringResource(R.string.item_type_alias_description),
-                style = ProtonTheme.typography.defaultSmall,
-                color = ProtonTheme.colors.textWeak
-            )
-        }
-    override val leftIcon: (@Composable () -> Unit)
-        get() = { AliasIcon() }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: () -> Unit
-        get() = onCreateAlias
-    override val isDivider = false
-}
+private fun createAlias(
+    shareId: ShareId?,
+    onCreateAlias: (Option<ShareId>) -> Unit
+): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_alias)) }
+        override val subtitle: (@Composable () -> Unit)
+            get() = {
+                Text(
+                    text = stringResource(R.string.item_type_alias_description),
+                    style = ProtonTheme.typography.defaultSmall,
+                    color = ProtonTheme.colors.textWeak
+                )
+            }
+        override val leftIcon: (@Composable () -> Unit)
+            get() = { AliasIcon() }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = { onCreateAlias(shareId.toOption()) }
+        override val isDivider = false
+    }
 
-private fun createNote(onCreateNote: () -> Unit): BottomSheetItem = object : BottomSheetItem {
-    override val title: @Composable () -> Unit
-        get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_note)) }
-    override val subtitle: (@Composable () -> Unit)
-        get() = {
-            Text(
-                text = stringResource(R.string.item_type_note_description),
-                style = ProtonTheme.typography.defaultSmall,
-                color = ProtonTheme.colors.textWeak
-            )
-        }
-    override val leftIcon: (@Composable () -> Unit)
-        get() = { NoteIcon() }
-    override val endIcon: (@Composable () -> Unit)?
-        get() = null
-    override val onClick: () -> Unit
-        get() = onCreateNote
-    override val isDivider = false
-}
+private fun createNote(
+    shareId: ShareId?,
+    onCreateNote: (Option<ShareId>) -> Unit
+): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_note)) }
+        override val subtitle: (@Composable () -> Unit)
+            get() = {
+                Text(
+                    text = stringResource(R.string.item_type_note_description),
+                    style = ProtonTheme.typography.defaultSmall,
+                    color = ProtonTheme.colors.textWeak
+                )
+            }
+        override val leftIcon: (@Composable () -> Unit)
+            get() = { NoteIcon() }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = { onCreateNote(shareId.toOption()) }
+        override val isDivider = false
+    }
 
 private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
     object : BottomSheetItem {

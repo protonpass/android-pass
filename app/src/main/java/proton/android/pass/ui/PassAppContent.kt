@@ -16,9 +16,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
@@ -106,7 +106,7 @@ fun PassAppContent(
             },
             content = {
                 Column(modifier = Modifier.padding(contentPadding)) {
-                    ModalBottomSheetLayout(appNavigator.bottomSheetNavigator) {
+                    PassModalBottomSheetLayout(appNavigator.bottomSheetNavigator) {
                         PassNavHost(
                             modifier = Modifier.weight(1f),
                             drawerUiState = appUiState.drawerUiState,

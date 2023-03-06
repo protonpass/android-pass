@@ -19,7 +19,10 @@ import proton.android.pass.commonui.api.PassTheme
 fun PassModalBottomSheetLayout(
     modifier: Modifier = Modifier,
     sheetContent: @Composable ColumnScope.() -> Unit,
-    sheetState: ModalBottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden),
+    sheetState: ModalBottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    ),
     content: @Composable () -> Unit,
 ) {
     ModalBottomSheetLayout(
@@ -42,8 +45,8 @@ fun PassModalBottomSheetLayout(
     content: @Composable () -> Unit
 ) {
     ModalBottomSheetLayout(
-        bottomSheetNavigator = bottomSheetNavigator,
         modifier = modifier,
+        bottomSheetNavigator = bottomSheetNavigator,
         sheetShape = PassTheme.shapes.bottomsheetShape,
         sheetBackgroundColor = PassTheme.colors.accentBrandDark,
         scrimColor = ProtonTheme.colors.blenderNorm,

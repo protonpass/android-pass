@@ -41,7 +41,6 @@ object CreateAlias : NavItem(
 )
 fun NavGraphBuilder.createAliasGraph(
     onAliasCreatedSuccess: () -> Unit,
-    onAliasDraftCreatedSuccess: (AliasItem) -> Unit,
     onBackClick: () -> Unit,
 ) {
     composable(CreateAlias) {
@@ -49,7 +48,6 @@ fun NavGraphBuilder.createAliasGraph(
             onClose = onBackClick,
             onUpClick = onBackClick,
             onAliasCreated = { onAliasCreatedSuccess() },
-            onAliasDraftCreated = onAliasDraftCreatedSuccess
         )
     }
 }

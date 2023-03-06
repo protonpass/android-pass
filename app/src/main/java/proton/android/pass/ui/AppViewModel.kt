@@ -24,7 +24,7 @@ import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
@@ -40,7 +40,7 @@ import javax.inject.Inject
 class AppViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     preferenceRepository: UserPreferencesRepository,
-    observeVaults: ObserveVaults,
+    observeVaults: ObserveVaultsWithItemCount,
     itemRepository: ItemRepository,
     networkMonitor: NetworkMonitor,
     private val snackbarMessageRepository: SnackbarMessageRepository
@@ -75,8 +75,8 @@ class AppViewModel @Inject constructor(
                         .map {
                             totalTrashed += it.trashedItemCount
                             ShareUiModelWithItemCount(
-                                id = it.shareId,
-                                name = it.name,
+                                id = it.vault.shareId,
+                                name = it.vault.name,
                                 activeItemCount = it.activeItemCount,
                                 trashedItemCount = it.trashedItemCount
                             )

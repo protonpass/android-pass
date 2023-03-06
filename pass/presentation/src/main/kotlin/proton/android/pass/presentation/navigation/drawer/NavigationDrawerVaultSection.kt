@@ -57,6 +57,7 @@ fun NavigationDrawerVaultSection(
                 itemCount = drawerUiState.trashedItemCount,
                 icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
                 color = PassTheme.colors.textDisabled,
+                iconColor = PassTheme.colors.textWeak,
                 isSelected = drawerUiState.selectedSection == NavigationDrawerSection.Trash,
                 isShared = false,
                 showMenuIcon = false,

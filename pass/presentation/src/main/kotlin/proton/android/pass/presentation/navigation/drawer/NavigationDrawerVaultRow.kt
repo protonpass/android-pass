@@ -37,6 +37,7 @@ fun NavigationDrawerVaultRow(
     itemCount: Long,
     @DrawableRes icon: Int,
     color: Color,
+    iconColor: Color = color,
     isShared: Boolean,
     isSelected: Boolean,
     showMenuIcon: Boolean,
@@ -54,6 +55,7 @@ fun NavigationDrawerVaultRow(
         VaultIcon(
             color = color,
             icon = icon,
+            iconColor = iconColor
         )
         Column(
             modifier = Modifier.weight(1f)

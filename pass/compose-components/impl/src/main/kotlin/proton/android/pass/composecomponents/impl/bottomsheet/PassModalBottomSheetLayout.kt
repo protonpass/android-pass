@@ -8,6 +8,9 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.google.accompanist.navigation.material.BottomSheetNavigator
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 
@@ -26,6 +29,23 @@ fun PassModalBottomSheetLayout(
         sheetShape = PassTheme.shapes.bottomsheetShape,
         sheetBackgroundColor = PassTheme.colors.accentBrandDark,
         sheetContentColor = ProtonTheme.colors.textNorm,
+        scrimColor = ProtonTheme.colors.blenderNorm,
+        content = content
+    )
+}
+
+@OptIn(ExperimentalMaterialNavigationApi::class)
+@Composable
+fun PassModalBottomSheetLayout(
+    bottomSheetNavigator: BottomSheetNavigator,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    ModalBottomSheetLayout(
+        bottomSheetNavigator = bottomSheetNavigator,
+        modifier = modifier,
+        sheetShape = PassTheme.shapes.bottomsheetShape,
+        sheetBackgroundColor = PassTheme.colors.accentBrandDark,
         scrimColor = ProtonTheme.colors.blenderNorm,
         content = content
     )

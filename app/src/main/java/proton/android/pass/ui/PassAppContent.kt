@@ -1,10 +1,14 @@
 package proton.android.pass.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
+import androidx.compose.material.SwipeableDefaults
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,6 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -41,7 +46,7 @@ import proton.android.pass.ui.internal.InternalDrawerState
 import proton.android.pass.ui.internal.InternalDrawerValue
 import proton.android.pass.ui.internal.rememberInternalDrawerState
 
-@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun PassAppContent(
     modifier: Modifier = Modifier,
@@ -53,7 +58,9 @@ fun PassAppContent(
     onSnackbarMessageDelivered: () -> Unit,
     finishActivity: () -> Unit
 ) {
-    val appNavigator = rememberAppNavigator()
+    val appNavigator = rememberAppNavigator(
+        bottomSheetNavigator = rememberBottomSheetNavigator(skipHalfExpanded = true),
+    )
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
     var homeItemTypeSelection: HomeItemTypeSelection by remember {
@@ -176,5 +183,22 @@ private fun SnackBarLaunchedEffect(
             snackBarMessageLocale
         )
         onSnackBarMessageDelivered()
+    }
+}
+
+@ExperimentalMaterialNavigationApi
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun rememberBottomSheetNavigator(
+    animationSpec: AnimationSpec<Float> = SwipeableDefaults.AnimationSpec,
+    skipHalfExpanded: Boolean = false,
+): BottomSheetNavigator {
+    val sheetState = rememberModalBottomSheetState(
+        ModalBottomSheetValue.Hidden,
+        animationSpec,
+        skipHalfExpanded,
+    )
+    return remember(sheetState) {
+        BottomSheetNavigator(sheetState = sheetState)
     }
 }

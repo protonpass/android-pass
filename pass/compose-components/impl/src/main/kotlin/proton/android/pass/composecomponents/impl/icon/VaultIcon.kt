@@ -26,8 +26,8 @@ import proton.android.pass.composecomponents.impl.R
 @Composable
 fun VaultIcon(
     modifier: Modifier = Modifier,
-    color: Color,
-    iconColor: Color = color,
+    backgroundColor: Color,
+    iconColor: Color,
     size: Int = 40,
     @DrawableRes icon: Int,
 ) {
@@ -35,7 +35,7 @@ fun VaultIcon(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
             .size(size.dp)
-            .background(color.copy(alpha = 0.4f))
+            .background(backgroundColor)
             .padding(8.dp),
         contentAlignment = Alignment.Center
     ) {
@@ -48,6 +48,7 @@ fun VaultIcon(
     }
 }
 
+@Suppress("MagicNumber")
 @Preview
 @Composable
 fun VaultIconPreview(
@@ -56,7 +57,8 @@ fun VaultIconPreview(
     PassTheme(isDark = isDark) {
         Surface {
             VaultIcon(
-                color = PassTheme.colors.accentYellowNorm,
+                iconColor = Color(0xFFF7D775),
+                backgroundColor = Color(0x10F7D775),
                 icon = me.proton.core.presentation.R.drawable.ic_proton_house,
             )
         }

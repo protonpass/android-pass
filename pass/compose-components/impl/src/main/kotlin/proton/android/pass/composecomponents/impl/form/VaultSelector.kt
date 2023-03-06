@@ -11,6 +11,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -19,6 +20,7 @@ import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 
+@Suppress("MagicNumber")
 @Composable
 fun VaultSelector(
     modifier: Modifier = Modifier,
@@ -34,7 +36,8 @@ fun VaultSelector(
         verticalAlignment = Alignment.CenterVertically
     ) {
         VaultIcon(
-            color = PassTheme.colors.accentYellowNorm,
+            iconColor = Color(0xFFF7D775),
+            backgroundColor = Color(0x10F7D775),
             icon = me.proton.core.presentation.R.drawable.ic_proton_house,
         )
         Column(

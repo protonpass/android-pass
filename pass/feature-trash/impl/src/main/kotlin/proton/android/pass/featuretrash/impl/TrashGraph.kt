@@ -1,9 +1,8 @@
-package proton.android.pass.ui.trash
+package proton.android.pass.featuretrash.impl
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featuretrash.impl.TrashScreen
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 

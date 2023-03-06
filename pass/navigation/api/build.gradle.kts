@@ -24,6 +24,8 @@ android {
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.navigation.material)
+    implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.ui)
     implementation(libs.core.cryptoAndroid)
     implementation(libs.core.cryptoCommon)

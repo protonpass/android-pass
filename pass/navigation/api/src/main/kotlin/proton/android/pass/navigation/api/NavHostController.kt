@@ -7,22 +7,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.Navigator
 import androidx.navigation.compose.DialogNavigator
 import com.google.accompanist.navigation.animation.AnimatedComposeNavigator
 import me.proton.core.crypto.android.keystore.AndroidKeyStoreCrypto
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 
-@ExperimentalAnimationApi
 @Composable
-fun rememberAnimatedNavController(): NavHostController {
+fun rememberAnimatedNavController(
+    vararg navigators: Navigator<out NavDestination>
+): NavHostController {
     val context = LocalContext.current
-    return rememberSaveable(saver = NavControllerSaver(context, AndroidKeyStoreCrypto.default)) {
-        createNavController(context)
-    }
+    return rememberSaveable(
+        inputs = navigators,
+        saver = NavControllerSaver(context, AndroidKeyStoreCrypto.default)
+    ) { createNavController(context) }
+        .apply {
+            for (navigator in navigators) {
+                navigatorProvider.addNavigator(navigator)
+            }
+        }
 }
 
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 fun createNavController(context: Context) =
     NavHostController(context).apply {
         navigatorProvider.addNavigator(AnimatedComposeNavigator())
@@ -32,7 +41,6 @@ fun createNavController(context: Context) =
 /**
  * Saver to save and restore the NavController across config change and process death.
  */
-@ExperimentalAnimationApi
 private fun NavControllerSaver(
     context: Context,
     keyStoreCrypto: KeyStoreCrypto

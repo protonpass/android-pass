@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
@@ -19,7 +20,8 @@ import proton.android.pass.navigation.api.rememberAppNavigator
 @OptIn(
     ExperimentalAnimationApi::class,
     ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialNavigationApi::class
 )
 @Composable
 fun AutofillAppContent(

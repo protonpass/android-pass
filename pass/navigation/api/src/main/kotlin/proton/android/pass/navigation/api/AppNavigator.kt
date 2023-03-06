@@ -1,6 +1,5 @@
 package proton.android.pass.navigation.api
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -8,19 +7,25 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.google.accompanist.navigation.material.BottomSheetNavigator
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import proton.android.pass.log.api.PassLogger
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Composable
 fun rememberAppNavigator(
-    navController: NavHostController = rememberAnimatedNavController()
-): AppNavigator = remember(navController) { AppNavigator(navController) }
+    bottomSheetNavigator: BottomSheetNavigator = rememberBottomSheetNavigator(),
+    navController: NavHostController = rememberAnimatedNavController(bottomSheetNavigator),
+): AppNavigator = remember(navController) { AppNavigator(navController, bottomSheetNavigator) }
 
+@OptIn(ExperimentalMaterialNavigationApi::class)
 @Stable
 class AppNavigator(
-    val navController: NavHostController
+    val navController: NavHostController,
+    val bottomSheetNavigator: BottomSheetNavigator
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController

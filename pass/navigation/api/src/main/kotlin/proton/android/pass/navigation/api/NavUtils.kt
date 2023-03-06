@@ -7,9 +7,12 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.dialog
 import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.bottomSheet
 
-@ExperimentalAnimationApi
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.composable(
     navItem: NavItem,
     enterTransition: (AnimatedContentScope<NavBackStackEntry>.() -> EnterTransition?)? = null,
@@ -28,6 +31,27 @@ fun NavGraphBuilder.composable(
     ) {
         content(it)
     }
+}
+
+@OptIn(ExperimentalMaterialNavigationApi::class)
+fun NavGraphBuilder.bottomSheet(
+    navItem: NavItem,
+    content: @Composable (NavBackStackEntry) -> Unit
+) {
+    bottomSheet(
+        route = navItem.route,
+        arguments = navItem.args
+    ) { content(it) }
+}
+
+fun NavGraphBuilder.dialog(
+    navItem: NavItem,
+    content: @Composable (NavBackStackEntry) -> Unit
+) {
+    dialog(
+        route = navItem.route,
+        arguments = navItem.args
+    ) { content(it) }
 }
 
 fun Map<String, Any>.toPath() = this

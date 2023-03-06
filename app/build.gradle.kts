@@ -206,6 +206,7 @@ android {
 dependencies {
     implementation(files("../../proton-libs/gopenpgp/gopenpgp.aar"))
     implementation(libs.accompanist.navigation.animation)
+    implementation(libs.accompanist.navigation.material)
     implementation(libs.accompanist.insets)
     implementation(libs.accompanist.systemUiController)
     implementation(libs.androidx.activity.ktx)

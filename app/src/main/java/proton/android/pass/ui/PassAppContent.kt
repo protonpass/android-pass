@@ -3,6 +3,7 @@ package proton.android.pass.ui
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -14,6 +15,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
@@ -38,6 +41,7 @@ import proton.android.pass.ui.internal.InternalDrawerValue
 import proton.android.pass.ui.internal.rememberInternalDrawerState
 import proton.android.pass.ui.navigation.Trash
 
+@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun PassAppContent(
     modifier: Modifier = Modifier,
@@ -102,16 +106,18 @@ fun PassAppContent(
             },
             content = {
                 Column(modifier = Modifier.padding(contentPadding)) {
-                    PassNavHost(
-                        modifier = Modifier.weight(1f),
-                        drawerUiState = appUiState.drawerUiState,
-                        appNavigator = appNavigator,
-                        homeItemTypeSelection = homeItemTypeSelection,
-                        homeVaultSelection = homeVaultSelection,
-                        navDrawerNavigation = navDrawerNavigation,
-                        coreNavigation = coreNavigation,
-                        finishActivity = finishActivity
-                    )
+                    ModalBottomSheetLayout(appNavigator.bottomSheetNavigator) {
+                        PassNavHost(
+                            modifier = Modifier.weight(1f),
+                            drawerUiState = appUiState.drawerUiState,
+                            appNavigator = appNavigator,
+                            homeItemTypeSelection = homeItemTypeSelection,
+                            homeVaultSelection = homeVaultSelection,
+                            navDrawerNavigation = navDrawerNavigation,
+                            coreNavigation = coreNavigation,
+                            finishActivity = finishActivity
+                        )
+                    }
 
                     AnimatedVisibility(visible = appUiState.networkStatus == NetworkStatus.Offline) {
                         OfflineIndicator()

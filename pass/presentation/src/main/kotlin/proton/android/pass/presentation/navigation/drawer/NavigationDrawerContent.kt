@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -56,7 +57,7 @@ fun NavigationDrawerContent(
                             .fillMaxWidth()
                             .padding(16.dp),
                         color = PassTheme.colors.accentPurpleWeakest,
-                        elevation = null,
+                        elevation = ButtonDefaults.elevation(0.dp),
                         onClick = {} // Create vault
                     ) {
                         Text(

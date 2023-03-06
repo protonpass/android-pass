@@ -69,12 +69,7 @@ internal class CreateLoginViewModelTest {
     @Test
     fun `when a create item event without title should return a BlankTitle validation error`() =
         runTest {
-            val vault = Vault(
-                shareId = ShareId("ShareId"),
-                name = "name",
-                activeItemCount = 1,
-                trashedItemCount = 0
-            )
+            val vault = Vault(ShareId("shareId"), "Share")
             observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
 
             createLoginViewModel.createItem()
@@ -95,7 +90,7 @@ internal class CreateLoginViewModelTest {
     fun `given valid data when a create item event should return a success event`() = runTest {
         val item = TestItem.create(keyStoreCrypto = TestKeyStoreCrypto)
 
-        val vault = Vault(item.shareId, "Share", activeItemCount = 1, trashedItemCount = 0)
+        val vault = Vault(item.shareId, "Share")
         observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
 
         val titleInput = "Title input"
@@ -151,7 +146,7 @@ internal class CreateLoginViewModelTest {
 
     @Test
     fun `setting initial data emits the proper contents`() = runTest {
-        val vault = Vault(ShareId("shareId"), "Share", activeItemCount = 1, trashedItemCount = 0)
+        val vault = Vault(ShareId("shareId"), "Share")
         observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
         val initialContents = InitialCreateLoginUiState(
             title = TestUtils.randomString(),

@@ -36,8 +36,8 @@ fun NavigationDrawerVaultRow(
     name: String,
     itemCount: Long,
     @DrawableRes icon: Int,
-    color: Color,
-    iconColor: Color = color,
+    iconBackgroundColor: Color,
+    iconColor: Color,
     isShared: Boolean,
     isSelected: Boolean,
     showMenuIcon: Boolean,
@@ -53,7 +53,7 @@ fun NavigationDrawerVaultRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         VaultIcon(
-            color = color,
+            backgroundColor = iconBackgroundColor,
             icon = icon,
             iconColor = iconColor
         )
@@ -110,6 +110,7 @@ fun NavigationDrawerVaultRow(
 class ThemeVaultRowPreviewProvider :
     ThemePairPreviewProvider<VaultRowInput>(NavigationDrawerVaultRowPreviewProvider())
 
+@Suppress("MagicNumber")
 @Preview
 @Composable
 fun NavigationDrawerVaultRowPreview(
@@ -121,7 +122,8 @@ fun NavigationDrawerVaultRowPreview(
                 name = "test vault",
                 itemCount = 123,
                 icon = me.proton.core.presentation.R.drawable.ic_proton_house,
-                color = PassTheme.colors.accentYellowNorm,
+                iconColor = Color(0xFFF7D775),
+                iconBackgroundColor = Color(0x10F7D775),
                 isSelected = input.second.isSelected,
                 isShared = input.second.isShared,
                 showMenuIcon = input.second.showMenuIcon,

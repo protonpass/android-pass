@@ -11,6 +11,20 @@
     <string name="action_save">Save</string>
     <string name="action_remove">Remove</string>
 
+    <!-- Create item bottomsheet -->
+    <string name="action_login">Login</string>
+    <string name="action_alias">Alias</string>
+    <string name="action_note">Note</string>
+    <string name="action_password">Password</string>
+    <string name="item_type_login_description">Add login details for an app or site</string>
+    <string name="item_type_alias_description">Get an email alias to use on new apps</string>
+    <string name="item_type_note_description">Jot down a PIN, code, or note to self</string>
+    <string name="item_type_password_description">Generate a secure password</string>
+    <string name="item_type_login_create_content_description">Create login</string>
+
+    <!-- Generate password bottomsheet -->
+    <string name="generate_password_copy">Copy &amp; close</string>
+
     <!-- Create Login -->
     <string name="title_create_login">Create login</string>
     <string name="title_edit_login">Edit login</string>

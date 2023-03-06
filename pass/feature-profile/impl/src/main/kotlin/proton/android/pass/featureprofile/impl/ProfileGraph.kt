@@ -17,7 +17,8 @@ object Profile : NavItem(baseRoute = "profile", isTopLevel = true)
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.profileGraph(
-    onListClick: () -> Unit
+    onListClick: () -> Unit,
+    onCreateItemClick: () -> Unit,
 ) {
     composable(Profile) {
         Scaffold(
@@ -26,7 +27,7 @@ fun NavGraphBuilder.profileGraph(
                 BottomBar(
                     bottomBarSelected = BottomBarSelected.Profile,
                     onListClick = onListClick,
-                    onCreateClick = { },
+                    onCreateClick = onCreateItemClick,
                     onProfileClick = {}
                 )
             }

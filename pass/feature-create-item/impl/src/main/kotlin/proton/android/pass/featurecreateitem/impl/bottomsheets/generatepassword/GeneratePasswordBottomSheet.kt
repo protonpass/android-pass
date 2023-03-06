@@ -1,4 +1,4 @@
-package proton.android.pass.featurehome.impl.bottomsheet.password
+package proton.android.pass.featurecreateitem.impl.bottomsheets.generatepassword
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

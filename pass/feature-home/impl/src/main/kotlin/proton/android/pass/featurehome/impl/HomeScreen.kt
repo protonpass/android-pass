@@ -17,14 +17,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
 import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.SortingBottomSheetContents
-import proton.android.pass.featurehome.impl.bottomsheet.password.GeneratePasswordBottomSheet
 import proton.pass.domain.ItemType
+import proton.pass.domain.ShareId
 
 @OptIn(
     ExperimentalLifecycleComposeApi::class,
@@ -39,10 +40,11 @@ fun HomeScreen(
     homeItemTypeSelection: HomeItemTypeSelection,
     homeVaultSelection: HomeVaultSelection,
     onDrawerIconClick: () -> Unit,
+    onAddItemClick: (Option<ShareId>) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.homeUiState.collectAsStateWithLifecycle()
-    val (currentBottomSheet, setBottomSheet) = rememberSaveable { mutableStateOf(HomeBottomSheetType.CreateItem) }
+    val (currentBottomSheet, setBottomSheet) = rememberSaveable { mutableStateOf(HomeBottomSheetType.Sorting) }
     val (selectedItem, setSelectedItem) = rememberSaveable(stateSaver = ItemUiModelSaver) {
         mutableStateOf(null)
     }
@@ -66,27 +68,6 @@ fun HomeScreen(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {
-                HomeBottomSheetType.CreateItem -> CreateItemBottomSheetContents(
-                    onCreateLogin = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeScreenNavigation.toCreateLogin(uiState.homeListUiState.selectedShare)
-                        }
-                    },
-                    onCreateAlias = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeScreenNavigation.toCreateAlias(uiState.homeListUiState.selectedShare)
-                        }
-                    },
-                    onCreateNote = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            homeScreenNavigation.toCreateNote(uiState.homeListUiState.selectedShare)
-                        }
-                    },
-                    onCreatePassword = { setBottomSheet(HomeBottomSheetType.GeneratePassword) }
-                )
                 HomeBottomSheetType.Sorting -> SortingBottomSheetContents(
                     sortingType = uiState.homeListUiState.sortingType
                 ) {
@@ -146,9 +127,6 @@ fun HomeScreen(
                         setShowDeleteDialog(true)
                     }
                 )
-                HomeBottomSheetType.GeneratePassword -> GeneratePasswordBottomSheet {
-                    scope.launch { bottomSheetState.hide() }
-                }
             }
         }
     ) {
@@ -168,10 +146,7 @@ fun HomeScreen(
                     setBottomSheet(HomeBottomSheetType.Sorting)
                     scope.launch { bottomSheetState.show() }
                 },
-                onAddItemClick = {
-                    setBottomSheet(HomeBottomSheetType.CreateItem)
-                    scope.launch { bottomSheetState.show() }
-                },
+                onAddItemClick = onAddItemClick,
                 onItemMenuClick = { item ->
                     setSelectedItem(item)
                     when (item.itemType) {

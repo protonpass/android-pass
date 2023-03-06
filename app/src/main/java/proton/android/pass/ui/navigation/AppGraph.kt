@@ -7,23 +7,27 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.authGraph
-import proton.android.pass.featurecreateitem.impl.CreateAlias
-import proton.android.pass.featurecreateitem.impl.CreateLogin
-import proton.android.pass.featurecreateitem.impl.CreateNote
-import proton.android.pass.featurecreateitem.impl.EditAlias
-import proton.android.pass.featurecreateitem.impl.EditLogin
-import proton.android.pass.featurecreateitem.impl.EditNote
+import proton.android.pass.featurecreateitem.impl.alias.CreateAlias
+import proton.android.pass.featurecreateitem.impl.alias.EditAlias
 import proton.android.pass.featurecreateitem.impl.alias.RESULT_CREATED_DRAFT_ALIAS
-import proton.android.pass.featurecreateitem.impl.createAliasGraph
-import proton.android.pass.featurecreateitem.impl.createLoginGraph
-import proton.android.pass.featurecreateitem.impl.createNoteGraph
+import proton.android.pass.featurecreateitem.impl.alias.createAliasGraph
+import proton.android.pass.featurecreateitem.impl.alias.updateAliasGraph
+import proton.android.pass.featurecreateitem.impl.bottomsheets.createitem.CreateItemBottomsheet
+import proton.android.pass.featurecreateitem.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
+import proton.android.pass.featurecreateitem.impl.bottomsheets.generatepassword.GeneratePasswordBottomsheet
+import proton.android.pass.featurecreateitem.impl.bottomsheets.generatepassword.generatePasswordBottomsheetGraph
+import proton.android.pass.featurecreateitem.impl.login.CreateLogin
+import proton.android.pass.featurecreateitem.impl.login.EditLogin
+import proton.android.pass.featurecreateitem.impl.login.createLoginGraph
+import proton.android.pass.featurecreateitem.impl.login.updateLoginGraph
+import proton.android.pass.featurecreateitem.impl.note.CreateNote
+import proton.android.pass.featurecreateitem.impl.note.EditNote
+import proton.android.pass.featurecreateitem.impl.note.createNoteGraph
+import proton.android.pass.featurecreateitem.impl.note.updateNoteGraph
 import proton.android.pass.featurecreateitem.impl.totp.CameraTotp
 import proton.android.pass.featurecreateitem.impl.totp.PhotoPickerTotp
 import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featurecreateitem.impl.totp.createTotpGraph
-import proton.android.pass.featurecreateitem.impl.updateAliasGraph
-import proton.android.pass.featurecreateitem.impl.updateLoginGraph
-import proton.android.pass.featurecreateitem.impl.updateNoteGraph
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection
 import proton.android.pass.featurehome.impl.HomeScreenNavigation
@@ -47,7 +51,7 @@ import proton.pass.domain.ShareId
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
-@Suppress("LongParameterList", "LongMethod")
+@Suppress("LongParameterList", "LongMethod", "ComplexMethod")
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
     homeItemTypeSelection: HomeItemTypeSelection,
@@ -61,14 +65,55 @@ fun NavGraphBuilder.appGraph(
         homeScreenNavigation = createHomeScreenNavigation(appNavigator),
         onDrawerIconClick = onDrawerIconClick,
         homeItemTypeSelection = homeItemTypeSelection,
-        homeVaultSelection = homeVaultSelection
+        homeVaultSelection = homeVaultSelection,
+        onAddItemClick = { shareId ->
+            appNavigator.navigate(
+                CreateItemBottomsheet,
+                CreateItemBottomsheet.createNavRoute(shareId)
+            )
+        }
+    )
+    bottomsheetCreateItemGraph(
+        onCreateLogin = { shareId ->
+            appNavigator.navigate(
+                CreateLogin,
+                CreateLogin.createNavRoute(shareId)
+            )
+        },
+        onCreateAlias = { shareId ->
+            appNavigator.navigate(
+                CreateAlias,
+                CreateAlias.createNavRoute(shareId)
+            )
+        },
+        onCreateNote = { shareId ->
+            appNavigator.navigate(
+                CreateNote,
+                CreateNote.createNavRoute(shareId)
+            )
+        },
+        onCreatePassword = {
+            val backDestination = when {
+                appNavigator.hasDestinationInStack(Profile) -> Profile
+                appNavigator.hasDestinationInStack(Home) -> Home
+                else -> null
+            }
+            appNavigator.navigate(
+                destination = GeneratePasswordBottomsheet,
+                backDestination = backDestination
+            )
+        }
+    )
+    generatePasswordBottomsheetGraph(
+        onDismiss = { appNavigator.onBackClick() }
     )
     trashGraph(
         navigationDrawer = navigationDrawer,
         onDrawerIconClick = onDrawerIconClick
     )
     profileGraph(
-        onListClick = { appNavigator.navigate(Home) }
+        onListClick = { appNavigator.navigate(Home) },
+        onCreateItemClick = { appNavigator.navigate(CreateItemBottomsheet) }
     )
     settingsGraph(
         navigationDrawer = navigationDrawer,
@@ -177,34 +222,16 @@ fun NavGraphBuilder.appGraph(
 
 private fun createHomeScreenNavigation(appNavigator: AppNavigator): HomeScreenNavigation =
     HomeScreenNavigation(
-        toCreateLogin = { shareId ->
-            appNavigator.navigate(
-                CreateLogin,
-                CreateLogin.createNavRoute(shareId)
-            )
-        },
         toEditLogin = { shareId: ShareId, itemId: ItemId ->
             appNavigator.navigate(
                 EditLogin,
                 EditLogin.createNavRoute(shareId, itemId)
             )
         },
-        toCreateNote = { shareId ->
-            appNavigator.navigate(
-                CreateNote,
-                CreateNote.createNavRoute(shareId)
-            )
-        },
         toEditNote = { shareId: ShareId, itemId: ItemId ->
             appNavigator.navigate(
                 EditNote,
                 EditNote.createNavRoute(shareId, itemId)
-            )
-        },
-        toCreateAlias = { shareId ->
-            appNavigator.navigate(
-                CreateAlias,
-                CreateAlias.createNavRoute(shareId)
             )
         },
         toEditAlias = { shareId: ShareId, itemId: ItemId ->

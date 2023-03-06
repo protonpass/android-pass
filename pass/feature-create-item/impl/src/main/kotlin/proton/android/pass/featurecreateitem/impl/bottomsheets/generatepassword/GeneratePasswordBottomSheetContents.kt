@@ -1,4 +1,4 @@
-package proton.android.pass.featurehome.impl.bottomsheet.password
+package proton.android.pass.featurecreateitem.impl.bottomsheets.generatepassword
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +20,7 @@ import proton.android.pass.composecomponents.impl.generatepassword.GeneratePassw
 import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordStatePreviewProvider
 import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordUiState
 import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordViewContent
-import proton.android.pass.featurehome.impl.R
+import proton.android.pass.featurecreateitem.impl.R
 
 @Composable
 fun GeneratePasswordBottomSheetContent(

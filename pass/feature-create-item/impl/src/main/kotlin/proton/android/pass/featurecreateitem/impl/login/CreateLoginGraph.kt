@@ -1,4 +1,4 @@
-package proton.android.pass.featurecreateitem.impl
+package proton.android.pass.featurecreateitem.impl.login
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
@@ -9,8 +9,6 @@ import kotlinx.coroutines.flow.StateFlow
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.featurecreateitem.impl.login.CreateLoginScreen
-import proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable

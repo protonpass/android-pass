@@ -13,9 +13,9 @@ import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.featureauth.impl.authGraph
-import proton.android.pass.featurecreateitem.impl.CreateLogin
-import proton.android.pass.featurecreateitem.impl.createLoginGraph
+import proton.android.pass.featurecreateitem.impl.login.CreateLogin
 import proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
+import proton.android.pass.featurecreateitem.impl.login.createLoginGraph
 import proton.android.pass.featurecreateitem.impl.totp.CameraTotp
 import proton.android.pass.featurecreateitem.impl.totp.PhotoPickerTotp
 import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY

@@ -1,4 +1,4 @@
-package proton.android.pass.featurecreateitem.impl
+package proton.android.pass.featurecreateitem.impl.login
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
@@ -6,7 +6,6 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import kotlinx.coroutines.flow.StateFlow
-import proton.android.pass.featurecreateitem.impl.login.UpdateLogin
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable

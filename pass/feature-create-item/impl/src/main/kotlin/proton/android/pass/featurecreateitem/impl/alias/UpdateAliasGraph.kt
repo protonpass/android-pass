@@ -1,10 +1,9 @@
-package proton.android.pass.featurecreateitem.impl
+package proton.android.pass.featurecreateitem.impl.alias
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featurecreateitem.impl.alias.UpdateAlias
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable

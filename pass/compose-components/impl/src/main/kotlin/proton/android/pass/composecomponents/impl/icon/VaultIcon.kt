@@ -27,6 +27,7 @@ import proton.android.pass.composecomponents.impl.R
 fun VaultIcon(
     modifier: Modifier = Modifier,
     color: Color,
+    iconColor: Color = color,
     size: Int = 40,
     @DrawableRes icon: Int,
 ) {
@@ -42,7 +43,7 @@ fun VaultIcon(
             modifier = Modifier.fillMaxSize(),
             painter = painterResource(id = icon),
             contentDescription = stringResource(R.string.vault_selector_icon_content_description),
-            tint = color
+            tint = iconColor
         )
     }
 }

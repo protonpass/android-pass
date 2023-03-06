@@ -39,7 +39,7 @@ import proton.android.pass.presentation.navigation.drawer.SelectedVaults
 import proton.android.pass.ui.internal.InternalDrawerState
 import proton.android.pass.ui.internal.InternalDrawerValue
 import proton.android.pass.ui.internal.rememberInternalDrawerState
-import proton.android.pass.ui.navigation.Trash
+import proton.android.pass.ui.trash.Trash
 
 @OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalMaterialApi::class)
 @Composable

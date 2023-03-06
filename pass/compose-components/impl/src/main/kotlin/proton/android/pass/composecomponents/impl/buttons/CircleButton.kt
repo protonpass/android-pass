@@ -20,7 +20,7 @@ fun CircleButton(
     modifier: Modifier = Modifier,
     color: Color,
     contentPadding: PaddingValues = PaddingValues(),
-    elevation: ButtonElevation? = ButtonDefaults.elevation(),
+    elevation: ButtonElevation = ButtonDefaults.elevation(),
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {

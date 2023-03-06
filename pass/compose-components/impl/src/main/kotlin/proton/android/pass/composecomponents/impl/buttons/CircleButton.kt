@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.ButtonElevation
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ fun CircleButton(
     modifier: Modifier = Modifier,
     color: Color,
     contentPadding: PaddingValues = PaddingValues(),
+    elevation: ButtonElevation? = ButtonDefaults.elevation(),
     onClick: () -> Unit,
     content: @Composable () -> Unit
 ) {
@@ -27,6 +29,7 @@ fun CircleButton(
         contentPadding = contentPadding,
         colors = ButtonDefaults.buttonColors(backgroundColor = color),
         shape = CircleShape,
+        elevation = elevation,
         onClick = onClick
     ) {
         content()

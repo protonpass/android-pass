@@ -1,8 +1,7 @@
-package proton.android.pass.featurecreateitem.impl
+package proton.android.pass.featurecreateitem.impl.note
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featurecreateitem.impl.note.UpdateNote
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable

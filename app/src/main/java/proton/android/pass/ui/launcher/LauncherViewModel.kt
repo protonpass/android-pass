@@ -119,7 +119,7 @@ class LauncherViewModel @Inject constructor(
 
     fun addAccount() = viewModelScope.launch {
         authOrchestrator.startAddAccountWorkflow(
-            requiredAccountType = AccountType.Internal,
+            requiredAccountType = requiredAccountType,
             creatableAccountType = AccountType.Internal,
             product = product
         )

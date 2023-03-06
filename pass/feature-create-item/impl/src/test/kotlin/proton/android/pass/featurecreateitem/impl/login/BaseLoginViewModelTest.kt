@@ -136,17 +136,6 @@ internal class BaseLoginViewModelTest {
     }
 
     private fun givenAVaultList() {
-        observeVaults.sendResult(
-            LoadingResult.Success(
-                listOf(
-                    Vault(
-                        shareId = ShareId("ShareId"),
-                        name = "name",
-                        activeItemCount = 1,
-                        trashedItemCount = 0
-                    )
-                )
-            )
-        )
+        observeVaults.sendResult(LoadingResult.Success(listOf(Vault(ShareId("shareId"), "Share"))))
     }
 }

@@ -9,20 +9,16 @@ import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import proton.android.pass.composecomponents.impl.dialogs.ConfirmSignOutDialog
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.featurehome.impl.HomeItemTypeSelection
 import proton.android.pass.featurehome.impl.HomeVaultSelection
+import proton.android.pass.featuresettings.impl.SignOutDialog
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.presentation.navigation.CoreNavigation
 import proton.android.pass.presentation.navigation.drawer.DrawerUiState
@@ -49,7 +45,6 @@ fun PassNavHost(
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
     BackHandler(drawerState.isOpen) { coroutineScope.launch { drawerState.close() } }
-    var showSignOutDialog by remember { mutableStateOf(false) }
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -67,20 +62,15 @@ fun PassNavHost(
                         drawerState = drawerState,
                         navDrawerNavigation = navDrawerNavigation,
                         coreNavigation = coreNavigation,
-                        onSignOutClick = { showSignOutDialog = true },
+                        onSignOutClick = { appNavigator.navigate(SignOutDialog) },
                         signOutDialog = {},
                         content = content
                     )
                 },
                 onDrawerIconClick = { coroutineScope.launch { drawerState.open() } },
                 finishActivity = finishActivity,
-                onLogoutClick = { showSignOutDialog = true }
+                onLogout = { coreNavigation.onRemove(null) }
             )
         }
-        ConfirmSignOutDialog(
-            show = showSignOutDialog,
-            onDismiss = { showSignOutDialog = false },
-            onConfirm = { coreNavigation.onRemove(null) }
-        )
     }
 }

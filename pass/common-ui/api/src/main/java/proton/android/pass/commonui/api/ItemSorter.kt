@@ -14,7 +14,6 @@ import proton.android.pass.commonui.api.DateFormatUtils.Format.ThisWeek
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Today
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Yesterday
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.log.api.PassLogger
 import java.time.format.DateTimeFormatter
 
 sealed interface GroupingKeys {
@@ -123,7 +122,6 @@ object ItemSorter {
             )
         }
             .mapKeys { entry ->
-                PassLogger.d("VicLog", entry.key.toString())
                 GroupingKeys.MostRecentKey(
                     entry.key,
                     entry.value.first().let { recentDate(it.modificationTime, it.lastAutofillTime) }

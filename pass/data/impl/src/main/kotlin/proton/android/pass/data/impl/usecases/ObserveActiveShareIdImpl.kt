@@ -53,8 +53,6 @@ class ObserveActiveShareIdImpl @Inject constructor(
                         val firstShare = shares.first()
                         shareRepository.selectVault(userId, firstShare.id)
                             .map { emit(firstShare) }
-                    } else {
-                        throw IllegalStateException("Could not find any share for user")
                     }
                 }
             }

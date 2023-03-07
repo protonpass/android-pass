@@ -2,12 +2,14 @@ package proton.android.pass.autofill.ui.previewproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.Clock
 import proton.android.pass.autofill.ui.autofill.select.AutofillItemClickedEvent
 import proton.android.pass.autofill.ui.autofill.select.SearchUiState
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListItems
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListUiState
 import proton.android.pass.autofill.ui.autofill.select.SelectItemUiState
+import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
@@ -25,7 +27,9 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     isRefreshing = IsRefreshingState.NotRefreshing,
                     items = SelectItemListItems(
                         suggestions = persistentListOf(),
-                        items = persistentListOf(item("Item with long text")),
+                        items = persistentMapOf(
+                            GroupingKeys.NoGrouping to persistentListOf(item("Item with long text"))
+                        ),
                         suggestionsForTitle = ""
                     ),
                     itemClickedEvent = AutofillItemClickedEvent.None
@@ -38,9 +42,11 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     isRefreshing = IsRefreshingState.NotRefreshing,
                     items = SelectItemListItems(
                         suggestions = persistentListOf(item("Suggested item")),
-                        items = persistentListOf(
-                            item("Item with long text"),
-                            item("Another item")
+                        items = persistentMapOf(
+                            GroupingKeys.NoGrouping to persistentListOf(
+                                item("Item with long text"),
+                                item("Another item")
+                            )
                         ),
                         suggestionsForTitle = "some.website.local"
                     ),
@@ -72,6 +78,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
             "Some very very long test that should be ellipsized as we type"
         ),
         createTime = Clock.System.now(),
-        modificationTime = Clock.System.now()
+        modificationTime = Clock.System.now(),
+        lastAutofillTime = Clock.System.now()
     )
 }

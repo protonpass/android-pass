@@ -3,64 +3,136 @@ package proton.android.pass.commonui.api
 import com.google.common.truth.Truth.assertThat
 import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
-import kotlinx.datetime.Month
+import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
 import org.junit.Test
 
 class DateFormatUtilsTest {
 
+    @Test(expected = IllegalStateException::class)
+    fun `given no format should throw error`() {
+        val now = Instant.fromEpochSeconds(NOW)
+        DateFormatUtils.getFormat(now, now, emptyList())
+    }
+
     @Test
-    fun canFormatToday() {
+    fun `given today can format today`() {
         val now = Instant.fromEpochSeconds(NOW)
         val nowMinusOneHour = now.minus(1, DateTimeUnit.HOUR)
-        val res = DateFormatUtils.formatInstant(now, nowMinusOneHour)
-        assertThat(res).isInstanceOf(DateFormatUtils.FormatResult.Today::class.java)
-
-        val asToday = res as DateFormatUtils.FormatResult.Today
-        assertThat(asToday.time).isEqualTo("12:48")
+        val res = DateFormatUtils.getFormat(
+            now,
+            nowMinusOneHour,
+            listOf(DateFormatUtils.Format.Today)
+        )
+        assertThat(res).isInstanceOf(DateFormatUtils.Format.Today::class.java)
     }
 
     @Test
-    fun canFormatYesterday() {
+    fun `given yesterday can format yesterday`() {
         val now = Instant.fromEpochSeconds(NOW)
         val nowMinusOneDay = now.minus(24, DateTimeUnit.HOUR)
-        val res = DateFormatUtils.formatInstant(now, nowMinusOneDay)
-        assertThat(res).isInstanceOf(DateFormatUtils.FormatResult.Yesterday::class.java)
-
-        val asYesterday = res as DateFormatUtils.FormatResult.Yesterday
-        assertThat(asYesterday.time).isEqualTo("13:48")
+        val res = DateFormatUtils.getFormat(
+            now,
+            nowMinusOneDay,
+            listOf(DateFormatUtils.Format.Yesterday)
+        )
+        assertThat(res).isInstanceOf(DateFormatUtils.Format.Yesterday::class.java)
     }
 
     @Test
-    fun canFormatOneWeekAgo() {
+    fun `given 3 days ago can format ThisWeek`() {
+        val now = Instant.fromEpochSeconds(NOW)
+        val nowMinusOneDay = now.minus(3, DateTimeUnit.DAY, TimeZone.UTC)
+        val res = DateFormatUtils.getFormat(
+            now,
+            nowMinusOneDay,
+            listOf(DateFormatUtils.Format.ThisWeek)
+        )
+        assertThat(res).isInstanceOf(DateFormatUtils.Format.ThisWeek::class.java)
+    }
+
+    @Test
+    fun `given last 9 days ago can format LastTwoWeeks`() {
+        val now = Instant.fromEpochSeconds(NOW)
+        val nowMinusOneDay = now.minus(9, DateTimeUnit.DAY, TimeZone.UTC)
+        val res = DateFormatUtils.getFormat(
+            now,
+            nowMinusOneDay,
+            listOf(DateFormatUtils.Format.LastTwoWeeks)
+        )
+        assertThat(res).isInstanceOf(DateFormatUtils.Format.LastTwoWeeks::class.java)
+    }
+
+    @Test
+    fun `given last 20 days ago can format Last30Days`() {
+        val now = Instant.fromEpochSeconds(NOW)
+        val nowMinusOneDay = now.minus(20, DateTimeUnit.DAY, TimeZone.UTC)
+        val res = DateFormatUtils.getFormat(
+            now,
+            nowMinusOneDay,
+            listOf(DateFormatUtils.Format.Last30Days)
+        )
+        assertThat(res).isInstanceOf(DateFormatUtils.Format.Last30Days::class.java)
+    }
+
+    @Test
+    fun `given last 40 days ago can format Last60Days`() {
+        val now = Instant.fromEpochSeconds(NOW)
+        val nowMinusOneDay = now.minus(40, DateTimeUnit.DAY, TimeZone.UTC)
+        val res = DateFormatUtils.getFormat(
+            now,
+            nowMinusOneDay,
+            listOf(DateFormatUtils.Format.Last60Days)
+        )
+        assertThat(res).isInstanceOf(DateFormatUtils.Format.Last60Days::class.java)
+    }
+
+    @Test
+    fun `given last 80 days ago can format Last60Days`() {
+        val now = Instant.fromEpochSeconds(NOW)
+        val nowMinusOneDay = now.minus(80, DateTimeUnit.DAY, TimeZone.UTC)
+        val res = DateFormatUtils.getFormat(
+            now,
+            nowMinusOneDay,
+            listOf(DateFormatUtils.Format.Last90Days)
+        )
+        assertThat(res).isInstanceOf(DateFormatUtils.Format.Last90Days::class.java)
+    }
+
+    @Test
+    fun `given last 91 days ago can format LastYear`() {
+        val now = Instant.fromEpochSeconds(NOW)
+        val nowMinusOneDay = now.minus(91, DateTimeUnit.DAY, TimeZone.UTC)
+        val res = DateFormatUtils.getFormat(
+            now,
+            nowMinusOneDay,
+            listOf(DateFormatUtils.Format.LastYear)
+        )
+        assertThat(res).isInstanceOf(DateFormatUtils.Format.LastYear::class.java)
+    }
+
+    @Test
+    fun `given 1 week ago can format DateOfSameYear`() {
         val now = Instant.fromEpochSeconds(NOW)
         val nowMinusOneWeek = now.minus(24 * 7, DateTimeUnit.HOUR)
-        val res = DateFormatUtils.formatInstant(now, nowMinusOneWeek)
-        assertThat(res).isInstanceOf(DateFormatUtils.FormatResult.DateOfSameYear::class.java)
-
-        val asDate = res as DateFormatUtils.FormatResult.DateOfSameYear
-        val date = asDate.localDateTime
-        assertThat(date.dayOfMonth).isEqualTo(10)
-        assertThat(date.month).isEqualTo(Month.FEBRUARY)
-        assertThat(date.year).isEqualTo(2023)
-        assertThat(date.time.hour).isEqualTo(13)
-        assertThat(date.time.minute).isEqualTo(48)
+        val res = DateFormatUtils.getFormat(
+            now,
+            nowMinusOneWeek,
+            listOf(DateFormatUtils.Format.DateOfSameYear)
+        )
+        assertThat(res).isInstanceOf(DateFormatUtils.Format.DateOfSameYear::class.java)
     }
 
     @Test
-    fun canFormatOneYearAgo() {
+    fun `given 1 year ago can format Date`() {
         val now = Instant.fromEpochSeconds(NOW)
         val nowMinusOneYear = now.minus(24 * 365, DateTimeUnit.HOUR)
-        val res = DateFormatUtils.formatInstant(now, nowMinusOneYear)
-        assertThat(res).isInstanceOf(DateFormatUtils.FormatResult.Date::class.java)
-
-        val asDate = res as DateFormatUtils.FormatResult.Date
-        val date = asDate.localDateTime
-        assertThat(date.dayOfMonth).isEqualTo(17)
-        assertThat(date.month).isEqualTo(Month.FEBRUARY)
-        assertThat(date.year).isEqualTo(2022)
-        assertThat(date.time.hour).isEqualTo(13)
-        assertThat(date.time.minute).isEqualTo(48)
+        val res = DateFormatUtils.getFormat(
+            now,
+            nowMinusOneYear,
+            listOf(DateFormatUtils.Format.Date)
+        )
+        assertThat(res).isInstanceOf(DateFormatUtils.Format.Date::class.java)
     }
 
     @Suppress("UnderscoresInNumericLiterals")

@@ -43,7 +43,7 @@ private fun sortingItemList(
     onSortingTypeSelected: (SortingType) -> Unit
 ): ImmutableList<BottomSheetItem> =
     listOf(
-        SortingType.ModificationDate,
+        SortingType.MostRecent,
         SortingType.TitleAsc,
         SortingType.TitleDesc,
         SortingType.CreationAsc,

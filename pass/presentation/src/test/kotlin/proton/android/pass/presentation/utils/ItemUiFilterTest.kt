@@ -5,7 +5,7 @@ import me.proton.core.crypto.common.keystore.encrypt
 import org.junit.Test
 import proton.android.pass.commonui.api.ItemUiFilter
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.presentation.components.model.TestItemUiModel
+import proton.android.pass.commonuimodels.fakes.TestItemUiModel
 import proton.android.pass.test.TestUtils.randomString
 import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.ItemType

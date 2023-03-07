@@ -10,6 +10,7 @@ enum class ShareColor {
 enum class ShareIcon {
     House,
     Suitcase,
+    Vault
 }
 
 data class ShareProperties(

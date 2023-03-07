@@ -1,5 +1,6 @@
 package proton.android.pass.featuretrash.impl
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -10,12 +11,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon
+import proton.android.pass.composecomponents.impl.topbar.icon.NavigationIcon
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -29,9 +32,12 @@ internal fun TrashTopBar(
         modifier = modifier,
         title = { TopBarTitleView(title = stringResource(id = R.string.title_trash)) },
         navigationIcon = {
-            HamburgerIcon(
-                onClick = onDrawerIconClick
-            )
+            NavigationIcon(
+                modifier = modifier.padding(start = 8.dp),
+                onUpClick = onDrawerIconClick
+            ) {
+                TrashVaultIcon()
+            }
         },
         actions = {
             if (showActions) {

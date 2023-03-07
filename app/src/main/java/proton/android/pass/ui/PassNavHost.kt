@@ -2,8 +2,6 @@ package proton.android.pass.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.DrawerState
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -45,32 +43,30 @@ fun PassNavHost(
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
     BackHandler(drawerState.isOpen) { coroutineScope.launch { drawerState.close() } }
-    Box(
-        modifier = modifier.fillMaxSize()
+    AnimatedNavHost(
+        modifier = modifier,
+        navController = appNavigator.navController,
+        startDestination = Home.route
     ) {
-        AnimatedNavHost(
-            navController = appNavigator.navController,
-            startDestination = Home.route
-        ) {
-            appGraph(
-                appNavigator = appNavigator,
-                homeItemTypeSelection = homeItemTypeSelection,
-                homeVaultSelection = homeVaultSelection,
-                navigationDrawer = { content ->
-                    ModalNavigationDrawer(
-                        drawerUiState = drawerUiState,
-                        drawerState = drawerState,
-                        navDrawerNavigation = navDrawerNavigation,
-                        coreNavigation = coreNavigation,
-                        onSignOutClick = { appNavigator.navigate(SignOutDialog) },
-                        signOutDialog = {},
-                        content = content
-                    )
-                },
-                onDrawerIconClick = { coroutineScope.launch { drawerState.open() } },
-                finishActivity = finishActivity,
-                onLogout = { coreNavigation.onRemove(null) }
-            )
-        }
+        appGraph(
+            appNavigator = appNavigator,
+            homeItemTypeSelection = homeItemTypeSelection,
+            homeVaultSelection = homeVaultSelection,
+            navigationDrawer = { content ->
+                ModalNavigationDrawer(
+                    drawerUiState = drawerUiState,
+                    drawerState = drawerState,
+                    navDrawerNavigation = navDrawerNavigation,
+                    coreNavigation = coreNavigation,
+                    onSignOutClick = { appNavigator.navigate(SignOutDialog) },
+                    signOutDialog = {},
+                    content = content
+                )
+            },
+            onDrawerIconClick = { coroutineScope.launch { drawerState.open() } },
+            finishActivity = finishActivity,
+            onLogout = { coreNavigation.onRemove(null) }
+        )
     }
+
 }

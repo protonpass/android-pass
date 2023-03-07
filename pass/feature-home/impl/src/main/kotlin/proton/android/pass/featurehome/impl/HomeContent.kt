@@ -26,6 +26,7 @@ import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDialog
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
+import proton.android.pass.featurehome.impl.icon.ActiveVaultIcon
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.pass.domain.ShareId
 
@@ -66,7 +67,9 @@ internal fun HomeContent(
                 onSearchQueryChange = onSearchQueryChange,
                 onEnterSearch = onEnterSearch,
                 onStopSearching = onStopSearching,
-                onDrawerIconClick = onDrawerIconClick
+                drawerIcon = {
+                    ActiveVaultIcon(onClick = onDrawerIconClick)
+                }
             )
         },
         bottomBar = {

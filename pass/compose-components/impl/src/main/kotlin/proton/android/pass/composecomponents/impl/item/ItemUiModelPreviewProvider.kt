@@ -19,7 +19,8 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                     "Some very very long test that should be ellipsized as we type"
                 ),
                 createTime = Clock.System.now(),
-                modificationTime = Clock.System.now()
+                modificationTime = Clock.System.now(),
+                lastAutofillTime = Clock.System.now()
             ),
             ItemUiModel(
                 id = ItemId("123"),
@@ -34,7 +35,8 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                     """.trimIndent()
                 ),
                 createTime = Clock.System.now(),
-                modificationTime = Clock.System.now()
+                modificationTime = Clock.System.now(),
+                lastAutofillTime = Clock.System.now()
             )
         )
 }

@@ -2,9 +2,11 @@ package proton.android.pass.featurehome.impl
 
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentMapOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
@@ -28,15 +30,15 @@ data class HomeUiState(
 data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
-    val items: ImmutableList<ItemUiModel>,
+    val items: ImmutableMap<GroupingKeys, ImmutableList<ItemUiModel>>,
     val selectedShare: Option<ShareId> = None,
-    val sortingType: SortingType = SortingType.ModificationDate
+    val sortingType: SortingType = SortingType.MostRecent
 ) {
     companion object {
         val Loading = HomeListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
-            items = persistentListOf(),
+            items = persistentMapOf(),
             selectedShare = None
         )
     }

@@ -62,7 +62,8 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
                         primaryTotp = ""
                     ),
                     createTime = Clock.System.now(),
-                    modificationTime = Clock.System.now()
+                    modificationTime = Clock.System.now(),
+                    lastAutofillTime = Clock.System.now()
                 ),
                 highlight = highlight
             )

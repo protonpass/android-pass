@@ -2,14 +2,18 @@ package proton.android.pass.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.DrawerState
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -45,38 +49,38 @@ fun PassNavHost(
     coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
     BackHandler(drawerState.isOpen) { coroutineScope.launch { drawerState.close() } }
-    AnimatedNavHost(
-        modifier = modifier,
-        navController = appNavigator.navController,
-        startDestination = Home.route
+    var showSignOutDialog by remember { mutableStateOf(false) }
+    Box(
+        modifier = modifier.fillMaxSize()
     ) {
-        appGraph(
-            appNavigator = appNavigator,
-            homeItemTypeSelection = homeItemTypeSelection,
-            homeVaultSelection = homeVaultSelection,
-            navigationDrawer = { content ->
-                val (isSignOutDialogShown, setShowSignOutDialog) =
-                    remember { mutableStateOf(false) }
-                ModalNavigationDrawer(
-                    drawerUiState = drawerUiState,
-                    drawerState = drawerState,
-                    navDrawerNavigation = navDrawerNavigation,
-                    coreNavigation = coreNavigation,
-                    onSignOutClick = { setShowSignOutDialog(true) },
-                    signOutDialog = {
-                        if (isSignOutDialogShown) {
-                            ConfirmSignOutDialog(
-                                state = isSignOutDialogShown,
-                                onDismiss = { setShowSignOutDialog(false) },
-                                onConfirm = { coreNavigation.onRemove(null) }
-                            )
-                        }
-                    },
-                    content = content
-                )
-            },
-            onDrawerIconClick = { coroutineScope.launch { drawerState.open() } },
-            finishActivity = finishActivity
+        AnimatedNavHost(
+            navController = appNavigator.navController,
+            startDestination = Home.route
+        ) {
+            appGraph(
+                appNavigator = appNavigator,
+                homeItemTypeSelection = homeItemTypeSelection,
+                homeVaultSelection = homeVaultSelection,
+                navigationDrawer = { content ->
+                    ModalNavigationDrawer(
+                        drawerUiState = drawerUiState,
+                        drawerState = drawerState,
+                        navDrawerNavigation = navDrawerNavigation,
+                        coreNavigation = coreNavigation,
+                        onSignOutClick = { showSignOutDialog = true },
+                        signOutDialog = {},
+                        content = content
+                    )
+                },
+                onDrawerIconClick = { coroutineScope.launch { drawerState.open() } },
+                finishActivity = finishActivity,
+                onLogoutClick = { showSignOutDialog = true }
+            )
+        }
+        ConfirmSignOutDialog(
+            show = showSignOutDialog,
+            onDismiss = { showSignOutDialog = false },
+            onConfirm = { coreNavigation.onRemove(null) }
         )
     }
 }

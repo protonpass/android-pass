@@ -109,7 +109,8 @@ fun LoginOptionsBottomSheetContentsPreview(
                         primaryTotp = ""
                     ),
                     createTime = Clock.System.now(),
-                    modificationTime = Clock.System.now()
+                    modificationTime = Clock.System.now(),
+                    lastAutofillTime = Clock.System.now()
                 ),
                 onCopyUsername = {},
                 onCopyPassword = {},

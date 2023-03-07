@@ -90,7 +90,8 @@ fun NoteOptionsBottomSheetContentsPreview(
                     note = "Note content",
                     itemType = ItemType.Note("My note text"),
                     createTime = Clock.System.now(),
-                    modificationTime = Clock.System.now()
+                    modificationTime = Clock.System.now(),
+                    lastAutofillTime = Clock.System.now()
                 ),
                 onCopyNote = {},
                 onEdit = { _, _ -> },

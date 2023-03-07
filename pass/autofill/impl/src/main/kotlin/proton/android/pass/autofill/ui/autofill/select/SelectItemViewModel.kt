@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -37,6 +38,7 @@ import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.ItemUiFilter
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -144,7 +146,7 @@ class SelectItemViewModel @Inject constructor(
                 .map { items ->
                     SelectItemListItems(
                         suggestions = persistentListOf(),
-                        items = items.toImmutableList(),
+                        items = persistentMapOf(GroupingKeys.NoGrouping to items.toImmutableList()),
                         suggestionsForTitle = ""
                     )
                 }
@@ -152,7 +154,7 @@ class SelectItemViewModel @Inject constructor(
             result.flatMap { items ->
                 suggestionsResult.map { suggestions ->
                     SelectItemListItems(
-                        items = items.toImmutableList(),
+                        items = persistentMapOf(GroupingKeys.NoGrouping to items.toImmutableList()),
                         suggestions = suggestions.toImmutableList(),
                         suggestionsForTitle = autofillAppState.value()
                             ?.let { getSuggestionsTitle(it) }

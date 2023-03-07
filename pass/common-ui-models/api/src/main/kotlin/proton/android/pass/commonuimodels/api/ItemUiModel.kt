@@ -12,5 +12,6 @@ data class ItemUiModel(
     val note: String,
     val itemType: ItemType,
     val createTime: Instant,
-    val modificationTime: Instant
+    val modificationTime: Instant,
+    val lastAutofillTime: Instant?
 )

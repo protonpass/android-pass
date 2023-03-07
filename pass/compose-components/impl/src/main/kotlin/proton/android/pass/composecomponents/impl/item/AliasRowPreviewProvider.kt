@@ -43,7 +43,8 @@ class AliasRowPreviewProvider : PreviewParameterProvider<AliasRowParameter> {
                     note = note,
                     itemType = ItemType.Alias(aliasEmail = alias),
                     createTime = Clock.System.now(),
-                    modificationTime = Clock.System.now()
+                    modificationTime = Clock.System.now(),
+                    lastAutofillTime = Clock.System.now()
                 ),
                 highlight = highlight
             )

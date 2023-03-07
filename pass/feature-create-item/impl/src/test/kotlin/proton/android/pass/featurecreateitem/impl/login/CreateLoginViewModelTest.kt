@@ -136,7 +136,8 @@ internal class CreateLoginViewModelTest {
                                 note = TestEncryptionContext.decrypt(item.note),
                                 itemType = item.itemType,
                                 createTime = item.createTime,
-                                modificationTime = item.modificationTime
+                                modificationTime = item.modificationTime,
+                                lastAutofillTime = item.lastAutofillTime.value()
                             )
                         )
                     )

@@ -3,6 +3,7 @@ package proton.android.pass.featuretrash.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,6 +19,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
+import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -75,7 +77,7 @@ class TrashScreenViewModel @Inject constructor(
         TrashUiState(
             isLoading = isLoading,
             isRefreshing = refreshing,
-            items = items.toImmutableList()
+            items = persistentMapOf(GroupingKeys.NoGrouping to items.toImmutableList()),
         )
     }
         .stateIn(

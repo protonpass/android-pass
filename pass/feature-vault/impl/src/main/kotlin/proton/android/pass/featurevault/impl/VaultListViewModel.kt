@@ -54,12 +54,12 @@ class VaultListViewModel @Inject constructor(
     val shareUIState: StateFlow<VaultListUIState> = combine(
         observeShares(),
         observeActiveShare()
-    ) { shareResult, activeShareResult ->
-        if (shareResult is LoadingResult.Success && activeShareResult is LoadingResult.Success) {
+    ) { shareResult, activeShare ->
+        if (shareResult is LoadingResult.Success) {
             val shareList = decryptShares(shareResult.data)
             VaultListUIState(
                 list = shareList.toPersistentList(),
-                currentShare = activeShareResult.data
+                currentShare = activeShare.id
             )
 
         } else {

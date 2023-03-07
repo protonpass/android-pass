@@ -3,16 +3,14 @@ package proton.android.pass.featurehome.impl
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon
+import proton.android.pass.featurehome.impl.icon.ActiveVaultIcon
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun IdleHomeTopBar(
     modifier: Modifier = Modifier,
@@ -32,7 +30,7 @@ fun IdleHomeTopBar(
             TopBarTitleView(title = stringResource(id = title))
         },
         navigationIcon = {
-            HamburgerIcon(onClick = onDrawerIconClick)
+            ActiveVaultIcon(onClick = onDrawerIconClick)
         },
         actions = {
             IconButton(onClick = {

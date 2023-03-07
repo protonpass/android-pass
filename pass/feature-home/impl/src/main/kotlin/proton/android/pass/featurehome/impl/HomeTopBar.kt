@@ -8,9 +8,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
+import proton.android.pass.composecomponents.impl.topbar.icon.NavigationIcon
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
@@ -20,10 +23,10 @@ internal fun HomeTopBar(
     searchQuery: String,
     inSearchMode: Boolean,
     homeFilter: HomeItemTypeSelection,
+    drawerIcon: @Composable () -> Unit,
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
-    onStopSearching: () -> Unit,
-    onDrawerIconClick: () -> Unit
+    onStopSearching: () -> Unit
 ) {
     if (inSearchMode) {
         SearchTopBar(
@@ -39,8 +42,8 @@ internal fun HomeTopBar(
         IdleHomeTopBar(
             modifier = modifier,
             homeFilter = homeFilter,
-            startSearchMode = { onEnterSearch() },
-            onDrawerIconClick = onDrawerIconClick
+            drawerIcon = drawerIcon,
+            startSearchMode = { onEnterSearch() }
         )
     }
 }
@@ -60,7 +63,15 @@ fun HomeTopBarIdlePreview(
                 onSearchQueryChange = {},
                 onEnterSearch = {},
                 onStopSearching = {},
-                onDrawerIconClick = {}
+                drawerIcon = {
+                    NavigationIcon(onUpClick = {}) {
+                        VaultIcon(
+                            backgroundColor = PassPalette.Yellow16,
+                            iconColor = PassPalette.Yellow100,
+                            icon = me.proton.core.presentation.R.drawable.ic_proton_house
+                        )
+                    }
+                }
             )
         }
     }
@@ -81,7 +92,7 @@ fun HomeTopBarSearchPreview(
                 onSearchQueryChange = {},
                 onEnterSearch = {},
                 onStopSearching = {},
-                onDrawerIconClick = {}
+                drawerIcon = {}
             )
         }
     }

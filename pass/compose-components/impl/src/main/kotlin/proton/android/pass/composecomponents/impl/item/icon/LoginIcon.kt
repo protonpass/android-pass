@@ -21,6 +21,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.pass.domain.ItemType
+import proton.pass.domain.WebsiteUrl
 
 @Composable
 fun LoginIcon(
@@ -61,7 +62,7 @@ fun LoginIcon(
                 .clip(CircleShape)
                 .size(size.dp)
                 .background(ProtonTheme.colors.backgroundNorm),
-            model = website,
+            model = WebsiteUrl(website),
             contentDescription = null,
 
         ) {

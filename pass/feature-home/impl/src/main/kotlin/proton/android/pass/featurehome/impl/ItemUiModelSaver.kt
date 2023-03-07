@@ -18,6 +18,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val itemType = "item_type"
     val createTime = "create_time"
     val modificationTime = "modification_time"
+    val lastAutofillTime = "last_autofill_time"
     mapSaver(
         save = {
             if (it != null) {
@@ -28,7 +29,8 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     note to it.note,
                     itemType to Json.encodeToString(it.itemType),
                     createTime to it.createTime.toString(),
-                    modificationTime to it.modificationTime.toString()
+                    modificationTime to it.modificationTime.toString(),
+                    lastAutofillTime to it.lastAutofillTime?.toString(),
                 )
             } else {
                 emptyMap()
@@ -43,7 +45,8 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     note = values[note] as String,
                     itemType = Json.decodeFromString(values[itemType] as String),
                     createTime = (values[createTime] as String).let { Instant.parse(it) },
-                    modificationTime = (values[modificationTime] as String).let { Instant.parse(it) }
+                    modificationTime = (values[modificationTime] as String).let { Instant.parse(it) },
+                    lastAutofillTime = (values[modificationTime] as? String)?.let { Instant.parse(it) }
                 )
             } else {
                 null

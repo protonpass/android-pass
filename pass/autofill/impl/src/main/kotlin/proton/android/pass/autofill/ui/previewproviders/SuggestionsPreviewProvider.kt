@@ -30,6 +30,7 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<List<ItemUiModel>> {
                 primaryTotp = ""
             ),
             createTime = Clock.System.now(),
-            modificationTime = Clock.System.now()
+            modificationTime = Clock.System.now(),
+            lastAutofillTime = Clock.System.now(),
         )
 }

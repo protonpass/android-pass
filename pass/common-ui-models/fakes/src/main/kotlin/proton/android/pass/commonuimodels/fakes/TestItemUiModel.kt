@@ -1,6 +1,7 @@
-package proton.android.pass.presentation.components.model
+package proton.android.pass.commonuimodels.fakes
 
 import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -11,7 +12,10 @@ object TestItemUiModel {
     fun create(
         title: String = "item-title",
         note: String = "item-note",
-        itemType: ItemType = ItemType.Password
+        itemType: ItemType = ItemType.Password,
+        createTime: Instant = Clock.System.now(),
+        modificationTime: Instant = Clock.System.now(),
+        lastAutofillTime: Instant? = null
     ): ItemUiModel {
         return ItemUiModel(
             id = ItemId(id = "item-id"),
@@ -19,8 +23,9 @@ object TestItemUiModel {
             itemType = itemType,
             name = title,
             note = note,
-            createTime = Clock.System.now(),
-            modificationTime = Clock.System.now()
+            createTime = createTime,
+            modificationTime = modificationTime,
+            lastAutofillTime = lastAutofillTime,
         )
     }
 }

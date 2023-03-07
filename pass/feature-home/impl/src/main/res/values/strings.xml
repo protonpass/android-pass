@@ -10,8 +10,8 @@
     <string name="placeholder_item_search">Login, alias or note</string>
     <string name="sort_by_title_asc">Title (A-Z)</string>
     <string name="sort_by_title_desc">Title (Z-A)</string>
-    <string name="sort_by_creation_asc">Newest to oldest</string>
-    <string name="sort_by_creation_desc">Oldest to newest</string>
+    <string name="sort_by_creation_asc">Oldest to newest</string>
+    <string name="sort_by_creation_desc">Newest to oldest</string>
     <string name="sort_by_modification_date">Most Recent</string>
     <string name="empty_list_home_subtitle">Or use the Proton Pass web extension to import items from another password manager. </string>
 

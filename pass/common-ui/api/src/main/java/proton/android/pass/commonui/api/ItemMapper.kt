@@ -16,7 +16,8 @@ fun Item.toUiModel(context: EncryptionContext): ItemUiModel =
         note = context.decrypt(note),
         itemType = itemType,
         createTime = createTime,
-        modificationTime = modificationTime
+        modificationTime = modificationTime,
+        lastAutofillTime = lastAutofillTime.value(),
     )
 
 fun Item.itemName(context: EncryptionContext): String =

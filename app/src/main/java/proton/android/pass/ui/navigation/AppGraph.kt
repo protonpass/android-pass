@@ -38,7 +38,9 @@ import proton.android.pass.featureonboarding.impl.OnBoarding
 import proton.android.pass.featureonboarding.impl.onBoardingGraph
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.profileGraph
+import proton.android.pass.featuresettings.impl.SignOutDialog
 import proton.android.pass.featuresettings.impl.settingsGraph
+import proton.android.pass.featuresettings.impl.signOutDialogGraph
 import proton.android.pass.featuretrash.impl.trashGraph
 import proton.android.pass.featurevault.impl.CreateVault
 import proton.android.pass.featurevault.impl.vaultGraph
@@ -58,7 +60,7 @@ fun NavGraphBuilder.appGraph(
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
     onDrawerIconClick: () -> Unit,
     finishActivity: () -> Unit,
-    onLogoutClick: () -> Unit
+    onLogout: () -> Unit
 ) {
     homeGraph(
         navigationDrawer = navigationDrawer,
@@ -104,6 +106,10 @@ fun NavGraphBuilder.appGraph(
             )
         }
     )
+    signOutDialogGraph(
+        onConfirm = onLogout,
+        onDismiss = { appNavigator.onBackClick() }
+    )
     generatePasswordBottomsheetGraph(
         onDismiss = { appNavigator.onBackClick() }
     )
@@ -114,11 +120,11 @@ fun NavGraphBuilder.appGraph(
     profileGraph(
         onListClick = { appNavigator.navigate(Home) },
         onCreateItemClick = { appNavigator.navigate(CreateItemBottomsheet) },
-        onLogoutClick = onLogoutClick
+        onLogoutClick = { appNavigator.navigate(SignOutDialog) }
     )
     settingsGraph(
         navigationDrawer = navigationDrawer,
-        onLogoutClick = onLogoutClick
+        onLogoutClick = { appNavigator.navigate(SignOutDialog) }
     )
     createLoginGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
@@ -215,6 +221,10 @@ fun NavGraphBuilder.appGraph(
     vaultGraph(
         onNavigateToCreateVault = { appNavigator.navigate(CreateVault) },
         onNavigateUp = { appNavigator.onBackClick() }
+    )
+    signOutDialogGraph(
+        onDismiss = { appNavigator.onBackClick() },
+        onConfirm = onLogout
     )
 }
 

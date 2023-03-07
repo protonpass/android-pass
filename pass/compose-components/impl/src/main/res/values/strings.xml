@@ -68,4 +68,14 @@
     <string name="bottom_bar_add_item_icon_content_description">Add item icon</string>
     <string name="bottom_bar_profile_icon_content_description">Profile icon</string>
 
+    <!-- List group by most recents -->
+    <string name="most_recent_today">Today</string>
+    <string name="most_recent_yesterday">Yesterday</string>
+    <string name="most_recent_this_week">This week</string>
+    <string name="most_recent_last_two_weeks">Last two weeks</string>
+    <string name="most_recent_last_30_days">Last 30 days</string>
+    <string name="most_recent_last_60_days">Last 60 days</string>
+    <string name="most_recent_last_90_days">Last 90 days</string>
+    <string name="most_recent_within_the_last_year">Within the last year</string>
+    <string name="most_recent_older">Older</string>
 </resources>

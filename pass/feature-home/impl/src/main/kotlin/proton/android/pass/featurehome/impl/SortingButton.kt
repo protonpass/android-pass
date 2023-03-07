@@ -29,7 +29,7 @@ fun SortingButton(
     onSortingOptionsClick: () -> Unit
 ) {
     val text = when (sortingType) {
-        SortingType.ModificationDate -> stringResource(id = sortingType.titleId)
+        SortingType.MostRecent -> stringResource(id = sortingType.titleId)
         SortingType.TitleAsc -> stringResource(id = sortingType.titleId)
         SortingType.TitleDesc -> stringResource(id = sortingType.titleId)
         SortingType.CreationAsc -> stringResource(id = sortingType.titleId)

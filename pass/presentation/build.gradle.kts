@@ -131,6 +131,7 @@ dependencies {
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.autofill.fakes)
     testImplementation(projects.pass.biometry.fakes)
+    testImplementation(projects.pass.commonUiModels.fakes)
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
 }

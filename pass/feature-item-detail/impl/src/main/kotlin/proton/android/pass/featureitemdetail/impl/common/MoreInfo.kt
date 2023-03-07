@@ -32,6 +32,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toJavaLocalDateTime
+import kotlinx.datetime.toLocalDateTime
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -39,6 +43,8 @@ import proton.android.pass.commonui.api.DateFormatUtils
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featureitemdetail.impl.R
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Suppress("MagicNumber")
 @Composable
@@ -47,7 +53,11 @@ fun MoreInfo(
     moreInfoUiState: MoreInfoUiState,
     shouldShowMoreInfoInitially: Boolean = false
 ) {
-    Column(modifier = modifier.fillMaxWidth().padding(horizontal = 8.dp)) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 8.dp)
+    ) {
         var showMoreInfo by remember { mutableStateOf(shouldShowMoreInfoInitially) }
         var rotation by remember { mutableStateOf(0f) }
         val displayRotation by animateFloatAsState(targetValue = rotation)
@@ -76,7 +86,9 @@ fun MoreInfo(
             )
 
             Icon(
-                modifier = Modifier.size(16.dp).rotate(displayRotation),
+                modifier = Modifier
+                    .size(16.dp)
+                    .rotate(displayRotation),
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_down),
                 contentDescription = stringResource(R.string.more_info_icon),
                 tint = ProtonTheme.colors.iconWeak,
@@ -105,7 +117,7 @@ fun MoreInfo(
                     MoreInfoModifiedContent(moreInfoUiState = moreInfoUiState)
                     // Created
                     MoreInfoText(
-                        text = DateFormatUtils.formatInstantText(
+                        text = formatMoreInfoInstantText(
                             now = moreInfoUiState.now,
                             toFormat = moreInfoUiState.createdTime
                         )
@@ -145,7 +157,7 @@ private fun MoreInfoLastAutofilledContent(
     if (moreInfoUiState.lastAutofilled is Some) {
         MoreInfoText(
             modifier = modifier,
-            text = DateFormatUtils.formatInstantText(
+            text = formatMoreInfoInstantText(
                 now = moreInfoUiState.now,
                 toFormat = moreInfoUiState.lastAutofilled.value
             )
@@ -161,7 +173,7 @@ private fun ColumnScope.MoreInfoModifiedContent(
 ) {
     val modifiedTimes = moreInfoUiState.numRevisions - 1
     if (modifiedTimes > 0) {
-        val lastUpdateString = DateFormatUtils.formatInstantText(
+        val lastUpdateString = formatMoreInfoInstantText(
             now = moreInfoUiState.now,
             toFormat = moreInfoUiState.lastModified
         )
@@ -179,6 +191,60 @@ private fun ColumnScope.MoreInfoModifiedContent(
             text = stringResource(R.string.more_info_last_time_modified, lastUpdateString)
         )
     }
+}
+
+@Composable
+fun formatMoreInfoInstantText(
+    now: Instant,
+    toFormat: Instant,
+    locale: Locale = Locale.getDefault()
+): String =
+    when (
+        DateFormatUtils.getFormat(
+            now = now,
+            toFormat = toFormat,
+            timeZone = TimeZone.currentSystemDefault(),
+            acceptedFormats = listOf(
+                DateFormatUtils.Format.Date,
+                DateFormatUtils.Format.Yesterday,
+                DateFormatUtils.Format.DateOfSameYear,
+                DateFormatUtils.Format.Date
+            )
+        )
+    ) {
+        DateFormatUtils.Format.Date -> {
+            val pattern =
+                stringResource(R.string.date_full_date_format_with_year)
+            DateTimeFormatter.ofPattern(pattern)
+                .withLocale(locale)
+                .format(
+                    toFormat.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
+                )
+        }
+        DateFormatUtils.Format.DateOfSameYear -> {
+            val pattern =
+                stringResource(R.string.date_full_date_format)
+            DateTimeFormatter.ofPattern(pattern)
+                .withLocale(locale)
+                .format(
+                    toFormat.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
+                )
+        }
+        DateFormatUtils.Format.Today -> stringResource(
+            R.string.date_today,
+            extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
+        )
+        DateFormatUtils.Format.Yesterday -> stringResource(
+            R.string.date_yesterday,
+            extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
+        )
+        else -> throw IllegalStateException("Unexpected date format")
+    }
+
+private fun extractHour(instant: LocalDateTime): String {
+    val hour = instant.hour.toString().padStart(2, '0')
+    val minute = instant.minute.toString().padStart(2, '0')
+    return "$hour:$minute"
 }
 
 class ThemedMoreInfoPreviewProvider :

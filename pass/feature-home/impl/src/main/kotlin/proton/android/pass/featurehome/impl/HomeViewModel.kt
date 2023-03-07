@@ -4,7 +4,11 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -23,6 +27,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Clock
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
@@ -31,6 +36,12 @@ import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.GroupingKeys
+import proton.android.pass.commonui.api.ItemSorter.sortByCreationAsc
+import proton.android.pass.commonui.api.ItemSorter.sortByCreationDesc
+import proton.android.pass.commonui.api.ItemSorter.sortByMostRecent
+import proton.android.pass.commonui.api.ItemSorter.sortByTitleAsc
+import proton.android.pass.commonui.api.ItemSorter.sortByTitleDesc
 import proton.android.pass.commonui.api.ItemUiFilter
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -61,6 +72,7 @@ class HomeViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val applyPendingEvents: ApplyPendingEvents,
     private val encryptionContextProvider: EncryptionContextProvider,
+    clock: Clock,
     observeCurrentUser: ObserveCurrentUser,
     observeActiveItems: ObserveActiveItems
 ) : ViewModel() {
@@ -93,7 +105,7 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(IsRefreshingState.NotRefreshing)
 
     private val sortingTypeState: MutableStateFlow<SortingType> =
-        MutableStateFlow(SortingType.ModificationDate)
+        MutableStateFlow(SortingType.MostRecent)
 
     private val activeItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = vaultSelectionFlow
         .flatMapLatest { selectedVault ->
@@ -113,42 +125,55 @@ class HomeViewModel @Inject constructor(
                 .distinctUntilChanged()
         }
 
-    private val sortedListItemFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
-        activeItemUIModelFlow,
-        sortingTypeState
-    ) { result, sortingType ->
-        when (sortingType) {
-            SortingType.TitleAsc -> result.map { list -> list.sortByTitleAsc() }
-            SortingType.TitleDesc -> result.map { list -> list.sortByTitleDesc() }
-            SortingType.CreationAsc -> result.map { list -> list.sortByCreationAsc() }
-            SortingType.CreationDesc -> result.map { list -> list.sortByCreationDesc() }
-            SortingType.ModificationDate -> result.map { list -> list.sortByModificationTime() }
-        }
-    }
-        .distinctUntilChanged()
-
-    @OptIn(FlowPreview::class)
-    private val resultsFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
-        sortedListItemFlow,
-        searchQueryState.debounce(DEBOUNCE_TIMEOUT),
-        itemTypeSelectionFlow
-    ) { result, searchQuery, itemTypeSelection ->
-        isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
-        if (searchQuery.isNotBlank()) {
-            result.map { ItemUiFilter.filterByQuery(it, searchQuery) }
-        } else {
-            result.map { items ->
-                items.filter {
-                    when (itemTypeSelection) {
-                        HomeItemTypeSelection.AllItems -> true
-                        HomeItemTypeSelection.Aliases -> it.itemType is ItemType.Alias
-                        HomeItemTypeSelection.Logins -> it.itemType is ItemType.Login
-                        HomeItemTypeSelection.Notes -> it.itemType is ItemType.Note
-                    }
-                }
+    private val sortedListItemFlow: Flow<LoadingResult<Map<GroupingKeys, List<ItemUiModel>>>> =
+        combine(
+            activeItemUIModelFlow,
+            sortingTypeState
+        ) { result, sortingType ->
+            when (sortingType) {
+                SortingType.TitleAsc -> result.map { list -> list.sortByTitleAsc() }
+                SortingType.TitleDesc -> result.map { list -> list.sortByTitleDesc() }
+                SortingType.CreationAsc -> result.map { list -> list.sortByCreationAsc() }
+                SortingType.CreationDesc -> result.map { list -> list.sortByCreationDesc() }
+                SortingType.MostRecent -> result.map { list -> list.sortByMostRecent(clock.now()) }
             }
         }
-    }.flowOn(Dispatchers.Default)
+            .distinctUntilChanged()
+
+    @OptIn(FlowPreview::class)
+    private val resultsFlow: Flow<LoadingResult<ImmutableMap<GroupingKeys, ImmutableList<ItemUiModel>>>> =
+        combine(
+            sortedListItemFlow,
+            searchQueryState.debounce(DEBOUNCE_TIMEOUT),
+            itemTypeSelectionFlow
+        ) { result, searchQuery, itemTypeSelection ->
+            isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
+            if (searchQuery.isNotBlank()) {
+                result.map { grouped ->
+                    grouped.mapValues {
+                        ItemUiFilter.filterByQuery(it.value, searchQuery).toPersistentList()
+                    }
+                        .filterValues { it.isNotEmpty() }
+                        .toPersistentMap()
+                }
+            } else {
+                result.map { items ->
+                    items
+                        .mapValues {
+                            it.value.filter { item ->
+                                when (itemTypeSelection) {
+                                    HomeItemTypeSelection.AllItems -> true
+                                    HomeItemTypeSelection.Aliases -> item.itemType is ItemType.Alias
+                                    HomeItemTypeSelection.Logins -> item.itemType is ItemType.Login
+                                    HomeItemTypeSelection.Notes -> item.itemType is ItemType.Note
+                                }
+                            }.toPersistentList()
+                        }
+                        .filterValues { it.isNotEmpty() }
+                        .toPersistentMap()
+                }
+            }
+        }.flowOn(Dispatchers.Default)
 
     private data class SearchWrapper(
         val searchQuery: String,
@@ -166,12 +191,12 @@ class HomeViewModel @Inject constructor(
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val items = when (itemsResult) {
-            LoadingResult.Loading -> emptyList()
+            LoadingResult.Loading -> persistentMapOf()
             is LoadingResult.Success -> itemsResult.data
             is LoadingResult.Error -> {
                 PassLogger.e(TAG, itemsResult.exception, "Observe items error")
                 snackbarMessageRepository.emitSnackbarMessage(ObserveItemsError)
-                emptyList()
+                persistentMapOf()
             }
         }
 
@@ -184,7 +209,7 @@ class HomeViewModel @Inject constructor(
             homeListUiState = HomeListUiState(
                 isLoading = isLoading,
                 isRefreshing = refreshing,
-                items = items.toImmutableList(),
+                items = items,
                 selectedShare = selectedShare,
                 sortingType = sortingType
             ),
@@ -294,13 +319,6 @@ class HomeViewModel @Inject constructor(
     fun setVaultSelection(homeVaultSelection: HomeVaultSelection) {
         vaultSelectionFlow.update { homeVaultSelection }
     }
-
-    private fun List<ItemUiModel>.sortByTitleAsc() = sortedBy { it.name.lowercase() }
-    private fun List<ItemUiModel>.sortByTitleDesc() = sortedByDescending { it.name.lowercase() }
-    private fun List<ItemUiModel>.sortByCreationAsc() = sortedBy { it.createTime }
-    private fun List<ItemUiModel>.sortByCreationDesc() = sortedByDescending { it.createTime }
-    private fun List<ItemUiModel>.sortByModificationTime() =
-        sortedByDescending { it.modificationTime }
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

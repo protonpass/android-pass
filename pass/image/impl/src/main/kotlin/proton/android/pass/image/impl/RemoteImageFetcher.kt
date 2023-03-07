@@ -1,7 +1,6 @@
 package proton.android.pass.image.impl
 
 import android.content.Context
-import android.net.Uri
 import coil.ImageLoader
 import coil.decode.DataSource
 import coil.decode.ImageSource
@@ -21,6 +20,7 @@ import proton.android.pass.data.api.usecases.ImageResponseResult
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.image.impl.CacheUtils.cacheDir
 import proton.android.pass.log.api.PassLogger
+import proton.pass.domain.WebsiteUrl
 import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,8 +31,8 @@ class RemoteImageFetcherFactory @Inject constructor(
     private val requestImage: RequestImage,
     @ApplicationContext private val context: Context,
     private val clock: Clock
-) : Fetcher.Factory<Uri> {
-    override fun create(data: Uri, options: Options, imageLoader: ImageLoader): Fetcher =
+) : Fetcher.Factory<WebsiteUrl> {
+    override fun create(data: WebsiteUrl, options: Options, imageLoader: ImageLoader): Fetcher =
         RemoteImageFetcher(requestImage, context, clock, data)
 }
 
@@ -40,7 +40,7 @@ class RemoteImageFetcher(
     private val requestImage: RequestImage,
     private val context: Context,
     private val clock: Clock,
-    private val uri: Uri
+    private val webs: WebsiteUrl
 ) : Fetcher {
 
     override suspend fun fetch(): FetchResult? = withContext(Dispatchers.IO) {
@@ -147,10 +147,7 @@ class RemoteImageFetcher(
     }
 
     private fun getDomain(): String? {
-        val uriHost = uri.host
-        if (uriHost != null) return uriHost
-
-        return UrlSanitizer.getDomain(uri.toString()).fold(
+        return UrlSanitizer.getDomain(webs.url).fold(
             onSuccess = { it },
             onFailure = { null }
         )

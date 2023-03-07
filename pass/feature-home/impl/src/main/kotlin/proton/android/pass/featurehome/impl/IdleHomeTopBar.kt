@@ -9,14 +9,13 @@ import androidx.compose.ui.res.stringResource
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.featurehome.impl.icon.ActiveVaultIcon
 
 @Composable
 fun IdleHomeTopBar(
     modifier: Modifier = Modifier,
     homeFilter: HomeItemTypeSelection,
-    startSearchMode: () -> Unit,
-    onDrawerIconClick: () -> Unit
+    drawerIcon: @Composable () -> Unit,
+    startSearchMode: () -> Unit
 ) {
     val title = when (homeFilter) {
         HomeItemTypeSelection.AllItems -> R.string.title_all_items
@@ -30,7 +29,7 @@ fun IdleHomeTopBar(
             TopBarTitleView(title = stringResource(id = title))
         },
         navigationIcon = {
-            ActiveVaultIcon(onClick = onDrawerIconClick)
+            drawerIcon()
         },
         actions = {
             IconButton(onClick = {

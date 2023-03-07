@@ -17,7 +17,7 @@ import proton.android.pass.biometry.ContextHolder
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
-    onDrawerIconClick: () -> Unit
+    onLogoutClick: () -> Unit
 ) {
     val viewModel: SettingsViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -26,7 +26,6 @@ fun SettingsScreen(
     SettingsContent(
         modifier = modifier,
         scaffoldState = scaffoldState,
-        onDrawerIconClick = onDrawerIconClick,
         state = state,
         onThemeChange = { viewModel.onThemePreferenceChange(it) },
         onFingerPrintLockChange = {
@@ -35,6 +34,7 @@ fun SettingsScreen(
         onToggleAutofillChange = { viewModel.onToggleAutofill(it) },
         onCopyToClipboardChange = { viewModel.onCopyToClipboardChange(it) },
         onForceSyncClick = { viewModel.onForceSync() },
-        onAppVersionClick = { viewModel.copyAppVersion(it) }
+        onAppVersionClick = { viewModel.copyAppVersion(it) },
+        onLogoutClick = onLogoutClick,
     )
 }

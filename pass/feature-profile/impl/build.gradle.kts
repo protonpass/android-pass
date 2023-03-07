@@ -39,6 +39,7 @@ dependencies {
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
 
+    implementation(projects.pass.featureSettings.impl)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.composeComponents.impl)
 }

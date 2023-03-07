@@ -15,7 +15,8 @@ data class SettingsUiState(
     val autofillStatus: AutofillSupportedStatus,
     val copyTotpToClipboard: CopyTotpToClipboard,
     val isLoadingState: IsLoadingState,
-    val appVersion: String
+    val appVersion: String,
+    val currentAccount: String
 ) {
     companion object {
         fun getInitialState(appVersion: String) = SettingsUiState(
@@ -24,7 +25,8 @@ data class SettingsUiState(
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
             copyTotpToClipboard = CopyTotpToClipboard.NotEnabled,
             isLoadingState = IsLoadingState.NotLoading,
-            appVersion = appVersion
+            appVersion = appVersion,
+            currentAccount = ""
         )
     }
 }

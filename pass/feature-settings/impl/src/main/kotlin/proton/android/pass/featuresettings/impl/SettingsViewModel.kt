@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getPrimaryAccount
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillSupportedStatus
@@ -51,6 +53,10 @@ class SettingsViewModel @Inject constructor(
     private val appConfig: AppConfig
 ) : ViewModel() {
 
+    private val currentAccountState = accountManager.getPrimaryAccount()
+        .filterNotNull()
+        .distinctUntilChanged()
+
     private val biometricLockState: Flow<BiometricLockState> = preferencesRepository
         .getBiometricLockState()
         .distinctUntilChanged()
@@ -64,6 +70,18 @@ class SettingsViewModel @Inject constructor(
             .getCopyTotpToClipboardEnabled()
             .distinctUntilChanged()
 
+    data class PreferencesState(
+        val biometricLock: BiometricLockState,
+        val theme: ThemePreference,
+        val copyTotpToClipboard: CopyTotpToClipboard
+    )
+
+    private val preferencesState: Flow<PreferencesState> = combine(
+        biometricLockState,
+        themeState,
+        copyTotpToClipboardState
+    ) { biometric, theme, totp -> PreferencesState(biometric, theme, totp) }
+
     private val autofillState: Flow<AutofillSupportedStatus> = autofillManager
         .getAutofillStatus()
         .distinctUntilChanged()
@@ -72,17 +90,16 @@ class SettingsViewModel @Inject constructor(
         MutableStateFlow(IsLoadingState.NotLoading)
 
     val state: StateFlow<SettingsUiState> = combine(
-        biometricLockState,
-        themeState,
+        currentAccountState,
+        preferencesState,
         autofillState,
-        copyTotpToClipboardState,
         isLoadingState
-    ) { biometricLock, theme, autofill, copyTotpToClipboardEnabled, loading ->
+    ) { account, preferences, autofill, loading ->
         val fingerprintSection = when (biometryManager.getBiometryStatus()) {
             BiometryStatus.NotEnrolled -> FingerprintSectionState.NoFingerprintRegistered
             BiometryStatus.NotAvailable -> FingerprintSectionState.NotAvailable
             BiometryStatus.CanAuthenticate -> {
-                val available = when (biometricLock) {
+                val available = when (preferences.biometricLock) {
                     BiometricLockState.Enabled -> IsButtonEnabled.Enabled
                     BiometricLockState.Disabled -> IsButtonEnabled.Disabled
                 }
@@ -91,11 +108,12 @@ class SettingsViewModel @Inject constructor(
         }
         SettingsUiState(
             fingerprintSection = fingerprintSection,
-            themePreference = theme,
+            themePreference = preferences.theme,
             autofillStatus = autofill,
-            copyTotpToClipboard = copyTotpToClipboardEnabled,
+            copyTotpToClipboard = preferences.copyTotpToClipboard,
             isLoadingState = loading,
-            appVersion = appConfig.versionName
+            appVersion = appConfig.versionName,
+            currentAccount = account.email ?: account.username
         )
     }.stateIn(
         scope = viewModelScope,

@@ -40,6 +40,10 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.DateFormatUtils
+import proton.android.pass.commonui.api.DateFormatUtils.Format.Date
+import proton.android.pass.commonui.api.DateFormatUtils.Format.DateOfSameYear
+import proton.android.pass.commonui.api.DateFormatUtils.Format.Today
+import proton.android.pass.commonui.api.DateFormatUtils.Format.Yesterday
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.featureitemdetail.impl.R
@@ -204,15 +208,10 @@ fun formatMoreInfoInstantText(
             now = now,
             toFormat = toFormat,
             timeZone = TimeZone.currentSystemDefault(),
-            acceptedFormats = listOf(
-                DateFormatUtils.Format.Date,
-                DateFormatUtils.Format.Yesterday,
-                DateFormatUtils.Format.DateOfSameYear,
-                DateFormatUtils.Format.Date
-            )
+            acceptedFormats = listOf(Today, Yesterday, DateOfSameYear, Date)
         )
     ) {
-        DateFormatUtils.Format.Date -> {
+        Date -> {
             val pattern =
                 stringResource(R.string.date_full_date_format_with_year)
             DateTimeFormatter.ofPattern(pattern)
@@ -221,7 +220,7 @@ fun formatMoreInfoInstantText(
                     toFormat.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
                 )
         }
-        DateFormatUtils.Format.DateOfSameYear -> {
+        DateOfSameYear -> {
             val pattern =
                 stringResource(R.string.date_full_date_format)
             DateTimeFormatter.ofPattern(pattern)
@@ -230,11 +229,11 @@ fun formatMoreInfoInstantText(
                     toFormat.toLocalDateTime(TimeZone.currentSystemDefault()).toJavaLocalDateTime()
                 )
         }
-        DateFormatUtils.Format.Today -> stringResource(
+        Today -> stringResource(
             R.string.date_today,
             extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
         )
-        DateFormatUtils.Format.Yesterday -> stringResource(
+        Yesterday -> stringResource(
             R.string.date_yesterday,
             extractHour(toFormat.toLocalDateTime(TimeZone.currentSystemDefault()))
         )

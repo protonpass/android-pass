@@ -10,7 +10,6 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import kotlinx.coroutines.launch
@@ -18,12 +17,11 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.loading.LoadingDialog
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.composecomponents.impl.topbar.icon.HamburgerIcon
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.preferences.ThemePreference
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SettingsContent(
     modifier: Modifier = Modifier,
@@ -31,11 +29,11 @@ fun SettingsContent(
     state: SettingsUiState,
     onThemeChange: (ThemePreference) -> Unit,
     onFingerPrintLockChange: (IsButtonEnabled) -> Unit,
-    onDrawerIconClick: () -> Unit,
     onToggleAutofillChange: (Boolean) -> Unit,
     onCopyToClipboardChange: (Boolean) -> Unit,
     onForceSyncClick: () -> Unit,
-    onAppVersionClick: (String) -> Unit
+    onAppVersionClick: (String) -> Unit,
+    onLogoutClick: () -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
@@ -67,11 +65,6 @@ fun SettingsContent(
                         TopBarTitleView(
                             title = stringResource(id = R.string.title_settings)
                         )
-                    },
-                    navigationIcon = {
-                        HamburgerIcon(
-                            onClick = onDrawerIconClick
-                        )
                     }
                 )
             }
@@ -87,7 +80,8 @@ fun SettingsContent(
                 onToggleAutofillChange = onToggleAutofillChange,
                 onCopyToClipboardChange = onCopyToClipboardChange,
                 onForceSyncClick = onForceSyncClick,
-                onAppVersionClick = onAppVersionClick
+                onAppVersionClick = onAppVersionClick,
+                onLogoutClick = onLogoutClick
             )
         }
     }

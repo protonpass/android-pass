@@ -1,6 +1,5 @@
 package proton.android.pass.presentation.navigation.drawer
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,7 +16,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.pass.presentation.R
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
@@ -35,9 +34,7 @@ fun NavigationDrawerVaultRow(
     modifier: Modifier = Modifier,
     name: String,
     itemCount: Long,
-    @DrawableRes icon: Int,
-    iconBackgroundColor: Color,
-    iconColor: Color,
+    icon: @Composable () -> Unit,
     isShared: Boolean,
     isSelected: Boolean,
     showMenuIcon: Boolean,
@@ -52,11 +49,7 @@ fun NavigationDrawerVaultRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        VaultIcon(
-            backgroundColor = iconBackgroundColor,
-            icon = icon,
-            iconColor = iconColor
-        )
+        icon()
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -121,9 +114,13 @@ fun NavigationDrawerVaultRowPreview(
             NavigationDrawerVaultRow(
                 name = "test vault",
                 itemCount = 123,
-                icon = me.proton.core.presentation.R.drawable.ic_proton_house,
-                iconColor = Color(0xFFF7D775),
-                iconBackgroundColor = Color(0x10F7D775),
+                icon = {
+                    VaultIcon(
+                        icon = me.proton.core.presentation.R.drawable.ic_proton_house,
+                        iconColor = PassPalette.Yellow100,
+                        backgroundColor = PassPalette.Yellow16,
+                    )
+                },
                 isSelected = input.second.isSelected,
                 isShared = input.second.isShared,
                 showMenuIcon = input.second.showMenuIcon,

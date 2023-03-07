@@ -8,15 +8,16 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.pass.presentation.R
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
+import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
+import proton.android.pass.composecomponents.impl.icon.VaultIcon
 
-@Suppress("MagicNumber")
 @Composable
 fun NavigationDrawerVaultSection(
     modifier: Modifier = Modifier,
@@ -26,7 +27,9 @@ fun NavigationDrawerVaultSection(
     onCloseDrawer: () -> Unit = {},
 ) {
     LazyColumn(
-        modifier = modifier.fillMaxHeight().padding(horizontal = 16.dp),
+        modifier = modifier
+            .fillMaxHeight()
+            .padding(horizontal = 16.dp),
     ) {
         item {
             Text(
@@ -40,9 +43,13 @@ fun NavigationDrawerVaultSection(
             NavigationDrawerVaultRow(
                 name = share.name,
                 itemCount = share.activeItemCount,
-                icon = me.proton.core.presentation.R.drawable.ic_proton_house,
-                iconColor = Color(0xFFF7D775),
-                iconBackgroundColor = Color(0x10F7D775),
+                icon = {
+                    VaultIcon(
+                        backgroundColor = PassPalette.Yellow16,
+                        icon = me.proton.core.presentation.R.drawable.ic_proton_house,
+                        iconColor = PassPalette.Yellow100
+                    )
+                },
                 isShared = false,
                 isSelected = drawerUiState.selectedSection == NavigationDrawerSection.AllItems(share.id),
                 showMenuIcon = true,
@@ -58,9 +65,9 @@ fun NavigationDrawerVaultSection(
             NavigationDrawerVaultRow(
                 name = stringResource(R.string.navigation_item_trash),
                 itemCount = drawerUiState.trashedItemCount,
-                icon = me.proton.core.presentation.R.drawable.ic_proton_trash,
-                iconBackgroundColor = PassTheme.colors.textDisabled,
-                iconColor = PassTheme.colors.textWeak,
+                icon = {
+                    TrashVaultIcon()
+                },
                 isSelected = drawerUiState.selectedSection == NavigationDrawerSection.Trash,
                 isShared = false,
                 showMenuIcon = false,

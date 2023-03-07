@@ -18,7 +18,8 @@ fun Settings(
     onToggleAutofillChange: (Boolean) -> Unit,
     onCopyToClipboardChange: (Boolean) -> Unit,
     onForceSyncClick: () -> Unit,
-    onAppVersionClick: (String) -> Unit
+    onAppVersionClick: (String) -> Unit,
+    onLogoutClick: () -> Unit
 ) {
     ProtonSettingsList(modifier = modifier) {
         if (state.autofillStatus is AutofillSupportedStatus.Supported) {
@@ -67,6 +68,13 @@ fun Settings(
                 appVersion = state.appVersion,
                 onForceSyncClick = onForceSyncClick,
                 onAppVersionClick = onAppVersionClick
+            )
+            Divider(modifier = Modifier.fillMaxWidth())
+        }
+        item {
+            AccountSection(
+                currentAccount = state.currentAccount,
+                onLogoutClick = onLogoutClick
             )
         }
     }

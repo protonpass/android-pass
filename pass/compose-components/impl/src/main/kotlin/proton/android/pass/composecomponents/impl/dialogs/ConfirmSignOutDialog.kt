@@ -6,14 +6,16 @@ import proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun ConfirmSignOutDialog(
-    state: Boolean?,
+    show: Boolean,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ) {
+    if (!show) return
+
     ConfirmDialog(
         title = stringResource(R.string.alert_confirm_sign_out_title),
         message = stringResource(R.string.alert_confirm_sign_out_message),
-        state = state,
+        state = show,
         onDismiss = onDismiss,
         onConfirm = { onConfirm() }
     )

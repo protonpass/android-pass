@@ -37,7 +37,6 @@ androidComponents {
 
 dependencies {
     implementation(projects.pass.autofill.impl)
-    implementation(projects.pass.presentation)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.featureAuth.impl)

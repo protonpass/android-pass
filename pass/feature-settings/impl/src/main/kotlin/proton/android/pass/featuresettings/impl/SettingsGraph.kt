@@ -11,12 +11,14 @@ object Settings : NavItem(baseRoute = "settings", isTopLevel = true)
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.settingsGraph(
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
+    onReportProblemClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
     composable(Settings) {
         navigationDrawer {
             SettingsScreen(
-                onLogoutClick = onLogoutClick
+                onLogoutClick = onLogoutClick,
+                onReportProblemClick = onReportProblemClick
             )
         }
     }

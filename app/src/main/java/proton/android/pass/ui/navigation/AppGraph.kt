@@ -2,7 +2,6 @@ package proton.android.pass.ui.navigation
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featureauth.impl.Auth
@@ -28,9 +27,7 @@ import proton.android.pass.featurecreateitem.impl.totp.PhotoPickerTotp
 import proton.android.pass.featurecreateitem.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featurecreateitem.impl.totp.createTotpGraph
 import proton.android.pass.featurehome.impl.Home
-import proton.android.pass.featurehome.impl.HomeItemTypeSelection
 import proton.android.pass.featurehome.impl.HomeScreenNavigation
-import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.featurehome.impl.homeGraph
 import proton.android.pass.featureitemdetail.impl.ViewItem
 import proton.android.pass.featureitemdetail.impl.itemDetailGraph
@@ -41,6 +38,7 @@ import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.featuresettings.impl.SignOutDialog
 import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featuresettings.impl.signOutDialogGraph
+import proton.android.pass.featuretrash.impl.Trash
 import proton.android.pass.featuretrash.impl.trashGraph
 import proton.android.pass.featurevault.impl.CreateVault
 import proton.android.pass.featurevault.impl.vaultGraph
@@ -55,26 +53,19 @@ import proton.pass.domain.ShareId
 @Suppress("LongParameterList", "LongMethod", "ComplexMethod")
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
-    homeItemTypeSelection: HomeItemTypeSelection,
-    homeVaultSelection: HomeVaultSelection,
-    navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
-    onDrawerIconClick: () -> Unit,
     finishActivity: () -> Unit,
     onReportProblemClick: () -> Unit,
     onLogout: () -> Unit
 ) {
     homeGraph(
-        navigationDrawer = navigationDrawer,
         homeScreenNavigation = createHomeScreenNavigation(appNavigator),
-        onDrawerIconClick = onDrawerIconClick,
-        homeItemTypeSelection = homeItemTypeSelection,
-        homeVaultSelection = homeVaultSelection,
         onAddItemClick = { shareId ->
             appNavigator.navigate(
                 CreateItemBottomsheet,
                 CreateItemBottomsheet.createNavRoute(shareId)
             )
-        }
+        },
+        onTrashClick = { appNavigator.navigate(Trash) }
     )
     bottomsheetCreateItemGraph(
         onCreateLogin = { shareId ->
@@ -115,8 +106,7 @@ fun NavGraphBuilder.appGraph(
         onDismiss = { appNavigator.onBackClick() }
     )
     trashGraph(
-        navigationDrawer = navigationDrawer,
-        onDrawerIconClick = onDrawerIconClick
+        onDismiss = { appNavigator.onBackClick() }
     )
     profileGraph(
         onListClick = { appNavigator.navigate(Home) },
@@ -125,7 +115,6 @@ fun NavGraphBuilder.appGraph(
         onReportProblemClick = onReportProblemClick
     )
     settingsGraph(
-        navigationDrawer = navigationDrawer,
         onLogoutClick = { appNavigator.navigate(SignOutDialog) },
         onReportProblemClick = onReportProblemClick
     )

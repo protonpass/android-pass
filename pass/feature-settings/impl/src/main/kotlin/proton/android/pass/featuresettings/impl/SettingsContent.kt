@@ -33,6 +33,7 @@ fun SettingsContent(
     onCopyToClipboardChange: (Boolean) -> Unit,
     onForceSyncClick: () -> Unit,
     onAppVersionClick: (String) -> Unit,
+    onReportProblemClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(ModalBottomSheetValue.Hidden)
@@ -81,6 +82,7 @@ fun SettingsContent(
                 onCopyToClipboardChange = onCopyToClipboardChange,
                 onForceSyncClick = onForceSyncClick,
                 onAppVersionClick = onAppVersionClick,
+                onReportProblemClick = onReportProblemClick,
                 onLogoutClick = onLogoutClick
             )
         }

@@ -21,7 +21,8 @@ fun AppSection(
     modifier: Modifier = Modifier,
     appVersion: String,
     onForceSyncClick: () -> Unit,
-    onAppVersionClick: (String) -> Unit
+    onAppVersionClick: (String) -> Unit,
+    onReportProblemClick: () -> Unit
 ) {
     Column(modifier = modifier.padding(vertical = 12.dp)) {
         ProtonSettingsHeader(title = stringResource(R.string.settings_app_section_title))
@@ -32,6 +33,11 @@ fun AppSection(
         )
         TelemetrySettingToggleItem(divider = {})
         CrashReportSettingToggleItem(divider = {})
+        ProtonSettingsItem(
+            name = stringResource(R.string.settings_report_problem_title),
+            hint = stringResource(R.string.settings_report_problem_description),
+            onClick = onReportProblemClick
+        )
         ProtonSettingsItem(
             name = stringResource(R.string.settings_app_version_title),
             hint = appVersion,
@@ -50,7 +56,8 @@ fun AppSectionPreview(
             AppSection(
                 appVersion = "1.2.3",
                 onForceSyncClick = {},
-                onAppVersionClick = {}
+                onAppVersionClick = {},
+                onReportProblemClick = {}
             )
         }
     }

@@ -14,7 +14,7 @@
 
     <string name="settings_copy_to_clipboard_section_title">Copy TOTP to clipboard</string>
     <string name="settings_copy_to_clipboard_name">Automatically copy TOTP code</string>
-    <string name="settings_copy_to_clipboard_hint">When autofilling a password we will copy the TOTP code if present</string>
+    <string name="settings_copy_to_clipboard_hint">When autofilling a password we will copy the TOTP code if present.</string>
 
     <string name="settings_app_section_title">App</string>
 
@@ -32,6 +32,8 @@
     <string name="settings_force_sync_hint">Download all your items again to make sure you are in sync.</string>
     <string name="settings_force_sync_success">Your items are now in sync</string>
     <string name="settings_force_sync_error">Error performing sync</string>
+    <string name="settings_report_problem_title">Report a problem</string>
+    <string name="settings_report_problem_description">Did you experience a problem? Please tell us about it</string>
 
 
     <string name="settings_error_biometry_failed_to_start">Could not start the biometric authentication</string>

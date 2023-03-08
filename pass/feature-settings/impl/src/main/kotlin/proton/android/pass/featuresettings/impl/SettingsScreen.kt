@@ -17,6 +17,7 @@ import proton.android.pass.biometry.ContextHolder
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
+    onReportProblemClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
     val viewModel: SettingsViewModel = hiltViewModel()
@@ -35,6 +36,7 @@ fun SettingsScreen(
         onCopyToClipboardChange = { viewModel.onCopyToClipboardChange(it) },
         onForceSyncClick = { viewModel.onForceSync() },
         onAppVersionClick = { viewModel.copyAppVersion(it) },
+        onReportProblemClick = onReportProblemClick,
         onLogoutClick = onLogoutClick,
     )
 }

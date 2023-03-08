@@ -60,6 +60,7 @@ fun NavGraphBuilder.appGraph(
     navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
     onDrawerIconClick: () -> Unit,
     finishActivity: () -> Unit,
+    onReportProblemClick: () -> Unit,
     onLogout: () -> Unit
 ) {
     homeGraph(
@@ -120,11 +121,13 @@ fun NavGraphBuilder.appGraph(
     profileGraph(
         onListClick = { appNavigator.navigate(Home) },
         onCreateItemClick = { appNavigator.navigate(CreateItemBottomsheet) },
-        onLogoutClick = { appNavigator.navigate(SignOutDialog) }
+        onLogoutClick = { appNavigator.navigate(SignOutDialog) },
+        onReportProblemClick = onReportProblemClick
     )
     settingsGraph(
         navigationDrawer = navigationDrawer,
-        onLogoutClick = { appNavigator.navigate(SignOutDialog) }
+        onLogoutClick = { appNavigator.navigate(SignOutDialog) },
+        onReportProblemClick = onReportProblemClick
     )
     createLoginGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },

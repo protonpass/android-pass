@@ -18,6 +18,7 @@ object Profile : NavItem(baseRoute = "profile", isTopLevel = true)
 fun NavGraphBuilder.profileGraph(
     onListClick: () -> Unit,
     onCreateItemClick: () -> Unit,
+    onReportProblemClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
     composable(Profile) {
@@ -34,7 +35,8 @@ fun NavGraphBuilder.profileGraph(
         ) { padding ->
             SettingsScreen(
                 modifier = Modifier.padding(padding),
-                onLogoutClick = onLogoutClick
+                onLogoutClick = onLogoutClick,
+                onReportProblemClick = onReportProblemClick
             )
         }
     }

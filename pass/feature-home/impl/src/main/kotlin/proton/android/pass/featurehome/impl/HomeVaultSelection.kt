@@ -6,5 +6,6 @@ import proton.pass.domain.ShareId
 @Stable
 sealed class HomeVaultSelection {
     object AllVaults : HomeVaultSelection()
+    object Trash : HomeVaultSelection()
     data class Vault(val shareId: ShareId) : HomeVaultSelection()
 }

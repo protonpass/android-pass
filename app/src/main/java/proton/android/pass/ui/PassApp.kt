@@ -15,7 +15,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.preferences.ThemePreference
-import proton.android.pass.presentation.navigation.CoreNavigation
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -46,7 +45,6 @@ fun PassApp(
                     .imePadding(),
                 appUiState = appUiState,
                 coreNavigation = coreNavigation,
-                onDrawerSectionChanged = { appViewModel.onDrawerSectionChanged(it) },
                 onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
                 finishActivity = finishActivity
             )

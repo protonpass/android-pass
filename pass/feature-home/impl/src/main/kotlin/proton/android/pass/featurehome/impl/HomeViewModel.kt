@@ -112,6 +112,7 @@ class HomeViewModel @Inject constructor(
             val shareSelection = when (selectedVault) {
                 HomeVaultSelection.AllVaults -> ShareSelection.AllShares
                 is HomeVaultSelection.Vault -> ShareSelection.Share(selectedVault.shareId)
+                HomeVaultSelection.Trash -> ShareSelection.AllShares
             }
             observeActiveItems(shareSelection = shareSelection)
                 .asResultWithoutLoading()
@@ -203,6 +204,7 @@ class HomeViewModel @Inject constructor(
         val selectedShare = when (vaultSelection) {
             HomeVaultSelection.AllVaults -> None
             is HomeVaultSelection.Vault -> vaultSelection.shareId.toOption()
+            HomeVaultSelection.Trash -> None
         }
 
         HomeUiState(

@@ -17,7 +17,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.compose.component.ProtonCenteredProgress
 import proton.android.pass.BuildConfig
-import proton.android.pass.presentation.navigation.CoreNavigation
 import proton.android.pass.ui.launcher.LauncherViewModel
 import proton.android.pass.ui.launcher.LauncherViewModel.State.AccountNeeded
 import proton.android.pass.ui.launcher.LauncherViewModel.State.PrimaryExist

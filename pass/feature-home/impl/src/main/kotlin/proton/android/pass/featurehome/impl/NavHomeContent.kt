@@ -11,12 +11,9 @@ import proton.pass.domain.ShareId
 @Composable
 fun NavHomeContent(
     state: NavHomeUiState,
-    navigationDrawer: @Composable (@Composable () -> Unit) -> Unit,
     homeScreenNavigation: HomeScreenNavigation,
-    homeItemTypeSelection: HomeItemTypeSelection,
-    homeVaultSelection: HomeVaultSelection,
-    onDrawerIconClick: () -> Unit,
-    onAddItemClick: (Option<ShareId>) -> Unit
+    onAddItemClick: (Option<ShareId>) -> Unit,
+    onTrashClick: () -> Unit
 ) {
     when {
         state.shouldAuthenticate is Some && state.shouldAuthenticate.value -> {
@@ -30,15 +27,11 @@ fun NavHomeContent(
             }
         }
         state.hasCompletedOnBoarding is Some && state.shouldAuthenticate is Some -> {
-            navigationDrawer {
-                HomeScreen(
-                    homeScreenNavigation = homeScreenNavigation,
-                    homeItemTypeSelection = homeItemTypeSelection,
-                    homeVaultSelection = homeVaultSelection,
-                    onDrawerIconClick = onDrawerIconClick,
-                    onAddItemClick = onAddItemClick
-                )
-            }
+            HomeScreen(
+                homeScreenNavigation = homeScreenNavigation,
+                onAddItemClick = onAddItemClick,
+                onTrashClick = onTrashClick
+            )
         }
     }
 }

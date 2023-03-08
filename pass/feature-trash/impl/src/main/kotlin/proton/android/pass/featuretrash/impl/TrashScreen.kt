@@ -21,7 +21,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 @Composable
 fun TrashScreen(
     modifier: Modifier = Modifier,
-    onDrawerIconClick: () -> Unit,
+    onDismiss: () -> Unit,
     viewModel: TrashScreenViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -84,7 +84,7 @@ fun TrashScreen(
                 setBottomSheet(TrashBottomSheetType.ItemActions)
                 scope.launch { bottomSheetState.show() }
             },
-            onDrawerIconClick = onDrawerIconClick,
+            onDrawerIconClick = onDismiss,
             onRefresh = { viewModel.onRefresh() }
         )
         ConfirmClearTrashDialog(

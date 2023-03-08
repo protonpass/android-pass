@@ -19,6 +19,7 @@ fun Settings(
     onCopyToClipboardChange: (Boolean) -> Unit,
     onForceSyncClick: () -> Unit,
     onAppVersionClick: (String) -> Unit,
+    onReportProblemClick: () -> Unit,
     onLogoutClick: () -> Unit
 ) {
     ProtonSettingsList(modifier = modifier) {
@@ -67,7 +68,8 @@ fun Settings(
             AppSection(
                 appVersion = state.appVersion,
                 onForceSyncClick = onForceSyncClick,
-                onAppVersionClick = onAppVersionClick
+                onAppVersionClick = onAppVersionClick,
+                onReportProblemClick = onReportProblemClick
             )
             Divider(modifier = Modifier.fillMaxWidth())
         }

@@ -6,7 +6,6 @@ import org.gradle.api.Project
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import org.gradle.api.tasks.options.Option
-import java.util.Locale
 
 open class ModuleGenTask : DefaultTask() {
 
@@ -92,7 +91,7 @@ open class ModuleGenTask : DefaultTask() {
 
     private fun detectConfigurations(input: String): List<Configuration> = input
         .split(",")
-        .map { conf -> Configuration.valueOf(conf.toUpperCase(Locale.ROOT)) }
+        .map { conf -> Configuration.valueOf(conf.uppercase()) }
 
     private fun Project.generateDirs(
         modulePath: List<String>,

@@ -65,7 +65,8 @@ fun PassNavHost(
             },
             onDrawerIconClick = { coroutineScope.launch { drawerState.open() } },
             finishActivity = finishActivity,
-            onLogout = { coreNavigation.onRemove(null) }
+            onLogout = { coreNavigation.onRemove(null) },
+            onReportProblemClick = { coreNavigation.onReport() }
         )
     }
 

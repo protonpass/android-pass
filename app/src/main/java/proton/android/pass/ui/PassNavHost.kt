@@ -3,7 +3,6 @@ package proton.android.pass.ui
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -22,10 +21,9 @@ fun PassNavHost(
     appNavigator: AppNavigator,
     onReportProblemClick: () -> Unit,
     onLogout: () -> Unit,
-    dismissBottomSheet: suspend () -> Unit,
+    dismissBottomSheet: () -> Unit,
     finishActivity: () -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
     AnimatedNavHost(
         modifier = modifier,
         navController = appNavigator.navController,
@@ -36,8 +34,7 @@ fun PassNavHost(
             finishActivity = finishActivity,
             onReportProblemClick = onReportProblemClick,
             dismissBottomSheet = dismissBottomSheet,
-            onLogout = onLogout,
-            coroutineScope = scope
+            onLogout = onLogout
         )
     }
 }

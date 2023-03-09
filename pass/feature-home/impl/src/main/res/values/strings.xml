@@ -53,4 +53,10 @@
     <string name="vault_drawer_item_trash">Trash</string>
     <string name="vault_drawer_all_vaults">All vaults</string>
 
+    <string name="item_list_header_all_search_results">All</string>
+    <plurals name="item_list_header_results">
+        <item quantity="one">result</item>
+        <item quantity="other">results</item>
+    </plurals>
+
 </resources>

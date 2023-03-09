@@ -12,6 +12,8 @@ import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.impl.usecases.OpenItemImpl
 import proton.pass.domain.ItemType
 import proton.pass.domain.Share
+import proton.pass.domain.ShareColor
+import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermission
 import proton.pass.domain.SharePermissionFlag
@@ -66,6 +68,8 @@ class OpenItemImplTest {
             content = None,
             expirationTime = null,
             createTime = Date(1664195804),
+            color = ShareColor.Color1,
+            icon = ShareIcon.Icon1
         )
     }
 

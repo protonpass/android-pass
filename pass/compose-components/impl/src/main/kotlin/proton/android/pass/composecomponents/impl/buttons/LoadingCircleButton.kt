@@ -30,13 +30,14 @@ fun LoadingCircleButton(
     leadingIcon: (@Composable () -> Unit)? = null,
     color: Color,
     isLoading: Boolean,
+    buttonEnabled: Boolean = true,
     onClick: () -> Unit
 ) {
     Row(
         modifier = modifier
             .height(IntrinsicSize.Min)
             .clip(CircleShape)
-            .applyIf(condition = !isLoading, ifTrue = { clickable { onClick() } })
+            .applyIf(condition = !isLoading && buttonEnabled, ifTrue = { clickable { onClick() } })
             .background(color)
     ) {
         AnimatedContent(modifier = Modifier.padding(16.dp, 10.dp), targetState = isLoading) {

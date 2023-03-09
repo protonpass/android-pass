@@ -13,12 +13,16 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.pass.domain.ShareColor
+import proton.pass.domain.ShareIcon
 
 @Composable
 fun TitleVaultSelectionSection(
     modifier: Modifier = Modifier,
     showVaultSelector: Boolean,
     vaultName: String?,
+    vaultColor: ShareColor?,
+    vaultIcon: ShareIcon?,
     titleValue: String,
     onTitleRequiredError: Boolean,
     enabled: Boolean = true,
@@ -31,6 +35,8 @@ fun TitleVaultSelectionSection(
         ) {
             VaultSelector(
                 vaultName = vaultName ?: "",
+                color = vaultColor ?: ShareColor.Color1,
+                icon = vaultIcon ?: ShareIcon.Icon1,
                 onVaultClicked = onVaultClicked
             )
             Divider()
@@ -69,7 +75,9 @@ fun TitleVaultSelectionSectionPreview(
                 enabled = true,
                 onTitleChanged = {},
                 onTitleRequiredError = false,
-                onVaultClicked = {}
+                onVaultClicked = {},
+                vaultColor = ShareColor.Color1,
+                vaultIcon = ShareIcon.Icon1
             )
         }
     }

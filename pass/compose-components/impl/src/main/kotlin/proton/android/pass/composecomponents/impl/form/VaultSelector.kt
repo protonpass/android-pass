@@ -11,20 +11,26 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.extension.toBackgroundColor
+import proton.android.pass.composecomponents.impl.extension.toIconColor
+import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
+import proton.pass.domain.ShareColor
+import proton.pass.domain.ShareIcon
 
 @Suppress("MagicNumber")
 @Composable
 fun VaultSelector(
     modifier: Modifier = Modifier,
     vaultName: String,
+    color: ShareColor,
+    icon: ShareIcon,
     onVaultClicked: () -> Unit
 ) {
     Row(
@@ -36,9 +42,9 @@ fun VaultSelector(
         verticalAlignment = Alignment.CenterVertically
     ) {
         VaultIcon(
-            iconColor = Color(0xFFF7D775),
-            backgroundColor = Color(0x10F7D775),
-            icon = me.proton.core.presentation.R.drawable.ic_proton_house,
+            iconColor = color.toIconColor(),
+            backgroundColor = color.toBackgroundColor(),
+            icon = icon.toResource(),
         )
         Column(
             modifier = Modifier.weight(1f)

@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.data.api.usecases.ObserveActiveShare
-import proton.pass.domain.ShareColor
-import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareProperties
 import javax.inject.Inject
 
@@ -19,11 +17,11 @@ class ActiveVaultViewModel @Inject constructor(
 ) : ViewModel() {
 
     val state: StateFlow<ActiveVaultState> = observeActiveShare()
-        .map {
+        .map { share ->
             ActiveVaultState(
                 properties = ShareProperties( // Change when we store the properties in the share
-                    shareColor = ShareColor.Purple,
-                    shareIcon = ShareIcon.Vault
+                    shareColor = share.color,
+                    shareIcon = share.icon
                 )
             )
         }

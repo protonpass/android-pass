@@ -15,12 +15,14 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.UpdateActiveShare
 import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -29,7 +31,8 @@ import javax.inject.Inject
 class VaultDrawerViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaultsWithItemCount,
-    itemRepository: ItemRepository
+    itemRepository: ItemRepository,
+    private val updateActiveShare: UpdateActiveShare
 ) : ViewModel() {
 
     private val currentUserFlow = observeCurrentUser().filterNotNull()
@@ -58,7 +61,9 @@ class VaultDrawerViewModel @Inject constructor(
                                 id = it.vault.shareId,
                                 name = it.vault.name,
                                 activeItemCount = it.activeItemCount,
-                                trashedItemCount = it.trashedItemCount
+                                trashedItemCount = it.trashedItemCount,
+                                color = it.vault.color,
+                                icon = it.vault.icon
                             )
                         }
 
@@ -108,8 +113,11 @@ class VaultDrawerViewModel @Inject constructor(
         )
     )
 
-    fun setVaultSelection(homeVaultSelection: HomeVaultSelection) {
+    fun setVaultSelection(homeVaultSelection: HomeVaultSelection) = viewModelScope.launch {
         vaultSelectionState.update { homeVaultSelection }
+        if (homeVaultSelection is HomeVaultSelection.Vault) {
+            updateActiveShare(homeVaultSelection.shareId)
+        }
     }
 
     companion object {

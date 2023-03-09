@@ -27,6 +27,9 @@ class TestShareRepository : ShareRepository {
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
     )
 
+    private var updateVaultResult: Result<Share> =
+        Result.failure(IllegalStateException("UpdateVaultResult not set"))
+
     fun setCreateVaultResult(result: LoadingResult<Share>) {
         createVaultResult = result
     }
@@ -45,6 +48,10 @@ class TestShareRepository : ShareRepository {
 
     fun emitObserveShares(value: LoadingResult<List<Share>>) {
         observeSharesFlow.tryEmit(value)
+    }
+
+    fun setUpdateVaultResult(value: Result<Share>) {
+        updateVaultResult = value
     }
 
     override suspend fun createVault(userId: SessionUserId, vault: NewVault): LoadingResult<Share> =
@@ -67,4 +74,10 @@ class TestShareRepository : ShareRepository {
 
     override suspend fun getById(userId: UserId, shareId: ShareId): LoadingResult<Share?> =
         getByIdResultFlow.first()
+
+    override suspend fun updateVault(userId: UserId, shareId: ShareId, vault: NewVault): Share =
+        updateVaultResult.fold(
+            onSuccess = { it },
+            onFailure = { throw it }
+        )
 }

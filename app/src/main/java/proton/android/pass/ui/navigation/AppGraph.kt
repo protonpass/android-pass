@@ -4,6 +4,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurecreateitem.impl.alias.CreateAlias
@@ -41,6 +43,8 @@ import proton.android.pass.featuresettings.impl.signOutDialogGraph
 import proton.android.pass.featuretrash.impl.Trash
 import proton.android.pass.featuretrash.impl.trashGraph
 import proton.android.pass.featurevault.impl.CreateVault
+import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultBottomSheet
+import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetCreateVaultGraph
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.pass.domain.ItemId
@@ -54,8 +58,10 @@ import proton.pass.domain.ShareId
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
     finishActivity: () -> Unit,
+    dismissBottomSheet: suspend () -> Unit,
     onReportProblemClick: () -> Unit,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    coroutineScope: CoroutineScope
 ) {
     homeGraph(
         homeScreenNavigation = createHomeScreenNavigation(appNavigator),
@@ -65,7 +71,8 @@ fun NavGraphBuilder.appGraph(
                 CreateItemBottomsheet.createNavRoute(shareId)
             )
         },
-        onTrashClick = { appNavigator.navigate(Trash) }
+        onTrashClick = { appNavigator.navigate(Trash) },
+        onCreateVaultClick = { appNavigator.navigate(CreateVaultBottomSheet) }
     )
     bottomsheetCreateItemGraph(
         onCreateLogin = { shareId ->
@@ -96,6 +103,14 @@ fun NavGraphBuilder.appGraph(
                 destination = GeneratePasswordBottomsheet,
                 backDestination = backDestination
             )
+        }
+    )
+    bottomSheetCreateVaultGraph(
+        onClose = {
+            coroutineScope.launch {
+                dismissBottomSheet()
+                appNavigator.onBackClick()
+            }
         }
     )
     signOutDialogGraph(

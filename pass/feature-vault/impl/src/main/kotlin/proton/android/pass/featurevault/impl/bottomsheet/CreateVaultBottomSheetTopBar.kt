@@ -23,16 +23,21 @@ import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.feature.vault.impl.R
+import proton.android.pass.log.api.PassLogger
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CreateVaultBottomSheetTopBar(
     modifier: Modifier = Modifier,
+    buttonText: String,
     isLoading: Boolean,
     isButtonEnabled: Boolean,
     onCloseClick: () -> Unit,
     onCreateClick: () -> Unit
 ) {
+
+    PassLogger.d("CarlosTest", "IsLoading: $isLoading")
+
     val keyboardController = LocalSoftwareKeyboardController.current
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -63,7 +68,7 @@ fun CreateVaultBottomSheetTopBar(
             buttonEnabled = isButtonEnabled,
             text = {
                 Text(
-                    text = stringResource(R.string.bottomsheet_create_vault_button),
+                    text = buttonText,
                     color = PassTheme.colors.textInverted,
                     style = PassTypography.body3Regular
                 )
@@ -84,6 +89,7 @@ fun CreateVaultBottomSheetTopBarPreview(
     PassTheme(isDark = input.first) {
         Surface {
             CreateVaultBottomSheetTopBar(
+                buttonText = stringResource(R.string.bottomsheet_create_vault_button),
                 isLoading = input.second,
                 isButtonEnabled = true,
                 onCloseClick = {},

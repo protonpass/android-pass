@@ -7,8 +7,6 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.withContext
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.User
@@ -29,6 +27,8 @@ import proton.android.pass.data.impl.crypto.ReencryptShareContents
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
+import proton.android.pass.data.impl.extensions.toDomain
+import proton.android.pass.data.impl.extensions.toProto
 import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.remote.RemoteShareDataSource
@@ -36,6 +36,8 @@ import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.responses.ShareResponse
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.Share
+import proton.pass.domain.ShareColor
+import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermission
 import proton.pass.domain.ShareType
@@ -52,7 +54,6 @@ class ShareRepositoryImpl @Inject constructor(
     private val userAddressRepository: UserAddressRepository,
     private val remoteShareDataSource: RemoteShareDataSource,
     private val localShareDataSource: LocalShareDataSource,
-    private val cryptoContext: CryptoContext,
     private val reencryptShareContents: ReencryptShareContents,
     private val createVault: CreateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -304,6 +305,16 @@ class ShareRepositoryImpl @Inject constructor(
             return LoadingResult.Error(e)
         }
 
+        val (color, icon) = if (entity.encryptedContent == null) {
+            ShareColor.Color1 to ShareIcon.Icon1
+        } else {
+            encryptionContextProvider.withEncryptionContext {
+                val decrypted = decrypt(entity.encryptedContent)
+                val asProto = VaultV1.Vault.parseFrom(decrypted)
+                asProto.display.color.toDomain() to asProto.display.icon.toDomain()
+            }
+        }
+
         val share = Share(
             id = ShareId(entity.id),
             shareType = shareType,
@@ -313,6 +324,8 @@ class ShareRepositoryImpl @Inject constructor(
             content = entity.encryptedContent.toOption(),
             expirationTime = entity.expirationTime?.let { Date(it) },
             createTime = Date(entity.createTime),
+            color = color,
+            icon = icon
         )
         return LoadingResult.Success(share)
     }
@@ -322,9 +335,18 @@ class ShareRepositoryImpl @Inject constructor(
         vault: NewVault,
         userAddress: UserAddress
     ): Pair<CreateVaultRequest, EncryptionKey> {
+        val (name, description) = encryptionContextProvider.withEncryptionContext {
+            decrypt(vault.name) to decrypt(vault.description)
+        }
+
+        val display = VaultV1.VaultDisplayPreferences.newBuilder()
+            .setColor(vault.color.toProto())
+            .setIcon(vault.icon.toProto())
+            .build()
         val metadata = VaultV1.Vault.newBuilder()
-            .setName(vault.name.decrypt(cryptoContext.keyStoreCrypto))
-            .setDescription(vault.description.decrypt(cryptoContext.keyStoreCrypto))
+            .setName(name)
+            .setDescription(description)
+            .setDisplay(display)
             .build()
         val (request, shareKey) = createVault.createVaultRequest(user, userAddress, metadata)
         return request.toRequest() to shareKey

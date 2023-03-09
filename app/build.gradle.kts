@@ -70,15 +70,14 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = appVersionCode
         versionName = appVersionName
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"
 
         buildConfigField("String", "SENTRY_DSN", sentryDSN.toBuildConfigValue())
         buildConfigField("String", "PROXY_TOKEN", proxyToken.toBuildConfigValue())
-        buildConfigField(
-            "String",
-            "HUMAN_VERIFICATION_HOST",
-            "verify.proton.me".toBuildConfigValue()
-        )
+    }
+
+    testOptions {
+        execution = "ANDROIDX_TEST_ORCHESTRATOR"
     }
 
     buildFeatures {
@@ -133,7 +132,6 @@ android {
             isDefault = true
             applicationIdSuffix = ".dev"
             versionNameSuffix = "-dev"
-            buildConfigField("String", "HUMAN_VERIFICATION_HOST", "\"verify.proton.black\"")
             buildConfigField("Boolean", "ALLOW_SCREENSHOTS", "true")
             signingConfig = signingConfigs["signingKeystore"]
         }
@@ -156,12 +154,14 @@ android {
             dimension = "env"
             applicationIdSuffix = ".black"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
-            buildConfigField("String", "HOST", "\"api.proton.black\"")
+            buildConfigField("String", "HOST", "api.proton.black".toBuildConfigValue())
+            buildConfigField("String", "HV_HOST", "verify.proton.black".toBuildConfigValue())
         }
         create("prod") {
             dimension = "env"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
-            buildConfigField("String", "HOST", "\"pass-api.proton.me\"")
+            buildConfigField("String", "HOST", "pass-api.proton.me".toBuildConfigValue())
+            buildConfigField("String", "HV_HOST", "verify.proton.me".toBuildConfigValue())
         }
     }
 
@@ -241,6 +241,7 @@ dependencies {
     implementation(libs.core.featureFlag)
     implementation(libs.core.humanVerification)
     implementation(libs.core.key)
+    implementation(libs.core.network)
     implementation(libs.core.observability)
     implementation(libs.core.payment)
     implementation(libs.core.plan)
@@ -303,6 +304,17 @@ dependencies {
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
+
+    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(libs.bundles.test.android)
+    androidTestImplementation(libs.bundles.core.test)
+    androidTestUtil(libs.androidx.test.orchestrator)
+}
+
+// Espresso and protobuf-lite dependency causing exception on startup.
+// NoSuchMethodError: No static method registerDefaultInstance.
+configurations.configureEach {
+    exclude("com.google.protobuf", "protobuf-lite")
 }
 
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"

@@ -19,11 +19,13 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDialog
+import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.featurehome.impl.icon.ActiveVaultIcon
@@ -68,7 +70,14 @@ internal fun HomeContent(
                 onEnterSearch = onEnterSearch,
                 onStopSearching = onStopSearching,
                 drawerIcon = {
-                    ActiveVaultIcon(onClick = onDrawerIconClick)
+                    if (uiState.homeListUiState.selectedShare is None) {
+                        AllVaultsIcon(
+                            modifier = Modifier.padding(start = 8.dp),
+                            onClick = onDrawerIconClick
+                        )
+                    } else {
+                        ActiveVaultIcon(onClick = onDrawerIconClick)
+                    }
                 }
             )
         },

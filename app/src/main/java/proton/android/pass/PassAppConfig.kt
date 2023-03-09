@@ -11,7 +11,7 @@ class PassAppConfig @Inject constructor() : AppConfig {
     override val versionCode: Int = BuildConfig.VERSION_CODE
     override val versionName: String = BuildConfig.VERSION_NAME
     override val host: String = BuildConfig.HOST
-    override val humanVerificationHost: String = BuildConfig.HUMAN_VERIFICATION_HOST
+    override val humanVerificationHost: String = BuildConfig.HV_HOST
     override val proxyToken: String? = BuildConfig.PROXY_TOKEN
     override val useDefaultPins: Boolean = BuildConfig.USE_DEFAULT_PINS
     override val sentryDSN: String? = BuildConfig.SENTRY_DSN.takeIf { !BuildConfig.DEBUG }

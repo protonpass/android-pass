@@ -21,9 +21,15 @@ package proton.android.pass.initializer
 import android.content.Context
 import androidx.startup.AppInitializer
 import androidx.startup.Initializer
+import me.proton.core.auth.presentation.MissingScopeInitializer
+import me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
+import me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer
+import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
 import proton.android.pass.data.impl.sync.SyncInitializer
+import proton.android.pass.log.impl.LoggerInitializer
 import proton.android.pass.telemetry.impl.startup.TelemetryInitializer
+import proton.android.pass.tracing.impl.SentryInitializer
 
 class MainInitializer : Initializer<Unit> {
 
@@ -32,10 +38,18 @@ class MainInitializer : Initializer<Unit> {
     }
 
     override fun dependencies() = listOf(
-        SyncInitializer::class.java,
+        AccountStateHandlerInitializer::class.java,
+        CryptoValidatorInitializer::class.java,
         EventManagerInitializer::class.java,
         HumanVerificationInitializer::class.java,
-        TelemetryInitializer::class.java
+        LoggerInitializer::class.java,
+        MissingScopeInitializer::class.java,
+        SentryInitializer::class.java,
+        StrictModeInitializer::class.java,
+        SyncInitializer::class.java,
+        TelemetryInitializer::class.java,
+        UnAuthSessionFetcherInitializer::class.java,
+        UnredeemedPurchaseInitializer::class.java,
     )
 
     companion object {

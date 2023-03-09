@@ -1,0 +1,20 @@
+{
+  "endpoints": {
+    "SYSTEM_ENV": "/api/internal/system/env",
+    "JAIL_UNBAN": "/api/internal/quark/raw::jail:unban",
+    "USER_CREATE": "/api/internal/quark/raw::user:create",
+    "USER_CREATE_ADDRESS": "/api/internal/quark/raw::user:create:address",
+    "PAYMENTS_SEED_PAYMENT_METHOD": "/api/internal/quark/raw::payments:seed-payment-method",
+    "DRIVE_POPULATE_USER_WITH_DATA": "/api/internal/quark/drive:populate",
+    "PAYMENTS_SEED_SUBSCRIBER": "/api/internal/quark/raw::payments:seed-subscriber"
+  },
+  "constants": {
+    "DEFAULT_VERIFICATION_CODE": "666666",
+    "PAYPAL_USERNAME": "buyer@protonmail.com",
+    "PAYPAL_PASSWORD": "ProtonPayPal$",
+    "PLAN_DEV_NAME": "mail2021",
+    "PLAN_DEV_TEXT": "Mail Plus 2021",
+    "ENV_PAYMENT_STATUS_STORE_GOOGLE": "STATUS_ANDROID_GOOGLE",
+    "ENV_PAYMENT_STATUS_STORE_FDROID": "STATUS_ANDROID_FDROID"
+  }
+}

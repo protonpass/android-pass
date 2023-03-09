@@ -11,10 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
-import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
+import proton.android.pass.composecomponents.impl.extension.toBackgroundColor
+import proton.android.pass.composecomponents.impl.extension.toIconColor
+import proton.android.pass.composecomponents.impl.extension.toResource
+import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
 import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.featurehome.impl.HomeVaultSelection
@@ -50,11 +53,7 @@ fun VaultDrawerSection(
                     name = stringResource(R.string.vault_drawer_all_vaults),
                     itemCount = list.sumOf { it.activeItemCount },
                     icon = {
-                        VaultIcon(
-                            backgroundColor = PassPalette.Purple16,
-                            icon = me.proton.core.presentation.R.drawable.ic_proton_house,
-                            iconColor = PassPalette.Purple100
-                        )
+                        AllVaultsIcon()
                     },
                     isShared = false,
                     isSelected = homeVaultSelection == HomeVaultSelection.AllVaults,
@@ -71,9 +70,9 @@ fun VaultDrawerSection(
                 itemCount = share.activeItemCount,
                 icon = {
                     VaultIcon(
-                        backgroundColor = PassPalette.Yellow16,
-                        icon = me.proton.core.presentation.R.drawable.ic_proton_house,
-                        iconColor = PassPalette.Yellow100
+                        backgroundColor = share.color.toBackgroundColor(),
+                        icon = share.icon.toResource(),
+                        iconColor = share.color.toIconColor()
                     )
                 },
                 isShared = false,

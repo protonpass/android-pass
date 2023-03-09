@@ -84,6 +84,8 @@ internal fun LoginItemForm(
                 enabled = isEditAllowed,
                 showVaultSelector = showVaultSelector,
                 vaultName = selectedShare?.name,
+                vaultColor = selectedShare?.color,
+                vaultIcon = selectedShare?.icon,
                 onVaultClicked = onVaultSelectorClick
             )
             MainLoginSection(

@@ -46,6 +46,8 @@ internal fun CreateAliasForm(
             enabled = isEditAllowed,
             showVaultSelector = showVaultSelector,
             vaultName = selectedShare?.name,
+            vaultIcon = selectedShare?.icon,
+            vaultColor = selectedShare?.color,
             onVaultClicked = onVaultSelectorClick
         )
         if (canEdit) {

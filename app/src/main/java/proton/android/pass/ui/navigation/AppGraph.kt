@@ -69,7 +69,8 @@ fun NavGraphBuilder.appGraph(
             )
         },
         onTrashClick = { appNavigator.navigate(Trash) },
-        onCreateVaultClick = { appNavigator.navigate(CreateVaultBottomSheet) }
+        onCreateVaultClick = { appNavigator.navigate(CreateVaultBottomSheet) },
+        onEditVaultClick = { appNavigator.navigate(CreateVaultBottomSheet) },
     )
     bottomsheetCreateItemGraph(
         onCreateLogin = { shareId ->

@@ -13,7 +13,8 @@ fun NavHomeContent(
     state: NavHomeUiState,
     homeScreenNavigation: HomeScreenNavigation,
     onAddItemClick: (Option<ShareId>) -> Unit,
-    onTrashClick: () -> Unit
+    onTrashClick: () -> Unit,
+    onCreateVaultClick: () -> Unit
 ) {
     when {
         state.shouldAuthenticate is Some && state.shouldAuthenticate.value -> {
@@ -30,7 +31,8 @@ fun NavHomeContent(
             HomeScreen(
                 homeScreenNavigation = homeScreenNavigation,
                 onAddItemClick = onAddItemClick,
-                onTrashClick = onTrashClick
+                onTrashClick = onTrashClick,
+                onCreateVaultClick = onCreateVaultClick
             )
         }
     }

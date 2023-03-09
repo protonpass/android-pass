@@ -28,7 +28,8 @@ fun VaultDrawerContent(
     totalTrashedItems: Long,
     onAllVaultsClick: () -> Unit,
     onVaultClick: (ShareId) -> Unit,
-    onTrashClick: () -> Unit
+    onTrashClick: () -> Unit,
+    onCreateVaultClick: () -> Unit
 ) {
     Column(modifier = modifier.background(PassTheme.colors.backgroundNorm)) {
         VaultDrawerSection(
@@ -49,7 +50,7 @@ fun VaultDrawerContent(
                 .padding(16.dp),
             color = PassTheme.colors.accentPurpleWeakest,
             elevation = ButtonDefaults.elevation(0.dp),
-            onClick = {} // Create vault
+            onClick = onCreateVaultClick
         ) {
             Text(
                 text = stringResource(R.string.vault_drawer_create_vault),

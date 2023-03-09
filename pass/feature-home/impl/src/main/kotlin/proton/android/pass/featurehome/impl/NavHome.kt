@@ -15,6 +15,7 @@ fun NavHome(
     homeScreenNavigation: HomeScreenNavigation,
     onTrashClick: () -> Unit,
     onCreateVaultClick: () -> Unit,
+    onEditVaultClick: (ShareId) -> Unit,
     viewModel: NavHomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.navHomeUiState.collectAsStateWithLifecycle(NavHomeUiState.Initial)
@@ -24,6 +25,7 @@ fun NavHome(
         homeScreenNavigation = homeScreenNavigation,
         onAddItemClick = onAddItemClick,
         onTrashClick = onTrashClick,
-        onCreateVaultClick = onCreateVaultClick
+        onCreateVaultClick = onCreateVaultClick,
+        onEditVaultClick = onEditVaultClick
     )
 }

@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -21,7 +23,11 @@ fun CreateVaultBottomSheetContent(
     onClose: () -> Unit,
     onCreateClick: () -> Unit
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+    ) {
         CreateVaultBottomSheetTopBar(
             isLoading = state.isLoading.value(),
             isButtonEnabled = state.isCreateButtonEnabled.value(),

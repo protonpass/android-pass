@@ -14,14 +14,15 @@ import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 
 @Composable
-fun CreateVaultBottomSheetContent(
+fun VaultBottomSheetContent(
     modifier: Modifier = Modifier,
     state: CreateVaultUiState,
+    buttonText: String,
     onNameChange: (String) -> Unit,
     onColorChange: (ShareColor) -> Unit,
     onIconChange: (ShareIcon) -> Unit,
     onClose: () -> Unit,
-    onCreateClick: () -> Unit
+    onButtonClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -29,10 +30,11 @@ fun CreateVaultBottomSheetContent(
             .verticalScroll(rememberScrollState())
     ) {
         CreateVaultBottomSheetTopBar(
+            buttonText = buttonText,
             isLoading = state.isLoading.value(),
             isButtonEnabled = state.isCreateButtonEnabled.value(),
             onCloseClick = onClose,
-            onCreateClick = onCreateClick
+            onCreateClick = onButtonClick
         )
 
         Spacer(modifier = Modifier.height(32.dp))

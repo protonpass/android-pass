@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.common.api.toOption
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurecreateitem.impl.alias.CreateAlias
@@ -42,7 +43,9 @@ import proton.android.pass.featuretrash.impl.Trash
 import proton.android.pass.featuretrash.impl.trashGraph
 import proton.android.pass.featurevault.impl.CreateVault
 import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultBottomSheet
+import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetCreateVaultGraph
+import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetEditVaultGraph
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.pass.domain.ItemId
@@ -70,7 +73,12 @@ fun NavGraphBuilder.appGraph(
         },
         onTrashClick = { appNavigator.navigate(Trash) },
         onCreateVaultClick = { appNavigator.navigate(CreateVaultBottomSheet) },
-        onEditVaultClick = { appNavigator.navigate(CreateVaultBottomSheet) },
+        onEditVaultClick = { shareId ->
+            appNavigator.navigate(
+                EditVaultBottomSheet,
+                EditVaultBottomSheet.createNavRoute(shareId.toOption())
+            )
+        },
     )
     bottomsheetCreateItemGraph(
         onCreateLogin = { shareId ->
@@ -105,7 +113,9 @@ fun NavGraphBuilder.appGraph(
     )
     bottomSheetCreateVaultGraph(
         onClose = dismissBottomSheet
-
+    )
+    bottomSheetEditVaultGraph(
+        onClose = dismissBottomSheet
     )
     signOutDialogGraph(
         onConfirm = onLogout,

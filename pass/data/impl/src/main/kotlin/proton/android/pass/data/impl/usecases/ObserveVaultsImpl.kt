@@ -30,7 +30,7 @@ class ObserveVaultsImpl @Inject constructor(
                                     decrypt(content.value)
                                 }
                                 val parsed = VaultV1.Vault.parseFrom(decrypted)
-                                Vault(share.id, parsed.name)
+                                Vault(share.id, parsed.name, share.color, share.icon)
                             }
                             None -> throw ShareContentNotAvailableError()
                         }

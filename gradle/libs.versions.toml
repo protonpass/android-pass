@@ -29,6 +29,7 @@ androidx-room = "2.4.3"
 androidx-startup = "1.1.1"
 androidx-test = "1.5.0"
 androidx-test-junit = "1.1.5"
+androidx-test-orchestrator = "1.4.2"
 androidx-test-uiautomator = "2.3.0-alpha02"
 androidx-work = "2.7.1"
 # CashApp
@@ -38,7 +39,7 @@ coil = "2.2.2"
 # Commons codec
 commons-codec = "1.15"
 # Core
-core = "9.12.0"
+core = "9.18.0"
 # Dagger
 dagger = "2.44.2"
 # Google
@@ -75,6 +76,7 @@ retrofit = "2.9.0"
 junit = "4.13.2"
 testParameterInjector = "1.10"
 truth = "1.1.3"
+fusion = "0.9.50"
 # Turingcomplete
 onetimepassword = "2.4.0"
 # Zxing
@@ -182,6 +184,7 @@ core-accountManager = { module = "me.proton.core:account-manager", version.ref =
 core-accountManager-domain = { module = "me.proton.core:account-manager-domain", version.ref = "core" }
 core-accountManager-presentation-compose = { module = "me.proton.core:account-manager-presentation-compose", version.ref = "core" }
 core-auth = { module = "me.proton.core:auth", version.ref = "core" }
+core-auth-test = { module = "me.proton.core:auth-test", version.ref = "core" }
 core-challenge = { module = "me.proton.core:challenge", version.ref = "core" }
 core-country = { module = "me.proton.core:country", version.ref = "core" }
 core-crypto = { module = "me.proton.core:crypto", version.ref = "core" }
@@ -194,6 +197,7 @@ core-domain = { module = "me.proton.core:domain", version.ref = "core" }
 core-eventManager = { module = "me.proton.core:event-manager", version.ref = "core" }
 core-featureFlag = { module = "me.proton.core:feature-flag", version.ref = "core" }
 core-humanVerification = { module = "me.proton.core:human-verification", version.ref = "core" }
+core-humanVerification-test = { module = "me.proton.core:human-verification-test", version.ref = "core" }
 core-key = { module = "me.proton.core:key", version.ref = "core" }
 core-key-domain = { module = "me.proton.core:key-domain", version.ref = "core" }
 core-network = { module = "me.proton.core:network", version.ref = "core" }
@@ -202,6 +206,7 @@ core-network-domain = { module = "me.proton.core:network-domain", version.ref = 
 core-observability = { module = "me.proton.core:observability", version.ref = "core" }
 core-payment = { module = "me.proton.core:payment", version.ref = "core" }
 # core-payment-iap = { module = "me.proton.core:payment-iap", version.ref = "core" }
+# core-payment-iap-test = { module = "me.proton.core:payment-iap-test", version.ref = "core" }
 core-plan = { module = "me.proton.core:plan", version.ref = "core" }
 core-presentation = { module = "me.proton.core:presentation", version.ref = "core" }
 core-presentation-compose = { module = "me.proton.core:presentation-compose", version.ref = "core" }
@@ -266,12 +271,14 @@ androidx-test-espresso-core = { module = "androidx.test.espresso:espresso-core",
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test" }
 androidx-test-junit = { module = "androidx.test.ext:junit", version.ref = "androidx-test-junit" }
+androidx-test-orchestrator = { module = "androidx.test:orchestrator", version.ref = "androidx-test-orchestrator" }
 androidx-test-uiautomator = { module = "androidx.test.uiautomator:uiautomator", version.ref = "androidx-test-uiautomator" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlinTest = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 testParameterInjector = { module = "com.google.testparameterinjector:test-parameter-injector", version.ref = "testParameterInjector" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
+fusion = { module = "me.proton.test:fusion", version.ref = "fusion"}
 
 # Turingcomplete
 onetimepassword = { module = "dev.turingcomplete:kotlin-onetimepassword", version.ref = "onetimepassword" }
@@ -279,3 +286,6 @@ onetimepassword = { module = "dev.turingcomplete:kotlin-onetimepassword", versio
 # Zxing
 zxing-core = { module = "com.google.zxing:core", version.ref = "zxing" }
 
+[bundles]
+core-test = ["core-test-android-instrumented", "core-auth-test", "core-humanVerification-test"]
+test-android = ["fusion", "junit", "coroutines-test", "androidx-test-core-ktx", "androidx-test-runner", "androidx-test-rules", "androidx-compose-ui-test", "androidx-compose-ui-test-junit", "androidx-test-uiautomator", "dagger-hilt-android-testing"]

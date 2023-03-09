@@ -36,6 +36,7 @@ import proton.android.pass.data.api.usecases.UpdateActiveShare
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
+import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionItemFiltererImpl
 import proton.android.pass.data.impl.autofill.SuggestionSorter
@@ -72,6 +73,7 @@ import proton.android.pass.data.impl.usecases.UpdateActiveShareImpl
 import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
+import proton.android.pass.data.impl.usecases.UpdateVaultImpl
 
 @Suppress("TooManyFunctions")
 @Module
@@ -181,5 +183,8 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveVaultsWithItemCount(
         impl: ObserveVaultsWithItemCountImpl
     ): ObserveVaultsWithItemCount
+
+    @Binds
+    abstract fun bindUpdateVault(impl: UpdateVaultImpl): UpdateVault
 }
 

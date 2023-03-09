@@ -1,13 +1,12 @@
 package proton.android.pass.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
-import androidx.compose.material.SwipeableDefaults
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -33,7 +32,7 @@ import proton.android.pass.ui.internal.InternalDrawerState
 import proton.android.pass.ui.internal.InternalDrawerValue
 import proton.android.pass.ui.internal.rememberInternalDrawerState
 
-@OptIn(ExperimentalMaterialNavigationApi::class)
+@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalMaterialApi::class)
 @Composable
 fun PassAppContent(
     modifier: Modifier = Modifier,
@@ -42,8 +41,12 @@ fun PassAppContent(
     onSnackbarMessageDelivered: () -> Unit,
     finishActivity: () -> Unit
 ) {
+    val bottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
     val appNavigator = rememberAppNavigator(
-        bottomSheetNavigator = rememberBottomSheetNavigator(skipHalfExpanded = true),
+        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
     )
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
@@ -77,6 +80,9 @@ fun PassAppContent(
                             appNavigator = appNavigator,
                             finishActivity = finishActivity,
                             onReportProblemClick = { coreNavigation.onReport() },
+                            dismissBottomSheet = {
+                                bottomSheetState.hide()
+                            },
                             onLogout = { coreNavigation.onRemove(null) }
                         )
                     }
@@ -111,14 +117,8 @@ private fun SnackBarLaunchedEffect(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun rememberBottomSheetNavigator(
-    animationSpec: AnimationSpec<Float> = SwipeableDefaults.AnimationSpec,
-    skipHalfExpanded: Boolean = false,
+    sheetState: ModalBottomSheetState,
 ): BottomSheetNavigator {
-    val sheetState = rememberModalBottomSheetState(
-        ModalBottomSheetValue.Hidden,
-        animationSpec,
-        skipHalfExpanded,
-    )
     return remember(sheetState) {
         BottomSheetNavigator(sheetState = sheetState)
     }

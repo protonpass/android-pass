@@ -37,6 +37,8 @@ internal fun CreateNoteItemForm(
             titleValue = noteItem.title,
             showVaultSelector = showVaultSelector,
             vaultName = selectedShare?.name,
+            vaultColor = selectedShare?.color,
+            vaultIcon = selectedShare?.icon,
             onTitleChanged = onTitleChange,
             onTitleRequiredError = onTitleRequiredError,
             onVaultClicked = onVaultSelectorClick

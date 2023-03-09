@@ -57,7 +57,7 @@ abstract class BaseNoteViewModel(
                     PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
                     emptyList()
                 }
-                is LoadingResult.Success -> shares.data.map { ShareUiModel(it.shareId, it.name) }
+                is LoadingResult.Success -> shares.data.map { ShareUiModel(it.shareId, it.name, it.color, it.icon) }
             }
         }
         .distinctUntilChanged()

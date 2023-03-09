@@ -27,4 +27,7 @@
     <string name="vault_delete_dialog_cancel_action">Cancel</string>
     <string name="vault_delete_dialog_delete_action">Delete</string>
     <string name="vault_delete_bottomsheet_title">Vault to migrate to</string>
+
+    <string name="bottomsheet_close_icon_content_description">Close Create Vault</string>
+    <string name="bottomsheet_create_vault_button">Create vault</string>
 </resources>

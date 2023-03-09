@@ -13,6 +13,8 @@
     <string name="snackbar_empty_share">Share is empty</string>
     <string name="snackbar_create_vault_success">Vault created</string>
     <string name="snackbar_create_vault_error">Vault not created</string>
+    <string name="snackbar_edit_vault_success">Vault edited</string>
+    <string name="snackbar_edit_vault_error">Vault not edited</string>
     <string name="snackbar_delete_vault_success">Vault deleted</string>
     <string name="snackbar_delete_vault_error">Vault not deleted</string>
     <string name="snackbar_cannot_delete_current_vault_error">Cannot delete current vault</string>
@@ -30,4 +32,5 @@
 
     <string name="bottomsheet_close_icon_content_description">Close Create Vault</string>
     <string name="bottomsheet_create_vault_button">Create vault</string>
+    <string name="bottomsheet_edit_vault_button">Edit vault</string>
 </resources>

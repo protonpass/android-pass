@@ -78,8 +78,8 @@ internal class CreateLoginViewModelTest {
                 assertThat(awaitItem())
                     .isEqualTo(
                         Initial.copy(
-                            shareList = listOf(ShareUiModel(vault.shareId, vault.name)),
-                            selectedShareId = ShareUiModel(vault.shareId, vault.name),
+                            shareList = listOf(ShareUiModel(vault.shareId, vault.name, vault.color, vault.icon)),
+                            selectedShareId = ShareUiModel(vault.shareId, vault.name, vault.color, vault.icon),
                             validationErrors = setOf(LoginItemValidationErrors.BlankTitle)
                         )
                     )
@@ -105,8 +105,20 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
-                        shareList = listOf(ShareUiModel(vault.shareId, vault.name)),
-                        selectedShareId = ShareUiModel(vault.shareId, vault.name),
+                        shareList = listOf(
+                            ShareUiModel(
+                                vault.shareId,
+                                vault.name,
+                                vault.color,
+                                vault.icon
+                            )
+                        ),
+                        selectedShareId = ShareUiModel(
+                            vault.shareId,
+                            vault.name,
+                            vault.color,
+                            vault.icon
+                        ),
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.NotLoading
                     )
@@ -114,8 +126,20 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
-                        shareList = listOf(ShareUiModel(vault.shareId, vault.name)),
-                        selectedShareId = ShareUiModel(vault.shareId, vault.name),
+                        shareList = listOf(
+                            ShareUiModel(
+                                vault.shareId,
+                                vault.name,
+                                vault.color,
+                                vault.icon
+                            )
+                        ),
+                        selectedShareId = ShareUiModel(
+                            vault.shareId,
+                            vault.name,
+                            vault.color,
+                            vault.icon
+                        ),
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.Loading
                     )
@@ -123,8 +147,20 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
-                        shareList = listOf(ShareUiModel(vault.shareId, vault.name)),
-                        selectedShareId = ShareUiModel(vault.shareId, vault.name),
+                        shareList = listOf(
+                            ShareUiModel(
+                                vault.shareId,
+                                vault.name,
+                                vault.color,
+                                vault.icon
+                            )
+                        ),
+                        selectedShareId = ShareUiModel(
+                            vault.shareId,
+                            vault.name,
+                            vault.color,
+                            vault.icon
+                        ),
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.NotLoading,
                         isItemSaved = ItemSavedState.Success(
@@ -161,8 +197,20 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
-                        shareList = listOf(ShareUiModel(vault.shareId, vault.name)),
-                        selectedShareId = ShareUiModel(vault.shareId, vault.name),
+                        shareList = listOf(
+                            ShareUiModel(
+                                vault.shareId,
+                                vault.name,
+                                vault.color,
+                                vault.icon
+                            )
+                        ),
+                        selectedShareId = ShareUiModel(
+                            vault.shareId,
+                            vault.name,
+                            vault.color,
+                            vault.icon
+                        ),
                         loginItem = LoginItem.Empty.copy(
                             title = initialContents.title!!,
                             username = initialContents.username!!,

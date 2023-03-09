@@ -1,11 +1,8 @@
 package proton.android.pass.featurehome.impl
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
@@ -96,12 +93,15 @@ internal fun HomeContent(
         Column(
             modifier = Modifier.padding(contentPadding)
         ) {
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                SortingButton(
-                    sortingType = uiState.homeListUiState.sortingType,
-                    onSortingOptionsClick = onSortingOptionsClick
-                )
-            }
+            ItemListHeader(
+                sortingType = uiState.homeListUiState.sortingType,
+                showSearchResults = uiState.searchUiState.inSearchMode &&
+                    uiState.searchUiState.searchQuery.isNotEmpty(),
+                isProcessingSearch = uiState.searchUiState.isProcessingSearch.value(),
+                itemCount = uiState.homeListUiState.items.values.flatten().count()
+                    .takeIf { !uiState.searchUiState.isProcessingSearch.value() },
+                onSortingOptionsClick = onSortingOptionsClick
+            )
             ItemsList(
                 items = uiState.homeListUiState.items,
                 shouldScrollToTop = shouldScrollToTop,
@@ -127,12 +127,8 @@ internal fun HomeContent(
                         )
                     }
                 },
-                header = {
-                    item { OnBoardingTips() }
-                },
-                footer = {
-                    item { Spacer(Modifier.height(64.dp)) }
-                }
+                header = { item { OnBoardingTips() } },
+                footer = { item { Spacer(Modifier.height(64.dp)) } }
             )
         }
         ConfirmItemDeletionDialog(

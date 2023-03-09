@@ -10,17 +10,18 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.encrypt
 import proton.android.pass.common.api.logError
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CreateVaultError
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CreateVaultSuccess
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.pass.domain.ShareColor
+import proton.pass.domain.ShareIcon
 import proton.pass.domain.entity.NewVault
 import javax.inject.Inject
 
@@ -28,7 +29,7 @@ import javax.inject.Inject
 class CreateVaultViewModel @Inject constructor(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val createVault: CreateVault,
-    private val cryptoContext: CryptoContext
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
     private val vaultSavedState: MutableStateFlow<VaultSavedState> =
@@ -72,10 +73,15 @@ class CreateVaultViewModel @Inject constructor(
         if (validationErrors.isEmpty()) {
             validationErrorsState.value = emptySet()
             isLoadingState.update { IsLoadingState.Loading }
-            val vault = NewVault(
-                name = draftVault.title.encrypt(cryptoContext.keyStoreCrypto),
-                description = draftVault.description.encrypt(cryptoContext.keyStoreCrypto)
-            )
+
+            val vault = encryptionContextProvider.withEncryptionContext {
+                NewVault(
+                    name = encrypt(draftVault.title),
+                    description = encrypt(draftVault.description),
+                    icon = ShareIcon.Icon1,
+                    color = ShareColor.Color1
+                )
+            }
             createVault(vault = vault)
                 .onSuccess {
                     snackbarMessageRepository.emitSnackbarMessage(CreateVaultSuccess)

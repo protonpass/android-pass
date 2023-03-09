@@ -3,6 +3,8 @@ package proton.android.pass.featurehome.impl
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.pass.domain.ShareId
@@ -29,6 +31,7 @@ fun NavHomeContent(
         }
         state.hasCompletedOnBoarding is Some && state.shouldAuthenticate is Some -> {
             HomeScreen(
+                modifier = Modifier.testTag(HomeScreenTestTag.screen),
                 homeScreenNavigation = homeScreenNavigation,
                 onAddItemClick = onAddItemClick,
                 onCreateVaultClick = onCreateVaultClick,

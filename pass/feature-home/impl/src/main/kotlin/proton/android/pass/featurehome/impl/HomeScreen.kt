@@ -391,3 +391,7 @@ fun HomeScreen(
         }
     }
 }
+
+object HomeScreenTestTag {
+    const val screen = "homeScreen"
+}

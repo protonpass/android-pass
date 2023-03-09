@@ -2,6 +2,8 @@ package proton.android.pass.test.domain
 
 import proton.android.pass.common.api.None
 import proton.pass.domain.Share
+import proton.pass.domain.ShareColor
+import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
 import proton.pass.domain.SharePermission
 import proton.pass.domain.SharePermissionFlag
@@ -20,5 +22,7 @@ object TestShare {
             content = None,
             expirationTime = null,
             createTime = Date(),
+            color = ShareColor.Color1,
+            icon = ShareIcon.Icon1
         )
 }

@@ -15,12 +15,14 @@ fun NavGraphBuilder.homeGraph(
     homeScreenNavigation: HomeScreenNavigation,
     onAddItemClick: (Option<ShareId>) -> Unit,
     onTrashClick: () -> Unit,
+    onCreateVaultClick: () -> Unit,
 ) {
     composable(Home) {
         NavHome(
             homeScreenNavigation = homeScreenNavigation,
             onAddItemClick = onAddItemClick,
-            onTrashClick = onTrashClick
+            onTrashClick = onTrashClick,
+            onCreateVaultClick = onCreateVaultClick
         )
     }
 }

@@ -1,5 +1,6 @@
 package proton.android.pass.featurehome.impl
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -44,6 +45,7 @@ fun HomeScreen(
     homeScreenNavigation: HomeScreenNavigation,
     onAddItemClick: (Option<ShareId>) -> Unit,
     onTrashClick: () -> Unit,
+    onCreateVaultClick: () -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
     vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel()
 ) {
@@ -63,6 +65,13 @@ fun HomeScreen(
     )
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+
+    BackHandler(drawerState.isOpen) {
+        scope.launch {
+            drawerState.close()
+        }
+    }
+
     ModalDrawer(
         modifier = modifier,
         drawerState = drawerState,
@@ -85,6 +94,9 @@ fun HomeScreen(
                 onTrashClick = {
                     scope.launch { drawerState.close() }
                     onTrashClick()
+                },
+                onCreateVaultClick = {
+                    onCreateVaultClick()
                 }
             )
         }

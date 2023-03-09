@@ -10,8 +10,8 @@ data class ActiveVaultState(
     companion object {
         val Initial = ActiveVaultState(
             properties = ShareProperties(
-                shareColor = ShareColor.Purple,
-                shareIcon = ShareIcon.Vault
+                shareColor = ShareColor.Color1,
+                shareIcon = ShareIcon.Icon3
             )
         )
     }

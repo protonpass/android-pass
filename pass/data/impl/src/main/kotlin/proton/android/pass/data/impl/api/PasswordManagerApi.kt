@@ -8,6 +8,7 @@ import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
+import proton.android.pass.data.impl.requests.UpdateVaultRequest
 import proton.android.pass.data.impl.responses.AliasDetailsResponse
 import proton.android.pass.data.impl.responses.CreateItemResponse
 import proton.android.pass.data.impl.responses.CreateVaultResponse
@@ -33,10 +34,16 @@ import retrofit2.http.Query
 
 internal const val PREFIX = "pass/v1"
 
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions", "ComplexInterface")
 interface PasswordManagerApi : BaseRetrofitApi {
     @POST("$PREFIX/vault")
     suspend fun createVault(@Body request: CreateVaultRequest): CreateVaultResponse
+
+    @PUT("$PREFIX/vault/{shareId}")
+    suspend fun updateVault(
+        @Path("shareId") shareId: String,
+        @Body request: UpdateVaultRequest
+    ): CreateVaultResponse
 
     @DELETE("$PREFIX/vault/{shareId}")
     suspend fun deleteVault(@Path("shareId") shareId: String): DeleteVaultResponse

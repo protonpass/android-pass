@@ -6,5 +6,5 @@ import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 
 interface GetShareById {
-    suspend operator fun invoke(userId: UserId, shareId: ShareId): LoadingResult<Share?>
+    suspend operator fun invoke(userId: UserId? = null, shareId: ShareId): LoadingResult<Share?>
 }

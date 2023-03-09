@@ -13,12 +13,16 @@ import proton.android.pass.feature.vault.impl.R
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-fun CreateVaultBottomSheet(
+fun EditVaultBottomSheet(
     modifier: Modifier = Modifier,
     onClose: () -> Unit,
-    viewModel: CreateVaultViewModel = hiltViewModel()
+    viewModel: EditVaultViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        viewModel.onStart()
+    }
 
     LaunchedEffect(state.isVaultCreatedEvent) {
         if (state.isVaultCreatedEvent == IsVaultCreatedEvent.Created) {
@@ -29,11 +33,12 @@ fun CreateVaultBottomSheet(
     VaultBottomSheetContent(
         modifier = modifier.bottomSheetPadding(),
         state = state,
-        buttonText = stringResource(R.string.bottomsheet_create_vault_button),
+        buttonText = stringResource(R.string.bottomsheet_edit_vault_button),
         onNameChange = { viewModel.onNameChange(it) },
         onIconChange = { viewModel.onIconChange(it) },
         onColorChange = { viewModel.onColorChange(it) },
-        onClose = onClose,
-        onButtonClick = { viewModel.onCreateClick() }
+        onClose = { onClose() },
+        onButtonClick = { viewModel.onEditClick() }
     )
 }
+

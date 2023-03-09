@@ -10,6 +10,8 @@ enum class VaultSnackbarMessage(
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
 ) : SnackbarMessage {
+    EditVaultSuccess(R.string.snackbar_edit_vault_success, SnackbarType.SUCCESS),
+    EditVaultError(R.string.snackbar_edit_vault_error, SnackbarType.ERROR),
     CreateVaultSuccess(R.string.snackbar_create_vault_success, SnackbarType.SUCCESS),
     CreateVaultError(R.string.snackbar_create_vault_error, SnackbarType.ERROR),
     DeleteVaultSuccess(R.string.snackbar_delete_vault_success, SnackbarType.SUCCESS),

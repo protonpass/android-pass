@@ -19,4 +19,6 @@ data class Share(
     val content: Option<EncryptedByteArray>, // Can be None if targetType is Item
     val expirationTime: Date?,
     val createTime: Date,
+    val color: ShareColor,
+    val icon: ShareIcon
 )

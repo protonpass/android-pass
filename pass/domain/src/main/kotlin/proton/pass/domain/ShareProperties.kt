@@ -1,16 +1,29 @@
 package proton.pass.domain
 
 enum class ShareColor {
-    Purple,
-    Yellow,
-    Blue,
-    Green
+    Color1,
+    Color2,
+    Color3,
+    Color4,
+    Color5,
+    Color6,
+    Color7,
+    Color8,
+    Color9,
+    Color10
 }
 
 enum class ShareIcon {
-    House,
-    Suitcase,
-    Vault
+    Icon1,
+    Icon2,
+    Icon3,
+    Icon4,
+    Icon5,
+    Icon6,
+    Icon7,
+    Icon8,
+    Icon9,
+    Icon10
 }
 
 data class ShareProperties(

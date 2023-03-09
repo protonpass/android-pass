@@ -56,4 +56,15 @@ dependencies {
 
     debugImplementation(libs.androidx.compose.uiTooling)
     debugImplementation(libs.androidx.compose.uiTestManifest)
+
+    testImplementation(libs.core.test.kotlin)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.truth)
+    testImplementation(libs.turbine)
+
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.crypto.fakes)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.notifications.fakes)
 }

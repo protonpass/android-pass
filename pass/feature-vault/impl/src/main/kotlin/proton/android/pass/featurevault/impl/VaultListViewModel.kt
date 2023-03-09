@@ -125,7 +125,7 @@ class VaultListViewModel @Inject constructor(
                     is Some -> {
                         val decrypted = encryptionContext.decrypt(content.value)
                         val parsed = VaultV1.Vault.parseFrom(decrypted)
-                        ShareUiModel(share.id, parsed.name)
+                        ShareUiModel(share.id, parsed.name, share.color, share.icon)
                     }
                     None -> throw ShareContentNotAvailableError()
                 }

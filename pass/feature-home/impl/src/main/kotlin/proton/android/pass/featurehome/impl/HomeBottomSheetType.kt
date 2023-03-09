@@ -4,5 +4,6 @@ enum class HomeBottomSheetType {
     Sorting,
     LoginOptions,
     AliasOptions,
-    NoteOptions
+    NoteOptions,
+    VaultOptions
 }

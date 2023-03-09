@@ -28,6 +28,7 @@ fun VaultDrawerContent(
     totalTrashedItems: Long,
     onAllVaultsClick: () -> Unit,
     onVaultClick: (ShareId) -> Unit,
+    onVaultOptionsClick: (ShareUiModelWithItemCount) -> Unit,
     onTrashClick: () -> Unit,
     onCreateVaultClick: () -> Unit
 ) {
@@ -39,7 +40,7 @@ fun VaultDrawerContent(
             homeVaultSelection = homeVaultSelection,
             list = list,
             totalTrashedItems = totalTrashedItems,
-            onVaultOptionsClick = {}, // To be implemented
+            onVaultOptionsClick = onVaultOptionsClick,
             onAllVaultsClick = onAllVaultsClick,
             onVaultClick = onVaultClick,
             onTrashClick = onTrashClick

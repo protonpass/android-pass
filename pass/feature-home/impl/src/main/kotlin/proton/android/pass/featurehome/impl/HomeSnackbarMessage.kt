@@ -19,5 +19,9 @@ enum class HomeSnackbarMessage(
     NoteCopied(R.string.note_copied_to_clipboard, SnackbarType.NORM, true),
     PasswordCopied(R.string.password_copied_to_clipboard, SnackbarType.NORM, true),
     UsernameCopied(R.string.username_copied_to_clipboard, SnackbarType.NORM, true),
+
+    DeleteVaultSuccess(R.string.snackbar_delete_vault_success, SnackbarType.SUCCESS),
+    DeleteVaultError(R.string.snackbar_delete_vault_error, SnackbarType.ERROR),
+    CannotDeleteCurrentVault(R.string.snackbar_cannot_delete_current_vault_error, SnackbarType.ERROR),
 }
 

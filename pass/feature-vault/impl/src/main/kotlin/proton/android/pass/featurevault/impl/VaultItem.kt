@@ -26,6 +26,8 @@ import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ShareUiModel
+import proton.pass.domain.ShareColor
+import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
 
 @Composable
@@ -100,7 +102,9 @@ fun VaultItemPreview(
             VaultItem(
                 share = ShareUiModel(
                     id = ShareId(""),
-                    name = "Vault name"
+                    name = "Vault name",
+                    color = ShareColor.Color1,
+                    icon = ShareIcon.Icon1
                 ),
                 isSelected = true,
                 onVaultSelect = {},

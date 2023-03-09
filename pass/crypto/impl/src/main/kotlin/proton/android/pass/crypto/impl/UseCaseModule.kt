@@ -9,11 +9,13 @@ import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemKey
 import proton.android.pass.crypto.api.usecases.UpdateItem
+import proton.android.pass.crypto.api.usecases.UpdateVault
 import proton.android.pass.crypto.impl.usecases.CreateItemImpl
 import proton.android.pass.crypto.impl.usecases.CreateVaultImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemKeyImpl
 import proton.android.pass.crypto.impl.usecases.UpdateItemImpl
+import proton.android.pass.crypto.impl.usecases.UpdateVaultImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -33,5 +35,8 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindOpenItemKey(impl: OpenItemKeyImpl): OpenItemKey
+
+    @Binds
+    abstract fun bindUpdateVault(impl: UpdateVaultImpl): UpdateVault
 
 }

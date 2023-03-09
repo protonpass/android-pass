@@ -81,7 +81,9 @@ fun PassAppContent(
                             finishActivity = finishActivity,
                             onReportProblemClick = { coreNavigation.onReport() },
                             dismissBottomSheet = {
-                                bottomSheetState.hide()
+                                coroutineScope.launch {
+                                    bottomSheetState.hide()
+                                }
                             },
                             onLogout = { coreNavigation.onRemove(null) }
                         )

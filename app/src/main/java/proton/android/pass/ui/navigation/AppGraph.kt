@@ -4,8 +4,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurecreateitem.impl.alias.CreateAlias
@@ -58,10 +56,9 @@ import proton.pass.domain.ShareId
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
     finishActivity: () -> Unit,
-    dismissBottomSheet: suspend () -> Unit,
+    dismissBottomSheet: () -> Unit,
     onReportProblemClick: () -> Unit,
-    onLogout: () -> Unit,
-    coroutineScope: CoroutineScope
+    onLogout: () -> Unit
 ) {
     homeGraph(
         homeScreenNavigation = createHomeScreenNavigation(appNavigator),
@@ -106,12 +103,8 @@ fun NavGraphBuilder.appGraph(
         }
     )
     bottomSheetCreateVaultGraph(
-        onClose = {
-            coroutineScope.launch {
-                dismissBottomSheet()
-                appNavigator.onBackClick()
-            }
-        }
+        onClose = dismissBottomSheet
+
     )
     signOutDialogGraph(
         onConfirm = onLogout,

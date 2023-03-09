@@ -95,7 +95,7 @@ abstract class BaseLoginViewModel(
                 }
                 is LoadingResult.Success ->
                     shares.data
-                        .map { ShareUiModel(it.shareId, it.name) }
+                        .map { ShareUiModel(it.shareId, it.name, it.color, it.icon) }
             }
         }
         .distinctUntilChanged()

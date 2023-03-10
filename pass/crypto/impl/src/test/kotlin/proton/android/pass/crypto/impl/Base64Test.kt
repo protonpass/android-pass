@@ -1,4 +1,4 @@
-package me.proton.android.pass.crypto.impl
+package proton.android.pass.crypto.impl
 
 import org.apache.commons.codec.binary.Base64
 import org.junit.Test

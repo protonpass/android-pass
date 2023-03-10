@@ -4,11 +4,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.logError
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
@@ -47,10 +47,16 @@ class CreateVaultViewModel @Inject constructor(
                 isVaultCreated.update { IsVaultCreatedEvent.Created }
             }
             .onError {
-                snackbarMessageRepository.emitSnackbarMessage(VaultSnackbarMessage.CreateVaultError)
+                val message = if (it is CannotCreateMoreVaultsError) {
+                    VaultSnackbarMessage.CannotCreateMoreVaultsError
+                } else {
+                    PassLogger.w(TAG, it, "Create vault failed")
+                    VaultSnackbarMessage.CreateVaultError
+                }
+                snackbarMessageRepository.emitSnackbarMessage(message)
+
                 isLoadingFlow.update { IsLoadingState.NotLoading }
             }
-            .logError(PassLogger, TAG, "Create Vault Failed")
     }
 
 

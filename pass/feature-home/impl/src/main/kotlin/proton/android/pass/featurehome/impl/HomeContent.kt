@@ -19,16 +19,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDialog
+import proton.android.pass.composecomponents.impl.extension.toBackgroundColor
+import proton.android.pass.composecomponents.impl.extension.toIconColor
+import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
+import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
-import proton.android.pass.featurehome.impl.icon.ActiveVaultIcon
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.pass.domain.ShareId
 
@@ -65,15 +69,22 @@ internal fun HomeContent(
                 onSearchQueryChange = onSearchQueryChange,
                 drawerIcon = {
                     if (!uiState.searchUiState.inSearchMode) {
-                        if (uiState.homeListUiState.selectedShare is None) {
-                            AllVaultsIcon(
-                                onClick = onDrawerIconClick
-                            )
-                        } else {
-                            ActiveVaultIcon(
-                                modifier = Modifier.size(48.dp),
-                                onClick = onDrawerIconClick
-                            )
+                        when (val share = uiState.homeListUiState.selectedShare) {
+                            None -> {
+                                AllVaultsIcon(
+                                    modifier = Modifier.size(48.dp),
+                                    onClick = onDrawerIconClick
+                                )
+                            }
+                            is Some -> {
+                                VaultIcon(
+                                    modifier = Modifier.size(48.dp),
+                                    backgroundColor = share.value.color.toBackgroundColor(),
+                                    iconColor = share.value.color.toIconColor(),
+                                    icon = share.value.icon.toResource(),
+                                    onClick = onDrawerIconClick
+                                )
+                            }
                         }
                     } else {
                         ArrowBackIconButton { onStopSearch() }
@@ -85,7 +96,10 @@ internal fun HomeContent(
             BottomBar(
                 bottomBarSelected = BottomBarSelected.Home,
                 onListClick = {},
-                onCreateClick = { onAddItemClick(uiState.homeListUiState.selectedShare) },
+                onCreateClick = {
+                    val shareId = uiState.homeListUiState.selectedShare.map { it.id }
+                    onAddItemClick(shareId)
+                },
                 onProfileClick = onProfileClick
             )
         }
@@ -134,7 +148,8 @@ internal fun HomeContent(
                     } else {
                         HomeEmptyList(
                             onCreateItemClick = {
-                                onAddItemClick(uiState.homeListUiState.selectedShare)
+                                val shareId = uiState.homeListUiState.selectedShare.map { it.id }
+                                onAddItemClick(shareId)
                             }
                         )
                     }

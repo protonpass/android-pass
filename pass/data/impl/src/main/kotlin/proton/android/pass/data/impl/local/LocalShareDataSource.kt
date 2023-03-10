@@ -10,10 +10,8 @@ interface LocalShareDataSource {
     suspend fun upsertShares(shares: List<ShareEntity>)
     suspend fun evictAndUpsertShares(userId: UserId, shares: List<ShareEntity>)
     suspend fun getById(userId: UserId, shareId: ShareId): ShareEntity?
-    fun getSelectedSharesForUser(userId: UserId): Flow<List<ShareEntity>>
     fun getAllSharesForUser(userId: UserId): Flow<List<ShareEntity>>
     fun getAllSharesForAddress(addressId: AddressId): Flow<List<ShareEntity>>
-    suspend fun updateSelectedShare(shareId: ShareId)
     suspend fun deleteShare(shareId: ShareId): Boolean
     suspend fun hasShares(userId: UserId): Boolean
 }

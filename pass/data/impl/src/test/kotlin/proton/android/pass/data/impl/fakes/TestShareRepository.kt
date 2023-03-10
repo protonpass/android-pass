@@ -60,9 +60,6 @@ class TestShareRepository : ShareRepository {
     override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
         deleteVaultFlow.first()
 
-    override suspend fun selectVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
-        LoadingResult.Success(Unit)
-
     override suspend fun refreshShares(userId: UserId): LoadingResult<List<Share>> =
         refreshSharesResult
 

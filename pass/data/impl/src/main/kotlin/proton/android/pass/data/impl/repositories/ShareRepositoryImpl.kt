@@ -22,7 +22,6 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.UpdateVault
-import proton.android.pass.data.api.errors.CannotDeleteCurrentVaultError
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.impl.crypto.ReencryptShareContents
 import proton.android.pass.data.impl.db.PassDatabase
@@ -111,29 +110,14 @@ class ShareRepositoryImpl @Inject constructor(
     override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
         withContext(Dispatchers.IO) {
             database.inTransaction {
-                val currentSelectedShare: ShareEntity =
-                    localShareDataSource.getSelectedSharesForUser(userId = userId)
-                        .first()
-                        .first()
-                if (currentSelectedShare.id == shareId.id)
-                    return@inTransaction LoadingResult.Error(CannotDeleteCurrentVaultError())
                 remoteShareDataSource.deleteVault(userId, shareId)
                     .map { localShareDataSource.deleteShare(shareId) }
                     .map { }
             }
         }
 
-    override suspend fun selectVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
-        withContext(Dispatchers.IO) {
-            localShareDataSource.updateSelectedShare(shareId)
-            LoadingResult.Success(Unit)
-        }
-
     override fun observeAllShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =
         localShareDataSource.getAllSharesForUser(userId).toShare()
-
-    override fun observeSelectedShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =
-        localShareDataSource.getSelectedSharesForUser(userId).toShare()
 
     private fun Flow<List<ShareEntity>>.toShare(): Flow<LoadingResult<List<Share>>> =
         this.map { LoadingResult.Success(it) }

@@ -36,8 +36,7 @@ import kotlin.math.roundToInt
 fun InternalDrawer(
     modifier: Modifier = Modifier,
     drawerState: InternalDrawerState,
-    content: @Composable () -> Unit,
-    onOpenVault: () -> Unit
+    content: @Composable () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     BoxWithConstraints(modifier.fillMaxSize()) {
@@ -92,7 +91,7 @@ fun InternalDrawer(
                 contentColor = contentColorFor(MaterialTheme.colors.surface),
                 elevation = 16.dp
             ) {
-                InternalDrawerContents(onOpenVault = onOpenVault)
+                InternalDrawerContents()
             }
         }
     }

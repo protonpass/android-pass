@@ -24,7 +24,6 @@ import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
-import proton.android.pass.featurevault.impl.VaultList
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarMessage
@@ -66,12 +65,6 @@ fun PassAppContent(
     ) { contentPadding ->
         InternalDrawer(
             drawerState = internalDrawerState,
-            onOpenVault = {
-                coroutineScope.launch {
-                    internalDrawerState.close()
-                }
-                appNavigator.navigate(VaultList)
-            },
             content = {
                 Column(modifier = Modifier.padding(contentPadding)) {
                     PassModalBottomSheetLayout(appNavigator.bottomSheetNavigator) {

@@ -41,12 +41,10 @@ import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featuresettings.impl.signOutDialogGraph
 import proton.android.pass.featuretrash.impl.Trash
 import proton.android.pass.featuretrash.impl.trashGraph
-import proton.android.pass.featurevault.impl.CreateVault
 import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetCreateVaultGraph
 import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetEditVaultGraph
-import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -228,10 +226,6 @@ fun NavGraphBuilder.appGraph(
     onBoardingGraph(
         onOnBoardingFinished = { appNavigator.onBackClick() },
         onNavigateBack = finishActivity
-    )
-    vaultGraph(
-        onNavigateToCreateVault = { appNavigator.navigate(CreateVault) },
-        onNavigateUp = { appNavigator.onBackClick() }
     )
     signOutDialogGraph(
         onDismiss = { appNavigator.onBackClick() },

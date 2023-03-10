@@ -2,9 +2,11 @@ package proton.android.pass.data.impl.remote
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.ApiResult
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toLoadingResult
+import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
@@ -18,11 +20,21 @@ class RemoteShareDataSourceImpl @Inject constructor(
     override suspend fun createVault(
         userId: UserId,
         body: CreateVaultRequest
-    ): LoadingResult<ShareResponse> =
-        api.get<PasswordManagerApi>(userId)
+    ): LoadingResult<ShareResponse> {
+        val res = api.get<PasswordManagerApi>(userId)
             .invoke { createVault(body) }
-            .toLoadingResult()
-            .map { it.share }
+        when (res) {
+            is ApiResult.Success -> return LoadingResult.Success(res.value.share)
+            is ApiResult.Error -> {
+                if (res is ApiResult.Error.Http) {
+                    if (res.proton?.code == CODE_CANNOT_CREATE_MORE_VAULTS) {
+                        return LoadingResult.Error(CannotCreateMoreVaultsError())
+                    }
+                }
+                return LoadingResult.Error(res.cause ?: Exception("Create vault failed"))
+            }
+        }
+    }
 
     override suspend fun updateVault(
         userId: UserId,
@@ -59,7 +71,9 @@ class RemoteShareDataSourceImpl @Inject constructor(
             }
             .toLoadingResult()
 
+    @Suppress("UnderscoresInNumericLiterals")
     companion object {
         private const val PROTON_RESPONSE_OK = 1000
+        private const val CODE_CANNOT_CREATE_MORE_VAULTS = 300007
     }
 }

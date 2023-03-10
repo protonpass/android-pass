@@ -3,7 +3,6 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
@@ -65,9 +64,6 @@ class TestShareRepository : ShareRepository {
 
     override fun observeAllShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =
         observeSharesFlow
-
-    override fun observeSelectedShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =
-        emptyFlow()
 
     override suspend fun getById(userId: UserId, shareId: ShareId): LoadingResult<Share?> =
         getByIdResultFlow.first()

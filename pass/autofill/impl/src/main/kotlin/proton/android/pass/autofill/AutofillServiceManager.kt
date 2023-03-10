@@ -11,7 +11,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
-import me.proton.pass.autofill.service.R
+import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option

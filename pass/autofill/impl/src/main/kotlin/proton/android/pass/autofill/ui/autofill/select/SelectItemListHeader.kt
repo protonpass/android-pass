@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
-import me.proton.pass.autofill.service.R
+import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.previewproviders.SuggestionsPreviewProvider
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider

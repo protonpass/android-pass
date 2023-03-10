@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.view.autofill.AutofillManager
 import androidx.fragment.app.Fragment
 import proton.android.pass.autofill.sample.LoginResultFragment
-import me.proton.pass.autofill.sample.R
-import me.proton.pass.autofill.sample.databinding.FragmentSimpleLoginBinding
+import proton.android.pass.autofill.sample.R
+import proton.android.pass.autofill.sample.databinding.FragmentSimpleLoginBinding
 
 class SimpleLoginFragment : Fragment() {
 

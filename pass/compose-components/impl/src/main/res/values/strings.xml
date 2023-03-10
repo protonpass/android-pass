@@ -59,6 +59,7 @@
     <string name="forward_icon_content_description">Arrow forward icon</string>
     <string name="vault_selector_icon_content_description">Vault selector icon</string>
     <string name="add_item_icon_content_description">Add item icon</string>
+    <string name="navigate_back_icon_content_description">Navigate back icon</string>
 
     <!-- Vault selector -->
     <string name="vault_selector_title">Vault</string>
@@ -78,4 +79,8 @@
     <string name="most_recent_last_90_days">Last 90 days</string>
     <string name="most_recent_within_the_last_year">Within the last year</string>
     <string name="most_recent_older">Older</string>
+
+    <!-- Search Top Bar -->
+    <string name="search_topbar_icon_content_description">Search icon</string>
+
 </resources>

@@ -8,12 +8,17 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import me.proton.pass.autofill.service.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
+import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 import proton.pass.domain.ItemType
 
 @Composable
@@ -60,13 +65,19 @@ internal fun SelectItemScreenContent(
             )
         },
         topBar = {
-            SelectItemTopAppBar(
+            SearchTopBar(
+                placeholderText = stringResource(id = R.string.topbar_search_query),
                 searchQuery = uiState.searchUiState.searchQuery,
                 inSearchMode = uiState.searchUiState.inSearchMode,
                 onSearchQueryChange = onSearchQueryChange,
+                onStopSearch = onStopSearching,
                 onEnterSearch = onEnterSearch,
-                onStopSearching = onStopSearching,
-                onClose = onClose
+                drawerIcon = {
+                    BackArrowCircleIconButton(
+                        color = PassTheme.colors.accentPurpleOpaque,
+                        onUpClick = onClose
+                    )
+                }
             )
         }
     ) { padding ->

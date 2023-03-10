@@ -1,4 +1,4 @@
-package proton.android.pass.composecomponents.impl.topbar.icon
+package proton.android.pass.composecomponents.impl.topbar.iconbutton
 
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
@@ -8,10 +8,10 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 
 @ExperimentalComposeUiApi
 @Composable
-fun ArrowBackIcon(
+fun ArrowBackIconButton(
     onUpClick: () -> Unit
 ) {
-    NavigationIcon(onUpClick = onUpClick) {
+    NavigationIconButton(onUpClick = onUpClick) {
         Icon(
             imageVector = Icons.Default.ArrowBack,
             contentDescription = null

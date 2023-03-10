@@ -1,10 +1,10 @@
 package proton.android.pass.featurehome.impl
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -15,6 +15,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -25,6 +26,8 @@ import proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDia
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
+import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.featurehome.impl.icon.ActiveVaultIcon
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.pass.domain.ShareId
@@ -36,12 +39,11 @@ import proton.pass.domain.ShareId
 internal fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
-    homeFilter: HomeItemTypeSelection,
     shouldScrollToTop: Boolean,
     homeScreenNavigation: HomeScreenNavigation,
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
-    onStopSearching: () -> Unit,
+    onStopSearch: () -> Unit,
     sendItemToTrash: (ItemUiModel) -> Unit,
     onDrawerIconClick: () -> Unit,
     onSortingOptionsClick: () -> Unit,
@@ -51,29 +53,30 @@ internal fun HomeContent(
     onScrollToTop: () -> Unit,
     onProfileClick: () -> Unit
 ) {
-    // Only enable the backhandler if we are in search mode
-    BackHandler(enabled = uiState.searchUiState.inSearchMode) {
-        onStopSearching()
-    }
-
     Scaffold(
         modifier = modifier,
         topBar = {
-            HomeTopBar(
+            SearchTopBar(
                 searchQuery = uiState.searchUiState.searchQuery,
                 inSearchMode = uiState.searchUiState.inSearchMode,
-                homeFilter = homeFilter,
-                onSearchQueryChange = onSearchQueryChange,
+                placeholderText = stringResource(R.string.search_topbar_placeholder_all_vaults),
                 onEnterSearch = onEnterSearch,
-                onStopSearching = onStopSearching,
+                onStopSearch = onStopSearch,
+                onSearchQueryChange = onSearchQueryChange,
                 drawerIcon = {
-                    if (uiState.homeListUiState.selectedShare is None) {
-                        AllVaultsIcon(
-                            modifier = Modifier.padding(start = 8.dp),
-                            onClick = onDrawerIconClick
-                        )
+                    if (!uiState.searchUiState.inSearchMode) {
+                        if (uiState.homeListUiState.selectedShare is None) {
+                            AllVaultsIcon(
+                                onClick = onDrawerIconClick
+                            )
+                        } else {
+                            ActiveVaultIcon(
+                                modifier = Modifier.size(48.dp),
+                                onClick = onDrawerIconClick
+                            )
+                        }
                     } else {
-                        ActiveVaultIcon(onClick = onDrawerIconClick)
+                        ArrowBackIconButton { onStopSearch() }
                     }
                 }
             )

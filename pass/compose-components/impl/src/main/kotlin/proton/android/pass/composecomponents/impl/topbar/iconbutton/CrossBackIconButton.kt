@@ -1,4 +1,4 @@
-package proton.android.pass.composecomponents.impl.topbar.icon
+package proton.android.pass.composecomponents.impl.topbar.iconbutton
 
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
@@ -8,12 +8,12 @@ import me.proton.core.presentation.R
 
 @ExperimentalComposeUiApi
 @Composable
-fun ChevronBackIcon(
+fun CrossBackIconButton(
     onUpClick: () -> Unit
 ) {
-    NavigationIcon(onUpClick = onUpClick) {
+    NavigationIconButton(onUpClick = onUpClick) {
         Icon(
-            painter = painterResource(R.drawable.ic_proton_chevron_left),
+            painter = painterResource(R.drawable.ic_proton_close),
             contentDescription = null
         )
     }

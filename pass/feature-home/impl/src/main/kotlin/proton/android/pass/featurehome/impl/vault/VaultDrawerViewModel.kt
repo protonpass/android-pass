@@ -27,7 +27,6 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.UpdateActiveShare
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage
 import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.log.api.PassLogger
@@ -40,7 +39,6 @@ class VaultDrawerViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaultsWithItemCount,
     itemRepository: ItemRepository,
-    private val updateActiveShare: UpdateActiveShare,
     private val deleteVault: DeleteVault,
     private val snackbarMessageRepository: SnackbarMessageRepository
 ) : ViewModel() {
@@ -125,9 +123,6 @@ class VaultDrawerViewModel @Inject constructor(
 
     fun setVaultSelection(homeVaultSelection: HomeVaultSelection) = viewModelScope.launch {
         vaultSelectionState.update { homeVaultSelection }
-        if (homeVaultSelection is HomeVaultSelection.Vault) {
-            updateActiveShare(homeVaultSelection.shareId)
-        }
     }
 
     fun onDeleteVault(shareId: ShareId) = viewModelScope.launch {

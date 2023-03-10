@@ -1,12 +1,11 @@
 package proton.android.pass.composecomponents.impl.item
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -38,7 +37,8 @@ fun ActionableItemRow(
             .fillMaxWidth()
             .clickable { onItemClick(item) }
             .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         ItemRowContents(
             item = item,
@@ -46,7 +46,6 @@ fun ActionableItemRow(
             modifier = Modifier.weight(1f)
         )
         if (showMenuIcon) {
-            Spacer(modifier = Modifier.width(16.dp))
             IconButton(
                 onClick = { onItemMenuClick(item) },
                 modifier = Modifier.size(24.dp)

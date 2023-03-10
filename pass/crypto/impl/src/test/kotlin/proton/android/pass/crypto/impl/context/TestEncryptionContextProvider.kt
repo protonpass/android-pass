@@ -1,9 +1,8 @@
-package me.proton.android.pass.crypto.impl.context
+package proton.android.pass.crypto.impl.context
 
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.crypto.impl.context.EncryptionContextImpl
 
 class TestEncryptionContextProvider(private val key: EncryptionKey) : EncryptionContextProvider {
     override fun <R> withEncryptionContext(block: EncryptionContext.() -> R): R =

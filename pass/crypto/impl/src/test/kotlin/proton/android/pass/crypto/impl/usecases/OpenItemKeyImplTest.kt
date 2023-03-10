@@ -1,13 +1,12 @@
-package me.proton.android.pass.crypto.impl.usecases
+package proton.android.pass.crypto.impl.usecases
 
-import me.proton.android.pass.crypto.impl.context.TestEncryptionContextProvider
+import proton.android.pass.crypto.impl.context.TestEncryptionContextProvider
 import org.apache.commons.codec.binary.Base64
 import org.junit.Before
 import org.junit.Test
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.EncryptedItemKey
-import proton.android.pass.crypto.impl.usecases.OpenItemKeyImpl
 import proton.pass.domain.key.ShareKey
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals

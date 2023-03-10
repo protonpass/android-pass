@@ -1,4 +1,4 @@
-package me.proton.android.pass.crypto.impl.usecases
+package proton.android.pass.crypto.impl.usecases
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.apache.commons.codec.binary.Base64
@@ -7,7 +7,6 @@ import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.utils.TestUtils
 import proton.android.pass.crypto.api.extensions.serializeToProto
-import proton.android.pass.crypto.impl.usecases.UpdateItemImpl
 import proton.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
 import kotlin.random.Random

@@ -18,8 +18,7 @@ import proton.android.pass.log.api.PassLogger
 @Composable
 fun InternalDrawerContents(
     modifier: Modifier = Modifier,
-    viewModel: InternalDrawerViewModel = hiltViewModel(),
-    onOpenVault: () -> Unit,
+    viewModel: InternalDrawerViewModel = hiltViewModel()
 ) {
     Column(
         modifier = modifier
@@ -54,12 +53,6 @@ fun InternalDrawerContents(
             },
         ) {
             Text(text = "Trigger Crash")
-        }
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { onOpenVault() },
-        ) {
-            Text(text = "Manage vaults")
         }
         Button(
             modifier = Modifier.fillMaxWidth(),

@@ -11,6 +11,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.fakes.usecases.TestCreateVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
@@ -98,6 +99,23 @@ class CreateVaultViewModelTest {
             val message = snackbar.snackbarMessage.first().value()
             assertThat(message).isNotNull()
             assertThat(message).isEqualTo(VaultSnackbarMessage.CreateVaultError)
+        }
+    }
+
+    @Test
+    fun `displays proper error snackbar on cannotCreateMoreVaults`() = runTest {
+        instance.onNameChange("name")
+
+        createVault.setResult(LoadingResult.Error(CannotCreateMoreVaultsError()))
+        instance.onCreateClick()
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item.isVaultCreatedEvent).isEqualTo(IsVaultCreatedEvent.Unknown)
+            assertThat(item.isLoading).isEqualTo(IsLoadingState.NotLoading)
+
+            val message = snackbar.snackbarMessage.first().value()
+            assertThat(message).isNotNull()
+            assertThat(message).isEqualTo(VaultSnackbarMessage.CannotCreateMoreVaultsError)
         }
     }
 

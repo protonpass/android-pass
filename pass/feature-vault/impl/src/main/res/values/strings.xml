@@ -13,6 +13,7 @@
     <string name="snackbar_empty_share">Share is empty</string>
     <string name="snackbar_create_vault_success">Vault created</string>
     <string name="snackbar_create_vault_error">Vault not created</string>
+    <string name="snackbar_cannot_create_more_vaults_error">Cannot create more vaults</string>
     <string name="snackbar_edit_vault_success">Vault edited</string>
     <string name="snackbar_edit_vault_error">Vault not edited</string>
     <string name="snackbar_delete_vault_success">Vault deleted</string>

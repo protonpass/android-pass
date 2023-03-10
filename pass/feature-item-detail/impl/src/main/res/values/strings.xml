@@ -52,7 +52,6 @@
     <string name="totp_icon_content_description">OTP icon</string>
     <string name="website_icon_content_description">Website icon</string>
     <string name="open_menu_icon_content_description">Open menu icon</string>
-    <string name="navigate_back_icon_content_description">Navigate back icon</string>
 
     <!-- Bottomsheet -->
     <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>

@@ -52,7 +52,7 @@ fun AutofillApp(
             }
         }
     }
-    PassTheme(isDark = isDark) {
+    PassTheme(isDark = true) {
         Scaffold(
             modifier = modifier,
             snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }

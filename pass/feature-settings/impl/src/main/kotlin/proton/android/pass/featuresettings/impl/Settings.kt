@@ -9,6 +9,7 @@ import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.preferences.value
 
+@Suppress("UnusedPrivateMember")
 @Composable
 fun Settings(
     modifier: Modifier = Modifier,
@@ -55,14 +56,14 @@ fun Settings(
                 Divider(modifier = Modifier.fillMaxWidth())
             }
         }
-
+/*
         item {
             AppearanceSection(
                 theme = state.themePreference,
                 onSelectThemeClick = onOpenThemeSelection
             )
             Divider(modifier = Modifier.fillMaxWidth())
-        }
+        }*/
 
         item {
             AppSection(

@@ -98,6 +98,13 @@ internal fun HomeContent(
         Column(
             modifier = Modifier.padding(contentPadding)
         ) {
+            ItemTypeFilterList(
+                selected = HomeItemTypeSelection.AllItems,
+                loginCount = 1,
+                aliasCount = 2,
+                noteCount = 3,
+                onItemTypeClick = {}
+            )
             ItemListHeader(
                 sortingType = uiState.homeListUiState.sortingType,
                 showSearchResults = uiState.searchUiState.inSearchMode &&

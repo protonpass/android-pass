@@ -16,7 +16,7 @@ import me.proton.pass.autofill.service.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.composecomponents.impl.topbar.icon.ArrowBackIcon
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -27,7 +27,7 @@ fun IdleSelectItemTopBar(
 ) {
     ProtonTopAppBar(
         modifier = modifier,
-        navigationIcon = { ArrowBackIcon(onUpClick = onClose) },
+        navigationIcon = { ArrowBackIconButton(onUpClick = onClose) },
         title = {
             TopBarTitleView(title = stringResource(id = R.string.select_item_title_items))
         },

@@ -32,6 +32,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurecreateitem.impl.ItemSavedState
 import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.bottomsheet.CreateAliasBottomSheet
+import proton.android.pass.featurecreateitem.impl.alias.saver.LoginBottomSheetContentTypeSaver
 import proton.android.pass.featurecreateitem.impl.common.CreateUpdateTopBar
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.AliasOptionsBottomSheet
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.LoginBottomSheetContentType
@@ -78,7 +79,9 @@ internal fun LoginContent(
     }
 
     var regeneratePassword by remember { mutableStateOf(true) }
-    var currentBottomSheet by rememberSaveable { mutableStateOf(LoginBottomSheetContentType.GeneratePassword) }
+    var currentBottomSheet by rememberSaveable(stateSaver = LoginBottomSheetContentTypeSaver) {
+        mutableStateOf(LoginBottomSheetContentType.GeneratePassword)
+    }
     var showRemoveAliasDialog by rememberSaveable { mutableStateOf(false) }
     var showBottomSheetWhenKeyboardDisappears by rememberSaveable { mutableStateOf(false) }
 

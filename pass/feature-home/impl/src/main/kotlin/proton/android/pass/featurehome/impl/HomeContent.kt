@@ -87,7 +87,9 @@ internal fun HomeContent(
             )
         }
     ) { contentPadding ->
-        var itemToDelete by rememberSaveable { mutableStateOf<ItemUiModel?>(null) }
+        var itemToDelete by rememberSaveable(stateSaver = ItemUiModelSaver) {
+            mutableStateOf(null)
+        }
         val keyboardController = LocalSoftwareKeyboardController.current
 
         Column(

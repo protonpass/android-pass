@@ -33,6 +33,7 @@ import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetC
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.SortingBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.VaultOptionsBottomSheetContents
+import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
 import proton.android.pass.featurehome.impl.vault.VaultDeleteDialog
 import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
@@ -59,7 +60,9 @@ fun HomeScreen(
     val homeUiState by homeViewModel.homeUiState.collectAsStateWithLifecycle()
     val drawerUiState by vaultDrawerViewModel.drawerUiState.collectAsStateWithLifecycle()
 
-    var currentBottomSheet by rememberSaveable { mutableStateOf(HomeBottomSheetType.Sorting) }
+    var currentBottomSheet by rememberSaveable(stateSaver = HomeBottomSheetTypeSaver) {
+        mutableStateOf(HomeBottomSheetType.Sorting)
+    }
     var selectedItem by rememberSaveable(stateSaver = ItemUiModelSaver) {
         mutableStateOf(null)
     }

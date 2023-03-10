@@ -25,6 +25,7 @@ import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationError
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featurecreateitem.impl.alias.AliasItemValidationErrors.InvalidAliasContent
 import proton.android.pass.featurecreateitem.impl.alias.mailboxes.SelectMailboxesDialog
+import proton.android.pass.featurecreateitem.impl.alias.saver.AliasBottomSheetContentTypeSaver
 import proton.android.pass.featurecreateitem.impl.alias.suffixes.SelectSuffixDialog
 import proton.android.pass.featurecreateitem.impl.common.CreateUpdateTopBar
 import proton.android.pass.featurecreateitem.impl.login.bottomsheet.VaultSelectionBottomSheet
@@ -56,7 +57,9 @@ internal fun AliasContent(
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
-    var currentBottomSheet by rememberSaveable { mutableStateOf(AliasOptions) }
+    var currentBottomSheet by rememberSaveable(stateSaver = AliasBottomSheetContentTypeSaver) {
+        mutableStateOf(AliasOptions)
+    }
 
     // If the BottomSheet is visible and the user presses back, dismiss the BottomSheet
     BackHandler(enabled = bottomSheetState.isVisible) {

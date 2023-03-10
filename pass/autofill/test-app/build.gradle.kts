@@ -15,7 +15,7 @@ fun versionCode(versionName: String): Int {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
-    namespace = "me.proton.pass.autofill.sample"
+    namespace = "proton.android.pass.autofill.sample"
 
     defaultConfig {
         applicationId = "me.proton.pass.core.autofill.sample"

@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
@@ -42,8 +41,6 @@ class EditVaultViewModel @Inject constructor(
 
     fun onStart() = viewModelScope.launch(coroutineExceptionHandler) {
         formFlow.update { CreateVaultFormValues() }
-
-        hackSoItWorks()
 
         isLoadingFlow.update { IsLoadingState.Loading }
         getShareById.invoke(shareId = shareId)
@@ -105,11 +102,6 @@ class EditVaultViewModel @Inject constructor(
                 color = share.color
             )
         }
-    }
-
-    @Suppress("MagicNumber")
-    private suspend fun hackSoItWorks() {
-        delay(500)
     }
 
     private fun getNavShareId(): ShareId {

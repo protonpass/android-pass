@@ -152,7 +152,7 @@ fun HomeScreen(
                 HomeBottomSheetType.VaultOptions -> {
                     val showDelete = when (val share = homeUiState.homeListUiState.selectedShare) {
                         None -> true
-                        is Some -> share.value.id != selectedShare?.id?.id
+                        is Some -> share.value.id.id != selectedShare?.id?.id
                     }
                     VaultOptionsBottomSheetContents(
                         showDelete = showDelete,

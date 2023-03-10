@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -31,6 +32,8 @@ import kotlinx.datetime.Clock
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
@@ -45,11 +48,14 @@ import proton.android.pass.commonui.api.ItemSorter.sortByTitleDesc
 import proton.android.pass.commonui.api.ItemUiFilter
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
+import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.TrashItem
@@ -61,6 +67,7 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.ItemType
+import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
 import javax.inject.Inject
 
@@ -72,6 +79,7 @@ class HomeViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val applyPendingEvents: ApplyPendingEvents,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val getShareById: GetShareById,
     clock: Clock,
     observeCurrentUser: ObserveCurrentUser,
     observeActiveItems: ObserveActiveItems
@@ -100,6 +108,17 @@ class HomeViewModel @Inject constructor(
     ) { searchQuery, isInSearchMode, isProcessingSearch ->
         SearchWrapper(searchQuery, isInSearchMode, isProcessingSearch)
     }
+
+    private val selectedShareFlow: Flow<Option<ShareUiModel>> = vaultSelectionFlow
+        .mapLatest {
+            when (it) {
+                HomeVaultSelection.AllVaults -> None
+                HomeVaultSelection.Trash -> None
+                is HomeVaultSelection.Vault -> {
+                    shareIdToShare(it.shareId)
+                }
+            }
+        }
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
         MutableStateFlow(IsRefreshingState.NotRefreshing)
@@ -183,12 +202,12 @@ class HomeViewModel @Inject constructor(
     )
 
     val homeUiState = combine(
-        vaultSelectionFlow,
+        selectedShareFlow,
         resultsFlow,
         searchWrapperWrapper,
         isRefreshing,
         sortingTypeState
-    ) { vaultSelection, itemsResult, searchWrapper, refreshing, sortingType ->
+    ) { selectedShare, itemsResult, searchWrapper, refreshing, sortingType ->
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val items = when (itemsResult) {
@@ -199,12 +218,6 @@ class HomeViewModel @Inject constructor(
                 snackbarMessageRepository.emitSnackbarMessage(ObserveItemsError)
                 persistentMapOf()
             }
-        }
-
-        val selectedShare = when (vaultSelection) {
-            HomeVaultSelection.AllVaults -> None
-            is HomeVaultSelection.Vault -> vaultSelection.shareId.toOption()
-            HomeVaultSelection.Trash -> None
         }
 
         HomeUiState(
@@ -321,6 +334,32 @@ class HomeViewModel @Inject constructor(
     fun setVaultSelection(homeVaultSelection: HomeVaultSelection) {
         vaultSelectionFlow.update { homeVaultSelection }
     }
+
+    private suspend fun shareIdToShare(shareId: ShareId): Option<ShareUiModel> {
+        val shareResult = getShareById(shareId = shareId)
+            .map {
+                if (it == null) {
+                    None
+                } else {
+                    when (val asVault = it.toVault(encryptionContextProvider)) {
+                        None -> None
+                        is Some -> ShareUiModel.fromVault(asVault.value).toOption()
+                    }
+                }
+            }
+
+        return when (shareResult) {
+            LoadingResult.Loading -> None
+            is LoadingResult.Error -> {
+                PassLogger.w(TAG, shareResult.exception, "Error getting share by id")
+                None
+            }
+            is LoadingResult.Success -> {
+                shareResult.data
+            }
+        }
+    }
+
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L

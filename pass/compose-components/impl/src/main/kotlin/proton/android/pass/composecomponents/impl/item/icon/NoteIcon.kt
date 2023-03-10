@@ -24,8 +24,8 @@ fun NoteIcon(
         size = size,
     ) {
         Icon(
-            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_note),
-            contentDescription = stringResource(R.string.alias_title_icon_content_description),
+            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_file_lines),
+            contentDescription = stringResource(R.string.note_title_icon_content_description),
             tint = PassTheme.colors.accentYellowOpaque
         )
     }

@@ -18,7 +18,7 @@ val ShareUiModelWithItemCountSaver: Saver<ShareUiModelWithItemCount?, Any> = run
         save = {
             if (it != null) {
                 mapOf(
-                    shareId to it.id,
+                    shareId to it.id.id,
                     name to it.name,
                     icon to it.icon.name,
                     color to it.color.name,

@@ -33,7 +33,7 @@ import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.composecomponents.impl.topbar.icon.CrossBackIcon
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackIconButton
 import proton.android.pass.feature.vault.impl.R
 import proton.pass.domain.ShareId
 
@@ -84,7 +84,7 @@ fun VaultListContent(
                 ProtonTopAppBar(
                     modifier = modifier,
                     title = { TopBarTitleView(title = stringResource(id = R.string.vault_list_top_bar_title)) },
-                    navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
+                    navigationIcon = { CrossBackIconButton(onUpClick = onUpClick) },
                     actions = {
                         IconButton(
                             onClick = { onVaultCreate() },

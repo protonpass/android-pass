@@ -18,7 +18,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.composecomponents.impl.topbar.icon.NavigationIcon
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.NavigationIconButton
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -32,7 +32,7 @@ internal fun TrashTopBar(
         modifier = modifier,
         title = { TopBarTitleView(title = stringResource(id = R.string.title_trash)) },
         navigationIcon = {
-            NavigationIcon(
+            NavigationIconButton(
                 modifier = modifier.padding(start = 8.dp),
                 onUpClick = onDrawerIconClick
             ) {

@@ -16,7 +16,7 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.composecomponents.impl.topbar.TopBarLoading
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.composecomponents.impl.topbar.icon.CrossBackIcon
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackIconButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -34,7 +34,7 @@ internal fun TotpTopBar(
     ProtonTopAppBar(
         modifier = modifier,
         title = { TopBarTitleView(title = topBarTitle) },
-        navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
+        navigationIcon = { CrossBackIconButton(onUpClick = onUpClick) },
         actions = {
             IconButton(
                 enabled = isLoadingState == IsLoadingState.NotLoading,

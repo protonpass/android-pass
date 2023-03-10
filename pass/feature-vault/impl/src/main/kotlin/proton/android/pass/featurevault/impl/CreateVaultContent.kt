@@ -19,7 +19,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.topbar.TopBarLoading
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.composecomponents.impl.topbar.icon.CrossBackIcon
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackIconButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.feature.vault.impl.R
 import proton.android.pass.featurevault.impl.DraftVaultValidationErrors.BlankTitle
@@ -40,7 +40,7 @@ fun CreateVaultContent(
             ProtonTopAppBar(
                 modifier = modifier,
                 title = { TopBarTitleView(title = stringResource(id = R.string.vault_create_top_bar_title)) },
-                navigationIcon = { CrossBackIcon(onUpClick = onUpClick) },
+                navigationIcon = { CrossBackIconButton(onUpClick = onUpClick) },
                 actions = {
                     IconButton(
                         enabled = uiState.isLoadingState == IsLoadingState.NotLoading,

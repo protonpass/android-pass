@@ -1,4 +1,4 @@
-package proton.android.pass.composecomponents.impl.topbar.icon
+package proton.android.pass.composecomponents.impl.topbar.iconbutton
 
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
@@ -9,11 +9,11 @@ import me.proton.core.presentation.R
 
 @ExperimentalComposeUiApi
 @Composable
-fun HamburgerIcon(
+fun HamburgerIconButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
-    NavigationIcon(
+    NavigationIconButton(
         modifier = modifier,
         onUpClick = onClick
     ) {

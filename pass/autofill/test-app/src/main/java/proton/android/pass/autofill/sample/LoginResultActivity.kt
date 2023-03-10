@@ -2,7 +2,7 @@ package proton.android.pass.autofill.sample
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import me.proton.pass.autofill.sample.databinding.ActivityLoginResultBinding
+import proton.android.pass.autofill.sample.databinding.ActivityLoginResultBinding
 
 class LoginResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

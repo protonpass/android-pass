@@ -2,8 +2,8 @@ package proton.android.pass.autofill.sample.simplefragment
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import me.proton.pass.autofill.sample.R
-import me.proton.pass.autofill.sample.databinding.ActivitySimpleFragmentLoginBinding
+import proton.android.pass.autofill.sample.R
+import proton.android.pass.autofill.sample.databinding.ActivitySimpleFragmentLoginBinding
 
 class SimpleFragmentLoginActivity : AppCompatActivity() {
 

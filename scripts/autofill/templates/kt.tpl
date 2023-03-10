@@ -1,4 +1,4 @@
-package me.proton.pass.autofill
+package proton.android.pass.autofill
 
 val BROWSERS = setOf(
 {{CONTENT}}

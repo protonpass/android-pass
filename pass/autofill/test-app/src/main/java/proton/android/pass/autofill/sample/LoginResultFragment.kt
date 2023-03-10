@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import me.proton.pass.autofill.sample.databinding.FragmentLoginResultBinding
+import proton.android.pass.autofill.sample.databinding.FragmentLoginResultBinding
 
 class LoginResultFragment : Fragment() {
 

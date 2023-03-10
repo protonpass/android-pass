@@ -9,7 +9,7 @@ plugins {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
-    namespace = "me.proton.pass.autofill.service"
+    namespace = "proton.android.pass.autofill.service"
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()

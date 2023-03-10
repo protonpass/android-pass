@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
 import proton.android.pass.autofill.sample.LoginResultActivity
-import me.proton.pass.autofill.sample.databinding.ActivitySimpleLoginBinding
+import proton.android.pass.autofill.sample.databinding.ActivitySimpleLoginBinding
 
 class SimpleLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

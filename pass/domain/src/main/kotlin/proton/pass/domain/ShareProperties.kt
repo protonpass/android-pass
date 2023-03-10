@@ -23,7 +23,27 @@ enum class ShareIcon {
     Icon7,
     Icon8,
     Icon9,
-    Icon10
+    Icon10,
+    Icon11,
+    Icon12,
+    Icon13,
+    Icon14,
+    Icon15,
+    Icon16,
+    Icon17,
+    Icon18,
+    Icon19,
+    Icon20,
+    Icon21,
+    Icon22,
+    Icon23,
+    Icon24,
+    Icon25,
+    Icon26,
+    Icon27,
+    Icon28,
+    Icon29,
+    Icon30
 }
 
 data class ShareProperties(

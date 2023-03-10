@@ -7,7 +7,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,6 +20,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.applyIf
+
+private val ButtonContentHeight = 20.dp
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -43,13 +44,13 @@ fun LoadingCircleButton(
         AnimatedContent(modifier = Modifier.padding(16.dp, 10.dp), targetState = isLoading) {
             if (it) {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(20.dp),
+                    modifier = Modifier.size(ButtonContentHeight),
                     strokeWidth = 2.dp,
                     color = ProtonTheme.colors.iconInverted
                 )
             } else {
                 Row(
-                    modifier = Modifier.fillMaxHeight(),
+                    modifier = Modifier.height(ButtonContentHeight),
                     horizontalArrangement = Arrangement.spacedBy(5.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {

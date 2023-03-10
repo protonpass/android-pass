@@ -23,7 +23,6 @@ import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.feature.vault.impl.R
-import proton.android.pass.log.api.PassLogger
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -35,8 +34,6 @@ fun CreateVaultBottomSheetTopBar(
     onCloseClick: () -> Unit,
     onCreateClick: () -> Unit
 ) {
-
-    PassLogger.d("CarlosTest", "IsLoading: $isLoading")
 
     val keyboardController = LocalSoftwareKeyboardController.current
     Row(

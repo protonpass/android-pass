@@ -212,12 +212,11 @@ fun HomeScreen(
             HomeContent(
                 uiState = homeUiState,
                 // homeFilter = homeItemTypeSelection,
-                homeFilter = HomeItemTypeSelection.AllItems,
                 shouldScrollToTop = shouldScrollToTop,
                 homeScreenNavigation = homeScreenNavigation,
                 onSearchQueryChange = { homeViewModel.onSearchQueryChange(it) },
                 onEnterSearch = { homeViewModel.onEnterSearch() },
-                onStopSearching = { homeViewModel.onStopSearching() },
+                onStopSearch = { homeViewModel.onStopSearching() },
                 sendItemToTrash = { homeViewModel.sendItemToTrash(it) },
                 onDrawerIconClick = { scope.launch { drawerState.open() } },
                 onSortingOptionsClick = {

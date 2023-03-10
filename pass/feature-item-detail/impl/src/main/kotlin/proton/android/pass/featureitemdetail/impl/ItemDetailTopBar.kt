@@ -25,6 +25,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 import proton.android.pass.composecomponents.impl.container.Circle
+import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
 
 @ExperimentalComposeUiApi
 @Composable
@@ -40,17 +41,11 @@ internal fun ItemDetailTopBar(
         modifier = modifier,
         title = { },
         navigationIcon = {
-            Circle(
-                modifier = Modifier.padding(12.dp, 4.dp),
-                backgroundColor = color,
-                onClick = { onUpClick() }
-            ) {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_arrow_back),
-                    contentDescription = stringResource(R.string.navigate_back_icon_content_description),
-                    tint = color
-                )
-            }
+            BackArrowCircleIconButton(
+                modifier = modifier.padding(12.dp, 4.dp),
+                color = color,
+                onUpClick = onUpClick
+            )
         },
         actions = {
             Row(

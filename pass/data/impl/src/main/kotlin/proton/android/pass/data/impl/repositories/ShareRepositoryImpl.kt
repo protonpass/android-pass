@@ -79,7 +79,9 @@ class ShareRepositoryImpl @Inject constructor(
 
         val createVaultResult = remoteShareDataSource.createVault(userAddress.userId, request)
         val createVaultResponse = when (createVaultResult) {
-            is LoadingResult.Error -> return@withContext LoadingResult.Error(createVaultResult.exception)
+            is LoadingResult.Error -> {
+                return@withContext LoadingResult.Error(createVaultResult.exception)
+            }
             LoadingResult.Loading -> return@withContext LoadingResult.Loading
             is LoadingResult.Success -> createVaultResult.data
         }

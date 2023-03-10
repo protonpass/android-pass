@@ -16,7 +16,7 @@ fun versionCode(versionName: String): Int {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
-    namespace = "me.proton.pass.autofill.e2e"
+    namespace = "proton.android.pass.autofill.e2e"
 
     defaultConfig {
         applicationId = "me.proton.pass.core.autofill.e2e"

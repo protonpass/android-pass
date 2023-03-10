@@ -4,7 +4,7 @@ import android.app.assist.AssistStructure
 import android.content.Context
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
-import me.proton.pass.autofill.service.R
+import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.Utils.getApplicationPackageName
 import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.SaveInformation

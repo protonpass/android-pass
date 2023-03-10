@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultStrong
-import me.proton.pass.autofill.service.R
+import proton.android.pass.autofill.service.R
 import proton.android.pass.commonuimodels.api.ItemUiModel
 
 @Composable

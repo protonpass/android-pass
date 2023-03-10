@@ -3,7 +3,7 @@ package proton.android.pass.autofill.sample.webview
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import me.proton.pass.autofill.sample.databinding.ActivityWebviewLoginBinding
+import proton.android.pass.autofill.sample.databinding.ActivityWebviewLoginBinding
 
 class WebViewLoginActivity : AppCompatActivity() {
 

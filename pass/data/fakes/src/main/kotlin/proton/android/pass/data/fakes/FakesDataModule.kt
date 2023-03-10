@@ -11,7 +11,6 @@ import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.ObserveActiveItems
-import proton.android.pass.data.api.usecases.ObserveActiveShare
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -26,7 +25,6 @@ import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestGetShareById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
-import proton.android.pass.data.fakes.usecases.TestObserveActiveShare
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
@@ -68,11 +66,6 @@ abstract class FakesDataModule {
     abstract fun bindObserveActiveItems(
         impl: TestObserveActiveItems
     ): ObserveActiveItems
-
-    @Binds
-    abstract fun bindObserveActiveShare(
-        impl: TestObserveActiveShare
-    ): ObserveActiveShare
 
     @Binds
     abstract fun bindObserveVaults(

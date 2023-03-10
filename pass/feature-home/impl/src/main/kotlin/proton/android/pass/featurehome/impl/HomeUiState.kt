@@ -8,10 +8,10 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
-import proton.pass.domain.ShareId
 
 @Immutable
 data class HomeUiState(
@@ -31,7 +31,7 @@ data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
     val items: ImmutableMap<GroupingKeys, ImmutableList<ItemUiModel>>,
-    val selectedShare: Option<ShareId> = None,
+    val selectedShare: Option<ShareUiModel> = None,
     val sortingType: SortingType = SortingType.MostRecent
 ) {
     companion object {

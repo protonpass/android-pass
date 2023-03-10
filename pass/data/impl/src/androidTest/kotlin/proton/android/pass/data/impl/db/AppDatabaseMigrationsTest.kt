@@ -11,6 +11,8 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
 
+private const val VALIDATE_DROPPED_TABLES = true
+
 @RunWith(AndroidJUnit4::class)
 class MigrationTest {
 
@@ -45,7 +47,7 @@ class MigrationTest {
         helper.runMigrationsAndValidate(
             AppDatabase.DB_NAME,
             AppDatabase.VERSION,
-            false,
+            VALIDATE_DROPPED_TABLES,
             *AppDatabase.migrations.toTypedArray()
         )
 

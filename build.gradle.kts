@@ -22,6 +22,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.doctor)
     alias(libs.plugins.gradlePlugin.application) apply false
     alias(libs.plugins.gradlePlugin.library) apply false
+    alias(libs.plugins.gradlePlugin.test) apply false
     alias(libs.plugins.gradlePlugin.ksp) apply false
     alias(libs.plugins.gradlePlugin.kotlin.jvm) apply false
     alias(libs.plugins.gradlePlugin.kotlin.serialization) apply false

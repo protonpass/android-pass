@@ -224,6 +224,7 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uiTooling)
+    implementation(libs.androidx.profileinstaller)
     implementation(libs.androidx.startup.runtime)
     implementation(libs.coil)
     implementation(libs.core.account)

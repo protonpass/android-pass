@@ -14,6 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
+        <profileable android:shell="true" tools:targetApi="q" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"

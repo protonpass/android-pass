@@ -32,6 +32,8 @@ data class HomeListUiState(
     val isRefreshing: IsRefreshingState,
     val items: ImmutableMap<GroupingKeys, ImmutableList<ItemUiModel>>,
     val selectedShare: Option<ShareUiModel> = None,
+    val homeVaultSelection: HomeVaultSelection = HomeVaultSelection.AllVaults,
+    val homeItemTypeSelection: HomeItemTypeSelection = HomeItemTypeSelection.AllItems,
     val sortingType: SortingType = SortingType.MostRecent
 ) {
     companion object {
@@ -39,7 +41,6 @@ data class HomeListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
             items = persistentMapOf(),
-            selectedShare = None
         )
     }
 }
@@ -48,13 +49,15 @@ data class HomeListUiState(
 data class SearchUiState(
     val searchQuery: String,
     val isProcessingSearch: IsProcessingSearchState,
-    val inSearchMode: Boolean
+    val inSearchMode: Boolean,
+    val itemTypeCount: ItemTypeCount
 ) {
     companion object {
         val Initial = SearchUiState(
             searchQuery = "",
             isProcessingSearch = IsProcessingSearchState.NotLoading,
-            inSearchMode = false
+            inSearchMode = false,
+            itemTypeCount = ItemTypeCount(0, 0, 0)
         )
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
@@ -45,6 +46,7 @@ private const val PLACEHOLDER_ELEMENTS = 40
 fun ItemsList(
     modifier: Modifier = Modifier,
     items: ImmutableMap<GroupingKeys, ImmutableList<ItemUiModel>>,
+    scrollableState: LazyListState = rememberLazyListState(),
     shouldScrollToTop: Boolean,
     highlight: String = "",
     isRefreshing: IsRefreshingState,
@@ -60,7 +62,6 @@ fun ItemsList(
     onScrollToTop: () -> Unit,
     emptyContent: @Composable () -> Unit
 ) {
-    val scrollableState = rememberLazyListState()
     LaunchedEffect(shouldScrollToTop) {
         if (shouldScrollToTop) {
             scrollableState.scrollToItem(0)

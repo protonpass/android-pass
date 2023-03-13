@@ -15,4 +15,5 @@ enum class VaultSnackbarMessage(
     CreateVaultSuccess(R.string.snackbar_create_vault_success, SnackbarType.SUCCESS),
     CannotCreateMoreVaultsError(R.string.snackbar_cannot_create_more_vaults_error, SnackbarType.ERROR),
     CreateVaultError(R.string.snackbar_create_vault_error, SnackbarType.ERROR),
+    CannotRetrieveVaultError(R.string.snackbar_retrieve_vault_error, SnackbarType.ERROR)
 }

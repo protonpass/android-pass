@@ -39,9 +39,16 @@ class EditVaultViewModel @Inject constructor(
         formFlow.update { CreateVaultFormValues() }
 
         isLoadingFlow.update { IsLoadingState.Loading }
-        val vault = getVaultById(shareId = shareId).first()
-        setInitialValues(vault)
-        isLoadingFlow.update { IsLoadingState.NotLoading }
+        kotlin.runCatching {
+            getVaultById(shareId = shareId).first()
+        }.onSuccess { vault ->
+            setInitialValues(vault)
+            isLoadingFlow.update { IsLoadingState.NotLoading }
+        }.onFailure {
+            PassLogger.w(TAG, it, "Error getting vault by id")
+            snackbarMessageRepository.emitSnackbarMessage(VaultSnackbarMessage.CannotRetrieveVaultError)
+            isLoadingFlow.update { IsLoadingState.NotLoading }
+        }
     }
 
     fun onEditClick() = viewModelScope.launch {

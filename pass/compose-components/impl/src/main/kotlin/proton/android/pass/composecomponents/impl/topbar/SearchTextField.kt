@@ -50,7 +50,7 @@ fun SearchTextField(
         }
     }
     BackHandler(enabled = inSearchMode) {
-        focusManager.clearFocus()
+        onStopSearch()
     }
     ProtonTextField(
         modifier = modifier
@@ -80,10 +80,8 @@ fun SearchTextField(
         },
         textStyle = ProtonTheme.typography.default,
         onFocusChange = {
-            if (it) {
+            if (it && !inSearchMode) {
                 onEnterSearch()
-            } else {
-                onStopSearch()
             }
         },
         onChange = onSearchQueryChange,

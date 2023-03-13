@@ -29,10 +29,11 @@ fun TitleVaultSelectionSection(
     onTitleChanged: (String) -> Unit,
     onVaultClicked: () -> Unit
 ) {
-    if (showVaultSelector) {
-        Column(
-            modifier = modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
-        ) {
+
+    Column(
+        modifier = modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
+    ) {
+        if (showVaultSelector) {
             VaultSelector(
                 vaultName = vaultName ?: "",
                 color = vaultColor ?: ShareColor.Color1,
@@ -40,22 +41,14 @@ fun TitleVaultSelectionSection(
                 onVaultClicked = onVaultClicked
             )
             Divider()
-            TitleSection(
-                modifier = Modifier.padding(12.dp),
-                value = titleValue,
-                onTitleRequiredError = onTitleRequiredError,
-                enabled = enabled,
-                isRounded = true,
-                onChange = onTitleChanged
-            )
         }
-    } else {
         TitleSection(
-            modifier = modifier,
+            modifier = Modifier.padding(12.dp),
             value = titleValue,
+            requestFocus = true,
             onTitleRequiredError = onTitleRequiredError,
             enabled = enabled,
-            isRounded = false,
+            isRounded = true,
             onChange = onTitleChanged
         )
     }

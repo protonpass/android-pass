@@ -4,24 +4,20 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.logError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.GetShareById
+import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarMessageRepository
-import proton.pass.domain.Share
 import proton.pass.domain.ShareId
+import proton.pass.domain.Vault
 import proton.pass.domain.entity.NewVault
-import proton_pass_vault_v1.VaultV1
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,7 +26,7 @@ class EditVaultViewModel @Inject constructor(
     private val updateVault: UpdateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val savedStateHandle: SavedStateHandle,
-    private val getShareById: GetShareById
+    private val getVaultById: GetVaultById
 ) : BaseVaultViewModel() {
 
     private val shareId = getNavShareId()
@@ -43,12 +39,8 @@ class EditVaultViewModel @Inject constructor(
         formFlow.update { CreateVaultFormValues() }
 
         isLoadingFlow.update { IsLoadingState.Loading }
-        getShareById.invoke(shareId = shareId)
-            .onSuccess { share ->
-                requireNotNull(share)
-                setInitialValues(share)
-            }
-            .logError(PassLogger, TAG, "Error loading share")
+        val vault = getVaultById(shareId = shareId).first()
+        setInitialValues(vault)
         isLoadingFlow.update { IsLoadingState.NotLoading }
     }
 
@@ -83,23 +75,12 @@ class EditVaultViewModel @Inject constructor(
         }
     }
 
-    private fun setInitialValues(share: Share) {
-        val name = when (val content = share.content) {
-            None -> ""
-            is Some -> {
-                encryptionContextProvider.withEncryptionContext {
-                    val decrypted = decrypt(content.value)
-                    val parsed = VaultV1.Vault.parseFrom(decrypted)
-                    parsed.name
-                }
-            }
-        }
-
+    private fun setInitialValues(vault: Vault) {
         formFlow.update {
             CreateVaultFormValues(
-                name = name,
-                icon = share.icon,
-                color = share.color
+                name = vault.name,
+                icon = vault.icon,
+                color = vault.color
             )
         }
     }

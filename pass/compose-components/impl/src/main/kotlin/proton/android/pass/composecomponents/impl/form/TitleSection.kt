@@ -4,7 +4,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
@@ -25,8 +29,11 @@ fun TitleSection(
     onTitleRequiredError: Boolean,
     enabled: Boolean = true,
     isRounded: Boolean = false,
+    requestFocus: Boolean = false,
     onChange: (String) -> Unit
 ) {
+    val focusRequester = remember { FocusRequester() }
+
     ProtonTextField(
         modifier = modifier
             .applyIf(
@@ -35,7 +42,8 @@ fun TitleSection(
                     roundedContainer(ProtonTheme.colors.separatorNorm)
                         .padding(16.dp, 10.dp, 0.dp, 10.dp)
                 }
-            ),
+            )
+            .focusRequester(focusRequester),
         textStyle = PassTypography.hero(enabled),
         label = {
             ProtonTextFieldLabel(
@@ -60,6 +68,12 @@ fun TitleSection(
         isError = onTitleRequiredError,
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
     )
+
+    LaunchedEffect(requestFocus) {
+        if (requestFocus) {
+            focusRequester.requestFocus()
+        }
+    }
 }
 
 class ThemeAndTitleInputProvider :

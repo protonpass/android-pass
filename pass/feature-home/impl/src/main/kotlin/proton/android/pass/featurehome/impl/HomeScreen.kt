@@ -211,7 +211,6 @@ fun HomeScreen(
         ) {
             HomeContent(
                 uiState = homeUiState,
-                // homeFilter = homeItemTypeSelection,
                 shouldScrollToTop = shouldScrollToTop,
                 homeScreenNavigation = homeScreenNavigation,
                 onSearchQueryChange = { homeViewModel.onSearchQueryChange(it) },
@@ -236,7 +235,8 @@ fun HomeScreen(
                 },
                 onRefresh = { homeViewModel.onRefresh() },
                 onScrollToTop = { shouldScrollToTop = false },
-                onProfileClick = { homeScreenNavigation.toProfile() }
+                onProfileClick = { homeScreenNavigation.toProfile() },
+                onItemTypeSelected = { homeViewModel.setItemTypeSelection(it) }
             )
 
             VaultDeleteDialog(

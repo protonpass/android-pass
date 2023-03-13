@@ -4,9 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetVaultById
@@ -38,17 +39,24 @@ class EditVaultViewModel @Inject constructor(
     fun onStart() = viewModelScope.launch(coroutineExceptionHandler) {
         formFlow.update { CreateVaultFormValues() }
 
-        isLoadingFlow.update { IsLoadingState.Loading }
-        kotlin.runCatching {
-            getVaultById(shareId = shareId).first()
-        }.onSuccess { vault ->
-            setInitialValues(vault)
-            isLoadingFlow.update { IsLoadingState.NotLoading }
-        }.onFailure {
-            PassLogger.w(TAG, it, "Error getting vault by id")
-            snackbarMessageRepository.emitSnackbarMessage(VaultSnackbarMessage.CannotRetrieveVaultError)
-            isLoadingFlow.update { IsLoadingState.NotLoading }
-        }
+        getVaultById(shareId = shareId)
+            .asLoadingResult()
+            .collect {
+                when (it) {
+                    LoadingResult.Loading -> {
+                        isLoadingFlow.update { IsLoadingState.Loading }
+                    }
+                    is LoadingResult.Error -> {
+                        PassLogger.w(TAG, it.exception, "Error getting vault by id")
+                        snackbarMessageRepository.emitSnackbarMessage(VaultSnackbarMessage.CannotRetrieveVaultError)
+                        isLoadingFlow.update { IsLoadingState.NotLoading }
+                    }
+                    is LoadingResult.Success -> {
+                        setInitialValues(it.data)
+                        isLoadingFlow.update { IsLoadingState.NotLoading }
+                    }
+                }
+            }
     }
 
     fun onEditClick() = viewModelScope.launch {

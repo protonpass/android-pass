@@ -2,6 +2,7 @@ package proton.android.pass.featurevault.impl.bottomsheet
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -10,6 +11,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.data.fakes.usecases.TestUpdateVault
+import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import proton.android.pass.test.MainDispatcherRule
@@ -110,6 +112,48 @@ class EditVaultViewModelTest {
         assertThat(notNullPayload.shareId).isEqualTo(vault.shareId)
         assertThat(notNullPayload.vault.color).isEqualTo(vault.color)
         assertThat(notNullPayload.vault.icon).isEqualTo(vault.icon)
+    }
+
+    @Test
+    fun `onEditClick sends snackbar message on error`() = runTest {
+        // Given
+        val vault = Vault(
+            shareId = ShareId(SHARE_ID),
+            name = "some name",
+            color = ShareColor.Color4,
+            icon = ShareIcon.Icon7
+        )
+        getVaultById.emitValue(vault)
+        updateVault.setResult(Result.failure(IllegalStateException("test")))
+
+        // When
+        instance.onStart()
+        instance.onEditClick()
+
+        // Then
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item.isLoading).isEqualTo(IsLoadingState.NotLoading)
+        }
+
+        val message = snackbar.snackbarMessage.first().value()
+        assertThat(message).isNotNull()
+        assertThat(message!!).isEqualTo(VaultSnackbarMessage.EditVaultError)
+    }
+
+    @Test
+    fun `onStart with error shows error message`() = runTest {
+        getVaultById.sendException(IllegalStateException("Test"))
+
+        instance.onStart()
+        instance.state.test {
+            val item = awaitItem()
+            assertThat(item.isLoading).isEqualTo(IsLoadingState.NotLoading)
+        }
+
+        val message = snackbar.snackbarMessage.first().value()
+        assertThat(message).isNotNull()
+        assertThat(message!!).isEqualTo(VaultSnackbarMessage.CannotRetrieveVaultError)
     }
 
     companion object {

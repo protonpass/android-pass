@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -55,7 +56,8 @@ internal fun HomeContent(
     onItemMenuClick: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit,
     onScrollToTop: () -> Unit,
-    onProfileClick: () -> Unit
+    onProfileClick: () -> Unit,
+    onItemTypeSelected: (HomeItemTypeSelection) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -108,17 +110,20 @@ internal fun HomeContent(
             mutableStateOf(null)
         }
         val keyboardController = LocalSoftwareKeyboardController.current
+        val scrollableState = rememberLazyListState()
 
         Column(
             modifier = Modifier.padding(contentPadding)
         ) {
-            ItemTypeFilterList(
-                selected = HomeItemTypeSelection.AllItems,
-                loginCount = 1,
-                aliasCount = 2,
-                noteCount = 3,
-                onItemTypeClick = {}
-            )
+            if (uiState.searchUiState.inSearchMode) {
+                ItemTypeFilterList(
+                    selected = uiState.homeListUiState.homeItemTypeSelection,
+                    loginCount = uiState.searchUiState.itemTypeCount.loginCount,
+                    aliasCount = uiState.searchUiState.itemTypeCount.aliasCount,
+                    noteCount = uiState.searchUiState.itemTypeCount.noteCount,
+                    onItemTypeClick = onItemTypeSelected
+                )
+            }
             ItemListHeader(
                 sortingType = uiState.homeListUiState.sortingType,
                 showSearchResults = uiState.searchUiState.inSearchMode &&
@@ -131,6 +136,7 @@ internal fun HomeContent(
             ItemsList(
                 items = uiState.homeListUiState.items,
                 shouldScrollToTop = shouldScrollToTop,
+                scrollableState = scrollableState,
                 highlight = uiState.searchUiState.searchQuery,
                 onItemClick = { item ->
                     keyboardController?.hide()

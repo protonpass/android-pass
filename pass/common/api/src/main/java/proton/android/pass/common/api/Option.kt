@@ -8,6 +8,12 @@ sealed interface Option<out A> {
 
     fun <R> map(block: (A) -> R): Option<R>
 
+    fun <B> flatMap(f: (A) -> Option<B>): Option<B> =
+        when (this) {
+            is None -> this
+            is Some -> f(value)
+        }
+
     fun value(): A? = when (this) {
         None -> null
         is Some -> this.value

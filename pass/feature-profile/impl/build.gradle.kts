@@ -31,6 +31,12 @@ dependencies {
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.core.presentation)
+    implementation(libs.core.presentation.compose)
+
+    debugImplementation(libs.androidx.compose.uiTooling)
+    implementation(libs.androidx.compose.uiToolingPreview)
+    debugImplementation(libs.androidx.compose.uiTestManifest)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
@@ -39,7 +45,7 @@ dependencies {
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
 
-    implementation(projects.pass.featureSettings.impl)
     implementation(projects.pass.navigation.api)
+    implementation(projects.pass.commonUi.api)
     implementation(projects.pass.composeComponents.impl)
 }

@@ -27,7 +27,7 @@ dependencies {
 
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.uiTooling)
+    debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.hilt.navigation.compose)
 

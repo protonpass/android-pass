@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 
-object Settings : NavItem(baseRoute = "settings", isTopLevel = true)
+object Settings : NavItem(baseRoute = "settings")
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.settingsGraph(

@@ -18,12 +18,14 @@ android {
 }
 
 dependencies {
-    api(libs.androidx.compose.runtime)
-    api(libs.androidx.compose.ui)
-    api(libs.androidx.compose.uiToolingPreview)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.compose.ui)
     implementation(libs.core.presentation.compose)
-
     implementation(libs.kotlinx.datetime)
+
+    debugImplementation(libs.androidx.compose.uiTooling)
+    implementation(libs.androidx.compose.uiToolingPreview)
+
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.crypto.api)

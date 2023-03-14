@@ -36,6 +36,7 @@ import proton.android.pass.featureonboarding.impl.OnBoarding
 import proton.android.pass.featureonboarding.impl.onBoardingGraph
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.profileGraph
+import proton.android.pass.featuresettings.impl.Settings
 import proton.android.pass.featuresettings.impl.SignOutDialog
 import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featuresettings.impl.signOutDialogGraph
@@ -126,10 +127,9 @@ fun NavGraphBuilder.appGraph(
         onDismiss = { appNavigator.onBackClick() }
     )
     profileGraph(
+        onSettingsClick = { appNavigator.navigate(Settings) },
         onListClick = { appNavigator.navigate(Home) },
         onCreateItemClick = { appNavigator.navigate(CreateItemBottomsheet) },
-        onLogoutClick = { appNavigator.navigate(SignOutDialog) },
-        onReportProblemClick = onReportProblemClick
     )
     settingsGraph(
         onLogoutClick = { appNavigator.navigate(SignOutDialog) },

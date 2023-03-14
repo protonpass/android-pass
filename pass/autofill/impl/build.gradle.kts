@@ -80,7 +80,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.featureAuth.impl)
-    implementation(projects.pass.featureCreateItem.impl)
+    implementation(projects.pass.featureItemCreate.impl)
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)

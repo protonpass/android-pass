@@ -37,7 +37,7 @@ import proton.android.pass.featurecreateitem.impl.alias.AliasItem
 import proton.android.pass.featurecreateitem.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featurecreateitem.impl.alias.AliasSnackbarMessage
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.Item
@@ -55,7 +55,7 @@ abstract class BaseLoginViewModel(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    protected val navShareId = savedStateHandle.get<String>(CommonNavArgId.ShareId.key)
+    protected val navShareId = savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)
         .toOption()
         .map { ShareId(it) }
     private val navShareIdState = MutableStateFlow(navShareId)

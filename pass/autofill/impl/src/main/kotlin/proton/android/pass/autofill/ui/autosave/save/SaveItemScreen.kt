@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.autofill.entities.SaveInformation
 import proton.android.pass.autofill.entities.SaveItemType
-import proton.android.pass.featurecreateitem.impl.login.CreateLoginScreen
-import proton.android.pass.featurecreateitem.impl.login.InitialCreateLoginUiState
+import proton.android.pass.featureitemcreate.impl.login.CreateLoginScreen
+import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 
 const val SAVE_ITEM_ROUTE = "save/item"
 

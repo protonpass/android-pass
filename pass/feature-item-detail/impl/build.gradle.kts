@@ -26,7 +26,6 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.core.accountManager.domain)
     implementation(libs.core.presentation)
@@ -55,5 +54,6 @@ dependencies {
     implementation(projects.pass.totp.api)
 
     debugImplementation(libs.androidx.compose.uiTooling)
+    implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTestManifest)
 }

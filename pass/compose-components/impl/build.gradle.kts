@@ -36,12 +36,14 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.uiTooling)
     implementation(libs.coil.compose)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
+
+    debugImplementation(libs.androidx.compose.uiTooling)
+    implementation(libs.androidx.compose.uiToolingPreview)
 
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.common.api)

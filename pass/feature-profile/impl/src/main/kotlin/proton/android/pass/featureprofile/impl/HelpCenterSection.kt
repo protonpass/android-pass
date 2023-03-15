@@ -18,7 +18,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 
 @Composable
-fun HelpCenterSection(modifier: Modifier = Modifier) {
+fun HelpCenterProfileSection(modifier: Modifier = Modifier) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(R.string.profile_help_center),
@@ -44,7 +44,7 @@ fun HelpCenterSectionPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            HelpCenterSection()
+            HelpCenterProfileSection()
         }
     }
 }

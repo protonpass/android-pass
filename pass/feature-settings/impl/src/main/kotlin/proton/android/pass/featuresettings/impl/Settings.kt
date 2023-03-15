@@ -5,8 +5,6 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import me.proton.core.compose.component.ProtonSettingsList
-import proton.android.pass.autofill.api.AutofillSupportedStatus
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.preferences.value
 
 @Suppress("UnusedPrivateMember")
@@ -14,9 +12,6 @@ import proton.android.pass.preferences.value
 fun Settings(
     modifier: Modifier = Modifier,
     state: SettingsUiState,
-    onOpenThemeSelection: () -> Unit,
-    onFingerPrintLockChange: (IsButtonEnabled) -> Unit,
-    onToggleAutofillChange: (Boolean) -> Unit,
     onCopyToClipboardChange: (Boolean) -> Unit,
     onForceSyncClick: () -> Unit,
     onAppVersionClick: (String) -> Unit,
@@ -24,37 +19,12 @@ fun Settings(
     onLogoutClick: () -> Unit
 ) {
     ProtonSettingsList(modifier = modifier) {
-        if (state.autofillStatus is AutofillSupportedStatus.Supported) {
-            item {
-                AutofillSection(
-                    state = state.autofillStatus.status.value(),
-                    onToggleChange = onToggleAutofillChange
-                )
-                Divider(modifier = Modifier.fillMaxWidth())
-            }
-        }
         item {
             CopyTotpToClipboardSection(
                 state = state.copyTotpToClipboard.value(),
                 onToggleChange = onCopyToClipboardChange
             )
             Divider(modifier = Modifier.fillMaxWidth())
-        }
-
-        if (state.fingerprintSection != FingerprintSectionState.NotAvailable) {
-            val (enabled, toggleChecked) = when (val res = state.fingerprintSection) {
-                FingerprintSectionState.NoFingerprintRegistered -> false to IsButtonEnabled.Disabled
-                is FingerprintSectionState.Available -> true to res.enabled
-                else -> false to IsButtonEnabled.Disabled
-            }
-            item {
-                AuthenticationSection(
-                    enabled = enabled,
-                    isToggleChecked = toggleChecked,
-                    onToggleChange = onFingerPrintLockChange
-                )
-                Divider(modifier = Modifier.fillMaxWidth())
-            }
         }
 /*
         item {

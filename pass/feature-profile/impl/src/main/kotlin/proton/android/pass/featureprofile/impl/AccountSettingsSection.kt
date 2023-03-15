@@ -14,7 +14,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 
 @Composable
-fun AccountSettingsSection(
+fun AccountProfileSection(
     modifier: Modifier = Modifier,
     onAccountClick: () -> Unit,
     onSettingsClick: () -> Unit
@@ -41,7 +41,7 @@ fun AccountSettingsSectionPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            AccountSettingsSection(Modifier, {}, {})
+            AccountProfileSection(Modifier, {}, {})
         }
     }
 }

@@ -65,7 +65,14 @@ internal fun HomeContent(
             SearchTopBar(
                 searchQuery = uiState.searchUiState.searchQuery,
                 inSearchMode = uiState.searchUiState.inSearchMode,
-                placeholderText = stringResource(R.string.search_topbar_placeholder_all_vaults),
+                placeholderText = when (uiState.homeListUiState.homeVaultSelection) {
+                    HomeVaultSelection.AllVaults -> stringResource(R.string.search_topbar_placeholder_all_vaults)
+                    HomeVaultSelection.Trash -> stringResource(R.string.search_topbar_placeholder_trash)
+                    is HomeVaultSelection.Vault -> stringResource(
+                        R.string.search_topbar_placeholder_vault,
+                        uiState.homeListUiState.selectedShare.value()?.name ?: ""
+                    )
+                },
                 onEnterSearch = onEnterSearch,
                 onStopSearch = onStopSearch,
                 onSearchQueryChange = onSearchQueryChange,

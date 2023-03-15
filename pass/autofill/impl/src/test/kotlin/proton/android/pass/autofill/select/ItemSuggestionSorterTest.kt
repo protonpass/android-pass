@@ -6,39 +6,36 @@ import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.Instant
 import kotlinx.datetime.minus
 import org.junit.Test
-import proton.android.pass.autofill.ui.autofill.select.SelectItemViewModel
-import proton.android.pass.common.api.None
-import proton.android.pass.commonui.api.GroupingKeys
+import proton.android.pass.autofill.ui.autofill.select.ItemSuggestionSorter
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
-class SelectItemViewModelTest {
+class ItemSuggestionSorterTest {
 
     @Test
     fun `sortResults can handle empty results`() {
-        val res = SelectItemViewModel.sortResults(emptyList(), emptyList(), None)
+        val res = ItemSuggestionSorter.sort(emptyList(), emptyList())
         assertThat(res.suggestions).isEmpty()
-        assertThat(res.suggestionsForTitle).isEmpty()
-        assertThat(res.items.get(GroupingKeys.NoGrouping)).isEmpty()
+        assertThat(res.allItems).isEmpty()
     }
 
     @Test
     fun `sortResults does not show duplicate items`() {
-        val item1 = uiModel("item1")
-        val item2 = uiModel("item2")
-        val item3 = uiModel("item3")
+        val now = Clock.System.now()
+        val item1 = uiModel("item1", now)
+        val item2 = uiModel("item2", now)
+        val item3 = uiModel("item3", now)
         val suggestions = listOf(item1, item2)
         val allItems = listOf(item1, item2, item3)
 
-        val res = SelectItemViewModel.sortResults(
+        val res = ItemSuggestionSorter.sort(
             allItems = allItems,
-            suggestions = suggestions,
-            autofillAppState = None
+            suggestions = suggestions
         )
         assertThat(res.suggestions).isEqualTo(suggestions)
-        assertThat(res.items.get(GroupingKeys.NoGrouping)).isEqualTo(listOf(item3))
+        assertThat(res.allItems).isEqualTo(listOf(item3))
     }
 
     @Test
@@ -50,13 +47,12 @@ class SelectItemViewModelTest {
         val suggestions = listOf(item1)
         val allItems = listOf(item1, item2, item3)
 
-        val res = SelectItemViewModel.sortResults(
+        val res = ItemSuggestionSorter.sort(
             allItems = allItems,
             suggestions = suggestions,
-            autofillAppState = None
         )
         assertThat(res.suggestions).isEqualTo(suggestions)
-        assertThat(res.items.get(GroupingKeys.NoGrouping)).isEqualTo(listOf(item3, item2))
+        assertThat(res.allItems).isEqualTo(listOf(item3, item2))
     }
 
 

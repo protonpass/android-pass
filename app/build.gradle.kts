@@ -41,7 +41,7 @@ val sentryDSN: String? = privateProperties.getProperty("SENTRY_DSN")
 val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
 
 val jobId: Int = System.getenv("CI_JOB_ID")?.take(3)?.toInt() ?: 0
-val appVersionName: String = "0.4.0"
+val appVersionName: String = "0.4.1"
 val appVersionCode: Int = versionCode(appVersionName)
 val archivesBaseName = "ProtonPass-$appVersionName"
 

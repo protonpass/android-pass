@@ -1,5 +1,6 @@
 package proton.android.pass.autofill.ui.autofill.select
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,6 +26,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Instant
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
@@ -141,27 +143,9 @@ class SelectItemViewModel @Inject constructor(
     ) { autofillAppState, result, suggestionsResult, searchQuery ->
         isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
         if (searchQuery.isNotBlank()) {
-            result
-                .map { ItemUiFilter.filterByQuery(it, searchQuery) }
-                .map { items ->
-                    SelectItemListItems(
-                        suggestions = persistentListOf(),
-                        items = persistentMapOf(GroupingKeys.NoGrouping to items.toImmutableList()),
-                        suggestionsForTitle = ""
-                    )
-                }
+            itemsForSearch(result, searchQuery)
         } else {
-            result.flatMap { items ->
-                suggestionsResult.map { suggestions ->
-                    SelectItemListItems(
-                        items = persistentMapOf(GroupingKeys.NoGrouping to items.toImmutableList()),
-                        suggestions = suggestions.toImmutableList(),
-                        suggestionsForTitle = autofillAppState.value()
-                            ?.let { getSuggestionsTitle(it) }
-                            ?: ""
-                    )
-                }
-            }
+            itemsWhenNotSearching(result, suggestionsResult, autofillAppState)
         }
 
     }.flowOn(Dispatchers.Default)
@@ -283,31 +267,79 @@ class SelectItemViewModel @Inject constructor(
         this.autofillAppState.update { autofillAppState.toOption() }
     }
 
-    private fun getSuggestionsTitle(autofillAppState: AutofillAppState): String =
-        if (autofillAppState.webDomain is Some) {
-            getSuggestionsTitleForDomain(autofillAppState.webDomain.value)
-        } else if (autofillAppState.packageInfoUi != null) {
-            autofillAppState.packageInfoUi.appName
-        } else {
-            ""
-        }
-
-    private fun getSuggestionsTitleForDomain(domain: String): String =
-        UrlSanitizer.sanitize(domain).fold(
-            onSuccess = {
-                runCatching {
-                    val parsed = URI(it)
-                    parsed.host
-                }.getOrDefault("")
-            },
-            onFailure = {
-                PassLogger.i(TAG, it, "Error sanitizing URL [url=$domain]")
-                ""
+    private fun itemsForSearch(
+        result: LoadingResult<List<ItemUiModel>>,
+        searchQuery: String
+    ): LoadingResult<SelectItemListItems> =
+        result
+            .map { ItemUiFilter.filterByQuery(it, searchQuery) }
+            .map { items ->
+                SelectItemListItems(
+                    suggestions = persistentListOf(),
+                    items = persistentMapOf(GroupingKeys.NoGrouping to items.toImmutableList()),
+                    suggestionsForTitle = ""
+                )
             }
-        )
+
+    private fun itemsWhenNotSearching(
+        result: LoadingResult<List<ItemUiModel>>,
+        suggestionsResult: LoadingResult<List<ItemUiModel>>,
+        autofillAppState: Option<AutofillAppState>
+    ): LoadingResult<SelectItemListItems> {
+        return result.flatMap { items ->
+            suggestionsResult.map { suggestions ->
+                sortResults(items, suggestions, autofillAppState)
+            }
+        }
+    }
 
     companion object {
         private const val DEBOUNCE_TIMEOUT = 300L
         private const val TAG = "SelectItemViewModel"
+
+        @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+        fun sortResults(
+            allItems: List<ItemUiModel>,
+            suggestions: List<ItemUiModel>,
+            autofillAppState: Option<AutofillAppState>
+        ): SelectItemListItems {
+            val suggestionIds = suggestions.map { it.id }.toSet()
+            val allItemsWithoutSuggestedAndSorted = allItems.filter { !suggestionIds.contains(it.id) }
+                .sortedByDescending { recentDate(it.modificationTime, it.lastAutofillTime) }
+
+            return SelectItemListItems(
+                items = persistentMapOf(GroupingKeys.NoGrouping to allItemsWithoutSuggestedAndSorted.toImmutableList()),
+                suggestions = suggestions.toImmutableList(),
+                suggestionsForTitle = autofillAppState.value()
+                    ?.let { getSuggestionsTitle(it) }
+                    ?: ""
+            )
+        }
+
+        private fun getSuggestionsTitle(autofillAppState: AutofillAppState): String =
+            if (autofillAppState.webDomain is Some) {
+                getSuggestionsTitleForDomain(autofillAppState.webDomain.value)
+            } else if (autofillAppState.packageInfoUi != null) {
+                autofillAppState.packageInfoUi.appName
+            } else {
+                ""
+            }
+
+        private fun getSuggestionsTitleForDomain(domain: String): String =
+            UrlSanitizer.sanitize(domain).fold(
+                onSuccess = {
+                    runCatching {
+                        val parsed = URI(it)
+                        parsed.host
+                    }.getOrDefault("")
+                },
+                onFailure = {
+                    PassLogger.i(TAG, it, "Error sanitizing URL [url=$domain]")
+                    ""
+                }
+            )
+
+        private fun recentDate(modificationTime: Instant, lastAutofillTime: Instant?): Instant =
+            lastAutofillTime?.let { maxOf(it, modificationTime) } ?: modificationTime
     }
 }

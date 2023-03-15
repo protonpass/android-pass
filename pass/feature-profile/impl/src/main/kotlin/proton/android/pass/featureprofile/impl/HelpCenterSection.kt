@@ -1,5 +1,6 @@
 package proton.android.pass.featureprofile.impl
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
@@ -9,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
@@ -17,10 +19,11 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 
 @Composable
 fun HelpCenterSection(modifier: Modifier = Modifier) {
-    Column(modifier) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(R.string.profile_help_center),
-            style = ProtonTheme.typography.defaultSmallWeak
+            style = ProtonTheme.typography.defaultSmallWeak,
+            color = PassTheme.colors.textWeak
         )
         Column(
             modifier = Modifier.roundedContainer(ProtonTheme.colors.separatorNorm)

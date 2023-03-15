@@ -17,7 +17,6 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.loading.LoadingDialog
 import proton.android.pass.composecomponents.impl.topbar.TopBarTitleView
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.preferences.ThemePreference
 
@@ -28,8 +27,6 @@ fun SettingsContent(
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     state: SettingsUiState,
     onThemeChange: (ThemePreference) -> Unit,
-    onFingerPrintLockChange: (IsButtonEnabled) -> Unit,
-    onToggleAutofillChange: (Boolean) -> Unit,
     onCopyToClipboardChange: (Boolean) -> Unit,
     onForceSyncClick: () -> Unit,
     onAppVersionClick: (String) -> Unit,
@@ -76,9 +73,6 @@ fun SettingsContent(
             Settings(
                 modifier = modifier.padding(contentPadding),
                 state = state,
-                onOpenThemeSelection = { scope.launch { bottomSheetState.show() } },
-                onFingerPrintLockChange = onFingerPrintLockChange,
-                onToggleAutofillChange = onToggleAutofillChange,
                 onCopyToClipboardChange = onCopyToClipboardChange,
                 onForceSyncClick = onForceSyncClick,
                 onAppVersionClick = onAppVersionClick,

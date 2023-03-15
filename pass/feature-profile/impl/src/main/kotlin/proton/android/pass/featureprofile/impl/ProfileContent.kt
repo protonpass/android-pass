@@ -9,11 +9,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallStrong
+import proton.android.pass.autofill.api.AutofillStatus
+import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.uievents.value
 
 @Composable
 fun ProfileContent(
     modifier: Modifier = Modifier,
+    state: ProfileUiState,
+    onFingerprintClicked: (Boolean) -> Unit,
+    onAutofillClicked: (Boolean) -> Unit,
     onAccountClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
@@ -23,8 +29,20 @@ fun ProfileContent(
             style = ProtonTheme.typography.defaultSmallStrong,
             color = PassTheme.colors.textNorm
         )
-        AccountSettingsSection(onAccountClick = onAccountClick, onSettingsClick = onSettingsClick)
-        HelpCenterSection()
+        if (state.fingerprintSection is FingerprintSectionState.Available) {
+            FingerprintProfileSection(
+                isChecked = state.fingerprintSection.enabled.value(),
+                onClick = onFingerprintClicked
+            )
+        }
+        if (state.autofillStatus is AutofillSupportedStatus.Supported) {
+            AutofillProfileSection(
+                isChecked = state.autofillStatus.status is AutofillStatus.EnabledByOurService,
+                onClick = onAutofillClicked
+            )
+        }
+        AccountProfileSection(onAccountClick = onAccountClick, onSettingsClick = onSettingsClick)
+        HelpCenterProfileSection()
     }
 }
 

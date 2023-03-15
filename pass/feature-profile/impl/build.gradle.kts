@@ -45,7 +45,12 @@ dependencies {
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
 
-    implementation(projects.pass.navigation.api)
+    implementation(projects.pass.autofill.api)
+    implementation(projects.pass.biometry.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.composeComponents.impl)
+    implementation(projects.pass.log.api)
+    implementation(projects.pass.navigation.api)
+    implementation(projects.pass.notifications.api)
+    implementation(projects.pass.preferences.api)
 }

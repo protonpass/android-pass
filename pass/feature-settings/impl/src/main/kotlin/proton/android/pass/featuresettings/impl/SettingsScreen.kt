@@ -5,11 +5,9 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.biometry.ContextHolder
 
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -23,16 +21,11 @@ fun SettingsScreen(
     val viewModel: SettingsViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    val context = LocalContext.current
     SettingsContent(
         modifier = modifier,
         scaffoldState = scaffoldState,
         state = state,
         onThemeChange = { viewModel.onThemePreferenceChange(it) },
-        onFingerPrintLockChange = {
-            viewModel.onFingerPrintLockChange(ContextHolder.fromContext(context), it)
-        },
-        onToggleAutofillChange = { viewModel.onToggleAutofill(it) },
         onCopyToClipboardChange = { viewModel.onCopyToClipboardChange(it) },
         onForceSyncClick = { viewModel.onForceSync() },
         onAppVersionClick = { viewModel.copyAppVersion(it) },

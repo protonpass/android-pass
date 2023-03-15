@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallStrong
+import proton.android.pass.commonui.api.PassTheme
 
 @Composable
 fun ProfileContent(
@@ -19,7 +20,8 @@ fun ProfileContent(
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(R.string.profile_manage_profile),
-            style = ProtonTheme.typography.defaultSmallStrong
+            style = ProtonTheme.typography.defaultSmallStrong,
+            color = PassTheme.colors.textNorm
         )
         AccountSettingsSection(onAccountClick = onAccountClick, onSettingsClick = onSettingsClick)
         HelpCenterSection()

@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
-import me.proton.core.presentation.R as CoreR
+import proton.android.pass.commonui.api.PassTheme
 
 @Composable
 fun ProfileOption(
@@ -31,12 +31,13 @@ fun ProfileOption(
     ) {
         Text(
             text = text,
-            style = ProtonTheme.typography.defaultWeak
+            style = ProtonTheme.typography.defaultWeak,
+            color = PassTheme.colors.textNorm
         )
         Icon(
-            painter = painterResource(CoreR.drawable.ic_proton_chevron_right),
+            painter = painterResource(R.drawable.ic_chevron_tiny_right),
             contentDescription = stringResource(R.string.profile_option_icon_content_description),
-            tint = ProtonTheme.colors.iconWeak
+            tint = PassTheme.colors.textHint
         )
     }
 }

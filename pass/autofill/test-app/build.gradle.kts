@@ -4,7 +4,7 @@ plugins {
     id("kotlin-android")
 }
 
-val appVersionName = "0.4.0"
+val appVersionName = "0.4.1"
 val appVersionCode = versionCode(appVersionName)
 val archivesBaseName = "AutofillTestApp-$appVersionName"
 

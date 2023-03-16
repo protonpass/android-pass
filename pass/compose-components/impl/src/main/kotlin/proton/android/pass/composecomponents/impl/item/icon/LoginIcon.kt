@@ -1,29 +1,30 @@
 package proton.android.pass.composecomponents.impl.item.icon
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.squircle
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
+import proton.android.pass.composecomponents.impl.container.Squircle
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.pass.domain.ItemType
 import proton.pass.domain.WebsiteUrl
@@ -50,7 +51,7 @@ fun LoginIcon(
 
 @Composable
 fun LoginIcon(modifier: Modifier = Modifier) {
-    Circle(modifier = modifier, backgroundColor = PassTheme.colors.accentPurpleOpaque) {
+    Squircle(modifier = modifier, backgroundColor = PassTheme.colors.accentPurpleOpaque) {
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_user),
             contentDescription = stringResource(R.string.login_title_icon_content_description),
@@ -69,6 +70,7 @@ fun LoginIcon(
 ) {
     if (website == null) {
         FallbackLoginIcon(
+            modifier = modifier,
             text = text,
             packageName = packageName,
             size = size
@@ -76,9 +78,9 @@ fun LoginIcon(
     } else {
         SubcomposeAsyncImage(
             modifier = modifier
-                .clip(CircleShape)
+                .squircle()
                 .size(size.dp)
-                .background(ProtonTheme.colors.backgroundNorm),
+                .background(Color.White),
             model = WebsiteUrl(website),
             contentDescription = null
         ) {
@@ -91,7 +93,15 @@ fun LoginIcon(
                     )
                 }
                 is AsyncImagePainter.State.Success -> {
-                    SubcomposeAsyncImageContent(modifier = Modifier.fillMaxSize())
+                    SubcomposeAsyncImageContent(
+                        modifier = Modifier.fillMaxSize()
+                            .border(
+                                width = 3.dp,
+                                color = PassTheme.colors.iconBorder,
+                                shape = PassTheme.shapes.squircleShape
+                            )
+                            .padding(8.dp)
+                    )
                 }
                 else -> {
                     FallbackLoginIcon(

@@ -1,9 +1,9 @@
 package proton.android.pass.composecomponents.impl.item
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,20 +29,22 @@ fun PlaceholderItemRow(modifier: Modifier = Modifier) {
     ) {
         Box(
             modifier = Modifier
-                .size(36.dp)
+                .size(40.dp)
                 .placeholder()
         )
-        Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
             Box(
                 modifier = Modifier
-                    .height(10.dp)
-                    .width(170.dp)
+                    .height(14.dp)
+                    .width(100.dp)
                     .placeholder()
             )
-            Spacer(modifier = Modifier.height(8.dp))
             Box(
                 modifier = Modifier
-                    .height(10.dp)
+                    .height(14.dp)
                     .width(200.dp)
                     .placeholder()
             )

@@ -5,7 +5,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -29,17 +30,21 @@ fun VaultIcon(
     backgroundColor: Color,
     iconColor: Color,
     @DrawableRes icon: Int,
+    size: Int = 40,
+    iconSize: Int = 20,
     onClick: (() -> Unit)? = null
 ) {
     Box(
         modifier = modifier
-            .clip(RoundedCornerShape(16.dp))
+            .size(size.dp)
+            .clip(CircleShape)
             .applyIf(onClick != null, ifTrue = { clickable { onClick?.invoke() } })
             .background(backgroundColor)
             .padding(8.dp),
         contentAlignment = Alignment.Center
     ) {
         Icon(
+            modifier = Modifier.size(iconSize.dp),
             painter = painterResource(id = icon),
             contentDescription = stringResource(R.string.vault_selector_icon_content_description),
             tint = iconColor

@@ -11,14 +11,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.container.Circle
+import proton.android.pass.composecomponents.impl.container.Squircle
 
 @Composable
 fun NoteIcon(
     modifier: Modifier = Modifier,
     size: Int = 40,
 ) {
-    Circle(
+    Squircle(
         modifier = modifier,
         backgroundColor = PassTheme.colors.accentYellowOpaque,
         size = size,

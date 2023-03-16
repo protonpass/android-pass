@@ -23,7 +23,7 @@ data class PassShapes(
                 bottomEnd = 0.dp
             ),
             containerInputShape = RoundedCornerShape(Radius.small + Radius.extraSmall),
-            squircleShape = RoundedCornerShape(16.dp)
+            squircleShape = RoundedCornerShape(Radius.medium)
         )
     }
 }

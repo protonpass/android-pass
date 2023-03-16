@@ -11,7 +11,8 @@ import androidx.compose.ui.unit.dp
 @Immutable
 data class PassShapes(
     val bottomsheetShape: Shape,
-    val containerInputShape: Shape
+    val containerInputShape: Shape,
+    val squircleShape: Shape
 ) {
     companion object {
         val Default: PassShapes = PassShapes(
@@ -21,7 +22,8 @@ data class PassShapes(
                 bottomStart = 0.dp,
                 bottomEnd = 0.dp
             ),
-            containerInputShape = RoundedCornerShape(Radius.small + Radius.extraSmall)
+            containerInputShape = RoundedCornerShape(Radius.small + Radius.extraSmall),
+            squircleShape = RoundedCornerShape(16.dp)
         )
     }
 }
@@ -30,6 +32,7 @@ val LocalPassShapes = staticCompositionLocalOf {
     PassShapes(
         bottomsheetShape = CutCornerShape(0.dp),
         containerInputShape = CutCornerShape(0.dp),
+        squircleShape = CutCornerShape(0.dp),
     )
 }
 

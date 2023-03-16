@@ -21,7 +21,7 @@ fun CircleTextIcon(
     backgroundAlpha: Float = 0.25f,
     size: Int = 40,
 ) {
-    Circle(
+    Squircle(
         modifier = modifier,
         backgroundColor = color,
         backgroundAlpha = backgroundAlpha,

@@ -17,7 +17,13 @@ import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
+import proton.android.pass.common.api.getOrNull
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveActiveItems
+import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToStartError
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.ErrorPerformingOperation
@@ -28,6 +34,7 @@ import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.pass.domain.ItemType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,6 +43,9 @@ class ProfileViewModel @Inject constructor(
     private val biometryManager: BiometryManager,
     private val autofillManager: AutofillManager,
     private val snackbarMessageRepository: SnackbarMessageRepository,
+    encryptionContextProvider: EncryptionContextProvider,
+    observeItemCount: ObserveItemCount,
+    observeActiveItems: ObserveActiveItems
 ) : ViewModel() {
 
     private val biometricLockState = preferencesRepository
@@ -46,11 +56,30 @@ class ProfileViewModel @Inject constructor(
         .getAutofillStatus()
         .distinctUntilChanged()
 
+    private val mfaCountFlow = observeActiveItems(ItemTypeFilter.Logins)
+        .map {
+            encryptionContextProvider.withEncryptionContext {
+                it.map { decrypt((it.toUiModel(this).itemType as ItemType.Login).primaryTotp) }
+            }.count { it.isNotBlank() }
+        }
+
     val state: StateFlow<ProfileUiState> = combine(
         biometricLockState,
         flowOf(biometryManager.getBiometryStatus()),
         autofillStatusFlow,
-    ) { biometricLock, biometryStatus, autofillStatus ->
+        observeItemCount().distinctUntilChanged(),
+        mfaCountFlow
+    ) { biometricLock, biometryStatus, autofillStatus, itemCountResult, mfaCount ->
+        val itemSummaryUiState = itemCountResult.getOrNull()
+            ?.let {
+                ItemSummaryUiState(
+                    loginCount = it.login.toInt(),
+                    notesCount = it.note.toInt(),
+                    aliasCount = it.alias.toInt(),
+                    mfaCount = mfaCount,
+                )
+            }
+            ?: ItemSummaryUiState()
         val fingerprintSection = when (biometryStatus) {
             BiometryStatus.NotEnrolled -> FingerprintSectionState.NoFingerprintRegistered
             BiometryStatus.NotAvailable -> FingerprintSectionState.NotAvailable
@@ -64,7 +93,8 @@ class ProfileViewModel @Inject constructor(
         }
         ProfileUiState(
             fingerprintSection = fingerprintSection,
-            autofillStatus = autofillStatus
+            autofillStatus = autofillStatus,
+            itemSummaryUiState = itemSummaryUiState
         )
     }.stateIn(
         scope = viewModelScope,
@@ -128,6 +158,6 @@ class ProfileViewModel @Inject constructor(
     }
 
     companion object {
-        private const val TAG = "SettingsViewModel"
+        private const val TAG = "ProfileViewModel"
     }
 }

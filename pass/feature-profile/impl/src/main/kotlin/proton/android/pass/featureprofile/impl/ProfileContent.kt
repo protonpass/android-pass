@@ -24,6 +24,7 @@ fun ProfileContent(
     onSettingsClick: () -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+        ItemSummary(itemSummaryUiState = state.itemSummaryUiState)
         Text(
             text = stringResource(R.string.profile_manage_profile),
             style = ProtonTheme.typography.defaultSmallStrong,
@@ -45,4 +46,3 @@ fun ProfileContent(
         HelpCenterProfileSection()
     }
 }
-

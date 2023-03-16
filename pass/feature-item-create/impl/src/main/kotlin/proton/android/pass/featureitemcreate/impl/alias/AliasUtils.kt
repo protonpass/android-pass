@@ -1,5 +1,7 @@
 package proton.android.pass.featureitemcreate.impl.alias
 
+import java.text.Normalizer
+
 data class PrefixSuffix(
     val prefix: String,
     val suffix: String
@@ -10,12 +12,11 @@ object AliasUtils {
     private const val SPACE_REPLACEMENT_CHAR = '-'
     private val ALLOWED_SPECIAL_CHARACTERS: List<Char> = listOf('_', '-', '.')
 
-    fun formatAlias(value: String): String {
-        val noSpaces = value.replace(" ", SPACE_REPLACEMENT_CHAR.toString())
-        return noSpaces
+    fun formatAlias(value: String): String =
+        value.replace(" ", SPACE_REPLACEMENT_CHAR.toString())
             .filter { it.isLetterOrDigit() || ALLOWED_SPECIAL_CHARACTERS.contains(it) }
             .lowercase()
-    }
+            .removeAccent()
 
     fun areAllAliasCharactersValid(alias: String): Boolean {
         for (char in alias) {
@@ -66,3 +67,8 @@ object AliasUtils {
         return PrefixSuffix(prefix, suffix)
     }
 }
+
+private fun CharSequence.removeAccent(): String =
+    "\\p{InCombiningDiacriticalMarks}+"
+        .toRegex()
+        .replace(Normalizer.normalize(this, Normalizer.Form.NFD), "")

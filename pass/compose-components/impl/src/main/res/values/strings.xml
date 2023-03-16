@@ -50,8 +50,10 @@
     <string name="field_required_indicator">Required</string>
 
     <!-- Icon content description -->
+    <string name="login_title_icon_content_description">Login icon</string>
     <string name="alias_title_icon_content_description">Alias icon</string>
     <string name="note_title_icon_content_description">Note icon</string>
+    <string name="mfa_title_icon_content_description">2fa icon</string>
     <string name="password_title_icon_content_description">Password icon</string>
     <string name="missing_app_icon_content_description">Missing app icon</string>
     <string name="linked_app_icon_content_description">App icon</string>

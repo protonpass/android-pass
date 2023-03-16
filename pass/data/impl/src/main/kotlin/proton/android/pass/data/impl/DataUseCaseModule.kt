@@ -24,6 +24,7 @@ import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveTrashedItems
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -60,6 +61,7 @@ import proton.android.pass.data.impl.usecases.ObserveActiveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveAliasOptionsImpl
 import proton.android.pass.data.impl.usecases.ObserveAllSharesImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
+import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveTrashedItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
@@ -175,6 +177,9 @@ abstract class DataUseCaseModule {
     abstract fun bindObserveVaultsWithItemCount(
         impl: ObserveVaultsWithItemCountImpl
     ): ObserveVaultsWithItemCount
+
+    @Binds
+    abstract fun bindObserveItemCount(impl: ObserveItemCountImpl): ObserveItemCount
 
     @Binds
     abstract fun bindUpdateVault(impl: UpdateVaultImpl): UpdateVault

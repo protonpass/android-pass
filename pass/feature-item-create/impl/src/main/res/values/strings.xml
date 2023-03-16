@@ -20,7 +20,6 @@
     <string name="item_type_alias_description">Get an email alias to use on new apps</string>
     <string name="item_type_note_description">Jot down a PIN, code, or note to self</string>
     <string name="item_type_password_description">Generate a secure password</string>
-    <string name="item_type_login_create_content_description">Create login</string>
 
     <!-- Generate password bottomsheet -->
     <string name="generate_password_copy">Copy &amp; close</string>

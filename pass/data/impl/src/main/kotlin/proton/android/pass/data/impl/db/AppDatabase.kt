@@ -30,6 +30,9 @@ import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.entity.KeySaltEntity
 import me.proton.core.key.data.entity.PublicAddressEntity
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
+import me.proton.core.keytransparency.data.local.KeyTransparencyDatabase
+import me.proton.core.keytransparency.data.local.entity.AddressChangeEntity
+import me.proton.core.keytransparency.data.local.entity.SelfAuditResultEntity
 import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.observability.data.entity.ObservabilityEventEntity
 import me.proton.core.payment.data.local.db.PaymentDatabase
@@ -59,6 +62,7 @@ import proton.android.pass.data.impl.db.entities.TelemetryEntity
         // Core
         AccountEntity::class,
         AccountMetadataEntity::class,
+        AddressChangeEntity::class,
         AddressEntity::class,
         AddressKeyEntity::class,
         ChallengeFrameEntity::class,
@@ -72,6 +76,7 @@ import proton.android.pass.data.impl.db.entities.TelemetryEntity
         ObservabilityEventEntity::class,
         PublicAddressEntity::class,
         PublicAddressKeyEntity::class,
+        SelfAuditResultEntity::class,
         SessionDetailsEntity::class,
         SessionEntity::class,
         UserEntity::class,
@@ -114,6 +119,7 @@ abstract class AppDatabase :
     FeatureFlagDatabase,
     HumanVerificationDatabase,
     KeySaltDatabase,
+    KeyTransparencyDatabase,
     OrganizationDatabase,
     ObservabilityDatabase,
     PassDatabase,
@@ -123,7 +129,7 @@ abstract class AppDatabase :
     UserSettingsDatabase {
 
     companion object {
-        const val VERSION = 8
+        const val VERSION = 9
 
         const val DB_NAME = "db-passkey"
 
@@ -131,6 +137,7 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_1_2,
             AppDatabaseMigrations.MIGRATION_6_7,
             AppDatabaseMigrations.MIGRATION_7_8,
+            AppDatabaseMigrations.MIGRATION_8_9,
         )
 
         fun buildDatabase(context: Context): AppDatabase =

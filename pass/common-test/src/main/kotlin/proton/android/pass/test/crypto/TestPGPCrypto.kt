@@ -417,4 +417,8 @@ object TestPGPCrypto : PGPCrypto {
     override fun updateTime(epochSeconds: Long) {
         throw IllegalStateException("This method should not be called")
     }
+
+    override suspend fun getCurrentTime(): Long {
+        throw IllegalStateException("This method should not be called")
+    }
 }

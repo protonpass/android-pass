@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.core.featureFlag)
     implementation(libs.core.humanVerification)
     implementation(libs.core.key)
+    implementation(libs.core.keyTransparency)
     implementation(libs.core.network)
     implementation(libs.core.observability)
     implementation(libs.core.payment)

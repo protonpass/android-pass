@@ -34,6 +34,7 @@ import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.pass.domain.ShareId
 
@@ -131,15 +132,21 @@ internal fun HomeContent(
                     onItemTypeClick = onItemTypeSelected
                 )
             }
-            ItemListHeader(
-                sortingType = uiState.homeListUiState.sortingType,
-                showSearchResults = uiState.searchUiState.inSearchMode &&
-                    uiState.searchUiState.searchQuery.isNotEmpty(),
-                isProcessingSearch = uiState.searchUiState.isProcessingSearch.value(),
-                itemCount = uiState.homeListUiState.items.values.flatten().count()
-                    .takeIf { !uiState.searchUiState.isProcessingSearch.value() },
-                onSortingOptionsClick = onSortingOptionsClick
-            )
+            if (
+                uiState.homeListUiState.items.isNotEmpty() &&
+                uiState.homeListUiState.isLoading == IsLoadingState.NotLoading
+            ) {
+                ItemListHeader(
+                    sortingType = uiState.homeListUiState.sortingType,
+                    showSearchResults = uiState.searchUiState.inSearchMode &&
+                        uiState.searchUiState.searchQuery.isNotEmpty(),
+                    isProcessingSearch = uiState.searchUiState.isProcessingSearch.value(),
+                    itemCount = uiState.homeListUiState.items.values.flatten().count()
+                        .takeIf { !uiState.searchUiState.isProcessingSearch.value() },
+                    onSortingOptionsClick = onSortingOptionsClick
+                )
+            }
+
             ItemsList(
                 items = uiState.homeListUiState.items,
                 shouldScrollToTop = shouldScrollToTop,

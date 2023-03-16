@@ -42,7 +42,9 @@ data class PassColors(
 
     val inputBackground: Color,
     val inputBorder: Color,
-    val inputBorderFocused: Color
+    val inputBorderFocused: Color,
+
+    val iconBorder: Color
 ) {
     companion object {
         val Dark = PassColors(
@@ -79,7 +81,8 @@ data class PassColors(
             accentRedWeakest = PassPalette.Red8,
             inputBackground = PassPalette.White4,
             inputBorder = PassPalette.White8,
-            inputBorderFocused = PassPalette.Purple80
+            inputBorderFocused = PassPalette.Purple80,
+            iconBorder = Color(0xffeff3fb)
         )
     }
 }
@@ -119,6 +122,7 @@ val LocalPassColors = staticCompositionLocalOf {
         accentRedWeakest = Color.Unspecified,
         inputBackground = Color.Unspecified,
         inputBorder = Color.Unspecified,
-        inputBorderFocused = Color.Unspecified
+        inputBorderFocused = Color.Unspecified,
+        iconBorder = Color.Unspecified
     )
 }

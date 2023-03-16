@@ -24,9 +24,7 @@ class ObserveVaultsWithItemCountImpl @Inject constructor(
             when (result) {
                 LoadingResult.Loading -> flowOf(LoadingResult.Loading)
                 is LoadingResult.Error -> flowOf(LoadingResult.Error(result.exception))
-                is LoadingResult.Success -> {
-                    observeItemCounts(result.data)
-                }
+                is LoadingResult.Success -> observeItemCounts(result.data)
             }
         }
 

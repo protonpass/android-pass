@@ -1,5 +1,6 @@
 package proton.android.pass.composecomponents.impl.messages
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Snackbar
@@ -31,7 +32,7 @@ fun PassSnackbar(
     snackbarData: SnackbarData
 ) {
     Snackbar(
-        modifier = modifier,
+        modifier = modifier.padding(12.dp),
         content = { Text(snackbarData.message) },
         action = {
             IconButton(

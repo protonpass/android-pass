@@ -201,6 +201,7 @@ core-featureFlag = { module = "me.proton.core:feature-flag", version.ref = "core
 core-humanVerification = { module = "me.proton.core:human-verification", version.ref = "core" }
 core-humanVerification-test = { module = "me.proton.core:human-verification-test", version.ref = "core" }
 core-key = { module = "me.proton.core:key", version.ref = "core" }
+core-keyTransparency = { module = "me.proton.core:key-transparency", version.ref = "core" }
 core-key-domain = { module = "me.proton.core:key-domain", version.ref = "core" }
 core-network = { module = "me.proton.core:network", version.ref = "core" }
 core-network-data = { module = "me.proton.core:network-data", version.ref = "core" }

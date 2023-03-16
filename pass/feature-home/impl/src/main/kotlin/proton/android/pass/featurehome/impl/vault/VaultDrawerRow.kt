@@ -91,7 +91,8 @@ fun VaultDrawerRow(
                     ),
                     contentDescription = stringResource(
                         id = proton.android.pass.composecomponents.impl.R.string.action_content_description_menu
-                    )
+                    ),
+                    tint = PassTheme.colors.textWeak
                 )
             }
         } else {

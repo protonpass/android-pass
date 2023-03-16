@@ -82,7 +82,8 @@ internal fun HomeContent(
                         when (val share = uiState.homeListUiState.selectedShare) {
                             None -> {
                                 AllVaultsIcon(
-                                    modifier = Modifier.size(48.dp),
+                                    size = 48,
+                                    iconSize = 28,
                                     onClick = onDrawerIconClick
                                 )
                             }

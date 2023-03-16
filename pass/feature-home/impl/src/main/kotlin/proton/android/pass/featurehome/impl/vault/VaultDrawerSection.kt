@@ -2,7 +2,6 @@ package proton.android.pass.featurehome.impl.vault
 
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
@@ -53,7 +52,7 @@ fun VaultDrawerSection(
                 VaultDrawerRow(
                     name = stringResource(R.string.vault_drawer_all_vaults),
                     itemCount = list.sumOf { it.activeItemCount },
-                    icon = { AllVaultsIcon(Modifier.size(40.dp)) },
+                    icon = { AllVaultsIcon(iconSize = 24) },
                     isShared = false,
                     isSelected = homeVaultSelection == HomeVaultSelection.AllVaults,
                     showMenuIcon = false,

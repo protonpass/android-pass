@@ -14,6 +14,8 @@ import proton.pass.domain.ShareColor
 @Composable
 fun AllVaultsIcon(
     modifier: Modifier = Modifier,
+    size: Int = 40,
+    iconSize: Int = 20,
     onClick: (() -> Unit)? = null
 ) {
     VaultIcon(
@@ -21,6 +23,8 @@ fun AllVaultsIcon(
         backgroundColor = ShareColor.Color1.toBackgroundColor(),
         iconColor = ShareColor.Color1.toIconColor(),
         icon = proton.android.pass.commonui.api.R.drawable.ic_vault_squares,
+        size = size,
+        iconSize = iconSize,
         onClick = onClick
     )
 }

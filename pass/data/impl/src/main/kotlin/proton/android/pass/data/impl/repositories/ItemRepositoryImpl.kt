@@ -190,11 +190,6 @@ class ItemRepositoryImpl @Inject constructor(
                 // Detect if we have received the update from a logout
                 val isAccountStillAvailable = accountManager.getAccount(userId).first() != null
                 if (!isAccountStillAvailable) return@map emptyList()
-
-                // The update does not come from a logout
-                val userAddress =
-                    requireNotNull(userAddressRepository.getAddresses(userId).primary())
-                refreshItemsIfNeeded(userAddress, shareSelection)
                 encryptionContextProvider.withEncryptionContext {
                     items.map { entityToDomain(this@withEncryptionContext, it) }
                 }
@@ -411,7 +406,10 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun refreshItems(userId: UserId, share: Share): LoadingResult<List<Item>> =
         withContext(Dispatchers.IO) {
             val address = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-            fetchItemsForShare(address, share)
+            remoteItemDataSource.getItems(address.userId, share.id)
+                .flatMap { items ->
+                    decryptItems(address, share, items)
+                }
         }
 
     override suspend fun refreshItems(userId: UserId, shareId: ShareId): LoadingResult<List<Item>> =
@@ -572,51 +570,6 @@ class ItemRepositoryImpl @Inject constructor(
                 }
         }
     }
-
-    @Suppress("ReturnCount")
-    private suspend fun refreshItemsIfNeeded(
-        userAddress: UserAddress,
-        shareSelection: ShareSelection
-    ): LoadingResult<Unit> {
-        val shareIds: List<Share> = when (shareSelection) {
-            is ShareSelection.AllShares -> {
-                when (val result = shareRepository.observeAllShares(userAddress.userId).first()) {
-                    is LoadingResult.Error -> return LoadingResult.Error(result.exception)
-                    LoadingResult.Loading -> return LoadingResult.Loading
-                    is LoadingResult.Success -> result.data
-                }
-            }
-            is ShareSelection.Share -> {
-                when (
-                    val result: LoadingResult<Share?> =
-                        shareRepository.getById(userAddress.userId, shareSelection.shareId)
-                ) {
-                    is LoadingResult.Error -> return LoadingResult.Error(result.exception)
-                    LoadingResult.Loading -> return LoadingResult.Loading
-                    is LoadingResult.Success -> listOf(requireNotNull(result.data))
-                }
-            }
-        }
-
-        database.inTransaction {
-            shareIds.forEach {
-                val hasItems = localItemDataSource.hasItemsForShare(userAddress.userId, it.id)
-                if (!hasItems) {
-                    fetchItemsForShare(userAddress, it)
-                }
-            }
-        }
-        return LoadingResult.Success(Unit)
-    }
-
-    private suspend fun fetchItemsForShare(
-        userAddress: UserAddress,
-        share: Share
-    ): LoadingResult<List<Item>> =
-        remoteItemDataSource.getItems(userAddress.userId, share.id)
-            .flatMap { items ->
-                decryptItems(userAddress, share, items)
-            }
 
     private suspend fun decryptItems(
         userAddress: UserAddress,

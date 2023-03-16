@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -18,10 +21,13 @@ import coil.compose.SubcomposeAsyncImageContent
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.pass.domain.ItemType
 import proton.pass.domain.WebsiteUrl
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun LoginIcon(
@@ -40,6 +46,17 @@ fun LoginIcon(
         packageName = packageName,
         size = size,
     )
+}
+
+@Composable
+fun LoginIcon(modifier: Modifier = Modifier) {
+    Circle(modifier = modifier, backgroundColor = PassTheme.colors.accentPurpleOpaque) {
+        Icon(
+            painter = painterResource(CoreR.drawable.ic_proton_user),
+            contentDescription = stringResource(R.string.login_title_icon_content_description),
+            tint = PassTheme.colors.accentPurpleOpaque
+        )
+    }
 }
 
 @Composable
@@ -63,8 +80,7 @@ fun LoginIcon(
                 .size(size.dp)
                 .background(ProtonTheme.colors.backgroundNorm),
             model = WebsiteUrl(website),
-            contentDescription = null,
-
+            contentDescription = null
         ) {
             when (painter.state) {
                 is AsyncImagePainter.State.Loading -> {

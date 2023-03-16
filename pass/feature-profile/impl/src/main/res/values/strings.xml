@@ -22,5 +22,10 @@
     <string name="profile_fingerprint_lock_enabled">Fingerprint unlock enabled</string>
     <string name="profile_fingerprint_lock_disabled">Fingerprint unlock disabled</string>
     <string name="profile_error_performing_operation">Error performing operation</string>
+    <string name="itemtype_summary_login">Logins</string>
+    <string name="itemtype_summary_notes">Notes</string>
+    <string name="itemtype_summary_alias">Alias</string>
+    <string name="itemtype_summary_2fa">2FA</string>
+    <string name="itemtype_summary_left">%1$s left</string>
 
 </resources>

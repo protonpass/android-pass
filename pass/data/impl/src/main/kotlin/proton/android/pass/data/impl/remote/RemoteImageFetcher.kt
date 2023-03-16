@@ -21,7 +21,7 @@ class RemoteImageFetcherImpl @Inject constructor(
     @Suppress("MagicNumber")
     override fun fetchFavicon(userId: UserId, domain: String): Flow<ImageResponse?> = flow {
         api.get<PasswordManagerApi>(userId).invoke {
-            for (size in listOf(128, 64, 32, 16)) {
+            for (size in listOf(128, 64, 32)) {
                 try {
                     val res = getFavicon(domain, size = size)
                     val body = checkNotNull(res.body()?.bytes())

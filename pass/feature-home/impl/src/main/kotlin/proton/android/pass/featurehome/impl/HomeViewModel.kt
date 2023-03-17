@@ -56,8 +56,9 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.GetShareById
-import proton.android.pass.data.api.usecases.ObserveActiveItems
+import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.LoginMovedToTrash
@@ -66,6 +67,7 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsErro
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.pass.domain.ItemState
 import proton.pass.domain.ItemType
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
@@ -83,7 +85,7 @@ class HomeViewModel @Inject constructor(
     private val getShareById: GetShareById,
     clock: Clock,
     observeCurrentUser: ObserveCurrentUser,
-    observeActiveItems: ObserveActiveItems
+    observeItems: ObserveItems
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -123,27 +125,42 @@ class HomeViewModel @Inject constructor(
     private val sortingTypeState: MutableStateFlow<SortingType> =
         MutableStateFlow(SortingType.MostRecent)
 
-    private val activeItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = vaultSelectionFlow
-        .flatMapLatest { selectedVault ->
-            val shareSelection = when (selectedVault) {
-                HomeVaultSelection.AllVaults -> ShareSelection.AllShares
-                is HomeVaultSelection.Vault -> ShareSelection.Share(selectedVault.shareId)
-                HomeVaultSelection.Trash -> ShareSelection.AllShares
-            }
-            observeActiveItems(shareSelection = shareSelection)
-                .asResultWithoutLoading()
-                .map { itemResult ->
-                    itemResult.map { list ->
-                        encryptionContextProvider.withEncryptionContext {
-                            list.map { it.toUiModel(this@withEncryptionContext) }
-                        }
-                    }
-                }
-                .distinctUntilChanged()
+    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
+        vaultSelectionFlow,
+        itemTypeSelectionFlow,
+    ) { vault, itemType ->
+        val (shareSelection, itemState) = when (vault) {
+            HomeVaultSelection.AllVaults -> ShareSelection.AllShares to ItemState.Active
+            is HomeVaultSelection.Vault -> ShareSelection.Share(vault.shareId) to ItemState.Active
+            HomeVaultSelection.Trash -> ShareSelection.AllShares to ItemState.Trashed
         }
 
+        val itemTypeSelection = when (itemType) {
+            HomeItemTypeSelection.Aliases -> ItemTypeFilter.Aliases
+            HomeItemTypeSelection.AllItems -> ItemTypeFilter.All
+            HomeItemTypeSelection.Logins -> ItemTypeFilter.Logins
+            HomeItemTypeSelection.Notes -> ItemTypeFilter.Notes
+        }
+
+        Triple(shareSelection, itemState, itemTypeSelection)
+    }.flatMapLatest {
+        observeItems(
+            selection = it.first,
+            itemState = it.second,
+            filter = it.third
+        ).asResultWithoutLoading()
+            .map { itemResult ->
+                itemResult.map { list ->
+                    encryptionContextProvider.withEncryptionContext {
+                        list.map { it.toUiModel(this@withEncryptionContext) }
+                    }
+                }
+            }
+            .distinctUntilChanged()
+    }
+
     private val sortedListItemFlow = combine(
-        activeItemUIModelFlow,
+        itemUiModelFlow,
         sortingTypeState
     ) { result, sortingType ->
         when (sortingType) {

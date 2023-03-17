@@ -8,8 +8,9 @@ import proton.pass.domain.ShareSelection
 
 interface ObserveItems {
     operator fun invoke(
-        userId: UserId,
+        userId: UserId? = null,
         selection: ShareSelection,
-        itemState: ItemState
+        itemState: ItemState,
+        filter: ItemTypeFilter
     ): Flow<List<Item>>
 }

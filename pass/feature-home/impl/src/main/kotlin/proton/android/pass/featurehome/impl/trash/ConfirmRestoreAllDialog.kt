@@ -1,4 +1,4 @@
-package proton.android.pass.featuretrash.impl
+package proton.android.pass.featurehome.impl.trash
 
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Surface
@@ -8,8 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+
 
 @Composable
 internal fun ConfirmRestoreAllDialog(
@@ -28,12 +30,12 @@ internal fun ConfirmRestoreAllDialog(
                 onConfirm()
                 onDismiss()
             }) {
-                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_ok))
+                Text(text = stringResource(id = R.string.presentation_alert_ok))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_cancel))
+                Text(text = stringResource(id = R.string.presentation_alert_cancel))
             }
         }
     )

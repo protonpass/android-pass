@@ -26,7 +26,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.ObserveTrashedItems
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.ClearTrashError
 import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.DeleteItemError
@@ -35,12 +36,14 @@ import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.RefreshError
 import proton.android.pass.featuretrash.impl.TrashSnackbarMessage.RestoreItemsError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.pass.domain.ItemState
+import proton.pass.domain.ShareSelection
 import javax.inject.Inject
 
 @HiltViewModel
 class TrashScreenViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    observeTrashedItems: ObserveTrashedItems,
+    observeItems: ObserveItems,
     private val itemRepository: ItemRepository,
     private val refreshContent: RefreshContent,
     private val snackbarMessageRepository: SnackbarMessageRepository,
@@ -53,7 +56,11 @@ class TrashScreenViewModel @Inject constructor(
         MutableStateFlow(IsRefreshingState.NotRefreshing)
 
     val uiState: StateFlow<TrashUiState> = combine(
-        observeTrashedItems().asResultWithoutLoading(),
+        observeItems(
+            selection = ShareSelection.AllShares,
+            itemState = ItemState.Trashed,
+            filter = ItemTypeFilter.All
+        ).asResultWithoutLoading(),
         isRefreshing,
         isLoading
     ) { itemsResult, refreshing, loading ->

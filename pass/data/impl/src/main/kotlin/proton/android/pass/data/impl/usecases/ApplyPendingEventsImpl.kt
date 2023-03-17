@@ -10,7 +10,6 @@ import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.runCatching
@@ -18,10 +17,10 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.RefreshShares
 import proton.android.pass.data.impl.extensions.toPendingEvent
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.responses.EventList
@@ -37,7 +36,7 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val addressRepository: UserAddressRepository,
     private val itemRepository: ItemRepository,
     private val observeCurrentUser: ObserveCurrentUser,
-    private val refreshShares: RefreshShares,
+    private val shareRepository: ShareRepository,
     private val createVault: CreateVault,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : ApplyPendingEvents {
@@ -47,28 +46,29 @@ class ApplyPendingEventsImpl @Inject constructor(
             withContext(Dispatchers.IO) {
                 val user = observeCurrentUser().first()
                 val address = requireNotNull(addressRepository.getAddresses(user.userId).primary())
-                refreshShares(user.userId)
-                    .map { shares ->
-                        if (shares.isEmpty()) {
-                            createDefaultVault(user.userId)
-                        } else {
-                            shares.map { share ->
-                                async {
-                                    try {
-                                        applyPendingEvents(address.addressId, user.userId, share.id)
-                                    } catch (e: ShareNotAvailableError) {
-                                        PassLogger.d(TAG, e, "Triggering a share refresh")
-                                        refreshShares(user.userId)
-                                            .map {
-                                                if (shares.isEmpty()) {
-                                                    createDefaultVault(user.userId)
-                                                }
-                                            }
-                                    }
-                                }
-                            }.awaitAll()
+                val refreshSharesResult = shareRepository.refreshShares(user.userId)
+                if (refreshSharesResult.allShareIds.isEmpty()) {
+                    createDefaultVault(user.userId)
+                } else {
+                    refreshSharesResult.newShareIds
+                        .map {
+                            PassLogger.d(TAG, "Refreshing items on new share")
+                            itemRepository.refreshItems(user.userId, it)
+                            PassLogger.d(TAG, "Items refreshed on new share")
                         }
-                    }
+                    refreshSharesResult.allShareIds.subtract(refreshSharesResult.newShareIds)
+                        .map { share ->
+                            async {
+                                try {
+                                    applyPendingEvents(address.addressId, user.userId, share)
+                                } catch (e: ShareNotAvailableError) {
+                                    PassLogger.d(TAG, e, "Deleting share not available")
+                                    shareRepository.deleteVault(user.userId, share)
+                                }
+                            }
+                        }
+                        .awaitAll()
+                }
             }
         }
 

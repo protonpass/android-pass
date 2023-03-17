@@ -33,6 +33,7 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
+    implementation(libs.kotlinx.collections)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)

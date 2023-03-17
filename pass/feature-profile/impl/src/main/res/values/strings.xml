@@ -27,5 +27,8 @@
     <string name="itemtype_summary_alias">Alias</string>
     <string name="itemtype_summary_2fa">2FA</string>
     <string name="itemtype_summary_left">%1$s left</string>
+    <string name="feedback_option_reddit">Check out Proton on Reddit</string>
+    <string name="feedback_option_twitter">Message us on Twitter</string>
+    <string name="feedback_option_mail">Send us a message</string>
 
 </resources>

@@ -29,7 +29,8 @@ fun SearchTopBar(
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
     onStopSearch: () -> Unit,
-    drawerIcon: @Composable () -> Unit
+    drawerIcon: @Composable () -> Unit,
+    actions: (@Composable () -> Unit)? = null
 ) {
     Row(
         modifier = modifier.padding(16.dp),
@@ -38,6 +39,7 @@ fun SearchTopBar(
     ) {
         drawerIcon()
         SearchTextField(
+            modifier = Modifier.weight(1f),
             searchQuery = searchQuery,
             placeholderText = placeholderText,
             inSearchMode = inSearchMode,
@@ -56,6 +58,7 @@ fun SearchTopBar(
                 }
             } else null
         )
+        actions?.invoke()
     }
 }
 

@@ -86,9 +86,13 @@ fun HomeScreen(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val isTrashMode = homeUiState.homeListUiState.homeVaultSelection == HomeVaultSelection.Trash
 
-    BackHandler(drawerState.isOpen) {
+    BackHandler(drawerState.isOpen || bottomSheetState.isVisible) {
         scope.launch {
-            drawerState.close()
+            if (drawerState.isOpen) {
+                drawerState.close()
+            } else if (bottomSheetState.isVisible) {
+                bottomSheetState.hide()
+            }
         }
     }
 

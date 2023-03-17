@@ -47,10 +47,10 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
     @Query(
         """
         DELETE FROM ${ShareEntity.TABLE} 
-        WHERE ${ShareEntity.Columns.ID} = :shareId
+        WHERE ${ShareEntity.Columns.ID} IN (:shareIdList)
         """
     )
-    abstract suspend fun delete(shareId: String): Int
+    abstract suspend fun delete(shareIdList: Array<String>): Int
 
     @Query(
         """

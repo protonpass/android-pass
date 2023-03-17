@@ -41,6 +41,7 @@ import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
+import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
 import proton.pass.domain.ShareId
 
 @Suppress("LongParameterList")
@@ -63,8 +64,10 @@ internal fun HomeContent(
     onRefresh: () -> Unit,
     onScrollToTop: () -> Unit,
     onProfileClick: () -> Unit,
-    onItemTypeSelected: (HomeItemTypeSelection) -> Unit
+    onItemTypeSelected: (HomeItemTypeSelection) -> Unit,
+    onTrashActionsClick: () -> Unit
 ) {
+    val isTrashMode = uiState.homeListUiState.homeVaultSelection == HomeVaultSelection.Trash
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -90,8 +93,8 @@ internal fun HomeContent(
                     )
                 },
                 actions = {
-                    if (uiState.homeListUiState.homeVaultSelection == HomeVaultSelection.Trash) {
-                        IconButton(onClick = { }) {
+                    if (isTrashMode) {
+                        IconButton(onClick = onTrashActionsClick) {
                             Icon(
                                 painter = painterResource(
                                     id = me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical
@@ -165,7 +168,9 @@ internal fun HomeContent(
                 onRefresh = onRefresh,
                 onScrollToTop = onScrollToTop,
                 emptyContent = {
-                    if (uiState.searchUiState.inSearchMode) {
+                    if (isTrashMode) {
+                        EmptyTrashContent()
+                    } else if (uiState.searchUiState.inSearchMode) {
                         EmptySearchResults()
                     } else {
                         HomeEmptyList(

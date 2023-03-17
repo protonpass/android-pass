@@ -32,6 +32,8 @@ import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetC
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.SortingBottomSheetContents
+import proton.android.pass.featurehome.impl.bottomsheet.TrashAllBottomSheetContents
+import proton.android.pass.featurehome.impl.bottomsheet.TrashItemBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.VaultOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
 import proton.android.pass.featurehome.impl.vault.VaultDeleteDialog
@@ -51,7 +53,6 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     homeScreenNavigation: HomeScreenNavigation,
     onAddItemClick: (Option<ShareId>) -> Unit,
-    onTrashClick: () -> Unit,
     onCreateVaultClick: () -> Unit,
     onEditVaultClick: (ShareId) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
@@ -79,6 +80,7 @@ fun HomeScreen(
     )
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val isTrashMode = homeUiState.homeListUiState.homeVaultSelection == HomeVaultSelection.Trash
 
     BackHandler(drawerState.isOpen) {
         scope.launch {
@@ -170,6 +172,35 @@ fun HomeScreen(
                         }
                     )
                 }
+                HomeBottomSheetType.TrashItemOptions -> TrashItemBottomSheetContents(
+                    itemUiModel = selectedItem!!,
+                    onRestoreItem = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.restoreItem(it)
+                        }
+                    },
+                    onDeleteItem = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.deleteItem(it)
+                        }
+                    }
+                )
+                HomeBottomSheetType.TrashOptions -> TrashAllBottomSheetContents(
+                    onEmptyTrash = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.clearTrash()
+                        }
+                    },
+                    onRestoreAll = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.restoreItems()
+                        }
+                    }
+                )
             }
         }
     ) {
@@ -226,18 +257,26 @@ fun HomeScreen(
                 onAddItemClick = onAddItemClick,
                 onItemMenuClick = { item ->
                     selectedItem = item
-                    when (item.itemType) {
-                        is ItemType.Alias -> currentBottomSheet = HomeBottomSheetType.AliasOptions
-                        is ItemType.Login -> currentBottomSheet = HomeBottomSheetType.LoginOptions
-                        is ItemType.Note -> currentBottomSheet = HomeBottomSheetType.NoteOptions
-                        ItemType.Password -> {}
+                    if (isTrashMode) {
+                        currentBottomSheet = HomeBottomSheetType.TrashItemOptions
+                    } else {
+                        when (item.itemType) {
+                            is ItemType.Alias -> currentBottomSheet = HomeBottomSheetType.AliasOptions
+                            is ItemType.Login -> currentBottomSheet = HomeBottomSheetType.LoginOptions
+                            is ItemType.Note -> currentBottomSheet = HomeBottomSheetType.NoteOptions
+                            ItemType.Password -> {}
+                        }
                     }
                     scope.launch { bottomSheetState.show() }
                 },
                 onRefresh = { homeViewModel.onRefresh() },
                 onScrollToTop = { shouldScrollToTop = false },
                 onProfileClick = { homeScreenNavigation.toProfile() },
-                onItemTypeSelected = { homeViewModel.setItemTypeSelection(it) }
+                onItemTypeSelected = { homeViewModel.setItemTypeSelection(it) },
+                onTrashActionsClick = {
+                    currentBottomSheet = HomeBottomSheetType.TrashOptions
+                    scope.launch { bottomSheetState.show() }
+                }
             )
 
             VaultDeleteDialog(

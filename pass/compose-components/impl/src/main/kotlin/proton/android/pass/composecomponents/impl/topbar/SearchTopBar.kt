@@ -1,8 +1,9 @@
 package proton.android.pass.composecomponents.impl.topbar
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
@@ -35,9 +36,9 @@ fun SearchTopBar(
     Row(
         modifier = modifier.padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         drawerIcon()
+        Spacer(modifier = Modifier.width(8.dp))
         SearchTextField(
             modifier = Modifier.weight(1f),
             searchQuery = searchQuery,

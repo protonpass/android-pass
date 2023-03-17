@@ -13,7 +13,6 @@ fun NavHomeContent(
     state: NavHomeUiState,
     homeScreenNavigation: HomeScreenNavigation,
     onAddItemClick: (Option<ShareId>) -> Unit,
-    onTrashClick: () -> Unit,
     onCreateVaultClick: () -> Unit,
     onEditVaultClick: (ShareId) -> Unit
 ) {
@@ -32,7 +31,6 @@ fun NavHomeContent(
             HomeScreen(
                 homeScreenNavigation = homeScreenNavigation,
                 onAddItemClick = onAddItemClick,
-                onTrashClick = onTrashClick,
                 onCreateVaultClick = onCreateVaultClick,
                 onEditVaultClick = onEditVaultClick
             )

@@ -14,7 +14,6 @@ object Home : NavItem(baseRoute = "home", isTopLevel = true)
 fun NavGraphBuilder.homeGraph(
     homeScreenNavigation: HomeScreenNavigation,
     onAddItemClick: (Option<ShareId>) -> Unit,
-    onTrashClick: () -> Unit,
     onCreateVaultClick: () -> Unit,
     onEditVaultClick: (ShareId) -> Unit
 ) {
@@ -22,7 +21,6 @@ fun NavGraphBuilder.homeGraph(
         NavHome(
             homeScreenNavigation = homeScreenNavigation,
             onAddItemClick = onAddItemClick,
-            onTrashClick = onTrashClick,
             onCreateVaultClick = onCreateVaultClick,
             onEditVaultClick = onEditVaultClick
         )

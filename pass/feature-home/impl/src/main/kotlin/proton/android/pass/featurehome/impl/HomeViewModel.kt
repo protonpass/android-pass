@@ -34,6 +34,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
@@ -55,10 +56,14 @@ import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
+import proton.android.pass.data.api.usecases.ClearTrash
+import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.RestoreItem
+import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.LoginMovedToTrash
@@ -83,6 +88,10 @@ class HomeViewModel @Inject constructor(
     private val applyPendingEvents: ApplyPendingEvents,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val getShareById: GetShareById,
+    private val restoreItem: RestoreItem,
+    private val restoreItems: RestoreItems,
+    private val deleteItem: DeleteItem,
+    private val clearTrash: ClearTrash,
     clock: Clock,
     observeCurrentUser: ObserveCurrentUser,
     observeItems: ObserveItems
@@ -367,6 +376,82 @@ class HomeViewModel @Inject constructor(
 
     fun setVaultSelection(homeVaultSelection: HomeVaultSelection) {
         vaultSelectionFlow.update { homeVaultSelection }
+    }
+
+    fun restoreItem(item: ItemUiModel) = viewModelScope.launch {
+        restoreItem.invoke(shareId = item.shareId, itemId = item.id)
+            .asLoadingResult()
+            .collect {
+                when (it) {
+                    LoadingResult.Loading -> isRefreshing.update { IsRefreshingState.Refreshing }
+                    is LoadingResult.Error -> {
+                        PassLogger.e(TAG, it.exception, "Error restoring item")
+                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.RestoreItemsError)
+                    }
+                    is LoadingResult.Success -> {
+                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        PassLogger.i(TAG, "Item restored successfully")
+                    }
+                }
+            }
+    }
+
+    fun deleteItem(item: ItemUiModel) = viewModelScope.launch {
+        deleteItem.invoke(shareId = item.shareId, itemId = item.id)
+            .asLoadingResult()
+            .collect {
+                when (it) {
+                    LoadingResult.Loading -> isRefreshing.update { IsRefreshingState.Refreshing }
+                    is LoadingResult.Error -> {
+                        PassLogger.e(TAG, it.exception, "Error deleting item")
+                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.DeleteItemError)
+                    }
+                    is LoadingResult.Success -> {
+                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        PassLogger.i(TAG, "Item deleted successfully")
+                    }
+                }
+            }
+    }
+
+    fun clearTrash() = viewModelScope.launch {
+        clearTrash.invoke()
+            .asLoadingResult()
+            .collect {
+                when (it) {
+                    LoadingResult.Loading -> isRefreshing.update { IsRefreshingState.Refreshing }
+                    is LoadingResult.Error -> {
+                        PassLogger.e(TAG, it.exception, "Error clearing trash")
+                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.ClearTrashError)
+                    }
+                    is LoadingResult.Success -> {
+                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        PassLogger.i(TAG, "Trash cleared successfully")
+                    }
+                }
+            }
+    }
+
+    fun restoreItems() = viewModelScope.launch {
+        restoreItems.invoke()
+            .asLoadingResult()
+            .collect {
+                when (it) {
+                    LoadingResult.Loading -> isRefreshing.update { IsRefreshingState.Refreshing }
+                    is LoadingResult.Error -> {
+                        PassLogger.e(TAG, it.exception, "Error restoring items")
+                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.RestoreItemsError)
+                    }
+                    is LoadingResult.Success -> {
+                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        PassLogger.i(TAG, "Items restored successfully")
+                    }
+                }
+            }
     }
 
     private suspend fun shareIdToShare(shareId: ShareId): Option<ShareUiModel> {

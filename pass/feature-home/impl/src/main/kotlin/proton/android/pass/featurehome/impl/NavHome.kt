@@ -13,7 +13,6 @@ import proton.pass.domain.ShareId
 fun NavHome(
     onAddItemClick: (Option<ShareId>) -> Unit,
     homeScreenNavigation: HomeScreenNavigation,
-    onTrashClick: () -> Unit,
     onCreateVaultClick: () -> Unit,
     onEditVaultClick: (ShareId) -> Unit,
     viewModel: NavHomeViewModel = hiltViewModel()
@@ -24,7 +23,6 @@ fun NavHome(
         state = state,
         homeScreenNavigation = homeScreenNavigation,
         onAddItemClick = onAddItemClick,
-        onTrashClick = onTrashClick,
         onCreateVaultClick = onCreateVaultClick,
         onEditVaultClick = onEditVaultClick
     )

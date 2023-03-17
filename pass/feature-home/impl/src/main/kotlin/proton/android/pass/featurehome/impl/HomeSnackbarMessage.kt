@@ -23,5 +23,9 @@ enum class HomeSnackbarMessage(
     DeleteVaultSuccess(R.string.snackbar_delete_vault_success, SnackbarType.SUCCESS),
     DeleteVaultError(R.string.snackbar_delete_vault_error, SnackbarType.ERROR),
     CannotDeleteCurrentVault(R.string.snackbar_cannot_delete_current_vault_error, SnackbarType.ERROR),
+
+    ClearTrashError(R.string.trash_error_clearing_trash, SnackbarType.ERROR),
+    RestoreItemsError(R.string.trash_error_restoring_items, SnackbarType.ERROR),
+    DeleteItemError(R.string.trash_error_deleting_item, SnackbarType.ERROR),
 }
 

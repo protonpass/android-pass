@@ -280,7 +280,6 @@ dependencies {
     implementation(projects.pass.featureHome.impl)
     implementation(projects.pass.featureSettings.impl)
     implementation(projects.pass.featureOnboarding.impl)
-    implementation(projects.pass.featureTrash.impl)
     implementation(projects.pass.featureVault.impl)
     implementation(projects.pass.featureItemDetail.impl)
     implementation(projects.pass.featureProfile.impl)

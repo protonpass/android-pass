@@ -52,6 +52,7 @@ import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.report.presentation.entity.BugReportInput
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
+import proton.android.pass.data.api.usecases.SendUserAccess
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -67,7 +68,8 @@ class LauncherViewModel @Inject constructor(
     private val plansOrchestrator: PlansOrchestrator,
     private val reportOrchestrator: ReportOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
-    private val preferenceRepository: UserPreferencesRepository
+    private val preferenceRepository: UserPreferencesRepository,
+    private val sendUserAccess: SendUserAccess
 ) : ViewModel() {
 
     init {
@@ -104,6 +106,11 @@ class LauncherViewModel @Inject constructor(
             viewModelScope.launch {
                 if (result == null && getPrimaryUserIdOrNull() == null) {
                     context.finish()
+                }
+
+                if (result != null) {
+                    PassLogger.i(TAG, "Sending User Access")
+                    sendUserAccess()
                 }
             }
         }

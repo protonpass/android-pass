@@ -7,6 +7,11 @@ import kotlin.test.assertEquals
 class AliasUtilsTest {
 
     @Test
+    fun `alias with vocals with accents in title returns vocals without accents`() {
+        assertEquals(AliasUtils.formatAlias("áàäâãāéèëêėē"), "aaaaaaeeeeee")
+    }
+
+    @Test
     fun `alias with empty title returns empty string`() {
         assertEquals(AliasUtils.formatAlias(""), "")
     }

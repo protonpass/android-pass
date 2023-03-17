@@ -6,9 +6,11 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
+import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateVault
+import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAddressById
 import proton.android.pass.data.api.usecases.GetAddressesForUserId
@@ -30,6 +32,8 @@ import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RequestImage
+import proton.android.pass.data.api.usecases.RestoreItem
+import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.SendUserAccess
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateAlias
@@ -42,9 +46,11 @@ import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.data.impl.autofill.SuggestionSorterImpl
 import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
+import proton.android.pass.data.impl.usecases.ClearTrashImpl
 import proton.android.pass.data.impl.usecases.CreateAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemImpl
 import proton.android.pass.data.impl.usecases.CreateVaultImpl
+import proton.android.pass.data.impl.usecases.DeleteItemImpl
 import proton.android.pass.data.impl.usecases.DeleteVaultImpl
 import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
@@ -66,6 +72,8 @@ import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
+import proton.android.pass.data.impl.usecases.RestoreItemImpl
+import proton.android.pass.data.impl.usecases.RestoreItemsImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
@@ -186,6 +194,18 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindSendUserAccessRequest(impl: SendUserAccessRequestImpl): SendUserAccessRequest
+
+    @Binds
+    abstract fun bindRestoreItem(impl: RestoreItemImpl): RestoreItem
+
+    @Binds
+    abstract fun bindRestoreItems(impl: RestoreItemsImpl): RestoreItems
+
+    @Binds
+    abstract fun bindDeleteItem(impl: DeleteItemImpl): DeleteItem
+
+    @Binds
+    abstract fun bindClearTrash(impl: ClearTrashImpl): ClearTrash
 
 }
 

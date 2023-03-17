@@ -19,7 +19,7 @@ interface ShareRepository {
         shareId: ShareId
     ): LoadingResult<Unit>
 
-    suspend fun refreshShares(userId: UserId): LoadingResult<List<Share>>
+    suspend fun refreshShares(userId: UserId): RefreshSharesResult
 
     fun observeAllShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>>
 
@@ -31,3 +31,8 @@ interface ShareRepository {
         vault: NewVault
     ): Share
 }
+
+data class RefreshSharesResult(
+    val allShareIds: Set<ShareId>,
+    val newShareIds: Set<ShareId>
+)

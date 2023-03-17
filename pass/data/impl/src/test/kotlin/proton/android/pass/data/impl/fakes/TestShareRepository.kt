@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId
@@ -15,7 +16,8 @@ import proton.pass.domain.entity.NewVault
 class TestShareRepository : ShareRepository {
 
     private var createVaultResult: LoadingResult<Share> = LoadingResult.Loading
-    private var refreshSharesResult: LoadingResult<List<Share>> = LoadingResult.Loading
+    private var refreshSharesResult: RefreshSharesResult =
+        RefreshSharesResult(emptySet(), emptySet())
     private var observeSharesFlow = MutableSharedFlow<LoadingResult<List<Share>>>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
     )
@@ -33,7 +35,7 @@ class TestShareRepository : ShareRepository {
         createVaultResult = result
     }
 
-    fun setRefreshSharesResult(result: LoadingResult<List<Share>>) {
+    fun setRefreshSharesResult(result: RefreshSharesResult) {
         refreshSharesResult = result
     }
 
@@ -59,7 +61,7 @@ class TestShareRepository : ShareRepository {
     override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
         deleteVaultFlow.first()
 
-    override suspend fun refreshShares(userId: UserId): LoadingResult<List<Share>> =
+    override suspend fun refreshShares(userId: UserId): RefreshSharesResult =
         refreshSharesResult
 
     override fun observeAllShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =

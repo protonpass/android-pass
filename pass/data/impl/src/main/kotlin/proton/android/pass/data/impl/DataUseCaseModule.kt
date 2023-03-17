@@ -30,7 +30,6 @@ import proton.android.pass.data.api.usecases.ObserveTrashedItems
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.RefreshContent
-import proton.android.pass.data.api.usecases.RefreshShares
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.data.api.usecases.SendUserAccess
 import proton.android.pass.data.api.usecases.TrashItem
@@ -68,7 +67,6 @@ import proton.android.pass.data.impl.usecases.ObserveTrashedItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
-import proton.android.pass.data.impl.usecases.RefreshSharesImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
@@ -146,9 +144,6 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindRefreshContent(impl: RefreshContentImpl): RefreshContent
-
-    @Binds
-    abstract fun bindRefreshShares(impl: RefreshSharesImpl): RefreshShares
 
     @Binds
     abstract fun bindTrashItem(impl: TrashItemImpl): TrashItem

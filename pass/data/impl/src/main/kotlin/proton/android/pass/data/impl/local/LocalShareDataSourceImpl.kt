@@ -15,9 +15,6 @@ class LocalShareDataSourceImpl @Inject constructor(
     override suspend fun upsertShares(shares: List<ShareEntity>) =
         database.sharesDao().insertOrUpdate(*shares.toTypedArray())
 
-    override suspend fun evictAndUpsertShares(userId: UserId, shares: List<ShareEntity>) =
-        database.sharesDao().evictAndUpsertShares(userId, *shares.toTypedArray())
-
     override suspend fun getById(userId: UserId, shareId: ShareId): ShareEntity? =
         database.sharesDao().getById(userId.id, shareId.id)
 
@@ -27,8 +24,8 @@ class LocalShareDataSourceImpl @Inject constructor(
     override fun getAllSharesForAddress(addressId: AddressId): Flow<List<ShareEntity>> =
         database.sharesDao().observeAllForAddress(addressId.id)
 
-    override suspend fun deleteShare(shareId: ShareId): Boolean =
-        database.sharesDao().delete(shareId.id) > 0
+    override suspend fun deleteShares(shareIds: Set<ShareId>): Boolean =
+        database.sharesDao().delete(shareIds.map { it.id }.toTypedArray()) > 0
 
     override suspend fun hasShares(userId: UserId): Boolean =
         database.sharesDao().countShares(userId.id) > 0

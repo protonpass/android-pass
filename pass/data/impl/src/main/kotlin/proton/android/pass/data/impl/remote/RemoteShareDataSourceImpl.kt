@@ -52,12 +52,12 @@ class RemoteShareDataSourceImpl @Inject constructor(
             .toLoadingResult()
             .map { }
 
-    override suspend fun getShares(userId: UserId): LoadingResult<List<ShareResponse>> =
+    override suspend fun getShares(userId: UserId): List<ShareResponse> =
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 getShares().shares
             }
-            .toLoadingResult()
+            .valueOrThrow
 
     override suspend fun getShareById(userId: UserId, shareId: ShareId): LoadingResult<ShareResponse?> =
         api.get<PasswordManagerApi>(userId)

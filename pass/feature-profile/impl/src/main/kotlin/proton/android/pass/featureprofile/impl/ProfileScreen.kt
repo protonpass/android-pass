@@ -30,6 +30,7 @@ fun ProfileScreen(
     onListClick: () -> Unit,
     onCreateItemClick: () -> Unit,
     onSettingsClick: () -> Unit,
+    onFeedbackClick: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -66,7 +67,10 @@ fun ProfileScreen(
             },
             onAutofillClicked = { viewModel.onToggleAutofill(it) },
             onAccountClick = { },
-            onSettingsClick = onSettingsClick
+            onSettingsClick = onSettingsClick,
+            onTipsClick = {},
+            onFeedbackClick = onFeedbackClick,
+            onRateAppClick = {}
         )
     }
 }

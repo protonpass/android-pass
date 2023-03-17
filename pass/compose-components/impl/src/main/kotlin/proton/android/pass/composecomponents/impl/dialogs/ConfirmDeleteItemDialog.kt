@@ -20,7 +20,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
-fun ConfirmMoveItemToTrashDialog(
+fun ConfirmDeleteItemDialog(
     modifier: Modifier = Modifier,
     show: Boolean,
     itemName: String,
@@ -35,7 +35,7 @@ fun ConfirmMoveItemToTrashDialog(
         onDismissRequest = onDismiss,
         title = {
             Text(
-                text = stringResource(R.string.alert_confirm_move_to_trash_dialog_title),
+                text = stringResource(R.string.alert_confirm_delete_item_dialog_title),
                 style = ProtonTheme.typography.headline,
                 color = ProtonTheme.colors.textNorm
             )
@@ -43,7 +43,7 @@ fun ConfirmMoveItemToTrashDialog(
         text = {
             ProtonAlertDialogText(
                 text = stringResource(
-                    R.string.alert_confirm_item_send_to_trash_message,
+                    R.string.alert_confirm_delete_item_dialog_message,
                     itemName
                 )
             )
@@ -84,7 +84,7 @@ fun ConfirmMoveItemToTrashDialogPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            ConfirmMoveItemToTrashDialog(
+            ConfirmDeleteItemDialog(
                 itemName = "an item",
                 show = true,
                 onConfirm = {},

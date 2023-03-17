@@ -5,7 +5,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import me.proton.core.presentation.R
+import proton.android.pass.featurehome.impl.R
+import me.proton.core.presentation.R as CoreR
 
 @Composable
 internal fun ConfirmClearTrashDialog(
@@ -24,12 +25,12 @@ internal fun ConfirmClearTrashDialog(
                 onConfirm()
                 onDismiss()
             }) {
-                Text(text = stringResource(id = R.string.presentation_alert_ok))
+                Text(text = stringResource(id = CoreR.string.presentation_alert_ok))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = R.string.presentation_alert_cancel))
+                Text(text = stringResource(id = CoreR.string.presentation_alert_cancel))
             }
         }
     )

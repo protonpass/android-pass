@@ -284,6 +284,7 @@ class HomeViewModel @Inject constructor(
     fun onStopSearching() {
         searchQueryState.update { "" }
         isInSearchModeState.update { false }
+        itemTypeSelectionFlow.update { HomeItemTypeSelection.AllItems }
     }
 
     fun onEnterSearch() {

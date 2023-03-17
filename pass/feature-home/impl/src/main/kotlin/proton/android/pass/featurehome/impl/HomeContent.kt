@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,11 +18,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
@@ -84,6 +88,19 @@ internal fun HomeContent(
                         onDrawerIconClick = onDrawerIconClick,
                         onStopSearch = onStopSearch
                     )
+                },
+                actions = {
+                    if (uiState.homeListUiState.homeVaultSelection == HomeVaultSelection.Trash) {
+                        IconButton(onClick = { }) {
+                            Icon(
+                                painter = painterResource(
+                                    id = me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical
+                                ),
+                                contentDescription = null,
+                                tint = PassTheme.colors.textWeak
+                            )
+                        }
+                    }
                 }
             )
         },

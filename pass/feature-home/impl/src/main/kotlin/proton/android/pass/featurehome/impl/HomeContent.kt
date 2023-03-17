@@ -29,6 +29,7 @@ import proton.android.pass.composecomponents.impl.extension.toBackgroundColor
 import proton.android.pass.composecomponents.impl.extension.toIconColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
+import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
@@ -78,28 +79,11 @@ internal fun HomeContent(
                 onStopSearch = onStopSearch,
                 onSearchQueryChange = onSearchQueryChange,
                 drawerIcon = {
-                    if (!uiState.searchUiState.inSearchMode) {
-                        when (val share = uiState.homeListUiState.selectedShare) {
-                            None -> {
-                                AllVaultsIcon(
-                                    size = 48,
-                                    iconSize = 28,
-                                    onClick = onDrawerIconClick
-                                )
-                            }
-                            is Some -> {
-                                VaultIcon(
-                                    modifier = Modifier.size(48.dp),
-                                    backgroundColor = share.value.color.toBackgroundColor(),
-                                    iconColor = share.value.color.toIconColor(),
-                                    icon = share.value.icon.toResource(),
-                                    onClick = onDrawerIconClick
-                                )
-                            }
-                        }
-                    } else {
-                        ArrowBackIconButton { onStopSearch() }
-                    }
+                    HomeDrawerIcon(
+                        uiState = uiState,
+                        onDrawerIconClick = onDrawerIconClick,
+                        onStopSearch = onStopSearch
+                    )
                 }
             )
         },
@@ -186,5 +170,51 @@ internal fun HomeContent(
             message = R.string.alert_confirm_item_send_to_trash_message,
             onConfirm = sendItemToTrash
         )
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+private fun HomeDrawerIcon(
+    modifier: Modifier = Modifier,
+    uiState: HomeUiState,
+    onDrawerIconClick: () -> Unit,
+    onStopSearch: () -> Unit
+) {
+    if (!uiState.searchUiState.inSearchMode) {
+        when (val share = uiState.homeListUiState.selectedShare) {
+            None -> {
+                when (uiState.homeListUiState.homeVaultSelection) {
+                    HomeVaultSelection.AllVaults -> {
+                        AllVaultsIcon(
+                            modifier = modifier,
+                            size = 48,
+                            iconSize = 28,
+                            onClick = onDrawerIconClick
+                        )
+                    }
+                    HomeVaultSelection.Trash -> {
+                        TrashVaultIcon(
+                            modifier = modifier,
+                            size = 48,
+                            iconSize = 28,
+                            onClick = onDrawerIconClick
+                        )
+                    }
+                    else -> {} // This combination is not possible
+                }
+            }
+            is Some -> {
+                VaultIcon(
+                    modifier = modifier.size(48.dp),
+                    backgroundColor = share.value.color.toBackgroundColor(),
+                    iconColor = share.value.color.toIconColor(),
+                    icon = share.value.icon.toResource(),
+                    onClick = onDrawerIconClick
+                )
+            }
+        }
+    } else {
+        ArrowBackIconButton(modifier) { onStopSearch() }
     }
 }

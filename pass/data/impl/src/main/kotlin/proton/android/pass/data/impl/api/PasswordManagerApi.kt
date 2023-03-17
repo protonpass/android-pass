@@ -154,4 +154,8 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Query("Size") size: Int = 64,
         @Query("Mode") mode: String = "dark"
     ): retrofit2.Response<okhttp3.ResponseBody>
+
+    // User access
+    @POST("$PREFIX/user/access")
+    suspend fun userAccess(): retrofit2.Response<okhttp3.ResponseBody>
 }

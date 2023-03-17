@@ -32,6 +32,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RefreshShares
 import proton.android.pass.data.api.usecases.RequestImage
+import proton.android.pass.data.api.usecases.SendUserAccess
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
@@ -69,6 +70,9 @@ import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RefreshSharesImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
+import proton.android.pass.data.impl.usecases.SendUserAccessImpl
+import proton.android.pass.data.impl.usecases.SendUserAccessRequest
+import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
 import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
@@ -186,5 +190,12 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetVaultById(impl: GetVaultByIdImpl): GetVaultById
+
+    @Binds
+    abstract fun bindSendUserAccess(impl: SendUserAccessImpl): SendUserAccess
+
+    @Binds
+    abstract fun bindSendUserAccessRequest(impl: SendUserAccessRequestImpl): SendUserAccessRequest
+
 }
 

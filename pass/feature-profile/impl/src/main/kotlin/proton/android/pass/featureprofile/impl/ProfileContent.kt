@@ -21,7 +21,10 @@ fun ProfileContent(
     onFingerprintClicked: (Boolean) -> Unit,
     onAutofillClicked: (Boolean) -> Unit,
     onAccountClick: () -> Unit,
-    onSettingsClick: () -> Unit
+    onSettingsClick: () -> Unit,
+    onTipsClick: () -> Unit,
+    onFeedbackClick: () -> Unit,
+    onRateAppClick: () -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         ItemSummary(itemSummaryUiState = state.itemSummaryUiState)
@@ -43,6 +46,10 @@ fun ProfileContent(
             )
         }
         AccountProfileSection(onAccountClick = onAccountClick, onSettingsClick = onSettingsClick)
-        HelpCenterProfileSection()
+        HelpCenterProfileSection(
+            onTipsClick = onTipsClick,
+            onFeedbackClick = onFeedbackClick,
+            onRateAppClick = onRateAppClick
+        )
     }
 }

@@ -7,6 +7,9 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.toOption
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.authGraph
+import proton.android.pass.featurehome.impl.Home
+import proton.android.pass.featurehome.impl.HomeScreenNavigation
+import proton.android.pass.featurehome.impl.homeGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
 import proton.android.pass.featureitemcreate.impl.alias.EditAlias
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
@@ -27,13 +30,11 @@ import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
-import proton.android.pass.featurehome.impl.Home
-import proton.android.pass.featurehome.impl.HomeScreenNavigation
-import proton.android.pass.featurehome.impl.homeGraph
 import proton.android.pass.featureitemdetail.impl.ViewItem
 import proton.android.pass.featureitemdetail.impl.itemDetailGraph
 import proton.android.pass.featureonboarding.impl.OnBoarding
 import proton.android.pass.featureonboarding.impl.onBoardingGraph
+import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.featuresettings.impl.Settings
@@ -130,6 +131,7 @@ fun NavGraphBuilder.appGraph(
         onSettingsClick = { appNavigator.navigate(Settings) },
         onListClick = { appNavigator.navigate(Home) },
         onCreateItemClick = { appNavigator.navigate(CreateItemBottomsheet) },
+        onFeedbackClick = { appNavigator.navigate(FeedbackBottomsheet) }
     )
     settingsGraph(
         onLogoutClick = { appNavigator.navigate(SignOutDialog) },

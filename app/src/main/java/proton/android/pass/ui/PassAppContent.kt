@@ -67,6 +67,9 @@ fun PassAppContent(
             drawerState = internalDrawerState,
             content = {
                 Column(modifier = Modifier.padding(contentPadding)) {
+                    AnimatedVisibility(visible = appUiState.networkStatus == NetworkStatus.Offline) {
+                        OfflineIndicator()
+                    }
                     PassModalBottomSheetLayout(appNavigator.bottomSheetNavigator) {
                         PassNavHost(
                             modifier = Modifier.weight(1f),
@@ -80,10 +83,6 @@ fun PassAppContent(
                             },
                             onLogout = { coreNavigation.onRemove(null) }
                         )
-                    }
-
-                    AnimatedVisibility(visible = appUiState.networkStatus == NetworkStatus.Offline) {
-                        OfflineIndicator()
                     }
                 }
             }

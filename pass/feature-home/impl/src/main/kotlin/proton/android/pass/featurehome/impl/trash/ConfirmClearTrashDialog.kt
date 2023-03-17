@@ -1,10 +1,11 @@
-package proton.android.pass.featuretrash.impl
+package proton.android.pass.featurehome.impl.trash
 
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import me.proton.core.presentation.R
 
 @Composable
 internal fun ConfirmClearTrashDialog(
@@ -23,13 +24,14 @@ internal fun ConfirmClearTrashDialog(
                 onConfirm()
                 onDismiss()
             }) {
-                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_ok))
+                Text(text = stringResource(id = R.string.presentation_alert_ok))
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_cancel))
+                Text(text = stringResource(id = R.string.presentation_alert_cancel))
             }
         }
     )
 }
+

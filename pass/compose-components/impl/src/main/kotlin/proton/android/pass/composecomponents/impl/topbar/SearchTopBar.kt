@@ -18,7 +18,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 
 @Composable
@@ -33,8 +33,9 @@ fun SearchTopBar(
     drawerIcon: @Composable () -> Unit,
     actions: (@Composable () -> Unit)? = null
 ) {
+    val endPadding = if (actions != null) 4.dp else 16.dp
     Row(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier.padding(start = 16.dp, top = 16.dp, end = endPadding, bottom = 16.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         drawerIcon()
@@ -66,9 +67,9 @@ fun SearchTopBar(
 @Preview
 @Composable
 fun SearchTopBarPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDarkMode: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = isDarkMode) {
+    PassTheme(isDark = input.first) {
         Surface {
             SearchTopBar(
                 searchQuery = "",
@@ -83,7 +84,20 @@ fun SearchTopBarPreview(
                 },
                 inSearchMode = true,
                 onStopSearch = {},
-                onEnterSearch = {}
+                onEnterSearch = {},
+                actions = {
+                    if (input.second) {
+                        IconButton(onClick = {}) {
+                            Icon(
+                                painter = painterResource(
+                                    id = R.drawable.ic_proton_three_dots_vertical
+                                ),
+                                contentDescription = null,
+                                tint = PassTheme.colors.textWeak
+                            )
+                        }
+                    }
+                }
             )
         }
     }

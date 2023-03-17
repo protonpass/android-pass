@@ -27,7 +27,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.composecomponents.impl.dialogs.ConfirmMoveItemToTrashDialog
+import proton.android.pass.composecomponents.impl.dialogs.ConfirmDeleteItemDialog
 import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
@@ -36,6 +36,8 @@ import proton.android.pass.featurehome.impl.bottomsheet.TrashAllBottomSheetConte
 import proton.android.pass.featurehome.impl.bottomsheet.TrashItemBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.VaultOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
+import proton.android.pass.featurehome.impl.trash.ConfirmClearTrashDialog
+import proton.android.pass.featurehome.impl.trash.ConfirmRestoreAllDialog
 import proton.android.pass.featurehome.impl.vault.VaultDeleteDialog
 import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
@@ -70,6 +72,8 @@ fun HomeScreen(
     var shouldScrollToTop by remember { mutableStateOf(false) }
     var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowDeleteVaultDialog by rememberSaveable { mutableStateOf(false) }
+    var shouldShowRestoreAllDialog by rememberSaveable { mutableStateOf(false) }
+    var shouldShowClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     var selectedShare: ShareUiModelWithItemCount? by rememberSaveable(stateSaver = ShareUiModelWithItemCountSaver) {
         mutableStateOf(null)
     }
@@ -117,8 +121,10 @@ fun HomeScreen(
                         homeScreenNavigation.toEditLogin(shareId, itemId)
                     },
                     onMoveToTrash = {
-                        scope.launch { bottomSheetState.hide() }
-                        shouldShowDeleteItemDialog = true
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.sendItemToTrash(it)
+                        }
                     }
                 )
                 HomeBottomSheetType.AliasOptions -> AliasOptionsBottomSheetContents(
@@ -132,8 +138,10 @@ fun HomeScreen(
                         homeScreenNavigation.toEditAlias(shareId, itemId)
                     },
                     onMoveToTrash = {
-                        scope.launch { bottomSheetState.hide() }
-                        shouldShowDeleteItemDialog = true
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.sendItemToTrash(it)
+                        }
                     }
                 )
                 HomeBottomSheetType.NoteOptions -> NoteOptionsBottomSheetContents(
@@ -147,8 +155,10 @@ fun HomeScreen(
                         homeScreenNavigation.toEditNote(shareId, itemId)
                     },
                     onMoveToTrash = {
-                        scope.launch { bottomSheetState.hide() }
-                        shouldShowDeleteItemDialog = true
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.sendItemToTrash(it)
+                        }
                     }
                 )
                 HomeBottomSheetType.VaultOptions -> {
@@ -183,7 +193,7 @@ fun HomeScreen(
                     onDeleteItem = {
                         scope.launch {
                             bottomSheetState.hide()
-                            homeViewModel.deleteItem(it)
+                            shouldShowDeleteItemDialog = true
                         }
                     }
                 )
@@ -191,13 +201,13 @@ fun HomeScreen(
                     onEmptyTrash = {
                         scope.launch {
                             bottomSheetState.hide()
-                            homeViewModel.clearTrash()
+                            shouldShowClearTrashDialog = true
                         }
                     },
                     onRestoreAll = {
                         scope.launch {
                             bottomSheetState.hide()
-                            homeViewModel.restoreItems()
+                            shouldShowRestoreAllDialog = true
                         }
                     }
                 )
@@ -302,11 +312,33 @@ fun HomeScreen(
                 }
             )
 
-            ConfirmMoveItemToTrashDialog(
+            ConfirmRestoreAllDialog(
+                show = shouldShowRestoreAllDialog,
+                onDismiss = {
+                    shouldShowRestoreAllDialog = false
+                },
+                onConfirm = {
+                    homeViewModel.restoreItems()
+                    shouldShowRestoreAllDialog = false
+                }
+            )
+
+            ConfirmClearTrashDialog(
+                show = shouldShowClearTrashDialog,
+                onDismiss = {
+                    shouldShowClearTrashDialog = false
+                },
+                onConfirm = {
+                    homeViewModel.clearTrash()
+                    shouldShowClearTrashDialog = false
+                }
+            )
+
+            ConfirmDeleteItemDialog(
                 itemName = selectedItem?.name ?: "",
                 show = shouldShowDeleteItemDialog,
                 onConfirm = {
-                    homeViewModel.sendItemToTrash(selectedItem)
+                    homeViewModel.deleteItem(selectedItem!!)
                     shouldShowDeleteItemDialog = false
                 },
                 onDismiss = { shouldShowDeleteItemDialog = false },

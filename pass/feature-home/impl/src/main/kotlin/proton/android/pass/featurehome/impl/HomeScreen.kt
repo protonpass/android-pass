@@ -194,7 +194,8 @@ fun HomeScreen(
                     },
                     onTrashClick = {
                         scope.launch { drawerState.close() }
-                        onTrashClick()
+                        vaultDrawerViewModel.setVaultSelection(HomeVaultSelection.Trash)
+                        homeViewModel.setVaultSelection(HomeVaultSelection.Trash)
                     },
                     onCreateVaultClick = {
                         onCreateVaultClick()

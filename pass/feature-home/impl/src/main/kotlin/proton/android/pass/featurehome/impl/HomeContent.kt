@@ -137,7 +137,7 @@ internal fun HomeContent(
                     showSearchResults = uiState.searchUiState.inSearchMode &&
                         uiState.searchUiState.searchQuery.isNotEmpty(),
                     isProcessingSearch = uiState.searchUiState.isProcessingSearch.value(),
-                    itemCount = uiState.homeListUiState.items.values.flatten().count()
+                    itemCount = uiState.homeListUiState.items.map { it.second }.flatten().count()
                         .takeIf { !uiState.searchUiState.isProcessingSearch.value() },
                     onSortingOptionsClick = onSortingOptionsClick
                 )

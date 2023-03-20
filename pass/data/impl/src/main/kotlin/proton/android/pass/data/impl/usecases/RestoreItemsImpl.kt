@@ -1,8 +1,6 @@
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -16,23 +14,23 @@ class RestoreItemsImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : RestoreItems {
 
-    override fun invoke(userId: UserId?): Flow<Unit> =
-        if (userId == null) {
-            observeCurrentUser()
-                .flatMapLatest { restoreItems(it.userId) }
+    override suspend fun invoke(userId: UserId?) {
+        val id = if (userId == null) {
+            val user = requireNotNull(observeCurrentUser().first())
+            user.userId
         } else {
-            restoreItems(userId)
+            userId
         }
+        restoreItems(id)
+    }
 
-    private fun restoreItems(userId: UserId): Flow<Unit> = flow {
+    private suspend fun restoreItems(userId: UserId) {
         when (val res = itemRepository.restoreItems(userId)) {
             LoadingResult.Loading -> {}
+            is LoadingResult.Success -> {}
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, res.exception, "Error restoring items")
                 throw res.exception
-            }
-            is LoadingResult.Success -> {
-                emit(Unit)
             }
         }
     }

@@ -37,6 +37,7 @@ import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.ItemUiFilter
 import proton.android.pass.commonui.api.toUiModel
@@ -273,7 +274,12 @@ class SelectItemViewModel @Inject constructor(
             .map { items ->
                 SelectItemListItems(
                     suggestions = persistentListOf(),
-                    items = persistentListOf(GroupingKeys.NoGrouping to items.toImmutableList()),
+                    items = persistentListOf(
+                        GroupedItemList(
+                            GroupingKeys.NoGrouping,
+                            items.toImmutableList()
+                        )
+                    ),
                     suggestionsForTitle = ""
                 )
             }
@@ -297,7 +303,12 @@ class SelectItemViewModel @Inject constructor(
     ): SelectItemListItems {
         val sorted = ItemSuggestionSorter.sort(allItems, suggestions)
         return SelectItemListItems(
-            items = persistentListOf(GroupingKeys.NoGrouping to sorted.allItems.toImmutableList()),
+            items = persistentListOf(
+                GroupedItemList(
+                    GroupingKeys.NoGrouping,
+                    sorted.allItems.toImmutableList()
+                )
+            ),
             suggestions = sorted.suggestions.toImmutableList(),
             suggestionsForTitle = autofillAppState.value()
                 ?.let { getSuggestionsTitle(it) }

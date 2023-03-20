@@ -8,6 +8,7 @@ import proton.android.pass.autofill.ui.autofill.select.SearchUiState
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListItems
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListUiState
 import proton.android.pass.autofill.ui.autofill.select.SelectItemUiState
+import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -27,7 +28,10 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     items = SelectItemListItems(
                         suggestions = persistentListOf(),
                         items = persistentListOf(
-                            GroupingKeys.NoGrouping to persistentListOf(item("Item with long text"))
+                            GroupedItemList(
+                                key = GroupingKeys.NoGrouping,
+                                items = persistentListOf(item("Item with long text"))
+                            )
                         ),
                         suggestionsForTitle = ""
                     ),
@@ -42,9 +46,12 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     items = SelectItemListItems(
                         suggestions = persistentListOf(item("Suggested item")),
                         items = persistentListOf(
-                            GroupingKeys.NoGrouping to persistentListOf(
-                                item("Item with long text"),
-                                item("Another item")
+                            GroupedItemList(
+                                key = GroupingKeys.NoGrouping,
+                                items = persistentListOf(
+                                    item("Item with long text"),
+                                    item("Another item")
+                                )
                             )
                         ),
                         suggestionsForTitle = "some.website.local"

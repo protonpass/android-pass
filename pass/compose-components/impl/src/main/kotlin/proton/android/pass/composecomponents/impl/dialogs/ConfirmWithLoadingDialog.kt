@@ -1,5 +1,6 @@
 package proton.android.pass.composecomponents.impl.dialogs
 
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
@@ -7,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.component.ProtonAlertDialogText
 import me.proton.core.compose.component.ProtonTextButton
@@ -51,7 +53,9 @@ fun ConfirmWithLoadingDialog(
         },
         confirmButton = {
             if (isLoading) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    modifier = Modifier.height(48.dp)
+                )
             } else {
                 ProtonTextButton(
                     onClick = onConfirm,

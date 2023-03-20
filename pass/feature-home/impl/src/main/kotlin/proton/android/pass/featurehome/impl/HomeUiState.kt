@@ -5,8 +5,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.commonui.api.GroupingKeys
-import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
@@ -36,7 +35,7 @@ data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
     val actionState: ActionState = ActionState.Unknown,
-    val items: ImmutableList<Pair<GroupingKeys, ImmutableList<ItemUiModel>>>,
+    val items: ImmutableList<GroupedItemList>,
     val selectedShare: Option<ShareUiModel> = None,
     val homeVaultSelection: HomeVaultSelection = HomeVaultSelection.AllVaults,
     val homeItemTypeSelection: HomeItemTypeSelection = HomeItemTypeSelection.AllItems,

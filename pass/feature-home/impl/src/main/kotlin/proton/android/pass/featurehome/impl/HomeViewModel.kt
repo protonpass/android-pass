@@ -7,7 +7,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -38,7 +37,7 @@ import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonui.api.GroupingKeys
+import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.ItemSorter.sortByCreationAsc
 import proton.android.pass.commonui.api.ItemSorter.sortByCreationDesc
 import proton.android.pass.commonui.api.ItemSorter.sortByMostRecent
@@ -197,7 +196,7 @@ class HomeViewModel @Inject constructor(
             SortingType.CreationDesc -> result.map { list -> list.sortByCreationDesc() }
             SortingType.MostRecent -> result.map { list -> list.sortByMostRecent(clock.now()) }
         }
-    }
+    }.distinctUntilChanged()
 
     @OptIn(FlowPreview::class)
     private val textFilterListItemFlow = combine(
@@ -206,29 +205,29 @@ class HomeViewModel @Inject constructor(
     ) { result, searchQuery ->
         isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
         if (searchQuery.isNotBlank()) {
-            result.map { grouped -> grouped.mapValues { filterByQuery(it.value, searchQuery) } }
+            result.map { grouped ->
+                grouped.map { GroupedItemList(it.key, filterByQuery(it.items, searchQuery)) }
+            }
         } else {
             result
         }
     }.flowOn(Dispatchers.Default)
 
-    private val resultsFlow: Flow<LoadingResult<ImmutableList<Pair<GroupingKeys, ImmutableList<ItemUiModel>>>>> =
+    private val resultsFlow: Flow<LoadingResult<ImmutableList<GroupedItemList>>> =
         combine(
             textFilterListItemFlow,
             itemTypeSelectionFlow,
             isInSearchModeState
         ) { result, itemTypeSelection, isInSearchMode ->
             result.map { grouped ->
-                grouped.mapValues {
+                grouped.map {
                     if (isInSearchMode) {
-                        filterByType(it, itemTypeSelection)
+                        GroupedItemList(it.key, filterByType(it.items, itemTypeSelection))
                     } else {
-                        it.value
+                        it
                     }
                 }
-                    .filterValues { it.isNotEmpty() }
-                    .mapValues { it.value.toPersistentList() }
-                    .toList()
+                    .filter { it.items.isNotEmpty() }
                     .toImmutableList()
             }
         }.flowOn(Dispatchers.Default)
@@ -238,7 +237,7 @@ class HomeViewModel @Inject constructor(
             is LoadingResult.Error -> ItemTypeCount(loginCount = 0, aliasCount = 0, noteCount = 0)
             LoadingResult.Loading -> ItemTypeCount(loginCount = 0, aliasCount = 0, noteCount = 0)
             is LoadingResult.Success -> {
-                result.data.values.flatten().let { list ->
+                result.data.map { it.items }.flatten().let { list ->
                     ItemTypeCount(
                         loginCount = list.count { it.itemType is ItemType.Login },
                         aliasCount = list.count { it.itemType is ItemType.Alias },
@@ -483,9 +482,9 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun filterByType(
-        it: Map.Entry<GroupingKeys, List<ItemUiModel>>,
+        items: List<ItemUiModel>,
         itemTypeSelection: HomeItemTypeSelection
-    ) = it.value.filter { item ->
+    ) = items.filter { item ->
         when (itemTypeSelection) {
             HomeItemTypeSelection.AllItems -> true
             HomeItemTypeSelection.Aliases -> item.itemType is ItemType.Alias

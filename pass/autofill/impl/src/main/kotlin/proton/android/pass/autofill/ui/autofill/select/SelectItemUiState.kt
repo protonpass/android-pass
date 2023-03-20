@@ -3,7 +3,7 @@ package proton.android.pass.autofill.ui.autofill.select
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import proton.android.pass.commonui.api.GroupingKeys
+import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
@@ -40,7 +40,7 @@ data class SelectItemListUiState(
 
 data class SelectItemListItems(
     val suggestions: ImmutableList<ItemUiModel>,
-    val items: ImmutableList<Pair<GroupingKeys, ImmutableList<ItemUiModel>>>,
+    val items: ImmutableList<GroupedItemList>,
     val suggestionsForTitle: String
 ) {
     companion object {

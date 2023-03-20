@@ -10,9 +10,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -79,8 +79,7 @@ fun LoginIcon(
         SubcomposeAsyncImage(
             modifier = modifier
                 .squircle()
-                .size(size.dp)
-                .background(Color.White),
+                .size(size.dp),
             model = WebsiteUrl(website),
             contentDescription = null
         ) {
@@ -100,6 +99,7 @@ fun LoginIcon(
                                 color = PassTheme.colors.iconBorder,
                                 shape = PassTheme.shapes.squircleShape
                             )
+                            .background(Color.White)
                             .padding(8.dp)
                     )
                 }

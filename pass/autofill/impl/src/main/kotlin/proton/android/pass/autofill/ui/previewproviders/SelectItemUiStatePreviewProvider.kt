@@ -2,7 +2,6 @@ package proton.android.pass.autofill.ui.previewproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.Clock
 import proton.android.pass.autofill.ui.autofill.select.AutofillItemClickedEvent
 import proton.android.pass.autofill.ui.autofill.select.SearchUiState
@@ -27,7 +26,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     isRefreshing = IsRefreshingState.NotRefreshing,
                     items = SelectItemListItems(
                         suggestions = persistentListOf(),
-                        items = persistentMapOf(
+                        items = persistentListOf(
                             GroupingKeys.NoGrouping to persistentListOf(item("Item with long text"))
                         ),
                         suggestionsForTitle = ""
@@ -42,7 +41,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     isRefreshing = IsRefreshingState.NotRefreshing,
                     items = SelectItemListItems(
                         suggestions = persistentListOf(item("Suggested item")),
-                        items = persistentMapOf(
+                        items = persistentListOf(
                             GroupingKeys.NoGrouping to persistentListOf(
                                 item("Item with long text"),
                                 item("Another item")

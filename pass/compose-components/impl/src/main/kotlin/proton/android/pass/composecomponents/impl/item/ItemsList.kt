@@ -19,7 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableMap
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Last30Days
@@ -45,7 +44,7 @@ private const val PLACEHOLDER_ELEMENTS = 40
 @Composable
 fun ItemsList(
     modifier: Modifier = Modifier,
-    items: ImmutableMap<GroupingKeys, ImmutableList<ItemUiModel>>,
+    items: ImmutableList<Pair<GroupingKeys, ImmutableList<ItemUiModel>>>,
     scrollableState: LazyListState = rememberLazyListState(),
     shouldScrollToTop: Boolean,
     highlight: String = "",

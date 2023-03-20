@@ -5,10 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableMap
-import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -198,7 +197,7 @@ class HomeViewModel @Inject constructor(
             SortingType.CreationDesc -> result.map { list -> list.sortByCreationDesc() }
             SortingType.MostRecent -> result.map { list -> list.sortByMostRecent(clock.now()) }
         }
-    }.distinctUntilChanged()
+    }
 
     @OptIn(FlowPreview::class)
     private val textFilterListItemFlow = combine(
@@ -213,7 +212,7 @@ class HomeViewModel @Inject constructor(
         }
     }.flowOn(Dispatchers.Default)
 
-    private val resultsFlow: Flow<LoadingResult<ImmutableMap<GroupingKeys, ImmutableList<ItemUiModel>>>> =
+    private val resultsFlow: Flow<LoadingResult<ImmutableList<Pair<GroupingKeys, ImmutableList<ItemUiModel>>>>> =
         combine(
             textFilterListItemFlow,
             itemTypeSelectionFlow,
@@ -229,7 +228,8 @@ class HomeViewModel @Inject constructor(
                 }
                     .filterValues { it.isNotEmpty() }
                     .mapValues { it.value.toPersistentList() }
-                    .toPersistentMap()
+                    .toList()
+                    .toImmutableList()
             }
         }.flowOn(Dispatchers.Default)
 
@@ -274,12 +274,12 @@ class HomeViewModel @Inject constructor(
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val items = when (itemsResult) {
-            LoadingResult.Loading -> persistentMapOf()
+            LoadingResult.Loading -> persistentListOf()
             is LoadingResult.Success -> itemsResult.data
             is LoadingResult.Error -> {
                 PassLogger.e(TAG, itemsResult.exception, "Observe items error")
                 snackbarMessageRepository.emitSnackbarMessage(ObserveItemsError)
-                persistentMapOf()
+                persistentListOf()
             }
         }
 

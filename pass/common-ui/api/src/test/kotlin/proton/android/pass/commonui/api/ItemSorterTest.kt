@@ -25,13 +25,19 @@ class ItemSorterTest {
         val sorted = itemList.sortByTitleDesc()
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
-        assertThat(sorted).containsKey(sortingKeyA)
-        assertThat(sorted).containsKey(sortingKeyB)
-        assertThat(sorted).containsKey(sortingKeyS)
-        assertThat(sorted[sortingKeyA]).hasSize(1)
-        assertThat(sorted[sortingKeyB]).hasSize(1)
-        assertThat(sorted[sortingKeyS]).hasSize(2)
-        assert(sorted.keys.toList() == listOf(sortingKeyB, sortingKeyA, sortingKeyS))
+
+        val sortedA = sorted.first { it.key == sortingKeyA }
+        val sortedB = sorted.first { it.key == sortingKeyB }
+        val sortedS = sorted.first { it.key == sortingKeyS }
+        assertThat(sortedA).isNotNull()
+        assertThat(sortedB).isNotNull()
+        assertThat(sortedS).isNotNull()
+        assertThat(sortedA.items).hasSize(1)
+        assertThat(sortedB.items).hasSize(1)
+        assertThat(sortedS.items).hasSize(2)
+
+        val keys = sorted.map { it.key }
+        assert(keys == listOf(sortingKeyB, sortingKeyA, sortingKeyS))
     }
 
     @Test
@@ -43,13 +49,20 @@ class ItemSorterTest {
         val sorted = itemList.sortByTitleAsc()
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
-        assertThat(sorted).containsKey(sortingKeyA)
-        assertThat(sorted).containsKey(sortingKeyB)
-        assertThat(sorted).containsKey(sortingKeyS)
-        assertThat(sorted[sortingKeyA]).hasSize(1)
-        assertThat(sorted[sortingKeyB]).hasSize(1)
-        assertThat(sorted[sortingKeyS]).hasSize(2)
-        assert(sorted.keys.toList() == listOf(sortingKeyS, sortingKeyA, sortingKeyB))
+
+
+        val sortedA = sorted.first { it.key == sortingKeyA }
+        val sortedB = sorted.first { it.key == sortingKeyB }
+        val sortedS = sorted.first { it.key == sortingKeyS }
+        assertThat(sortedA).isNotNull()
+        assertThat(sortedB).isNotNull()
+        assertThat(sortedS).isNotNull()
+        assertThat(sortedA.items).hasSize(1)
+        assertThat(sortedB.items).hasSize(1)
+        assertThat(sortedS.items).hasSize(2)
+
+        val keys = sorted.map { it.key }
+        assert(keys == listOf(sortingKeyS, sortingKeyA, sortingKeyB))
     }
 
     @Test
@@ -64,21 +77,22 @@ class ItemSorterTest {
         val sorted = itemList.sortByCreationAsc()
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
-        assertThat(sorted).containsKey(sortingKeyJanuary)
-        assertThat(sorted).containsKey(sortingKeyAugust)
-        assertThat(sorted).containsKey(sortingKeyFebruary)
-        assertThat(sorted[sortingKeyJanuary]).hasSize(1)
-        assertThat(sorted[sortingKeyAugust]).hasSize(1)
-        assertThat(sorted[sortingKeyFebruary]).hasSize(2)
-        assert(
-            sorted.keys.toList() == listOf(
-                sortingKeyJanuary,
-                sortingKeyAugust,
-                sortingKeyFebruary
-            )
-        )
-        assert(sorted[sortingKeyFebruary]?.get(0)?.createTime == item1Feb().createTime)
-        assert(sorted[sortingKeyFebruary]?.get(1)?.createTime == item15Feb().createTime)
+
+        val sortedJanuary = sorted.first { it.key == sortingKeyJanuary }
+        val sortedAugust = sorted.first { it.key == sortingKeyAugust }
+        val sortedFebruary = sorted.first { it.key == sortingKeyFebruary }
+        assertThat(sortedJanuary).isNotNull()
+        assertThat(sortedAugust).isNotNull()
+        assertThat(sortedFebruary).isNotNull()
+        assertThat(sortedJanuary.items).hasSize(1)
+        assertThat(sortedAugust.items).hasSize(1)
+        assertThat(sortedFebruary.items).hasSize(2)
+
+        val keys = sorted.map { it.key }
+        assert(keys == listOf(sortingKeyJanuary, sortingKeyAugust, sortingKeyFebruary))
+
+        assert(sortedFebruary.items[0].createTime == item1Feb().createTime)
+        assert(sortedFebruary.items[1].createTime == item15Feb().createTime)
     }
 
     @Test
@@ -93,17 +107,22 @@ class ItemSorterTest {
         val sorted = itemList.sortByCreationDesc()
         assertThat(sorted).isNotEmpty()
         assertThat(sorted).hasSize(3)
-        assertThat(sorted).containsKey(sortingKeyJanuary)
-        assertThat(sorted).containsKey(sortingKeyAugust)
-        assertThat(sorted).containsKey(sortingKeyFebruary)
-        assertThat(sorted[sortingKeyJanuary]).hasSize(1)
-        assertThat(sorted[sortingKeyAugust]).hasSize(1)
-        assertThat(sorted[sortingKeyFebruary]).hasSize(2)
-        assert(
-            sorted.keys.toList() == listOf(sortingKeyFebruary, sortingKeyAugust, sortingKeyJanuary)
-        )
-        assert(sorted[sortingKeyFebruary]?.get(0)?.createTime == item15Feb().createTime)
-        assert(sorted[sortingKeyFebruary]?.get(1)?.createTime == item1Feb().createTime)
+
+        val sortedJanuary = sorted.first { it.key == sortingKeyJanuary }
+        val sortedAugust = sorted.first { it.key == sortingKeyAugust }
+        val sortedFebruary = sorted.first { it.key == sortingKeyFebruary }
+        assertThat(sortedJanuary).isNotNull()
+        assertThat(sortedAugust).isNotNull()
+        assertThat(sortedFebruary).isNotNull()
+        assertThat(sortedJanuary.items).hasSize(1)
+        assertThat(sortedAugust.items).hasSize(1)
+        assertThat(sortedFebruary.items).hasSize(2)
+
+        val keys = sorted.map { it.key }
+        assert(keys == listOf(sortingKeyFebruary, sortingKeyAugust, sortingKeyJanuary))
+
+        assert(sortedFebruary.items[0].createTime == item15Feb().createTime)
+        assert(sortedFebruary.items[1].createTime == item1Feb().createTime)
     }
 
     @Test
@@ -128,8 +147,12 @@ class ItemSorterTest {
                 else -> fail("Unhandled")
             }
         }
-        assertThat(sorted[sortingKeyToday]?.get(0)?.modificationTime).isEqualTo(itemToday().modificationTime)
-        assertThat(sorted[sortingKeyToday]?.get(1)?.lastAutofillTime).isEqualTo(itemAutofillToday().lastAutofillTime)
+
+        val sortedToday = sorted.first { it.key == sortingKeyToday }
+        assertThat(sortedToday).isNotNull()
+
+        assertThat(sortedToday.items[0].modificationTime).isEqualTo(itemToday().modificationTime)
+        assertThat(sortedToday.items[1].lastAutofillTime).isEqualTo(itemAutofillToday().lastAutofillTime)
     }
 
     private fun item15Feb() = TestItemUiModel.create(

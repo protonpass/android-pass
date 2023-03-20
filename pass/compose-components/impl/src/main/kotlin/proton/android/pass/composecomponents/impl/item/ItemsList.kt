@@ -29,6 +29,7 @@ import proton.android.pass.commonui.api.DateFormatUtils.Format.LastYear
 import proton.android.pass.commonui.api.DateFormatUtils.Format.ThisWeek
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Today
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Yesterday
+import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -44,7 +45,7 @@ private const val PLACEHOLDER_ELEMENTS = 40
 @Composable
 fun ItemsList(
     modifier: Modifier = Modifier,
-    items: ImmutableList<Pair<GroupingKeys, ImmutableList<ItemUiModel>>>,
+    items: ImmutableList<GroupedItemList>,
     scrollableState: LazyListState = rememberLazyListState(),
     shouldScrollToTop: Boolean,
     highlight: String = "",

@@ -128,8 +128,22 @@ class HomeViewModel @Inject constructor(
             }
         }
 
+    private data class ActionRefreshingWrapper(
+        val refreshing: IsRefreshingState,
+        val actionState: ActionState
+    )
+
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
         MutableStateFlow(IsRefreshingState.NotRefreshing)
+
+    private val actionStateFlow: MutableStateFlow<ActionState> =
+        MutableStateFlow(ActionState.Unknown)
+
+    private val refreshingLoadingFlow = combine(
+        isRefreshing,
+        actionStateFlow,
+        ::ActionRefreshingWrapper
+    )
 
     private val sortingTypeState: MutableStateFlow<SortingType> =
         MutableStateFlow(SortingType.MostRecent)
@@ -250,8 +264,8 @@ class HomeViewModel @Inject constructor(
         filtersWrapperFlow,
         resultsFlow,
         searchUiStateFlow,
-        isRefreshing,
-    ) { selectedShare, filtersWrapper, itemsResult, searchUiState, refreshing ->
+        refreshingLoadingFlow,
+    ) { selectedShare, filtersWrapper, itemsResult, searchUiState, refreshingLoading ->
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val items = when (itemsResult) {
@@ -267,7 +281,8 @@ class HomeViewModel @Inject constructor(
         HomeUiState(
             homeListUiState = HomeListUiState(
                 isLoading = isLoading,
-                isRefreshing = refreshing,
+                isRefreshing = refreshingLoading.refreshing,
+                actionState = refreshingLoading.actionState,
                 items = items,
                 selectedShare = selectedShare,
                 homeVaultSelection = filtersWrapper.vaultSelection,
@@ -378,19 +393,23 @@ class HomeViewModel @Inject constructor(
         vaultSelectionFlow.update { homeVaultSelection }
     }
 
+    fun restoreActionState() {
+        actionStateFlow.update { ActionState.Unknown }
+    }
+
     fun restoreItem(item: ItemUiModel) = viewModelScope.launch {
         restoreItem.invoke(shareId = item.shareId, itemId = item.id)
             .asLoadingResult()
             .collect {
                 when (it) {
-                    LoadingResult.Loading -> isRefreshing.update { IsRefreshingState.Refreshing }
+                    LoadingResult.Loading -> actionStateFlow.update { ActionState.Loading }
                     is LoadingResult.Error -> {
                         PassLogger.e(TAG, it.exception, "Error restoring item")
-                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        actionStateFlow.update { ActionState.Done }
                         snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.RestoreItemsError)
                     }
                     is LoadingResult.Success -> {
-                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        actionStateFlow.update { ActionState.Done }
                         PassLogger.i(TAG, "Item restored successfully")
                     }
                 }
@@ -402,14 +421,14 @@ class HomeViewModel @Inject constructor(
             .asLoadingResult()
             .collect {
                 when (it) {
-                    LoadingResult.Loading -> isRefreshing.update { IsRefreshingState.Refreshing }
+                    LoadingResult.Loading -> actionStateFlow.update { ActionState.Loading }
                     is LoadingResult.Error -> {
                         PassLogger.e(TAG, it.exception, "Error deleting item")
-                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        actionStateFlow.update { ActionState.Done }
                         snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.DeleteItemError)
                     }
                     is LoadingResult.Success -> {
-                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        actionStateFlow.update { ActionState.Done }
                         PassLogger.i(TAG, "Item deleted successfully")
                     }
                 }
@@ -421,14 +440,14 @@ class HomeViewModel @Inject constructor(
             .asLoadingResult()
             .collect {
                 when (it) {
-                    LoadingResult.Loading -> isRefreshing.update { IsRefreshingState.Refreshing }
+                    LoadingResult.Loading -> actionStateFlow.update { ActionState.Loading }
                     is LoadingResult.Error -> {
                         PassLogger.e(TAG, it.exception, "Error clearing trash")
-                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        actionStateFlow.update { ActionState.Done }
                         snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.ClearTrashError)
                     }
                     is LoadingResult.Success -> {
-                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        actionStateFlow.update { ActionState.Done }
                         PassLogger.i(TAG, "Trash cleared successfully")
                     }
                 }
@@ -440,14 +459,14 @@ class HomeViewModel @Inject constructor(
             .asLoadingResult()
             .collect {
                 when (it) {
-                    LoadingResult.Loading -> isRefreshing.update { IsRefreshingState.Refreshing }
+                    LoadingResult.Loading -> actionStateFlow.update { ActionState.Loading }
                     is LoadingResult.Error -> {
                         PassLogger.e(TAG, it.exception, "Error restoring items")
-                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        actionStateFlow.update { ActionState.Done }
                         snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.RestoreItemsError)
                     }
                     is LoadingResult.Success -> {
-                        isRefreshing.update { IsRefreshingState.NotRefreshing }
+                        actionStateFlow.update { ActionState.Done }
                         PassLogger.i(TAG, "Items restored successfully")
                     }
                 }

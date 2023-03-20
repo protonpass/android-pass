@@ -18,6 +18,7 @@ android {
 dependencies {
     api(projects.pass.log.api)
     implementation(projects.pass.tracing.impl)
+    implementation(projects.pass.appConfig.api)
 
     implementation(libs.androidx.startup.runtime)
     implementation(libs.timber)

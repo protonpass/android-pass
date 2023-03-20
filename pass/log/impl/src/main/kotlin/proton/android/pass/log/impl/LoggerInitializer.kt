@@ -26,13 +26,14 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import proton.android.pass.log.api.PassLogger
-import proton.android.pass.log.api.i
-import proton.android.pass.tracing.impl.SentryInitializer
 import me.proton.core.usersettings.domain.DeviceSettingsHandler
 import me.proton.core.usersettings.domain.onDeviceSettingsChanged
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.Logger
+import proton.android.pass.appconfig.api.AppConfig
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.log.api.i
+import proton.android.pass.tracing.impl.SentryInitializer
 import timber.log.Timber
 
 class LoggerInitializer : Initializer<Unit> {
@@ -43,16 +44,17 @@ class LoggerInitializer : Initializer<Unit> {
             LoggerInitializerEntryPoint::class.java
         )
 
-        // Temporarily add always DebugTree to gather logs from alpha
-        val tree = Timber.DebugTree()
-        val handler = entryPoint.handler()
-        handler.onDeviceSettingsChanged {
-            if (it.isCrashReportEnabled) {
-                tree.let { tree -> Timber.plant(tree) }
-            } else {
-                Timber.uprootAll()
+        entryPoint.handler()
+            .onDeviceSettingsChanged {
+                if (it.isCrashReportEnabled) {
+                    if (entryPoint.appConfig().isDebug) {
+                        Timber.plant(Timber.DebugTree())
+                    }
+                    Timber.plant(FileLoggingTree(context))
+                } else {
+                    Timber.uprootAll()
+                }
             }
-        }
 
         PassLogger.deviceInfo()
 
@@ -68,9 +70,9 @@ class LoggerInitializer : Initializer<Unit> {
     @InstallIn(SingletonComponent::class)
     interface LoggerInitializerEntryPoint {
         fun handler(): DeviceSettingsHandler
+        fun appConfig(): AppConfig
     }
 }
-
 
 private fun Logger.deviceInfo() {
     i("-----------------------------------------")

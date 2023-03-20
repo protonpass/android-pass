@@ -97,10 +97,10 @@
     <string name="trash_action_restore">Restore</string>
 
     <!-- Alerts -->
-    <string name="alert_confirm_item_deletion_title">Delete item?</string>
-    <string name="alert_confirm_item_deletion_message">Are you sure you want to permanently delete \'%s\'?</string>
     <string name="alert_confirm_clear_trash_title">Clear trash?</string>
     <string name="alert_confirm_clear_trash_message">Are you sure you want to clear the trash? All your trashed items will be deleted permanently</string>
     <string name="alert_confirm_restore_all_title">Restore all items?</string>
     <string name="alert_confirm_restore_all_message">Are you sure you want to restore all the trashed items?</string>
+    <string name="alert_confirm_delete_item_dialog_title">Permanently delete?</string>
+    <string name="alert_confirm_delete_item_dialog_message">You are going to delete \'%s\' irreversibly, are you sure?</string>
 </resources>

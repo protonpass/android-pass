@@ -13,6 +13,12 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 
+sealed interface ActionState {
+    object Unknown : ActionState
+    object Loading : ActionState
+    object Done : ActionState
+}
+
 @Immutable
 data class HomeUiState(
     val homeListUiState: HomeListUiState,
@@ -30,11 +36,12 @@ data class HomeUiState(
 data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
+    val actionState: ActionState = ActionState.Unknown,
     val items: ImmutableMap<GroupingKeys, ImmutableList<ItemUiModel>>,
     val selectedShare: Option<ShareUiModel> = None,
     val homeVaultSelection: HomeVaultSelection = HomeVaultSelection.AllVaults,
     val homeItemTypeSelection: HomeItemTypeSelection = HomeItemTypeSelection.AllItems,
-    val sortingType: SortingType = SortingType.MostRecent
+    val sortingType: SortingType = SortingType.MostRecent,
 ) {
     companion object {
         val Loading = HomeListUiState(

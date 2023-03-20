@@ -9,6 +9,7 @@ import androidx.compose.material.ModalDrawer
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +28,6 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.composecomponents.impl.dialogs.ConfirmDeleteItemDialog
 import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
@@ -37,6 +37,7 @@ import proton.android.pass.featurehome.impl.bottomsheet.TrashItemBottomSheetCont
 import proton.android.pass.featurehome.impl.bottomsheet.VaultOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
 import proton.android.pass.featurehome.impl.trash.ConfirmClearTrashDialog
+import proton.android.pass.featurehome.impl.trash.ConfirmDeleteItemDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmRestoreAllDialog
 import proton.android.pass.featurehome.impl.vault.VaultDeleteDialog
 import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
@@ -76,6 +77,17 @@ fun HomeScreen(
     var shouldShowClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     var selectedShare: ShareUiModelWithItemCount? by rememberSaveable(stateSaver = ShareUiModelWithItemCountSaver) {
         mutableStateOf(null)
+    }
+
+    val actionState = homeUiState.homeListUiState.actionState
+    LaunchedEffect(actionState) {
+        if (actionState == ActionState.Done) {
+            shouldShowDeleteItemDialog = false
+            shouldShowDeleteVaultDialog = false
+            shouldShowRestoreAllDialog = false
+            shouldShowClearTrashDialog = false
+            homeViewModel.restoreActionState()
+        }
     }
 
     val bottomSheetState = rememberModalBottomSheetState(
@@ -262,7 +274,6 @@ fun HomeScreen(
                 onSearchQueryChange = { homeViewModel.onSearchQueryChange(it) },
                 onEnterSearch = { homeViewModel.onEnterSearch() },
                 onStopSearch = { homeViewModel.onStopSearching() },
-                sendItemToTrash = { homeViewModel.sendItemToTrash(it) },
                 onDrawerIconClick = { scope.launch { drawerState.open() } },
                 onSortingOptionsClick = {
                     currentBottomSheet = HomeBottomSheetType.Sorting
@@ -318,35 +329,34 @@ fun HomeScreen(
 
             ConfirmRestoreAllDialog(
                 show = shouldShowRestoreAllDialog,
+                isLoading = actionState == ActionState.Loading,
                 onDismiss = {
                     shouldShowRestoreAllDialog = false
                 },
                 onConfirm = {
                     homeViewModel.restoreItems()
-                    shouldShowRestoreAllDialog = false
                 }
             )
 
             ConfirmClearTrashDialog(
                 show = shouldShowClearTrashDialog,
+                isLoading = actionState == ActionState.Loading,
                 onDismiss = {
                     shouldShowClearTrashDialog = false
                 },
                 onConfirm = {
                     homeViewModel.clearTrash()
-                    shouldShowClearTrashDialog = false
                 }
             )
 
             ConfirmDeleteItemDialog(
                 itemName = selectedItem?.name ?: "",
+                isLoading = actionState == ActionState.Loading,
                 show = shouldShowDeleteItemDialog,
                 onConfirm = {
                     homeViewModel.deleteItem(selectedItem!!)
-                    shouldShowDeleteItemDialog = false
                 },
-                onDismiss = { shouldShowDeleteItemDialog = false },
-                onCancel = { shouldShowDeleteItemDialog = false }
+                onDismiss = { shouldShowDeleteItemDialog = false }
             )
         }
     }

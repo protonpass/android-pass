@@ -147,6 +147,12 @@ class HomeViewModel @Inject constructor(
     private val sortingTypeState: MutableStateFlow<SortingType> =
         MutableStateFlow(SortingType.MostRecent)
 
+    private data class ItemSelectionState(
+        val shareSelection: ShareSelection,
+        val itemState: ItemState,
+        val itemTypeFilter: ItemTypeFilter
+    )
+
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
         vaultSelectionFlow,
         itemTypeSelectionFlow,
@@ -164,12 +170,12 @@ class HomeViewModel @Inject constructor(
             HomeItemTypeSelection.Notes -> ItemTypeFilter.Notes
         }
 
-        Triple(shareSelection, itemState, itemTypeSelection)
+        ItemSelectionState(shareSelection, itemState, itemTypeSelection)
     }.flatMapLatest {
         observeItems(
-            selection = it.first,
-            itemState = it.second,
-            filter = it.third
+            selection = it.shareSelection,
+            itemState = it.itemState,
+            filter = it.itemTypeFilter
         ).asResultWithoutLoading()
             .map { itemResult ->
                 itemResult.map { list ->

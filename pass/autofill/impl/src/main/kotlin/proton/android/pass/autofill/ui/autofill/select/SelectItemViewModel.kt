@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -274,7 +273,7 @@ class SelectItemViewModel @Inject constructor(
             .map { items ->
                 SelectItemListItems(
                     suggestions = persistentListOf(),
-                    items = persistentMapOf(GroupingKeys.NoGrouping to items.toImmutableList()),
+                    items = persistentListOf(GroupingKeys.NoGrouping to items.toImmutableList()),
                     suggestionsForTitle = ""
                 )
             }
@@ -298,7 +297,7 @@ class SelectItemViewModel @Inject constructor(
     ): SelectItemListItems {
         val sorted = ItemSuggestionSorter.sort(allItems, suggestions)
         return SelectItemListItems(
-            items = persistentMapOf(GroupingKeys.NoGrouping to sorted.allItems.toImmutableList()),
+            items = persistentListOf(GroupingKeys.NoGrouping to sorted.allItems.toImmutableList()),
             suggestions = sorted.suggestions.toImmutableList(),
             suggestionsForTitle = autofillAppState.value()
                 ?.let { getSuggestionsTitle(it) }

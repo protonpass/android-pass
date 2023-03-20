@@ -13,8 +13,6 @@
     <string name="regenerate_password_icon_content_description">Regenerate pass icon</string>
 
     <!-- Alerts -->
-    <string name="alert_confirm_delete_item_dialog_title">Permanently delete?</string>
-    <string name="alert_confirm_delete_item_dialog_message">You are going to delete \'%s\' irreversibly, are you sure?</string>
     <string name="alert_confirm_sign_out_title">Sign out?</string>
     <string name="alert_confirm_sign_out_message">Are you sure you want to sign out?</string>
 

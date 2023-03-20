@@ -11,10 +11,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -28,7 +24,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
-import proton.android.pass.composecomponents.impl.dialogs.ConfirmItemDeletionDialog
 import proton.android.pass.composecomponents.impl.extension.toBackgroundColor
 import proton.android.pass.composecomponents.impl.extension.toIconColor
 import proton.android.pass.composecomponents.impl.extension.toResource
@@ -56,7 +51,6 @@ internal fun HomeContent(
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
     onStopSearch: () -> Unit,
-    sendItemToTrash: (ItemUiModel) -> Unit,
     onDrawerIconClick: () -> Unit,
     onSortingOptionsClick: () -> Unit,
     onAddItemClick: (Option<ShareId>) -> Unit,
@@ -119,9 +113,6 @@ internal fun HomeContent(
             )
         }
     ) { contentPadding ->
-        var itemToDelete by rememberSaveable(stateSaver = ItemUiModelSaver) {
-            mutableStateOf(null)
-        }
         val keyboardController = LocalSoftwareKeyboardController.current
         val scrollableState = rememberLazyListState()
 
@@ -185,13 +176,6 @@ internal fun HomeContent(
                 footer = { item { Spacer(Modifier.height(64.dp)) } }
             )
         }
-        ConfirmItemDeletionDialog(
-            state = itemToDelete,
-            onDismiss = { itemToDelete = null },
-            title = R.string.alert_confirm_item_send_to_trash_title,
-            message = R.string.alert_confirm_item_send_to_trash_message,
-            onConfirm = sendItemToTrash
-        )
     }
 }
 

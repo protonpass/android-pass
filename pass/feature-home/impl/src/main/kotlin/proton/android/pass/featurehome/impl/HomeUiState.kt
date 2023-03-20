@@ -2,8 +2,7 @@ package proton.android.pass.featurehome.impl
 
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.ImmutableMap
-import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.GroupingKeys
@@ -37,7 +36,7 @@ data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
     val actionState: ActionState = ActionState.Unknown,
-    val items: ImmutableMap<GroupingKeys, ImmutableList<ItemUiModel>>,
+    val items: ImmutableList<Pair<GroupingKeys, ImmutableList<ItemUiModel>>>,
     val selectedShare: Option<ShareUiModel> = None,
     val homeVaultSelection: HomeVaultSelection = HomeVaultSelection.AllVaults,
     val homeItemTypeSelection: HomeItemTypeSelection = HomeItemTypeSelection.AllItems,
@@ -47,7 +46,7 @@ data class HomeListUiState(
         val Loading = HomeListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
-            items = persistentMapOf(),
+            items = persistentListOf(),
         )
     }
 }

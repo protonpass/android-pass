@@ -1,8 +1,6 @@
 package proton.android.pass.data.impl.usecases
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.ItemRepository
@@ -18,23 +16,23 @@ class RestoreItemImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : RestoreItem {
 
-    override fun invoke(userId: UserId?, shareId: ShareId, itemId: ItemId): Flow<Unit> =
-        if (userId == null) {
-            observeCurrentUser()
-                .flatMapLatest { restoreItem(it.userId, shareId, itemId) }
+    override suspend fun invoke(userId: UserId?, shareId: ShareId, itemId: ItemId) {
+        val id = if (userId == null) {
+            val user = requireNotNull(observeCurrentUser().first())
+            user.userId
         } else {
-            restoreItem(userId, shareId, itemId)
+            userId
         }
+        restoreItem(id, shareId, itemId)
+    }
 
-    private fun restoreItem(userId: UserId, shareId: ShareId, itemId: ItemId): Flow<Unit> = flow {
+    private suspend fun restoreItem(userId: UserId, shareId: ShareId, itemId: ItemId) {
         when (val res = itemRepository.untrashItem(userId, shareId, itemId)) {
             LoadingResult.Loading -> {}
+            is LoadingResult.Success -> {}
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, res.exception, "Error untrashing item")
                 throw res.exception
-            }
-            is LoadingResult.Success -> {
-                emit(Unit)
             }
         }
     }

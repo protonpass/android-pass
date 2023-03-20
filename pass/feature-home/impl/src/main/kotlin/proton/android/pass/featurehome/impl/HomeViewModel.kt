@@ -34,7 +34,6 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
@@ -398,79 +397,59 @@ class HomeViewModel @Inject constructor(
     }
 
     fun restoreItem(item: ItemUiModel) = viewModelScope.launch {
-        restoreItem.invoke(shareId = item.shareId, itemId = item.id)
-            .asLoadingResult()
-            .collect {
-                when (it) {
-                    LoadingResult.Loading -> actionStateFlow.update { ActionState.Loading }
-                    is LoadingResult.Error -> {
-                        PassLogger.e(TAG, it.exception, "Error restoring item")
-                        actionStateFlow.update { ActionState.Done }
-                        snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.RestoreItemsError)
-                    }
-                    is LoadingResult.Success -> {
-                        actionStateFlow.update { ActionState.Done }
-                        PassLogger.i(TAG, "Item restored successfully")
-                    }
-                }
-            }
+        actionStateFlow.update { ActionState.Loading }
+        runCatching {
+            restoreItem.invoke(shareId = item.shareId, itemId = item.id)
+        }.onSuccess {
+            actionStateFlow.update { ActionState.Done }
+            PassLogger.i(TAG, "Item restored successfully")
+        }.onFailure {
+            PassLogger.e(TAG, it, "Error restoring item")
+            actionStateFlow.update { ActionState.Done }
+            snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.RestoreItemsError)
+        }
     }
 
     fun deleteItem(item: ItemUiModel) = viewModelScope.launch {
-        deleteItem.invoke(shareId = item.shareId, itemId = item.id)
-            .asLoadingResult()
-            .collect {
-                when (it) {
-                    LoadingResult.Loading -> actionStateFlow.update { ActionState.Loading }
-                    is LoadingResult.Error -> {
-                        PassLogger.e(TAG, it.exception, "Error deleting item")
-                        actionStateFlow.update { ActionState.Done }
-                        snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.DeleteItemError)
-                    }
-                    is LoadingResult.Success -> {
-                        actionStateFlow.update { ActionState.Done }
-                        PassLogger.i(TAG, "Item deleted successfully")
-                    }
-                }
-            }
+        actionStateFlow.update { ActionState.Loading }
+        runCatching {
+            deleteItem.invoke(shareId = item.shareId, itemId = item.id)
+        }.onSuccess {
+            actionStateFlow.update { ActionState.Done }
+            PassLogger.i(TAG, "Item deleted successfully")
+        }.onFailure {
+            PassLogger.e(TAG, it, "Error deleting item")
+            actionStateFlow.update { ActionState.Done }
+            snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.DeleteItemError)
+        }
     }
 
     fun clearTrash() = viewModelScope.launch {
-        clearTrash.invoke()
-            .asLoadingResult()
-            .collect {
-                when (it) {
-                    LoadingResult.Loading -> actionStateFlow.update { ActionState.Loading }
-                    is LoadingResult.Error -> {
-                        PassLogger.e(TAG, it.exception, "Error clearing trash")
-                        actionStateFlow.update { ActionState.Done }
-                        snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.ClearTrashError)
-                    }
-                    is LoadingResult.Success -> {
-                        actionStateFlow.update { ActionState.Done }
-                        PassLogger.i(TAG, "Trash cleared successfully")
-                    }
-                }
-            }
+        actionStateFlow.update { ActionState.Loading }
+        runCatching {
+            clearTrash.invoke()
+        }.onSuccess {
+            actionStateFlow.update { ActionState.Done }
+            PassLogger.i(TAG, "Trash cleared successfully")
+        }.onFailure {
+            PassLogger.e(TAG, it, "Error clearing trash")
+            actionStateFlow.update { ActionState.Done }
+            snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.ClearTrashError)
+        }
     }
 
     fun restoreItems() = viewModelScope.launch {
-        restoreItems.invoke()
-            .asLoadingResult()
-            .collect {
-                when (it) {
-                    LoadingResult.Loading -> actionStateFlow.update { ActionState.Loading }
-                    is LoadingResult.Error -> {
-                        PassLogger.e(TAG, it.exception, "Error restoring items")
-                        actionStateFlow.update { ActionState.Done }
-                        snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.RestoreItemsError)
-                    }
-                    is LoadingResult.Success -> {
-                        actionStateFlow.update { ActionState.Done }
-                        PassLogger.i(TAG, "Items restored successfully")
-                    }
-                }
-            }
+        actionStateFlow.update { ActionState.Loading }
+        runCatching {
+            restoreItems.invoke()
+        }.onSuccess {
+            actionStateFlow.update { ActionState.Done }
+            PassLogger.i(TAG, "Items restored successfully")
+        }.onFailure {
+            PassLogger.e(TAG, it, "Error restoring items")
+            actionStateFlow.update { ActionState.Done }
+            snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.RestoreItemsError)
+        }
     }
 
     private suspend fun shareIdToShare(shareId: ShareId): Option<ShareUiModel> {

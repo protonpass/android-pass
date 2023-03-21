@@ -52,4 +52,6 @@
     <string name="settings_about_section_title">About</string>
     <string name="settings_option_privacy_policy">Privacy policy</string>
     <string name="settings_option_terms_of_service">Terms of service</string>
+
+    <string name="view_logs_title">View logs</string>
 </resources>

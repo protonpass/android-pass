@@ -18,7 +18,7 @@ fun BackArrowCircleIconButton(
     Circle(
         modifier = modifier,
         backgroundColor = color,
-        onClick = { onUpClick() }
+        onClick = onUpClick
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_arrow_back),

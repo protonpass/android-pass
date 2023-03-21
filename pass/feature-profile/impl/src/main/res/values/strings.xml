@@ -3,7 +3,6 @@
     <string name="profile_screen_title">Profile</string>
 
     <string name="profile_option_settings">Settings</string>
-    <string name="profile_option_icon_content_description">Open profile option icon</string>
     <string name="profile_option_account">Account</string>
     <string name="profile_manage_profile">Manage my profile</string>
     <string name="profile_help_center">Help center</string>

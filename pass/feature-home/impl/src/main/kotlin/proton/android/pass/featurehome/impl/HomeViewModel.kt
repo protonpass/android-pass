@@ -147,8 +147,7 @@ class HomeViewModel @Inject constructor(
 
     private data class ItemSelectionState(
         val shareSelection: ShareSelection,
-        val itemState: ItemState,
-        val itemTypeFilter: ItemTypeFilter
+        val itemState: ItemState
     )
 
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
@@ -161,19 +160,16 @@ class HomeViewModel @Inject constructor(
             HomeVaultSelection.Trash -> ShareSelection.AllShares to ItemState.Trashed
         }
 
-        val itemTypeSelection = when (itemType) {
-            HomeItemTypeSelection.Aliases -> ItemTypeFilter.Aliases
-            HomeItemTypeSelection.AllItems -> ItemTypeFilter.All
-            HomeItemTypeSelection.Logins -> ItemTypeFilter.Logins
-            HomeItemTypeSelection.Notes -> ItemTypeFilter.Notes
-        }
-
-        ItemSelectionState(shareSelection, itemState, itemTypeSelection)
+        ItemSelectionState(shareSelection, itemState)
     }.flatMapLatest {
         observeItems(
             selection = it.shareSelection,
             itemState = it.itemState,
-            filter = it.itemTypeFilter
+
+            // We observe them all, because otherwise in the All part of the search we would not
+            // know how many ItemTypes are there for the other ItemTypes.
+            // We filter out the results using the filterByType function
+            filter = ItemTypeFilter.All
         ).asResultWithoutLoading()
             .map { itemResult ->
                 itemResult.map { list ->

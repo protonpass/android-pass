@@ -5,6 +5,7 @@ import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
 import proton.android.pass.data.impl.db.dao.ShareKeysDao
 import proton.android.pass.data.impl.db.dao.SharesDao
+import proton.android.pass.data.impl.db.dao.TelemetryDao
 
 interface PassDatabase : Database {
 
@@ -12,5 +13,6 @@ interface PassDatabase : Database {
     fun itemsDao(): ItemsDao
     fun shareKeysDao(): ShareKeysDao
     fun passEventsDao(): PassEventsDao
+    fun telemetryEventsDao(): TelemetryDao
 
 }

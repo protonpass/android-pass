@@ -59,6 +59,8 @@ import proton.android.pass.data.impl.usecases.GetCurrentUserIdImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedLoginItemsImpl
+import proton.android.pass.data.impl.usecases.GetUserPlan
+import proton.android.pass.data.impl.usecases.GetUserPlanImpl
 import proton.android.pass.data.impl.usecases.GetVaultByIdImpl
 import proton.android.pass.data.impl.usecases.MigrateVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
@@ -206,6 +208,9 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindClearTrash(impl: ClearTrashImpl): ClearTrash
+
+    @Binds
+    abstract fun bindGetUserPlan(impl: GetUserPlanImpl): GetUserPlan
 
 }
 

@@ -18,6 +18,8 @@ import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.remote.RemoteShareDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSourceImpl
+import proton.android.pass.data.impl.remote.RemoteTelemetryDataSource
+import proton.android.pass.data.impl.remote.RemoteTelemetryDataSourceImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -43,5 +45,10 @@ abstract class DataRemoteDataSourceModule {
 
     @Binds
     abstract fun bindRemoteImageFetcher(impl: RemoteImageFetcherImpl): RemoteImageFetcher
+
+    @Binds
+    abstract fun bindRemoteTelemetryDataSource(
+        impl: RemoteTelemetryDataSourceImpl
+    ): RemoteTelemetryDataSource
 }
 

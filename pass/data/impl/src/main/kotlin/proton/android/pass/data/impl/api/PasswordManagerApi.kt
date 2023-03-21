@@ -4,6 +4,7 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
+import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
@@ -158,4 +159,8 @@ interface PasswordManagerApi : BaseRetrofitApi {
     // User access
     @POST("$PREFIX/user/access")
     suspend fun userAccess(): retrofit2.Response<okhttp3.ResponseBody>
+
+    // Telemetry
+    @POST("/data/v1/stats/multiple")
+    suspend fun sendTelemetry(@Body request: TelemetryRequest): retrofit2.Response<okhttp3.ResponseBody>
 }

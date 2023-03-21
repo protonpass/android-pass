@@ -12,6 +12,8 @@ import proton.android.pass.data.impl.local.LocalShareDataSource
 import proton.android.pass.data.impl.local.LocalShareDataSourceImpl
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.local.LocalShareKeyDataSourceImpl
+import proton.android.pass.data.impl.local.LocalTelemetryDataSource
+import proton.android.pass.data.impl.local.LocalTelemetryDataSourceImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,5 +30,8 @@ abstract class DataLocalDataSourceModule {
 
     @Binds
     abstract fun bindLocalEventDataSource(impl: LocalEventDataSourceImpl): LocalEventDataSource
+
+    @Binds
+    abstract fun bindLocalTelemetryDataSource(impl: LocalTelemetryDataSourceImpl): LocalTelemetryDataSource
 
 }

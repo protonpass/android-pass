@@ -12,6 +12,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.setting.SettingOption
 
 @Composable
 fun AccountProfileSection(
@@ -22,12 +23,12 @@ fun AccountProfileSection(
     Column(
         modifier = modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
     ) {
-        ProfileOption(
+        SettingOption(
             text = stringResource(R.string.profile_option_account),
             onClick = onAccountClick
         )
         Divider()
-        ProfileOption(
+        SettingOption(
             text = stringResource(R.string.profile_option_settings),
             onClick = onSettingsClick
         )

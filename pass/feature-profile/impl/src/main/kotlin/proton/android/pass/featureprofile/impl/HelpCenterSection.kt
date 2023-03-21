@@ -16,34 +16,28 @@ import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.setting.SettingOption
 
 @Composable
 fun HelpCenterProfileSection(
     modifier: Modifier = Modifier,
-    onTipsClick: () -> Unit,
     onFeedbackClick: () -> Unit,
     onRateAppClick: () -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
             text = stringResource(R.string.profile_help_center),
-            style = ProtonTheme.typography.defaultSmallWeak,
-            color = PassTheme.colors.textWeak
+            style = ProtonTheme.typography.defaultSmallWeak
         )
         Column(
             modifier = Modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
         ) {
-            ProfileOption(
-                text = stringResource(R.string.profile_option_tips),
-                onClick = onTipsClick
-            )
-            Divider()
-            ProfileOption(
+            SettingOption(
                 text = stringResource(R.string.profile_option_feedback),
                 onClick = onFeedbackClick
             )
             Divider()
-            ProfileOption(
+            SettingOption(
                 text = stringResource(R.string.profile_option_rating),
                 onClick = onRateAppClick
             )
@@ -59,7 +53,6 @@ fun HelpCenterSectionPreview(
     PassTheme(isDark = isDark) {
         Surface {
             HelpCenterProfileSection(
-                onTipsClick = {},
                 onFeedbackClick = {},
                 onRateAppClick = {}
             )

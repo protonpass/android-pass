@@ -91,15 +91,6 @@ class SettingsViewModel @Inject constructor(
         initialValue = SettingsUiState.getInitialState(appConfig.versionName)
     )
 
-    fun onThemePreferenceChange(theme: ThemePreference) = viewModelScope.launch {
-        PassLogger.d(TAG, "Changing theme to $theme")
-        preferencesRepository.setThemePreference(theme)
-            .onFailure {
-                PassLogger.e(TAG, it, "Error setting ThemePreference")
-                snackbarMessageRepository.emitSnackbarMessage(ErrorPerformingOperation)
-            }
-    }
-
     fun onCopyToClipboardChange(value: Boolean) = viewModelScope.launch {
         PassLogger.d(TAG, "Changing CopyTotpToClipboard to $value")
         preferencesRepository.setCopyTotpToClipboardEnabled(CopyTotpToClipboard.from(value))

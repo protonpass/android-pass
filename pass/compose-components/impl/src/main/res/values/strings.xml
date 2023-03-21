@@ -84,4 +84,7 @@
     <!-- Search Top Bar -->
     <string name="search_topbar_icon_content_description">Search icon</string>
 
+    <!-- Setting option -->
+    <string name="setting_option_icon_content_description">Option icon</string>
+
 </resources>

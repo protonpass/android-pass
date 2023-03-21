@@ -44,4 +44,12 @@
     <string name="settings_account_section_title">Account</string>
     <string name="settings_account_log_out_title">Sign out</string>
     <string name="settings_account_current_account">Current account: %s</string>
+
+    <string name="settings_option_clipboard">Clipboard</string>
+    <string name="settings_application_section_title">Application</string>
+    <string name="settings_option_view_logs">View logs</string>
+    <string name="settings_option_force_sync">Force Synchronization</string>
+    <string name="settings_about_section_title">About</string>
+    <string name="settings_option_privacy_policy">Privacy policy</string>
+    <string name="settings_option_terms_of_service">Terms of service</string>
 </resources>

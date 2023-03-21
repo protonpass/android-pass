@@ -1,7 +1,7 @@
-package proton.android.pass.featureprofile.impl
+package proton.android.pass.featuresettings.impl
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -19,27 +19,28 @@ import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 
 @Composable
-fun HelpCenterProfileSection(
+fun AboutSection(
     modifier: Modifier = Modifier,
-    onFeedbackClick: () -> Unit,
-    onRateAppClick: () -> Unit
+    onPrivacyClick: () -> Unit,
+    onTermsClick: () -> Unit
 ) {
-    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    Column(modifier = modifier) {
         Text(
-            text = stringResource(R.string.profile_help_center),
-            style = ProtonTheme.typography.defaultSmallWeak
+            modifier = Modifier.padding(16.dp),
+            text = stringResource(R.string.settings_about_section_title),
+            style = ProtonTheme.typography.defaultSmallWeak,
         )
         Column(
             modifier = Modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
         ) {
             SettingOption(
-                text = stringResource(R.string.profile_option_feedback),
-                onClick = onFeedbackClick
+                text = stringResource(R.string.settings_option_privacy_policy),
+                onClick = onPrivacyClick
             )
             Divider()
             SettingOption(
-                text = stringResource(R.string.profile_option_rating),
-                onClick = onRateAppClick
+                text = stringResource(R.string.settings_option_terms_of_service),
+                onClick = onTermsClick
             )
         }
     }
@@ -47,15 +48,12 @@ fun HelpCenterProfileSection(
 
 @Preview
 @Composable
-fun HelpCenterSectionPreview(
+fun AboutSectionPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            HelpCenterProfileSection(
-                onFeedbackClick = {},
-                onRateAppClick = {}
-            )
+            AboutSection(onPrivacyClick = {}, onTermsClick = {})
         }
     }
 }

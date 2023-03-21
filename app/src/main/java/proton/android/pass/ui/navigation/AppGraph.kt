@@ -37,6 +37,7 @@ import proton.android.pass.featureonboarding.impl.onBoardingGraph
 import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
 import proton.android.pass.featureprofile.impl.Profile
 import proton.android.pass.featureprofile.impl.profileGraph
+import proton.android.pass.featuresettings.impl.LogView
 import proton.android.pass.featuresettings.impl.Settings
 import proton.android.pass.featuresettings.impl.SignOutDialog
 import proton.android.pass.featuresettings.impl.ThemeSelector
@@ -133,7 +134,8 @@ fun NavGraphBuilder.appGraph(
         onReportProblemClick = onReportProblemClick,
         onSelectThemeClick = { appNavigator.navigate(ThemeSelector) },
         onUpClick = { appNavigator.onBackClick() },
-        dismissBottomSheet = dismissBottomSheet
+        dismissBottomSheet = dismissBottomSheet,
+        onViewLogsClick = { appNavigator.navigate(LogView) }
     )
     createLoginGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <files-path path="/logs" name="logs" />
+    <cache-path path="logs/" name="logs" />
 </paths>

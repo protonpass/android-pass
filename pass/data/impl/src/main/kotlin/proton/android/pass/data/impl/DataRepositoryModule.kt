@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
+import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.impl.repositories.AliasRepositoryImpl
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.repositories.EventRepositoryImpl
@@ -16,6 +17,7 @@ import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
+import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -38,5 +40,8 @@ abstract class DataRepositoryModule {
 
     @Binds
     abstract fun bindShareRepository(impl: ShareRepositoryImpl): ShareRepository
+
+    @Binds
+    abstract fun bindTelemetryRepository(impl: TelemetryRepositoryImpl): TelemetryRepository
 
 }

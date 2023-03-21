@@ -22,6 +22,7 @@ fun SettingsContent(
     modifier: Modifier = Modifier,
     state: SettingsUiState,
     onSelectThemeClick: () -> Unit,
+    onViewLogsClick: () -> Unit,
     onForceSyncClick: () -> Unit,
     onAppVersionClick: (String) -> Unit,
     onReportProblemClick: () -> Unit,
@@ -43,7 +44,7 @@ fun SettingsContent(
                 navigationIcon = {
                     BackArrowCircleIconButton(
                         modifier = modifier.padding(12.dp, 4.dp),
-                        color = PassTheme.colors.accentPurpleOpaque,
+                        color = PassTheme.colors.accentBrandOpaque,
                         onUpClick = onUpClick
                     )
                 }
@@ -68,7 +69,10 @@ fun SettingsContent(
                 onPrivacyClick = onPrivacyClick,
                 onTermsClick = onTermsClick
             )
-            ApplicationSection(onViewLogsClick = {}, onForceSyncClick = onForceSyncClick)
+            ApplicationSection(
+                onViewLogsClick = onViewLogsClick,
+                onForceSyncClick = onForceSyncClick
+            )
             AppSection(
                 appVersion = state.appVersion,
                 onAppVersionClick = onAppVersionClick,

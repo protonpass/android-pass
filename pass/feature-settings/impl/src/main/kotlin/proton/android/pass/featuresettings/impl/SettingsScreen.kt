@@ -17,6 +17,7 @@ fun SettingsScreen(
     onSelectThemeClick: () -> Unit,
     onLogoutClick: () -> Unit,
     onUpClick: () -> Unit,
+    onViewLogsClick: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -24,6 +25,7 @@ fun SettingsScreen(
     SettingsContent(
         modifier = modifier,
         state = state,
+        onViewLogsClick = onViewLogsClick,
         onForceSyncClick = { viewModel.onForceSync() },
         onAppVersionClick = { viewModel.copyAppVersion(it) },
         onReportProblemClick = onReportProblemClick,

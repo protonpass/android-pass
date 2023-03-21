@@ -1,4 +1,4 @@
-package proton.android.pass.featureprofile.impl
+package proton.android.pass.featuresettings.impl
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Divider
@@ -13,36 +13,50 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.setting.SettingOption
+import proton.android.pass.preferences.ThemePreference
 
 @Composable
-fun AccountProfileSection(
+fun PreferencesSection(
     modifier: Modifier = Modifier,
-    onAccountClick: () -> Unit,
-    onSettingsClick: () -> Unit
+    theme: ThemePreference,
+    onSelectThemeClick: () -> Unit,
+    onClipboardClick: () -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
     ) {
+        val subtitle = stringResource(
+            when (theme) {
+                ThemePreference.System -> R.string.settings_appearance_preference_subtitle_match_system
+                ThemePreference.Dark -> R.string.settings_appearance_preference_subtitle_dark
+                ThemePreference.Light -> R.string.settings_appearance_preference_subtitle_light
+            }
+        )
         SettingOption(
-            text = stringResource(R.string.profile_option_account),
-            onClick = onAccountClick
+            text = subtitle,
+            label = stringResource(R.string.settings_appearance_preference_title),
+            onClick = onSelectThemeClick
         )
         Divider()
         SettingOption(
-            text = stringResource(R.string.profile_option_settings),
-            onClick = onSettingsClick
+            text = stringResource(R.string.settings_option_clipboard),
+            onClick = onClipboardClick
         )
     }
 }
 
 @Preview
 @Composable
-fun AccountSettingsSectionPreview(
+fun PreferencesSectionPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            AccountProfileSection(Modifier, {}, {})
+            PreferencesSection(
+                theme = ThemePreference.Dark,
+                onSelectThemeClick = {},
+                onClipboardClick = {}
+            )
         }
     }
 }

@@ -20,17 +20,11 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 fun AppSection(
     modifier: Modifier = Modifier,
     appVersion: String,
-    onForceSyncClick: () -> Unit,
     onAppVersionClick: (String) -> Unit,
     onReportProblemClick: () -> Unit
 ) {
     Column(modifier = modifier.padding(vertical = 12.dp)) {
         ProtonSettingsHeader(title = stringResource(R.string.settings_app_section_title))
-        ProtonSettingsItem(
-            name = stringResource(R.string.settings_force_sync_title),
-            hint = stringResource(R.string.settings_force_sync_hint),
-            onClick = onForceSyncClick
-        )
         TelemetrySettingToggleItem(divider = {})
         CrashReportSettingToggleItem(divider = {})
         ProtonSettingsItem(
@@ -55,7 +49,6 @@ fun AppSectionPreview(
         Surface {
             AppSection(
                 appVersion = "1.2.3",
-                onForceSyncClick = {},
                 onAppVersionClick = {},
                 onReportProblemClick = {}
             )

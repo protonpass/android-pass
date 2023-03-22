@@ -11,13 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.overline
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.composecomponents.impl.container.Circle
-import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
+import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -30,20 +28,9 @@ fun LogViewContent(
     Scaffold(
         modifier = modifier,
         topBar = {
-            ProtonTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.view_logs_title),
-                        style = PassTypography.hero
-                    )
-                },
-                navigationIcon = {
-                    BackArrowCircleIconButton(
-                        modifier = Modifier.padding(12.dp, 4.dp),
-                        color = PassTheme.colors.accentBrandOpaque,
-                        onUpClick = onUpClick
-                    )
-                },
+            BackArrowTopAppBar(
+                title = stringResource(R.string.view_logs_title),
+                onUpClick = onUpClick,
                 actions = {
                     Circle(
                         modifier = Modifier.padding(12.dp, 4.dp),

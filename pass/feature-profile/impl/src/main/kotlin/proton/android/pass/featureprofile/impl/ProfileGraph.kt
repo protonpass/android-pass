@@ -15,6 +15,7 @@ object FeedbackBottomsheet : NavItem(baseRoute = "feedback/bottomsheet")
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.profileGraph(
+    onAccountClick: () -> Unit,
     onListClick: () -> Unit,
     onCreateItemClick: () -> Unit,
     onSettingsClick: () -> Unit,
@@ -22,6 +23,7 @@ fun NavGraphBuilder.profileGraph(
 ) {
     composable(Profile) {
         ProfileScreen(
+            onAccountClick = onAccountClick,
             onListClick = onListClick,
             onCreateItemClick = onCreateItemClick,
             onSettingsClick = onSettingsClick,

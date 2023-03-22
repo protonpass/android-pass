@@ -9,13 +9,15 @@ import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 data class ProfileUiState(
     val fingerprintSection: FingerprintSectionState,
     val autofillStatus: AutofillSupportedStatus,
-    val itemSummaryUiState: ItemSummaryUiState
+    val itemSummaryUiState: ItemSummaryUiState,
+    val appVersion: String
 ) {
     companion object {
-        val Initial = ProfileUiState(
+        fun getInitialState(appVersion: String) = ProfileUiState(
             fingerprintSection = FingerprintSectionState.Available(IsButtonEnabled.Disabled),
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
-            itemSummaryUiState = ItemSummaryUiState()
+            itemSummaryUiState = ItemSummaryUiState(),
+            appVersion = appVersion
         )
     }
 }

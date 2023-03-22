@@ -3,6 +3,7 @@ package proton.android.pass.featureprofile.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -11,12 +12,15 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.biometry.BiometryAuthError
 import proton.android.pass.biometry.BiometryManager
 import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
+import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
@@ -24,6 +28,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToStartError
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.ErrorPerformingOperation
@@ -42,7 +47,9 @@ class ProfileViewModel @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
     private val biometryManager: BiometryManager,
     private val autofillManager: AutofillManager,
+    private val clipboardManager: ClipboardManager,
     private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val appConfig: AppConfig,
     encryptionContextProvider: EncryptionContextProvider,
     observeItemCount: ObserveItemCount,
     observeActiveItems: ObserveActiveItems
@@ -94,12 +101,13 @@ class ProfileViewModel @Inject constructor(
         ProfileUiState(
             fingerprintSection = fingerprintSection,
             autofillStatus = autofillStatus,
-            itemSummaryUiState = itemSummaryUiState
+            itemSummaryUiState = itemSummaryUiState,
+            appVersion = appConfig.versionName
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = ProfileUiState.Initial
+        initialValue = ProfileUiState.getInitialState(appVersion = appConfig.versionName)
     )
 
     fun onFingerprintToggle(contextHolder: ContextHolder, value: Boolean) =
@@ -155,6 +163,13 @@ class ProfileViewModel @Inject constructor(
         } else {
             autofillManager.disableAutofill()
         }
+    }
+
+    fun copyAppVersion(appVersion: String) = viewModelScope.launch {
+        withContext(Dispatchers.IO) {
+            clipboardManager.copyToClipboard(appVersion)
+        }
+        snackbarMessageRepository.emitSnackbarMessage(AppVersionCopied)
     }
 
     companion object {

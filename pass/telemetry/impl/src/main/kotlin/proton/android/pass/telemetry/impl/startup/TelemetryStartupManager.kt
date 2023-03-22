@@ -10,8 +10,8 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.telemetry.impl.work.TelemetrySenderWorker
 import javax.inject.Inject
+import kotlin.random.Random
 import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.seconds
 
 interface TelemetryStartupManager {
     fun start()
@@ -46,9 +46,10 @@ class TelemetryStartupManagerImpl @Inject constructor(
     }
 
     private fun enqueueWorker() {
+        val initialDelay = Random.nextInt(1, 3)
         val request = TelemetrySenderWorker.getRequestFor(
             repeatInterval = SEND_TELEMETRY_INTERVAL,
-            initialDelay = SEND_TELEMETRY_INITIAL_DELAY
+            initialDelay = initialDelay.hours
         )
         workManager.enqueueUniquePeriodicWork(
             TelemetrySenderWorker.WORKER_UNIQUE_NAME,
@@ -70,6 +71,5 @@ class TelemetryStartupManagerImpl @Inject constructor(
         private const val TAG = "TelemetryStartupManagerImpl"
 
         private val SEND_TELEMETRY_INTERVAL = 6.hours
-        private val SEND_TELEMETRY_INITIAL_DELAY = 30.seconds
     }
 }

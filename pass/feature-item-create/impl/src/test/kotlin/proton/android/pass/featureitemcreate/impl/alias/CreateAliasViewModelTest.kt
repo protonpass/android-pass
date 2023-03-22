@@ -14,7 +14,10 @@ import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestAccountManager
 import proton.android.pass.test.TestSavedStateHandle
@@ -36,6 +39,7 @@ class CreateAliasViewModelTest {
     private lateinit var observeAliasOptions: TestObserveAliasOptions
     private lateinit var createAlias: TestCreateAlias
     private lateinit var snackbarRepository: TestSnackbarMessageRepository
+    private lateinit var telemetryManager: TestTelemetryManager
 
     @Before
     fun setUp() {
@@ -46,6 +50,7 @@ class CreateAliasViewModelTest {
         observeAliasOptions = TestObserveAliasOptions()
         createAlias = TestCreateAlias()
         snackbarRepository = TestSnackbarMessageRepository()
+        telemetryManager = TestTelemetryManager()
     }
 
 
@@ -140,6 +145,10 @@ class CreateAliasViewModelTest {
             assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
             assertThat(item.isAliasSavedState).isInstanceOf(AliasSavedState.Success::class.java)
         }
+
+        val events = telemetryManager.getMemory()
+        assertThat(events.size).isEqualTo(1)
+        assertThat(events[0]).isEqualTo(ItemCreate(EventItemType.Alias))
     }
 
     @Test
@@ -179,7 +188,8 @@ class CreateAliasViewModelTest {
                 title?.let {
                     set("aliasTitle", title)
                 }
-            }
+            },
+            telemetryManager = telemetryManager
         )
 
     private fun setupContentsForCreation() {

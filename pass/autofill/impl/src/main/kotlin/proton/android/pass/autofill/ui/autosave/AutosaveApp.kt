@@ -55,7 +55,10 @@ fun AutoSaveApp(
                     .imePadding()
                     .padding(padding),
                 info = info,
-                onAutoSaveSuccess = onAutoSaveSuccess,
+                onAutoSaveSuccess = {
+                    viewModel.onItemAutoSaved()
+                    onAutoSaveSuccess()
+                },
                 onAutoSaveCancel = onAutoSaveCancel
             )
         }

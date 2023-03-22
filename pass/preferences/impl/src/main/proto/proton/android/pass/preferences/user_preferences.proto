@@ -2,6 +2,7 @@
 syntax = "proto3";
 
 import "proton/android/pass/preferences/theme_pref.proto";
+import "proton/android/pass/preferences/clipboard_pref.proto";
 
 option java_package = "proton.android.pass.preferences";
 option java_multiple_files = true;
@@ -13,4 +14,5 @@ message UserPreferences {
   ThemePrefProto theme = 4;
   bool has_dismissed_autofill_banner = 5;
   bool copy_totp_to_clipboard_enabled = 6;
+  ClipboardPrefProto clear_clipboard_after = 7;
 }

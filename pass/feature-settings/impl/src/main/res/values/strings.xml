@@ -27,7 +27,6 @@
     <string name="settings_theme_selector_title">Select the theme</string>
 
     <string name="settings_app_version_title">App version</string>
-    <string name="settings_app_version_copied_to_clipboard">App version copied</string>
     <string name="settings_force_sync_title">Force sync</string>
     <string name="settings_force_sync_hint">Download all your items again to make sure you are in sync.</string>
     <string name="settings_force_sync_success">Your items are now in sync</string>

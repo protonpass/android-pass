@@ -13,5 +13,6 @@ enum class ProfileSnackbarMessage(
     BiometryFailedToAuthenticateError(R.string.profile_error_biometry_failed_to_authenticate, SnackbarType.ERROR),
     FingerprintLockEnabled(R.string.profile_fingerprint_lock_enabled, SnackbarType.SUCCESS),
     FingerprintLockDisabled(R.string.profile_fingerprint_lock_disabled, SnackbarType.SUCCESS),
-    ErrorPerformingOperation(R.string.profile_error_performing_operation, SnackbarType.ERROR)
+    ErrorPerformingOperation(R.string.profile_error_performing_operation, SnackbarType.ERROR),
+    AppVersionCopied(R.string.profile_app_version_copied_to_clipboard, SnackbarType.SUCCESS, true)
 }

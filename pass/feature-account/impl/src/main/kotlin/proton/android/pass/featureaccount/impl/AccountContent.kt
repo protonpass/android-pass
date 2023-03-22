@@ -45,7 +45,6 @@ fun AccountContent(
             SignOut(onSignOutClick = onSignOutClick)
             DeleteAccount(onDeleteAccountClick = onDeleteAccountClick)
             Text(
-                modifier = Modifier.padding(16.dp, 0.dp),
                 text = stringResource(R.string.account_permanently_delete_warning),
                 style = ProtonTheme.typography.captionWeak
             )

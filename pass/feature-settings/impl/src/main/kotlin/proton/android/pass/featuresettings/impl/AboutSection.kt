@@ -1,7 +1,7 @@
 package proton.android.pass.featuresettings.impl
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -24,9 +24,8 @@ fun AboutSection(
     onPrivacyClick: () -> Unit,
     onTermsClick: () -> Unit
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
-            modifier = Modifier.padding(16.dp),
             text = stringResource(R.string.settings_about_section_title),
             style = ProtonTheme.typography.defaultSmallWeak,
         )

@@ -25,7 +25,7 @@ class TelemetryManagerImpl @Inject constructor(
         mutableEventFlow.tryEmit(event)
     }
 
-    suspend fun startListening(onSubscribed: () -> Unit = {}, onPerformed: () -> Unit = {}) {
+    override suspend fun startListening(onSubscribed: () -> Unit, onPerformed: () -> Unit) {
         mutableEventFlow
             .onSubscription { onSubscribed() }
             .collect { event ->

@@ -15,7 +15,10 @@ android {
     }
 }
 dependencies {
+    implementation(libs.androidx.hilt.work)
+    implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.core.userSettings)
     implementation(libs.core.utilKotlin)
 
     implementation(libs.dagger.hilt.android)

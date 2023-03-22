@@ -16,11 +16,14 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemCreationError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.NoteCreated
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -31,6 +34,7 @@ class CreateNoteViewModel @Inject constructor(
     private val itemRepository: ItemRepository,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val telemetryManager: TelemetryManager,
     observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
 ) : BaseNoteViewModel(observeVaults, savedStateHandle) {
@@ -64,6 +68,7 @@ class CreateNoteViewModel @Inject constructor(
                                     }
                                 }
                                 snackbarMessageRepository.emitSnackbarMessage(NoteCreated)
+                                telemetryManager.sendEvent(ItemCreate(EventItemType.Note))
                             }
                             .onError {
                                 PassLogger.e(TAG, it, "Create item error")

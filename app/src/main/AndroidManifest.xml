@@ -47,6 +47,10 @@
                 android:name="proton.android.pass.data.impl.sync.SyncInitializer"
                 android:value="androidx.startup"
                 tools:node="remove"/>
+            <meta-data
+                android:name="proton.android.pass.telemetry.impl.startup.TelemetryInitializer"
+                android:value="androidx.startup"
+                tools:node="remove"/>
         </provider>
 
         <provider

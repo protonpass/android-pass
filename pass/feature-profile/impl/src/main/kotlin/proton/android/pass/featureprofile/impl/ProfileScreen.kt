@@ -16,6 +16,7 @@ import java.lang.ref.WeakReference
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
+    onAccountClick: () -> Unit,
     onListClick: () -> Unit,
     onCreateItemClick: () -> Unit,
     onSettingsClick: () -> Unit,
@@ -31,7 +32,7 @@ fun ProfileScreen(
             viewModel.onFingerprintToggle(ContextHolder(WeakReference(context).toOption()), it)
         },
         onAutofillClicked = { viewModel.onToggleAutofill(it) },
-        onAccountClick = { },
+        onAccountClick = onAccountClick,
         onSettingsClick = onSettingsClick,
         onFeedbackClick = onFeedbackClick,
         onRateAppClick = {

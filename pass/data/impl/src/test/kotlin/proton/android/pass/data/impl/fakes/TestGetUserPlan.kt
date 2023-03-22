@@ -1,7 +1,7 @@
 package proton.android.pass.data.impl.fakes
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.impl.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.GetUserPlan
 
 class TestGetUserPlan : GetUserPlan {
 

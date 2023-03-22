@@ -7,7 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.commonui.api.BrowserUtils
+import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -25,10 +25,10 @@ fun AccountScreen(
         onSignOutClick = onSignOutClick,
         onUpClick = onUpClick,
         onManageSubscriptionClick = {
-            BrowserUtils.openWebsite(context, "")
+            openWebsite(context, "https://account.proton.me/u/0/pass/dashboard")
         },
         onDeleteAccountClick = {
-            BrowserUtils.openWebsite(context, "")
+            openWebsite(context, "https://account.proton.me/u/0/pass/account-password")
         }
     )
 }

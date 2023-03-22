@@ -21,6 +21,7 @@ import proton.android.pass.autofill.service.R
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.entity.AppName
 import proton.pass.domain.entity.PackageInfo
 import proton.pass.domain.entity.PackageName
@@ -35,7 +36,8 @@ object AutoFillHandler {
         request: FillRequest,
         callback: FillCallback,
         cancellationSignal: CancellationSignal,
-        autofillServiceManager: AutofillServiceManager
+        autofillServiceManager: AutofillServiceManager,
+        telemetryManager: TelemetryManager
     ) {
         val windowNode = getWindowNodes(request.fillContexts.last()).lastOrNull()
         if (windowNode?.rootViewNode == null) {
@@ -53,7 +55,8 @@ object AutoFillHandler {
                     windowNode = windowNode,
                     callback = callback,
                     request = request,
-                    autofillServiceManager = autofillServiceManager
+                    autofillServiceManager = autofillServiceManager,
+                    telemetryManager = telemetryManager
                 )
             }
 
@@ -62,12 +65,14 @@ object AutoFillHandler {
         }
     }
 
+    @Suppress("LongParameterList")
     private suspend fun searchAndFill(
         context: Context,
         windowNode: AssistStructure.WindowNode,
         callback: FillCallback,
         request: FillRequest,
-        autofillServiceManager: AutofillServiceManager
+        autofillServiceManager: AutofillServiceManager,
+        telemetryManager: TelemetryManager
     ) {
         val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
         if (assistInfo.fields.isEmpty()) return
@@ -99,6 +104,7 @@ object AutoFillHandler {
         return if (!currentCoroutineContext().isActive) {
             callback.onFailure(context.getString(R.string.error_credentials_not_found))
         } else {
+            telemetryManager.sendEvent(AutofillDisplayed(AutofillTriggerSource.Source))
             callback.onSuccess(responseBuilder.build())
         }
     }

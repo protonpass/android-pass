@@ -7,6 +7,7 @@ import android.service.autofill.FillRequest
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
 import dagger.hilt.android.AndroidEntryPoint
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -14,6 +15,9 @@ class ProtonPassAutofillService : AutofillService() {
 
     @Inject
     lateinit var autofillServiceManager: AutofillServiceManager
+
+    @Inject
+    lateinit var telemetryManager: TelemetryManager
 
     override fun onFillRequest(
         request: FillRequest,
@@ -25,7 +29,8 @@ class ProtonPassAutofillService : AutofillService() {
             request = request,
             callback = callback,
             cancellationSignal = cancellationSignal,
-            autofillServiceManager = autofillServiceManager
+            autofillServiceManager = autofillServiceManager,
+            telemetryManager = telemetryManager
         )
     }
 

@@ -11,8 +11,11 @@ interface GetUserPlan {
 class GetUserPlanImpl @Inject constructor(
     private val getOrganization: GetOrganization
 ) : GetUserPlan {
+
     override suspend fun invoke(userId: UserId): String {
         val organization = getOrganization.invoke(userId, refresh = true)
+
+        // If the user does not have an organization it means that they are not in a paid plan
         return organization?.planName ?: "free"
     }
 }

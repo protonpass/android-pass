@@ -75,7 +75,6 @@ fun PassAppContent(
                             modifier = Modifier.weight(1f),
                             appNavigator = appNavigator,
                             finishActivity = finishActivity,
-                            onReportProblemClick = { coreNavigation.onReport() },
                             dismissBottomSheet = {
                                 coroutineScope.launch {
                                     bottomSheetState.hide()

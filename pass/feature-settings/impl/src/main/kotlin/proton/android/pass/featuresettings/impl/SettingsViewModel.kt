@@ -3,7 +3,6 @@ package proton.android.pass.featuresettings.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -14,9 +13,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import proton.android.pass.appconfig.api.AppConfig
-import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.RefreshContent
@@ -33,9 +29,7 @@ class SettingsViewModel @Inject constructor(
     preferencesRepository: UserPreferencesRepository,
     private val observeCurrentUser: ObserveCurrentUser,
     private val snackbarMessageRepository: SnackbarMessageRepository,
-    private val refreshContent: RefreshContent,
-    private val clipboardManager: ClipboardManager,
-    private val appConfig: AppConfig
+    private val refreshContent: RefreshContent
 ) : ViewModel() {
 
     private val biometricLockState: Flow<BiometricLockState> = preferencesRepository
@@ -73,13 +67,12 @@ class SettingsViewModel @Inject constructor(
         SettingsUiState(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
-            isLoadingState = loading,
-            appVersion = appConfig.versionName
+            isLoadingState = loading
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = SettingsUiState.getInitialState(appConfig.versionName)
+        initialValue = SettingsUiState.Initial
     )
 
     fun onForceSync() = viewModelScope.launch {
@@ -96,13 +89,6 @@ class SettingsViewModel @Inject constructor(
         }
 
         isLoadingState.update { IsLoadingState.NotLoading }
-    }
-
-    fun copyAppVersion(appVersion: String) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            clipboardManager.copyToClipboard(appVersion)
-        }
-        snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.AppVersionCopied)
     }
 
     companion object {

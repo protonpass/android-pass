@@ -25,7 +25,7 @@ fun SettingToggle(
         modifier = modifier
             .clickable { onClick(!isChecked) }
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp, 26.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(

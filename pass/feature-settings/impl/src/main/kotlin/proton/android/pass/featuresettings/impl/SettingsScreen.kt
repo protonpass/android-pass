@@ -13,7 +13,6 @@ import proton.android.pass.commonui.api.BrowserUtils
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
-    onReportProblemClick: () -> Unit,
     onSelectThemeClick: () -> Unit,
     onClipboardClick: () -> Unit,
     onUpClick: () -> Unit,
@@ -27,8 +26,6 @@ fun SettingsScreen(
         state = state,
         onViewLogsClick = onViewLogsClick,
         onForceSyncClick = { viewModel.onForceSync() },
-        onAppVersionClick = { viewModel.copyAppVersion(it) },
-        onReportProblemClick = onReportProblemClick,
         onSelectThemeClick = onSelectThemeClick,
         onClipboardClick = onClipboardClick,
         onPrivacyClick = {

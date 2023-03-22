@@ -16,6 +16,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.pass.clipboard.api)
+
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
@@ -25,6 +27,6 @@ dependencies {
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.utilKotlin)
 
-    api(projects.pass.clipboard.api)
+    implementation(projects.pass.preferences.api)
     implementation(projects.pass.log.api)
 }

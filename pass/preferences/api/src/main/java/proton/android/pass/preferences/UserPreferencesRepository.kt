@@ -21,5 +21,8 @@ interface UserPreferencesRepository {
     suspend fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit>
     fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard>
 
+    suspend fun setClearClipboardPreference(clearClipboard: ClearClipboardPreference): Result<Unit>
+    fun getClearClipboardPreference(): Flow<ClearClipboardPreference>
+
     suspend fun clearPreferences(): Result<Unit>
 }

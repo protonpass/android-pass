@@ -10,10 +10,10 @@ import androidx.work.Data
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import proton.android.pass.log.api.PassLogger
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
+import proton.android.pass.log.api.PassLogger
 
 @HiltWorker
 class ClearClipboardWorker @AssistedInject constructor(
@@ -44,7 +44,7 @@ class ClearClipboardWorker @AssistedInject constructor(
                 val currentContents = primaryClip.getItemAt(0)
                 if (currentContents.text == expected) {
                     clearClipboard(clipboardManager)
-                    PassLogger.i(TAG, "Clipboard did not have contents")
+                    PassLogger.i(TAG, "Clipboard did not have previous contents")
                 } else {
                     PassLogger.i(
                         TAG,

@@ -7,19 +7,28 @@ import android.content.Context
 import android.os.Build
 import android.os.PersistableBundle
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.clipboard.api.CouldNotAccessClipboard
 import proton.android.pass.clipboard.api.CouldNotGetClipboardContent
 import proton.android.pass.clipboard.api.EmptyClipboardContent
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.ClearClipboardPreference
+import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 import android.content.ClipboardManager as AndroidClipboardManager
 
 class ClipboardManagerImpl @Inject constructor(
     @ApplicationContext private val context: Context,
+    preferencesRepository: UserPreferencesRepository,
     private val scheduler: ClearClipboardScheduler
 ) : ClipboardManager {
-    override fun copyToClipboard(text: String, clearAfterSeconds: Long?, isSecure: Boolean) {
+
+    private val clearClipboardPreferenceFlow = preferencesRepository.getClearClipboardPreference()
+
+    @Suppress("MagicNumber")
+    override fun copyToClipboard(text: String, isSecure: Boolean) {
         val androidClipboard = context.getSystemService(AndroidClipboardManager::class.java)
         if (androidClipboard == null) {
             PassLogger.i(TAG, "Could not get ClipboardManager")
@@ -31,7 +40,11 @@ class ClipboardManagerImpl @Inject constructor(
             applySecureFlag(clipData)
         }
         androidClipboard.setPrimaryClip(clipData)
-        clearAfterSeconds?.let { scheduler.schedule(it, text) }
+        when (runBlocking { clearClipboardPreferenceFlow.first() }) {
+            ClearClipboardPreference.Never -> {}
+            ClearClipboardPreference.S69 -> scheduler.schedule(69, text)
+            ClearClipboardPreference.S180 -> scheduler.schedule(180, text)
+        }
     }
 
     override fun getClipboardContent(): Result<String> {

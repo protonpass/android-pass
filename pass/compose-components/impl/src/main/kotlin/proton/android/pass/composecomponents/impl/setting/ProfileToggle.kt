@@ -1,4 +1,4 @@
-package proton.android.pass.featureprofile.impl
+package proton.android.pass.composecomponents.impl.setting
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,7 +15,7 @@ import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 
 @Composable
-fun ProfileToggle(
+fun SettingToggle(
     modifier: Modifier = Modifier,
     text: String,
     isChecked: Boolean,

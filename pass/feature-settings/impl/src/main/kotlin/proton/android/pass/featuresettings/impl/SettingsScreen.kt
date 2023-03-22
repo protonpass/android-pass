@@ -15,6 +15,7 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
     onReportProblemClick: () -> Unit,
     onSelectThemeClick: () -> Unit,
+    onClipboardClick: () -> Unit,
     onLogoutClick: () -> Unit,
     onUpClick: () -> Unit,
     onViewLogsClick: () -> Unit,
@@ -31,6 +32,7 @@ fun SettingsScreen(
         onReportProblemClick = onReportProblemClick,
         onLogoutClick = onLogoutClick,
         onSelectThemeClick = onSelectThemeClick,
+        onClipboardClick = onClipboardClick,
         onPrivacyClick = {
             BrowserUtils.openWebsite(context, "https://proton.me/legal/privacy")
         },

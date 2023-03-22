@@ -9,15 +9,13 @@ import proton.android.pass.preferences.ThemePreference
 data class SettingsUiState(
     val themePreference: ThemePreference,
     val copyTotpToClipboard: CopyTotpToClipboard,
-    val isLoadingState: IsLoadingState,
-    val appVersion: String
+    val isLoadingState: IsLoadingState
 ) {
     companion object {
-        fun getInitialState(appVersion: String) = SettingsUiState(
+        val Initial = SettingsUiState(
             themePreference = ThemePreference.System,
             copyTotpToClipboard = CopyTotpToClipboard.NotEnabled,
-            isLoadingState = IsLoadingState.NotLoading,
-            appVersion = appVersion
+            isLoadingState = IsLoadingState.NotLoading
         )
     }
 }

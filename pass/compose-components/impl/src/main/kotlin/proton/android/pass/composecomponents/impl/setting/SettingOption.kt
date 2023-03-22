@@ -38,7 +38,11 @@ fun SettingOption(
         modifier = modifier
             .applyIf(onClick != null, ifTrue = { clickable { onClick?.invoke() } })
             .fillMaxWidth()
-            .padding(16.dp),
+            .applyIf(
+                condition = label != null,
+                ifTrue = { padding(16.dp) },
+                ifFalse = { padding(16.dp, 26.dp) }
+            ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -58,11 +62,13 @@ fun SettingOption(
                 color = PassTheme.colors.textNorm
             )
         }
-        Icon(
-            painter = painterResource(R.drawable.ic_chevron_tiny_right),
-            contentDescription = stringResource(R.string.setting_option_icon_content_description),
-            tint = PassTheme.colors.textHint
-        )
+        if (onClick != null) {
+            Icon(
+                painter = painterResource(R.drawable.ic_chevron_tiny_right),
+                contentDescription = stringResource(R.string.setting_option_icon_content_description),
+                tint = PassTheme.colors.textHint
+            )
+        }
     }
 }
 

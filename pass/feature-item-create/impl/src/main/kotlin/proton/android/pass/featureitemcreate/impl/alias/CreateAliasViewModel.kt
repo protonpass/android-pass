@@ -18,10 +18,13 @@ import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.NewAlias
 import javax.inject.Inject
@@ -31,6 +34,7 @@ open class CreateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val createAlias: CreateAlias,
     private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val telemetryManager: TelemetryManager,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
@@ -137,6 +141,7 @@ open class CreateAliasViewModel @Inject constructor(
                         getAliasToBeCreated(aliasItem.prefix, aliasSuffix) ?: ""
                     isAliasSavedState.update { AliasSavedState.Success(item.id, generatedAlias) }
                     snackbarMessageRepository.emitSnackbarMessage(AliasCreated)
+                    telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
                 }
                 .onError { onCreateAliasError(it) }
         } else {

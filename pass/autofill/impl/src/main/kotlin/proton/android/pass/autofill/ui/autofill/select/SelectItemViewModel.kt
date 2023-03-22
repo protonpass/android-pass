@@ -24,6 +24,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import proton.android.pass.autofill.AutofillDisplayed
+import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
@@ -58,6 +60,7 @@ import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.GetTotpCodeFromUri
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
@@ -74,8 +77,13 @@ class SelectItemViewModel @Inject constructor(
     private val notificationManager: NotificationManager,
     private val preferenceRepository: UserPreferencesRepository,
     observeActiveItems: ObserveActiveItems,
-    getSuggestedLoginItems: GetSuggestedLoginItems
+    getSuggestedLoginItems: GetSuggestedLoginItems,
+    telemetryManager: TelemetryManager
 ) : ViewModel() {
+
+    init {
+        telemetryManager.sendEvent(AutofillDisplayed(AutofillTriggerSource.App))
+    }
 
     private val autofillAppState: MutableStateFlow<Option<AutofillAppState>> =
         MutableStateFlow(None)

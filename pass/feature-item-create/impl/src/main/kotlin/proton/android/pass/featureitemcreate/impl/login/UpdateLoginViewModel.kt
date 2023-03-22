@@ -29,12 +29,15 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.InitError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemUpdateError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
@@ -48,6 +51,7 @@ class UpdateLoginViewModel @Inject constructor(
     private val updateItem: UpdateItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val telemetryManager: TelemetryManager,
     createAlias: CreateAlias,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
@@ -183,6 +187,7 @@ class UpdateLoginViewModel @Inject constructor(
                         )
                     }
                 }
+                telemetryManager.sendEvent(ItemUpdate(EventItemType.Login))
             }
             .onError {
                 PassLogger.e(TAG, it, "Update item error")

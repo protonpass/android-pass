@@ -18,11 +18,14 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.InitError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemUpdateError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.NoteUpdated
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.Item
 import proton.pass.domain.ShareId
 import javax.inject.Inject
@@ -34,6 +37,7 @@ class UpdateNoteViewModel @Inject constructor(
     private val getShare: GetShareById,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val telemetryManager: TelemetryManager,
     observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
 ) : BaseNoteViewModel(observeVaults, savedStateHandle) {
@@ -97,6 +101,7 @@ class UpdateNoteViewModel @Inject constructor(
                                 }
                             }
                             snackbarMessageRepository.emitSnackbarMessage(NoteUpdated)
+                            telemetryManager.sendEvent(ItemUpdate(EventItemType.Note))
                         }
                         .onError {
                             PassLogger.e(TAG, it, "Update item error")

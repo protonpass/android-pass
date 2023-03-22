@@ -23,10 +23,13 @@ import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.ShareId
 import javax.inject.Inject
@@ -36,6 +39,7 @@ class CreateLoginViewModel @Inject constructor(
     private val createItem: CreateItem,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val telemetryManager: TelemetryManager,
     createAlias: CreateAlias,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
@@ -113,7 +117,10 @@ class CreateLoginViewModel @Inject constructor(
             val aliasItemOption = aliasItemState.value
             if (aliasItemOption is Some) {
                 performCreateAlias(userId, shareId.id, aliasItemOption.value)
-                    .map { performCreateItem(userId, shareId.id) }
+                    .map {
+                        telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
+                        performCreateItem(userId, shareId.id)
+                    }
             } else {
                 performCreateItem(userId, shareId.id)
             }
@@ -141,6 +148,7 @@ class CreateLoginViewModel @Inject constructor(
                         )
                     }
                 }
+                telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
             }
             .onError {
                 PassLogger.e(TAG, it, "Could not create item")

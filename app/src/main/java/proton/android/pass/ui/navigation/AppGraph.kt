@@ -63,7 +63,6 @@ fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
     finishActivity: () -> Unit,
     dismissBottomSheet: () -> Unit,
-    onReportProblemClick: () -> Unit,
     onLogout: () -> Unit
 ) {
     homeGraph(
@@ -136,7 +135,6 @@ fun NavGraphBuilder.appGraph(
         onFeedbackClick = { appNavigator.navigate(FeedbackBottomsheet) }
     )
     settingsGraph(
-        onReportProblemClick = onReportProblemClick,
         onSelectThemeClick = { appNavigator.navigate(ThemeSelector) },
         onUpClick = { appNavigator.onBackClick() },
         dismissBottomSheet = dismissBottomSheet,

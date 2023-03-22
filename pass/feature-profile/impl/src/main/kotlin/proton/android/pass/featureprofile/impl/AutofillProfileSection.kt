@@ -1,7 +1,6 @@
 package proton.android.pass.featureprofile.impl
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -28,25 +27,16 @@ fun AutofillProfileSection(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Box(
-            modifier = Modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
-        ) {
-            SettingToggle(
-                text = stringResource(R.string.profile_option_autofill),
-                isChecked = isChecked,
-                onClick = { onClick(isChecked) }
-            )
-        }
-        Column {
-            Text(
-                text = stringResource(R.string.profile_option_autofill_subtitle),
-                style = ProtonTheme.typography.caption.copy(PassTheme.colors.textWeak)
-            )
-            Text(
-                text = stringResource(R.string.profile_option_autofill_link),
-                style = ProtonTheme.typography.caption.copy(PassTheme.colors.accentBrandOpaque)
-            )
-        }
+        SettingToggle(
+            modifier = Modifier.roundedContainer(ProtonTheme.colors.separatorNorm),
+            text = stringResource(R.string.profile_option_autofill),
+            isChecked = isChecked,
+            onClick = { onClick(isChecked) }
+        )
+        Text(
+            text = stringResource(R.string.profile_option_autofill_subtitle),
+            style = ProtonTheme.typography.caption.copy(PassTheme.colors.textWeak)
+        )
     }
 }
 

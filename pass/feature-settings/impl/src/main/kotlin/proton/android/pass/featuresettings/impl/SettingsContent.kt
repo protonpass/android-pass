@@ -1,5 +1,6 @@
 package proton.android.pass.featuresettings.impl
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -21,8 +22,6 @@ fun SettingsContent(
     onClipboardClick: () -> Unit,
     onViewLogsClick: () -> Unit,
     onForceSyncClick: () -> Unit,
-    onAppVersionClick: (String) -> Unit,
-    onReportProblemClick: () -> Unit,
     onPrivacyClick: () -> Unit,
     onTermsClick: () -> Unit,
     onUpClick: () -> Unit
@@ -43,7 +42,8 @@ fun SettingsContent(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
-                .padding(16.dp)
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             PreferencesSection(
                 theme = state.themePreference,
@@ -57,11 +57,6 @@ fun SettingsContent(
             ApplicationSection(
                 onViewLogsClick = onViewLogsClick,
                 onForceSyncClick = onForceSyncClick
-            )
-            AppSection(
-                appVersion = state.appVersion,
-                onAppVersionClick = onAppVersionClick,
-                onReportProblemClick = onReportProblemClick
             )
         }
     }

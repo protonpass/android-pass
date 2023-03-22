@@ -42,7 +42,8 @@ fun ProfileScreen(
             )
         },
         onListClick = onListClick,
-        onCreateItemClick = onCreateItemClick
+        onCreateItemClick = onCreateItemClick,
+        onCopyAppVersionClick = { viewModel.copyAppVersion(state.appVersion) },
     )
 }
 

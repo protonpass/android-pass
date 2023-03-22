@@ -16,7 +16,6 @@ object ClearClipboardOptions : NavItem(baseRoute = "clipboard/clearOptions/botto
 @Suppress("LongParameterList")
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.settingsGraph(
-    onReportProblemClick: () -> Unit,
     onSelectThemeClick: () -> Unit,
     onClipboardClick: () -> Unit,
     onClearClipboardSettingClick: () -> Unit,
@@ -26,7 +25,6 @@ fun NavGraphBuilder.settingsGraph(
 ) {
     composable(Settings) {
         SettingsScreen(
-            onReportProblemClick = onReportProblemClick,
             onSelectThemeClick = onSelectThemeClick,
             onUpClick = onUpClick,
             onViewLogsClick = onViewLogsClick,

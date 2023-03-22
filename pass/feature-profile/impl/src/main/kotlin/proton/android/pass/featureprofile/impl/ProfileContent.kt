@@ -1,19 +1,24 @@
 package proton.android.pass.featureprofile.impl
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.captionWeak
 import me.proton.core.compose.theme.defaultSmallStrong
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
@@ -34,7 +39,8 @@ fun ProfileContent(
     onAccountClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onFeedbackClick: () -> Unit,
-    onRateAppClick: () -> Unit
+    onRateAppClick: () -> Unit,
+    onCopyAppVersionClick: () -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -90,6 +96,18 @@ fun ProfileContent(
                 onFeedbackClick = onFeedbackClick,
                 onRateAppClick = onRateAppClick
             )
+            Box(
+                modifier = Modifier
+                    .clickable { onCopyAppVersionClick() }
+                    .fillMaxWidth()
+                    .padding(32.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = state.appVersion,
+                    style = ProtonTheme.typography.captionWeak
+                )
+            }
         }
     }
 }

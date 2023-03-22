@@ -26,13 +26,13 @@ android {
 dependencies {
 
     implementation(libs.kotlinx.collections)
-    implementation(libs.core.userSettings.presentation.compose)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.presentation)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.core.user.domain)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
@@ -42,7 +42,6 @@ dependencies {
     kspDebug(libs.showkaseProcessor)
 
     implementation(projects.pass.appConfig.api)
-    implementation(projects.pass.clipboard.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.composeComponents.impl)

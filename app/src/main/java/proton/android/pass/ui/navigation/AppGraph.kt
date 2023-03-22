@@ -5,6 +5,9 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.toOption
+import proton.android.pass.featureaccount.impl.Account
+import proton.android.pass.featureaccount.impl.SignOutDialog
+import proton.android.pass.featureaccount.impl.accountGraph
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurehome.impl.Home
@@ -41,10 +44,8 @@ import proton.android.pass.featuresettings.impl.ClearClipboardOptions
 import proton.android.pass.featuresettings.impl.ClipboardSettings
 import proton.android.pass.featuresettings.impl.LogView
 import proton.android.pass.featuresettings.impl.Settings
-import proton.android.pass.featuresettings.impl.SignOutDialog
 import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
-import proton.android.pass.featuresettings.impl.signOutDialogGraph
 import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetCreateVaultGraph
@@ -118,21 +119,23 @@ fun NavGraphBuilder.appGraph(
     bottomSheetEditVaultGraph(
         onClose = dismissBottomSheet
     )
-    signOutDialogGraph(
-        onConfirm = onLogout,
-        onDismiss = { appNavigator.onBackClick() }
-    )
     generatePasswordBottomsheetGraph(
         onDismiss = { appNavigator.onBackClick() }
     )
+    accountGraph(
+        onSignOutClick = { appNavigator.navigate(SignOutDialog) },
+        onUpClick = { appNavigator.onBackClick() },
+        onDismissClick = { appNavigator.onBackClick() },
+        onConfirmSignOutClick = onLogout
+    )
     profileGraph(
+        onAccountClick = { appNavigator.navigate(Account) },
         onSettingsClick = { appNavigator.navigate(Settings) },
         onListClick = { appNavigator.navigate(Home) },
         onCreateItemClick = { appNavigator.navigate(CreateItemBottomsheet) },
         onFeedbackClick = { appNavigator.navigate(FeedbackBottomsheet) }
     )
     settingsGraph(
-        onLogoutClick = { appNavigator.navigate(SignOutDialog) },
         onReportProblemClick = onReportProblemClick,
         onSelectThemeClick = { appNavigator.navigate(ThemeSelector) },
         onUpClick = { appNavigator.onBackClick() },
@@ -232,10 +235,6 @@ fun NavGraphBuilder.appGraph(
     onBoardingGraph(
         onOnBoardingFinished = { appNavigator.onBackClick() },
         onNavigateBack = finishActivity
-    )
-    signOutDialogGraph(
-        onDismiss = { appNavigator.onBackClick() },
-        onConfirm = onLogout
     )
 }
 

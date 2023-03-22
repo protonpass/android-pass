@@ -27,7 +27,6 @@ dependencies {
 
     implementation(libs.kotlinx.collections)
     implementation(libs.core.userSettings.presentation.compose)
-    implementation(libs.core.accountManager.domain)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.presentation)
     implementation(libs.androidx.lifecycle.runtime.compose)

@@ -22,24 +22,27 @@ import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.item.placeholder
 
 @Composable
 fun SettingOption(
     modifier: Modifier = Modifier,
     text: String,
     label: String? = null,
-    onClick: () -> Unit
+    isLoading: Boolean = false,
+    onClick: (() -> Unit)? = null
 ) {
     Row(
         modifier = modifier
-            .clickable { onClick() }
+            .applyIf(onClick != null, ifTrue = { clickable { onClick?.invoke() } })
             .fillMaxWidth()
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Column {
+        Column(Modifier.weight(1f)) {
             label?.let {
                 Text(
                     text = it,
@@ -47,6 +50,9 @@ fun SettingOption(
                 )
             }
             Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .applyIf(condition = isLoading, ifTrue = { placeholder() }),
                 text = text,
                 style = ProtonTheme.typography.defaultWeak,
                 color = PassTheme.colors.textNorm

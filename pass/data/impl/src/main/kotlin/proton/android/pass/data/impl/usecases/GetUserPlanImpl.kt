@@ -2,11 +2,8 @@ package proton.android.pass.data.impl.usecases
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.domain.usecase.GetOrganization
+import proton.android.pass.data.api.usecases.GetUserPlan
 import javax.inject.Inject
-
-interface GetUserPlan {
-    suspend operator fun invoke(userId: UserId): String
-}
 
 class GetUserPlanImpl @Inject constructor(
     private val getOrganization: GetOrganization

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package = "me.proton.android.pass.preferences";
+option java_multiple_files = true;
+
+enum ClipboardPrefProto {
+  CLIPBOARD_PREFERENCE_UNSPECIFIED = 0;
+  CLIPBOARD_PREFERENCE_NEVER = 1;
+  CLIPBOARD_PREFERENCE_69S = 2;
+  CLIPBOARD_PREFERENCE_180S = 3;
+}
+

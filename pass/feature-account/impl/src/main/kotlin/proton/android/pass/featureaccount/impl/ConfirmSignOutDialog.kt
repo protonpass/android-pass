@@ -1,8 +1,8 @@
-package proton.android.pass.composecomponents.impl.dialogs
+package proton.android.pass.featureaccount.impl
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.dialogs.ConfirmDialog
 
 @Composable
 fun ConfirmSignOutDialog(

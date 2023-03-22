@@ -12,7 +12,7 @@ import proton.android.pass.data.impl.local.LocalTelemetryDataSource
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSource
 import proton.android.pass.data.impl.requests.EventInfo
 import proton.android.pass.data.impl.requests.TelemetryRequest
-import proton.android.pass.data.impl.usecases.GetUserPlan
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.impl.util.DimensionsSerializer
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject

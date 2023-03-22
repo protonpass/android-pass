@@ -20,14 +20,12 @@ fun NavGraphBuilder.settingsGraph(
     onSelectThemeClick: () -> Unit,
     onClipboardClick: () -> Unit,
     onClearClipboardSettingClick: () -> Unit,
-    onLogoutClick: () -> Unit,
     onUpClick: () -> Unit,
     onViewLogsClick: () -> Unit,
     dismissBottomSheet: () -> Unit
 ) {
     composable(Settings) {
         SettingsScreen(
-            onLogoutClick = onLogoutClick,
             onReportProblemClick = onReportProblemClick,
             onSelectThemeClick = onSelectThemeClick,
             onUpClick = onUpClick,

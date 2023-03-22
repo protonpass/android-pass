@@ -22,7 +22,6 @@ import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.RefreshContent
-import proton.android.pass.featuresettings.impl.SettingsSnackbarMessage.ErrorPerformingOperation
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.preferences.BiometricLockState
@@ -91,15 +90,6 @@ class SettingsViewModel @Inject constructor(
         initialValue = SettingsUiState.getInitialState(appConfig.versionName)
     )
 
-    fun onCopyToClipboardChange(value: Boolean) = viewModelScope.launch {
-        PassLogger.d(TAG, "Changing CopyTotpToClipboard to $value")
-        preferencesRepository.setCopyTotpToClipboardEnabled(CopyTotpToClipboard.from(value))
-            .onFailure {
-                PassLogger.e(TAG, it, "Error setting CopyTotpToClipboard")
-                snackbarMessageRepository.emitSnackbarMessage(ErrorPerformingOperation)
-            }
-    }
-
     fun onForceSync() = viewModelScope.launch {
         val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
 
@@ -118,7 +108,7 @@ class SettingsViewModel @Inject constructor(
 
     fun copyAppVersion(appVersion: String) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
-            clipboardManager.copyToClipboard(appVersion, clearAfterSeconds = null)
+            clipboardManager.copyToClipboard(appVersion)
         }
         snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.AppVersionCopied)
     }

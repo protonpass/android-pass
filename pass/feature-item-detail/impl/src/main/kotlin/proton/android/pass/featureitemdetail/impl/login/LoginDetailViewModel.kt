@@ -137,7 +137,7 @@ class LoginDetailViewModel @Inject constructor(
         itemFlow.value?.let { item ->
             val itemType = item.itemType as ItemType.Login
             withContext(Dispatchers.IO) {
-                clipboardManager.copyToClipboard(itemType.username, clearAfterSeconds = null)
+                clipboardManager.copyToClipboard(itemType.username)
             }
             snackbarMessageRepository.emitSnackbarMessage(UsernameCopiedToClipboard)
         }
@@ -145,7 +145,7 @@ class LoginDetailViewModel @Inject constructor(
 
     fun copyWebsiteToClipboard(website: String) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
-            clipboardManager.copyToClipboard(website, clearAfterSeconds = null)
+            clipboardManager.copyToClipboard(website)
         }
         snackbarMessageRepository.emitSnackbarMessage(WebsiteCopiedToClipboard)
     }

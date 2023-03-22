@@ -16,6 +16,7 @@ import me.proton.core.compose.theme.caption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.setting.SettingToggle
 
 @Composable
 fun FingerprintProfileSection(
@@ -30,7 +31,7 @@ fun FingerprintProfileSection(
         Box(
             modifier = Modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
         ) {
-            ProfileToggle(
+            SettingToggle(
                 text = stringResource(R.string.profile_option_fingerprint),
                 isChecked = isChecked,
                 onClick = { onClick(isChecked) }

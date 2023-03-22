@@ -270,7 +270,10 @@ fun HomeScreen(
             HomeContent(
                 uiState = homeUiState,
                 shouldScrollToTop = shouldScrollToTop,
-                homeScreenNavigation = homeScreenNavigation,
+                onItemClick = { item ->
+                    homeViewModel.onItemClicked()
+                    homeScreenNavigation.toItemDetail(item.shareId, item.id)
+                },
                 onSearchQueryChange = { homeViewModel.onSearchQueryChange(it) },
                 onEnterSearch = { homeViewModel.onEnterSearch() },
                 onStopSearch = { homeViewModel.onStopSearching() },

@@ -47,7 +47,7 @@ internal fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState,
     shouldScrollToTop: Boolean,
-    homeScreenNavigation: HomeScreenNavigation,
+    onItemClick: (ItemUiModel) -> Unit,
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
     onStopSearch: () -> Unit,
@@ -150,7 +150,7 @@ internal fun HomeContent(
                 highlight = uiState.searchUiState.searchQuery,
                 onItemClick = { item ->
                     keyboardController?.hide()
-                    homeScreenNavigation.toItemDetail(item.shareId, item.id)
+                    onItemClick(item)
                 },
                 onItemMenuClick = onItemMenuClick,
                 isLoading = uiState.homeListUiState.isLoading,

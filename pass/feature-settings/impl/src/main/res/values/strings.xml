@@ -54,4 +54,11 @@
     <string name="settings_option_terms_of_service">Terms of service</string>
 
     <string name="view_logs_title">View logs</string>
+    <string name="clipboard_bottomsheet_title">Clipboard</string>
+    <string name="clipboard_option_clear_clipboard_label">Clear clipboard</string>
+    <string name="clipboard_option_copy_totp_code">Copy authentication codes</string>
+    <string name="clipboard_option_copy_totp_code_hint">Automatically copy authentication codes when using autofill.</string>
+    <string name="clipboard_option_clear_clipboard_never">Never</string>
+    <string name="clipboard_option_clear_clipboard_after_69_seconds">After 69 seconds</string>
+    <string name="clipboard_option_clear_clipboard_after_180_seconds">After 180 seconds</string>
 </resources>

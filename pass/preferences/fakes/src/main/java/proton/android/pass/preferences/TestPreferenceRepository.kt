@@ -31,6 +31,10 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
     )
 
+    private val clearClipboardPreference = MutableSharedFlow<ClearClipboardPreference>(
+        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
+    )
+
     override suspend fun setBiometricLockState(state: BiometricLockState): Result<Unit> {
         biometricLockState.tryEmit(state)
         return Result.success(Unit)
@@ -73,6 +77,14 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     }
 
     override fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard> = copyTotpToClipboard
+
+    override suspend fun setClearClipboardPreference(clearClipboard: ClearClipboardPreference): Result<Unit> {
+        clearClipboardPreference.tryEmit(clearClipboard)
+        return Result.success(Unit)
+    }
+
+    override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> =
+        clearClipboardPreference
 
     override suspend fun clearPreferences(): Result<Unit> = Result.success(Unit)
 

@@ -105,6 +105,22 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 CopyTotpToClipboard.from(preferences.copyTotpToClipboardEnabled)
             }
 
+    override suspend fun setClearClipboardPreference(
+        clearClipboard: ClearClipboardPreference
+    ): Result<Unit> = runCatching {
+        dataStore.updateData {
+            it.toBuilder()
+                .setClearClipboardAfterValue(clearClipboard.value())
+                .build()
+        }
+        return@runCatching
+    }
+
+    override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> = dataStore.data
+        .map { preferences ->
+            ClearClipboardPreference.from(preferences.clearClipboardAfterValue)
+        }
+
     override suspend fun clearPreferences(): Result<Unit> =
         runCatching {
             dataStore.updateData {

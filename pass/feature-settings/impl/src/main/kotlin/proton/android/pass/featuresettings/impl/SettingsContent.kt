@@ -22,6 +22,7 @@ fun SettingsContent(
     modifier: Modifier = Modifier,
     state: SettingsUiState,
     onSelectThemeClick: () -> Unit,
+    onClipboardClick: () -> Unit,
     onViewLogsClick: () -> Unit,
     onForceSyncClick: () -> Unit,
     onAppVersionClick: (String) -> Unit,
@@ -63,7 +64,7 @@ fun SettingsContent(
             PreferencesSection(
                 theme = state.themePreference,
                 onSelectThemeClick = onSelectThemeClick,
-                onClipboardClick = { }
+                onClipboardClick = onClipboardClick
             )
             AboutSection(
                 onPrivacyClick = onPrivacyClick,

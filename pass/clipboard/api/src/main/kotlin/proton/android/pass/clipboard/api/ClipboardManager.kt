@@ -5,7 +5,7 @@ import androidx.annotation.WorkerThread
 interface ClipboardManager {
 
     @WorkerThread
-    fun copyToClipboard(text: String, clearAfterSeconds: Long? = 120, isSecure: Boolean = false)
+    fun copyToClipboard(text: String, isSecure: Boolean = false)
 
     @WorkerThread
     fun getClipboardContent(): Result<String>

@@ -28,6 +28,7 @@ import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
+import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasUpdated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.InitError
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
@@ -35,6 +36,8 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.Ite
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.AliasDetails
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
@@ -50,6 +53,7 @@ class UpdateAliasViewModel @Inject constructor(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val updateAliasUseCase: UpdateAlias,
     private val encryptionContextProvider: EncryptionContextProvider,
+    private val telemetryManager: TelemetryManager,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
@@ -208,6 +212,7 @@ class UpdateAliasViewModel @Inject constructor(
                     }
                     isLoadingState.update { IsLoadingState.NotLoading }
                     snackbarMessageRepository.emitSnackbarMessage(AliasUpdated)
+                    telemetryManager.sendEvent(ItemUpdate(EventItemType.Alias))
                 }
                 .onError {
                     PassLogger.e(TAG, it, "Update alias error")

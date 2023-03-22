@@ -43,9 +43,7 @@ fun LinkedAppIcon(
     SubcomposeAsyncImage(
         modifier = modifier
             .squircle()
-            .border(width = 3.dp, color = PassTheme.colors.iconBorder, shape = PassTheme.shapes.squircleShape)
-            .size(size.dp)
-            .background(Color.White),
+            .size(size.dp),
         model = packageName,
         contentDescription = null
     ) {
@@ -58,7 +56,16 @@ fun LinkedAppIcon(
                 )
             }
             is AsyncImagePainter.State.Success -> {
-                SubcomposeAsyncImageContent(modifier = Modifier.fillMaxSize().padding(8.dp))
+                SubcomposeAsyncImageContent(
+                    modifier = Modifier.fillMaxSize()
+                        .border(
+                            width = 3.dp,
+                            color = PassTheme.colors.iconBorder,
+                            shape = PassTheme.shapes.squircleShape
+                        )
+                        .background(Color.White)
+                        .padding(8.dp)
+                )
             }
             else -> {
                 emptyContent()

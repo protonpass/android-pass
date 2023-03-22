@@ -10,16 +10,14 @@ data class SettingsUiState(
     val themePreference: ThemePreference,
     val copyTotpToClipboard: CopyTotpToClipboard,
     val isLoadingState: IsLoadingState,
-    val appVersion: String,
-    val currentAccount: String
+    val appVersion: String
 ) {
     companion object {
         fun getInitialState(appVersion: String) = SettingsUiState(
             themePreference = ThemePreference.System,
             copyTotpToClipboard = CopyTotpToClipboard.NotEnabled,
             isLoadingState = IsLoadingState.NotLoading,
-            appVersion = appVersion,
-            currentAccount = ""
+            appVersion = appVersion
         )
     }
 }

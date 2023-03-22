@@ -10,17 +10,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
@@ -32,17 +30,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val accountManager: AccountManager,
-    private val preferencesRepository: UserPreferencesRepository,
+    preferencesRepository: UserPreferencesRepository,
+    private val observeCurrentUser: ObserveCurrentUser,
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val refreshContent: RefreshContent,
     private val clipboardManager: ClipboardManager,
     private val appConfig: AppConfig
 ) : ViewModel() {
-
-    private val currentAccountState = accountManager.getPrimaryAccount()
-        .filterNotNull()
-        .distinctUntilChanged()
 
     private val biometricLockState: Flow<BiometricLockState> = preferencesRepository
         .getBiometricLockState()
@@ -73,16 +67,14 @@ class SettingsViewModel @Inject constructor(
         MutableStateFlow(IsLoadingState.NotLoading)
 
     val state: StateFlow<SettingsUiState> = combine(
-        currentAccountState,
         preferencesState,
         isLoadingState
-    ) { account, preferences, loading ->
+    ) { preferences, loading ->
         SettingsUiState(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
             isLoadingState = loading,
-            appVersion = appConfig.versionName,
-            currentAccount = account.email ?: account.username
+            appVersion = appConfig.versionName
         )
     }.stateIn(
         scope = viewModelScope,
@@ -91,7 +83,7 @@ class SettingsViewModel @Inject constructor(
     )
 
     fun onForceSync() = viewModelScope.launch {
-        val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+        val userId = observeCurrentUser().firstOrNull()?.userId ?: return@launch
 
         isLoadingState.update { IsLoadingState.Loading }
         runCatching {

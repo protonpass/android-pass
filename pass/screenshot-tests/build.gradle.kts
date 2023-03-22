@@ -39,6 +39,7 @@ dependencies {
     implementation(projects.pass.autofill.impl)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.featureAccount.impl)
     implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.featureItemCreate.impl)
     implementation(projects.pass.featureHome.impl)

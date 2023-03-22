@@ -16,7 +16,6 @@ fun SettingsScreen(
     onReportProblemClick: () -> Unit,
     onSelectThemeClick: () -> Unit,
     onClipboardClick: () -> Unit,
-    onLogoutClick: () -> Unit,
     onUpClick: () -> Unit,
     onViewLogsClick: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel()
@@ -30,7 +29,6 @@ fun SettingsScreen(
         onForceSyncClick = { viewModel.onForceSync() },
         onAppVersionClick = { viewModel.copyAppVersion(it) },
         onReportProblemClick = onReportProblemClick,
-        onLogoutClick = onLogoutClick,
         onSelectThemeClick = onSelectThemeClick,
         onClipboardClick = onClipboardClick,
         onPrivacyClick = {

@@ -61,6 +61,7 @@ dependencies {
     implementation(projects.pass.preferences.fakes)
     implementation(projects.pass.notifications.fakes)
     implementation(projects.pass.clipboard.fakes)
+    implementation(projects.pass.telemetry.fakes)
     implementation(projects.pass.totp.fakes)
     implementation(projects.pass.commonTest)
 

@@ -69,6 +69,8 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsErro
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ItemState
 import proton.pass.domain.ItemType
 import proton.pass.domain.Share
@@ -89,6 +91,7 @@ class HomeViewModel @Inject constructor(
     private val restoreItems: RestoreItems,
     private val deleteItem: DeleteItem,
     private val clearTrash: ClearTrash,
+    private val telemetryManager: TelemetryManager,
     clock: Clock,
     observeCurrentUser: ObserveCurrentUser,
     observeItems: ObserveItems
@@ -97,6 +100,10 @@ class HomeViewModel @Inject constructor(
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
+
+    // Variable to keep track of whether the user has entered the search in this session, so we
+    // don't send an EnterSearch event every time they click on the search bar
+    private var hasEnteredSearch = false
 
     private data class FiltersWrapper(
         val vaultSelection: HomeVaultSelection,
@@ -314,6 +321,10 @@ class HomeViewModel @Inject constructor(
     fun onEnterSearch() {
         searchQueryState.update { "" }
         isInSearchModeState.update { true }
+        if (!hasEnteredSearch) {
+            telemetryManager.sendEvent(SearchTriggered)
+        }
+        hasEnteredSearch = true
     }
 
     fun onSortingTypeChanged(sortingType: SortingType) {
@@ -418,6 +429,7 @@ class HomeViewModel @Inject constructor(
         }.onSuccess {
             actionStateFlow.update { ActionState.Done }
             PassLogger.i(TAG, "Item deleted successfully")
+            telemetryManager.sendEvent(ItemDelete(EventItemType.from(item.itemType)))
         }.onFailure {
             PassLogger.e(TAG, it, "Error deleting item")
             actionStateFlow.update { ActionState.Done }
@@ -427,11 +439,14 @@ class HomeViewModel @Inject constructor(
 
     fun clearTrash() = viewModelScope.launch {
         actionStateFlow.update { ActionState.Loading }
+
+        val deletedItems = homeUiState.value.homeListUiState.items
         runCatching {
             clearTrash.invoke()
         }.onSuccess {
             actionStateFlow.update { ActionState.Done }
             PassLogger.i(TAG, "Trash cleared successfully")
+            emitDeletedItems(deletedItems)
         }.onFailure {
             PassLogger.e(TAG, it, "Error clearing trash")
             actionStateFlow.update { ActionState.Done }
@@ -450,6 +465,12 @@ class HomeViewModel @Inject constructor(
             PassLogger.e(TAG, it, "Error restoring items")
             actionStateFlow.update { ActionState.Done }
             snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.RestoreItemsError)
+        }
+    }
+
+    fun onItemClicked() {
+        if (homeUiState.value.searchUiState.inSearchMode) {
+            telemetryManager.sendEvent(SearchItemClicked)
         }
     }
 
@@ -486,6 +507,14 @@ class HomeViewModel @Inject constructor(
             HomeItemTypeSelection.Aliases -> item.itemType is ItemType.Alias
             HomeItemTypeSelection.Logins -> item.itemType is ItemType.Login
             HomeItemTypeSelection.Notes -> item.itemType is ItemType.Note
+        }
+    }
+
+    private fun emitDeletedItems(items: List<GroupedItemList>) {
+        items.forEach { list ->
+            list.items.forEach { item ->
+                telemetryManager.sendEvent(ItemDelete(EventItemType.from(item.itemType)))
+            }
         }
     }
 

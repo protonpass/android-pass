@@ -77,5 +77,6 @@ dependencies {
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.telemetry.fakes)
     testImplementation(projects.pass.totp.fakes)
 }

@@ -11,6 +11,8 @@ import proton.android.pass.data.fakes.repositories.TestTelemetryRepository
 import proton.android.pass.telemetry.api.TelemetryEvent
 import proton.android.pass.test.MainDispatcherRule
 
+object TestEvent : TelemetryEvent("test")
+
 class TelemetryManagerImplTest {
 
     @get:Rule
@@ -46,14 +48,14 @@ class TelemetryManagerImplTest {
         startMutex.lock()
 
         // Send the event
-        instance.sendEvent(TelemetryEvent.AutosaveDisplay)
+        instance.sendEvent(TestEvent)
 
         // Make sure the process has been called
         eventMutex.lock()
 
         val memory = repository.getMemory()
         assertThat(memory.size).isEqualTo(1)
-        assertThat(memory[0].event).isEqualTo(TelemetryEvent.AutosaveDisplay.eventName)
+        assertThat(memory[0].event).isEqualTo(TestEvent.eventName)
 
         job.cancel()
     }

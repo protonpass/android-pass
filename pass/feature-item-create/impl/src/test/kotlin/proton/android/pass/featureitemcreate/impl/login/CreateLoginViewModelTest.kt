@@ -19,9 +19,12 @@ import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.login.CreateUpdateLoginUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestAccountManager
 import proton.android.pass.test.TestSavedStateHandle
@@ -44,6 +47,7 @@ internal class CreateLoginViewModelTest {
     private lateinit var createItem: TestCreateItem
     private lateinit var observeVaults: TestObserveVaults
     private lateinit var createLoginViewModel: CreateLoginViewModel
+    private lateinit var telemetryManager: TestTelemetryManager
 
     @Before
     fun setUp() {
@@ -52,6 +56,7 @@ internal class CreateLoginViewModelTest {
         accountManager = TestAccountManager()
         createItem = TestCreateItem()
         observeVaults = TestObserveVaults()
+        telemetryManager = TestTelemetryManager()
         createLoginViewModel = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,
@@ -62,7 +67,8 @@ internal class CreateLoginViewModelTest {
             encryptionContextProvider = TestEncryptionContextProvider(),
             createAlias = TestCreateAlias(),
             observeVaults = observeVaults,
-            observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
+            observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
+            telemetryManager = telemetryManager
         )
     }
 
@@ -179,6 +185,10 @@ internal class CreateLoginViewModelTest {
                     )
                 )
         }
+
+        val memory = telemetryManager.getMemory()
+        assertThat(memory.size).isEqualTo(1)
+        assertThat(memory[0]).isEqualTo(ItemCreate(EventItemType.Login))
     }
 
     @Test

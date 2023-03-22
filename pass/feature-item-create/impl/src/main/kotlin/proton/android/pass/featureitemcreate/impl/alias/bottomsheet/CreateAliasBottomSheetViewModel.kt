@@ -11,6 +11,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,11 +21,13 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     snackbarMessageRepository: SnackbarMessageRepository,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaults,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    telemetryManager: TelemetryManager
 ) : CreateAliasViewModel(
     accountManager,
     createAlias,
     snackbarMessageRepository,
+    telemetryManager,
     observeAliasOptions,
     observeVaults,
     savedStateHandle

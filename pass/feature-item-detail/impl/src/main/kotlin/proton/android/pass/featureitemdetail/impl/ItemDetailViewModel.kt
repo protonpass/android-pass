@@ -26,6 +26,8 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitErr
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
@@ -38,6 +40,7 @@ class ItemDetailViewModel @Inject constructor(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clock: Clock,
+    private val telemetryManager: TelemetryManager,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -81,6 +84,7 @@ class ItemDetailViewModel @Inject constructor(
                                 ).some()
                             }
                         }
+                        telemetryManager.sendEvent(ItemRead(EventItemType.from(item.itemType)))
                     }
                     .onError {
                         PassLogger.e(TAG, it, "Get by id error")

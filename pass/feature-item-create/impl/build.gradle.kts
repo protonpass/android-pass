@@ -60,6 +60,7 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.clipboard.api)
     implementation(projects.pass.common.api)
+    implementation(projects.pass.telemetry.api)
     implementation(projects.pass.totp.api)
 
     debugImplementation(libs.showkase)

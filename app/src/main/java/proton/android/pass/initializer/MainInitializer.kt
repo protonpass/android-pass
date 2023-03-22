@@ -23,6 +23,7 @@ import androidx.startup.AppInitializer
 import androidx.startup.Initializer
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
 import proton.android.pass.data.impl.sync.SyncInitializer
+import proton.android.pass.telemetry.impl.startup.TelemetryInitializer
 
 class MainInitializer : Initializer<Unit> {
 
@@ -34,6 +35,7 @@ class MainInitializer : Initializer<Unit> {
         SyncInitializer::class.java,
         EventManagerInitializer::class.java,
         HumanVerificationInitializer::class.java,
+        TelemetryInitializer::class.java
     )
 
     companion object {

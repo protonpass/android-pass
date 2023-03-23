@@ -16,7 +16,8 @@ fun ItemDetailContent(
     modifier: Modifier = Modifier,
     uiState: ItemDetailScreenUiState,
     onUpClick: () -> Unit,
-    onEditClick: (ShareId, ItemId, ItemType) -> Unit
+    onEditClick: (ShareId, ItemId, ItemType) -> Unit,
+    onMigrateClick: (ShareId, ItemId) -> Unit
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         if (uiState.model != null && uiState.moreInfoUiState != null) {
@@ -26,19 +27,22 @@ fun ItemDetailContent(
                     item = item,
                     moreInfoUiState = uiState.moreInfoUiState,
                     onUpClick = onUpClick,
-                    onEditClick = onEditClick
+                    onEditClick = onEditClick,
+                    onMigrateClick = onMigrateClick
                 )
                 is ItemType.Note -> NoteDetail(
                     item = item,
                     moreInfoUiState = uiState.moreInfoUiState,
                     onUpClick = onUpClick,
-                    onEditClick = onEditClick
+                    onEditClick = onEditClick,
+                    onMigrateClick = onMigrateClick
                 )
                 is ItemType.Alias -> AliasDetail(
                     item = item,
                     moreInfoUiState = uiState.moreInfoUiState,
                     onUpClick = onUpClick,
-                    onEditClick = onEditClick
+                    onEditClick = onEditClick,
+                    onMigrateClick = onMigrateClick
                 )
                 ItemType.Password -> {}
             }

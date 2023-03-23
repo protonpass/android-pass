@@ -28,6 +28,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.CryptoException
 import proton.android.pass.crypto.api.extensions.serializeToProto
 import proton.android.pass.crypto.api.usecases.CreateItem
+import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.data.api.ItemCountSummary
@@ -51,6 +52,7 @@ import proton.android.pass.data.impl.extensions.withUrl
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
+import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.TrashItemRevision
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.responses.ItemRevision
@@ -82,6 +84,7 @@ class ItemRepositoryImpl @Inject constructor(
     private val remoteItemDataSource: RemoteItemDataSource,
     private val shareKeyRepository: ShareKeyRepository,
     private val openItem: OpenItem,
+    private val migrateItem: MigrateItem,
     private val itemKeyRepository: ItemKeyRepository,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : BaseRepository(userAddressRepository), ItemRepository {
@@ -367,7 +370,7 @@ class ItemRepositoryImpl @Inject constructor(
     override suspend fun addPackageAndUrlToItem(
         shareId: ShareId,
         itemId: ItemId,
-        packageInfoOption: Option<PackageInfo>,
+        packageInfo: Option<PackageInfo>,
         url: Option<String>
     ): LoadingResult<Item> = withContext(Dispatchers.IO) {
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
@@ -381,7 +384,7 @@ class ItemRepositoryImpl @Inject constructor(
         val (needsToUpdate, updatedContents) = updateItemContents(
             item,
             itemProto,
-            packageInfoOption,
+            packageInfo,
             url
         )
 
@@ -477,6 +480,36 @@ class ItemRepositoryImpl @Inject constructor(
 
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> =
         localItemDataSource.observeItemCount(shareIds)
+
+    override suspend fun migrateItem(
+        userId: UserId,
+        source: Share,
+        destination: Share,
+        itemId: ItemId
+    ): Item {
+        val item = requireNotNull(localItemDataSource.getById(source.id, itemId))
+        val destinationKey = shareKeyRepository.getLatestKeyForShare(destination.id).first()
+
+        val body = migrateItem.migrate(destinationKey, item.encryptedContent, item.contentFormatVersion)
+        val request = MigrateItemRequest(
+            shareId = destination.id.id,
+            item = body.toRequest()
+        )
+
+        val res = remoteItemDataSource.migrateItem(userId, source.id, ItemId(item.id), request)
+
+        val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
+        val resAsEntity =
+            itemResponseToEntity(userAddress, res, destination, listOf(destinationKey))
+        database.inTransaction {
+            localItemDataSource.upsertItem(resAsEntity)
+            localItemDataSource.delete(source.id, ItemId(item.id))
+        }
+
+        return encryptionContextProvider.withEncryptionContext {
+            entityToDomain(this@withEncryptionContext, resAsEntity)
+        }
+    }
 
     private suspend fun getShare(userId: UserId, shareId: ShareId): Share =
         when (val share = shareRepository.getById(userId, shareId)) {

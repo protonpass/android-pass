@@ -11,6 +11,7 @@ import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
+import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
@@ -67,7 +68,10 @@ class RemoteItemDataSourceImpl @Inject constructor(
             .toLoadingResult()
             .map { it.item }
 
-    override suspend fun getItems(userId: UserId, shareId: ShareId): LoadingResult<List<ItemRevision>> =
+    override suspend fun getItems(
+        userId: UserId,
+        shareId: ShareId
+    ): LoadingResult<List<ItemRevision>> =
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 var sinceToken: String? = null
@@ -127,4 +131,14 @@ class RemoteItemDataSourceImpl @Inject constructor(
             .invoke { updateLastUsedTime(shareId.id, itemId.id, UpdateLastUsedTimeRequest(now)) }
             .toLoadingResult()
             .map { }
+
+    override suspend fun migrateItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        body: MigrateItemRequest
+    ): ItemRevision =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { migrateItem(shareId.id, itemId.id, body).item }
+            .valueOrThrow
 }

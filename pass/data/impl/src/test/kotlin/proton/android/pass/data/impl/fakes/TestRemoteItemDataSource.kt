@@ -5,6 +5,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
+import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.responses.ItemRevision
@@ -87,6 +88,15 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         itemId: ItemId,
         now: Long
     ): LoadingResult<Unit> {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override suspend fun migrateItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId,
+        body: MigrateItemRequest
+    ): ItemRevision {
         throw IllegalStateException("Not yet implemented")
     }
 

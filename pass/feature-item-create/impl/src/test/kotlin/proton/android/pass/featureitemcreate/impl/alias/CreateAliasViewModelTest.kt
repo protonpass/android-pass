@@ -13,7 +13,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import proton.android.pass.telemetry.api.EventItemType
@@ -26,6 +26,7 @@ import proton.android.pass.test.domain.TestShare
 import proton.pass.domain.AliasOptions
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
+import proton.pass.domain.VaultWithItemCount
 
 class CreateAliasViewModelTest {
 
@@ -35,7 +36,7 @@ class CreateAliasViewModelTest {
     private lateinit var suffix: AliasSuffixUiModel
     private lateinit var mailbox: AliasMailboxUiModel
     private lateinit var viewModel: CreateAliasViewModel
-    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var observeAliasOptions: TestObserveAliasOptions
     private lateinit var createAlias: TestCreateAlias
     private lateinit var snackbarRepository: TestSnackbarMessageRepository
@@ -46,7 +47,7 @@ class CreateAliasViewModelTest {
         suffix = TestAliasSuffixUiModel.create()
         mailbox = TestAliasMailboxUiModel.create()
 
-        observeVaults = TestObserveVaults()
+        observeVaults = TestObserveVaultsWithItemCount()
         observeAliasOptions = TestObserveAliasOptions()
         createAlias = TestCreateAlias()
         snackbarRepository = TestSnackbarMessageRepository()
@@ -215,7 +216,17 @@ class CreateAliasViewModelTest {
     }
 
     private fun setupVaults() {
-        observeVaults.sendResult(LoadingResult.Success(listOf(Vault(ShareId("ShareId"), "name"))))
+        observeVaults.sendResult(
+            LoadingResult.Success(
+                listOf(
+                    VaultWithItemCount(
+                        vault = Vault(ShareId("ShareId"), "name"),
+                        activeItemCount = 1,
+                        trashedItemCount = 0
+                    )
+                )
+            )
+        )
     }
 
     private fun setupAliasOptions() {

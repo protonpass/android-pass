@@ -7,24 +7,25 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.note.CreateUpdateNoteUiState.Companion.Initial
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
+import proton.pass.domain.VaultWithItemCount
 
 internal class BaseNoteViewModelTest {
 
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
-    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var baseNoteViewModel: BaseNoteViewModel
 
     @Before
     fun setUp() {
-        observeVaults = TestObserveVaults()
+        observeVaults = TestObserveVaultsWithItemCount()
         baseNoteViewModel = object : BaseNoteViewModel(
             observeVaults,
             TestSavedStateHandle.create()
@@ -61,6 +62,16 @@ internal class BaseNoteViewModelTest {
     }
 
     private fun givenAVaultList() {
-        observeVaults.sendResult(LoadingResult.Success(listOf(Vault(ShareId("shareId"), "Share"))))
+        observeVaults.sendResult(
+            LoadingResult.Success(
+                listOf(
+                    VaultWithItemCount(
+                        vault = Vault(ShareId("ShareId"), "name"),
+                        activeItemCount = 1,
+                        trashedItemCount = 0
+                    )
+                )
+            )
+        )
     }
 }

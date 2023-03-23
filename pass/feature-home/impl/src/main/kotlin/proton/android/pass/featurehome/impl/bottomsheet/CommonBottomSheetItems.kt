@@ -2,7 +2,6 @@ package proton.android.pass.featurehome.impl.bottomsheet
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
@@ -26,13 +25,15 @@ internal fun edit(itemUiModel: ItemUiModel, onEdit: (ShareId, ItemId) -> Unit): 
         override val isDivider = false
     }
 
-internal fun moveToTrash(itemUiModel: ItemUiModel, onMoveToTrash: (ItemUiModel) -> Unit): BottomSheetItem =
+internal fun moveToTrash(
+    itemUiModel: ItemUiModel,
+    onMoveToTrash: (ItemUiModel) -> Unit
+): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
             get() = {
                 BottomSheetItemTitle(
-                    text = stringResource(id = R.string.bottomsheet_move_to_trash),
-                    color = ProtonTheme.colors.notificationError
+                    text = stringResource(id = R.string.bottomsheet_move_to_trash)
                 )
             }
         override val subtitle: (@Composable () -> Unit)?
@@ -40,8 +41,7 @@ internal fun moveToTrash(itemUiModel: ItemUiModel, onMoveToTrash: (ItemUiModel) 
         override val leftIcon: (@Composable () -> Unit)
             get() = {
                 BottomSheetItemIcon(
-                    iconId = me.proton.core.presentation.R.drawable.ic_proton_trash,
-                    tint = ProtonTheme.colors.notificationError
+                    iconId = me.proton.core.presentation.R.drawable.ic_proton_trash
                 )
             }
         override val endIcon: (@Composable () -> Unit)?

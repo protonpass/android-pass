@@ -86,8 +86,8 @@ internal fun HomeContent(
                         onStopSearch = onStopSearch
                     )
                 },
-                actions = {
-                    if (isTrashMode) {
+                actions = if (isTrashMode) {
+                    {
                         IconButton(onClick = onTrashActionsClick) {
                             Icon(
                                 painter = painterResource(
@@ -98,6 +98,8 @@ internal fun HomeContent(
                             )
                         }
                     }
+                } else {
+                    null
                 }
             )
         },

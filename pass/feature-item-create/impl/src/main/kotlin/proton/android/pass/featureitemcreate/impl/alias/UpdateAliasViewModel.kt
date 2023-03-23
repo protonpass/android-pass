@@ -24,7 +24,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
@@ -55,7 +55,7 @@ class UpdateAliasViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     observeAliasOptions: ObserveAliasOptions,
-    observeVaults: ObserveVaults,
+    observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
 ) : BaseAliasViewModel(
     snackbarMessageRepository,

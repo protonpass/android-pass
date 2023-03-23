@@ -16,17 +16,17 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
+import proton.pass.domain.VaultWithItemCount
 
 abstract class BaseNoteViewModel(
-    observeVaults: ObserveVaults,
+    observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -57,7 +57,7 @@ abstract class BaseNoteViewModel(
                     PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
                     emptyList()
                 }
-                is LoadingResult.Success -> shares.data.map { ShareUiModel(it.shareId, it.name, it.color, it.icon) }
+                is LoadingResult.Success -> shares.data
             }
         }
         .distinctUntilChanged()
@@ -68,15 +68,15 @@ abstract class BaseNoteViewModel(
         observeAllVaultsFlow
     ) { navShareId, selectedShareId, allShares ->
         val selectedShare = allShares
-            .firstOrNull { it.id == selectedShareId.value() }
-            ?: allShares.firstOrNull { it.id == navShareId.value() }
+            .firstOrNull { it.vault.shareId == selectedShareId.value() }
+            ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
             ?: allShares.first()
         SharesWrapper(allShares, selectedShare)
     }
 
     private data class SharesWrapper(
-        val shareList: List<ShareUiModel>,
-        val currentShare: ShareUiModel
+        val vaultList: List<VaultWithItemCount>,
+        val currentVault: VaultWithItemCount
     )
 
     private val noteItemWrapperState = combine(
@@ -98,13 +98,13 @@ abstract class BaseNoteViewModel(
         isItemSavedState
     ) { shareWrapper, noteItemWrapper, isLoading, isItemSaved ->
         CreateUpdateNoteUiState(
-            shareList = shareWrapper.shareList,
-            selectedShareId = shareWrapper.currentShare,
+            vaultList = shareWrapper.vaultList,
+            selectedVault = shareWrapper.currentVault,
             noteItem = noteItemWrapper.noteItem,
             errorList = noteItemWrapper.noteItemValidationErrors,
             isLoadingState = isLoading,
             isItemSaved = isItemSaved,
-            showVaultSelector = shareWrapper.shareList.size > 1
+            showVaultSelector = shareWrapper.vaultList.size > 1
         )
     }
         .stateIn(

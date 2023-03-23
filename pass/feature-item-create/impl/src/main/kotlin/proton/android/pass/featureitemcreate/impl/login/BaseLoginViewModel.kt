@@ -25,12 +25,11 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
@@ -42,6 +41,7 @@ import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.Item
 import proton.pass.domain.ShareId
+import proton.pass.domain.VaultWithItemCount
 import proton.pass.domain.entity.NewAlias
 
 abstract class BaseLoginViewModel(
@@ -50,7 +50,7 @@ abstract class BaseLoginViewModel(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val clipboardManager: ClipboardManager,
     private val totpManager: TotpManager,
-    observeVaults: ObserveVaults,
+    observeVaults: ObserveVaultsWithItemCount,
     observeCurrentUser: ObserveCurrentUser,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -85,7 +85,7 @@ abstract class BaseLoginViewModel(
     private val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val canUpdateUsernameState: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
-    private val observeAllSharesFlow = observeVaults()
+    private val observeAllVaultsFlow = observeVaults()
         .map { shares ->
             when (shares) {
                 LoadingResult.Loading -> emptyList()
@@ -93,9 +93,7 @@ abstract class BaseLoginViewModel(
                     PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
                     emptyList()
                 }
-                is LoadingResult.Success ->
-                    shares.data
-                        .map { ShareUiModel(it.shareId, it.name, it.color, it.icon) }
+                is LoadingResult.Success -> shares.data
             }
         }
         .distinctUntilChanged()
@@ -103,18 +101,18 @@ abstract class BaseLoginViewModel(
     private val sharesWrapperState = combine(
         navShareIdState,
         selectedShareIdState,
-        observeAllSharesFlow
+        observeAllVaultsFlow
     ) { navShareId, selectedShareId, allShares ->
         val selectedShare = allShares
-            .firstOrNull { it.id == selectedShareId.value() }
-            ?: allShares.firstOrNull { it.id == navShareId.value() }
+            .firstOrNull { it.vault.shareId == selectedShareId.value() }
+            ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
             ?: allShares.first()
         SharesWrapper(allShares, selectedShare)
     }
 
     private data class SharesWrapper(
-        val shareList: List<ShareUiModel>,
-        val currentShare: ShareUiModel
+        val vaultList: List<VaultWithItemCount>,
+        val currentVault: VaultWithItemCount
     )
 
     private val loginAliasItemWrapperState = combine(
@@ -149,8 +147,8 @@ abstract class BaseLoginViewModel(
         focusLastWebsiteState,
     ) { shareWrapper, loginItemWrapper, isLoading, events, focusLastWebsite ->
         CreateUpdateLoginUiState(
-            shareList = shareWrapper.shareList,
-            selectedShareId = shareWrapper.currentShare,
+            vaultList = shareWrapper.vaultList,
+            selectedVault = shareWrapper.currentVault,
             loginItem = loginItemWrapper.loginItem,
             validationErrors = loginItemWrapper.loginItemValidationErrors,
             isLoadingState = isLoading,
@@ -160,7 +158,7 @@ abstract class BaseLoginViewModel(
             canUpdateUsername = loginItemWrapper.canUpdateUsername,
             primaryEmail = loginItemWrapper.primaryEmail,
             aliasItem = loginItemWrapper.aliasItem.value(),
-            showVaultSelector = shareWrapper.shareList.size > 1
+            showVaultSelector = shareWrapper.vaultList.size > 1
         )
     }
         .stateIn(

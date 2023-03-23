@@ -12,18 +12,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 import proton.android.pass.composecomponents.impl.form.NoteSection
 import proton.android.pass.composecomponents.impl.form.VaultSelector
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
+import proton.pass.domain.VaultWithItemCount
 
 @Composable
 internal fun CreateNoteItemForm(
     modifier: Modifier = Modifier,
     noteItem: NoteItem,
-    selectedShare: ShareUiModel?,
+    selectedVault: VaultWithItemCount?,
     enabled: Boolean,
     showVaultSelector: Boolean,
     onTitleRequiredError: Boolean,
@@ -42,9 +42,9 @@ internal fun CreateNoteItemForm(
             Column { // Column so spacedBy does not affect the spacer
                 VaultSelector(
                     modifier = Modifier.roundedContainer(ProtonTheme.colors.separatorNorm),
-                    vaultName = selectedShare?.name ?: "",
-                    color = selectedShare?.color ?: ShareColor.Color1,
-                    icon = selectedShare?.icon ?: ShareIcon.Icon1,
+                    vaultName = selectedVault?.vault?.name ?: "",
+                    color = selectedVault?.vault?.color ?: ShareColor.Color1,
+                    icon = selectedVault?.vault?.icon ?: ShareIcon.Icon1,
                     onVaultClicked = onVaultSelectorClick
                 )
                 Spacer(modifier = Modifier.height(8.dp)) // 16 come from spacedBy + 8 = 24

@@ -28,8 +28,8 @@ fun CreateAliasBottomSheet(
 
     val isAliasDraftSaved = state.isAliasDraftSavedState
     if (isAliasDraftSaved is AliasDraftSavedState.Success) {
-        LaunchedEffect(state.selectedShareId) {
-            state.selectedShareId?.let {
+        LaunchedEffect(state.selectedVault) {
+            state.selectedVault?.let {
                 onAliasCreated(isAliasDraftSaved.aliasItem)
                 viewModel.resetAliasDraftSavedState()
             }
@@ -41,8 +41,8 @@ fun CreateAliasBottomSheet(
         state = state,
         onCancel = onCancel,
         onConfirm = {
-            state.selectedShareId?.let {
-                viewModel.createAlias(it.id)
+            state.selectedVault?.let {
+                viewModel.createAlias(it.vault.shareId)
             }
         },
         onPrefixChanged = { viewModel.onPrefixChange(it) },

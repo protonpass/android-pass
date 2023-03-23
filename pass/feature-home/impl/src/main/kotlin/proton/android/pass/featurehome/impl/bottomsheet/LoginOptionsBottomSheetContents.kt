@@ -51,6 +51,7 @@ fun LoginOptionsBottomSheetContents(
                 copyPassword(itemType.password, onCopyPassword),
                 bottomSheetDivider(),
                 edit(itemUiModel, onEdit),
+                bottomSheetDivider(),
                 moveToTrash(itemUiModel, onMoveToTrash)
             )
         )

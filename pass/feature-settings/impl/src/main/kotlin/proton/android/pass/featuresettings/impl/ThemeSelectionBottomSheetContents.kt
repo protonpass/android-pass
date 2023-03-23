@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheetPadding
@@ -18,6 +19,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.ThemePreference.Dark
 import proton.android.pass.preferences.ThemePreference.Light
@@ -38,6 +40,9 @@ fun ThemeSelectionBottomSheetContents(
                 themePreference = themePreference,
                 onThemeSelected = onThemeSelected
             )
+                .flatMap { listOf(it, bottomSheetDivider()) }
+                .dropLast(1)
+                .toPersistentList()
         )
     }
 }

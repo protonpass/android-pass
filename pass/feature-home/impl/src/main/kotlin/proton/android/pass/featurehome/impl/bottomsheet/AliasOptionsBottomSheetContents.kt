@@ -52,6 +52,7 @@ fun AliasOptionsBottomSheetContents(
                 copyAlias(itemType.aliasEmail, onCopyAlias),
                 bottomSheetDivider(),
                 edit(itemUiModel, onEdit),
+                bottomSheetDivider(),
                 moveToTrash(itemUiModel, onMoveToTrash)
             )
         )

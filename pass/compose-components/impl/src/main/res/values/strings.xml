@@ -14,7 +14,6 @@
 
     <!-- Actions -->
     <string name="action_cancel_send_to_trash">Cancel</string>
-    <string name="action_accept_move_to_trash">Move to trash</string>
     <string name="action_content_description_menu">Item action menu</string>
 
     <!-- Empty list -->

@@ -21,8 +21,8 @@
     <string name="settings_appearance_section_title">Appearance</string>
     <string name="settings_appearance_preference_title">Theme</string>
     <string name="settings_appearance_preference_subtitle_match_system">Match system</string>
-    <string name="settings_appearance_preference_subtitle_light">Light</string>
-    <string name="settings_appearance_preference_subtitle_dark">Dark</string>
+    <string name="settings_appearance_preference_subtitle_light">Light mode</string>
+    <string name="settings_appearance_preference_subtitle_dark">Dark mode</string>
     <string name="settings_appearance_preference_description">Select a color theme for the app.</string>
     <string name="settings_theme_selector_title">Select the theme</string>
 

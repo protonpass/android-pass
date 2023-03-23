@@ -124,6 +124,7 @@ class AppImageFetcher(
         if (isFileValid(file)) {
             result
         } else {
+            file.delete()
             CacheResult.Miss
         }
 

@@ -14,6 +14,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.featureitemdetail.impl.R
 
 @Composable
@@ -27,6 +28,7 @@ fun WebsiteOptionsBottomSheetContents(
         modifier = modifier.bottomSheetPadding(),
         items = persistentListOf(
             openWebsite(onClick = { onOpenWebsite(website) }),
+            bottomSheetDivider(),
             copyWebsite(onClick = { onCopyToClipboard(website) })
         )
     )

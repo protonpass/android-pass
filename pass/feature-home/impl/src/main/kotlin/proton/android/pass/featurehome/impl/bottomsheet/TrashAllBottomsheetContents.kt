@@ -20,6 +20,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIco
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.featurehome.impl.R
 import me.proton.core.presentation.R as CoreR
 
@@ -40,6 +41,7 @@ fun TrashAllBottomSheetContents(
         BottomSheetItemList(
             items = persistentListOf(
                 restoreAll(onRestoreAll),
+                bottomSheetDivider(),
                 emptyTrash(onEmptyTrash)
             )
         )

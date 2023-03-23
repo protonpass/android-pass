@@ -17,6 +17,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.featurehome.impl.R
 
 @ExperimentalMaterialApi
@@ -32,6 +33,7 @@ fun VaultOptionsBottomSheetContents(
             items = if (showDelete) {
                 persistentListOf(
                     editVault(onEdit),
+                    bottomSheetDivider(),
                     removeVault(onRemove)
                 )
             } else {

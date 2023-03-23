@@ -57,7 +57,7 @@ fun TitleSection(
                 textStyle = PassTypography.heroWeak,
             )
         },
-        trailingIcon = if (!isRounded && value.isNotBlank() && enabled) {
+        trailingIcon = if (value.isNotBlank() && enabled) {
             { SmallCrossIconButton { onChange("") } }
         } else {
             null

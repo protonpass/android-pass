@@ -1,12 +1,10 @@
 package proton.android.pass.featureitemdetail.impl.common
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -40,17 +38,16 @@ fun NoteSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_note),
                 contentDescription = stringResource(R.string.note_section_icon_content_description),
                 tint = accentColor
             )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 SectionTitle(text = stringResource(R.string.field_detail_note_title))
-                Spacer(modifier = Modifier.height(8.dp))
                 SectionSubtitle(text = text.asAnnotatedString())
             }
         }

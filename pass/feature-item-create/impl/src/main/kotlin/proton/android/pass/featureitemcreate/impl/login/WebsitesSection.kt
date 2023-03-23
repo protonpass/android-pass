@@ -63,7 +63,7 @@ internal fun WebsitesSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            modifier = Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp),
+            modifier = Modifier.padding(12.dp, 0.dp, 0.dp, 0.dp),
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_earth),
             contentDescription = "",
             tint = ProtonTheme.colors.iconWeak

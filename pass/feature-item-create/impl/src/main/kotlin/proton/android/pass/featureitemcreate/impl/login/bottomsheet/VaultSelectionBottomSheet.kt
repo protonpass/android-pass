@@ -92,7 +92,12 @@ private fun createVaultBottomSheetItem(
             }
         override val endIcon: (@Composable () -> Unit)?
             get() = if (isSelected) {
-                { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark) }
+                {
+                    BottomSheetItemIcon(
+                        iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
+                        tint = PassTheme.colors.accentPurpleOpaque
+                    )
+                }
             } else null
         override val onClick: () -> Unit = { onVaultClick(vault.vault.shareId) }
         override val isDivider = false

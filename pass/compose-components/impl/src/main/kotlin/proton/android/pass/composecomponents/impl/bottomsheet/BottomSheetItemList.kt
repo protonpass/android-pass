@@ -7,6 +7,7 @@ import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import kotlinx.collections.immutable.ImmutableList
+import proton.android.pass.commonui.api.PassTheme
 
 @Composable
 fun BottomSheetItemList(
@@ -18,7 +19,7 @@ fun BottomSheetItemList(
     ) {
         items.forEach { item ->
             if (item.isDivider) {
-                Divider()
+                Divider(color = PassTheme.colors.accentBrandWeakest)
             } else {
                 BottomSheetItemRow(
                     title = item.title,

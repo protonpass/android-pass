@@ -58,6 +58,7 @@ internal fun CreateNoteItemForm(
             onValueChanged = onTitleChange
         )
         NoteSection(
+            modifier = modifier.weight(1f),
             enabled = enabled,
             isRounded = true,
             value = noteItem.note,

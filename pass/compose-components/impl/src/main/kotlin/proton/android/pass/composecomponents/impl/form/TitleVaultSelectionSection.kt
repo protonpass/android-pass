@@ -43,7 +43,7 @@ fun TitleVaultSelectionSection(
             Divider()
         }
         TitleSection(
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(16.dp),
             value = titleValue,
             requestFocus = true,
             onTitleRequiredError = onTitleRequiredError,

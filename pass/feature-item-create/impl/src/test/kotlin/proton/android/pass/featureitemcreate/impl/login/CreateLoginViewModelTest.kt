@@ -84,8 +84,8 @@ internal class CreateLoginViewModelTest {
                 assertThat(awaitItem())
                     .isEqualTo(
                         Initial.copy(
-                            shareList = listOf(ShareUiModel(vault.shareId, vault.name, vault.color, vault.icon)),
-                            selectedShareId = ShareUiModel(vault.shareId, vault.name, vault.color, vault.icon),
+                            vaultList = listOf(ShareUiModel(vault.shareId, vault.name, vault.color, vault.icon)),
+                            selectedVault = ShareUiModel(vault.shareId, vault.name, vault.color, vault.icon),
                             validationErrors = setOf(LoginItemValidationErrors.BlankTitle)
                         )
                     )
@@ -111,7 +111,7 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
-                        shareList = listOf(
+                        vaultList = listOf(
                             ShareUiModel(
                                 vault.shareId,
                                 vault.name,
@@ -119,7 +119,7 @@ internal class CreateLoginViewModelTest {
                                 vault.icon
                             )
                         ),
-                        selectedShareId = ShareUiModel(
+                        selectedVault = ShareUiModel(
                             vault.shareId,
                             vault.name,
                             vault.color,
@@ -132,7 +132,7 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
-                        shareList = listOf(
+                        vaultList = listOf(
                             ShareUiModel(
                                 vault.shareId,
                                 vault.name,
@@ -140,7 +140,7 @@ internal class CreateLoginViewModelTest {
                                 vault.icon
                             )
                         ),
-                        selectedShareId = ShareUiModel(
+                        selectedVault = ShareUiModel(
                             vault.shareId,
                             vault.name,
                             vault.color,
@@ -153,7 +153,7 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
-                        shareList = listOf(
+                        vaultList = listOf(
                             ShareUiModel(
                                 vault.shareId,
                                 vault.name,
@@ -161,7 +161,7 @@ internal class CreateLoginViewModelTest {
                                 vault.icon
                             )
                         ),
-                        selectedShareId = ShareUiModel(
+                        selectedVault = ShareUiModel(
                             vault.shareId,
                             vault.name,
                             vault.color,
@@ -207,7 +207,7 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
-                        shareList = listOf(
+                        vaultList = listOf(
                             ShareUiModel(
                                 vault.shareId,
                                 vault.name,
@@ -215,7 +215,7 @@ internal class CreateLoginViewModelTest {
                                 vault.icon
                             )
                         ),
-                        selectedShareId = ShareUiModel(
+                        selectedVault = ShareUiModel(
                             vault.shareId,
                             vault.name,
                             vault.color,

@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,7 +28,7 @@ private val ButtonContentHeight = 20.dp
 @Composable
 fun LoadingCircleButton(
     modifier: Modifier = Modifier,
-    text: @Composable () -> Unit,
+    text: @Composable RowScope.() -> Unit,
     leadingIcon: (@Composable () -> Unit)? = null,
     color: Color,
     isLoading: Boolean,
@@ -39,7 +40,8 @@ fun LoadingCircleButton(
             .height(IntrinsicSize.Min)
             .clip(CircleShape)
             .applyIf(condition = !isLoading && buttonEnabled, ifTrue = { clickable { onClick() } })
-            .background(color)
+            .background(color),
+        horizontalArrangement = Arrangement.Center
     ) {
         AnimatedContent(modifier = Modifier.padding(16.dp, 10.dp), targetState = isLoading) {
             if (it) {

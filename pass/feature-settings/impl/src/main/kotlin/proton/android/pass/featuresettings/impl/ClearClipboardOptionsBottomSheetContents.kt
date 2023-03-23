@@ -16,7 +16,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.preferences.ClearClipboardPreference
 import proton.android.pass.preferences.ClearClipboardPreference.Never
 import proton.android.pass.preferences.ClearClipboardPreference.S180
@@ -33,9 +33,7 @@ fun ClearClipboardOptionsBottomSheetContents(
         items = clearClipboardItemList(
             clearClipboardPreference,
             onClearClipboardSettingSelected
-        ).flatMap { listOf(it, bottomSheetDivider()) }
-            .dropLast(1)
-            .toPersistentList()
+        ).withDividers().toPersistentList()
     )
 }
 

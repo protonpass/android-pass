@@ -5,3 +5,5 @@ data class VaultWithItemCount(
     val activeItemCount: Long,
     val trashedItemCount: Long
 )
+
+fun List<VaultWithItemCount>.sorted(): List<VaultWithItemCount> = sortedBy { it.vault.name }

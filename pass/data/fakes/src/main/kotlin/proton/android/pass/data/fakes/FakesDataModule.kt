@@ -11,6 +11,8 @@ import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetVaultById
+import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
+import proton.android.pass.data.api.usecases.MigrateItem
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -28,6 +30,8 @@ import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestGetShareById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
+import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
+import proton.android.pass.data.fakes.usecases.TestMigrateItem
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
@@ -127,4 +131,14 @@ abstract class FakesDataModule {
     abstract fun bindObserveVaultsWithItemCount(
         impl: TestObserveVaultsWithItemCount
     ): ObserveVaultsWithItemCount
+
+    @Binds
+    abstract fun bindMigrateItem(
+        impl: TestMigrateItem
+    ): MigrateItem
+
+    @Binds
+    abstract fun bindGetVaultWithItemCountById(
+        impl: TestGetVaultWithItemCountById
+    ): GetVaultWithItemCountById
 }

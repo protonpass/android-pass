@@ -4,6 +4,7 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
+import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
@@ -111,6 +112,13 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("shareId") shareId: String,
         @Body request: TrashItemsRequest
     ): TrashItemsResponse
+
+    @PUT("$PREFIX/share/{shareId}/item/{itemId}/share")
+    suspend fun migrateItem(
+        @Path("shareId") shareId: String,
+        @Path("itemId") itemId: String,
+        @Body request: MigrateItemRequest
+    ): CreateItemResponse
 
     // ItemKey
     @GET("$PREFIX/share/{shareId}/item/{itemId}/key/latest")

@@ -16,6 +16,7 @@ fun ItemDetailScreen(
     modifier: Modifier = Modifier,
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
+    onMigrateClick: (ShareId, ItemId) -> Unit,
     viewModel: ItemDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -24,7 +25,8 @@ fun ItemDetailScreen(
         modifier = modifier,
         uiState = uiState,
         onUpClick = onUpClick,
-        onEditClick = onEditClick
+        onEditClick = onEditClick,
+        onMigrateClick = onMigrateClick
     )
 }
 

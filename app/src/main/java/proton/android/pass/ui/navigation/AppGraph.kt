@@ -35,6 +35,9 @@ import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
 import proton.android.pass.featureitemdetail.impl.ViewItem
 import proton.android.pass.featureitemdetail.impl.itemDetailGraph
+import proton.android.pass.featureitemdetail.impl.migrate.MigrateConfirmVault
+import proton.android.pass.featureitemdetail.impl.migrate.MigrateSelectVault
+import proton.android.pass.featureitemdetail.impl.migrate.migrateItemGraph
 import proton.android.pass.featureonboarding.impl.OnBoarding
 import proton.android.pass.featureonboarding.impl.onBoardingGraph
 import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
@@ -62,7 +65,7 @@ import proton.pass.domain.ShareId
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
     finishActivity: () -> Unit,
-    dismissBottomSheet: () -> Unit,
+    dismissBottomSheet: (() -> Unit) -> Unit,
     onLogout: () -> Unit
 ) {
     homeGraph(
@@ -113,10 +116,10 @@ fun NavGraphBuilder.appGraph(
         }
     )
     bottomSheetCreateVaultGraph(
-        onClose = dismissBottomSheet
+        onClose = { dismissBottomSheet({}) }
     )
     bottomSheetEditVaultGraph(
-        onClose = dismissBottomSheet
+        onClose = { dismissBottomSheet({}) }
     )
     generatePasswordBottomsheetGraph(
         onDismiss = { appNavigator.onBackClick() }
@@ -137,7 +140,7 @@ fun NavGraphBuilder.appGraph(
     settingsGraph(
         onSelectThemeClick = { appNavigator.navigate(ThemeSelector) },
         onUpClick = { appNavigator.onBackClick() },
-        dismissBottomSheet = dismissBottomSheet,
+        dismissBottomSheet = { dismissBottomSheet({}) },
         onViewLogsClick = { appNavigator.navigate(LogView) },
         onClipboardClick = { appNavigator.navigate(ClipboardSettings) },
         onClearClipboardSettingClick = { appNavigator.navigate(ClearClipboardOptions) }
@@ -222,8 +225,34 @@ fun NavGraphBuilder.appGraph(
                 appNavigator.navigate(destination, route)
             }
         },
+        onMigrateClick = { shareId: ShareId, itemId: ItemId ->
+            appNavigator.navigate(
+                destination = MigrateSelectVault,
+                route = MigrateSelectVault.createNavRoute(shareId, itemId)
+            )
+        },
+
         onBackClick = { appNavigator.onBackClick() }
     )
+
+    migrateItemGraph(
+        dismissBottomSheet = dismissBottomSheet,
+        onMigrateVaultSelectedClick = { sourceShareId: ShareId, itemId: ItemId, destShareId: ShareId ->
+            appNavigator.navigate(
+                destination = MigrateConfirmVault,
+                route = MigrateConfirmVault.createNavRoute(sourceShareId, itemId, destShareId),
+                backDestination = ViewItem
+            )
+        },
+        onItemMigrated = { shareId: ShareId, itemId: ItemId ->
+            appNavigator.navigate(
+                destination = ViewItem,
+                route = ViewItem.createNavRoute(shareId, itemId),
+                backDestination = Home
+            )
+        },
+    )
+
     authGraph(
         onNavigateBack = finishActivity,
         onAuthSuccessful = { appNavigator.onBackClick() },

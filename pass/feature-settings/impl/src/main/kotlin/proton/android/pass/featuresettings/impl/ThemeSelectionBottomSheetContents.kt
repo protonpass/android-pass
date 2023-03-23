@@ -19,7 +19,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.ThemePreference.Dark
 import proton.android.pass.preferences.ThemePreference.Light
@@ -40,8 +40,7 @@ fun ThemeSelectionBottomSheetContents(
                 themePreference = themePreference,
                 onThemeSelected = onThemeSelected
             )
-                .flatMap { listOf(it, bottomSheetDivider()) }
-                .dropLast(1)
+                .withDividers()
                 .toPersistentList()
         )
     }

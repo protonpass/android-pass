@@ -141,8 +141,8 @@ fun CreateAliasBottomSheetContentPreview(
         Surface {
             CreateAliasBottomSheetContent(
                 state = CreateUpdateAliasUiState(
-                    shareList = emptyList(),
-                    selectedShareId = null,
+                    vaultList = emptyList(),
+                    selectedVault = null,
                     aliasItem = AliasItem(
                         title = "some title",
                         prefix = "some alias",

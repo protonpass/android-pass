@@ -1,16 +1,16 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.runtime.Immutable
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.pass.domain.VaultWithItemCount
 
 @Immutable
 data class CreateUpdateLoginUiState(
-    val shareList: List<ShareUiModel>,
-    val selectedShareId: ShareUiModel?,
+    val vaultList: List<VaultWithItemCount>,
+    val selectedVault: VaultWithItemCount?,
     val loginItem: LoginItem,
     val aliasItem: AliasItem?,
     val validationErrors: Set<LoginItemValidationErrors>,
@@ -24,8 +24,8 @@ data class CreateUpdateLoginUiState(
 ) {
     companion object {
         val Initial = CreateUpdateLoginUiState(
-            shareList = emptyList(),
-            selectedShareId = null,
+            vaultList = emptyList(),
+            selectedVault = null,
             aliasItem = null,
             isLoadingState = IsLoadingState.NotLoading,
             loginItem = LoginItem.Empty,

@@ -83,8 +83,8 @@ internal fun AliasContent(
                     }
                 )
                 VaultSelection -> VaultSelectionBottomSheet(
-                    shareList = uiState.shareList,
-                    selectedShare = uiState.selectedShareId!!,
+                    shareList = uiState.vaultList,
+                    selectedShareId = uiState.selectedVault?.vault?.shareId,
                     onVaultClick = {
                         onVaultSelect(it)
                         scope.launch {
@@ -105,14 +105,14 @@ internal fun AliasContent(
                     opaqueColor = PassTheme.colors.accentGreenOpaque,
                     weakestColor = PassTheme.colors.accentGreenWeakest,
                     onCloseClick = onUpClick,
-                    onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
+                    onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) }
                 )
             }
         ) { padding ->
             CreateAliasForm(
                 modifier = Modifier.padding(padding),
                 aliasItem = uiState.aliasItem,
-                selectedShare = uiState.selectedShareId,
+                selectedVault = uiState.selectedVault,
                 canEdit = canEdit,
                 isEditAllowed = isEditAllowed,
                 showVaultSelector = showVaultSelector,
@@ -180,9 +180,9 @@ private fun IsAliasSavedLaunchedEffect(
 ) {
     val isAliasSaved = uiState.isAliasSavedState
     if (isAliasSaved is AliasSavedState.Success) {
-        LaunchedEffect(uiState.selectedShareId) {
-            uiState.selectedShareId?.let {
-                onAliasCreated(it.id, isAliasSaved.itemId, isAliasSaved.alias)
+        LaunchedEffect(uiState.selectedVault) {
+            uiState.selectedVault?.let {
+                onAliasCreated(it.vault.shareId, isAliasSaved.itemId, isAliasSaved.alias)
             }
         }
     }

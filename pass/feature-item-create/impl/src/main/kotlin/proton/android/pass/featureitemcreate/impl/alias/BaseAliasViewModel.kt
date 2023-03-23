@@ -22,22 +22,22 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.CannotRetrieveAliasOptions
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarMessageRepository
 import proton.pass.domain.ShareId
+import proton.pass.domain.VaultWithItemCount
 
 abstract class BaseAliasViewModel(
     snackbarMessageRepository: SnackbarMessageRepository,
     observeAliasOptions: ObserveAliasOptions,
-    observeVaults: ObserveVaults,
+    observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -60,14 +60,7 @@ abstract class BaseAliasViewModel(
                     PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
                     emptyList()
                 }
-                is LoadingResult.Success -> shares.data.map {
-                    ShareUiModel(
-                        it.shareId,
-                        it.name,
-                        it.color,
-                        it.icon
-                    )
-                }
+                is LoadingResult.Success -> shares.data
             }
         }
         .distinctUntilChanged()
@@ -78,15 +71,15 @@ abstract class BaseAliasViewModel(
         observeAllVaultsFlow
     ) { navShareId, selectedShareId, allShares ->
         val selectedShare = allShares
-            .firstOrNull { it.id == selectedShareId.value() }
-            ?: allShares.firstOrNull { it.id == navShareId.value() }
+            .firstOrNull { it.vault.shareId == selectedShareId.value() }
+            ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
             ?: allShares.first()
         SharesWrapper(allShares, selectedShare)
     }
 
     protected data class SharesWrapper(
-        val shareList: List<ShareUiModel>,
-        val currentShare: ShareUiModel
+        val vaultList: List<VaultWithItemCount>,
+        val currentVault: VaultWithItemCount
     )
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
@@ -113,7 +106,7 @@ abstract class BaseAliasViewModel(
     private val selectedSuffixState: MutableStateFlow<Option<AliasSuffixUiModel>> =
         MutableStateFlow(None)
     private val aliasOptionsState: Flow<LoadingResult<AliasOptionsUiModel>> = sharesWrapperState
-        .flatMapLatest { observeAliasOptions(it.currentShare.id) }
+        .flatMapLatest { observeAliasOptions(it.currentVault.vault.shareId) }
         .map(::AliasOptionsUiModel)
         .asLoadingResult()
         .onEach {
@@ -209,8 +202,8 @@ abstract class BaseAliasViewModel(
         isApplyButtonEnabledState
     ) { shareWrapper, aliasItemWrapper, isLoading, isAliasSavedEvent, isButtonEnabled ->
         CreateUpdateAliasUiState(
-            shareList = shareWrapper.shareList,
-            selectedShareId = shareWrapper.currentShare,
+            vaultList = shareWrapper.vaultList,
+            selectedVault = shareWrapper.currentVault,
             aliasItem = aliasItemWrapper.aliasItem,
             isDraft = isDraft,
             errorList = aliasItemWrapper.aliasItemValidationErrors,
@@ -218,7 +211,7 @@ abstract class BaseAliasViewModel(
             isAliasSavedState = isAliasSavedEvent.isAliasSaved,
             isAliasDraftSavedState = isAliasSavedEvent.isAliasDraftSaved,
             isApplyButtonEnabled = isButtonEnabled,
-            showVaultSelector = shareWrapper.shareList.size > 1
+            showVaultSelector = shareWrapper.vaultList.size > 1
         )
     }
         .stateIn(

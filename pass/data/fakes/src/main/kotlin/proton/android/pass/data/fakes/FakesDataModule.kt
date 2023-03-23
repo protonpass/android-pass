@@ -15,6 +15,7 @@ import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
@@ -31,6 +32,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestTrashItem
 import proton.android.pass.data.fakes.usecases.TestUpdateAlias
 import proton.android.pass.data.fakes.usecases.TestUpdateAutofillItem
@@ -120,4 +122,9 @@ abstract class FakesDataModule {
     abstract fun bindGetVaultById(
         impl: TestGetVaultById
     ): GetVaultById
+
+    @Binds
+    abstract fun bindObserveVaultsWithItemCount(
+        impl: TestObserveVaultsWithItemCount
+    ): ObserveVaultsWithItemCount
 }

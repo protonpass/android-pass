@@ -9,15 +9,15 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.form.NoteSection
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
+import proton.pass.domain.VaultWithItemCount
 
 @Composable
 internal fun CreateAliasForm(
     modifier: Modifier = Modifier,
     aliasItem: AliasItem,
-    selectedShare: ShareUiModel?,
+    selectedVault: VaultWithItemCount?,
     canEdit: Boolean,
     onTitleRequiredError: Boolean,
     onAliasRequiredError: Boolean,
@@ -45,9 +45,9 @@ internal fun CreateAliasForm(
             onTitleRequiredError = onTitleRequiredError,
             enabled = isEditAllowed,
             showVaultSelector = showVaultSelector,
-            vaultName = selectedShare?.name,
-            vaultIcon = selectedShare?.icon,
-            vaultColor = selectedShare?.color,
+            vaultName = selectedVault?.vault?.name,
+            vaultIcon = selectedVault?.vault?.icon,
+            vaultColor = selectedVault?.vault?.color,
             onVaultClicked = onVaultSelectorClick
         )
         if (canEdit) {

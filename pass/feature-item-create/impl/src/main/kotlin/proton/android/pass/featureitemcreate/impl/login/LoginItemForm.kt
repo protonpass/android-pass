@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.form.NoteSection
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
@@ -32,6 +31,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsCo
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AliasOptions
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.GeneratePassword
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.None
+import proton.pass.domain.VaultWithItemCount
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Suppress("UnusedPrivateMember")
@@ -40,7 +40,7 @@ internal fun LoginItemForm(
     modifier: Modifier = Modifier,
     isEditAllowed: Boolean,
     loginItem: LoginItem,
-    selectedShare: ShareUiModel?,
+    selectedShare: VaultWithItemCount?,
     showCreateAliasButton: Boolean,
     primaryEmail: String?,
     isUpdate: Boolean,
@@ -83,9 +83,9 @@ internal fun LoginItemForm(
                 onTitleRequiredError = onTitleRequiredError,
                 enabled = isEditAllowed,
                 showVaultSelector = showVaultSelector,
-                vaultName = selectedShare?.name,
-                vaultColor = selectedShare?.color,
-                vaultIcon = selectedShare?.icon,
+                vaultName = selectedShare?.vault?.name,
+                vaultColor = selectedShare?.vault?.color,
+                vaultIcon = selectedShare?.vault?.icon,
                 onVaultClicked = onVaultSelectorClick
             )
             MainLoginSection(

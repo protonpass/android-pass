@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -129,8 +128,8 @@ internal fun LoginContent(
                     }
                 )
                 LoginBottomSheetContentType.VaultSelection -> VaultSelectionBottomSheet(
-                    shareList = uiState.shareList,
-                    selectedShare = uiState.selectedShareId!!,
+                    shareList = uiState.vaultList,
+                    selectedShareId = uiState.selectedVault?.vault?.shareId,
                     onVaultClick = {
                         onVaultSelect(it)
                         scope.launch {
@@ -165,14 +164,14 @@ internal fun LoginContent(
                     opaqueColor = PassTheme.colors.accentPurpleOpaque,
                     weakestColor = PassTheme.colors.accentPurpleWeakest,
                     onCloseClick = onUpClick,
-                    onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
+                    onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) }
                 )
             }
         ) { padding ->
             LoginItemForm(
                 modifier = Modifier.padding(padding),
                 loginItem = uiState.loginItem,
-                selectedShare = uiState.selectedShareId,
+                selectedShare = uiState.selectedVault,
                 showCreateAliasButton = showCreateAliasButton,
                 canUpdateUsername = uiState.canUpdateUsername,
                 primaryEmail = uiState.primaryEmail,
@@ -252,7 +251,7 @@ internal fun LoginContent(
 
             ItemSavedLaunchedEffect(
                 isItemSaved = uiState.isItemSaved,
-                selectedShareId = uiState.selectedShareId,
+                selectedShareId = uiState.selectedVault?.vault?.shareId,
                 onSuccess = onSuccess
             )
         }
@@ -262,14 +261,14 @@ internal fun LoginContent(
 @Composable
 private fun ItemSavedLaunchedEffect(
     isItemSaved: ItemSavedState,
-    selectedShareId: ShareUiModel?,
+    selectedShareId: ShareId?,
     onSuccess: (ShareId, ItemId, ItemUiModel) -> Unit
 ) {
     if (isItemSaved !is ItemSavedState.Success) return
     selectedShareId ?: return
     LaunchedEffect(Unit) {
         onSuccess(
-            selectedShareId.id,
+            selectedShareId,
             isItemSaved.itemId,
             isItemSaved.item
         )

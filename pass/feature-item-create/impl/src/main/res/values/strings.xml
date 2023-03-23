@@ -2,7 +2,6 @@
 <resources>
 
     <!-- Actions -->
-    <string name="action_move_to_trash">Move to trash</string>
     <string name="action_reveal_password">Reveal password</string>
     <string name="action_conceal_password">Conceal password</string>
     <string name="action_restore">Restore</string>

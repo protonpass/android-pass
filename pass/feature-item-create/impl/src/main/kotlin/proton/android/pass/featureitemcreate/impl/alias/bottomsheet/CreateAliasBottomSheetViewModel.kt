@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.update
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
@@ -20,7 +20,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     createAlias: CreateAlias,
     snackbarMessageRepository: SnackbarMessageRepository,
     observeAliasOptions: ObserveAliasOptions,
-    observeVaults: ObserveVaults,
+    observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle,
     telemetryManager: TelemetryManager
 ) : CreateAliasViewModel(

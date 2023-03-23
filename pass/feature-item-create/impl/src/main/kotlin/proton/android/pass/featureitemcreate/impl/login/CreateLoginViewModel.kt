@@ -22,7 +22,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
@@ -45,7 +45,7 @@ class CreateLoginViewModel @Inject constructor(
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
-    observeVaults: ObserveVaults,
+    observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(
     createAlias,
@@ -110,19 +110,19 @@ class CreateLoginViewModel @Inject constructor(
         if (!shouldCreate) return@launch
 
         isLoadingState.update { IsLoadingState.Loading }
-        val shareId = loginUiState.value.selectedShareId
+        val vault = loginUiState.value.selectedVault
         val userId = accountManager.getPrimaryUserId()
             .firstOrNull { userId -> userId != null }
-        if (userId != null && shareId != null) {
+        if (userId != null && vault != null) {
             val aliasItemOption = aliasItemState.value
             if (aliasItemOption is Some) {
-                performCreateAlias(userId, shareId.id, aliasItemOption.value)
+                performCreateAlias(userId, vault.vault.shareId, aliasItemOption.value)
                     .map {
                         telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
-                        performCreateItem(userId, shareId.id)
+                        performCreateItem(userId, vault.vault.shareId)
                     }
             } else {
-                performCreateItem(userId, shareId.id)
+                performCreateItem(userId, vault.vault.shareId)
             }
         } else {
             snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)

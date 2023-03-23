@@ -1,7 +1,6 @@
 package proton.android.pass.featuresettings.impl
 
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.bottomSheet
@@ -33,11 +32,7 @@ fun NavGraphBuilder.settingsGraph(
     }
 
     bottomSheet(ThemeSelector) {
-        val viewModel: ThemeSelectorViewModel = hiltViewModel()
-        ThemeSelectionBottomSheetContents {
-            viewModel.onThemePreferenceChange(it)
-            dismissBottomSheet()
-        }
+        ThemeSelectionBottomSheet(dismissBottomSheet)
     }
 
     composable(LogView) {

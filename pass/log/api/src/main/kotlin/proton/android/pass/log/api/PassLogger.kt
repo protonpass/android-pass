@@ -29,8 +29,3 @@ object PassLogger : Logger {
 
     override fun log(tag: LoggerLogTag, message: String) = i(tag.name, message)
 }
-
-fun Logger.v(message: String) = v("app", message)
-fun Logger.d(message: String) = d("app", message)
-fun Logger.i(message: String) = i("app", message)
-fun Logger.e(throwable: Throwable) = e("app", throwable)

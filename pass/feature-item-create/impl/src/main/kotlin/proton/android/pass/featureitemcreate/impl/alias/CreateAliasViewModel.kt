@@ -17,7 +17,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
@@ -36,7 +36,7 @@ open class CreateAliasViewModel @Inject constructor(
     private val snackbarMessageRepository: SnackbarMessageRepository,
     private val telemetryManager: TelemetryManager,
     observeAliasOptions: ObserveAliasOptions,
-    observeVaults: ObserveVaults,
+    observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
 ) : BaseAliasViewModel(snackbarMessageRepository, observeAliasOptions, observeVaults, savedStateHandle) {
 

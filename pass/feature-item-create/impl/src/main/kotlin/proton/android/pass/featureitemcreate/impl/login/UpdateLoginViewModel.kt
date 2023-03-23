@@ -26,7 +26,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
@@ -57,7 +57,7 @@ class UpdateLoginViewModel @Inject constructor(
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
-    observeVaults: ObserveVaults,
+    observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(
     createAlias,

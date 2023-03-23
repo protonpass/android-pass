@@ -45,8 +45,8 @@ internal fun NoteContent(
         sheetState = bottomSheetState,
         sheetContent = {
             VaultSelectionBottomSheet(
-                shareList = uiState.shareList,
-                selectedShare = uiState.selectedShareId,
+                shareList = uiState.vaultList,
+                selectedShareId = uiState.selectedVault?.vault?.shareId,
                 onVaultClick = {
                     onVaultSelect(it)
                     scope.launch {
@@ -65,14 +65,14 @@ internal fun NoteContent(
                     opaqueColor = PassTheme.colors.accentYellowOpaque,
                     weakestColor = PassTheme.colors.accentYellowWeakest,
                     onCloseClick = onUpClick,
-                    onActionClick = { uiState.selectedShareId?.id?.let(onSubmit) }
+                    onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) }
                 )
             }
         ) { padding ->
             CreateNoteItemForm(
                 modifier = Modifier.padding(padding),
                 noteItem = uiState.noteItem,
-                selectedShare = uiState.selectedShareId,
+                selectedVault = uiState.selectedVault,
                 onTitleRequiredError = uiState.errorList.contains(BlankTitle),
                 onTitleChange = onTitleChange,
                 onNoteChange = onNoteChange,
@@ -86,9 +86,9 @@ internal fun NoteContent(
             )
             LaunchedEffect(uiState.isItemSaved is ItemSavedState.Success) {
                 val isItemSaved = uiState.isItemSaved
-                if (isItemSaved is ItemSavedState.Success && uiState.selectedShareId != null) {
+                if (isItemSaved is ItemSavedState.Success && uiState.selectedVault != null) {
                     onSuccess(
-                        uiState.selectedShareId.id,
+                        uiState.selectedVault.vault.shareId,
                         isItemSaved.itemId
                     )
                 }

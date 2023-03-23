@@ -6,12 +6,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.CreateVault
+import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemKey
 import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.crypto.api.usecases.UpdateVault
 import proton.android.pass.crypto.impl.usecases.CreateItemImpl
 import proton.android.pass.crypto.impl.usecases.CreateVaultImpl
+import proton.android.pass.crypto.impl.usecases.MigrateItemImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemImpl
 import proton.android.pass.crypto.impl.usecases.OpenItemKeyImpl
 import proton.android.pass.crypto.impl.usecases.UpdateItemImpl
@@ -38,5 +40,8 @@ abstract class UseCaseModule {
 
     @Binds
     abstract fun bindUpdateVault(impl: UpdateVaultImpl): UpdateVault
+
+    @Binds
+    abstract fun bindMigrateItem(impl: MigrateItemImpl): MigrateItem
 
 }

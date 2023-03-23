@@ -38,7 +38,8 @@ fun AliasDetail(
     moreInfoUiState: MoreInfoUiState,
     viewModel: AliasDetailViewModel = hiltViewModel(),
     onUpClick: () -> Unit,
-    onEditClick: (ShareId, ItemId, ItemType) -> Unit
+    onEditClick: (ShareId, ItemId, ItemType) -> Unit,
+    onMigrateClick: (ShareId, ItemId) -> Unit
 ) {
     LaunchedEffect(item) {
         viewModel.setItem(item)
@@ -58,6 +59,10 @@ fun AliasDetail(
         sheetState = bottomSheetState,
         sheetContent = {
             TopBarOptionsBottomSheetContents(
+                onMigrate = {
+                    scope.launch { bottomSheetState.hide() }
+                    onMigrateClick(item.shareId, item.id)
+                },
                 onMoveToTrash = {
                     viewModel.onDelete(item.shareId, item.id)
                     scope.launch { bottomSheetState.hide() }

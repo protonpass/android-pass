@@ -18,86 +18,68 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.preferences.ThemePreference
+import proton.android.pass.preferences.ThemePreference.Dark
+import proton.android.pass.preferences.ThemePreference.Light
+import proton.android.pass.preferences.ThemePreference.System
 
 @Composable
 fun ThemeSelectionBottomSheetContents(
     modifier: Modifier = Modifier,
+    themePreference: ThemePreference,
     onThemeSelected: (ThemePreference) -> Unit
 ) {
     Column(
         modifier = modifier.bottomSheetPadding(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        BottomSheetTitle(title = stringResource(id = R.string.settings_theme_selector_title))
         BottomSheetItemList(
             items = themeItemList(
-                onThemeTypeSelected = onThemeSelected
+                themePreference = themePreference,
+                onThemeSelected = onThemeSelected
             )
         )
     }
 }
 
 private fun themeItemList(
-    onThemeTypeSelected: (ThemePreference) -> Unit
+    themePreference: ThemePreference,
+    onThemeSelected: (ThemePreference) -> Unit
 ): ImmutableList<BottomSheetItem> =
     ThemePreference.values()
-        .map { it.toBottomSheetItem(onThemeTypeSelected) }
+        .map {
+            object : BottomSheetItem {
+                override val title: @Composable () -> Unit
+                    get() = {
+                        val title = when (it) {
+                            System -> stringResource(R.string.settings_appearance_preference_subtitle_match_system)
+                            Dark -> stringResource(R.string.settings_appearance_preference_subtitle_dark)
+                            Light -> stringResource(R.string.settings_appearance_preference_subtitle_light)
+                        }
+                        val color = if (it == themePreference) {
+                            PassTheme.colors.accentBrandNorm
+                        } else {
+                            PassTheme.colors.textNorm
+                        }
+                        BottomSheetItemTitle(text = title, color = color)
+                    }
+                override val subtitle: @Composable (() -> Unit)? = null
+                override val leftIcon: @Composable (() -> Unit)? = null
+                override val endIcon: (@Composable () -> Unit)?
+                    get() = if (it == themePreference) {
+                        {
+                            BottomSheetItemIcon(
+                                iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
+                                tint = PassTheme.colors.accentBrandOpaque
+                            )
+                        }
+                    } else null
+                override val onClick: () -> Unit
+                    get() = { onThemeSelected(it) }
+                override val isDivider = false
+            }
+        }
         .toImmutableList()
-
-private fun ThemePreference.toBottomSheetItem(
-    onThemeTypeSelected: (ThemePreference) -> Unit
-): BottomSheetItem = when (this) {
-    ThemePreference.Light -> object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.settings_appearance_preference_subtitle_light)
-                )
-            }
-        override val subtitle: @Composable (() -> Unit)? = null
-        override val leftIcon: @Composable (() -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_sun) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onThemeTypeSelected(this@toBottomSheetItem) }
-        override val isDivider = false
-    }
-    ThemePreference.Dark -> object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.settings_appearance_preference_subtitle_dark)
-                )
-            }
-        override val subtitle: @Composable (() -> Unit)? = null
-        override val leftIcon: @Composable (() -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_moon) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onThemeTypeSelected(this@toBottomSheetItem) }
-        override val isDivider = false
-    }
-    ThemePreference.System -> object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = {
-                BottomSheetItemTitle(
-                    text = stringResource(id = R.string.settings_appearance_preference_subtitle_match_system)
-                )
-            }
-        override val subtitle: @Composable (() -> Unit)? = null
-        override val leftIcon: @Composable (() -> Unit)
-            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_cog_wheel) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = { onThemeTypeSelected(this@toBottomSheetItem) }
-        override val isDivider = false
-    }
-}
 
 @Preview
 @Composable
@@ -106,7 +88,10 @@ fun ThemeSelectionBottomSheetContentsPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            ThemeSelectionBottomSheetContents(onThemeSelected = {})
+            ThemeSelectionBottomSheetContents(
+                themePreference = Light,
+                onThemeSelected = {}
+            )
         }
     }
 }

@@ -87,4 +87,11 @@ interface ItemRepository {
         shareId: ShareId,
         itemId: ItemId
     )
+
+    suspend fun migrateItem(
+        userId: UserId,
+        source: Share,
+        destination: Share,
+        itemId: ItemId
+    ): Item
 }

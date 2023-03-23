@@ -12,6 +12,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
+import proton.pass.domain.sorted
 import javax.inject.Inject
 
 class ObserveVaultsWithItemCountImpl @Inject constructor(
@@ -47,7 +48,7 @@ class ObserveVaultsWithItemCountImpl @Inject constructor(
                 activeItemCount = itemsForShare.activeItems,
                 trashedItemCount = itemsForShare.trashedItems
             )
-        }
+        }.sorted()
         return LoadingResult.Success(res)
     }
 

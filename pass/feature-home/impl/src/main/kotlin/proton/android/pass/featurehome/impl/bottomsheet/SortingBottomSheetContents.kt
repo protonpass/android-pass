@@ -17,7 +17,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.featurehome.impl.SortingType
 
 @ExperimentalMaterialApi
@@ -30,8 +30,7 @@ fun SortingBottomSheetContents(
     BottomSheetItemList(
         modifier = modifier.bottomSheetPadding(),
         items = sortingItemList(sortingType, onSortingTypeSelected)
-            .flatMap { listOf(it, bottomSheetDivider()) }
-            .dropLast(1)
+            .withDividers()
             .toPersistentList()
     )
 }

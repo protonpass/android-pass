@@ -26,6 +26,7 @@ object ViewItem : NavItem(
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.itemDetailGraph(
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
+    onMigrateClick: (ShareId, ItemId) -> Unit,
     onBackClick: () -> Unit
 ) {
     composable(
@@ -40,7 +41,8 @@ fun NavGraphBuilder.itemDetailGraph(
     ) {
         ItemDetailScreen(
             onUpClick = onBackClick,
-            onEditClick = onEditClick
+            onEditClick = onEditClick,
+            onMigrateClick = onMigrateClick,
         )
     }
 }

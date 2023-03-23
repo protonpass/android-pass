@@ -23,6 +23,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
@@ -68,6 +69,7 @@ fun TrashItemBottomSheetContents(
         BottomSheetItemList(
             items = persistentListOf(
                 restoreItem(itemUiModel, onRestoreItem),
+                bottomSheetDivider(),
                 deleteItem(itemUiModel, onDeleteItem)
             )
         )

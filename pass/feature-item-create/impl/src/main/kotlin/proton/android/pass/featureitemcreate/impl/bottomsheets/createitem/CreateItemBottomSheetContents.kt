@@ -19,6 +19,7 @@ import proton.android.pass.commonui.api.bottomSheetPadding
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
+import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
@@ -40,8 +41,11 @@ fun CreateItemBottomSheetContents(
         modifier = modifier.bottomSheetPadding(),
         items = persistentListOf(
             createLogin(shareId, onCreateLogin),
+            bottomSheetDivider(),
             createAlias(shareId, onCreateAlias),
+            bottomSheetDivider(),
             createNote(shareId, onCreateNote),
+            bottomSheetDivider(),
             createPassword(onCreatePassword)
         )
     )

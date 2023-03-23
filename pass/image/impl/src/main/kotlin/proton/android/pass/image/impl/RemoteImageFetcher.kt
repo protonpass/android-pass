@@ -133,6 +133,7 @@ class RemoteImageFetcher(
         if (isFileValid(file)) {
             result
         } else {
+            file.delete()
             CacheResult.Miss
         }
 

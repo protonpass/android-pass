@@ -54,6 +54,10 @@
 
     <!-- Bottomsheet -->
     <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>
+    <string name="migrate_item_detail_bottom_sheet">Move to another vault</string>
+    <string name="migrate_item_confirm_title_bottom_sheet">This item will be moved to another vault. Do you want to continue?</string>
+    <string name="migrate_item_success_snackbar">Item moved</string>
+    <string name="migrate_item_error_snackbar">Error moving the item</string>
 
     <!-- More info -->
     <string name="date_today">Today %s</string>

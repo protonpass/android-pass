@@ -20,7 +20,7 @@ fun PassNavHost(
     modifier: Modifier = Modifier,
     appNavigator: AppNavigator,
     onLogout: () -> Unit,
-    dismissBottomSheet: () -> Unit,
+    dismissBottomSheet: (() -> Unit) -> Unit,
     finishActivity: () -> Unit,
 ) {
     AnimatedNavHost(

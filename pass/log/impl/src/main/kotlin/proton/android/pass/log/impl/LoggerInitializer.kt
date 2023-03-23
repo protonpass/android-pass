@@ -29,10 +29,8 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.core.usersettings.domain.DeviceSettingsHandler
 import me.proton.core.usersettings.domain.onDeviceSettingsChanged
 import me.proton.core.util.kotlin.CoreLogger
-import me.proton.core.util.kotlin.Logger
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.log.api.i
 import proton.android.pass.tracing.impl.SentryInitializer
 import timber.log.Timber
 
@@ -51,12 +49,11 @@ class LoggerInitializer : Initializer<Unit> {
                         Timber.plant(Timber.DebugTree())
                     }
                     Timber.plant(FileLoggingTree(context))
+                    deviceInfo()
                 } else {
                     Timber.uprootAll()
                 }
             }
-
-        PassLogger.deviceInfo()
 
         // Forward Core Logs to Timber, using AppLogger.
         CoreLogger.set(PassLogger)
@@ -74,12 +71,17 @@ class LoggerInitializer : Initializer<Unit> {
     }
 }
 
-private fun Logger.deviceInfo() {
-    i("-----------------------------------------")
-    i("OS:          Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})")
-    i("DEVICE:      ${Build.MANUFACTURER} ${Build.MODEL}")
-    i("FINGERPRINT: ${Build.FINGERPRINT}")
-    i("ABI:         ${Build.SUPPORTED_ABIS.joinToString(",")}")
-    i("LOCALE:      ${LocaleList.getDefault().toLanguageTags()}")
-    i("-----------------------------------------")
+private fun deviceInfo() {
+    PassLogger.i(TAG, "-----------------------------------------")
+    PassLogger.i(
+        TAG,
+        "OS:          Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})"
+    )
+    PassLogger.i(TAG, "DEVICE:      ${Build.MANUFACTURER} ${Build.MODEL}")
+    PassLogger.i(TAG, "FINGERPRINT: ${Build.FINGERPRINT}")
+    PassLogger.i(TAG, "ABI:         ${Build.SUPPORTED_ABIS.joinToString(",")}")
+    PassLogger.i(TAG, "LOCALE:      ${LocaleList.getDefault().toLanguageTags()}")
+    PassLogger.i(TAG, "-----------------------------------------")
 }
+
+private const val TAG = "DEVICE_INFO"

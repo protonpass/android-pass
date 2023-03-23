@@ -75,9 +75,10 @@ fun PassAppContent(
                             modifier = Modifier.weight(1f),
                             appNavigator = appNavigator,
                             finishActivity = finishActivity,
-                            dismissBottomSheet = {
+                            dismissBottomSheet = { callback ->
                                 coroutineScope.launch {
                                     bottomSheetState.hide()
+                                    callback()
                                 }
                             },
                             onLogout = { coreNavigation.onRemove(null) }

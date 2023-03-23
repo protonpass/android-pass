@@ -87,14 +87,6 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteItem(
-        userId: UserId,
-        shareId: ShareId,
-        itemId: ItemId
-    ): LoadingResult<Unit> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun clearTrash(userId: UserId): LoadingResult<Unit> {
         TODO("Not yet implemented")
     }
@@ -141,6 +133,23 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     }
 
     override suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteItem(
+        userId: UserId,
+        shareId: ShareId,
+        itemId: ItemId
+    ): LoadingResult<Unit> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun migrateItem(
+        userId: UserId,
+        source: Share,
+        destination: Share,
+        itemId: ItemId
+    ): Item {
         TODO("Not yet implemented")
     }
 }

@@ -27,7 +27,7 @@ class TestGetVaultById @Inject constructor() : GetVaultById {
         exceptionOption = exception.toOption()
     }
 
-    override suspend fun invoke(userId: UserId?, shareId: ShareId): Flow<Vault> =
+    override fun invoke(userId: UserId?, shareId: ShareId): Flow<Vault> =
         flow.onSubscription {
             when (val exception = exceptionOption) {
                 None -> {}

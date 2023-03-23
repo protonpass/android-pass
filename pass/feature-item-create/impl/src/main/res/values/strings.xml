@@ -145,10 +145,4 @@
 
     <string name="camera_permission_explanation">Camera permission required for this feature to be available.</string>
     <string name="camera_permission_open_settings">Open settings</string>
-
-    <!-- Select Vault BottomSheet -->
-    <plurals name="bottomsheet_select_vault_item_count">
-        <item quantity="one">1 item</item>
-        <item quantity="other">%d items</item>
-    </plurals>
 </resources>

@@ -6,3 +6,5 @@ data class Vault(
     val color: ShareColor = ShareColor.Color1,
     val icon: ShareIcon = ShareIcon.Icon1
 )
+
+fun List<Vault>.sorted(): List<Vault> = sortedBy { it.name }

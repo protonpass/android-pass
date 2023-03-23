@@ -22,7 +22,7 @@ class GetVaultByIdImpl @Inject constructor(
     private val getShareById: GetShareById
 ) : GetVaultById {
 
-    override suspend fun invoke(userId: UserId?, shareId: ShareId): Flow<Vault> = flow {
+    override fun invoke(userId: UserId?, shareId: ShareId): Flow<Vault> = flow {
         when (val share = getShareById(userId, shareId)) {
             LoadingResult.Loading -> {}
             is LoadingResult.Error -> {

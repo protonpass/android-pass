@@ -53,6 +53,7 @@ fun NoteOptionsBottomSheetContents(
                 copyNote(itemType.text, onCopyNote),
                 bottomSheetDivider(),
                 edit(itemUiModel, onEdit),
+                bottomSheetDivider(),
                 moveToTrash(itemUiModel, onMoveToTrash)
             )
         )

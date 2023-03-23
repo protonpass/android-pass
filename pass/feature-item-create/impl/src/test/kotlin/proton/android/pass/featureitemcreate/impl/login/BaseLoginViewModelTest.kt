@@ -11,7 +11,7 @@ import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.login.CreateUpdateLoginUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import proton.android.pass.test.MainDispatcherRule
@@ -21,6 +21,7 @@ import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
+import proton.pass.domain.VaultWithItemCount
 
 internal class BaseLoginViewModelTest {
 
@@ -29,7 +30,7 @@ internal class BaseLoginViewModelTest {
 
     private lateinit var totpManager: TestTotpManager
     private lateinit var clipboardManager: TestClipboardManager
-    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var baseLoginViewModel: BaseLoginViewModel
@@ -38,7 +39,7 @@ internal class BaseLoginViewModelTest {
     fun setUp() {
         totpManager = TestTotpManager()
         clipboardManager = TestClipboardManager()
-        observeVaults = TestObserveVaults()
+        observeVaults = TestObserveVaultsWithItemCount()
         observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
         savedStateHandle = TestSavedStateHandle.create()
         baseLoginViewModel = object : BaseLoginViewModel(
@@ -136,6 +137,16 @@ internal class BaseLoginViewModelTest {
     }
 
     private fun givenAVaultList() {
-        observeVaults.sendResult(LoadingResult.Success(listOf(Vault(ShareId("shareId"), "Share"))))
+        observeVaults.sendResult(
+            LoadingResult.Success(
+                listOf(
+                    VaultWithItemCount(
+                        vault = Vault(ShareId("ShareId"), "name"),
+                        activeItemCount = 1,
+                        trashedItemCount = 0
+                    )
+                )
+            )
+        )
     }
 }

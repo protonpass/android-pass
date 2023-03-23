@@ -11,14 +11,13 @@ import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.commonui.api.itemName
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.login.CreateUpdateLoginUiState.Companion.Initial
@@ -35,6 +34,7 @@ import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
+import proton.pass.domain.VaultWithItemCount
 
 internal class CreateLoginViewModelTest {
 
@@ -45,7 +45,7 @@ internal class CreateLoginViewModelTest {
     private lateinit var clipboardManager: TestClipboardManager
     private lateinit var accountManager: TestAccountManager
     private lateinit var createItem: TestCreateItem
-    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var createLoginViewModel: CreateLoginViewModel
     private lateinit var telemetryManager: TestTelemetryManager
 
@@ -55,7 +55,7 @@ internal class CreateLoginViewModelTest {
         clipboardManager = TestClipboardManager()
         accountManager = TestAccountManager()
         createItem = TestCreateItem()
-        observeVaults = TestObserveVaults()
+        observeVaults = TestObserveVaultsWithItemCount()
         telemetryManager = TestTelemetryManager()
         createLoginViewModel = CreateLoginViewModel(
             accountManager = accountManager,
@@ -75,7 +75,7 @@ internal class CreateLoginViewModelTest {
     @Test
     fun `when a create item event without title should return a BlankTitle validation error`() =
         runTest {
-            val vault = Vault(ShareId("shareId"), "Share")
+            val vault = VaultWithItemCount(Vault(ShareId("shareId"), "Share"), 1, 0)
             observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
 
             createLoginViewModel.createItem()
@@ -84,8 +84,8 @@ internal class CreateLoginViewModelTest {
                 assertThat(awaitItem())
                     .isEqualTo(
                         Initial.copy(
-                            vaultList = listOf(ShareUiModel(vault.shareId, vault.name, vault.color, vault.icon)),
-                            selectedVault = ShareUiModel(vault.shareId, vault.name, vault.color, vault.icon),
+                            vaultList = listOf(vault),
+                            selectedVault = vault,
                             validationErrors = setOf(LoginItemValidationErrors.BlankTitle)
                         )
                     )
@@ -96,7 +96,7 @@ internal class CreateLoginViewModelTest {
     fun `given valid data when a create item event should return a success event`() = runTest {
         val item = TestItem.create(keyStoreCrypto = TestKeyStoreCrypto)
 
-        val vault = Vault(item.shareId, "Share")
+        val vault = VaultWithItemCount(Vault(item.shareId, "Share"), 1, 0)
         observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
 
         val titleInput = "Title input"
@@ -111,20 +111,8 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
-                        vaultList = listOf(
-                            ShareUiModel(
-                                vault.shareId,
-                                vault.name,
-                                vault.color,
-                                vault.icon
-                            )
-                        ),
-                        selectedVault = ShareUiModel(
-                            vault.shareId,
-                            vault.name,
-                            vault.color,
-                            vault.icon
-                        ),
+                        vaultList = listOf(vault),
+                        selectedVault = vault,
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.NotLoading
                     )
@@ -132,20 +120,8 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
-                        vaultList = listOf(
-                            ShareUiModel(
-                                vault.shareId,
-                                vault.name,
-                                vault.color,
-                                vault.icon
-                            )
-                        ),
-                        selectedVault = ShareUiModel(
-                            vault.shareId,
-                            vault.name,
-                            vault.color,
-                            vault.icon
-                        ),
+                        vaultList = listOf(vault),
+                        selectedVault = vault,
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.Loading
                     )
@@ -153,20 +129,8 @@ internal class CreateLoginViewModelTest {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
-                        vaultList = listOf(
-                            ShareUiModel(
-                                vault.shareId,
-                                vault.name,
-                                vault.color,
-                                vault.icon
-                            )
-                        ),
-                        selectedVault = ShareUiModel(
-                            vault.shareId,
-                            vault.name,
-                            vault.color,
-                            vault.icon
-                        ),
+                        vaultList = listOf(vault),
+                        selectedVault = vault,
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.NotLoading,
                         isItemSaved = ItemSavedState.Success(
@@ -193,7 +157,7 @@ internal class CreateLoginViewModelTest {
 
     @Test
     fun `setting initial data emits the proper contents`() = runTest {
-        val vault = Vault(ShareId("shareId"), "Share")
+        val vault = VaultWithItemCount(Vault(ShareId("shareId"), "Share"), 1, 0)
         observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
         val initialContents = InitialCreateLoginUiState(
             title = TestUtils.randomString(),
@@ -208,18 +172,26 @@ internal class CreateLoginViewModelTest {
                 .isEqualTo(
                     Initial.copy(
                         vaultList = listOf(
-                            ShareUiModel(
-                                vault.shareId,
-                                vault.name,
-                                vault.color,
-                                vault.icon
+                            VaultWithItemCount(
+                                vault = Vault(
+                                    vault.vault.shareId,
+                                    vault.vault.name,
+                                    vault.vault.color,
+                                    vault.vault.icon
+                                ),
+                                activeItemCount = 1,
+                                trashedItemCount = 0
                             )
                         ),
-                        selectedVault = ShareUiModel(
-                            vault.shareId,
-                            vault.name,
-                            vault.color,
-                            vault.icon
+                        selectedVault = VaultWithItemCount(
+                            vault = Vault(
+                                vault.vault.shareId,
+                                vault.vault.name,
+                                vault.vault.color,
+                                vault.vault.icon
+                            ),
+                            activeItemCount = 1,
+                            trashedItemCount = 0
                         ),
                         loginItem = LoginItem.Empty.copy(
                             title = initialContents.title!!,

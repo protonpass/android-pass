@@ -8,7 +8,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
-import proton.android.pass.data.fakes.usecases.TestObserveVaults
+import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.alias.CreateUpdateAliasUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
 import proton.android.pass.test.MainDispatcherRule
@@ -18,6 +18,7 @@ import proton.pass.domain.AliasOptions
 import proton.pass.domain.AliasSuffix
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
+import proton.pass.domain.VaultWithItemCount
 
 internal class BaseAliasViewModelTest {
 
@@ -26,14 +27,14 @@ internal class BaseAliasViewModelTest {
 
 
     private lateinit var snackbarMessageRepository: TestSnackbarMessageRepository
-    private lateinit var observeVaults: TestObserveVaults
+    private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var observeAliasOptions: TestObserveAliasOptions
     private lateinit var baseAliasViewModel: BaseAliasViewModel
 
     @Before
     fun setUp() {
         snackbarMessageRepository = TestSnackbarMessageRepository()
-        observeVaults = TestObserveVaults()
+        observeVaults = TestObserveVaultsWithItemCount()
         observeAliasOptions = TestObserveAliasOptions()
         baseAliasViewModel = object : BaseAliasViewModel(
             snackbarMessageRepository,
@@ -150,7 +151,17 @@ internal class BaseAliasViewModelTest {
         }
 
     private fun setupVaults() {
-        observeVaults.sendResult(LoadingResult.Success(listOf(Vault(ShareId("ShareId"), "name"))))
+        observeVaults.sendResult(
+            LoadingResult.Success(
+                listOf(
+                    VaultWithItemCount(
+                        vault = Vault(ShareId("ShareId"), "name"),
+                        activeItemCount = 1,
+                        trashedItemCount = 0
+                    )
+                )
+            )
+        )
     }
 
     private fun setupAliasOptions(

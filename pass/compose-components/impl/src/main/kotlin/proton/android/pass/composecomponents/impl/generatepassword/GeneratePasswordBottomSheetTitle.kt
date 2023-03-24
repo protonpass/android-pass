@@ -33,13 +33,13 @@ fun GeneratePasswordBottomSheetTitle(
         )
         CircleIconButton(
             modifier = Modifier.align(Alignment.CenterEnd),
-            backgroundColor = PassTheme.colors.accentPurpleWeakest,
+            backgroundColor = PassTheme.colors.loginInteractionNormMinor2,
             onClick = { onRegenerate() }
         ) {
             Icon(
                 painter = painterResource(me.proton.core.presentation.compose.R.drawable.ic_proton_arrows_rotate),
                 contentDescription = stringResource(R.string.regenerate_password_icon_content_description),
-                tint = PassTheme.colors.accentPurpleNorm
+                tint = PassTheme.colors.loginInteractionNorm
             )
         }
     }

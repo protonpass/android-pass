@@ -41,7 +41,7 @@ fun BottomSheetCancelConfirm(
         }
         CircleButton(
             modifier = Modifier.weight(1f),
-            color = PassTheme.colors.accentPurpleOpaque,
+            color = PassTheme.colors.loginInteractionNormMajor1,
             onClick = onConfirm
         ) {
             Text(

@@ -42,20 +42,20 @@ fun CreateVaultBottomSheetTopBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Circle(
-            backgroundColor = PassTheme.colors.accentPurpleOpaque,
+            backgroundColor = PassTheme.colors.loginInteractionNormMajor1,
             onClick = onCloseClick
         ) {
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross),
                 contentDescription = stringResource(R.string.bottomsheet_close_icon_content_description),
-                tint = PassTheme.colors.accentPurpleOpaque
+                tint = PassTheme.colors.loginInteractionNormMajor1
             )
         }
 
         val buttonColor = if (isButtonEnabled) {
-            PassTheme.colors.accentPurpleOpaque
+            PassTheme.colors.loginInteractionNormMajor1
         } else {
-            PassTheme.colors.accentPurpleWeakest
+            PassTheme.colors.loginInteractionNormMinor2
         }
 
         LoadingCircleButton(
@@ -66,7 +66,7 @@ fun CreateVaultBottomSheetTopBar(
             text = {
                 Text(
                     text = buttonText,
-                    color = PassTheme.colors.textInverted,
+                    color = PassTheme.colors.textInvert,
                     style = PassTypography.body3Regular
                 )
             },

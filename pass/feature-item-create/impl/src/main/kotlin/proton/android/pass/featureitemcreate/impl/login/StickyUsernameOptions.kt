@@ -49,11 +49,11 @@ fun StickyUsernameOptions(
                 Icon(
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
                     contentDescription = stringResource(R.string.sticky_button_create_alias_icon_content_description),
-                    tint = PassTheme.colors.accentPurpleOpaque
+                    tint = PassTheme.colors.loginInteractionNormMajor1
                 )
                 Text(
                     text = stringResource(id = R.string.sticky_button_create_alias),
-                    color = PassTheme.colors.accentPurpleOpaque,
+                    color = PassTheme.colors.loginInteractionNormMajor1,
                     style = ProtonTheme.typography.default,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
@@ -81,7 +81,7 @@ fun StickyUsernameOptions(
                         id = R.string.sticky_button_use_account_email,
                         primaryEmail
                     ),
-                    color = PassTheme.colors.accentPurpleOpaque,
+                    color = PassTheme.colors.loginInteractionNormMajor1,
                     style = ProtonTheme.typography.default,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1

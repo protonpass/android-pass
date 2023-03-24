@@ -43,7 +43,7 @@ fun GeneratePasswordBottomSheetContent(
         )
         CircleButton(
             modifier = Modifier.fillMaxWidth(),
-            color = PassTheme.colors.accentPurpleOpaque,
+            color = PassTheme.colors.loginInteractionNormMajor1,
             onClick = { onConfirm(state.password) }
         ) {
             Text(

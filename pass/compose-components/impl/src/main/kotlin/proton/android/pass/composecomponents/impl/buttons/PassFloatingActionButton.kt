@@ -21,8 +21,8 @@ fun PassFloatingActionButton(
 ) {
     FloatingActionButton(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.accentPurpleWeakest.compositeOver(PassTheme.colors.backgroundNorm),
-        contentColor = PassTheme.colors.accentPurpleNorm,
+        backgroundColor = PassTheme.colors.loginInteractionNormMinor2.compositeOver(PassTheme.colors.backgroundNorm),
+        contentColor = PassTheme.colors.loginInteractionNorm,
         onClick = onClick
     ) {
         Icon(

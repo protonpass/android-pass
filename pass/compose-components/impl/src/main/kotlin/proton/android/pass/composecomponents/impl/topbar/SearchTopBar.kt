@@ -77,8 +77,8 @@ fun SearchTopBarPreview(
                 onSearchQueryChange = { },
                 drawerIcon = {
                     VaultIcon(
-                        backgroundColor = PassPalette.Yellow16,
-                        iconColor = PassPalette.Yellow100,
+                        backgroundColor = PassPalette.MacaroniAndCheese16,
+                        iconColor = PassPalette.MacaroniAndCheese100,
                         icon = R.drawable.ic_proton_house
                     )
                 },

@@ -70,7 +70,7 @@ fun AliasDetail(
             topBar = {
                 ItemDetailTopBar(
                     isLoading = uiState.isLoadingState,
-                    color = PassTheme.colors.accentGreenOpaque,
+                    color = PassTheme.colors.aliasInteractionNormMajor1,
                     onUpClick = onUpClick,
                     onEditClick = { onEditClick(item.shareId, item.id, item.itemType) },
                     onOptionsClick = {

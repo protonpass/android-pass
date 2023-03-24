@@ -9,33 +9,33 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
         get() = sequenceOf(
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                opaqueColor = PassPalette.Purple100,
-                weakestColor = PassPalette.Purple8,
+                opaqueColor = PassPalette.Lavender100,
+                weakestColor = PassPalette.Lavender8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                opaqueColor = PassPalette.Green100,
-                weakestColor = PassPalette.Green8
+                opaqueColor = PassPalette.GreenSheen100,
+                weakestColor = PassPalette.GreenSheen8
             ),
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                opaqueColor = PassPalette.Yellow100,
-                weakestColor = PassPalette.Yellow8,
+                opaqueColor = PassPalette.MacaroniAndCheese100,
+                weakestColor = PassPalette.MacaroniAndCheese8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                opaqueColor = PassPalette.Purple100,
-                weakestColor = PassPalette.Purple8,
+                opaqueColor = PassPalette.Lavender100,
+                weakestColor = PassPalette.Lavender8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                opaqueColor = PassPalette.Green100,
-                weakestColor = PassPalette.Green8,
+                opaqueColor = PassPalette.GreenSheen100,
+                weakestColor = PassPalette.GreenSheen8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                opaqueColor = PassPalette.Yellow100,
-                weakestColor = PassPalette.Yellow8
+                opaqueColor = PassPalette.MacaroniAndCheese100,
+                weakestColor = PassPalette.MacaroniAndCheese8
             )
         )
 }

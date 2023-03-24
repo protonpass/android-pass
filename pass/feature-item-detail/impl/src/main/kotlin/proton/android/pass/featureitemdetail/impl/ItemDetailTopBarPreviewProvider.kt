@@ -9,27 +9,27 @@ class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBa
         get() = sequenceOf(
             ItemDetailTopBarPreview(
                 isLoading = false,
-                color = PassPalette.Purple100
+                color = PassPalette.Lavender100
             ),
             ItemDetailTopBarPreview(
                 isLoading = false,
-                color = PassPalette.Green100
+                color = PassPalette.GreenSheen100
             ),
             ItemDetailTopBarPreview(
                 isLoading = false,
-                color = PassPalette.Yellow100
+                color = PassPalette.MacaroniAndCheese100
             ),
             ItemDetailTopBarPreview(
                 isLoading = true,
-                color = PassPalette.Purple100
+                color = PassPalette.Lavender100
             ),
             ItemDetailTopBarPreview(
                 isLoading = true,
-                color = PassPalette.Green100
+                color = PassPalette.GreenSheen100
             ),
             ItemDetailTopBarPreview(
                 isLoading = true,
-                color = PassPalette.Yellow100
+                color = PassPalette.MacaroniAndCheese100
             )
         )
 }

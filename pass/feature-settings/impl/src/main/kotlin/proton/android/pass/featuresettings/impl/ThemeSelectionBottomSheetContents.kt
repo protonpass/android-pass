@@ -62,7 +62,7 @@ private fun themeItemList(
                             Light -> stringResource(R.string.settings_appearance_preference_subtitle_light)
                         }
                         val color = if (it == themePreference) {
-                            PassTheme.colors.accentBrandNorm
+                            PassTheme.colors.interactionNorm
                         } else {
                             PassTheme.colors.textNorm
                         }
@@ -75,7 +75,7 @@ private fun themeItemList(
                         {
                             BottomSheetItemIcon(
                                 iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
-                                tint = PassTheme.colors.accentBrandOpaque
+                                tint = PassTheme.colors.interactionNormMajor1
                             )
                         }
                     } else null

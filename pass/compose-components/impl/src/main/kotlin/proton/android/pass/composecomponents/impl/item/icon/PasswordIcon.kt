@@ -20,13 +20,13 @@ fun PasswordIcon(
 ) {
     Squircle(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.accentRedOpaque,
+        backgroundColor = PassTheme.colors.passwordInteractionNormMajor1,
         size = size,
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
             contentDescription = stringResource(R.string.password_title_icon_content_description),
-            tint = PassTheme.colors.accentRedOpaque
+            tint = PassTheme.colors.passwordInteractionNormMajor1
         )
     }
 }

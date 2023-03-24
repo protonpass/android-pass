@@ -37,7 +37,7 @@ fun TotpRow(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
             contentDescription = stringResource(R.string.totp_icon_content_description),
-            tint = PassTheme.colors.accentPurpleOpaque
+            tint = PassTheme.colors.loginInteractionNormMajor1
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)

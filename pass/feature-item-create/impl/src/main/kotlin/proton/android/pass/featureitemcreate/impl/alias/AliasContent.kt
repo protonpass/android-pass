@@ -102,8 +102,8 @@ internal fun AliasContent(
                 CreateUpdateTopBar(
                     text = topBarActionName,
                     isLoading = uiState.isLoadingState.value(),
-                    opaqueColor = PassTheme.colors.accentGreenOpaque,
-                    weakestColor = PassTheme.colors.accentGreenWeakest,
+                    opaqueColor = PassTheme.colors.aliasInteractionNormMajor1,
+                    weakestColor = PassTheme.colors.aliasInteractionNormMinor2,
                     onCloseClick = onUpClick,
                     onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) }
                 )
@@ -145,7 +145,7 @@ internal fun AliasContent(
                 show = showSuffixDialog,
                 suffixes = uiState.aliasItem.aliasOptions.suffixes.toImmutableList(),
                 selectedSuffix = uiState.aliasItem.selectedSuffix,
-                color = PassTheme.colors.accentGreenNorm,
+                color = PassTheme.colors.aliasInteractionNorm,
                 onSuffixChanged = { suffix ->
                     scope.launch {
                         showSuffixDialog = false

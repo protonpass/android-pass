@@ -20,13 +20,13 @@ fun SignOut(modifier: Modifier = Modifier, onSignOutClick: () -> Unit) {
     ColorSettingOption(
         modifier = modifier.roundedContainer(ProtonTheme.colors.separatorNorm),
         text = stringResource(R.string.account_sign_out),
-        textColor = PassTheme.colors.accentBrandOpaque,
-        iconBgColor = PassTheme.colors.accentBrandWeakest,
+        textColor = PassTheme.colors.interactionNormMajor1,
+        iconBgColor = PassTheme.colors.interactionNormMinor1,
         icon = {
             Icon(
                 painter = painterResource(CoreR.drawable.ic_proton_arrow_out_from_rectangle),
                 contentDescription = stringResource(R.string.account_sign_out_icon_content_description),
-                tint = PassTheme.colors.accentBrandOpaque
+                tint = PassTheme.colors.interactionNormMajor1
             )
         },
         onClick = onSignOutClick

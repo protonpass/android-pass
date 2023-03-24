@@ -42,14 +42,14 @@ fun AliasToBeCreated(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
             contentDescription = null,
-            tint = PassTheme.colors.accentGreenNorm
+            tint = PassTheme.colors.aliasInteractionNorm
         )
         Column(modifier = Modifier.fillMaxWidth()) {
             ProtonTextFieldLabel(text = stringResource(id = R.string.field_alias_you_are_about_to_create))
             AliasPrefixSuffixText(
                 prefix = prefix,
                 suffix = suffix?.suffix ?: "",
-                suffixColor = PassTheme.colors.accentGreenNorm
+                suffixColor = PassTheme.colors.aliasInteractionNorm
             )
         }
     }

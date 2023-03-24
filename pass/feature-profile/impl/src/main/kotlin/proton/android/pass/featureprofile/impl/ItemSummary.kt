@@ -76,7 +76,7 @@ fun RowScope.ItemTypeBox(
         modifier = modifier
             .weight(1f)
             .clip(RoundedCornerShape(16.dp))
-            .background(PassTheme.colors.accentBrandWeakest)
+            .background(PassTheme.colors.interactionNormMinor1)
             .padding(16.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

@@ -64,7 +64,7 @@ fun NoteSectionPreview(
 ) {
     PassTheme(isDark = input.first) {
         Surface {
-            NoteSection(text = input.second, accentColor = PassTheme.colors.accentPurpleOpaque)
+            NoteSection(text = input.second, accentColor = PassTheme.colors.loginInteractionNormMajor1)
         }
     }
 }

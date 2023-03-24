@@ -54,7 +54,7 @@ private fun clearClipboardItemList(
                             S180 -> stringResource(R.string.clipboard_option_clear_clipboard_after_180_seconds)
                         }
                         val color = if (it == clearClipboardPreference) {
-                            PassTheme.colors.accentBrandNorm
+                            PassTheme.colors.interactionNorm
                         } else {
                             PassTheme.colors.textNorm
                         }
@@ -69,7 +69,7 @@ private fun clearClipboardItemList(
                         {
                             BottomSheetItemIcon(
                                 iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
-                                tint = PassTheme.colors.accentBrandOpaque
+                                tint = PassTheme.colors.interactionNormMajor1
                             )
                         }
                     } else null

@@ -25,7 +25,7 @@ fun AliasDetailContent(
     ) {
         AliasTitle(title = model?.title ?: "")
         AliasSection(Modifier, model, isLoading, onCopyAlias)
-        NoteSection(text = model?.note ?: "", accentColor = PassTheme.colors.accentGreenOpaque)
+        NoteSection(text = model?.note ?: "", accentColor = PassTheme.colors.aliasInteractionNormMajor1)
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }
 }

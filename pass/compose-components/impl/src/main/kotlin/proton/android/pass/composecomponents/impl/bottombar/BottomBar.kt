@@ -37,7 +37,7 @@ fun BottomBar(
     ) {
         BottomNavigationItem(
             selected = bottomBarSelected == BottomBarSelected.Home,
-            selectedContentColor = PassTheme.colors.accentBrandNorm,
+            selectedContentColor = PassTheme.colors.interactionNorm,
             unselectedContentColor = Color.White,
             onClick = onListClick,
             icon = {
@@ -49,7 +49,7 @@ fun BottomBar(
         )
         BottomNavigationItem(
             selected = false,
-            selectedContentColor = PassTheme.colors.accentBrandNorm,
+            selectedContentColor = PassTheme.colors.interactionNorm,
             unselectedContentColor = Color.White,
             onClick = onCreateClick,
             icon = {
@@ -61,7 +61,7 @@ fun BottomBar(
         )
         BottomNavigationItem(
             selected = bottomBarSelected == BottomBarSelected.Profile,
-            selectedContentColor = PassTheme.colors.accentBrandNorm,
+            selectedContentColor = PassTheme.colors.interactionNorm,
             unselectedContentColor = Color.White,
             onClick = onProfileClick,
             icon = {

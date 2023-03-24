@@ -8,7 +8,7 @@ import proton.pass.domain.ShareColor
 @Suppress("MagicNumber")
 @Composable
 fun ShareColor.toIconColor(): Color = when (this) {
-    ShareColor.Color1 -> PassPalette.Purple100
+    ShareColor.Color1 -> PassPalette.Lavender100
     ShareColor.Color2 -> Color(0xFFF29292)
     ShareColor.Color3 -> Color(0xFFF7D775)
     ShareColor.Color4 -> Color(0xFF91C799)
@@ -23,7 +23,7 @@ fun ShareColor.toIconColor(): Color = when (this) {
 @Suppress("MagicNumber")
 @Composable
 fun ShareColor.toBackgroundColor(): Color = when (this) {
-    ShareColor.Color1 -> PassPalette.Purple16
+    ShareColor.Color1 -> PassPalette.Lavender16
     ShareColor.Color2 -> Color(0x29F29292)
     ShareColor.Color3 -> Color(0x29F7D775)
     ShareColor.Color4 -> Color(0x2991C799)

@@ -14,7 +14,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.fakes.usecases.TestCreateVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
-import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestShare
 import proton.pass.domain.ShareColor
@@ -26,12 +26,12 @@ class CreateVaultViewModelTest {
     val dispatcher = MainDispatcherRule()
 
     private lateinit var instance: CreateVaultViewModel
-    private lateinit var snackbar: TestSnackbarMessageRepository
+    private lateinit var snackbar: TestSnackbarDispatcher
     private lateinit var createVault: TestCreateVault
 
     @Before
     fun setup() {
-        snackbar = TestSnackbarMessageRepository()
+        snackbar = TestSnackbarDispatcher()
         createVault = TestCreateVault()
         instance = CreateVaultViewModel(
             snackbar,

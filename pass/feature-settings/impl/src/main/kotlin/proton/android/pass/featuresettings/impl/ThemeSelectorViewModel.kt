@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.featuresettings.impl.SettingsSnackbarMessage.ErrorPerformingOperation
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ThemeSelectorViewModel @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     val state = preferencesRepository.getThemePreference()
@@ -33,7 +33,7 @@ class ThemeSelectorViewModel @Inject constructor(
         preferencesRepository.setThemePreference(theme)
             .onFailure {
                 PassLogger.e(TAG, it, "Error setting ThemePreference")
-                snackbarMessageRepository.emitSnackbarMessage(ErrorPerformingOperation)
+                snackbarDispatcher(ErrorPerformingOperation)
             }
     }
 

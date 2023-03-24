@@ -13,7 +13,7 @@ import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.data.fakes.usecases.TestUpdateVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestShare
@@ -29,13 +29,13 @@ class EditVaultViewModelTest {
 
     private lateinit var encryptionContextProvider: TestEncryptionContextProvider
     private lateinit var instance: EditVaultViewModel
-    private lateinit var snackbar: TestSnackbarMessageRepository
+    private lateinit var snackbar: TestSnackbarDispatcher
     private lateinit var updateVault: TestUpdateVault
     private lateinit var getVaultById: TestGetVaultById
 
     @Before
     fun setup() {
-        snackbar = TestSnackbarMessageRepository()
+        snackbar = TestSnackbarDispatcher()
         updateVault = TestUpdateVault()
         getVaultById = TestGetVaultById()
         encryptionContextProvider = TestEncryptionContextProvider()

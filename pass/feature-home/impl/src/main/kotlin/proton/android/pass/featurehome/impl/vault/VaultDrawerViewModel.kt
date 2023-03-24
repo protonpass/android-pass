@@ -30,7 +30,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage
 import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -40,7 +40,7 @@ class VaultDrawerViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     itemRepository: ItemRepository,
     private val deleteVault: DeleteVault,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val currentUserFlow = observeCurrentUser().filterNotNull()
@@ -128,13 +128,13 @@ class VaultDrawerViewModel @Inject constructor(
     fun onDeleteVault(shareId: ShareId) = viewModelScope.launch {
         deleteVault(shareId)
             .onSuccess {
-                snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.DeleteVaultSuccess)
+                snackbarDispatcher(HomeSnackbarMessage.DeleteVaultSuccess)
             }
             .onError {
                 when (it) {
                     is CannotDeleteCurrentVaultError ->
-                        snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.CannotDeleteCurrentVault)
-                    else -> snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.DeleteVaultError)
+                        snackbarDispatcher(HomeSnackbarMessage.CannotDeleteCurrentVault)
+                    else -> snackbarDispatcher(HomeSnackbarMessage.DeleteVaultError)
                 }
             }
             .logError(PassLogger, TAG, "Delete Vault Failed")

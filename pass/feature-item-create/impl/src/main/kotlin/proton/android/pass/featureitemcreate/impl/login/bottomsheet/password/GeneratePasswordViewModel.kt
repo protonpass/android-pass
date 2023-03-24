@@ -13,12 +13,12 @@ import kotlinx.coroutines.withContext
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonui.api.PasswordGenerator
 import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordUiState
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class GeneratePasswordViewModel @Inject constructor(
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager
 ) : ViewModel() {
 
@@ -50,7 +50,7 @@ class GeneratePasswordViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             clipboardManager.copyToClipboard(state.value.password, isSecure = true)
         }
-        snackbarMessageRepository.emitSnackbarMessage(GeneratePasswordSnackbarMessage.CopiedToClipboard)
+        snackbarDispatcher(GeneratePasswordSnackbarMessage.CopiedToClipboard)
     }
 
     companion object {

@@ -18,7 +18,7 @@ import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -27,7 +27,7 @@ import javax.inject.Inject
 class AppViewModel @Inject constructor(
     preferenceRepository: UserPreferencesRepository,
     networkMonitor: NetworkMonitor,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val themePreference: Flow<ThemePreference> = preferenceRepository
@@ -40,7 +40,7 @@ class AppViewModel @Inject constructor(
         .distinctUntilChanged()
 
     val appUiState: StateFlow<AppUiState> = combine(
-        snackbarMessageRepository.snackbarMessage,
+        snackbarDispatcher.snackbarMessage,
         themePreference,
         networkStatus
     ) { snackbarMessage, theme, network ->
@@ -62,7 +62,7 @@ class AppViewModel @Inject constructor(
 
     fun onSnackbarMessageDelivered() {
         viewModelScope.launch {
-            snackbarMessageRepository.snackbarMessageDelivered()
+            snackbarDispatcher.snackbarMessageDelivered()
         }
     }
 

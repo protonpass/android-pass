@@ -30,12 +30,12 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.Can
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
 
 abstract class BaseAliasViewModel(
-    snackbarMessageRepository: SnackbarMessageRepository,
+    snackbarDispatcher: SnackbarDispatcher,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
@@ -113,7 +113,7 @@ abstract class BaseAliasViewModel(
             when (it) {
                 is LoadingResult.Error -> {
                     isLoadingState.update { IsLoadingState.NotLoading }
-                    snackbarMessageRepository.emitSnackbarMessage(CannotRetrieveAliasOptions)
+                    snackbarDispatcher(CannotRetrieveAliasOptions)
                     mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
                 }
                 LoadingResult.Loading -> isLoadingState.update { IsLoadingState.Loading }

@@ -10,7 +10,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class CreateAliasBottomSheetViewModel @Inject constructor(
     accountManager: AccountManager,
     createAlias: CreateAlias,
-    snackbarMessageRepository: SnackbarMessageRepository,
+    snackbarDispatcher: SnackbarDispatcher,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle,
@@ -26,7 +26,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
 ) : CreateAliasViewModel(
     accountManager,
     createAlias,
-    snackbarMessageRepository,
+    snackbarDispatcher,
     telemetryManager,
     observeAliasOptions,
     observeVaults,

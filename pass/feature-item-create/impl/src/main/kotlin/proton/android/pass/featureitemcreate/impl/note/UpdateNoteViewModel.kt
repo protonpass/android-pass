@@ -23,7 +23,7 @@ import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.InitE
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemUpdateError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.NoteUpdated
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.Item
@@ -35,7 +35,7 @@ class UpdateNoteViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
     private val getShare: GetShareById,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     observeVaults: ObserveVaultsWithItemCount,
@@ -69,11 +69,11 @@ class UpdateNoteViewModel @Inject constructor(
                     }
                     .onError {
                         PassLogger.i(TAG, it, "Get by id error")
-                        snackbarMessageRepository.emitSnackbarMessage(InitError)
+                        snackbarDispatcher(InitError)
                     }
             } else {
                 PassLogger.i(TAG, "Empty user/share/item Id")
-                snackbarMessageRepository.emitSnackbarMessage(InitError)
+                snackbarDispatcher(InitError)
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }
@@ -100,21 +100,21 @@ class UpdateNoteViewModel @Inject constructor(
                                     )
                                 }
                             }
-                            snackbarMessageRepository.emitSnackbarMessage(NoteUpdated)
+                            snackbarDispatcher(NoteUpdated)
                             telemetryManager.sendEvent(ItemUpdate(EventItemType.Note))
                         }
                         .onError {
                             PassLogger.e(TAG, it, "Update item error")
-                            snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
+                            snackbarDispatcher(ItemUpdateError)
                         }
                 }
                 .onError {
                     PassLogger.e(TAG, it, "Get share error")
-                    snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
+                    snackbarDispatcher(ItemUpdateError)
                 }
         } else {
             PassLogger.i(TAG, "Empty User Id")
-            snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
+            snackbarDispatcher(ItemUpdateError)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
     }

@@ -21,7 +21,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemCreationError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.NoteCreated
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ShareId
@@ -32,7 +32,7 @@ class CreateNoteViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val getShare: GetShareById,
     private val itemRepository: ItemRepository,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     observeVaults: ObserveVaultsWithItemCount,
@@ -67,21 +67,21 @@ class CreateNoteViewModel @Inject constructor(
                                         )
                                     }
                                 }
-                                snackbarMessageRepository.emitSnackbarMessage(NoteCreated)
+                                snackbarDispatcher(NoteCreated)
                                 telemetryManager.sendEvent(ItemCreate(EventItemType.Note))
                             }
                             .onError {
                                 PassLogger.e(TAG, it, "Create item error")
-                                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+                                snackbarDispatcher(ItemCreationError)
                             }
                     }
                     .onError {
                         PassLogger.e(TAG, it, "Get share error")
-                        snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+                        snackbarDispatcher(ItemCreationError)
                     }
             } else {
                 PassLogger.i(TAG, "Empty User Id")
-                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+                snackbarDispatcher(ItemCreationError)
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }

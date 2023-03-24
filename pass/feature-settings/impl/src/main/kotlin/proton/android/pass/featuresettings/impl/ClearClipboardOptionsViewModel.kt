@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.ClearClipboardPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -21,7 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ClearClipboardOptionsViewModel @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val isClearClipboardOptionSavedState: MutableStateFlow<IsClearClipboardOptionSaved> =
@@ -49,7 +49,7 @@ class ClearClipboardOptionsViewModel @Inject constructor(
             .onSuccess { isClearClipboardOptionSavedState.update { IsClearClipboardOptionSaved.Success } }
             .onFailure {
                 PassLogger.e(TAG, it, "Error setting ClearClipboardPreference")
-                snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.ErrorPerformingOperation)
+                snackbarDispatcher(SettingsSnackbarMessage.ErrorPerformingOperation)
             }
     }
 

@@ -35,7 +35,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.Ite
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemUpdateError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.AliasDetails
@@ -50,7 +50,7 @@ class UpdateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
     private val aliasRepository: AliasRepository,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val updateAliasUseCase: UpdateAlias,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
@@ -58,7 +58,7 @@ class UpdateAliasViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
 ) : BaseAliasViewModel(
-    snackbarMessageRepository,
+    snackbarDispatcher,
     observeAliasOptions,
     observeVaults,
     savedStateHandle
@@ -182,7 +182,7 @@ class UpdateAliasViewModel @Inject constructor(
         it: Throwable? = null
     ) {
         PassLogger.e(TAG, it ?: Exception(message), message)
-        snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
+        snackbarDispatcher(snackbarMessage)
     }
 
     fun updateAlias() = viewModelScope.launch(coroutineExceptionHandler) {
@@ -211,17 +211,17 @@ class UpdateAliasViewModel @Inject constructor(
                         )
                     }
                     isLoadingState.update { IsLoadingState.NotLoading }
-                    snackbarMessageRepository.emitSnackbarMessage(AliasUpdated)
+                    snackbarDispatcher(AliasUpdated)
                     telemetryManager.sendEvent(ItemUpdate(EventItemType.Alias))
                 }
                 .onError {
                     PassLogger.e(TAG, it, "Update alias error")
-                    snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
+                    snackbarDispatcher(ItemUpdateError)
                     isLoadingState.update { IsLoadingState.NotLoading }
                 }
         } else {
             PassLogger.i(TAG, "Empty User Id")
-            snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+            snackbarDispatcher(ItemCreationError)
             isLoadingState.update { IsLoadingState.NotLoading }
         }
     }

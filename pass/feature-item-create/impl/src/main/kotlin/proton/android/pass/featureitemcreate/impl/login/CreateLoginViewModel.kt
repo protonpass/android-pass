@@ -27,7 +27,7 @@ import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
@@ -37,7 +37,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CreateLoginViewModel @Inject constructor(
     private val createItem: CreateItem,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     createAlias: CreateAlias,
@@ -50,7 +50,7 @@ class CreateLoginViewModel @Inject constructor(
 ) : BaseLoginViewModel(
     createAlias,
     accountManager,
-    snackbarMessageRepository,
+    snackbarDispatcher,
     clipboardManager,
     totpManager,
     observeVaults,
@@ -125,7 +125,7 @@ class CreateLoginViewModel @Inject constructor(
                 performCreateItem(userId, vault.vault.shareId)
             }
         } else {
-            snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+            snackbarDispatcher(ItemCreationError)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
     }
@@ -152,7 +152,7 @@ class CreateLoginViewModel @Inject constructor(
             }
             .onError {
                 PassLogger.e(TAG, it, "Could not create item")
-                snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+                snackbarDispatcher(ItemCreationError)
             }
     }
 

@@ -17,7 +17,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Autofill
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Fingerprint
 import proton.android.pass.featureonboarding.impl.OnBoardingPageName.Last
-import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
@@ -30,14 +30,14 @@ class OnBoardingViewModelTest {
     val dispatcherRule = MainDispatcherRule()
 
     private lateinit var viewModel: OnBoardingViewModel
-    private lateinit var snackbarMessageRepository: TestSnackbarMessageRepository
+    private lateinit var snackbarMessageRepository: TestSnackbarDispatcher
     private lateinit var preferenceRepository: TestPreferenceRepository
     private lateinit var biometryManager: TestBiometryManager
     private lateinit var autofillManager: TestAutofillManager
 
     @Before
     fun setUp() {
-        snackbarMessageRepository = TestSnackbarMessageRepository()
+        snackbarMessageRepository = TestSnackbarDispatcher()
         preferenceRepository = TestPreferenceRepository()
         biometryManager = TestBiometryManager()
         autofillManager = TestAutofillManager()

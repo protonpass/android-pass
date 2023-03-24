@@ -13,7 +13,7 @@ import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.login.CreateUpdateLoginUiState.Companion.Initial
-import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestAccountManager
 import proton.android.pass.test.TestSavedStateHandle
@@ -45,7 +45,7 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel = object : BaseLoginViewModel(
             TestCreateAlias(),
             TestAccountManager(),
-            TestSnackbarMessageRepository(),
+            TestSnackbarDispatcher(),
             clipboardManager,
             totpManager,
             observeVaults,

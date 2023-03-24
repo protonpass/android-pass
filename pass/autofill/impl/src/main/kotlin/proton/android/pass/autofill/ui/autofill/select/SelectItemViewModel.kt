@@ -57,7 +57,7 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.NotificationManager
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -70,7 +70,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectItemViewModel @Inject constructor(
     private val updateAutofillItem: UpdateAutofillItem,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
     private val getTotpCodeFromUri: GetTotpCodeFromUri,
@@ -177,7 +177,7 @@ class SelectItemViewModel @Inject constructor(
                     itemsResult.exception,
                     "Could not load autofill items"
                 )
-                snackbarMessageRepository.emitSnackbarMessage(LoadItemsError)
+                snackbarDispatcher(LoadItemsError)
                 SelectItemListItems.Initial
             }
         }

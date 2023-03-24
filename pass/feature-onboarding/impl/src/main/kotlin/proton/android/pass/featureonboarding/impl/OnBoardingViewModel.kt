@@ -26,7 +26,7 @@ import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.Biom
 import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.ErrorPerformingOperation
 import proton.android.pass.featureonboarding.impl.OnBoardingSnackbarMessage.FingerprintLockEnabled
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.HasCompletedOnBoarding
@@ -39,7 +39,7 @@ class OnBoardingViewModel @Inject constructor(
     private val autofillManager: AutofillManager,
     private val biometryManager: BiometryManager,
     private val preferenceRepository: UserPreferencesRepository,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     private val _onBoardingUiState = MutableStateFlow(OnBoardingUiState.Initial)
@@ -128,8 +128,7 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     private suspend fun onBiometryFailedToStart() {
-        snackbarMessageRepository
-            .emitSnackbarMessage(BiometryFailedToStartError)
+        snackbarDispatcher(BiometryFailedToStartError)
     }
 
     private suspend fun onBiometryError(result: BiometryResult.Error) {
@@ -138,9 +137,7 @@ class OnBoardingViewModel @Inject constructor(
             BiometryAuthError.Canceled -> {}
             BiometryAuthError.UserCanceled -> {}
 
-            else ->
-                snackbarMessageRepository
-                    .emitSnackbarMessage(BiometryFailedToAuthenticateError)
+            else -> snackbarDispatcher(BiometryFailedToAuthenticateError)
         }
     }
 
@@ -172,11 +169,11 @@ class OnBoardingViewModel @Inject constructor(
         PassLogger.d(TAG, "Changing BiometricLock to ${BiometricLockState.Enabled}")
         preferenceRepository.setBiometricLockState(BiometricLockState.Enabled)
             .onSuccess {
-                snackbarMessageRepository.emitSnackbarMessage(FingerprintLockEnabled)
+                snackbarDispatcher(FingerprintLockEnabled)
             }
             .onFailure {
                 PassLogger.e(TAG, it, "Error setting BiometricLockState")
-                snackbarMessageRepository.emitSnackbarMessage(ErrorPerformingOperation)
+                snackbarDispatcher(ErrorPerformingOperation)
             }
     }
 

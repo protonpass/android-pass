@@ -39,7 +39,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.TotpCop
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.UsernameCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.WebsiteCopiedToClipboard
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.totp.api.ObserveTotpFromUri
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
@@ -49,7 +49,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginDetailViewModel @Inject constructor(
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val observeTotpFromUri: ObserveTotpFromUri,
@@ -129,7 +129,7 @@ class LoginDetailViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 clipboardManager.copyToClipboard(text = text, isSecure = true)
             }
-            snackbarMessageRepository.emitSnackbarMessage(PasswordCopiedToClipboard)
+            snackbarDispatcher(PasswordCopiedToClipboard)
         }
     }
 
@@ -139,7 +139,7 @@ class LoginDetailViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 clipboardManager.copyToClipboard(itemType.username)
             }
-            snackbarMessageRepository.emitSnackbarMessage(UsernameCopiedToClipboard)
+            snackbarDispatcher(UsernameCopiedToClipboard)
         }
     }
 
@@ -147,14 +147,14 @@ class LoginDetailViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             clipboardManager.copyToClipboard(website)
         }
-        snackbarMessageRepository.emitSnackbarMessage(WebsiteCopiedToClipboard)
+        snackbarDispatcher(WebsiteCopiedToClipboard)
     }
 
     fun copyTotpCodeToClipboard(code: String) = viewModelScope.launch {
         withContext(Dispatchers.IO) {
             clipboardManager.copyToClipboard(code)
         }
-        snackbarMessageRepository.emitSnackbarMessage(TotpCopiedToClipboard)
+        snackbarDispatcher(TotpCopiedToClipboard)
     }
 
     fun togglePassword() {
@@ -181,10 +181,10 @@ class LoginDetailViewModel @Inject constructor(
         trashItem(shareId = shareId, itemId = itemId)
             .onSuccess {
                 isItemSentToTrashState.update { IsSentToTrashState.Sent }
-                snackbarMessageRepository.emitSnackbarMessage(ItemMovedToTrash)
+                snackbarDispatcher(ItemMovedToTrash)
             }
             .onError {
-                snackbarMessageRepository.emitSnackbarMessage(ItemNotMovedToTrash)
+                snackbarDispatcher(ItemNotMovedToTrash)
                 PassLogger.d(TAG, it, "Could not delete item")
             }
         isLoadingState.update { IsLoadingState.NotLoading }

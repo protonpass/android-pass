@@ -23,7 +23,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMov
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotMovedToTrash
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.NoteCopiedToClipboard
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
@@ -32,7 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NoteDetailViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val trashItem: TrashItem
 ) : ViewModel() {
@@ -76,7 +76,7 @@ class NoteDetailViewModel @Inject constructor(
             }
             clipboardManager.copyToClipboard(decrypted)
         }
-        snackbarMessageRepository.emitSnackbarMessage(NoteCopiedToClipboard)
+        snackbarDispatcher(NoteCopiedToClipboard)
     }
 
     fun onDelete(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
@@ -84,10 +84,10 @@ class NoteDetailViewModel @Inject constructor(
         trashItem(shareId = shareId, itemId = itemId)
             .onSuccess {
                 isItemSentToTrashState.update { IsSentToTrashState.Sent }
-                snackbarMessageRepository.emitSnackbarMessage(ItemMovedToTrash)
+                snackbarDispatcher(ItemMovedToTrash)
             }
             .onError {
-                snackbarMessageRepository.emitSnackbarMessage(ItemNotMovedToTrash)
+                snackbarDispatcher(ItemNotMovedToTrash)
                 PassLogger.d(TAG, it, "Could not delete item")
             }
         isLoadingState.update { IsLoadingState.NotLoading }

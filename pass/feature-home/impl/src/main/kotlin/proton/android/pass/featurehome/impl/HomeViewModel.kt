@@ -63,12 +63,15 @@ import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ClearTrashError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.DeleteItemError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.LoginMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
+import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsError
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ItemState
@@ -82,7 +85,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val trashItem: TrashItem,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
     private val applyPendingEvents: ApplyPendingEvents,
     private val encryptionContextProvider: EncryptionContextProvider,
@@ -280,7 +283,7 @@ class HomeViewModel @Inject constructor(
             is LoadingResult.Success -> itemsResult.data
             is LoadingResult.Error -> {
                 PassLogger.e(TAG, itemsResult.exception, "Observe items error")
-                snackbarMessageRepository.emitSnackbarMessage(ObserveItemsError)
+                snackbarDispatcher(ObserveItemsError)
                 persistentListOf()
             }
         }
@@ -336,7 +339,7 @@ class HomeViewModel @Inject constructor(
         applyPendingEvents()
             .onError { t ->
                 PassLogger.e(TAG, t, "Apply pending events failed")
-                snackbarMessageRepository.emitSnackbarMessage(RefreshError)
+                snackbarDispatcher(RefreshError)
             }
 
         isRefreshing.update { IsRefreshingState.NotRefreshing }
@@ -351,11 +354,11 @@ class HomeViewModel @Inject constructor(
                 .onSuccess {
                     when (item.itemType) {
                         is ItemType.Alias ->
-                            snackbarMessageRepository.emitSnackbarMessage(AliasMovedToTrash)
+                            snackbarDispatcher(AliasMovedToTrash)
                         is ItemType.Login ->
-                            snackbarMessageRepository.emitSnackbarMessage(LoginMovedToTrash)
+                            snackbarDispatcher(LoginMovedToTrash)
                         is ItemType.Note ->
-                            snackbarMessageRepository.emitSnackbarMessage(NoteMovedToTrash)
+                            snackbarDispatcher(NoteMovedToTrash)
                         ItemType.Password -> {}
                     }
                 }
@@ -369,13 +372,13 @@ class HomeViewModel @Inject constructor(
                     withContext(Dispatchers.IO) {
                         clipboardManager.copyToClipboard(text = text)
                     }
-                    snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.AliasCopied)
+                    snackbarDispatcher(HomeSnackbarMessage.AliasCopied)
                 }
                 HomeClipboardType.Note -> {
                     withContext(Dispatchers.IO) {
                         clipboardManager.copyToClipboard(text = text)
                     }
-                    snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.NoteCopied)
+                    snackbarDispatcher(HomeSnackbarMessage.NoteCopied)
                 }
                 HomeClipboardType.Password -> {
                     withContext(Dispatchers.IO) {
@@ -384,13 +387,13 @@ class HomeViewModel @Inject constructor(
                             isSecure = true
                         )
                     }
-                    snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.PasswordCopied)
+                    snackbarDispatcher(HomeSnackbarMessage.PasswordCopied)
                 }
                 HomeClipboardType.Username -> {
                     withContext(Dispatchers.IO) {
                         clipboardManager.copyToClipboard(text = text)
                     }
-                    snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.UsernameCopied)
+                    snackbarDispatcher(HomeSnackbarMessage.UsernameCopied)
                 }
             }
         }
@@ -418,7 +421,7 @@ class HomeViewModel @Inject constructor(
         }.onFailure {
             PassLogger.e(TAG, it, "Error restoring item")
             actionStateFlow.update { ActionState.Done }
-            snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.RestoreItemsError)
+            snackbarDispatcher(RestoreItemsError)
         }
     }
 
@@ -433,7 +436,7 @@ class HomeViewModel @Inject constructor(
         }.onFailure {
             PassLogger.e(TAG, it, "Error deleting item")
             actionStateFlow.update { ActionState.Done }
-            snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.DeleteItemError)
+            snackbarDispatcher(DeleteItemError)
         }
     }
 
@@ -450,7 +453,7 @@ class HomeViewModel @Inject constructor(
         }.onFailure {
             PassLogger.e(TAG, it, "Error clearing trash")
             actionStateFlow.update { ActionState.Done }
-            snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.ClearTrashError)
+            snackbarDispatcher(ClearTrashError)
         }
     }
 
@@ -464,7 +467,7 @@ class HomeViewModel @Inject constructor(
         }.onFailure {
             PassLogger.e(TAG, it, "Error restoring items")
             actionStateFlow.update { ActionState.Done }
-            snackbarMessageRepository.emitSnackbarMessage(HomeSnackbarMessage.RestoreItemsError)
+            snackbarDispatcher(RestoreItemsError)
         }
     }
 

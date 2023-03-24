@@ -21,7 +21,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.login.CreateUpdateLoginUiState.Companion.Initial
-import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -62,7 +62,7 @@ internal class CreateLoginViewModelTest {
             createItem = createItem,
             clipboardManager = clipboardManager,
             totpManager = totpManager,
-            snackbarMessageRepository = TestSnackbarMessageRepository(),
+            snackbarDispatcher = TestSnackbarDispatcher(),
             savedStateHandle = TestSavedStateHandle.create(),
             encryptionContextProvider = TestEncryptionContextProvider(),
             createAlias = TestCreateAlias(),

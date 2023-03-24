@@ -30,7 +30,7 @@ import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMov
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotMovedToTrash
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarMessage
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.AliasDetails
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
@@ -43,7 +43,7 @@ class AliasDetailViewModel @Inject constructor(
     private val aliasRepository: AliasRepository,
     private val accountManager: AccountManager,
     private val clipboardManager: ClipboardManager,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val trashItem: TrashItem
 ) : ViewModel() {
@@ -128,7 +128,7 @@ class AliasDetailViewModel @Inject constructor(
         throwable: Throwable? = null
     ) {
         PassLogger.e(TAG, throwable ?: Exception(message), message)
-        snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
+        snackbarDispatcher(snackbarMessage)
     }
 
     fun onCopyAlias(alias: String) {
@@ -136,7 +136,7 @@ class AliasDetailViewModel @Inject constructor(
             withContext(Dispatchers.IO) {
                 clipboardManager.copyToClipboard(alias)
             }
-            snackbarMessageRepository.emitSnackbarMessage(AliasCopiedToClipboard)
+            snackbarDispatcher(AliasCopiedToClipboard)
         }
     }
 
@@ -145,10 +145,10 @@ class AliasDetailViewModel @Inject constructor(
         trashItem(shareId = shareId, itemId = itemId)
             .onSuccess {
                 isItemSentToTrashState.update { IsSentToTrashState.Sent }
-                snackbarMessageRepository.emitSnackbarMessage(ItemMovedToTrash)
+                snackbarDispatcher(ItemMovedToTrash)
             }
             .onError {
-                snackbarMessageRepository.emitSnackbarMessage(ItemNotMovedToTrash)
+                snackbarDispatcher(ItemNotMovedToTrash)
                 PassLogger.d(TAG, it, "Could not delete item")
             }
         isLoadingState.update { IsLoadingState.NotLoading }

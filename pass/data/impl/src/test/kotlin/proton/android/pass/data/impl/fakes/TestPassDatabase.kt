@@ -3,6 +3,7 @@ package proton.android.pass.data.impl.fakes
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
+import proton.android.pass.data.impl.db.dao.SearchEntryDao
 import proton.android.pass.data.impl.db.dao.ShareKeysDao
 import proton.android.pass.data.impl.db.dao.SharesDao
 import proton.android.pass.data.impl.db.dao.TelemetryDao
@@ -25,6 +26,10 @@ class TestPassDatabase : PassDatabase {
     }
 
     override fun telemetryEventsDao(): TelemetryDao {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun searchEntryDao(): SearchEntryDao {
         throw IllegalStateException("This method should not be called")
     }
 

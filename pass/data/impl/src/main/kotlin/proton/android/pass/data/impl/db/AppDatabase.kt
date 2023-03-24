@@ -49,6 +49,7 @@ import me.proton.core.usersettings.data.entity.OrganizationKeysEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.PassEventEntity
+import proton.android.pass.data.impl.db.entities.SearchEntryEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
@@ -81,11 +82,13 @@ import proton.android.pass.data.impl.db.entities.TelemetryEntity
         ShareEntity::class,
         ShareKeyEntity::class,
         PassEventEntity::class,
-        TelemetryEntity::class
+        TelemetryEntity::class,
+        SearchEntryEntity::class
     ],
     autoMigrations = [
         AutoMigration(from = 2, to = 3, spec = AppDatabaseMigrations.MIGRATION_2_3::class),
-        AutoMigration(from = 3, to = 4)
+        AutoMigration(from = 3, to = 4),
+        AutoMigration(from = 4, to = 5),
     ],
     version = AppDatabase.VERSION,
     exportSchema = true
@@ -119,7 +122,7 @@ abstract class AppDatabase :
     UserSettingsDatabase {
 
     companion object {
-        const val VERSION = 4
+        const val VERSION = 5
 
         const val DB_NAME = "db-passkey"
 

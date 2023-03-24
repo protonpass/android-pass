@@ -9,20 +9,20 @@ import kotlinx.coroutines.sync.withLock
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.SnackbarMessage
-import proton.android.pass.notifications.api.SnackbarMessageRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SnackbarMessageRepositoryImpl @Inject constructor() : SnackbarMessageRepository {
+class SnackbarDispatcherImpl @Inject constructor() : SnackbarDispatcher {
     private val mutex = Mutex()
 
     private val snackbarState = MutableStateFlow<Option<SnackbarMessage>>(None)
 
     override val snackbarMessage: Flow<Option<SnackbarMessage>> = snackbarState
 
-    override suspend fun emitSnackbarMessage(snackbarMessage: SnackbarMessage) {
+    override suspend fun invoke(snackbarMessage: SnackbarMessage) {
         if (!shouldDisplay(snackbarMessage)) return
         mutex.withLock {
             snackbarState.update { snackbarMessage.some() }

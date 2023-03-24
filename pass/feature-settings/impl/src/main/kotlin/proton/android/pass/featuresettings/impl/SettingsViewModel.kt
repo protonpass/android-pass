@@ -17,7 +17,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
@@ -28,7 +28,7 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     preferencesRepository: UserPreferencesRepository,
     private val observeCurrentUser: ObserveCurrentUser,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val refreshContent: RefreshContent
 ) : ViewModel() {
 
@@ -82,10 +82,10 @@ class SettingsViewModel @Inject constructor(
         runCatching {
             refreshContent.invoke(userId)
         }.onSuccess {
-            snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.SyncSuccessful)
+            snackbarDispatcher(SettingsSnackbarMessage.SyncSuccessful)
         }.onFailure {
             PassLogger.e(TAG, it, "Error performing sync")
-            snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.ErrorPerformingSync)
+            snackbarDispatcher(SettingsSnackbarMessage.ErrorPerformingSync)
         }
 
         isLoadingState.update { IsLoadingState.NotLoading }

@@ -15,7 +15,7 @@ import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
-import proton.android.pass.notifications.fakes.TestSnackbarMessageRepository
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -39,7 +39,7 @@ class CreateAliasViewModelTest {
     private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var observeAliasOptions: TestObserveAliasOptions
     private lateinit var createAlias: TestCreateAlias
-    private lateinit var snackbarRepository: TestSnackbarMessageRepository
+    private lateinit var snackbarRepository: TestSnackbarDispatcher
     private lateinit var telemetryManager: TestTelemetryManager
 
     @Before
@@ -50,7 +50,7 @@ class CreateAliasViewModelTest {
         observeVaults = TestObserveVaultsWithItemCount()
         observeAliasOptions = TestObserveAliasOptions()
         createAlias = TestCreateAlias()
-        snackbarRepository = TestSnackbarMessageRepository()
+        snackbarRepository = TestSnackbarDispatcher()
         telemetryManager = TestTelemetryManager()
     }
 
@@ -182,7 +182,7 @@ class CreateAliasViewModelTest {
             observeAliasOptions = observeAliasOptions,
             observeVaults = observeVaults,
             createAlias = createAlias,
-            snackbarMessageRepository = snackbarRepository,
+            snackbarDispatcher = snackbarRepository,
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set("shareId", "123")
                 set("isDraft", isDraft)

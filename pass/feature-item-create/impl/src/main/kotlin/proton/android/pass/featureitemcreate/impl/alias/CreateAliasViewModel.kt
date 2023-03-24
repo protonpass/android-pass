@@ -22,7 +22,7 @@ import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ShareId
@@ -33,12 +33,12 @@ import javax.inject.Inject
 open class CreateAliasViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val createAlias: CreateAlias,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val telemetryManager: TelemetryManager,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
-) : BaseAliasViewModel(snackbarMessageRepository, observeAliasOptions, observeVaults, savedStateHandle) {
+) : BaseAliasViewModel(snackbarDispatcher, observeAliasOptions, observeVaults, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -140,23 +140,23 @@ open class CreateAliasViewModel @Inject constructor(
                     val generatedAlias =
                         getAliasToBeCreated(aliasItem.prefix, aliasSuffix) ?: ""
                     isAliasSavedState.update { AliasSavedState.Success(item.id, generatedAlias) }
-                    snackbarMessageRepository.emitSnackbarMessage(AliasCreated)
+                    snackbarDispatcher(AliasCreated)
                     telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
                 }
                 .onError { onCreateAliasError(it) }
         } else {
             PassLogger.i(TAG, "Empty User Id")
-            snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+            snackbarDispatcher(ItemCreationError)
         }
     }
 
     private suspend fun onCreateAliasError(cause: Throwable?) {
         if (cause is CannotCreateMoreAliasesError) {
-            snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.CannotCreateMoreAliasesError)
+            snackbarDispatcher(AliasSnackbarMessage.CannotCreateMoreAliasesError)
         } else {
             val defaultMessage = "Create alias error"
             PassLogger.e(TAG, cause ?: Exception(defaultMessage), defaultMessage)
-            snackbarMessageRepository.emitSnackbarMessage(ItemCreationError)
+            snackbarDispatcher(ItemCreationError)
         }
     }
 

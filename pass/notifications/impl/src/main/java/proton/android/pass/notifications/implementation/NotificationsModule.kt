@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.notifications.api.NotificationManager
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -13,8 +13,8 @@ abstract class NotificationsModule {
 
     @Binds
     abstract fun bindSnackbarMessageRepository(
-        snackbarMessageRepositoryImpl: SnackbarMessageRepositoryImpl
-    ): SnackbarMessageRepository
+        snackbarMessageRepositoryImpl: SnackbarDispatcherImpl
+    ): SnackbarDispatcher
 
     @Binds
     abstract fun bindNotificationManager(

@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.ClearClipboardPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ClipboardSettingsViewModel @Inject constructor(
     private val preferencesRepository: UserPreferencesRepository,
-    private val snackbarMessageRepository: SnackbarMessageRepository
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     val state: StateFlow<ClipboardSettingsUIState> = combine(
@@ -44,7 +44,7 @@ class ClipboardSettingsViewModel @Inject constructor(
         preferencesRepository.setCopyTotpToClipboardEnabled(CopyTotpToClipboard.from(value))
             .onFailure {
                 PassLogger.e(TAG, it, "Error setting CopyTotpToClipboard")
-                snackbarMessageRepository.emitSnackbarMessage(SettingsSnackbarMessage.ErrorPerformingOperation)
+                snackbarDispatcher(SettingsSnackbarMessage.ErrorPerformingOperation)
             }
     }
 

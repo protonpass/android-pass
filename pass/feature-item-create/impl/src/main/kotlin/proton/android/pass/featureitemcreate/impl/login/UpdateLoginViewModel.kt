@@ -35,7 +35,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.In
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemUpdateError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
@@ -49,7 +49,7 @@ import javax.inject.Inject
 class UpdateLoginViewModel @Inject constructor(
     private val itemRepository: ItemRepository,
     private val updateItem: UpdateItem,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     createAlias: CreateAlias,
@@ -62,7 +62,7 @@ class UpdateLoginViewModel @Inject constructor(
 ) : BaseLoginViewModel(
     createAlias,
     accountManager,
-    snackbarMessageRepository,
+    snackbarDispatcher,
     clipboardManager,
     totpManager,
     observeVaults,
@@ -116,11 +116,11 @@ class UpdateLoginViewModel @Inject constructor(
                     }
                     .onError {
                         PassLogger.i(TAG, it, "Get by id error")
-                        snackbarMessageRepository.emitSnackbarMessage(InitError)
+                        snackbarDispatcher(InitError)
                     }
             } else {
                 PassLogger.i(TAG, "Empty user/share/item Id")
-                snackbarMessageRepository.emitSnackbarMessage(InitError)
+                snackbarDispatcher(InitError)
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }
@@ -166,7 +166,7 @@ class UpdateLoginViewModel @Inject constructor(
                 }
             } else {
                 PassLogger.i(TAG, "Empty User Id")
-                snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
+                snackbarDispatcher(ItemUpdateError)
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }
@@ -191,7 +191,7 @@ class UpdateLoginViewModel @Inject constructor(
             }
             .onError {
                 PassLogger.e(TAG, it, "Update item error")
-                snackbarMessageRepository.emitSnackbarMessage(ItemUpdateError)
+                snackbarDispatcher(ItemUpdateError)
             }
     }
 

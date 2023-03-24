@@ -43,7 +43,7 @@ fun CircleTextIconPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            CircleTextIcon(text = "This is an example", color = PassTheme.colors.accentPurpleOpaque)
+            CircleTextIcon(text = "This is an example", color = PassTheme.colors.loginInteractionNormMajor1)
         }
     }
 }

@@ -44,7 +44,7 @@ fun CircleButtonTextPreview(
     PassTheme(isDark = isDark) {
         Surface {
             CircleButton(
-                color = PassTheme.colors.accentGreenOpaque,
+                color = PassTheme.colors.aliasInteractionNormMajor1,
                 content = {
                     Text(text = "A long Label")
                 },

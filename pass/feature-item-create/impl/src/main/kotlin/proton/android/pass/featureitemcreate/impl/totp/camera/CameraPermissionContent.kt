@@ -48,7 +48,7 @@ fun CameraPermissionContent(
             )
             CircleButton(
                 modifier = Modifier.width(250.dp),
-                color = PassTheme.colors.accentPurpleOpaque,
+                color = PassTheme.colors.loginInteractionNormMajor1,
                 onClick = { onOpenAppSettings() }
             ) {
                 Text(

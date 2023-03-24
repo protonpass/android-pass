@@ -48,7 +48,7 @@ fun LoginContent(
         )
         NoteSection(
             text = state.note,
-            accentColor = PassTheme.colors.accentPurpleOpaque
+            accentColor = PassTheme.colors.loginInteractionNormMajor1
         )
         LinkedAppsListSection(
             packageInfoUiSet = state.packageInfoSet,

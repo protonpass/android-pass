@@ -67,9 +67,9 @@ private fun ItemTypeButton(
     CircleButton(
         contentPadding = PaddingValues(12.dp, 0.dp),
         color = if (isSelected) {
-            PassTheme.colors.accentBrandNorm
+            PassTheme.colors.interactionNorm
         } else {
-            PassTheme.colors.accentBrandWeak
+            PassTheme.colors.interactionNormMinor1
         },
         onClick = { onItemTypeClick(homeItemTypeSelection) }
     ) {

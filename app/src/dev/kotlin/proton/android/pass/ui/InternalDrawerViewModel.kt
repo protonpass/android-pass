@@ -10,15 +10,17 @@ import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.image.impl.ClearIconCache
 import proton.android.pass.log.api.LogSharing
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.ui.InternalDrawerSnackbarMessage.PreferencesClearError
+import proton.android.pass.ui.InternalDrawerSnackbarMessage.PreferencesCleared
 import javax.inject.Inject
 
 @HiltViewModel
 class InternalDrawerViewModel @Inject constructor(
     private val appConfig: AppConfig,
     private val preferenceRepository: UserPreferencesRepository,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val logSharing: LogSharing,
     private val clearCache: ClearIconCache
 ) : ViewModel() {
@@ -26,13 +28,11 @@ class InternalDrawerViewModel @Inject constructor(
     fun clearPreferences() = viewModelScope.launch {
         preferenceRepository.clearPreferences()
             .onSuccess {
-                snackbarMessageRepository
-                    .emitSnackbarMessage(InternalDrawerSnackbarMessage.PreferencesCleared)
+                snackbarDispatcher(PreferencesCleared)
             }
             .onFailure {
                 PassLogger.e(TAG, it, "Error clearing preferences")
-                snackbarMessageRepository
-                    .emitSnackbarMessage(InternalDrawerSnackbarMessage.PreferencesClearError)
+                snackbarDispatcher(PreferencesClearError)
             }
     }
 

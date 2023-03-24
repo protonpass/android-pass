@@ -35,7 +35,7 @@ import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.ErrorPerfo
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FingerprintLockDisabled
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.FingerprintLockEnabled
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -48,7 +48,7 @@ class ProfileViewModel @Inject constructor(
     private val biometryManager: BiometryManager,
     private val autofillManager: AutofillManager,
     private val clipboardManager: ClipboardManager,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val appConfig: AppConfig,
     encryptionContextProvider: EncryptionContextProvider,
     observeItemCount: ObserveItemCount,
@@ -128,11 +128,10 @@ class ProfileViewModel @Inject constructor(
 
                             PassLogger.d(TAG, "Changing BiometricLock to $lockState")
                             preferencesRepository.setBiometricLockState(lockState)
-                                .onSuccess { snackbarMessageRepository.emitSnackbarMessage(message) }
+                                .onSuccess { snackbarDispatcher(message) }
                                 .onFailure {
                                     PassLogger.e(TAG, it, "Error setting BiometricLockState")
-                                    snackbarMessageRepository
-                                        .emitSnackbarMessage(ErrorPerformingOperation)
+                                    snackbarDispatcher(ErrorPerformingOperation)
                                 }
                         }
                         is BiometryResult.Error -> {
@@ -140,17 +139,14 @@ class ProfileViewModel @Inject constructor(
                                 // If the user has cancelled it, do nothing
                                 BiometryAuthError.Canceled -> {}
                                 BiometryAuthError.UserCanceled -> {}
-                                else ->
-                                    snackbarMessageRepository
-                                        .emitSnackbarMessage(BiometryFailedToAuthenticateError)
+                                else -> snackbarDispatcher(BiometryFailedToAuthenticateError)
                             }
                         }
 
                         // User can retry
                         BiometryResult.Failed -> {}
                         is BiometryResult.FailedToStart ->
-                            snackbarMessageRepository
-                                .emitSnackbarMessage(BiometryFailedToStartError)
+                            snackbarDispatcher(BiometryFailedToStartError)
                     }
                     PassLogger.i(TAG, "Biometry result: $result")
                 }
@@ -169,7 +165,7 @@ class ProfileViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             clipboardManager.copyToClipboard(appVersion)
         }
-        snackbarMessageRepository.emitSnackbarMessage(AppVersionCopied)
+        snackbarDispatcher(AppVersionCopied)
     }
 
     companion object {

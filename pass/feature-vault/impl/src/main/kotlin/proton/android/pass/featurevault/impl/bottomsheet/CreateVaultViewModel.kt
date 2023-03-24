@@ -12,13 +12,13 @@ import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.entity.NewVault
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateVaultViewModel @Inject constructor(
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val createVault: CreateVault,
     private val encryptionContextProvider: EncryptionContextProvider
 ) : BaseVaultViewModel() {
@@ -42,7 +42,7 @@ class CreateVaultViewModel @Inject constructor(
         createVault(vault = body)
             .onSuccess {
                 PassLogger.d(TAG, "Vault created successfully")
-                snackbarMessageRepository.emitSnackbarMessage(VaultSnackbarMessage.CreateVaultSuccess)
+                snackbarDispatcher(VaultSnackbarMessage.CreateVaultSuccess)
                 isLoadingFlow.update { IsLoadingState.NotLoading }
                 isVaultCreated.update { IsVaultCreatedEvent.Created }
             }
@@ -53,7 +53,7 @@ class CreateVaultViewModel @Inject constructor(
                     PassLogger.w(TAG, it, "Create vault failed")
                     VaultSnackbarMessage.CreateVaultError
                 }
-                snackbarMessageRepository.emitSnackbarMessage(message)
+                snackbarDispatcher(message)
 
                 isLoadingFlow.update { IsLoadingState.NotLoading }
             }

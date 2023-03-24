@@ -25,7 +25,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.Item
@@ -37,7 +37,7 @@ import javax.inject.Inject
 class ItemDetailViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clock: Clock,
     private val telemetryManager: TelemetryManager,
@@ -88,12 +88,12 @@ class ItemDetailViewModel @Inject constructor(
                     }
                     .onError {
                         PassLogger.e(TAG, it, "Get by id error")
-                        snackbarMessageRepository.emitSnackbarMessage(InitError)
+                        snackbarDispatcher(InitError)
                     }
             } else {
                 val message = "Empty user/share/item Id"
                 PassLogger.e(TAG, Exception(message), message)
-                snackbarMessageRepository.emitSnackbarMessage(InitError)
+                snackbarDispatcher(InitError)
             }
         }
     }

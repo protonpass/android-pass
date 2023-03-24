@@ -37,7 +37,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.Item
 import proton.pass.domain.ShareId
@@ -47,7 +47,7 @@ import proton.pass.domain.entity.NewAlias
 abstract class BaseLoginViewModel(
     private val createAlias: CreateAlias,
     protected val accountManager: AccountManager,
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
     private val totpManager: TotpManager,
     observeVaults: ObserveVaultsWithItemCount,
@@ -228,7 +228,7 @@ abstract class BaseLoginViewModel(
 
     fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) =
         viewModelScope.launch {
-            snackbarMessageRepository.emitSnackbarMessage(snackbarMessage)
+            snackbarDispatcher(snackbarMessage)
         }
 
     fun onAliasCreated(aliasItem: AliasItem) {
@@ -263,7 +263,7 @@ abstract class BaseLoginViewModel(
         } else {
             val message = "Empty suffix on create alias"
             PassLogger.i(TAG, message)
-            snackbarMessageRepository.emitSnackbarMessage(AliasSnackbarMessage.ItemCreationError)
+            snackbarDispatcher(AliasSnackbarMessage.ItemCreationError)
             LoadingResult.Error(Exception(message))
         }
 

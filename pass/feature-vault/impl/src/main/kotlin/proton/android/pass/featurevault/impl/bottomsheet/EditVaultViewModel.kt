@@ -15,7 +15,7 @@ import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.api.SnackbarMessageRepository
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.entity.NewVault
@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditVaultViewModel @Inject constructor(
-    private val snackbarMessageRepository: SnackbarMessageRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
     private val updateVault: UpdateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val savedStateHandle: SavedStateHandle,
@@ -48,7 +48,7 @@ class EditVaultViewModel @Inject constructor(
                     }
                     is LoadingResult.Error -> {
                         PassLogger.w(TAG, it.exception, "Error getting vault by id")
-                        snackbarMessageRepository.emitSnackbarMessage(VaultSnackbarMessage.CannotRetrieveVaultError)
+                        snackbarDispatcher(VaultSnackbarMessage.CannotRetrieveVaultError)
                         isLoadingFlow.update { IsLoadingState.NotLoading }
                     }
                     is LoadingResult.Success -> {
@@ -80,12 +80,12 @@ class EditVaultViewModel @Inject constructor(
             updateVault(vault = body, shareId = shareId)
         }.onSuccess {
             PassLogger.d(TAG, "Vault edited successfully")
-            snackbarMessageRepository.emitSnackbarMessage(VaultSnackbarMessage.EditVaultSuccess)
+            snackbarDispatcher(VaultSnackbarMessage.EditVaultSuccess)
             isLoadingFlow.update { IsLoadingState.NotLoading }
             isVaultCreated.update { IsVaultCreatedEvent.Created }
         }.onFailure {
             PassLogger.e(TAG, it, "Edit Vault Failed")
-            snackbarMessageRepository.emitSnackbarMessage(VaultSnackbarMessage.EditVaultError)
+            snackbarDispatcher(VaultSnackbarMessage.EditVaultError)
             isLoadingFlow.update { IsLoadingState.NotLoading }
         }
     }

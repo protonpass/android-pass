@@ -75,7 +75,7 @@ fun VaultDrawerRow(
                 Icon(
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_checkmark),
                     contentDescription = null,
-                    tint = PassTheme.colors.accentPurpleOpaque
+                    tint = PassTheme.colors.loginInteractionNormMajor1
                 )
             }
         }
@@ -118,8 +118,8 @@ fun NavigationDrawerVaultRowPreview(
                 icon = {
                     VaultIcon(
                         icon = me.proton.core.presentation.R.drawable.ic_proton_house,
-                        iconColor = PassPalette.Yellow100,
-                        backgroundColor = PassPalette.Yellow16,
+                        iconColor = PassPalette.MacaroniAndCheese100,
+                        backgroundColor = PassPalette.MacaroniAndCheese16,
                     )
                 },
                 isSelected = input.second.isSelected,

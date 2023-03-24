@@ -20,13 +20,13 @@ fun MFAIcon(
 ) {
     Circle(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.accentRedOpaque,
+        backgroundColor = PassTheme.colors.passwordInteractionNormMajor1,
         size = size,
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
             contentDescription = stringResource(R.string.mfa_title_icon_content_description),
-            tint = PassTheme.colors.accentRedOpaque
+            tint = PassTheme.colors.passwordInteractionNormMajor1
         )
     }
 }

@@ -74,7 +74,7 @@ internal fun SelectItemScreenContent(
                 onEnterSearch = onEnterSearch,
                 drawerIcon = {
                     BackArrowCircleIconButton(
-                        color = PassTheme.colors.accentPurpleOpaque,
+                        color = PassTheme.colors.loginInteractionNormMajor1,
                         onUpClick = onClose
                     )
                 }

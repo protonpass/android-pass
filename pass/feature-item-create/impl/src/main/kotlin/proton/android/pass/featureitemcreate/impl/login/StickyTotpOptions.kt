@@ -44,11 +44,11 @@ fun StickyTotpOptions(
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_squares),
                 contentDescription = stringResource(R.string.paste_code_icon_content_description),
-                tint = PassTheme.colors.accentPurpleOpaque
+                tint = PassTheme.colors.loginInteractionNormMajor1
             )
             Text(
                 text = stringResource(R.string.totp_paste_code_action),
-                color = PassTheme.colors.accentPurpleOpaque,
+                color = PassTheme.colors.loginInteractionNormMajor1,
                 style = ProtonTheme.typography.default,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
@@ -72,11 +72,11 @@ fun StickyTotpOptions(
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_camera),
                 contentDescription = stringResource(R.string.scan_code_icon_content_description),
-                tint = PassTheme.colors.accentPurpleOpaque
+                tint = PassTheme.colors.loginInteractionNormMajor1
             )
             Text(
                 text = stringResource(R.string.totp_scan_code_action),
-                color = PassTheme.colors.accentPurpleOpaque,
+                color = PassTheme.colors.loginInteractionNormMajor1,
                 style = ProtonTheme.typography.default,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1

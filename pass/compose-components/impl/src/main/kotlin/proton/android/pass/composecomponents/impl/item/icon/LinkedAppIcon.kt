@@ -60,7 +60,7 @@ fun LinkedAppIcon(
                     modifier = Modifier.fillMaxSize()
                         .border(
                             width = 3.dp,
-                            color = PassTheme.colors.iconBorder,
+                            color = PassTheme.colors.inputBorder,
                             shape = PassTheme.shapes.squircleShape
                         )
                         .background(Color.White)

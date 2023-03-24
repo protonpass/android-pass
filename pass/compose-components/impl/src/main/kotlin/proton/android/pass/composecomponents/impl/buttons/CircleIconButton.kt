@@ -39,13 +39,13 @@ fun CircleIconButtonPreview(
     PassTheme(isDark = isDark) {
         Surface {
             CircleIconButton(
-                backgroundColor = PassTheme.colors.accentGreenOpaque,
+                backgroundColor = PassTheme.colors.aliasInteractionNormMajor1,
                 onClick = {},
                 content = {
                     Icon(
                         painter = painterResource(R.drawable.ic_proton_arrows_rotate),
                         contentDescription = null,
-                        tint = PassTheme.colors.accentPurpleOpaque
+                        tint = PassTheme.colors.loginInteractionNormMajor1
                     )
                 }
             )

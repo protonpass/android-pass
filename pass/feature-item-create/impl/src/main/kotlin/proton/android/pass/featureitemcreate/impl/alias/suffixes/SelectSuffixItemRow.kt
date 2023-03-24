@@ -54,7 +54,7 @@ fun SelectSuffixItemRowPreview(
             SelectSuffixItemRow(
                 suffix = ".some@suffix.test",
                 isSelected = input.second,
-                color = PassTheme.colors.accentPurpleNorm,
+                color = PassTheme.colors.loginInteractionNorm,
                 onSelect = {}
             )
         }

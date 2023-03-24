@@ -161,8 +161,8 @@ internal fun LoginContent(
                 CreateUpdateTopBar(
                     text = topBarActionName,
                     isLoading = uiState.isLoadingState.value(),
-                    opaqueColor = PassTheme.colors.accentPurpleOpaque,
-                    weakestColor = PassTheme.colors.accentPurpleWeakest,
+                    opaqueColor = PassTheme.colors.loginInteractionNormMajor1,
+                    weakestColor = PassTheme.colors.loginInteractionNormMinor2,
                     onCloseClick = onUpClick,
                     onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) }
                 )

@@ -20,13 +20,13 @@ fun AliasIcon(
 ) {
     Squircle(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.accentGreenOpaque,
+        backgroundColor = PassTheme.colors.aliasInteractionNormMajor1,
         size = size,
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
             contentDescription = stringResource(R.string.alias_title_icon_content_description),
-            tint = PassTheme.colors.accentGreenOpaque
+            tint = PassTheme.colors.aliasInteractionNormMajor1
         )
     }
 }

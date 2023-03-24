@@ -97,7 +97,7 @@ fun LoginDetail(
             topBar = {
                 ItemDetailTopBar(
                     isLoading = model.isLoading,
-                    color = PassTheme.colors.accentPurpleOpaque,
+                    color = PassTheme.colors.loginInteractionNormMajor1,
                     onUpClick = onUpClick,
                     onEditClick = { onEditClick(item.shareId, item.id, item.itemType) },
                     onOptionsClick = {

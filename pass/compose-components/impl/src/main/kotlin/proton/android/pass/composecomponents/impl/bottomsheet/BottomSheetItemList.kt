@@ -19,7 +19,7 @@ fun BottomSheetItemList(
     ) {
         items.forEach { item ->
             if (item.isDivider) {
-                Divider(color = PassTheme.colors.accentBrandWeakest)
+                Divider(color = PassTheme.colors.interactionNormMinor1)
             } else {
                 BottomSheetItemRow(
                     title = item.title,

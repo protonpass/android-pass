@@ -40,8 +40,8 @@ fun GeneratePasswordViewContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val annotatedString = state.password.toPasswordAnnotatedString(
-            digitColor = PassTheme.colors.accentPurpleOpaque,
-            symbolColor = PassTheme.colors.accentGreenOpaque,
+            digitColor = PassTheme.colors.loginInteractionNormMajor1,
+            symbolColor = PassTheme.colors.aliasInteractionNormMajor1,
             letterColor = PassTheme.colors.textNorm
         )
         Text(

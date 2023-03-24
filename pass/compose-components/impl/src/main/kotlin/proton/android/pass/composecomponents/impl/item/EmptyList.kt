@@ -67,7 +67,7 @@ fun EmptyList(
             if (onCreateItemClick != null) {
                 CircleButton(
                     contentPadding = ButtonDefaults.ContentPadding,
-                    color = PassTheme.colors.accentBrandOpaque,
+                    color = PassTheme.colors.interactionNormMajor1,
                     onClick = onCreateItemClick
                 ) {
                     Text(
@@ -80,13 +80,13 @@ fun EmptyList(
             if (onOpenWebsiteClick != null) {
                 CircleButton(
                     contentPadding = ButtonDefaults.ContentPadding,
-                    color = PassTheme.colors.accentBrandWeakest,
+                    color = PassTheme.colors.interactionNormMinor1,
                     onClick = onOpenWebsiteClick
                 ) {
                     Text(
                         text = stringResource(R.string.empty_list_open_extension),
                         style = PassTypography.body3Regular,
-                        color = PassTheme.colors.accentBrandOpaque
+                        color = PassTheme.colors.interactionNormMajor1
                     )
                 }
             }

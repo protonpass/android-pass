@@ -52,7 +52,7 @@ private fun sortingItemList(
                 override val title: @Composable () -> Unit
                     get() = {
                         val color = if (it == selectedSortingType) {
-                            PassTheme.colors.accentBrandNorm
+                            PassTheme.colors.interactionNorm
                         } else {
                             PassTheme.colors.textNorm
                         }
@@ -67,7 +67,7 @@ private fun sortingItemList(
                         {
                             BottomSheetItemIcon(
                                 iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
-                                tint = PassTheme.colors.accentBrandOpaque
+                                tint = PassTheme.colors.interactionNormMajor1
                             )
                         }
                     } else null

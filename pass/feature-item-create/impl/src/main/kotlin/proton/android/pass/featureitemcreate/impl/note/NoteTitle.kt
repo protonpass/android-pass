@@ -30,7 +30,7 @@ fun NoteTitle(
 ) {
     val focusRequester = remember { FocusRequester() }
     val titleColor = if (onTitleRequiredError) {
-        PassTheme.colors.accentRedNorm
+        PassTheme.colors.passwordInteractionNorm
     } else {
         PassTheme.colors.textWeak
     }

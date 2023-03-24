@@ -95,7 +95,7 @@ private fun createVaultBottomSheetItem(
                 {
                     BottomSheetItemIcon(
                         iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
-                        tint = PassTheme.colors.accentPurpleOpaque
+                        tint = PassTheme.colors.loginInteractionNormMajor1
                     )
                 }
             } else null

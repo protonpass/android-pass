@@ -69,7 +69,7 @@ fun NoteDetail(
             topBar = {
                 ItemDetailTopBar(
                     isLoading = model.isLoading,
-                    color = PassTheme.colors.accentYellowOpaque,
+                    color = PassTheme.colors.noteInteractionNormMajor1,
                     onUpClick = onUpClick,
                     onEditClick = { onEditClick(item.shareId, item.id, item.itemType) },
                     onOptionsClick = {

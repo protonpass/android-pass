@@ -73,7 +73,7 @@ fun CreateAliasBottomSheetContent(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             prefix = state.aliasItem.prefix,
             suffix = state.aliasItem.selectedSuffix?.suffix ?: "",
-            suffixColor = PassTheme.colors.accentPurpleNorm,
+            suffixColor = PassTheme.colors.loginInteractionNorm,
             fontSize = 20.sp
         )
         AnimatedVisibility(visible = showAdvancedOptions) {
@@ -122,7 +122,7 @@ fun CreateAliasBottomSheetContent(
             show = showSuffixDialog,
             suffixes = state.aliasItem.aliasOptions.suffixes.toImmutableList(),
             selectedSuffix = state.aliasItem.selectedSuffix,
-            color = PassTheme.colors.accentPurpleNorm,
+            color = PassTheme.colors.loginInteractionNorm,
             onSuffixChanged = {
                 onSuffixChanged(it)
                 showSuffixDialog = false

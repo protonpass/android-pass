@@ -51,11 +51,11 @@ fun LoginIcon(
 
 @Composable
 fun LoginIcon(modifier: Modifier = Modifier) {
-    Squircle(modifier = modifier, backgroundColor = PassTheme.colors.accentPurpleOpaque) {
+    Squircle(modifier = modifier, backgroundColor = PassTheme.colors.loginInteractionNormMajor1) {
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_user),
             contentDescription = stringResource(R.string.login_title_icon_content_description),
-            tint = PassTheme.colors.accentPurpleOpaque
+            tint = PassTheme.colors.loginInteractionNormMajor1
         )
     }
 }
@@ -96,7 +96,7 @@ fun LoginIcon(
                         modifier = Modifier.fillMaxSize()
                             .border(
                                 width = 3.dp,
-                                color = PassTheme.colors.iconBorder,
+                                color = PassTheme.colors.inputBorder,
                                 shape = PassTheme.shapes.squircleShape
                             )
                             .background(Color.White)
@@ -152,7 +152,7 @@ private fun TwoLetterLoginIcon(
     CircleTextIcon(
         modifier = modifier,
         text = text,
-        color = PassTheme.colors.accentPurpleOpaque,
+        color = PassTheme.colors.loginInteractionNormMajor1,
         size = size
     )
 }

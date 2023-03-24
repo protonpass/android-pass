@@ -49,13 +49,13 @@ fun VaultDrawerContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            color = PassTheme.colors.accentPurpleWeakest,
+            color = PassTheme.colors.loginInteractionNormMinor2,
             elevation = ButtonDefaults.elevation(0.dp),
             onClick = onCreateVaultClick
         ) {
             Text(
                 text = stringResource(R.string.vault_drawer_create_vault),
-                color = PassTheme.colors.accentPurpleOpaque,
+                color = PassTheme.colors.loginInteractionNormMajor1,
                 style = PassTypography.body3Regular
             )
         }

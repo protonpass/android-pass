@@ -34,13 +34,13 @@ fun LogViewContent(
                 actions = {
                     Circle(
                         modifier = Modifier.padding(12.dp, 4.dp),
-                        backgroundColor = PassTheme.colors.accentBrandOpaque,
+                        backgroundColor = PassTheme.colors.interactionNormMajor1,
                         onClick = onShareLogsClick
                     ) {
                         Icon(
                             painter = painterResource(CoreR.drawable.ic_proton_arrow_up_from_square),
                             contentDescription = "",
-                            tint = PassTheme.colors.accentBrandOpaque
+                            tint = PassTheme.colors.interactionNormMajor1
                         )
                     }
                 }

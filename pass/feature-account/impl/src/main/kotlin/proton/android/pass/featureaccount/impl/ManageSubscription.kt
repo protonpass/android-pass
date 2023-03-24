@@ -22,13 +22,13 @@ fun ManageSubscription(
     ColorSettingOption(
         modifier = modifier.roundedContainer(ProtonTheme.colors.separatorNorm),
         text = stringResource(R.string.account_manage_subscription),
-        textColor = PassTheme.colors.accentBrandOpaque,
-        iconBgColor = PassTheme.colors.accentBrandWeakest,
+        textColor = PassTheme.colors.interactionNormMajor1,
+        iconBgColor = PassTheme.colors.interactionNormMinor1,
         icon = {
             Icon(
                 painter = painterResource(me.proton.core.presentation.compose.R.drawable.ic_proton_arrow_out_square),
                 contentDescription = stringResource(R.string.manage_subscription_icon_content_description),
-                tint = PassTheme.colors.accentBrandOpaque
+                tint = PassTheme.colors.interactionNormMajor1
             )
         },
         onClick = onManageSubscriptionClick

@@ -80,7 +80,7 @@ fun IconItem(
         Box(
             modifier = Modifier.size(40.dp)
                 .clip(CircleShape)
-                .background(PassTheme.colors.accentPurpleWeakest),
+                .background(PassTheme.colors.loginInteractionNormMinor2),
             contentAlignment = Alignment.Center
         ) {
             Icon(

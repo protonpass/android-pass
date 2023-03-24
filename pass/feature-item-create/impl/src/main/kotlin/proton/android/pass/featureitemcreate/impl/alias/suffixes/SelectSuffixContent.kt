@@ -57,7 +57,7 @@ fun SelectSuffixContentPreview(
                     )
                 ),
                 selectedSuffix = selected,
-                color = PassTheme.colors.accentPurpleNorm,
+                color = PassTheme.colors.loginInteractionNorm,
                 onSuffixChanged = {}
             )
         }

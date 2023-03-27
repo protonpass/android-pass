@@ -83,8 +83,7 @@ fun NoteDetail(
                     .padding(padding)
                     .verticalScroll(rememberScrollState()),
                 model = model,
-                moreInfoUiState = moreInfoUiState,
-                onCopyToClipboard = { viewModel.onCopyToClipboard() }
+                moreInfoUiState = moreInfoUiState
             )
         }
     }

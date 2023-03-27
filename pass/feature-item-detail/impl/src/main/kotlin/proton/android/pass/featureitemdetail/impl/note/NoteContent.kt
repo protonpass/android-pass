@@ -1,10 +1,10 @@
 package proton.android.pass.featureitemdetail.impl.note
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,21 +24,20 @@ import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 fun NoteContent(
     modifier: Modifier = Modifier,
     model: NoteDetailUiState,
-    moreInfoUiState: MoreInfoUiState,
-    onCopyToClipboard: () -> Unit
+    moreInfoUiState: MoreInfoUiState
 ) {
     Column(
         modifier = modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
         ItemTitleText(text = model.title, maxLines = Int.MAX_VALUE)
-        Text(
-            modifier = Modifier
-                .clickable { onCopyToClipboard() }
-                .fillMaxWidth(),
-            text = model.note,
-            style = ProtonTheme.typography.default
-        )
+        SelectionContainer(modifier = Modifier.fillMaxWidth()) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = model.note,
+                style = ProtonTheme.typography.default
+            )
+        }
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }
 }
@@ -57,7 +56,6 @@ fun NoteContentPreview(
                     isLoading = false,
                     isItemSentToTrash = false
                 ),
-                onCopyToClipboard = {},
 
                 // We don't care about the MoreInfo as we are not showing it
                 moreInfoUiState = MoreInfoUiState.Initial

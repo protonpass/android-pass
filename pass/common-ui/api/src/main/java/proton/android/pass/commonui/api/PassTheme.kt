@@ -10,7 +10,7 @@ import me.proton.core.compose.theme.isNightMode
 fun PassTheme(
     isDark: Boolean = isNightMode(),
     protonColors: ProtonColors = if (isDark) ProtonColors.Dark else ProtonColors.Light,
-    passColors: PassColors = if (isDark) PassColors.Dark else PassColors.Dark,
+    passColors: PassColors = if (isDark) PassColors.Dark else PassColors.Light,
     passDimens: PassDimens = PassDimens.Phone,
     passShapes: PassShapes = PassShapes.Default,
     content: @Composable () -> Unit

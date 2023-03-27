@@ -81,7 +81,7 @@ data class PassColors(
             textDisabled = PassPalette.White8,
             textInvert = PassPalette.EerieBlack,
             inputBackground = PassPalette.White4,
-            inputBorder = PassPalette.BrightGray,
+            inputBorder = PassPalette.SilverWhite,
             inputBorderFocused = PassPalette.Lavender8,
             backgroundNorm = PassPalette.EerieBlack,
             backgroundWeak = PassPalette.DarkGunmetal,
@@ -92,6 +92,48 @@ data class PassColors(
             signalSuccess = PassPalette.OceanGreen,
             signalInfo = PassPalette.PictonBlue,
             signalNorm = PassPalette.White100
+        )
+        val Light = PassColors(
+            interactionNormMajor1 = PassPalette.Iris,
+            interactionNorm = PassPalette.Indigo,
+            interactionNormMinor1 = PassPalette.Lilac,
+            interactionNormMinor2 = PassPalette.Magnolia,
+            loginInteractionNormMajor1 = PassPalette.BlueViolet,
+            loginInteractionNorm = PassPalette.LavenderFloral,
+            loginInteractionNormMinor1 = PassPalette.LavenderPink,
+            loginInteractionNormMinor2 = PassPalette.LilacMist,
+            aliasInteractionNormMajor1 = PassPalette.GreenCyan,
+            aliasInteractionNorm = PassPalette.ShamrockGreen,
+            aliasInteractionNormMinor1 = PassPalette.AzureishWhite,
+            aliasInteractionNormMinor2 = PassPalette.Honeydew,
+            noteInteractionNormMajor1 = PassPalette.Bronze,
+            noteInteractionNorm = PassPalette.VeryLightTangelo,
+            noteInteractionNormMinor1 = PassPalette.Flesh,
+            noteInteractionNormMinor2 = PassPalette.OldLace,
+            passwordInteractionNormMajor1 = PassPalette.Tulip,
+            passwordInteractionNorm = PassPalette.LightSalmonPink,
+            passwordInteractionNormMinor1 = PassPalette.Pink,
+            passwordInteractionNormMinor2 = PassPalette.Linen,
+            textNorm = PassPalette.DarkCharcoal,
+            textWeak = PassPalette.GraniteGray,
+            textHint = PassPalette.SilverChalice,
+            textDisabled = PassPalette.BrightGray,
+            textInvert = PassPalette.White100,
+
+            inputBackground = PassPalette.Cultured,
+            inputBorder = PassPalette.SilverWhite,
+            inputBorderFocused = PassPalette.Lavender8,
+
+            backgroundNorm = PassPalette.White100,
+            backgroundWeak = PassPalette.Sapphire8,
+            backgroundStrong = PassPalette.Whisper,
+            backgroundStrongest = PassPalette.AliceBlue,
+
+            signalDanger = PassPalette.DingyDungeon,
+            signalWarning = PassPalette.Persimmon,
+            signalSuccess = PassPalette.SpanishViridian,
+            signalInfo = PassPalette.Cyan,
+            signalNorm = PassPalette.RichBlack
         )
     }
 }

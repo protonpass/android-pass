@@ -14,8 +14,7 @@ import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
-import proton.android.pass.composecomponents.impl.extension.toBackgroundColor
-import proton.android.pass.composecomponents.impl.extension.toIconColor
+import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
 import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
@@ -68,9 +67,9 @@ fun VaultDrawerSection(
                 itemCount = share.activeItemCount,
                 icon = {
                     VaultIcon(
-                        backgroundColor = share.color.toBackgroundColor(),
+                        backgroundColor = share.color.toColor(true),
                         icon = share.icon.toResource(),
-                        iconColor = share.color.toIconColor()
+                        iconColor = share.color.toColor()
                     )
                 },
                 isShared = false,

@@ -22,8 +22,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
-import proton.android.pass.composecomponents.impl.extension.toBackgroundColor
-import proton.android.pass.composecomponents.impl.extension.toIconColor
+import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.featureitemcreate.impl.R
@@ -85,8 +84,8 @@ private fun createVaultBottomSheetItem(
         override val leftIcon: @Composable (() -> Unit)
             get() = {
                 VaultIcon(
-                    backgroundColor = vault.vault.color.toBackgroundColor(),
-                    iconColor = vault.vault.color.toIconColor(),
+                    backgroundColor = vault.vault.color.toColor(true),
+                    iconColor = vault.vault.color.toColor(),
                     icon = vault.vault.icon.toResource()
                 )
             }

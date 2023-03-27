@@ -3,7 +3,6 @@ package proton.android.pass.featureitemdetail.impl.note
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -11,8 +10,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -21,7 +18,6 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotMovedToTrash
-import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.NoteCopiedToClipboard
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.Item
@@ -31,7 +27,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NoteDetailViewModel @Inject constructor(
-    private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val trashItem: TrashItem
@@ -66,17 +61,6 @@ class NoteDetailViewModel @Inject constructor(
 
     fun setItem(item: Item) {
         itemFlow.update { item }
-    }
-
-    fun onCopyToClipboard() = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            val decrypted = encryptionContextProvider.withEncryptionContext {
-                val note = itemFlow.value?.note ?: return@withEncryptionContext ""
-                decrypt(note)
-            }
-            clipboardManager.copyToClipboard(decrypted)
-        }
-        snackbarDispatcher(NoteCopiedToClipboard)
     }
 
     fun onDelete(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {

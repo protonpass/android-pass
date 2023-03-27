@@ -34,6 +34,7 @@ import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
+import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -53,6 +54,7 @@ import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
+import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.TrashItemRevision
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.responses.ItemRevision
@@ -153,6 +155,64 @@ class ItemRepositoryImpl @Inject constructor(
                         entityToDomain(this@withEncryptionContext, entity)
                     }
                 }
+        }
+    }
+
+    override suspend fun createItemAndAlias(
+        userId: UserId,
+        shareId: ShareId,
+        contents: ItemContents,
+        newAlias: NewAlias
+    ): Item = withContext(Dispatchers.IO) {
+        withUserAddress(userId) { userAddress ->
+            val share = when (val res = shareRepository.getById(userId, shareId)) {
+                is LoadingResult.Success -> {
+                    res.data ?: throw ShareNotAvailableError()
+                }
+                is LoadingResult.Error -> {
+                    PassLogger.e(TAG, res.exception, "Could not get share")
+                    throw ShareNotAvailableError()
+                }
+                LoadingResult.Loading -> {
+                    val e = IllegalStateException("Should not be Loading")
+                    PassLogger.e(TAG, e, "Could not get share")
+                    throw e
+                }
+            }
+            val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
+            val request = runCatching {
+                val itemBody = createItem.create(shareKey, contents)
+                val aliasContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
+                val aliasBody = createItem.create(shareKey, aliasContents)
+
+                CreateItemAliasRequest(
+                    alias = CreateAliasRequest(
+                        prefix = newAlias.prefix,
+                        signedSuffix = newAlias.suffix.signedSuffix,
+                        mailboxes = newAlias.mailboxes.map { it.id },
+                        item = aliasBody.request.toRequest()
+                    ),
+                    item = itemBody.request.toRequest()
+                )
+            }.fold(
+                onSuccess = { it },
+                onFailure = {
+                    PassLogger.e(TAG, it, "Error creating item")
+                    throw it
+                }
+            )
+
+            val itemResponse = remoteItemDataSource.createItemAndAlias(userId, shareId, request)
+            val itemEntity = itemResponseToEntity(userAddress, itemResponse.item, share, listOf(shareKey))
+            val aliasEntity = itemResponseToEntity(userAddress, itemResponse.alias, share, listOf(shareKey))
+            database.inTransaction {
+                localItemDataSource.upsertItem(itemEntity)
+                localItemDataSource.upsertItem(aliasEntity)
+            }
+
+            encryptionContextProvider.withEncryptionContext {
+                entityToDomain(this@withEncryptionContext, itemEntity)
+            }
         }
     }
 

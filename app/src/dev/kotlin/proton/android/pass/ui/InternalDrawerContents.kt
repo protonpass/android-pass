@@ -10,7 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import proton.android.pass.log.api.PassLogger
@@ -34,13 +33,6 @@ fun InternalDrawerContents(
             onClick = { viewModel.clearPreferences() },
         ) {
             Text(text = "Clear preferences")
-        }
-        val localContext = LocalContext.current
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { viewModel.shareLogCatOutput(localContext) },
-        ) {
-            Text(text = "Share Logs")
         }
         Button(
             modifier = Modifier.fillMaxWidth(),

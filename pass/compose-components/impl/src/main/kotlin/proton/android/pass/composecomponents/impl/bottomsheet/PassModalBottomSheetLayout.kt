@@ -8,6 +8,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.compositeOver
 import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
@@ -30,9 +31,10 @@ fun PassModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = sheetContent,
         sheetShape = PassTheme.shapes.bottomsheetShape,
-        sheetBackgroundColor = PassTheme.colors.interactionNormMinor2,
+        sheetBackgroundColor = PassTheme.colors.interactionNormMinor2
+            .compositeOver(PassTheme.colors.backgroundNorm),
         sheetContentColor = ProtonTheme.colors.textNorm,
-        scrimColor = ProtonTheme.colors.blenderNorm,
+        scrimColor = PassTheme.colors.backdrop,
         content = content
     )
 }
@@ -48,8 +50,9 @@ fun PassModalBottomSheetLayout(
         modifier = modifier,
         bottomSheetNavigator = bottomSheetNavigator,
         sheetShape = PassTheme.shapes.bottomsheetShape,
-        sheetBackgroundColor = PassTheme.colors.interactionNormMinor2,
-        scrimColor = ProtonTheme.colors.blenderNorm,
+        sheetBackgroundColor = PassTheme.colors.interactionNormMinor2
+            .compositeOver(PassTheme.colors.backgroundNorm),
+        scrimColor = PassTheme.colors.backdrop,
         content = content
     )
 }

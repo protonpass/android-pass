@@ -26,8 +26,12 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
+import proton.android.pass.featurehome.impl.HomeBottomSheetType.AliasOptions
+import proton.android.pass.featurehome.impl.HomeBottomSheetType.LoginOptions
+import proton.android.pass.featurehome.impl.HomeBottomSheetType.NoteOptions
 import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
@@ -119,7 +123,7 @@ fun HomeScreen(
                     shouldScrollToTop = true
                     scope.launch { bottomSheetState.hide() }
                 }
-                HomeBottomSheetType.LoginOptions -> LoginOptionsBottomSheetContents(
+                LoginOptions -> LoginOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     onCopyUsername = {
                         scope.launch { bottomSheetState.hide() }
@@ -143,7 +147,7 @@ fun HomeScreen(
                         }
                     }
                 )
-                HomeBottomSheetType.AliasOptions -> AliasOptionsBottomSheetContents(
+                AliasOptions -> AliasOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     onCopyAlias = {
                         scope.launch { bottomSheetState.hide() }
@@ -160,7 +164,7 @@ fun HomeScreen(
                         }
                     }
                 )
-                HomeBottomSheetType.NoteOptions -> NoteOptionsBottomSheetContents(
+                NoteOptions -> NoteOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     onCopyNote = {
                         scope.launch { bottomSheetState.hide() }
@@ -234,6 +238,7 @@ fun HomeScreen(
             modifier = modifier,
             drawerState = drawerState,
             drawerShape = CutCornerShape(0.dp),
+            scrimColor = PassTheme.colors.backdrop,
             drawerContent = {
                 VaultDrawerContent(
                     homeVaultSelection = drawerUiState.vaultSelection,
@@ -289,9 +294,9 @@ fun HomeScreen(
                         currentBottomSheet = HomeBottomSheetType.TrashItemOptions
                     } else {
                         when (item.itemType) {
-                            is ItemType.Alias -> currentBottomSheet = HomeBottomSheetType.AliasOptions
-                            is ItemType.Login -> currentBottomSheet = HomeBottomSheetType.LoginOptions
-                            is ItemType.Note -> currentBottomSheet = HomeBottomSheetType.NoteOptions
+                            is ItemType.Alias -> currentBottomSheet = AliasOptions
+                            is ItemType.Login -> currentBottomSheet = LoginOptions
+                            is ItemType.Note -> currentBottomSheet = NoteOptions
                             ItemType.Password -> {}
                         }
                     }

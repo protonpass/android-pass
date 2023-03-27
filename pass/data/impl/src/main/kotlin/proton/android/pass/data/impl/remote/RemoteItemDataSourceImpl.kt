@@ -10,11 +10,13 @@ import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
 import proton.android.pass.data.impl.requests.CreateAliasRequest
+import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
+import proton.android.pass.data.impl.responses.CreateItemAliasBundle
 import proton.android.pass.data.impl.responses.ItemRevision
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.pass.domain.ItemId
@@ -53,6 +55,26 @@ class RemoteItemDataSourceImpl @Inject constructor(
                     }
                 }
                 return LoadingResult.Error(res.cause ?: Exception("Create alias failed"))
+            }
+        }
+    }
+
+    override suspend fun createItemAndAlias(
+        userId: UserId,
+        shareId: ShareId,
+        body: CreateItemAliasRequest
+    ): CreateItemAliasBundle {
+        val res = api.get<PasswordManagerApi>(userId)
+            .invoke { createItemAndAlias(shareId.id, body) }
+        when (res) {
+            is ApiResult.Success -> return res.value.bundle
+            is ApiResult.Error -> {
+                if (res is ApiResult.Error.Http) {
+                    if (res.proton?.code == CODE_CANNOT_CREATE_MORE_ALIASES) {
+                        throw CannotCreateMoreAliasesError()
+                    }
+                }
+                throw res.cause ?: Exception("Create item and alias failed")
             }
         }
     }

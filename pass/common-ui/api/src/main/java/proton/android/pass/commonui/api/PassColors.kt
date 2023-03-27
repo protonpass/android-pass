@@ -54,7 +54,18 @@ data class PassColors(
     val signalInfo: Color,
     val signalNorm: Color,
 
-    val backdrop: Color
+    val backdrop: Color,
+
+    val vaultColor1: Color,
+    val vaultColor2: Color,
+    val vaultColor3: Color,
+    val vaultColor4: Color,
+    val vaultColor5: Color,
+    val vaultColor6: Color,
+    val vaultColor7: Color,
+    val vaultColor8: Color,
+    val vaultColor9: Color,
+    val vaultColor10: Color,
 ) {
     companion object {
         val Dark = PassColors(
@@ -97,6 +108,16 @@ data class PassColors(
             signalInfo = PassPalette.PictonBlue,
             signalNorm = PassPalette.White100,
             backdrop = PassPalette.Black32,
+            vaultColor1 = PassPalette.Heliotrope,
+            vaultColor2 = PassPalette.Mauvelous,
+            vaultColor3 = PassPalette.MarigoldYellow,
+            vaultColor4 = PassPalette.DeYork,
+            vaultColor5 = PassPalette.JordyBlue,
+            vaultColor6 = PassPalette.LavenderMagenta,
+            vaultColor7 = PassPalette.ChestnutRose,
+            vaultColor8 = PassPalette.Porsche,
+            vaultColor9 = PassPalette.Mercury,
+            vaultColor10 = PassPalette.WaterLeaf,
         )
         val Light = PassColors(
             interactionNormContrast = PassPalette.SmokyBlack,
@@ -140,7 +161,18 @@ data class PassColors(
             signalSuccess = PassPalette.SpanishViridian,
             signalInfo = PassPalette.Cyan,
             signalNorm = PassPalette.RichBlack,
-            backdrop = PassPalette.Black32
+            backdrop = PassPalette.Black32,
+
+            vaultColor1 = PassPalette.Lavender100,
+            vaultColor2 = PassPalette.Begonia,
+            vaultColor3 = PassPalette.AmericanYellow,
+            vaultColor4 = PassPalette.JungleGreen,
+            vaultColor5 = PassPalette.CornflowerBlue,
+            vaultColor6 = PassPalette.RosePink,
+            vaultColor7 = PassPalette.BrickRed,
+            vaultColor8 = PassPalette.DeepSaffron,
+            vaultColor9 = PassPalette.SpanishGray,
+            vaultColor10 = PassPalette.MaximumBlueGreen,
         )
     }
 }
@@ -185,6 +217,16 @@ val LocalPassColors = staticCompositionLocalOf {
         signalSuccess = Color.Unspecified,
         signalInfo = Color.Unspecified,
         signalNorm = Color.Unspecified,
-        backdrop = Color.Unspecified
+        backdrop = Color.Unspecified,
+        vaultColor1 = Color.Unspecified,
+        vaultColor2 = Color.Unspecified,
+        vaultColor3 = Color.Unspecified,
+        vaultColor4 = Color.Unspecified,
+        vaultColor5 = Color.Unspecified,
+        vaultColor6 = Color.Unspecified,
+        vaultColor7 = Color.Unspecified,
+        vaultColor8 = Color.Unspecified,
+        vaultColor9 = Color.Unspecified,
+        vaultColor10 = Color.Unspecified
     )
 }

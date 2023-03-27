@@ -24,8 +24,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
-import proton.android.pass.composecomponents.impl.extension.toBackgroundColor
-import proton.android.pass.composecomponents.impl.extension.toIconColor
+import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
 import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
@@ -215,8 +214,8 @@ private fun HomeDrawerIcon(
             is Some -> {
                 VaultIcon(
                     modifier = modifier.size(48.dp),
-                    backgroundColor = share.value.color.toBackgroundColor(),
-                    iconColor = share.value.color.toIconColor(),
+                    backgroundColor = share.value.color.toColor(true),
+                    iconColor = share.value.color.toColor(),
                     icon = share.value.icon.toResource(),
                     onClick = onDrawerIconClick
                 )

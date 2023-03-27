@@ -13,6 +13,8 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.pass.domain.ItemType
 
+private const val MAX_LINES_NOTE_DETAIL = 2
+
 @Composable
 fun NoteRow(
     modifier: Modifier = Modifier,
@@ -20,10 +22,9 @@ fun NoteRow(
     highlight: String = ""
 ) {
     with(item.itemType as ItemType.Note) {
-        val processedText = this.text.replace("\n", " ")
         var title = AnnotatedString(item.name)
-        var note = AnnotatedString(processedText)
-        if (highlight.isNotBlank()) {
+        val note = if (highlight.isNotBlank()) {
+            val processedText = this.text.replace("\n", " ")
             val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
             val titleMatches = regex.findAll(item.name)
             if (titleMatches.any()) {
@@ -31,8 +32,13 @@ fun NoteRow(
             }
             val noteMatches = regex.findAll(processedText)
             if (noteMatches.any()) {
-                note = processedText.highlight(noteMatches)
+                processedText.highlight(noteMatches)
+            } else {
+                AnnotatedString(processedText)
             }
+        } else {
+            val firstLines = this.text.lines().take(MAX_LINES_NOTE_DETAIL)
+            AnnotatedString(firstLines.joinToString(" "))
         }
 
         ItemRow(

@@ -8,6 +8,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
+import kotlinx.datetime.Clock
+import kotlinx.datetime.toJavaInstant
 import proton.android.pass.log.api.PassLogger
 import timber.log.Timber
 import java.io.BufferedWriter
@@ -15,31 +19,30 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileWriter
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.Date
+import java.time.ZoneId
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class FileLoggingTree(context: Context) : Timber.Tree() {
-
-    private var writer: BufferedWriter? = null
-    private val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS", Locale.getDefault())
+class FileLoggingTree(private val context: Context) : Timber.Tree() {
+    private val mutex = Mutex()
+    private val dateTimeFormatter = DateTimeFormatter
+        .ofPattern("yyyy-MM-dd hh:mm:ss.SSS", Locale.getDefault())
+        .withZone(ZoneId.from(ZoneOffset.UTC))
     private val scope = CoroutineScope(SupervisorJob())
 
     init {
         try {
-            val cacheDir = File(context.cacheDir, "logs")
+            val cacheDir = File(context.cacheDir, LOGS_DIR)
             if (!cacheDir.exists()) {
                 cacheDir.mkdirs()
             }
-            val cacheFile = File(cacheDir, "pass.log")
+            val cacheFile = File(cacheDir, LOGS_FILE)
             if (!cacheFile.exists()) {
                 cacheFile.createNewFile()
             }
             if (shouldRotate(cacheFile)) {
                 rotateLog(cacheDir, cacheFile)
-            }
-            if (cacheFile.exists()) {
-                writer = BufferedWriter(FileWriter(cacheFile, true))
             }
         } catch (e: IOException) {
             PassLogger.e(TAG, e, "Could not create log file")
@@ -76,6 +79,38 @@ class FileLoggingTree(context: Context) : Timber.Tree() {
         }
     }
 
+    @SuppressLint("LogNotTimber")
+    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+        if (priority < Log.INFO) return
+        scope.launch(Dispatchers.IO) {
+            try {
+                val cacheFile = File(context.cacheDir, "$LOGS_DIR/$LOGS_FILE")
+                if (cacheFile.exists()) {
+                    mutex.withLock {
+                        BufferedWriter(FileWriter(cacheFile, true))
+                            .use { writer ->
+                                writer.append(buildLog(priority, tag, message))
+                                writer.newLine()
+                                writer.flush()
+                            }
+                    }
+                }
+            } catch (e: IOException) {
+                Log.e(TAG, "Could not write to log file", e)
+            }
+        }
+    }
+
+    private fun buildLog(priority: Int, tag: String?, message: String): String = buildString {
+        append(dateTimeFormatter.format(Clock.System.now().toJavaInstant()))
+        append(' ')
+        append(priority.toPriorityChar())
+        append(": ")
+        append(tag ?: "EmptyTag")
+        append(" - ")
+        append(message)
+    }
+
     private fun Int.toPriorityChar(): Char = when (this) {
         Log.VERBOSE -> 'V'
         Log.DEBUG -> 'D'
@@ -86,35 +121,11 @@ class FileLoggingTree(context: Context) : Timber.Tree() {
         else -> '-'
     }
 
-    @SuppressLint("LogNotTimber")
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        val wr = writer ?: return
-        if (priority >= Log.INFO) {
-            val log = buildString {
-                append(dateFormat.format(Date()))
-                append(' ')
-                append(priority.toPriorityChar())
-                append(": ")
-                append(tag ?: "EmptyTag")
-                append(" - ")
-                append(message)
-            }
-
-            scope.launch(Dispatchers.IO) {
-                try {
-                    wr.append(log)
-                    wr.newLine()
-                    wr.flush()
-                } catch (e: IOException) {
-                    Log.e(TAG, "Could not write to log file", e)
-                }
-            }
-        }
-    }
-
     companion object {
         private const val TAG = "FileLoggingTree"
         private const val MAX_FILE_SIZE: Long = 4 * 1024 * 1024 // 4 MB
         private const val ROTATION_LINES: Long = 500
+        private const val LOGS_DIR = "logs"
+        private const val LOGS_FILE = "pass.log"
     }
 }

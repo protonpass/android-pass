@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmallInverted
+import me.proton.core.compose.theme.defaultSmall
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
@@ -42,7 +42,7 @@ internal fun ItemDetailTopBar(
         title = { },
         navigationIcon = {
             BackArrowCircleIconButton(
-                modifier = modifier.padding(12.dp, 4.dp),
+                modifier = Modifier.padding(12.dp, 4.dp),
                 color = color,
                 onUpClick = onUpClick
             )
@@ -61,14 +61,15 @@ internal fun ItemDetailTopBar(
                     text = {
                         Text(
                             text = stringResource(R.string.top_bar_edit_button_text),
-                            style = ProtonTheme.typography.defaultSmallInverted
+                            style = ProtonTheme.typography.defaultSmall,
+                            color = PassTheme.colors.textInvert
                         )
                     },
                     leadingIcon = {
                         Icon(
                             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_pencil),
                             contentDescription = stringResource(R.string.top_bar_edit_icon_content_description),
-                            tint = ProtonTheme.colors.iconInverted
+                            tint = PassTheme.colors.textInvert
                         )
                     },
                     onClick = { onEditClick() }

@@ -83,4 +83,6 @@ object PassPalette {
     val AliceBlue = Color(0xFFEFF3FB)
     val Whisper = Color(0xFFF6F5F8)
     val Sapphire8 = Color(0x146160fd)
+
+    val Black32 = Color(0x52000000)
 }

@@ -7,7 +7,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -38,7 +37,7 @@ fun BottomBar(
         BottomNavigationItem(
             selected = bottomBarSelected == BottomBarSelected.Home,
             selectedContentColor = PassTheme.colors.interactionNorm,
-            unselectedContentColor = Color.White,
+            unselectedContentColor = PassTheme.colors.interactionNormContrast,
             onClick = onListClick,
             icon = {
                 Icon(
@@ -50,7 +49,7 @@ fun BottomBar(
         BottomNavigationItem(
             selected = false,
             selectedContentColor = PassTheme.colors.interactionNorm,
-            unselectedContentColor = Color.White,
+            unselectedContentColor = PassTheme.colors.interactionNormContrast,
             onClick = onCreateClick,
             icon = {
                 Icon(
@@ -62,7 +61,7 @@ fun BottomBar(
         BottomNavigationItem(
             selected = bottomBarSelected == BottomBarSelected.Profile,
             selectedContentColor = PassTheme.colors.interactionNorm,
-            unselectedContentColor = Color.White,
+            unselectedContentColor = PassTheme.colors.interactionNormContrast,
             onClick = onProfileClick,
             icon = {
                 Icon(

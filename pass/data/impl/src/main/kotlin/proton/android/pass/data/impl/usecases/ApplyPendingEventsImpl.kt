@@ -96,14 +96,14 @@ class ApplyPendingEventsImpl @Inject constructor(
         while (true) {
             val events = eventRepository.getEvents(userId, addressId, shareId)
 
-            PassLogger.i(TAG, "Applying events with share id :$shareId")
+            PassLogger.d(TAG, "Applying events with share id :$shareId")
             itemRepository.applyEvents(
                 userId,
                 addressId,
                 shareId,
                 events.toDomain()
             )
-            PassLogger.i(
+            PassLogger.d(
                 TAG,
                 "Applied events with share id :$shareId. Storing latest event ID"
             )

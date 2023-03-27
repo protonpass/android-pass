@@ -36,7 +36,7 @@ fun PassApp(
     LaunchedEffect(systemUiController, isDark) {
         systemUiController.systemBarsDarkContentEnabled = !isDark
     }
-    PassTheme(isDark = true) {
+    PassTheme(isDark = isDark) {
         ProvideWindowInsets {
             PassAppContent(
                 modifier = modifier

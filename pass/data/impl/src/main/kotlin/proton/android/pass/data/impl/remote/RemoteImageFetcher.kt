@@ -40,6 +40,9 @@ class RemoteImageFetcherImpl @Inject constructor(
                     }
                 }
             }
+
+            // Could not find any image
+            emit(null)
         }
     }
 

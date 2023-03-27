@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 @Immutable
 data class PassColors(
 
+    val interactionNormContrast: Color,
     val interactionNormMajor1: Color,
     val interactionNorm: Color,
     val interactionNormMinor1: Color,
@@ -52,9 +53,12 @@ data class PassColors(
     val signalSuccess: Color,
     val signalInfo: Color,
     val signalNorm: Color,
+
+    val backdrop: Color
 ) {
     companion object {
         val Dark = PassColors(
+            interactionNormContrast = PassPalette.White100,
             interactionNormMajor1 = PassPalette.VeryLightBlue100,
             interactionNorm = PassPalette.VeryLightBlue80,
             interactionNormMinor1 = PassPalette.VeryLightBlue16,
@@ -91,9 +95,11 @@ data class PassColors(
             signalWarning = PassPalette.PastelOrange,
             signalSuccess = PassPalette.OceanGreen,
             signalInfo = PassPalette.PictonBlue,
-            signalNorm = PassPalette.White100
+            signalNorm = PassPalette.White100,
+            backdrop = PassPalette.Black32,
         )
         val Light = PassColors(
+            interactionNormContrast = PassPalette.SmokyBlack,
             interactionNormMajor1 = PassPalette.Iris,
             interactionNorm = PassPalette.Indigo,
             interactionNormMinor1 = PassPalette.Lilac,
@@ -133,13 +139,15 @@ data class PassColors(
             signalWarning = PassPalette.Persimmon,
             signalSuccess = PassPalette.SpanishViridian,
             signalInfo = PassPalette.Cyan,
-            signalNorm = PassPalette.RichBlack
+            signalNorm = PassPalette.RichBlack,
+            backdrop = PassPalette.Black32
         )
     }
 }
 
 val LocalPassColors = staticCompositionLocalOf {
     PassColors(
+        interactionNormContrast = Color.Unspecified,
         interactionNormMajor1 = Color.Unspecified,
         interactionNorm = Color.Unspecified,
         interactionNormMinor1 = Color.Unspecified,
@@ -176,6 +184,7 @@ val LocalPassColors = staticCompositionLocalOf {
         signalWarning = Color.Unspecified,
         signalSuccess = Color.Unspecified,
         signalInfo = Color.Unspecified,
-        signalNorm = Color.Unspecified
+        signalNorm = Color.Unspecified,
+        backdrop = Color.Unspecified
     )
 }

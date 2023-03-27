@@ -4,10 +4,12 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
+import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
+import proton.android.pass.data.impl.responses.CreateItemAliasBundle
 import proton.android.pass.data.impl.responses.ItemRevision
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
@@ -42,6 +44,14 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         shareId: ShareId,
         body: CreateAliasRequest
     ): LoadingResult<ItemRevision> {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override suspend fun createItemAndAlias(
+        userId: UserId,
+        shareId: ShareId,
+        body: CreateItemAliasRequest
+    ): CreateItemAliasBundle {
         throw IllegalStateException("Not yet implemented")
     }
 

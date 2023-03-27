@@ -80,7 +80,7 @@ data class PassColors(
             textHint = PassPalette.White24,
             textDisabled = PassPalette.White8,
             textInvert = PassPalette.EerieBlack,
-            inputBackground = PassPalette.Cultured,
+            inputBackground = PassPalette.White4,
             inputBorder = PassPalette.BrightGray,
             inputBorderFocused = PassPalette.Lavender8,
             backgroundNorm = PassPalette.EerieBlack,

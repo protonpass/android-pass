@@ -39,6 +39,7 @@ class LogViewViewModel @Inject constructor(
                     _state.update {
                         br.readLines()
                             .takeLast(TAIL_LOG_SIZE)
+                            .reversed()
                             .joinToString("\n")
                     }
                 }

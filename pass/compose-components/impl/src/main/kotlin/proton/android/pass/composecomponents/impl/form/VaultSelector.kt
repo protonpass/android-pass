@@ -19,8 +19,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.extension.toBackgroundColor
-import proton.android.pass.composecomponents.impl.extension.toIconColor
+import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.pass.domain.ShareColor
@@ -44,8 +43,8 @@ fun VaultSelector(
         verticalAlignment = Alignment.CenterVertically
     ) {
         VaultIcon(
-            iconColor = color.toIconColor(),
-            backgroundColor = color.toBackgroundColor(),
+            iconColor = color.toColor(),
+            backgroundColor = color.toColor(true),
             icon = icon.toResource(),
         )
         Column(

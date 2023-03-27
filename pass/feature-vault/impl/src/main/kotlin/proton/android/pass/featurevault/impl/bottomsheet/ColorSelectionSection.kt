@@ -20,8 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.extension.toBackgroundColor
-import proton.android.pass.composecomponents.impl.extension.toIconColor
+import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.pass.domain.ShareColor
 
 private const val ITEMS_PER_COLUMN = 5
@@ -42,8 +41,8 @@ fun ColorSelectionSection(
             ) {
                 rowColors.forEach { shareColor ->
                     ColorSelector(
-                        color = shareColor.toIconColor(),
-                        selectedColor = shareColor.toBackgroundColor(),
+                        color = shareColor.toColor(),
+                        selectedColor = shareColor.toColor(true),
                         isSelected = shareColor == selected,
                         onClick = {
                             onColorSelected(shareColor)

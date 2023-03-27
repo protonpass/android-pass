@@ -12,8 +12,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.composecomponents.impl.extension.toBackgroundColor
-import proton.android.pass.composecomponents.impl.extension.toIconColor
+import proton.android.pass.composecomponents.impl.extension.toColor
 import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.form.TitleSection
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
@@ -31,8 +30,8 @@ fun VaultPreviewSection(
         verticalAlignment = Alignment.CenterVertically
     ) {
         VaultIcon(
-            backgroundColor = state.color.toBackgroundColor(),
-            iconColor = state.color.toIconColor(),
+            backgroundColor = state.color.toColor(true),
+            iconColor = state.color.toColor(),
             icon = state.icon.toResource()
         )
 

@@ -276,7 +276,7 @@ fun HomeScreen(
                 uiState = homeUiState,
                 shouldScrollToTop = shouldScrollToTop,
                 onItemClick = { item ->
-                    homeViewModel.onItemClicked()
+                    homeViewModel.onItemClicked(item.shareId, item.id)
                     homeScreenNavigation.toItemDetail(item.shareId, item.id)
                 },
                 onSearchQueryChange = { homeViewModel.onSearchQueryChange(it) },
@@ -309,7 +309,8 @@ fun HomeScreen(
                 onTrashActionsClick = {
                     currentBottomSheet = HomeBottomSheetType.TrashOptions
                     scope.launch { bottomSheetState.show() }
-                }
+                },
+                onClearRecentSearchClick = homeViewModel::onClearAllRecentSearch
             )
 
             VaultDeleteDialog(

@@ -17,7 +17,7 @@ class SearchEntryRepositoryImpl @Inject constructor(
     private val clock: Clock
 ) : SearchEntryRepository {
 
-    override suspend fun store(userId: UserId, itemId: ItemId, shareId: ShareId) {
+    override suspend fun store(userId: UserId, shareId: ShareId, itemId: ItemId) {
         val searchEntryEntity = SearchEntryEntity(
             itemId = itemId.id,
             shareId = shareId.id,

@@ -12,18 +12,20 @@ import proton.pass.domain.VaultId
 import java.util.Date
 
 object TestShare {
-    fun create(): Share =
-        Share(
-            id = ShareId("123"),
-            shareType = ShareType.Vault,
-            targetId = "456",
-            permission = SharePermission(SharePermissionFlag.Admin.value),
-            vaultId = VaultId("456"),
-            content = None,
-            expirationTime = null,
-            createTime = Date(),
-            color = ShareColor.Color1,
-            icon = ShareIcon.Icon1,
-            isPrimary = false
-        )
+    fun create(
+        shareId: ShareId = ShareId("123"),
+        isPrimary: Boolean = false
+    ): Share = Share(
+        id = shareId,
+        shareType = ShareType.Vault,
+        targetId = "456",
+        permission = SharePermission(SharePermissionFlag.Admin.value),
+        vaultId = VaultId("456"),
+        content = None,
+        expirationTime = null,
+        createTime = Date(),
+        color = ShareColor.Color1,
+        icon = ShareIcon.Icon1,
+        isPrimary = isPrimary
+    )
 }

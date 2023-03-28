@@ -18,8 +18,8 @@
 
     <!-- Empty list -->
     <string name="empty_list_title">Add your first item</string>
-    <string name="empty_search_results_title">No results found</string>
-    <string name="empty_search_results_subtitle">Please try a different search term.</string>
+    <string name="empty_search_results_title">Find an alias, login or note</string>
+    <string name="no_search_results_image_content_description">No search results image</string>
     <string name="empty_list_open_extension">Visit web extension</string>
     <string name="empty_list_create_item_button">Create new item</string>
     <string name="empty_list_image_content_description">Empty list image</string>

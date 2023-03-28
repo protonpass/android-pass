@@ -112,6 +112,7 @@ abstract class BaseAliasViewModel(
         .onEach {
             when (it) {
                 is LoadingResult.Error -> {
+                    PassLogger.w(TAG, it.exception, "Error loading AliasOptions")
                     isLoadingState.update { IsLoadingState.NotLoading }
                     snackbarDispatcher(CannotRetrieveAliasOptions)
                     mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
@@ -182,25 +183,28 @@ abstract class BaseAliasViewModel(
         val aliasItemValidationErrors: Set<AliasItemValidationErrors>
     )
 
-    private val aliasSavedEventWrapperState = combine(
+    private val eventWrapperState = combine(
         isAliasSavedState,
-        isAliasDraftSavedState
-    ) { isAliasSaved, isAliasDraftSaved ->
-        AliasSavedEventWrapper(isAliasSaved, isAliasDraftSaved)
+        isAliasDraftSavedState,
+        isApplyButtonEnabledState,
+        mutableCloseScreenEventFlow
+    ) { isAliasSaved, isAliasDraftSaved, applyButton, closeScreen ->
+        EventWrapper(isAliasSaved, isAliasDraftSaved, applyButton, closeScreen)
     }
 
-    private data class AliasSavedEventWrapper(
+    private data class EventWrapper(
         val isAliasSaved: AliasSavedState,
-        val isAliasDraftSaved: AliasDraftSavedState
+        val isAliasDraftSaved: AliasDraftSavedState,
+        val isApplyButtonEnabled: IsButtonEnabled,
+        val closeScreenEvent: CloseScreenEvent
     )
 
     val aliasUiState: StateFlow<CreateUpdateAliasUiState> = combine(
         sharesWrapperState,
         aliasItemWrapperState,
         isLoadingState,
-        aliasSavedEventWrapperState,
-        isApplyButtonEnabledState
-    ) { shareWrapper, aliasItemWrapper, isLoading, isAliasSavedEvent, isButtonEnabled ->
+        eventWrapperState
+    ) { shareWrapper, aliasItemWrapper, isLoading, eventWrapper ->
         CreateUpdateAliasUiState(
             vaultList = shareWrapper.vaultList,
             selectedVault = shareWrapper.currentVault,
@@ -208,10 +212,11 @@ abstract class BaseAliasViewModel(
             isDraft = isDraft,
             errorList = aliasItemWrapper.aliasItemValidationErrors,
             isLoadingState = isLoading,
-            isAliasSavedState = isAliasSavedEvent.isAliasSaved,
-            isAliasDraftSavedState = isAliasSavedEvent.isAliasDraftSaved,
-            isApplyButtonEnabled = isButtonEnabled,
-            showVaultSelector = shareWrapper.vaultList.size > 1
+            isAliasSavedState = eventWrapper.isAliasSaved,
+            isAliasDraftSavedState = eventWrapper.isAliasDraftSaved,
+            isApplyButtonEnabled = eventWrapper.isApplyButtonEnabled,
+            showVaultSelector = shareWrapper.vaultList.size > 1,
+            closeScreenEvent = eventWrapper.closeScreenEvent
         )
     }
         .stateIn(

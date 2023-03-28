@@ -1,6 +1,7 @@
 package proton.android.pass.featureitemcreate.impl.alias
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,10 +21,11 @@ fun CreateAliasScreen(
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.aliasUiState.collectAsStateWithLifecycle()
-    val closeScreenState by viewModel.closeScreenEventFlow.collectAsStateWithLifecycle()
 
-    if (closeScreenState is CloseScreenEvent.Close) {
-        onClose()
+    LaunchedEffect(viewState.closeScreenEvent) {
+        if (viewState.closeScreenEvent is CloseScreenEvent.Close) {
+            onClose()
+        }
     }
 
     AliasContent(

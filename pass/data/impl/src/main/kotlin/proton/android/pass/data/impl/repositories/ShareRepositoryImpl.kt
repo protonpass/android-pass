@@ -128,29 +128,50 @@ class ShareRepositoryImpl @Inject constructor(
             }
             .flowOn(Dispatchers.IO)
 
-    override suspend fun refreshShares(userId: UserId): RefreshSharesResult =
-        withContext(Dispatchers.IO) {
-            val userAddress = userAddressRepository.getAddresses(userId).primary()
-                ?: throw IllegalStateException("Could not find PrimaryAddress")
+    override suspend fun refreshShares(userId: UserId): RefreshSharesResult = withContext(Dispatchers.IO) {
+        val userAddress = userAddressRepository.getAddresses(userId).primary()
+            ?: throw IllegalStateException("Could not find PrimaryAddress")
 
-            val remoteShares = remoteShareDataSource.getShares(userAddress.userId)
-            val remoteShareIds = remoteShares.map { ShareId(it.shareId) }.toSet()
-            val toSave = database.inTransaction {
-                val localShares =
-                    localShareDataSource.getAllSharesForUser(userAddress.userId).first()
-                val localSharesIds = localShares.map { ShareId(it.id) }.toSet()
-                val toDelete = localSharesIds.subtract(remoteShareIds)
-                localShareDataSource.deleteShares(toDelete)
-                remoteShareIds.subtract(localSharesIds)
+        // Retrieve remote shares and create a map ShareId->ShareResponse
+        val remoteShares = remoteShareDataSource.getShares(userAddress.userId)
+        val remoteShareMap = remoteShares.associateBy { ShareId(it.shareId) }
+
+        val toSave = database.inTransaction {
+
+            // Retrieve local shares and create a map ShareId->ShareEntity
+            val localShares = localShareDataSource
+                .getAllSharesForUser(userAddress.userId)
+                .first()
+            val localSharesMap = localShares.associateBy { ShareId(it.id) }
+
+            // Update primary status if needed
+            remoteShareMap.forEach { (remoteId, remoteShare) ->
+                val localShare = localSharesMap[remoteId]
+                if (localShare != null && localShare.isPrimary != remoteShare.primary) {
+                    localShareDataSource.setPrimaryShareStatus(
+                        userId = userId,
+                        shareId = remoteId,
+                        isPrimary = remoteShare.primary
+                    )
+                }
             }
-            val remoteSharesToSave = remoteShares.filter { toSave.contains(ShareId(it.shareId)) }
-            storeShares(userAddress, remoteSharesToSave)
 
-            RefreshSharesResult(
-                allShareIds = remoteShareIds,
-                newShareIds = toSave
-            )
+            val toDelete = localSharesMap.keys.subtract(remoteShareMap.keys)
+            localShareDataSource.deleteShares(toDelete)
+
+            // Return shares that were not in local, so they are saved
+            remoteShares
+                .filter { !localSharesMap.containsKey(ShareId(it.shareId)) }
+                .map { ShareId(it.shareId) }
         }
+        val remoteSharesToSave = remoteShares.filter { toSave.contains(ShareId(it.shareId)) }
+        storeShares(userAddress, remoteSharesToSave)
+
+        RefreshSharesResult(
+            allShareIds = remoteShareMap.keys,
+            newShareIds = toSave.toSet()
+        )
+    }
 
     @Suppress("ReturnCount")
     override suspend fun getById(userId: UserId, shareId: ShareId): LoadingResult<Share?> =

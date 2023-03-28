@@ -23,6 +23,7 @@ object TestShare {
             expirationTime = null,
             createTime = Date(),
             color = ShareColor.Color1,
-            icon = ShareIcon.Icon1
+            icon = ShareIcon.Icon1,
+            isPrimary = false
         )
 }

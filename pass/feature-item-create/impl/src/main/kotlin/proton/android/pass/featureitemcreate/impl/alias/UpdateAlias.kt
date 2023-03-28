@@ -2,6 +2,7 @@ package proton.android.pass.featureitemcreate.impl.alias
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -25,6 +26,12 @@ fun UpdateAlias(
     viewModel: UpdateAliasViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.aliasUiState.collectAsStateWithLifecycle()
+    LaunchedEffect(viewState.closeScreenEvent) {
+        if (viewState.closeScreenEvent is CloseScreenEvent.Close) {
+            onUpClick()
+        }
+    }
+
     AliasContent(
         modifier = modifier,
         uiState = viewState,

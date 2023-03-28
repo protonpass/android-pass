@@ -36,6 +36,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasOptionsUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasPrefixSuffixText
 import proton.android.pass.featureitemcreate.impl.alias.AliasSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
+import proton.android.pass.featureitemcreate.impl.alias.CloseScreenEvent
 import proton.android.pass.featureitemcreate.impl.alias.CreateUpdateAliasUiState
 import proton.android.pass.featureitemcreate.impl.alias.MailboxSection
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
@@ -193,7 +194,8 @@ fun CreateAliasBottomSheetContentPreview(
                     isAliasSavedState = AliasSavedState.Unknown,
                     isAliasDraftSavedState = AliasDraftSavedState.Unknown,
                     isApplyButtonEnabled = IsButtonEnabled.Enabled,
-                    showVaultSelector = false
+                    showVaultSelector = false,
+                    closeScreenEvent = CloseScreenEvent.NotClose
                 ),
                 showAdvancedOptionsInitially = true,
                 onCancel = {},

@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.map
@@ -31,6 +32,8 @@ import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
+import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.InitError
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemUpdateError
 import proton.android.pass.log.api.PassLogger
@@ -43,6 +46,7 @@ import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
+import proton.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,7 +56,7 @@ class UpdateLoginViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
-    createAlias: CreateAlias,
+    private val createAlias: CreateAlias,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
@@ -60,7 +64,6 @@ class UpdateLoginViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(
-    createAlias,
     accountManager,
     snackbarDispatcher,
     clipboardManager,
@@ -169,6 +172,33 @@ class UpdateLoginViewModel @Inject constructor(
                 snackbarDispatcher(ItemUpdateError)
             }
             isLoadingState.update { IsLoadingState.NotLoading }
+        }
+
+    private suspend fun performCreateAlias(
+        userId: UserId,
+        shareId: ShareId,
+        aliasItem: AliasItem
+    ): LoadingResult<Item> =
+        if (aliasItem.selectedSuffix != null) {
+            createAlias(
+                userId = userId,
+                shareId = shareId,
+                newAlias = NewAlias(
+                    title = aliasItem.title,
+                    note = aliasItem.note,
+                    prefix = aliasItem.prefix,
+                    suffix = aliasItem.selectedSuffix.toDomain(),
+                    mailboxes = aliasItem.mailboxes
+                        .filter { it.selected }
+                        .map { it.model }
+                        .map(AliasMailboxUiModel::toDomain)
+                )
+            )
+        } else {
+            val message = "Empty suffix on create alias"
+            PassLogger.i(TAG, message)
+            snackbarDispatcher(AliasSnackbarMessage.ItemCreationError)
+            LoadingResult.Error(Exception(message))
         }
 
     private suspend fun performUpdateItem(

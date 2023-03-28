@@ -38,12 +38,16 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
+import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.SendUserAccess
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
+import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
+import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
+import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionItemFiltererImpl
 import proton.android.pass.data.impl.autofill.SuggestionSorter
@@ -82,6 +86,7 @@ import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
 import proton.android.pass.data.impl.usecases.RestoreItemsImpl
+import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
@@ -90,6 +95,9 @@ import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
+import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
+import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
+import proton.android.pass.data.impl.usecases.searchentry.ObserveSearchEntryImpl
 
 @Suppress("TooManyFunctions")
 @Module
@@ -228,5 +236,16 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindCreateItemAndAlias(impl: CreateItemAndAliasImpl): CreateItemAndAlias
-}
 
+    @Binds
+    abstract fun bindAddSearchEntry(impl: AddSearchEntryImpl): AddSearchEntry
+
+    @Binds
+    abstract fun bindDeleteSearchEntry(impl: DeleteSearchEntryImpl): DeleteSearchEntry
+
+    @Binds
+    abstract fun bindDeleteAllSearchEntry(impl: DeleteAllSearchEntryImpl): DeleteAllSearchEntry
+
+    @Binds
+    abstract fun bindObserveSearchEntry(impl: ObserveSearchEntryImpl): ObserveSearchEntry
+}

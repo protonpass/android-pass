@@ -103,4 +103,8 @@
     <string name="alert_confirm_restore_all_message">Are you sure you want to restore all the trashed items?</string>
     <string name="alert_confirm_delete_item_dialog_title">Permanently delete?</string>
     <string name="alert_confirm_delete_item_dialog_message">You are going to delete \'%s\' irreversibly, are you sure?</string>
+
+    <!-- Recent search -->
+    <string name="recent_search_header_count">Recent searches</string>
+    <string name="recent_search_clear">Clear</string>
 </resources>

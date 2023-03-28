@@ -31,6 +31,9 @@ class TestShareRepository : ShareRepository {
     private var updateVaultResult: Result<Share> =
         Result.failure(IllegalStateException("UpdateVaultResult not set"))
 
+    private var markAsPrimaryResult: Result<Share> =
+        Result.failure(IllegalStateException("MarkAsPrimaryResult not set"))
+
     fun setCreateVaultResult(result: LoadingResult<Share>) {
         createVaultResult = result
     }
@@ -55,6 +58,10 @@ class TestShareRepository : ShareRepository {
         updateVaultResult = value
     }
 
+    fun setMarkAsPrimaryResult(value: Result<Share>) {
+        markAsPrimaryResult = value
+    }
+
     override suspend fun createVault(userId: SessionUserId, vault: NewVault): LoadingResult<Share> =
         createVaultResult
 
@@ -71,8 +78,8 @@ class TestShareRepository : ShareRepository {
         getByIdResultFlow.first()
 
     override suspend fun updateVault(userId: UserId, shareId: ShareId, vault: NewVault): Share =
-        updateVaultResult.fold(
-            onSuccess = { it },
-            onFailure = { throw it }
-        )
+        updateVaultResult.getOrThrow()
+
+    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId): Share =
+        markAsPrimaryResult.getOrThrow()
 }

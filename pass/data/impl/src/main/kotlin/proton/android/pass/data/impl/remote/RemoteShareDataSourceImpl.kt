@@ -71,6 +71,11 @@ class RemoteShareDataSourceImpl @Inject constructor(
             }
             .toLoadingResult()
 
+    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) =
+        api.get<PasswordManagerApi>(userId)
+            .invoke { markAsPrimary(shareId.id) }
+            .valueOrThrow
+
     @Suppress("UnderscoresInNumericLiterals")
     companion object {
         private const val PROTON_RESPONSE_OK = 1000

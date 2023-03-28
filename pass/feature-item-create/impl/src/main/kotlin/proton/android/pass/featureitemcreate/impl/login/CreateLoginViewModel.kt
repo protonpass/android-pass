@@ -12,19 +12,21 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
+import proton.android.pass.data.api.usecases.CreateItemAndAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
+import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -32,15 +34,16 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.ShareId
+import proton.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateLoginViewModel @Inject constructor(
     private val createItem: CreateItem,
+    private val createItemAndAlias: CreateItemAndAlias,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
-    createAlias: CreateAlias,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
@@ -48,7 +51,6 @@ class CreateLoginViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
 ) : BaseLoginViewModel(
-    createAlias,
     accountManager,
     snackbarDispatcher,
     clipboardManager,
@@ -116,11 +118,7 @@ class CreateLoginViewModel @Inject constructor(
         if (userId != null && vault != null) {
             val aliasItemOption = aliasItemState.value
             if (aliasItemOption is Some) {
-                performCreateAlias(userId, vault.vault.shareId, aliasItemOption.value)
-                    .map {
-                        telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
-                        performCreateItem(userId, vault.vault.shareId)
-                    }
+                performCreateItemAndAlias(userId, vault.vault.shareId, aliasItemOption.value)
             } else {
                 performCreateItem(userId, vault.vault.shareId)
             }
@@ -128,6 +126,52 @@ class CreateLoginViewModel @Inject constructor(
             snackbarDispatcher(ItemCreationError)
         }
         isLoadingState.update { IsLoadingState.NotLoading }
+    }
+
+    private suspend fun performCreateItemAndAlias(
+        userId: UserId,
+        shareId: ShareId,
+        aliasItem: AliasItem
+    ) {
+        val selectedSuffix = aliasItem.selectedSuffix
+        if (selectedSuffix == null) {
+            val message = "Empty suffix on create alias"
+            PassLogger.w(TAG, message)
+            snackbarDispatcher(AliasSnackbarMessage.ItemCreationError)
+            return
+        }
+
+        runCatching {
+            createItemAndAlias(
+                userId = userId,
+                shareId = shareId,
+                itemContents = loginItemState.value.toItemContents(),
+                newAlias = NewAlias(
+                    title = aliasItem.title,
+                    note = aliasItem.note,
+                    prefix = aliasItem.prefix,
+                    suffix = aliasItem.selectedSuffix.toDomain(),
+                    mailboxes = aliasItem.mailboxes
+                        .filter { it.selected }
+                        .map { it.model }
+                        .map(AliasMailboxUiModel::toDomain)
+                )
+            )
+        }.onSuccess { item ->
+            isItemSavedState.update {
+                encryptionContextProvider.withEncryptionContext {
+                    ItemSavedState.Success(
+                        item.id,
+                        item.toUiModel(this@withEncryptionContext)
+                    )
+                }
+            }
+            telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
+            telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
+        }.onFailure {
+            PassLogger.e(TAG, it, "Could not create item")
+            snackbarDispatcher(ItemCreationError)
+        }
     }
 
     private suspend fun performCreateItem(

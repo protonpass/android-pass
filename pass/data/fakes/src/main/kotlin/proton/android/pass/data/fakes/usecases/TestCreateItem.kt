@@ -11,12 +11,18 @@ import javax.inject.Inject
 class TestCreateItem @Inject constructor() : CreateItem {
 
     private var item: LoadingResult<Item> = LoadingResult.Loading
+    private var invoked = false
+
+    fun hasBeenInvoked() = invoked
 
     override suspend fun invoke(
         userId: UserId,
         shareId: ShareId,
         itemContents: ItemContents
-    ): LoadingResult<Item> = item
+    ): LoadingResult<Item> {
+        invoked = true
+        return item
+    }
 
     fun sendItem(item: LoadingResult<Item>) {
         this.item = item

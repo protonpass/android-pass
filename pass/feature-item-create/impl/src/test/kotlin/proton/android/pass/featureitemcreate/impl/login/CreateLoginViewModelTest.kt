@@ -2,6 +2,7 @@ package proton.android.pass.featureitemcreate.impl.login
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
@@ -14,12 +15,17 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
-import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
+import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
+import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
+import proton.android.pass.featureitemcreate.impl.alias.AliasOptionsUiModel
+import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
+import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.login.CreateUpdateLoginUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
@@ -41,13 +47,15 @@ internal class CreateLoginViewModelTest {
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
+    private lateinit var instance: CreateLoginViewModel
     private lateinit var totpManager: TestTotpManager
     private lateinit var clipboardManager: TestClipboardManager
     private lateinit var accountManager: TestAccountManager
     private lateinit var createItem: TestCreateItem
+    private lateinit var createItemAndAlias: TestCreateItemAndAlias
     private lateinit var observeVaults: TestObserveVaultsWithItemCount
-    private lateinit var createLoginViewModel: CreateLoginViewModel
     private lateinit var telemetryManager: TestTelemetryManager
+    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     fun setUp() {
@@ -55,17 +63,19 @@ internal class CreateLoginViewModelTest {
         clipboardManager = TestClipboardManager()
         accountManager = TestAccountManager()
         createItem = TestCreateItem()
+        createItemAndAlias = TestCreateItemAndAlias()
         observeVaults = TestObserveVaultsWithItemCount()
         telemetryManager = TestTelemetryManager()
-        createLoginViewModel = CreateLoginViewModel(
+        snackbarDispatcher = TestSnackbarDispatcher()
+        instance = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,
             clipboardManager = clipboardManager,
             totpManager = totpManager,
-            snackbarDispatcher = TestSnackbarDispatcher(),
+            snackbarDispatcher = snackbarDispatcher,
             savedStateHandle = TestSavedStateHandle.create(),
             encryptionContextProvider = TestEncryptionContextProvider(),
-            createAlias = TestCreateAlias(),
+            createItemAndAlias = createItemAndAlias,
             observeVaults = observeVaults,
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
             telemetryManager = telemetryManager
@@ -78,9 +88,9 @@ internal class CreateLoginViewModelTest {
             val vault = VaultWithItemCount(Vault(ShareId("shareId"), "Share"), 1, 0)
             observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
 
-            createLoginViewModel.createItem()
+            instance.createItem()
 
-            createLoginViewModel.loginUiState.test {
+            instance.loginUiState.test {
                 assertThat(awaitItem())
                     .isEqualTo(
                         Initial.copy(
@@ -95,19 +105,17 @@ internal class CreateLoginViewModelTest {
     @Test
     fun `given valid data when a create item event should return a success event`() = runTest {
         val item = TestItem.create(keyStoreCrypto = TestKeyStoreCrypto)
-
-        val vault = VaultWithItemCount(Vault(item.shareId, "Share"), 1, 0)
-        observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
+        val vault = sendInitialVault(item.shareId)
 
         val titleInput = "Title input"
-        createLoginViewModel.onTitleChange(titleInput)
+        instance.onTitleChange(titleInput)
 
         val userId = UserId("user-id")
         accountManager.sendPrimaryUserId(userId)
         createItem.sendItem(LoadingResult.Success(item))
 
-        createLoginViewModel.loginUiState.test {
-            createLoginViewModel.createItem()
+        instance.loginUiState.test {
+            instance.createItem()
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
@@ -157,17 +165,10 @@ internal class CreateLoginViewModelTest {
 
     @Test
     fun `setting initial data emits the proper contents`() = runTest {
-        val vault = VaultWithItemCount(Vault(ShareId("shareId"), "Share"), 1, 0)
-        observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
-        val initialContents = InitialCreateLoginUiState(
-            title = TestUtils.randomString(),
-            username = TestUtils.randomString(),
-            password = TestUtils.randomString(),
-            url = TestUtils.randomString()
-        )
-        createLoginViewModel.setInitialContents(initialContents)
+        val vault = sendInitialVault(ShareId("shareId"))
+        val initialContents = setInitialContents()
 
-        createLoginViewModel.loginUiState.test {
+        instance.loginUiState.test {
             assertThat(awaitItem())
                 .isEqualTo(
                     Initial.copy(
@@ -202,5 +203,95 @@ internal class CreateLoginViewModelTest {
                     )
                 )
         }
+    }
+
+    @Test
+    fun `if there is an error creating item a message is emitted`() = runTest {
+        val shareId = ShareId("shareId")
+        setInitialContents()
+        sendInitialVault(shareId)
+        createItem.sendItem(LoadingResult.Error(IllegalStateException("Test")))
+
+        instance.loginUiState.test {
+            skipItems(1) // Initial state
+            instance.createItem()
+
+            skipItems(1) // Loading
+            val item = awaitItem()
+            assertThat(createItem.hasBeenInvoked()).isTrue()
+
+            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.isItemSaved).isEqualTo(ItemSavedState.Unknown)
+
+            val message = snackbarDispatcher.snackbarMessage.first().value()!!
+            assertThat(message).isInstanceOf(LoginSnackbarMessages.ItemCreationError::class.java)
+        }
+    }
+
+    @Test
+    fun `if there is an error creating item and alias a message is emitted`() = runTest {
+        val shareId = ShareId("shareId")
+        setInitialContents()
+        sendInitialVault(shareId)
+        setTestAlias()
+        createItemAndAlias.setResult(Result.failure(IllegalStateException("Test")))
+
+        instance.loginUiState.test {
+            skipItems(1) // Initial state
+            instance.createItem()
+
+            skipItems(1) // Loading
+            val item = awaitItem()
+            assertThat(createItemAndAlias.hasBeenInvoked()).isTrue()
+
+            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.isItemSaved).isEqualTo(ItemSavedState.Unknown)
+
+            val message = snackbarDispatcher.snackbarMessage.first().value()!!
+            assertThat(message).isInstanceOf(LoginSnackbarMessages.ItemCreationError::class.java)
+        }
+    }
+
+    private fun setTestAlias(): AliasItem {
+        val suffix = AliasSuffixUiModel(
+            suffix = TestUtils.randomString(),
+            signedSuffix = TestUtils.randomString(),
+            isCustom = false,
+            domain = TestUtils.randomString()
+        )
+        val mailbox = AliasMailboxUiModel(id = 1, email = TestUtils.randomString())
+        val aliasItem = AliasItem(
+            title = TestUtils.randomString(),
+            prefix = TestUtils.randomString(),
+            note = TestUtils.randomString(),
+            mailboxTitle = TestUtils.randomString(),
+            aliasOptions = AliasOptionsUiModel(
+                suffixes = listOf(suffix),
+                mailboxes = listOf(mailbox)
+            ),
+            selectedSuffix = suffix,
+            mailboxes = listOf(SelectedAliasMailboxUiModel(mailbox, true)),
+            aliasToBeCreated = TestUtils.randomString()
+        )
+        instance.onAliasCreated(aliasItem)
+        return aliasItem
+    }
+
+    private fun setInitialContents(): InitialCreateLoginUiState {
+        val initialContents = InitialCreateLoginUiState(
+            title = TestUtils.randomString(),
+            username = TestUtils.randomString(),
+            password = TestUtils.randomString(),
+            url = TestUtils.randomString(),
+        )
+        instance.setInitialContents(initialContents)
+        accountManager.sendPrimaryUserId(UserId("UserId"))
+        return initialContents
+    }
+
+    private fun sendInitialVault(shareId: ShareId): VaultWithItemCount {
+        val vault = VaultWithItemCount(Vault(shareId, "Share"), 1, 0)
+        observeVaults.sendResult(LoadingResult.Success(listOf(vault)))
+        return vault
     }
 }

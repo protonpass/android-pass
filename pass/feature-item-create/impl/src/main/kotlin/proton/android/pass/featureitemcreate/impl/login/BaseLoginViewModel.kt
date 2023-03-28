@@ -139,6 +139,7 @@ abstract class BaseLoginViewModel(
         eventsFlow,
         focusLastWebsiteState,
     ) { shareWrapper, loginItemWrapper, isLoading, events, focusLastWebsite ->
+        println("$shareWrapper | $loginItemWrapper | $isLoading | $events | $focusLastWebsite")
         CreateUpdateLoginUiState(
             vaultList = shareWrapper.vaultList,
             selectedVault = shareWrapper.currentVault,

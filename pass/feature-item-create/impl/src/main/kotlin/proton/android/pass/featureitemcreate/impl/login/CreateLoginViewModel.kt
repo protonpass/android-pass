@@ -26,7 +26,6 @@ import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
-import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -137,7 +136,7 @@ class CreateLoginViewModel @Inject constructor(
         if (selectedSuffix == null) {
             val message = "Empty suffix on create alias"
             PassLogger.w(TAG, message)
-            snackbarDispatcher(AliasSnackbarMessage.ItemCreationError)
+            snackbarDispatcher(ItemCreationError)
             return
         }
 

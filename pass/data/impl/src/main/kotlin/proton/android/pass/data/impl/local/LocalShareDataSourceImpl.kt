@@ -29,4 +29,7 @@ class LocalShareDataSourceImpl @Inject constructor(
 
     override suspend fun hasShares(userId: UserId): Boolean =
         database.sharesDao().countShares(userId.id) > 0
+
+    override suspend fun disablePrimaryShare(userId: UserId) =
+        database.sharesDao().disablePrimaryShares(userId.id)
 }

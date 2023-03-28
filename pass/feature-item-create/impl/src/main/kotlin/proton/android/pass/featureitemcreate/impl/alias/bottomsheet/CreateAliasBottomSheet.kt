@@ -9,6 +9,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.CloseScreenEvent
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -25,6 +26,12 @@ fun CreateAliasBottomSheet(
     }
 
     val state by viewModel.aliasUiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.closeScreenEvent) {
+        if (state.closeScreenEvent is CloseScreenEvent.Close) {
+            onCancel()
+        }
+    }
 
     val isAliasDraftSaved = state.isAliasDraftSavedState
     if (isAliasDraftSaved is AliasDraftSavedState.Success) {

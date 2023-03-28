@@ -123,7 +123,7 @@ data class PassColors(
             interactionNormContrast = PassPalette.SmokyBlack,
             interactionNormMajor1 = PassPalette.Iris,
             interactionNorm = PassPalette.Indigo,
-            interactionNormMinor1 = PassPalette.Lilac,
+            interactionNormMinor1 = PassPalette.LavenderMist,
             interactionNormMinor2 = PassPalette.Magnolia,
             loginInteractionNormMajor1 = PassPalette.BlueViolet,
             loginInteractionNorm = PassPalette.LavenderFloral,

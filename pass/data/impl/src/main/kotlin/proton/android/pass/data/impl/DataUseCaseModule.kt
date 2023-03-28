@@ -226,6 +226,7 @@ abstract class DataUseCaseModule {
         impl: GetVaultWithItemCountByIdImpl
     ): GetVaultWithItemCountById
 
+    @Binds
     abstract fun bindCreateItemAndAlias(impl: CreateItemAndAliasImpl): CreateItemAndAlias
 }
 

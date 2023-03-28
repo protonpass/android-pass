@@ -214,6 +214,29 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId): Share = withContext(Dispatchers.IO) {
+        remoteShareDataSource.markAsPrimary(userId, shareId)
+
+        val updated = database.inTransaction {
+            val share = localShareDataSource.getById(userId, shareId)
+                ?: throw IllegalStateException("Could not find share with id $shareId")
+            localShareDataSource.disablePrimaryShare(userId)
+
+            val updatedShare = share.copy(isPrimary = true)
+            localShareDataSource.upsertShares(listOf(updatedShare))
+            updatedShare
+        }
+
+        return@withContext when (val res = shareEntityToShare(updated)) {
+            LoadingResult.Loading -> throw IllegalStateException("Should not be Loading")
+            is LoadingResult.Error -> {
+                PassLogger.w(TAG, res.exception, "Error converting share entity to share")
+                throw res.exception
+            }
+            is LoadingResult.Success -> res.data
+        }
+    }
+
     @Suppress("ReturnCount")
     private fun shareEntitiesToShares(entities: List<ShareEntity>): LoadingResult<List<Share>> {
         val mapped = entities.map {

@@ -30,6 +30,8 @@ interface ShareRepository {
         shareId: ShareId,
         vault: NewVault
     ): Share
+
+    suspend fun markAsPrimary(userId: UserId, shareId: ShareId): Share
 }
 
 data class RefreshSharesResult(

@@ -61,6 +61,15 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
     )
     abstract suspend fun countShares(userId: String): Int
 
+    @Query(
+        """
+        UPDATE ${ShareEntity.TABLE}
+        SET ${ShareEntity.Columns.IS_PRIMARY} = 0
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract suspend fun disablePrimaryShares(userId: String)
+
     @Transaction
     open suspend fun evictAndUpsertShares(userId: UserId, vararg entities: ShareEntity) {
         val insertOrUpdateShares = entities.asList().map { it.id }

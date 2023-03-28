@@ -12,6 +12,6 @@ fun Share.toVault(encryptionContextProvider: EncryptionContextProvider): Option<
             decrypt(it)
         }
         val parsed = VaultV1.Vault.parseFrom(decrypted)
-        Vault(id, parsed.name, color, icon)
+        Vault(shareId = id, isPrimary = isPrimary, name = parsed.name, color = color, icon = icon)
     }
 

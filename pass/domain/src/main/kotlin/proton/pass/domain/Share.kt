@@ -15,6 +15,7 @@ data class Share(
     val shareType: ShareType,
     val targetId: String,
     val permission: SharePermission,
+    val isPrimary: Boolean,
     val vaultId: VaultId,
     val content: Option<EncryptedByteArray>, // Can be None if targetType is Item
     val expirationTime: Date?,

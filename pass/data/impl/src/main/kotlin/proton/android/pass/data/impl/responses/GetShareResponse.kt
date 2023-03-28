@@ -19,6 +19,8 @@ data class ShareResponse(
     val vaultId: String,
     @SerialName("AddressID")
     val addressId: String,
+    @SerialName("Primary")
+    val primary: Boolean,
     @SerialName("TargetType")
     val targetType: Int,
     @SerialName("TargetID")

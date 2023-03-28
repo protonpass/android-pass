@@ -311,7 +311,8 @@ class ShareRepositoryImpl @Inject constructor(
             contentFormatVersion = shareResponse.contentFormatVersion,
             expirationTime = shareResponse.expirationTime,
             createTime = shareResponse.createTime,
-            encryptedContent = encryptedContent
+            encryptedContent = encryptedContent,
+            isPrimary = shareResponse.primary
         )
     }
 
@@ -343,7 +344,8 @@ class ShareRepositoryImpl @Inject constructor(
             expirationTime = entity.expirationTime?.let { Date(it) },
             createTime = Date(entity.createTime),
             color = color,
-            icon = icon
+            icon = icon,
+            isPrimary = entity.isPrimary
         )
         return LoadingResult.Success(share)
     }

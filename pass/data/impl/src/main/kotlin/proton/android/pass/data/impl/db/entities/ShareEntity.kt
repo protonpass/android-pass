@@ -40,6 +40,8 @@ data class ShareEntity(
     val targetId: String,
     @ColumnInfo(name = Columns.PERMISSION)
     val permission: Int,
+    @ColumnInfo(name = Columns.IS_PRIMARY, defaultValue = "false")
+    val isPrimary: Boolean,
     @ColumnInfo(name = Columns.CONTENT)
     val content: String?,
     @ColumnInfo(name = Columns.CONTENT_KEY_ROTATION)
@@ -62,6 +64,7 @@ data class ShareEntity(
         const val SHARE_TYPE = "share_type"
         const val TARGET_ID = "target_id"
         const val PERMISSION = "permission"
+        const val IS_PRIMARY = "is_primary"
         const val VAULT_ID = "vault_id"
         const val CONTENT = "content"
         const val CONTENT_KEY_ROTATION = "content_key_rotation"

@@ -139,7 +139,7 @@ internal class BaseLoginViewModelTest {
             LoadingResult.Success(
                 listOf(
                     VaultWithItemCount(
-                        vault = Vault(ShareId("ShareId"), "name"),
+                        vault = Vault(ShareId("ShareId"), "name", isPrimary = false),
                         activeItemCount = 1,
                         trashedItemCount = 0
                     )

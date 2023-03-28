@@ -55,6 +55,7 @@ data class SearchUiState(
     val searchQuery: String,
     val isProcessingSearch: IsProcessingSearchState,
     val inSearchMode: Boolean,
+    val isInSuggestionsMode: Boolean,
     val itemTypeCount: ItemTypeCount
 ) {
     companion object {
@@ -62,6 +63,7 @@ data class SearchUiState(
             searchQuery = "",
             isProcessingSearch = IsProcessingSearchState.NotLoading,
             inSearchMode = false,
+            isInSuggestionsMode = false,
             itemTypeCount = ItemTypeCount(0, 0, 0)
         )
     }

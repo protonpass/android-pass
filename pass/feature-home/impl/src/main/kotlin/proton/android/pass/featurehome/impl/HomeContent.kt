@@ -38,7 +38,7 @@ import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
 import proton.pass.domain.ShareId
 
-@Suppress("LongParameterList")
+@Suppress("LongParameterList", "ComplexMethod")
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
 @Composable
@@ -52,6 +52,7 @@ internal fun HomeContent(
     onStopSearch: () -> Unit,
     onDrawerIconClick: () -> Unit,
     onSortingOptionsClick: () -> Unit,
+    onClearRecentSearchClick: () -> Unit,
     onAddItemClick: (Option<ShareId>) -> Unit,
     onItemMenuClick: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit,
@@ -129,18 +130,22 @@ internal fun HomeContent(
                     onItemTypeClick = onItemTypeSelected
                 )
             }
-            if (
-                uiState.homeListUiState.items.isNotEmpty() &&
-                uiState.homeListUiState.isLoading == IsLoadingState.NotLoading
-            ) {
+
+            if (shouldShowItemListHeader(uiState)) {
                 ItemListHeader(
                     sortingType = uiState.homeListUiState.sortingType,
                     showSearchResults = uiState.searchUiState.inSearchMode &&
                         uiState.searchUiState.searchQuery.isNotEmpty(),
-                    isProcessingSearch = uiState.searchUiState.isProcessingSearch.value(),
                     itemCount = uiState.homeListUiState.items.map { it.items }.flatten().count()
                         .takeIf { !uiState.searchUiState.isProcessingSearch.value() },
                     onSortingOptionsClick = onSortingOptionsClick
+                )
+            }
+
+            if (shouldShowRecentSearchHeader(uiState)) {
+                RecentSearchListHeader(
+                    itemCount = uiState.homeListUiState.items.map { it.items }.flatten().count(),
+                    onClearRecentSearchClick = onClearRecentSearchClick
                 )
             }
 
@@ -179,6 +184,17 @@ internal fun HomeContent(
         }
     }
 }
+
+private fun shouldShowRecentSearchHeader(uiState: HomeUiState) =
+    uiState.homeListUiState.items.isNotEmpty() &&
+        uiState.searchUiState.inSearchMode &&
+        uiState.searchUiState.isInSuggestionsMode
+
+private fun shouldShowItemListHeader(uiState: HomeUiState) =
+    uiState.homeListUiState.items.isNotEmpty() &&
+        uiState.homeListUiState.isLoading == IsLoadingState.NotLoading &&
+        !uiState.searchUiState.isProcessingSearch.value() &&
+        !uiState.searchUiState.isInSuggestionsMode
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

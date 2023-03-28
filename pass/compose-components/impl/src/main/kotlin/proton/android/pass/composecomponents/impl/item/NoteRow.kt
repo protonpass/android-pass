@@ -13,7 +13,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.pass.domain.ItemType
 
-private const val MAX_LINES_NOTE_DETAIL = 2
+private const val MAX_LINES_NOTE_DETAIL = 1
 
 @Composable
 fun NoteRow(

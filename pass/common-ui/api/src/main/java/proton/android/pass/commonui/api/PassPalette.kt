@@ -44,7 +44,7 @@ object PassPalette {
 
     val Iris = Color(0xFF573BCC)
     val Indigo = Color(0xFF6D4AFF)
-    val Lilac = Color(0xFFF8FEE0)
+    val LavenderMist = Color(0xFFE6E0FE)
     val Magnolia = Color(0xFFF4F1FF)
 
     val BlueViolet = Color(0xFF883ADE)

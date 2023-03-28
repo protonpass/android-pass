@@ -19,7 +19,8 @@ class BottomSheetVaultRowPreviewProvider : PreviewParameterProvider<VaultRowInpu
                                     shareId = ShareId("123"),
                                     name = "some vault",
                                     color = ShareColor.Color2,
-                                    icon = ShareIcon.Icon10
+                                    icon = ShareIcon.Icon10,
+                                    isPrimary = false
                                 ),
                                 activeItemCount = 2,
                                 trashedItemCount = 0

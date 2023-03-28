@@ -1,6 +1,5 @@
 package proton.android.pass.crypto.impl.usecases
 
-import proton.android.pass.crypto.impl.context.TestEncryptionContextProvider
 import org.apache.commons.codec.binary.Base64
 import org.junit.Before
 import org.junit.Test
@@ -9,6 +8,7 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
 import proton.android.pass.crypto.api.usecases.OpenItem
+import proton.android.pass.crypto.impl.context.TestEncryptionContextProvider
 import proton.pass.domain.ItemType
 import proton.pass.domain.Share
 import proton.pass.domain.ShareColor
@@ -68,7 +68,8 @@ class OpenItemImplTest {
             expirationTime = null,
             createTime = Date(1664195804),
             color = ShareColor.Color1,
-            icon = ShareIcon.Icon1
+            icon = ShareIcon.Icon1,
+            isPrimary = false
         )
     }
 

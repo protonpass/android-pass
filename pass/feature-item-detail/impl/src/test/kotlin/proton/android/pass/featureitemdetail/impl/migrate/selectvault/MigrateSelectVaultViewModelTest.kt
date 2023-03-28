@@ -82,7 +82,8 @@ class MigrateSelectVaultViewModelTest {
             VaultWithItemCount(
                 vault = Vault(
                     shareId = SHARE_ID,
-                    name = "vault1"
+                    name = "vault1",
+                    isPrimary = false
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 0
@@ -90,7 +91,8 @@ class MigrateSelectVaultViewModelTest {
             VaultWithItemCount(
                 vault = Vault(
                     shareId = ShareId("OTHER_SHARE_ID"),
-                    name = "vault2"
+                    name = "vault2",
+                    isPrimary = false
                 ),
                 activeItemCount = 1,
                 trashedItemCount = 0

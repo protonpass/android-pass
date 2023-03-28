@@ -64,7 +64,8 @@ fun VaultSelectionBottomSheetPreview(
                     VaultWithItemCount(
                         vault = Vault(
                             shareId = ShareId(shareId),
-                            name = "vault 1"
+                            name = "vault 1",
+                            isPrimary = false
                         ),
                         activeItemCount = 12,
                         trashedItemCount = 0,
@@ -74,7 +75,8 @@ fun VaultSelectionBottomSheetPreview(
                             shareId = ShareId("other"),
                             name = "vault 2",
                             color = ShareColor.Color2,
-                            icon = ShareIcon.Icon2
+                            icon = ShareIcon.Icon2,
+                            isPrimary = false
                         ),
                         activeItemCount = 1,
                         trashedItemCount = 0,

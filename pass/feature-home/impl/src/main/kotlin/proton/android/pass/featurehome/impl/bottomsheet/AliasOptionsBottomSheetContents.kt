@@ -8,10 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Clock
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheetPadding
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
@@ -20,7 +20,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.featurehome.impl.R
 import proton.pass.domain.ItemId
@@ -32,9 +32,11 @@ import proton.pass.domain.ShareId
 fun AliasOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
+    isRecentSearch: Boolean = false,
     onCopyAlias: (String) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
-    onMoveToTrash: (ItemUiModel) -> Unit
+    onMoveToTrash: (ItemUiModel) -> Unit,
+    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
     val itemType = itemUiModel.itemType as ItemType.Alias
     Column(modifier.bottomSheetPadding()) {
@@ -47,14 +49,16 @@ fun AliasOptionsBottomSheetContents(
             },
             leftIcon = { AliasIcon() }
         )
+        val list = mutableListOf(
+            copyAlias(itemType.aliasEmail, onCopyAlias),
+            edit(itemUiModel, onEdit),
+            moveToTrash(itemUiModel, onMoveToTrash)
+        )
+        if (isRecentSearch) {
+            list.add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
+        }
         BottomSheetItemList(
-            items = persistentListOf(
-                copyAlias(itemType.aliasEmail, onCopyAlias),
-                bottomSheetDivider(),
-                edit(itemUiModel, onEdit),
-                bottomSheetDivider(),
-                moveToTrash(itemUiModel, onMoveToTrash)
-            )
+            items = list.withDividers().toPersistentList()
         )
     }
 }
@@ -78,9 +82,9 @@ private fun copyAlias(aliasEmail: String, onCopyAlias: (String) -> Unit): Bottom
 @Preview
 @Composable
 fun AliasOptionsBottomSheetContentsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = isDark) {
+    PassTheme(isDark = input.first) {
         Surface {
             AliasOptionsBottomSheetContents(
                 itemUiModel = ItemUiModel(
@@ -93,9 +97,11 @@ fun AliasOptionsBottomSheetContentsPreview(
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now()
                 ),
+                isRecentSearch = input.second,
                 onCopyAlias = {},
                 onEdit = { _, _ -> },
-                onMoveToTrash = {}
+                onMoveToTrash = {},
+                onRemoveFromRecentSearch = { _, _ -> }
             )
         }
     }

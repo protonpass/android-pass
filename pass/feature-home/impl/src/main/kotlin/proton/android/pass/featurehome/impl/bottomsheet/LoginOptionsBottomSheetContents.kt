@@ -8,10 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Clock
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheetPadding
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
@@ -20,7 +20,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemRow
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSubtitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.featurehome.impl.R
 import proton.pass.domain.ItemId
@@ -32,10 +32,12 @@ import proton.pass.domain.ShareId
 fun LoginOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
+    isRecentSearch: Boolean = false,
     onCopyUsername: (String) -> Unit,
     onCopyPassword: (String) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
-    onMoveToTrash: (ItemUiModel) -> Unit
+    onMoveToTrash: (ItemUiModel) -> Unit,
+    onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
     val itemType = itemUiModel.itemType as ItemType.Login
     Column(modifier.bottomSheetPadding()) {
@@ -44,16 +46,18 @@ fun LoginOptionsBottomSheetContents(
             subtitle = { BottomSheetItemSubtitle(text = itemType.username) },
             leftIcon = { LoginIcon(text = itemUiModel.name, itemType = itemType) }
         )
+        val list = mutableListOf(
+            copyUsername(itemType.username, onCopyUsername),
+            copyPassword(itemType.password, onCopyPassword),
+            edit(itemUiModel, onEdit),
+            moveToTrash(itemUiModel, onMoveToTrash)
+        )
+
+        if (isRecentSearch) {
+            list.add(removeFromRecentSearch(itemUiModel, onRemoveFromRecentSearch))
+        }
         BottomSheetItemList(
-            items = persistentListOf(
-                copyUsername(itemType.username, onCopyUsername),
-                bottomSheetDivider(),
-                copyPassword(itemType.password, onCopyPassword),
-                bottomSheetDivider(),
-                edit(itemUiModel, onEdit),
-                bottomSheetDivider(),
-                moveToTrash(itemUiModel, onMoveToTrash)
-            )
+            items = list.withDividers().toPersistentList()
         )
     }
 }
@@ -92,9 +96,9 @@ private fun copyPassword(password: String, onCopyPassword: (String) -> Unit): Bo
 @Preview
 @Composable
 fun LoginOptionsBottomSheetContentsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = isDark) {
+    PassTheme(isDark = input.first) {
         Surface {
             LoginOptionsBottomSheetContents(
                 itemUiModel = ItemUiModel(
@@ -113,10 +117,12 @@ fun LoginOptionsBottomSheetContentsPreview(
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now()
                 ),
+                isRecentSearch = input.second,
                 onCopyUsername = {},
                 onCopyPassword = {},
                 onEdit = { _, _ -> },
-                onMoveToTrash = {}
+                onMoveToTrash = {},
+                onRemoveFromRecentSearch = { _, _ -> }
             )
         }
     }

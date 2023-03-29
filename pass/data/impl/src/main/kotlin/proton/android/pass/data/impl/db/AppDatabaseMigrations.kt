@@ -5,6 +5,7 @@ import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.observability.data.db.ObservabilityDatabase
+import me.proton.core.usersettings.data.db.OrganizationDatabase
 
 @Suppress("ClassNaming")
 object AppDatabaseMigrations {
@@ -16,4 +17,10 @@ object AppDatabaseMigrations {
 
     @DeleteTable.Entries(value = [DeleteTable(tableName = "SelectedShareEntity")])
     class MIGRATION_2_3 : AutoMigrationSpec
+
+    val MIGRATION_6_7 = object : Migration(6, 7) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            OrganizationDatabase.MIGRATION_2.migrate(database)
+        }
+    }
 }

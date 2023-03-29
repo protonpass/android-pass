@@ -62,6 +62,7 @@ import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
+import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry.SearchEntrySelection
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.AliasMovedToTrash
@@ -99,6 +100,7 @@ class HomeViewModel @Inject constructor(
     private val deleteItem: DeleteItem,
     private val clearTrash: ClearTrash,
     private val addSearchEntry: AddSearchEntry,
+    private val deleteSearchEntry: DeleteSearchEntry,
     private val deleteAllSearchEntry: DeleteAllSearchEntry,
     private val observeSearchEntry: ObserveSearchEntry,
     private val telemetryManager: TelemetryManager,
@@ -528,6 +530,12 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             deleteAllSearchEntry()
             isInSuggestionsModeState.update { false }
+        }
+    }
+
+    fun onClearRecentSearch(shareId: ShareId, itemId: ItemId) {
+        viewModelScope.launch {
+            deleteSearchEntry(shareId, itemId)
         }
     }
 

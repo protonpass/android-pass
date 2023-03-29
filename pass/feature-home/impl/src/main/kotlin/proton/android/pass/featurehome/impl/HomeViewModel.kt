@@ -402,6 +402,10 @@ class HomeViewModel @Inject constructor(
                     ItemType.Password -> {}
                 }
             }
+            .onError {
+                PassLogger.e(TAG, it, "Trash item failed")
+                snackbarDispatcher(HomeSnackbarMessage.MoveToTrashError)
+            }
     }
 
     fun copyToClipboard(text: String, homeClipboardType: HomeClipboardType) {

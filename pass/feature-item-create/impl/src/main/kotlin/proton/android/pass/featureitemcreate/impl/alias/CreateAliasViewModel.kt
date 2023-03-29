@@ -12,6 +12,7 @@ import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
+import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -32,6 +33,7 @@ open class CreateAliasViewModel @Inject constructor(
     private val createAlias: CreateAlias,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val telemetryManager: TelemetryManager,
+    private val draftRepository: DraftRepository,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
@@ -99,6 +101,7 @@ open class CreateAliasViewModel @Inject constructor(
         }
 
         if (isDraft) {
+            draftRepository.save(KEY_DRAFT_ALIAS, aliasItem)
             isAliasDraftSavedState.tryEmit(AliasDraftSavedState.Success(shareId, aliasItem))
         } else {
             isLoadingState.update { IsLoadingState.Loading }

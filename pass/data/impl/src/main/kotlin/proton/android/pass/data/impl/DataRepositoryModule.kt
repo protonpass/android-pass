@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.SearchEntryRepository
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -15,6 +16,7 @@ import proton.android.pass.data.impl.repositories.EventRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemKeyRepository
 import proton.android.pass.data.impl.repositories.ItemKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
+import proton.android.pass.data.impl.repositories.OnMemoryDraftRepository
 import proton.android.pass.data.impl.repositories.SearchEntryRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareKeyRepositoryImpl
@@ -48,4 +50,7 @@ abstract class DataRepositoryModule {
 
     @Binds
     abstract fun bindSearchEntryRepository(impl: SearchEntryRepositoryImpl): SearchEntryRepository
+
+    @Binds
+    abstract fun bindDraftRepository(impl: OnMemoryDraftRepository): DraftRepository
 }

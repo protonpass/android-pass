@@ -66,7 +66,7 @@ fun SettingOption(
             Icon(
                 painter = painterResource(R.drawable.ic_chevron_tiny_right),
                 contentDescription = stringResource(R.string.setting_option_icon_content_description),
-                tint = PassTheme.colors.textHint
+                tint = PassTheme.colors.inputBorder
             )
         }
     }

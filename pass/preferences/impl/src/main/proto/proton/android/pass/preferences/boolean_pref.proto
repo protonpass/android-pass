@@ -1,0 +1,12 @@
+
+syntax = "proto3";
+
+option java_package = "me.proton.android.pass.preferences";
+option java_multiple_files = true;
+
+enum BooleanPrefProto {
+  BOOLEAN_PREFERENCE_UNSPECIFIED = 0;
+  BOOLEAN_PREFERENCE_TRUE = 1;
+  BOOLEAN_PREFERENCE_FALSE = 2;
+}
+

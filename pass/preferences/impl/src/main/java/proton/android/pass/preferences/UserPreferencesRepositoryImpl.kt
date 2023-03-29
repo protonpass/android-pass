@@ -2,7 +2,11 @@ package proton.android.pass.preferences
 
 import androidx.datastore.core.DataStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import proton.android.pass.log.api.PassLogger
+import java.io.IOException
 import javax.inject.Inject
 
 class UserPreferencesRepositoryImpl @Inject constructor(
@@ -13,7 +17,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         runCatching {
             dataStore.updateData {
                 it.toBuilder()
-                    .setBiometricLock(state.value())
+                    .setBiometricLock(state.value().toBooleanPrefProto())
                     .build()
             }
             return@runCatching
@@ -21,15 +25,16 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override fun getBiometricLockState(): Flow<BiometricLockState> =
         dataStore.data
+            .catch { exception -> handleExceptions(exception) }
             .map { preferences ->
-                BiometricLockState.from(preferences.biometricLock)
+                BiometricLockState.from(fromBooleanPrefProto(preferences.biometricLock))
             }
 
     override suspend fun setHasAuthenticated(state: HasAuthenticated): Result<Unit> =
         runCatching {
             dataStore.updateData {
                 it.toBuilder()
-                    .setHasAuthenticatedWithBiometry(state.value())
+                    .setHasAuthenticatedWithBiometry(state.value().toBooleanPrefProto())
                     .build()
             }
             return@runCatching
@@ -37,15 +42,16 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override fun getHasAuthenticated(): Flow<HasAuthenticated> =
         dataStore.data
+            .catch { exception -> handleExceptions(exception) }
             .map { preferences ->
-                HasAuthenticated.from(preferences.hasAuthenticatedWithBiometry)
+                HasAuthenticated.from(fromBooleanPrefProto(preferences.hasAuthenticatedWithBiometry))
             }
 
     override suspend fun setHasCompletedOnBoarding(state: HasCompletedOnBoarding): Result<Unit> =
         runCatching {
             dataStore.updateData {
                 it.toBuilder()
-                    .setCompletedOnboarding(state.value())
+                    .setCompletedOnboarding(state.value().toBooleanPrefProto())
                     .build()
             }
             return@runCatching
@@ -53,8 +59,9 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override fun getHasCompletedOnBoarding(): Flow<HasCompletedOnBoarding> =
         dataStore.data
+            .catch { exception -> handleExceptions(exception) }
             .map { preferences ->
-                HasCompletedOnBoarding.from(preferences.completedOnboarding)
+                HasCompletedOnBoarding.from(fromBooleanPrefProto(preferences.completedOnboarding))
             }
 
     override suspend fun setThemePreference(theme: ThemePreference): Result<Unit> =
@@ -69,6 +76,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override fun getThemePreference(): Flow<ThemePreference> =
         dataStore.data
+            .catch { exception -> handleExceptions(exception) }
             .map { preferences ->
                 ThemePreference.from(preferences.themeValue)
             }
@@ -77,7 +85,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         runCatching {
             dataStore.updateData {
                 it.toBuilder()
-                    .setHasDismissedAutofillBanner(state.value())
+                    .setHasDismissedAutofillBanner(state.value().toBooleanPrefProto())
                     .build()
             }
             return@runCatching
@@ -85,15 +93,16 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner> =
         dataStore.data
+            .catch { exception -> handleExceptions(exception) }
             .map { preferences ->
-                HasDismissedAutofillBanner.from(preferences.hasDismissedAutofillBanner)
+                HasDismissedAutofillBanner.from(fromBooleanPrefProto(preferences.hasDismissedAutofillBanner))
             }
 
     override suspend fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit> =
         runCatching {
             dataStore.updateData {
                 it.toBuilder()
-                    .setCopyTotpToClipboardEnabled(state.value())
+                    .setCopyTotpToClipboardEnabled(state.value().toBooleanPrefProto())
                     .build()
             }
             return@runCatching
@@ -101,8 +110,14 @@ class UserPreferencesRepositoryImpl @Inject constructor(
 
     override fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard> =
         dataStore.data
+            .catch { exception -> handleExceptions(exception) }
             .map { preferences ->
-                CopyTotpToClipboard.from(preferences.copyTotpToClipboardEnabled)
+                CopyTotpToClipboard.from(
+                    fromBooleanPrefProto(
+                        pref = preferences.copyTotpToClipboardEnabled,
+                        default = true
+                    )
+                )
             }
 
     override suspend fun setClearClipboardPreference(
@@ -116,10 +131,12 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         return@runCatching
     }
 
-    override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> = dataStore.data
-        .map { preferences ->
-            ClearClipboardPreference.from(preferences.clearClipboardAfterValue)
-        }
+    override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> =
+        dataStore.data
+            .catch { exception -> handleExceptions(exception) }
+            .map { preferences ->
+                ClearClipboardPreference.from(preferences.clearClipboardAfterValue)
+            }
 
     override suspend fun clearPreferences(): Result<Unit> =
         runCatching {
@@ -130,4 +147,15 @@ class UserPreferencesRepositoryImpl @Inject constructor(
             }
             return@runCatching
         }
+
+    private suspend fun FlowCollector<UserPreferences>.handleExceptions(
+        exception: Throwable
+    ) {
+        if (exception is IOException) {
+            PassLogger.e("Cannot read preferences.", exception)
+            emit(UserPreferences.getDefaultInstance())
+        } else {
+            throw exception
+        }
+    }
 }

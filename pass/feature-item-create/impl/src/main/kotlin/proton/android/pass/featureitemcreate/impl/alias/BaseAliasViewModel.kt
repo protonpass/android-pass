@@ -267,6 +267,11 @@ abstract class BaseAliasViewModel(
         selectedShareIdState.update { shareId.toOption() }
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    fun setDraftStatus(status: Boolean) {
+        isDraft = status
+    }
+
     companion object {
         private const val TAG = "BaseAliasViewModel"
     }

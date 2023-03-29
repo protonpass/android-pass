@@ -108,4 +108,5 @@
     <!-- Recent search -->
     <string name="recent_search_header_count">Recent searches</string>
     <string name="recent_search_clear">Clear</string>
+    <string name="recent_search_remove_item">Remove from recent searches</string>
 </resources>

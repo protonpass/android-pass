@@ -125,6 +125,7 @@ fun HomeScreen(
                 }
                 LoginOptions -> LoginOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
+                    isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                     onCopyUsername = {
                         scope.launch { bottomSheetState.hide() }
                         homeViewModel.copyToClipboard(it, HomeClipboardType.Username)
@@ -145,10 +146,17 @@ fun HomeScreen(
                             bottomSheetState.hide()
                             homeViewModel.sendItemToTrash(it)
                         }
+                    },
+                    onRemoveFromRecentSearch = { shareId, itemId ->
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.onClearRecentSearch(shareId, itemId)
+                        }
                     }
                 )
                 AliasOptions -> AliasOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
+                    isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                     onCopyAlias = {
                         scope.launch { bottomSheetState.hide() }
                         homeViewModel.copyToClipboard(it, HomeClipboardType.Alias)
@@ -162,10 +170,17 @@ fun HomeScreen(
                             bottomSheetState.hide()
                             homeViewModel.sendItemToTrash(it)
                         }
+                    },
+                    onRemoveFromRecentSearch = { shareId, itemId ->
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.onClearRecentSearch(shareId, itemId)
+                        }
                     }
                 )
                 NoteOptions -> NoteOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
+                    isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
                     onCopyNote = {
                         scope.launch { bottomSheetState.hide() }
                         homeViewModel.copyToClipboard(it, HomeClipboardType.Note)
@@ -178,6 +193,12 @@ fun HomeScreen(
                         scope.launch {
                             bottomSheetState.hide()
                             homeViewModel.sendItemToTrash(it)
+                        }
+                    },
+                    onRemoveFromRecentSearch = { shareId, itemId ->
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.onClearRecentSearch(shareId, itemId)
                         }
                     }
                 )

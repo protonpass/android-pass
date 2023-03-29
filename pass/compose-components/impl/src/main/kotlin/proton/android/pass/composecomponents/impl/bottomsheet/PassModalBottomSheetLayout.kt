@@ -31,7 +31,7 @@ fun PassModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = sheetContent,
         sheetShape = PassTheme.shapes.bottomsheetShape,
-        sheetBackgroundColor = PassTheme.colors.interactionNormMinor2
+        sheetBackgroundColor = PassTheme.colors.backgroundWeak
             .compositeOver(PassTheme.colors.backgroundNorm),
         sheetContentColor = ProtonTheme.colors.textNorm,
         scrimColor = PassTheme.colors.backdrop,
@@ -50,7 +50,7 @@ fun PassModalBottomSheetLayout(
         modifier = modifier,
         bottomSheetNavigator = bottomSheetNavigator,
         sheetShape = PassTheme.shapes.bottomsheetShape,
-        sheetBackgroundColor = PassTheme.colors.interactionNormMinor2
+        sheetBackgroundColor = PassTheme.colors.backgroundWeak
             .compositeOver(PassTheme.colors.backgroundNorm),
         scrimColor = PassTheme.colors.backdrop,
         content = content

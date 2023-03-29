@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -22,12 +23,14 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle,
-    telemetryManager: TelemetryManager
+    telemetryManager: TelemetryManager,
+    draftRepository: DraftRepository
 ) : CreateAliasViewModel(
     accountManager,
     createAlias,
     snackbarDispatcher,
     telemetryManager,
+    draftRepository,
     observeAliasOptions,
     observeVaults,
     savedStateHandle

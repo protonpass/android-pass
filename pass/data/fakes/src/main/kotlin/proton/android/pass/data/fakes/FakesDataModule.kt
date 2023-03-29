@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.repositories.AliasRepository
+import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
@@ -25,6 +26,7 @@ import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
 import proton.android.pass.data.fakes.repositories.TestAliasRepository
+import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
@@ -63,6 +65,11 @@ abstract class FakesDataModule {
     abstract fun bindAliasRepository(
         impl: TestAliasRepository
     ): AliasRepository
+
+    @Binds
+    abstract fun bindDraftRepository(
+        impl: TestDraftRepository
+    ): DraftRepository
 
     @Binds
     abstract fun bindCreateAlias(

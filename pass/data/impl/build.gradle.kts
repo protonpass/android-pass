@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.core.userSettings)
     implementation(libs.core.utilKotlin)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit)

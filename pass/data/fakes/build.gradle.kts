@@ -17,6 +17,7 @@ android {
 
 dependencies {
     implementation(libs.core.user)
+    implementation(libs.kotlinx.collections)
     implementation(projects.pass.common.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)

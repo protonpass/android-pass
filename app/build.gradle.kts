@@ -156,12 +156,12 @@ android {
             dimension = "env"
             applicationIdSuffix = ".black"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
-            buildConfigField("String", "HOST", "\"proton.black\"")
+            buildConfigField("String", "HOST", "\"api.proton.black\"")
         }
         create("prod") {
             dimension = "env"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "true")
-            buildConfigField("String", "HOST", "\"protonmail.ch\"")
+            buildConfigField("String", "HOST", "\"pass-api.proton.me\"")
         }
     }
 

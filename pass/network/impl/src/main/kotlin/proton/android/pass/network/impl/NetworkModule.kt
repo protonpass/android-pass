@@ -29,7 +29,7 @@ object NetworkModule {
     @Provides
     @BaseProtonApiUrl
     fun provideProtonApiUrl(appConfig: AppConfig): HttpUrl =
-        "https://api.${appConfig.host}".toHttpUrl()
+        "https://${appConfig.host}".toHttpUrl()
 
     @Provides
     @Singleton

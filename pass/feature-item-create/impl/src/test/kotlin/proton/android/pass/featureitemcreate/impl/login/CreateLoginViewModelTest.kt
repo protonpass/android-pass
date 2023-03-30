@@ -15,6 +15,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
@@ -78,7 +79,8 @@ internal class CreateLoginViewModelTest {
             createItemAndAlias = createItemAndAlias,
             observeVaults = observeVaults,
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
-            telemetryManager = telemetryManager
+            telemetryManager = telemetryManager,
+            draftRepository = TestDraftRepository()
         )
     }
 

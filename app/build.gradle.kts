@@ -306,15 +306,13 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
-    androidTestImplementation(libs.bundles.test.android)
-    androidTestImplementation(libs.bundles.core.test)
+    androidTestImplementation(libs.bundles.test.android) {
+        exclude(module = "protobuf-lite")
+    }
+    androidTestImplementation(libs.bundles.core.test) {
+        exclude(module = "protobuf-lite")
+    }
     androidTestUtil(libs.androidx.test.orchestrator)
-}
-
-// Espresso and protobuf-lite dependency causing exception on startup.
-// NoSuchMethodError: No static method registerDefaultInstance.
-configurations.configureEach {
-    exclude("com.google.protobuf", "protobuf-lite")
 }
 
 fun String?.toBuildConfigValue() = if (this != null) "\"$this\"" else "null"

@@ -24,6 +24,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -62,15 +63,17 @@ class UpdateLoginViewModel @Inject constructor(
     totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaultsWithItemCount,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    draftRepository: DraftRepository
 ) : BaseLoginViewModel(
-    accountManager,
-    snackbarDispatcher,
-    clipboardManager,
-    totpManager,
-    observeVaults,
-    observeCurrentUser,
-    savedStateHandle
+    accountManager = accountManager,
+    snackbarDispatcher = snackbarDispatcher,
+    clipboardManager = clipboardManager,
+    totpManager = totpManager,
+    observeVaults = observeVaults,
+    observeCurrentUser = observeCurrentUser,
+    savedStateHandle = savedStateHandle,
+    draftRepository = draftRepository
 ) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -131,7 +134,7 @@ class UpdateLoginViewModel @Inject constructor(
 
     fun setAliasItem(aliasItem: AliasItem) {
         canUpdateUsernameState.update { false }
-        aliasItemState.update { aliasItem.toOption() }
+        aliasLocalItemState.update { aliasItem.toOption() }
         loginItemState.update {
             it.copy(
                 username = aliasItem.aliasToBeCreated ?: it.username
@@ -160,7 +163,7 @@ class UpdateLoginViewModel @Inject constructor(
             val userId = accountManager.getPrimaryUserId()
                 .first { userId -> userId != null }
             if (userId != null) {
-                val aliasItemOption = aliasItemState.value
+                val aliasItemOption = aliasLocalItemState.value
                 if (aliasItemOption is Some) {
                     performCreateAlias(userId, shareId, aliasItemOption.value)
                         .map { performUpdateItem(userId, shareId, currentItem, loginItem) }

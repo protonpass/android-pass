@@ -33,7 +33,7 @@ open class CreateAliasViewModel @Inject constructor(
     private val createAlias: CreateAlias,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val telemetryManager: TelemetryManager,
-    private val draftRepository: DraftRepository,
+    protected val draftRepository: DraftRepository,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
@@ -155,5 +155,6 @@ open class CreateAliasViewModel @Inject constructor(
 
     companion object {
         private const val TAG = "CreateAliasViewModel"
+        const val KEY_DRAFT_ALIAS = "draft_alias"
     }
 }

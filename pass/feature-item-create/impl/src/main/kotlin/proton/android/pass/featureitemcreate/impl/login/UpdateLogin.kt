@@ -8,6 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.Option
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.LoginUpdated
@@ -22,7 +23,8 @@ fun UpdateLogin(
     primaryTotp: String?,
     onUpClick: () -> Unit,
     onSuccess: (ShareId, ItemId) -> Unit,
-    onScanTotp: () -> Unit
+    onScanTotp: () -> Unit,
+    onCreateAlias: (ShareId, Option<String>) -> Unit
 ) {
     val viewModel: UpdateLoginViewModel = hiltViewModel()
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
@@ -51,7 +53,10 @@ fun UpdateLogin(
         topBarActionName = stringResource(id = R.string.action_save),
         isUpdate = true,
         showVaultSelector = false,
-        onUpClick = onUpClick,
+        onUpClick = {
+            viewModel.onClose()
+            onUpClick()
+        },
         onSuccess = { shareId, itemId, _ ->
             viewModel.onEmitSnackbarMessage(LoginUpdated)
             onSuccess(shareId, itemId)
@@ -62,7 +67,7 @@ fun UpdateLogin(
         onPasswordChange = { viewModel.onPasswordChange(it) },
         onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) },
-        onAliasCreated = { viewModel.onAliasCreated(it) },
+        onCreateAlias = onCreateAlias,
         onRemoveAliasClick = { viewModel.onRemoveAlias() },
         onVaultSelect = {
             // Migrate element

@@ -32,6 +32,7 @@ fun SaveItemScreen(
         initialContents = initialContents,
         onClose = onSaved, // For now we consider close to be the same as success
         onSuccess = { onSaved() },
-        onScanTotp = {}
+        onScanTotp = {},
+        onCreateAlias = { _, _ -> }
     )
 }

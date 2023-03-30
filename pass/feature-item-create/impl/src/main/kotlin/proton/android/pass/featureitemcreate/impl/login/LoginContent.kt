@@ -22,6 +22,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -29,8 +32,6 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
-import proton.android.pass.featureitemcreate.impl.alias.AliasItem
-import proton.android.pass.featureitemcreate.impl.alias.bottomsheet.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.saver.LoginBottomSheetContentTypeSaver
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.AliasOptionsBottomSheet
@@ -63,7 +64,7 @@ internal fun LoginContent(
     onPasteTotpClick: () -> Unit,
     onScanTotpClick: () -> Unit,
     onLinkedAppDelete: (PackageInfoUi) -> Unit,
-    onAliasCreated: (AliasItem) -> Unit
+    onCreateAlias: (ShareId, Option<String>) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
@@ -71,9 +72,13 @@ internal fun LoginContent(
         skipHalfExpanded = true
     )
 
-    BackHandler(enabled = bottomSheetState.isVisible) {
-        scope.launch {
-            bottomSheetState.hide()
+    BackHandler {
+        if (bottomSheetState.isVisible) {
+            scope.launch {
+                bottomSheetState.hide()
+            }
+        } else {
+            onUpClick()
         }
     }
 
@@ -116,8 +121,7 @@ internal fun LoginContent(
                     onEditAliasClick = {
                         scope.launch {
                             bottomSheetState.hide()
-                            currentBottomSheet = LoginBottomSheetContentType.CreateAlias
-                            bottomSheetState.show()
+                            onCreateAlias(uiState.selectedVault!!.vault.shareId, uiState.loginItem.title.some())
                         }
                     },
                     onRemoveAliasClick = {
@@ -132,21 +136,6 @@ internal fun LoginContent(
                     selectedShareId = uiState.selectedVault?.vault?.shareId,
                     onVaultClick = {
                         onVaultSelect(it)
-                        scope.launch {
-                            bottomSheetState.hide()
-                        }
-                    }
-                )
-                LoginBottomSheetContentType.CreateAlias -> CreateAliasBottomSheet(
-                    itemTitle = uiState.loginItem.title,
-                    aliasItem = uiState.aliasItem,
-                    onAliasCreated = {
-                        scope.launch {
-                            onAliasCreated(it)
-                            bottomSheetState.hide()
-                        }
-                    },
-                    onCancel = {
                         scope.launch {
                             bottomSheetState.hide()
                         }
@@ -210,15 +199,8 @@ internal fun LoginContent(
                 },
                 onCreateAliasClick = {
                     scope.launch {
-                        currentBottomSheet = LoginBottomSheetContentType.CreateAlias
-                        if (!keyboardState) {
-                            // If keyboard is hidden, display the bottomsheet
-                            bottomSheetState.show()
-                        } else {
-                            // If keyboard is present, do it in a deferred way
-                            showBottomSheetWhenKeyboardDisappears = true
-                            keyboardController?.hide()
-                        }
+                        bottomSheetState.hide()
+                        onCreateAlias(uiState.selectedVault!!.vault.shareId, uiState.loginItem.title.toOption())
                     }
                 },
                 onAliasOptionsClick = {

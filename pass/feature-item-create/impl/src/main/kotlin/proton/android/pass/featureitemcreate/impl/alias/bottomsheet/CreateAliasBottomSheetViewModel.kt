@@ -1,9 +1,13 @@
 package proton.android.pass.featureitemcreate.impl.alias.bottomsheet
 
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
@@ -40,16 +44,20 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
         isDraft = true
     }
 
-    fun setInitialState(title: String, aliasItem: AliasItem?) {
-        if (aliasItem != null) {
-            aliasItemState.update { aliasItem }
-        } else {
-            if (aliasItemState.value.prefix.isBlank()) {
-                if (title.isBlank()) {
-                    onPrefixChange(randomPrefix())
-                } else {
-                    titlePrefixInSync = true
-                    onTitleChange(title)
+    fun setInitialState(title: String) = viewModelScope.launch {
+        val draft = draftRepository.get<AliasItem>(KEY_DRAFT_ALIAS).firstOrNull()
+        when (draft) {
+            is Some -> {
+                aliasItemState.update { draft.value }
+            }
+            else -> {
+                if (aliasItemState.value.prefix.isBlank()) {
+                    if (title.isBlank()) {
+                        onPrefixChange(randomPrefix())
+                    } else {
+                        titlePrefixInSync = true
+                        onTitleChange(title)
+                    }
                 }
             }
         }

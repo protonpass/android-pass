@@ -18,6 +18,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -26,6 +27,7 @@ import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -43,20 +45,22 @@ class CreateLoginViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
+    private val draftRepository: DraftRepository,
     accountManager: AccountManager,
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaultsWithItemCount,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : BaseLoginViewModel(
-    accountManager,
-    snackbarDispatcher,
-    clipboardManager,
-    totpManager,
-    observeVaults,
-    observeCurrentUser,
-    savedStateHandle
+    accountManager = accountManager,
+    snackbarDispatcher = snackbarDispatcher,
+    clipboardManager = clipboardManager,
+    totpManager = totpManager,
+    observeVaults = observeVaults,
+    observeCurrentUser = observeCurrentUser,
+    savedStateHandle = savedStateHandle,
+    draftRepository = draftRepository
 ) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -77,7 +81,7 @@ class CreateLoginViewModel @Inject constructor(
                 websites.add(initialContents.url)
             }
         }
-        aliasItemState.update { initialContents.aliasItem.toOption() }
+        aliasLocalItemState.update { initialContents.aliasItem.toOption() }
         loginItemState.update {
             val username = initialContents.username
                 ?: if (initialContents.aliasItem?.aliasToBeCreated != null) {
@@ -115,7 +119,7 @@ class CreateLoginViewModel @Inject constructor(
         val userId = accountManager.getPrimaryUserId()
             .firstOrNull { userId -> userId != null }
         if (userId != null && vault != null) {
-            val aliasItemOption = aliasItemState.value
+            val aliasItemOption = aliasLocalItemState.value
             if (aliasItemOption is Some) {
                 performCreateItemAndAlias(userId, vault.vault.shareId, aliasItemOption.value)
             } else {
@@ -167,6 +171,7 @@ class CreateLoginViewModel @Inject constructor(
             }
             telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
             telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
+            draftRepository.delete(CreateAliasViewModel.KEY_DRAFT_ALIAS)
         }.onFailure {
             PassLogger.e(TAG, it, "Could not create item")
             snackbarDispatcher(ItemCreationError)

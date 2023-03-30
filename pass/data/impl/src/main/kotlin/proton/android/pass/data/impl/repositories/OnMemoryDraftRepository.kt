@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
+import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.repositories.DraftRepository
@@ -33,11 +34,15 @@ class OnMemoryDraftRepository @Inject constructor() : DraftRepository {
         }
         .distinctUntilChanged()
 
-    override fun delete(key: String) {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T> delete(key: String): Option<T> {
+        var res: Option<T> = None
         storeFlow.update {
             it.toMutableMap().apply {
-                remove(key)
+                val removed = remove(key) as? T
+                res = removed.toOption()
             }.toPersistentMap()
         }
+        return res
     }
 }

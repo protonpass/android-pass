@@ -28,6 +28,7 @@ fun SelectItemList(
     ItemsList(
         modifier = modifier,
         items = listUiState.items.items,
+        shares = listUiState.shares,
         shouldScrollToTop = false,
         highlight = searchUiState.searchQuery,
         isLoading = listUiState.isLoading,

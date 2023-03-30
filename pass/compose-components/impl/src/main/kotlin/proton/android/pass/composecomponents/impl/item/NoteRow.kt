@@ -19,7 +19,8 @@ private const val MAX_LINES_NOTE_DETAIL = 1
 fun NoteRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
-    highlight: String = ""
+    highlight: String = "",
+    vaultIcon: Int? = null
 ) {
     with(item.itemType as ItemType.Note) {
         var title = AnnotatedString(item.name)
@@ -42,10 +43,11 @@ fun NoteRow(
         }
 
         ItemRow(
+            modifier = modifier,
             icon = { NoteIcon() },
             title = title,
             subtitles = persistentListOf(note),
-            modifier = modifier
+            vaultIcon = vaultIcon
         )
     }
 }

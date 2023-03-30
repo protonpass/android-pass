@@ -17,7 +17,8 @@ import proton.pass.domain.ItemType
 internal fun AliasRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
-    highlight: String = ""
+    highlight: String = "",
+    vaultIcon: Int? = null
 ) {
     with(item.itemType as ItemType.Alias) {
         var title = AnnotatedString(item.name)
@@ -41,10 +42,11 @@ internal fun AliasRow(
         }
 
         ItemRow(
+            modifier = modifier,
             icon = { AliasIcon() },
             title = title,
             subtitles = listOfNotNull(aliasEmail, note).toImmutableList(),
-            modifier = modifier
+            vaultIcon = vaultIcon
         )
     }
 }

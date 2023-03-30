@@ -151,6 +151,8 @@ internal fun HomeContent(
 
             ItemsList(
                 items = uiState.homeListUiState.items,
+                shares = uiState.homeListUiState.shares,
+                isShareSelected = uiState.homeListUiState.selectedShare.isNotEmpty(),
                 shouldScrollToTop = shouldScrollToTop,
                 scrollableState = scrollableState,
                 highlight = uiState.searchUiState.searchQuery,
@@ -241,3 +243,4 @@ private fun HomeDrawerIcon(
         ArrowBackIconButton(modifier) { onStopSearch() }
     }
 }
+

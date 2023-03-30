@@ -21,7 +21,7 @@ package proton.android.pass.uitest.flow
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.auth.test.MinimalSignUpExternalTests
 import proton.android.pass.uitest.BaseTest
-import proton.android.pass.uitest.robot.HomeRobot
+import proton.android.pass.uitest.robot.OnBoardingRobot
 
 @HiltAndroidTest
 class SignUpFlowTest : BaseTest(), MinimalSignUpExternalTests {
@@ -29,6 +29,6 @@ class SignUpFlowTest : BaseTest(), MinimalSignUpExternalTests {
     override val isCongratsDisplayed = true
 
     override fun verifyAfter() {
-        HomeRobot.verify { homeScreenDisplayed() }
+        OnBoardingRobot.verify { onBoardingScreenDisplayed() }
     }
 }

@@ -9,23 +9,27 @@ import proton.pass.domain.ItemType
 internal fun ItemRowContents(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
-    highlight: String
+    highlight: String,
+    vaultIcon: Int? = null
 ) {
     when (item.itemType) {
         is ItemType.Login -> LoginRow(
             modifier = modifier,
             item = item,
-            highlight = highlight
+            highlight = highlight,
+            vaultIcon = vaultIcon
         )
         is ItemType.Note -> NoteRow(
             modifier = modifier,
             item = item,
-            highlight = highlight
+            highlight = highlight,
+            vaultIcon = vaultIcon
         )
         is ItemType.Alias -> AliasRow(
             modifier = modifier,
             item = item,
-            highlight = highlight
+            highlight = highlight,
+            vaultIcon = vaultIcon
         )
         ItemType.Password -> {}
     }

@@ -2,7 +2,9 @@ package proton.android.pass.featurehome.impl
 
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.GroupedItemList
@@ -10,6 +12,7 @@ import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.pass.domain.ShareId
 
 sealed interface ActionState {
     object Unknown : ActionState
@@ -37,6 +40,7 @@ data class HomeListUiState(
     val actionState: ActionState = ActionState.Unknown,
     val items: ImmutableList<GroupedItemList>,
     val selectedShare: Option<ShareUiModel> = None,
+    val shares: ImmutableMap<ShareId, ShareUiModel>,
     val homeVaultSelection: HomeVaultSelection = HomeVaultSelection.AllVaults,
     val homeItemTypeSelection: HomeItemTypeSelection = HomeItemTypeSelection.AllItems,
     val sortingType: SortingType = SortingType.MostRecent,
@@ -46,6 +50,7 @@ data class HomeListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
             items = persistentListOf(),
+            shares = persistentMapOf(),
         )
     }
 }

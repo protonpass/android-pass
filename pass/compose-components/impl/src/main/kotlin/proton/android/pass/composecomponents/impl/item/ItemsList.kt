@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.ImmutableMap
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Last30Days
@@ -33,12 +34,15 @@ import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.composecomponents.impl.loading.PassSwipeRefresh
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.pass.domain.ShareId
 
 private const val PLACEHOLDER_ELEMENTS = 40
 
@@ -46,6 +50,8 @@ private const val PLACEHOLDER_ELEMENTS = 40
 fun ItemsList(
     modifier: Modifier = Modifier,
     items: ImmutableList<GroupedItemList>,
+    shares: ImmutableMap<ShareId, ShareUiModel>,
+    isShareSelected: Boolean = false,
     scrollableState: LazyListState = rememberLazyListState(),
     shouldScrollToTop: Boolean,
     highlight: String = "",
@@ -84,6 +90,10 @@ fun ItemsList(
                     items(items = value, key = { it.id.id }) { item ->
                         ActionableItemRow(
                             item = item,
+                            vaultIcon = shares[item.shareId]
+                                ?.takeIf { !isShareSelected }
+                                ?.icon
+                                ?.toResource(),
                             highlight = highlight,
                             showMenuIcon = showMenuIcon,
                             onItemClick = onItemClick,

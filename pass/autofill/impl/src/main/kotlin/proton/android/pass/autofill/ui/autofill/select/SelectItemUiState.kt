@@ -2,12 +2,16 @@ package proton.android.pass.autofill.ui.autofill.select
 
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.pass.domain.ShareId
 
 @Immutable
 data class SelectItemUiState(
@@ -26,14 +30,16 @@ data class SelectItemListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
     val itemClickedEvent: AutofillItemClickedEvent,
-    val items: SelectItemListItems
+    val items: SelectItemListItems,
+    val shares: PersistentMap<ShareId, ShareUiModel>
 ) {
     companion object {
         val Loading = SelectItemListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
             itemClickedEvent = AutofillItemClickedEvent.None,
-            items = SelectItemListItems.Initial
+            items = SelectItemListItems.Initial,
+            shares = persistentMapOf()
         )
     }
 }

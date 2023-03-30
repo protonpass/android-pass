@@ -2,6 +2,7 @@ package proton.android.pass.autofill.ui.previewproviders
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.Clock
 import proton.android.pass.autofill.ui.autofill.select.AutofillItemClickedEvent
 import proton.android.pass.autofill.ui.autofill.select.SearchUiState
@@ -25,6 +26,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                 SelectItemListUiState(
                     isLoading = IsLoadingState.NotLoading,
                     isRefreshing = IsRefreshingState.NotRefreshing,
+                    itemClickedEvent = AutofillItemClickedEvent.None,
                     items = SelectItemListItems(
                         suggestions = persistentListOf(),
                         items = persistentListOf(
@@ -35,7 +37,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                         ),
                         suggestionsForTitle = ""
                     ),
-                    itemClickedEvent = AutofillItemClickedEvent.None
+                    shares = persistentMapOf()
                 ),
                 SearchUiState.Initial
             ),
@@ -43,6 +45,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                 SelectItemListUiState(
                     isLoading = IsLoadingState.NotLoading,
                     isRefreshing = IsRefreshingState.NotRefreshing,
+                    itemClickedEvent = AutofillItemClickedEvent.None,
                     items = SelectItemListItems(
                         suggestions = persistentListOf(item("Suggested item")),
                         items = persistentListOf(
@@ -56,7 +59,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                         ),
                         suggestionsForTitle = "some.website.local"
                     ),
-                    itemClickedEvent = AutofillItemClickedEvent.None
+                    shares = persistentMapOf()
                 ),
                 SearchUiState.Initial
             ),
@@ -64,8 +67,9 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                 SelectItemListUiState(
                     isLoading = IsLoadingState.NotLoading,
                     isRefreshing = IsRefreshingState.NotRefreshing,
+                    itemClickedEvent = AutofillItemClickedEvent.None,
                     items = SelectItemListItems.Initial,
-                    itemClickedEvent = AutofillItemClickedEvent.None
+                    shares = persistentMapOf()
                 ),
                 SearchUiState(
                     searchQuery = "query",

@@ -81,7 +81,7 @@ fun DeleteVaultDialogContent(
     )
 }
 
-class DeleteVaultPreviewProvider:
+class DeleteVaultPreviewProvider :
     ThemePairPreviewProvider<DeleteVaultUiState>(DeleteVaultDialogPreviewProvider())
 
 @Preview

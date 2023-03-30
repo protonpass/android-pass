@@ -3,7 +3,6 @@ package proton.android.pass.featureitemcreate.impl.alias.bottomsheet
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
@@ -45,7 +44,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     }
 
     fun setInitialState(title: String) = viewModelScope.launch {
-        val draft = draftRepository.get<AliasItem>(KEY_DRAFT_ALIAS).firstOrNull()
+        val draft = draftRepository.delete<AliasItem>(KEY_DRAFT_ALIAS)
         when (draft) {
             is Some -> {
                 aliasItemState.update { draft.value }

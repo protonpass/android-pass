@@ -1,5 +1,6 @@
 package proton.android.pass.featurevault.impl.bottomsheet
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,6 +20,10 @@ fun CreateVaultBottomSheet(
     viewModel: CreateVaultViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    BackHandler {
+        onClose()
+    }
 
     LaunchedEffect(state.isVaultCreatedEvent) {
         if (state.isVaultCreatedEvent == IsVaultCreatedEvent.Created) {

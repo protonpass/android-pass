@@ -43,7 +43,6 @@ import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
 import proton.android.pass.featurehome.impl.trash.ConfirmClearTrashDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmDeleteItemDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmRestoreAllDialog
-import proton.android.pass.featurehome.impl.vault.VaultDeleteDialog
 import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
 import proton.pass.domain.ItemType
@@ -62,6 +61,7 @@ fun HomeScreen(
     onAddItemClick: (Option<ShareId>) -> Unit,
     onCreateVaultClick: () -> Unit,
     onEditVaultClick: (ShareId) -> Unit,
+    onDeleteVaultClick: (ShareId) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
     vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel()
 ) {
@@ -76,7 +76,6 @@ fun HomeScreen(
     }
     var shouldScrollToTop by remember { mutableStateOf(false) }
     var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
-    var shouldShowDeleteVaultDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowRestoreAllDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowClearTrashDialog by rememberSaveable { mutableStateOf(false) }
     var selectedShare: ShareUiModelWithItemCount? by rememberSaveable(stateSaver = ShareUiModelWithItemCountSaver) {
@@ -87,7 +86,6 @@ fun HomeScreen(
     LaunchedEffect(actionState) {
         if (actionState == ActionState.Done) {
             shouldShowDeleteItemDialog = false
-            shouldShowDeleteVaultDialog = false
             shouldShowRestoreAllDialog = false
             shouldShowClearTrashDialog = false
             homeViewModel.restoreActionState()
@@ -218,7 +216,7 @@ fun HomeScreen(
                         onRemove = {
                             scope.launch {
                                 bottomSheetState.hide()
-                                shouldShowDeleteVaultDialog = true
+                                selectedShare?.let { onDeleteVaultClick(it.id) }
                             }
                         }
                     )
@@ -332,29 +330,6 @@ fun HomeScreen(
                     scope.launch { bottomSheetState.show() }
                 },
                 onClearRecentSearchClick = homeViewModel::onClearAllRecentSearch
-            )
-
-            VaultDeleteDialog(
-                show = shouldShowDeleteVaultDialog,
-                vaultName = selectedShare?.name,
-                onDismiss = {
-                    shouldShowDeleteVaultDialog = false
-                    selectedShare = null
-                },
-                onDelete = {
-                    scope.launch {
-                        drawerState.close()
-                        shouldShowDeleteVaultDialog = false
-
-                        selectedShare?.let { share ->
-                            vaultDrawerViewModel.onDeleteVault(share.id)
-                        }
-                    }
-                },
-                onCancel = {
-                    shouldShowDeleteVaultDialog = false
-                    selectedShare = null
-                }
             )
 
             ConfirmRestoreAllDialog(

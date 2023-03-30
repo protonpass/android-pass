@@ -4,8 +4,11 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableMap
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
@@ -19,7 +22,6 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -29,8 +31,8 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
@@ -50,13 +52,12 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.crypto.api.extensions.toVault
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItem
-import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItem
@@ -80,7 +81,6 @@ import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemState
 import proton.pass.domain.ItemType
-import proton.pass.domain.Share
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
 import javax.inject.Inject
@@ -94,7 +94,6 @@ class HomeViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val applyPendingEvents: ApplyPendingEvents,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val getShareById: GetShareById,
     private val restoreItem: RestoreItem,
     private val restoreItems: RestoreItems,
     private val deleteItem: DeleteItem,
@@ -104,6 +103,7 @@ class HomeViewModel @Inject constructor(
     private val deleteAllSearchEntry: DeleteAllSearchEntry,
     private val observeSearchEntry: ObserveSearchEntry,
     private val telemetryManager: TelemetryManager,
+    observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems
 ) : ViewModel() {
@@ -133,14 +133,36 @@ class HomeViewModel @Inject constructor(
     private val isProcessingSearchState: MutableStateFlow<IsProcessingSearchState> =
         MutableStateFlow(IsProcessingSearchState.NotLoading)
 
-    private val selectedShareFlow: Flow<Option<ShareUiModel>> = vaultSelectionFlow
-        .mapLatest {
-            when (it) {
-                HomeVaultSelection.AllVaults -> None
-                HomeVaultSelection.Trash -> None
-                is HomeVaultSelection.Vault -> shareIdToShare(it.shareId)
+    private val shareListWrapperFlow = combine(
+        vaultSelectionFlow,
+        observeVaults()
+    ) { vaultSelection, vaultsResult ->
+        val vaults = vaultsResult.getOrNull() ?: emptyList()
+        val shares = vaults.associate { it.shareId to ShareUiModel.fromVault(it) }
+            .toPersistentMap()
+        val selectedShare = when (vaultSelection) {
+            HomeVaultSelection.AllVaults -> None
+            HomeVaultSelection.Trash -> None
+            is HomeVaultSelection.Vault -> {
+                vaults.find { it.shareId == vaultSelection.shareId }
+                    .toOption()
+                    .map { ShareUiModel.fromVault(it) }
             }
         }
+        ShareListWrapper(
+            shares = shares,
+            selectedShare = selectedShare
+        )
+    }.distinctUntilChanged()
+
+    data class ShareListWrapper(
+        val shares: ImmutableMap<ShareId, ShareUiModel>,
+        val selectedShare: Option<ShareUiModel>
+    ) {
+        companion object {
+            val Empty = ShareListWrapper(persistentMapOf(), None)
+        }
+    }
 
     private val searchEntryState = vaultSelectionFlow
         .flatMapLatest {
@@ -309,12 +331,12 @@ class HomeViewModel @Inject constructor(
     )
 
     val homeUiState = combine(
-        selectedShareFlow,
+        shareListWrapperFlow,
         filtersWrapperFlow,
         resultsFlow,
         searchUiStateFlow,
         refreshingLoadingFlow,
-    ) { selectedShare, filtersWrapper, itemsResult, searchUiState, refreshingLoading ->
+    ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading ->
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
 
         val items = when (itemsResult) {
@@ -333,7 +355,8 @@ class HomeViewModel @Inject constructor(
                 isRefreshing = refreshingLoading.refreshing,
                 actionState = refreshingLoading.actionState,
                 items = items,
-                selectedShare = selectedShare,
+                selectedShare = shareListWrapper.selectedShare,
+                shares = shareListWrapper.shares,
                 homeVaultSelection = filtersWrapper.vaultSelection,
                 homeItemTypeSelection = filtersWrapper.itemTypeSelection,
                 sortingType = filtersWrapper.sortingSelection
@@ -536,30 +559,6 @@ class HomeViewModel @Inject constructor(
     fun onClearRecentSearch(shareId: ShareId, itemId: ItemId) {
         viewModelScope.launch {
             deleteSearchEntry(shareId, itemId)
-        }
-    }
-
-    private suspend fun shareIdToShare(shareId: ShareId): Option<ShareUiModel> {
-        val shareResult = getShareById(shareId = shareId)
-            .map(Share?::toOption)
-            .map {
-                it.flatMap { share ->
-                    when (val asVault = share.toVault(encryptionContextProvider)) {
-                        None -> None
-                        is Some -> ShareUiModel.fromVault(asVault.value).toOption()
-                    }
-                }
-            }
-
-        return when (shareResult) {
-            LoadingResult.Loading -> None
-            is LoadingResult.Error -> {
-                PassLogger.w(TAG, shareResult.exception, "Error getting share by id")
-                None
-            }
-            is LoadingResult.Success -> {
-                shareResult.data
-            }
         }
     }
 

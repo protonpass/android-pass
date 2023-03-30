@@ -17,7 +17,8 @@ import proton.pass.domain.ItemType
 fun LoginRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
-    highlight: String = ""
+    highlight: String = "",
+    vaultIcon: Int? = null
 ) {
     with(item.itemType as ItemType.Login) {
         var title = AnnotatedString(item.name)
@@ -49,10 +50,11 @@ fun LoginRow(
         }
 
         ItemRow(
+            modifier = modifier,
             icon = { LoginIcon(text = title.text, itemType = this) },
             title = title,
             subtitles = (listOfNotNull(username, note) + websites).toImmutableList(),
-            modifier = modifier
+            vaultIcon = vaultIcon
         )
     }
 }

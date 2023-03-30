@@ -10,6 +10,7 @@ import org.junit.Before
 import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.some
 import proton.android.pass.data.impl.repositories.OnMemoryDraftRepository
 
@@ -50,11 +51,19 @@ class OnMemoryDraftRepositoryTest {
 
     @Test
     fun `delete deletes the value`() = runTest {
-        instance.save(KEY, 1234)
-        instance.delete(KEY)
+        val value = 1234
+        instance.save(KEY, value)
+        val res = instance.delete<Int>(KEY)
+        assertThat(res).isEqualTo(Some(value))
         instance.get<String>(KEY).test {
             assertThat(awaitItem()).isEqualTo(None)
         }
+    }
+
+    @Test
+    fun `delete of unknown key returns None`() = runTest {
+        val res = instance.delete<Int>(KEY)
+        assertThat(res).isEqualTo(None)
     }
 
     @Test
@@ -94,7 +103,8 @@ class OnMemoryDraftRepositoryTest {
         readMutex.lock() // Make sure the consumer has emitted
         assertThat(received).isEqualTo(value2.some())
 
-        instance.delete(KEY)
+        val res = instance.delete<Int>(KEY)
+        assertThat(res).isEqualTo(Some(value2))
 
         writeMutex.unlock() // Allow the consumer to emit
         readMutex.lock() // Make sure the consumer has emitted

@@ -27,7 +27,7 @@ object EditVaultBottomSheet : NavItem(
     }
 }
 
-fun NavGraphBuilder.bottomSheetCreateVaultGraph(
+internal fun NavGraphBuilder.bottomSheetCreateVaultGraph(
     onClose: () -> Unit
 ) {
     bottomSheet(CreateVaultBottomSheet) {
@@ -36,7 +36,7 @@ fun NavGraphBuilder.bottomSheetCreateVaultGraph(
         )
     }
 }
-fun NavGraphBuilder.bottomSheetEditVaultGraph(
+internal fun NavGraphBuilder.bottomSheetEditVaultGraph(
     onClose: () -> Unit
 ) {
     bottomSheet(EditVaultBottomSheet) {

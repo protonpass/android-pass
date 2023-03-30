@@ -69,7 +69,7 @@ abstract class BaseLoginViewModel(
         when (aliasDraft) {
             is Some -> {
                 onAliasCreated(aliasDraft.value)
-                draftRepository.delete(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+                draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
                 aliasDraft
             }
             None -> aliasItem
@@ -254,7 +254,7 @@ abstract class BaseLoginViewModel(
     }
 
     fun onClose() {
-        draftRepository.delete(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+        draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
     }
 
     protected fun validateItem(): Boolean {
@@ -322,7 +322,7 @@ abstract class BaseLoginViewModel(
 
     fun onRemoveAlias() {
         aliasLocalItemState.update { None }
-        draftRepository.delete(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+        draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
 
         loginItemState.update { it.copy(username = "") }
         canUpdateUsernameState.update { true }

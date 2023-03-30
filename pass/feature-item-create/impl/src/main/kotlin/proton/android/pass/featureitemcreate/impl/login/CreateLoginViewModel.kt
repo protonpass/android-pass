@@ -171,7 +171,7 @@ class CreateLoginViewModel @Inject constructor(
             }
             telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
             telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
-            draftRepository.delete(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+            draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
         }.onFailure {
             PassLogger.e(TAG, it, "Could not create item")
             snackbarDispatcher(ItemCreationError)

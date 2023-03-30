@@ -179,7 +179,9 @@ class CreateAliasViewModelTest {
         assertThat(events).isEmpty()
 
         // Draft should be stored
-        val draft = draftRepository.get<AliasItem>(KEY_DRAFT_ALIAS).first().value()
+        val draft = draftRepository.get<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+            .first()
+            .value()
         assertThat(draft).isNotNull()
         assertThat(draft!!.title).isEqualTo(TEST_ALIAS_TITLE)
         assertThat(draft.prefix).isEqualTo(TEST_ALIAS_PREFIX)

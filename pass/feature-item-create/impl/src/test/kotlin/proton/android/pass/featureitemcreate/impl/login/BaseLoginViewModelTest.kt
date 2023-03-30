@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.login.CreateUpdateLoginUiState.Companion.Initial
@@ -42,13 +43,14 @@ internal class BaseLoginViewModelTest {
         observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) }
         savedStateHandle = TestSavedStateHandle.create()
         baseLoginViewModel = object : BaseLoginViewModel(
-            TestAccountManager(),
-            TestSnackbarDispatcher(),
-            clipboardManager,
-            totpManager,
-            observeVaults,
-            observeCurrentUser,
-            savedStateHandle
+            accountManager = TestAccountManager(),
+            snackbarDispatcher = TestSnackbarDispatcher(),
+            clipboardManager = clipboardManager,
+            totpManager = totpManager,
+            draftRepository = TestDraftRepository(),
+            observeVaults = observeVaults,
+            observeCurrentUser = observeCurrentUser,
+            savedStateHandle = savedStateHandle
         ) {}
     }
 

@@ -81,6 +81,7 @@
 
     <!-- Setting option -->
     <string name="setting_option_icon_content_description">Option icon</string>
+    <string name="vault_icon_content_description">Vault icon</string>
 
     <!-- Select Vault BottomSheet -->
     <plurals name="bottomsheet_select_vault_item_count">

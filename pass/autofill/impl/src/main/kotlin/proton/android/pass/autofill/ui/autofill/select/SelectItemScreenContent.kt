@@ -82,7 +82,7 @@ internal fun SelectItemScreenContent(
         }
     ) { padding ->
         SelectItemList(
-            modifier = modifier.padding(padding),
+            modifier = Modifier.padding(padding),
             uiState = uiState,
             onItemClicked = {
                 val item = it.itemType as? ItemType.Login ?: return@SelectItemList

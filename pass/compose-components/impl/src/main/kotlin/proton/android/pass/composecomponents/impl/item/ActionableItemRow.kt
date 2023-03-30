@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.R
 
@@ -27,10 +28,11 @@ import proton.android.pass.composecomponents.impl.R
 fun ActionableItemRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
+    vaultIcon: Int? = null,
     highlight: String = "",
     showMenuIcon: Boolean,
     onItemClick: (ItemUiModel) -> Unit = {},
-    onItemMenuClick: (ItemUiModel) -> Unit = {}
+    onItemMenuClick: (ItemUiModel) -> Unit = {},
 ) {
     Row(
         modifier = modifier
@@ -41,9 +43,10 @@ fun ActionableItemRow(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         ItemRowContents(
+            modifier = Modifier.weight(1f),
             item = item,
             highlight = highlight,
-            modifier = Modifier.weight(1f)
+            vaultIcon = vaultIcon
         )
         if (showMenuIcon) {
             IconButton(
@@ -72,7 +75,8 @@ fun ActionableItemRowPreviewWithMenuIcon(
         Surface {
             ActionableItemRow(
                 item = input.second,
-                showMenuIcon = true
+                showMenuIcon = true,
+                vaultIcon = null
             )
         }
     }
@@ -87,7 +91,24 @@ fun ActionableItemRowPreviewWithoutMenuIcon(
         Surface {
             ActionableItemRow(
                 item = input.second,
-                showMenuIcon = false
+                showMenuIcon = false,
+                vaultIcon = null
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun ActionableItemRowPreviewWithVaultIcon(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            ActionableItemRow(
+                item = ItemUiModelPreviewProvider().values.first(),
+                showMenuIcon = false,
+                vaultIcon = R.drawable.ic_briefcase
             )
         }
     }

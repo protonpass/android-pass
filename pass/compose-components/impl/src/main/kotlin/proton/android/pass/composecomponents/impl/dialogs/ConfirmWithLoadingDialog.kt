@@ -21,6 +21,7 @@ fun ConfirmWithLoadingDialog(
     show: Boolean,
     isLoading: Boolean,
     isConfirmActionDestructive: Boolean,
+    isConfirmEnabled: Boolean = true,
     title: String,
     message: String,
     confirmText: String,
@@ -29,13 +30,53 @@ fun ConfirmWithLoadingDialog(
     onConfirm: () -> Unit,
     onCancel: () -> Unit
 ) {
+    ConfirmWithLoadingDialog(
+        modifier = modifier,
+        show = show,
+        isLoading = isLoading,
+        isConfirmActionDestructive = isConfirmActionDestructive,
+        isConfirmEnabled = isConfirmEnabled,
+        title = title,
+        content = {
+            ProtonAlertDialogText(
+                text = message
+            )
+        },
+        confirmText = confirmText,
+        cancelText = cancelText,
+        onDismiss = onDismiss,
+        onConfirm = onConfirm,
+        onCancel = onCancel
+    )
+}
+
+@Composable
+fun ConfirmWithLoadingDialog(
+    modifier: Modifier = Modifier,
+    show: Boolean,
+    isLoading: Boolean,
+    isConfirmActionDestructive: Boolean,
+    isConfirmEnabled: Boolean = true,
+    title: String,
+    content: @Composable () -> Unit,
+    confirmText: String,
+    cancelText: String,
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit,
+    onCancel: () -> Unit
+) {
     if (!show) return
 
-    val confirmColor = if (isConfirmActionDestructive) {
-        ProtonTheme.colors.notificationError
+    val confirmColor = if (isConfirmEnabled) {
+        if (isConfirmActionDestructive) {
+            ProtonTheme.colors.notificationError
+        } else {
+            ProtonTheme.colors.brandNorm
+        }
     } else {
-        ProtonTheme.colors.brandNorm
+        ProtonTheme.colors.textDisabled
     }
+
     ProtonAlertDialog(
         modifier = modifier,
         onDismissRequest = onDismiss,
@@ -46,11 +87,7 @@ fun ConfirmWithLoadingDialog(
                 color = ProtonTheme.colors.textNorm
             )
         },
-        text = {
-            ProtonAlertDialogText(
-                text = message
-            )
-        },
+        text = content,
         confirmButton = {
             if (isLoading) {
                 CircularProgressIndicator(
@@ -59,8 +96,10 @@ fun ConfirmWithLoadingDialog(
             } else {
                 ProtonTextButton(
                     onClick = onConfirm,
+                    enabled = isConfirmEnabled,
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Color.Transparent,
+                        disabledBackgroundColor = Color.Transparent,
                         contentColor = confirmColor
                     )
                 ) {
@@ -87,3 +126,4 @@ fun ConfirmWithLoadingDialog(
         }
     )
 }
+

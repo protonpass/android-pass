@@ -15,10 +15,13 @@
     <string name="snackbar_cannot_create_more_vaults_error">Cannot create more vaults</string>
     <string name="snackbar_edit_vault_success">Vault edited</string>
     <string name="snackbar_edit_vault_error">Vault not edited</string>
+    <string name="snackbar_delete_vault_success">Vault deleted</string>
+    <string name="snackbar_delete_vault_error">Vault not deleted</string>
     <string name="snackbar_retrieve_vault_error">Vault not found</string>
 
     <string name="vault_delete_dialog_title">Delete vault</string>
-    <string name="vault_delete_dialog_body">Do you want to permanently delete %1$s or migrate items to another vault?</string>
+    <string name="vault_delete_dialog_body">Do you want to permanently delete %1$s? Please write the vault name to confirm</string>
+    <string name="vault_delete_dialog_placeholder">Vault name</string>
     <string name="vault_delete_dialog_migrate_action">Migrate</string>
     <string name="vault_delete_dialog_cancel_action">Cancel</string>
     <string name="vault_delete_dialog_delete_action">Delete</string>

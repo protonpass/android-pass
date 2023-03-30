@@ -51,8 +51,8 @@ import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
-import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetCreateVaultGraph
-import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetEditVaultGraph
+import proton.android.pass.featurevault.impl.delete.DeleteVaultDialog
+import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -83,6 +83,13 @@ fun NavGraphBuilder.appGraph(
                 EditVaultBottomSheet.createNavRoute(shareId.toOption())
             )
         },
+        onDeleteVaultClick = { shareId ->
+            appNavigator.navigate(
+                destination = DeleteVaultDialog,
+                route = DeleteVaultDialog.createNavRoute(shareId),
+                backDestination = Home
+            )
+        }
     )
     bottomsheetCreateItemGraph(
         onCreateLogin = { shareId ->
@@ -115,11 +122,9 @@ fun NavGraphBuilder.appGraph(
             )
         }
     )
-    bottomSheetCreateVaultGraph(
-        onClose = { dismissBottomSheet({}) }
-    )
-    bottomSheetEditVaultGraph(
-        onClose = { dismissBottomSheet({}) }
+    vaultGraph(
+        dismissBottomSheet = { dismissBottomSheet({}) },
+        onClose = { appNavigator.onBackClick() }
     )
     generatePasswordBottomsheetGraph(
         onDismiss = { appNavigator.onBackClick() }

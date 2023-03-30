@@ -10,6 +10,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
+import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetVaultById
@@ -31,6 +32,7 @@ import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
+import proton.android.pass.data.fakes.usecases.TestDeleteVault
 import proton.android.pass.data.fakes.usecases.TestGetShareById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
@@ -155,4 +157,9 @@ abstract class FakesDataModule {
     abstract fun bindCreateItemAndAlias(
         impl: TestCreateItemAndAlias
     ): CreateItemAndAlias
+
+    @Binds
+    abstract fun bindDeleteVault(
+        impl: TestDeleteVault
+    ): DeleteVault
 }

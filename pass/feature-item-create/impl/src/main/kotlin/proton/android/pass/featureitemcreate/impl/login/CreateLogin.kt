@@ -8,8 +8,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.featureitemcreate.impl.R
+import proton.pass.domain.ShareId
 
 @OptIn(
     ExperimentalLifecycleComposeApi::class
@@ -21,7 +23,8 @@ fun CreateLoginScreen(
     showCreateAliasButton: Boolean = true,
     onClose: () -> Unit,
     onSuccess: (ItemUiModel) -> Unit,
-    onScanTotp: () -> Unit
+    onScanTotp: () -> Unit,
+    onCreateAlias: (ShareId, Option<String>) -> Unit
 ) {
     val viewModel: CreateLoginViewModel = hiltViewModel()
     LaunchedEffect(initialContents) {
@@ -45,7 +48,10 @@ fun CreateLoginScreen(
         isUpdate = false,
         showVaultSelector = uiState.showVaultSelector,
         topBarActionName = stringResource(id = R.string.title_create_login),
-        onUpClick = { onClose() },
+        onUpClick = {
+            viewModel.onClose()
+            onClose()
+        },
         onSuccess = { _, _, item ->
             viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.LoginCreated)
             onSuccess(item)
@@ -56,7 +62,7 @@ fun CreateLoginScreen(
         onPasswordChange = { viewModel.onPasswordChange(it) },
         onWebsiteChange = onWebsiteChange,
         onNoteChange = { viewModel.onNoteChange(it) },
-        onAliasCreated = { viewModel.onAliasCreated(it) },
+        onCreateAlias = onCreateAlias,
         onRemoveAliasClick = { viewModel.onRemoveAlias() },
         onVaultSelect = { viewModel.changeVault(it) },
         onLinkedAppDelete = {},

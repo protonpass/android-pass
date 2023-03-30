@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -25,12 +26,14 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -43,6 +46,7 @@ abstract class BaseLoginViewModel(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clipboardManager: ClipboardManager,
     private val totpManager: TotpManager,
+    private val draftRepository: DraftRepository,
     observeVaults: ObserveVaultsWithItemCount,
     observeCurrentUser: ObserveCurrentUser,
     savedStateHandle: SavedStateHandle
@@ -55,7 +59,23 @@ abstract class BaseLoginViewModel(
     private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
 
     protected val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
-    protected val aliasItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
+    protected val aliasLocalItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
+    private val aliasDraftState: Flow<Option<AliasItem>> = draftRepository
+        .get(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+    private val aliasState: Flow<Option<AliasItem>> = combine(
+        aliasLocalItemState,
+        aliasDraftState.onStart { emit(None) }
+    ) { aliasItem, aliasDraft ->
+        when (aliasDraft) {
+            is Some -> {
+                onAliasCreated(aliasDraft.value)
+                draftRepository.delete(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+                aliasDraft
+            }
+            None -> aliasItem
+        }
+    }
+
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
     protected val isItemSavedState: MutableStateFlow<ItemSavedState> =
@@ -113,7 +133,7 @@ abstract class BaseLoginViewModel(
         loginItemValidationErrorsState,
         canUpdateUsernameState,
         observeCurrentUser().map { it.email },
-        aliasItemState
+        aliasState
     ) { loginItem, loginItemValidationErrors, updateUsername, primaryEmail, aliasItem ->
         LoginAliasItemWrapper(
             loginItem,
@@ -139,7 +159,6 @@ abstract class BaseLoginViewModel(
         eventsFlow,
         focusLastWebsiteState,
     ) { shareWrapper, loginItemWrapper, isLoading, events, focusLastWebsite ->
-        println("$shareWrapper | $loginItemWrapper | $isLoading | $events | $focusLastWebsite")
         CreateUpdateLoginUiState(
             vaultList = shareWrapper.vaultList,
             selectedVault = shareWrapper.currentVault,
@@ -167,9 +186,9 @@ abstract class BaseLoginViewModel(
             it.toMutableSet().apply { remove(LoginItemValidationErrors.BlankTitle) }
         }
 
-        val aliasItem = aliasItemState.value
+        val aliasItem = aliasLocalItemState.value
         if (aliasItem is Some) {
-            aliasItemState.update { aliasItem.value.copy(title = value).toOption() }
+            aliasLocalItemState.update { aliasItem.value.copy(title = value).toOption() }
         }
     }
 
@@ -226,7 +245,7 @@ abstract class BaseLoginViewModel(
         }
 
     fun onAliasCreated(aliasItem: AliasItem) {
-        aliasItemState.update { aliasItem.toOption() }
+        aliasLocalItemState.update { aliasItem.toOption() }
         val alias = aliasItem.aliasToBeCreated
         if (alias != null) {
             loginItemState.update { it.copy(username = alias) }
@@ -234,6 +253,9 @@ abstract class BaseLoginViewModel(
         }
     }
 
+    fun onClose() {
+        draftRepository.delete(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+    }
 
     protected fun validateItem(): Boolean {
         loginItemState.update {
@@ -299,8 +321,10 @@ abstract class BaseLoginViewModel(
     }
 
     fun onRemoveAlias() {
+        aliasLocalItemState.update { None }
+        draftRepository.delete(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+
         loginItemState.update { it.copy(username = "") }
-        aliasItemState.update { None }
         canUpdateUsernameState.update { true }
     }
 

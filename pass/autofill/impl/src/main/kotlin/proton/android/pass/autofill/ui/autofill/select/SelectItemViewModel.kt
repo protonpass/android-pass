@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
@@ -37,6 +38,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.flatMap
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.GroupedItemList
@@ -45,6 +47,7 @@ import proton.android.pass.commonui.api.ItemUiFilter
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
@@ -53,6 +56,7 @@ import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.log.api.PassLogger
@@ -78,7 +82,8 @@ class SelectItemViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
     observeActiveItems: ObserveActiveItems,
     getSuggestedLoginItems: GetSuggestedLoginItems,
-    telemetryManager: TelemetryManager
+    telemetryManager: TelemetryManager,
+    observeVaults: ObserveVaults
 ) : ViewModel() {
 
     init {
@@ -106,6 +111,14 @@ class SelectItemViewModel @Inject constructor(
         val isInSearchMode: Boolean,
         val isProcessingSearch: IsProcessingSearchState
     )
+
+    private val sharesFlow = observeVaults()
+        .map { vaultsResult ->
+            val vaults = vaultsResult.getOrNull() ?: emptyList()
+            vaults.associate { it.shareId to ShareUiModel.fromVault(it) }
+                .toPersistentMap()
+        }
+        .distinctUntilChanged()
 
     private val activeItemUIModelFlow: Flow<LoadingResult<List<ItemUiModel>>> =
         observeActiveItems(filter = ItemTypeFilter.Logins)
@@ -163,10 +176,11 @@ class SelectItemViewModel @Inject constructor(
 
     val uiState: StateFlow<SelectItemUiState> = combine(
         listItems,
+        sharesFlow,
         isRefreshing,
         itemClickedFlow,
         searchWrapper
-    ) { itemsResult, isRefreshing, itemClicked, search ->
+    ) { itemsResult, shares, isRefreshing, itemClicked, search ->
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
         val items = when (itemsResult) {
             LoadingResult.Loading -> SelectItemListItems.Initial
@@ -187,7 +201,8 @@ class SelectItemViewModel @Inject constructor(
                 isLoading = isLoading,
                 isRefreshing = isRefreshing,
                 itemClickedEvent = itemClicked,
-                items = items
+                items = items,
+                shares = shares
             ),
             SearchUiState(
                 searchQuery = search.searchQuery,

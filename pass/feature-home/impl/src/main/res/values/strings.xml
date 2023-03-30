@@ -64,7 +64,6 @@
 
     <!-- Vault management -->
     <string name="vault_delete_dialog_title">Delete vault</string>
-    <string name="vault_delete_dialog_body">Do you want to permanently delete %1$s or migrate items to another vault?</string>
     <string name="vault_delete_dialog_migrate_action">Migrate</string>
     <string name="vault_delete_dialog_cancel_action">Cancel</string>
     <string name="vault_delete_dialog_delete_action">Delete</string>

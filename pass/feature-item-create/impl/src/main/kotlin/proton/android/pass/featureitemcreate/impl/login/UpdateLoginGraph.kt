@@ -6,6 +6,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import kotlinx.coroutines.flow.StateFlow
+import proton.android.pass.common.api.Option
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
@@ -28,7 +29,8 @@ fun NavGraphBuilder.updateLoginGraph(
     getPrimaryTotp: () -> StateFlow<String?>,
     onSuccess: (ShareId, ItemId) -> Unit,
     onUpClick: () -> Unit,
-    onScanTotp: () -> Unit
+    onScanTotp: () -> Unit,
+    onCreateAlias: (ShareId, Option<String>) -> Unit,
 ) {
     composable(EditLogin) {
         val primaryTotp by getPrimaryTotp().collectAsStateWithLifecycle()
@@ -37,7 +39,8 @@ fun NavGraphBuilder.updateLoginGraph(
             primaryTotp = primaryTotp,
             onUpClick = onUpClick,
             onSuccess = onSuccess,
-            onScanTotp = onScanTotp
+            onScanTotp = onScanTotp,
+            onCreateAlias = onCreateAlias
         )
     }
 }

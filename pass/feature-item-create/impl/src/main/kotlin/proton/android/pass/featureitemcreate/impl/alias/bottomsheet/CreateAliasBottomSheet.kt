@@ -16,13 +16,12 @@ import proton.android.pass.featureitemcreate.impl.alias.CloseScreenEvent
 fun CreateAliasBottomSheet(
     modifier: Modifier = Modifier,
     itemTitle: String,
-    aliasItem: AliasItem?,
     onAliasCreated: (AliasItem) -> Unit,
     onCancel: () -> Unit,
     viewModel: CreateAliasBottomSheetViewModel = hiltViewModel()
 ) {
     LaunchedEffect(itemTitle) {
-        viewModel.setInitialState(itemTitle, aliasItem)
+        viewModel.setInitialState(itemTitle)
     }
 
     val state by viewModel.aliasUiState.collectAsStateWithLifecycle()

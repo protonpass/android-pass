@@ -39,7 +39,8 @@ fun NavGraphBuilder.createLoginGraph(
     getPrimaryTotp: () -> StateFlow<String?>,
     onSuccess: (ItemUiModel) -> Unit,
     onClose: () -> Unit,
-    onScanTotp: () -> Unit
+    onScanTotp: () -> Unit,
+    onCreateAlias: (ShareId, Option<String>) -> Unit,
 ) {
     composable(CreateLogin) {
         val primaryTotp by getPrimaryTotp().collectAsStateWithLifecycle()
@@ -50,7 +51,8 @@ fun NavGraphBuilder.createLoginGraph(
             initialContents = initialContents,
             onClose = onClose,
             onSuccess = onSuccess,
-            onScanTotp = onScanTotp
+            onScanTotp = onScanTotp,
+            onCreateAlias = onCreateAlias
         )
     }
 }

@@ -44,7 +44,7 @@ fun ItemSummary(
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             ItemTypeBox(type = SummaryItemType.Logins, count = itemSummaryUiState.loginCount)
-            ItemTypeBox(type = SummaryItemType.Notes, count = itemSummaryUiState.aliasCount)
+            ItemTypeBox(type = SummaryItemType.Notes, count = itemSummaryUiState.notesCount)
         }
         Row(
             modifier = Modifier.fillMaxWidth(),

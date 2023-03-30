@@ -5,7 +5,7 @@ import proton.android.pass.data.api.usecases.DeleteVault
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
-class TestDeleteVault @Inject constructor(): DeleteVault {
+class TestDeleteVault @Inject constructor() : DeleteVault {
     private var result: LoadingResult<Unit> = LoadingResult.Error(IllegalStateException("Result not set"))
 
     fun setResult(value: LoadingResult<Unit>) {

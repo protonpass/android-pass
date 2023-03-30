@@ -13,6 +13,7 @@ import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.featureauth.impl.authGraph
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
@@ -67,7 +68,13 @@ fun NavGraphBuilder.appGraph(
                 is Some -> onAutofillItemReceived(autofillItem.value)
             }
         },
-        onScanTotp = { appNavigator.navigate(CameraTotp) }
+        onScanTotp = { appNavigator.navigate(CameraTotp) },
+        onCreateAlias = { shareId, title ->
+            appNavigator.navigate(
+                destination = CreateAliasBottomSheet,
+                route = CreateAliasBottomSheet.createNavRoute(shareId, title)
+            )
+        }
     )
     createTotpGraph(
         onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },

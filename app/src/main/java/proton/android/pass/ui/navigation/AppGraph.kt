@@ -14,6 +14,7 @@ import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.featurehome.impl.HomeScreenNavigation
 import proton.android.pass.featurehome.impl.homeGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.EditAlias
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
 import proton.android.pass.featureitemcreate.impl.alias.updateAliasGraph
@@ -154,7 +155,14 @@ fun NavGraphBuilder.appGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
         onClose = { appNavigator.onBackClick() },
         onSuccess = { appNavigator.onBackClick() },
-        onScanTotp = { appNavigator.navigate(CameraTotp) }
+        onScanTotp = { appNavigator.navigate(CameraTotp) },
+        onCreateAlias = { shareId, title ->
+            appNavigator.navigate(
+                destination = CreateAliasBottomSheet,
+                route = CreateAliasBottomSheet.createNavRoute(shareId, title),
+                backDestination = CreateLogin
+            )
+        }
     )
     updateLoginGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
@@ -166,7 +174,14 @@ fun NavGraphBuilder.appGraph(
             )
         },
         onUpClick = { appNavigator.onBackClick() },
-        onScanTotp = { appNavigator.navigate(CameraTotp) }
+        onScanTotp = { appNavigator.navigate(CameraTotp) },
+        onCreateAlias = { shareId, title ->
+            appNavigator.navigate(
+                destination = CreateAliasBottomSheet,
+                route = CreateAliasBottomSheet.createNavRoute(shareId, title),
+                backDestination = EditLogin
+            )
+        }
     )
     createTotpGraph(
         onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
@@ -198,6 +213,7 @@ fun NavGraphBuilder.appGraph(
         onBackClick = { appNavigator.onBackClick() }
     )
     createAliasGraph(
+        dismissBottomSheet = dismissBottomSheet,
         onAliasCreatedSuccess = { appNavigator.onBackClick() },
         onBackClick = { appNavigator.onBackClick() }
     )

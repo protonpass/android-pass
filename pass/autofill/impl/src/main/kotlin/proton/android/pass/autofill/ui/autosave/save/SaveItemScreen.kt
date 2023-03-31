@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.autofill.entities.SaveInformation
 import proton.android.pass.autofill.entities.SaveItemType
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureitemcreate.impl.login.CreateLoginScreen
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 
@@ -23,7 +24,8 @@ fun SaveItemScreen(
         title = info.appName,
         username = username,
         password = password,
-        url = null
+        url = null,
+        packageInfoUi = PackageInfoUi(info.packageName, info.appName)
     )
 
     CreateLoginScreen(

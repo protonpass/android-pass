@@ -30,8 +30,8 @@ import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomShee
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.TopBarOptions
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.WebsiteOptions
 import proton.android.pass.featureitemdetail.impl.login.bottomsheet.WebsiteOptionsBottomSheetContents
-import proton.pass.domain.Item
 import proton.pass.domain.ItemId
+import proton.pass.domain.ItemState
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
@@ -42,95 +42,100 @@ import proton.pass.domain.ShareId
 @Composable
 fun LoginDetail(
     modifier: Modifier = Modifier,
-    item: Item,
     moreInfoUiState: MoreInfoUiState,
     viewModel: LoginDetailViewModel = hiltViewModel(),
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
-    onMigrateClick: (ShareId, ItemId) -> Unit
+    onMigrateClick: (ShareId, ItemId) -> Unit,
 ) {
-    LaunchedEffect(item) {
-        viewModel.setItem(item)
-    }
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    val model by viewModel.uiState.collectAsStateWithLifecycle()
-
-    if (model.isItemSentToTrash) {
-        LaunchedEffect(Unit) { onUpClick() }
-    }
-    val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
-    var currentBottomSheet by remember { mutableStateOf(TopBarOptions) }
-    var selectedWebsite by remember { mutableStateOf("") }
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
-    PassModalBottomSheetLayout(
-        sheetState = bottomSheetState,
-        sheetContent = {
-            when (currentBottomSheet) {
-                WebsiteOptions -> {
-                    WebsiteOptionsBottomSheetContents(
-                        website = selectedWebsite,
-                        onCopyToClipboard = { website ->
-                            viewModel.copyWebsiteToClipboard(website)
-                            scope.launch { bottomSheetState.hide() }
-                        },
-                        onOpenWebsite = { website ->
-                            openWebsite(context, website)
-                            scope.launch { bottomSheetState.hide() }
-                        }
-                    )
-                }
-                TopBarOptions -> {
-                    TopBarOptionsBottomSheetContents(
-                        onMigrate = {
-                            scope.launch { bottomSheetState.hide() }
-                            onMigrateClick(item.shareId, item.id)
-                        },
-                        onMoveToTrash = {
-                            viewModel.onDelete(item.shareId, item.id)
-                            scope.launch { bottomSheetState.hide() }
-                        }
-                    )
-                }
+    when (val state = uiState) {
+        LoginDetailUiState.NotInitialised -> {}
+        LoginDetailUiState.Error -> LaunchedEffect(Unit) { onUpClick() }
+        is LoginDetailUiState.Success -> {
+            if (state.isItemSentToTrash) {
+                LaunchedEffect(Unit) { onUpClick() }
             }
-        }
-    ) {
-        Scaffold(
-            topBar = {
-                ItemDetailTopBar(
-                    isLoading = model.isLoading,
-                    color = PassTheme.colors.loginInteractionNormMajor1,
-                    onUpClick = onUpClick,
-                    onEditClick = { onEditClick(item.shareId, item.id, item.itemType) },
-                    onOptionsClick = {
-                        currentBottomSheet = TopBarOptions
-                        scope.launch { bottomSheetState.show() }
-                    }
-                )
-            }
-        ) { padding ->
-            LoginContent(
-                modifier = modifier
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState()),
-                state = model,
-                moreInfoUiState = moreInfoUiState,
-                onTogglePasswordClick = { viewModel.togglePassword() },
-                onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },
-                onUsernameClick = { viewModel.copyUsernameToClipboard() },
-                onWebsiteClicked = { website -> openWebsite(context, website) },
-                onWebsiteLongClicked = { website ->
-                    selectedWebsite = website
-                    currentBottomSheet = WebsiteOptions
-                    scope.launch { bottomSheetState.show() }
-                },
-                onCopyTotpClick = {
-                    viewModel.copyTotpCodeToClipboard(it)
-                }
+            val bottomSheetState = rememberModalBottomSheetState(
+                initialValue = ModalBottomSheetValue.Hidden,
+                skipHalfExpanded = true
             )
+            var currentBottomSheet by remember { mutableStateOf(WebsiteOptions) }
+            var selectedWebsite by remember { mutableStateOf("") }
+            val scope = rememberCoroutineScope()
+            val context = LocalContext.current
+            PassModalBottomSheetLayout(
+                sheetState = bottomSheetState,
+                sheetContent = {
+                    when (currentBottomSheet) {
+                        WebsiteOptions -> {
+                            WebsiteOptionsBottomSheetContents(
+                                website = selectedWebsite,
+                                onCopyToClipboard = { website ->
+                                    viewModel.copyWebsiteToClipboard(website)
+                                    scope.launch { bottomSheetState.hide() }
+                                },
+                                onOpenWebsite = { website ->
+                                    openWebsite(context, website)
+                                    scope.launch { bottomSheetState.hide() }
+                                }
+                            )
+                        }
+                        TopBarOptions -> when (state.state) {
+                            ItemState.Active.value -> TopBarOptionsBottomSheetContents(
+                                onMigrate = {
+                                    scope.launch { bottomSheetState.hide() }
+                                    onMigrateClick(state.shareId, state.itemId)
+                                },
+                                onMoveToTrash = {
+                                    viewModel.onDelete(state.shareId, state.itemId)
+                                    scope.launch { bottomSheetState.hide() }
+                                }
+                            )
+                            ItemState.Trashed.value -> {}
+                        }
+                    }
+                }
+            ) {
+                Scaffold(
+                    topBar = {
+                        ItemDetailTopBar(
+                            isLoading = state.isLoading,
+                            isInTrash = state.state == ItemState.Trashed.value,
+                            color = PassTheme.colors.loginInteractionNormMajor1,
+                            onUpClick = onUpClick,
+                            onEditClick = {
+                                onEditClick(state.shareId, state.itemId, state.itemType)
+                            },
+                            onOptionsClick = {
+                                currentBottomSheet = TopBarOptions
+                                scope.launch { bottomSheetState.show() }
+                            }
+                        )
+                    }
+                ) { padding ->
+                    LoginContent(
+                        modifier = modifier
+                            .padding(padding)
+                            .verticalScroll(rememberScrollState()),
+                        state = state,
+                        moreInfoUiState = moreInfoUiState,
+                        onTogglePasswordClick = { viewModel.togglePassword() },
+                        onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },
+                        onUsernameClick = { viewModel.copyUsernameToClipboard() },
+                        onWebsiteClicked = { website -> openWebsite(context, website) },
+                        onWebsiteLongClicked = { website ->
+                            selectedWebsite = website
+                            currentBottomSheet = WebsiteOptions
+                            scope.launch { bottomSheetState.show() }
+                        },
+                        onCopyTotpClick = {
+                            viewModel.copyTotpCodeToClipboard(it)
+                        }
+                    )
+                }
+            }
         }
     }
 }

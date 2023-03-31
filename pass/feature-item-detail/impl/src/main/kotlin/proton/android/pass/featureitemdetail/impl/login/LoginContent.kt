@@ -15,7 +15,7 @@ import proton.android.pass.featureitemdetail.impl.common.NoteSection
 @Composable
 fun LoginContent(
     modifier: Modifier = Modifier,
-    state: LoginDetailUiState,
+    state: LoginDetailUiState.Success,
     moreInfoUiState: MoreInfoUiState,
     onTogglePasswordClick: () -> Unit,
     onUsernameClick: () -> Unit,

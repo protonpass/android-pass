@@ -32,6 +32,7 @@ import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCir
 internal fun ItemDetailTopBar(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
+    isInTrash: Boolean,
     color: Color,
     onUpClick: () -> Unit,
     onEditClick: () -> Unit,
@@ -55,25 +56,27 @@ internal fun ItemDetailTopBar(
                 horizontalArrangement = Arrangement.spacedBy(4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                LoadingCircleButton(
-                    color = color,
-                    isLoading = isLoading,
-                    text = {
-                        Text(
-                            text = stringResource(R.string.top_bar_edit_button_text),
-                            style = ProtonTheme.typography.defaultSmall,
-                            color = PassTheme.colors.textInvert
-                        )
-                    },
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_pencil),
-                            contentDescription = stringResource(R.string.top_bar_edit_icon_content_description),
-                            tint = PassTheme.colors.textInvert
-                        )
-                    },
-                    onClick = { onEditClick() }
-                )
+                if (!isInTrash) {
+                    LoadingCircleButton(
+                        color = color,
+                        isLoading = isLoading,
+                        text = {
+                            Text(
+                                text = stringResource(R.string.top_bar_edit_button_text),
+                                style = ProtonTheme.typography.defaultSmall,
+                                color = PassTheme.colors.textInvert
+                            )
+                        },
+                        leadingIcon = {
+                            Icon(
+                                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_pencil),
+                                contentDescription = stringResource(R.string.top_bar_edit_icon_content_description),
+                                tint = PassTheme.colors.textInvert
+                            )
+                        },
+                        onClick = { onEditClick() }
+                    )
+                }
                 AnimatedVisibility(visible = !isLoading) {
                     Circle(
                         backgroundColor = color,
@@ -106,6 +109,7 @@ fun ItemDetailTopBarPreview(
         Surface {
             ItemDetailTopBar(
                 isLoading = input.second.isLoading,
+                isInTrash = true,
                 color = input.second.color,
                 onUpClick = {},
                 onEditClick = {},

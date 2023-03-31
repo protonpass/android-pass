@@ -23,18 +23,19 @@ import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 @Composable
 fun NoteContent(
     modifier: Modifier = Modifier,
-    model: NoteDetailUiState,
+    name: String,
+    note: String,
     moreInfoUiState: MoreInfoUiState
 ) {
     Column(
         modifier = modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(32.dp)
     ) {
-        ItemTitleText(text = model.title, maxLines = Int.MAX_VALUE)
+        ItemTitleText(text = name, maxLines = Int.MAX_VALUE)
         SelectionContainer(modifier = Modifier.fillMaxWidth()) {
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = model.note,
+                text = note,
                 style = ProtonTheme.typography.default
             )
         }
@@ -50,13 +51,8 @@ fun NoteContentPreview(
     PassTheme(isDark = isDark) {
         Surface {
             NoteContent(
-                model = NoteDetailUiState(
-                    title = "Note title",
-                    note = "Note body",
-                    isLoading = false,
-                    isItemSentToTrash = false
-                ),
-
+                name = "Note title",
+                note = "Note body",
                 // We don't care about the MoreInfo as we are not showing it
                 moreInfoUiState = MoreInfoUiState.Initial
             )

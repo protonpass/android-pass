@@ -18,6 +18,7 @@ data class Item(
     val title: EncryptedString,
     val note: EncryptedString,
     val content: EncryptedByteArray,
+    val state: Int,
     val packageInfoSet: Set<PackageInfo>,
     val createTime: Instant,
     val modificationTime: Instant,

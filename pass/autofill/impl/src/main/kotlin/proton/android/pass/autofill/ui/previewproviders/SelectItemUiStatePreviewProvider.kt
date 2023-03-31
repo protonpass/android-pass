@@ -87,6 +87,7 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
         itemType = ItemType.Note(
             "Some very very long test that should be ellipsized as we type"
         ),
+        state = 0,
         createTime = Clock.System.now(),
         modificationTime = Clock.System.now(),
         lastAutofillTime = Clock.System.now()

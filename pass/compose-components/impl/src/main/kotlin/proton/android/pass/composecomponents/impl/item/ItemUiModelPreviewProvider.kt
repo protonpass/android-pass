@@ -18,6 +18,7 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 itemType = ItemType.Note(
                     "Some very very long test that should be ellipsized as we type"
                 ),
+                state = 0,
                 createTime = Clock.System.now(),
                 modificationTime = Clock.System.now(),
                 lastAutofillTime = Clock.System.now()
@@ -29,11 +30,12 @@ class ItemUiModelPreviewProvider : PreviewParameterProvider<ItemUiModel> {
                 note = "Note content",
                 itemType = ItemType.Note(
                     """
-                A line
-                Another line
-                At some point this gets ellipsized
+                        A line
+                        Another line
+                        At some point this gets ellipsized
                     """.trimIndent()
                 ),
+                state = 0,
                 createTime = Clock.System.now(),
                 modificationTime = Clock.System.now(),
                 lastAutofillTime = Clock.System.now()

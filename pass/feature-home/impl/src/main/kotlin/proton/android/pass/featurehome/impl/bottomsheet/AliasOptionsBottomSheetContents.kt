@@ -93,6 +93,7 @@ fun AliasOptionsBottomSheetContentsPreview(
                     name = "My Alias",
                     note = "Note content",
                     itemType = ItemType.Alias("alias.email@proton.me"),
+                    state = 0,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now()

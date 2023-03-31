@@ -39,6 +39,8 @@ class NetworkMonitorImpl @Inject constructor(
 
         connectivityManager?.registerNetworkCallback(
             NetworkRequest.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+                .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
                 .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
                 .build(),
             callback

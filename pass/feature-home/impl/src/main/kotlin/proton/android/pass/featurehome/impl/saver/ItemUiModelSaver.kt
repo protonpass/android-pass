@@ -44,6 +44,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                     name = values[name] as String,
                     note = values[note] as String,
                     itemType = Json.decodeFromString(values[itemType] as String),
+                    state = 0,
                     createTime = (values[createTime] as String).let { Instant.parse(it) },
                     modificationTime = (values[modificationTime] as String).let { Instant.parse(it) },
                     lastAutofillTime = (values[modificationTime] as? String)?.let { Instant.parse(it) }

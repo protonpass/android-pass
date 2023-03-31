@@ -61,6 +61,7 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
                         packageInfoSet = emptySet(),
                         primaryTotp = ""
                     ),
+                    state = 0,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now()

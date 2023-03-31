@@ -35,6 +35,7 @@ object TestItem {
             note = keyStoreCrypto?.let { note.encrypt(it) } ?: note,
             content = EncryptedByteArray(byteArrayOf()),
             packageInfoSet = packageInfoSet,
+            state = 0,
             modificationTime = now,
             createTime = now,
             lastAutofillTime = None
@@ -72,6 +73,7 @@ object TestItem {
             note = TestKeyStoreCrypto.encrypt(noteParam),
             content = itemContent,
             packageInfoSet = emptySet(),
+            state = 0,
             createTime = now,
             modificationTime = now,
             lastAutofillTime = None,

@@ -53,8 +53,8 @@ import proton.android.pass.data.impl.extensions.withUrl
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
-import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
+import proton.android.pass.data.impl.requests.MigrateItemRequest
 import proton.android.pass.data.impl.requests.TrashItemRevision
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.responses.ItemRevision
@@ -757,6 +757,7 @@ class ItemRepositoryImpl @Inject constructor(
             title = entity.encryptedTitle,
             note = entity.encryptedNote,
             content = entity.encryptedContent,
+            state = entity.state,
             packageInfoSet = entity.allowedApps(encryptionContext),
             modificationTime = Instant.fromEpochSeconds(entity.modifyTime),
             createTime = Instant.fromEpochSeconds(entity.createTime),

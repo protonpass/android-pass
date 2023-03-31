@@ -1,5 +1,6 @@
 package proton.android.pass.data.impl.usecases
 
+import androidx.work.WorkManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -24,6 +25,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.impl.extensions.toPendingEvent
 import proton.android.pass.data.impl.repositories.EventRepository
 import proton.android.pass.data.impl.responses.EventList
+import proton.android.pass.data.impl.work.FetchItemsWorker
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
@@ -38,7 +40,8 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val observeCurrentUser: ObserveCurrentUser,
     private val shareRepository: ShareRepository,
     private val createVault: CreateVault,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val encryptionContextProvider: EncryptionContextProvider,
+    private val workManager: WorkManager
 ) : ApplyPendingEvents {
 
     override suspend fun invoke(): LoadingResult<Unit> =
@@ -50,12 +53,7 @@ class ApplyPendingEventsImpl @Inject constructor(
                 if (refreshSharesResult.allShareIds.isEmpty()) {
                     createDefaultVault(user.userId)
                 } else {
-                    refreshSharesResult.newShareIds
-                        .map {
-                            PassLogger.d(TAG, "Refreshing items on new share")
-                            itemRepository.refreshItems(user.userId, it)
-                            PassLogger.d(TAG, "Items refreshed on new share")
-                        }
+                    enqueueRefreshItems(refreshSharesResult.newShareIds)
                     refreshSharesResult.allShareIds.subtract(refreshSharesResult.newShareIds)
                         .map { share ->
                             async {
@@ -115,6 +113,13 @@ class ApplyPendingEventsImpl @Inject constructor(
             )
 
             if (!events.eventsPending) break
+        }
+    }
+
+    private fun enqueueRefreshItems(shares: Set<ShareId>) {
+        if (shares.isNotEmpty()) {
+            val request = FetchItemsWorker.getRequestFor(shares.toList())
+            workManager.enqueue(request)
         }
     }
 

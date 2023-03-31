@@ -6,12 +6,14 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.isActive
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
@@ -50,12 +52,13 @@ class AutofillManagerImpl @Inject constructor(
             }
             delay(UPDATE_TIME)
         }
+    }.catch {
+        PassLogger.w(TAG, it, "Exception while retrieving hasEnabledAutofillServices")
+        emit(Unsupported)
     }
-        .catch {
-            PassLogger.w(TAG, it, "Exception while retrieving hasEnabledAutofillServices")
-            emit(Unsupported)
-        }
         .distinctUntilChanged()
+        .flowOn(Dispatchers.IO.limitedParallelism(1))
+
 
     override fun openAutofillSelector() {
         try {

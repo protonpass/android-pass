@@ -95,6 +95,7 @@ fun NoteOptionsBottomSheetContentsPreview(
                     name = "My Note",
                     note = "Note content",
                     itemType = ItemType.Note("My note text"),
+                    state = 0,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now()

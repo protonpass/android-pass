@@ -124,6 +124,7 @@ class OpenItemImpl @Inject constructor(
             packageInfoSet = decoded.platformSpecific.android.allowedAppsList
                 .map { PackageInfo(PackageName(it.packageName), AppName(it.appName)) }
                 .toSet(),
+            state = response.state,
             createTime = Instant.fromEpochSeconds(response.createTime),
             modificationTime = Instant.fromEpochSeconds(response.modifyTime),
             lastAutofillTime = response.lastUseTime.toOption().map(Instant::fromEpochSeconds),

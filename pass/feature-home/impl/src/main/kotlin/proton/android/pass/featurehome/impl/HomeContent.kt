@@ -1,8 +1,7 @@
 package proton.android.pass.featurehome.impl
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -11,6 +10,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -117,11 +119,15 @@ internal fun HomeContent(
     ) { contentPadding ->
         val keyboardController = LocalSoftwareKeyboardController.current
         val scrollableState = rememberLazyListState()
-
+        val firstItemVisible by remember {
+            derivedStateOf {
+                scrollableState.firstVisibleItemIndex <= 1
+            }
+        }
         Column(
             modifier = Modifier.padding(contentPadding)
         ) {
-            if (uiState.searchUiState.inSearchMode) {
+            AnimatedVisibility(visible = uiState.searchUiState.inSearchMode && firstItemVisible) {
                 ItemTypeFilterList(
                     selected = uiState.homeListUiState.homeItemTypeSelection,
                     loginCount = uiState.searchUiState.itemTypeCount.loginCount,
@@ -181,7 +187,6 @@ internal fun HomeContent(
                     }
                 },
                 header = { item { OnBoardingTips() } },
-                footer = { item { Spacer(Modifier.height(64.dp)) } }
             )
         }
     }

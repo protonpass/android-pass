@@ -63,7 +63,7 @@ open class ModuleGenTask : DefaultTask() {
         modulePath: List<String>,
         configurationSet: Set<Configuration>
     ) {
-        require(modulePath.isEmpty()) { "Module path is empty" }
+        require(modulePath.isNotEmpty()) { "Module path is empty" }
         if (configurationSet.none { it == Configuration.IMPL || it == Configuration.FAKES }) {
             return
         }

@@ -3,6 +3,7 @@ package proton.android.pass.data.api.repositories
 import kotlinx.coroutines.flow.Flow
 
 sealed interface ItemSyncStatus {
+    object NotStarted : ItemSyncStatus
     object Syncing : ItemSyncStatus
     object Synced : ItemSyncStatus
     object NotSynced : ItemSyncStatus

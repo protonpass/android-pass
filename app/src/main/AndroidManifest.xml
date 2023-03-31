@@ -104,33 +104,9 @@
 
         <!-- Core-Auth activities -->
         <activity
-            android:name="me.proton.core.auth.presentation.ui.AuthHelpActivity"
-            android:theme="@style/ProtonTheme"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.ChooseAddressActivity"
-            android:theme="@style/ProtonTheme"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name="me.proton.core.auth.presentation.ui.AddAccountActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/ProtonTheme.AddAccount"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.LoginActivity"
-            android:theme="@style/ProtonTheme"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.signup.SignupActivity"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.TwoPassModeActivity"
-            android:theme="@style/ProtonTheme"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name="me.proton.core.auth.presentation.ui.SecondFactorActivity"
-            android:theme="@style/ProtonTheme"
-            android:windowSoftInputMode="adjustResize" />
+            tools:replace="theme" />
         <activity
             android:name="me.proton.core.payment.presentation.ui.BillingActivity"
             android:windowSoftInputMode="adjustResize" />

@@ -186,7 +186,8 @@ class HomeViewModel @Inject constructor(
     private data class ActionRefreshingWrapper(
         val refreshing: IsRefreshingState,
         val actionState: ActionState,
-        val loading: IsLoadingState
+        val loading: IsLoadingState,
+        val syncStatus: ItemSyncStatus
     )
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
@@ -307,8 +308,7 @@ class HomeViewModel @Inject constructor(
         } else {
             IsLoadingState.from(itemsResult is LoadingResult.Loading)
         }
-
-        ActionRefreshingWrapper(refreshing, actionState, loading)
+        ActionRefreshingWrapper(refreshing, actionState, loading, syncStatus)
     }.distinctUntilChanged()
 
     private val itemTypeCountFlow = textFilterListItemFlow.map { result ->
@@ -350,19 +350,30 @@ class HomeViewModel @Inject constructor(
         searchUiStateFlow,
         refreshingLoadingFlow,
     ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading ->
-        val items = when (itemsResult) {
-            LoadingResult.Loading -> persistentListOf()
-            is LoadingResult.Success -> itemsResult.data
+        val (items, isLoading) = when (itemsResult) {
+            LoadingResult.Loading -> persistentListOf<GroupedItemList>() to IsLoadingState.Loading
+            is LoadingResult.Success -> when (refreshingLoading.syncStatus) {
+                ItemSyncStatus.Synced -> {
+                    val loading = if (itemsResult.data.isEmpty()) {
+                        // The items are synced, but the flow has not emitted yet
+                        IsLoadingState.Loading
+                    } else {
+                        refreshingLoading.loading
+                    }
+                    itemsResult.data to loading
+                }
+                else -> itemsResult.data to refreshingLoading.loading
+            }
             is LoadingResult.Error -> {
                 PassLogger.e(TAG, itemsResult.exception, "Observe items error")
                 snackbarDispatcher(ObserveItemsError)
-                persistentListOf()
+                persistentListOf<GroupedItemList>() to refreshingLoading.loading
             }
         }
 
         HomeUiState(
             homeListUiState = HomeListUiState(
-                isLoading = refreshingLoading.loading,
+                isLoading = isLoading,
                 isRefreshing = refreshingLoading.refreshing,
                 actionState = refreshingLoading.actionState,
                 items = items,

@@ -4,64 +4,63 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
-import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
-import proton.android.pass.common.api.some
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
+import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
+import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
 class ItemDetailViewModel @Inject constructor(
-    private val accountManager: AccountManager,
     private val itemRepository: ItemRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val encryptionContextProvider: EncryptionContextProvider,
     private val clock: Clock,
     private val telemetryManager: TelemetryManager,
+    observeCurrentUser: ObserveCurrentUser,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val shareId: Option<ShareId> =
-        Option.fromNullable(savedStateHandle.get<String>("shareId")?.let { ShareId(it) })
-    private val itemId: Option<ItemId> =
-        Option.fromNullable(savedStateHandle.get<String>("itemId")?.let { ItemId(it) })
+    private val shareId: ShareId =
+        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
+    private val itemId: ItemId =
+        ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
 
-    private val itemModelState: MutableStateFlow<Option<ItemModelUiState>> =
-        MutableStateFlow(None)
-
-    val uiState: StateFlow<ItemDetailScreenUiState> = itemModelState
-        .map { itemModel ->
-            val moreInfoUiState = when (itemModel) {
-                None -> null
-                is Some -> getMoreInfoUiState(itemModel.value.item)
+    val uiState: StateFlow<ItemDetailScreenUiState> = observeCurrentUser()
+        .map { itemRepository.getById(it.userId, shareId, itemId) }
+        .distinctUntilChanged()
+        .map { result ->
+            when (result) {
+                is LoadingResult.Error -> {
+                    PassLogger.e(TAG, result.exception, "Get by id error")
+                    snackbarDispatcher(DetailSnackbarMessages.InitError)
+                    ItemDetailScreenUiState.Initial
+                }
+                LoadingResult.Loading -> ItemDetailScreenUiState.Initial
+                is LoadingResult.Success -> ItemDetailScreenUiState(
+                    itemTypeUiState = when (result.data.itemType) {
+                        is ItemType.Login -> ItemTypeUiState.Login
+                        is ItemType.Note -> ItemTypeUiState.Note
+                        is ItemType.Alias -> ItemTypeUiState.Alias
+                        ItemType.Password -> ItemTypeUiState.Password
+                    },
+                    moreInfoUiState = getMoreInfoUiState(result.data)
+                )
             }
-            ItemDetailScreenUiState(
-                model = itemModel.value(),
-                moreInfoUiState = moreInfoUiState
-            )
         }
         .stateIn(
             scope = viewModelScope,
@@ -69,32 +68,16 @@ class ItemDetailViewModel @Inject constructor(
             initialValue = ItemDetailScreenUiState.Initial
         )
 
-    init {
-        viewModelScope.launch {
-            val userId = accountManager.getPrimaryUserId()
-                .firstOrNull { userId -> userId != null }
-            if (userId != null && shareId is Some && itemId is Some) {
-                itemRepository.getById(userId, shareId.value, itemId.value)
-                    .onSuccess { item ->
-                        itemModelState.update {
-                            encryptionContextProvider.withEncryptionContext {
-                                ItemModelUiState(
-                                    name = decrypt(item.title),
-                                    item = item
-                                ).some()
-                            }
-                        }
-                        telemetryManager.sendEvent(ItemRead(EventItemType.from(item.itemType)))
-                    }
-                    .onError {
-                        PassLogger.e(TAG, it, "Get by id error")
-                        snackbarDispatcher(InitError)
-                    }
-            } else {
-                val message = "Empty user/share/item Id"
-                PassLogger.e(TAG, Exception(message), message)
-                snackbarDispatcher(InitError)
-            }
+    fun sendItemReadEvent(itemTypeUiState: ItemTypeUiState) {
+        val eventItemType: EventItemType? = when (itemTypeUiState) {
+            ItemTypeUiState.Login -> EventItemType.Login
+            ItemTypeUiState.Note -> EventItemType.Note
+            ItemTypeUiState.Alias -> EventItemType.Alias
+            ItemTypeUiState.Password -> EventItemType.Password
+            ItemTypeUiState.Unknown -> null
+        }
+        eventItemType?.let {
+            telemetryManager.sendEvent(ItemRead(eventItemType))
         }
     }
 

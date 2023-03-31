@@ -39,7 +39,7 @@ coil = "2.2.2"
 # Commons codec
 commons-codec = "1.15"
 # Core
-core = "10.0.0"
+core = "10.1.0"
 # Dagger
 dagger = "2.44.2"
 # Google

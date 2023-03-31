@@ -52,6 +52,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItem
@@ -105,7 +107,8 @@ class HomeViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     observeVaults: ObserveVaults,
     clock: Clock,
-    observeItems: ObserveItems
+    observeItems: ObserveItems,
+    itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -182,7 +185,8 @@ class HomeViewModel @Inject constructor(
 
     private data class ActionRefreshingWrapper(
         val refreshing: IsRefreshingState,
-        val actionState: ActionState
+        val actionState: ActionState,
+        val loading: IsLoadingState
     )
 
     private val isRefreshing: MutableStateFlow<IsRefreshingState> =
@@ -190,12 +194,6 @@ class HomeViewModel @Inject constructor(
 
     private val actionStateFlow: MutableStateFlow<ActionState> =
         MutableStateFlow(ActionState.Unknown)
-
-    private val refreshingLoadingFlow = combine(
-        isRefreshing,
-        actionStateFlow,
-        ::ActionRefreshingWrapper
-    )
 
     private val sortingTypeState: MutableStateFlow<SortingType> =
         MutableStateFlow(SortingType.MostRecent)
@@ -298,6 +296,21 @@ class HomeViewModel @Inject constructor(
 
     }.flowOn(Dispatchers.Default)
 
+    private val refreshingLoadingFlow = combine(
+        isRefreshing,
+        actionStateFlow,
+        itemSyncStatusRepository.observeSyncStatus(),
+        resultsFlow
+    ) { refreshing, actionState, syncStatus, itemsResult ->
+        val loading = if (syncStatus == ItemSyncStatus.Syncing) {
+            IsLoadingState.Loading
+        } else {
+            IsLoadingState.from(itemsResult is LoadingResult.Loading)
+        }
+
+        ActionRefreshingWrapper(refreshing, actionState, loading)
+    }.distinctUntilChanged()
+
     private val itemTypeCountFlow = textFilterListItemFlow.map { result ->
         when (result) {
             is LoadingResult.Error -> ItemTypeCount(loginCount = 0, aliasCount = 0, noteCount = 0)
@@ -337,8 +350,6 @@ class HomeViewModel @Inject constructor(
         searchUiStateFlow,
         refreshingLoadingFlow,
     ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading ->
-        val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
-
         val items = when (itemsResult) {
             LoadingResult.Loading -> persistentListOf()
             is LoadingResult.Success -> itemsResult.data
@@ -351,7 +362,7 @@ class HomeViewModel @Inject constructor(
 
         HomeUiState(
             homeListUiState = HomeListUiState(
-                isLoading = isLoading,
+                isLoading = refreshingLoading.loading,
                 isRefreshing = refreshingLoading.refreshing,
                 actionState = refreshingLoading.actionState,
                 items = items,

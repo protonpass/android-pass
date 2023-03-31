@@ -20,32 +20,27 @@ fun ItemDetailContent(
     onMigrateClick: (ShareId, ItemId) -> Unit
 ) {
     Box(modifier = modifier.fillMaxSize()) {
-        if (uiState.model != null && uiState.moreInfoUiState != null) {
-            val item = uiState.model.item
-            when (item.itemType) {
-                is ItemType.Login -> LoginDetail(
-                    item = item,
-                    moreInfoUiState = uiState.moreInfoUiState,
-                    onUpClick = onUpClick,
-                    onEditClick = onEditClick,
-                    onMigrateClick = onMigrateClick
-                )
-                is ItemType.Note -> NoteDetail(
-                    item = item,
-                    moreInfoUiState = uiState.moreInfoUiState,
-                    onUpClick = onUpClick,
-                    onEditClick = onEditClick,
-                    onMigrateClick = onMigrateClick
-                )
-                is ItemType.Alias -> AliasDetail(
-                    item = item,
-                    moreInfoUiState = uiState.moreInfoUiState,
-                    onUpClick = onUpClick,
-                    onEditClick = onEditClick,
-                    onMigrateClick = onMigrateClick
-                )
-                ItemType.Password -> {}
-            }
+        when (uiState.itemTypeUiState) {
+            ItemTypeUiState.Login -> LoginDetail(
+                moreInfoUiState = uiState.moreInfoUiState,
+                onUpClick = onUpClick,
+                onEditClick = onEditClick,
+                onMigrateClick = onMigrateClick
+            )
+            ItemTypeUiState.Note -> NoteDetail(
+                moreInfoUiState = uiState.moreInfoUiState,
+                onUpClick = onUpClick,
+                onEditClick = onEditClick,
+                onMigrateClick = onMigrateClick
+            )
+            ItemTypeUiState.Alias -> AliasDetail(
+                moreInfoUiState = uiState.moreInfoUiState,
+                onUpClick = onUpClick,
+                onEditClick = onEditClick,
+                onMigrateClick = onMigrateClick
+            )
+            ItemTypeUiState.Password -> {}
+            else -> {}
         }
     }
 }

@@ -15,8 +15,10 @@ import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAddressById
 import proton.android.pass.data.api.usecases.GetAddressesForUserId
+import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetCurrentShare
 import proton.android.pass.data.api.usecases.GetCurrentUserId
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
@@ -38,13 +40,13 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
-import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.SendUserAccess
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
+import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
@@ -63,8 +65,10 @@ import proton.android.pass.data.impl.usecases.DeleteItemImpl
 import proton.android.pass.data.impl.usecases.DeleteVaultImpl
 import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
+import proton.android.pass.data.impl.usecases.GetAliasDetailsImpl
 import proton.android.pass.data.impl.usecases.GetCurrentShareImpl
 import proton.android.pass.data.impl.usecases.GetCurrentUserIdImpl
+import proton.android.pass.data.impl.usecases.GetItemByIdImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedLoginItemsImpl
@@ -86,7 +90,6 @@ import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
 import proton.android.pass.data.impl.usecases.RestoreItemsImpl
-import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
@@ -95,6 +98,7 @@ import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
+import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.ObserveSearchEntryImpl
@@ -139,6 +143,12 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetShareById(impl: GetShareByIdImpl): GetShareById
+
+    @Binds
+    abstract fun bindGetItemById(impl: GetItemByIdImpl): GetItemById
+
+    @Binds
+    abstract fun bindGetAliasDetails(impl: GetAliasDetailsImpl): GetAliasDetails
 
     @Binds
     abstract fun bindGetSuggestedLoginItems(impl: GetSuggestedLoginItemsImpl): GetSuggestedLoginItems

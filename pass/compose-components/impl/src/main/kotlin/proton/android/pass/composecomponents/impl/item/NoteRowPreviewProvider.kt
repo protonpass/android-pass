@@ -34,6 +34,7 @@ class NoteRowPreviewProvider : PreviewParameterProvider<NoteRowParameter> {
                     name = title,
                     note = "Note content",
                     itemType = ItemType.Note(text = text),
+                    state = 0,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now()

@@ -22,74 +22,80 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
-import proton.pass.domain.Item
 import proton.pass.domain.ItemId
+import proton.pass.domain.ItemState
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 @OptIn(
-    ExperimentalLifecycleComposeApi::class, ExperimentalComposeUiApi::class,
+    ExperimentalLifecycleComposeApi::class,
+    ExperimentalComposeUiApi::class,
     ExperimentalMaterialApi::class
 )
 @Composable
 fun NoteDetail(
     modifier: Modifier = Modifier,
-    item: Item,
     moreInfoUiState: MoreInfoUiState,
     viewModel: NoteDetailViewModel = hiltViewModel(),
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
-    onMigrateClick: (ShareId, ItemId) -> Unit
+    onMigrateClick: (ShareId, ItemId) -> Unit,
 ) {
-    LaunchedEffect(item) {
-        viewModel.setItem(item)
-    }
-
-    val model by viewModel.viewState.collectAsStateWithLifecycle()
-    if (model.isItemSentToTrash) {
-        LaunchedEffect(Unit) { onUpClick() }
-    }
-    val scope = rememberCoroutineScope()
-    val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
-    PassModalBottomSheetLayout(
-        sheetState = bottomSheetState,
-        sheetContent = {
-            TopBarOptionsBottomSheetContents(
-                onMigrate = {
-                    scope.launch { bottomSheetState.hide() }
-                    onMigrateClick(item.shareId, item.id)
-                },
-                onMoveToTrash = {
-                    viewModel.onDelete(item.shareId, item.id)
-                    scope.launch { bottomSheetState.hide() }
-                }
-            )
-        }
-    ) {
-        Scaffold(
-            modifier = modifier,
-            topBar = {
-                ItemDetailTopBar(
-                    isLoading = model.isLoading,
-                    color = PassTheme.colors.noteInteractionNormMajor1,
-                    onUpClick = onUpClick,
-                    onEditClick = { onEditClick(item.shareId, item.id, item.itemType) },
-                    onOptionsClick = {
-                        scope.launch { bottomSheetState.show() }
-                    }
-                )
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
+    when (val state = uiState) {
+        NoteDetailUiState.NotInitialised -> {}
+        NoteDetailUiState.Error -> LaunchedEffect(Unit) { onUpClick() }
+        is NoteDetailUiState.Success -> {
+            if (state.isItemSentToTrash) {
+                LaunchedEffect(Unit) { onUpClick() }
             }
-        ) { padding ->
-            NoteContent(
-                modifier = Modifier
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState()),
-                model = model,
-                moreInfoUiState = moreInfoUiState
+            val scope = rememberCoroutineScope()
+            val bottomSheetState = rememberModalBottomSheetState(
+                initialValue = ModalBottomSheetValue.Hidden,
+                skipHalfExpanded = true
             )
+            PassModalBottomSheetLayout(
+                sheetState = bottomSheetState,
+                sheetContent = {
+                    TopBarOptionsBottomSheetContents(
+                        onMigrate = {
+                            scope.launch { bottomSheetState.hide() }
+                            onMigrateClick(state.shareId, state.itemId)
+                        },
+                        onMoveToTrash = {
+                            scope.launch { bottomSheetState.hide() }
+                            viewModel.onDelete(state.shareId, state.itemId)
+                        }
+                    )
+                }
+            ) {
+                Scaffold(
+                    modifier = modifier,
+                    topBar = {
+                        ItemDetailTopBar(
+                            isLoading = state.isLoading,
+                            isInTrash = state.state == ItemState.Trashed.value,
+                            color = PassTheme.colors.noteInteractionNormMajor1,
+                            onUpClick = onUpClick,
+                            onEditClick = {
+                                onEditClick(state.shareId, state.itemId, state.itemType)
+                            },
+                            onOptionsClick = {
+                                scope.launch { bottomSheetState.show() }
+                            }
+                        )
+                    }
+                ) { padding ->
+                    NoteContent(
+                        modifier = Modifier
+                            .padding(padding)
+                            .verticalScroll(rememberScrollState()),
+                        name = state.title,
+                        note = state.note,
+                        moreInfoUiState = moreInfoUiState
+                    )
+                }
+            }
         }
     }
 }

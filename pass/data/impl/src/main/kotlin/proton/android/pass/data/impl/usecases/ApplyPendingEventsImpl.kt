@@ -18,6 +18,8 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ItemSyncStatus
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
@@ -41,7 +43,8 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val shareRepository: ShareRepository,
     private val createVault: CreateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val workManager: WorkManager
+    private val workManager: WorkManager,
+    private val itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ApplyPendingEvents {
 
     override suspend fun invoke(): LoadingResult<Unit> =
@@ -52,6 +55,7 @@ class ApplyPendingEventsImpl @Inject constructor(
                 val refreshSharesResult = shareRepository.refreshShares(user.userId)
                 if (refreshSharesResult.allShareIds.isEmpty()) {
                     createDefaultVault(user.userId)
+                    itemSyncStatusRepository.emit(ItemSyncStatus.Synced)
                 } else {
                     enqueueRefreshItems(refreshSharesResult.newShareIds)
                     refreshSharesResult.allShareIds.subtract(refreshSharesResult.newShareIds)
@@ -118,6 +122,7 @@ class ApplyPendingEventsImpl @Inject constructor(
 
     private fun enqueueRefreshItems(shares: Set<ShareId>) {
         if (shares.isNotEmpty()) {
+            itemSyncStatusRepository.emit(ItemSyncStatus.Syncing)
             val request = FetchItemsWorker.getRequestFor(shares.toList())
             workManager.enqueue(request)
         }

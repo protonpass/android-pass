@@ -74,6 +74,7 @@ fun ItemsList(
             onScrollToTop()
         }
     }
+
     PassSwipeRefresh(
         modifier = modifier.fillMaxSize(),
         state = SwipeRefreshState(isRefreshing is IsRefreshingState.Refreshing),
@@ -82,6 +83,12 @@ fun ItemsList(
     ) {
         if (isProcessingSearch == IsProcessingSearchState.Loading) {
             Loading(Modifier.fillMaxSize())
+        } else if (isLoading == IsLoadingState.Loading) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                repeat(PLACEHOLDER_ELEMENTS) {
+                    PlaceholderItemRow()
+                }
+            }
         } else if (items.isNotEmpty()) {
             LazyColumn(modifier = Modifier.fillMaxSize(), state = scrollableState) {
                 header()
@@ -102,12 +109,6 @@ fun ItemsList(
                     }
                 }
                 footer()
-            }
-        } else if (isLoading == IsLoadingState.Loading) {
-            Column(modifier = Modifier.fillMaxSize()) {
-                repeat(PLACEHOLDER_ELEMENTS) {
-                    PlaceholderItemRow()
-                }
             }
         } else {
             emptyContent()

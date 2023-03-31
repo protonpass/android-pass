@@ -14,7 +14,7 @@ import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 @Composable
 fun MainLoginSection(
     modifier: Modifier = Modifier,
-    state: LoginDetailUiState,
+    state: LoginDetailUiState.Success,
     onUsernameClick: () -> Unit,
     onTogglePasswordClick: () -> Unit,
     onCopyPasswordClick: () -> Unit,
@@ -42,12 +42,12 @@ fun MainLoginSection(
 
 
 class ThemedLoginPasswordRowPreviewProvider :
-    ThemePairPreviewProvider<LoginDetailUiState>(LoginDetailUiStatePreviewProvider())
+    ThemePairPreviewProvider<LoginDetailUiState.Success>(LoginDetailUiStatePreviewProvider())
 
 @Preview
 @Composable
 fun MainLoginSectionPreview(
-    @PreviewParameter(ThemedLoginPasswordRowPreviewProvider::class) input: Pair<Boolean, LoginDetailUiState>
+    @PreviewParameter(ThemedLoginPasswordRowPreviewProvider::class) input: Pair<Boolean, LoginDetailUiState.Success>
 ) {
     PassTheme(isDark = input.first) {
         Surface {

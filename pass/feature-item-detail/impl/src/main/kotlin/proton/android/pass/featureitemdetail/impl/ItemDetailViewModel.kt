@@ -11,8 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.Clock
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -27,11 +26,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemDetailViewModel @Inject constructor(
-    private val itemRepository: ItemRepository,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val clock: Clock,
     private val telemetryManager: TelemetryManager,
-    observeCurrentUser: ObserveCurrentUser,
+    getItemById: GetItemById,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -40,8 +38,7 @@ class ItemDetailViewModel @Inject constructor(
     private val itemId: ItemId =
         ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
 
-    val uiState: StateFlow<ItemDetailScreenUiState> = observeCurrentUser()
-        .map { itemRepository.getById(it.userId, shareId, itemId) }
+    val uiState: StateFlow<ItemDetailScreenUiState> = getItemById(shareId, itemId)
         .distinctUntilChanged()
         .map { result ->
             when (result) {

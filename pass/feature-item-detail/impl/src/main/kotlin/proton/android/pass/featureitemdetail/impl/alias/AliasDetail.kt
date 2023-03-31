@@ -22,77 +22,81 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
-import proton.pass.domain.Item
 import proton.pass.domain.ItemId
+import proton.pass.domain.ItemState
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 @OptIn(
-    ExperimentalLifecycleComposeApi::class, ExperimentalComposeUiApi::class,
+    ExperimentalLifecycleComposeApi::class,
+    ExperimentalComposeUiApi::class,
     ExperimentalMaterialApi::class
 )
 @Composable
 fun AliasDetail(
     modifier: Modifier = Modifier,
-    item: Item,
     moreInfoUiState: MoreInfoUiState,
     viewModel: AliasDetailViewModel = hiltViewModel(),
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
-    onMigrateClick: (ShareId, ItemId) -> Unit
+    onMigrateClick: (ShareId, ItemId) -> Unit,
 ) {
-    LaunchedEffect(item) {
-        viewModel.setItem(item)
-    }
-
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-    if (uiState.isItemSentToTrash) {
-        LaunchedEffect(Unit) { onUpClick() }
-    }
-    val scope = rememberCoroutineScope()
-    val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true
-    )
-    PassModalBottomSheetLayout(
-        sheetState = bottomSheetState,
-        sheetContent = {
-            TopBarOptionsBottomSheetContents(
-                onMigrate = {
-                    scope.launch { bottomSheetState.hide() }
-                    onMigrateClick(item.shareId, item.id)
-                },
-                onMoveToTrash = {
-                    viewModel.onDelete(item.shareId, item.id)
-                    scope.launch { bottomSheetState.hide() }
-                }
-            )
-        }
-    ) {
-        Scaffold(
-            modifier = modifier,
-            topBar = {
-                ItemDetailTopBar(
-                    isLoading = uiState.isLoadingState,
-                    color = PassTheme.colors.aliasInteractionNormMajor1,
-                    onUpClick = onUpClick,
-                    onEditClick = { onEditClick(item.shareId, item.id, item.itemType) },
-                    onOptionsClick = {
-                        scope.launch { bottomSheetState.show() }
-                    }
-                )
+    when (val state = uiState) {
+        AliasDetailUiState.NotInitialised -> {}
+        AliasDetailUiState.Error -> LaunchedEffect(Unit) { onUpClick() }
+        is AliasDetailUiState.Success -> {
+            if (state.isItemSentToTrash) {
+                LaunchedEffect(Unit) { onUpClick() }
             }
-        ) { padding ->
-            AliasDetailContent(
-                modifier = Modifier
-                    .padding(padding)
-                    .verticalScroll(rememberScrollState()),
-                model = uiState.model,
-                isLoading = uiState.isLoadingState,
-                onCopyAlias = { viewModel.onCopyAlias(it) },
-                moreInfoUiState = moreInfoUiState
+            val scope = rememberCoroutineScope()
+            val bottomSheetState = rememberModalBottomSheetState(
+                initialValue = ModalBottomSheetValue.Hidden,
+                skipHalfExpanded = true
             )
+            PassModalBottomSheetLayout(
+                sheetState = bottomSheetState,
+                sheetContent = {
+                    TopBarOptionsBottomSheetContents(
+                        onMigrate = {
+                            scope.launch { bottomSheetState.hide() }
+                            onMigrateClick(state.shareId, state.itemId)
+                        },
+                        onMoveToTrash = {
+                            viewModel.onDelete(state.shareId, state.itemId)
+                            scope.launch { bottomSheetState.hide() }
+                        }
+                    )
+                }
+            ) {
+                Scaffold(
+                    modifier = modifier,
+                    topBar = {
+                        ItemDetailTopBar(
+                            isLoading = state.isLoading,
+                            isInTrash = state.state == ItemState.Trashed.value,
+                            color = PassTheme.colors.aliasInteractionNormMajor1,
+                            onUpClick = onUpClick,
+                            onEditClick = {
+                                onEditClick(state.shareId, state.itemId, state.itemType)
+                            },
+                            onOptionsClick = {
+                                scope.launch { bottomSheetState.show() }
+                            }
+                        )
+                    }
+                ) { padding ->
+                    AliasDetailContent(
+                        modifier = Modifier
+                            .padding(padding)
+                            .verticalScroll(rememberScrollState()),
+                        model = state.model,
+                        isLoading = state.isLoadingMailboxes,
+                        onCopyAlias = { viewModel.onCopyAlias(it) },
+                        moreInfoUiState = moreInfoUiState
+                    )
+                }
+            }
         }
     }
 }

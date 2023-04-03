@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.featurehome.impl.R
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -40,7 +41,7 @@ fun HomeEmptyList(
             Spacer(modifier = Modifier.height(16.dp))
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = proton.android.pass.featurehome.impl.R.string.home_empty_vault_create_login),
+                text = stringResource(R.string.home_empty_vault_create_login),
                 backgroundColor = PassTheme.colors.loginInteractionNormMinor2,
                 textColor = PassTheme.colors.loginInteractionNormMajor1,
                 icon = CoreR.drawable.ic_proton_user,
@@ -49,7 +50,7 @@ fun HomeEmptyList(
 
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = proton.android.pass.featurehome.impl.R.string.home_empty_vault_create_alias),
+                text = stringResource(R.string.home_empty_vault_create_alias),
                 backgroundColor = PassTheme.colors.aliasInteractionNormMinor2,
                 textColor = PassTheme.colors.aliasInteractionNormMajor1,
                 icon = CoreR.drawable.ic_proton_alias,
@@ -58,7 +59,7 @@ fun HomeEmptyList(
 
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = proton.android.pass.featurehome.impl.R.string.home_empty_vault_create_note),
+                text = stringResource(R.string.home_empty_vault_create_note),
                 backgroundColor = PassTheme.colors.noteInteractionNormMinor2,
                 textColor = PassTheme.colors.noteInteractionNormMajor1,
                 icon = CoreR.drawable.ic_proton_notepad_checklist,
@@ -67,9 +68,7 @@ fun HomeEmptyList(
 
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = stringResource(
-                    id = proton.android.pass.featurehome.impl.R.string.home_empty_vault_create_password
-                ),
+                text = stringResource(R.string.home_empty_vault_create_password),
                 backgroundColor = PassTheme.colors.passwordInteractionNormMinor2,
                 textColor = PassTheme.colors.passwordInteractionNormMajor1,
                 icon = CoreR.drawable.ic_proton_key,

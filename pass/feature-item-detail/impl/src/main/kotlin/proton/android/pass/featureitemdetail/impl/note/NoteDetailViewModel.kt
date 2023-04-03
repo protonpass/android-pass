@@ -17,16 +17,20 @@ import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
+import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotMovedToTrash
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotRestored
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemPermanentlyDeleted
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemRestored
 import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -44,6 +48,7 @@ class NoteDetailViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val trashItem: TrashItem,
     private val deleteItem: DeleteItem,
+    private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
     getItemById: GetItemById,
     savedStateHandle: SavedStateHandle
@@ -60,13 +65,16 @@ class NoteDetailViewModel @Inject constructor(
         MutableStateFlow(IsSentToTrashState.NotSent)
     private val isPermanentlyDeletedState: MutableStateFlow<IsPermanentlyDeletedState> =
         MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
+    private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
+        MutableStateFlow(IsRestoredFromTrashState.NotRestored)
 
     val state: StateFlow<NoteDetailUiState> = combine(
         getItemById(shareId, itemId),
         isLoadingState,
         isItemSentToTrashState,
-        isPermanentlyDeletedState
-    ) { itemLoadingResult, isLoading, isItemSentToTrash, isPermanentlyDeleted ->
+        isPermanentlyDeletedState,
+        isRestoredFromTrashState
+    ) { itemLoadingResult, isLoading, isItemSentToTrash, isPermanentlyDeleted, isRestoredFromTrash ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -79,6 +87,7 @@ class NoteDetailViewModel @Inject constructor(
                     isLoading = isLoading.value(),
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
+                    isRestoredFromTrash = isRestoredFromTrash.value(),
                 )
             }
         }
@@ -119,6 +128,21 @@ class NoteDetailViewModel @Inject constructor(
             }
             isLoadingState.update { IsLoadingState.NotLoading }
         }
+
+    fun onItemRestore(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+        isLoadingState.update { IsLoadingState.Loading }
+        runCatching {
+            restoreItem(shareId = shareId, itemId = itemId)
+        }.onSuccess {
+            isRestoredFromTrashState.update { IsRestoredFromTrashState.Restored }
+            PassLogger.i(TAG, "Item restored successfully")
+            snackbarDispatcher(ItemRestored)
+        }.onFailure {
+            PassLogger.i(TAG, it, "Error restoring item")
+            snackbarDispatcher(ItemNotRestored)
+        }
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
 
     companion object {
         private const val TAG = "NoteDetailViewModel"

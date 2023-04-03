@@ -18,5 +18,7 @@ enum class DetailSnackbarMessages(
     ItemMovedToTrash(R.string.move_item_to_trash_message, SnackbarType.NORM),
     ItemNotMovedToTrash(R.string.error_move_item_to_trash_message, SnackbarType.ERROR),
     ItemPermanentlyDeleted(R.string.item_permanently_deleted_message, SnackbarType.NORM),
-    ItemNotPermanentlyDeleted(R.string.item_permanently_deleted_message_error, SnackbarType.ERROR)
+    ItemNotPermanentlyDeleted(R.string.item_permanently_deleted_message_error, SnackbarType.ERROR),
+    ItemRestored(R.string.item_restored_message, SnackbarType.NORM),
+    ItemNotRestored(R.string.item_restored_message_error, SnackbarType.ERROR)
 }

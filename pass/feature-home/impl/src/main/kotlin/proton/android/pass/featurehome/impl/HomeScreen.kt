@@ -27,6 +27,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.AliasOptions
@@ -58,7 +59,7 @@ import proton.pass.domain.ShareId
 fun HomeScreen(
     modifier: Modifier = Modifier,
     homeScreenNavigation: HomeScreenNavigation,
-    onAddItemClick: (Option<ShareId>) -> Unit,
+    onAddItemClick: (Option<ShareId>, ItemTypeUiState) -> Unit,
     onCreateVaultClick: () -> Unit,
     onEditVaultClick: (ShareId) -> Unit,
     onDeleteVaultClick: (ShareId) -> Unit,

@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -14,7 +15,7 @@ import proton.pass.domain.ShareId
 fun NavHomeContent(
     state: NavHomeUiState,
     homeScreenNavigation: HomeScreenNavigation,
-    onAddItemClick: (Option<ShareId>) -> Unit,
+    onAddItemClick: (Option<ShareId>, ItemTypeUiState) -> Unit,
     onCreateVaultClick: () -> Unit,
     onEditVaultClick: (ShareId) -> Unit,
     onDeleteVaultClick: (ShareId) -> Unit

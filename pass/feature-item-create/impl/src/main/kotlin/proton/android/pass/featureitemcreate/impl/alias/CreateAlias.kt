@@ -71,7 +71,10 @@ fun CreateAliasScreen(
             onCancel = {
                 showConfirmDialog = false
             },
-            onConfirm = onExit
+            onConfirm = {
+                showConfirmDialog = false
+                onUpClick()
+            }
         )
     }
 }

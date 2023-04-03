@@ -55,7 +55,7 @@ class ApplyPendingEventsImpl @Inject constructor(
                 val refreshSharesResult = shareRepository.refreshShares(user.userId)
                 if (refreshSharesResult.allShareIds.isEmpty()) {
                     createDefaultVault(user.userId)
-                    itemSyncStatusRepository.emit(ItemSyncStatus.Synced)
+                    itemSyncStatusRepository.emit(ItemSyncStatus.Synced(false))
                 } else {
                     enqueueRefreshItems(refreshSharesResult.newShareIds)
                     refreshSharesResult.allShareIds.subtract(refreshSharesResult.newShareIds)

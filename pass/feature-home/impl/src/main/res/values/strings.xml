@@ -13,7 +13,13 @@
     <string name="sort_by_creation_asc">Oldest to newest</string>
     <string name="sort_by_creation_desc">Newest to oldest</string>
     <string name="sort_by_modification_date">Most Recent</string>
-    <string name="empty_list_home_subtitle">Or use the Proton Pass web extension to import items from another password manager. </string>
+
+    <string name="home_empty_vault_title">Your vault is empty</string>
+    <string name="home_empty_vault_subtitle">Let\'s get started by creating your first item</string>
+    <string name="home_empty_vault_create_login">Create a login</string>
+    <string name="home_empty_vault_create_alias">Create a Hide My Email alias</string>
+    <string name="home_empty_vault_create_note">Create a note</string>
+    <string name="home_empty_vault_create_password">Generate a password</string>
 
     <string name="error_observing_items">Error observing items</string>
     <string name="error_observing_share">Error observing share</string>

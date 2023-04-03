@@ -186,7 +186,6 @@ class HomeViewModel @Inject constructor(
     private data class ActionRefreshingWrapper(
         val refreshing: IsRefreshingState,
         val actionState: ActionState,
-        val loading: IsLoadingState,
         val syncStatus: ItemSyncStatus
     )
 
@@ -301,15 +300,8 @@ class HomeViewModel @Inject constructor(
         isRefreshing,
         actionStateFlow,
         itemSyncStatusRepository.observeSyncStatus(),
-        resultsFlow
-    ) { refreshing, actionState, syncStatus, itemsResult ->
-        val loading = if (syncStatus == ItemSyncStatus.Syncing) {
-            IsLoadingState.Loading
-        } else {
-            IsLoadingState.from(itemsResult is LoadingResult.Loading)
-        }
-        ActionRefreshingWrapper(refreshing, actionState, loading, syncStatus)
-    }.distinctUntilChanged()
+        ::ActionRefreshingWrapper
+    ).distinctUntilChanged()
 
     private val itemTypeCountFlow = textFilterListItemFlow.map { result ->
         when (result) {
@@ -350,24 +342,30 @@ class HomeViewModel @Inject constructor(
         searchUiStateFlow,
         refreshingLoadingFlow,
     ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading ->
+        val syncLoading = if (refreshingLoading.syncStatus == ItemSyncStatus.Syncing) {
+            IsLoadingState.Loading
+        } else {
+            IsLoadingState.from(itemsResult is LoadingResult.Loading)
+        }
+
         val (items, isLoading) = when (itemsResult) {
             LoadingResult.Loading -> persistentListOf<GroupedItemList>() to IsLoadingState.Loading
-            is LoadingResult.Success -> when (refreshingLoading.syncStatus) {
-                ItemSyncStatus.Synced -> {
-                    val loading = if (itemsResult.data.isEmpty()) {
-                        // The items are synced, but the flow has not emitted yet
+            is LoadingResult.Success -> when (val syncStatus = refreshingLoading.syncStatus) {
+                is ItemSyncStatus.Synced -> {
+                    val loading = if (itemsResult.data.isEmpty() && syncStatus.hasItems) {
+                        // The items are synced, there are items, but the flow has not emitted yet
                         IsLoadingState.Loading
                     } else {
-                        refreshingLoading.loading
+                        syncLoading
                     }
                     itemsResult.data to loading
                 }
-                else -> itemsResult.data to refreshingLoading.loading
+                else -> itemsResult.data to syncLoading
             }
             is LoadingResult.Error -> {
                 PassLogger.e(TAG, itemsResult.exception, "Observe items error")
                 snackbarDispatcher(ObserveItemsError)
-                persistentListOf<GroupedItemList>() to refreshingLoading.loading
+                persistentListOf<GroupedItemList>() to IsLoadingState.NotLoading
             }
         }
 

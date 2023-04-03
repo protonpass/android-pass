@@ -137,6 +137,7 @@ fun TrashItemBottomSheetContentsPreview(
                     note = "Note",
                     itemType = ItemType.Alias("alias.email@proton.me"),
                     createTime = Clock.System.now(),
+                    state = 0,
                     modificationTime = Clock.System.now(),
                     lastAutofillTime = Clock.System.now()
                 ),

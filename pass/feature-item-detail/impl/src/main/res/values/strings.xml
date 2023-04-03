@@ -25,6 +25,8 @@
     <string name="error_move_item_to_trash_message">Error moving to trash</string>
     <string name="item_permanently_deleted_message">Item permanently deleted</string>
     <string name="item_permanently_deleted_message_error">Error deleting item</string>
+    <string name="item_restored_message">Item restored</string>
+    <string name="item_restored_message_error">Error restoring item</string>
 
     <string name="field_username">Username</string>
     <string name="field_password">Password</string>

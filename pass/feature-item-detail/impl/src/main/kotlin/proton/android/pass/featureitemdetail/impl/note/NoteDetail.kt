@@ -52,7 +52,7 @@ fun NoteDetail(
         NoteDetailUiState.Error -> LaunchedEffect(Unit) { onUpClick() }
         is NoteDetailUiState.Success -> {
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
-            if (state.isItemSentToTrash || state.isPermanentlyDeleted) {
+            if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
                 LaunchedEffect(Unit) { onUpClick() }
             }
             val scope = rememberCoroutineScope()
@@ -79,7 +79,10 @@ fun NoteDetail(
                         )
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
                             itemUiModel = state.itemUiModel,
-                            onRestoreItem = { shareId, itemId -> },
+                            onRestoreItem = { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                viewModel.onItemRestore(shareId, itemId)
+                            },
                             onDeleteItem = { _, _ ->
                                 scope.launch { bottomSheetState.hide() }
                                 shouldShowDeleteItemDialog = true

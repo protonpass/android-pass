@@ -2,6 +2,7 @@ package proton.android.pass.featurehome.impl
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -23,6 +24,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottombar.BottomBar
 import proton.android.pass.composecomponents.impl.bottombar.BottomBarSelected
@@ -36,6 +38,7 @@ import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.featurehome.impl.empty.HomeEmptyList
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
 import proton.pass.domain.ShareId
@@ -55,7 +58,7 @@ internal fun HomeContent(
     onDrawerIconClick: () -> Unit,
     onSortingOptionsClick: () -> Unit,
     onClearRecentSearchClick: () -> Unit,
-    onAddItemClick: (Option<ShareId>) -> Unit,
+    onAddItemClick: (Option<ShareId>, ItemTypeUiState) -> Unit,
     onItemMenuClick: (ItemUiModel) -> Unit,
     onRefresh: () -> Unit,
     onScrollToTop: () -> Unit,
@@ -111,7 +114,7 @@ internal fun HomeContent(
                 onListClick = {},
                 onCreateClick = {
                     val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                    onAddItemClick(shareId)
+                    onAddItemClick(shareId, ItemTypeUiState.Unknown)
                 },
                 onProfileClick = onProfileClick
             )
@@ -179,10 +182,23 @@ internal fun HomeContent(
                         EmptySearchResults()
                     } else {
                         HomeEmptyList(
-                            onCreateItemClick = {
+                            modifier = Modifier.fillMaxHeight(),
+                            onCreateLoginClick = {
                                 val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                                onAddItemClick(shareId)
-                            }
+                                onAddItemClick(shareId, ItemTypeUiState.Login)
+                            },
+                            onCreateAliasClick = {
+                                val shareId = uiState.homeListUiState.selectedShare.map { it.id }
+                                onAddItemClick(shareId, ItemTypeUiState.Alias)
+                            },
+                            onCreateNoteClick = {
+                                val shareId = uiState.homeListUiState.selectedShare.map { it.id }
+                                onAddItemClick(shareId, ItemTypeUiState.Note)
+                            },
+                            onCreatePasswordClick = {
+                                val shareId = uiState.homeListUiState.selectedShare.map { it.id }
+                                onAddItemClick(shareId, ItemTypeUiState.Password)
+                            },
                         )
                     }
                 },

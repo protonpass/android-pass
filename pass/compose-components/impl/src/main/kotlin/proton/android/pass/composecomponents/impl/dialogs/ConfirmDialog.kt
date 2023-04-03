@@ -4,10 +4,12 @@ import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 
 @Composable
 fun <T> ConfirmDialog(
+    modifier: Modifier = Modifier,
     title: String,
     message: String,
     state: T?,
@@ -17,6 +19,7 @@ fun <T> ConfirmDialog(
     val value = state ?: return
 
     AlertDialog(
+        modifier = modifier,
         onDismissRequest = onDismiss,
         title = { Text(title) },
         text = { Text(message) },

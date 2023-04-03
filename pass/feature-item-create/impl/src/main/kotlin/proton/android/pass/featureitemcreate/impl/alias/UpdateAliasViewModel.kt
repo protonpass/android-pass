@@ -98,6 +98,7 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     override fun onTitleChange(value: String) {
+        onUserEditedContent()
         aliasItemState.update { it.copy(title = value) }
         aliasItemValidationErrorsState.update {
             it.toMutableSet()

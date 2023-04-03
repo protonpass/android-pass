@@ -83,7 +83,7 @@ fun NoteDetail(
                             onDeleteItem = { _, _ ->
                                 scope.launch { bottomSheetState.hide() }
                                 shouldShowDeleteItemDialog = true
-                            },
+                            }
                         )
                     }
                 }

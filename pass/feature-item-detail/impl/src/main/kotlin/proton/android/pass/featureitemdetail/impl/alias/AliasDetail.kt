@@ -10,7 +10,10 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,6 +25,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
+import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemState
@@ -47,7 +51,8 @@ fun AliasDetail(
         AliasDetailUiState.NotInitialised -> {}
         AliasDetailUiState.Error -> LaunchedEffect(Unit) { onUpClick() }
         is AliasDetailUiState.Success -> {
-            if (state.isItemSentToTrash) {
+            var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
+            if (state.isItemSentToTrash || state.isPermanentlyDeleted) {
                 LaunchedEffect(Unit) { onUpClick() }
             }
             val scope = rememberCoroutineScope()
@@ -66,13 +71,16 @@ fun AliasDetail(
                             },
                             onMoveToTrash = {
                                 scope.launch { bottomSheetState.hide() }
-                                viewModel.onDelete(state.itemUiModel.shareId, state.itemUiModel.id)
+                                viewModel.onMoveToTrash(state.itemUiModel.shareId, state.itemUiModel.id)
                             }
                         )
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
                             itemUiModel = state.itemUiModel,
                             onRestoreItem = { shareId, itemId -> },
-                            onDeleteItem = { shareId, itemId -> },
+                            onDeleteItem = { _, _ ->
+                                scope.launch { bottomSheetState.hide() }
+                                shouldShowDeleteItemDialog = true
+                            }
                         )
                     }
                 }
@@ -105,6 +113,20 @@ fun AliasDetail(
                         moreInfoUiState = moreInfoUiState
                     )
                 }
+                ConfirmDeleteItemDialog(
+                    itemName = state.itemUiModel.name,
+                    isLoading = state.isLoading,
+                    show = shouldShowDeleteItemDialog,
+                    onConfirm = {
+                        shouldShowDeleteItemDialog = false
+                        viewModel.onPermanentlyDelete(
+                            state.itemUiModel.shareId,
+                            state.itemUiModel.id,
+                            state.itemUiModel.itemType
+                        )
+                    },
+                    onDismiss = { shouldShowDeleteItemDialog = false }
+                )
             }
         }
     }

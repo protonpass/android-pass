@@ -23,19 +23,26 @@ import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.AliasCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotMovedToTrash
+import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ItemId
+import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -45,6 +52,8 @@ class AliasDetailViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val trashItem: TrashItem,
+    private val deleteItem: DeleteItem,
+    private val telemetryManager: TelemetryManager,
     getItemById: GetItemById,
     getAliasDetails: GetAliasDetails,
     savedStateHandle: SavedStateHandle
@@ -59,13 +68,16 @@ class AliasDetailViewModel @Inject constructor(
         MutableStateFlow(IsLoadingState.NotLoading)
     private val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
         MutableStateFlow(IsSentToTrashState.NotSent)
+    private val isPermanentlyDeletedState: MutableStateFlow<IsPermanentlyDeletedState> =
+        MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
 
     val uiState: StateFlow<AliasDetailUiState> = combine(
         getItemById(shareId, itemId),
         getAliasDetails(shareId, itemId).asLoadingResult(),
         isLoadingState,
-        isItemSentToTrashState
-    ) { itemLoadingResult, aliasDetailsResult, isLoading, isItemSentToTrash ->
+        isItemSentToTrashState,
+        isPermanentlyDeletedState,
+    ) { itemLoadingResult, aliasDetailsResult, isLoading, isItemSentToTrash, isPermanentlyDeleted ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -76,10 +88,12 @@ class AliasDetailViewModel @Inject constructor(
                 encryptionContextProvider.withEncryptionContext {
                     AliasDetailUiState.Success(
                         itemUiModel = itemLoadingResult.data.toUiModel(this),
-                        mailboxes = aliasDetailsResult.getOrNull()?.mailboxes?.toPersistentList() ?: persistentListOf(),
+                        mailboxes = aliasDetailsResult.getOrNull()?.mailboxes?.toPersistentList()
+                            ?: persistentListOf(),
                         isLoading = aliasDetailsResult is LoadingResult.Loading || isLoading.value(),
                         isLoadingMailboxes = aliasDetailsResult is LoadingResult.Loading,
                         isItemSentToTrash = isItemSentToTrash.value(),
+                        isPermanentlyDeleted = isPermanentlyDeleted.value()
                     )
                 }
             }
@@ -100,7 +114,7 @@ class AliasDetailViewModel @Inject constructor(
         }
     }
 
-    fun onDelete(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+    fun onMoveToTrash(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
         trashItem(shareId = shareId, itemId = itemId)
             .onSuccess {
@@ -113,6 +127,23 @@ class AliasDetailViewModel @Inject constructor(
             }
         isLoadingState.update { IsLoadingState.NotLoading }
     }
+
+    fun onPermanentlyDelete(shareId: ShareId, itemId: ItemId, itemType: ItemType) =
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
+            runCatching {
+                deleteItem(shareId = shareId, itemId = itemId)
+            }.onSuccess {
+                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemType)))
+                isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
+                snackbarDispatcher(DetailSnackbarMessages.ItemPermanentlyDeleted)
+                PassLogger.i(TAG, "Item deleted successfully")
+            }.onFailure {
+                snackbarDispatcher(DetailSnackbarMessages.ItemNotPermanentlyDeleted)
+                PassLogger.i(TAG, it, "Could not delete item")
+            }
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
 
     companion object {
         private const val TAG = "AliasDetailViewModel"

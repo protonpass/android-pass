@@ -143,6 +143,7 @@ class UpdateLoginViewModel @Inject constructor(
     }
 
     fun setTotp(uri: String?) {
+        onUserEditedContent()
         val currentValue = loginItemState.value
         loginItemState.update {
             it.copy(

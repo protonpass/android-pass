@@ -66,6 +66,7 @@ class ItemSuggestionSorterTest {
         name = "",
         note = "",
         itemType = ItemType.Password,
+        state = 0,
         createTime = Clock.System.now(),
         modificationTime = modificationTime,
         lastAutofillTime = lastAutofillTime

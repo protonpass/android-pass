@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 sealed interface ItemSyncStatus {
     object NotStarted : ItemSyncStatus
     object Syncing : ItemSyncStatus
-    object Synced : ItemSyncStatus
+    data class Synced(val hasItems: Boolean) : ItemSyncStatus
     object NotSynced : ItemSyncStatus
 }
 

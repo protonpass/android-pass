@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.featureitemdetail.impl.alias.AliasDetail
 import proton.android.pass.featureitemdetail.impl.login.LoginDetail
 import proton.android.pass.featureitemdetail.impl.note.NoteDetail

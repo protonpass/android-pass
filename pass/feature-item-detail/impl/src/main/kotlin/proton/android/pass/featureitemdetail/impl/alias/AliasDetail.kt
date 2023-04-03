@@ -52,7 +52,7 @@ fun AliasDetail(
         AliasDetailUiState.Error -> LaunchedEffect(Unit) { onUpClick() }
         is AliasDetailUiState.Success -> {
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
-            if (state.isItemSentToTrash || state.isPermanentlyDeleted) {
+            if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
                 LaunchedEffect(Unit) { onUpClick() }
             }
             val scope = rememberCoroutineScope()
@@ -71,12 +71,18 @@ fun AliasDetail(
                             },
                             onMoveToTrash = {
                                 scope.launch { bottomSheetState.hide() }
-                                viewModel.onMoveToTrash(state.itemUiModel.shareId, state.itemUiModel.id)
+                                viewModel.onMoveToTrash(
+                                    state.itemUiModel.shareId,
+                                    state.itemUiModel.id
+                                )
                             }
                         )
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
                             itemUiModel = state.itemUiModel,
-                            onRestoreItem = { shareId, itemId -> },
+                            onRestoreItem = { shareId, itemId ->
+                                scope.launch { bottomSheetState.hide() }
+                                viewModel.onItemRestore(shareId, itemId)
+                            },
                             onDeleteItem = { _, _ ->
                                 scope.launch { bottomSheetState.hide() }
                                 shouldShowDeleteItemDialog = true
@@ -94,7 +100,11 @@ fun AliasDetail(
                             color = PassTheme.colors.aliasInteractionNormMajor1,
                             onUpClick = onUpClick,
                             onEditClick = {
-                                onEditClick(state.itemUiModel.shareId, state.itemUiModel.id, state.itemUiModel.itemType)
+                                onEditClick(
+                                    state.itemUiModel.shareId,
+                                    state.itemUiModel.id,
+                                    state.itemUiModel.itemType
+                                )
                             },
                             onOptionsClick = {
                                 scope.launch { bottomSheetState.show() }

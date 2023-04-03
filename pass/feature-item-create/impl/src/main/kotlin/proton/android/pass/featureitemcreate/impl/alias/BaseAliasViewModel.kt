@@ -105,6 +105,8 @@ abstract class BaseAliasViewModel(
         MutableStateFlow(emptyList())
     private val selectedSuffixState: MutableStateFlow<Option<AliasSuffixUiModel>> =
         MutableStateFlow(None)
+    protected val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
     private val aliasOptionsState: Flow<LoadingResult<AliasOptionsUiModel>> = sharesWrapperState
         .flatMapLatest { observeAliasOptions(it.currentVault.vault.shareId) }
         .map(::AliasOptionsUiModel)
@@ -203,8 +205,9 @@ abstract class BaseAliasViewModel(
         sharesWrapperState,
         aliasItemWrapperState,
         isLoadingState,
-        eventWrapperState
-    ) { shareWrapper, aliasItemWrapper, isLoading, eventWrapper ->
+        eventWrapperState,
+        hasUserEditedContentFlow
+    ) { shareWrapper, aliasItemWrapper, isLoading, eventWrapper, hasUserEditedContent ->
         CreateUpdateAliasUiState(
             vaultList = shareWrapper.vaultList,
             selectedVault = shareWrapper.currentVault,
@@ -216,7 +219,8 @@ abstract class BaseAliasViewModel(
             isAliasDraftSavedState = eventWrapper.isAliasDraftSaved,
             isApplyButtonEnabled = eventWrapper.isApplyButtonEnabled,
             showVaultSelector = shareWrapper.vaultList.size > 1,
-            closeScreenEvent = eventWrapper.closeScreenEvent
+            closeScreenEvent = eventWrapper.closeScreenEvent,
+            hasUserEditedContent = hasUserEditedContent
         )
     }
         .stateIn(
@@ -229,14 +233,17 @@ abstract class BaseAliasViewModel(
     abstract fun onPrefixChange(value: String)
 
     open fun onNoteChange(value: String) {
+        onUserEditedContent()
         aliasItemState.update { it.copy(note = value) }
     }
 
     fun onSuffixChange(suffix: AliasSuffixUiModel) {
+        onUserEditedContent()
         selectedSuffixState.update { suffix.toOption() }
     }
 
     open fun onMailboxesChanged(mailboxes: List<SelectedAliasMailboxUiModel>) {
+        onUserEditedContent()
         val atLeastOneSelected = mailboxes.any { it.selected }
         if (!atLeastOneSelected) return
         selectedMailboxListState.update { mailboxes.filter { it.selected }.map { it.model.id } }
@@ -263,6 +270,7 @@ abstract class BaseAliasViewModel(
     }
 
     fun changeVault(shareId: ShareId) = viewModelScope.launch {
+        onUserEditedContent()
         isLoadingState.update { IsLoadingState.Loading }
         selectedShareIdState.update { shareId.toOption() }
     }
@@ -270,6 +278,11 @@ abstract class BaseAliasViewModel(
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     fun setDraftStatus(status: Boolean) {
         isDraft = status
+    }
+
+    protected fun onUserEditedContent() {
+        if (hasUserEditedContentFlow.value) return
+        hasUserEditedContentFlow.update { true }
     }
 
     companion object {

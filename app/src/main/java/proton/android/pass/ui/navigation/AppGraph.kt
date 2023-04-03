@@ -5,6 +5,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.SignOutDialog
 import proton.android.pass.featureaccount.impl.accountGraph
@@ -71,11 +72,18 @@ fun NavGraphBuilder.appGraph(
 ) {
     homeGraph(
         homeScreenNavigation = createHomeScreenNavigation(appNavigator),
-        onAddItemClick = { shareId ->
-            appNavigator.navigate(
-                CreateItemBottomsheet,
-                CreateItemBottomsheet.createNavRoute(shareId)
-            )
+        onAddItemClick = { shareId, itemType ->
+            val (destination, route) = when (itemType) {
+                ItemTypeUiState.Unknown -> {
+                    CreateItemBottomsheet to CreateItemBottomsheet.createNavRoute(shareId)
+                }
+                ItemTypeUiState.Login -> CreateLogin to CreateLogin.createNavRoute(shareId)
+                ItemTypeUiState.Note -> CreateNote to CreateNote.createNavRoute(shareId)
+                ItemTypeUiState.Alias -> CreateAlias to CreateAlias.createNavRoute(shareId)
+                ItemTypeUiState.Password -> GeneratePasswordBottomsheet to null
+            }
+
+            appNavigator.navigate(destination, route)
         },
         onCreateVaultClick = { appNavigator.navigate(CreateVaultBottomSheet) },
         onEditVaultClick = { shareId ->

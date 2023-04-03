@@ -29,8 +29,15 @@ fun CreateAliasScreen(
 ) {
     val viewState by viewModel.aliasUiState.collectAsStateWithLifecycle()
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
+    val onExit = {
+        if (viewState.hasUserEditedContent) {
+            showConfirmDialog = !showConfirmDialog
+        } else {
+            onUpClick()
+        }
+    }
     BackHandler {
-        showConfirmDialog = !showConfirmDialog
+        onExit()
     }
 
     LaunchedEffect(viewState.closeScreenEvent) {
@@ -48,7 +55,7 @@ fun CreateAliasScreen(
             canEdit = true,
             isEditAllowed = viewState.isLoadingState == IsLoadingState.NotLoading,
             showVaultSelector = viewState.showVaultSelector,
-            onUpClick = { showConfirmDialog = true },
+            onUpClick = onExit,
             onAliasCreated = { _, _, alias -> onAliasCreated(alias) },
             onSubmit = { shareId -> viewModel.createAlias(shareId) },
             onSuffixChange = { viewModel.onSuffixChange(it) },
@@ -64,10 +71,7 @@ fun CreateAliasScreen(
             onCancel = {
                 showConfirmDialog = false
             },
-            onConfirm = {
-                showConfirmDialog = false
-                onUpClick()
-            }
+            onConfirm = onExit
         )
     }
 }

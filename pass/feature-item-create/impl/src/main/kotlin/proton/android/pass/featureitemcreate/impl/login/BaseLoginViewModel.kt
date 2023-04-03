@@ -40,6 +40,7 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.common.api.combine as combineN
 
 abstract class BaseLoginViewModel(
     protected val accountManager: AccountManager,
@@ -58,7 +59,7 @@ abstract class BaseLoginViewModel(
     private val navShareIdState = MutableStateFlow(navShareId)
     private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
 
-    protected val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
     protected val aliasLocalItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
     private val aliasDraftState: Flow<Option<AliasItem>> = draftRepository
@@ -153,7 +154,7 @@ abstract class BaseLoginViewModel(
         val aliasItem: Option<AliasItem>
     )
 
-    val loginUiState: StateFlow<CreateUpdateLoginUiState> = proton.android.pass.common.api.combine(
+    val loginUiState: StateFlow<CreateUpdateLoginUiState> = combineN(
         sharesWrapperState,
         loginAliasItemWrapperState,
         isLoadingState,

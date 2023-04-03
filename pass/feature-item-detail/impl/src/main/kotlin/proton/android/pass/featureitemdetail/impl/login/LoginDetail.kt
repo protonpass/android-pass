@@ -93,7 +93,16 @@ fun LoginDetail(
                                     scope.launch { bottomSheetState.hide() }
                                 }
                             )
-                            ItemState.Trashed.value -> {}
+                            ItemState.Trashed.value -> TopBarOptionsBottomSheetContents(
+                                onMigrate = {
+                                    scope.launch { bottomSheetState.hide() }
+                                    onMigrateClick(state.shareId, state.itemId)
+                                },
+                                onMoveToTrash = {
+                                    viewModel.onDelete(state.shareId, state.itemId)
+                                    scope.launch { bottomSheetState.hide() }
+                                }
+                            )
                         }
                     }
                 }

@@ -16,5 +16,7 @@ enum class DetailSnackbarMessages(
     WebsiteCopiedToClipboard(R.string.website_copied_to_clipboard, SnackbarType.NORM, true),
     TotpCopiedToClipboard(R.string.totp_copied_to_clipboard, SnackbarType.NORM, true),
     ItemMovedToTrash(R.string.move_item_to_trash_message, SnackbarType.NORM),
-    ItemNotMovedToTrash(R.string.error_move_item_to_trash_message, SnackbarType.ERROR)
+    ItemNotMovedToTrash(R.string.error_move_item_to_trash_message, SnackbarType.ERROR),
+    ItemPermanentlyDeleted(R.string.item_permanently_deleted_message, SnackbarType.NORM),
+    ItemNotPermanentlyDeleted(R.string.item_permanently_deleted_message_error, SnackbarType.ERROR)
 }

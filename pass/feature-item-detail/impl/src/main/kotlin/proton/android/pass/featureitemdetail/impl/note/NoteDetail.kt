@@ -22,6 +22,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
+import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemState
 import proton.pass.domain.ItemType
@@ -57,16 +58,23 @@ fun NoteDetail(
             PassModalBottomSheetLayout(
                 sheetState = bottomSheetState,
                 sheetContent = {
-                    TopBarOptionsBottomSheetContents(
-                        onMigrate = {
-                            scope.launch { bottomSheetState.hide() }
-                            onMigrateClick(state.shareId, state.itemId)
-                        },
-                        onMoveToTrash = {
-                            scope.launch { bottomSheetState.hide() }
-                            viewModel.onDelete(state.shareId, state.itemId)
-                        }
-                    )
+                    when (state.itemUiModel.state) {
+                        ItemState.Active.value -> TopBarOptionsBottomSheetContents(
+                            onMigrate = {
+                                scope.launch { bottomSheetState.hide() }
+                                onMigrateClick(state.itemUiModel.shareId, state.itemUiModel.id)
+                            },
+                            onMoveToTrash = {
+                                scope.launch { bottomSheetState.hide() }
+                                viewModel.onDelete(state.itemUiModel.shareId, state.itemUiModel.id)
+                            }
+                        )
+                        ItemState.Trashed.value -> TrashItemBottomSheetContents(
+                            itemUiModel = state.itemUiModel,
+                            onRestoreItem = { shareId, itemId -> },
+                            onDeleteItem = { shareId, itemId -> },
+                        )
+                    }
                 }
             ) {
                 Scaffold(
@@ -74,11 +82,15 @@ fun NoteDetail(
                     topBar = {
                         ItemDetailTopBar(
                             isLoading = state.isLoading,
-                            isInTrash = state.state == ItemState.Trashed.value,
+                            isInTrash = state.itemUiModel.state == ItemState.Trashed.value,
                             color = PassTheme.colors.noteInteractionNormMajor1,
                             onUpClick = onUpClick,
                             onEditClick = {
-                                onEditClick(state.shareId, state.itemId, state.itemType)
+                                onEditClick(
+                                    state.itemUiModel.shareId,
+                                    state.itemUiModel.id,
+                                    state.itemUiModel.itemType
+                                )
                             },
                             onOptionsClick = {
                                 scope.launch { bottomSheetState.show() }
@@ -90,8 +102,8 @@ fun NoteDetail(
                         modifier = Modifier
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
-                        name = state.title,
-                        note = state.note,
+                        name = state.itemUiModel.name,
+                        note = (state.itemUiModel.itemType as ItemType.Note).text,
                         moreInfoUiState = moreInfoUiState
                     )
                 }

@@ -38,14 +38,14 @@ import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetC
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.SortingBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.TrashAllBottomSheetContents
-import proton.android.pass.featurehome.impl.bottomsheet.TrashItemBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.VaultOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
 import proton.android.pass.featurehome.impl.trash.ConfirmClearTrashDialog
-import proton.android.pass.featurehome.impl.trash.ConfirmDeleteItemDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmRestoreAllDialog
 import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
+import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
+import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
@@ -224,13 +224,13 @@ fun HomeScreen(
                 }
                 HomeBottomSheetType.TrashItemOptions -> TrashItemBottomSheetContents(
                     itemUiModel = selectedItem!!,
-                    onRestoreItem = {
+                    onRestoreItem = { shareId, itemId ->
                         scope.launch {
                             bottomSheetState.hide()
-                            homeViewModel.restoreItem(it)
+                            homeViewModel.restoreItem(shareId, itemId)
                         }
                     },
-                    onDeleteItem = {
+                    onDeleteItem = { _, _ ->
                         scope.launch {
                             bottomSheetState.hide()
                             shouldShowDeleteItemDialog = true
@@ -360,7 +360,8 @@ fun HomeScreen(
                 isLoading = actionState == ActionState.Loading,
                 show = shouldShowDeleteItemDialog,
                 onConfirm = {
-                    homeViewModel.deleteItem(selectedItem!!)
+                    val item = selectedItem ?: return@ConfirmDeleteItemDialog
+                    homeViewModel.deleteItem(item.shareId, item.id, item.itemType)
                 },
                 onDismiss = { shouldShowDeleteItemDialog = false }
             )

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.asAnnotatedString
 import proton.android.pass.composecomponents.impl.icon.ForwardIcon
@@ -23,7 +24,7 @@ import proton.pass.domain.AliasMailbox
 @Composable
 fun AliasMailboxesRow(
     modifier: Modifier = Modifier,
-    mailboxes: List<AliasMailbox>,
+    mailboxes: ImmutableList<AliasMailbox>,
     isLoading: Boolean
 ) {
     if (!isLoading && mailboxes.isEmpty()) return

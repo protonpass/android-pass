@@ -37,8 +37,16 @@ fun UpdateLogin(
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
+    val onExit = {
+        if (uiState.hasUserEditedContent) {
+            showConfirmDialog = !showConfirmDialog
+        } else {
+            viewModel.onClose()
+            onUpClick()
+        }
+    }
     BackHandler {
-        showConfirmDialog = !showConfirmDialog
+        onExit()
     }
 
     LaunchedEffect(draftAlias) {
@@ -67,7 +75,7 @@ fun UpdateLogin(
             topBarActionName = stringResource(id = R.string.action_save),
             isUpdate = true,
             showVaultSelector = false,
-            onUpClick = { showConfirmDialog = true },
+            onUpClick = onExit,
             onSuccess = { shareId, itemId, _ ->
                 viewModel.onEmitSnackbarMessage(LoginUpdated)
                 onSuccess(shareId, itemId)
@@ -94,11 +102,7 @@ fun UpdateLogin(
             onCancel = {
                 showConfirmDialog = false
             },
-            onConfirm = {
-                showConfirmDialog = false
-                viewModel.onClose()
-                onUpClick()
-            }
+            onConfirm = onExit
         )
     }
 }

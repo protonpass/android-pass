@@ -124,7 +124,8 @@ internal class CreateLoginViewModelTest {
                         vaultList = listOf(vault),
                         selectedVault = vault,
                         loginItem = LoginItem.Empty.copy(title = titleInput),
-                        isLoadingState = IsLoadingState.NotLoading
+                        isLoadingState = IsLoadingState.NotLoading,
+                        hasUserEditedContent = true
                     )
                 )
             assertThat(awaitItem())
@@ -133,7 +134,8 @@ internal class CreateLoginViewModelTest {
                         vaultList = listOf(vault),
                         selectedVault = vault,
                         loginItem = LoginItem.Empty.copy(title = titleInput),
-                        isLoadingState = IsLoadingState.Loading
+                        isLoadingState = IsLoadingState.Loading,
+                        hasUserEditedContent = true
                     )
                 )
             assertThat(awaitItem())
@@ -143,6 +145,7 @@ internal class CreateLoginViewModelTest {
                         selectedVault = vault,
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.NotLoading,
+                        hasUserEditedContent = true,
                         isItemSaved = ItemSavedState.Success(
                             item.id,
                             ItemUiModel(

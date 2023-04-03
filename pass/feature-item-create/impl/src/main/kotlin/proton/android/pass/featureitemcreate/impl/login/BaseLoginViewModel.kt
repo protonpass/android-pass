@@ -58,6 +58,7 @@ abstract class BaseLoginViewModel(
     private val navShareIdState = MutableStateFlow(navShareId)
     private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
 
+    protected val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
     protected val aliasLocalItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
     private val aliasDraftState: Flow<Option<AliasItem>> = draftRepository
@@ -152,13 +153,14 @@ abstract class BaseLoginViewModel(
         val aliasItem: Option<AliasItem>
     )
 
-    val loginUiState: StateFlow<CreateUpdateLoginUiState> = combine(
+    val loginUiState: StateFlow<CreateUpdateLoginUiState> = proton.android.pass.common.api.combine(
         sharesWrapperState,
         loginAliasItemWrapperState,
         isLoadingState,
         eventsFlow,
         focusLastWebsiteState,
-    ) { shareWrapper, loginItemWrapper, isLoading, events, focusLastWebsite ->
+        hasUserEditedContentFlow
+    ) { shareWrapper, loginItemWrapper, isLoading, events, focusLastWebsite, hasUserEditedContent ->
         CreateUpdateLoginUiState(
             vaultList = shareWrapper.vaultList,
             selectedVault = shareWrapper.currentVault,
@@ -171,7 +173,8 @@ abstract class BaseLoginViewModel(
             canUpdateUsername = loginItemWrapper.canUpdateUsername,
             primaryEmail = loginItemWrapper.primaryEmail,
             aliasItem = loginItemWrapper.aliasItem.value(),
-            showVaultSelector = shareWrapper.vaultList.size > 1
+            showVaultSelector = shareWrapper.vaultList.size > 1,
+            hasUserEditedContent = hasUserEditedContent
         )
     }
         .stateIn(
@@ -181,6 +184,7 @@ abstract class BaseLoginViewModel(
         )
 
     fun onTitleChange(value: String) {
+        onUserEditedContent()
         loginItemState.update { it.copy(title = value) }
         loginItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(LoginItemValidationErrors.BlankTitle) }
@@ -193,19 +197,23 @@ abstract class BaseLoginViewModel(
     }
 
     fun onUsernameChange(value: String) {
+        onUserEditedContent()
         loginItemState.update { it.copy(username = value) }
     }
 
     fun onPasswordChange(value: String) {
+        onUserEditedContent()
         loginItemState.update { it.copy(password = value) }
     }
 
     fun onTotpChange(value: String) {
+        onUserEditedContent()
         val newValue = value.replace(" ", "").replace("\n", "")
         loginItemState.update { it.copy(primaryTotp = newValue) }
     }
 
     fun onWebsiteChange(value: String, index: Int) {
+        onUserEditedContent()
         val newValue = value.replace(" ", "").replace("\n", "")
         loginItemState.update {
             it.copy(
@@ -217,6 +225,7 @@ abstract class BaseLoginViewModel(
     }
 
     fun onAddWebsite() {
+        onUserEditedContent()
         loginItemState.update {
             val websites = sanitizeWebsites(it.websiteAddresses).toMutableList()
             websites.add("")
@@ -227,6 +236,7 @@ abstract class BaseLoginViewModel(
     }
 
     fun onRemoveWebsite(index: Int) {
+        onUserEditedContent()
         loginItemState.update {
             it.copy(
                 websiteAddresses = it.websiteAddresses.toMutableList().apply { removeAt(index) }
@@ -236,6 +246,7 @@ abstract class BaseLoginViewModel(
     }
 
     fun onNoteChange(value: String) {
+        onUserEditedContent()
         loginItemState.update { it.copy(note = value) }
     }
 
@@ -245,6 +256,7 @@ abstract class BaseLoginViewModel(
         }
 
     fun onAliasCreated(aliasItem: AliasItem) {
+        onUserEditedContent()
         aliasLocalItemState.update { aliasItem.toOption() }
         val alias = aliasItem.aliasToBeCreated
         if (alias != null) {
@@ -299,12 +311,14 @@ abstract class BaseLoginViewModel(
     }
 
     fun onDeleteLinkedApp(packageInfo: PackageInfoUi) {
+        onUserEditedContent()
         loginItemState.update {
             it.copy(packageInfoSet = it.packageInfoSet.minus(packageInfo).toImmutableSet())
         }
     }
 
     fun onPasteTotp() = viewModelScope.launch(Dispatchers.IO) {
+        onUserEditedContent()
         clipboardManager.getClipboardContent()
             .onSuccess { clipboardContent ->
                 withContext(Dispatchers.Main) {
@@ -321,11 +335,17 @@ abstract class BaseLoginViewModel(
     }
 
     fun onRemoveAlias() {
+        onUserEditedContent()
         aliasLocalItemState.update { None }
         draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
 
         loginItemState.update { it.copy(username = "") }
         canUpdateUsernameState.update { true }
+    }
+
+    protected fun onUserEditedContent() {
+        if (hasUserEditedContentFlow.value) return
+        hasUserEditedContentFlow.update { true }
     }
 
     companion object {

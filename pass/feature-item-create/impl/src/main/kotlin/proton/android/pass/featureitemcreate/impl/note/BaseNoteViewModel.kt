@@ -48,6 +48,7 @@ abstract class BaseNoteViewModel(
         MutableStateFlow(ItemSavedState.Unknown)
     protected val noteItemValidationErrorsState: MutableStateFlow<Set<NoteItemValidationErrors>> =
         MutableStateFlow(emptySet())
+    protected val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val observeAllVaultsFlow = observeVaults()
         .map { shares ->
@@ -95,8 +96,9 @@ abstract class BaseNoteViewModel(
         sharesWrapperState,
         noteItemWrapperState,
         isLoadingState,
-        isItemSavedState
-    ) { shareWrapper, noteItemWrapper, isLoading, isItemSaved ->
+        isItemSavedState,
+        hasUserEditedContentFlow
+    ) { shareWrapper, noteItemWrapper, isLoading, isItemSaved, hasUserEditedContent ->
         CreateUpdateNoteUiState(
             vaultList = shareWrapper.vaultList,
             selectedVault = shareWrapper.currentVault,
@@ -104,7 +106,8 @@ abstract class BaseNoteViewModel(
             errorList = noteItemWrapper.noteItemValidationErrors,
             isLoadingState = isLoading,
             isItemSaved = isItemSaved,
-            showVaultSelector = shareWrapper.vaultList.size > 1
+            showVaultSelector = shareWrapper.vaultList.size > 1,
+            hasUserEditedContent = hasUserEditedContent
         )
     }
         .stateIn(
@@ -114,6 +117,7 @@ abstract class BaseNoteViewModel(
         )
 
     fun onTitleChange(value: String) {
+        onUserEditedContent()
         noteItemState.update { it.copy(title = value) }
         noteItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(NoteItemValidationErrors.BlankTitle) }
@@ -121,11 +125,18 @@ abstract class BaseNoteViewModel(
     }
 
     fun onNoteChange(value: String) {
+        onUserEditedContent()
         noteItemState.update { it.copy(note = value) }
     }
 
     fun changeVault(shareId: ShareId) = viewModelScope.launch {
+        onUserEditedContent()
         selectedShareIdState.update { shareId.toOption() }
+    }
+
+    private fun onUserEditedContent() {
+        if (hasUserEditedContentFlow.value) return
+        hasUserEditedContentFlow.update { true }
     }
 
     companion object {

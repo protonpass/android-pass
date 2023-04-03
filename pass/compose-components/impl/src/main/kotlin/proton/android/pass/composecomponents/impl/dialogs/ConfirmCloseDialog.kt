@@ -8,9 +8,12 @@ import proton.android.pass.composecomponents.impl.R
 @Composable
 fun ConfirmCloseDialog(
     modifier: Modifier = Modifier,
+    show: Boolean,
     onCancel: () -> Unit,
     onConfirm: () -> Unit
 ) {
+    if (!show) return
+
     ConfirmDialog(
         modifier = modifier,
         title = stringResource(R.string.confirm_close_dialog_title),

@@ -24,6 +24,7 @@ object TestItemUiModel {
             name = title,
             note = note,
             createTime = createTime,
+            state = 0,
             modificationTime = modificationTime,
             lastAutofillTime = lastAutofillTime,
         )

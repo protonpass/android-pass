@@ -4,8 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +25,7 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -104,23 +102,13 @@ class LoginDetailViewModel @Inject constructor(
             }
             LoadingResult.Loading -> LoginDetailUiState.NotInitialised
             is LoadingResult.Success -> {
-                val itemContents = itemLoadingResult.data.itemType as ItemType.Login
                 encryptionContextProvider.withEncryptionContext {
                     LoginDetailUiState.Success(
-                        shareId = itemLoadingResult.data.shareId,
-                        itemId = itemLoadingResult.data.id,
-                        itemType = itemLoadingResult.data.itemType,
-                        title = decrypt(itemLoadingResult.data.title),
-                        username = itemContents.username,
-                        password = password,
-                        websites = itemContents.websites.toImmutableList(),
-                        packageInfoSet = itemContents.packageInfoSet.map(::PackageInfoUi)
-                            .toImmutableSet(),
-                        note = decrypt(itemLoadingResult.data.note),
-                        totpUiState = totpOption.map {
-                            TotpUiState(it.code, it.remainingSeconds, it.totalSeconds)
-                        }.value(),
-                        state = itemLoadingResult.data.state,
+                        itemUiModel = itemLoadingResult.data.toUiModel(this),
+                        passwordState = password,
+                        totpUiState = totpOption
+                            .map { TotpUiState(it.code, it.remainingSeconds, it.totalSeconds) }
+                            .value(),
                         isLoading = isLoading.value(),
                         isItemSentToTrash = isItemSentToTrash.value()
                     )
@@ -136,7 +124,7 @@ class LoginDetailViewModel @Inject constructor(
 
     fun copyPasswordToClipboard() = viewModelScope.launch(coroutineExceptionHandler) {
         val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
-        val itemType = state.itemType as? ItemType.Login ?: return@launch
+        val itemType = state.itemUiModel.itemType as? ItemType.Login ?: return@launch
         val text = when (val password = passwordState.value) {
             is PasswordState.Revealed -> password.clearText
             is PasswordState.Concealed -> encryptionContextProvider.withEncryptionContext {
@@ -151,7 +139,7 @@ class LoginDetailViewModel @Inject constructor(
 
     fun copyUsernameToClipboard() = viewModelScope.launch {
         val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
-        val itemType = state.itemType as? ItemType.Login ?: return@launch
+        val itemType = state.itemUiModel.itemType as? ItemType.Login ?: return@launch
         withContext(Dispatchers.IO) {
             clipboardManager.copyToClipboard(itemType.username)
         }
@@ -174,7 +162,7 @@ class LoginDetailViewModel @Inject constructor(
 
     fun togglePassword() = viewModelScope.launch(coroutineExceptionHandler) {
         val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
-        val itemType = state.itemType as? ItemType.Login ?: return@launch
+        val itemType = state.itemUiModel.itemType as? ItemType.Login ?: return@launch
 
         when (passwordState.value) {
             is PasswordState.Concealed ->

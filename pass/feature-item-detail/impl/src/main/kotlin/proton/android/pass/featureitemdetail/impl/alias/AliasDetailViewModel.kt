@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -19,6 +21,7 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -33,7 +36,6 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -71,24 +73,15 @@ class AliasDetailViewModel @Inject constructor(
             }
             LoadingResult.Loading -> AliasDetailUiState.NotInitialised
             is LoadingResult.Success -> {
-                val model = encryptionContextProvider.withEncryptionContext {
-                    AliasUiModel(
-                        title = decrypt(itemLoadingResult.data.title),
-                        alias = (itemLoadingResult.data.itemType as ItemType.Alias).aliasEmail,
-                        mailboxes = aliasDetailsResult.getOrNull()?.mailboxes ?: emptyList(),
-                        note = decrypt(itemLoadingResult.data.note)
+                encryptionContextProvider.withEncryptionContext {
+                    AliasDetailUiState.Success(
+                        itemUiModel = itemLoadingResult.data.toUiModel(this),
+                        mailboxes = aliasDetailsResult.getOrNull()?.mailboxes?.toPersistentList() ?: persistentListOf(),
+                        isLoading = aliasDetailsResult is LoadingResult.Loading || isLoading.value(),
+                        isLoadingMailboxes = aliasDetailsResult is LoadingResult.Loading,
+                        isItemSentToTrash = isItemSentToTrash.value(),
                     )
                 }
-                AliasDetailUiState.Success(
-                    isLoading = aliasDetailsResult is LoadingResult.Loading || isLoading.value(),
-                    isLoadingMailboxes = aliasDetailsResult is LoadingResult.Loading,
-                    isItemSentToTrash = isItemSentToTrash.value(),
-                    model = model,
-                    shareId = shareId,
-                    itemId = itemId,
-                    state = itemLoadingResult.data.state,
-                    itemType = itemLoadingResult.data.itemType
-                )
             }
         }
     }

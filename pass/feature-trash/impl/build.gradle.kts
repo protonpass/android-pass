@@ -7,14 +7,13 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.featurehome.impl"
+    namespace = "proton.android.pass.featuretrash"
     compileSdk = libs.versions.compileSdk.get().toInt()
-
+    
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
     }
-
     buildFeatures {
         compose = true
     }
@@ -32,13 +31,12 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
-    implementation(libs.core.user.domain)
     implementation(libs.kotlinx.collections)
     implementation(libs.kotlinx.datetime)
-    implementation(libs.kotlinx.serialization.json)
 
-    debugImplementation(libs.androidx.compose.uiTooling)
-    implementation(libs.androidx.compose.uiToolingPreview)
+    implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.commonUiModels.api)
+    implementation(projects.pass.composeComponents.impl)
 
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
@@ -47,31 +45,7 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
-    implementation(projects.pass.autofill.api)
-    implementation(projects.pass.clipboard.api)
-    implementation(projects.pass.common.api)
-    implementation(projects.pass.commonUi.api)
-    implementation(projects.pass.commonUiModels.api)
-    implementation(projects.pass.composeComponents.impl)
-    implementation(projects.pass.crypto.api)
-    implementation(projects.pass.data.api)
-    implementation(projects.pass.log.api)
-    implementation(projects.pass.navigation.api)
-    implementation(projects.pass.notifications.api)
-    implementation(projects.pass.preferences.api)
-    implementation(projects.pass.telemetry.api)
-
-    // Temporarily depend on the impl module until move the bottomsheets to routes
-    implementation(projects.pass.featureTrash.impl)
-
     debugImplementation(libs.androidx.compose.uiTooling)
+    implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTestManifest)
-
-    testImplementation(libs.turbine)
-    testImplementation(libs.truth)
-    testImplementation(libs.coroutines.test)
-
-    testImplementation(projects.pass.autofill.fakes)
-    testImplementation(projects.pass.commonTest)
-    testImplementation(projects.pass.preferences.fakes)
 }

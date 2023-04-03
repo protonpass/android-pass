@@ -57,7 +57,8 @@ open class FetchItemsWorker @AssistedInject constructor(
             return Result.retry()
         }
 
-        itemSyncStatusRepository.emit(ItemSyncStatus.Synced)
+        val hasItems = results.any { it is LoadingResult.Success && it.data.isNotEmpty() }
+        itemSyncStatusRepository.emit(ItemSyncStatus.Synced(hasItems))
         return Result.success()
     }
 

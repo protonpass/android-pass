@@ -16,17 +16,25 @@ import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotMovedToTrash
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemPermanentlyDeleted
+import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ItemId
+import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -35,6 +43,8 @@ class NoteDetailViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val trashItem: TrashItem,
+    private val deleteItem: DeleteItem,
+    private val telemetryManager: TelemetryManager,
     getItemById: GetItemById,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -48,12 +58,15 @@ class NoteDetailViewModel @Inject constructor(
         MutableStateFlow(IsLoadingState.NotLoading)
     private val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
         MutableStateFlow(IsSentToTrashState.NotSent)
+    private val isPermanentlyDeletedState: MutableStateFlow<IsPermanentlyDeletedState> =
+        MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
 
     val state: StateFlow<NoteDetailUiState> = combine(
         getItemById(shareId, itemId),
         isLoadingState,
-        isItemSentToTrashState
-    ) { itemLoadingResult, isLoading, isItemSentToTrash ->
+        isItemSentToTrashState,
+        isPermanentlyDeletedState
+    ) { itemLoadingResult, isLoading, isItemSentToTrash, isPermanentlyDeleted ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -64,7 +77,8 @@ class NoteDetailViewModel @Inject constructor(
                 NoteDetailUiState.Success(
                     itemUiModel = itemLoadingResult.data.toUiModel(this),
                     isLoading = isLoading.value(),
-                    isItemSentToTrash = isItemSentToTrash.value()
+                    isItemSentToTrash = isItemSentToTrash.value(),
+                    isPermanentlyDeleted = isPermanentlyDeleted.value(),
                 )
             }
         }
@@ -75,7 +89,7 @@ class NoteDetailViewModel @Inject constructor(
             initialValue = NoteDetailUiState.NotInitialised
         )
 
-    fun onDelete(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+    fun onMoveToTrash(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
         trashItem(shareId = shareId, itemId = itemId)
             .onSuccess {
@@ -88,6 +102,23 @@ class NoteDetailViewModel @Inject constructor(
             }
         isLoadingState.update { IsLoadingState.NotLoading }
     }
+
+    fun onPermanentlyDelete(shareId: ShareId, itemId: ItemId, itemType: ItemType) =
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
+            runCatching {
+                deleteItem(shareId = shareId, itemId = itemId)
+            }.onSuccess {
+                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemType)))
+                isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
+                snackbarDispatcher(ItemPermanentlyDeleted)
+                PassLogger.i(TAG, "Item deleted successfully")
+            }.onFailure {
+                snackbarDispatcher(DetailSnackbarMessages.ItemNotPermanentlyDeleted)
+                PassLogger.i(TAG, it, "Could not delete item")
+            }
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
 
     companion object {
         private const val TAG = "NoteDetailViewModel"

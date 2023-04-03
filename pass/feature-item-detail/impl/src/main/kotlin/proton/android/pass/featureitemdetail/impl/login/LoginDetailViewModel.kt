@@ -9,7 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -27,25 +26,33 @@ import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotMovedToTrash
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotPermanentlyDeleted
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemPermanentlyDeleted
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.PasswordCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.TotpCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.UsernameCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.WebsiteCopiedToClipboard
+import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.telemetry.api.EventItemType
+import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.ObserveTotpFromUri
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import javax.inject.Inject
+import proton.android.pass.common.api.combine as combineN
 
 @HiltViewModel
 class LoginDetailViewModel @Inject constructor(
@@ -54,6 +61,8 @@ class LoginDetailViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val observeTotpFromUri: ObserveTotpFromUri,
     private val trashItem: TrashItem,
+    private val deleteItem: DeleteItem,
+    private val telemetryManager: TelemetryManager,
     getItemById: GetItemById,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -73,6 +82,8 @@ class LoginDetailViewModel @Inject constructor(
         MutableStateFlow(IsLoadingState.NotLoading)
     private val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
         MutableStateFlow(IsSentToTrashState.NotSent)
+    private val isPermanentlyDeletedState: MutableStateFlow<IsPermanentlyDeletedState> =
+        MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
 
     private val observeTotpOptionFlow = getItemById(shareId, itemId)
         .flatMapLatest { itemLoadingResult ->
@@ -88,13 +99,14 @@ class LoginDetailViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    val uiState: StateFlow<LoginDetailUiState> = combine(
+    val uiState: StateFlow<LoginDetailUiState> = combineN(
         getItemById(shareId, itemId),
         passwordState,
         observeTotpOptionFlow,
         isLoadingState,
-        isItemSentToTrashState
-    ) { itemLoadingResult, password, totpOption, isLoading, isItemSentToTrash ->
+        isItemSentToTrashState,
+        isPermanentlyDeletedState
+    ) { itemLoadingResult, password, totpOption, isLoading, isItemSentToTrash, isPermanentlyDeleted ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -110,7 +122,8 @@ class LoginDetailViewModel @Inject constructor(
                             .map { TotpUiState(it.code, it.remainingSeconds, it.totalSeconds) }
                             .value(),
                         isLoading = isLoading.value(),
-                        isItemSentToTrash = isItemSentToTrash.value()
+                        isItemSentToTrash = isItemSentToTrash.value(),
+                        isPermanentlyDeleted = isPermanentlyDeleted.value()
                     )
                 }
             }
@@ -177,7 +190,7 @@ class LoginDetailViewModel @Inject constructor(
         }
     }
 
-    fun onDelete(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
+    fun onMoveToTrash(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
         trashItem(shareId = shareId, itemId = itemId)
             .onSuccess {
@@ -190,6 +203,23 @@ class LoginDetailViewModel @Inject constructor(
             }
         isLoadingState.update { IsLoadingState.NotLoading }
     }
+
+    fun onPermanentlyDelete(shareId: ShareId, itemId: ItemId, itemType: ItemType) =
+        viewModelScope.launch {
+            isLoadingState.update { IsLoadingState.Loading }
+            runCatching {
+                deleteItem(shareId = shareId, itemId = itemId)
+            }.onSuccess {
+                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemType)))
+                isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
+                snackbarDispatcher(ItemPermanentlyDeleted)
+                PassLogger.i(TAG, "Item deleted successfully")
+            }.onFailure {
+                snackbarDispatcher(ItemNotPermanentlyDeleted)
+                PassLogger.i(TAG, it, "Could not delete item")
+            }
+            isLoadingState.update { IsLoadingState.NotLoading }
+        }
 
     private fun getInitialPasswordState(): PasswordState =
         encryptionContextProvider.withEncryptionContext {

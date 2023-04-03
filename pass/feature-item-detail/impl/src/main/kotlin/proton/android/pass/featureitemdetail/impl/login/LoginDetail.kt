@@ -30,6 +30,7 @@ import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomShee
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.TopBarOptions
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.WebsiteOptions
 import proton.android.pass.featureitemdetail.impl.login.bottomsheet.WebsiteOptionsBottomSheetContents
+import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemState
 import proton.pass.domain.ItemType
@@ -69,53 +70,57 @@ fun LoginDetail(
                 sheetState = bottomSheetState,
                 sheetContent = {
                     when (currentBottomSheet) {
-                        WebsiteOptions -> {
-                            WebsiteOptionsBottomSheetContents(
-                                website = selectedWebsite,
-                                onCopyToClipboard = { website ->
-                                    viewModel.copyWebsiteToClipboard(website)
-                                    scope.launch { bottomSheetState.hide() }
-                                },
-                                onOpenWebsite = { website ->
-                                    openWebsite(context, website)
-                                    scope.launch { bottomSheetState.hide() }
-                                }
-                            )
-                        }
-                        TopBarOptions -> when (state.state) {
+                        WebsiteOptions -> WebsiteOptionsBottomSheetContents(
+                            website = selectedWebsite,
+                            onCopyToClipboard = { website ->
+                                viewModel.copyWebsiteToClipboard(website)
+                                scope.launch { bottomSheetState.hide() }
+                            },
+                            onOpenWebsite = { website ->
+                                openWebsite(context, website)
+                                scope.launch { bottomSheetState.hide() }
+                            }
+                        )
+                        TopBarOptions -> when (state.itemUiModel.state) {
                             ItemState.Active.value -> TopBarOptionsBottomSheetContents(
                                 onMigrate = {
                                     scope.launch { bottomSheetState.hide() }
-                                    onMigrateClick(state.shareId, state.itemId)
+                                    onMigrateClick(
+                                        state.itemUiModel.shareId,
+                                        state.itemUiModel.id
+                                    )
                                 },
                                 onMoveToTrash = {
-                                    viewModel.onDelete(state.shareId, state.itemId)
+                                    viewModel.onDelete(
+                                        state.itemUiModel.shareId,
+                                        state.itemUiModel.id
+                                    )
                                     scope.launch { bottomSheetState.hide() }
                                 }
                             )
-                            ItemState.Trashed.value -> TopBarOptionsBottomSheetContents(
-                                onMigrate = {
-                                    scope.launch { bottomSheetState.hide() }
-                                    onMigrateClick(state.shareId, state.itemId)
-                                },
-                                onMoveToTrash = {
-                                    viewModel.onDelete(state.shareId, state.itemId)
-                                    scope.launch { bottomSheetState.hide() }
-                                }
+                            ItemState.Trashed.value -> TrashItemBottomSheetContents(
+                                itemUiModel = state.itemUiModel,
+                                onRestoreItem = { shareId, itemId -> },
+                                onDeleteItem = { shareId, itemId -> },
                             )
                         }
                     }
                 }
             ) {
                 Scaffold(
+                    modifier = modifier,
                     topBar = {
                         ItemDetailTopBar(
                             isLoading = state.isLoading,
-                            isInTrash = state.state == ItemState.Trashed.value,
+                            isInTrash = state.itemUiModel.state == ItemState.Trashed.value,
                             color = PassTheme.colors.loginInteractionNormMajor1,
                             onUpClick = onUpClick,
                             onEditClick = {
-                                onEditClick(state.shareId, state.itemId, state.itemType)
+                                onEditClick(
+                                    state.itemUiModel.shareId,
+                                    state.itemUiModel.id,
+                                    state.itemUiModel.itemType
+                                )
                             },
                             onOptionsClick = {
                                 currentBottomSheet = TopBarOptions
@@ -125,10 +130,12 @@ fun LoginDetail(
                     }
                 ) { padding ->
                     LoginContent(
-                        modifier = modifier
+                        modifier = Modifier
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
-                        state = state,
+                        itemUiModel = state.itemUiModel,
+                        passwordState = state.passwordState,
+                        totpUiState = state.totpUiState,
                         moreInfoUiState = moreInfoUiState,
                         onTogglePasswordClick = { viewModel.togglePassword() },
                         onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },

@@ -61,6 +61,9 @@ dependencies {
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.telemetry.api)
 
+    // Temporarily depend on the impl module until move the bottomsheets to routes
+    implementation(projects.pass.featureTrash.impl)
+
     debugImplementation(libs.androidx.compose.uiTooling)
     debugImplementation(libs.androidx.compose.uiTestManifest)
 

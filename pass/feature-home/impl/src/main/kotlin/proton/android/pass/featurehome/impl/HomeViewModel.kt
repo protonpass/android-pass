@@ -500,10 +500,10 @@ class HomeViewModel @Inject constructor(
         actionStateFlow.update { ActionState.Unknown }
     }
 
-    fun restoreItem(item: ItemUiModel) = viewModelScope.launch {
+    fun restoreItem(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         actionStateFlow.update { ActionState.Loading }
         runCatching {
-            restoreItem.invoke(shareId = item.shareId, itemId = item.id)
+            restoreItem.invoke(shareId = shareId, itemId = itemId)
         }.onSuccess {
             actionStateFlow.update { ActionState.Done }
             PassLogger.i(TAG, "Item restored successfully")
@@ -514,14 +514,14 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun deleteItem(item: ItemUiModel) = viewModelScope.launch {
+    fun deleteItem(shareId: ShareId, itemId: ItemId, itemType: ItemType) = viewModelScope.launch {
         actionStateFlow.update { ActionState.Loading }
         runCatching {
-            deleteItem.invoke(shareId = item.shareId, itemId = item.id)
+            deleteItem.invoke(shareId = shareId, itemId = itemId)
         }.onSuccess {
             actionStateFlow.update { ActionState.Done }
             PassLogger.i(TAG, "Item deleted successfully")
-            telemetryManager.sendEvent(ItemDelete(EventItemType.from(item.itemType)))
+            telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemType)))
         }.onFailure {
             PassLogger.e(TAG, it, "Error deleting item")
             actionStateFlow.update { ActionState.Done }

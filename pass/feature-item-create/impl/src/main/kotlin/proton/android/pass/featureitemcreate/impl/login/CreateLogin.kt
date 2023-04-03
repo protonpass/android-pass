@@ -93,7 +93,11 @@ fun CreateLoginScreen(
             onCancel = {
                 showConfirmDialog = false
             },
-            onConfirm = onExit
+            onConfirm = {
+                showConfirmDialog = false
+                viewModel.onClose()
+                onClose()
+            }
         )
     }
 }

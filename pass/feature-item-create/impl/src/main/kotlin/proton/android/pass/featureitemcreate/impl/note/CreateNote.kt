@@ -30,8 +30,15 @@ fun CreateNoteScreen(
 ) {
     val noteUiState by viewModel.noteUiState.collectAsStateWithLifecycle()
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
+    val onExit = {
+        if (noteUiState.hasUserEditedContent) {
+            showConfirmDialog = !showConfirmDialog
+        } else {
+            onUpClick()
+        }
+    }
     BackHandler {
-        showConfirmDialog = !showConfirmDialog
+        onExit()
     }
 
     Box(
@@ -41,7 +48,7 @@ fun CreateNoteScreen(
             uiState = noteUiState,
             topBarActionName = stringResource(R.string.title_create_note),
             showVaultSelector = noteUiState.showVaultSelector,
-            onUpClick = { showConfirmDialog = true },
+            onUpClick = onExit,
             onSuccess = { _, _ -> onSuccess() },
             onSubmit = { shareId -> viewModel.createNote(shareId) },
             onTitleChange = { viewModel.onTitleChange(it) },
@@ -54,10 +61,7 @@ fun CreateNoteScreen(
             onCancel = {
                 showConfirmDialog = false
             },
-            onConfirm = {
-                showConfirmDialog = false
-                onUpClick()
-            }
+            onConfirm = onExit
         )
     }
 }

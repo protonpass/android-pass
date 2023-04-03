@@ -46,6 +46,7 @@ open class CreateAliasViewModel @Inject constructor(
     protected var titlePrefixInSync = true
 
     override fun onTitleChange(value: String) {
+        onUserEditedContent()
         aliasItemState.update { aliasItem ->
             val prefix = if (titlePrefixInSync) {
                 AliasUtils.formatAlias(value)
@@ -69,6 +70,7 @@ open class CreateAliasViewModel @Inject constructor(
 
     override fun onPrefixChange(value: String) {
         if (value.contains(" ") || value.contains("\n")) return
+        onUserEditedContent()
         val prefix = value.take(AliasItem.MAX_PREFIX_LENGTH)
         aliasItemState.update {
             it.copy(

@@ -76,7 +76,10 @@ fun UpdateAlias(
             onCancel = {
                 showConfirmDialog = false
             },
-            onConfirm = onExit
+            onConfirm = {
+                showConfirmDialog = false
+                onUpClick()
+            }
         )
     }
 }

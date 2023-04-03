@@ -8,12 +8,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import me.proton.core.compose.theme.ProtonTypography
+import me.proton.core.compose.theme.headlineSmall
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featurehome.impl.R
 
@@ -27,14 +29,14 @@ fun HomeEmptyHeader(
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.home_empty_vault_title),
-            fontWeight = FontWeight.W500,
-            color = PassTheme.colors.textNorm,
+            text = stringResource(R.string.home_empty_vault_title),
+            style = ProtonTypography.Default.headlineSmall,
             textAlign = TextAlign.Center
         )
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.home_empty_vault_subtitle),
+            text = stringResource(R.string.home_empty_vault_subtitle),
+            style = PassTypography.body3Regular,
             color = PassTheme.colors.textWeak,
             textAlign = TextAlign.Center
         )

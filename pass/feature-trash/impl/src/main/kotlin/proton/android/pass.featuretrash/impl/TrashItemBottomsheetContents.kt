@@ -4,11 +4,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.datetime.Clock
 import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheetPadding
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
@@ -114,4 +120,31 @@ private fun deleteItem(
     override val onClick: () -> Unit
         get() = { onDeleteItem(shareId, itemId) }
     override val isDivider = false
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview
+@Composable
+fun TrashItemBottomSheetContentsPreview(
+    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+) {
+    PassTheme(isDark = isDark) {
+        Surface {
+            TrashItemBottomSheetContents(
+                itemUiModel = ItemUiModel(
+                    id = ItemId(id = ""),
+                    shareId = ShareId(id = ""),
+                    name = "My Alias",
+                    note = "Note",
+                    itemType = ItemType.Alias("alias.email@proton.me"),
+                    createTime = Clock.System.now(),
+                    state = 0,
+                    modificationTime = Clock.System.now(),
+                    lastAutofillTime = Clock.System.now()
+                ),
+                onRestoreItem = { _: ShareId, _: ItemId -> },
+                onDeleteItem = { _: ShareId, _: ItemId -> },
+            )
+        }
+    }
 }

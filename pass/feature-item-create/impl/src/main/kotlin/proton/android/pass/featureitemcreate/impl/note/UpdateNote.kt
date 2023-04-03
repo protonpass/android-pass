@@ -30,8 +30,15 @@ fun UpdateNote(
     val noteUiState by viewModel.noteUiState.collectAsStateWithLifecycle()
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
+    val onExit = {
+        if (noteUiState.hasUserEditedContent) {
+            showConfirmDialog = !showConfirmDialog
+        } else {
+            onUpClick()
+        }
+    }
     BackHandler {
-        showConfirmDialog = !showConfirmDialog
+        onExit()
     }
 
     Box(
@@ -41,7 +48,7 @@ fun UpdateNote(
             uiState = noteUiState,
             topBarActionName = stringResource(R.string.action_save),
             showVaultSelector = false,
-            onUpClick = { showConfirmDialog = true },
+            onUpClick = onExit,
             onSuccess = { shareId, itemId -> onSuccess(shareId, itemId) },
             onSubmit = { shareId -> viewModel.updateItem(shareId) },
             onTitleChange = { viewModel.onTitleChange(it) },
@@ -54,10 +61,7 @@ fun UpdateNote(
             onCancel = {
                 showConfirmDialog = false
             },
-            onConfirm = {
-                showConfirmDialog = false
-                onUpClick()
-            }
+            onConfirm = onExit
         )
     }
 

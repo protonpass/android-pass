@@ -38,13 +38,21 @@ fun CreateLoginScreen(
         initialContents ?: return@LaunchedEffect
         viewModel.setInitialContents(initialContents)
     }
+    val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
+    val onExit = {
+        if (uiState.hasUserEditedContent) {
+            showConfirmDialog = !showConfirmDialog
+        } else {
+            viewModel.onClose()
+            onClose()
+        }
+    }
     BackHandler {
-        showConfirmDialog = !showConfirmDialog
+        onExit()
     }
 
-    val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
     val onWebsiteChange = object : OnWebsiteChange {
         override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int ->
             viewModel.onWebsiteChange(value, idx)
@@ -60,7 +68,7 @@ fun CreateLoginScreen(
             isUpdate = false,
             showVaultSelector = uiState.showVaultSelector,
             topBarActionName = stringResource(id = R.string.title_create_login),
-            onUpClick = { showConfirmDialog = true },
+            onUpClick = onExit,
             onSuccess = { _, _, item ->
                 viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.LoginCreated)
                 onSuccess(item)
@@ -85,11 +93,7 @@ fun CreateLoginScreen(
             onCancel = {
                 showConfirmDialog = false
             },
-            onConfirm = {
-                showConfirmDialog = false
-                viewModel.onClose()
-                onClose()
-            }
+            onConfirm = onExit
         )
     }
 }

@@ -195,7 +195,8 @@ fun CreateAliasBottomSheetContentPreview(
                     isAliasDraftSavedState = AliasDraftSavedState.Unknown,
                     isApplyButtonEnabled = IsButtonEnabled.Enabled,
                     showVaultSelector = false,
-                    closeScreenEvent = CloseScreenEvent.NotClose
+                    closeScreenEvent = CloseScreenEvent.NotClose,
+                    hasUserEditedContent = false
                 ),
                 showAdvancedOptionsInitially = true,
                 onCancel = {},

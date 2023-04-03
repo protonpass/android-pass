@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import proton.android.pass.commonui.api.PassTypography
 
 @Composable
 fun HomeEmptyButton(
@@ -41,7 +42,8 @@ fun HomeEmptyButton(
             modifier = Modifier.weight(1f),
             text = text,
             color = textColor,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            style = PassTypography.body3Regular
         )
     }
 }

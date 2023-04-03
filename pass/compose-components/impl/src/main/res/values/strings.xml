@@ -89,4 +89,8 @@
         <item quantity="other">%d items</item>
     </plurals>
 
+    <!-- Confirm close dialog -->
+    <string name="confirm_close_dialog_title">Are you sure?</string>
+    <string name="confirm_close_dialog_message">You have unsaved changes. Are you sure you want to close this item?</string>
+
 </resources>

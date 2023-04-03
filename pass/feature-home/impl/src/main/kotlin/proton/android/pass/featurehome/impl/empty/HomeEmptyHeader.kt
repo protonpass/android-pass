@@ -12,7 +12,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTypography
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.headlineSmall
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
@@ -30,7 +30,7 @@ fun HomeEmptyHeader(
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.home_empty_vault_title),
-            style = ProtonTypography.Default.headlineSmall,
+            style = ProtonTheme.typography.headlineSmall,
             textAlign = TextAlign.Center
         )
         Text(

@@ -21,6 +21,7 @@ data class CreateUpdateLoginUiState(
     val canUpdateUsername: Boolean,
     val primaryEmail: String?,
     val showVaultSelector: Boolean,
+    val hasUserEditedContent: Boolean
 ) {
     companion object {
         val Initial = CreateUpdateLoginUiState(
@@ -35,7 +36,8 @@ data class CreateUpdateLoginUiState(
             focusLastWebsite = false,
             canUpdateUsername = true,
             primaryEmail = null,
-            showVaultSelector = false
+            showVaultSelector = false,
+            hasUserEditedContent = false
         )
     }
 }

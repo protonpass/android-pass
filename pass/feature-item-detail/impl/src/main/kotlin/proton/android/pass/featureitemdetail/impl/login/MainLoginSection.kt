@@ -14,45 +14,49 @@ import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 @Composable
 fun MainLoginSection(
     modifier: Modifier = Modifier,
-    state: LoginDetailUiState.Success,
+    username: String,
+    passwordState: PasswordState,
+    totpUiState: TotpUiState?,
     onUsernameClick: () -> Unit,
     onTogglePasswordClick: () -> Unit,
     onCopyPasswordClick: () -> Unit,
-    onCopyTotpClick: (String) -> Unit
+    onCopyTotpClick: (String) -> Unit,
 ) {
     RoundedCornersColumn(
         modifier = modifier.fillMaxWidth()
     ) {
         LoginUsernameRow(
-            username = state.username,
+            username = username,
             onUsernameClick = onUsernameClick
         )
         Divider()
         LoginPasswordRow(
-            password = state.password,
+            password = passwordState,
             onTogglePasswordClick = onTogglePasswordClick,
             onCopyPasswordClick = onCopyPasswordClick
         )
-        if (state.totpUiState != null) {
+        if (totpUiState != null) {
             Divider()
-            TotpRow(state = state.totpUiState) { onCopyTotpClick(it) }
+            TotpRow(state = totpUiState) { onCopyTotpClick(it) }
         }
     }
 }
 
 
 class ThemedLoginPasswordRowPreviewProvider :
-    ThemePairPreviewProvider<LoginDetailUiState.Success>(LoginDetailUiStatePreviewProvider())
+    ThemePairPreviewProvider<MainLoginSectionParams>(MainLoginSectionParamsPreviewProvider())
 
 @Preview
 @Composable
 fun MainLoginSectionPreview(
-    @PreviewParameter(ThemedLoginPasswordRowPreviewProvider::class) input: Pair<Boolean, LoginDetailUiState.Success>
+    @PreviewParameter(ThemedLoginPasswordRowPreviewProvider::class) input: Pair<Boolean, MainLoginSectionParams>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             MainLoginSection(
-                state = input.second,
+                username = input.second.username,
+                passwordState = input.second.passwordState,
+                totpUiState = input.second.totpUiState,
                 onUsernameClick = {},
                 onTogglePasswordClick = {},
                 onCopyPasswordClick = {},

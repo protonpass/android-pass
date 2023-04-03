@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
+import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -61,12 +62,7 @@ class NoteDetailViewModel @Inject constructor(
             LoadingResult.Loading -> NoteDetailUiState.NotInitialised
             is LoadingResult.Success -> encryptionContextProvider.withEncryptionContext {
                 NoteDetailUiState.Success(
-                    shareId = shareId,
-                    itemId = itemId,
-                    itemType = itemLoadingResult.data.itemType,
-                    title = decrypt(itemLoadingResult.data.title),
-                    note = decrypt(itemLoadingResult.data.note),
-                    state = itemLoadingResult.data.state,
+                    itemUiModel = itemLoadingResult.data.toUiModel(this),
                     isLoading = isLoading.value(),
                     isItemSentToTrash = isItemSentToTrash.value()
                 )

@@ -1,12 +1,12 @@
-package proton.android.pass.featurehome.impl.trash
+package proton.android.pass.featuretrash.impl
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
-import proton.android.pass.featurehome.impl.R
+import proton.android.pass.featuretrash.R
 
 @Composable
-internal fun ConfirmDeleteItemDialog(
+fun ConfirmDeleteItemDialog(
     show: Boolean,
     isLoading: Boolean,
     itemName: String,

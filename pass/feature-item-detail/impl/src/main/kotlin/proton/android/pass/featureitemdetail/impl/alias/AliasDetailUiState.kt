@@ -1,9 +1,9 @@
 package proton.android.pass.featureitemdetail.impl.alias
 
 import androidx.compose.runtime.Stable
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
-import proton.pass.domain.ShareId
+import kotlinx.collections.immutable.PersistentList
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.pass.domain.AliasMailbox
 
 sealed interface AliasDetailUiState {
 
@@ -15,13 +15,10 @@ sealed interface AliasDetailUiState {
 
     @Stable
     data class Success(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val itemType: ItemType,
-        val state: Int,
+        val itemUiModel: ItemUiModel,
+        val mailboxes: PersistentList<AliasMailbox>,
         val isLoading: Boolean,
         val isLoadingMailboxes: Boolean,
         val isItemSentToTrash: Boolean,
-        val model: AliasUiModel?,
     ) : AliasDetailUiState
 }

@@ -13,11 +13,12 @@ import proton.android.pass.composecomponents.impl.container.Circle
 fun BackArrowCircleIconButton(
     modifier: Modifier = Modifier,
     color: Color,
+    backgroundColor: Color,
     onUpClick: () -> Unit
 ) {
     Circle(
         modifier = modifier,
-        backgroundColor = color,
+        backgroundColor = backgroundColor,
         onClick = onUpClick
     ) {
         Icon(

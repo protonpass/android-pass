@@ -9,7 +9,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -24,7 +24,7 @@ fun TopBarOptionsBottomSheetContents(
     onMoveToTrash: () -> Unit
 ) {
     BottomSheetItemList(
-        modifier = modifier.bottomSheetPadding(),
+        modifier = modifier.bottomSheet(),
         items = persistentListOf(
             migrate(onClick = onMigrate),
             bottomSheetDivider(),

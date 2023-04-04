@@ -41,24 +41,24 @@ fun HomeEmptyList(
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.home_empty_vault_create_login),
-                backgroundColor = PassTheme.colors.loginInteractionNormMinor2,
-                textColor = PassTheme.colors.loginInteractionNormMajor1,
+                backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+                textColor = PassTheme.colors.loginInteractionNormMajor2,
                 icon = CoreR.drawable.ic_proton_user,
                 onClick = onCreateLoginClick,
             )
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.home_empty_vault_create_alias),
-                backgroundColor = PassTheme.colors.aliasInteractionNormMinor2,
-                textColor = PassTheme.colors.aliasInteractionNormMajor1,
+                backgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
+                textColor = PassTheme.colors.aliasInteractionNormMajor2,
                 icon = CoreR.drawable.ic_proton_alias,
                 onClick = onCreateAliasClick,
             )
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.home_empty_vault_create_note),
-                backgroundColor = PassTheme.colors.noteInteractionNormMinor2,
-                textColor = PassTheme.colors.noteInteractionNormMajor1,
+                backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
+                textColor = PassTheme.colors.noteInteractionNormMajor2,
                 icon = CoreR.drawable.ic_proton_notepad_checklist,
                 onClick = onCreateNoteClick,
             )

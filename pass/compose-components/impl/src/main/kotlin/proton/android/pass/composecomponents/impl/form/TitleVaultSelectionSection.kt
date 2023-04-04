@@ -9,10 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 
@@ -31,7 +30,7 @@ fun TitleVaultSelectionSection(
 ) {
 
     Column(
-        modifier = modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
+        modifier = modifier.roundedContainerNorm()
     ) {
         if (showVaultSelector) {
             VaultSelector(

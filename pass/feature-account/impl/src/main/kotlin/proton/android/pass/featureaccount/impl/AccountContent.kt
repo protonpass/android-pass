@@ -1,5 +1,6 @@
 package proton.android.pass.featureaccount.impl
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -13,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 
 @Composable
@@ -36,6 +38,7 @@ fun AccountContent(
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
+                .background(PassTheme.colors.backgroundStrong)
                 .padding(contentPadding)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)

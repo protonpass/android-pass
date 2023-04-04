@@ -6,21 +6,21 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.container.roundedContainerStrong
+import proton.android.pass.composecomponents.impl.form.ChevronDownIcon
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.icon.ForwardIcon
 import proton.android.pass.composecomponents.impl.item.placeholder
@@ -33,6 +33,7 @@ fun MailboxSection(
     isCreateMode: Boolean,
     isEditAllowed: Boolean,
     isLoading: Boolean,
+    isBottomSheet: Boolean,
     onMailboxClick: () -> Unit
 ) {
     val selectedMailboxes = mailboxes.filter { it.selected }
@@ -44,7 +45,11 @@ fun MailboxSection(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .roundedContainer(ProtonTheme.colors.separatorNorm)
+            .applyIf(
+                condition = isBottomSheet,
+                ifTrue = { roundedContainerStrong() },
+                ifFalse = { roundedContainerNorm() }
+            )
             .clickable(enabled = isEditAllowed, onClick = onMailboxClick)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -65,10 +70,7 @@ fun MailboxSection(
 
         }
         if (isEditAllowed) {
-            Icon(
-                painter = painterResource(id = me.proton.core.presentation.R.drawable.ic_proton_chevron_down),
-                contentDescription = null,
-            )
+            ChevronDownIcon()
         }
     }
 }
@@ -82,6 +84,7 @@ fun MailboxSectionPreview(
         Surface {
             MailboxSection(
                 isLoading = false,
+                isBottomSheet = false,
                 mailboxes = listOf(
                     SelectedAliasMailboxUiModel(
                         model = AliasMailboxUiModel(
@@ -93,6 +96,33 @@ fun MailboxSectionPreview(
                 ),
                 isCreateMode = true,
                 isEditAllowed = input.second,
+                onMailboxClick = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+fun MailboxSectionBottomSheetPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    PassTheme(isDark = input.first) {
+        Surface {
+            MailboxSection(
+                isBottomSheet = input.second,
+                isLoading = false,
+                mailboxes = listOf(
+                    SelectedAliasMailboxUiModel(
+                        model = AliasMailboxUiModel(
+                            id = 1,
+                            email = "prefix@suffix.test"
+                        ),
+                        selected = true
+                    )
+                ),
+                isEditAllowed = true,
+                isCreateMode = false,
                 onMailboxClick = {}
             )
         }

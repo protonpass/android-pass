@@ -40,7 +40,7 @@ fun PassApp(
         ProvideWindowInsets {
             PassAppContent(
                 modifier = modifier
-                    .background(PassTheme.colors.backgroundNorm)
+                    .background(PassTheme.colors.backgroundStrong)
                     .systemBarsPadding()
                     .imePadding(),
                 appUiState = appUiState,

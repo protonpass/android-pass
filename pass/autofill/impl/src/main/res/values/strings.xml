@@ -7,10 +7,6 @@
     <string name="topbar_search_query">Search items</string>
     <string name="inline_suggestions_open_app">Open Proton Pass</string>
 
-    <!-- TopBar -->
-    <string name="select_item_title_items">Items</string>
-    <string name="select_item_content_description_action_search">Search</string>
-
     <!-- Placeholder will contain the domain / app name we are trying to autofill -->
     <string name="autofill_suggestions_for_placeholder">Suggestions for %s</string>
     <string name="autofill_suggestions_other_items">Other items</string>

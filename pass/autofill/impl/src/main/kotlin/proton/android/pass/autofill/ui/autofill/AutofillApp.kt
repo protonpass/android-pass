@@ -46,7 +46,7 @@ fun AutofillApp(
             ) { padding ->
                 AutofillAppContent(
                     modifier = Modifier
-                        .background(PassTheme.colors.backgroundNorm)
+                        .background(PassTheme.colors.backgroundStrong)
                         .systemBarsPadding()
                         .imePadding()
                         .padding(padding),

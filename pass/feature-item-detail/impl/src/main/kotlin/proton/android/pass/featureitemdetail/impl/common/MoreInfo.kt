@@ -46,6 +46,7 @@ import proton.android.pass.commonui.api.DateFormatUtils.Format.Today
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Yesterday
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.form.ChevronDownIcon
 import proton.android.pass.featureitemdetail.impl.R
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -89,11 +90,10 @@ fun MoreInfo(
                 text = stringResource(R.string.more_info_title)
             )
 
-            Icon(
+            ChevronDownIcon(
                 modifier = Modifier
                     .size(16.dp)
                     .rotate(displayRotation),
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_down),
                 contentDescription = stringResource(R.string.more_info_icon),
                 tint = ProtonTheme.colors.iconWeak,
             )

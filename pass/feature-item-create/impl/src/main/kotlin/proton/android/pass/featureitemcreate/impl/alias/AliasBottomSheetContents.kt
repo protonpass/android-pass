@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.featureitemcreate.impl.R
 
@@ -25,7 +25,7 @@ fun AliasBottomSheetContents(
     onSuffixSelect: (AliasSuffixUiModel) -> Unit
 ) {
     Column(
-        modifier = modifier.bottomSheetPadding(),
+        modifier = modifier.bottomSheet(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         BottomSheetTitle(

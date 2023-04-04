@@ -4,8 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 
 @Composable
 fun MainLoginSection(
@@ -22,7 +21,7 @@ fun MainLoginSection(
     onTotpFocus: (Boolean) -> Unit
 ) {
     Column(
-        modifier = modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
+        modifier = modifier.roundedContainerNorm()
     ) {
         UsernameInput(
             value = loginItem.username,

@@ -33,18 +33,22 @@ internal fun ItemDetailTopBar(
     modifier: Modifier = Modifier,
     isLoading: Boolean,
     isInTrash: Boolean,
-    color: Color,
+    iconColor: Color,
+    iconBackgroundColor: Color,
+    actionColor: Color,
     onUpClick: () -> Unit,
     onEditClick: () -> Unit,
     onOptionsClick: () -> Unit
 ) {
     ProtonTopAppBar(
         modifier = modifier,
+        backgroundColor = PassTheme.colors.itemDetailBackground,
         title = { },
         navigationIcon = {
             BackArrowCircleIconButton(
                 modifier = Modifier.padding(12.dp, 4.dp),
-                color = color,
+                backgroundColor = iconBackgroundColor,
+                color = iconColor,
                 onUpClick = onUpClick
             )
         },
@@ -58,7 +62,7 @@ internal fun ItemDetailTopBar(
             ) {
                 if (!isInTrash) {
                     LoadingCircleButton(
-                        color = color,
+                        color = actionColor,
                         isLoading = isLoading,
                         text = {
                             Text(
@@ -79,7 +83,7 @@ internal fun ItemDetailTopBar(
                 }
                 AnimatedVisibility(visible = !isLoading) {
                     Circle(
-                        backgroundColor = color,
+                        backgroundColor = iconBackgroundColor,
                         onClick = { onOptionsClick() }
                     ) {
                         Icon(
@@ -87,7 +91,7 @@ internal fun ItemDetailTopBar(
                                 me.proton.core.presentation.R.drawable.ic_proton_three_dots_vertical
                             ),
                             contentDescription = stringResource(R.string.open_menu_icon_content_description),
-                            tint = color
+                            tint = iconColor
                         )
                     }
                 }
@@ -110,7 +114,9 @@ fun ItemDetailTopBarPreview(
             ItemDetailTopBar(
                 isLoading = input.second.isLoading,
                 isInTrash = true,
-                color = input.second.color,
+                actionColor = input.second.color,
+                iconBackgroundColor = input.second.closeBackgroundColor,
+                iconColor = input.second.color,
                 onUpClick = {},
                 onEditClick = {},
                 onOptionsClick = {}

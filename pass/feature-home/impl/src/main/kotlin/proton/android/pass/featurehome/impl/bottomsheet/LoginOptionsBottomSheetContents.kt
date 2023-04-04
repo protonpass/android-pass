@@ -12,7 +12,7 @@ import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Clock
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
@@ -40,7 +40,7 @@ fun LoginOptionsBottomSheetContents(
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
     val itemType = itemUiModel.itemType as ItemType.Login
-    Column(modifier.bottomSheetPadding()) {
+    Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = { BottomSheetItemSubtitle(text = itemType.username) },

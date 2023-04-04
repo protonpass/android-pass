@@ -42,16 +42,16 @@ fun SortingButton(
         onClick = onSortingOptionsClick
     ) {
         Icon(
-            modifier = Modifier.size(11.dp),
-            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_arrow_down_arrow_up),
+            modifier = Modifier.size(16.dp),
+            painter = painterResource(R.drawable.ic_sorting),
             contentDescription = stringResource(R.string.sorting_icon_content_description),
-            tint = PassTheme.colors.interactionNorm
+            tint = PassTheme.colors.interactionNormMajor2
         )
         Spacer(modifier = Modifier.width(5.dp))
         Text(
             text = text,
             style = ProtonTheme.typography.captionStrong,
-            color = PassTheme.colors.interactionNorm
+            color = PassTheme.colors.interactionNormMajor2
         )
     }
 }

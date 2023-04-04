@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
@@ -66,7 +66,7 @@ fun CreateAliasBottomSheetContent(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .bottomSheetPadding(),
+            .bottomSheet(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         BottomSheetTitle(title = stringResource(R.string.field_alias_you_are_about_to_create))
@@ -80,6 +80,7 @@ fun CreateAliasBottomSheetContent(
         AnimatedVisibility(visible = showAdvancedOptions) {
             AliasAdvancedOptionsSection(
                 enabled = true,
+                isBottomSheet = true,
                 prefix = state.aliasItem.prefix,
                 suffix = state.aliasItem.selectedSuffix,
                 isError = isBlankAliasError || isInvalidAliasError,
@@ -89,6 +90,7 @@ fun CreateAliasBottomSheetContent(
             )
         }
         MailboxSection(
+            isBottomSheet = true,
             mailboxes = state.aliasItem.mailboxes,
             isCreateMode = false,
             isEditAllowed = state.aliasItem.mailboxes.size > 1,

@@ -59,7 +59,7 @@ fun SearchTextField(
             .clip(RoundedCornerShape(16.dp))
             .applyIf(
                 condition = !inSearchMode,
-                ifTrue = { background(PassTheme.colors.backgroundStrongest) }
+                ifTrue = { background(PassTheme.colors.searchBarBackground) }
             ),
         value = searchQuery,
         placeholder = {

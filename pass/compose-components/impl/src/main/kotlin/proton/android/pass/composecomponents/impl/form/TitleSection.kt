@@ -14,13 +14,12 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 
 @Composable
 fun TitleSection(
@@ -39,7 +38,7 @@ fun TitleSection(
             .applyIf(
                 condition = !isRounded,
                 ifTrue = {
-                    roundedContainer(ProtonTheme.colors.separatorNorm)
+                    roundedContainerNorm()
                         .padding(start = 16.dp, top = 10.dp, end = 4.dp, bottom = 10.dp)
                 }
             )

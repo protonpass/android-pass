@@ -3,7 +3,6 @@ package proton.android.pass.featureitemcreate.impl.alias
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -11,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -19,6 +17,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.composecomponents.impl.form.ChevronDownIcon
 
 @Composable
 internal fun Selector(
@@ -35,11 +34,7 @@ internal fun Selector(
         onValueChange = {},
         trailingIcon = {
             if (enabled) {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_chevron_down),
-                    contentDescription = null,
-                    tint = ProtonTheme.colors.iconNorm
-                )
+                ChevronDownIcon()
             }
         },
         shape = shape,

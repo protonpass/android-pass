@@ -1,6 +1,7 @@
 package proton.android.pass.featurehome.impl
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -293,6 +294,7 @@ fun HomeScreen(
             }
         ) {
             HomeContent(
+                modifier = Modifier.background(PassTheme.colors.backgroundStrong),
                 uiState = homeUiState,
                 shouldScrollToTop = shouldScrollToTop,
                 onItemClick = { item ->

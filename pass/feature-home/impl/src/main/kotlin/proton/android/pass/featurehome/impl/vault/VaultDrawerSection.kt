@@ -57,7 +57,7 @@ fun VaultDrawerSection(
                     showMenuIcon = false,
                     onClick = { onAllVaultsClick() }
                 )
-                Divider()
+                Divider(color = PassTheme.colors.inputBackgroundStrong)
             }
         }
 
@@ -78,7 +78,7 @@ fun VaultDrawerSection(
                 onOptionsClick = { onVaultOptionsClick(share) },
                 onClick = { onVaultClick(share.id) }
             )
-            Divider()
+            Divider(color = PassTheme.colors.inputBackgroundStrong)
         }
         item {
             VaultDrawerRow(

@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordBottomSheetTitle
 import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordStatePreviewProvider
@@ -33,7 +33,7 @@ fun GeneratePasswordBottomSheetContent(
     onConfirm: (String) -> Unit
 ) {
     Column(
-        modifier = modifier.bottomSheetPadding(),
+        modifier = modifier.bottomSheet(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         GeneratePasswordBottomSheetTitle(onRegenerate = { onRegenerateClick() })

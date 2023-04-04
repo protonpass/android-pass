@@ -5,7 +5,6 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,8 +20,8 @@ fun PassFloatingActionButton(
 ) {
     FloatingActionButton(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.loginInteractionNormMinor2.compositeOver(PassTheme.colors.backgroundNorm),
-        contentColor = PassTheme.colors.loginInteractionNorm,
+        backgroundColor = PassTheme.colors.interactionNormMajor1,
+        contentColor = PassTheme.colors.textInvert,
         onClick = onClick
     ) {
         Icon(

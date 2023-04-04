@@ -42,7 +42,7 @@ internal fun LoginPasswordRow(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
             contentDescription = stringResource(R.string.password_key_icon_content_description),
-            tint = PassTheme.colors.loginInteractionNormMajor1
+            tint = PassTheme.colors.loginInteractionNormMajor2
         )
         val sectionContent = remember(password) {
             when (password) {
@@ -78,14 +78,13 @@ internal fun LoginPasswordRow(
             }
         }
         Circle(
-            backgroundColor = PassTheme.colors.loginInteractionNormMajor1,
-            backgroundAlpha = 0.1f,
+            backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
             onClick = { onTogglePasswordClick() }
         ) {
             Icon(
                 painter = painterResource(icon),
                 contentDescription = actionContent,
-                tint = PassTheme.colors.loginInteractionNormMajor1
+                tint = PassTheme.colors.loginInteractionNormMajor2
             )
         }
     }

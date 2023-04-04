@@ -21,7 +21,7 @@ import me.proton.core.compose.theme.default
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmWithLoadingDialog
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -72,7 +72,7 @@ fun DeleteVaultDialogContent(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .roundedContainer(ProtonTheme.colors.separatorNorm)
+                        .roundedContainerNorm()
                         .padding(16.dp),
                 ) {
                     ProtonTextField(

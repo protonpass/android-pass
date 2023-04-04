@@ -94,7 +94,7 @@ fun DialogButton(modifier: Modifier = Modifier, text: String, onClick: () -> Uni
         Text(
             text = text,
             style = ProtonTheme.typography.default,
-            color = PassTheme.colors.interactionNormMajor1
+            color = PassTheme.colors.interactionNormMajor2
         )
     }
 }

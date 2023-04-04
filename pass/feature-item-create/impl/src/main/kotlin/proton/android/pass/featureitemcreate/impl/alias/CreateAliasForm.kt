@@ -67,6 +67,7 @@ internal fun CreateAliasForm(
             )
         }
         MailboxSection(
+            isBottomSheet = false,
             mailboxes = aliasItem.mailboxes,
             isCreateMode = isCreateMode,
             isEditAllowed = isEditAllowed && aliasItem.mailboxes.size > 1,

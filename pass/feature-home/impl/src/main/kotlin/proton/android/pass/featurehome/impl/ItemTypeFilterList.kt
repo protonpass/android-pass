@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmall
-import me.proton.core.compose.theme.overlineWeak
+import me.proton.core.compose.theme.overline
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
@@ -67,7 +67,7 @@ private fun ItemTypeButton(
     CircleButton(
         contentPadding = PaddingValues(12.dp, 0.dp),
         color = if (isSelected) {
-            PassTheme.colors.interactionNorm
+            PassTheme.colors.interactionNormMajor1
         } else {
             PassTheme.colors.interactionNormMinor1
         },
@@ -100,10 +100,12 @@ private fun ItemTypeButton(
                     Notes -> stringResource(R.string.item_type_filter_note)
                 },
                 style = ProtonTheme.typography.defaultSmall,
+                color = PassTheme.colors.textNorm
             )
             Text(
                 text = "$count",
-                style = ProtonTheme.typography.overlineWeak
+                style = ProtonTheme.typography.overline,
+                color = PassTheme.colors.textNorm
             )
         }
     }

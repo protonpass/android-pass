@@ -29,8 +29,9 @@ internal fun CreateUpdateTopBar(
     modifier: Modifier = Modifier,
     text: String,
     isLoading: Boolean,
-    opaqueColor: Color,
-    weakestColor: Color,
+    actionColor: Color,
+    iconColor: Color,
+    iconBackgroundColor: Color,
     onCloseClick: () -> Unit,
     onActionClick: () -> Unit
 ) {
@@ -41,7 +42,7 @@ internal fun CreateUpdateTopBar(
         navigationIcon = {
             Circle(
                 modifier = Modifier.padding(12.dp, 4.dp),
-                backgroundColor = weakestColor,
+                backgroundColor = iconBackgroundColor,
                 onClick = {
                     keyboardController?.hide()
                     onCloseClick()
@@ -50,19 +51,20 @@ internal fun CreateUpdateTopBar(
                 Icon(
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_small),
                     contentDescription = stringResource(R.string.close_scree_icon_content_description),
-                    tint = opaqueColor
+                    tint = iconColor
                 )
             }
         },
         actions = {
             LoadingCircleButton(
                 modifier = Modifier.padding(12.dp, 4.dp),
-                color = opaqueColor,
+                color = actionColor,
                 isLoading = isLoading,
                 text = {
                     Text(
                         text = text,
-                        style = ProtonTheme.typography.defaultSmallInverted
+                        style = ProtonTheme.typography.defaultSmallInverted,
+                        color = PassTheme.colors.textInvert
                     )
                 },
                 onClick = {
@@ -88,8 +90,9 @@ fun CreateUpdateTopBarPreview(
             CreateUpdateTopBar(
                 text = "Save",
                 isLoading = input.second.isLoading,
-                opaqueColor = input.second.opaqueColor,
-                weakestColor = input.second.weakestColor,
+                actionColor = input.second.actionColor,
+                iconBackgroundColor = input.second.closeBackgroundColor,
+                iconColor = input.second.closeIconColor,
                 onCloseClick = {},
                 onActionClick = {}
             )

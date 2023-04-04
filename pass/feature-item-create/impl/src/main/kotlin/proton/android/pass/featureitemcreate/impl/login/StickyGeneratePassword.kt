@@ -31,12 +31,12 @@ fun StickyGeneratePassword(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
             contentDescription = stringResource(R.string.sticky_button_generate_password_key_icon_content_description),
-            tint = PassTheme.colors.loginInteractionNormMajor1
+            tint = PassTheme.colors.loginInteractionNormMajor2
         )
         Spacer(modifier = Modifier.width(8.dp))
         Text(
             text = stringResource(id = R.string.sticky_button_generate_password),
-            color = PassTheme.colors.loginInteractionNormMajor1,
+            color = PassTheme.colors.loginInteractionNormMajor2,
             style = ProtonTheme.typography.default,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1

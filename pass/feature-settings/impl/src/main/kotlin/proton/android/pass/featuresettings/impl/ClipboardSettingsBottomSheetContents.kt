@@ -15,9 +15,9 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.setting.SettingToggle
 import proton.android.pass.preferences.ClearClipboardPreference
@@ -32,12 +32,12 @@ fun ClipboardBottomSheetContents(
     onCopyTotpSettingClick: (Boolean) -> Unit,
 ) {
     Column(
-        modifier = modifier.bottomSheetPadding(),
+        modifier = modifier.bottomSheet(),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         BottomSheetTitle(title = stringResource(R.string.clipboard_bottomsheet_title))
         Column(
-            modifier = Modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
+            modifier = Modifier.roundedContainerNorm()
         ) {
             val clearClipboardString = when (state.clearClipboardPreference) {
                 ClearClipboardPreference.Never ->

@@ -33,7 +33,7 @@ fun VaultDrawerContent(
     onTrashClick: () -> Unit,
     onCreateVaultClick: () -> Unit
 ) {
-    Column(modifier = modifier.background(PassTheme.colors.backgroundNorm)) {
+    Column(modifier = modifier.background(PassTheme.colors.backgroundWeak)) {
         VaultDrawerSection(
             modifier = Modifier
                 .padding(top = ProtonDimens.DefaultSpacing)
@@ -51,13 +51,13 @@ fun VaultDrawerContent(
                 .fillMaxWidth()
                 .padding(16.dp),
             contentPadding = PaddingValues(14.dp),
-            color = PassTheme.colors.loginInteractionNormMinor2,
+            color = PassTheme.colors.loginInteractionNormMinor1,
             elevation = ButtonDefaults.elevation(0.dp),
             onClick = onCreateVaultClick
         ) {
             Text(
                 text = stringResource(R.string.vault_drawer_create_vault),
-                color = PassTheme.colors.loginInteractionNormMajor1,
+                color = PassTheme.colors.loginInteractionNormMajor2,
                 style = PassTypography.body3Regular
             )
         }

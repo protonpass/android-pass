@@ -17,7 +17,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.ColorSettingOption
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 import me.proton.core.presentation.compose.R as CoreR
@@ -34,7 +34,7 @@ fun ApplicationSection(
             style = ProtonTheme.typography.defaultSmallWeak,
         )
         Column(
-            modifier = Modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
+            modifier = Modifier.roundedContainerNorm()
         ) {
             SettingOption(
                 text = stringResource(R.string.settings_option_view_logs),
@@ -43,13 +43,13 @@ fun ApplicationSection(
             Divider()
             ColorSettingOption(
                 text = stringResource(R.string.settings_option_force_sync),
-                textColor = PassTheme.colors.interactionNormMajor1,
-                iconBgColor = PassTheme.colors.interactionNormMinor1,
+                textColor = PassTheme.colors.interactionNorm,
+                iconBgColor = PassTheme.colors.interactionNormMinor2,
                 icon = {
                     Icon(
                         painter = painterResource(CoreR.drawable.ic_proton_arrows_rotate),
                         contentDescription = "",
-                        tint = PassTheme.colors.interactionNormMajor1
+                        tint = PassTheme.colors.interactionNorm
                     )
                 },
                 onClick = onForceSyncClick,

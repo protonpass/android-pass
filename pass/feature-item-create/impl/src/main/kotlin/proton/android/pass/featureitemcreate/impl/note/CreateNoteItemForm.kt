@@ -11,8 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.VaultSelector
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
@@ -40,7 +39,7 @@ internal fun CreateNoteItemForm(
         if (showVaultSelector) {
             Column { // Column so spacedBy does not affect the spacer
                 VaultSelector(
-                    modifier = Modifier.roundedContainer(ProtonTheme.colors.separatorNorm),
+                    modifier = Modifier.roundedContainerNorm(),
                     vaultName = selectedVault?.vault?.name ?: "",
                     color = selectedVault?.vault?.color ?: ShareColor.Color1,
                     icon = selectedVault?.vault?.icon ?: ShareIcon.Icon1,

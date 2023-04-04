@@ -30,7 +30,7 @@ fun BottomSheetVaultRow(
                 val color = if (enabled) {
                     PassTheme.colors.textNorm
                 } else {
-                    PassTheme.colors.textDisabled
+                    PassTheme.colors.textHint
                 }
 
                 BottomSheetItemTitle(

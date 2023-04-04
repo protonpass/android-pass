@@ -15,7 +15,7 @@ import kotlinx.datetime.Clock
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
@@ -41,7 +41,7 @@ fun TrashItemBottomSheetContents(
     onRestoreItem: (ShareId, ItemId) -> Unit,
     onDeleteItem: (ShareId, ItemId) -> Unit
 ) {
-    Column(modifier.bottomSheetPadding()) {
+    Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = {

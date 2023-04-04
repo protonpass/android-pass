@@ -12,7 +12,7 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -28,7 +28,7 @@ fun SortingBottomSheetContents(
     onSortingTypeSelected: (SortingType) -> Unit
 ) {
     BottomSheetItemList(
-        modifier = modifier.bottomSheetPadding(),
+        modifier = modifier.bottomSheet(),
         items = sortingItemList(sortingType, onSortingTypeSelected)
             .withDividers()
             .toPersistentList()

@@ -52,7 +52,7 @@ fun AutoSaveApp(
             ) { padding ->
                 AutosaveAppContent(
                     modifier = Modifier
-                        .background(PassTheme.colors.backgroundNorm)
+                        .background(PassTheme.colors.backgroundStrong)
                         .systemBarsPadding()
                         .imePadding()
                         .padding(padding),

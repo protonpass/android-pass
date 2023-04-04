@@ -6,35 +6,29 @@ import proton.android.pass.commonui.api.PassPalette
 
 class ItemDetailTopBarPreviewProvider : PreviewParameterProvider<ItemDetailTopBarPreview> {
     override val values: Sequence<ItemDetailTopBarPreview>
-        get() = sequenceOf(
-            ItemDetailTopBarPreview(
-                isLoading = false,
-                color = PassPalette.Lavender100
-            ),
-            ItemDetailTopBarPreview(
-                isLoading = false,
-                color = PassPalette.GreenSheen100
-            ),
-            ItemDetailTopBarPreview(
-                isLoading = false,
-                color = PassPalette.MacaroniAndCheese100
-            ),
-            ItemDetailTopBarPreview(
-                isLoading = true,
-                color = PassPalette.Lavender100
-            ),
-            ItemDetailTopBarPreview(
-                isLoading = true,
-                color = PassPalette.GreenSheen100
-            ),
-            ItemDetailTopBarPreview(
-                isLoading = true,
-                color = PassPalette.MacaroniAndCheese100
-            )
-        )
+        get() = sequence {
+            for (isLoading in listOf(true, false)) {
+                for (
+                    color in listOf(
+                        PassPalette.Lavender100,
+                        PassPalette.GreenSheen100,
+                        PassPalette.MacaroniAndCheese100
+                    )
+                ) {
+                    yield(
+                        ItemDetailTopBarPreview(
+                            isLoading = isLoading,
+                            color = color,
+                            closeBackgroundColor = color.copy(alpha = 0.8f)
+                        )
+                    )
+                }
+            }
+        }
 }
 
 data class ItemDetailTopBarPreview(
     val isLoading: Boolean,
-    val color: Color
+    val color: Color,
+    val closeBackgroundColor: Color
 )

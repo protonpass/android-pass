@@ -17,7 +17,7 @@ import me.proton.core.compose.theme.default
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 
 @Composable
 fun SimpleNoteSection(
@@ -28,7 +28,7 @@ fun SimpleNoteSection(
 ) {
     ProtonTextField(
         modifier = modifier
-            .roundedContainer(ProtonTheme.colors.separatorNorm)
+            .roundedContainerNorm()
             .padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
         textStyle = ProtonTheme.typography.default(enabled),
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_note_title)) },

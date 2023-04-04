@@ -1,5 +1,6 @@
 package proton.android.pass.featuresettings.impl
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -35,7 +36,7 @@ fun LogViewContent(
                 actions = {
                     Circle(
                         modifier = Modifier.padding(12.dp, 4.dp),
-                        backgroundColor = PassTheme.colors.interactionNormMajor1,
+                        backgroundColor = PassTheme.colors.interactionNormMinor2,
                         onClick = onShareLogsClick
                     ) {
                         Icon(
@@ -51,6 +52,7 @@ fun LogViewContent(
         SelectionContainer(
             Modifier
                 .verticalScroll(rememberScrollState())
+                .background(PassTheme.colors.backgroundStrong)
                 .padding(contentPadding)
                 .padding(16.dp)
         ) {

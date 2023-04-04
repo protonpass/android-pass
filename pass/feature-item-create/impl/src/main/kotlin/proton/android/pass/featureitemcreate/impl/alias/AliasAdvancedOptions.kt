@@ -40,6 +40,7 @@ fun AliasAdvancedOptions(
         AnimatedVisibility(visible = showAdvancedOptions) {
             AliasAdvancedOptionsSection(
                 enabled = enabled,
+                isBottomSheet = false,
                 prefix = prefix,
                 suffix = suffix,
                 isError = isError,

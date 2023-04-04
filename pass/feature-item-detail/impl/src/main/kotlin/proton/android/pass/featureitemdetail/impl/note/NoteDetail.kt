@@ -1,5 +1,7 @@
 package proton.android.pass.featureitemdetail.impl.note
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -97,7 +99,9 @@ fun NoteDetail(
                         ItemDetailTopBar(
                             isLoading = state.isLoading,
                             isInTrash = state.itemUiModel.state == ItemState.Trashed.value,
-                            color = PassTheme.colors.noteInteractionNormMajor1,
+                            actionColor = PassTheme.colors.noteInteractionNormMajor1,
+                            iconColor = PassTheme.colors.noteInteractionNormMajor2,
+                            iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor2,
                             onUpClick = onUpClick,
                             onEditClick = {
                                 onEditClick(
@@ -114,6 +118,8 @@ fun NoteDetail(
                 ) { padding ->
                     NoteContent(
                         modifier = Modifier
+                            .fillMaxSize()
+                            .background(PassTheme.colors.itemDetailBackground)
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
                         name = state.itemUiModel.name,

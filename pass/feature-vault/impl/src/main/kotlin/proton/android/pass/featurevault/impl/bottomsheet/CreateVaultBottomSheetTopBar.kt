@@ -42,13 +42,13 @@ fun CreateVaultBottomSheetTopBar(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Circle(
-            backgroundColor = PassTheme.colors.loginInteractionNormMajor1,
+            backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
             onClick = onCloseClick
         ) {
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross),
                 contentDescription = stringResource(R.string.bottomsheet_close_icon_content_description),
-                tint = PassTheme.colors.loginInteractionNormMajor1
+                tint = PassTheme.colors.loginInteractionNormMajor2
             )
         }
 

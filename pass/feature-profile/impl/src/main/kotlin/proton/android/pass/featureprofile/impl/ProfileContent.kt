@@ -1,5 +1,6 @@
 package proton.android.pass.featureprofile.impl
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -46,6 +47,7 @@ fun ProfileContent(
         modifier = modifier.fillMaxSize(),
         topBar = {
             ProtonTopAppBar(
+                backgroundColor = PassTheme.colors.backgroundStrong,
                 title = {
                     Text(
                         text = stringResource(R.string.profile_screen_title),
@@ -66,6 +68,7 @@ fun ProfileContent(
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
+                .background(PassTheme.colors.backgroundStrong)
                 .padding(padding)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)

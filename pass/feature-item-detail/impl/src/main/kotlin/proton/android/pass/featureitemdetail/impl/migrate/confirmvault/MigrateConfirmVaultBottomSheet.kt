@@ -9,7 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.common.api.Some
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -38,7 +38,7 @@ fun MigrateConfirmVaultBottomSheet(
     }
 
     MigrateConfirmVaultContents(
-        modifier = modifier.bottomSheetPadding(),
+        modifier = modifier.bottomSheet(),
         state = state,
         onCancel = { viewModel.onCancel() },
         onConfirm = { viewModel.onConfirm() }

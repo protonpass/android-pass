@@ -22,7 +22,7 @@ fun AliasTitle(modifier: Modifier = Modifier, title: String) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        AliasIcon(size = 60)
+        AliasIcon(size = 60, shape = PassTheme.shapes.squircleMediumLargeShape)
         ItemTitleText(text = title)
     }
 }

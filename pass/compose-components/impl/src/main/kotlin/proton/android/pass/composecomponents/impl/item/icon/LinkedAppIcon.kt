@@ -8,13 +8,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.squircle
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.pass.domain.entity.PackageName
 
@@ -23,12 +24,14 @@ fun LinkedAppIcon(
     modifier: Modifier = Modifier,
     packageName: String,
     size: Int = 40,
+    shape: Shape,
     emptyContent: @Composable () -> Unit
 ) {
     LinkedAppIcon(
         modifier = modifier,
         packageName = PackageName(packageName),
         size = size,
+        shape = shape,
         emptyContent = emptyContent
     )
 }
@@ -38,11 +41,12 @@ fun LinkedAppIcon(
     modifier: Modifier = Modifier,
     packageName: PackageName,
     size: Int = 40,
+    shape: Shape = PassTheme.shapes.squircleMediumShape,
     emptyContent: @Composable () -> Unit
 ) {
     SubcomposeAsyncImage(
         modifier = modifier
-            .squircle()
+            .clip(shape)
             .size(size.dp),
         model = packageName,
         contentDescription = null
@@ -61,7 +65,7 @@ fun LinkedAppIcon(
                         .border(
                             width = 3.dp,
                             color = PassTheme.colors.inputBorder,
-                            shape = PassTheme.shapes.squircleShape
+                            shape = shape
                         )
                         .background(Color.White)
                         .padding(8.dp)

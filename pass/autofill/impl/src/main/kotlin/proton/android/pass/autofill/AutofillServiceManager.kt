@@ -1,6 +1,8 @@
 package proton.android.pass.autofill
 
 import android.content.Context
+import android.graphics.BlendMode
+import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.autofill.Dataset
 import android.view.inputmethod.InlineSuggestionsRequest
@@ -11,11 +13,12 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
-import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.entities.AutofillData
+import proton.android.pass.autofill.service.R
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.itemName
 import proton.android.pass.commonui.api.loginUsername
@@ -55,16 +58,21 @@ class AutofillServiceManager @Inject constructor(
                 autofillData = autofillData,
                 inlinePresentationSpec = requestOption.value.inlinePresentationSpecs.last()
             )
+            val pinnedOpenApp = createPinnedIcon(
+                autofillData = autofillData,
+                inlinePresentationSpec = requestOption.value.inlinePresentationSpecs.last()
+            )
             if (suggestedItemsResult is Some && suggestedItemsResult.value.isNotEmpty()) {
                 createSuggestedItemsDatasetList(
                     suggestedItems = suggestedItemsResult.value,
                     maxSuggestion = maxSuggestion.value,
                     requestOption = requestOption.value,
                     autofillData = autofillData,
-                    openAppDataSet = openAppDataSet
+                    openAppDataSet = openAppDataSet,
+                    pinnedOpenApp = pinnedOpenApp
                 )
             } else {
-                listOf(openAppDataSet)
+                listOf(openAppDataSet, pinnedOpenApp)
             }
         } else {
             emptyList()
@@ -89,12 +97,14 @@ class AutofillServiceManager @Inject constructor(
     }
 
     @RequiresApi(Build.VERSION_CODES.R)
+    @Suppress("LongParameterList")
     private fun createSuggestedItemsDatasetList(
         suggestedItems: List<Item>,
         maxSuggestion: Int,
         requestOption: InlineSuggestionsRequest,
         autofillData: AutofillData,
-        openAppDataSet: Dataset
+        openAppDataSet: Dataset,
+        pinnedOpenApp: Dataset
     ) = encryptionContextProvider.withEncryptionContext {
         PassLogger.i(TAG, "Suggested item count: ${suggestedItems.size}")
 
@@ -116,7 +126,7 @@ class AutofillServiceManager @Inject constructor(
         } else {
             emptyList()
         }
-    }.plus(openAppDataSet)
+    }.plus(listOf(openAppDataSet, pinnedOpenApp))
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun EncryptionContext.createItemDataset(
@@ -159,6 +169,34 @@ class AutofillServiceManager @Inject constructor(
             title = context.getString(R.string.inline_suggestions_open_app),
             subtitle = None,
             inlinePresentationSpec = inlinePresentationSpec,
+            pendingIntent = PendingIntentUtils.getLongPressInlinePendingIntent(context),
+            icon = getIcon().some()
+        )
+        val pendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
+            context = context,
+            autofillData = autofillData,
+            intentRequestCode = OPEN_PASS_SUGGESTION_REQUEST_CODE
+        )
+        val builderOptions = DatasetBuilderOptions(
+            inlinePresentation = inlinePresentation.toOption(),
+            pendingIntent = pendingIntent.toOption()
+        )
+        return DatasetUtils.buildDataset(
+            context = context,
+            dsbOptions = builderOptions,
+            assistFields = autofillData.assistInfo.fields
+        )
+    }
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    private fun createPinnedIcon(
+        autofillData: AutofillData,
+        inlinePresentationSpec: InlinePresentationSpec
+    ): Dataset {
+        val inlinePresentation = InlinePresentationUtils.createPinned(
+            contentDescription = context.getString(R.string.inline_suggestions_open_app),
+            icon = getIcon(),
+            inlinePresentationSpec = inlinePresentationSpec,
             pendingIntent = PendingIntentUtils.getLongPressInlinePendingIntent(context)
         )
         val pendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
@@ -197,6 +235,12 @@ class AutofillServiceManager @Inject constructor(
             context.getString(R.string.autofill_authenticate_prompt)
         )
         return view
+    }
+
+    private fun getIcon(): Icon {
+        val icon = Icon.createWithResource(context, R.drawable.ic_pass_logo)
+        icon.setTintBlendMode(BlendMode.DST)
+        return icon
     }
 
     companion object {

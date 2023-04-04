@@ -16,8 +16,10 @@ import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
+import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
 import java.io.File
 
@@ -92,6 +94,23 @@ object TestPGPCrypto : PGPCrypto {
         keyPacket: KeyPacket,
         password: ByteArray
     ): SessionKey {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun signText(
+        plainText: String,
+        unlockedKey: Unarmored,
+        trimTrailingSpaces: Boolean,
+        signatureContext: SignatureContext?
+    ): Signature {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun signData(
+        data: ByteArray,
+        unlockedKey: Unarmored,
+        signatureContext: SignatureContext?
+    ): Signature {
         throw IllegalStateException("This method should not be called")
     }
 
@@ -250,25 +269,6 @@ object TestPGPCrypto : PGPCrypto {
         throw IllegalStateException("This method should not be called")
     }
 
-    override fun getVerifiedTimestampOfData(
-        data: ByteArray,
-        signature: Armored,
-        publicKey: Armored,
-        time: VerificationTime
-    ): Long? {
-        throw IllegalStateException("This method should not be called")
-    }
-
-    override fun getVerifiedTimestampOfText(
-        plainText: String,
-        signature: Armored,
-        publicKey: Armored,
-        time: VerificationTime,
-        trimTrailingSpaces: Boolean
-    ): Long? {
-        throw IllegalStateException("This method should not be called")
-    }
-
     override fun isPrivateKey(key: Armored): Boolean {
         throw IllegalStateException("This method should not be called")
     }
@@ -285,19 +285,26 @@ object TestPGPCrypto : PGPCrypto {
         throw IllegalStateException("This method should not be called")
     }
 
-    override fun signData(data: ByteArray, unlockedKey: Unarmored): Signature {
+    override fun signFile(file: File, unlockedKey: Unarmored): Signature {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun signTextEncrypted(
+        plainText: String,
+        unlockedKey: Unarmored,
+        encryptionKeys: List<Armored>,
+        trimTrailingSpaces: Boolean,
+        signatureContext: SignatureContext?
+    ): EncryptedSignature {
         throw IllegalStateException("This method should not be called")
     }
 
     override fun signDataEncrypted(
         data: ByteArray,
         unlockedKey: Unarmored,
-        encryptionKeys: List<Armored>
+        encryptionKeys: List<Armored>,
+        signatureContext: SignatureContext?
     ): EncryptedSignature {
-        throw IllegalStateException("This method should not be called")
-    }
-
-    override fun signFile(file: File, unlockedKey: Unarmored): Signature {
         throw IllegalStateException("This method should not be called")
     }
 
@@ -309,20 +316,89 @@ object TestPGPCrypto : PGPCrypto {
         throw IllegalStateException("This method should not be called")
     }
 
-    override fun signText(
+    override fun verifyText(
         plainText: String,
-        unlockedKey: Unarmored,
-        trimTrailingSpaces: Boolean
-    ): Signature {
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime,
+        trimTrailingSpaces: Boolean,
+        verificationContext: VerificationContext?
+    ): Boolean {
         throw IllegalStateException("This method should not be called")
     }
 
-    override fun signTextEncrypted(
+    override fun verifyData(
+        data: ByteArray,
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime,
+        verificationContext: VerificationContext?
+    ): Boolean {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun verifyFile(
+        file: DecryptedFile,
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime,
+        verificationContext: VerificationContext?
+    ): Boolean {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun getVerifiedTimestampOfText(
         plainText: String,
-        unlockedKey: Unarmored,
-        encryptionKeys: List<Armored>,
-        trimTrailingSpaces: Boolean
-    ): EncryptedSignature {
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime,
+        trimTrailingSpaces: Boolean,
+        verificationContext: VerificationContext?
+    ): Long? {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun getVerifiedTimestampOfData(
+        data: ByteArray,
+        signature: Armored,
+        publicKey: Armored,
+        time: VerificationTime,
+        verificationContext: VerificationContext?
+    ): Long? {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun verifyTextEncrypted(
+        plainText: String,
+        encryptedSignature: EncryptedSignature,
+        privateKey: Unarmored,
+        publicKeys: List<Armored>,
+        time: VerificationTime,
+        trimTrailingSpaces: Boolean,
+        verificationContext: VerificationContext?
+    ): Boolean {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun verifyDataEncrypted(
+        data: ByteArray,
+        encryptedSignature: EncryptedSignature,
+        privateKey: Unarmored,
+        publicKeys: List<Armored>,
+        time: VerificationTime,
+        verificationContext: VerificationContext?
+    ): Boolean {
+        throw IllegalStateException("This method should not be called")
+    }
+
+    override fun verifyFileEncrypted(
+        file: File,
+        encryptedSignature: EncryptedSignature,
+        privateKey: Unarmored,
+        publicKeys: List<Armored>,
+        time: VerificationTime,
+        verificationContext: VerificationContext?
+    ): Boolean {
         throw IllegalStateException("This method should not be called")
     }
 
@@ -339,65 +415,6 @@ object TestPGPCrypto : PGPCrypto {
     }
 
     override fun updateTime(epochSeconds: Long) {
-        throw IllegalStateException("This method should not be called")
-    }
-
-    override fun verifyData(
-        data: ByteArray,
-        signature: Armored,
-        publicKey: Armored,
-        time: VerificationTime
-    ): Boolean {
-        throw IllegalStateException("This method should not be called")
-    }
-
-    override fun verifyDataEncrypted(
-        data: ByteArray,
-        encryptedSignature: EncryptedSignature,
-        privateKey: Unarmored,
-        publicKeys: List<Armored>,
-        time: VerificationTime
-    ): Boolean {
-        throw IllegalStateException("This method should not be called")
-    }
-
-    override fun verifyFile(
-        file: DecryptedFile,
-        signature: Armored,
-        publicKey: Armored,
-        time: VerificationTime
-    ): Boolean {
-        throw IllegalStateException("This method should not be called")
-    }
-
-    override fun verifyFileEncrypted(
-        file: File,
-        encryptedSignature: EncryptedSignature,
-        privateKey: Unarmored,
-        publicKeys: List<Armored>,
-        time: VerificationTime
-    ): Boolean {
-        throw IllegalStateException("This method should not be called")
-    }
-
-    override fun verifyText(
-        plainText: String,
-        signature: Armored,
-        publicKey: Armored,
-        time: VerificationTime,
-        trimTrailingSpaces: Boolean
-    ): Boolean {
-        throw IllegalStateException("This method should not be called")
-    }
-
-    override fun verifyTextEncrypted(
-        plainText: String,
-        encryptedSignature: EncryptedSignature,
-        privateKey: Unarmored,
-        publicKeys: List<Armored>,
-        time: VerificationTime,
-        trimTrailingSpaces: Boolean
-    ): Boolean {
         throw IllegalStateException("This method should not be called")
     }
 }

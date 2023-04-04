@@ -3,6 +3,7 @@ package proton.android.pass.composecomponents.impl.item
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -45,6 +46,7 @@ fun LinkedAppItem(
 
         LinkedAppIcon(
             packageName = packageInfoUi.packageName,
+            shape = CircleShape,
             emptyContent = {
                 Circle(backgroundColor = PassTheme.colors.loginInteractionNormMajor1) {
                     Icon(

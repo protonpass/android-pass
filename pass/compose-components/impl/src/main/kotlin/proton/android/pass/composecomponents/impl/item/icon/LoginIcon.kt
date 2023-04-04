@@ -10,7 +10,9 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,10 +23,9 @@ import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.squircle
 import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
-import proton.android.pass.composecomponents.impl.container.Squircle
 import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.pass.domain.ItemType
 import proton.pass.domain.WebsiteUrl
@@ -50,8 +51,12 @@ fun LoginIcon(
 }
 
 @Composable
-fun LoginIcon(modifier: Modifier = Modifier) {
-    Squircle(modifier = modifier, backgroundColor = PassTheme.colors.loginInteractionNormMajor1) {
+fun LoginIcon(modifier: Modifier = Modifier, shape: Shape = PassTheme.shapes.squircleMediumShape) {
+    BoxedIcon(
+        modifier = modifier,
+        shape = shape,
+        backgroundColor = PassTheme.colors.loginInteractionNormMajor1
+    ) {
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_user),
             contentDescription = stringResource(R.string.login_title_icon_content_description),
@@ -67,18 +72,20 @@ fun LoginIcon(
     website: String?,
     packageName: String?,
     size: Int = 40,
+    shape: Shape = PassTheme.shapes.squircleMediumShape,
 ) {
     if (website == null) {
         FallbackLoginIcon(
             modifier = modifier,
             text = text,
             packageName = packageName,
-            size = size
+            size = size,
+            shape = shape
         )
     } else {
         SubcomposeAsyncImage(
             modifier = modifier
-                .squircle()
+                .clip(shape)
                 .size(size.dp),
             model = WebsiteUrl(website),
             contentDescription = null
@@ -93,11 +100,12 @@ fun LoginIcon(
                 }
                 is AsyncImagePainter.State.Success -> {
                     SubcomposeAsyncImageContent(
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier
+                            .fillMaxSize()
                             .border(
                                 width = 3.dp,
                                 color = PassTheme.colors.inputBorder,
-                                shape = PassTheme.shapes.squircleShape
+                                shape = shape
                             )
                             .background(Color.White)
                             .padding(8.dp)
@@ -107,7 +115,8 @@ fun LoginIcon(
                     FallbackLoginIcon(
                         text = text,
                         packageName = packageName,
-                        size = size
+                        size = size,
+                        shape = shape
                     )
                 }
             }
@@ -120,23 +129,27 @@ private fun FallbackLoginIcon(
     modifier: Modifier = Modifier,
     text: String,
     packageName: String?,
-    size: Int = 40
+    size: Int = 40,
+    shape: Shape
 ) {
     if (packageName == null) {
         TwoLetterLoginIcon(
             modifier = modifier,
             text = text,
             size = size,
+            shape = shape
         )
     } else {
         LinkedAppIcon(
             packageName = packageName,
             size = size,
+            shape = shape,
             emptyContent = {
                 TwoLetterLoginIcon(
                     modifier = modifier,
                     text = text,
                     size = size,
+                    shape = shape
                 )
             }
         )
@@ -147,13 +160,15 @@ private fun FallbackLoginIcon(
 private fun TwoLetterLoginIcon(
     modifier: Modifier = Modifier,
     text: String,
-    size: Int = 40
+    size: Int = 40,
+    shape: Shape
 ) {
     CircleTextIcon(
         modifier = modifier,
         text = text,
         color = PassTheme.colors.loginInteractionNormMajor1,
-        size = size
+        size = size,
+        shape = shape
     )
 }
 

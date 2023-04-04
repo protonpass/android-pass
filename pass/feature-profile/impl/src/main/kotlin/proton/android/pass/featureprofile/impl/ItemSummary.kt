@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -85,21 +86,21 @@ fun RowScope.ItemTypeBox(
         ) {
             when (type) {
                 SummaryItemType.Logins -> {
-                    LoginIcon()
+                    LoginIcon(shape = CircleShape)
                     Text(
                         text = stringResource(R.string.itemtype_summary_login),
                         style = PassTypography.body3Regular
                     )
                 }
                 SummaryItemType.Notes -> {
-                    NoteIcon()
+                    NoteIcon(shape = CircleShape)
                     Text(
                         text = stringResource(R.string.itemtype_summary_notes),
                         style = PassTypography.body3Regular
                     )
                 }
                 SummaryItemType.Alias -> {
-                    AliasIcon()
+                    AliasIcon(shape = CircleShape)
                     Text(
                         text = stringResource(R.string.itemtype_summary_alias),
                         style = PassTypography.body3Regular

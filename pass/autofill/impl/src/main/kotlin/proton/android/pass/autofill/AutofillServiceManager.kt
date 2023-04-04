@@ -54,13 +54,14 @@ class AutofillServiceManager @Inject constructor(
                     .firstOrNull()
                     .toOption()
 
+            val specs = requestOption.value.inlinePresentationSpecs
             val openAppDataSet = createOpenAppDataset(
                 autofillData = autofillData,
-                inlinePresentationSpec = requestOption.value.inlinePresentationSpecs.last()
+                inlinePresentationSpec = specs[specs.size - INLINE_SUGGESTIONS_OFFSET]
             )
             val pinnedOpenApp = createPinnedIcon(
                 autofillData = autofillData,
-                inlinePresentationSpec = requestOption.value.inlinePresentationSpecs.last()
+                inlinePresentationSpec = specs.last()
             )
             if (suggestedItemsResult is Some && suggestedItemsResult.value.isNotEmpty()) {
                 createSuggestedItemsDatasetList(
@@ -202,7 +203,7 @@ class AutofillServiceManager @Inject constructor(
         val pendingIntent = PendingIntentUtils.getOpenAppPendingIntent(
             context = context,
             autofillData = autofillData,
-            intentRequestCode = OPEN_PASS_SUGGESTION_REQUEST_CODE
+            intentRequestCode = OPEN_PASS_PINNED_REQUEST_CODE
         )
         val builderOptions = DatasetBuilderOptions(
             inlinePresentation = inlinePresentation.toOption(),
@@ -237,6 +238,7 @@ class AutofillServiceManager @Inject constructor(
         return view
     }
 
+    @RequiresApi(Build.VERSION_CODES.R)
     private fun getIcon(): Icon {
         val icon = Icon.createWithResource(context, R.drawable.ic_pass_logo)
         icon.setTintBlendMode(BlendMode.DST)
@@ -244,9 +246,10 @@ class AutofillServiceManager @Inject constructor(
     }
 
     companion object {
-        private const val INLINE_SUGGESTIONS_OFFSET = 1
+        private const val INLINE_SUGGESTIONS_OFFSET = 2
         private const val OPEN_PASS_SUGGESTION_REQUEST_CODE = 1000
         private const val OPEN_PASS_MENU_REQUEST_CODE = 1001
+        private const val OPEN_PASS_PINNED_REQUEST_CODE = 1002
 
         private const val TAG = "AutofillServiceManager"
     }

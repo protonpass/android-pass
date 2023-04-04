@@ -19,7 +19,6 @@ fun Circle(
     modifier: Modifier = Modifier,
     size: Int = 40,
     backgroundColor: Color,
-    backgroundAlpha: Float = 0.25f,
     onClick: (() -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit
 ) {
@@ -31,7 +30,7 @@ fun Circle(
                 condition = onClick != null,
                 ifTrue = { clickable { onClick?.invoke() } }
             )
-            .background(backgroundColor.copy(backgroundAlpha)),
+            .background(backgroundColor),
         contentAlignment = Alignment.Center
     ) {
         content()

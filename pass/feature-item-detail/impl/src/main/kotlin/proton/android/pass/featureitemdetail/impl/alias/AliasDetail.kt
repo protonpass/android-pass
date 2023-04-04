@@ -1,5 +1,7 @@
 package proton.android.pass.featureitemdetail.impl.alias
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -97,7 +99,9 @@ fun AliasDetail(
                         ItemDetailTopBar(
                             isLoading = state.isLoading,
                             isInTrash = state.itemUiModel.state == ItemState.Trashed.value,
-                            color = PassTheme.colors.aliasInteractionNormMajor1,
+                            actionColor = PassTheme.colors.aliasInteractionNormMajor1,
+                            iconColor = PassTheme.colors.aliasInteractionNormMajor2,
+                            iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                             onUpClick = onUpClick,
                             onEditClick = {
                                 onEditClick(
@@ -114,6 +118,8 @@ fun AliasDetail(
                 ) { padding ->
                     AliasDetailContent(
                         modifier = Modifier
+                            .fillMaxSize()
+                            .background(PassTheme.colors.itemDetailBackground)
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
                         itemUiModel = state.itemUiModel,

@@ -36,7 +36,7 @@ fun AliasAddressRow(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
             contentDescription = stringResource(R.string.alias_address_icon_content_description),
-            tint = PassTheme.colors.aliasInteractionNormMajor1
+            tint = PassTheme.colors.aliasInteractionNormMajor2
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)

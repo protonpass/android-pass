@@ -104,7 +104,7 @@ fun LoginIcon(
                             .fillMaxSize()
                             .border(
                                 width = 3.dp,
-                                color = PassTheme.colors.inputBorder,
+                                color = PassTheme.colors.loginIconBorder,
                                 shape = shape
                             )
                             .background(Color.White)

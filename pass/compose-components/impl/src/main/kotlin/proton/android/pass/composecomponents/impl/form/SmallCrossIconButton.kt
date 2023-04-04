@@ -7,14 +7,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import me.proton.core.compose.theme.ProtonTheme
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun SmallCrossIconButton(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    tint: Color = ProtonTheme.colors.iconWeak,
+    tint: Color = PassTheme.colors.textHint,
     onClick: () -> Unit
 ) {
     IconButton(

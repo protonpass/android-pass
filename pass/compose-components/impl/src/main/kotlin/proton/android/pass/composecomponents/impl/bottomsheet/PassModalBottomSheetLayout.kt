@@ -12,7 +12,6 @@ import androidx.compose.ui.graphics.compositeOver
 import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 
 @ExperimentalMaterialApi
@@ -31,9 +30,8 @@ fun PassModalBottomSheetLayout(
         sheetState = sheetState,
         sheetContent = sheetContent,
         sheetShape = PassTheme.shapes.bottomsheetShape,
-        sheetBackgroundColor = PassTheme.colors.backgroundWeak
-            .compositeOver(PassTheme.colors.backgroundNorm),
-        sheetContentColor = ProtonTheme.colors.textNorm,
+        sheetBackgroundColor = PassTheme.colors.bottomSheetBackground,
+        sheetContentColor = PassTheme.colors.bottomSheetBackground,
         scrimColor = PassTheme.colors.backdrop,
         content = content
     )

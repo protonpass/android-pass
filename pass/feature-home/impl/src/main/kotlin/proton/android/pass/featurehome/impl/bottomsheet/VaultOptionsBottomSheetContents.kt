@@ -12,7 +12,7 @@ import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
@@ -28,7 +28,7 @@ fun VaultOptionsBottomSheetContents(
     onEdit: () -> Unit,
     onRemove: () -> Unit
 ) {
-    Column(modifier.bottomSheetPadding()) {
+    Column(modifier.bottomSheet()) {
         BottomSheetItemList(
             items = if (showDelete) {
                 persistentListOf(

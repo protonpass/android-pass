@@ -15,7 +15,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
@@ -38,7 +38,7 @@ fun CreateItemBottomSheetContents(
     onCreatePassword: () -> Unit
 ) {
     BottomSheetItemList(
-        modifier = modifier.bottomSheetPadding(),
+        modifier = modifier.bottomSheet(),
         items = persistentListOf(
             createLogin(shareId, onCreateLogin),
             bottomSheetDivider(),

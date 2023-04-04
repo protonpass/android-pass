@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.commonui.api.bottomSheetPadding
+import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
@@ -32,7 +32,7 @@ fun VaultSelectionBottomSheet(
     onVaultClick: (ShareId) -> Unit
 ) {
     Column(
-        modifier = modifier.bottomSheetPadding(),
+        modifier = modifier.bottomSheet(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         BottomSheetTitle(title = stringResource(R.string.vault_title))

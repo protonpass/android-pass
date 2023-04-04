@@ -9,39 +9,46 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
         get() = sequenceOf(
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                opaqueColor = PassPalette.Lavender100,
-                weakestColor = PassPalette.Lavender8,
+                actionColor = PassPalette.Lavender100,
+                closeIconColor = PassPalette.Lavender100,
+                closeBackgroundColor = PassPalette.Lavender8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                opaqueColor = PassPalette.GreenSheen100,
-                weakestColor = PassPalette.GreenSheen8
+                actionColor = PassPalette.GreenSheen100,
+                closeIconColor = PassPalette.GreenSheen100,
+                closeBackgroundColor = PassPalette.GreenSheen8
             ),
             CreateUpdateTopBarPreview(
                 isLoading = false,
-                opaqueColor = PassPalette.MacaroniAndCheese100,
-                weakestColor = PassPalette.MacaroniAndCheese8,
+                actionColor = PassPalette.MacaroniAndCheese100,
+                closeIconColor = PassPalette.MacaroniAndCheese100,
+                closeBackgroundColor = PassPalette.MacaroniAndCheese8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                opaqueColor = PassPalette.Lavender100,
-                weakestColor = PassPalette.Lavender8,
+                actionColor = PassPalette.Lavender100,
+                closeIconColor = PassPalette.Lavender100,
+                closeBackgroundColor = PassPalette.Lavender8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                opaqueColor = PassPalette.GreenSheen100,
-                weakestColor = PassPalette.GreenSheen8,
+                actionColor = PassPalette.GreenSheen100,
+                closeIconColor = PassPalette.GreenSheen100,
+                closeBackgroundColor = PassPalette.GreenSheen8,
             ),
             CreateUpdateTopBarPreview(
                 isLoading = true,
-                opaqueColor = PassPalette.MacaroniAndCheese100,
-                weakestColor = PassPalette.MacaroniAndCheese8
+                actionColor = PassPalette.MacaroniAndCheese100,
+                closeIconColor = PassPalette.MacaroniAndCheese100,
+                closeBackgroundColor = PassPalette.MacaroniAndCheese8
             )
         )
 }
 
 data class CreateUpdateTopBarPreview(
     val isLoading: Boolean,
-    val opaqueColor: Color,
-    val weakestColor: Color
+    val actionColor: Color,
+    val closeBackgroundColor: Color,
+    val closeIconColor: Color,
 )

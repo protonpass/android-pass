@@ -11,12 +11,29 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 
 @Stable
-fun Modifier.roundedContainer(borderColor: Color) = composed {
+fun Modifier.roundedContainerNorm() = composed {
+    roundedContainer(
+        backgroundColor = PassTheme.colors.inputBackgroundNorm,
+        borderColor = PassTheme.colors.inputBorderNorm
+    )
+}
+
+@Stable
+fun Modifier.roundedContainerStrong() = composed {
+    roundedContainer(
+        backgroundColor = PassTheme.colors.inputBackgroundStrong,
+        borderColor = PassTheme.colors.inputBorderStrong
+    )
+}
+
+@Stable
+fun Modifier.roundedContainer(backgroundColor: Color, borderColor: Color) = composed {
     clip(PassTheme.shapes.containerInputShape)
-        .background(PassTheme.colors.inputBackground)
+        .background(backgroundColor)
         .border(
             width = 1.dp,
             color = borderColor,
             shape = PassTheme.shapes.containerInputShape
         )
 }
+

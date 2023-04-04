@@ -2,6 +2,7 @@ package proton.android.pass.featurehome.impl.vault
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ButtonDefaults
@@ -49,6 +50,7 @@ fun VaultDrawerContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
+            contentPadding = PaddingValues(14.dp),
             color = PassTheme.colors.loginInteractionNormMinor2,
             elevation = ButtonDefaults.elevation(0.dp),
             onClick = onCreateVaultClick
@@ -59,6 +61,5 @@ fun VaultDrawerContent(
                 style = PassTypography.body3Regular
             )
         }
-
     }
 }

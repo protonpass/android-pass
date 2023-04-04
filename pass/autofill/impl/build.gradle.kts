@@ -37,7 +37,6 @@ dependencies {
 
     implementation(libs.accompanist.navigation.animation)
     implementation(libs.accompanist.navigation.material)
-    implementation(libs.accompanist.permissions)
     implementation(libs.accompanist.systemUiController)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.activity.compose)

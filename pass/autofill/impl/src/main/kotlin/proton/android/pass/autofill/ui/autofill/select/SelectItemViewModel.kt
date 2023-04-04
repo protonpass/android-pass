@@ -29,6 +29,7 @@ import proton.android.pass.autofill.AutofillDisplayed
 import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.extensions.toAutoFillItem
+import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.ItemFieldMapper
 import proton.android.pass.autofill.ui.autofill.select.SelectItemSnackbarMessage.LoadItemsError
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -60,8 +61,8 @@ import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.NotificationManager
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.notifications.api.ToastManager
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -78,7 +79,7 @@ class SelectItemViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
     private val getTotpCodeFromUri: GetTotpCodeFromUri,
-    private val notificationManager: NotificationManager,
+    private val toastManager: ToastManager,
     private val preferenceRepository: UserPreferencesRepository,
     observeActiveItems: ObserveActiveItems,
     getSuggestedLoginItems: GetSuggestedLoginItems,
@@ -236,7 +237,7 @@ class SelectItemViewModel @Inject constructor(
                                     withContext(Dispatchers.IO) {
                                         clipboardManager.copyToClipboard(it)
                                     }
-                                    notificationManager.sendNotification()
+                                    toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
                                 }
                                 .onFailure {
                                     PassLogger.w(TAG, "Could not copy totp code")

@@ -24,8 +24,10 @@
     <string name="home_snackbar_note_moved_to_trash">Note moved to trash</string>
     <string name="home_snackbar_move_to_trash_error">Could not move to trash</string>
 
-    <string name="home_autofill_banner_title">Log in to apps instantly ›</string>
-    <string name="home_autofill_banner_text">Let Proton Pass fill in login details for you.\nNo typing or copy-paste required</string>
+    <string name="home_autofill_banner_title">Enjoy the magic of AutoFill</string>
+    <string name="home_autofill_banner_text">Create a unique email alias for each website to protect your personal inbox.</string>
+    <string name="home_autofill_banner_settings">Go to Settings ›</string>
+    <string name="home_autofill_banner_image_content_description">Autofill banner image</string>
 
     <!-- Common bottomsheet -->
     <string name="bottomsheet_copy_password">Copy password</string>

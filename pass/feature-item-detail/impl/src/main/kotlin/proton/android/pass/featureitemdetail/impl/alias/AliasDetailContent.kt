@@ -28,7 +28,10 @@ fun AliasDetailContent(
         modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        AliasTitle(title = itemUiModel.name)
+        AliasTitle(
+            modifier = Modifier.padding(0.dp, 12.dp),
+            title = itemUiModel.name
+        )
         AliasSection(
             alias = (itemUiModel.itemType as ItemType.Alias).aliasEmail,
             mailboxes = mailboxes,

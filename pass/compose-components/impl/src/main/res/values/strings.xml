@@ -13,7 +13,6 @@
     <string name="regenerate_password_icon_content_description">Regenerate pass icon</string>
 
     <!-- Actions -->
-    <string name="action_cancel_send_to_trash">Cancel</string>
     <string name="action_content_description_menu">Item action menu</string>
 
     <!-- Empty list -->
@@ -23,9 +22,6 @@
     <string name="empty_list_open_extension">Visit web extension</string>
     <string name="empty_list_create_item_button">Create new item</string>
     <string name="empty_list_image_content_description">Empty list image</string>
-
-    <!-- Alerts -->
-    <string name="alert_confirm_item_send_to_trash_message">Are you sure you want to send \'%s\' to the trash?</string>
 
     <!-- Field -->
     <string name="field_title_title">Title</string>
@@ -40,9 +36,6 @@
     <!-- Indicator that indicates lack of internet connectivity -->
     <string name="indicator_no_network">Offline</string>
 
-    <!-- Indicator that indicates field is required -->
-    <string name="field_required_indicator">Required</string>
-
     <!-- Icon content description -->
     <string name="login_title_icon_content_description">Login icon</string>
     <string name="alias_title_icon_content_description">Alias icon</string>
@@ -50,8 +43,6 @@
     <string name="mfa_title_icon_content_description">2fa icon</string>
     <string name="password_title_icon_content_description">Password icon</string>
     <string name="missing_app_icon_content_description">Missing app icon</string>
-    <string name="linked_app_icon_content_description">App icon</string>
-    <string name="linked_app_cross_icon_content_description">Remove linked app icon</string>
     <string name="forward_icon_content_description">Arrow forward icon</string>
     <string name="vault_selector_icon_content_description">Vault selector icon</string>
     <string name="add_item_icon_content_description">Add item icon</string>
@@ -74,7 +65,6 @@
     <string name="most_recent_last_60_days">Last 60 days</string>
     <string name="most_recent_last_90_days">Last 90 days</string>
     <string name="most_recent_within_the_last_year">Within the last year</string>
-    <string name="most_recent_older">Older</string>
 
     <!-- Search Top Bar -->
     <string name="search_topbar_icon_content_description">Search icon</string>

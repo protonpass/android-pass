@@ -16,4 +16,5 @@
     <string name="autofill_dialog_just_autofill">Autofill</string>
     <string name="autofill_dialog_cancel">Cancel</string>
 
+    <string name="autofill_notification_copy_to_clipboard">Totp has been copied to clipboard</string>
 </resources>

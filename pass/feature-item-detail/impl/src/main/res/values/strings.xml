@@ -5,7 +5,6 @@
     <string name="action_copy">Copy</string>
     <!-- Detail -->
     <string name="detail_init_error">Could not initialise the element</string>
-    <string name="detail_item_not_loaded_error">The item has not been loaded</string>
     <string name="top_bar_edit_button_text">Edit</string>
 
     <!-- Alias details -->

@@ -5,6 +5,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -20,12 +21,14 @@ fun CircleTextIcon(
     color: Color,
     backgroundAlpha: Float = 0.25f,
     size: Int = 40,
+    shape: Shape
 ) {
-    Squircle(
+    BoxedIcon(
         modifier = modifier,
         backgroundColor = color,
         backgroundAlpha = backgroundAlpha,
-        size = size
+        size = size,
+        shape = shape
     ) {
         Text(
             text = text.filter { !it.isWhitespace() }.take(2).uppercase(),
@@ -43,7 +46,11 @@ fun CircleTextIconPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            CircleTextIcon(text = "This is an example", color = PassTheme.colors.loginInteractionNormMajor1)
+            CircleTextIcon(
+                text = "This is an example",
+                color = PassTheme.colors.loginInteractionNormMajor1,
+                shape = PassTheme.shapes.squircleMediumShape
+            )
         }
     }
 }

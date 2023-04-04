@@ -8,15 +8,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.applyIf
-import proton.android.pass.commonui.api.squircle
 
 @Composable
-fun Squircle(
+fun BoxedIcon(
     modifier: Modifier = Modifier,
     size: Int = 40,
+    shape: Shape = PassTheme.shapes.squircleMediumShape,
     backgroundColor: Color,
     backgroundAlpha: Float = 0.25f,
     onClick: (() -> Unit)? = null,
@@ -25,7 +28,7 @@ fun Squircle(
     Box(
         modifier = modifier
             .size(size.dp)
-            .squircle()
+            .clip(shape)
             .applyIf(
                 condition = onClick != null,
                 ifTrue = { clickable { onClick?.invoke() } }

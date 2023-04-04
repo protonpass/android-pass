@@ -12,7 +12,7 @@ fun Modifier.placeholder(): Modifier =
         placeholder(
             visible = true,
             color = PassTheme.colors.backgroundWeak,
-            shape = PassTheme.shapes.squircleShape,
+            shape = PassTheme.shapes.squircleMediumShape,
             highlight = PlaceholderHighlight.shimmer(
                 highlightColor = PassTheme.colors.backgroundNorm
             )

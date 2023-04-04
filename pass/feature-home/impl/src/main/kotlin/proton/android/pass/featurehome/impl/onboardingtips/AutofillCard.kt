@@ -3,37 +3,31 @@ package proton.android.pass.featurehome.impl.onboardingtips
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RadialGradientShader
-import androidx.compose.ui.graphics.Shader
-import androidx.compose.ui.graphics.ShaderBrush
-import androidx.compose.ui.layout.FixedScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmall
-import me.proton.core.compose.theme.defaultStrong
+import me.proton.core.compose.theme.caption
+import me.proton.core.compose.theme.captionStrong
+import me.proton.core.compose.theme.defaultHighlight
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featurehome.impl.R
 
 @Suppress("MagicNumber")
@@ -43,65 +37,54 @@ fun AutofillCard(
     onClick: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val largeRadialGradient = object : ShaderBrush() {
-        override fun createShader(size: Size): Shader =
-            RadialGradientShader(
-                colors = listOf(
-                    Color(0xFFFFDA00),
-                    Color(0xFFFB8F42),
-                    Color(0xFFC266A7),
-                    Color(0xFF6D4AFF)
-                ),
-                center = Offset(0f, size.height * 2.6f),
-                radius = maxOf(size.height, size.width) / 1.1f,
-                colorStops = listOf(0f, 0.43f, 0.68f, 0.88f)
-            )
-    }
 
     Card(
-        modifier = modifier,
+        modifier = modifier.clickable { onClick() },
         elevation = 10.dp
     ) {
         Box(
             modifier = Modifier
-                .clickable { onClick() }
-                .background(largeRadialGradient)
-                .fillMaxWidth()
+                .background(PassTheme.colors.aliasInteractionNormMajor1),
         ) {
-            Image(
-                modifier = Modifier
-                    .matchParentSize(),
-                alignment = Alignment.BottomEnd,
-                contentScale = FixedScale(0.9f),
-                painter = painterResource(id = R.drawable.autofill_keyboard),
-                contentDescription = ""
-            )
-            Column(
-                modifier = Modifier
-                    .padding(19.dp)
+            Row(
+                modifier = Modifier.padding(16.dp, 32.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Text(
-                    text = stringResource(id = R.string.home_autofill_banner_title),
-                    style = ProtonTheme.typography.defaultStrong,
-                    color = Color.White
-                )
-                Spacer(modifier = Modifier.height(5.dp))
-                Text(
-                    text = stringResource(id = R.string.home_autofill_banner_text),
-                    style = ProtonTheme.typography.defaultSmall,
-                    color = Color.White
+                Column(
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.home_autofill_banner_title),
+                        style = ProtonTheme.typography.defaultHighlight,
+                        color = PassTheme.colors.textInvert
+                    )
+                    Text(
+                        text = stringResource(id = R.string.home_autofill_banner_text),
+                        style = ProtonTheme.typography.caption,
+                        color = PassTheme.colors.textInvert
+                    )
+                    Spacer(modifier = Modifier.size(4.dp))
+                    Text(
+                        text = stringResource(id = R.string.home_autofill_banner_settings),
+                        style = ProtonTheme.typography.captionStrong,
+                        color = PassTheme.colors.textInvert
+                    )
+                }
+                Image(
+                    modifier = Modifier.size(60.dp),
+                    alignment = Alignment.CenterEnd,
+                    painter = painterResource(id = R.drawable.spotlight_illustration),
+                    contentDescription = stringResource(id = R.string.home_autofill_banner_image_content_description)
                 )
             }
-            IconButton(
+
+            SmallCrossIconButton(
                 modifier = Modifier.align(Alignment.TopEnd),
-                onClick = { onDismiss() }
-            ) {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_circle_filled),
-                    tint = Color.White,
-                    contentDescription = ""
-                )
-            }
+                tint = PassTheme.colors.textNorm,
+                onClick = onDismiss
+            )
         }
     }
 }

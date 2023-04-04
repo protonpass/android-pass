@@ -7,13 +7,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,7 +21,11 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.applyIf
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.container.roundedContainerStrong
+import proton.android.pass.composecomponents.impl.form.ChevronDownIcon
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
@@ -36,12 +38,18 @@ fun AliasAdvancedOptionsSection(
     prefix: String,
     suffix: AliasSuffixUiModel?,
     isError: Boolean,
+    isBottomSheet: Boolean,
     canSelectSuffix: Boolean,
     onPrefixChanged: (String) -> Unit,
     onSuffixClicked: () -> Unit
 ) {
-    RoundedCornersColumn(
+    Column(
         modifier = modifier
+            .applyIf(
+                condition = isBottomSheet,
+                ifTrue = { roundedContainerStrong() },
+                ifFalse = { roundedContainerNorm() }
+            )
     ) {
         ProtonTextField(
             modifier = modifier.padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 4.dp),
@@ -81,10 +89,7 @@ fun AliasAdvancedOptionsSection(
                 Text(aliasText)
             }
             if (canSelectSuffix) {
-                Icon(
-                    painter = painterResource(id = me.proton.core.presentation.R.drawable.ic_proton_chevron_down),
-                    contentDescription = null,
-                )
+                ChevronDownIcon()
             }
         }
     }
@@ -104,10 +109,40 @@ fun AliasAdvancedOptionsSectionPreview(
         Surface {
             AliasAdvancedOptionsSection(
                 enabled = true,
+                isBottomSheet = false,
                 prefix = input.second.prefix,
                 suffix = input.second.suffix,
                 isError = input.second.isError,
                 canSelectSuffix = input.second.canSelectSuffix,
+                onPrefixChanged = {},
+                onSuffixClicked = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+@Suppress("FunctionMaxLength")
+fun AliasAdvancedOptionsSectionBottomSheetPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class)
+    input: Pair<Boolean, Boolean>
+) {
+
+    PassTheme(isDark = input.first) {
+        Surface {
+            AliasAdvancedOptionsSection(
+                enabled = true,
+                isBottomSheet = input.second,
+                prefix = "prefix",
+                suffix = AliasSuffixUiModel(
+                    suffix = ".some@suffix.test",
+                    signedSuffix = "",
+                    isCustom = false,
+                    domain = "suffix.test"
+                ),
+                isError = false,
+                canSelectSuffix = true,
                 onPrefixChanged = {},
                 onSuffixClicked = {}
             )

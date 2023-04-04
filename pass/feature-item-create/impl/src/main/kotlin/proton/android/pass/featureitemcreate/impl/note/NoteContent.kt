@@ -73,8 +73,9 @@ internal fun NoteContent(
                 CreateUpdateTopBar(
                     text = topBarActionName,
                     isLoading = uiState.isLoadingState.value(),
-                    opaqueColor = PassTheme.colors.noteInteractionNormMajor1,
-                    weakestColor = PassTheme.colors.noteInteractionNormMinor2,
+                    actionColor = PassTheme.colors.noteInteractionNorm,
+                    iconColor = PassTheme.colors.noteInteractionNormMajor1,
+                    iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor1,
                     onCloseClick = onUpClick,
                     onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) }
                 )

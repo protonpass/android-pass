@@ -8,17 +8,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Composable
 fun AccountInfo(modifier: Modifier = Modifier, state: AccountUiState) {
     Column(
-        modifier = modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
+        modifier = modifier.roundedContainerNorm()
     ) {
         SettingOption(
             text = state.email ?: "",

@@ -15,7 +15,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.container.roundedContainer
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.SettingOption
 
 @Composable
@@ -30,7 +30,7 @@ fun AboutSection(
             style = ProtonTheme.typography.defaultSmallWeak,
         )
         Column(
-            modifier = Modifier.roundedContainer(ProtonTheme.colors.separatorNorm)
+            modifier = Modifier.roundedContainerNorm()
         ) {
             SettingOption(
                 text = stringResource(R.string.settings_option_privacy_policy),

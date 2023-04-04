@@ -1,5 +1,7 @@
 package proton.android.pass.featureitemdetail.impl.login
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -122,7 +124,9 @@ fun LoginDetail(
                         ItemDetailTopBar(
                             isLoading = state.isLoading,
                             isInTrash = state.itemUiModel.state == ItemState.Trashed.value,
-                            color = PassTheme.colors.loginInteractionNormMajor1,
+                            actionColor = PassTheme.colors.loginInteractionNormMajor1,
+                            iconColor = PassTheme.colors.loginInteractionNormMajor2,
+                            iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
                             onUpClick = onUpClick,
                             onEditClick = {
                                 onEditClick(
@@ -140,6 +144,8 @@ fun LoginDetail(
                 ) { padding ->
                     LoginContent(
                         modifier = Modifier
+                            .fillMaxSize()
+                            .background(PassTheme.colors.itemDetailBackground)
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
                         itemUiModel = state.itemUiModel,

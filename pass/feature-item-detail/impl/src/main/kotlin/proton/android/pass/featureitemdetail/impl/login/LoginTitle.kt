@@ -27,7 +27,13 @@ fun LoginTitle(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        LoginIcon(size = 60, text = title, website = website, packageName = packageName)
+        LoginIcon(
+            size = 60,
+            shape = PassTheme.shapes.squircleMediumLargeShape,
+            text = title,
+            website = website,
+            packageName = packageName
+        )
         ItemTitleText(text = title)
     }
 }

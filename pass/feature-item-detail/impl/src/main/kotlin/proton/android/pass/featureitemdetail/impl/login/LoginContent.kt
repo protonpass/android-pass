@@ -37,6 +37,7 @@ fun LoginContent(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         LoginTitle(
+            modifier = Modifier.padding(0.dp, 12.dp),
             title = itemUiModel.name,
             website = itemType.websites.firstOrNull(),
             packageName = itemType.packageInfoSet.minByOrNull { it.packageName.value }?.packageName?.value

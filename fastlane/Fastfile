@@ -65,7 +65,7 @@ platform :android do
   desc "Run Unit tests"
   lane :unitTests do
     gradle(task: "testDebugUnitTest")
-    gradle(task: "testDevDebugUnitTest")
+    gradle(task: "testDevDebugUnitTest -x :pass:screenshot-tests:testDevDebugUnitTest")
   end
 
   desc "Verify screenshot tests"

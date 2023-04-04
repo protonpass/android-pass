@@ -38,6 +38,7 @@ fun BottomSheetCancelConfirm(
             isLoading = false,
             color = PassTheme.colors.textDisabled,
             onClick = { if (!isLoading) onCancel() },
+            buttonHeight = 26.dp,
             text = {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
@@ -52,6 +53,7 @@ fun BottomSheetCancelConfirm(
             isLoading = isLoading,
             color = PassTheme.colors.loginInteractionNormMajor1,
             onClick = onConfirm,
+            buttonHeight = 26.dp,
             text = {
                 Text(
                     modifier = Modifier.fillMaxWidth(),

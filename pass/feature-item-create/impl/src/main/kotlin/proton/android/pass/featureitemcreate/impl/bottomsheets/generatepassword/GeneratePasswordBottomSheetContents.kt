@@ -2,6 +2,7 @@ package proton.android.pass.featureitemcreate.impl.bottomsheets.generatepassword
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -43,6 +44,7 @@ fun GeneratePasswordBottomSheetContent(
         )
         CircleButton(
             modifier = Modifier.fillMaxWidth(),
+            contentPadding = PaddingValues(14.dp),
             color = PassTheme.colors.loginInteractionNormMajor1,
             onClick = { onConfirm(state.password) }
         ) {

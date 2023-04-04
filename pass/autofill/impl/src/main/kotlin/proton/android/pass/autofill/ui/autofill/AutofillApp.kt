@@ -1,6 +1,5 @@
 package proton.android.pass.autofill.ui.autofill
 
-import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
@@ -10,9 +9,6 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.autofill.entities.AutofillMappings
@@ -21,7 +17,6 @@ import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.preferences.ThemePreference
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun AutofillApp(
     modifier: Modifier = Modifier,
@@ -42,16 +37,6 @@ fun AutofillApp(
         systemUiController.systemBarsDarkContentEnabled = !isDark
     }
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        val notificationsPermissionState = rememberPermissionState(
-            android.Manifest.permission.POST_NOTIFICATIONS
-        )
-        LaunchedEffect(notificationsPermissionState.status.isGranted) {
-            if (!notificationsPermissionState.status.isGranted) {
-                notificationsPermissionState.launchPermissionRequest()
-            }
-        }
-    }
     PassTheme(isDark = isDark) {
         Scaffold(
             modifier = modifier,

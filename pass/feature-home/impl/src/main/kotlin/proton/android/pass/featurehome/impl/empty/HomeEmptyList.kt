@@ -25,8 +25,7 @@ fun HomeEmptyList(
     modifier: Modifier = Modifier,
     onCreateLoginClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
-    onCreateNoteClick: () -> Unit,
-    onCreatePasswordClick: () -> Unit,
+    onCreateNoteClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -47,7 +46,6 @@ fun HomeEmptyList(
                 icon = CoreR.drawable.ic_proton_user,
                 onClick = onCreateLoginClick,
             )
-
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.home_empty_vault_create_alias),
@@ -56,7 +54,6 @@ fun HomeEmptyList(
                 icon = CoreR.drawable.ic_proton_alias,
                 onClick = onCreateAliasClick,
             )
-
             HomeEmptyButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = stringResource(R.string.home_empty_vault_create_note),
@@ -64,15 +61,6 @@ fun HomeEmptyList(
                 textColor = PassTheme.colors.noteInteractionNormMajor1,
                 icon = CoreR.drawable.ic_proton_notepad_checklist,
                 onClick = onCreateNoteClick,
-            )
-
-            HomeEmptyButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(R.string.home_empty_vault_create_password),
-                backgroundColor = PassTheme.colors.passwordInteractionNormMinor2,
-                textColor = PassTheme.colors.passwordInteractionNormMajor1,
-                icon = CoreR.drawable.ic_proton_key,
-                onClick = onCreatePasswordClick,
             )
         }
     }
@@ -88,8 +76,7 @@ fun HomeEmptyListPreview(
             HomeEmptyList(
                 onCreateLoginClick = {},
                 onCreateAliasClick = {},
-                onCreateNoteClick = {},
-                onCreatePasswordClick = {}
+                onCreateNoteClick = {}
             )
         }
     }

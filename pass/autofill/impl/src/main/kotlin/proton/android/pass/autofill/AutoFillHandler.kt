@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.extensions.addSaveInfo
-import proton.android.pass.autofill.service.R
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.AndroidUtils
 import proton.android.pass.log.api.PassLogger
@@ -41,7 +40,8 @@ object AutoFillHandler {
     ) {
         val windowNode = getWindowNodes(request.fillContexts.last()).lastOrNull()
         if (windowNode?.rootViewNode == null) {
-            callback.onFailure(context.getString(R.string.error_cant_find_matching_fields))
+            PassLogger.i(TAG, "No window node found")
+            callback.onSuccess(null)
             return
         }
 
@@ -102,7 +102,8 @@ object AutoFillHandler {
         }
         responseBuilder.addSaveInfo(assistInfo)
         return if (!currentCoroutineContext().isActive) {
-            callback.onFailure(context.getString(R.string.error_credentials_not_found))
+            PassLogger.i(TAG, "Job was cancelled")
+            callback.onSuccess(null)
         } else {
             telemetryManager.sendEvent(AutofillDisplayed(AutofillTriggerSource.Source))
             callback.onSuccess(responseBuilder.build())

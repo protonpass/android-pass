@@ -1,18 +1,27 @@
 package proton.android.pass.data.impl.usecases
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.usersettings.domain.usecase.GetOrganization
+import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import proton.android.pass.data.api.usecases.GetUserPlan
 import javax.inject.Inject
 
 class GetUserPlanImpl @Inject constructor(
-    private val getOrganization: GetOrganization
+    private val getSubscription: GetCurrentSubscription
 ) : GetUserPlan {
 
     override suspend fun invoke(userId: UserId): String {
-        val organization = getOrganization.invoke(userId, refresh = true)
+        // If user does not have a subscription it means they are in the free plan
+        val subscription = getSubscription.invoke(userId) ?: return FREE_PLAN_NAME
+        val plan = subscription
+            .plans
+            .firstOrNull { it.type == ACTIVE_PLAN_TYPE }
+            ?: return FREE_PLAN_NAME
 
-        // If the user does not have an organization it means that they are not in a paid plan
-        return organization?.planName ?: "free"
+        return plan.title
+    }
+
+    companion object {
+        private const val FREE_PLAN_NAME = "free"
+        private const val ACTIVE_PLAN_TYPE = 1
     }
 }

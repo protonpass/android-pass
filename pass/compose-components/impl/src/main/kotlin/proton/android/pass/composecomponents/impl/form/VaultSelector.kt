@@ -38,7 +38,7 @@ fun VaultSelector(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onVaultClicked)
-            .padding(16.dp),
+            .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

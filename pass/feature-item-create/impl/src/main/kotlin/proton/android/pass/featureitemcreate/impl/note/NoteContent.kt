@@ -1,5 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.note
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
@@ -41,6 +42,16 @@ internal fun NoteContent(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
     )
+
+    BackHandler(
+        enabled = bottomSheetState.isVisible,
+        onBack = {
+            scope.launch {
+                bottomSheetState.hide()
+            }
+        }
+    )
+
     PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {

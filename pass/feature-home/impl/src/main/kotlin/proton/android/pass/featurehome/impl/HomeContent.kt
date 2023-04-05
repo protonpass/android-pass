@@ -194,11 +194,7 @@ internal fun HomeContent(
                             onCreateNoteClick = {
                                 val shareId = uiState.homeListUiState.selectedShare.map { it.id }
                                 onAddItemClick(shareId, ItemTypeUiState.Note)
-                            },
-                            onCreatePasswordClick = {
-                                val shareId = uiState.homeListUiState.selectedShare.map { it.id }
-                                onAddItemClick(shareId, ItemTypeUiState.Password)
-                            },
+                            }
                         )
                     }
                 },

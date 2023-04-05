@@ -40,7 +40,7 @@ fun TitleSection(
                 condition = !isRounded,
                 ifTrue = {
                     roundedContainer(ProtonTheme.colors.separatorNorm)
-                        .padding(16.dp, 10.dp, 0.dp, 10.dp)
+                        .padding(start = 16.dp, top = 10.dp, end = 4.dp, bottom = 10.dp)
                 }
             )
             .focusRequester(focusRequester),

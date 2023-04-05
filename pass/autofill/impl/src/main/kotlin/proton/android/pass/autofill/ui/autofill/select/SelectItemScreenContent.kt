@@ -39,8 +39,6 @@ internal fun SelectItemScreenContent(
     if (showAssociateDialog) {
         AssociateAutofillItemDialog(
             itemUiModel = itemClicked.value(),
-            appName = packageInfo?.appName,
-            webDomain = webDomain,
             onAssociateAndAutofill = {
                 onItemClicked(it, true)
                 showAssociateDialog = false

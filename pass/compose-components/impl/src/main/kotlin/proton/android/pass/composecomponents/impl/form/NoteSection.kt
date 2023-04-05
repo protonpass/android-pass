@@ -34,7 +34,7 @@ fun NoteSection(
                 condition = !isRounded,
                 ifTrue = {
                     roundedContainer(ProtonTheme.colors.separatorNorm)
-                        .padding(0.dp, 16.dp)
+                        .padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp)
                 }
             ),
         textStyle = ProtonTheme.typography.default(enabled),

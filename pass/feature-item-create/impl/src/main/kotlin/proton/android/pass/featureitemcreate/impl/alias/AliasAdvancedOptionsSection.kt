@@ -44,7 +44,7 @@ fun AliasAdvancedOptionsSection(
         modifier = modifier
     ) {
         ProtonTextField(
-            modifier = modifier.padding(16.dp),
+            modifier = modifier.padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 4.dp),
             textStyle = ProtonTheme.typography.default,
             label = {
                 ProtonTextFieldLabel(

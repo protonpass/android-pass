@@ -32,7 +32,7 @@ internal fun UsernameInput(
     onFocus: (Boolean) -> Unit
 ) {
     ProtonTextField(
-        modifier = modifier.padding(0.dp, 16.dp),
+        modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
         value = value,
         onChange = onChange,
         textStyle = ProtonTheme.typography.default(isEditAllowed && canUpdateUsername),

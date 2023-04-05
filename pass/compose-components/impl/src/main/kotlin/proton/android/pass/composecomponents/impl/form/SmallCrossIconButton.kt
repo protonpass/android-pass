@@ -17,7 +17,11 @@ fun SmallCrossIconButton(
     tint: Color = ProtonTheme.colors.iconWeak,
     onClick: () -> Unit
 ) {
-    IconButton(modifier = modifier, enabled = enabled, onClick = { onClick() }) {
+    IconButton(
+        modifier = modifier,
+        enabled = enabled,
+        onClick = { onClick() }
+    ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_cross_small),
             contentDescription = stringResource(R.string.small_cross_icon_content_description),

@@ -42,7 +42,6 @@ dependencies {
 
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
-    implementation(libs.commons.codec)
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.key)
     implementation(libs.core.user)

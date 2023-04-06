@@ -1,12 +1,12 @@
 package proton.android.pass.crypto.impl.context
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import org.apache.commons.codec.binary.Base64
 import org.junit.Assert.assertThrows
 import org.junit.Test
+import proton.android.pass.crypto.api.Base64
+import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.error.BadTagException
-import proton.android.pass.crypto.api.EncryptionKey
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 

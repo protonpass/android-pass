@@ -6,4 +6,6 @@ data class VaultWithItemCount(
     val trashedItemCount: Long
 )
 
-fun List<VaultWithItemCount>.sorted(): List<VaultWithItemCount> = sortedBy { it.vault.name }
+fun List<VaultWithItemCount>.sorted(): List<VaultWithItemCount> = sortedBy {
+    it.vault.name.lowercase()
+}

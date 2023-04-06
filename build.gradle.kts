@@ -103,7 +103,7 @@ allprojects {
 
 fladle {
     debugApk.set("$rootDir/app/build/outputs/apk/devBlack/debug/app-dev-black-debug.apk")
-    serviceAccountCredentials.set(project.layout.projectDirectory.file("$rootDir/app/google-services.json"))
+    serviceAccountCredentials.set(File("/tmp/service-account.json"))
     devices.set(
         listOf(
             mapOf("model" to "NexusLowRes", "version" to "\"27\""),

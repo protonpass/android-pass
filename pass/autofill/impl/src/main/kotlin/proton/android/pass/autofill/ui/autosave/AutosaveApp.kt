@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.autofill.entities.SaveInformation
@@ -44,23 +45,25 @@ fun AutoSaveApp(
     }
 
     PassTheme(isDark = isDark) {
-        Scaffold(
-            modifier = modifier,
-            snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
-        ) { padding ->
-            AutosaveAppContent(
-                modifier = Modifier
-                    .background(PassTheme.colors.backgroundNorm)
-                    .systemBarsPadding()
-                    .imePadding()
-                    .padding(padding),
-                info = info,
-                onAutoSaveSuccess = {
-                    viewModel.onItemAutoSaved()
-                    onAutoSaveSuccess()
-                },
-                onAutoSaveCancel = onAutoSaveCancel
-            )
+        ProvideWindowInsets {
+            Scaffold(
+                modifier = modifier,
+                snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
+            ) { padding ->
+                AutosaveAppContent(
+                    modifier = Modifier
+                        .background(PassTheme.colors.backgroundNorm)
+                        .systemBarsPadding()
+                        .imePadding()
+                        .padding(padding),
+                    info = info,
+                    onAutoSaveSuccess = {
+                        viewModel.onItemAutoSaved()
+                        onAutoSaveSuccess()
+                    },
+                    onAutoSaveCancel = onAutoSaveCancel
+                )
+            }
         }
     }
 }

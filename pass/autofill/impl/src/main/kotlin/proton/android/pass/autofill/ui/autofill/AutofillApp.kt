@@ -9,6 +9,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.autofill.entities.AutofillMappings
@@ -38,22 +39,24 @@ fun AutofillApp(
     }
 
     PassTheme(isDark = isDark) {
-        Scaffold(
-            modifier = modifier,
-            snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
-        ) { padding ->
-            AutofillAppContent(
-                modifier = Modifier
-                    .background(PassTheme.colors.backgroundNorm)
-                    .systemBarsPadding()
-                    .imePadding()
-                    .padding(padding),
-                autofillAppState = autofillUiState.autofillAppState,
-                selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),
-                isFingerprintRequired = autofillUiState.isFingerprintRequiredPreference,
-                onAutofillSuccess = onAutofillSuccess,
-                onAutofillCancel = onAutofillCancel
-            )
+        ProvideWindowInsets {
+            Scaffold(
+                modifier = modifier,
+                snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
+            ) { padding ->
+                AutofillAppContent(
+                    modifier = Modifier
+                        .background(PassTheme.colors.backgroundNorm)
+                        .systemBarsPadding()
+                        .imePadding()
+                        .padding(padding),
+                    autofillAppState = autofillUiState.autofillAppState,
+                    selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),
+                    isFingerprintRequired = autofillUiState.isFingerprintRequiredPreference,
+                    onAutofillSuccess = onAutofillSuccess,
+                    onAutofillCancel = onAutofillCancel
+                )
+            }
         }
     }
 }

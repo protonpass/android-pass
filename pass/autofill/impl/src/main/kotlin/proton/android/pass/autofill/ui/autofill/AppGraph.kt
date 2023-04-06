@@ -14,6 +14,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
+import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
@@ -33,7 +34,8 @@ fun NavGraphBuilder.appGraph(
     selectedAutofillItem: AutofillItem?,
     onAutofillSuccess: (AutofillMappings) -> Unit,
     onAutofillCancel: () -> Unit,
-    onAutofillItemReceived: (AutofillItem) -> Unit
+    onAutofillItemReceived: (AutofillItem) -> Unit,
+    dismissBottomSheet: (() -> Unit) -> Unit
 ) {
     authGraph(
         onNavigateBack = onAutofillCancel,
@@ -85,5 +87,10 @@ fun NavGraphBuilder.appGraph(
                 backDestination = CreateLogin
             )
         }
+    )
+    createAliasGraph(
+        dismissBottomSheet = dismissBottomSheet,
+        onAliasCreatedSuccess = { appNavigator.onBackClick() },
+        onBackClick = { appNavigator.onBackClick() }
     )
 }

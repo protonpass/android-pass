@@ -48,6 +48,7 @@ protobuf = "3.21.12"
 gradlePlugin-android = "7.4.1"
 gradlePlugin-dependency-analysis = "1.19.0"
 gradlePlugin-doctor = "0.8.1"
+gradlePlugin-fulladle = "0.17.4"
 gradlePlugin-paparazzi = "1.2.0"
 gradlePlugin-ksp = "1.7.20-1.0.8"
 gradlePlugin-protobuf = "0.8.19"
@@ -86,6 +87,7 @@ zxing = "3.5.1"
 gradlePlugin-application = { id = "com.android.application", version.ref = "gradlePlugin-android" }
 gradlePlugin-dependency-analysis = { id = "com.autonomousapps.dependency-analysis", version.ref = "gradlePlugin-dependency-analysis" }
 gradlePlugin-doctor = { id = "com.osacky.doctor", version.ref = "gradlePlugin-doctor" }
+gradlePlugin-fulladle = { id = "com.osacky.fulladle", version.ref = "gradlePlugin-fulladle" }
 gradlePlugin-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 gradlePlugin-ksp = { id = "com.google.devtools.ksp", version.ref = "gradlePlugin-ksp" }
 gradlePlugin-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }

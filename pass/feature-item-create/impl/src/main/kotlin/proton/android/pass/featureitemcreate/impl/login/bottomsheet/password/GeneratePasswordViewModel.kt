@@ -3,13 +3,11 @@ package proton.android.pass.featureitemcreate.impl.login.bottomsheet.password
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonui.api.PasswordGenerator
 import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordUiState
@@ -47,9 +45,7 @@ class GeneratePasswordViewModel @Inject constructor(
     }
 
     fun onConfirm() = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            clipboardManager.copyToClipboard(state.value.password, isSecure = true)
-        }
+        clipboardManager.copyToClipboard(state.value.password, isSecure = true)
         snackbarDispatcher(GeneratePasswordSnackbarMessage.CopiedToClipboard)
     }
 

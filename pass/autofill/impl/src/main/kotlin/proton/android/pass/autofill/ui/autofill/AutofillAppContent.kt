@@ -2,20 +2,29 @@ package proton.android.pass.autofill.ui.autofill
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import kotlinx.coroutines.launch
 import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
+import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.navigation.api.rememberAppNavigator
 
@@ -43,30 +52,58 @@ fun AutofillAppContent(
     }
 
     val viewModel = hiltViewModel<AutofillAppViewModel>()
-    val appNavigator = rememberAppNavigator()
-    AnimatedNavHost(
-        modifier = modifier.defaultMinSize(minHeight = 200.dp),
-        navController = appNavigator.navController,
-        startDestination = startDestination
+    val bottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+    val appNavigator = rememberAppNavigator(
+        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
+    )
+    val coroutineScope = rememberCoroutineScope()
+    PassModalBottomSheetLayout(
+        modifier = Modifier.systemBarsPadding().imePadding(),
+        bottomSheetNavigator = appNavigator.bottomSheetNavigator
     ) {
-        appGraph(
-            appNavigator = appNavigator,
-            autofillAppState = autofillAppState,
-            selectedAutofillItem = selectedAutofillItem,
-            onAutofillSuccess = onAutofillSuccess,
-            onAutofillCancel = onAutofillCancel,
-            onAutofillItemReceived = { autofillItem ->
-                val source = if (selectedAutofillItem == null) {
-                    // We didn't have an item selected, so the user must have opened the app
-                    AutofillTriggerSource.App
-                } else {
-                    // We had an item selected
-                    AutofillTriggerSource.Source
-                }
-                viewModel.onAutofillItemSelected(source)
-                onAutofillSuccess(viewModel.getMappings(autofillItem, autofillAppState))
-            }
-        )
+        AnimatedNavHost(
+            modifier = modifier.defaultMinSize(minHeight = 200.dp),
+            navController = appNavigator.navController,
+            startDestination = startDestination
+        ) {
+            appGraph(
+                appNavigator = appNavigator,
+                autofillAppState = autofillAppState,
+                selectedAutofillItem = selectedAutofillItem,
+                onAutofillSuccess = onAutofillSuccess,
+                onAutofillCancel = onAutofillCancel,
+                onAutofillItemReceived = { autofillItem ->
+                    val source = if (selectedAutofillItem == null) {
+                        // We didn't have an item selected, so the user must have opened the app
+                        AutofillTriggerSource.App
+                    } else {
+                        // We had an item selected
+                        AutofillTriggerSource.Source
+                    }
+                    viewModel.onAutofillItemSelected(source)
+                    onAutofillSuccess(viewModel.getMappings(autofillItem, autofillAppState))
+                },
+                dismissBottomSheet = { callback ->
+                    coroutineScope.launch {
+                        bottomSheetState.hide()
+                        callback()
+                    }
+                },
+            )
+        }
     }
 }
 
+@ExperimentalMaterialNavigationApi
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun rememberBottomSheetNavigator(
+    sheetState: ModalBottomSheetState,
+): BottomSheetNavigator {
+    return remember(sheetState) {
+        BottomSheetNavigator(sheetState = sheetState)
+    }
+}

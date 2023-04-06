@@ -41,6 +41,11 @@ import proton.android.pass.featureitemcreate.impl.login.bottomsheet.password.Gen
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
+private enum class ActionAfterHideKeyboard {
+    ShowBottomSheet,
+    CreateAlias
+}
+
 @OptIn(ExperimentalMaterialApi::class, ExperimentalComposeUiApi::class)
 @Composable
 internal fun LoginContent(
@@ -87,14 +92,25 @@ internal fun LoginContent(
         mutableStateOf(LoginBottomSheetContentType.GeneratePassword)
     }
     var showRemoveAliasDialog by rememberSaveable { mutableStateOf(false) }
-    var showBottomSheetWhenKeyboardDisappears by rememberSaveable { mutableStateOf(false) }
+    var actionWhenKeyboardDisappears by remember { mutableStateOf<ActionAfterHideKeyboard?>(null) }
 
     val keyboardState by keyboardAsState()
-    LaunchedEffect(keyboardState, showBottomSheetWhenKeyboardDisappears) {
-        if (!keyboardState && showBottomSheetWhenKeyboardDisappears) {
-            scope.launch {
-                bottomSheetState.forceExpand()
-                showBottomSheetWhenKeyboardDisappears = false // Clear flag
+    LaunchedEffect(keyboardState, actionWhenKeyboardDisappears) {
+        if (!keyboardState) {
+            when (actionWhenKeyboardDisappears) {
+                ActionAfterHideKeyboard.ShowBottomSheet -> {
+                    scope.launch {
+                        bottomSheetState.forceExpand()
+                        actionWhenKeyboardDisappears = null // Clear flag
+                    }
+                }
+                ActionAfterHideKeyboard.CreateAlias -> {
+                    scope.launch {
+                        onCreateAlias(uiState.selectedVault!!.vault.shareId, uiState.loginItem.title.some())
+                        actionWhenKeyboardDisappears = null // Clear flag
+                    }
+                }
+                null -> Unit
             }
         }
     }
@@ -192,15 +208,19 @@ internal fun LoginContent(
                             bottomSheetState.show()
                         } else {
                             // If keyboard is present, do it in a deferred way
-                            showBottomSheetWhenKeyboardDisappears = true
+                            actionWhenKeyboardDisappears = ActionAfterHideKeyboard.ShowBottomSheet
                             keyboardController?.hide()
                         }
                     }
                 },
                 onCreateAliasClick = {
-                    scope.launch {
-                        bottomSheetState.hide()
+                    if (!keyboardState) {
+                        // If keyboard is hidden, call the action directly
                         onCreateAlias(uiState.selectedVault!!.vault.shareId, uiState.loginItem.title.toOption())
+                    } else {
+                        // If keyboard is present, do it in a deferred way
+                        actionWhenKeyboardDisappears = ActionAfterHideKeyboard.CreateAlias
+                        keyboardController?.hide()
                     }
                 },
                 onAliasOptionsClick = {

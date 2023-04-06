@@ -57,7 +57,7 @@ fun UpdateAlias(
         AliasContent(
             uiState = viewState,
             topBarActionName = stringResource(id = R.string.action_save),
-            canEdit = false,
+            isCreateMode = false,
             isEditAllowed = viewState.isLoadingState == IsLoadingState.NotLoading,
             showVaultSelector = false,
             onUpClick = onExit,

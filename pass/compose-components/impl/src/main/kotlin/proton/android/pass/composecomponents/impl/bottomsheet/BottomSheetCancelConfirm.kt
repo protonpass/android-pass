@@ -23,6 +23,7 @@ import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
 fun BottomSheetCancelConfirm(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
+    confirmText: String = stringResource(R.string.bottomsheet_confirm_button),
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
 ) {
@@ -57,7 +58,7 @@ fun BottomSheetCancelConfirm(
             text = {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(R.string.bottomsheet_confirm_button),
+                    text = confirmText,
                     style = PassTypography.body3RegularInverted,
                     textAlign = TextAlign.Center
                 )

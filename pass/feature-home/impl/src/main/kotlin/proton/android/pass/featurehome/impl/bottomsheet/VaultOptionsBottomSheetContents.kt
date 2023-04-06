@@ -72,7 +72,7 @@ private fun removeVault(onRemove: () -> Unit): BottomSheetItem =
         override val leftIcon: (@Composable () -> Unit)
             get() = {
                 BottomSheetItemIcon(
-                    iconId = me.proton.core.presentation.R.drawable.ic_proton_trash,
+                    iconId = me.proton.core.presentation.R.drawable.ic_proton_trash_cross,
                     tint = ProtonTheme.colors.notificationError
                 )
             }

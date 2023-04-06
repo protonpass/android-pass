@@ -11,7 +11,7 @@
     <string name="snackbar_retrieve_vault_error">Vault not found</string>
 
     <string name="vault_delete_dialog_title">Delete vault</string>
-    <string name="vault_delete_dialog_body">Do you want to permanently delete %1$s? Please write the vault name to confirm:</string>
+    <string name="vault_delete_dialog_body">This will permanently delete the vault __VAULT_NAME__ and all its contents. Enter the vault name to confirm deletion.</string>
     <string name="vault_delete_dialog_placeholder">Vault name</string>
     <string name="vault_delete_dialog_cancel_action">Cancel</string>
     <string name="vault_delete_dialog_delete_action">Delete</string>

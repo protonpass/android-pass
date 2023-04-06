@@ -7,7 +7,7 @@ import me.proton.core.key.domain.decryptAndVerifyData
 import me.proton.core.key.domain.getArmored
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.User
-import org.apache.commons.codec.binary.Base64
+import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.error.InvalidSignature
 import javax.inject.Inject

@@ -6,7 +6,7 @@ import me.proton.core.key.domain.encryptAndSignData
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
-import org.apache.commons.codec.binary.Base64
+import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag

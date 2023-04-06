@@ -20,6 +20,7 @@ plugins {
     alias(libs.plugins.gradlePlugin.proton.detekt)
     alias(libs.plugins.gradlePlugin.dependency.analysis)
     alias(libs.plugins.gradlePlugin.doctor)
+    alias(libs.plugins.gradlePlugin.fulladle)
     alias(libs.plugins.gradlePlugin.application) apply false
     alias(libs.plugins.gradlePlugin.library) apply false
     alias(libs.plugins.gradlePlugin.test) apply false
@@ -98,4 +99,16 @@ allprojects {
             }
         }
     }
+}
+
+fladle {
+    debugApk.set("$rootDir/app/build/outputs/apk/devBlack/debug/app-dev-black-debug.apk")
+    serviceAccountCredentials.set(project.layout.projectDirectory.file("$rootDir/app/google-services.json"))
+    devices.set(
+        listOf(
+            mapOf("model" to "NexusLowRes", "version" to "\"27\""),
+            mapOf("model" to "Pixel2.arm", "version" to "\"33\""),
+        )
+    )
+    recordVideo.set(false)
 }

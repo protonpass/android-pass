@@ -78,7 +78,7 @@ platform :android do
     sh("../scripts/ci/installFirebase.sh")
     sh("../scripts/ci/setupGoogleJson.sh")
     sh("../scripts/ci/setupGoogleCloud.sh")
-    sh("../scripts/launchFirebaseInstrumentedTests.sh")
+    gradle(task: "runFlank")
   end
 
   desc "Publish dev build to firebase group"

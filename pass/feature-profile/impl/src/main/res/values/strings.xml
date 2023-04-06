@@ -10,7 +10,7 @@
     <string name="profile_option_rating">Rate app</string>
     <string name="profile_option_autofill">Autofill</string>
     <string name="profile_option_autofill_subtitle">Automatically fill in your usernames and passwords.</string>
-    <string name="profile_option_fingerprint_subtitle">Unlock Proton pass with a glance.</string>
+    <string name="profile_option_fingerprint_subtitle">Unlock Proton pass with a touch.</string>
     <string name="profile_option_fingerprint">Fingerprint</string>
 
     <string name="profile_error_biometry_failed_to_start">Could not start the biometric authentication</string>

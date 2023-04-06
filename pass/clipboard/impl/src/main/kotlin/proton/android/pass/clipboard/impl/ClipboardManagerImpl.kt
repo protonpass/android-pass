@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Build
 import android.os.PersistableBundle
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -39,7 +40,9 @@ class ClipboardManagerImpl @Inject constructor(
         if (isSecure) {
             applySecureFlag(clipData)
         }
-        androidClipboard.setPrimaryClip(clipData)
+        runBlocking(Dispatchers.IO) {
+            androidClipboard.setPrimaryClip(clipData)
+        }
         when (runBlocking { clearClipboardPreferenceFlow.first() }) {
             ClearClipboardPreference.Never -> {}
             ClearClipboardPreference.S69 -> scheduler.schedule(69, text)

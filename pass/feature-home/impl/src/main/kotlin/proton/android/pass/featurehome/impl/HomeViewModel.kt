@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
@@ -457,30 +456,23 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             when (homeClipboardType) {
                 HomeClipboardType.Alias -> {
-                    withContext(Dispatchers.IO) {
-                        clipboardManager.copyToClipboard(text = text)
-                    }
+                    clipboardManager.copyToClipboard(text = text)
                     snackbarDispatcher(HomeSnackbarMessage.AliasCopied)
                 }
                 HomeClipboardType.Note -> {
-                    withContext(Dispatchers.IO) {
-                        clipboardManager.copyToClipboard(text = text)
-                    }
+                    clipboardManager.copyToClipboard(text = text)
+
                     snackbarDispatcher(HomeSnackbarMessage.NoteCopied)
                 }
                 HomeClipboardType.Password -> {
-                    withContext(Dispatchers.IO) {
-                        clipboardManager.copyToClipboard(
-                            text = encryptionContextProvider.withEncryptionContext { decrypt(text) },
-                            isSecure = true
-                        )
-                    }
+                    clipboardManager.copyToClipboard(
+                        text = encryptionContextProvider.withEncryptionContext { decrypt(text) },
+                        isSecure = true
+                    )
                     snackbarDispatcher(HomeSnackbarMessage.PasswordCopied)
                 }
                 HomeClipboardType.Username -> {
-                    withContext(Dispatchers.IO) {
-                        clipboardManager.copyToClipboard(text = text)
-                    }
+                    clipboardManager.copyToClipboard(text = text)
                     snackbarDispatcher(HomeSnackbarMessage.UsernameCopied)
                 }
             }

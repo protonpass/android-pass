@@ -3,11 +3,9 @@ package proton.android.pass.autofill.ui.autofill
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import proton.android.pass.autofill.AutofillDone
 import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.entities.AutofillAppState
@@ -54,9 +52,7 @@ class AutofillAppViewModel @Inject constructor(
                 viewModelScope.launch {
                     getTotpCodeFromUri(totpUri)
                         .onSuccess {
-                            withContext(Dispatchers.IO) {
-                                clipboardManager.copyToClipboard(it)
-                            }
+                            clipboardManager.copyToClipboard(it)
                             toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
                         }
                         .onFailure {

@@ -9,7 +9,6 @@ import proton.android.pass.featuretrash.R
 fun ConfirmDeleteItemDialog(
     show: Boolean,
     isLoading: Boolean,
-    itemName: String,
     onDismiss: () -> Unit,
     onConfirm: () -> Unit
 ) {
@@ -18,7 +17,7 @@ fun ConfirmDeleteItemDialog(
         isLoading = isLoading,
         isConfirmActionDestructive = true,
         title = stringResource(R.string.alert_confirm_delete_item_dialog_title),
-        message = stringResource(R.string.alert_confirm_delete_item_dialog_message, itemName),
+        message = stringResource(R.string.alert_confirm_delete_item_dialog_message),
         confirmText = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_ok),
         cancelText = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_cancel),
         onDismiss = onDismiss,

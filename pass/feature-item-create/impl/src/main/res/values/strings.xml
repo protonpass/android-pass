@@ -58,7 +58,8 @@
     <string name="title_create_alias">Create alias</string>
     <string name="field_alias_title">Alias address</string>
     <string name="field_alias_hint">Alias username</string>
-    <string name="field_mailboxes_title">Forwarded to</string>
+    <string name="field_mailboxes_creation_title">Forward to</string>
+    <string name="field_mailboxes_edit_title">Forwarding to</string>
     <string name="field_alias_you_are_about_to_create">You are about to create</string>
     <string name="field_alias_show_advanced_options">Show advanced options</string>
     <string name="field_alias_hide_advanced_options">Hide advanced options</string>
@@ -78,7 +79,7 @@
     <string name="cannot_retrieve_alias_options">Cannot retrieve alias options</string>
     <string name="alias_mailbox_dialog_confirm_button">OK</string>
     <string name="alias_mailbox_dialog_cancel_button">Cancel</string>
-    <string name="alias_mailbox_dialog_title">Destination mailbox</string>
+    <string name="alias_mailbox_dialog_title">Forward to</string>
 
     <!--  Create password  -->
     <string name="password_copied_to_clipboard">Password copied</string>

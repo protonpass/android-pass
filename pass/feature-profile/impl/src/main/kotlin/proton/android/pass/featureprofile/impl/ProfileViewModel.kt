@@ -3,7 +3,6 @@ package proton.android.pass.featureprofile.impl
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.biometry.BiometryAuthError
@@ -162,9 +160,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun copyAppVersion(appVersion: String) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            clipboardManager.copyToClipboard(appVersion)
-        }
+        clipboardManager.copyToClipboard(appVersion)
         snackbarDispatcher(AppVersionCopied)
     }
 

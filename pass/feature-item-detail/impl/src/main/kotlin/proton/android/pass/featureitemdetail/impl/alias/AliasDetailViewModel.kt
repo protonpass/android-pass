@@ -6,14 +6,12 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
@@ -121,9 +119,7 @@ class AliasDetailViewModel @Inject constructor(
 
     fun onCopyAlias(alias: String) {
         viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                clipboardManager.copyToClipboard(alias)
-            }
+            clipboardManager.copyToClipboard(alias)
             snackbarDispatcher(AliasCopiedToClipboard)
         }
     }

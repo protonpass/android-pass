@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +15,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
@@ -159,32 +157,24 @@ class LoginDetailViewModel @Inject constructor(
                 decrypt(itemType.password)
             }
         }
-        withContext(Dispatchers.IO) {
-            clipboardManager.copyToClipboard(text = text, isSecure = true)
-        }
+        clipboardManager.copyToClipboard(text = text, isSecure = true)
         snackbarDispatcher(PasswordCopiedToClipboard)
     }
 
     fun copyUsernameToClipboard() = viewModelScope.launch {
         val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
         val itemType = state.itemUiModel.itemType as? ItemType.Login ?: return@launch
-        withContext(Dispatchers.IO) {
-            clipboardManager.copyToClipboard(itemType.username)
-        }
+        clipboardManager.copyToClipboard(itemType.username)
         snackbarDispatcher(UsernameCopiedToClipboard)
     }
 
     fun copyWebsiteToClipboard(website: String) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            clipboardManager.copyToClipboard(website)
-        }
+        clipboardManager.copyToClipboard(website)
         snackbarDispatcher(WebsiteCopiedToClipboard)
     }
 
     fun copyTotpCodeToClipboard(code: String) = viewModelScope.launch {
-        withContext(Dispatchers.IO) {
-            clipboardManager.copyToClipboard(code)
-        }
+        clipboardManager.copyToClipboard(code)
         snackbarDispatcher(TotpCopiedToClipboard)
     }
 

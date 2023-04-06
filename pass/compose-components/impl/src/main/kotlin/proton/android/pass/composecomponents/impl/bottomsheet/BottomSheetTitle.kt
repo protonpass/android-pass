@@ -40,7 +40,7 @@ fun BottomSheetTitlePreview(
     PassTheme(isDark = input) {
         Surface {
             BottomSheetTitle(
-                title = "Generate Password"
+                title = "Generate password"
             )
         }
     }

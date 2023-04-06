@@ -52,7 +52,7 @@ fun CreateAliasScreen(
         AliasContent(
             uiState = viewState,
             topBarActionName = stringResource(id = R.string.title_create_alias),
-            canEdit = true,
+            isCreateMode = true,
             isEditAllowed = viewState.isLoadingState == IsLoadingState.NotLoading,
             showVaultSelector = viewState.showVaultSelector,
             onUpClick = onExit,

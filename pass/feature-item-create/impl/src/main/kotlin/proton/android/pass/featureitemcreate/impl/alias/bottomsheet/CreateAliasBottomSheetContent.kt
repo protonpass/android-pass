@@ -90,6 +90,7 @@ fun CreateAliasBottomSheetContent(
         }
         MailboxSection(
             mailboxes = state.aliasItem.mailboxes,
+            isCreateMode = false,
             isEditAllowed = state.aliasItem.mailboxes.size > 1,
             isLoading = state.isLoadingState.value(),
             onMailboxClick = { showMailboxesDialog = true }

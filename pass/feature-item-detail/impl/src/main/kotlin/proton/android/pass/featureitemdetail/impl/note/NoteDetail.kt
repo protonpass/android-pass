@@ -122,7 +122,6 @@ fun NoteDetail(
                     )
                 }
                 ConfirmDeleteItemDialog(
-                    itemName = state.itemUiModel.name,
                     isLoading = state.isLoading,
                     show = shouldShowDeleteItemDialog,
                     onConfirm = {

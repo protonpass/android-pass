@@ -30,11 +30,17 @@ import proton.android.pass.featureitemcreate.impl.R
 fun MailboxSection(
     modifier: Modifier = Modifier,
     mailboxes: List<SelectedAliasMailboxUiModel>,
+    isCreateMode: Boolean,
     isEditAllowed: Boolean,
     isLoading: Boolean,
     onMailboxClick: () -> Unit
 ) {
     val selectedMailboxes = mailboxes.filter { it.selected }
+    val labelText = if (isCreateMode) {
+        stringResource(R.string.field_mailboxes_creation_title)
+    } else {
+        stringResource(R.string.field_mailboxes_edit_title)
+    }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -48,7 +54,7 @@ fun MailboxSection(
         Column(
             modifier = Modifier.weight(1f),
         ) {
-            ProtonTextFieldLabel(text = stringResource(R.string.field_mailboxes_title))
+            ProtonTextFieldLabel(text = labelText)
             if (isLoading) {
                 Text(modifier = Modifier.fillMaxWidth().placeholder(), text = "")
             } else {
@@ -85,6 +91,7 @@ fun MailboxSectionPreview(
                         selected = true
                     )
                 ),
+                isCreateMode = true,
                 isEditAllowed = input.second,
                 onMailboxClick = {}
             )

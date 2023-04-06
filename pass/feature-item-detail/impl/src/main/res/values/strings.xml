@@ -10,7 +10,7 @@
     <!-- Alias details -->
     <string name="field_alias_title">Alias address</string>
     <string name="alias_copied_to_clipboard">Alias copied</string>
-    <string name="alias_detail_field_mailboxes_title">Forwarded to</string>
+    <string name="alias_detail_field_mailboxes_title">Forwarding to</string>
 
     <!-- Note details -->
     <string name="field_detail_note_title">Note</string>
@@ -59,7 +59,8 @@
     <!-- Bottomsheet -->
     <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>
     <string name="migrate_item_detail_bottom_sheet">Move to another vault</string>
-    <string name="migrate_item_confirm_title_bottom_sheet">This item will be moved to another vault. Do you want to continue?</string>
+    <string name="migrate_item_confirm_title_bottom_sheet">Move this item to the following vault?</string>
+    <string name="migrate_item_confirm_confirm_button">Move</string>
     <string name="migrate_item_success_snackbar">Item moved</string>
     <string name="migrate_item_error_snackbar">Error moving the item</string>
 

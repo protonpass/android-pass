@@ -18,7 +18,7 @@ internal fun CreateAliasForm(
     modifier: Modifier = Modifier,
     aliasItem: AliasItem,
     selectedVault: VaultWithItemCount?,
-    canEdit: Boolean,
+    isCreateMode: Boolean,
     onTitleRequiredError: Boolean,
     onAliasRequiredError: Boolean,
     onInvalidAliasError: Boolean,
@@ -50,7 +50,7 @@ internal fun CreateAliasForm(
             vaultColor = selectedVault?.vault?.color,
             onVaultClicked = onVaultSelectorClick
         )
-        if (canEdit) {
+        if (isCreateMode) {
             CreateAliasSection(
                 state = aliasItem,
                 onChange = onPrefixChange,
@@ -68,6 +68,7 @@ internal fun CreateAliasForm(
         }
         MailboxSection(
             mailboxes = aliasItem.mailboxes,
+            isCreateMode = isCreateMode,
             isEditAllowed = isEditAllowed && aliasItem.mailboxes.size > 1,
             isLoading = isLoading,
             onMailboxClick = onMailboxClick

@@ -55,6 +55,7 @@ fun MigrateConfirmVaultContents(
 
         BottomSheetCancelConfirm(
             isLoading = state.isLoading.value(),
+            confirmText = stringResource(R.string.migrate_item_confirm_confirm_button),
             onCancel = onCancel,
             onConfirm = onConfirm
         )

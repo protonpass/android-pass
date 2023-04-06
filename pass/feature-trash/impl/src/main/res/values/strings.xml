@@ -3,7 +3,7 @@
     <string name="trash_action_restore">Restore</string>
     <string name="bottomsheet_delete_permanently">Delete permanently</string>
 
-    <string name="alert_confirm_delete_item_dialog_title">Permanently delete?</string>
-    <string name="alert_confirm_delete_item_dialog_message">You are going to delete \'%s\' irreversibly, are you sure?</string>
+    <string name="alert_confirm_delete_item_dialog_title">Delete permanently?</string>
+    <string name="alert_confirm_delete_item_dialog_message">This action is irreversible.</string>
 
 </resources>

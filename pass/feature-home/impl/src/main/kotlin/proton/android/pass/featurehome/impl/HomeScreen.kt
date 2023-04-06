@@ -356,7 +356,6 @@ fun HomeScreen(
             )
 
             ConfirmDeleteItemDialog(
-                itemName = selectedItem?.name ?: "",
                 isLoading = actionState == ActionState.Loading,
                 show = shouldShowDeleteItemDialog,
                 onConfirm = {

@@ -7,7 +7,7 @@
     <string name="bottomsheet_cancel_button">Cancel</string>
 
     <!-- Generate password bottomsheet -->
-    <string name="bottomsheet_generate_password_title">Generate Password</string>
+    <string name="bottomsheet_generate_password_title">Generate password</string>
     <string name="special_characters">Special characters (!&amp;*)</string>
     <string name="character_count">%s characters</string>
     <string name="regenerate_password_icon_content_description">Regenerate pass icon</string>
@@ -17,7 +17,7 @@
 
     <!-- Empty list -->
     <string name="empty_list_title">Add your first item</string>
-    <string name="empty_search_results_title">Find an alias, login or note</string>
+    <string name="empty_search_results_title">Find an alias, login, or note</string>
     <string name="no_search_results_image_content_description">No search results image</string>
     <string name="empty_list_open_extension">Visit web extension</string>
     <string name="empty_list_create_item_button">Create new item</string>

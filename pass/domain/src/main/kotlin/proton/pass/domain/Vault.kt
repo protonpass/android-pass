@@ -8,4 +8,4 @@ data class Vault(
     val isPrimary: Boolean
 )
 
-fun List<Vault>.sorted(): List<Vault> = sortedBy { it.name }
+fun List<Vault>.sorted(): List<Vault> = sortedBy { it.name.lowercase() }

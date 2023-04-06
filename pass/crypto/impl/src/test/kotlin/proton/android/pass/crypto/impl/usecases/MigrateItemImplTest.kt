@@ -1,8 +1,8 @@
 package proton.android.pass.crypto.impl.usecases
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import org.apache.commons.codec.binary.Base64
 import org.junit.Test
+import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.utils.TestUtils

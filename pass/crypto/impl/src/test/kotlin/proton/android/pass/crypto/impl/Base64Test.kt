@@ -1,7 +1,7 @@
 package proton.android.pass.crypto.impl
 
-import org.apache.commons.codec.binary.Base64
 import org.junit.Test
+import proton.android.pass.crypto.api.Base64
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 

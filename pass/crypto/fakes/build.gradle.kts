@@ -15,7 +15,6 @@ android {
     }
 }
 dependencies {
-    implementation(libs.commons.codec)
     implementation(libs.core.crypto)
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.key)

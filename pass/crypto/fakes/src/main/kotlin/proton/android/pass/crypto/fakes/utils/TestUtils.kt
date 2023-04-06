@@ -14,7 +14,7 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
-import org.apache.commons.codec.binary.Base64
+import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.test.TestUtils

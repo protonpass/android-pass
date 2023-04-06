@@ -6,10 +6,10 @@
     <string name="sort_by_title_desc">Title (Z-A)</string>
     <string name="sort_by_creation_asc">Oldest to newest</string>
     <string name="sort_by_creation_desc">Newest to oldest</string>
-    <string name="sort_by_modification_date">Most Recent</string>
+    <string name="sort_by_modification_date">Most recent</string>
 
     <string name="home_empty_vault_title">Your vault is empty</string>
-    <string name="home_empty_vault_subtitle">Let\'s get started by creating your first item</string>
+    <string name="home_empty_vault_subtitle">Get started by creating your first item.</string>
     <string name="home_empty_vault_create_login">Create a login</string>
     <string name="home_empty_vault_create_alias">Create a Hide My Email alias</string>
     <string name="home_empty_vault_create_note">Create a note</string>
@@ -82,7 +82,7 @@
 
     <!-- Trash -->
     <string name="trash_empty_list_title">Trash empty</string>
-    <string name="trash_empty_list_message">Deleted items will be moved here first</string>
+    <string name="trash_empty_list_message">Items moved to trash appear here.</string>
     <string name="bottomsheet_trash_all_items_title">Trash</string>
     <string name="bottomsheet_restore_all_items">Restore all items</string>
     <string name="bottomsheet_empty_trash">Empty trash</string>

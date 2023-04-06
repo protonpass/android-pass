@@ -82,7 +82,7 @@ private fun createRemoveAlias(onRemoveAlias: () -> Unit): BottomSheetItem =
         override val leftIcon: (@Composable () -> Unit)
             get() = {
                 BottomSheetItemIcon(
-                    iconId = me.proton.core.presentation.R.drawable.ic_proton_trash,
+                    iconId = me.proton.core.presentation.R.drawable.ic_proton_cross_circle,
                     tint = ProtonTheme.colors.notificationError
                 )
             }

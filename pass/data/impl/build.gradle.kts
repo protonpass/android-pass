@@ -52,7 +52,6 @@ dependencies {
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.work.runtime.ktx)
-    implementation(libs.commons.codec)
     implementation(libs.core.account)
     implementation(libs.core.accountManager)
     implementation(libs.core.challenge)

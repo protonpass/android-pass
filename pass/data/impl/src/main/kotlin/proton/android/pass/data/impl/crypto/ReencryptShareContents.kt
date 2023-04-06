@@ -1,7 +1,7 @@
 package proton.android.pass.data.impl.crypto
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import org.apache.commons.codec.binary.Base64
+import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.context.EncryptionTag

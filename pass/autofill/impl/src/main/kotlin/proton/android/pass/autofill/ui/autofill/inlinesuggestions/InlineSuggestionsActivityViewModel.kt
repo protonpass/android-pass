@@ -5,7 +5,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +12,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
@@ -132,9 +130,7 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
                 viewModelScope.launch {
                     getTotpCodeFromUri(totpUri)
                         .onSuccess {
-                            withContext(Dispatchers.IO) {
-                                clipboardManager.copyToClipboard(it)
-                            }
+                            clipboardManager.copyToClipboard(it)
                             toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
                         }
                         .onFailure { PassLogger.w(TAG, "Could not copy totp code") }

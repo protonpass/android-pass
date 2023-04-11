@@ -45,7 +45,7 @@ dagger = "2.44.2"
 # Google
 protobuf = "3.21.12"
 # Gradle
-gradlePlugin-android = "7.4.1"
+gradlePlugin-android = "7.4.2"
 gradlePlugin-dependency-analysis = "1.19.0"
 gradlePlugin-doctor = "0.8.1"
 gradlePlugin-fulladle = "0.17.4"

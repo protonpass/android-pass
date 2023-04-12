@@ -7,8 +7,8 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
-import proton.android.pass.data.impl.fakes.TestGetUserPlan
 import proton.android.pass.data.impl.fakes.TestLocalTelemetryDataSource
 import proton.android.pass.data.impl.fakes.TestPassDatabase
 import proton.android.pass.data.impl.fakes.TestRemoteTelemetryDataSource

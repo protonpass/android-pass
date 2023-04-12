@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity android:name="proton.android.pass.test.HiltComponentActivity" />
+    </application>
+
+</manifest>

@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainer
-import proton.android.pass.composecomponents.impl.form.NoteSection
 import proton.android.pass.composecomponents.impl.form.VaultSelector
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
@@ -57,10 +56,9 @@ internal fun CreateNoteItemForm(
             enabled = enabled,
             onValueChanged = onTitleChange
         )
-        NoteSection(
+        FullNoteSection(
             modifier = modifier.weight(1f),
             enabled = enabled,
-            isRounded = true,
             value = noteItem.note,
             onChange = onNoteChange
         )

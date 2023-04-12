@@ -254,10 +254,11 @@ class HomeViewModel @Inject constructor(
     @OptIn(FlowPreview::class)
     private val textFilterListItemFlow = combine(
         sortedListItemFlow,
-        searchQueryState.debounce(DEBOUNCE_TIMEOUT)
-    ) { result, searchQuery ->
+        searchQueryState.debounce(DEBOUNCE_TIMEOUT),
+        isInSearchModeState
+    ) { result, searchQuery, isInSearchMode ->
         isProcessingSearchState.update { IsProcessingSearchState.NotLoading }
-        if (searchQuery.isNotBlank()) {
+        if (isInSearchMode && searchQuery.isNotBlank()) {
             result.map { grouped ->
                 grouped.map { GroupedItemList(it.key, filterByQuery(it.items, searchQuery)) }
             }
@@ -273,10 +274,7 @@ class HomeViewModel @Inject constructor(
         isInSuggestionsModeState,
         isInSearchModeState
     ) { recentSearchResult, result, itemTypeSelection, isInSuggestionsMode, isInSearchMode ->
-        if (
-            isInSuggestionsMode &&
-            isInSearchMode
-        ) {
+        if (isInSuggestionsMode && isInSearchMode) {
             recentSearchResult
         } else {
             result.map { grouped ->
@@ -292,7 +290,6 @@ class HomeViewModel @Inject constructor(
                     .toImmutableList()
             }
         }
-
     }.flowOn(Dispatchers.Default)
 
     private val refreshingLoadingFlow = combine(

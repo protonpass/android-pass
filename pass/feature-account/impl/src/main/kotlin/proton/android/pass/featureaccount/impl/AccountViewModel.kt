@@ -27,7 +27,11 @@ class AccountViewModel @Inject constructor(
                 LoadingResult.Loading -> AccountUiState()
                 is LoadingResult.Success -> {
                     val plan = getUserPlan(it.data.userId)
-                    AccountUiState(it.data.email ?: "", plan, IsLoadingState.NotLoading)
+                    AccountUiState(
+                        it.data.email ?: "",
+                        plan.humanReadable,
+                        IsLoadingState.NotLoading
+                    )
                 }
             }
         }

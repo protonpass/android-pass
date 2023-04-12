@@ -6,13 +6,13 @@ import kotlinx.serialization.json.JsonPrimitive
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.repositories.TelemetryRepository
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
 import proton.android.pass.data.impl.local.LocalTelemetryDataSource
 import proton.android.pass.data.impl.remote.RemoteTelemetryDataSource
 import proton.android.pass.data.impl.requests.EventInfo
 import proton.android.pass.data.impl.requests.TelemetryRequest
-import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.impl.util.DimensionsSerializer
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
@@ -48,7 +48,7 @@ class TelemetryRepositoryImpl @Inject constructor(
             if (all.isNotEmpty()) {
                 all.chunked(MAX_EVENT_BATCH_SIZE).forEach { eventChunk ->
                     runCatching {
-                        performSend(userId, planName, eventChunk)
+                        performSend(userId, planName.internal, eventChunk)
                     }.onSuccess {
                         val min = eventChunk.first().id
                         val max = eventChunk.last().id

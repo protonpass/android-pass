@@ -7,6 +7,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.data.api.usecases.UserPlan
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
 import proton.android.pass.data.impl.fakes.TestLocalTelemetryDataSource
@@ -79,7 +80,7 @@ class TelemetryRepositoryTest {
     fun `sendEvents can work with empty results`() = runTest {
         // GIVEN
         accountManager.sendPrimaryUserId(UserId("123"))
-        getUserPlan.setResult(Result.success("plan"))
+        getUserPlan.setResult(Result.success(UserPlan("plan", "plan")))
 
         // WHEN
         instance.sendEvents()
@@ -162,7 +163,7 @@ class TelemetryRepositoryTest {
         event: String
     ) {
         accountManager.sendPrimaryUserId(UserId(userId))
-        getUserPlan.setResult(Result.success(plan))
+        getUserPlan.setResult(Result.success(UserPlan(plan, plan)))
 
         (0 until numItems).forEach { idx ->
             localDataSource.store(

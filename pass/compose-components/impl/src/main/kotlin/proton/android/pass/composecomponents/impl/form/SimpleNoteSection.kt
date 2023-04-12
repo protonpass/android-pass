@@ -16,27 +16,20 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.roundedContainer
 
 @Composable
-fun NoteSection(
+fun SimpleNoteSection(
     modifier: Modifier = Modifier,
     value: String,
-    isRounded: Boolean = false,
     enabled: Boolean = true,
     onChange: (String) -> Unit
 ) {
     ProtonTextField(
         modifier = modifier
-            .applyIf(
-                condition = !isRounded,
-                ifTrue = {
-                    roundedContainer(ProtonTheme.colors.separatorNorm)
-                        .padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp)
-                }
-            ),
+            .roundedContainer(ProtonTheme.colors.separatorNorm)
+            .padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
         textStyle = ProtonTheme.typography.default(enabled),
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_note_title)) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_note_hint)) },
@@ -45,18 +38,14 @@ fun NoteSection(
         onChange = onChange,
         singleLine = false,
         moveToNextOnEnter = false,
-        leadingIcon = if (!isRounded) {
-            {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_note),
-                    contentDescription = null,
-                    tint = ProtonTheme.colors.iconWeak
-                )
-            }
-        } else {
-            null
+        leadingIcon = {
+            Icon(
+                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_note),
+                contentDescription = null,
+                tint = ProtonTheme.colors.iconWeak
+            )
         },
-        trailingIcon = if (!isRounded && value.isNotBlank() && enabled) {
+        trailingIcon = if (value.isNotBlank() && enabled) {
             { SmallCrossIconButton { onChange("") } }
         } else {
             null
@@ -70,12 +59,12 @@ class ThemedNoteInputPreviewProvider :
 
 @Preview
 @Composable
-fun NoteInputPreview(
+fun SimpleNoteInputPreview(
     @PreviewParameter(ThemedNoteInputPreviewProvider::class) input: Pair<Boolean, NoteInputPreviewParameter>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
-            NoteSection(
+            SimpleNoteSection(
                 value = input.second.value,
                 enabled = input.second.enabled,
                 onChange = {}

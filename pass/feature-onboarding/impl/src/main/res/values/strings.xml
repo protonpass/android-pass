@@ -3,12 +3,12 @@
 
     <string name="on_boarding_autofill_content">Let Proton Pass fill in login details for you. No typing or copy-paste required.</string>
     <string name="on_boarding_autofill_title">Log in to apps instantly</string>
-    <string name="on_boarding_autofill_button">Turn on autofill</string>
-    <string name="on_boarding_fingerprint_content">Enable fingerprint unlock so no one else can access your Proton Pass.</string>
-    <string name="on_boarding_fingerprint_title">Keep sensitive info secure</string>
-    <string name="on_boarding_fingerprint_button">Enable biometric unlock</string>
-    <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead use an email alias that you can discard anytime.</string>
-    <string name="on_boarding_last_page_title">Enjoy a spam-free inbox</string>
+    <string name="on_boarding_autofill_button">Autofill with Proton Pass</string>
+    <string name="on_boarding_fingerprint_content">Set Proton Pass to unlock with your fingerprint so only you have access.</string>
+    <string name="on_boarding_fingerprint_title">Protect your most sensitive data</string>
+    <string name="on_boarding_fingerprint_button">Enable fingerprint unlock</string>
+    <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead hide it with email aliases— a Proton Pass exclusive.</string>
+    <string name="on_boarding_last_page_title">Control what lands in your inbox</string>
     <string name="on_boarding_last_page_button">Get started</string>
     <string name="on_boarding_skip">Not now</string>
 

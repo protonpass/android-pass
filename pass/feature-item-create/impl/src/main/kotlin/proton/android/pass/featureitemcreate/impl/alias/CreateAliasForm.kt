@@ -9,7 +9,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import proton.android.pass.composecomponents.impl.form.NoteSection
+import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.pass.domain.VaultWithItemCount
 
@@ -73,7 +73,7 @@ internal fun CreateAliasForm(
             isLoading = isLoading,
             onMailboxClick = onMailboxClick
         )
-        NoteSection(
+        SimpleNoteSection(
             value = aliasItem.note,
             enabled = isEditAllowed,
             onChange = onNoteChange

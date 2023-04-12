@@ -12,6 +12,8 @@ fun <T> ConfirmDialog(
     modifier: Modifier = Modifier,
     title: String,
     message: String,
+    confirmText: String = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_ok),
+    cancelText: String = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_cancel),
     state: T?,
     onDismiss: () -> Unit,
     onConfirm: (T) -> Unit
@@ -28,12 +30,12 @@ fun <T> ConfirmDialog(
                 onConfirm(value)
                 onDismiss()
             }) {
-                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_ok))
+                Text(text = confirmText)
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_cancel))
+                Text(text = cancelText)
             }
         }
     )

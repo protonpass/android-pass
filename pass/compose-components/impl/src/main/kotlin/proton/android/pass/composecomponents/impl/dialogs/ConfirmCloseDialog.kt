@@ -18,6 +18,7 @@ fun ConfirmCloseDialog(
         modifier = modifier,
         title = stringResource(R.string.confirm_close_dialog_title),
         message = stringResource(R.string.confirm_close_dialog_message),
+        confirmText = stringResource(R.string.confirm_close_dialog_close_button),
         state = true,
         onDismiss = onCancel,
         onConfirm = { onConfirm() }

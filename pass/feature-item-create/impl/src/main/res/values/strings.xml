@@ -16,7 +16,7 @@
     <string name="item_type_password_description">Generate a secure password</string>
 
     <!-- Generate password bottomsheet -->
-    <string name="generate_password_copy">Copy &amp; close</string>
+    <string name="generate_password_copy">Copy and close</string>
 
     <!-- Create Login -->
     <string name="title_create_login">Create login</string>
@@ -33,7 +33,8 @@
     <string name="sticky_button_use_account_email">Use %1$s</string>
     <string name="sticky_button_create_alias_icon_content_description">Create alias icon</string>
 
-    <string name="delete_login_alias_dialog_text">This will delete the alias, please confirm.</string>
+    <string name="delete_login_alias_dialog_title">Remove alias?</string>
+    <string name="delete_login_alias_dialog_text">This alias will not be saved.</string>
     <string name="delete_login_alias_dialog_cancel">Cancel</string>
     <string name="delete_login_alias_dialog_confirm">@string/action_remove</string>
 
@@ -61,7 +62,7 @@
     <string name="field_mailboxes_creation_title">Forward to</string>
     <string name="field_mailboxes_edit_title">Forwarding to</string>
     <string name="field_alias_you_are_about_to_create">You are about to create</string>
-    <string name="field_alias_show_advanced_options">Show advanced options</string>
+    <string name="field_alias_show_advanced_options">Advanced options</string>
     <string name="field_alias_hide_advanced_options">Hide advanced options</string>
     <string name="field_alias_prefix">Prefix</string>
     <string name="field_alias_suffix">Suffix</string>
@@ -80,6 +81,9 @@
     <string name="alias_mailbox_dialog_confirm_button">OK</string>
     <string name="alias_mailbox_dialog_cancel_button">Cancel</string>
     <string name="alias_mailbox_dialog_title">Forward to</string>
+
+    <!-- Create note -->
+    <string name="note_hint">Note</string>
 
     <!--  Create password  -->
     <string name="password_copied_to_clipboard">Password copied</string>

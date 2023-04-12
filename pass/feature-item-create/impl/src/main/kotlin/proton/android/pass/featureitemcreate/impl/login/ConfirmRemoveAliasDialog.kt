@@ -11,6 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonAlertDialog
+import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.default
 import me.proton.core.compose.theme.headlineSmall
@@ -31,7 +32,9 @@ fun ConfirmRemoveAliasDialog(
     ProtonAlertDialog(
         modifier = modifier,
         onDismissRequest = onDismiss,
-        title = {},
+        title = {
+            ProtonDialogTitle(title = stringResource(R.string.delete_login_alias_dialog_title))
+        },
         confirmButton = {
             Text(
                 modifier = Modifier

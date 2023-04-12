@@ -21,7 +21,7 @@ class GetUserPlanImpl @Inject constructor(
     }
 
     companion object {
-        private const val FREE_PLAN_NAME = "free"
+        private const val FREE_PLAN_NAME = "Proton Free"
         private const val ACTIVE_PLAN_TYPE = 1
     }
 }

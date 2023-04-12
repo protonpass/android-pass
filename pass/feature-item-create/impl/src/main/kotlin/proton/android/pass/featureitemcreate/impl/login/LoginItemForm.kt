@@ -24,7 +24,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.composecomponents.impl.form.NoteSection
+import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AddTotp
@@ -125,7 +125,7 @@ internal fun LoginItemForm(
                 focusLastWebsite = focusLastWebsite,
                 doesWebsiteIndexHaveError = doesWebsiteIndexHaveError
             )
-            NoteSection(
+            SimpleNoteSection(
                 value = loginItem.note,
                 enabled = isEditAllowed,
                 onChange = onNoteChange

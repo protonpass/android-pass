@@ -1,9 +1,10 @@
-package proton.android.pass.data.impl.fakes
+package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.GetUserPlan
+import javax.inject.Inject
 
-class TestGetUserPlan : GetUserPlan {
+class TestGetUserPlan @Inject constructor() : GetUserPlan {
 
     private var result: Result<String> = Result.failure(IllegalStateException("value not set"))
 

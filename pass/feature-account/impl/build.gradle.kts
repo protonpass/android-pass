@@ -13,6 +13,8 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
+
+        testInstrumentationRunner = "proton.android.pass.test.HiltRunner"
     }
 
     buildFeatures {
@@ -21,6 +23,18 @@ android {
 
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
+    }
+
+    testOptions {
+        managedDevices {
+            devices {
+                maybeCreate<com.android.build.api.dsl.ManagedVirtualDevice>("pixel2api30").apply {
+                    device = "Pixel 2"
+                    apiLevel = 30
+                    systemImageSource = "aosp-atd"
+                }
+            }
+        }
     }
 }
 
@@ -39,6 +53,7 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
     debugImplementation(libs.androidx.compose.uiTestManifest)
 
+    implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
@@ -52,4 +67,8 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.log.api)
+
+    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.data.fakes)
 }

@@ -17,6 +17,7 @@ fun SettingsScreen(
     onClipboardClick: () -> Unit,
     onUpClick: () -> Unit,
     onViewLogsClick: () -> Unit,
+    onPrimaryVaultClick: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -34,6 +35,7 @@ fun SettingsScreen(
         onTermsClick = {
             BrowserUtils.openWebsite(context, "https://proton.me/legal/terms")
         },
-        onUpClick = onUpClick
+        onUpClick = onUpClick,
+        onPrimaryVaultClick = onPrimaryVaultClick
     )
 }

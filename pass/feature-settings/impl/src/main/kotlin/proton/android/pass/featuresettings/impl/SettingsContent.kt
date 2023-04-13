@@ -27,6 +27,7 @@ fun SettingsContent(
     onForceSyncClick: () -> Unit,
     onPrivacyClick: () -> Unit,
     onTermsClick: () -> Unit,
+    onPrimaryVaultClick: () -> Unit,
     onUpClick: () -> Unit
 ) {
     Scaffold(
@@ -54,6 +55,10 @@ fun SettingsContent(
                 theme = state.themePreference,
                 onSelectThemeClick = onSelectThemeClick,
                 onClipboardClick = onClipboardClick
+            )
+            PrimaryVaultSection(
+                primaryVault = state.primaryVault,
+                onPrimaryVaultClick = onPrimaryVaultClick
             )
             AboutSection(
                 onPrivacyClick = onPrivacyClick,

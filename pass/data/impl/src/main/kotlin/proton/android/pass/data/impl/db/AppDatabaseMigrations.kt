@@ -23,4 +23,10 @@ object AppDatabaseMigrations {
             OrganizationDatabase.MIGRATION_2.migrate(database)
         }
     }
+
+    val MIGRATION_7_8 = object : Migration(7, 8) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("UPDATE AccountMetadataEntity SET product = 'Pass'")
+        }
+    }
 }

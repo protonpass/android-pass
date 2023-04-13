@@ -56,7 +56,7 @@ fun AutoSaveApp(
                         .systemBarsPadding()
                         .imePadding()
                         .padding(padding),
-                    info = info,
+                    saveInformation = info,
                     onAutoSaveSuccess = {
                         viewModel.onItemAutoSaved()
                         onAutoSaveSuccess()

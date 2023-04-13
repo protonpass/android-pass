@@ -3,6 +3,7 @@ package proton.android.pass.featureaccount.impl
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -37,8 +38,9 @@ fun AccountContent(
     ) { contentPadding ->
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
+                .fillMaxHeight()
                 .background(PassTheme.colors.backgroundStrong)
+                .verticalScroll(rememberScrollState())
                 .padding(contentPadding)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)

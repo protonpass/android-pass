@@ -40,7 +40,7 @@ fun NavGraphBuilder.profileGraph(
                 )
             },
             onOpenTwitter = {
-                BrowserUtils.openWebsite(context, "https://twitter.com/ProtonPass")
+                BrowserUtils.openWebsite(context, "https://twitter.com/proton_pass")
             },
             onOpenReddit = {
                 BrowserUtils.openWebsite(context, "https://www.reddit.com/r/ProtonPass/")

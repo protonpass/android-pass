@@ -24,8 +24,13 @@ class RemoteImageFetcherImpl @Inject constructor(
             for (size in listOf(128, 64, 32)) {
                 try {
                     val res = getFavicon(domain, size = size)
+                    if (res.code() == HTTP_NO_CONTENT) {
+                        emit(null)
+                        return@invoke
+                    }
+
                     val body = checkNotNull(res.body()?.bytes())
-                    val mimeType = res.headers().get("Content-Type")
+                    val mimeType = res.headers()["Content-Type"]
                     emit(ImageResponse(content = body, mimeType = mimeType))
                     return@invoke
                 } catch (e: ProtonErrorException) {
@@ -86,6 +91,7 @@ class RemoteImageFetcherImpl @Inject constructor(
 
     companion object {
         private const val HTTP_UNPROCESSABLE_CONTENT = 422
+        private const val HTTP_NO_CONTENT = 204
 
         private const val TAG = "RemoteImageFetcherImpl"
     }

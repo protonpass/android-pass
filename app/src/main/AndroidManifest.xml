@@ -105,7 +105,7 @@
         <!-- Core-Auth activities -->
         <activity
             android:name="me.proton.core.auth.presentation.ui.AddAccountActivity"
-            android:theme="@style/ProtonTheme.AddAccount"
+            android:theme="@style/ProtonTheme.Pass.AddAccount"
             tools:replace="theme" />
         <activity
             android:name="me.proton.core.payment.presentation.ui.BillingActivity"

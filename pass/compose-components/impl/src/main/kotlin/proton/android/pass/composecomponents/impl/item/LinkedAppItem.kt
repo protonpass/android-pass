@@ -48,11 +48,11 @@ fun LinkedAppItem(
             packageName = packageInfoUi.packageName,
             shape = CircleShape,
             emptyContent = {
-                Circle(backgroundColor = PassTheme.colors.loginInteractionNormMajor1) {
+                Circle(backgroundColor = PassTheme.colors.loginInteractionNormMinor2) {
                     Icon(
                         painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_grid_3),
                         contentDescription = stringResource(R.string.missing_app_icon_content_description),
-                        tint = PassTheme.colors.loginInteractionNormMajor1
+                        tint = PassTheme.colors.loginInteractionNorm
                     )
                 }
             }

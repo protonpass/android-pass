@@ -2,49 +2,57 @@ package proton.android.pass.autofill.ui.autosave
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import proton.android.pass.autofill.entities.SaveInformation
-import proton.android.pass.autofill.ui.autosave.save.SAVE_ITEM_ROUTE
-import proton.android.pass.autofill.ui.autosave.save.SaveItemScreen
-import proton.android.pass.featureauth.impl.AuthScreen
+import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
+import proton.android.pass.featureauth.impl.AUTH_SCREEN_ROUTE
+import proton.android.pass.navigation.api.rememberAppNavigator
+import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
-private const val AUTH_SCREEN_ROUTE = "common/auth"
-
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(
+    ExperimentalAnimationApi::class,
+    ExperimentalMaterialNavigationApi::class,
+    ExperimentalMaterialApi::class
+)
 @Composable
 fun AutosaveAppContent(
     modifier: Modifier = Modifier,
-    info: SaveInformation,
+    saveInformation: SaveInformation,
     onAutoSaveSuccess: () -> Unit,
     onAutoSaveCancel: () -> Unit
 ) {
-    val navController = rememberAnimatedNavController()
-
-    AnimatedNavHost(
-        modifier = modifier.defaultMinSize(minHeight = 200.dp),
-        navController = navController,
-        startDestination = AUTH_SCREEN_ROUTE,
+    val bottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true
+    )
+    val appNavigator = rememberAppNavigator(
+        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
+    )
+    PassModalBottomSheetLayout(
+        modifier = Modifier
+            .systemBarsPadding()
+            .imePadding(),
+        bottomSheetNavigator = appNavigator.bottomSheetNavigator
     ) {
-        composable(AUTH_SCREEN_ROUTE) {
-            AuthScreen(
-                onAuthSuccessful = {
-                    navController.navigate(SAVE_ITEM_ROUTE) {
-                        popUpTo(0)
-                    }
-                },
-                onAuthFailed = { onAutoSaveCancel() },
-                onAuthDismissed = { onAutoSaveCancel() }
-            )
-        }
-        composable(SAVE_ITEM_ROUTE) {
-            SaveItemScreen(
-                info = info,
-                onSaved = { onAutoSaveSuccess() }
+        AnimatedNavHost(
+            modifier = modifier.defaultMinSize(minHeight = 200.dp),
+            navController = appNavigator.navController,
+            startDestination = AUTH_SCREEN_ROUTE,
+        ) {
+            autosaveActivityGraph(
+                appNavigator = appNavigator,
+                info = saveInformation,
+                onAutoSaveCancel = onAutoSaveCancel,
+                onAutoSaveSuccess = onAutoSaveSuccess
             )
         }
     }

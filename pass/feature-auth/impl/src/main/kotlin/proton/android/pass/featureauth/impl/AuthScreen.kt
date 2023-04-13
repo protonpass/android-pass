@@ -9,6 +9,8 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.biometry.ContextHolder
 
+const val AUTH_SCREEN_ROUTE = "common/auth"
+
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun AuthScreen(

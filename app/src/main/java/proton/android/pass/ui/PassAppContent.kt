@@ -4,18 +4,15 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -25,6 +22,7 @@ import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
 import proton.android.pass.navigation.api.rememberAppNavigator
+import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.ui.internal.InternalDrawerState
@@ -104,16 +102,5 @@ private fun SnackBarLaunchedEffect(
             snackBarMessageLocale
         )
         onSnackBarMessageDelivered()
-    }
-}
-
-@ExperimentalMaterialNavigationApi
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-private fun rememberBottomSheetNavigator(
-    sheetState: ModalBottomSheetState,
-): BottomSheetNavigator {
-    return remember(sheetState) {
-        BottomSheetNavigator(sheetState = sheetState)
     }
 }

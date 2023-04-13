@@ -28,7 +28,7 @@ import proton.android.pass.navigation.api.AppNavigator
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
-fun NavGraphBuilder.appGraph(
+fun NavGraphBuilder.autofillActivityGraph(
     appNavigator: AppNavigator,
     autofillAppState: AutofillAppState,
     selectedAutofillItem: AutofillItem?,

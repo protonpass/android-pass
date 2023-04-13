@@ -11,5 +11,7 @@ enum class SettingsSnackbarMessage(
 ) : SnackbarMessage {
     ErrorPerformingOperation(R.string.settings_error_performing_operation, SnackbarType.ERROR),
     ErrorPerformingSync(R.string.settings_force_sync_error, SnackbarType.ERROR),
-    SyncSuccessful(R.string.settings_force_sync_success, SnackbarType.SUCCESS)
+    SyncSuccessful(R.string.settings_force_sync_success, SnackbarType.SUCCESS),
+    ChangePrimaryVaultSuccess(R.string.settings_primary_vault_change_success, SnackbarType.SUCCESS),
+    ChangePrimaryVaultError(R.string.settings_primary_vault_change_error, SnackbarType.ERROR)
 }

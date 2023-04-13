@@ -4,5 +4,5 @@ import me.proton.core.domain.entity.UserId
 import proton.pass.domain.ShareId
 
 interface MarkVaultAsPrimary {
-    suspend fun invoke(userId: UserId? = null, shareId: ShareId)
+    suspend operator fun invoke(userId: UserId? = null, shareId: ShareId)
 }

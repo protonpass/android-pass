@@ -21,8 +21,7 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideProduct(): Product =
-        Product.Drive
+    fun provideProduct(): Product = Product.Pass
 
     @Provides
     @Singleton

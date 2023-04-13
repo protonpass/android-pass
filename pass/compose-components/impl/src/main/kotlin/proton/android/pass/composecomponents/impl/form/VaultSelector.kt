@@ -33,6 +33,8 @@ fun VaultSelector(
     vaultName: String,
     color: ShareColor,
     icon: ShareIcon,
+    selectorTitle: String = stringResource(R.string.vault_selector_title),
+    trailingIcon: @Composable () -> Unit = { ChevronDownIcon() },
     onVaultClicked: () -> Unit
 ) {
     Row(
@@ -52,7 +54,7 @@ fun VaultSelector(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                text = stringResource(R.string.vault_selector_title),
+                text = selectorTitle,
                 color = PassTheme.colors.textWeak,
                 style = PassTypography.body3Regular
             )
@@ -62,7 +64,7 @@ fun VaultSelector(
             )
         }
         IconButton(onClick = onVaultClicked) {
-            ChevronDownIcon()
+            trailingIcon()
         }
     }
 }

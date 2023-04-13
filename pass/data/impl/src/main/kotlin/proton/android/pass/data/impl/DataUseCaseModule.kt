@@ -25,6 +25,7 @@ import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
+import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
 import proton.android.pass.data.api.usecases.MigrateItem
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveAccounts
@@ -75,6 +76,7 @@ import proton.android.pass.data.impl.usecases.GetSuggestedLoginItemsImpl
 import proton.android.pass.data.impl.usecases.GetUserPlanImpl
 import proton.android.pass.data.impl.usecases.GetVaultByIdImpl
 import proton.android.pass.data.impl.usecases.GetVaultWithItemCountByIdImpl
+import proton.android.pass.data.impl.usecases.MarkVaultAsPrimaryImpl
 import proton.android.pass.data.impl.usecases.MigrateItemImpl
 import proton.android.pass.data.impl.usecases.MigrateVaultImpl
 import proton.android.pass.data.impl.usecases.ObserveAccountsImpl
@@ -258,4 +260,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveSearchEntry(impl: ObserveSearchEntryImpl): ObserveSearchEntry
+
+    @Binds
+    abstract fun bindMarkVaultAsPrimaryImpl(impl: MarkVaultAsPrimaryImpl): MarkVaultAsPrimary
 }

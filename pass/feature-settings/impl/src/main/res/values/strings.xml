@@ -30,6 +30,12 @@
     <string name="settings_about_section_title">About</string>
     <string name="settings_option_privacy_policy">Privacy policy</string>
     <string name="settings_option_terms_of_service">Terms of service</string>
+    <string name="settings_primary_vault_section_title">Vaults</string>
+    <string name="settings_primary_vault_vault_selector_title">Primary vault</string>
+    <string name="settings_primary_vault_section_subtitle">You can\'t delete a primary vault.</string>
+    <string name="settings_primary_vault_change_success">The primary vault has been changed</string>
+    <string name="settings_primary_vault_change_error">Could not change the primary vault</string>
+
 
     <string name="view_logs_title">View logs</string>
     <string name="clipboard_bottomsheet_title">Clipboard</string>

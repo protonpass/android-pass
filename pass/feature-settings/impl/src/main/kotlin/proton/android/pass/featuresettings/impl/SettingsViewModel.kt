@@ -10,11 +10,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -22,6 +28,7 @@ import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.pass.domain.Vault
 import javax.inject.Inject
 
 @HiltViewModel
@@ -29,7 +36,8 @@ class SettingsViewModel @Inject constructor(
     preferencesRepository: UserPreferencesRepository,
     private val observeCurrentUser: ObserveCurrentUser,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val refreshContent: RefreshContent
+    private val refreshContent: RefreshContent,
+    observeVaults: ObserveVaults
 ) : ViewModel() {
 
     private val biometricLockState: Flow<BiometricLockState> = preferencesRepository
@@ -60,14 +68,32 @@ class SettingsViewModel @Inject constructor(
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
+    private val primaryVaultFlow: Flow<Option<Vault>> = observeVaults()
+        .map { res ->
+            when (res) {
+                LoadingResult.Loading -> None
+                is LoadingResult.Error -> {
+                    PassLogger.e(TAG, res.exception, "Error observing vaults")
+                    None
+                }
+                is LoadingResult.Success -> {
+                    val primary = res.data.firstOrNull { it.isPrimary }
+                        ?: res.data.firstOrNull()
+                    primary.toOption()
+                }
+            }
+        }
+
     val state: StateFlow<SettingsUiState> = combine(
         preferencesState,
+        primaryVaultFlow,
         isLoadingState
-    ) { preferences, loading ->
+    ) { preferences, primaryVault, loading ->
         SettingsUiState(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
-            isLoadingState = loading
+            isLoadingState = loading,
+            primaryVault = primaryVault
         )
     }.stateIn(
         scope = viewModelScope,

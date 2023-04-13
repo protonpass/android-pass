@@ -48,6 +48,7 @@ import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.featuresettings.impl.ClearClipboardOptions
 import proton.android.pass.featuresettings.impl.ClipboardSettings
 import proton.android.pass.featuresettings.impl.LogView
+import proton.android.pass.featuresettings.impl.SelectPrimaryVault
 import proton.android.pass.featuresettings.impl.Settings
 import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
@@ -157,7 +158,8 @@ fun NavGraphBuilder.appGraph(
         dismissBottomSheet = { dismissBottomSheet({}) },
         onViewLogsClick = { appNavigator.navigate(LogView) },
         onClipboardClick = { appNavigator.navigate(ClipboardSettings) },
-        onClearClipboardSettingClick = { appNavigator.navigate(ClearClipboardOptions) }
+        onClearClipboardSettingClick = { appNavigator.navigate(ClearClipboardOptions) },
+        onPrimaryVaultClick = { appNavigator.navigate(SelectPrimaryVault) }
     )
     createLoginGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },

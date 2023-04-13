@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -14,9 +14,10 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 
 @Composable
+@Suppress("UnusedPrivateMember")
 fun FeedbackBottomsheetContent(
     modifier: Modifier = Modifier,
     onSendEmail: () -> Unit,
@@ -25,13 +26,11 @@ fun FeedbackBottomsheetContent(
 ) {
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
-        items = persistentListOf(
+        items = listOf(
             sendEmail(onClick = onSendEmail),
-            bottomSheetDivider(),
-            openPassTwitter(onClick = onOpenTwitter),
-            bottomSheetDivider(),
+//            openPassTwitter(onClick = onOpenTwitter),
             openProtonReddit(onClick = onOpenReddit),
-        )
+        ).withDividers().toPersistentList()
     )
 }
 
@@ -66,6 +65,7 @@ private fun sendEmail(onClick: () -> Unit): BottomSheetItem =
         override val isDivider = false
     }
 
+@Suppress("UnusedPrivateMember")
 private fun openPassTwitter(onClick: () -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit

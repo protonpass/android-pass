@@ -34,4 +34,6 @@ fun AuthScreen(
     LaunchedEffect(Unit) {
         viewModel.init(ContextHolder.fromContext(ctx))
     }
+
+    AuthScreenContent()
 }

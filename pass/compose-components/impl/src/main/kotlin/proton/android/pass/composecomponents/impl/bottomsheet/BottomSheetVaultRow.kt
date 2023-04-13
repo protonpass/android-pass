@@ -1,12 +1,16 @@
 package proton.android.pass.composecomponents.impl.bottomsheet
 
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -22,6 +26,7 @@ fun BottomSheetVaultRow(
     vault: VaultWithItemCount,
     isSelected: Boolean,
     enabled: Boolean = true,
+    isLoading: Boolean = false,
     onVaultClick: ((ShareId) -> Unit)?
 ): BottomSheetItem =
     object : BottomSheetItem {
@@ -69,6 +74,10 @@ fun BottomSheetVaultRow(
                         iconId = me.proton.core.presentation.R.drawable.ic_proton_checkmark,
                         tint = PassTheme.colors.loginInteractionNormMajor1
                     )
+                }
+            } else if (isLoading) {
+                {
+                    CircularProgressIndicator(modifier = Modifier.size(28.dp))
                 }
             } else null
         override val onClick: (() -> Unit)? = if (onVaultClick != null && enabled) {

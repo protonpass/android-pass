@@ -204,13 +204,16 @@ fun HomeScreen(
                 )
                 HomeBottomSheetType.VaultOptions -> {
                     val showDelete = when (val share = homeUiState.homeListUiState.selectedShare) {
-                        None -> true
+                        None -> {
+                            // We are in the all vaults view, so we can't delete the primary vault
+                            selectedShare?.isPrimary != true
+                        }
                         is Some -> {
-                            val isSelectedVault = share.value.id.id != selectedShare?.id?.id
-                            val isPrimaryVault = share.value.isPrimary
-
-                            // Don't allow to delete the actively selected vault or the primary one
-                            isSelectedVault || !isPrimaryVault
+                            // We are in the vault view, so we can't delete the actively selected
+                            // vault nor the primary one
+                            val isSelectedVault = share.value.id.id == selectedShare?.id?.id
+                            val isPrimaryVault = selectedShare?.isPrimary ?: false
+                            !isSelectedVault && !isPrimaryVault
                         }
                     }
                     VaultOptionsBottomSheetContents(

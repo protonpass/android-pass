@@ -29,5 +29,6 @@ data class ShareUiModelWithItemCount(
     val activeItemCount: Long,
     val trashedItemCount: Long,
     val color: ShareColor,
-    val icon: ShareIcon
+    val icon: ShareIcon,
+    val isPrimary: Boolean
 )

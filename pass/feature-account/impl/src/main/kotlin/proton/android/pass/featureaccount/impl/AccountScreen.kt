@@ -1,7 +1,5 @@
 package proton.android.pass.featureaccount.impl
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -10,7 +8,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
-import proton.android.pass.commonui.api.PassTheme
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -23,9 +20,7 @@ fun AccountScreen(
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
     AccountContent(
-        modifier = modifier
-            .fillMaxSize()
-            .background(PassTheme.colors.backgroundStrong),
+        modifier = modifier,
         state = state,
         onSignOutClick = onSignOutClick,
         onUpClick = onUpClick,

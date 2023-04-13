@@ -36,6 +36,7 @@ object CreateLogin : NavItem(
 )
 fun NavGraphBuilder.createLoginGraph(
     initialCreateLoginUiState: InitialCreateLoginUiState = InitialCreateLoginUiState(),
+    showCreateAliasButton: Boolean = true,
     getPrimaryTotp: () -> StateFlow<String?>,
     onSuccess: (ItemUiModel) -> Unit,
     onClose: () -> Unit,
@@ -49,6 +50,7 @@ fun NavGraphBuilder.createLoginGraph(
         )
         CreateLoginScreen(
             initialContents = initialContents,
+            showCreateAliasButton = showCreateAliasButton,
             onClose = onClose,
             onSuccess = onSuccess,
             onScanTotp = onScanTotp,

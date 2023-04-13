@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -16,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.launch
 import proton.android.pass.autofill.AutofillTriggerSource
@@ -27,6 +25,7 @@ import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.navigation.api.rememberAppNavigator
+import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
 @OptIn(
     ExperimentalAnimationApi::class,
@@ -69,7 +68,7 @@ fun AutofillAppContent(
             navController = appNavigator.navController,
             startDestination = startDestination
         ) {
-            appGraph(
+            autofillActivityGraph(
                 appNavigator = appNavigator,
                 autofillAppState = autofillAppState,
                 selectedAutofillItem = selectedAutofillItem,
@@ -94,16 +93,5 @@ fun AutofillAppContent(
                 },
             )
         }
-    }
-}
-
-@ExperimentalMaterialNavigationApi
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-private fun rememberBottomSheetNavigator(
-    sheetState: ModalBottomSheetState,
-): BottomSheetNavigator {
-    return remember(sheetState) {
-        BottomSheetNavigator(sheetState = sheetState)
     }
 }

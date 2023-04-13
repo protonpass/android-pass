@@ -25,14 +25,16 @@ android {
 
 dependencies {
 
+    implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    implementation(projects.pass.preferences.api)
     implementation(projects.pass.biometry.api)
+    implementation(projects.pass.composeComponents.impl)
+    implementation(projects.pass.preferences.api)
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.log.api)
 

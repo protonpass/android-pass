@@ -29,7 +29,7 @@
     <string name="field_website_add_another">Add</string>
     <string name="sticky_button_generate_password">Generate a new password</string>
     <string name="sticky_button_generate_password_key_icon_content_description">Generate password icon</string>
-    <string name="sticky_button_create_alias">Hide my username</string>
+    <string name="sticky_button_create_alias">Hide my email</string>
     <string name="sticky_button_use_account_email">Use %1$s</string>
     <string name="sticky_button_create_alias_icon_content_description">Create alias icon</string>
 

@@ -31,6 +31,7 @@ import proton.android.pass.preferences.value
 import proton.pass.domain.Item
 import javax.inject.Inject
 import kotlin.math.min
+import proton.android.pass.composecomponents.impl.R as PassR
 
 class AutofillServiceManager @Inject constructor(
     @ApplicationContext private val context: Context,
@@ -240,7 +241,7 @@ class AutofillServiceManager @Inject constructor(
 
     @RequiresApi(Build.VERSION_CODES.R)
     private fun getIcon(): Icon {
-        val icon = Icon.createWithResource(context, R.drawable.ic_pass_logo)
+        val icon = Icon.createWithResource(context, PassR.drawable.ic_pass_logo)
         icon.setTintBlendMode(BlendMode.DST)
         return icon
     }

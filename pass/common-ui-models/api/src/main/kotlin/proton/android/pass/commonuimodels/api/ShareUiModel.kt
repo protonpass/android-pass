@@ -9,7 +9,8 @@ data class ShareUiModel(
     val id: ShareId,
     val name: String,
     val color: ShareColor,
-    val icon: ShareIcon
+    val icon: ShareIcon,
+    val isPrimary: Boolean
 ) {
     companion object {
         fun fromVault(vault: Vault) = ShareUiModel(
@@ -17,6 +18,7 @@ data class ShareUiModel(
             name = vault.name,
             color = vault.color,
             icon = vault.icon,
+            isPrimary = vault.isPrimary
         )
     }
 }

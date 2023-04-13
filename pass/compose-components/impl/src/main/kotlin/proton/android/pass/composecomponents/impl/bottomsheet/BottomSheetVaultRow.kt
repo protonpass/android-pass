@@ -102,6 +102,7 @@ fun BottomSheetVaultRowPreview(
                         vault = input.second.vault,
                         isSelected = input.second.isSelected,
                         enabled = input.second.enabled,
+                        isLoading = input.second.isLoading,
                         onVaultClick = {}
                     )
                 ).toImmutableList()

@@ -15,6 +15,10 @@ android {
     }
 }
 
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     implementation(libs.kotlinx.datetime)
     implementation(libs.onetimepassword)

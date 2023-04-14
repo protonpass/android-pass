@@ -15,6 +15,10 @@ android {
     }
 }
 
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     api(projects.pass.network.api)
     implementation(projects.pass.appConfig.api)

@@ -27,6 +27,7 @@ import proton.android.pass.commonui.api.DateFormatUtils.Format.Last60Days
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Last90Days
 import proton.android.pass.commonui.api.DateFormatUtils.Format.LastTwoWeeks
 import proton.android.pass.commonui.api.DateFormatUtils.Format.LastYear
+import proton.android.pass.commonui.api.DateFormatUtils.Format.MoreThan1Year
 import proton.android.pass.commonui.api.DateFormatUtils.Format.ThisWeek
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Today
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Yesterday
@@ -134,6 +135,7 @@ fun LazyListScope.stickyItemListHeader(key: GroupingKeys) {
                 Last60Days -> stringResource(R.string.most_recent_last_60_days)
                 Last90Days -> stringResource(R.string.most_recent_last_90_days)
                 LastYear -> stringResource(R.string.most_recent_within_the_last_year)
+                MoreThan1Year -> stringResource(R.string.most_recent_more_than_1_year)
                 else -> throw IllegalStateException("Unhandled date")
             }.apply { ListHeader(title = this@apply) }
         }

@@ -15,6 +15,10 @@ android {
     }
 }
 
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     implementation(libs.core.user)
     implementation(libs.kotlinx.collections)

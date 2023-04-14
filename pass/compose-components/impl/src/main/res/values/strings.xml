@@ -65,6 +65,7 @@
     <string name="most_recent_last_60_days">Last 60 days</string>
     <string name="most_recent_last_90_days">Last 90 days</string>
     <string name="most_recent_within_the_last_year">Within the last year</string>
+    <string name="most_recent_more_than_1_year">More than 1 year</string>
 
     <!-- Search Top Bar -->
     <string name="search_topbar_icon_content_description">Search icon</string>

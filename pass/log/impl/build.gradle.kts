@@ -15,6 +15,10 @@ android {
     }
 }
 
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     api(projects.pass.log.api)
     implementation(projects.pass.tracing.impl)

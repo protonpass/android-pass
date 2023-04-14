@@ -13,6 +13,10 @@ android {
     }
 }
 
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     implementation(libs.core.network.domain)
     implementation(libs.core.userSettings.domain)

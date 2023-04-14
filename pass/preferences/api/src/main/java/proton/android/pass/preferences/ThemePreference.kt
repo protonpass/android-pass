@@ -22,7 +22,7 @@ enum class ThemePreference {
                 THEME_SYSTEM -> System
                 THEME_LIGHT -> Light
                 THEME_DARK -> Dark
-                else -> System
+                else -> Dark
             }
     }
 }

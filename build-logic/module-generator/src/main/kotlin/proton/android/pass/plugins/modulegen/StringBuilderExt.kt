@@ -24,6 +24,10 @@ fun StringBuilder.appendAndroidLibraryPlugin(namespace: String): StringBuilder =
                 targetSdk = libs.versions.targetSdk.get().toInt()
             }
         }
+        
+        androidComponents.beforeVariants { variant ->
+            variant.enableAndroidTest = false
+        }
     """.trimIndent()
 )
 

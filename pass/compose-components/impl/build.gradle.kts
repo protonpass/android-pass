@@ -22,6 +22,10 @@ android {
     }
 }
 
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pager.indicators)

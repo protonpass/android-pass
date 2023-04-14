@@ -15,6 +15,10 @@ android {
     }
 }
 
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     implementation(projects.pass.clipboard.api)
 

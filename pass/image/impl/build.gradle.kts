@@ -15,6 +15,11 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
     }
 }
+
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     implementation(libs.coil.base)
     implementation(libs.coil.gif)

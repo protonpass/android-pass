@@ -17,6 +17,10 @@ android {
     composeOptions.kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
 }
 
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.androidx.compose.ui)

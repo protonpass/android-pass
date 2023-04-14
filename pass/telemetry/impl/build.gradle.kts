@@ -14,6 +14,11 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
     }
 }
+
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     implementation(libs.androidx.hilt.work)
     implementation(libs.androidx.work.runtime.ktx)

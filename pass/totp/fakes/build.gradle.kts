@@ -14,6 +14,11 @@ android {
         targetSdk = libs.versions.targetSdk.get().toInt()
     }
 }
+
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     implementation(projects.pass.totp.api)
     implementation(projects.pass.common.api)

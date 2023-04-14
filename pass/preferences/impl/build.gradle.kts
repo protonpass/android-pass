@@ -30,6 +30,10 @@ android {
     }
 }
 
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 protobuf {
     protoc {
         artifact = project.libs.google.protobuf.protoc.get().toString()

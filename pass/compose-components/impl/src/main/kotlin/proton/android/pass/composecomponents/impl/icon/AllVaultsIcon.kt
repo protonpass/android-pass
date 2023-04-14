@@ -7,8 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.extension.toColor
-import proton.pass.domain.ShareColor
+import proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun AllVaultsIcon(
@@ -19,9 +18,9 @@ fun AllVaultsIcon(
 ) {
     VaultIcon(
         modifier = modifier,
-        backgroundColor = ShareColor.Color1.toColor(true),
-        iconColor = ShareColor.Color1.toColor(),
-        icon = proton.android.pass.commonui.api.R.drawable.ic_vault_squares,
+        backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+        iconColor = PassTheme.colors.loginInteractionNormMajor1,
+        icon = R.drawable.ic_brand_pass,
         size = size,
         iconSize = iconSize,
         onClick = onClick

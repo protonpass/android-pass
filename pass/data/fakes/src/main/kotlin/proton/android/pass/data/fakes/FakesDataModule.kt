@@ -11,6 +11,7 @@ import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
 import proton.android.pass.data.api.usecases.DeleteVault
+import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -34,6 +35,7 @@ import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
+import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetShareById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
@@ -53,6 +55,7 @@ import proton.android.pass.data.fakes.usecases.TestUpdateVault
 
 @Module
 @InstallIn(SingletonComponent::class)
+@Suppress("TooManyFunctions")
 abstract class FakesDataModule {
 
     @Binds
@@ -169,4 +172,9 @@ abstract class FakesDataModule {
     abstract fun bindGetUserPlan(
         impl: TestGetUserPlan
     ): GetUserPlan
+
+    @Binds
+    abstract fun bindGetItemById(
+        impl: TestGetItemById
+    ): GetItemById
 }

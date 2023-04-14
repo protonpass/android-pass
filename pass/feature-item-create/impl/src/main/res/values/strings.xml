@@ -20,8 +20,8 @@
 
     <!-- Create Login -->
     <string name="title_create_login">Create login</string>
-    <string name="field_username_title">Username</string>
-    <string name="field_username_hint">Add username</string>
+    <string name="field_username_title">Username or email</string>
+    <string name="field_username_hint">Add username or email</string>
     <string name="field_password_title">Password</string>
     <string name="field_password_hint">Add password</string>
     <string name="field_website_address_title">Website</string>
@@ -108,7 +108,7 @@
     <string name="totp_secret_field_placeholder">Add secret</string>
     <string name="totp_issuer_field_placeholder">Add issuer</string>
     <string name="totp_valid_time_field_placeholder">0</string>
-    <string name="totp_create_login_field_title">TOTP</string>
+    <string name="totp_create_login_field_title">2FA token (TOTP)</string>
     <string name="totp_create_login_field_placeholder">Add one-time password code</string>
     <string name="close_scree_icon_content_description">Close screen icon</string>
 

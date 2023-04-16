@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class TestBiometryManager @Inject constructor() : BiometryManager {
 
-    private var biometryStatus: BiometryStatus? = null
+    private var biometryStatus: BiometryStatus = BiometryStatus.CanAuthenticate
 
     private val resultFlow = MutableSharedFlow<BiometryResult>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST
@@ -21,7 +21,7 @@ class TestBiometryManager @Inject constructor() : BiometryManager {
         resultFlow.tryEmit(result)
     }
 
-    override fun getBiometryStatus(): BiometryStatus = checkNotNull(biometryStatus)
+    override fun getBiometryStatus(): BiometryStatus = biometryStatus
 
     override fun launch(context: ContextHolder): Flow<BiometryResult> = resultFlow
 

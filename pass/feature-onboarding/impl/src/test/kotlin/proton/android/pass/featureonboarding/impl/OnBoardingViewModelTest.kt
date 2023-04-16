@@ -44,14 +44,6 @@ class OnBoardingViewModelTest {
     }
 
     @Test
-    fun `sends correct initial state`() = runTest {
-        viewModel = createViewModel()
-        viewModel.onBoardingUiState.test {
-            assertThat(awaitItem()).isEqualTo(OnBoardingUiState.Initial)
-        }
-    }
-
-    @Test
     fun `given no supported features should show last page`() = runTest {
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
         autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
@@ -70,11 +62,9 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given unsupported autofill should show 1 screen`() = runTest {
-        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+        autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
-            skipItems(1)
-            autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
             assertThat(awaitItem()).isEqualTo(
                 OnBoardingUiState.Initial.copy(enabledPages = setOf(Fingerprint, Last))
             )
@@ -83,11 +73,9 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given already enabled autofill should show 1 screen`() = runTest {
-        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
-            skipItems(1)
-            autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
             assertThat(awaitItem()).isEqualTo(
                 OnBoardingUiState.Initial.copy(enabledPages = setOf(Fingerprint, Last))
             )
@@ -169,10 +157,9 @@ class OnBoardingViewModelTest {
     @Test
     fun `given unsupported biometric should show 1 screen`() = runTest {
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {
-            skipItems(1)
-            autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.Disabled))
             assertThat(awaitItem()).isEqualTo(
                 OnBoardingUiState.Initial.copy(enabledPages = setOf(Autofill, Last))
             )
@@ -181,7 +168,6 @@ class OnBoardingViewModelTest {
 
     @Test
     fun `given a click on enable fingerprint should select last page`() = runTest {
-        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOurService))
         viewModel = createViewModel()
         viewModel.onBoardingUiState.test {

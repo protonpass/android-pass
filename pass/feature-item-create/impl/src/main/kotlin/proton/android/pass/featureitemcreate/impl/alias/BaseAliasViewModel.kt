@@ -4,39 +4,29 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.CannotRetrieveAliasOptions
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
 
 abstract class BaseAliasViewModel(
-    snackbarDispatcher: SnackbarDispatcher,
-    observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -60,12 +50,13 @@ abstract class BaseAliasViewModel(
                     PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
                     emptyList()
                 }
+
                 is LoadingResult.Success -> shares.data
             }
         }
         .distinctUntilChanged()
 
-    private val sharesWrapperState = combine(
+    protected val sharesWrapperState = combine(
         navShareIdState,
         selectedShareIdState,
         observeAllVaultsFlow
@@ -101,83 +92,29 @@ abstract class BaseAliasViewModel(
         MutableStateFlow(IsButtonEnabled.Disabled)
     protected val mutableCloseScreenEventFlow: MutableStateFlow<CloseScreenEvent> =
         MutableStateFlow(CloseScreenEvent.NotClose)
-    private val selectedMailboxListState: MutableStateFlow<List<Int>> =
+    protected val selectedMailboxListState: MutableStateFlow<List<Int>> =
         MutableStateFlow(emptyList())
-    private val selectedSuffixState: MutableStateFlow<Option<AliasSuffixUiModel>> =
-        MutableStateFlow(None)
-    protected val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
-    private val aliasOptionsState: Flow<LoadingResult<AliasOptionsUiModel>> = sharesWrapperState
-        .flatMapLatest { observeAliasOptions(it.currentVault.vault.shareId) }
-        .map(::AliasOptionsUiModel)
-        .asLoadingResult()
-        .onEach {
-            when (it) {
-                is LoadingResult.Error -> {
-                    PassLogger.w(TAG, it.exception, "Error loading AliasOptions")
-                    isLoadingState.update { IsLoadingState.NotLoading }
-                    snackbarDispatcher(CannotRetrieveAliasOptions)
-                    mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
-                }
-                LoadingResult.Loading -> isLoadingState.update { IsLoadingState.Loading }
-                is LoadingResult.Success -> {
-                    isLoadingState.update { IsLoadingState.NotLoading }
-                    isApplyButtonEnabledState.update { IsButtonEnabled.Enabled }
-                }
-            }
-        }
-        .distinctUntilChanged()
+    private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
     private val aliasItemWrapperState = combine(
         aliasItemState,
-        aliasOptionsState,
         selectedMailboxListState,
-        selectedSuffixState,
-        aliasItemValidationErrorsState
-    ) { aliasItem, aliasOptionsResult, selectedMailboxes, selectedSuffix, aliasItemValidationErrors ->
-        val aliasItemWithOptions =
-            if (aliasOptionsResult is LoadingResult.Success) {
-                val aliasOptions = aliasOptionsResult.data
-
-                val mailboxes = aliasOptions.mailboxes
-                    .map { model ->
-                        SelectedAliasMailboxUiModel(
-                            model = model,
-                            selected = selectedMailboxes.contains(model.id)
-                        )
-                    }
-                    .toMutableList()
-                if (mailboxes.none { it.selected } && mailboxes.isNotEmpty()) {
-                    val mailbox = mailboxes.removeAt(0)
-                    mailboxes.add(0, mailbox.copy(selected = true))
-                        .also { selectedMailboxListState.update { listOf(mailbox.model.id) } }
-                }
-
-                val mailboxTitle = getMailboxTitle(mailboxes)
-
-                val suffix =
-                    if (selectedSuffix is Some && aliasOptions.suffixes.contains(selectedSuffix.value)) {
-                        selectedSuffix.value
-                    } else {
-                        aliasOptions.suffixes.first()
-                            .also { selectedSuffixState.update { it } }
-                    }
-                val aliasToBeCreated = if (aliasItem.prefix.isNotBlank()) {
-                    getAliasToBeCreated(aliasItem.prefix, suffix)
-                } else {
-                    null
-                }
-                aliasItem.copy(
-                    aliasOptions = aliasOptions,
-                    selectedSuffix = suffix,
-                    mailboxes = mailboxes,
-                    mailboxTitle = mailboxTitle,
-                    aliasToBeCreated = aliasToBeCreated
+        aliasItemValidationErrorsState,
+    ) { aliasItem, selectedMailboxList, aliasItemValidationErrors ->
+        val mailboxes = aliasItem.mailboxes
+            .map { mailbox ->
+                mailbox.copy(
+                    selected = selectedMailboxList.contains(mailbox.model.id)
                 )
-            } else {
-                aliasItem
             }
-        AliasItemWrapper(aliasItemWithOptions, aliasItemValidationErrors)
+            .toMutableList()
+        AliasItemWrapper(
+            aliasItem = aliasItem.copy(
+                mailboxes = mailboxes,
+                mailboxTitle = getMailboxTitle(mailboxes)
+            ),
+            aliasItemValidationErrors = aliasItemValidationErrors
+        )
     }
 
     private data class AliasItemWrapper(
@@ -189,10 +126,9 @@ abstract class BaseAliasViewModel(
         isAliasSavedState,
         isAliasDraftSavedState,
         isApplyButtonEnabledState,
-        mutableCloseScreenEventFlow
-    ) { isAliasSaved, isAliasDraftSaved, applyButton, closeScreen ->
-        EventWrapper(isAliasSaved, isAliasDraftSaved, applyButton, closeScreen)
-    }
+        mutableCloseScreenEventFlow,
+        ::EventWrapper
+    )
 
     private data class EventWrapper(
         val isAliasSaved: AliasSavedState,
@@ -201,7 +137,7 @@ abstract class BaseAliasViewModel(
         val closeScreenEvent: CloseScreenEvent
     )
 
-    val aliasUiState: StateFlow<CreateUpdateAliasUiState> = combine(
+    val baseAliasUiState: StateFlow<CreateUpdateAliasUiState> = combine(
         sharesWrapperState,
         aliasItemWrapperState,
         isLoadingState,
@@ -230,16 +166,10 @@ abstract class BaseAliasViewModel(
         )
 
     abstract fun onTitleChange(value: String)
-    abstract fun onPrefixChange(value: String)
 
     open fun onNoteChange(value: String) {
         onUserEditedContent()
         aliasItemState.update { it.copy(note = value) }
-    }
-
-    fun onSuffixChange(suffix: AliasSuffixUiModel) {
-        onUserEditedContent()
-        selectedSuffixState.update { suffix.toOption() }
     }
 
     open fun onMailboxesChanged(mailboxes: List<SelectedAliasMailboxUiModel>) {

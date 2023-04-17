@@ -27,7 +27,7 @@ fun CreateAliasScreen(
     onClose: () -> Unit,
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
-    val viewState by viewModel.aliasUiState.collectAsStateWithLifecycle()
+    val viewState by viewModel.createAliasUiState.collectAsStateWithLifecycle()
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
         if (viewState.hasUserEditedContent) {

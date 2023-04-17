@@ -15,4 +15,5 @@ enum class LoginSnackbarMessages(
     ItemUpdateError(R.string.create_login_item_update_error, SnackbarType.ERROR),
     LoginCreated(R.string.login_created, SnackbarType.SUCCESS),
     LoginUpdated(R.string.changes_saved, SnackbarType.SUCCESS),
+    CannotCreateMoreAliases(R.string.create_alias_cannot_create_more_aliases_error, SnackbarType.ERROR),
 }

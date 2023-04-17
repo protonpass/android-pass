@@ -18,6 +18,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
@@ -28,6 +29,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.CannotCreateMoreAliases
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -173,8 +175,16 @@ class CreateLoginViewModel @Inject constructor(
             telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
             draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
         }.onFailure {
-            PassLogger.e(TAG, it, "Could not create item")
-            snackbarDispatcher(ItemCreationError)
+            when (it) {
+                is CannotCreateMoreAliasesError -> {
+                    snackbarDispatcher(CannotCreateMoreAliases)
+                }
+
+                else -> {
+                    snackbarDispatcher(ItemCreationError)
+                }
+            }
+            PassLogger.w(TAG, it, "Could not create item")
         }
     }
 

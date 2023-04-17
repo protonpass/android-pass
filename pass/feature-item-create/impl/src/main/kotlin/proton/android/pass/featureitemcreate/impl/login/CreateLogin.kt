@@ -31,9 +31,9 @@ fun CreateLoginScreen(
     onClose: () -> Unit,
     onSuccess: (ItemUiModel) -> Unit,
     onScanTotp: () -> Unit,
-    onCreateAlias: (ShareId, Option<String>) -> Unit
+    onCreateAlias: (ShareId, Option<String>) -> Unit,
+    viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
-    val viewModel: CreateLoginViewModel = hiltViewModel()
     LaunchedEffect(initialContents) {
         initialContents ?: return@LaunchedEffect
         viewModel.setInitialContents(initialContents)

@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
-import proton.android.pass.autofill.entities.SaveInformation
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featureauth.impl.AUTH_SCREEN_ROUTE
 import proton.android.pass.navigation.api.rememberAppNavigator
@@ -26,7 +25,7 @@ import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 @Composable
 fun AutosaveAppContent(
     modifier: Modifier = Modifier,
-    saveInformation: SaveInformation,
+    arguments: AutoSaveArguments,
     onAutoSaveSuccess: () -> Unit,
     onAutoSaveCancel: () -> Unit
 ) {
@@ -50,7 +49,7 @@ fun AutosaveAppContent(
         ) {
             autosaveActivityGraph(
                 appNavigator = appNavigator,
-                info = saveInformation,
+                arguments = arguments,
                 onAutoSaveCancel = onAutoSaveCancel,
                 onAutoSaveSuccess = onAutoSaveSuccess
             )

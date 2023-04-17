@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -135,9 +136,19 @@ class HomeViewModel @Inject constructor(
     private val isProcessingSearchState: MutableStateFlow<IsProcessingSearchState> =
         MutableStateFlow(IsProcessingSearchState.NotLoading)
 
+    private val vaultsFlow = observeVaults()
+        .onEach { res ->
+            res.onSuccess {
+                if (it.size == 1) {
+                    val vault = it.first()
+                    vaultSelectionFlow.update { HomeVaultSelection.Vault(vault.shareId) }
+                }
+            }
+        }
+
     private val shareListWrapperFlow = combine(
         vaultSelectionFlow,
-        observeVaults()
+        vaultsFlow
     ) { vaultSelection, vaultsResult ->
         val vaults = vaultsResult.getOrNull() ?: emptyList()
         val shares = vaults.associate { it.shareId to ShareUiModel.fromVault(it) }

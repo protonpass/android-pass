@@ -50,7 +50,7 @@ fun WebsiteSection(
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_earth),
                 contentDescription = stringResource(R.string.website_icon_content_description),
-                tint = PassTheme.colors.loginInteractionNormMajor1
+                tint = PassTheme.colors.loginInteractionNormMajor2
             )
             Spacer(modifier = Modifier.width(16.dp))
             Column {

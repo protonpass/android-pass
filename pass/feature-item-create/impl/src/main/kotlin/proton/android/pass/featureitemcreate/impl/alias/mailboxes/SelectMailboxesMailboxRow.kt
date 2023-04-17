@@ -44,7 +44,9 @@ fun SelectMailboxesMailboxRow(
         CompositionLocalProvider(LocalMinimumTouchTargetEnforcement provides false) {
             Checkbox(
                 checked = item.selected,
-                onCheckedChange = {}
+                onCheckedChange = {
+                    onToggle()
+                }
             )
         }
 

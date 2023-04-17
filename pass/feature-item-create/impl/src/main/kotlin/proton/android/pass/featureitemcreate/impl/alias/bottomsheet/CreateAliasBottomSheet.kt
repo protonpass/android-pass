@@ -24,7 +24,7 @@ fun CreateAliasBottomSheet(
         viewModel.setInitialState(itemTitle)
     }
 
-    val state by viewModel.aliasUiState.collectAsStateWithLifecycle()
+    val state by viewModel.createAliasUiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(state.closeScreenEvent) {
         if (state.closeScreenEvent is CloseScreenEvent.Close) {

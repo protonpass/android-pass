@@ -16,7 +16,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import me.proton.core.compose.theme.isNightMode
-import proton.android.pass.autofill.entities.SaveInformation
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
@@ -26,7 +25,7 @@ import proton.android.pass.preferences.ThemePreference
 @Composable
 fun AutoSaveApp(
     modifier: Modifier = Modifier,
-    info: SaveInformation,
+    arguments: AutoSaveArguments,
     onAutoSaveSuccess: () -> Unit,
     onAutoSaveCancel: () -> Unit
 ) {
@@ -56,7 +55,7 @@ fun AutoSaveApp(
                         .systemBarsPadding()
                         .imePadding()
                         .padding(padding),
-                    saveInformation = info,
+                    arguments = arguments,
                     onAutoSaveSuccess = {
                         viewModel.onItemAutoSaved()
                         onAutoSaveSuccess()

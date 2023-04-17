@@ -23,7 +23,6 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
@@ -54,15 +53,9 @@ class UpdateAliasViewModel @Inject constructor(
     private val updateAliasUseCase: UpdateAlias,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
-    observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
-) : BaseAliasViewModel(
-    snackbarDispatcher,
-    observeAliasOptions,
-    observeVaults,
-    savedStateHandle
-) {
+) : BaseAliasViewModel(observeVaults, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -108,15 +101,6 @@ class UpdateAliasViewModel @Inject constructor(
         itemDataChanged = true
     }
 
-    override fun onPrefixChange(value: String) {
-        // no-op as alias cannot be changed from Update view
-        // should never be called
-        PassLogger.e(
-            TAG,
-            IllegalStateException("UpdateAliasViewModel.onAliasChange should never be called")
-        )
-    }
-
     private suspend fun setupInitialState() {
         if (_item != null) return
         isLoadingState.update { IsLoadingState.Loading }
@@ -150,11 +134,22 @@ class UpdateAliasViewModel @Inject constructor(
                 val email = alias.aliasEmail
                 val (prefix, suffix) = AliasUtils.extractPrefixSuffix(email)
 
-                val mailboxes = details.availableMailboxes.map { mailbox ->
-                    SelectedAliasMailboxUiModel(
-                        model = mailbox,
-                        selected = details.mailboxes.any { it.id == mailbox.id }
-                    )
+                val mailboxes = details.availableMailboxes
+                    .map { mailbox ->
+                        SelectedAliasMailboxUiModel(
+                            model = mailbox,
+                            selected = details.mailboxes.any { it.id == mailbox.id }
+                        )
+                    }
+                    .toMutableList()
+                if (mailboxes.none { it.selected } && mailboxes.isNotEmpty()) {
+                    val mailbox = mailboxes.removeAt(0)
+                    mailboxes.add(0, mailbox.copy(selected = true))
+                        .also { selectedMailboxListState.update { listOf(mailbox.model.id) } }
+                } else {
+                    selectedMailboxListState.update {
+                        mailboxes.filter { it.selected }.map { it.model.id }
+                    }
                 }
 
                 aliasItemState.update {
@@ -245,7 +240,7 @@ class UpdateAliasViewModel @Inject constructor(
 
     private fun createUpdateAliasBody(): UpdateAliasContent {
         val mailboxes = if (mailboxesChanged) {
-            val selectedMailboxes = aliasItemState.value
+            val selectedMailboxes = baseAliasUiState.value.aliasItem
                 .mailboxes
                 .filter { it.selected }
                 .map { it.model }

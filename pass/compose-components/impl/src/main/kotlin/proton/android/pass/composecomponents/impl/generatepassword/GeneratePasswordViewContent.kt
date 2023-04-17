@@ -3,10 +3,8 @@ package proton.android.pass.composecomponents.impl.generatepassword
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Slider
 import androidx.compose.material.Surface
@@ -52,16 +50,16 @@ fun GeneratePasswordViewContent(
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                modifier = Modifier.width(112.dp),
-                text = stringResource(R.string.character_count, state.length)
+                text = stringResource(R.string.character_count, state.length),
+                color = PassTheme.colors.textNorm
             )
-            Spacer(modifier = Modifier.width(8.dp))
             val (length, setLength) = remember { mutableStateOf(state.length.toFloat()) }
             Slider(
+                modifier = Modifier.weight(1f),
                 value = length,
                 valueRange = 4.toFloat()..64.toFloat(),
                 onValueChange = { newLength ->
@@ -78,7 +76,10 @@ fun GeneratePasswordViewContent(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(stringResource(R.string.special_characters))
+            Text(
+                text = stringResource(R.string.special_characters),
+                color = PassTheme.colors.textNorm
+            )
             Switch(
                 checked = state.hasSpecialCharacters,
                 onCheckedChange = { onSpecialCharactersChange(it) }

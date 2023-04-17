@@ -16,22 +16,29 @@ class AutoSaveActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val saveInformation = getSaveInformation() ?: run {
+        val arguments = getArguments() ?: run {
             finishApp()
             return
         }
 
         setContent {
             AutoSaveApp(
-                info = saveInformation,
+                arguments = arguments,
                 onAutoSaveSuccess = { finishApp() },
                 onAutoSaveCancel = { finishApp() }
             )
         }
     }
 
-    private fun getSaveInformation(): SaveInformation? =
-        intent?.extras?.getByteArray(ARG_SAVE_INFORMATION)?.deserializeParcelable()
+    private fun getArguments(): AutoSaveArguments? =
+        intent?.extras?.let {
+            AutoSaveArguments(
+                saveInformation = it.getByteArray(ARG_SAVE_INFORMATION)?.deserializeParcelable() ?: return null,
+                linkedAppInfo = it.getByteArray(ARG_LINKED_APP)?.deserializeParcelable(),
+                title = it.getString(ARG_TITLE) ?: return null,
+                website = it.getString(ARG_WEBSITE)
+            )
+        }
 
     private fun finishApp() {
         finish()
@@ -39,10 +46,24 @@ class AutoSaveActivity : FragmentActivity() {
 
     companion object {
         private const val ARG_SAVE_INFORMATION = "arg_save_information"
+        private const val ARG_LINKED_APP = "arg_linked_app"
+        private const val ARG_TITLE = "arg_title"
+        private const val ARG_WEBSITE = "arg_website"
 
-        fun newIntent(context: Context, saveInformation: SaveInformation): Intent {
+        fun newIntent(
+            context: Context,
+            saveInformation: SaveInformation,
+            title: String,
+            website: String?,
+            linkedAppInfo: LinkedAppInfo?
+        ): Intent {
             val extras = Bundle().apply {
                 putByteArray(ARG_SAVE_INFORMATION, marshalParcelable(saveInformation))
+                putString(ARG_TITLE, title)
+                putString(ARG_WEBSITE, website)
+                linkedAppInfo?.let {
+                    putByteArray(ARG_LINKED_APP, marshalParcelable(it))
+                }
             }
 
             val intent = Intent(context, AutoSaveActivity::class.java).apply {

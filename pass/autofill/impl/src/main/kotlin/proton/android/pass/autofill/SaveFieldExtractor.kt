@@ -6,11 +6,7 @@ import proton.android.pass.autofill.entities.SaveInformation
 import proton.android.pass.autofill.entities.SaveItemType
 
 object SaveFieldExtractor {
-    fun extract(
-        fieldsToSave: List<AssistField>,
-        packageName: String,
-        applicationName: String
-    ): List<SaveInformation> {
+    fun extract(fieldsToSave: List<AssistField>): List<SaveInformation> {
         val isIdentity: (AssistField) -> Boolean = {
             listOf(FieldType.Username, FieldType.Email).contains(it.type)
         }
@@ -32,11 +28,11 @@ object SaveFieldExtractor {
 
         return if (identityValue != null && passwordValue != null) {
             listOf(
-                SaveInformation(applicationName, packageName, SaveItemType.Login(identityValue, passwordValue))
+                SaveInformation(SaveItemType.Login(identityValue, passwordValue))
             )
         } else {
             validFields.map {
-                SaveInformation(applicationName, packageName, SaveItemType.SingleValue(it.text.toString()))
+                SaveInformation(SaveItemType.SingleValue(it.text.toString()))
             }
         }
     }

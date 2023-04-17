@@ -25,7 +25,7 @@
     <string name="home_snackbar_move_to_trash_error">Could not move to trash</string>
 
     <string name="home_autofill_banner_title">Enjoy the magic of AutoFill</string>
-    <string name="home_autofill_banner_text">One tap and—presto!—your usename and password are filled in instantly.</string>
+    <string name="home_autofill_banner_text">One tap and—presto!—your username and password are filled in instantly.</string>
     <string name="home_autofill_banner_settings">Turn on Autofill ›</string>
     <string name="home_autofill_banner_image_content_description">Autofill banner image</string>
 

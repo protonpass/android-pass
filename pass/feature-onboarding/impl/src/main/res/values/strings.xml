@@ -7,7 +7,7 @@
     <string name="on_boarding_fingerprint_content">Set Proton Pass to unlock with your fingerprint so only you have access.</string>
     <string name="on_boarding_fingerprint_title">Protect your most sensitive data</string>
     <string name="on_boarding_fingerprint_button">Enable fingerprint unlock</string>
-    <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead hide it with email aliases— a Proton Pass exclusive.</string>
+    <string name="on_boarding_last_page_content">Stop sharing your real email address. Instead hide it with email aliases—a Proton Pass exclusive.</string>
     <string name="on_boarding_last_page_title">Control what lands in your inbox</string>
     <string name="on_boarding_last_page_button">Start using Proton Pass</string>
     <string name="on_boarding_skip">Not now</string>

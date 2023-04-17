@@ -46,8 +46,7 @@ fun OnBoardingPage(
                 color = ProtonTheme.colors.textNorm,
                 style = ProtonTheme.typography.headline,
                 text = onBoardingPageData.title,
-                textAlign = TextAlign.Center,
-                maxLines = 1
+                textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(24.dp))
             Text(

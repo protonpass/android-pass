@@ -66,10 +66,11 @@ class CreateAliasViewModelTest {
         viewModel = createAliasViewModel()
         setupAliasOptions()
         val titleInput = "Title changed"
+
         viewModel.onSuffixChange(suffix)
         viewModel.onTitleChange(titleInput)
 
-        viewModel.aliasUiState.test {
+        viewModel.createAliasUiState.test {
             val item = awaitItem()
             assertThat(item.aliasItem.title).isEqualTo(titleInput)
             assertThat(item.aliasItem.prefix).isEqualTo("title-changed")
@@ -81,7 +82,7 @@ class CreateAliasViewModelTest {
         val newAlias = "myalias"
         viewModel.onPrefixChange(newAlias)
 
-        viewModel.aliasUiState.test {
+        viewModel.createAliasUiState.test {
             val item = awaitItem()
             assertThat(item.aliasItem.title).isEqualTo(titleInput)
             assertThat(item.aliasItem.prefix).isEqualTo(newAlias)
@@ -93,7 +94,7 @@ class CreateAliasViewModelTest {
         val newTitle = "New title"
         viewModel.onTitleChange(newTitle)
 
-        viewModel.aliasUiState.test {
+        viewModel.createAliasUiState.test {
             val item = awaitItem()
             assertThat(item.aliasItem.title).isEqualTo(newTitle)
             assertThat(item.aliasItem.prefix).isEqualTo(newAlias)
@@ -110,7 +111,7 @@ class CreateAliasViewModelTest {
         val aliasInput = "aliasInput"
         viewModel.onPrefixChange(aliasInput)
 
-        viewModel.aliasUiState.test {
+        viewModel.createAliasUiState.test {
             assertThat(awaitItem().aliasItem)
                 .isEqualTo(CreateUpdateAliasUiState.Initial.aliasItem.copy(prefix = aliasInput))
 
@@ -124,7 +125,7 @@ class CreateAliasViewModelTest {
         setupAliasOptions()
         createAlias.setResult(LoadingResult.Error(CannotCreateMoreAliasesError()))
         setupContentsForCreation()
-        viewModel.aliasUiState.test { awaitItem() }
+        viewModel.createAliasUiState.test { awaitItem() }
         viewModel.createAlias(TestShare.create().id)
 
         snackbarRepository.snackbarMessage.test {
@@ -143,9 +144,9 @@ class CreateAliasViewModelTest {
         createAlias.setResult(LoadingResult.Success(TestItem.random()))
         setupContentsForCreation()
 
-        viewModel.aliasUiState.test { awaitItem() }
+        viewModel.createAliasUiState.test { awaitItem() }
         viewModel.createAlias(TestShare.create().id)
-        viewModel.aliasUiState.test {
+        viewModel.createAliasUiState.test {
             skipItems(1)
             val item = awaitItem()
 
@@ -165,9 +166,9 @@ class CreateAliasViewModelTest {
         createAlias.setResult(LoadingResult.Success(TestItem.random()))
         setupContentsForCreation()
 
-        viewModel.aliasUiState.test { awaitItem() }
+        viewModel.createAliasUiState.test { awaitItem() }
         viewModel.createAlias(TestShare.create().id)
-        viewModel.aliasUiState.test {
+        viewModel.createAliasUiState.test {
             val item = awaitItem()
 
             assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
@@ -193,7 +194,7 @@ class CreateAliasViewModelTest {
         setupAliasOptions()
         val titleInput = "ThiS iS a TeSt"
         viewModel.onTitleChange(titleInput)
-        viewModel.aliasUiState.test {
+        viewModel.createAliasUiState.test {
             val item = awaitItem()
             assertThat(item.aliasItem.prefix).isEqualTo("this-is-a-test")
         }
@@ -203,7 +204,7 @@ class CreateAliasViewModelTest {
     fun `setInitialState properly formats alias`() = runTest {
         viewModel = createAliasViewModel(title = "ThiS.iS_a TeSt")
         setupAliasOptions()
-        viewModel.aliasUiState.test {
+        viewModel.createAliasUiState.test {
             val item = awaitItem()
             assertThat(item.aliasItem.prefix).isEqualTo("this.is_a-test")
         }

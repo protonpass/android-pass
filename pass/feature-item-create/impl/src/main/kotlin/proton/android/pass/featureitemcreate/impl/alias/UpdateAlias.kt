@@ -32,7 +32,7 @@ fun UpdateAlias(
     onSuccess: (ShareId, ItemId) -> Unit,
     viewModel: UpdateAliasViewModel = hiltViewModel()
 ) {
-    val viewState by viewModel.aliasUiState.collectAsStateWithLifecycle()
+    val viewState by viewModel.baseAliasUiState.collectAsStateWithLifecycle()
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
         if (viewState.hasUserEditedContent) {
@@ -63,11 +63,11 @@ fun UpdateAlias(
             onUpClick = onExit,
             onAliasCreated = { shareId, itemId, _ -> onSuccess(shareId, itemId) },
             onSubmit = { viewModel.updateAlias() },
-            onSuffixChange = { viewModel.onSuffixChange(it) },
+            onSuffixChange = {},
             onMailboxesChanged = { viewModel.onMailboxesChanged(it) },
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
-            onPrefixChange = { viewModel.onPrefixChange(it) },
+            onPrefixChange = {},
             onVaultSelect = {}
         )
 

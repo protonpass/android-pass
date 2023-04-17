@@ -7,6 +7,7 @@ import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.decode.SvgDecoder
+import coil.memory.MemoryCache
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -14,6 +15,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+
+private const val MEMORY_CACHE_SIZE_PERCENTAGE = 0.25
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -26,6 +29,11 @@ object ImageModule {
         remoteImageFetcher: RemoteImageFetcherFactory,
         appImageFetcher: AppImageFetcherFactory
     ): ImageLoader = ImageLoader.Builder(context)
+        .memoryCache {
+            MemoryCache.Builder(context)
+                .maxSizePercent(MEMORY_CACHE_SIZE_PERCENTAGE)
+                .build()
+        }
         .components {
             add(remoteImageFetcher)
             add(appImageFetcher)

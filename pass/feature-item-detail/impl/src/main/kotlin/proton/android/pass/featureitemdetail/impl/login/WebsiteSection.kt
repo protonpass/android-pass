@@ -66,7 +66,7 @@ fun WebsiteSection(
                             )
                             .padding(vertical = 8.dp),
                         text = website,
-                        color = PassTheme.colors.loginInteractionNormMajor1,
+                        color = PassTheme.colors.loginInteractionNormMajor2,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W400,
                         maxLines = 2,

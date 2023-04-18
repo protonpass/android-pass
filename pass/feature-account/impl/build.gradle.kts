@@ -66,9 +66,19 @@ dependencies {
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.data.api)
     implementation(projects.pass.navigation.api)
+    implementation(projects.pass.notifications.api)
     implementation(projects.pass.log.api)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.notifications.fakes)
+
+    testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.data.fakes)
+    testImplementation(projects.pass.notifications.fakes)
+    testImplementation(libs.truth)
+    testImplementation(libs.turbine)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.junit)
 }

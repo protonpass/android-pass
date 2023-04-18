@@ -16,9 +16,9 @@ const val AUTH_SCREEN_ROUTE = "common/auth"
 fun AuthScreen(
     onAuthSuccessful: () -> Unit,
     onAuthFailed: () -> Unit,
-    onAuthDismissed: () -> Unit
+    onAuthDismissed: () -> Unit,
+    viewModel: AuthViewModel = hiltViewModel()
 ) {
-    val viewModel: AuthViewModel = hiltViewModel()
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state) {

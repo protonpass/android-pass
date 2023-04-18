@@ -69,6 +69,8 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.log.api)
 
+    androidTestImplementation(libs.androidx.test.espresso.intents)
+
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.data.fakes)

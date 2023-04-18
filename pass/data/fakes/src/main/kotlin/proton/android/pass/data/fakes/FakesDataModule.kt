@@ -22,6 +22,7 @@ import proton.android.pass.data.api.usecases.MigrateItem
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.RestoreItem
@@ -48,6 +49,7 @@ import proton.android.pass.data.fakes.usecases.TestMigrateItem
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
@@ -151,6 +153,11 @@ abstract class FakesDataModule {
     abstract fun bindObserveVaultsWithItemCount(
         impl: TestObserveVaultsWithItemCount
     ): ObserveVaultsWithItemCount
+
+    @Binds
+    abstract fun bindObserveItemCount(
+        impl: TestObserveItemCount
+    ): ObserveItemCount
 
     @Binds
     abstract fun bindMigrateItem(

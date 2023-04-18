@@ -76,7 +76,7 @@ internal fun WebsitesSection(
                     Modifier.focusRequester(focusRequester)
                 }
                 ProtonTextField(
-                    modifier = textFieldModifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
+                    modifier = textFieldModifier.padding(start = 0.dp, top = 0.dp, end = 4.dp, bottom = 0.dp),
                     isError = doesWebsiteIndexHaveError(idx),
                     value = value,
                     editable = isEditAllowed,

@@ -9,36 +9,36 @@ import proton.pass.domain.ShareIcon
 @Composable
 @DrawableRes
 fun ShareIcon.toResource(): Int = when (this) {
-    ShareIcon.Icon1 -> R.drawable.ic_house
-    ShareIcon.Icon2 -> R.drawable.ic_cheque
-    ShareIcon.Icon3 -> R.drawable.ic_shop
-    ShareIcon.Icon4 -> R.drawable.ic_palm_tree
-    ShareIcon.Icon5 -> R.drawable.ic_savings
-    ShareIcon.Icon6 -> R.drawable.ic_discount
-    ShareIcon.Icon7 -> R.drawable.ic_run_shoes
-    ShareIcon.Icon8 -> R.drawable.ic_chef
-    ShareIcon.Icon9 -> R.drawable.ic_shopping_bag
-    ShareIcon.Icon10 -> R.drawable.ic_mario_mushroom
-    ShareIcon.Icon11 -> R.drawable.ic_wallet
-    ShareIcon.Icon12 -> R.drawable.ic_hacker
-    ShareIcon.Icon13 -> R.drawable.ic_present
-    ShareIcon.Icon14 -> R.drawable.ic_medal
-    ShareIcon.Icon15 -> R.drawable.ic_teddy_bear
-    ShareIcon.Icon16 -> R.drawable.ic_pacman
-    ShareIcon.Icon17 -> R.drawable.ic_shield
-    ShareIcon.Icon18 -> R.drawable.ic_book_bookmark
-    ShareIcon.Icon19 -> R.drawable.ic_witch_hat
-    ShareIcon.Icon20 -> R.drawable.ic_atom
-    ShareIcon.Icon21 -> R.drawable.ic_briefcase
-    ShareIcon.Icon22 -> R.drawable.ic_love
-    ShareIcon.Icon23 -> R.drawable.ic_chemistry
-    ShareIcon.Icon24 -> R.drawable.ic_grain
-    ShareIcon.Icon25 -> R.drawable.ic_credit_card
-    ShareIcon.Icon26 -> R.drawable.ic_router
-    ShareIcon.Icon27 -> R.drawable.ic_volleyball
-    ShareIcon.Icon28 -> R.drawable.ic_happy_baby
-    ShareIcon.Icon29 -> R.drawable.ic_alien
-    ShareIcon.Icon30 -> R.drawable.ic_car
+    ShareIcon.Icon1 -> R.drawable.ic_home
+    ShareIcon.Icon2 -> R.drawable.ic_work
+    ShareIcon.Icon3 -> R.drawable.ic_gift
+    ShareIcon.Icon4 -> R.drawable.ic_shop
+    ShareIcon.Icon5 -> R.drawable.ic_heart
+    ShareIcon.Icon6 -> R.drawable.ic_bear
+    ShareIcon.Icon7 -> R.drawable.ic_circles
+    ShareIcon.Icon8 -> R.drawable.ic_flower
+    ShareIcon.Icon9 -> R.drawable.ic_group
+    ShareIcon.Icon10 -> R.drawable.ic_pacman
+    ShareIcon.Icon11 -> R.drawable.ic_shopping_cart
+    ShareIcon.Icon12 -> R.drawable.ic_leaf
+    ShareIcon.Icon13 -> R.drawable.ic_shield
+    ShareIcon.Icon14 -> R.drawable.ic_basketball
+    ShareIcon.Icon15 -> R.drawable.ic_credit_card
+    ShareIcon.Icon16 -> R.drawable.ic_fish
+    ShareIcon.Icon17 -> R.drawable.ic_smile
+    ShareIcon.Icon18 -> R.drawable.ic_lock
+    ShareIcon.Icon19 -> R.drawable.ic_mushroom
+    ShareIcon.Icon20 -> R.drawable.ic_star
+    ShareIcon.Icon21 -> R.drawable.ic_fire
+    ShareIcon.Icon22 -> R.drawable.ic_wallet
+    ShareIcon.Icon23 -> R.drawable.ic_bookmark
+    ShareIcon.Icon24 -> R.drawable.ic_cream
+    ShareIcon.Icon25 -> R.drawable.ic_laptop
+    ShareIcon.Icon26 -> R.drawable.ic_json
+    ShareIcon.Icon27 -> R.drawable.ic_book
+    ShareIcon.Icon28 -> R.drawable.ic_box
+    ShareIcon.Icon29 -> R.drawable.ic_atom
+    ShareIcon.Icon30 -> R.drawable.ic_cheque
 }
 
 @Suppress("ComplexMethod")

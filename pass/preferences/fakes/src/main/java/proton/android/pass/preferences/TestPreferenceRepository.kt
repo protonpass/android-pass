@@ -4,7 +4,9 @@ import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository {
 
     private val biometricLockState = MutableSharedFlow<BiometricLockState>(

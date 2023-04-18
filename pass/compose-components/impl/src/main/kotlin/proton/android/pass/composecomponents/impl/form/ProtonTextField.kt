@@ -49,6 +49,7 @@ fun ProtonTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onChange: (String) -> Unit,
     onFocusChange: ((Boolean) -> Unit)? = null,
+    onDoneClick: (() -> Unit)? = null,
 ) {
     val maxLines = if (singleLine) {
         1
@@ -57,7 +58,11 @@ fun ProtonTextField(
     }
     val focusManager = LocalFocusManager.current
     val goToNextField = {
-        if (moveToNextOnEnter) focusManager.moveFocus(FocusDirection.Down)
+        if (moveToNextOnEnter) {
+            focusManager.moveFocus(FocusDirection.Down)
+        } else {
+            onDoneClick?.invoke()
+        }
     }
     var isFocused: Boolean by rememberSaveable { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }

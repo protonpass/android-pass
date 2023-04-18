@@ -46,7 +46,7 @@ fun AliasPrefixSuffixTextPreview(
             AliasPrefixSuffixText(
                 prefix = "some.prefix",
                 suffix = ".some@suffix.test",
-                suffixColor = PassTheme.colors.aliasInteractionNorm
+                suffixColor = PassTheme.colors.aliasInteractionNormMajor2
             )
         }
     }

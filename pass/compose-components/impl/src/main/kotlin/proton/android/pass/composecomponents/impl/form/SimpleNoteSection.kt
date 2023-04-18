@@ -42,7 +42,7 @@ fun SimpleNoteSection(
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_note),
                 contentDescription = null,
-                tint = ProtonTheme.colors.iconWeak
+                tint = PassTheme.colors.textWeak
             )
         },
         trailingIcon = if (value.isNotBlank() && enabled) {

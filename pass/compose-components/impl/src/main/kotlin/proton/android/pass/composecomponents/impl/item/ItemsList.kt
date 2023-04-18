@@ -37,7 +37,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.R
-import proton.android.pass.composecomponents.impl.extension.toResource
+import proton.android.pass.composecomponents.impl.extension.toSmallResource
 import proton.android.pass.composecomponents.impl.loading.Loading
 import proton.android.pass.composecomponents.impl.loading.PassSwipeRefresh
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -101,7 +101,7 @@ fun ItemsList(
                             vaultIcon = shares[item.shareId]
                                 ?.takeIf { !isShareSelected }
                                 ?.icon
-                                ?.toResource(),
+                                ?.toSmallResource(),
                             highlight = highlight,
                             showMenuIcon = showMenuIcon,
                             onItemClick = onItemClick,

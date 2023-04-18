@@ -29,7 +29,9 @@ fun TitleSection(
     enabled: Boolean = true,
     isRounded: Boolean = false,
     requestFocus: Boolean = false,
-    onChange: (String) -> Unit
+    moveToNextOnEnter: Boolean = true,
+    onChange: (String) -> Unit,
+    onDoneClick: (() -> Unit)? = null
 ) {
     val focusRequester = remember { FocusRequester() }
 
@@ -64,6 +66,8 @@ fun TitleSection(
         editable = enabled,
         value = value,
         onChange = onChange,
+        moveToNextOnEnter = moveToNextOnEnter,
+        onDoneClick = onDoneClick,
         isError = onTitleRequiredError,
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
     )

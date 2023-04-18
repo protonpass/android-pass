@@ -16,7 +16,9 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class BiometryManagerImpl @Inject constructor(
     private val biometricManager: BiometricManager
 ) : BiometryManager {

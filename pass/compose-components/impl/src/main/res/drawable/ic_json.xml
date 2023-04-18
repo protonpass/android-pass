@@ -7,28 +7,21 @@
     <clip-path
         android:pathData="M0,0h24v24h-24z"/>
     <path
-        android:pathData="M6,3H3C1.895,3 1,3.895 1,5C1,6.105 1.895,7 3,7"
+        android:pathData="M14.052,1.192C17.28,2.65 19.152,6.023 19.152,10.203C19.152,14.383 16.769,17.683 13.689,17.683C10.609,17.683 8.775,14.493 8.775,11.783C8.809,10.725 9.119,9.694 9.674,8.793C10.229,7.891 11.01,7.15 11.939,6.643"
         android:strokeLineJoin="round"
         android:strokeWidth="2"
         android:fillColor="#00000000"
         android:strokeColor="#000000"
         android:strokeLineCap="round"/>
     <path
-        android:pathData="M6,7V1H20V7"
+        android:pathData="M9.948,22.808C6.72,21.35 4.85,17.977 4.85,13.8C4.85,9.623 7.233,6.32 10.313,6.32C13.393,6.32 15.227,9.51 15.227,12.22C15.193,13.278 14.883,14.309 14.328,15.21C13.773,16.112 12.992,16.853 12.063,17.36"
         android:strokeLineJoin="round"
         android:strokeWidth="2"
         android:fillColor="#00000000"
         android:strokeColor="#000000"
         android:strokeLineCap="round"/>
     <path
-        android:pathData="M23,7H3C1.895,7 1,6.105 1,5V20C1,21.657 2.343,23 4,23H23V7Z"
-        android:strokeLineJoin="round"
-        android:strokeWidth="2"
-        android:fillColor="#00000000"
-        android:strokeColor="#000000"
-        android:strokeLineCap="round"/>
-    <path
-        android:pathData="M17,17C18.105,17 19,16.105 19,15C19,13.895 18.105,13 17,13C15.895,13 15,13.895 15,15C15,16.105 15.895,17 17,17Z"
+        android:pathData="M12,23C18.075,23 23,18.075 23,12C23,5.925 18.075,1 12,1C5.925,1 1,5.925 1,12C1,18.075 5.925,23 12,23Z"
         android:strokeLineJoin="round"
         android:strokeWidth="2"
         android:fillColor="#00000000"

@@ -108,7 +108,7 @@ fun ActionableItemRowPreviewWithVaultIcon(
             ActionableItemRow(
                 item = ItemUiModelPreviewProvider().values.first(),
                 showMenuIcon = false,
-                vaultIcon = R.drawable.ic_briefcase
+                vaultIcon = R.drawable.ic_bookmark_small
             )
         }
     }

@@ -13,6 +13,8 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
+
+        testInstrumentationRunner = "proton.android.pass.test.HiltRunner"
     }
 
     buildFeatures {
@@ -60,4 +62,17 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
+
+    androidTestImplementation(libs.androidx.test.espresso.intents)
+
+    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.preferences.fakes)
+    androidTestImplementation(projects.pass.biometry.fakes)
+    androidTestImplementation(projects.pass.autofill.fakes)
+    androidTestImplementation(projects.pass.clipboard.fakes)
+    androidTestImplementation(projects.pass.notifications.fakes)
+    androidTestImplementation(projects.pass.appConfig.fakes)
+    androidTestImplementation(projects.pass.crypto.fakes)
+    androidTestImplementation(projects.pass.data.fakes)
 }

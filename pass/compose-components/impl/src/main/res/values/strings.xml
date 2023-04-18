@@ -8,7 +8,7 @@
 
     <!-- Generate password bottomsheet -->
     <string name="bottomsheet_generate_password_title">Generate password</string>
-    <string name="special_characters">Special characters (!&amp;*)</string>
+    <string name="special_characters">Special characters</string>
     <string name="character_count">%s characters</string>
     <string name="regenerate_password_icon_content_description">Regenerate pass icon</string>
 

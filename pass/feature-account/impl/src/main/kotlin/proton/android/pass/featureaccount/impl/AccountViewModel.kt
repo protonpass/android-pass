@@ -11,26 +11,41 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.log.api.PassLogger
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
-    getUserPlan: GetUserPlan
+    getUserPlan: GetUserPlan,
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
     val state = observeCurrentUser()
         .asLoadingResult()
-        .map {
-            when (it) {
+        .map { userResult ->
+            when (userResult) {
                 is LoadingResult.Error -> AccountUiState(isLoadingState = IsLoadingState.NotLoading)
                 LoadingResult.Loading -> AccountUiState()
                 is LoadingResult.Success -> {
-                    val plan = getUserPlan(it.data.userId)
+                    val user = userResult.data
+
+                    val plan = runCatching {
+                        getUserPlan(user.userId)
+                    }.fold(
+                        onSuccess = { plan -> plan.humanReadable },
+                        onFailure = {
+                            PassLogger.e(TAG, it, "Error getting user plan")
+                            snackbarDispatcher(AccountSnackbarMessage.GetUserInfoError)
+                            null
+                        }
+                    )
+
                     AccountUiState(
-                        it.data.email ?: "",
-                        plan.humanReadable,
-                        IsLoadingState.NotLoading
+                        email = user.email,
+                        plan = plan,
+                        isLoadingState = IsLoadingState.NotLoading
                     )
                 }
             }
@@ -40,6 +55,10 @@ class AccountViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000L),
             initialValue = AccountUiState()
         )
+
+    companion object {
+        private const val TAG = "AccountViewModel"
+    }
 }
 
 data class AccountUiState(

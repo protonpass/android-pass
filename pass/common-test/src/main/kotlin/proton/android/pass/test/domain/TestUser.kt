@@ -5,10 +5,13 @@ import me.proton.core.user.domain.entity.User
 
 object TestUser {
 
-    fun create(): User = User(
+    fun create(
+        email: String? = null,
+        name: String? = null
+    ): User = User(
         userId = UserId("12345"),
-        email = null,
-        name = null,
+        email = email,
+        name = name,
         displayName = null,
         currency = "",
         credit = 0,

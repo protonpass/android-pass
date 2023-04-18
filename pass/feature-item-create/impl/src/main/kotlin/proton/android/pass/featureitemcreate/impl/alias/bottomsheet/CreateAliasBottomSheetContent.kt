@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -71,10 +72,10 @@ fun CreateAliasBottomSheetContent(
     ) {
         BottomSheetTitle(title = stringResource(R.string.field_alias_you_are_about_to_create))
         AliasPrefixSuffixText(
-            modifier = Modifier.align(Alignment.CenterHorizontally),
+            modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 8.dp),
             prefix = state.aliasItem.prefix,
             suffix = state.aliasItem.selectedSuffix?.suffix ?: "",
-            suffixColor = PassTheme.colors.loginInteractionNorm,
+            suffixColor = PassTheme.colors.loginInteractionNormMajor2,
             fontSize = 20.sp
         )
         AnimatedVisibility(visible = showAdvancedOptions) {
@@ -89,14 +90,6 @@ fun CreateAliasBottomSheetContent(
                 onSuffixClicked = { showSuffixDialog = true }
             )
         }
-        MailboxSection(
-            isBottomSheet = true,
-            mailboxes = state.aliasItem.mailboxes,
-            isCreateMode = false,
-            isEditAllowed = state.aliasItem.mailboxes.size > 1,
-            isLoading = state.isLoadingState.value(),
-            onMailboxClick = { showMailboxesDialog = true }
-        )
         if (!showAdvancedOptions) {
             Box(
                 modifier = Modifier.fillMaxWidth(),
@@ -108,7 +101,16 @@ fun CreateAliasBottomSheetContent(
                 )
             }
         }
+        MailboxSection(
+            isBottomSheet = true,
+            mailboxes = state.aliasItem.mailboxes,
+            isCreateMode = false,
+            isEditAllowed = state.aliasItem.mailboxes.size > 1,
+            isLoading = state.isLoadingState.value(),
+            onMailboxClick = { showMailboxesDialog = true }
+        )
         BottomSheetCancelConfirm(
+            modifier = Modifier.padding(top = 36.dp),
             onCancel = onCancel,
             onConfirm = onConfirm
         )

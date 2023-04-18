@@ -78,7 +78,7 @@ fun AliasAdvancedOptionsSection(
             } else {
                 null
             },
-            keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
+            keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None)
         )
 
         Divider()

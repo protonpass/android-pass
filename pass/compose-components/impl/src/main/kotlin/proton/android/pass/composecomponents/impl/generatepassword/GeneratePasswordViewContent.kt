@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Slider
+import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -19,9 +21,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.subheadline
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.toPasswordAnnotatedString
 import proton.android.pass.composecomponents.impl.R
@@ -38,12 +42,13 @@ fun GeneratePasswordViewContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val annotatedString = state.password.toPasswordAnnotatedString(
-            digitColor = PassTheme.colors.loginInteractionNormMajor1,
-            symbolColor = PassTheme.colors.aliasInteractionNormMajor1,
+            digitColor = PassTheme.colors.loginInteractionNormMajor2,
+            symbolColor = PassTheme.colors.aliasInteractionNormMajor2,
             letterColor = PassTheme.colors.textNorm
         )
         Text(
-            modifier = Modifier.height(100.dp)
+            modifier = Modifier
+                .height(100.dp)
                 .wrapContentHeight(align = Alignment.CenterVertically),
             text = annotatedString,
             style = ProtonTheme.typography.subheadline
@@ -55,13 +60,20 @@ fun GeneratePasswordViewContent(
         ) {
             Text(
                 text = stringResource(R.string.character_count, state.length),
-                color = PassTheme.colors.textNorm
+                color = PassTheme.colors.textNorm,
+                style = PassTypography.body3Regular,
+                fontSize = 16.sp
             )
             val (length, setLength) = remember { mutableStateOf(state.length.toFloat()) }
             Slider(
                 modifier = Modifier.weight(1f),
                 value = length,
                 valueRange = 4.toFloat()..64.toFloat(),
+                colors = SliderDefaults.colors(
+                    thumbColor = PassTheme.colors.loginInteractionNormMajor1,
+                    activeTrackColor = PassTheme.colors.loginInteractionNormMajor1,
+                    inactiveTrackColor = PassTheme.colors.loginInteractionNormMinor1
+                ),
                 onValueChange = { newLength ->
                     if (length.toInt() != newLength.toInt()) {
                         setLength(newLength)
@@ -78,10 +90,15 @@ fun GeneratePasswordViewContent(
         ) {
             Text(
                 text = stringResource(R.string.special_characters),
-                color = PassTheme.colors.textNorm
+                color = PassTheme.colors.textNorm,
+                style = PassTypography.body3Regular,
+                fontSize = 16.sp
             )
             Switch(
                 checked = state.hasSpecialCharacters,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = PassTheme.colors.loginInteractionNormMajor1,
+                ),
                 onCheckedChange = { onSpecialCharactersChange(it) }
             )
         }

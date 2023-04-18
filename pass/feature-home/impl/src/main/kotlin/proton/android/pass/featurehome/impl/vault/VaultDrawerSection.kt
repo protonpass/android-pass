@@ -51,7 +51,7 @@ fun VaultDrawerSection(
                 VaultDrawerRow(
                     name = stringResource(R.string.vault_drawer_all_vaults),
                     itemCount = list.sumOf { it.activeItemCount },
-                    icon = { AllVaultsIcon(iconSize = 24) },
+                    icon = { AllVaultsIcon() },
                     isShared = false,
                     isSelected = homeVaultSelection == HomeVaultSelection.AllVaults,
                     showMenuIcon = false,

@@ -48,7 +48,7 @@ fun AliasToBeCreated(
             AliasPrefixSuffixText(
                 prefix = prefix,
                 suffix = suffix?.suffix ?: "",
-                suffixColor = PassTheme.colors.aliasInteractionNorm
+                suffixColor = PassTheme.colors.aliasInteractionNormMajor2
             )
         }
     }

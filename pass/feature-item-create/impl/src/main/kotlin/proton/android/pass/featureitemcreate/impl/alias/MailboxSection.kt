@@ -55,7 +55,7 @@ fun MailboxSection(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        ForwardIcon()
+        ForwardIcon(tint = PassTheme.colors.textWeak)
         Column(
             modifier = Modifier.weight(1f),
         ) {

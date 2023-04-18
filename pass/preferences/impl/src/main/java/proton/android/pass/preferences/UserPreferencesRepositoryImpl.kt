@@ -8,7 +8,9 @@ import kotlinx.coroutines.flow.map
 import proton.android.pass.log.api.PassLogger
 import java.io.IOException
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class UserPreferencesRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<UserPreferences>
 ) : UserPreferencesRepository {

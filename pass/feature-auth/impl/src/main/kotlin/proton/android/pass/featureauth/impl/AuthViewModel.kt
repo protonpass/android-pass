@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -37,10 +36,7 @@ class AuthViewModel @Inject constructor(
         )
 
     fun init(context: ContextHolder) = viewModelScope.launch {
-        val status = biometryManager.getBiometryStatus()
-        PassLogger.i(TAG, "BiometryStatus: $status")
-
-        when (status) {
+        when (biometryManager.getBiometryStatus()) {
             BiometryStatus.CanAuthenticate -> {
                 val biometricLockState = preferenceRepository.getBiometricLockState().first()
                 if (biometricLockState == BiometricLockState.Disabled) {
@@ -52,6 +48,7 @@ class AuthViewModel @Inject constructor(
                     performAuth(context)
                 }
             }
+
             else -> {
                 // If there is no biometry available, emit success
                 _state.update { AuthStatus.Success }
@@ -62,13 +59,14 @@ class AuthViewModel @Inject constructor(
     private suspend fun performAuth(context: ContextHolder) {
         PassLogger.i(TAG, "Launching Biometry")
         biometryManager.launch(context)
-            .map { result ->
+            .collect { result ->
                 PassLogger.i(TAG, "Biometry result: $result")
                 when (result) {
                     BiometryResult.Success -> {
                         preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
                         _state.update { AuthStatus.Success }
                     }
+
                     is BiometryResult.Error -> {
                         PassLogger.w(TAG, "BiometryResult=Error: cause ${result.cause}")
                         when (result.cause) {
@@ -79,11 +77,10 @@ class AuthViewModel @Inject constructor(
                     }
 
                     // User can retry
-                    BiometryResult.Failed -> { }
+                    BiometryResult.Failed -> {}
                     is BiometryResult.FailedToStart -> _state.update { AuthStatus.Failed }
                 }
             }
-            .collect {}
     }
 
     companion object {

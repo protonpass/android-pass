@@ -179,6 +179,7 @@ class UpdateAliasViewModel @Inject constructor(
     ) {
         PassLogger.e(TAG, it ?: Exception(message), message)
         snackbarDispatcher(snackbarMessage)
+        mutableCloseScreenEventFlow.update { CloseScreenEvent.Close }
     }
 
     fun updateAlias() = viewModelScope.launch(coroutineExceptionHandler) {

@@ -11,7 +11,9 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +33,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AliasAdvancedOptionsSection(
     modifier: Modifier = Modifier,
@@ -43,6 +46,7 @@ fun AliasAdvancedOptionsSection(
     onPrefixChanged: (String) -> Unit,
     onSuffixClicked: () -> Unit
 ) {
+    val keyboardManager = LocalSoftwareKeyboardController.current
     Column(
         modifier = modifier
             .applyIf(
@@ -63,7 +67,12 @@ fun AliasAdvancedOptionsSection(
             value = prefix,
             onChange = onPrefixChanged,
             singleLine = true,
-            moveToNextOnEnter = true,
+            moveToNextOnEnter = !isBottomSheet,
+            onDoneClick = {
+                if (isBottomSheet) {
+                    keyboardManager?.hide()
+                }
+            },
             trailingIcon = if (prefix.isNotBlank() && enabled) {
                 { SmallCrossIconButton { onPrefixChanged("") } }
             } else {

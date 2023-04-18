@@ -6,7 +6,9 @@ import proton.android.pass.autofill.api.AutofillManager
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestAutofillManager @Inject constructor() : AutofillManager {
 
     private val statusFlow: MutableStateFlow<AutofillSupportedStatus> =

@@ -7,9 +7,17 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.unit.IntSize
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.autofill.api.AutofillStatus
+import proton.android.pass.autofill.api.AutofillSupportedStatus
+import proton.android.pass.autofill.fakes.TestAutofillManager
+import proton.android.pass.biometry.BiometryStatus
+import proton.android.pass.biometry.TestBiometryManager
+import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import javax.inject.Inject
 
 @HiltAndroidTest
 class OnBoardingScreenTest {
@@ -32,13 +40,106 @@ class OnBoardingScreenTest {
         hasText(composeTestRule.activity.resources.getString(R.string.on_boarding_last_page_button))
     }
 
-    @Test
-    fun onBoardingCanBeCompleted() {
-        var isCalled = false
+    @Inject
+    lateinit var autofillManager: TestAutofillManager
+    @Inject
+    lateinit var biometryManager: TestBiometryManager
 
+    @Before
+    fun setup() {
+        hiltRule.inject()
+    }
+
+    @Test
+    fun noAutofillNoBiometry() {
+        autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
+        biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
+
+        val checker = CallChecker()
         composeTestRule.setContent {
             OnBoardingScreen(
-                onBoardingShown = { isCalled = true }
+                onBoardingShown = { checker.call() }
+            )
+        }
+
+        composeTestRule
+            .onAllNodes(startMatcher)[0]
+            .performClick()
+
+        composeTestRule.waitUntil { checker.isCalled }
+    }
+
+    @Test
+    fun yesAutofillNoBiometry() {
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOtherService))
+        biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
+
+        val checker = CallChecker()
+        composeTestRule.setContent {
+            OnBoardingScreen(
+                onBoardingShown = { checker.call() }
+            )
+        }
+
+        composeTestRule
+            .onAllNodes(notNowButtonMatcher)[0]
+            .performClick()
+
+        composeTestRule.waitUntil {
+            composeTestRule
+                .onNode(startMatcher)
+                .assertIsDisplayed()
+                .fetchSemanticsNode()
+                .size != IntSize.Zero
+        }
+
+        composeTestRule
+            .onAllNodes(startMatcher)[0]
+            .performClick()
+
+        composeTestRule.waitUntil { checker.isCalled }
+    }
+
+    @Test
+    fun noAutofillYesBiometry() {
+        autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
+        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+
+        val checker = CallChecker()
+        composeTestRule.setContent {
+            OnBoardingScreen(
+                onBoardingShown = { checker.call() }
+            )
+        }
+
+        composeTestRule
+            .onAllNodes(notNowButtonMatcher)[0]
+            .performClick()
+
+        composeTestRule.waitUntil {
+            composeTestRule
+                .onNode(startMatcher)
+                .assertIsDisplayed()
+                .fetchSemanticsNode()
+                .size != IntSize.Zero
+        }
+
+        composeTestRule
+            .onAllNodes(startMatcher)[0]
+            .performClick()
+
+        composeTestRule.waitUntil { checker.isCalled }
+    }
+
+    @Test
+    fun yesAutofillYesBiometry() {
+        autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOtherService))
+        biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
+
+        val checker = CallChecker()
+        composeTestRule.setContent {
+            OnBoardingScreen(
+                onBoardingShown = { checker.call() }
             )
         }
 
@@ -63,6 +164,6 @@ class OnBoardingScreenTest {
                 .size != IntSize.Zero
         }
         composeTestRule.onNode(startMatcher).performClick()
-        composeTestRule.waitUntil { isCalled }
+        composeTestRule.waitUntil { checker.isCalled }
     }
 }

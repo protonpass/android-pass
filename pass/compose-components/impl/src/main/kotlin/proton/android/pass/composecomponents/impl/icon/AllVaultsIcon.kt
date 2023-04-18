@@ -19,7 +19,7 @@ fun AllVaultsIcon(
     VaultIcon(
         modifier = modifier,
         backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
-        iconColor = PassTheme.colors.loginInteractionNormMajor1,
+        iconColor = PassTheme.colors.loginInteractionNormMajor2,
         icon = R.drawable.ic_brand_pass,
         size = size,
         iconSize = iconSize,

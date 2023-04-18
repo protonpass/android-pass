@@ -2,6 +2,7 @@ package proton.android.pass.featureitemcreate.impl.login.bottomsheet.password
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -37,7 +38,11 @@ fun GeneratePasswordBottomSheetContent(
             onLengthChange = onLengthChange,
             onSpecialCharactersChange = onHasSpecialCharactersChange
         )
-        BottomSheetCancelConfirm(onCancel = onDismiss, onConfirm = { onConfirm(state.password) })
+        BottomSheetCancelConfirm(
+            modifier = Modifier.padding(top = 40.dp),
+            onCancel = onDismiss,
+            onConfirm = { onConfirm(state.password) }
+        )
     }
 }
 

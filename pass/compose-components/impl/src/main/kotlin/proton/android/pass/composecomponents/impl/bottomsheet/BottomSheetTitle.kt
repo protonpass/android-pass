@@ -9,9 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import androidx.compose.ui.unit.sp
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
 @Composable
@@ -26,7 +26,8 @@ fun BottomSheetTitle(
     ) {
         Text(
             text = title,
-            style = ProtonTheme.typography.default
+            style = PassTypography.body3Bold,
+            fontSize = 16.sp
         )
     }
 }

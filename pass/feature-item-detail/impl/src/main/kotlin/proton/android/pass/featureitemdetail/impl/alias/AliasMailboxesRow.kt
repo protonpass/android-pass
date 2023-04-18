@@ -35,7 +35,7 @@ fun AliasMailboxesRow(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        ForwardIcon(tint = PassTheme.colors.aliasInteractionNormMajor2)
+        ForwardIcon(tint = PassTheme.colors.aliasInteractionNorm)
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {

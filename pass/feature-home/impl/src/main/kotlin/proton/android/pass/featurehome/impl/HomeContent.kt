@@ -231,7 +231,6 @@ private fun HomeDrawerIcon(
                         AllVaultsIcon(
                             modifier = modifier,
                             size = 48,
-                            iconSize = 28,
                             onClick = onDrawerIconClick
                         )
                     }
@@ -239,7 +238,7 @@ private fun HomeDrawerIcon(
                         TrashVaultIcon(
                             modifier = modifier,
                             size = 48,
-                            iconSize = 28,
+                            iconSize = 20,
                             onClick = onDrawerIconClick
                         )
                     }

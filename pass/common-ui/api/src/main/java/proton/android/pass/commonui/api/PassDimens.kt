@@ -13,7 +13,7 @@ data class PassDimens(
     companion object {
         val Phone: PassDimens = PassDimens(
             bottomsheetHorizontalPadding = Spacing.medium,
-            bottomsheetVerticalPadding = Spacing.medium + Spacing.small
+            bottomsheetVerticalPadding = Spacing.large
         )
     }
 }

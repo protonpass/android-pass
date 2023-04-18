@@ -12,6 +12,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.sp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -29,17 +30,18 @@ fun GeneratePasswordBottomSheetTitle(
         Text(
             modifier = Modifier.align(Alignment.Center),
             text = stringResource(id = R.string.bottomsheet_generate_password_title),
-            style = PassTypography.body3Bold
+            style = PassTypography.body3Bold,
+            fontSize = 16.sp
         )
         CircleIconButton(
             modifier = Modifier.align(Alignment.CenterEnd),
-            backgroundColor = PassTheme.colors.loginInteractionNormMinor2,
+            backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
             onClick = { onRegenerate() }
         ) {
             Icon(
                 painter = painterResource(me.proton.core.presentation.compose.R.drawable.ic_proton_arrows_rotate),
                 contentDescription = stringResource(R.string.regenerate_password_icon_content_description),
-                tint = PassTheme.colors.loginInteractionNorm
+                tint = PassTheme.colors.loginInteractionNormMajor2
             )
         }
     }

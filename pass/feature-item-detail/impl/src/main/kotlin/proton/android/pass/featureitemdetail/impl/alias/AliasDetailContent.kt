@@ -40,7 +40,7 @@ fun AliasDetailContent(
         )
         NoteSection(
             text = itemUiModel.note,
-            accentColor = PassTheme.colors.aliasInteractionNormMajor1
+            accentColor = PassTheme.colors.aliasInteractionNorm
         )
         MoreInfo(moreInfoUiState = moreInfoUiState)
     }

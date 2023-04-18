@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -22,10 +23,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.caption
-import me.proton.core.compose.theme.captionStrong
 import me.proton.core.compose.theme.defaultHighlight
+import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featurehome.impl.R
@@ -40,6 +41,7 @@ fun AutofillCard(
 
     Card(
         modifier = modifier.clickable { onClick() },
+        shape = RoundedCornerShape(16.dp),
         elevation = 10.dp
     ) {
         Box(
@@ -62,13 +64,13 @@ fun AutofillCard(
                     )
                     Text(
                         text = stringResource(id = R.string.home_autofill_banner_text),
-                        style = ProtonTheme.typography.caption,
+                        style = PassTypography.body3Regular,
                         color = PassTheme.colors.textInvert
                     )
                     Spacer(modifier = Modifier.size(4.dp))
                     Text(
                         text = stringResource(id = R.string.home_autofill_banner_settings),
-                        style = ProtonTheme.typography.captionStrong,
+                        style = ProtonTheme.typography.defaultHighlight,
                         color = PassTheme.colors.textInvert
                     )
                 }
@@ -82,7 +84,7 @@ fun AutofillCard(
 
             SmallCrossIconButton(
                 modifier = Modifier.align(Alignment.TopEnd),
-                tint = PassTheme.colors.textNorm,
+                tint = PassPalette.White100,
                 onClick = onDismiss
             )
         }

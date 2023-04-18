@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionStrong
 import proton.android.pass.commonui.api.PassTheme
@@ -51,7 +52,8 @@ fun SortingButton(
         Text(
             text = text,
             style = ProtonTheme.typography.captionStrong,
-            color = PassTheme.colors.interactionNormMajor2
+            color = PassTheme.colors.interactionNormMajor2,
+            fontSize = 14.sp
         )
     }
 }

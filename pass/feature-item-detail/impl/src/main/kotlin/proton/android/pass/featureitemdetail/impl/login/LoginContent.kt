@@ -58,7 +58,7 @@ fun LoginContent(
         )
         NoteSection(
             text = itemUiModel.note,
-            accentColor = PassTheme.colors.loginInteractionNormMajor1
+            accentColor = PassTheme.colors.loginInteractionNorm
         )
         LinkedAppsListSection(
             packageInfoUiSet = itemType.packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet(),

@@ -9,7 +9,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.common.api.toOption
-import proton.android.pass.commonui.api.BrowserUtils
+import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import java.lang.ref.WeakReference
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -36,7 +36,7 @@ fun ProfileScreen(
         onSettingsClick = onSettingsClick,
         onFeedbackClick = onFeedbackClick,
         onRateAppClick = {
-            BrowserUtils.openWebsite(
+            openWebsite(
                 context,
                 "https://play.google.com/store/apps/details?id=proton.android.pass"
             )

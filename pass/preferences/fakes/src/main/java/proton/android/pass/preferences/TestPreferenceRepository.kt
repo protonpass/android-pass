@@ -3,6 +3,7 @@ package proton.android.pass.preferences
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,9 +14,7 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
     )
 
-    private val themePreference = MutableSharedFlow<ThemePreference>(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
-    )
+    private val themePreference = MutableStateFlow(ThemePreference.Dark)
 
     private val hasAuthenticated = MutableSharedFlow<HasAuthenticated>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1

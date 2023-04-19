@@ -26,7 +26,7 @@ fun PasswordIcon(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
             contentDescription = stringResource(R.string.password_title_icon_content_description),
-            tint = PassTheme.colors.passwordInteractionNormMajor1
+            tint = PassTheme.colors.passwordInteractionNormMajor2
         )
     }
 }

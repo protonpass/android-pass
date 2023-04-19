@@ -29,14 +29,14 @@ fun MainLoginSection(
             username = username,
             onUsernameClick = onUsernameClick
         )
-        Divider()
+        Divider(color = PassTheme.colors.inputBorderNorm)
         LoginPasswordRow(
             password = passwordState,
             onTogglePasswordClick = onTogglePasswordClick,
             onCopyPasswordClick = onCopyPasswordClick
         )
         if (totpUiState != null) {
-            Divider()
+            Divider(color = PassTheme.colors.inputBorderNorm)
             TotpRow(state = totpUiState) { onCopyTotpClick(it) }
         }
     }

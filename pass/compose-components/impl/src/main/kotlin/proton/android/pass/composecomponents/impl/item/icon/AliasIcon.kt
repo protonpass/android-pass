@@ -29,7 +29,7 @@ fun AliasIcon(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
             contentDescription = stringResource(R.string.alias_title_icon_content_description),
-            tint = PassTheme.colors.aliasInteractionNormMajor1
+            tint = PassTheme.colors.aliasInteractionNormMajor2
         )
     }
 }

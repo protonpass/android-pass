@@ -129,4 +129,7 @@ object PassPalette {
     val OrchidPink = Color(0xFFBA80E6)
     val LavenderBloom = Color(0xFFA792FF)
     val BabyBlueEyes = Color(0xFFF2EFFF)
+    val PearlWhite = Color(0xFFEAE7E4)
+    val CrimsonRed = Color(0xFF7E1013)
+    val BubbleGum = Color(0xFFFDB0B2)
 }

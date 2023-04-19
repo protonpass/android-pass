@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -46,11 +47,13 @@ fun GeneratePasswordBottomSheetContent(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(14.dp),
             color = PassTheme.colors.loginInteractionNormMajor1,
+            elevation = ButtonDefaults.elevation(0.dp),
             onClick = { onConfirm(state.password) }
         ) {
             Text(
                 text = stringResource(R.string.generate_password_copy),
-                style = PassTypography.body3RegularInverted
+                style = PassTypography.body3RegularInverted,
+                color = PassTheme.colors.textInvert
             )
         }
     }

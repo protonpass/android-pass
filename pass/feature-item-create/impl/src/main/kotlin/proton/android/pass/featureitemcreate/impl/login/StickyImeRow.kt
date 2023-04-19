@@ -21,7 +21,7 @@ fun StickyImeRow(
         modifier = modifier
             .fillMaxWidth()
             .height(48.dp)
-            .background(PassTheme.colors.backgroundStrongest),
+            .background(PassTheme.colors.backgroundNorm),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {

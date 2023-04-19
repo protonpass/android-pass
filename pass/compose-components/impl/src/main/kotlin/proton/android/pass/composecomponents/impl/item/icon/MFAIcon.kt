@@ -29,7 +29,7 @@ fun MFAIcon(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
             contentDescription = stringResource(R.string.mfa_title_icon_content_description),
-            tint = PassTheme.colors.passwordInteractionNormMajor1
+            tint = PassTheme.colors.passwordInteractionNormMajor2
         )
     }
 }

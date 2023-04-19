@@ -33,6 +33,7 @@ data class PassColors(
     val noteInteractionNormMinor2: Color,
 
     val passwordInteractionNormMajor1: Color,
+    val passwordInteractionNormMajor2: Color,
     val passwordInteractionNorm: Color,
     val passwordInteractionNormMinor1: Color,
     val passwordInteractionNormMinor2: Color,
@@ -108,6 +109,7 @@ data class PassColors(
             noteInteractionNormMinor2 = PassPalette.ShadowInk,
 
             passwordInteractionNormMajor1 = PassPalette.CoralCandy,
+            passwordInteractionNormMajor2 = PassPalette.BubbleGum,
             passwordInteractionNorm = PassPalette.BlossomPink,
             passwordInteractionNormMinor1 = PassPalette.BerryWine,
             passwordInteractionNormMinor2 = PassPalette.PlumPassion,
@@ -181,6 +183,7 @@ data class PassColors(
             noteInteractionNormMinor2 = PassPalette.OldLace,
 
             passwordInteractionNormMajor1 = PassPalette.Tulip,
+            passwordInteractionNormMajor2 = PassPalette.CrimsonRed,
             passwordInteractionNorm = PassPalette.LightSalmonPink,
             passwordInteractionNormMinor1 = PassPalette.Pink,
             passwordInteractionNormMinor2 = PassPalette.Linen,
@@ -191,13 +194,13 @@ data class PassColors(
             textDisabled = PassPalette.BrightGray,
             textInvert = PassPalette.EerieBlack,
 
-            inputBackgroundNorm = PassPalette.WinterBreeze,
+            inputBackgroundNorm = PassPalette.BrightWhite,
             inputBackgroundStrong = PassPalette.BrightWhite,
-            inputBorderNorm = PassPalette.MistyMorning,
+            inputBorderNorm = PassPalette.BrightGray,
             inputBorderStrong = PassPalette.BrightGray,
             inputBorderFocused = PassPalette.Lavender8,
 
-            backgroundNorm = PassPalette.Whisper,
+            backgroundNorm = PassPalette.White100,
             backgroundWeak = PassPalette.White100,
             backgroundStrong = PassPalette.White100,
             backgroundStrongest = PassPalette.AliceBlue,
@@ -220,11 +223,11 @@ data class PassColors(
             vaultColor9 = PassPalette.MercuryLight,
             vaultColor10 = PassPalette.WaterLeafLight,
 
-            searchBarBackground = PassPalette.White100,
+            searchBarBackground = PassPalette.Whisper,
             bottomBarBackground = PassPalette.White100,
             bottomSheetBackground = PassPalette.White100,
             itemDetailBackground = PassPalette.White100,
-            loginIconBorder = PassPalette.White100,
+            loginIconBorder = PassPalette.PearlWhite,
         )
     }
 }
@@ -253,6 +256,7 @@ val LocalPassColors = staticCompositionLocalOf {
         noteInteractionNormMinor1 = Color.Unspecified,
         noteInteractionNormMinor2 = Color.Unspecified,
         passwordInteractionNormMajor1 = Color.Unspecified,
+        passwordInteractionNormMajor2 = Color.Unspecified,
         passwordInteractionNorm = Color.Unspecified,
         passwordInteractionNormMinor1 = Color.Unspecified,
         passwordInteractionNormMinor2 = Color.Unspecified,

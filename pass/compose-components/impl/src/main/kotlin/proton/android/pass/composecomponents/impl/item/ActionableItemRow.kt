@@ -56,7 +56,7 @@ fun ActionableItemRow(
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_three_dots_vertical_24),
                     contentDescription = stringResource(id = R.string.action_content_description_menu),
-                    tint = PassTheme.colors.textWeak
+                    tint = PassTheme.colors.textHint
                 )
             }
         }

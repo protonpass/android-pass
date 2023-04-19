@@ -36,7 +36,7 @@ fun AboutSection(
                 text = stringResource(R.string.settings_option_privacy_policy),
                 onClick = onPrivacyClick
             )
-            Divider()
+            Divider(color = PassTheme.colors.inputBorderNorm)
             SettingOption(
                 text = stringResource(R.string.settings_option_terms_of_service),
                 onClick = onTermsClick

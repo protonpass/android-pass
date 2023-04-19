@@ -39,7 +39,7 @@ fun TitleVaultSelectionSection(
                 icon = vaultIcon ?: ShareIcon.Icon1,
                 onVaultClicked = onVaultClicked
             )
-            Divider()
+            Divider(color = PassTheme.colors.inputBorderNorm)
         }
         TitleSection(
             modifier = Modifier.padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),

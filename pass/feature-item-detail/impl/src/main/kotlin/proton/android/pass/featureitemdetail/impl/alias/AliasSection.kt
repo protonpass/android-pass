@@ -30,7 +30,7 @@ fun AliasSection(
             onCopyAlias = { onCopyAlias(it) }
         )
         if (!mailboxes.isEmpty() || isLoading) {
-            Divider()
+            Divider(color = PassTheme.colors.inputBorderNorm)
         }
         AliasMailboxesRow(
             mailboxes = mailboxes,

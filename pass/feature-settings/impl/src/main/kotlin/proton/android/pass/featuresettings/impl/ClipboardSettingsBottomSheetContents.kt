@@ -42,8 +42,8 @@ fun ClipboardBottomSheetContents(
             val clearClipboardString = when (state.clearClipboardPreference) {
                 ClearClipboardPreference.Never ->
                     stringResource(R.string.clipboard_option_clear_clipboard_never)
-                ClearClipboardPreference.S69 ->
-                    stringResource(R.string.clipboard_option_clear_clipboard_after_69_seconds)
+                ClearClipboardPreference.S60 ->
+                    stringResource(R.string.clipboard_option_clear_clipboard_after_60_seconds)
                 ClearClipboardPreference.S180 ->
                     stringResource(R.string.clipboard_option_clear_clipboard_after_180_seconds)
             }

@@ -45,7 +45,7 @@ class ClipboardManagerImpl @Inject constructor(
         }
         when (runBlocking { clearClipboardPreferenceFlow.first() }) {
             ClearClipboardPreference.Never -> {}
-            ClearClipboardPreference.S69 -> scheduler.schedule(69, text)
+            ClearClipboardPreference.S60 -> scheduler.schedule(60, text)
             ClearClipboardPreference.S180 -> scheduler.schedule(180, text)
         }
     }

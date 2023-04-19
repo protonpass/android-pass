@@ -20,7 +20,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.preferences.ClearClipboardPreference
 import proton.android.pass.preferences.ClearClipboardPreference.Never
 import proton.android.pass.preferences.ClearClipboardPreference.S180
-import proton.android.pass.preferences.ClearClipboardPreference.S69
+import proton.android.pass.preferences.ClearClipboardPreference.S60
 
 @Composable
 fun ClearClipboardOptionsBottomSheetContents(
@@ -41,14 +41,14 @@ private fun clearClipboardItemList(
     clearClipboardPreference: ClearClipboardPreference,
     onClearClipboardPreferenceSelected: (ClearClipboardPreference) -> Unit
 ): ImmutableList<BottomSheetItem> =
-    listOf(S69, S180, Never)
+    listOf(S60, S180, Never)
         .map {
             object : BottomSheetItem {
                 override val title: @Composable () -> Unit
                     get() = {
                         val clearClipboardString = when (it) {
                             Never -> stringResource(R.string.clipboard_option_clear_clipboard_never)
-                            S69 -> stringResource(R.string.clipboard_option_clear_clipboard_after_69_seconds)
+                            S60 -> stringResource(R.string.clipboard_option_clear_clipboard_after_60_seconds)
                             S180 -> stringResource(R.string.clipboard_option_clear_clipboard_after_180_seconds)
                         }
                         val color = if (it == clearClipboardPreference) {

@@ -80,7 +80,7 @@ class TelemetryRepositoryTest {
     fun `sendEvents can work with empty results`() = runTest {
         // GIVEN
         accountManager.sendPrimaryUserId(UserId("123"))
-        getUserPlan.setResult(Result.success(UserPlan("plan", "plan")))
+        getUserPlan.setResult(Result.success(UserPlan.Paid("plan", "plan")))
 
         // WHEN
         instance.sendEvents()
@@ -163,7 +163,7 @@ class TelemetryRepositoryTest {
         event: String
     ) {
         accountManager.sendPrimaryUserId(UserId(userId))
-        getUserPlan.setResult(Result.success(UserPlan(plan, plan)))
+        getUserPlan.setResult(Result.success(UserPlan.Paid(plan, plan)))
 
         (0 until numItems).forEach { idx ->
             localDataSource.store(

@@ -63,7 +63,7 @@ fun LinkedAppIcon(
                 SubcomposeAsyncImageContent(
                     modifier = Modifier.fillMaxSize()
                         .border(
-                            width = 3.dp,
+                            width = 1.dp,
                             color = PassTheme.colors.loginIconBorder,
                             shape = shape
                         )

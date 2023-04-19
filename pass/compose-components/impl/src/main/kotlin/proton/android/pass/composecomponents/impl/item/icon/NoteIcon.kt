@@ -29,7 +29,7 @@ fun NoteIcon(
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_file_lines),
             contentDescription = stringResource(R.string.note_title_icon_content_description),
-            tint = PassTheme.colors.noteInteractionNormMajor1
+            tint = PassTheme.colors.noteInteractionNormMajor2
         )
     }
 }

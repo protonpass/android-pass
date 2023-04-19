@@ -185,7 +185,7 @@ data class PassColors(
             passwordInteractionNormMajor1 = PassPalette.Tulip,
             passwordInteractionNormMajor2 = PassPalette.CrimsonRed,
             passwordInteractionNorm = PassPalette.LightSalmonPink,
-            passwordInteractionNormMinor1 = PassPalette.Pink,
+            passwordInteractionNormMinor1 = PassPalette.CottonCandy,
             passwordInteractionNormMinor2 = PassPalette.Linen,
 
             textNorm = PassPalette.DarkCharcoal,

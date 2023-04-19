@@ -43,13 +43,13 @@ fun ApplicationSection(
             Divider(color = PassTheme.colors.inputBorderNorm)
             ColorSettingOption(
                 text = stringResource(R.string.settings_option_force_sync),
-                textColor = PassTheme.colors.interactionNorm,
-                iconBgColor = PassTheme.colors.interactionNormMinor2,
+                textColor = PassTheme.colors.interactionNormMajor2,
+                iconBgColor = PassTheme.colors.interactionNormMinor1,
                 icon = {
                     Icon(
                         painter = painterResource(CoreR.drawable.ic_proton_arrows_rotate),
                         contentDescription = "",
-                        tint = PassTheme.colors.interactionNorm
+                        tint = PassTheme.colors.interactionNormMajor2
                     )
                 },
                 onClick = onForceSyncClick,

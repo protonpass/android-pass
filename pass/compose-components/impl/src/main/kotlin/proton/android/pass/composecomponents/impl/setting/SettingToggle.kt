@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -35,6 +36,9 @@ fun SettingToggle(
         )
         Switch(
             checked = isChecked,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = PassTheme.colors.interactionNormMajor1,
+            ),
             onCheckedChange = null
         )
     }

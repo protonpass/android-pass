@@ -103,7 +103,7 @@ internal fun AliasContent(
                     text = topBarActionName,
                     isLoading = uiState.isLoadingState.value(),
                     actionColor = PassTheme.colors.aliasInteractionNorm,
-                    iconColor = PassTheme.colors.aliasInteractionNormMajor1,
+                    iconColor = PassTheme.colors.aliasInteractionNormMajor2,
                     iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                     onCloseClick = onUpClick,
                     onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) }

@@ -26,7 +26,7 @@ fun AccountProfileSection(
             text = stringResource(R.string.profile_option_account),
             onClick = onAccountClick
         )
-        Divider()
+        Divider(color = PassTheme.colors.inputBorderNorm)
         SettingOption(
             text = stringResource(R.string.profile_option_settings),
             onClick = onSettingsClick

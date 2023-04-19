@@ -60,7 +60,8 @@ fun BottomSheetCancelConfirm(
                     modifier = Modifier.fillMaxWidth(),
                     text = confirmText,
                     style = PassTypography.body3RegularInverted,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    color = PassTheme.colors.textInvert
                 )
             }
         )

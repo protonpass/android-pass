@@ -60,7 +60,7 @@ fun LoginIcon(modifier: Modifier = Modifier, shape: Shape = PassTheme.shapes.squ
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_user),
             contentDescription = stringResource(R.string.login_title_icon_content_description),
-            tint = PassTheme.colors.loginInteractionNormMajor1
+            tint = PassTheme.colors.loginInteractionNormMajor2
         )
     }
 }
@@ -103,7 +103,7 @@ fun LoginIcon(
                         modifier = Modifier
                             .fillMaxSize()
                             .border(
-                                width = 3.dp,
+                                width = 1.dp,
                                 color = PassTheme.colors.loginIconBorder,
                                 shape = shape
                             )
@@ -166,7 +166,7 @@ private fun TwoLetterLoginIcon(
     CircleTextIcon(
         modifier = modifier,
         text = text,
-        color = PassTheme.colors.loginInteractionNormMajor1,
+        color = PassTheme.colors.loginInteractionNormMajor2,
         size = size,
         shape = shape
     )

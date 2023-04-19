@@ -52,7 +52,7 @@ fun ClipboardBottomSheetContents(
                 label = stringResource(R.string.clipboard_option_clear_clipboard_label),
                 onClick = onClearClipboardSettingClick
             )
-            Divider()
+            Divider(color = PassTheme.colors.inputBorderNorm)
             SettingToggle(
                 text = stringResource(R.string.clipboard_option_copy_totp_code),
                 isChecked = state.isCopyTotpToClipboardEnabled.value(),

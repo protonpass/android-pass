@@ -102,7 +102,7 @@ internal fun AliasContent(
                 CreateUpdateTopBar(
                     text = topBarActionName,
                     isLoading = uiState.isLoadingState.value(),
-                    actionColor = PassTheme.colors.aliasInteractionNorm,
+                    actionColor = PassTheme.colors.aliasInteractionNormMajor1,
                     iconColor = PassTheme.colors.aliasInteractionNormMajor2,
                     iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                     onCloseClick = onUpClick,

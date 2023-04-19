@@ -32,8 +32,8 @@ fun BackArrowTopAppBar(
         navigationIcon = {
             BackArrowCircleIconButton(
                 modifier = Modifier.padding(12.dp, 4.dp),
-                color = PassTheme.colors.interactionNormMajor1,
-                backgroundColor = PassTheme.colors.interactionNormMinor2,
+                color = PassTheme.colors.interactionNormMajor2,
+                backgroundColor = PassTheme.colors.interactionNormMinor1,
                 onUpClick = onUpClick
             )
         },

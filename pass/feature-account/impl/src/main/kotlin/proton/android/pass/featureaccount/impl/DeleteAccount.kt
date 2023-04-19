@@ -18,13 +18,13 @@ fun DeleteAccount(modifier: Modifier = Modifier, onDeleteAccountClick: () -> Uni
     ColorSettingOption(
         modifier = modifier.roundedContainerNorm(),
         text = stringResource(R.string.account_delete_account),
-        textColor = PassTheme.colors.passwordInteractionNormMajor1,
-        iconBgColor = PassTheme.colors.passwordInteractionNormMinor2,
+        textColor = PassTheme.colors.passwordInteractionNormMajor2,
+        iconBgColor = PassTheme.colors.passwordInteractionNormMinor1,
         icon = {
             Icon(
                 painter = painterResource(me.proton.core.presentation.compose.R.drawable.ic_proton_trash_cross),
                 contentDescription = stringResource(R.string.account_delete_account_icon_content_description),
-                tint = PassTheme.colors.passwordInteractionNormMajor1
+                tint = PassTheme.colors.passwordInteractionNormMajor2
             )
         },
         onClick = onDeleteAccountClick

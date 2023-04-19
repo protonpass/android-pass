@@ -14,7 +14,7 @@ import proton.android.pass.composecomponents.impl.R
 fun BottomSheetItemIcon(
     modifier: Modifier = Modifier,
     @DrawableRes iconId: Int,
-    tint: Color = PassTheme.colors.textWeak
+    tint: Color = PassTheme.colors.textNorm
 ) {
     Icon(
         modifier = modifier,

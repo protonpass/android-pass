@@ -1,26 +1,54 @@
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.PaymentManager
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.isOrganizationAdmin
+import me.proton.core.user.domain.extension.isOrganizationMember
+import me.proton.core.user.domain.extension.isOrganizationUser
+import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.UserPlan
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 class GetUserPlanImpl @Inject constructor(
+    private val userRepository: UserRepository,
     private val paymentManager: PaymentManager,
     private val getSubscription: GetCurrentSubscription
 ) : GetUserPlan {
 
     @Suppress("ReturnCount")
-    override suspend fun invoke(userId: UserId): UserPlan {
-        val plan = getPlan(userId)
-        return if (plan != null) {
-            UserPlan(internal = plan.name, humanReadable = plan.title)
+    override fun invoke(userId: UserId): Flow<UserPlan> = flow {
+        val user = userRepository.getUser(userId)
+        if (user.isOrganizationUser()) {
+            emit(planForOrganizationUser(user))
         } else {
-            FreeUserPlan
+            emit(UserPlan.Free)
+        }
+    }
+
+    private suspend fun planForOrganizationUser(user: User): UserPlan =
+        if (user.isOrganizationAdmin()) {
+            planForOrganizationAdmin(user)
+        } else if (user.isOrganizationMember()) {
+            UserPlan.Subuser
+        } else {
+            UserPlan.Free
+        }
+    private suspend fun planForOrganizationAdmin(user: User): UserPlan {
+        val plan = getPlan(user.userId)
+        return if (plan == null) {
+            UserPlan.Free
+        } else {
+            UserPlan.Paid(
+                internal = plan.name,
+                humanReadable = plan.title
+            )
         }
     }
 
@@ -40,10 +68,6 @@ class GetUserPlanImpl @Inject constructor(
     }
 
     companion object {
-        private val FreeUserPlan = UserPlan(
-            humanReadable = "Proton Free",
-            internal = "free"
-        )
         private const val TAG = "GetUserPlanImpl"
         private const val ACTIVE_PLAN_TYPE = 1
     }

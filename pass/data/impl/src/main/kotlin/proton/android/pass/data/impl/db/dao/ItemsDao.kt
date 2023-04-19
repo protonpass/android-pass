@@ -141,23 +141,12 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
 
     @Query(
         """
-        SELECT
-            ${ItemEntity.Columns.SHARE_ID} as shareId,
-            (
-                SELECT COUNT(*)
-                FROM ${ItemEntity.TABLE}
-                WHERE ${ItemEntity.Columns.SHARE_ID} = o.${ItemEntity.Columns.SHARE_ID}
-                  AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE}
-            ) as activeItemCount,
-            (
-                SELECT COUNT(*)
-                FROM ${ItemEntity.TABLE}
-                WHERE ${ItemEntity.Columns.SHARE_ID} = o.${ItemEntity.Columns.SHARE_ID}
-                  AND ${ItemEntity.Columns.STATE} = ${ItemStateValues.TRASHED}
-            ) as trashedItemCount
-        FROM ${ItemEntity.TABLE} o
-        WHERE o.${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
-        GROUP BY o.${ItemEntity.Columns.SHARE_ID}
+        SELECT ${ItemEntity.Columns.SHARE_ID} as shareId,
+        SUM(CASE WHEN ${ItemEntity.Columns.STATE} = ${ItemStateValues.ACTIVE} THEN 1 ELSE 0 END) as activeItemCount,
+        SUM(CASE WHEN ${ItemEntity.Columns.STATE} = ${ItemStateValues.TRASHED} THEN 1 ELSE 0 END) as trashedItemCount
+        FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.SHARE_ID} IN (:shareIds)
+        GROUP BY ${ItemEntity.Columns.SHARE_ID}
         """
     )
     abstract fun countItemsForShares(shareIds: List<String>): Flow<List<ShareItemCountRow>>

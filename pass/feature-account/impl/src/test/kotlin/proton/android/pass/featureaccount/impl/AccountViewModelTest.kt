@@ -41,14 +41,14 @@ class AccountViewModelTest {
     @Test
     fun `emits initial state`() = runTest {
         instance.state.test {
-            assertThat(awaitItem()).isEqualTo(AccountUiState())
+            assertThat(awaitItem()).isEqualTo(AccountUiState.Initial)
         }
     }
 
     @Test
     fun `emits user email and plan`() = runTest {
         val email = "test@email.local"
-        val plan = UserPlan(internal = "internal", humanReadable = "testplan")
+        val plan = UserPlan.Paid(internal = "internal", humanReadable = "testplan")
 
         val user = TestUser.create(email = email)
         observeCurrentUser.sendUser(user)
@@ -58,7 +58,7 @@ class AccountViewModelTest {
             val item = awaitItem()
             assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
             assertThat(item.email).isEqualTo(email)
-            assertThat(item.plan).isEqualTo(plan.humanReadable)
+            assertThat(item.plan).isEqualTo(PlanSection.Data(plan.humanReadable))
         }
     }
 
@@ -73,7 +73,7 @@ class AccountViewModelTest {
             val item = awaitItem()
             assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
             assertThat(item.email).isEqualTo(email)
-            assertThat(item.plan).isNull()
+            assertThat(item.plan).isEqualTo(PlanSection.Hide)
         }
 
         val message = snackbarDispatcher.snackbarMessage.first().value()

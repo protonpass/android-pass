@@ -40,7 +40,7 @@ fun ApplicationSection(
                 text = stringResource(R.string.settings_option_view_logs),
                 onClick = onViewLogsClick
             )
-            Divider()
+            Divider(color = PassTheme.colors.inputBorderNorm)
             ColorSettingOption(
                 text = stringResource(R.string.settings_option_force_sync),
                 textColor = PassTheme.colors.interactionNorm,

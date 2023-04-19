@@ -36,7 +36,7 @@ fun PreferencesSection(
             label = stringResource(R.string.settings_appearance_preference_title),
             onClick = onSelectThemeClick
         )
-        Divider()
+        Divider(color = PassTheme.colors.inputBorderNorm)
         SettingOption(
             text = stringResource(R.string.settings_option_clipboard),
             onClick = onClipboardClick

@@ -81,7 +81,7 @@ fun AliasAdvancedOptionsSection(
             keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.None)
         )
 
-        Divider()
+        Divider(color = PassTheme.colors.inputBorderNorm)
 
         val aliasText = suffix?.suffix ?: ""
         Row(

@@ -24,7 +24,8 @@ fun AccountInfo(modifier: Modifier = Modifier, state: AccountUiState) {
             label = stringResource(R.string.account_username_label),
             isLoading = state.isLoadingState.value()
         )
-        Divider()
+
+        Divider(color = PassTheme.colors.inputBorderNorm)
 
         if (state.plan != PlanSection.Hide) {
             SettingOption(

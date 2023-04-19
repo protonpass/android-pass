@@ -36,7 +36,7 @@ fun HelpCenterProfileSection(
                 text = stringResource(R.string.profile_option_feedback),
                 onClick = onFeedbackClick
             )
-            Divider()
+            Divider(color = PassTheme.colors.inputBorderNorm)
             SettingOption(
                 text = stringResource(R.string.profile_option_rating),
                 onClick = onRateAppClick

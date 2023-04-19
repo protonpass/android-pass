@@ -25,11 +25,14 @@ fun AccountInfo(modifier: Modifier = Modifier, state: AccountUiState) {
             isLoading = state.isLoadingState.value()
         )
         Divider()
-        SettingOption(
-            text = state.plan ?: "",
-            label = stringResource(R.string.account_subscription_label),
-            isLoading = state.isLoadingState.value()
-        )
+
+        if (state.plan != PlanSection.Hide) {
+            SettingOption(
+                text = state.plan.name(),
+                label = stringResource(R.string.account_subscription_label),
+                isLoading = state.plan.isLoading()
+            )
+        }
     }
 }
 
@@ -43,7 +46,7 @@ fun AccountInfoPreview(
             AccountInfo(
                 state = AccountUiState(
                     "myemail@proton.me",
-                    "free",
+                    PlanSection.Data("Free"),
                     IsLoadingState.NotLoading
                 )
             )

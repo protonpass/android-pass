@@ -1,6 +1,7 @@
 package proton.android.pass.data.impl.repositories
 
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.Clock
 import kotlinx.serialization.json.JsonPrimitive
 import me.proton.core.accountmanager.domain.AccountManager
@@ -41,14 +42,14 @@ class TelemetryRepositoryImpl @Inject constructor(
 
     override suspend fun sendEvents() {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
-        val planName = getUserPlan(userId)
+        val planName = requireNotNull(getUserPlan(userId).firstOrNull())
 
         passDatabase.inTransaction {
             val all = localDataSource.getAll(userId)
             if (all.isNotEmpty()) {
                 all.chunked(MAX_EVENT_BATCH_SIZE).forEach { eventChunk ->
                     runCatching {
-                        performSend(userId, planName.internal, eventChunk)
+                        performSend(userId, planName.internalName(), eventChunk)
                     }.onSuccess {
                         val min = eventChunk.first().id
                         val max = eventChunk.last().id
@@ -70,7 +71,7 @@ class TelemetryRepositoryImpl @Inject constructor(
         TelemetryRequest(
             eventInfo = events.map { event ->
                 val dimensions = DimensionsSerializer.deserialize(event.dimensions).toMutableMap()
-                dimensions.put(PLAN_NAME_KEY, JsonPrimitive(planName))
+                dimensions[PLAN_NAME_KEY] = JsonPrimitive(planName)
 
                 EventInfo(
                     measurementGroup = MEASUREMENT_GROUP,

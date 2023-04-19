@@ -18,6 +18,7 @@ import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
+import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
 import proton.android.pass.data.api.usecases.MigrateItem
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
@@ -25,6 +26,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateAlias
@@ -45,6 +47,7 @@ import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
+import proton.android.pass.data.fakes.usecases.TestMarkVaultAsPrimary
 import proton.android.pass.data.fakes.usecases.TestMigrateItem
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
@@ -52,6 +55,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.TestRefreshContent
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
 import proton.android.pass.data.fakes.usecases.TestTrashItem
 import proton.android.pass.data.fakes.usecases.TestUpdateAlias
@@ -198,4 +202,14 @@ abstract class FakesDataModule {
     abstract fun bindRestoreItem(
         impl: TestRestoreItem
     ): RestoreItem
+
+    @Binds
+    abstract fun bindMarkVaultAsPrimary(
+        impl: TestMarkVaultAsPrimary
+    ): MarkVaultAsPrimary
+
+    @Binds
+    abstract fun bindRefreshContent(
+        impl: TestRefreshContent
+    ): RefreshContent
 }

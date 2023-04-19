@@ -42,6 +42,9 @@ class ProfileScreenTest {
             )
         }
         composeTestRule
+            .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_settings))
+            .performScrollTo()
+        composeTestRule
             .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_account))
             .performClick()
         composeTestRule.waitUntil { isCalled }
@@ -60,6 +63,9 @@ class ProfileScreenTest {
                 onFeedbackClick = {}
             )
         }
+        composeTestRule
+            .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_feedback))
+            .performScrollTo()
         composeTestRule
             .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_settings))
             .performClick()

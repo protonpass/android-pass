@@ -110,5 +110,5 @@ fladle {
             mapOf("model" to "Pixel2.arm", "version" to "\"33\""),
         )
     )
-    recordVideo.set(false)
+    useOrchestrator.set(true)
 }

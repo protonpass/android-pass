@@ -5,7 +5,9 @@ import java.net.URISyntaxException
 
 object UrlSanitizer {
     fun sanitize(url: String): Result<String> {
-        if (url.isEmpty()) return Result.failure(IllegalArgumentException("url cannot be empty"))
+        if (url.isBlank()) return Result.failure(IllegalArgumentException("url cannot be empty"))
+        if (url.all { !it.isLetterOrDigit() })
+            return Result.failure(IllegalArgumentException("url cannot be all symbols"))
 
         // If it doesn't have a scheme, add https://
         val urlWithScheme = if (!url.contains("://")) {
@@ -16,6 +18,7 @@ object UrlSanitizer {
 
         return try {
             val parsed = URI(urlWithScheme)
+            if (parsed.host == null) return Result.failure(IllegalArgumentException("url cannot be parsed"))
             val meaningfulSection = "${parsed.scheme}://${parsed.host}${parsed.path}"
             Result.success(meaningfulSection)
         } catch (e: URISyntaxException) {

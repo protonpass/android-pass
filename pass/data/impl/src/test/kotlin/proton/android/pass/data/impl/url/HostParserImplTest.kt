@@ -31,6 +31,23 @@ class HostParserImplTest {
     }
 
     @Test
+    fun `symbols string should error`() {
+        publicSuffixList.setTlds(emptySet())
+        val res = instance.parse(".$%")
+
+        assertTrue(res.isFailure)
+    }
+
+    @Test
+    fun `can only contain allowed symbols`() {
+        publicSuffixList.setTlds(emptySet())
+        val res = instance.parse("a!b")
+
+        println(res)
+        assertTrue(res.isFailure)
+    }
+
+    @Test
     fun `is able to detect ipv4`() {
         val ip = "127.0.0.1"
         publicSuffixList.setTlds(emptySet())
@@ -49,11 +66,7 @@ class HostParserImplTest {
         publicSuffixList.setTlds(emptySet())
         val res = instance.parse("300.400.500.1")
 
-        assertTrue(res.isSuccess)
-
-        val hostInfo = res.getOrNull()
-        assertNotNull(hostInfo)
-        assertFalse(hostInfo is HostInfo.Ip)
+        assertTrue(res.isFailure)
     }
 
     @Test

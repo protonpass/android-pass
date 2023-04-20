@@ -24,11 +24,13 @@ class HostParserImpl @Inject constructor(
             parseHostInfo(domain)
         }
 
+    @Suppress("ReturnCount")
     private fun parseHostInfo(domain: String): Result<HostInfo.Host> {
         val publicSuffixes = getPublicSuffixList()
-        val parts = domain.split('.')
-
-        if (parts.size == 1) {
+        val parts: List<String> = domain.split('.')
+        if (parts.isEmpty()) {
+            return Result.failure(IllegalArgumentException("host is empty"))
+        } else if (parts.size == 1) {
             return handleDomainWithSinglePart(domain, publicSuffixes)
         }
 
@@ -68,11 +70,9 @@ class HostParserImpl @Inject constructor(
             None
         } else {
             buildString {
-                var portions = 0
-                for (i in 0 until tldStartingPart - 1) {
+                for ((portions, i) in (0 until tldStartingPart - 1).withIndex()) {
                     if (portions > 0) append('.')
                     append(parts[i])
-                    portions++
                 }
             }.some()
         }
@@ -95,11 +95,9 @@ class HostParserImpl @Inject constructor(
 
         val hostInfo = if (parts.size > 2) {
             val subdomain = buildString {
-                var portions = 0
-                for (i in 0 until parts.size - 2) {
+                for ((portions, i) in (0 until parts.size - 2).withIndex()) {
                     if (portions > 0) append('.')
                     append(parts[i])
-                    portions++
                 }
             }
 
@@ -122,11 +120,9 @@ class HostParserImpl @Inject constructor(
     }
 
     private fun stringFromParts(parts: List<String>, startingFrom: Int): String = buildString {
-        var portions = 0
-        for (i in startingFrom until parts.size) {
+        for ((portions, i) in (startingFrom until parts.size).withIndex()) {
             if (portions > 0) append('.')
             append(parts[i])
-            portions++
         }
     }
 

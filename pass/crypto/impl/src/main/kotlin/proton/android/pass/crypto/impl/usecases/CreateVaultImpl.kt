@@ -29,10 +29,10 @@ class CreateVaultImpl @Inject constructor(
         val vaultKey = EncryptionKey.generate()
         val vaultContents = vaultMetadata.toByteArray()
 
-        val encryptedVaultContents = encryptionContextProvider.withEncryptionContext(vaultKey) {
+        val encryptedVaultKey = user.useKeys(cryptoContext) { encryptAndSignData(vaultKey.value()) }
+        val encryptedVaultContents = encryptionContextProvider.withEncryptionContext(vaultKey.clone()) {
             encrypt(vaultContents, EncryptionTag.VaultContent)
         }
-        val encryptedVaultKey = user.useKeys(cryptoContext) { encryptAndSignData(vaultKey.key) }
 
         return CreateVaultOutput(
             request = EncryptedCreateVault(

@@ -17,7 +17,6 @@ import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
-import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.CreateVault
@@ -86,17 +85,17 @@ class ShareRepositoryImpl @Inject constructor(
             is LoadingResult.Success -> createVaultResult.data
         }
 
-        val responseAsEntity = shareResponseToEntity(userAddress, createVaultResponse, shareKey)
         val symmetricallyEncryptedKey = encryptionContextProvider.withEncryptionContext {
-            encrypt(shareKey.key)
+            encrypt(shareKey.value())
         }
+        val responseAsEntity = shareResponseToEntity(userAddress, createVaultResponse, shareKey)
 
         val shareKeyEntity = ShareKeyEntity(
             rotation = 1,
             userId = userId.id,
             addressId = userAddress.addressId.id,
             shareId = createVaultResponse.shareId,
-            key = Base64.encodeBase64String(shareKey.key),
+            key = request.encryptedVaultKey,
             createTime = createVaultResponse.createTime,
             symmetricallyEncryptedKey = symmetricallyEncryptedKey
         )

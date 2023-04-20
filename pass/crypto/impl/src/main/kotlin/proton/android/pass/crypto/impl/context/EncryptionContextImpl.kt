@@ -20,7 +20,8 @@ class EncryptionContextImpl(private val key: EncryptionKey) : EncryptionContext 
 
     override fun encrypt(content: ByteArray, tag: EncryptionTag?): EncryptedByteArray {
         val cipher = cipherFactory()
-        val secretKey = SecretKeySpec(key.key, 0, key.key.size, algorithm)
+        val keyBytes = key.value()
+        val secretKey = SecretKeySpec(keyBytes, 0, keyBytes.size, algorithm)
         cipher.init(Cipher.ENCRYPT_MODE, secretKey)
         tag?.let { cipher.updateAAD(it.value) }
         val cipherByteArray = cipher.doFinal(content)
@@ -37,7 +38,8 @@ class EncryptionContextImpl(private val key: EncryptionKey) : EncryptionContext 
         val cipher = cipherFactory()
         val iv = content.array.copyOf(ivSize)
         val cipherByteArray = content.array.copyOfRange(ivSize, content.array.size)
-        val secretKey = SecretKeySpec(key.key, 0, key.key.size, algorithm)
+        val keyBytes = key.value()
+        val secretKey = SecretKeySpec(keyBytes, 0, keyBytes.size, algorithm)
         cipher.init(Cipher.DECRYPT_MODE, secretKey, GCMParameterSpec(cipherGCMTagBits, iv))
         tag?.let { cipher.updateAAD(it.value) }
         try {

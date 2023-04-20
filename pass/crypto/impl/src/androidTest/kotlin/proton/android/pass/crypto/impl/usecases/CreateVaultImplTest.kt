@@ -57,7 +57,7 @@ class CreateVaultImplTest {
         }
 
         assertEquals(decryptedVaultKey.status, VerificationStatus.Success)
-        assertContentEquals(vaultKey.key, decryptedVaultKey.data)
+        assertContentEquals(vaultKey.value(), decryptedVaultKey.data)
     }
 
     private fun validateVaultMetadata(

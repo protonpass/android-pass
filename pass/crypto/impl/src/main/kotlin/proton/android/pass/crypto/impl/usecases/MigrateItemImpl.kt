@@ -30,7 +30,7 @@ class MigrateItemImpl @Inject constructor(
 
         val encryptedItemKey =
             encryptionContextProvider.withEncryptionContext(decryptedDestinationKey) {
-                encrypt(newItemKey.key, EncryptionTag.ItemKey)
+                encrypt(newItemKey.value(), EncryptionTag.ItemKey)
             }
 
         return EncryptedMigrateItemBody(

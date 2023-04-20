@@ -66,6 +66,8 @@ class OpenItemImpl @Inject constructor(
             EncryptionKey(decrypt(EncryptedByteArray(decodedItemKey), EncryptionTag.ItemKey))
         }
 
+        val encryptedItemKey = encryptionContextProvider.withEncryptionContext { encrypt(decryptedItemKey.value()) }
+
         val decodedItemContents = Base64.decodeBase64(response.content)
         val decryptedContents = encryptionContextProvider.withEncryptionContext(decryptedItemKey) {
             decrypt(EncryptedByteArray(decodedItemContents), EncryptionTag.ItemContent)
@@ -74,7 +76,7 @@ class OpenItemImpl @Inject constructor(
         val decoded = ItemV1.Item.parseFrom(decryptedContents)
         return OpenItemOutput(
             item = createDomainObject(response, shareId, decoded, decryptedContents),
-            itemKey = encryptionContextProvider.withEncryptionContext { encrypt(decryptedItemKey.key) }
+            itemKey = encryptedItemKey
         )
     }
 

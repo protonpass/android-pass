@@ -29,15 +29,14 @@ class EncryptionContextProviderImpl @Inject constructor(
         key: EncryptionKey,
         block: EncryptionContext.() -> R
     ): R {
-        val cloned = key.clone()
-        val context = EncryptionContextImpl(cloned)
+        val context = EncryptionContextImpl(key)
         try {
             val res = block(context)
             return res
         } catch (e: Throwable) {
             throw e
         } finally {
-            cloned.clear()
+            key.clear()
         }
     }
 
@@ -53,15 +52,14 @@ class EncryptionContextProviderImpl @Inject constructor(
         key: EncryptionKey,
         block: suspend EncryptionContext.() -> R
     ): R {
-        val cloned = key.clone()
-        val context = EncryptionContextImpl(cloned)
+        val context = EncryptionContextImpl(key)
         try {
             val res = block(context)
             return res
         } catch (e: Throwable) {
             throw e
         } finally {
-            cloned.clear()
+            key.clear()
         }
     }
 
@@ -78,7 +76,7 @@ class EncryptionContextProviderImpl @Inject constructor(
 
     private fun generateKey(file: File): EncryptionKey {
         val key = EncryptionKey.generate()
-        val encrypted = keyStoreCrypto.encrypt(PlainByteArray(key.key.clone()))
+        val encrypted = keyStoreCrypto.encrypt(PlainByteArray(key.value()))
         file.writeBytes(encrypted.array)
 
         return key

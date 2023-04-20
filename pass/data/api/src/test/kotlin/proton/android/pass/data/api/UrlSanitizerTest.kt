@@ -27,6 +27,20 @@ class UrlSanitizerTest {
     }
 
     @Test
+    fun `symbols string should error`() {
+        val domain = ".$%"
+        val res = UrlSanitizer.sanitize(domain)
+        assertTrue(res.isFailure)
+    }
+
+    @Test
+    fun `only accepted symbols`() {
+        val domain = "a!b"
+        val res = UrlSanitizer.getDomain(domain)
+        assertTrue(res.isFailure)
+    }
+
+    @Test
     fun `url with scheme should return success and not have it edited`() {
         val domain = "ssh://some.domain"
         val res = UrlSanitizer.sanitize(domain)

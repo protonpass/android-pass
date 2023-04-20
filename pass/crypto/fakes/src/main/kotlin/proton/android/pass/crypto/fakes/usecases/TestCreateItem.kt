@@ -31,7 +31,7 @@ class TestCreateItem : CreateItem {
                     contentFormatVersion = 1,
                     content = TestKeyStoreCrypto.encrypt("content"),
                     keyRotation = 1,
-                    itemKey = Base64.encodeBase64String(TestEncryptionContext.encrypt(key.key).array)
+                    itemKey = Base64.encodeBase64String(TestEncryptionContext.encrypt(key.value()).array)
                 ),
                 itemKey = key
             )

@@ -9,14 +9,14 @@ class EncryptionKeyTest {
     fun `key has the expected key size`() {
         val key = EncryptionKey.generate()
 
-        assert(key.key.size == 32)
+        assert(key.value().size == 32)
     }
 
     @Test
     fun `key contains different values`() {
         val key = EncryptionKey.generate()
 
-        assert(key.key.any { it != 0x00.toByte() })
+        assert(key.value().any { it != 0x00.toByte() })
     }
 
     @Test
@@ -27,12 +27,12 @@ class EncryptionKeyTest {
         assert(key1 != key2)
     }
 
-    @Test
+    @Test(expected = IllegalStateException::class)
     fun `clears the key when clear is called`() {
         val key = EncryptionKey.generate()
         key.clear()
 
-        assert(key.key.all { it == 0x00.toByte() })
+        assert(key.value().all { it == 0x00.toByte() })
     }
 
 }

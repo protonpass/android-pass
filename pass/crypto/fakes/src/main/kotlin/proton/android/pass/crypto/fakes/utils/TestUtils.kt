@@ -95,8 +95,8 @@ object TestUtils {
         val key = EncryptionKey.generate()
         return ShareKey(
             rotation = 1,
-            key = TestEncryptionContext.encrypt(key.key),
-            responseKey = Base64.encodeBase64String(key.key),
+            key = TestEncryptionContext.encrypt(key.value()),
+            responseKey = Base64.encodeBase64String(key.value()),
             createTime = 123456789
         ) to key
     }
@@ -105,8 +105,8 @@ object TestUtils {
         val key = EncryptionKey.generate()
         return ItemKey(
             rotation = 1,
-            key = TestEncryptionContext.encrypt(key.key),
-            responseKey = Base64.encodeBase64String(key.key)
+            key = TestEncryptionContext.encrypt(key.value()),
+            responseKey = Base64.encodeBase64String(key.value())
         ) to key
     }
 

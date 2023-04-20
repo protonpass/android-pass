@@ -5,7 +5,7 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-val appVersionName: String = "1.0.3"
+val appVersionName: String = "1.0.4"
 val appVersionCode: Int = versionCode(appVersionName)
 val archivesBaseName = "AutofillE2EApp-$appVersionName"
 

@@ -58,6 +58,7 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.autofill.api)
     implementation(projects.pass.preferences.api)

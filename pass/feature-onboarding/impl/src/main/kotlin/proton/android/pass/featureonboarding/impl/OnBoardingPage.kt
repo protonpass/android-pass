@@ -15,11 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.compose.theme.headline
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.buttons.CircleButton
 
 @Composable
 fun OnBoardingPage(
@@ -60,11 +61,12 @@ fun OnBoardingPage(
                     .height(24.dp)
                     .weight(1f)
             )
-            ProtonSolidButton(
+            CircleButton(
                 modifier = Modifier
                     .padding(32.dp, 0.dp)
                     .fillMaxWidth()
                     .height(48.dp),
+                color = PassTheme.colors.interactionNormMajor1,
                 onClick = { onMainButtonClick(onBoardingPageData.page) }
             ) {
                 Text(

@@ -47,34 +47,49 @@ class AutofillServiceManager @Inject constructor(
     ): List<Dataset> {
         val maxSuggestion = requestOption.value()?.maxSuggestionCount.toOption()
         return if (maxSuggestion is Some && maxSuggestion.value > 0 && requestOption is Some) {
-            val suggestedItemsResult =
-                getSuggestedLoginItems(
-                    packageName = autofillData.packageInfo.map { it.packageName.value },
-                    url = autofillData.assistInfo.url
-                )
-                    .firstOrNull()
-                    .toOption()
+            val suggestedItemsResult = getSuggestedLoginItems(
+                packageName = autofillData.packageInfo.map { it.packageName.value },
+                url = autofillData.assistInfo.url
+            )
+                .firstOrNull()
+                .toOption()
 
             val specs = requestOption.value.inlinePresentationSpecs
-            val openAppDataSet = createOpenAppDataset(
-                autofillData = autofillData,
-                inlinePresentationSpec = specs[specs.size - INLINE_SUGGESTIONS_OFFSET]
-            )
-            val pinnedOpenApp = createPinnedIcon(
-                autofillData = autofillData,
-                inlinePresentationSpec = specs.last()
-            )
-            if (suggestedItemsResult is Some && suggestedItemsResult.value.isNotEmpty()) {
-                createSuggestedItemsDatasetList(
-                    suggestedItems = suggestedItemsResult.value,
-                    maxSuggestion = maxSuggestion.value,
-                    requestOption = requestOption.value,
+
+            val pinnedIcon = { spec: InlinePresentationSpec ->
+                createPinnedIcon(
                     autofillData = autofillData,
-                    openAppDataSet = openAppDataSet,
-                    pinnedOpenApp = pinnedOpenApp
+                    inlinePresentationSpec = spec
                 )
-            } else {
-                listOf(openAppDataSet, pinnedOpenApp)
+            }
+            val openApp = { spec: InlinePresentationSpec ->
+                createOpenAppDataset(
+                    autofillData = autofillData,
+                    inlinePresentationSpec = spec
+                )
+            }
+
+            when (specs.size) {
+                0 -> emptyList()
+                1 -> listOf(pinnedIcon(specs.first()))
+                2 -> listOf(openApp(specs.first()), pinnedIcon(specs.last()))
+                else -> {
+                    val openAppDataSet = openApp(specs[specs.size - INLINE_SUGGESTIONS_OFFSET])
+                    val pinnedOpenApp = pinnedIcon(specs.last())
+
+                    if (suggestedItemsResult is Some && suggestedItemsResult.value.isNotEmpty()) {
+                        createSuggestedItemsDatasetList(
+                            suggestedItems = suggestedItemsResult.value,
+                            maxSuggestion = maxSuggestion.value,
+                            requestOption = requestOption.value,
+                            autofillData = autofillData,
+                            openAppDataSet = openAppDataSet,
+                            pinnedOpenApp = pinnedOpenApp
+                        )
+                    } else {
+                        listOf(openAppDataSet, pinnedOpenApp)
+                    }
+                }
             }
         } else {
             emptyList()

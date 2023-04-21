@@ -55,7 +55,7 @@ dependencies {
     implementation(libs.material)
 
     implementation(projects.pass.autofill.impl)
-    implementation(projects.pass.crypto.api)
+    implementation(projects.pass.crypto.fakes)
     implementation(projects.pass.data.fakes)
     implementation(projects.pass.biometry.fakes)
     implementation(projects.pass.preferences.fakes)

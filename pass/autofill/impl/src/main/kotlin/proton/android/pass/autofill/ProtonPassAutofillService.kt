@@ -7,6 +7,7 @@ import android.service.autofill.FillRequest
 import android.service.autofill.SaveCallback
 import android.service.autofill.SaveRequest
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
 
@@ -19,10 +20,13 @@ class ProtonPassAutofillService : AutofillService() {
     @Inject
     lateinit var telemetryManager: TelemetryManager
 
+    @Inject
+    lateinit var accountManager: AccountManager
+
     override fun onFillRequest(
         request: FillRequest,
         cancellationSignal: CancellationSignal,
-        callback: FillCallback
+        callback: FillCallback,
     ) {
         AutoFillHandler.handleAutofill(
             context = this@ProtonPassAutofillService,
@@ -30,7 +34,8 @@ class ProtonPassAutofillService : AutofillService() {
             callback = callback,
             cancellationSignal = cancellationSignal,
             autofillServiceManager = autofillServiceManager,
-            telemetryManager = telemetryManager
+            telemetryManager = telemetryManager,
+            accountManager = accountManager
         )
     }
 

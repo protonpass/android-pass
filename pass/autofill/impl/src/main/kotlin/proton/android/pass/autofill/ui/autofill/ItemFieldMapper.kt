@@ -6,8 +6,12 @@ import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.DatasetMapping
 import proton.android.pass.autofill.entities.FieldType
 import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.log.api.PassLogger
 
 object ItemFieldMapper {
+
+    private const val TAG = "ItemFieldMapper"
+
     fun mapFields(
         encryptionContext: EncryptionContext,
         autofillItem: AutofillItem,
@@ -38,6 +42,12 @@ object ItemFieldMapper {
                 )
             )
         }
+
+        if (mappingList.isEmpty()) {
+            val message = "No mappings found for autofill. Detected field types: $autofillTypes"
+            PassLogger.e(TAG, IllegalStateException(message), message)
+        }
+
         return AutofillMappings(mappingList)
     }
 }

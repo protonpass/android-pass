@@ -69,15 +69,19 @@ class InlineSuggestionsNoUiActivity : FragmentActivity() {
             // Autofill presentations cannot be empty on 33, or it will throw an IllegalStateException
             authenticateView = remoteView
         )
-        val dataset = DatasetUtils.buildDataset(
-            context = this,
-            dsbOptions = datasetBuilderOptions,
-            autofillMappings = autofillMappings.toOption(),
-            assistFields = emptyList()
-        )
-        return Intent().apply {
-            putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, dataset)
+
+        val res = Intent()
+        if (autofillMappings.mappings.isNotEmpty()) {
+            val dataset = DatasetUtils.buildDataset(
+                context = this,
+                dsbOptions = datasetBuilderOptions,
+                autofillMappings = autofillMappings.toOption(),
+                assistFields = emptyList()
+            )
+
+            res.putExtra(AutofillManager.EXTRA_AUTHENTICATION_RESULT, dataset)
         }
+        return res
     }
 
     companion object {

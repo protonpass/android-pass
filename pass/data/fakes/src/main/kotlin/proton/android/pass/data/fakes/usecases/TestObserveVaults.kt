@@ -7,7 +7,9 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.pass.domain.Vault
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestObserveVaults @Inject constructor() : ObserveVaults {
 
     private val observeVaultsFlow: MutableSharedFlow<LoadingResult<List<Vault>>> =

@@ -5,7 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
 }
 
-val appVersionName: String = "1.0.4"
+val appVersionName: String = "1.0.5"
 val appVersionCode: Int = versionCode(appVersionName)
 val archivesBaseName = "AutofillE2EApp-$appVersionName"
 

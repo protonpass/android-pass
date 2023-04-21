@@ -24,6 +24,18 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
     }
+
+    testOptions {
+        managedDevices {
+            devices {
+                maybeCreate<com.android.build.api.dsl.ManagedVirtualDevice>("pixel2api30").apply {
+                    device = "Pixel 2"
+                    apiLevel = 30
+                    systemImageSource = "aosp-atd"
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -78,6 +90,7 @@ dependencies {
     testImplementation(projects.pass.preferences.fakes)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(libs.kotlinTest)
     androidTestImplementation(projects.pass.autofill.fakes)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.biometry.fakes)

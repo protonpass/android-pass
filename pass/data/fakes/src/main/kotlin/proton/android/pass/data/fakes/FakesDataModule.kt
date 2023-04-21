@@ -7,6 +7,9 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.ItemRepository
+import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.usecases.ApplyPendingEvents
+import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
@@ -24,22 +27,33 @@ import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RestoreItem
+import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
+import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
+import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
+import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
+import proton.android.pass.data.api.usecases.searchentry.ObserveSearchEntry
 import proton.android.pass.data.fakes.repositories.TestAliasRepository
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
+import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
+import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
+import proton.android.pass.data.fakes.usecases.TestClearTrash
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
+import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteItem
+import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetShareById
@@ -47,16 +61,20 @@ import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
+import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestMarkVaultAsPrimary
 import proton.android.pass.data.fakes.usecases.TestMigrateItem
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItemCount
+import proton.android.pass.data.fakes.usecases.TestObserveItems
+import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestRefreshContent
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
+import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItem
 import proton.android.pass.data.fakes.usecases.TestUpdateAlias
 import proton.android.pass.data.fakes.usecases.TestUpdateAutofillItem
@@ -212,4 +230,49 @@ abstract class FakesDataModule {
     abstract fun bindRefreshContent(
         impl: TestRefreshContent
     ): RefreshContent
+
+    @Binds
+    abstract fun bindApplyPendingEvents(
+        impl: TestApplyPendingEvents
+    ): ApplyPendingEvents
+
+    @Binds
+    abstract fun bindRestoreItems(
+        impl: TestRestoreItems
+    ): RestoreItems
+
+    @Binds
+    abstract fun bindClearTrash(
+        impl: TestClearTrash
+    ): ClearTrash
+
+    @Binds
+    abstract fun bindAddSearchEntry(
+        impl: TestAddSearchEntry
+    ): AddSearchEntry
+
+    @Binds
+    abstract fun bindDeleteSearchEntry(
+        impl: TestDeleteSearchEntry
+    ): DeleteSearchEntry
+
+    @Binds
+    abstract fun bindDeleteAllSearchEntry(
+        impl: TestDeleteAllSearchEntry
+    ): DeleteAllSearchEntry
+
+    @Binds
+    abstract fun bindObserveSearchEntry(
+        impl: TestObserveSearchEntry
+    ): ObserveSearchEntry
+
+    @Binds
+    abstract fun bindObserveItems(
+        impl: TestObserveItems
+    ): ObserveItems
+
+    @Binds
+    abstract fun bindItemSyncStatusRepository(
+        impl: TestItemSyncStatusRepository
+    ): ItemSyncStatusRepository
 }

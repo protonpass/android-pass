@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -22,7 +22,7 @@ fun TotpLabelInput(
 ) {
     ProtonTextField(
         modifier = modifier.padding(top = 8.dp),
-        textStyle = ProtonTheme.typography.default(enabled),
+        textStyle = ProtonTheme.typography.defaultNorm(enabled),
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.totp_label_field_title)) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.totp_label_field_placeholder)) },
         editable = enabled,

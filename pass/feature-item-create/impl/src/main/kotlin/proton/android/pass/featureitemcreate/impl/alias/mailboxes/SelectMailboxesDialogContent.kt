@@ -15,7 +15,7 @@ import me.proton.core.compose.component.ProtonAlertDialogButton
 import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.headlineSmall
+import me.proton.core.compose.theme.headlineSmallNorm
 import me.proton.core.compose.theme.interactionNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -43,7 +43,7 @@ fun SelectMailboxesDialogContent(
             ) {
                 Text(
                     text = stringResource(R.string.alias_mailbox_dialog_confirm_button),
-                    style = ProtonTheme.typography.headlineSmall,
+                    style = ProtonTheme.typography.headlineSmallNorm,
                     color = ProtonTheme.colors.interactionNorm(enabled = state.canApply.value()),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis

@@ -4,7 +4,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.RestoreItems
 import javax.inject.Inject
 
-class TestRestoreItems @Inject constructor(): RestoreItems {
+class TestRestoreItems @Inject constructor() : RestoreItems {
 
     private var result: Result<Unit> = Result.success(Unit)
 

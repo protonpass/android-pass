@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestObserveSearchEntry @Inject constructor(): ObserveSearchEntry {
+class TestObserveSearchEntry @Inject constructor() : ObserveSearchEntry {
 
     private val flow = testFlow<List<SearchEntry>>()
 

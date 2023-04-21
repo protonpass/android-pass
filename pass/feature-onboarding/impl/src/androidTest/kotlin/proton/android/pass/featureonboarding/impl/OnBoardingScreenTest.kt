@@ -55,7 +55,7 @@ class OnBoardingScreenTest {
         autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
 
-        val checker = CallChecker()
+        val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             OnBoardingScreen(
                 onBoardingShown = { checker.call() }
@@ -74,7 +74,7 @@ class OnBoardingScreenTest {
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOtherService))
         biometryManager.setBiometryStatus(BiometryStatus.NotAvailable)
 
-        val checker = CallChecker()
+        val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             OnBoardingScreen(
                 onBoardingShown = { checker.call() }
@@ -105,7 +105,7 @@ class OnBoardingScreenTest {
         autofillManager.emitStatus(AutofillSupportedStatus.Unsupported)
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
 
-        val checker = CallChecker()
+        val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             OnBoardingScreen(
                 onBoardingShown = { checker.call() }
@@ -136,7 +136,7 @@ class OnBoardingScreenTest {
         autofillManager.emitStatus(AutofillSupportedStatus.Supported(AutofillStatus.EnabledByOtherService))
         biometryManager.setBiometryStatus(BiometryStatus.CanAuthenticate)
 
-        val checker = CallChecker()
+        val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             OnBoardingScreen(
                 onBoardingShown = { checker.call() }

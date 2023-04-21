@@ -16,7 +16,7 @@ class ConfirmSignOutDialogTest {
 
     @Test
     fun dialogOnConfirmIsCalled() {
-        val checker = CallChecker()
+        val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             ConfirmSignOutDialog(
                 show = true,
@@ -32,7 +32,7 @@ class ConfirmSignOutDialogTest {
 
     @Test
     fun dialogOnDismissIsCalled() {
-        val checker = CallChecker()
+        val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             ConfirmSignOutDialog(
                 show = true,

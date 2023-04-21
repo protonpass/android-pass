@@ -21,7 +21,7 @@ class ThemeSelectionBottomSheetTest {
 
     @Test
     fun onThemeSelectShouldDismissBottomsheet() {
-        val checker = CallChecker()
+        val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             ThemeSelectionBottomSheet(
                 dismissBottomSheet = { checker.call() }

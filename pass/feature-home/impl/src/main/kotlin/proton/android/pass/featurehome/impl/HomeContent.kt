@@ -17,6 +17,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -38,6 +39,7 @@ import proton.android.pass.composecomponents.impl.item.ItemsList
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.featurehome.impl.empty.HomeEmptyList
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
@@ -86,6 +88,7 @@ internal fun HomeContent(
                 onSearchQueryChange = onSearchQueryChange,
                 drawerIcon = {
                     HomeDrawerIcon(
+                        modifier = Modifier.testTag(DrawerIconTestTag),
                         uiState = uiState,
                         onDrawerIconClick = onDrawerIconClick,
                         onStopSearch = onStopSearch
@@ -258,5 +261,9 @@ private fun HomeDrawerIcon(
     } else {
         ArrowBackIconButton(modifier) { onStopSearch() }
     }
+}
+
+object HomeContentTestTag {
+    const val DrawerIconTestTag = "drawerIcon"
 }
 

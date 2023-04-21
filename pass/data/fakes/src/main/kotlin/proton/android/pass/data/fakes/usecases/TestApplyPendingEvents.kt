@@ -4,7 +4,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import javax.inject.Inject
 
-class TestApplyPendingEvents @Inject constructor(): ApplyPendingEvents {
+class TestApplyPendingEvents @Inject constructor() : ApplyPendingEvents {
 
     private var result: LoadingResult<Unit> = LoadingResult.Success(Unit)
 

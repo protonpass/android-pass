@@ -5,7 +5,7 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
-class TestAddSearchEntry @Inject constructor(): AddSearchEntry {
+class TestAddSearchEntry @Inject constructor() : AddSearchEntry {
 
     private var result: Result<Unit> = Result.success(Unit)
 

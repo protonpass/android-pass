@@ -25,7 +25,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestObserveItems @Inject constructor(): ObserveItems {
+class TestObserveItems @Inject constructor() : ObserveItems {
 
     private val flow = testFlow<List<Item>>()
 

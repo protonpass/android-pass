@@ -43,7 +43,6 @@ class HostParserImplTest {
         publicSuffixList.setTlds(emptySet())
         val res = instance.parse("a!b")
 
-        println(res)
         assertTrue(res.isFailure)
     }
 

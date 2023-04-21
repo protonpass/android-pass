@@ -21,11 +21,11 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.kapt")
     id("com.google.devtools.ksp")
     id("dagger.hilt.android.plugin")
     id("kotlin-parcelize")
     id("io.sentry.android.gradle")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 val privateProperties = Properties().apply {

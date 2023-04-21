@@ -3,7 +3,9 @@ package proton.android.pass.data.fakes.usecases
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.RestoreItems
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestRestoreItems @Inject constructor() : RestoreItems {
 
     private var result: Result<Unit> = Result.success(Unit)

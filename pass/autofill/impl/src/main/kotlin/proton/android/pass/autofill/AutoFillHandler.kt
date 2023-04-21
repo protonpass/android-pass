@@ -12,8 +12,10 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.autofill.Utils.getWindowNodes
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.extensions.addSaveInfo
@@ -36,7 +38,8 @@ object AutoFillHandler {
         callback: FillCallback,
         cancellationSignal: CancellationSignal,
         autofillServiceManager: AutofillServiceManager,
-        telemetryManager: TelemetryManager
+        telemetryManager: TelemetryManager,
+        accountManager: AccountManager
     ) {
         val windowNode = getWindowNodes(request.fillContexts.last()).lastOrNull()
         if (windowNode?.rootViewNode == null) {
@@ -56,7 +59,8 @@ object AutoFillHandler {
                     callback = callback,
                     request = request,
                     autofillServiceManager = autofillServiceManager,
-                    telemetryManager = telemetryManager
+                    telemetryManager = telemetryManager,
+                    accountManager = accountManager
                 )
             }
 
@@ -72,8 +76,16 @@ object AutoFillHandler {
         callback: FillCallback,
         request: FillRequest,
         autofillServiceManager: AutofillServiceManager,
-        telemetryManager: TelemetryManager
+        telemetryManager: TelemetryManager,
+        accountManager: AccountManager
     ) {
+        val currentUser = accountManager.getPrimaryUserId().first()
+        if (currentUser == null) {
+            PassLogger.i(TAG, "No user found")
+            callback.onSuccess(null)
+            return
+        }
+
         val assistInfo = AssistNodeTraversal().traverse(windowNode.rootViewNode)
         if (assistInfo.fields.isEmpty()) return
         val packageNameOption = Utils.getApplicationPackageName(windowNode)

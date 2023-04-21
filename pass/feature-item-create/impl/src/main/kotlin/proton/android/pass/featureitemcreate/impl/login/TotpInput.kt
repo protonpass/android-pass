@@ -8,7 +8,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -28,7 +28,7 @@ internal fun TotpInput(
         value = value,
         onChange = onTotpChanged,
         editable = enabled,
-        textStyle = ProtonTheme.typography.default,
+        textStyle = ProtonTheme.typography.defaultNorm,
         onFocusChange = onFocus,
         label = { ProtonTextFieldLabel(text = stringResource(R.string.totp_create_login_field_title)) },
         placeholder = {

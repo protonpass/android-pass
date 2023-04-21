@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import kotlinx.datetime.Clock
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
-import me.proton.core.compose.theme.headline
+import me.proton.core.compose.theme.defaultNorm
+import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.autofill.service.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -52,7 +52,7 @@ internal fun AssociateAutofillItemDialog(
             ) {
                 Text(
                     text = stringResource(R.string.autofill_dialog_associate_title),
-                    style = ProtonTheme.typography.headline
+                    style = ProtonTheme.typography.headlineNorm
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -61,7 +61,7 @@ internal fun AssociateAutofillItemDialog(
                         R.string.autofill_associate_web_app_name_dialog_title,
                         itemUiModel.name
                     ),
-                    style = ProtonTheme.typography.default
+                    style = ProtonTheme.typography.defaultNorm
                 )
                 DialogButton(
                     modifier = Modifier.align(Alignment.End),
@@ -93,7 +93,7 @@ fun DialogButton(modifier: Modifier = Modifier, text: String, onClick: () -> Uni
     ) {
         Text(
             text = text,
-            style = ProtonTheme.typography.default,
+            style = ProtonTheme.typography.defaultNorm,
             color = PassTheme.colors.interactionNormMajor2
         )
     }

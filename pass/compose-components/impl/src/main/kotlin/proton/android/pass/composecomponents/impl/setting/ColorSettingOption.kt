@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
 
 @Composable
@@ -32,7 +32,7 @@ fun ColorSettingOption(
     ) {
         Text(
             text = text,
-            style = ProtonTheme.typography.default,
+            style = ProtonTheme.typography.defaultNorm,
             color = textColor
         )
         CircleIconButton(

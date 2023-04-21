@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -57,7 +57,7 @@ fun AliasAdvancedOptionsSection(
     ) {
         ProtonTextField(
             modifier = modifier.padding(start = 16.dp, top = 16.dp, bottom = 16.dp, end = 4.dp),
-            textStyle = ProtonTheme.typography.default,
+            textStyle = ProtonTheme.typography.defaultNorm,
             label = {
                 ProtonTextFieldLabel(
                     text = stringResource(id = R.string.field_alias_prefix),

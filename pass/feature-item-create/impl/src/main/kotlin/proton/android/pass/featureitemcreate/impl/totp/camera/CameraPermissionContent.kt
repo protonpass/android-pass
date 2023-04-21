@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -43,7 +43,7 @@ fun CameraPermissionContent(
             Text(
                 modifier = Modifier.width(250.dp),
                 text = stringResource(R.string.camera_permission_explanation),
-                style = ProtonTheme.typography.default,
+                style = ProtonTheme.typography.defaultNorm,
                 textAlign = TextAlign.Center
             )
             CircleButton(

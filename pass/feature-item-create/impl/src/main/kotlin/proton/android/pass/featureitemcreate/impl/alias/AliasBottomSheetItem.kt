@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.presentation.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -38,7 +38,7 @@ fun AliasBottomSheetItem(
                 .weight(1.0f)
                 .padding(vertical = 12.dp),
             text = text,
-            style = ProtonTheme.typography.default
+            style = ProtonTheme.typography.defaultNorm
         )
         if (isChecked) {
             Icon(

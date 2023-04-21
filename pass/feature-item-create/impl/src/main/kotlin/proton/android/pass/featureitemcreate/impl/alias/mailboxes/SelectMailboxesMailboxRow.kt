@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
@@ -54,7 +54,7 @@ fun SelectMailboxesMailboxRow(
         Text(
             modifier = Modifier.weight(1.0f),
             text = item.model.email,
-            style = ProtonTheme.typography.default,
+            style = ProtonTheme.typography.defaultNorm,
             overflow = TextOverflow.Ellipsis
         )
     }

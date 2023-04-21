@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
@@ -45,7 +45,7 @@ internal fun PasswordInput(
         modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
         value = value,
         editable = isEditAllowed,
-        textStyle = ProtonTheme.typography.default(isEditAllowed),
+        textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
         onChange = onChange,
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_password_title)) },
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_password_hint)) },

@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featureitemcreate.impl.R
@@ -37,7 +37,7 @@ fun StickyGeneratePassword(
         Text(
             text = stringResource(id = R.string.sticky_button_generate_password),
             color = PassTheme.colors.loginInteractionNormMajor2,
-            style = ProtonTheme.typography.default,
+            style = ProtonTheme.typography.defaultNorm,
             overflow = TextOverflow.Ellipsis,
             maxLines = 1
         )

@@ -5,7 +5,7 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
-class TestDeleteSearchEntry @Inject constructor(): DeleteSearchEntry {
+class TestDeleteSearchEntry @Inject constructor() : DeleteSearchEntry {
 
     private var result: Result<Unit> = Result.success(Unit)
 

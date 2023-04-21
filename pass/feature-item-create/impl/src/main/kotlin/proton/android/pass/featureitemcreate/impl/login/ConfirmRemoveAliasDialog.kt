@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
-import me.proton.core.compose.theme.headlineSmall
+import me.proton.core.compose.theme.defaultNorm
+import me.proton.core.compose.theme.headlineSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featureitemcreate.impl.R
@@ -42,7 +42,7 @@ fun ConfirmRemoveAliasDialog(
                     .padding(8.dp),
                 text = stringResource(R.string.delete_login_alias_dialog_confirm),
                 color = ProtonTheme.colors.notificationError,
-                style = ProtonTheme.typography.headlineSmall
+                style = ProtonTheme.typography.headlineSmallNorm
             )
         },
         dismissButton = {
@@ -52,13 +52,13 @@ fun ConfirmRemoveAliasDialog(
                     .padding(8.dp),
                 text = stringResource(R.string.delete_login_alias_dialog_cancel),
                 color = ProtonTheme.colors.brandNorm,
-                style = ProtonTheme.typography.headlineSmall
+                style = ProtonTheme.typography.headlineSmallNorm
             )
         },
         text = {
             Text(
                 text = stringResource(R.string.delete_login_alias_dialog_text),
-                style = ProtonTheme.typography.default
+                style = ProtonTheme.typography.defaultNorm
             )
         }
     )

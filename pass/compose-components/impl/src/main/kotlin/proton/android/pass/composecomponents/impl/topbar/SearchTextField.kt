@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.R
@@ -78,7 +78,7 @@ fun SearchTextField(
                 ProtonTextFieldPlaceHolder(text = placeholderText)
             }
         },
-        textStyle = ProtonTheme.typography.default,
+        textStyle = ProtonTheme.typography.defaultNorm,
         onFocusChange = {
             if (it && !inSearchMode) {
                 onEnterSearch()

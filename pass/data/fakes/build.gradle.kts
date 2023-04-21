@@ -22,9 +22,13 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     implementation(libs.core.user)
     implementation(libs.kotlinx.collections)
+    implementation(libs.kotlinx.datetime)
     implementation(projects.pass.common.api)
+    implementation(projects.pass.crypto.api)
+    implementation(projects.pass.crypto.fakes)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.protos)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

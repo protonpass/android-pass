@@ -13,7 +13,6 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
 import kotlinx.datetime.toJavaInstant
-import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
@@ -35,7 +34,6 @@ import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.pass.domain.Item
-import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
@@ -73,22 +71,14 @@ class HomeScreenTest {
     @OptIn(ExperimentalMaterialApi::class)
     @Test
     fun canNavigateToItemDetail() {
-        val items = (0 until 3).map { idx ->
-            TestObserveItems.createItem(
-                shareId = ShareId("share-$idx"),
-                itemId = ItemId("item-$idx"),
-                itemContents = ItemContents.Login(
-                    title = "Item $idx",
-                    note = "note $idx",
-                    username = "username $idx",
-                    password = EncryptedString(),
-                    urls = emptyList(),
-                    packageInfoSet = emptySet(),
-                    primaryTotp = EncryptedString(),
-                    extraTotpSet = emptySet()
-                )
-            )
-        }
+        val shareId = ShareId("shareId")
+        val loginItemId = ItemId("login")
+        val loginItemTitle = "login item"
+        val items = listOf(
+            TestObserveItems.createLogin(shareId, loginItemId, loginItemTitle),
+            TestObserveItems.createAlias(shareId, ItemId("alias"), "alias-item"),
+            TestObserveItems.createNote(shareId, ItemId("note"), "note-item"),
+        )
         setupWithItems(items)
 
         val checker = CallChecker<Pair<ShareId, ItemId>>()
@@ -114,7 +104,7 @@ class HomeScreenTest {
             }
         }
 
-        composeTestRule.onNodeWithText("Item 0").performClick()
+        composeTestRule.onNodeWithText(loginItemTitle).performClick()
         composeTestRule.waitUntil { checker.isCalled }
         assert(checker.memory == items[0].shareId to items[0].id)
     }

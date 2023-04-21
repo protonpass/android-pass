@@ -97,7 +97,7 @@
             android:name=".ui.MainActivity"
             android:exported="true"
             android:launchMode="singleInstance"
-            android:theme="@style/ProtonTheme.Splash"
+            android:theme="@style/ProtonTheme.Splash.Pass"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

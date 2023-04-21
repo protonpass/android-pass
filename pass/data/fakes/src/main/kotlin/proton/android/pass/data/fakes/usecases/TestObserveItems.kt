@@ -33,6 +33,10 @@ class TestObserveItems @Inject constructor() : ObserveItems {
         flow.tryEmit(value)
     }
 
+    fun emitDefault() {
+        flow.tryEmit(defaultValues.asList())
+    }
+
     override fun invoke(
         userId: UserId?,
         selection: ShareSelection,
@@ -40,10 +44,26 @@ class TestObserveItems @Inject constructor() : ObserveItems {
         filter: ItemTypeFilter
     ): Flow<List<Item>> = flow
 
+    data class DefaultValues(
+        val login: Item,
+        val alias: Item,
+        val note: Item
+    ) {
+        fun asList(): List<Item> = listOf(login, alias, note)
+    }
+
     companion object {
+
+        val defaultValues = DefaultValues(
+            createLogin(itemId = ItemId("login")),
+            createAlias(itemId = ItemId("alias")),
+            createNote(itemId = ItemId("note"))
+        )
+
         fun createItem(
             shareId: ShareId = ShareId("share-123"),
             itemId: ItemId = ItemId("item-123"),
+            aliasEmail: String? = null,
             itemContents: ItemContents
         ): Item {
             val now = Clock.System.now()
@@ -54,7 +74,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                     itemUuid = "",
                     revision = 1,
                     shareId = shareId,
-                    itemType = ItemType.Companion.fromParsed(this, asProto, null),
+                    itemType = ItemType.Companion.fromParsed(this, asProto, aliasEmail),
                     title = encrypt(itemContents.title),
                     note = encrypt(itemContents.note),
                     content = encrypt(asProto.toByteArray()),
@@ -66,6 +86,57 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                 )
             }
         }
+
+        fun createLogin(
+            shareId: ShareId = ShareId("share-123"),
+            itemId: ItemId = ItemId("item-123"),
+            title: String = "login-item",
+            username: String = "username",
+            note: String = "note"
+        ) = createItem(
+            shareId = shareId,
+            itemId = itemId,
+            itemContents = ItemContents.Login(
+                title = title,
+                note = note,
+                username = username,
+                password = "",
+                urls = emptyList(),
+                packageInfoSet = emptySet(),
+                primaryTotp = "",
+                extraTotpSet = emptySet()
+            )
+        )
+
+        fun createAlias(
+            shareId: ShareId = ShareId("share-123"),
+            itemId: ItemId = ItemId("item-123"),
+            title: String = "alias-item",
+            alias: String = "some.alias@domain.test",
+            note: String = "note"
+        ) = createItem(
+            shareId = shareId,
+            itemId = itemId,
+            aliasEmail = alias,
+            itemContents = ItemContents.Alias(
+                title = title,
+                note = note,
+            )
+        )
+
+        fun createNote(
+            shareId: ShareId = ShareId("share-123"),
+            itemId: ItemId = ItemId("item-123"),
+            title: String = "note-item",
+            note: String = "note"
+        ) = createItem(
+            shareId = shareId,
+            itemId = itemId,
+            itemContents = ItemContents.Note(
+                title = title,
+                note = note,
+            )
+        )
     }
 
 }

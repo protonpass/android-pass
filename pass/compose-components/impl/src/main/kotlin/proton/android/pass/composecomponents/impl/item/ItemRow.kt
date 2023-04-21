@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -66,7 +66,7 @@ internal fun ItemRow(
                 }
                 Text(
                     text = title,
-                    style = ProtonTheme.typography.default,
+                    style = ProtonTheme.typography.defaultNorm,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 1
                 )

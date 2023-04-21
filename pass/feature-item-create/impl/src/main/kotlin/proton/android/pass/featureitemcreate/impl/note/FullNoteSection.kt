@@ -9,7 +9,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.form.NoteInputPreviewParameter
@@ -28,7 +28,7 @@ fun FullNoteSection(
 ) {
     ProtonTextField(
         modifier = modifier,
-        textStyle = ProtonTheme.typography.default(enabled),
+        textStyle = ProtonTheme.typography.defaultNorm(enabled),
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.note_hint)) },
         editable = enabled,
         value = value,

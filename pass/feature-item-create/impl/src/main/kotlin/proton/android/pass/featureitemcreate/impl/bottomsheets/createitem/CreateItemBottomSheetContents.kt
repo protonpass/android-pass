@@ -10,7 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmall
+import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
@@ -61,7 +61,7 @@ private fun createLogin(
         get() = {
             Text(
                 text = stringResource(R.string.item_type_login_description),
-                style = ProtonTheme.typography.defaultSmall,
+                style = ProtonTheme.typography.defaultSmallNorm,
                 color = ProtonTheme.colors.textWeak
             )
         }
@@ -85,7 +85,7 @@ private fun createAlias(
             get() = {
                 Text(
                     text = stringResource(R.string.item_type_alias_description),
-                    style = ProtonTheme.typography.defaultSmall,
+                    style = ProtonTheme.typography.defaultSmallNorm,
                     color = ProtonTheme.colors.textWeak
                 )
             }
@@ -109,7 +109,7 @@ private fun createNote(
             get() = {
                 Text(
                     text = stringResource(R.string.item_type_note_description),
-                    style = ProtonTheme.typography.defaultSmall,
+                    style = ProtonTheme.typography.defaultSmallNorm,
                     color = ProtonTheme.colors.textWeak
                 )
             }
@@ -130,7 +130,7 @@ private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
             get() = {
                 Text(
                     text = stringResource(R.string.item_type_password_description),
-                    style = ProtonTheme.typography.defaultSmall,
+                    style = ProtonTheme.typography.defaultSmallNorm,
                     color = ProtonTheme.colors.textWeak
                 )
             }

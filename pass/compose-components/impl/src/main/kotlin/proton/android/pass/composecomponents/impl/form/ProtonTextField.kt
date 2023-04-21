@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 
@@ -133,7 +133,7 @@ fun ProtonTextFieldPreview(
         Surface {
             ProtonTextField(
                 value = input.second.value,
-                textStyle = ProtonTheme.typography.default,
+                textStyle = ProtonTheme.typography.defaultNorm,
                 placeholder = { ProtonTextFieldPlaceHolder(text = input.second.placeholder) },
                 editable = input.second.isEditable,
                 isError = input.second.isError,

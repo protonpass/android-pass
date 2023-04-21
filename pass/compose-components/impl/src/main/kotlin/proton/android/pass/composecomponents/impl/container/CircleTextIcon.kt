@@ -10,7 +10,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
@@ -33,7 +33,7 @@ fun CircleTextIcon(
         Text(
             text = text.filter { !it.isWhitespace() }.take(2).uppercase(),
             color = color,
-            style = ProtonTheme.typography.default,
+            style = ProtonTheme.typography.defaultNorm,
             textAlign = TextAlign.Center
         )
     }

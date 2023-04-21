@@ -4,7 +4,7 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.ClearTrash
 import javax.inject.Inject
 
-class TestClearTrash @Inject constructor(): ClearTrash {
+class TestClearTrash @Inject constructor() : ClearTrash {
 
     private var result: Result<Unit> = Result.success(Unit)
 

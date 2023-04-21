@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TestItemSyncStatusRepository @Inject constructor(): ItemSyncStatusRepository {
+class TestItemSyncStatusRepository @Inject constructor() : ItemSyncStatusRepository {
 
     private val flow = testFlow<ItemSyncStatus>()
 

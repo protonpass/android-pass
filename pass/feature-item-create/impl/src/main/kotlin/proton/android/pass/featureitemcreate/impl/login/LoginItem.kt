@@ -66,4 +66,5 @@ data class LoginItem(
 sealed interface LoginItemValidationErrors {
     object BlankTitle : LoginItemValidationErrors
     data class InvalidUrl(val index: Int) : LoginItemValidationErrors
+    object InvalidTotp : LoginItemValidationErrors
 }

@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonui.api.toUiModel
@@ -21,7 +22,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashSt
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.DeleteItem
-import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
@@ -50,7 +51,7 @@ class NoteDetailViewModel @Inject constructor(
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
-    getItemById: GetItemById,
+    getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -69,7 +70,7 @@ class NoteDetailViewModel @Inject constructor(
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
 
     val state: StateFlow<NoteDetailUiState> = combine(
-        getItemById(shareId, itemId),
+        getItemByIdWithVault(shareId, itemId).asLoadingResult(),
         isLoadingState,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
@@ -82,8 +83,11 @@ class NoteDetailViewModel @Inject constructor(
             }
             LoadingResult.Loading -> NoteDetailUiState.NotInitialised
             is LoadingResult.Success -> encryptionContextProvider.withEncryptionContext {
+                val details = itemLoadingResult.data
+                val vault = details.vault.takeIf { details.hasMoreThanOneVault }
                 NoteDetailUiState.Success(
-                    itemUiModel = itemLoadingResult.data.toUiModel(this),
+                    itemUiModel = details.item.toUiModel(this),
+                    vault = vault,
                     isLoading = isLoading.value(),
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),

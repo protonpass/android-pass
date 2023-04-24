@@ -108,8 +108,17 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
         append(": ")
         append(tag ?: "EmptyTag")
         append(" - ")
-        append(message)
+        append(message.sanitise())
     }
+
+    private fun String.sanitise(): String = split('/')
+        .joinToString(separator = "/") {
+            if (it.length == ID_LENGTH) {
+                it.substring(0, ID_OFFSET) + "..." + it.substring(ID_LENGTH - ID_OFFSET)
+            } else {
+                it
+            }
+        }
 
     private fun Int.toPriorityChar(): Char = when (this) {
         Log.VERBOSE -> 'V'
@@ -127,5 +136,7 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
         private const val ROTATION_LINES: Long = 500
         private const val LOGS_DIR = "logs"
         private const val LOGS_FILE = "pass.log"
+        private const val ID_LENGTH = 88
+        private const val ID_OFFSET = 4
     }
 }

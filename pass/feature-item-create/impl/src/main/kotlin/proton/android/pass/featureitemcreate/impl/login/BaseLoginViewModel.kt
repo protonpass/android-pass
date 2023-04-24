@@ -303,7 +303,7 @@ abstract class BaseLoginViewModel(
 
     private fun sanitizeOTP(otp: String): String =
         totpManager.parse(otp).fold(
-            onSuccess = { otp },
+            onSuccess = { totpManager.generateUri(it) },
             onFailure = { totpManager.generateUriWithDefaults(otp) }
         )
 

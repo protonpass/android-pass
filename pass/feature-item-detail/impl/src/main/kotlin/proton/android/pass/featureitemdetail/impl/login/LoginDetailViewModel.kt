@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -21,6 +20,7 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
@@ -31,8 +31,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashSt
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.DeleteItem
-import proton.android.pass.data.api.usecases.GetItemById
-import proton.android.pass.data.api.usecases.ObserveVaults
+import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -72,8 +71,7 @@ class LoginDetailViewModel @Inject constructor(
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
-    private val observeVaults: ObserveVaults,
-    getItemById: GetItemById,
+    getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
@@ -97,9 +95,10 @@ class LoginDetailViewModel @Inject constructor(
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
 
-    private val itemDetailsFlow: Flow<LoadingResult<LoginItemInfo>> = getItemById(shareId, itemId)
+    private val itemDetailsFlow: Flow<LoadingResult<LoginItemInfo>> = getItemByIdWithVault(shareId, itemId)
+        .asLoadingResult()
         .flatMapLatest { res ->
-            val item = when (res) {
+            val details = when (res) {
                 LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
                 is LoadingResult.Error -> {
                     PassLogger.e(TAG, res.exception, "Error loading item")
@@ -108,15 +107,8 @@ class LoginDetailViewModel @Inject constructor(
 
                 is LoadingResult.Success -> res.data
             }
-            val vaults = observeVaults().first()
 
-            val hasMoreThanOneVault = vaults.size > 1
-            val vault = vaults.firstOrNull { it.shareId == item.shareId }
-            if (vault == null) {
-                return@flatMapLatest flowOf(LoadingResult.Error(IllegalStateException("Vault not found")))
-            }
-
-            val itemContents = item.itemType as ItemType.Login
+            val itemContents = details.item.itemType as ItemType.Login
             val decryptedTotpUri = encryptionContextProvider.withEncryptionContext {
                 decrypt(itemContents.primaryTotp)
             }
@@ -127,10 +119,10 @@ class LoginDetailViewModel @Inject constructor(
                 .map { totp ->
                     LoadingResult.Success(
                         LoginItemInfo(
-                            item = item,
+                            item = details.item,
                             totp = totp,
-                            vault = vault,
-                            hasMoreThanOneVault = hasMoreThanOneVault
+                            vault = details.vault,
+                            hasMoreThanOneVault = details.hasMoreThanOneVault
                         )
                     )
                 }

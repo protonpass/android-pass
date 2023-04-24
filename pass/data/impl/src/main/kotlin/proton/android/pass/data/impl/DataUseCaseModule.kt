@@ -19,6 +19,7 @@ import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetCurrentShare
 import proton.android.pass.data.api.usecases.GetCurrentUserId
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
@@ -70,6 +71,7 @@ import proton.android.pass.data.impl.usecases.GetAliasDetailsImpl
 import proton.android.pass.data.impl.usecases.GetCurrentShareImpl
 import proton.android.pass.data.impl.usecases.GetCurrentUserIdImpl
 import proton.android.pass.data.impl.usecases.GetItemByIdImpl
+import proton.android.pass.data.impl.usecases.GetItemByIdWithVaultImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedLoginItemsImpl
@@ -263,4 +265,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindMarkVaultAsPrimaryImpl(impl: MarkVaultAsPrimaryImpl): MarkVaultAsPrimary
+
+    @Binds
+    abstract fun bindGetItemByIdWithVaultImpl(impl: GetItemByIdWithVaultImpl): GetItemByIdWithVault
 }

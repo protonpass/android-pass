@@ -128,14 +128,16 @@ class LoginDetailViewModel @Inject constructor(
                         )
                     }
             } else {
-                flowOf(LoadingResult.Success(
-                    LoginItemInfo(
-                        item = details.item,
-                        totp = None,
-                        vault = details.vault,
-                        hasMoreThanOneVault = details.hasMoreThanOneVault
+                flowOf(
+                    LoadingResult.Success(
+                        LoginItemInfo(
+                            item = details.item,
+                            totp = None,
+                            vault = details.vault,
+                            hasMoreThanOneVault = details.hasMoreThanOneVault
+                        )
                     )
-                ))
+                )
             }
         }
         .distinctUntilChanged()

@@ -123,6 +123,7 @@ fun AliasDetail(
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
                         itemUiModel = state.itemUiModel,
+                        vault = state.vault,
                         mailboxes = state.mailboxes,
                         isLoading = state.isLoadingMailboxes,
                         onCopyAlias = { viewModel.onCopyAlias(it) },

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -38,7 +39,7 @@ fun NoteSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            verticalAlignment = Alignment.Top,
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Icon(
@@ -48,7 +49,9 @@ fun NoteSection(
             )
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 SectionTitle(text = stringResource(R.string.field_detail_note_title))
-                SectionSubtitle(text = text.asAnnotatedString())
+                SelectionContainer {
+                    SectionSubtitle(text = text.asAnnotatedString())
+                }
             }
         }
     }

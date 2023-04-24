@@ -124,6 +124,7 @@ fun NoteDetail(
                             .verticalScroll(rememberScrollState()),
                         name = state.itemUiModel.name,
                         note = (state.itemUiModel.itemType as ItemType.Note).text,
+                        vault = state.vault,
                         moreInfoUiState = moreInfoUiState
                     )
                 }

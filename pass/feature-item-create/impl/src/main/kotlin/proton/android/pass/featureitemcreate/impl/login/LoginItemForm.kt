@@ -46,6 +46,7 @@ internal fun LoginItemForm(
     isUpdate: Boolean,
     showVaultSelector: Boolean,
     onTitleRequiredError: Boolean,
+    isTotpError: Boolean,
     focusLastWebsite: Boolean,
     canUpdateUsername: Boolean,
     onTitleChange: (String) -> Unit,
@@ -92,6 +93,7 @@ internal fun LoginItemForm(
                 loginItem = loginItem,
                 canUpdateUsername = canUpdateUsername,
                 isEditAllowed = isEditAllowed,
+                isTotpError = isTotpError,
                 onUsernameChange = onUsernameChange,
                 onUsernameFocus = { isFocused ->
                     currentStickyFormOption = if (isFocused) {

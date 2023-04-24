@@ -12,9 +12,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
+import proton.android.pass.featureitemdetail.impl.common.ItemTitleInput
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
+import proton.android.pass.featureitemdetail.impl.common.ThemeItemTitleProvider
 import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
 import proton.pass.domain.Vault
 
@@ -45,13 +46,10 @@ fun LoginTitle(
     }
 }
 
-class ThemeLoginTitlePreviewProvider :
-    ThemePairPreviewProvider<LoginTitleInput>(LoginTitlePreviewProvider())
-
 @Preview
 @Composable
 fun LoginTitlePreview(
-    @PreviewParameter(ThemeLoginTitlePreviewProvider::class) input: Pair<Boolean, LoginTitleInput>
+    @PreviewParameter(ThemeItemTitleProvider::class) input: Pair<Boolean, ItemTitleInput>
 ) {
     PassTheme(isDark = input.first) {
         Surface {

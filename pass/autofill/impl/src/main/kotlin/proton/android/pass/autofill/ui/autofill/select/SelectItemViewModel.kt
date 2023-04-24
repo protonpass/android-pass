@@ -36,6 +36,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.getOrNull
@@ -113,6 +114,7 @@ class SelectItemViewModel @Inject constructor(
     )
 
     private val sharesFlow = observeVaults()
+        .asLoadingResult()
         .map { vaultsResult ->
             val vaults = vaultsResult.getOrNull() ?: emptyList()
             vaults.associate { it.shareId to ShareUiModel.fromVault(it) }

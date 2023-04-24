@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -21,6 +22,7 @@ class ObserveVaultsWithItemCountImpl @Inject constructor(
 ) : ObserveVaultsWithItemCount {
 
     override fun invoke(): Flow<LoadingResult<List<VaultWithItemCount>>> = observeVaults()
+        .asLoadingResult()
         .flatMapLatest { result ->
             when (result) {
                 LoadingResult.Loading -> flowOf(LoadingResult.Loading)

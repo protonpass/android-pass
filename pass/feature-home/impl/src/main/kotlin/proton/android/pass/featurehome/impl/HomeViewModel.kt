@@ -31,6 +31,7 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
@@ -137,6 +138,7 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(IsProcessingSearchState.NotLoading)
 
     private val vaultsFlow = observeVaults()
+        .asLoadingResult()
         .onEach { res ->
             res.onSuccess {
                 if (it.size == 1) {

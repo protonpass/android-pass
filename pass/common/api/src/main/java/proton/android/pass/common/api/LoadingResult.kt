@@ -107,3 +107,9 @@ inline fun <T, R> T.runCatching(block: T.() -> R): LoadingResult<R> = try {
 } catch (e: Throwable) {
     LoadingResult.Error(e)
 }
+
+inline fun <T, R> Result<T>.flatMap(transform: (T) -> Result<R>): Result<R> =
+    fold(
+        onSuccess = { transform(it) },
+        onFailure = { Result.failure(it) }
+    )

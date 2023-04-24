@@ -17,6 +17,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -69,6 +70,7 @@ class SettingsViewModel @Inject constructor(
         MutableStateFlow(IsLoadingState.NotLoading)
 
     private val primaryVaultFlow: Flow<Option<Vault>> = observeVaults()
+        .asLoadingResult()
         .map { res ->
             when (res) {
                 LoadingResult.Loading -> None

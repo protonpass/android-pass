@@ -152,31 +152,30 @@ class UpdateLoginViewModel @Inject constructor(
         }
     }
 
-    fun updateItem(shareId: ShareId) =
-        viewModelScope.launch(coroutineExceptionHandler) {
-            val currentItem = _item
-            requireNotNull(currentItem)
-            val shouldUpdate = validateItem()
-            if (!shouldUpdate) return@launch
+    fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
+        val currentItem = _item
+        requireNotNull(currentItem)
+        val shouldUpdate = validateItem()
+        if (!shouldUpdate) return@launch
 
-            isLoadingState.update { IsLoadingState.Loading }
-            val loginItem = loginItemState.value
-            val userId = accountManager.getPrimaryUserId()
-                .first { userId -> userId != null }
-            if (userId != null) {
-                val aliasItemOption = aliasLocalItemState.value
-                if (aliasItemOption is Some) {
-                    performCreateAlias(userId, shareId, aliasItemOption.value)
-                        .map { performUpdateItem(userId, shareId, currentItem, loginItem) }
-                } else {
-                    performUpdateItem(userId, shareId, currentItem, loginItem)
-                }
+        isLoadingState.update { IsLoadingState.Loading }
+        val loginItem = loginItemState.value
+        val userId = accountManager.getPrimaryUserId()
+            .first { userId -> userId != null }
+        if (userId != null) {
+            val aliasItemOption = aliasLocalItemState.value
+            if (aliasItemOption is Some) {
+                performCreateAlias(userId, shareId, aliasItemOption.value)
+                    .map { performUpdateItem(userId, shareId, currentItem, loginItem) }
             } else {
-                PassLogger.i(TAG, "Empty User Id")
-                snackbarDispatcher(ItemUpdateError)
+                performUpdateItem(userId, shareId, currentItem, loginItem)
             }
-            isLoadingState.update { IsLoadingState.NotLoading }
+        } else {
+            PassLogger.i(TAG, "Empty User Id")
+            snackbarDispatcher(ItemUpdateError)
         }
+        isLoadingState.update { IsLoadingState.NotLoading }
+    }
 
     private suspend fun performCreateAlias(
         userId: UserId,

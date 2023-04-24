@@ -96,11 +96,20 @@ class OtpUriParserTest {
     }
 
     @Test
-    fun `can detect missing label`() {
+    fun `adds default label if missing label`() {
         val input = "otpauth://totp?secret=thisisthesecret"
 
+        val expected = TotpSpec(
+            label = OtpUriParser.DEFAULT_LABEL,
+            secret = "thisisthesecret",
+            issuer = None,
+            algorithm = TotpAlgorithm.Sha1,
+            digits = TotpDigits.Six,
+            validPeriodSeconds = 30
+        )
+
         val parsed = OtpUriParser.parse(input)
-        assertThat(parsed).isEqualTo(Result.failure<TotpSpec>(MalformedOtpUri.MissingLabel))
+        assertThat(parsed).isEqualTo(Result.success(expected))
     }
 
     @Test

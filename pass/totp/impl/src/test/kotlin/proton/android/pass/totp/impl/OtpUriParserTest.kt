@@ -100,7 +100,7 @@ class OtpUriParserTest {
         val input = "otpauth://totp?secret=thisisthesecret"
 
         val expected = TotpSpec(
-            label = "ProtonPass",
+            label = OtpUriParser.DEFAULT_LABEL,
             secret = "thisisthesecret",
             issuer = None,
             algorithm = TotpAlgorithm.Sha1,

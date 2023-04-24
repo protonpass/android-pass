@@ -41,6 +41,7 @@
     <string name="create_login_item_creation_error">Could not create Login</string>
     <string name="create_login_item_update_error">Could not update Login</string>
     <string name="create_login_init_error">Could not initialise Login</string>
+    <string name="create_login_invalid_totp">The 2FA contents are not valid</string>
     <string name="login_created">Login created</string>
     <string name="bottomsheet_modify_alias_title">Modify alias</string>
 

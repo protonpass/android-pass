@@ -211,6 +211,9 @@ abstract class BaseLoginViewModel(
         onUserEditedContent()
         val newValue = value.replace(" ", "").replace("\n", "")
         loginItemState.update { it.copy(primaryTotp = newValue) }
+        loginItemValidationErrorsState.update {
+            it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidTotp) }
+        }
     }
 
     fun onWebsiteChange(value: String, index: Int) {
@@ -270,15 +273,25 @@ abstract class BaseLoginViewModel(
         draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
     }
 
-    protected fun validateItem(): Boolean {
-        loginItemState.update {
-            val websites = sanitizeWebsites(it.websiteAddresses)
-            val otp = if (it.primaryTotp.isNotBlank()) {
-                sanitizeOTP(it.primaryTotp)
+    protected suspend fun validateItem(): Boolean {
+        loginItemState.update { state ->
+            val websites = sanitizeWebsites(state.websiteAddresses)
+            val otp = if (state.primaryTotp.isNotBlank()) {
+                sanitizeOTP(state.primaryTotp)
+                    .fold(
+                        onSuccess = { it },
+                        onFailure = {
+                            loginItemValidationErrorsState.update { errors ->
+                                errors.toMutableSet().apply { add(LoginItemValidationErrors.InvalidTotp) }
+                            }
+                            snackbarDispatcher(LoginSnackbarMessages.InvalidTotpError)
+                            return false
+                        }
+                    )
             } else {
                 ""
             }
-            it.copy(websiteAddresses = websites, primaryTotp = otp)
+            state.copy(websiteAddresses = websites, primaryTotp = otp)
         }
         val loginItem = loginItemState.value
         val loginItemValidationErrors = loginItem.validate()
@@ -301,11 +314,24 @@ abstract class BaseLoginViewModel(
             }
         }
 
-    private fun sanitizeOTP(otp: String): String =
-        totpManager.parse(otp).fold(
-            onSuccess = { otp },
-            onFailure = { totpManager.generateUriWithDefaults(otp) }
-        )
+    private fun sanitizeOTP(otp: String): Result<String> {
+        val isUri = otp.contains("://")
+        return totpManager.parse(otp)
+            .fold(
+                onSuccess = { spec ->
+                    val uri = totpManager.generateUri(spec)
+                    Result.success(uri)
+                },
+                onFailure = {
+                    // If is an URI, we require it to be valid. Otherwise we interpret it as secret
+                    if (isUri) {
+                        Result.failure(it)
+                    } else {
+                        Result.success(totpManager.generateUriWithDefaults(otp))
+                    }
+                }
+            )
+    }
 
     fun changeVault(shareId: ShareId) = viewModelScope.launch {
         selectedShareIdState.update { shareId.toOption() }

@@ -113,20 +113,30 @@ class LoginDetailViewModel @Inject constructor(
                 decrypt(itemContents.primaryTotp)
             }
 
-            observeTotpFromUri(decryptedTotpUri)
-                .map { totpFlow -> totpFlow.map { it.toOption() } }
-                .getOrDefault(flowOf(None))
-                .map { totp ->
-                    LoadingResult.Success(
-                        LoginItemInfo(
-                            item = details.item,
-                            totp = totp,
-                            vault = details.vault,
-                            hasMoreThanOneVault = details.hasMoreThanOneVault
+            if (decryptedTotpUri.isNotEmpty()) {
+                observeTotpFromUri(decryptedTotpUri)
+                    .map { totpFlow -> totpFlow.map { it.toOption() } }
+                    .getOrDefault(flowOf(None))
+                    .map { totp ->
+                        LoadingResult.Success(
+                            LoginItemInfo(
+                                item = details.item,
+                                totp = totp,
+                                vault = details.vault,
+                                hasMoreThanOneVault = details.hasMoreThanOneVault
+                            )
                         )
+                    }
+            } else {
+                flowOf(LoadingResult.Success(
+                    LoginItemInfo(
+                        item = details.item,
+                        totp = None,
+                        vault = details.vault,
+                        hasMoreThanOneVault = details.hasMoreThanOneVault
                     )
-                }
-
+                ))
+            }
         }
         .distinctUntilChanged()
 

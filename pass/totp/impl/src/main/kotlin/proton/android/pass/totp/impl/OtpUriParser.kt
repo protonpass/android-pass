@@ -2,6 +2,7 @@ package proton.android.pass.totp.impl
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.totp.api.MalformedOtpUri
 import proton.android.pass.totp.api.TotpAlgorithm
 import proton.android.pass.totp.api.TotpDigits
@@ -11,6 +12,8 @@ import java.net.URISyntaxException
 import java.net.URLDecoder
 
 object OtpUriParser {
+
+    private const val TAG = "OtpUriParser"
 
     private const val SCHEME = "otpauth"
     private const val HOST = "totp"
@@ -28,6 +31,8 @@ object OtpUriParser {
     private const val DEFAULT_ALGORITHM = SHA1_ALGORITHM
     private const val DEFAULT_DIGITS = "6"
     private const val DEFAULT_PERIOD = "30"
+
+    const val DEFAULT_LABEL = "ProtonPass"
 
     fun parse(input: String): Result<TotpSpec> =
         try {
@@ -77,7 +82,10 @@ object OtpUriParser {
     }
 
     private fun extractLabel(parsed: URI): String {
-        if (parsed.path.isEmpty()) throw MalformedOtpUri.MissingLabel
+        if (parsed.path.isEmpty()) {
+            PassLogger.d(TAG, "No label found in URI, using default")
+            return DEFAULT_LABEL
+        }
         return parsed.path.removePrefix("/")
     }
 

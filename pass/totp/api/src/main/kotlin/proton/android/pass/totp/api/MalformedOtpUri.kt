@@ -8,7 +8,6 @@ sealed class MalformedOtpUri : IllegalArgumentException() {
     data class InvalidHost(val host: String) : MalformedOtpUri()
     object MissingScheme : MalformedOtpUri()
     object MissingHost : MalformedOtpUri()
-    object MissingLabel : MalformedOtpUri()
     object MissingSecret : MalformedOtpUri()
     data class InvalidAlgorithm(val algorithm: String) : MalformedOtpUri()
     data class InvalidDigitCount(val digits: String) : MalformedOtpUri()

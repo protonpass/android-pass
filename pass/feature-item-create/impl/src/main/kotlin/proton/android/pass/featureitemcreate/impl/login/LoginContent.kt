@@ -186,6 +186,7 @@ internal fun LoginContent(
                 showVaultSelector = showVaultSelector,
                 onTitleChange = onTitleChange,
                 onTitleRequiredError = uiState.validationErrors.contains(LoginItemValidationErrors.BlankTitle),
+                isTotpError = uiState.validationErrors.contains(LoginItemValidationErrors.InvalidTotp),
                 onUsernameChange = onUsernameChange,
                 onPasswordChange = onPasswordChange,
                 onWebsiteChange = onWebsiteChange,

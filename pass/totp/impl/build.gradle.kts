@@ -20,12 +20,15 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
+    implementation(libs.commons.codec)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.onetimepassword)
-    implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.commons.codec)
+
+    implementation(libs.core.utilKotlin)
 
     implementation(projects.pass.common.api)
+    implementation(projects.pass.log.api)
     implementation(projects.pass.totp.api)
 
     implementation(libs.dagger.hilt.android)

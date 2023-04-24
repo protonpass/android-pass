@@ -12,8 +12,9 @@ import org.junit.Test
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.TestDeleteItem
-import proton.android.pass.data.fakes.usecases.TestGetItemById
+import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
 import proton.android.pass.data.fakes.usecases.TestTrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
@@ -27,7 +28,10 @@ import proton.android.pass.test.TestSavedStateHandle
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
+import proton.pass.domain.ShareColor
+import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
+import proton.pass.domain.Vault
 
 class NoteDetailViewModelTest {
 
@@ -38,7 +42,7 @@ class NoteDetailViewModelTest {
 
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var telemetryManager: TestTelemetryManager
-    private lateinit var getItemById: TestGetItemById
+    private lateinit var getItemByIdWithVault: TestGetItemByIdWithVault
     private lateinit var trashItem: TestTrashItem
     private lateinit var deleteItem: TestDeleteItem
     private lateinit var restoreItem: TestRestoreItem
@@ -48,7 +52,7 @@ class NoteDetailViewModelTest {
     fun setup() {
         snackbarDispatcher = TestSnackbarDispatcher()
         telemetryManager = TestTelemetryManager()
-        getItemById = TestGetItemById()
+        getItemByIdWithVault = TestGetItemByIdWithVault()
         trashItem = TestTrashItem()
         deleteItem = TestDeleteItem()
         restoreItem = TestRestoreItem()
@@ -56,7 +60,7 @@ class NoteDetailViewModelTest {
         instance = NoteDetailViewModel(
             snackbarDispatcher = snackbarDispatcher,
             telemetryManager = telemetryManager,
-            getItemById = getItemById,
+            getItemByIdWithVault = getItemByIdWithVault,
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID)
                 set(CommonNavArgId.ItemId.key, ITEM_ID)
@@ -202,9 +206,26 @@ class NoteDetailViewModelTest {
         assertThat(memory).isEmpty()
     }
 
-    private fun initialSetup(note: String = "note"): Item {
+    @Test
+    fun `does not display vault if there is only one vault`() = runTest {
+        initialSetup(hasMoreThanOneVault = false)
+        instance.state.test {
+            val value = awaitItem() as NoteDetailUiState.Success
+            assertThat(value.vault).isNull()
+        }
+    }
+
+    private fun initialSetup(
+        note: String = "note",
+        hasMoreThanOneVault: Boolean = true
+    ): Item {
         val item = createEncryptedItem(note)
-        getItemById.emitValue(LoadingResult.Success(item))
+        val value = ItemWithVaultInfo(
+            item = item,
+            vault = TEST_VAULT,
+            hasMoreThanOneVault = hasMoreThanOneVault
+        )
+        getItemByIdWithVault.emitValue(Result.success(value))
         return item
     }
 
@@ -235,6 +256,15 @@ class NoteDetailViewModelTest {
     companion object {
         private const val SHARE_ID = "share-id"
         private const val ITEM_ID = "item-id"
+        private const val VAULT_NAME = "Test Vault"
+
+        private val TEST_VAULT = Vault(
+            shareId = ShareId(SHARE_ID),
+            name = VAULT_NAME,
+            color = ShareColor.Color1,
+            icon = ShareIcon.Icon1,
+            isPrimary = false
+        )
     }
 
 }

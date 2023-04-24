@@ -32,7 +32,7 @@ object OtpUriParser {
     private const val DEFAULT_DIGITS = "6"
     private const val DEFAULT_PERIOD = "30"
 
-    private const val DEFAULT_LABEL = "ProtonPass"
+    const val DEFAULT_LABEL = "ProtonPass"
 
     fun parse(input: String): Result<TotpSpec> =
         try {

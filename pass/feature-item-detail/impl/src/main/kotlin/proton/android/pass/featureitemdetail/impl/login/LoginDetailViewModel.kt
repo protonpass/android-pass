@@ -98,9 +98,13 @@ class LoginDetailViewModel @Inject constructor(
             val decrypted = encryptionContextProvider.withEncryptionContext {
                 decrypt(itemContents.primaryTotp)
             }
-            observeTotpFromUri(decrypted)
-                .map { flow -> flow.map { it.toOption() } }
-                .getOrDefault(flowOf(None))
+            if (decrypted.isNotEmpty()) {
+                observeTotpFromUri(decrypted)
+                    .map { flow -> flow.map { it.toOption() } }
+                    .getOrDefault(flowOf(None))
+            } else {
+                flowOf(None)
+            }
         }
         .distinctUntilChanged()
 

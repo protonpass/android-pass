@@ -5,10 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -18,7 +20,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
@@ -30,6 +32,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -50,9 +53,12 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.ObserveTotpFromUri
+import proton.android.pass.totp.api.TotpManager
+import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
+import proton.pass.domain.Vault
 import javax.inject.Inject
 import proton.android.pass.common.api.combine as combineN
 
@@ -66,8 +72,9 @@ class LoginDetailViewModel @Inject constructor(
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
+    private val observeVaults: ObserveVaults,
     getItemById: GetItemById,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val shareId: ShareId =
@@ -90,47 +97,87 @@ class LoginDetailViewModel @Inject constructor(
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
 
-    private val observeTotpOptionFlow = getItemById(shareId, itemId)
-        .flatMapLatest { itemLoadingResult ->
-            val item = itemLoadingResult.getOrNull()
-            item ?: return@flatMapLatest flowOf(None)
+    private val itemDetailsFlow: Flow<LoadingResult<LoginItemInfo>> = getItemById(shareId, itemId)
+        .flatMapLatest { res ->
+            val item = when (res) {
+                LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
+                is LoadingResult.Error -> {
+                    PassLogger.e(TAG, res.exception, "Error loading item")
+                    return@flatMapLatest flowOf(res)
+                }
+
+                is LoadingResult.Success -> res.data
+            }
+            val vaults = observeVaults().first()
+
+            val hasMoreThanOneVault = vaults.size > 1
+            val vault = vaults.firstOrNull { it.shareId == item.shareId }
+            if (vault == null) {
+                return@flatMapLatest flowOf(LoadingResult.Error(IllegalStateException("Vault not found")))
+            }
+
             val itemContents = item.itemType as ItemType.Login
-            val decrypted = encryptionContextProvider.withEncryptionContext {
+            val decryptedTotpUri = encryptionContextProvider.withEncryptionContext {
                 decrypt(itemContents.primaryTotp)
             }
-            observeTotpFromUri(decrypted)
-                .map { flow -> flow.map { it.toOption() } }
+
+            observeTotpFromUri(decryptedTotpUri)
+                .map { totpFlow -> totpFlow.map { it.toOption() } }
                 .getOrDefault(flowOf(None))
+                .map { totp ->
+                    LoadingResult.Success(
+                        LoginItemInfo(
+                            item = item,
+                            totp = totp,
+                            vault = vault,
+                            hasMoreThanOneVault = hasMoreThanOneVault
+                        )
+                    )
+                }
+
         }
         .distinctUntilChanged()
 
+    private data class LoginItemInfo(
+        val item: Item,
+        val totp: Option<TotpManager.TotpWrapper>,
+        val vault: Vault,
+        val hasMoreThanOneVault: Boolean
+    )
+
     val uiState: StateFlow<LoginDetailUiState> = combineN(
-        getItemById(shareId, itemId),
+        itemDetailsFlow,
         passwordState,
-        observeTotpOptionFlow,
         isLoadingState,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState
-    ) { itemLoadingResult,
+    ) { itemDetails,
         password,
-        totpOption,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash ->
-        when (itemLoadingResult) {
+        when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
                 LoginDetailUiState.Error
             }
+
             LoadingResult.Loading -> LoginDetailUiState.NotInitialised
             is LoadingResult.Success -> {
+                val details = itemDetails.data
+                val vault = if (details.hasMoreThanOneVault) {
+                    details.vault
+                } else {
+                    null
+                }
                 encryptionContextProvider.withEncryptionContext {
                     LoginDetailUiState.Success(
-                        itemUiModel = itemLoadingResult.data.toUiModel(this),
+                        itemUiModel = details.item.toUiModel(this),
+                        vault = vault,
                         passwordState = password,
-                        totpUiState = totpOption
+                        totpUiState = details.totp
                             .map { TotpUiState(it.code, it.remainingSeconds, it.totalSeconds) }
                             .value(),
                         isLoading = isLoading.value(),
@@ -190,6 +237,7 @@ class LoginDetailViewModel @Inject constructor(
                         clearText = decrypt(itemType.password)
                     )
                 }
+
             is PasswordState.Revealed ->
                 passwordState.value = PasswordState.Concealed(itemType.password)
         }

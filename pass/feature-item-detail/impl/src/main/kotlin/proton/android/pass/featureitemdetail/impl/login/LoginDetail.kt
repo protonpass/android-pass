@@ -149,6 +149,7 @@ fun LoginDetail(
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
                         itemUiModel = state.itemUiModel,
+                        vault = state.vault,
                         passwordState = state.passwordState,
                         totpUiState = state.totpUiState,
                         moreInfoUiState = moreInfoUiState,

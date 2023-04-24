@@ -26,7 +26,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetAliasDetails
-import proton.android.pass.data.api.usecases.GetItemById
+import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
@@ -57,7 +57,7 @@ class AliasDetailViewModel @Inject constructor(
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
-    getItemById: GetItemById,
+    getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -77,7 +77,7 @@ class AliasDetailViewModel @Inject constructor(
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
 
     val uiState: StateFlow<AliasDetailUiState> = combineN(
-        getItemById(shareId, itemId),
+        getItemByIdWithVault(shareId, itemId).asLoadingResult(),
         getAliasDetails(shareId, itemId).asLoadingResult(),
         isLoadingState,
         isItemSentToTrashState,
@@ -96,9 +96,13 @@ class AliasDetailViewModel @Inject constructor(
             }
             LoadingResult.Loading -> AliasDetailUiState.NotInitialised
             is LoadingResult.Success -> {
+                val details = itemLoadingResult.data
+                val vault = details.vault.takeIf { details.hasMoreThanOneVault }
+
                 encryptionContextProvider.withEncryptionContext {
                     AliasDetailUiState.Success(
-                        itemUiModel = itemLoadingResult.data.toUiModel(this),
+                        itemUiModel = details.item.toUiModel(this),
+                        vault = vault,
                         mailboxes = aliasDetailsResult.getOrNull()?.mailboxes?.toPersistentList()
                             ?: persistentListOf(),
                         isLoading = aliasDetailsResult is LoadingResult.Loading || isLoading.value(),

@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 
 @Composable
 fun SectionSubtitle(
@@ -15,6 +15,6 @@ fun SectionSubtitle(
     Text(
         modifier = modifier,
         text = text,
-        style = ProtonTheme.typography.default
+        style = ProtonTheme.typography.defaultNorm
     )
 }

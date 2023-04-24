@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmallWeak
+import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 
@@ -29,7 +29,7 @@ fun TotpProgress(
         )
         Text(
             text = remainingSeconds.toString(),
-            style = ProtonTheme.typography.defaultSmallWeak
+            style = ProtonTheme.typography.defaultSmallNorm
         )
     }
 }

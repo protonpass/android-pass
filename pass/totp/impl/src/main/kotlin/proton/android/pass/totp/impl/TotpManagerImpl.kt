@@ -43,6 +43,7 @@ class TotpManagerImpl @Inject constructor(
             .digits(6)
             .algorithm(HmacAlgorithm.SHA1)
             .period(30, TimeUnit.SECONDS)
+            .label(OtpUriParser.DEFAULT_LABEL, null)
             .buildToString()
 
     override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> {

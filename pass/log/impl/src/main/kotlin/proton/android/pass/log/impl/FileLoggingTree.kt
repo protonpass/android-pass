@@ -30,6 +30,7 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
         .ofPattern("yyyy-MM-dd hh:mm:ss.SSS", Locale.getDefault())
         .withZone(ZoneId.from(ZoneOffset.UTC))
     private val scope = CoroutineScope(SupervisorJob())
+    private val idRegex = Regex("^[a-zA-Z0-9_=-]{88}")
 
     init {
         try {
@@ -113,8 +114,15 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
 
     private fun String.sanitise(): String = split('/')
         .joinToString(separator = "/") {
-            if (it.length == ID_LENGTH) {
-                it.substring(0, ID_OFFSET) + "..." + it.substring(ID_LENGTH - ID_OFFSET)
+            if (idRegex.containsMatchIn(it)) {
+                idRegex.replace(
+                    it,
+                    buildString {
+                        append(it.substring(0, ID_OFFSET))
+                        append(Typography.ellipsis)
+                        append(it.substring(ID_LENGTH - ID_OFFSET))
+                    }
+                )
             } else {
                 it
             }

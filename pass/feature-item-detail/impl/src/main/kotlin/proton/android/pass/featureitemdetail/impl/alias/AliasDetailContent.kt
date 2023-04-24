@@ -14,11 +14,13 @@ import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 import proton.pass.domain.AliasMailbox
 import proton.pass.domain.ItemType
+import proton.pass.domain.Vault
 
 @Composable
 fun AliasDetailContent(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
+    vault: Vault?,
     moreInfoUiState: MoreInfoUiState,
     mailboxes: PersistentList<AliasMailbox>,
     isLoading: Boolean,
@@ -30,7 +32,8 @@ fun AliasDetailContent(
     ) {
         AliasTitle(
             modifier = Modifier.padding(0.dp, 12.dp),
-            title = itemUiModel.name
+            title = itemUiModel.name,
+            vault = vault,
         )
         AliasSection(
             alias = (itemUiModel.itemType as ItemType.Alias).aliasEmail,

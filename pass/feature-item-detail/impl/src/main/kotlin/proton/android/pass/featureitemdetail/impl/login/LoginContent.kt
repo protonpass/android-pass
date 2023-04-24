@@ -16,11 +16,13 @@ import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 import proton.pass.domain.ItemType
+import proton.pass.domain.Vault
 
 @Composable
 fun LoginContent(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
+    vault: Vault?,
     passwordState: PasswordState,
     totpUiState: TotpUiState?,
     moreInfoUiState: MoreInfoUiState,
@@ -39,6 +41,7 @@ fun LoginContent(
         LoginTitle(
             modifier = Modifier.padding(0.dp, 12.dp),
             title = itemUiModel.name,
+            vault = vault,
             website = itemType.websites.firstOrNull(),
             packageName = itemType.packageInfoSet.minByOrNull { it.packageName.value }?.packageName?.value
         )

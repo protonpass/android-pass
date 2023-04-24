@@ -1,7 +1,8 @@
 package proton.android.pass.totp.impl
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import proton.android.pass.common.api.flatMap
+import proton.android.pass.log.api.PassLogger
 import proton.android.pass.totp.api.ObserveTotpFromUri
 import proton.android.pass.totp.api.TotpManager
 import javax.inject.Inject
@@ -12,7 +13,18 @@ class ObserveTotpFromUriImpl @Inject constructor(
 
     override fun invoke(uri: String): Result<Flow<TotpManager.TotpWrapper>> =
         totpManager.parse(uri)
-            .mapCatching { spec ->
-                totpManager.observeCode(spec).map { it }
+            .onFailure {
+                PassLogger.d(TAG, it, "Failed to parse TOTP uri")
+                PassLogger.w(TAG, "Failed to parse TOTP uri")
             }
+            .flatMap { spec ->
+                runCatching {
+                    totpManager.observeCode(spec)
+                }.onFailure { PassLogger.w(TAG, it, "Failed to observe TOTP code") }
+            }
+
+
+    companion object {
+        private const val TAG = "ObserveTotpFromUriImpl"
+    }
 }

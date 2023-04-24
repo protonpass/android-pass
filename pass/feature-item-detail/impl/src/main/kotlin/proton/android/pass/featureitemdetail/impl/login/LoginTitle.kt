@@ -1,8 +1,9 @@
 package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -11,19 +12,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.featureitemdetail.impl.common.ItemTitleText
+import proton.android.pass.featureitemdetail.impl.common.VaultNameSubtitle
+import proton.pass.domain.Vault
 
 @Composable
 fun LoginTitle(
     modifier: Modifier = Modifier,
     title: String,
     website: String?,
-    packageName: String?
+    packageName: String?,
+    vault: Vault?
 ) {
     Row(
-        modifier = modifier.height(75.dp),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
@@ -34,21 +38,28 @@ fun LoginTitle(
             website = website,
             packageName = packageName
         )
-        ItemTitleText(text = title)
+        Column(modifier = Modifier.fillMaxWidth()) {
+            ItemTitleText(text = title)
+            VaultNameSubtitle(vault = vault)
+        }
     }
 }
+
+class ThemeLoginTitlePreviewProvider :
+    ThemePairPreviewProvider<LoginTitleInput>(LoginTitlePreviewProvider())
 
 @Preview
 @Composable
 fun LoginTitlePreview(
-    @PreviewParameter(ThemePreviewProvider::class) input: Boolean
+    @PreviewParameter(ThemeLoginTitlePreviewProvider::class) input: Pair<Boolean, LoginTitleInput>
 ) {
-    PassTheme(isDark = input) {
+    PassTheme(isDark = input.first) {
         Surface {
             LoginTitle(
-                title = "A really long title to check if the element is multiline",
+                title = input.second.title,
                 website = null,
-                packageName = null
+                packageName = null,
+                vault = input.second.vault
             )
         }
     }

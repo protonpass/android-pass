@@ -260,6 +260,26 @@ internal class CreateLoginViewModelTest {
         }
     }
 
+    @Test
+    fun `invalid totp emits error`() = runTest {
+        val shareId = ShareId("shareId")
+        setInitialContents()
+        sendInitialVault(shareId)
+
+        instance.onTotpChange("invalid://uri")
+        instance.createItem()
+        instance.loginUiState.test {
+            val item = awaitItem()
+            assertThat(createItem.hasBeenInvoked()).isFalse()
+
+            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.validationErrors).isEqualTo(setOf(LoginItemValidationErrors.InvalidTotp))
+
+            val message = snackbarDispatcher.snackbarMessage.first().value()!!
+            assertThat(message).isInstanceOf(LoginSnackbarMessages.InvalidTotpError::class.java)
+        }
+    }
+
     private fun setTestAlias(): AliasItem {
         val suffix = AliasSuffixUiModel(
             suffix = TestUtils.randomString(),

@@ -24,14 +24,15 @@ class MigrateItemImpl @Inject constructor(
             }
 
         val newItemKey = EncryptionKey.generate()
-        val reencryptedContents = encryptionContextProvider.withEncryptionContext(newItemKey) {
-            encrypt(decryptedContents, EncryptionTag.ItemContent)
-        }
-
         val encryptedItemKey =
             encryptionContextProvider.withEncryptionContext(decryptedDestinationKey) {
                 encrypt(newItemKey.value(), EncryptionTag.ItemKey)
             }
+
+        val reencryptedContents = encryptionContextProvider.withEncryptionContext(newItemKey) {
+            encrypt(decryptedContents, EncryptionTag.ItemContent)
+        }
+
 
         return EncryptedMigrateItemBody(
             keyRotation = destinationKey.rotation,

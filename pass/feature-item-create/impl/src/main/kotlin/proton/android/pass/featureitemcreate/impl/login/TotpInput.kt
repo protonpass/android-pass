@@ -2,13 +2,18 @@ package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -20,6 +25,7 @@ internal fun TotpInput(
     modifier: Modifier = Modifier,
     value: String,
     enabled: Boolean,
+    isError: Boolean,
     onTotpChanged: (String) -> Unit,
     onFocus: (Boolean) -> Unit
 ) {
@@ -28,9 +34,15 @@ internal fun TotpInput(
         value = value,
         onChange = onTotpChanged,
         editable = enabled,
+        isError = isError,
         textStyle = ProtonTheme.typography.defaultNorm,
         onFocusChange = onFocus,
-        label = { ProtonTextFieldLabel(text = stringResource(R.string.totp_create_login_field_title)) },
+        label = {
+            ProtonTextFieldLabel(
+                text = stringResource(R.string.totp_create_login_field_title),
+                isError = isError
+            )
+        },
         placeholder = {
             ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.totp_create_login_field_placeholder))
         },
@@ -47,4 +59,22 @@ internal fun TotpInput(
             }
         }
     )
+}
+
+@Preview
+@Composable
+fun TotpInputPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    PassTheme(isDark = input.first) {
+        Surface {
+            TotpInput(
+                value = "123",
+                enabled = true,
+                isError = input.second,
+                onTotpChanged = {},
+                onFocus = { }
+            )
+        }
+    }
 }

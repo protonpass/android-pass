@@ -211,6 +211,9 @@ abstract class BaseLoginViewModel(
         onUserEditedContent()
         val newValue = value.replace(" ", "").replace("\n", "")
         loginItemState.update { it.copy(primaryTotp = newValue) }
+        loginItemValidationErrorsState.update {
+            it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidTotp) }
+        }
     }
 
     fun onWebsiteChange(value: String, index: Int) {
@@ -278,6 +281,9 @@ abstract class BaseLoginViewModel(
                     .fold(
                         onSuccess = { it },
                         onFailure = {
+                            loginItemValidationErrorsState.update { errors ->
+                                errors.toMutableSet().apply { add(LoginItemValidationErrors.InvalidTotp) }
+                            }
                             snackbarDispatcher(LoginSnackbarMessages.InvalidTotpError)
                             return false
                         }

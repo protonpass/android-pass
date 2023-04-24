@@ -13,6 +13,7 @@ fun MainLoginSection(
     loginItem: LoginItem,
     canUpdateUsername: Boolean,
     isEditAllowed: Boolean,
+    isTotpError: Boolean,
     onUsernameChange: (String) -> Unit,
     onUsernameFocus: (Boolean) -> Unit,
     onAliasOptionsClick: () -> Unit,
@@ -43,6 +44,7 @@ fun MainLoginSection(
         TotpInput(
             value = loginItem.primaryTotp,
             enabled = isEditAllowed,
+            isError = isTotpError,
             onTotpChanged = onTotpChanged,
             onFocus = onTotpFocus
         )

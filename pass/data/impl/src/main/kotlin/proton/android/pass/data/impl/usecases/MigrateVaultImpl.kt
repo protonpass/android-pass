@@ -12,11 +12,9 @@ import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -68,15 +66,13 @@ class MigrateVaultImpl @Inject constructor(
         userId: UserId,
         origin: ShareId,
         dest: ShareId
-    ): LoadingResult<Unit> =
-        shareRepository.getById(userId, dest)
-            .flatMap { destShare: Share? ->
-                destShare ?: throw ShareNotAvailableError()
-                onDestinationVaultReceived(items, userId, destShare)
-            }
+    ): LoadingResult<Unit> {
+        val share = shareRepository.getById(userId, dest)
+        return onDestinationVaultReceived(items, userId, share)
             .map {
                 return shareRepository.deleteVault(userId, origin)
             }
+    }
 
     private suspend fun onDestinationVaultReceived(
         items: List<Item>,
@@ -132,10 +128,12 @@ class MigrateVaultImpl @Inject constructor(
                                     .toSet()
                             )
                         }
+
                         is ItemType.Note -> ItemContents.Note(
                             title = encryptionContext.decrypt(item.title),
                             note = encryptionContext.decrypt(item.note)
                         )
+
                         ItemType.Password -> throw NotImplementedError()
                     }
                     itemRepository.createItem(

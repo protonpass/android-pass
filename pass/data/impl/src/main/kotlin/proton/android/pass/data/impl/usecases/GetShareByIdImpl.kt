@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.pass.domain.Share
@@ -16,7 +15,7 @@ class GetShareByIdImpl @Inject constructor(
     private val shareRepository: ShareRepository
 ) : GetShareById {
 
-    override suspend fun invoke(userId: UserId?, shareId: ShareId): LoadingResult<Share?> =
+    override suspend fun invoke(userId: UserId?, shareId: ShareId): Share =
         if (userId == null) {
             val primaryAccount = requireNotNull(accountManager.getPrimaryAccount().firstOrNull())
             getShare(primaryAccount.userId, shareId)
@@ -24,7 +23,7 @@ class GetShareByIdImpl @Inject constructor(
             getShare(userId, shareId)
         }
 
-    private suspend fun getShare(userId: UserId, shareId: ShareId): LoadingResult<Share?> =
+    private suspend fun getShare(userId: UserId, shareId: ShareId): Share =
         shareRepository.getById(userId, shareId)
 }
 

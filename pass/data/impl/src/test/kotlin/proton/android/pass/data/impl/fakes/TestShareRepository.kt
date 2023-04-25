@@ -1,11 +1,11 @@
 package proton.android.pass.data.impl.fakes
 
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -18,15 +18,9 @@ class TestShareRepository : ShareRepository {
     private var createVaultResult: LoadingResult<Share> = LoadingResult.Loading
     private var refreshSharesResult: RefreshSharesResult =
         RefreshSharesResult(emptySet(), emptySet())
-    private var observeSharesFlow = MutableSharedFlow<LoadingResult<List<Share>>>(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
-    )
-    private var deleteVaultFlow = MutableSharedFlow<LoadingResult<Unit>>(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
-    )
-    private var getByIdResultFlow = MutableSharedFlow<LoadingResult<Share?>>(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
-    )
+    private var observeSharesFlow = testFlow<LoadingResult<List<Share>>>()
+    private var deleteVaultFlow = testFlow<LoadingResult<Unit>>()
+    private var getByIdResultFlow = testFlow<Result<Share?>>()
 
     private var updateVaultResult: Result<Share> =
         Result.failure(IllegalStateException("UpdateVaultResult not set"))
@@ -46,7 +40,7 @@ class TestShareRepository : ShareRepository {
         deleteVaultFlow.tryEmit(result)
     }
 
-    fun setGetByIdResult(result: LoadingResult<Share?>) {
+    fun setGetByIdResult(result: Result<Share?>) {
         getByIdResultFlow.tryEmit(result)
     }
 
@@ -74,8 +68,9 @@ class TestShareRepository : ShareRepository {
     override fun observeAllShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =
         observeSharesFlow
 
-    override suspend fun getById(userId: UserId, shareId: ShareId): LoadingResult<Share?> =
-        getByIdResultFlow.first()
+    override fun getById(userId: UserId, shareId: ShareId): Flow<Share?> = getByIdResultFlow.map {
+        it.getOrThrow()
+    }
 
     override suspend fun updateVault(userId: UserId, shareId: ShareId, vault: NewVault): Share =
         updateVaultResult.getOrThrow()

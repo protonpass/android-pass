@@ -86,9 +86,8 @@ class UpdateNoteViewModel @Inject constructor(
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null) {
-            getShare(userId, shareId)
-                .onSuccess { share ->
-                    requireNotNull(share)
+            runCatching { getShare(userId, shareId) }
+                .map { share ->
                     val itemContents = noteItem.toItemContents()
                     itemRepository.updateItem(userId, share, _item!!, itemContents)
                         .onSuccess { item ->
@@ -108,7 +107,7 @@ class UpdateNoteViewModel @Inject constructor(
                             snackbarDispatcher(ItemUpdateError)
                         }
                 }
-                .onError {
+                .onFailure {
                     PassLogger.e(TAG, it, "Get share error")
                     snackbarDispatcher(ItemUpdateError)
                 }

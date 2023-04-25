@@ -85,4 +85,8 @@
     <string name="confirm_close_dialog_message">You have unsaved changes, are you sure you want to discard them?</string>
     <string name="confirm_close_dialog_close_button">Discard</string>
 
+    <!-- Upgrade -->
+    <string name="upgrade">Upgrade</string>
+    <string name="upgrade_icon_content_description">Upgrade icon</string>
+
 </resources>

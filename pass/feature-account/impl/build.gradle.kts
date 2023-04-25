@@ -66,6 +66,7 @@ dependencies {
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.data.api)
     implementation(projects.pass.navigation.api)
+    implementation(projects.pass.preferences.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.log.api)
 
@@ -79,6 +80,7 @@ dependencies {
     testImplementation(projects.pass.commonTest)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
+    testImplementation(projects.pass.preferences.fakes)
     testImplementation(libs.truth)
     testImplementation(libs.turbine)
     testImplementation(libs.coroutines.test)

@@ -11,9 +11,11 @@ sealed interface PlanSection {
     object Hide : PlanSection {
         override fun isLoading(): Boolean = false
     }
+
     object Loading : PlanSection {
         override fun isLoading(): Boolean = true
     }
+
     data class Data(val planName: String) : PlanSection {
         override fun name(): String = planName
         override fun isLoading(): Boolean = false
@@ -24,13 +26,15 @@ sealed interface PlanSection {
 data class AccountUiState(
     val email: String?,
     val plan: PlanSection,
-    val isLoadingState: IsLoadingState
+    val isLoadingState: IsLoadingState,
+    val showUpgradeButton: Boolean
 ) {
     companion object {
         val Initial = AccountUiState(
             email = null,
             plan = PlanSection.Hide,
-            isLoadingState = IsLoadingState.Loading
+            isLoadingState = IsLoadingState.Loading,
+            showUpgradeButton = false
         )
     }
 }

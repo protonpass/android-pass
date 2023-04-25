@@ -1,6 +1,7 @@
 package proton.android.pass.composecomponents.impl.buttons
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -22,7 +23,7 @@ fun CircleButton(
     contentPadding: PaddingValues = PaddingValues(),
     elevation: ButtonElevation = ButtonDefaults.elevation(),
     onClick: () -> Unit,
-    content: @Composable () -> Unit
+    content: @Composable RowScope.() -> Unit
 ) {
     Button(
         modifier = modifier,

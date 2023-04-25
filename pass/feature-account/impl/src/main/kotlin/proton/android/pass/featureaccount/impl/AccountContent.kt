@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 
 @Composable
@@ -25,6 +26,7 @@ fun AccountContent(
     onManageSubscriptionClick: () -> Unit,
     onSignOutClick: () -> Unit,
     onDeleteAccountClick: () -> Unit,
+    onUpgradeClick: () -> Unit,
     onUpClick: () -> Unit
 ) {
     Scaffold(
@@ -32,6 +34,14 @@ fun AccountContent(
         topBar = {
             BackArrowTopAppBar(
                 title = stringResource(R.string.account_title),
+                actions = {
+                    if (state.showUpgradeButton) {
+                        UpgradeButton(
+                            modifier = Modifier.padding(12.dp, 0.dp),
+                            onUpgradeClick = onUpgradeClick
+                        )
+                    }
+                },
                 onUpClick = onUpClick
             )
         }

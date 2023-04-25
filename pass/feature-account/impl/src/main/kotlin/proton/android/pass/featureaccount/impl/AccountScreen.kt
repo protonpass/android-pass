@@ -29,6 +29,9 @@ fun AccountScreen(
         },
         onDeleteAccountClick = {
             openWebsite(context, "https://account.proton.me/u/0/pass/account-password")
+        },
+        onUpgradeClick = {
+            // no-op
         }
     )
 }

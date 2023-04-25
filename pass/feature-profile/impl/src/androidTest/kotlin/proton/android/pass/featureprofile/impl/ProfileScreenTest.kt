@@ -113,6 +113,32 @@ class ProfileScreenTest {
             .performClick()
 
         intended(hasAction(Intent.ACTION_VIEW))
-        intended(hasData("https://play.google.com/store/apps/details?id=proton.android.pass"))
+        intended(hasData(PASS_STORE))
+    }
+
+
+    @Test
+    fun onImportExportClickCalled() {
+        composeTestRule.setContent {
+            PassTheme {
+                ProfileScreen(
+                    onAccountClick = {},
+                    onListClick = {},
+                    onCreateItemClick = {},
+                    onSettingsClick = {},
+                    onFeedbackClick = {}
+                )
+            }
+        }
+        composeTestRule.onNodeWithText("0.0.0")
+            .performScrollTo()
+
+        composeTestRule.onNodeWithText(
+            composeTestRule.activity.resources.getString(R.string.profile_option_import_export)
+        )
+            .performClick()
+
+        intended(hasAction(Intent.ACTION_VIEW))
+        intended(hasData(PASS_IMPORT))
     }
 }

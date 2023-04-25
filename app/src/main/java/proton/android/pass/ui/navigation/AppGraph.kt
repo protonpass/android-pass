@@ -11,6 +11,7 @@ import proton.android.pass.featureaccount.impl.SignOutDialog
 import proton.android.pass.featureaccount.impl.accountGraph
 import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.authGraph
+import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.featurehome.impl.HomeScreenNavigation
 import proton.android.pass.featurehome.impl.homeGraph
@@ -294,6 +295,7 @@ fun NavGraphBuilder.appGraph(
         onOnBoardingFinished = { appNavigator.onBackClick() },
         onNavigateBack = finishActivity
     )
+    featureFlagsGraph()
 }
 
 private fun createHomeScreenNavigation(appNavigator: AppNavigator): HomeScreenNavigation =

@@ -50,7 +50,7 @@ interface ItemRepository {
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All
     ): Flow<List<Item>>
 
-    suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): LoadingResult<Item>
+    suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Item
     suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId): LoadingResult<Unit>
     suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId): LoadingResult<Unit>
     suspend fun deleteItem(userId: UserId, shareId: ShareId, itemId: ItemId): LoadingResult<Unit>

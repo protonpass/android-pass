@@ -245,12 +245,12 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): LoadingResult<Item> =
+    ): Item =
         withContext(Dispatchers.IO) {
             val item = localItemDataSource.getById(shareId, itemId)
             requireNotNull(item)
             encryptionContextProvider.withEncryptionContext {
-                LoadingResult.Success(entityToDomain(this@withEncryptionContext, item))
+                entityToDomain(this@withEncryptionContext, item)
             }
         }
 

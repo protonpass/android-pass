@@ -92,7 +92,7 @@ class UpdateLoginViewModel @Inject constructor(
             val userId = accountManager.getPrimaryUserId()
                 .first { userId -> userId != null }
             if (userId != null && navShareId is Some && itemId is Some) {
-                itemRepository.getById(userId, navShareId.value, itemId.value)
+                runCatching { itemRepository.getById(userId, navShareId.value, itemId.value) }
                     .onSuccess { item ->
                         val itemContents = item.itemType as ItemType.Login
                         _item = item
@@ -118,7 +118,7 @@ class UpdateLoginViewModel @Inject constructor(
                             }
                         }
                     }
-                    .onError {
+                    .onFailure {
                         PassLogger.i(TAG, it, "Get by id error")
                         snackbarDispatcher(InitError)
                     }

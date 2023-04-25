@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.Clock
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -40,6 +41,7 @@ class ItemDetailViewModel @Inject constructor(
         ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
 
     val uiState: StateFlow<ItemDetailScreenUiState> = getItemById(shareId, itemId)
+        .asLoadingResult()
         .distinctUntilChanged()
         .map { result ->
             when (result) {

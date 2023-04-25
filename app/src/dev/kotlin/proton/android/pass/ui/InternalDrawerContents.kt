@@ -17,6 +17,7 @@ import proton.android.pass.log.api.PassLogger
 @Composable
 fun InternalDrawerContents(
     modifier: Modifier = Modifier,
+    onOpenFeatureFlag: () -> Unit,
     viewModel: InternalDrawerViewModel = hiltViewModel()
 ) {
     Column(
@@ -52,7 +53,12 @@ fun InternalDrawerContents(
         ) {
             Text(text = "Clear icon cache")
         }
-
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = onOpenFeatureFlag,
+        ) {
+            Text(text = "Feature flags preferences")
+        }
     }
 }
 

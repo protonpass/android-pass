@@ -3,9 +3,6 @@ package proton.android.pass.data.impl.remote
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
-import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.map
-import proton.android.pass.common.api.toLoadingResult
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.requests.CreateVaultRequest
@@ -46,11 +43,11 @@ class RemoteShareDataSourceImpl @Inject constructor(
             .valueOrThrow
 
 
-    override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
+    override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
         api.get<PasswordManagerApi>(userId)
             .invoke { deleteVault(shareId.id) }
-            .toLoadingResult()
-            .map { }
+            .valueOrThrow
+    }
 
     override suspend fun getShares(userId: UserId): List<ShareResponse> =
         api.get<PasswordManagerApi>(userId)

@@ -4,21 +4,18 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.map
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.MigrateVault
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemState
@@ -39,54 +36,43 @@ class MigrateVaultImpl @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider
 ) : MigrateVault {
 
-    override suspend fun invoke(origin: ShareId, dest: ShareId): LoadingResult<Unit> =
-        accountManager.getPrimaryUserId()
-            .filterNotNull()
-            .flatMapLatest { userId ->
-                onUserIdReceived(userId, origin, dest)
-            }
-            .first()
-
-    private fun onUserIdReceived(
-        userId: UserId,
-        origin: ShareId,
-        dest: ShareId
-    ) = itemRepository.observeItems(
-        userId = userId,
-        shareSelection = ShareSelection.Share(origin),
-        itemState = ItemState.Active,
-        itemTypeFilter = ItemTypeFilter.All
-    )
-        .map { result ->
-            onObserveItemsResultReceived(result, userId, origin, dest)
-        }
-
-    private suspend fun onObserveItemsResultReceived(
-        items: List<Item>,
-        userId: UserId,
-        origin: ShareId,
-        dest: ShareId
-    ): LoadingResult<Unit> {
-        val share = shareRepository.getById(userId, dest)
-        return onDestinationVaultReceived(items, userId, share)
-            .map {
-                return shareRepository.deleteVault(userId, origin)
-            }
+    override suspend fun invoke(origin: ShareId, dest: ShareId) {
+        val userId = requireNotNull(accountManager.getPrimaryUserId().firstOrNull())
+        onUserIdReceived(userId, origin, dest)
     }
 
-    private suspend fun onDestinationVaultReceived(
+    private suspend fun onUserIdReceived(
+        userId: UserId,
+        origin: ShareId,
+        dest: ShareId
+    ) {
+        val items = itemRepository.observeItems(
+            userId = userId,
+            shareSelection = ShareSelection.Share(origin),
+            itemState = ItemState.Active,
+            itemTypeFilter = ItemTypeFilter.All
+        ).first()
+
+        val destShare = shareRepository.getById(userId, dest)
+        performRecreate(items, userId, destShare)
+        shareRepository.deleteVault(userId, origin)
+    }
+
+    private suspend fun performRecreate(
         items: List<Item>,
         userId: UserId,
         destShare: Share
-    ) = encryptionContextProvider.withEncryptionContextSuspendable {
-        withContext(Dispatchers.IO) {
-            recreateItems(
-                items = items,
-                coroutineScope = this,
-                encryptionContext = this@withEncryptionContextSuspendable,
-                userId = userId,
-                destShare = destShare
-            )
+    ) {
+        encryptionContextProvider.withEncryptionContextSuspendable {
+            withContext(Dispatchers.IO) {
+                recreateItems(
+                    items = items,
+                    coroutineScope = this,
+                    encryptionContext = this@withEncryptionContextSuspendable,
+                    userId = userId,
+                    destShare = destShare
+                )
+            }
         }
     }
 
@@ -96,7 +82,7 @@ class MigrateVaultImpl @Inject constructor(
         encryptionContext: EncryptionContext,
         userId: UserId,
         destShare: Share
-    ): LoadingResult<Unit> {
+    ) {
         val results = items
             // Filter Aliases due to not being implemented in BE currently
             .filter { it.itemType !is ItemType.Alias }
@@ -148,9 +134,12 @@ class MigrateVaultImpl @Inject constructor(
             .awaitAll()
 
         val firstFailure = results.firstOrNull { it.isFailure } ?: Result.success(Unit)
-        return firstFailure.fold(
-            onSuccess = { LoadingResult.Success(Unit) },
-            onFailure = { LoadingResult.Error(it) }
-        )
+        firstFailure.onFailure {
+            PassLogger.d(TAG, it, "Failed to migrate vault")
+            throw it
+        }
+    }
+    companion object {
+        private const val TAG = "MigrateVaultImpl"
     }
 }

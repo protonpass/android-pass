@@ -17,7 +17,7 @@ interface ShareRepository {
     suspend fun deleteVault(
         userId: UserId,
         shareId: ShareId
-    ): LoadingResult<Unit>
+    )
 
     suspend fun refreshShares(userId: UserId): RefreshSharesResult
 

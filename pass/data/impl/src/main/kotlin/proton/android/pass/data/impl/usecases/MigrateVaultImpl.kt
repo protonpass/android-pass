@@ -136,18 +136,21 @@ class MigrateVaultImpl @Inject constructor(
 
                         ItemType.Password -> throw NotImplementedError()
                     }
-                    itemRepository.createItem(
-                        userId = userId,
-                        share = destShare,
-                        contents = itemContents
-                    )
+                    runCatching {
+                        itemRepository.createItem(
+                            userId = userId,
+                            share = destShare,
+                            contents = itemContents
+                        )
+                    }
                 }
             }
             .awaitAll()
-        return if (results.any { it is LoadingResult.Error }) {
-            results.filterIsInstance<LoadingResult.Error>().first()
-        } else {
-            LoadingResult.Success(Unit)
-        }
+
+        val firstFailure = results.firstOrNull { it.isFailure } ?: Result.success(Unit)
+        return firstFailure.fold(
+            onSuccess = { LoadingResult.Success(Unit) },
+            onFailure = { LoadingResult.Error(it) }
+        )
     }
 }

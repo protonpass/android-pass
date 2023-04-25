@@ -28,7 +28,7 @@ interface ItemRepository {
         userId: UserId,
         share: Share,
         contents: ItemContents
-    ): LoadingResult<Item>
+    ): Item
     suspend fun createAlias(userId: UserId, share: Share, newAlias: NewAlias): Item
     suspend fun createItemAndAlias(
         userId: UserId,

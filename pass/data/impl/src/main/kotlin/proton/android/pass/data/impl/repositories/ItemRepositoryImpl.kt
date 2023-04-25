@@ -95,7 +95,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         contents: ItemContents
-    ): LoadingResult<Item> = withContext(Dispatchers.IO) {
+    ): Item = withContext(Dispatchers.IO) {
         withUserAddress(userId) { userAddress ->
             val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
 
@@ -103,23 +103,21 @@ class ItemRepositoryImpl @Inject constructor(
                 createItem.create(shareKey, contents)
             } catch (e: RuntimeException) {
                 PassLogger.w(TAG, e, "Error creating item")
-                return@withUserAddress LoadingResult.Error(e)
+                throw e
             }
 
-            remoteItemDataSource.createItem(userId, share.id, body.request.toRequest())
-                .map { itemResponse ->
-                    val entity = itemResponseToEntity(
-                        userAddress,
-                        itemResponse,
-                        share,
-                        listOf(shareKey)
-                    )
-                    localItemDataSource.upsertItem(entity)
+            val itemResponse = remoteItemDataSource.createItem(userId, share.id, body.request.toRequest())
+            val entity = itemResponseToEntity(
+                userAddress,
+                itemResponse,
+                share,
+                listOf(shareKey)
+            )
+            localItemDataSource.upsertItem(entity)
 
-                    encryptionContextProvider.withEncryptionContext {
-                        entityToDomain(this@withEncryptionContext, entity)
-                    }
-                }
+            encryptionContextProvider.withEncryptionContext {
+                entityToDomain(this@withEncryptionContext, entity)
+            }
         }
     }
 

@@ -1,7 +1,6 @@
 package proton.android.pass.data.fakes.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
@@ -10,7 +9,7 @@ import javax.inject.Inject
 
 class TestCreateItem @Inject constructor() : CreateItem {
 
-    private var item: LoadingResult<Item> = LoadingResult.Loading
+    private var item: Result<Item> = Result.failure(IllegalStateException("Result not set"))
     private var invoked = false
 
     fun hasBeenInvoked() = invoked
@@ -19,12 +18,12 @@ class TestCreateItem @Inject constructor() : CreateItem {
         userId: UserId,
         shareId: ShareId,
         itemContents: ItemContents
-    ): LoadingResult<Item> {
+    ): Item {
         invoked = true
-        return item
+        return item.getOrThrow()
     }
 
-    fun sendItem(item: LoadingResult<Item>) {
+    fun sendItem(item: Result<Item>) {
         this.item = item
     }
 }

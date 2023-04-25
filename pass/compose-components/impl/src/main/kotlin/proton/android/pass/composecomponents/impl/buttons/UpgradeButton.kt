@@ -27,20 +27,20 @@ fun UpgradeButton(
     CircleButton(
         modifier = modifier,
         contentPadding = PaddingValues(16.dp, 10.dp),
-        color = PassTheme.colors.interactionNormMinor2,
+        color = PassTheme.colors.interactionNormMinor1,
         onClick = onUpgradeClick
     ) {
         Icon(
             modifier = Modifier.size(16.dp),
             painter = painterResource(R.drawable.ic_brand_pass),
             contentDescription = stringResource(R.string.upgrade_icon_content_description),
-            tint = PassTheme.colors.interactionNorm
+            tint = PassTheme.colors.interactionNormMajor2
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = stringResource(R.string.upgrade),
             style = PassTypography.body3Regular,
-            color = PassTheme.colors.interactionNorm
+            color = PassTheme.colors.interactionNormMajor2
         )
     }
 }

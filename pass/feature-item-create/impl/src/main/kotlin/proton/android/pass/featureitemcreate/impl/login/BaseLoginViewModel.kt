@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -100,18 +99,7 @@ abstract class BaseLoginViewModel(
     private val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val canUpdateUsernameState: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
-    private val observeAllVaultsFlow = observeVaults()
-        .map { shares ->
-            when (shares) {
-                LoadingResult.Loading -> emptyList()
-                is LoadingResult.Error -> {
-                    PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
-                    emptyList()
-                }
-                is LoadingResult.Success -> shares.data
-            }
-        }
-        .distinctUntilChanged()
+    private val observeAllVaultsFlow = observeVaults().distinctUntilChanged()
 
     private val sharesWrapperState = combine(
         navShareIdState,

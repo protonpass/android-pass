@@ -55,7 +55,7 @@ class UpdateNoteViewModel @Inject constructor(
             val userId = accountManager.getPrimaryUserId()
                 .first { userId -> userId != null }
             if (userId != null && navShareId is Some && itemId is Some) {
-                itemRepository.getById(userId, navShareId.value, itemId.value)
+                runCatching { itemRepository.getById(userId, navShareId.value, itemId.value) }
                     .onSuccess { item: Item ->
                         _item = item
                         noteItemState.update {
@@ -67,7 +67,7 @@ class UpdateNoteViewModel @Inject constructor(
                             }
                         }
                     }
-                    .onError {
+                    .onFailure {
                         PassLogger.i(TAG, it, "Get by id error")
                         snackbarDispatcher(InitError)
                     }

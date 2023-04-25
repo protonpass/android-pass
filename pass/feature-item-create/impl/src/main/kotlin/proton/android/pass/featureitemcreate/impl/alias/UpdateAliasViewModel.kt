@@ -115,15 +115,14 @@ class UpdateAliasViewModel @Inject constructor(
     }
 
     private suspend fun fetchInitialData(userId: UserId, shareId: ShareId, itemId: ItemId) {
-        val itemResult = itemRepository.getById(userId, shareId, itemId)
-        itemResult
-            .onSuccess { item ->
-                _item = item
-                aliasRepository.getAliasDetails(userId, shareId, itemId)
-                    .asResultWithoutLoading()
-                    .collect { onAliasDetails(it, item) }
-            }
-            .onError { showError("Error getting item by id", InitError, it) }
+        runCatching {
+            itemRepository.getById(userId, shareId, itemId)
+        }.onSuccess { item ->
+            _item = item
+            aliasRepository.getAliasDetails(userId, shareId, itemId)
+                .asResultWithoutLoading()
+                .collect { onAliasDetails(it, item) }
+        }.onFailure { showError("Error getting item by id", InitError, it) }
     }
 
     private suspend fun onAliasDetails(result: LoadingResult<AliasDetails>, item: Item) {

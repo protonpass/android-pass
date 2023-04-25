@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -54,27 +52,27 @@ class CreateNoteViewModel @Inject constructor(
                 .first { userId -> userId != null }
             if (userId != null) {
                 runCatching { getShare(userId, shareId) }
-                    .map { share ->
+                    .onFailure { PassLogger.e(TAG, it, "Error getting share") }
+                    .mapCatching { share ->
                         val itemContents = noteItem.toItemContents()
                         itemRepository.createItem(userId, share, itemContents)
-                            .onSuccess { item ->
-                                isItemSavedState.update {
-                                    encryptionContextProvider.withEncryptionContext {
-                                        ItemSavedState.Success(
-                                            item.id,
-                                            item.toUiModel(this@withEncryptionContext)
-                                        )
-                                    }
-                                }
-                                snackbarDispatcher(NoteCreated)
-                                telemetryManager.sendEvent(ItemCreate(EventItemType.Note))
-                            }
-                            .onError {
-                                PassLogger.e(TAG, it, "Create item error")
-                                snackbarDispatcher(ItemCreationError)
-                            }
                     }
-                    .onFailure { PassLogger.e(TAG, it, "Error getting share") }
+                    .onFailure {
+                        PassLogger.e(TAG, it, "Create item error")
+                        snackbarDispatcher(ItemCreationError)
+                    }
+                    .map { item ->
+                        isItemSavedState.update {
+                            encryptionContextProvider.withEncryptionContext {
+                                ItemSavedState.Success(
+                                    item.id,
+                                    item.toUiModel(this@withEncryptionContext)
+                                )
+                            }
+                        }
+                        snackbarDispatcher(NoteCreated)
+                        telemetryManager.sendEvent(ItemCreate(EventItemType.Note))
+                    }
             } else {
                 PassLogger.i(TAG, "Empty User Id")
                 snackbarDispatcher(ItemCreationError)

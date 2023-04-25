@@ -12,8 +12,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -192,26 +190,26 @@ class CreateLoginViewModel @Inject constructor(
         userId: UserId,
         shareId: ShareId
     ) {
-        createItem(
-            userId = userId,
-            shareId = shareId,
-            itemContents = loginItemState.value.toItemContents()
-        )
-            .onSuccess { item ->
-                isItemSavedState.update {
-                    encryptionContextProvider.withEncryptionContext {
-                        ItemSavedState.Success(
-                            item.id,
-                            item.toUiModel(this@withEncryptionContext)
-                        )
-                    }
+        runCatching {
+            createItem(
+                userId = userId,
+                shareId = shareId,
+                itemContents = loginItemState.value.toItemContents()
+            )
+        }.onSuccess { item ->
+            isItemSavedState.update {
+                encryptionContextProvider.withEncryptionContext {
+                    ItemSavedState.Success(
+                        item.id,
+                        item.toUiModel(this@withEncryptionContext)
+                    )
                 }
-                telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
             }
-            .onError {
-                PassLogger.e(TAG, it, "Could not create item")
-                snackbarDispatcher(ItemCreationError)
-            }
+            telemetryManager.sendEvent(ItemCreate(EventItemType.Login))
+        }.onFailure {
+            PassLogger.e(TAG, it, "Could not create item")
+            snackbarDispatcher(ItemCreationError)
+        }
     }
 
     companion object {

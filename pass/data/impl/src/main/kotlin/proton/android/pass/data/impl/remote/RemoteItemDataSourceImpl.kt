@@ -33,11 +33,11 @@ class RemoteItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         body: CreateItemRequest
-    ): LoadingResult<ItemRevision> =
+    ): ItemRevision =
         api.get<PasswordManagerApi>(userId)
             .invoke { createItem(shareId.id, body) }
-            .toLoadingResult()
-            .map { it.item }
+            .valueOrThrow
+            .item
 
     override suspend fun createAlias(
         userId: UserId,

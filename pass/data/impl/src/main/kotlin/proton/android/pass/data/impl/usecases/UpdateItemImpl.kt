@@ -1,7 +1,6 @@
 package proton.android.pass.data.impl.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -20,7 +19,7 @@ class UpdateItemImpl @Inject constructor(
         shareId: ShareId,
         item: Item,
         contents: ItemContents
-    ): LoadingResult<Item> {
+    ): Item {
         val share = shareRepository.getById(userId, shareId)
         return itemRepository.updateItem(userId, share, item, contents)
     }

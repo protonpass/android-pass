@@ -60,7 +60,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         shareId: ShareId,
         itemId: ItemId,
         body: UpdateItemRequest
-    ): LoadingResult<ItemRevision> {
+    ): ItemRevision {
         throw IllegalStateException("Not yet implemented")
     }
 

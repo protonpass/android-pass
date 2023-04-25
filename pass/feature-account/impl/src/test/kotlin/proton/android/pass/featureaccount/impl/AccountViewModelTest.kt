@@ -12,6 +12,8 @@ import proton.android.pass.data.api.usecases.UserPlan
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
 
@@ -24,14 +26,17 @@ class AccountViewModelTest {
     private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var ffPreferencesRepository: FeatureFlagsPreferencesRepository
 
     @Before
     fun setup() {
         observeCurrentUser = TestObserveCurrentUser()
         getUserPlan = TestGetUserPlan()
         snackbarDispatcher = TestSnackbarDispatcher()
+        ffPreferencesRepository = TestFeatureFlagsPreferenceRepository()
 
         instance = AccountViewModel(
+            ffPreferencesRepository = ffPreferencesRepository,
             observeCurrentUser = observeCurrentUser,
             getUserPlan = getUserPlan,
             snackbarDispatcher = snackbarDispatcher

@@ -7,6 +7,7 @@
     <string name="profile_manage_profile">Manage my profile</string>
     <string name="profile_help_center">Help center</string>
     <string name="profile_option_feedback">Feedback</string>
+    <string name="profile_option_import_export">Import/export</string>
     <string name="profile_option_rating">Rate app</string>
     <string name="profile_option_autofill">Autofill</string>
     <string name="profile_option_autofill_subtitle">Automatically fill in your usernames and passwords.</string>

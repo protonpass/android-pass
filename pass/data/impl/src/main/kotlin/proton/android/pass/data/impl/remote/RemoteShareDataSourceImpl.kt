@@ -20,18 +20,18 @@ class RemoteShareDataSourceImpl @Inject constructor(
     override suspend fun createVault(
         userId: UserId,
         body: CreateVaultRequest
-    ): LoadingResult<ShareResponse> {
+    ): ShareResponse {
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { createVault(body) }
         when (res) {
-            is ApiResult.Success -> return LoadingResult.Success(res.value.share)
+            is ApiResult.Success -> return res.value.share
             is ApiResult.Error -> {
                 if (res is ApiResult.Error.Http) {
                     if (res.proton?.code == CODE_CANNOT_CREATE_MORE_VAULTS) {
-                        return LoadingResult.Error(CannotCreateMoreVaultsError())
+                        throw CannotCreateMoreVaultsError()
                     }
                 }
-                return LoadingResult.Error(res.cause ?: Exception("Create vault failed"))
+                throw res.cause ?: Exception("Create vault failed")
             }
         }
     }

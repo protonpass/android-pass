@@ -10,8 +10,8 @@ import proton.pass.domain.ShareId
 
 class TestRemoteShareDataSource : RemoteShareDataSource {
 
-    private var createVaultResponse: LoadingResult<ShareResponse> =
-        LoadingResult.Error(IllegalStateException("createVaultResponse not set"))
+    private var createVaultResponse: Result<ShareResponse> =
+        Result.failure(IllegalStateException("createVaultResponse not set"))
     private var updateVaultResponse: Result<ShareResponse> =
         Result.failure(IllegalStateException("updateVaultResponse not set"))
     private var deleteVaultResponse: LoadingResult<Unit> =
@@ -23,7 +23,7 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
     private var markAsPrimaryResponse: Result<Unit> =
         Result.failure(IllegalStateException("markAsPrimaryResponse not set"))
 
-    fun setCreateVaultResponse(value: LoadingResult<ShareResponse>) {
+    fun setCreateVaultResponse(value: Result<ShareResponse>) {
         createVaultResponse = value
     }
 
@@ -50,7 +50,7 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
     override suspend fun createVault(
         userId: UserId,
         body: CreateVaultRequest
-    ): LoadingResult<ShareResponse> = createVaultResponse
+    ): ShareResponse = createVaultResponse.getOrThrow()
 
     override suspend fun updateVault(
         userId: UserId,

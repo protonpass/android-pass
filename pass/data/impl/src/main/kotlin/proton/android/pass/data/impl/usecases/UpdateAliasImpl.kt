@@ -2,7 +2,6 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.data.api.repositories.AliasRepository
@@ -11,6 +10,7 @@ import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.AliasMailbox
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
@@ -26,20 +26,27 @@ class UpdateAliasImpl @Inject constructor(
         userId: UserId,
         item: Item,
         content: UpdateAliasContent
-    ): LoadingResult<Item> {
+    ): Item {
         if (content.mailboxes is Some) {
             val mailboxes = (content.mailboxes as Some<List<AliasMailbox>>).value
-            val res = aliasRepository.updateAliasMailboxes(
-                userId,
-                item.shareId,
-                item.id,
-                mailboxes
+            runCatching {
+                aliasRepository.updateAliasMailboxes(
+                    userId,
+                    item.shareId,
+                    item.id,
+                    mailboxes
+                )
+                    .asResultWithoutLoading()
+                    .first()
+            }.fold(
+                onSuccess = {
+                    PassLogger.d(TAG, "Alias mailboxes updated")
+                },
+                onFailure = {
+                    PassLogger.d(TAG, it, "Error updating alias mailboxes")
+                    throw it
+                }
             )
-                .asResultWithoutLoading()
-                .first()
-            if (res is LoadingResult.Error) {
-                return LoadingResult.Error(res.exception)
-            }
         }
 
         if (content.itemData is Some) {
@@ -47,14 +54,14 @@ class UpdateAliasImpl @Inject constructor(
             return updateItemContent(userId, item, itemData)
         }
 
-        return LoadingResult.Success(item)
+        return item
     }
 
     private suspend fun updateItemContent(
         userId: UserId,
         item: Item,
         content: UpdateAliasItemContent
-    ): LoadingResult<Item> {
+    ): Item {
         val share = getShareById(userId, item.shareId)
         val itemContents = ItemContents.Alias(
             title = content.title,
@@ -63,5 +70,8 @@ class UpdateAliasImpl @Inject constructor(
         return itemRepository.updateItem(userId, share, item, itemContents)
     }
 
+    companion object {
+        private const val TAG = "UpdateAliasImpl"
+    }
 }
 

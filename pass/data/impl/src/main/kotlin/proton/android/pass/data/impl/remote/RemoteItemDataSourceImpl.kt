@@ -84,11 +84,11 @@ class RemoteItemDataSourceImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         body: UpdateItemRequest
-    ): LoadingResult<ItemRevision> =
+    ): ItemRevision =
         api.get<PasswordManagerApi>(userId)
             .invoke { updateItem(shareId.id, itemId.id, body) }
-            .toLoadingResult()
-            .map { it.item }
+            .valueOrThrow
+            .item
 
     override suspend fun getItems(
         userId: UserId,

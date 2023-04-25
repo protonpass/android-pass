@@ -2,7 +2,6 @@ package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.LoadingResult
 import proton.pass.domain.AliasMailbox
 import proton.pass.domain.Item
 
@@ -21,5 +20,5 @@ interface UpdateAlias {
         userId: UserId,
         item: Item,
         content: UpdateAliasContent
-    ): LoadingResult<Item>
+    ): Item
 }

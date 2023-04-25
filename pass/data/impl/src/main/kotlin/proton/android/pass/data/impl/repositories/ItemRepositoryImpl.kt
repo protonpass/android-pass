@@ -203,7 +203,7 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         item: Item,
         contents: ItemContents
-    ): LoadingResult<Item> = withContext(Dispatchers.IO) {
+    ): Item = withContext(Dispatchers.IO) {
         performUpdate(
             userId,
             share,
@@ -438,7 +438,7 @@ class ItemRepositoryImpl @Inject constructor(
         val userId = accountManager.getPrimaryUserId().first()
             ?: throw CryptoException("UserId cannot be null")
         val share = shareRepository.getById(userId, shareId)
-        return@withContext performUpdate(userId, share, item, updatedContents)
+        return@withContext LoadingResult.Success(performUpdate(userId, share, item, updatedContents))
     }
 
     override suspend fun refreshItems(userId: UserId, share: Share): LoadingResult<List<Item>> =
@@ -606,7 +606,7 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         item: Item,
         itemContents: ItemV1.Item
-    ): LoadingResult<Item> {
+    ): Item {
         return withUserAddress(userId) { userAddress ->
             val (shareKey, itemKey) = itemKeyRepository
                 .getLatestItemKey(userId, userAddress.addressId, share.id, item.id)
@@ -616,19 +616,22 @@ class ItemRepositoryImpl @Inject constructor(
                 itemContents,
                 item.revision
             )
-            remoteItemDataSource.updateItem(userId, share.id, item.id, body.toRequest())
-                .map { itemResponse ->
-                    val entity = itemResponseToEntity(
-                        userAddress,
-                        itemResponse,
-                        share,
-                        listOf(shareKey)
-                    )
-                    localItemDataSource.upsertItem(entity)
-                    encryptionContextProvider.withEncryptionContext {
-                        entityToDomain(this@withEncryptionContext, entity)
-                    }
-                }
+            val itemResponse = remoteItemDataSource.updateItem(
+                userId = userId,
+                shareId = share.id,
+                itemId = item.id,
+                body = body.toRequest()
+            )
+            val entity = itemResponseToEntity(
+                userAddress,
+                itemResponse,
+                share,
+                listOf(shareKey)
+            )
+            localItemDataSource.upsertItem(entity)
+            encryptionContextProvider.withEncryptionContext {
+                entityToDomain(this@withEncryptionContext, entity)
+            }
         }
     }
 

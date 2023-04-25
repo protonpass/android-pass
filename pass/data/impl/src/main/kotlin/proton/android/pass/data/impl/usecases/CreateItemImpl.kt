@@ -1,7 +1,6 @@
 package proton.android.pass.data.impl.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.CreateItem
@@ -19,7 +18,7 @@ class CreateItemImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemContents: ItemContents
-    ): LoadingResult<Item> {
+    ): Item {
         val share = shareRepository.getById(userId, shareId)
         return itemRepository.createItem(userId, share, itemContents)
     }

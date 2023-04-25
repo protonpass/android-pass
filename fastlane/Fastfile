@@ -62,6 +62,11 @@ platform :android do
     gradle(task: "assembleDebugAndroidTest")
   end
 
+  desc "Assemble DevBlackDebug and AndroidTest apks"
+  lane :assembleDevBlackDebugWithAndroidTests do
+    gradle(tasks: [":app:assembleDevBlackDebug", "assembleDebugAndroidTest"])
+  end
+
   desc "Run Unit tests"
   lane :unitTests do
     gradle(task: "testDebugUnitTest")

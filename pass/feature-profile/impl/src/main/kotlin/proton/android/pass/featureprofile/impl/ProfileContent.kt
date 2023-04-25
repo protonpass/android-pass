@@ -40,6 +40,7 @@ fun ProfileContent(
     onAccountClick: () -> Unit,
     onSettingsClick: () -> Unit,
     onFeedbackClick: () -> Unit,
+    onImportExportClick: () -> Unit,
     onRateAppClick: () -> Unit,
     onCopyAppVersionClick: () -> Unit
 ) {
@@ -97,6 +98,7 @@ fun ProfileContent(
             )
             HelpCenterProfileSection(
                 onFeedbackClick = onFeedbackClick,
+                onImportExportClick = onImportExportClick,
                 onRateAppClick = onRateAppClick
             )
             Box(

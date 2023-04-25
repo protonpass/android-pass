@@ -22,6 +22,7 @@ import proton.android.pass.composecomponents.impl.setting.SettingOption
 fun HelpCenterProfileSection(
     modifier: Modifier = Modifier,
     onFeedbackClick: () -> Unit,
+    onImportExportClick: () -> Unit,
     onRateAppClick: () -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -35,6 +36,11 @@ fun HelpCenterProfileSection(
             SettingOption(
                 text = stringResource(R.string.profile_option_feedback),
                 onClick = onFeedbackClick
+            )
+            Divider(color = PassTheme.colors.inputBorderNorm)
+            SettingOption(
+                text = stringResource(R.string.profile_option_import_export),
+                onClick = onImportExportClick
             )
             Divider(color = PassTheme.colors.inputBorderNorm)
             SettingOption(
@@ -54,6 +60,7 @@ fun HelpCenterSectionPreview(
         Surface {
             HelpCenterProfileSection(
                 onFeedbackClick = {},
+                onImportExportClick = {},
                 onRateAppClick = {}
             )
         }

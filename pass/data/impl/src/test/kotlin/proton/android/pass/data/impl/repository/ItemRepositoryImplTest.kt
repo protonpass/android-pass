@@ -5,7 +5,6 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.usecases.TestCreateItem
@@ -29,7 +28,6 @@ import proton.android.pass.test.domain.TestShareKey
 import proton.pass.domain.ItemContents
 import proton.pass.domain.Share
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
 
 class ItemRepositoryImplTest {
 
@@ -87,12 +85,11 @@ class ItemRepositoryImplTest {
         val protoItem = TestProtoItemGenerator.generate(name, note)
         val item = TestItem.random(content = protoItem.toByteArray())
         remoteItemDataSource.setCreateItemResponse {
-            LoadingResult.Success(TestRemoteItemDataSource.createItemRevision(item))
+            TestRemoteItemDataSource.createItemRevision(item)
         }
         openItem.setOutput(OpenItemOutput(item = item, itemKey = null))
 
-        val res = repository.createItem(userId, share, ItemContents.Note(name, note))
-        assertTrue(res is LoadingResult.Success)
+        repository.createItem(userId, share, ItemContents.Note(name, note))
 
         val remoteMemory = remoteItemDataSource.getCreateItemMemory()
         assertEquals(1, remoteMemory.size)

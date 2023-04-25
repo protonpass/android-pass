@@ -29,10 +29,12 @@ class BiometryManagerImpl @Inject constructor(
                 PassLogger.i(TAG, "Biometry")
                 BiometryStatus.CanAuthenticate
             }
+
             is BiometryResult.FailedToStart -> when (res.cause) {
                 BiometryStartupError.NoneEnrolled -> BiometryStatus.NotEnrolled
                 else -> BiometryStatus.NotAvailable
             }
+
             else -> BiometryStatus.NotAvailable
         }
 
@@ -70,6 +72,7 @@ class BiometryManagerImpl @Inject constructor(
                 trySend(BiometryResult.FailedToStart(BiometryStartupError.Unknown))
                 return@channelFlow
             }
+
             is Some -> ctx.value
         }
 
@@ -79,6 +82,7 @@ class BiometryManagerImpl @Inject constructor(
                 ContextCompat.getMainExecutor(ctx),
                 callback
             )
+
             else -> {
                 val message = "Context is not FragmentActivity"
                 PassLogger.e(TAG, IllegalArgumentException(message), message)
@@ -101,9 +105,9 @@ class BiometryManagerImpl @Inject constructor(
     private fun getPromptInfo(context: Context): PromptInfo =
         PromptInfo.Builder()
             .setTitle(context.getString(R.string.biometric_prompt_title))
+            .setSubtitle(context.getString(R.string.biometric_prompt_subtitle))
             .setAllowedAuthenticators(getAllowedAuthenticators())
             .build()
-
 
     // https://developer.android.com/reference/kotlin/androidx/biometric/BiometricPrompt.PromptInfo.Builder#setallowedauthenticators
     // BIOMETRIC_STRONG | DEVICE_CREDENTIAL is unsupported on API 28-29.

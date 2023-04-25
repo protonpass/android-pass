@@ -21,7 +21,8 @@ object ApplicationModule {
 
     @Provides
     @Singleton
-    fun provideProduct(): Product = Product.Pass
+    fun provideProduct(): Product =
+        Product.Pass
 
     @Provides
     @Singleton

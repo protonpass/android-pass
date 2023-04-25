@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -38,6 +39,7 @@ class SelectPrimaryVaultViewModel @Inject constructor(
         MutableStateFlow(IsLoadingState.NotLoading)
 
     private val vaultsFlow: Flow<ImmutableList<VaultWithItemCount>> = observeVaults()
+        .asLoadingResult()
         .map {
             when (it) {
                 LoadingResult.Loading -> persistentListOf()

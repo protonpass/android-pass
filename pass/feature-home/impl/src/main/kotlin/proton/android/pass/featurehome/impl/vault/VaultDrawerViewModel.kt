@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.logError
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
@@ -53,6 +54,7 @@ class VaultDrawerViewModel @Inject constructor(
     )
 
     private val allShareUiModelFlow: Flow<ShareUiModelsWithTrashedCount> = observeVaults()
+        .asLoadingResult()
         .map { shares ->
             when (shares) {
                 LoadingResult.Loading -> ShareUiModelsWithTrashedCount(emptyList(), 0)

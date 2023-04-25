@@ -152,7 +152,7 @@ android {
     productFlavors {
         create("black") {
             dimension = "env"
-            applicationIdSuffix = ".black"
+//            applicationIdSuffix = ".black"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
             buildConfigField("String", "HOST", "api.proton.black".toBuildConfigValue())
             buildConfigField("String", "HV_HOST", "verify.proton.black".toBuildConfigValue())
@@ -256,6 +256,7 @@ dependencies {
     implementation(libs.core.network)
     implementation(libs.core.observability)
     implementation(libs.core.payment)
+    implementation(libs.core.paymentIap)
     implementation(libs.core.plan)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)

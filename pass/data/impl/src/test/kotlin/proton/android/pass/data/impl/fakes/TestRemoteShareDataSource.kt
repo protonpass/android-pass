@@ -18,8 +18,8 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
         LoadingResult.Error(IllegalStateException("deleteVaultResponse not set"))
     private var getSharesResponse: Result<List<ShareResponse>> =
         Result.failure(IllegalStateException("getSharesResponse not set"))
-    private var getShareByIdResponse: LoadingResult<ShareResponse?> =
-        LoadingResult.Error(IllegalStateException("getShareByIdResponse not set"))
+    private var getShareByIdResponse: Result<ShareResponse> =
+        Result.failure(IllegalStateException("getShareByIdResponse not set"))
     private var markAsPrimaryResponse: Result<Unit> =
         Result.failure(IllegalStateException("markAsPrimaryResponse not set"))
 
@@ -39,7 +39,7 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
         getSharesResponse = value
     }
 
-    fun setGetShareByIdResponse(value: LoadingResult<ShareResponse?>) {
+    fun setGetShareByIdResponse(value: Result<ShareResponse>) {
         getShareByIdResponse = value
     }
 
@@ -67,7 +67,7 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
     override suspend fun fetchShareById(
         userId: UserId,
         shareId: ShareId
-    ): LoadingResult<ShareResponse?> = getShareByIdResponse
+    ): ShareResponse = getShareByIdResponse.getOrThrow()
 
     override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) {
         markAsPrimaryResponse.getOrThrow()

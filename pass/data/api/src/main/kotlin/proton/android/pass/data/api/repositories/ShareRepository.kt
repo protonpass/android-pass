@@ -12,7 +12,7 @@ interface ShareRepository {
     suspend fun createVault(
         userId: SessionUserId,
         vault: NewVault
-    ): LoadingResult<Share>
+    ): Share
 
     suspend fun deleteVault(
         userId: UserId,

@@ -16,7 +16,6 @@ import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetAddressById
 import proton.android.pass.data.api.usecases.GetAddressesForUserId
 import proton.android.pass.data.api.usecases.GetAliasDetails
-import proton.android.pass.data.api.usecases.GetCurrentShare
 import proton.android.pass.data.api.usecases.GetCurrentUserId
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
@@ -68,7 +67,6 @@ import proton.android.pass.data.impl.usecases.DeleteVaultImpl
 import proton.android.pass.data.impl.usecases.GetAddressByIdImpl
 import proton.android.pass.data.impl.usecases.GetAddressesForUserIdImpl
 import proton.android.pass.data.impl.usecases.GetAliasDetailsImpl
-import proton.android.pass.data.impl.usecases.GetCurrentShareImpl
 import proton.android.pass.data.impl.usecases.GetCurrentUserIdImpl
 import proton.android.pass.data.impl.usecases.GetItemByIdImpl
 import proton.android.pass.data.impl.usecases.GetItemByIdWithVaultImpl
@@ -135,9 +133,6 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetAddressesForUserId(impl: GetAddressesForUserIdImpl): GetAddressesForUserId
-
-    @Binds
-    abstract fun bindGetCurrentShare(impl: GetCurrentShareImpl): GetCurrentShare
 
     @Binds
     abstract fun bindObserveAliasOptions(impl: ObserveAliasOptionsImpl): ObserveAliasOptions

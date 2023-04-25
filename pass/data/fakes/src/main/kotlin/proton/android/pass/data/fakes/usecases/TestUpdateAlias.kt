@@ -1,17 +1,17 @@
 package proton.android.pass.data.fakes.usecases
 
+import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
-import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
 import proton.pass.domain.Item
 import javax.inject.Inject
 
 class TestUpdateAlias @Inject constructor() : UpdateAlias {
 
-    private var result: LoadingResult<Item> = LoadingResult.Loading
+    private var result: Result<Item> =
+        Result.failure(IllegalStateException("TestUpdateAlias result not set"))
 
-    fun setResult(result: LoadingResult<Item>) {
+    fun setResult(result: Result<Item>) {
         this.result = result
     }
 
@@ -19,5 +19,5 @@ class TestUpdateAlias @Inject constructor() : UpdateAlias {
         userId: UserId,
         item: Item,
         content: UpdateAliasContent
-    ): LoadingResult<Item> = result
+    ): Item = result.getOrThrow()
 }

@@ -41,7 +41,7 @@ interface ItemRepository {
         share: Share,
         item: Item,
         contents: ItemContents
-    ): LoadingResult<Item>
+    ): Item
 
     fun observeItems(
         userId: UserId,

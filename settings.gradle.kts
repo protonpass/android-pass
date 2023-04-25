@@ -69,6 +69,7 @@ include(":pass:data:impl")
 include(":pass:domain")
 include(":pass:feature-account:impl")
 include(":pass:feature-auth:impl")
+include(":pass:feature-feature-flags:impl")
 include(":pass:feature-home:impl")
 include(":pass:feature-item-create:impl")
 include(":pass:feature-item-detail:impl")
@@ -98,7 +99,6 @@ include(":pass:totp:api")
 include(":pass:totp:fakes")
 include(":pass:totp:impl")
 include(":pass:tracing:impl")
-
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {

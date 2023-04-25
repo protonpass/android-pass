@@ -9,8 +9,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -86,29 +84,29 @@ class UpdateNoteViewModel @Inject constructor(
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null) {
+            val itemContents = noteItem.toItemContents()
             runCatching { getShare(userId, shareId) }
-                .map { share ->
-                    val itemContents = noteItem.toItemContents()
-                    itemRepository.updateItem(userId, share, _item!!, itemContents)
-                        .onSuccess { item ->
-                            isItemSavedState.update {
-                                encryptionContextProvider.withEncryptionContext {
-                                    ItemSavedState.Success(
-                                        item.id,
-                                        item.toUiModel(this@withEncryptionContext)
-                                    )
-                                }
-                            }
-                            snackbarDispatcher(NoteUpdated)
-                            telemetryManager.sendEvent(ItemUpdate(EventItemType.Note))
-                        }
-                        .onError {
-                            PassLogger.e(TAG, it, "Update item error")
-                            snackbarDispatcher(ItemUpdateError)
-                        }
-                }
                 .onFailure {
                     PassLogger.e(TAG, it, "Get share error")
+                    snackbarDispatcher(ItemUpdateError)
+                }
+                .mapCatching { share ->
+                    itemRepository.updateItem(userId, share, _item!!, itemContents)
+                }
+                .onSuccess { item ->
+                    isItemSavedState.update {
+                        encryptionContextProvider.withEncryptionContext {
+                            ItemSavedState.Success(
+                                item.id,
+                                item.toUiModel(this@withEncryptionContext)
+                            )
+                        }
+                    }
+                    snackbarDispatcher(NoteUpdated)
+                    telemetryManager.sendEvent(ItemUpdate(EventItemType.Note))
+                }
+                .onFailure {
+                    PassLogger.e(TAG, it, "Update item error")
                     snackbarDispatcher(ItemUpdateError)
                 }
         } else {

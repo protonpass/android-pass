@@ -1,7 +1,5 @@
 package proton.android.pass.data.impl.remote
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import proton.android.pass.data.impl.api.PasswordManagerApi
@@ -13,16 +11,12 @@ import javax.inject.Inject
 class RemoteItemKeyDataSourceImpl @Inject constructor(
     private val api: ApiProvider
 ) : RemoteItemKeyDataSource {
-    override fun getLatestItemKey(
+    override suspend fun fetchLatestItemKey(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): Flow<ItemLatestKeyResponse> =
-        flow {
-            val res = api.get<PasswordManagerApi>(userId).invoke {
-                getItemLatestKey(shareId.id, itemId.id)
-            }.valueOrThrow
-                .key
-            emit(res)
-        }
+    ): ItemLatestKeyResponse =
+        api.get<PasswordManagerApi>(userId).invoke {
+            getItemLatestKey(shareId.id, itemId.id)
+        }.valueOrThrow.key
 }

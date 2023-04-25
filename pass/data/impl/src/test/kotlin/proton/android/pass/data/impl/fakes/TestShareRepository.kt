@@ -1,7 +1,6 @@
 package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
@@ -19,7 +18,8 @@ class TestShareRepository : ShareRepository {
     private var refreshSharesResult: RefreshSharesResult =
         RefreshSharesResult(emptySet(), emptySet())
     private var observeSharesFlow = testFlow<LoadingResult<List<Share>>>()
-    private var deleteVaultFlow = testFlow<LoadingResult<Unit>>()
+    private var deleteVault: Result<Unit> =
+        Result.failure(IllegalStateException("DeleteVaultResult not set"))
     private var getByIdResult: Result<Share> =
         Result.failure(IllegalStateException("GetByIdResult not set"))
 
@@ -29,6 +29,9 @@ class TestShareRepository : ShareRepository {
     private var markAsPrimaryResult: Result<Share> =
         Result.failure(IllegalStateException("MarkAsPrimaryResult not set"))
 
+    private val deleteVaultMemory: MutableList<ShareId> = mutableListOf()
+    fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
+
     fun setCreateVaultResult(result: Result<Share>) {
         createVaultResult = result
     }
@@ -37,8 +40,8 @@ class TestShareRepository : ShareRepository {
         refreshSharesResult = result
     }
 
-    fun setDeleteVaultResult(result: LoadingResult<Unit>) {
-        deleteVaultFlow.tryEmit(result)
+    fun setDeleteVaultResult(result: Result<Unit>) {
+        deleteVault = result
     }
 
     fun setGetByIdResult(result: Result<Share>) {
@@ -60,8 +63,10 @@ class TestShareRepository : ShareRepository {
     override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share =
         createVaultResult.getOrThrow()
 
-    override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
-        deleteVaultFlow.first()
+    override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
+        deleteVaultMemory.add(shareId)
+        deleteVault.getOrThrow()
+    }
 
     override suspend fun refreshShares(userId: UserId): RefreshSharesResult =
         refreshSharesResult

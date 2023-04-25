@@ -25,4 +25,15 @@ object PreferencesProviderModule {
         ) {
             context.dataStoreFile("user_preferences.pb")
         }
+
+    @Provides
+    @Singleton
+    fun provideFFDataStore(
+        @ApplicationContext context: Context
+    ): DataStore<FeatureFlagsPreferences> =
+        DataStoreFactory.create(
+            serializer = FeatureFlagsPreferencesSerializer
+        ) {
+            context.dataStoreFile("feature_flag_preferences.pb")
+        }
 }

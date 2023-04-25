@@ -255,7 +255,7 @@ class CreateAliasViewModelTest {
 
     private fun setupVaults() {
         observeVaults.sendResult(
-            LoadingResult.Success(
+            Result.success(
                 listOf(
                     VaultWithItemCount(
                         vault = Vault(ShareId("ShareId"), "name", isPrimary = false),

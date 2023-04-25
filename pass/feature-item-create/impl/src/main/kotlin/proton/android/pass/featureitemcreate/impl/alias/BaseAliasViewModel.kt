@@ -9,18 +9,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.pass.domain.ShareId
@@ -42,19 +39,7 @@ abstract class BaseAliasViewModel(
         .toOption()
     protected var isDraft: Boolean = false
 
-    private val observeAllVaultsFlow = observeVaults()
-        .map { shares ->
-            when (shares) {
-                LoadingResult.Loading -> emptyList()
-                is LoadingResult.Error -> {
-                    PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
-                    emptyList()
-                }
-
-                is LoadingResult.Success -> shares.data
-            }
-        }
-        .distinctUntilChanged()
+    private val observeAllVaultsFlow = observeVaults().distinctUntilChanged()
 
     protected val sharesWrapperState = combine(
         navShareIdState,
@@ -213,9 +198,5 @@ abstract class BaseAliasViewModel(
     protected fun onUserEditedContent() {
         if (hasUserEditedContentFlow.value) return
         hasUserEditedContentFlow.update { true }
-    }
-
-    companion object {
-        private const val TAG = "BaseAliasViewModel"
     }
 }

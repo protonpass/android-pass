@@ -6,7 +6,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.note.CreateUpdateNoteUiState.Companion.Initial
 import proton.android.pass.test.MainDispatcherRule
@@ -63,7 +62,7 @@ internal class BaseNoteViewModelTest {
 
     private fun givenAVaultList() {
         observeVaults.sendResult(
-            LoadingResult.Success(
+            Result.success(
                 listOf(
                     VaultWithItemCount(
                         vault = Vault(ShareId("ShareId"), "name", isPrimary = false),

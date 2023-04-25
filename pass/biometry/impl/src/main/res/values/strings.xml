@@ -1,3 +1,4 @@
 <resources>
-    <string name="biometric_prompt_title">Unlock with fingerprint</string>
+    <string name="biometric_prompt_title">App locked</string>
+    <string name="biometric_prompt_subtitle">Unlock using your device lock</string>
 </resources>

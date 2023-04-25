@@ -35,7 +35,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         share: Share,
         contents: ItemContents
-    ): LoadingResult<Item> {
+    ): Item {
         TODO("Not yet implemented")
     }
 

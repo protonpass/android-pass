@@ -13,7 +13,6 @@ import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -101,14 +100,12 @@ class ShareRepositoryImpl @Inject constructor(
         return@withContext this@ShareRepositoryImpl.shareEntityToShare(responseAsEntity)
     }
 
-    override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
+    override suspend fun deleteVault(userId: UserId, shareId: ShareId) {
         withContext(Dispatchers.IO) {
-            database.inTransaction {
-                remoteShareDataSource.deleteVault(userId, shareId)
-                    .map { localShareDataSource.deleteShares(setOf(shareId)) }
-                    .map { }
-            }
+            remoteShareDataSource.deleteVault(userId, shareId)
+            localShareDataSource.deleteShares(setOf(shareId))
         }
+    }
 
     override fun observeAllShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =
         localShareDataSource.getAllSharesForUser(userId)

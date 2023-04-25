@@ -18,30 +18,20 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.logError
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.data.api.ItemCountSummary
-import proton.android.pass.data.api.errors.CannotDeleteCurrentVaultError
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.featurehome.impl.HomeSnackbarMessage
 import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
 class VaultDrawerViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeVaults: ObserveVaultsWithItemCount,
-    itemRepository: ItemRepository,
-    private val deleteVault: DeleteVault,
-    private val snackbarDispatcher: SnackbarDispatcher
+    itemRepository: ItemRepository
 ) : ViewModel() {
 
     private val currentUserFlow = observeCurrentUser().filterNotNull()
@@ -126,21 +116,6 @@ class VaultDrawerViewModel @Inject constructor(
 
     fun setVaultSelection(homeVaultSelection: HomeVaultSelection) = viewModelScope.launch {
         vaultSelectionState.update { homeVaultSelection }
-    }
-
-    fun onDeleteVault(shareId: ShareId) = viewModelScope.launch {
-        deleteVault(shareId)
-            .onSuccess {
-                snackbarDispatcher(HomeSnackbarMessage.DeleteVaultSuccess)
-            }
-            .onError {
-                when (it) {
-                    is CannotDeleteCurrentVaultError ->
-                        snackbarDispatcher(HomeSnackbarMessage.CannotDeleteCurrentVault)
-                    else -> snackbarDispatcher(HomeSnackbarMessage.DeleteVaultError)
-                }
-            }
-            .logError(PassLogger, TAG, "Delete Vault Failed")
     }
 
     companion object {

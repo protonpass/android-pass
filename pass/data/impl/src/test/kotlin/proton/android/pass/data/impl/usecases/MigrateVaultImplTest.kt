@@ -1,11 +1,11 @@
 package proton.android.pass.data.impl.usecases
 
+import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.fakes.repositories.TestItemRepository
@@ -47,8 +47,10 @@ class MigrateVaultImplTest {
         accountManager.sendPrimaryUserId(UserId("userId"))
         itemRepository.sendObserveItemList(emptyList())
         shareRepository.setGetByIdResult(Result.success(TestShare.create()))
-        shareRepository.setDeleteVaultResult(LoadingResult.Success(Unit))
-        val result = migrateVault(originShare, destShare)
-        assert(result is LoadingResult.Success)
+        shareRepository.setDeleteVaultResult(Result.success(Unit))
+        migrateVault(originShare, destShare)
+
+        val deleteVaultMemory = shareRepository.deleteVaultMemory()
+        assertEquals(listOf(originShare), deleteVaultMemory)
     }
 }

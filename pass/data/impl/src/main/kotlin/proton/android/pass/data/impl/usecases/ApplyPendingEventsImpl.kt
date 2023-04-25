@@ -10,8 +10,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.ShareNotAvailableError
@@ -82,9 +80,9 @@ class ApplyPendingEventsImpl @Inject constructor(
                 color = ShareColor.Color1
             )
         }
-        createVault(userId, vault)
+        runCatching { createVault(userId, vault) }
             .onSuccess { PassLogger.d(TAG, "Created default vault") }
-            .onError { PassLogger.d(TAG, it, "Error creating default vault") }
+            .onFailure { PassLogger.d(TAG, it, "Error creating default vault") }
     }
 
     private suspend fun applyPendingEvents(

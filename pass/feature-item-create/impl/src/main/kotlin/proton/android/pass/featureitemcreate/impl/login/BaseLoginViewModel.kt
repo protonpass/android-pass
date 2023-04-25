@@ -22,6 +22,8 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -111,7 +113,7 @@ abstract class BaseLoginViewModel(
             ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
             ?: allShares.first()
         SharesWrapper(allShares, selectedShare)
-    }
+    }.asLoadingResult()
 
     private data class SharesWrapper(
         val vaultList: List<VaultWithItemCount>,
@@ -150,9 +152,11 @@ abstract class BaseLoginViewModel(
         focusLastWebsiteState,
         hasUserEditedContentFlow
     ) { shareWrapper, loginItemWrapper, isLoading, events, focusLastWebsite, hasUserEditedContent ->
+        val shares = shareWrapper.getOrNull()
+        val showVaultSelector = shares?.let { it.vaultList.size > 1 } ?: false
         CreateUpdateLoginUiState(
-            vaultList = shareWrapper.vaultList,
-            selectedVault = shareWrapper.currentVault,
+            vaultList = shares?.vaultList ?: emptyList(),
+            selectedVault = shares?.currentVault,
             loginItem = loginItemWrapper.loginItem,
             validationErrors = loginItemWrapper.loginItemValidationErrors,
             isLoadingState = isLoading,
@@ -162,7 +166,7 @@ abstract class BaseLoginViewModel(
             canUpdateUsername = loginItemWrapper.canUpdateUsername,
             primaryEmail = loginItemWrapper.primaryEmail,
             aliasItem = loginItemWrapper.aliasItem.value(),
-            showVaultSelector = shareWrapper.vaultList.size > 1,
+            showVaultSelector = showVaultSelector,
             hasUserEditedContent = hasUserEditedContent
         )
     }

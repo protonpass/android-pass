@@ -14,8 +14,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.DeleteVault
@@ -100,16 +98,16 @@ class DeleteVaultViewModel @Inject constructor(
 
     fun onDelete() = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
-        deleteVault.invoke(shareId)
+        runCatching { deleteVault.invoke(shareId) }
             .onSuccess {
-                isLoadingState.update { IsLoadingState.NotLoading }
                 snackbarDispatcher(VaultSnackbarMessage.DeleteVaultSuccess)
                 eventFlow.update { DeleteVaultEvent.Deleted }
             }
-            .onError {
-                isLoadingState.update { IsLoadingState.NotLoading }
+            .onFailure {
+                PassLogger.e(TAG, it, "Error deleting vault")
                 snackbarDispatcher(VaultSnackbarMessage.DeleteVaultError)
             }
+        isLoadingState.update { IsLoadingState.NotLoading }
     }
 
     private fun getNavShareId(): ShareId {

@@ -183,19 +183,27 @@ class UpdateLoginViewModel @Inject constructor(
         aliasItem: AliasItem
     ): LoadingResult<Item> =
         if (aliasItem.selectedSuffix != null) {
-            createAlias(
-                userId = userId,
-                shareId = shareId,
-                newAlias = NewAlias(
-                    title = aliasItem.title,
-                    note = aliasItem.note,
-                    prefix = aliasItem.prefix,
-                    suffix = aliasItem.selectedSuffix.toDomain(),
-                    mailboxes = aliasItem.mailboxes
-                        .filter { it.selected }
-                        .map { it.model }
-                        .map(AliasMailboxUiModel::toDomain)
+            runCatching {
+                createAlias(
+                    userId = userId,
+                    shareId = shareId,
+                    newAlias = NewAlias(
+                        title = aliasItem.title,
+                        note = aliasItem.note,
+                        prefix = aliasItem.prefix,
+                        suffix = aliasItem.selectedSuffix.toDomain(),
+                        mailboxes = aliasItem.mailboxes
+                            .filter { it.selected }
+                            .map { it.model }
+                            .map(AliasMailboxUiModel::toDomain)
+                    )
                 )
+            }.fold(
+                onSuccess = { LoadingResult.Success(it) },
+                onFailure = {
+                    PassLogger.e(TAG, it, "Error creating alias")
+                    LoadingResult.Error(it)
+                }
             )
         } else {
             val message = "Empty suffix on create alias"

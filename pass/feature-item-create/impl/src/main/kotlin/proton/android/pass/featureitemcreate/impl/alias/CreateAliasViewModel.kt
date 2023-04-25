@@ -23,8 +23,6 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -235,30 +233,26 @@ open class CreateAliasViewModel @Inject constructor(
     ) {
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
         if (userId != null) {
-            createAlias(
-                userId = userId,
-                shareId = shareId,
-                newAlias = NewAlias(
-                    title = aliasItem.title,
-                    note = aliasItem.note,
-                    prefix = aliasItem.prefix,
-                    suffix = aliasSuffix.toDomain(),
-                    mailboxes = mailboxes.map(AliasMailboxUiModel::toDomain)
+            runCatching {
+                createAlias(
+                    userId = userId,
+                    shareId = shareId,
+                    newAlias = NewAlias(
+                        title = aliasItem.title,
+                        note = aliasItem.note,
+                        prefix = aliasItem.prefix,
+                        suffix = aliasSuffix.toDomain(),
+                        mailboxes = mailboxes.map(AliasMailboxUiModel::toDomain)
+                    )
                 )
-            )
-                .onSuccess { item ->
-                    val generatedAlias =
-                        getAliasToBeCreated(aliasItem.prefix, aliasSuffix) ?: ""
-                    isAliasSavedState.update {
-                        AliasSavedState.Success(
-                            item.id,
-                            generatedAlias
-                        )
-                    }
-                    snackbarDispatcher(AliasCreated)
-                    telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
+            }.onSuccess { item ->
+                val generatedAlias = getAliasToBeCreated(aliasItem.prefix, aliasSuffix) ?: ""
+                isAliasSavedState.update {
+                    AliasSavedState.Success(item.id, generatedAlias)
                 }
-                .onError { onCreateAliasError(it) }
+                snackbarDispatcher(AliasCreated)
+                telemetryManager.sendEvent(ItemCreate(EventItemType.Alias))
+            }.onFailure { onCreateAliasError(it) }
         } else {
             PassLogger.i(TAG, "Empty User Id")
             snackbarDispatcher(ItemCreationError)

@@ -1,7 +1,6 @@
 package proton.android.pass.data.api.usecases
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
 import proton.pass.domain.Item
 import proton.pass.domain.ShareId
 import proton.pass.domain.entity.NewAlias
@@ -11,5 +10,5 @@ interface CreateAlias {
         userId: UserId,
         shareId: ShareId,
         newAlias: NewAlias
-    ): LoadingResult<Item>
+    ): Item
 }

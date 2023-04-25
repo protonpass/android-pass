@@ -25,7 +25,7 @@ interface RemoteItemDataSource {
         userId: UserId,
         shareId: ShareId,
         body: CreateAliasRequest
-    ): LoadingResult<ItemRevision>
+    ): ItemRevision
 
     suspend fun createItemAndAlias(
         userId: UserId,

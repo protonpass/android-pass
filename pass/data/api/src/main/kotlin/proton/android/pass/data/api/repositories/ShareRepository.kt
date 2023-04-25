@@ -23,7 +23,7 @@ interface ShareRepository {
 
     fun observeAllShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>>
 
-    suspend fun getById(userId: UserId, shareId: ShareId): LoadingResult<Share?>
+    suspend fun getById(userId: UserId, shareId: ShareId): Share
 
     suspend fun updateVault(
         userId: UserId,

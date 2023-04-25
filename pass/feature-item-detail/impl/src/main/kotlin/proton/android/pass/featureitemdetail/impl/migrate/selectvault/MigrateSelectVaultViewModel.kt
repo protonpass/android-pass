@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.log.api.PassLogger
@@ -35,7 +36,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
     private val eventFlow: MutableStateFlow<Option<SelectVaultEvent>> = MutableStateFlow(None)
 
     val state: StateFlow<MigrateSelectVaultUiState> = combine(
-        observeVaults(),
+        observeVaults().asLoadingResult(),
         eventFlow
     ) { vaultResult, event ->
         when (val res = vaultResult) {

@@ -6,7 +6,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.test.MainDispatcherRule
@@ -46,7 +45,7 @@ class MigrateSelectVaultViewModelTest {
     @Test
     fun `marks the current vault as not enabled`() = runTest {
         val (currentVault, otherVault) = initialVaults()
-        observeVaults.sendResult(LoadingResult.Success(listOf(currentVault, otherVault)))
+        observeVaults.sendResult(Result.success(listOf(currentVault, otherVault)))
 
         val expected = listOf(
             VaultEnabledPair(currentVault, false),
@@ -62,7 +61,7 @@ class MigrateSelectVaultViewModelTest {
     @Test
     fun `emits success when vault selected`() = runTest {
         val (currentVault, otherVault) = initialVaults()
-        observeVaults.sendResult(LoadingResult.Success(listOf(currentVault, otherVault)))
+        observeVaults.sendResult(Result.success(listOf(currentVault, otherVault)))
 
         instance.onVaultSelected(otherVault.vault.shareId)
         instance.state.test {

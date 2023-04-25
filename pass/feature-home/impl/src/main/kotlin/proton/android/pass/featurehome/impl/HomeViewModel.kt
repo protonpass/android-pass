@@ -432,11 +432,12 @@ class HomeViewModel @Inject constructor(
 
     fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
         isRefreshing.update { IsRefreshingState.Refreshing }
-        applyPendingEvents()
-            .onError { t ->
-                PassLogger.e(TAG, t, "Apply pending events failed")
-                snackbarDispatcher(RefreshError)
-            }
+        runCatching {
+            applyPendingEvents()
+        }.onFailure {
+            PassLogger.e(TAG, it, "Apply pending events failed")
+            snackbarDispatcher(RefreshError)
+        }
 
         isRefreshing.update { IsRefreshingState.NotRefreshing }
     }

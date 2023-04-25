@@ -21,12 +21,12 @@ import proton.pass.domain.ShareId
 
 class TestRemoteItemDataSource : RemoteItemDataSource {
 
-    private var createItemResponse: () -> LoadingResult<ItemRevision> = { LoadingResult.Loading }
+    private var createItemResponse: () -> ItemRevision = { throw IllegalStateException("response not set") }
     private var createItemMemory: MutableList<CreateItemParams> = mutableListOf()
 
     fun getCreateItemMemory(): List<CreateItemParams> = createItemMemory
 
-    fun setCreateItemResponse(delegate: () -> LoadingResult<ItemRevision>) {
+    fun setCreateItemResponse(delegate: () -> ItemRevision) {
         createItemResponse = delegate
     }
 
@@ -34,7 +34,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         userId: UserId,
         shareId: ShareId,
         body: CreateItemRequest
-    ): LoadingResult<ItemRevision> {
+    ): ItemRevision {
         createItemMemory.add(CreateItemParams(userId, shareId, body))
         return createItemResponse()
     }

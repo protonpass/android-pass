@@ -9,7 +9,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.commonui.api.itemName
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -114,7 +113,7 @@ internal class CreateLoginViewModelTest {
 
         val userId = UserId("user-id")
         accountManager.sendPrimaryUserId(userId)
-        createItem.sendItem(LoadingResult.Success(item))
+        createItem.sendItem(Result.success(item))
 
         instance.loginUiState.test {
             instance.createItem()
@@ -218,7 +217,7 @@ internal class CreateLoginViewModelTest {
         val shareId = ShareId("shareId")
         setInitialContents()
         sendInitialVault(shareId)
-        createItem.sendItem(LoadingResult.Error(IllegalStateException("Test")))
+        createItem.sendItem(Result.failure(IllegalStateException("Test")))
 
         instance.loginUiState.test {
             skipItems(1) // Initial state

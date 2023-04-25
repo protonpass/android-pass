@@ -1,7 +1,6 @@
 package proton.android.pass.data.impl.fakes
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.UpdateVaultRequest
@@ -14,8 +13,8 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
         Result.failure(IllegalStateException("createVaultResponse not set"))
     private var updateVaultResponse: Result<ShareResponse> =
         Result.failure(IllegalStateException("updateVaultResponse not set"))
-    private var deleteVaultResponse: LoadingResult<Unit> =
-        LoadingResult.Error(IllegalStateException("deleteVaultResponse not set"))
+    private var deleteVaultResponse: Result<Unit> =
+        Result.failure(IllegalStateException("deleteVaultResponse not set"))
     private var getSharesResponse: Result<List<ShareResponse>> =
         Result.failure(IllegalStateException("getSharesResponse not set"))
     private var getShareByIdResponse: Result<ShareResponse> =
@@ -31,7 +30,7 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
         updateVaultResponse = value
     }
 
-    fun setDeleteVaultResponse(value: LoadingResult<Unit>) {
+    fun setDeleteVaultResponse(value: Result<Unit>) {
         deleteVaultResponse = value
     }
 
@@ -58,8 +57,8 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
         body: UpdateVaultRequest
     ): ShareResponse = updateVaultResponse.getOrThrow()
 
-    override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
-        deleteVaultResponse
+    override suspend fun deleteVault(userId: UserId, shareId: ShareId) =
+        deleteVaultResponse.getOrThrow()
 
     override suspend fun getShares(userId: UserId): List<ShareResponse> =
         getSharesResponse.getOrThrow()

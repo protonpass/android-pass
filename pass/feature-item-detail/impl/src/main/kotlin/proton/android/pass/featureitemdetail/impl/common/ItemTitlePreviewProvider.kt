@@ -16,7 +16,7 @@ class ItemTitlePreviewProvider : PreviewParameterProvider<ItemTitleInput> {
             yield(ItemTitleInput(title = title, vault = null))
             yield(
                 ItemTitleInput(
-                    title = "A really long title to check if the element is multiline",
+                    title = title,
                     vault = Vault(
                         shareId = ShareId("123"),
                         name = "A vault",

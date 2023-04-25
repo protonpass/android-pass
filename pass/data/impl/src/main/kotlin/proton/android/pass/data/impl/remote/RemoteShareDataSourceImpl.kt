@@ -59,7 +59,7 @@ class RemoteShareDataSourceImpl @Inject constructor(
             }
             .valueOrThrow
 
-    override suspend fun getShareById(userId: UserId, shareId: ShareId): LoadingResult<ShareResponse?> =
+    override suspend fun fetchShareById(userId: UserId, shareId: ShareId): ShareResponse? =
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 val res = getShare(shareId.id)
@@ -69,7 +69,7 @@ class RemoteShareDataSourceImpl @Inject constructor(
                     null
                 }
             }
-            .toLoadingResult()
+            .valueOrThrow
 
     override suspend fun markAsPrimary(userId: UserId, shareId: ShareId) =
         api.get<PasswordManagerApi>(userId)

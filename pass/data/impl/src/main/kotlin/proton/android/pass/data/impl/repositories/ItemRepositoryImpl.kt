@@ -34,7 +34,6 @@ import proton.android.pass.crypto.api.usecases.UpdateItem
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.CannotRemoveNotTrashedItemError
-import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.repositories.ShareRepository
@@ -128,7 +127,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         share: Share,
         newAlias: NewAlias
-    ): LoadingResult<Item> = withContext(Dispatchers.IO) {
+    ): Item = withContext(Dispatchers.IO) {
         withUserAddress(userId) { userAddress ->
             val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
             val itemContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
@@ -142,19 +141,17 @@ class ItemRepositoryImpl @Inject constructor(
                 item = body.request.toRequest()
             )
 
-            remoteItemDataSource.createAlias(userId, share.id, requestBody)
-                .map { itemResponse ->
-                    val entity = itemResponseToEntity(
-                        userAddress,
-                        itemResponse,
-                        share,
-                        listOf(shareKey)
-                    )
-                    localItemDataSource.upsertItem(entity)
-                    encryptionContextProvider.withEncryptionContext {
-                        entityToDomain(this@withEncryptionContext, entity)
-                    }
-                }
+            val itemResponse = remoteItemDataSource.createAlias(userId, share.id, requestBody)
+            val entity = itemResponseToEntity(
+                userAddress,
+                itemResponse,
+                share,
+                listOf(shareKey)
+            )
+            localItemDataSource.upsertItem(entity)
+            encryptionContextProvider.withEncryptionContext {
+                entityToDomain(this@withEncryptionContext, entity)
+            }
         }
     }
 
@@ -165,20 +162,7 @@ class ItemRepositoryImpl @Inject constructor(
         newAlias: NewAlias
     ): Item = withContext(Dispatchers.IO) {
         withUserAddress(userId) { userAddress ->
-            val share = when (val res = shareRepository.getById(userId, shareId)) {
-                is LoadingResult.Success -> {
-                    res.data ?: throw ShareNotAvailableError()
-                }
-                is LoadingResult.Error -> {
-                    PassLogger.e(TAG, res.exception, "Could not get share")
-                    throw ShareNotAvailableError()
-                }
-                LoadingResult.Loading -> {
-                    val e = IllegalStateException("Should not be Loading")
-                    PassLogger.e(TAG, e, "Could not get share")
-                    throw e
-                }
-            }
+            val share = shareRepository.getById(userId, shareId)
             val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
             val request = runCatching {
                 val itemBody = createItem.create(shareKey, contents)
@@ -455,14 +439,7 @@ class ItemRepositoryImpl @Inject constructor(
 
         val userId = accountManager.getPrimaryUserId().first()
             ?: throw CryptoException("UserId cannot be null")
-        val shareResult = shareRepository.getById(userId, shareId)
-        when (shareResult) {
-            is LoadingResult.Error -> return@withContext LoadingResult.Error(shareResult.exception)
-            LoadingResult.Loading -> return@withContext LoadingResult.Loading
-            is LoadingResult.Success -> Unit
-        }
-        val share = shareResult.data ?: throw CryptoException("Share cannot be null")
-
+        val share = shareRepository.getById(userId, shareId)
         return@withContext performUpdate(userId, share, item, updatedContents)
     }
 
@@ -477,7 +454,7 @@ class ItemRepositoryImpl @Inject constructor(
 
     override suspend fun refreshItems(userId: UserId, shareId: ShareId): LoadingResult<List<Item>> =
         withContext(Dispatchers.IO) {
-            val share = getShare(userId, shareId)
+            val share = shareRepository.getById(userId, shareId)
             refreshItems(userId, share)
         }
 
@@ -494,7 +471,7 @@ class ItemRepositoryImpl @Inject constructor(
             )
 
             val userAddress = requireNotNull(userAddressRepository.getAddress(userId, addressId))
-            val share = getShare(userId, shareId)
+            val share = shareRepository.getById(userId, shareId)
             val shareKeys = shareKeyRepository.getShareKeys(userId, addressId, shareId).first()
 
             val updateAsEntities = events.updatedItems.map {
@@ -570,13 +547,6 @@ class ItemRepositoryImpl @Inject constructor(
             entityToDomain(this@withEncryptionContext, resAsEntity)
         }
     }
-
-    private suspend fun getShare(userId: UserId, shareId: ShareId): Share =
-        when (val share = shareRepository.getById(userId, shareId)) {
-            is LoadingResult.Success -> share.data
-            is LoadingResult.Error -> throw share.exception
-            LoadingResult.Loading -> throw IllegalStateException("shareRepository.getById cannot return Loading")
-        } ?: throw IllegalStateException("Could not find share [shareId=${shareId.id}]")
 
     private fun updateItemContents(
         item: Item,

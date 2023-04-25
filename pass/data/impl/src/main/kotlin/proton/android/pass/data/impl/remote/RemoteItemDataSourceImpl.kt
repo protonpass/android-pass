@@ -43,18 +43,18 @@ class RemoteItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         body: CreateAliasRequest
-    ): LoadingResult<ItemRevision> {
+    ): ItemRevision {
         val res = api.get<PasswordManagerApi>(userId)
             .invoke { createAlias(shareId.id, body) }
         when (res) {
-            is ApiResult.Success -> return LoadingResult.Success(res.value.item)
+            is ApiResult.Success -> return res.value.item
             is ApiResult.Error -> {
                 if (res is ApiResult.Error.Http) {
                     if (res.proton?.code == CODE_CANNOT_CREATE_MORE_ALIASES) {
-                        return LoadingResult.Error(CannotCreateMoreAliasesError())
+                        throw CannotCreateMoreAliasesError()
                     }
                 }
-                return LoadingResult.Error(res.cause ?: Exception("Create alias failed"))
+                throw res.cause ?: Exception("Create alias failed")
             }
         }
     }

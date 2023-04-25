@@ -15,8 +15,6 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -212,22 +210,22 @@ class UpdateLoginViewModel @Inject constructor(
         currentItem: Item,
         loginItem: LoginItem
     ) {
-        updateItem(userId, shareId, currentItem, loginItem.toItemContents())
-            .onSuccess { item ->
-                isItemSavedState.update {
-                    encryptionContextProvider.withEncryptionContext {
-                        ItemSavedState.Success(
-                            item.id,
-                            item.toUiModel(this@withEncryptionContext)
-                        )
-                    }
+        runCatching {
+            updateItem(userId, shareId, currentItem, loginItem.toItemContents())
+        }.onSuccess { item ->
+            isItemSavedState.update {
+                encryptionContextProvider.withEncryptionContext {
+                    ItemSavedState.Success(
+                        item.id,
+                        item.toUiModel(this@withEncryptionContext)
+                    )
                 }
-                telemetryManager.sendEvent(ItemUpdate(EventItemType.Login))
             }
-            .onError {
-                PassLogger.e(TAG, it, "Update item error")
-                snackbarDispatcher(ItemUpdateError)
-            }
+            telemetryManager.sendEvent(ItemUpdate(EventItemType.Login))
+        }.onFailure {
+            PassLogger.e(TAG, it, "Update item error")
+            snackbarDispatcher(ItemUpdateError)
+        }
     }
 
     companion object {

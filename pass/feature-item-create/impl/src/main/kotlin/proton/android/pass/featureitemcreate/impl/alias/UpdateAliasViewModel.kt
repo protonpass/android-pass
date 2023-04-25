@@ -193,28 +193,28 @@ class UpdateAliasViewModel @Inject constructor(
 
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
         if (userId != null) {
-            updateAliasUseCase(
-                userId = userId,
-                item = _item!!,
-                content = body
-            )
-                .onSuccess { item ->
-                    PassLogger.i(TAG, "Alias successfully updated")
-                    isAliasSavedState.update {
-                        AliasSavedState.Success(
-                            itemId = item.id,
-                            alias = "" // we don't care about it as we are updating it
-                        )
-                    }
-                    isLoadingState.update { IsLoadingState.NotLoading }
-                    snackbarDispatcher(AliasUpdated)
-                    telemetryManager.sendEvent(ItemUpdate(EventItemType.Alias))
+            runCatching {
+                updateAliasUseCase(
+                    userId = userId,
+                    item = _item!!,
+                    content = body
+                )
+            }.onSuccess { item ->
+                PassLogger.i(TAG, "Alias successfully updated")
+                isAliasSavedState.update {
+                    AliasSavedState.Success(
+                        itemId = item.id,
+                        alias = "" // we don't care about it as we are updating it
+                    )
                 }
-                .onError {
-                    PassLogger.e(TAG, it, "Update alias error")
-                    snackbarDispatcher(ItemUpdateError)
-                    isLoadingState.update { IsLoadingState.NotLoading }
-                }
+                isLoadingState.update { IsLoadingState.NotLoading }
+                snackbarDispatcher(AliasUpdated)
+                telemetryManager.sendEvent(ItemUpdate(EventItemType.Alias))
+            }.onFailure {
+                PassLogger.e(TAG, it, "Update alias error")
+                snackbarDispatcher(ItemUpdateError)
+                isLoadingState.update { IsLoadingState.NotLoading }
+            }
         } else {
             PassLogger.i(TAG, "Empty User Id")
             snackbarDispatcher(ItemCreationError)

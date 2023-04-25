@@ -13,10 +13,8 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
@@ -181,7 +179,7 @@ class UpdateLoginViewModel @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         aliasItem: AliasItem
-    ): LoadingResult<Item> =
+    ): Result<Item> =
         if (aliasItem.selectedSuffix != null) {
             runCatching {
                 createAlias(
@@ -198,18 +196,14 @@ class UpdateLoginViewModel @Inject constructor(
                             .map(AliasMailboxUiModel::toDomain)
                     )
                 )
-            }.fold(
-                onSuccess = { LoadingResult.Success(it) },
-                onFailure = {
-                    PassLogger.e(TAG, it, "Error creating alias")
-                    LoadingResult.Error(it)
-                }
-            )
+            }.onFailure {
+                PassLogger.e(TAG, it, "Error creating alias")
+            }
         } else {
             val message = "Empty suffix on create alias"
             PassLogger.i(TAG, message)
             snackbarDispatcher(AliasSnackbarMessage.ItemCreationError)
-            LoadingResult.Error(Exception(message))
+            Result.failure(Exception(message))
         }
 
     private suspend fun performUpdateItem(

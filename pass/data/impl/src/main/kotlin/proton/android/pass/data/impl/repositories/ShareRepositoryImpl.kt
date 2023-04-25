@@ -64,27 +64,21 @@ class ShareRepositoryImpl @Inject constructor(
     override suspend fun createVault(
         userId: SessionUserId,
         vault: NewVault
-    ): LoadingResult<Share> = withContext(Dispatchers.IO) {
+    ): Share = withContext(Dispatchers.IO) {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
         val user = requireNotNull(userRepository.getUser(userId))
 
-        val (request, shareKey) = try {
+        val (request, shareKey) = runCatching {
             createVaultRequest(user, vault, userAddress)
-        } catch (e: RuntimeException) {
-            PassLogger.w(TAG, e, "Error in CreateVaultRequest")
-            return@withContext LoadingResult.Error(e)
-        }
-
-        val createVaultResult = remoteShareDataSource.createVault(userAddress.userId, request)
-        val createVaultResponse = when (createVaultResult) {
-            is LoadingResult.Error -> {
-                return@withContext LoadingResult.Error(createVaultResult.exception)
+        }.fold(
+            onSuccess = { it },
+            onFailure = {
+                PassLogger.w(TAG, it, "Error in CreateVaultRequest")
+                throw it
             }
+        )
 
-            LoadingResult.Loading -> return@withContext LoadingResult.Loading
-            is LoadingResult.Success -> createVaultResult.data
-        }
-
+        val createVaultResponse = remoteShareDataSource.createVault(userAddress.userId, request)
         val symmetricallyEncryptedKey = encryptionContextProvider.withEncryptionContext {
             encrypt(shareKey.value())
         }
@@ -104,11 +98,7 @@ class ShareRepositoryImpl @Inject constructor(
             shareKeyRepository.saveShareKeys(listOf(shareKeyEntity))
         }
 
-        return@withContext LoadingResult.Success(
-            this@ShareRepositoryImpl.shareEntityToShare(
-                responseAsEntity
-            )
-        )
+        return@withContext this@ShareRepositoryImpl.shareEntityToShare(responseAsEntity)
     }
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =

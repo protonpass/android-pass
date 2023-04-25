@@ -14,7 +14,8 @@ import proton.pass.domain.entity.NewVault
 
 class TestShareRepository : ShareRepository {
 
-    private var createVaultResult: LoadingResult<Share> = LoadingResult.Loading
+    private var createVaultResult: Result<Share> =
+        Result.failure(IllegalStateException("CreateVaultResult not set"))
     private var refreshSharesResult: RefreshSharesResult =
         RefreshSharesResult(emptySet(), emptySet())
     private var observeSharesFlow = testFlow<LoadingResult<List<Share>>>()
@@ -28,7 +29,7 @@ class TestShareRepository : ShareRepository {
     private var markAsPrimaryResult: Result<Share> =
         Result.failure(IllegalStateException("MarkAsPrimaryResult not set"))
 
-    fun setCreateVaultResult(result: LoadingResult<Share>) {
+    fun setCreateVaultResult(result: Result<Share>) {
         createVaultResult = result
     }
 
@@ -56,8 +57,8 @@ class TestShareRepository : ShareRepository {
         markAsPrimaryResult = value
     }
 
-    override suspend fun createVault(userId: SessionUserId, vault: NewVault): LoadingResult<Share> =
-        createVaultResult
+    override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share =
+        createVaultResult.getOrThrow()
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
         deleteVaultFlow.first()

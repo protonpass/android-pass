@@ -2,7 +2,6 @@ package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
@@ -20,7 +19,8 @@ class TestShareRepository : ShareRepository {
         RefreshSharesResult(emptySet(), emptySet())
     private var observeSharesFlow = testFlow<LoadingResult<List<Share>>>()
     private var deleteVaultFlow = testFlow<LoadingResult<Unit>>()
-    private var getByIdResultFlow = testFlow<Result<Share?>>()
+    private var getByIdResult: Result<Share> =
+        Result.failure(IllegalStateException("GetByIdResult not set"))
 
     private var updateVaultResult: Result<Share> =
         Result.failure(IllegalStateException("UpdateVaultResult not set"))
@@ -40,8 +40,8 @@ class TestShareRepository : ShareRepository {
         deleteVaultFlow.tryEmit(result)
     }
 
-    fun setGetByIdResult(result: Result<Share?>) {
-        getByIdResultFlow.tryEmit(result)
+    fun setGetByIdResult(result: Result<Share>) {
+        getByIdResult = result
     }
 
     fun emitObserveShares(value: LoadingResult<List<Share>>) {
@@ -68,9 +68,8 @@ class TestShareRepository : ShareRepository {
     override fun observeAllShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =
         observeSharesFlow
 
-    override fun getById(userId: UserId, shareId: ShareId): Flow<Share?> = getByIdResultFlow.map {
-        it.getOrThrow()
-    }
+    override suspend fun getById(userId: UserId, shareId: ShareId): Share =
+        getByIdResult.getOrThrow()
 
     override suspend fun updateVault(userId: UserId, shareId: ShareId, vault: NewVault): Share =
         updateVaultResult.getOrThrow()

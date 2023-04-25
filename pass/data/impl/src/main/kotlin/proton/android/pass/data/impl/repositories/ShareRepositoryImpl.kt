@@ -3,9 +3,7 @@ package proton.android.pass.data.impl.repositories
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
@@ -21,6 +19,7 @@ import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.usecases.CreateVault
 import proton.android.pass.crypto.api.usecases.UpdateVault
+import proton.android.pass.data.api.errors.ShareNotAvailableError
 import proton.android.pass.data.api.repositories.RefreshSharesResult
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.impl.crypto.ReencryptShareContents
@@ -81,6 +80,7 @@ class ShareRepositoryImpl @Inject constructor(
             is LoadingResult.Error -> {
                 return@withContext LoadingResult.Error(createVaultResult.exception)
             }
+
             LoadingResult.Loading -> return@withContext LoadingResult.Loading
             is LoadingResult.Success -> createVaultResult.data
         }
@@ -104,7 +104,11 @@ class ShareRepositoryImpl @Inject constructor(
             shareKeyRepository.saveShareKeys(listOf(shareKeyEntity))
         }
 
-        return@withContext this@ShareRepositoryImpl.shareEntityToShare(responseAsEntity)
+        return@withContext LoadingResult.Success(
+            this@ShareRepositoryImpl.shareEntityToShare(
+                responseAsEntity
+            )
+        )
     }
 
     override suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit> =
@@ -117,63 +121,59 @@ class ShareRepositoryImpl @Inject constructor(
         }
 
     override fun observeAllShares(userId: SessionUserId): Flow<LoadingResult<List<Share>>> =
-        localShareDataSource.getAllSharesForUser(userId).toShare()
-
-    private fun Flow<List<ShareEntity>>.toShare(): Flow<LoadingResult<List<Share>>> =
-        this.map { LoadingResult.Success(it) }
-            .mapLatest { sharesResult ->
-                if (sharesResult.data.isEmpty()) return@mapLatest LoadingResult.Success(emptyList<Share>())
-                shareEntitiesToShares(sharesResult.data)
+        localShareDataSource.getAllSharesForUser(userId)
+            .map { shares ->
+                LoadingResult.Success(shares.map { shareEntityToShare(it) })
             }
-            .flowOn(Dispatchers.IO)
 
-    override suspend fun refreshShares(userId: UserId): RefreshSharesResult = withContext(Dispatchers.IO) {
-        val userAddress = userAddressRepository.getAddresses(userId).primary()
-            ?: throw IllegalStateException("Could not find PrimaryAddress")
+    override suspend fun refreshShares(userId: UserId): RefreshSharesResult =
+        withContext(Dispatchers.IO) {
+            val userAddress = userAddressRepository.getAddresses(userId).primary()
+                ?: throw IllegalStateException("Could not find PrimaryAddress")
 
-        // Retrieve remote shares and create a map ShareId->ShareResponse
-        val remoteShares = remoteShareDataSource.getShares(userAddress.userId)
-        val remoteShareMap = remoteShares.associateBy { ShareId(it.shareId) }
+            // Retrieve remote shares and create a map ShareId->ShareResponse
+            val remoteShares = remoteShareDataSource.getShares(userAddress.userId)
+            val remoteShareMap = remoteShares.associateBy { ShareId(it.shareId) }
 
-        val toSave = database.inTransaction {
+            val toSave = database.inTransaction {
 
-            // Retrieve local shares and create a map ShareId->ShareEntity
-            val localShares = localShareDataSource
-                .getAllSharesForUser(userAddress.userId)
-                .first()
-            val localSharesMap = localShares.associateBy { ShareId(it.id) }
+                // Retrieve local shares and create a map ShareId->ShareEntity
+                val localShares = localShareDataSource
+                    .getAllSharesForUser(userAddress.userId)
+                    .first()
+                val localSharesMap = localShares.associateBy { ShareId(it.id) }
 
-            // Update primary status if needed
-            remoteShareMap.forEach { (remoteId, remoteShare) ->
-                val localShare = localSharesMap[remoteId]
-                if (localShare != null && localShare.isPrimary != remoteShare.primary) {
-                    localShareDataSource.setPrimaryShareStatus(
-                        userId = userId,
-                        shareId = remoteId,
-                        isPrimary = remoteShare.primary
-                    )
+                // Update primary status if needed
+                remoteShareMap.forEach { (remoteId, remoteShare) ->
+                    val localShare = localSharesMap[remoteId]
+                    if (localShare != null && localShare.isPrimary != remoteShare.primary) {
+                        localShareDataSource.setPrimaryShareStatus(
+                            userId = userId,
+                            shareId = remoteId,
+                            isPrimary = remoteShare.primary
+                        )
+                    }
                 }
+
+                val toDelete = localSharesMap.keys.subtract(remoteShareMap.keys)
+                localShareDataSource.deleteShares(toDelete)
+
+                // Return shares that were not in local, so they are saved
+                remoteShares
+                    .filter { !localSharesMap.containsKey(ShareId(it.shareId)) }
+                    .map { ShareId(it.shareId) }
             }
+            val remoteSharesToSave = remoteShares.filter { toSave.contains(ShareId(it.shareId)) }
+            storeShares(userAddress, remoteSharesToSave)
 
-            val toDelete = localSharesMap.keys.subtract(remoteShareMap.keys)
-            localShareDataSource.deleteShares(toDelete)
-
-            // Return shares that were not in local, so they are saved
-            remoteShares
-                .filter { !localSharesMap.containsKey(ShareId(it.shareId)) }
-                .map { ShareId(it.shareId) }
+            RefreshSharesResult(
+                allShareIds = remoteShareMap.keys,
+                newShareIds = toSave.toSet()
+            )
         }
-        val remoteSharesToSave = remoteShares.filter { toSave.contains(ShareId(it.shareId)) }
-        storeShares(userAddress, remoteSharesToSave)
-
-        RefreshSharesResult(
-            allShareIds = remoteShareMap.keys,
-            newShareIds = toSave.toSet()
-        )
-    }
 
     @Suppress("ReturnCount")
-    override suspend fun getById(userId: UserId, shareId: ShareId): LoadingResult<Share?> =
+    override suspend fun getById(userId: UserId, shareId: ShareId): Share =
         withContext(Dispatchers.IO) {
             val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
 
@@ -181,17 +181,13 @@ class ShareRepositoryImpl @Inject constructor(
             var share: ShareEntity? = localShareDataSource.getById(userId, shareId)
             if (share == null) {
                 // Check remote
-                val getShareResult = remoteShareDataSource.getShareById(userId, shareId)
-                when (getShareResult) {
-                    is LoadingResult.Error -> return@withContext LoadingResult.Error(getShareResult.exception)
-                    LoadingResult.Loading -> return@withContext LoadingResult.Loading
-                    is LoadingResult.Success -> Unit
-                }
-                val shareResponse = getShareResult.data
-                    ?: return@withContext LoadingResult.Error(IllegalStateException("Share Response is null"))
+                val fetchedShare = remoteShareDataSource.fetchShareById(userId, shareId)
+                val shareResponse = fetchedShare ?: throw ShareNotAvailableError()
 
-                val storedShares: List<ShareEntity> =
-                    storeShares(userAddress, listOf(shareResponse))
+                val storedShares: List<ShareEntity> = storeShares(
+                    userAddress = userAddress,
+                    shares = listOf(shareResponse)
+                )
                 share = storedShares.first()
             }
 
@@ -224,50 +220,25 @@ class ShareRepositoryImpl @Inject constructor(
         val responseAsEntity = shareResponseToEntity(userAddress, response, shareKeyAsEncryptionkey)
         localShareDataSource.upsertShares(listOf(responseAsEntity))
 
-        return@withContext when (val res = shareEntityToShare(responseAsEntity)) {
-            LoadingResult.Loading -> throw IllegalStateException("Should not be Loading")
-            is LoadingResult.Error -> {
-                PassLogger.w(TAG, res.exception, "Error converting share entity to share")
-                throw res.exception
-            }
-            is LoadingResult.Success -> res.data
-        }
+        return@withContext shareEntityToShare(responseAsEntity)
     }
 
-    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId): Share = withContext(Dispatchers.IO) {
-        remoteShareDataSource.markAsPrimary(userId, shareId)
+    override suspend fun markAsPrimary(userId: UserId, shareId: ShareId): Share =
+        withContext(Dispatchers.IO) {
+            remoteShareDataSource.markAsPrimary(userId, shareId)
 
-        val updated = database.inTransaction {
-            val share = localShareDataSource.getById(userId, shareId)
-                ?: throw IllegalStateException("Could not find share with id $shareId")
-            localShareDataSource.disablePrimaryShare(userId)
+            val updated = database.inTransaction {
+                val share = localShareDataSource.getById(userId, shareId)
+                    ?: throw IllegalStateException("Could not find share with id $shareId")
+                localShareDataSource.disablePrimaryShare(userId)
 
-            val updatedShare = share.copy(isPrimary = true)
-            localShareDataSource.upsertShares(listOf(updatedShare))
-            updatedShare
-        }
-
-        return@withContext when (val res = shareEntityToShare(updated)) {
-            LoadingResult.Loading -> throw IllegalStateException("Should not be Loading")
-            is LoadingResult.Error -> {
-                PassLogger.w(TAG, res.exception, "Error converting share entity to share")
-                throw res.exception
+                val updatedShare = share.copy(isPrimary = true)
+                localShareDataSource.upsertShares(listOf(updatedShare))
+                updatedShare
             }
-            is LoadingResult.Success -> res.data
-        }
-    }
 
-    @Suppress("ReturnCount")
-    private fun shareEntitiesToShares(entities: List<ShareEntity>): LoadingResult<List<Share>> {
-        val mapped = entities.map {
-            when (val res = this.shareEntityToShare(it)) {
-                is LoadingResult.Error -> return LoadingResult.Error(res.exception)
-                LoadingResult.Loading -> return LoadingResult.Loading
-                is LoadingResult.Success -> res.data
-            }
+            return@withContext shareEntityToShare(updated)
         }
-        return LoadingResult.Success(mapped)
-    }
 
     private suspend fun storeShares(
         userAddress: UserAddress,
@@ -359,12 +330,12 @@ class ShareRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun shareEntityToShare(entity: ShareEntity): LoadingResult<Share> {
+    private fun shareEntityToShare(entity: ShareEntity): Share {
         val shareType = ShareType.map[entity.targetType]
         if (shareType == null) {
             val e = IllegalStateException("Unknown ShareType")
             PassLogger.w(TAG, e, "Unknown ShareType [shareType=${entity.targetType}]")
-            return LoadingResult.Error(e)
+            throw e
         }
 
         val (color, icon) = if (entity.encryptedContent == null) {
@@ -377,7 +348,7 @@ class ShareRepositoryImpl @Inject constructor(
             }
         }
 
-        val share = Share(
+        return Share(
             id = ShareId(entity.id),
             shareType = shareType,
             targetId = entity.targetId,
@@ -390,7 +361,6 @@ class ShareRepositoryImpl @Inject constructor(
             icon = icon,
             isPrimary = entity.isPrimary
         )
-        return LoadingResult.Success(share)
     }
 
     private fun createVaultRequest(

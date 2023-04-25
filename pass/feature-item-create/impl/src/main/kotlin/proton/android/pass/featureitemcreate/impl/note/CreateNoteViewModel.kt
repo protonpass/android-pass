@@ -53,9 +53,8 @@ class CreateNoteViewModel @Inject constructor(
             val userId = accountManager.getPrimaryUserId()
                 .first { userId -> userId != null }
             if (userId != null) {
-                getShare(userId, shareId)
-                    .onSuccess { share ->
-                        requireNotNull(share)
+                runCatching { getShare(userId, shareId) }
+                    .map { share ->
                         val itemContents = noteItem.toItemContents()
                         itemRepository.createItem(userId, share, itemContents)
                             .onSuccess { item ->
@@ -75,10 +74,7 @@ class CreateNoteViewModel @Inject constructor(
                                 snackbarDispatcher(ItemCreationError)
                             }
                     }
-                    .onError {
-                        PassLogger.e(TAG, it, "Get share error")
-                        snackbarDispatcher(ItemCreationError)
-                    }
+                    .onFailure { PassLogger.e(TAG, it, "Error getting share") }
             } else {
                 PassLogger.i(TAG, "Empty User Id")
                 snackbarDispatcher(ItemCreationError)

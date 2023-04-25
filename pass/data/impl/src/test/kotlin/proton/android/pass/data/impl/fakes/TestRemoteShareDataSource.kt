@@ -64,7 +64,7 @@ class TestRemoteShareDataSource : RemoteShareDataSource {
     override suspend fun getShares(userId: UserId): List<ShareResponse> =
         getSharesResponse.getOrThrow()
 
-    override suspend fun getShareById(
+    override suspend fun fetchShareById(
         userId: UserId,
         shareId: ShareId
     ): LoadingResult<ShareResponse?> = getShareByIdResponse

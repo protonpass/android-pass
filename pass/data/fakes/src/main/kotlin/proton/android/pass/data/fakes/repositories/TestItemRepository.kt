@@ -43,7 +43,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         userId: UserId,
         share: Share,
         newAlias: NewAlias
-    ): LoadingResult<Item> {
+    ): Item {
         TODO("Not yet implemented")
     }
 

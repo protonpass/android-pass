@@ -12,6 +12,6 @@ interface RemoteShareDataSource {
     suspend fun updateVault(userId: UserId, shareId: ShareId, body: UpdateVaultRequest): ShareResponse
     suspend fun deleteVault(userId: UserId, shareId: ShareId): LoadingResult<Unit>
     suspend fun getShares(userId: UserId): List<ShareResponse>
-    suspend fun getShareById(userId: UserId, shareId: ShareId): LoadingResult<ShareResponse?>
+    suspend fun fetchShareById(userId: UserId, shareId: ShareId): ShareResponse?
     suspend fun markAsPrimary(userId: UserId, shareId: ShareId)
 }

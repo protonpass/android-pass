@@ -9,7 +9,6 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
@@ -123,7 +122,7 @@ class CreateAliasViewModelTest {
     fun `is able to handle CannotCreateMoreAliases`() = runTest {
         viewModel = createAliasViewModel()
         setupAliasOptions()
-        createAlias.setResult(LoadingResult.Error(CannotCreateMoreAliasesError()))
+        createAlias.setResult(Result.failure(CannotCreateMoreAliasesError()))
         setupContentsForCreation()
         viewModel.createAliasUiState.test { awaitItem() }
         viewModel.createAlias(TestShare.create().id)
@@ -141,7 +140,7 @@ class CreateAliasViewModelTest {
     fun `emits success when alias is created successfully`() = runTest {
         viewModel = createAliasViewModel()
         setupAliasOptions()
-        createAlias.setResult(LoadingResult.Success(TestItem.random()))
+        createAlias.setResult(Result.success(TestItem.random()))
         setupContentsForCreation()
 
         viewModel.createAliasUiState.test { awaitItem() }
@@ -163,7 +162,7 @@ class CreateAliasViewModelTest {
     fun `emits success when draft alias is stored successfully`() = runTest {
         viewModel = createAliasViewModel(isDraft = true)
         setupAliasOptions()
-        createAlias.setResult(LoadingResult.Success(TestItem.random()))
+        createAlias.setResult(Result.success(TestItem.random()))
         setupContentsForCreation()
 
         viewModel.createAliasUiState.test { awaitItem() }

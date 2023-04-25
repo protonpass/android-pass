@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
@@ -63,9 +64,17 @@ open class CreateAliasViewModel @Inject constructor(
         MutableStateFlow(None)
 
     private val aliasOptionsState: Flow<LoadingResult<AliasOptionsUiModel>> = sharesWrapperState
-        .flatMapLatest { observeAliasOptions(it.currentVault.vault.shareId) }
-        .map(::AliasOptionsUiModel)
-        .asLoadingResult()
+        .flatMapLatest { res ->
+            when (res) {
+                LoadingResult.Loading -> flowOf(LoadingResult.Loading)
+                is LoadingResult.Error -> flowOf(LoadingResult.Error(res.exception))
+                is LoadingResult.Success -> {
+                    observeAliasOptions(res.data.currentVault.vault.shareId)
+                        .map(::AliasOptionsUiModel)
+                        .asLoadingResult()
+                }
+            }
+        }
         .onEach {
             when (it) {
                 is LoadingResult.Error -> {

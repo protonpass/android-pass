@@ -7,7 +7,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
@@ -89,7 +88,7 @@ class CreateVaultViewModelTest {
     fun `displays error snackbar on createVault error`() = runTest {
         instance.onNameChange("name")
 
-        createVault.setResult(LoadingResult.Error(IllegalStateException("test")))
+        createVault.setResult(Result.failure(IllegalStateException("test")))
         instance.onCreateClick()
         instance.state.test {
             val item = awaitItem()
@@ -106,7 +105,7 @@ class CreateVaultViewModelTest {
     fun `displays proper error snackbar on cannotCreateMoreVaults`() = runTest {
         instance.onNameChange("name")
 
-        createVault.setResult(LoadingResult.Error(CannotCreateMoreVaultsError()))
+        createVault.setResult(Result.failure(CannotCreateMoreVaultsError()))
         instance.onCreateClick()
         instance.state.test {
             val item = awaitItem()
@@ -123,7 +122,7 @@ class CreateVaultViewModelTest {
     fun `displays success snackbar on createVault success`() = runTest {
         instance.onNameChange("name")
 
-        createVault.setResult(LoadingResult.Success(TestShare.create()))
+        createVault.setResult(Result.success(TestShare.create()))
         instance.onCreateClick()
         instance.state.test {
             val item = awaitItem()

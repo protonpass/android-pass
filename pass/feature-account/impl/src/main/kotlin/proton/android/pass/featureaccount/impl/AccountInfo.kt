@@ -46,9 +46,10 @@ fun AccountInfoPreview(
         Surface {
             AccountInfo(
                 state = AccountUiState(
-                    "myemail@proton.me",
-                    PlanSection.Data("Free"),
-                    IsLoadingState.NotLoading
+                    email = "myemail@proton.me",
+                    plan = PlanSection.Data("Free"),
+                    isLoadingState = IsLoadingState.NotLoading,
+                    showUpgradeButton = true
                 )
             )
         }

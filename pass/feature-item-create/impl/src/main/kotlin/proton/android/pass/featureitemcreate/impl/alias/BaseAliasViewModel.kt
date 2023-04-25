@@ -14,6 +14,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -51,7 +53,7 @@ abstract class BaseAliasViewModel(
             ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
             ?: allShares.first()
         SharesWrapper(allShares, selectedShare)
-    }
+    }.asLoadingResult()
 
     protected data class SharesWrapper(
         val vaultList: List<VaultWithItemCount>,
@@ -129,9 +131,12 @@ abstract class BaseAliasViewModel(
         eventWrapperState,
         hasUserEditedContentFlow
     ) { shareWrapper, aliasItemWrapper, isLoading, eventWrapper, hasUserEditedContent ->
+        val shares = shareWrapper.getOrNull()
+        val showVaultSelector = shares?.let { it.vaultList.size > 1 } ?: false
+
         CreateUpdateAliasUiState(
-            vaultList = shareWrapper.vaultList,
-            selectedVault = shareWrapper.currentVault,
+            vaultList = shares?.vaultList ?: emptyList(),
+            selectedVault = shares?.currentVault,
             aliasItem = aliasItemWrapper.aliasItem,
             isDraft = isDraft,
             errorList = aliasItemWrapper.aliasItemValidationErrors,
@@ -139,7 +144,7 @@ abstract class BaseAliasViewModel(
             isAliasSavedState = eventWrapper.isAliasSaved,
             isAliasDraftSavedState = eventWrapper.isAliasDraftSaved,
             isApplyButtonEnabled = eventWrapper.isApplyButtonEnabled,
-            showVaultSelector = shareWrapper.vaultList.size > 1,
+            showVaultSelector = showVaultSelector,
             closeScreenEvent = eventWrapper.closeScreenEvent,
             hasUserEditedContent = hasUserEditedContent
         )

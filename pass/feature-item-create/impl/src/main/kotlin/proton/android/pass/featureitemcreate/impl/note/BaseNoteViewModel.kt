@@ -13,6 +13,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -59,7 +61,7 @@ abstract class BaseNoteViewModel(
             ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
             ?: allShares.first()
         SharesWrapper(allShares, selectedShare)
-    }
+    }.asLoadingResult()
 
     private data class SharesWrapper(
         val vaultList: List<VaultWithItemCount>,
@@ -85,14 +87,16 @@ abstract class BaseNoteViewModel(
         isItemSavedState,
         hasUserEditedContentFlow
     ) { shareWrapper, noteItemWrapper, isLoading, isItemSaved, hasUserEditedContent ->
+        val shares = shareWrapper.getOrNull()
+        val showVaultSelector = shares?.let { it.vaultList.size > 1 } ?: false
         CreateUpdateNoteUiState(
-            vaultList = shareWrapper.vaultList,
-            selectedVault = shareWrapper.currentVault,
+            vaultList = shares?.vaultList ?: emptyList(),
+            selectedVault = shares?.currentVault,
             noteItem = noteItemWrapper.noteItem,
             errorList = noteItemWrapper.noteItemValidationErrors,
             isLoadingState = isLoading,
             isItemSaved = isItemSaved,
-            showVaultSelector = shareWrapper.vaultList.size > 1,
+            showVaultSelector = showVaultSelector,
             hasUserEditedContent = hasUserEditedContent
         )
     }

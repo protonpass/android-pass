@@ -8,7 +8,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
@@ -138,7 +137,7 @@ internal class BaseLoginViewModelTest {
 
     private fun givenAVaultList() {
         observeVaults.sendResult(
-            LoadingResult.Success(
+            Result.success(
                 listOf(
                     VaultWithItemCount(
                         vault = Vault(ShareId("ShareId"), "name", isPrimary = false),

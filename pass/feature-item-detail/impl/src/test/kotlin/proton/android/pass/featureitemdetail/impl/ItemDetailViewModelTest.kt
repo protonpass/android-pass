@@ -8,7 +8,6 @@ import kotlinx.datetime.Instant
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -63,7 +62,7 @@ class ItemDetailViewModelTest {
     fun `sends the right item data`() = runTest {
         val note = "some text"
         val item = TestItem.create(itemType = ItemType.Note(note))
-        getItemById.emitValue(LoadingResult.Success(item))
+        getItemById.emitValue(Result.success(item))
 
         instance.uiState.test {
             val emitted = awaitItem()
@@ -100,7 +99,7 @@ class ItemDetailViewModelTest {
 
     @Test
     fun `emits error when cannot retrieve item`() = runTest {
-        getItemById.emitValue(LoadingResult.Error(IllegalStateException("test")))
+        getItemById.emitValue(Result.failure(IllegalStateException("test")))
         instance.uiState.test {
             assertThat(awaitItem()).isEqualTo(ItemDetailScreenUiState.Initial)
 

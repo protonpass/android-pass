@@ -10,10 +10,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
-import proton.android.pass.common.api.runCatching
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.PendingEventList
 import proton.android.pass.data.api.errors.ShareNotAvailableError
@@ -47,32 +45,31 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val itemSyncStatusRepository: ItemSyncStatusRepository
 ) : ApplyPendingEvents {
 
-    override suspend fun invoke(): LoadingResult<Unit> =
-        runCatching {
-            withContext(Dispatchers.IO) {
-                val user = observeCurrentUser().first()
-                val address = requireNotNull(addressRepository.getAddresses(user.userId).primary())
-                val refreshSharesResult = shareRepository.refreshShares(user.userId)
-                if (refreshSharesResult.allShareIds.isEmpty()) {
-                    createDefaultVault(user.userId)
-                    itemSyncStatusRepository.emit(ItemSyncStatus.Synced(false))
-                } else {
-                    enqueueRefreshItems(refreshSharesResult.newShareIds)
-                    refreshSharesResult.allShareIds.subtract(refreshSharesResult.newShareIds)
-                        .map { share ->
-                            async {
-                                try {
-                                    applyPendingEvents(address.addressId, user.userId, share)
-                                } catch (e: ShareNotAvailableError) {
-                                    PassLogger.d(TAG, e, "Deleting share not available")
-                                    shareRepository.deleteVault(user.userId, share)
-                                }
+    override suspend fun invoke() {
+        withContext(Dispatchers.IO) {
+            val user = observeCurrentUser().first()
+            val address = requireNotNull(addressRepository.getAddresses(user.userId).primary())
+            val refreshSharesResult = shareRepository.refreshShares(user.userId)
+            if (refreshSharesResult.allShareIds.isEmpty()) {
+                createDefaultVault(user.userId)
+                itemSyncStatusRepository.emit(ItemSyncStatus.Synced(false))
+            } else {
+                enqueueRefreshItems(refreshSharesResult.newShareIds)
+                refreshSharesResult.allShareIds.subtract(refreshSharesResult.newShareIds)
+                    .map { share ->
+                        async {
+                            try {
+                                applyPendingEvents(address.addressId, user.userId, share)
+                            } catch (e: ShareNotAvailableError) {
+                                PassLogger.d(TAG, e, "Deleting share not available")
+                                shareRepository.deleteVault(user.userId, share)
                             }
                         }
-                        .awaitAll()
-                }
+                    }
+                    .awaitAll()
             }
         }
+    }
 
     private suspend fun createDefaultVault(userId: UserId) {
         PassLogger.d(TAG, "Creating default vault")

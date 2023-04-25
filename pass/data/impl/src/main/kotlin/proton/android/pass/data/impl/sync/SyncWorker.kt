@@ -12,7 +12,6 @@ import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.log.api.PassLogger
 import java.util.concurrent.TimeUnit
@@ -27,12 +26,15 @@ open class SyncWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         PassLogger.i(TAG, "Starting sync worker")
-        return when (val result = applyPendingEvents()) {
-            is LoadingResult.Error -> Result.failure()
-                .also { PassLogger.w(TAG, result.exception, "Sync worker error") }
-            is LoadingResult.Success -> Result.success()
-            LoadingResult.Loading -> throw IllegalStateException("Loading state not possible here")
-        }
+        return runCatching {
+            applyPendingEvents()
+        }.fold(
+            onSuccess = { Result.success() },
+            onFailure = {
+                PassLogger.w(TAG, it, "Sync worker error")
+                Result.failure()
+            }
+        )
     }
 
     companion object {

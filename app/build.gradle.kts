@@ -292,6 +292,7 @@ dependencies {
     implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.featureItemCreate.impl)
     implementation(projects.pass.featureHome.impl)
+    implementation(projects.pass.featureFeatureFlags.impl)
     implementation(projects.pass.featureSettings.impl)
     implementation(projects.pass.featureOnboarding.impl)
     implementation(projects.pass.featureVault.impl)

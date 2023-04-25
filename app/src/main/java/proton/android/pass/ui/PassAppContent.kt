@@ -21,6 +21,7 @@ import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
+import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 import proton.android.pass.network.api.NetworkStatus
@@ -63,6 +64,10 @@ fun PassAppContent(
     ) { contentPadding ->
         InternalDrawer(
             drawerState = internalDrawerState,
+            onOpenFeatureFlag = {
+                appNavigator.navigate(FeatureFlagRoute)
+                coroutineScope.launch { internalDrawerState.close() }
+            },
             content = {
                 Column(modifier = Modifier.padding(contentPadding)) {
                     AnimatedVisibility(visible = appUiState.networkStatus == NetworkStatus.Offline) {

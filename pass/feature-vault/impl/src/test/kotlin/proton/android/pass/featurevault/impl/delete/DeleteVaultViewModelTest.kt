@@ -7,7 +7,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.usecases.TestDeleteVault
@@ -94,7 +93,7 @@ class DeleteVaultViewModelTest {
     fun `emits success on delete success`() = runTest {
         performSetup()
 
-        deleteVault.setResult(LoadingResult.Success(Unit))
+        deleteVault.setResult(Result.success(Unit))
         instance.onDelete()
         instance.state.test {
             val item = awaitItem()
@@ -110,7 +109,7 @@ class DeleteVaultViewModelTest {
     fun `emits error on delete error`() = runTest {
         performSetup()
 
-        deleteVault.setResult(LoadingResult.Error(IllegalStateException("test")))
+        deleteVault.setResult(Result.failure(IllegalStateException("test")))
         instance.onDelete()
         instance.state.test {
             val item = awaitItem()

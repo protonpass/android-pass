@@ -75,6 +75,7 @@ dependencies {
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
 
     testImplementation(projects.pass.commonTest)

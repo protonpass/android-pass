@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.PendingEventList
@@ -109,7 +108,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         itemId: ItemId,
         packageInfo: Option<PackageInfo>,
         url: Option<String>
-    ): LoadingResult<Item> {
+    ): Item {
         TODO("Not yet implemented")
     }
 

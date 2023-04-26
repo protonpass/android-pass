@@ -15,7 +15,6 @@ import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -342,7 +341,7 @@ class ItemRepositoryImpl @Inject constructor(
         withContext(Dispatchers.IO) {
             val trashedItems = localItemDataSource.getTrashedItems(userId)
             val trashedPerShare = trashedItems.groupBy { it.shareId }
-            trashedPerShare
+            val results = trashedPerShare
                 .map { entry ->
                     async {
                         restoreItemsForShare(
@@ -353,7 +352,11 @@ class ItemRepositoryImpl @Inject constructor(
                     }
                 }
                 .awaitAll()
-            LoadingResult.Success(Unit)
+                .transpose()
+
+            results.onFailure {
+                throw it
+            }
         }
     }
 
@@ -393,7 +396,7 @@ class ItemRepositoryImpl @Inject constructor(
         itemId: ItemId,
         packageInfo: Option<PackageInfo>,
         url: Option<String>
-    ): LoadingResult<Item> = withContext(Dispatchers.IO) {
+    ): Item = withContext(Dispatchers.IO) {
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
 
         val (item, itemProto) = encryptionContextProvider.withEncryptionContext {
@@ -411,19 +414,17 @@ class ItemRepositoryImpl @Inject constructor(
 
         if (!needsToUpdate) {
             PassLogger.i(TAG, "Did not need to perform any update")
-            return@withContext LoadingResult.Success(item)
+            return@withContext item
         }
 
         val userId = accountManager.getPrimaryUserId().first()
             ?: throw CryptoException("UserId cannot be null")
         val share = shareRepository.getById(userId, shareId)
-        return@withContext LoadingResult.Success(
-            performUpdate(
-                userId,
-                share,
-                item,
-                updatedContents
-            )
+        return@withContext performUpdate(
+            userId,
+            share,
+            item,
+            updatedContents
         )
     }
 

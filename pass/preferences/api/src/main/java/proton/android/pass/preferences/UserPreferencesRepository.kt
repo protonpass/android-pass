@@ -24,5 +24,8 @@ interface UserPreferencesRepository {
     suspend fun setClearClipboardPreference(clearClipboard: ClearClipboardPreference): Result<Unit>
     fun getClearClipboardPreference(): Flow<ClearClipboardPreference>
 
+    suspend fun setUseFaviconsPreference(useFavicons: UseFaviconsPreference): Result<Unit>
+    fun getUseFaviconsPreference(): Flow<UseFaviconsPreference>
+
     suspend fun clearPreferences(): Result<Unit>
 }

@@ -100,7 +100,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun restoreItems(userId: UserId): LoadingResult<Unit> {
+    override suspend fun restoreItems(userId: UserId) {
         TODO("Not yet implemented")
     }
 

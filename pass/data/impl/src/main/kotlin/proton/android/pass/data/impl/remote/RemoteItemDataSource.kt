@@ -40,7 +40,7 @@ interface RemoteItemDataSource {
         body: UpdateItemRequest
     ): ItemRevision
 
-    suspend fun getItems(userId: UserId, shareId: ShareId): LoadingResult<List<ItemRevision>>
+    suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision>
     suspend fun sendToTrash(
         userId: UserId,
         shareId: ShareId,

@@ -93,7 +93,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
     override suspend fun getItems(
         userId: UserId,
         shareId: ShareId
-    ): LoadingResult<List<ItemRevision>> =
+    ): List<ItemRevision> =
         api.get<PasswordManagerApi>(userId)
             .invoke {
                 var sinceToken: String? = null
@@ -114,7 +114,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
                 }
                 items
             }
-            .toLoadingResult()
+            .valueOrThrow
 
     override suspend fun sendToTrash(
         userId: UserId,

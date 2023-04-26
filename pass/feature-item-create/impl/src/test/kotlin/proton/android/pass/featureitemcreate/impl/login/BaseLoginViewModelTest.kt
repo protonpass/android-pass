@@ -8,6 +8,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
@@ -49,7 +50,8 @@ internal class BaseLoginViewModelTest {
             draftRepository = TestDraftRepository(),
             observeVaults = observeVaults,
             observeCurrentUser = observeCurrentUser,
-            savedStateHandle = savedStateHandle
+            savedStateHandle = savedStateHandle,
+            encryptionContextProvider = TestEncryptionContextProvider()
         ) {}
     }
 

@@ -30,6 +30,7 @@ object CreateLogin : NavItem(
     }
 }
 
+@Suppress("LongParameterList")
 @OptIn(
     ExperimentalAnimationApi::class,
     ExperimentalLifecycleComposeApi::class
@@ -42,6 +43,7 @@ fun NavGraphBuilder.createLoginGraph(
     onClose: () -> Unit,
     onScanTotp: () -> Unit,
     onCreateAlias: (ShareId, Option<String>) -> Unit,
+    onGeneratePasswordClick: () -> Unit
 ) {
     composable(CreateLogin) {
         val primaryTotp by getPrimaryTotp().collectAsStateWithLifecycle()
@@ -54,7 +56,8 @@ fun NavGraphBuilder.createLoginGraph(
             onClose = onClose,
             onSuccess = onSuccess,
             onScanTotp = onScanTotp,
-            onCreateAlias = onCreateAlias
+            onCreateAlias = onCreateAlias,
+            onGeneratePasswordClick = onGeneratePasswordClick
         )
     }
 }

@@ -69,7 +69,8 @@ class UpdateLoginViewModel @Inject constructor(
     observeVaults = observeVaults,
     observeCurrentUser = observeCurrentUser,
     savedStateHandle = savedStateHandle,
-    draftRepository = draftRepository
+    draftRepository = draftRepository,
+    encryptionContextProvider = encryptionContextProvider
 ) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->

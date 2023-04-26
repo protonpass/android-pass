@@ -8,17 +8,16 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.commonui.api.PasswordGenerator
 import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordUiState
-import proton.android.pass.featureitemcreate.impl.login.bottomsheet.password.GeneratePasswordSnackbarMessage.CopiedToClipboard
-import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.DraftRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class GeneratePasswordViewModel @Inject constructor(
-    private val snackbarDispatcher: SnackbarDispatcher,
-    private val clipboardManager: ClipboardManager
+    private val draftRepository: DraftRepository,
+    private val encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<GeneratePasswordUiState> =
@@ -46,11 +45,14 @@ class GeneratePasswordViewModel @Inject constructor(
     }
 
     fun onConfirm() = viewModelScope.launch {
-        clipboardManager.copyToClipboard(state.value.password, isSecure = true)
-        snackbarDispatcher(CopiedToClipboard)
+        encryptionContextProvider.withEncryptionContext {
+            draftRepository.save(DRAFT_PASSWORD, encrypt(state.value.password))
+        }
     }
 
     companion object {
+
+        const val DRAFT_PASSWORD = "draft_password"
 
         private fun generatePassword(length: Int, hasSpecialCharacters: Boolean): String {
             val option = when {

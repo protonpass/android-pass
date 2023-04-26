@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
 import proton.android.pass.autofill.entities.SaveInformation
@@ -20,7 +21,7 @@ class AutoSaveActivity : FragmentActivity() {
             finishApp()
             return
         }
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             AutoSaveApp(
                 arguments = arguments,

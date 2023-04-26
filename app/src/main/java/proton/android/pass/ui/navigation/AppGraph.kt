@@ -26,7 +26,9 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.generatepassword.
 import proton.android.pass.featureitemcreate.impl.bottomsheets.generatepassword.generatePasswordBottomsheetGraph
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.EditLogin
+import proton.android.pass.featureitemcreate.impl.login.GenerateLoginPasswordBottomsheet
 import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
+import proton.android.pass.featureitemcreate.impl.login.generatePasswordGraph
 import proton.android.pass.featureitemcreate.impl.login.updateLoginGraph
 import proton.android.pass.featureitemcreate.impl.note.CreateNote
 import proton.android.pass.featureitemcreate.impl.note.EditNote
@@ -79,6 +81,7 @@ fun NavGraphBuilder.appGraph(
                 ItemTypeUiState.Unknown -> {
                     CreateItemBottomsheet to CreateItemBottomsheet.createNavRoute(shareId)
                 }
+
                 ItemTypeUiState.Login -> CreateLogin to CreateLogin.createNavRoute(shareId)
                 ItemTypeUiState.Note -> CreateNote to CreateNote.createNavRoute(shareId)
                 ItemTypeUiState.Alias -> CreateAlias to CreateAlias.createNavRoute(shareId)
@@ -173,6 +176,9 @@ fun NavGraphBuilder.appGraph(
                 route = CreateAliasBottomSheet.createNavRoute(shareId, title),
                 backDestination = CreateLogin
             )
+        },
+        onGeneratePasswordClick = {
+            appNavigator.navigate(GenerateLoginPasswordBottomsheet)
         }
     )
     updateLoginGraph(
@@ -192,8 +198,12 @@ fun NavGraphBuilder.appGraph(
                 route = CreateAliasBottomSheet.createNavRoute(shareId, title),
                 backDestination = EditLogin
             )
+        },
+        onGeneratePasswordClick = {
+            appNavigator.navigate(GenerateLoginPasswordBottomsheet)
         }
     )
+    generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
     createTotpGraph(
         onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
         onCloseTotp = { appNavigator.onBackClick() },

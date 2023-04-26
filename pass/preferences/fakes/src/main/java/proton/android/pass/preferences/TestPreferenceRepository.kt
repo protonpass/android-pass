@@ -1,40 +1,23 @@
 package proton.android.pass.preferences
 
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import proton.android.pass.common.api.FlowUtils.testFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository {
 
-    private val biometricLockState = MutableSharedFlow<BiometricLockState>(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
-    )
-
+    private val biometricLockState = testFlow<BiometricLockState>()
     private val themePreference = MutableStateFlow(ThemePreference.Dark)
 
-    private val hasAuthenticated = MutableSharedFlow<HasAuthenticated>(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
-    )
-
-    private val hasCompletedOnBoarding = MutableSharedFlow<HasCompletedOnBoarding>(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
-    )
-
-    private val hasDismissedAutofillBanner = MutableSharedFlow<HasDismissedAutofillBanner>(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
-    )
-
-    private val copyTotpToClipboard = MutableSharedFlow<CopyTotpToClipboard>(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
-    )
-
-    private val clearClipboardPreference = MutableSharedFlow<ClearClipboardPreference>(
-        replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST, extraBufferCapacity = 1
-    )
+    private val hasAuthenticated = testFlow<HasAuthenticated>()
+    private val hasCompletedOnBoarding = testFlow<HasCompletedOnBoarding>()
+    private val hasDismissedAutofillBanner = testFlow<HasDismissedAutofillBanner>()
+    private val copyTotpToClipboard = testFlow<CopyTotpToClipboard>()
+    private val clearClipboardPreference = testFlow<ClearClipboardPreference>()
+    private val useFaviconsPreference = testFlow<UseFaviconsPreference>()
 
     override suspend fun setBiometricLockState(state: BiometricLockState): Result<Unit> {
         biometricLockState.tryEmit(state)
@@ -86,6 +69,12 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     override fun getClearClipboardPreference(): Flow<ClearClipboardPreference> =
         clearClipboardPreference
+
+    override suspend fun setUseFaviconsPreference(useFavicons: UseFaviconsPreference): Result<Unit> {
+        useFaviconsPreference.tryEmit(useFavicons)
+        return Result.success(Unit)
+    }
+    override fun getUseFaviconsPreference(): Flow<UseFaviconsPreference> = useFaviconsPreference
 
     override suspend fun clearPreferences(): Result<Unit> = Result.success(Unit)
 

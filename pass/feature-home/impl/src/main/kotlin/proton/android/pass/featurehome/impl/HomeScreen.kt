@@ -59,11 +59,7 @@ import proton.pass.domain.ShareId
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    homeScreenNavigation: HomeScreenNavigation,
-    onAddItemClick: (Option<ShareId>, ItemTypeUiState) -> Unit,
-    onCreateVaultClick: () -> Unit,
-    onEditVaultClick: (ShareId) -> Unit,
-    onDeleteVaultClick: (ShareId) -> Unit,
+    onNavigateEvent: (HomeNavigation) -> Unit,
     homeViewModel: HomeViewModel = hiltViewModel(),
     vaultDrawerViewModel: VaultDrawerViewModel = hiltViewModel()
 ) {
@@ -123,6 +119,7 @@ fun HomeScreen(
                     shouldScrollToTop = true
                     scope.launch { bottomSheetState.hide() }
                 }
+
                 LoginOptions -> LoginOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
@@ -139,7 +136,7 @@ fun HomeScreen(
                     },
                     onEdit = { shareId, itemId ->
                         scope.launch { bottomSheetState.hide() }
-                        homeScreenNavigation.toEditLogin(shareId, itemId)
+                        onNavigateEvent(HomeNavigation.EditLogin(shareId, itemId))
                     },
                     onMoveToTrash = {
                         scope.launch {
@@ -154,6 +151,7 @@ fun HomeScreen(
                         }
                     }
                 )
+
                 AliasOptions -> AliasOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
@@ -163,7 +161,7 @@ fun HomeScreen(
                     },
                     onEdit = { shareId, itemId ->
                         scope.launch { bottomSheetState.hide() }
-                        homeScreenNavigation.toEditAlias(shareId, itemId)
+                        onNavigateEvent(HomeNavigation.EditAlias(shareId, itemId))
                     },
                     onMoveToTrash = {
                         scope.launch {
@@ -178,6 +176,7 @@ fun HomeScreen(
                         }
                     }
                 )
+
                 NoteOptions -> NoteOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
@@ -187,7 +186,7 @@ fun HomeScreen(
                     },
                     onEdit = { shareId, itemId ->
                         scope.launch { bottomSheetState.hide() }
-                        homeScreenNavigation.toEditNote(shareId, itemId)
+                        onNavigateEvent(HomeNavigation.EditNote(shareId, itemId))
                     },
                     onMoveToTrash = {
                         scope.launch {
@@ -202,12 +201,14 @@ fun HomeScreen(
                         }
                     }
                 )
+
                 HomeBottomSheetType.VaultOptions -> {
                     val showDelete = when (val share = homeUiState.homeListUiState.selectedShare) {
                         None -> {
                             // We are in the all vaults view, so we can't delete the primary vault
                             selectedShare?.isPrimary != true
                         }
+
                         is Some -> {
                             // We are in the vault view, so we can't delete the actively selected
                             // vault nor the primary one
@@ -221,17 +222,18 @@ fun HomeScreen(
                         onEdit = {
                             scope.launch {
                                 bottomSheetState.hide()
-                                selectedShare?.let { onEditVaultClick(it.id) }
+                                selectedShare?.let { onNavigateEvent(HomeNavigation.EditVault(it.id)) }
                             }
                         },
                         onRemove = {
                             scope.launch {
                                 bottomSheetState.hide()
-                                selectedShare?.let { onDeleteVaultClick(it.id) }
+                                selectedShare?.let { onNavigateEvent(HomeNavigation.DeleteVault(it.id)) }
                             }
                         }
                     )
                 }
+
                 HomeBottomSheetType.TrashItemOptions -> TrashItemBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     onRestoreItem = { shareId, itemId ->
@@ -247,6 +249,7 @@ fun HomeScreen(
                         }
                     }
                 )
+
                 HomeBottomSheetType.TrashOptions -> TrashAllBottomSheetContents(
                     onEmptyTrash = {
                         scope.launch {
@@ -289,9 +292,7 @@ fun HomeScreen(
                         vaultDrawerViewModel.setVaultSelection(HomeVaultSelection.Trash)
                         homeViewModel.setVaultSelection(HomeVaultSelection.Trash)
                     },
-                    onCreateVaultClick = {
-                        onCreateVaultClick()
-                    },
+                    onCreateVaultClick = { onNavigateEvent(HomeNavigation.CreateVault) },
                     onVaultOptionsClick = { share ->
                         currentBottomSheet = HomeBottomSheetType.VaultOptions
                         selectedShare = share
@@ -308,7 +309,7 @@ fun HomeScreen(
                 shouldScrollToTop = shouldScrollToTop,
                 onItemClick = { item ->
                     homeViewModel.onItemClicked(item.shareId, item.id)
-                    homeScreenNavigation.toItemDetail(item.shareId, item.id)
+                    onNavigateEvent(HomeNavigation.ItemDetail(item.shareId, item.id))
                 },
                 onSearchQueryChange = { homeViewModel.onSearchQueryChange(it) },
                 onEnterSearch = { homeViewModel.onEnterSearch() },
@@ -318,7 +319,9 @@ fun HomeScreen(
                     currentBottomSheet = HomeBottomSheetType.Sorting
                     scope.launch { bottomSheetState.show() }
                 },
-                onAddItemClick = onAddItemClick,
+                onAddItemClick = { shareId: Option<ShareId>, itemTypeUiState: ItemTypeUiState ->
+                    onNavigateEvent(HomeNavigation.AddItem(shareId, itemTypeUiState))
+                },
                 onItemMenuClick = { item ->
                     selectedItem = item
                     if (isTrashMode) {
@@ -335,7 +338,7 @@ fun HomeScreen(
                 },
                 onRefresh = { homeViewModel.onRefresh() },
                 onScrollToTop = { shouldScrollToTop = false },
-                onProfileClick = { homeScreenNavigation.toProfile() },
+                onProfileClick = { onNavigateEvent(HomeNavigation.Profile) },
                 onItemTypeSelected = { homeViewModel.setItemTypeSelection(it) },
                 onTrashActionsClick = {
                     currentBottomSheet = HomeBottomSheetType.TrashOptions

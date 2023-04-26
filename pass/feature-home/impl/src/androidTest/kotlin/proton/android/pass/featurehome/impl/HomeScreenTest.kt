@@ -98,21 +98,11 @@ class HomeScreenTest {
             setContent {
                 PassTheme(isDark = true) {
                     HomeScreen(
-                        homeScreenNavigation = HomeScreenNavigation(
-                            toEditLogin = { _, _ -> },
-                            toEditNote = { _, _ -> },
-                            toEditAlias = { _, _ -> },
-                            toItemDetail = { shareId, itemId ->
-                                checker.call(shareId to itemId)
-                            },
-                            toAuth = {},
-                            toProfile = {},
-                            toOnBoarding = {},
-                        ),
-                        onAddItemClick = { _, _ -> },
-                        onCreateVaultClick = {},
-                        onEditVaultClick = {},
-                        onDeleteVaultClick = {},
+                        onNavigateEvent = {
+                            if (it is HomeNavigation.ItemDetail) {
+                                checker.call(it.shareId to it.itemId)
+                            }
+                        }
                     )
                 }
             }
@@ -133,19 +123,11 @@ class HomeScreenTest {
         composeTestRule.setContent {
             PassTheme(isDark = true) {
                 HomeScreen(
-                    homeScreenNavigation = HomeScreenNavigation(
-                        toEditLogin = { _, _ -> },
-                        toEditNote = { _, _ -> },
-                        toEditAlias = { _, _ -> },
-                        toItemDetail = { _, _ -> },
-                        toAuth = {},
-                        toProfile = {},
-                        toOnBoarding = {},
-                    ),
-                    onAddItemClick = { _, _ -> },
-                    onCreateVaultClick = { checker.call() },
-                    onEditVaultClick = {},
-                    onDeleteVaultClick = {},
+                    onNavigateEvent = {
+                        if (it is HomeNavigation.CreateVault) {
+                            checker.call()
+                        }
+                    }
                 )
             }
         }
@@ -167,21 +149,11 @@ class HomeScreenTest {
             setContent {
                 PassTheme(isDark = true) {
                     HomeScreen(
-                        homeScreenNavigation = HomeScreenNavigation(
-                            toEditLogin = { _, _ -> },
-                            toEditNote = { _, _ -> },
-                            toEditAlias = { _, _ -> },
-                            toItemDetail = { _, _ -> },
-                            toAuth = {},
-                            toProfile = {},
-                            toOnBoarding = {},
-                        ),
-                        onAddItemClick = { _, itemType ->
-                            checker.call(itemType)
-                        },
-                        onCreateVaultClick = { },
-                        onEditVaultClick = {},
-                        onDeleteVaultClick = {},
+                        onNavigateEvent = {
+                            if (it is HomeNavigation.AddItem) {
+                                checker.call(it.itemTypeUiState)
+                            }
+                        }
                     )
                 }
             }
@@ -224,21 +196,11 @@ class HomeScreenTest {
             setContent {
                 PassTheme(isDark = true) {
                     HomeScreen(
-                        homeScreenNavigation = HomeScreenNavigation(
-                            toEditLogin = { _, _ -> },
-                            toEditNote = { _, _ -> },
-                            toEditAlias = { _, _ -> },
-                            toItemDetail = { _, _ -> },
-                            toAuth = {},
-                            toProfile = {},
-                            toOnBoarding = {},
-                        ),
-                        onAddItemClick = { _, itemType ->
-                            checker.call(itemType)
-                        },
-                        onCreateVaultClick = { },
-                        onEditVaultClick = {},
-                        onDeleteVaultClick = {},
+                        onNavigateEvent = {
+                            if (it is HomeNavigation.AddItem) {
+                                checker.call(it.itemTypeUiState)
+                            }
+                        }
                     )
                 }
             }

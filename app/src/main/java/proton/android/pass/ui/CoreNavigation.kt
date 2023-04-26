@@ -9,5 +9,6 @@ data class CoreNavigation(
     val onSignOut: (UserId) -> Unit,
     val onRemove: (UserId?) -> Unit,
     val onSwitch: (UserId) -> Unit,
-    val onReport: () -> Unit
+    val onReport: () -> Unit,
+    val onCurrentSubscription: () -> Unit
 )

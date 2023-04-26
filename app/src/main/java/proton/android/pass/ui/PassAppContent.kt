@@ -84,7 +84,8 @@ fun PassAppContent(
                                     callback()
                                 }
                             },
-                            onLogout = { coreNavigation.onRemove(null) }
+                            onLogout = { coreNavigation.onRemove(null) },
+                            onCurrentSubscription = { coreNavigation.onCurrentSubscription() }
                         )
                     }
                 }

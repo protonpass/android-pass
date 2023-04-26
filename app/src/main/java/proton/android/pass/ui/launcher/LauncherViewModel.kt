@@ -175,7 +175,7 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
-    fun subscription() = viewModelScope.launch {
+    fun onCurrentSubscription() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
             plansOrchestrator.showCurrentPlanWorkflow(it)
         }

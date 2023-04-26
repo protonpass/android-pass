@@ -1,7 +1,6 @@
 package proton.android.pass.data.impl.remote
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
@@ -60,7 +59,7 @@ interface RemoteItemDataSource {
         shareId: ShareId,
         itemId: ItemId,
         now: Long
-    ): LoadingResult<Unit>
+    )
 
     suspend fun migrateItem(
         userId: UserId,

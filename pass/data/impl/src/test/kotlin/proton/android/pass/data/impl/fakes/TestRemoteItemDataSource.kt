@@ -1,7 +1,6 @@
 package proton.android.pass.data.impl.fakes
 
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
@@ -97,7 +96,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         shareId: ShareId,
         itemId: ItemId,
         now: Long
-    ): LoadingResult<Unit> {
+    ) {
         throw IllegalStateException("Not yet implemented")
     }
 

@@ -15,7 +15,6 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
@@ -42,22 +41,30 @@ open class FetchItemsWorker @AssistedInject constructor(
             shareIds.map { shareId ->
                 async {
                     PassLogger.d(TAG, "Refreshing items on share ${shareId.id}")
-                    val res = itemRepository.refreshItems(userId, shareId)
-                    PassLogger.d(TAG, "Refreshed items on share ${shareId.id}")
-                    res
+                    runCatching {
+                        itemRepository.refreshItems(userId, shareId)
+                    }.onSuccess {
+                        PassLogger.d(TAG, "Refreshed items on share ${shareId.id}")
+                    }.onFailure {
+                        PassLogger.e(TAG, it, "Error refreshing items on share ${shareId.id}")
+                    }
                 }
             }.awaitAll()
         }
 
         PassLogger.i(TAG, "Finished refreshing items")
 
-        val hasErrors = results.any { it is LoadingResult.Error }
-        if (hasErrors) {
-            itemSyncStatusRepository.emit(ItemSyncStatus.NotSynced)
-            return Result.retry()
+        val items = results.map { result ->
+            result.fold(
+                onSuccess = { it },
+                onFailure = {
+                    itemSyncStatusRepository.emit(ItemSyncStatus.NotSynced)
+                    return Result.retry()
+                }
+            )
         }
 
-        val hasItems = results.any { it is LoadingResult.Success && it.data.isNotEmpty() }
+        val hasItems = results.any { items.isNotEmpty() }
         itemSyncStatusRepository.emit(ItemSyncStatus.Synced(hasItems))
         return Result.success()
     }

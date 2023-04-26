@@ -45,7 +45,7 @@ interface RemoteItemDataSource {
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): LoadingResult<TrashItemsResponse>
+    ): TrashItemsResponse
 
     suspend fun untrash(
         userId: UserId,

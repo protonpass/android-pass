@@ -138,10 +138,9 @@ class RemoteItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): LoadingResult<Unit> =
-        api.get<PasswordManagerApi>(userId)
-            .invoke { deleteItems(shareId.id, body) }
-            .toLoadingResult()
+    ) = api.get<PasswordManagerApi>(userId)
+        .invoke { deleteItems(shareId.id, body) }
+        .valueOrThrow
 
     override suspend fun updateLastUsedTime(
         userId: UserId,

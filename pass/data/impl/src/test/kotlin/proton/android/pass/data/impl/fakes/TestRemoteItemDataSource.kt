@@ -64,7 +64,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override suspend fun getItems(userId: UserId, shareId: ShareId): LoadingResult<List<ItemRevision>> {
+    override suspend fun getItems(userId: UserId, shareId: ShareId): List<ItemRevision> {
         throw IllegalStateException("Not yet implemented")
     }
 

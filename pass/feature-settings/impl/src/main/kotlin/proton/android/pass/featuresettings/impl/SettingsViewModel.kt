@@ -23,21 +23,24 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
+import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.pass.domain.Vault
 import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    preferencesRepository: UserPreferencesRepository,
+    private val preferencesRepository: UserPreferencesRepository,
     private val observeCurrentUser: ObserveCurrentUser,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val refreshContent: RefreshContent,
+    private val clearIconCache: ClearIconCache,
     observeVaults: ObserveVaults
 ) : ViewModel() {
 
@@ -54,17 +57,24 @@ class SettingsViewModel @Inject constructor(
             .getCopyTotpToClipboardEnabled()
             .distinctUntilChanged()
 
+    private val useFaviconsState: Flow<UseFaviconsPreference> =
+        preferencesRepository
+            .getUseFaviconsPreference()
+            .distinctUntilChanged()
+
     data class PreferencesState(
         val biometricLock: BiometricLockState,
         val theme: ThemePreference,
-        val copyTotpToClipboard: CopyTotpToClipboard
+        val copyTotpToClipboard: CopyTotpToClipboard,
+        val useFavicons: UseFaviconsPreference,
     )
 
     private val preferencesState: Flow<PreferencesState> = combine(
         biometricLockState,
         themeState,
-        copyTotpToClipboardState
-    ) { biometric, theme, totp -> PreferencesState(biometric, theme, totp) }
+        copyTotpToClipboardState,
+        useFaviconsState
+    ) { biometric, theme, totp, favicons -> PreferencesState(biometric, theme, totp, favicons) }
 
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -95,13 +105,29 @@ class SettingsViewModel @Inject constructor(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
             isLoadingState = loading,
-            primaryVault = primaryVault
+            primaryVault = primaryVault,
+            useFavicons = preferences.useFavicons
         )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
         initialValue = SettingsUiState.Initial
     )
+
+    fun onUseFaviconsChange(useFavicons: Boolean) = viewModelScope.launch {
+        preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.from(useFavicons))
+
+        if (!useFavicons) {
+            runCatching { clearIconCache() }
+                .onSuccess {
+                    snackbarDispatcher(SettingsSnackbarMessage.ClearIconCacheSuccess)
+                }
+                .onFailure {
+                    PassLogger.w(TAG, it, "Error clearing icon cache")
+                    snackbarDispatcher(SettingsSnackbarMessage.ClearIconCacheError)
+                }
+        }
+    }
 
     fun onForceSync() = viewModelScope.launch {
         val userId = observeCurrentUser().firstOrNull()?.userId ?: return@launch

@@ -16,11 +16,13 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.loading.LoadingDialog
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.preferences.value
 
 @Composable
 fun SettingsContent(
     modifier: Modifier = Modifier,
     state: SettingsUiState,
+    onUseFaviconsChange: (Boolean) -> Unit,
     onSelectThemeClick: () -> Unit,
     onClipboardClick: () -> Unit,
     onViewLogsClick: () -> Unit,
@@ -55,6 +57,10 @@ fun SettingsContent(
                 theme = state.themePreference,
                 onSelectThemeClick = onSelectThemeClick,
                 onClipboardClick = onClipboardClick
+            )
+            UseFaviconsSection(
+                value = state.useFavicons.value(),
+                onChange = onUseFaviconsChange
             )
             PrimaryVaultSection(
                 primaryVault = state.primaryVault,

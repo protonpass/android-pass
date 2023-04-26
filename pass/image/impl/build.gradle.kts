@@ -31,6 +31,7 @@ dependencies {
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.image.api)
     implementation(projects.pass.log.api)
 
     implementation(libs.dagger.hilt.android)

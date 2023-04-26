@@ -19,7 +19,6 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -104,7 +103,8 @@ class ItemRepositoryImpl @Inject constructor(
                 throw e
             }
 
-            val itemResponse = remoteItemDataSource.createItem(userId, share.id, body.request.toRequest())
+            val itemResponse =
+                remoteItemDataSource.createItem(userId, share.id, body.request.toRequest())
             val entity = itemResponseToEntity(
                 userAddress,
                 itemResponse,
@@ -183,8 +183,10 @@ class ItemRepositoryImpl @Inject constructor(
             )
 
             val itemResponse = remoteItemDataSource.createItemAndAlias(userId, shareId, request)
-            val itemEntity = itemResponseToEntity(userAddress, itemResponse.item, share, listOf(shareKey))
-            val aliasEntity = itemResponseToEntity(userAddress, itemResponse.alias, share, listOf(shareKey))
+            val itemEntity =
+                itemResponseToEntity(userAddress, itemResponse.item, share, listOf(shareKey))
+            val aliasEntity =
+                itemResponseToEntity(userAddress, itemResponse.alias, share, listOf(shareKey))
             database.inTransaction {
                 localItemDataSource.upsertItem(itemEntity)
                 localItemDataSource.upsertItem(aliasEntity)
@@ -223,6 +225,7 @@ class ItemRepositoryImpl @Inject constructor(
                 itemState = itemState,
                 filter = itemTypeFilter
             )
+
             is ShareSelection.AllShares -> localItemDataSource.observeItems(
                 userId = userId,
                 itemState = itemState,
@@ -256,32 +259,31 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): LoadingResult<Unit> =
+    ) {
         withContext(Dispatchers.IO) {
             val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
             if (item.state == ItemState.Trashed.value) {
-                return@withContext LoadingResult.Error(CannotRemoveNotTrashedItemError())
+                throw CannotRemoveNotTrashedItemError()
             }
 
             val body = TrashItemsRequest(
                 listOf(TrashItemRevision(itemId = item.id, revision = item.revision))
             )
 
-            return@withContext remoteItemDataSource.sendToTrash(userId, shareId, body)
-                .map { response ->
-                    database.inTransaction {
-                        response.items.find { it.itemId == item.id }
-                            ?.let {
-                                val updatedItem = item.copy(
-                                    revision = it.revision,
-                                    state = ItemState.Trashed.value
-                                )
-                                localItemDataSource.upsertItem(updatedItem)
-                            }
-                            ?: Unit
+            val response = remoteItemDataSource.sendToTrash(userId, shareId, body)
+            return@withContext database.inTransaction {
+                response.items.find { it.itemId == item.id }
+                    ?.let {
+                        val updatedItem = item.copy(
+                            revision = it.revision,
+                            state = ItemState.Trashed.value
+                        )
+                        localItemDataSource.upsertItem(updatedItem)
                     }
-                }
+            }
         }
+    }
+
 
     override suspend fun untrashItem(
         userId: UserId,
@@ -311,6 +313,7 @@ class ItemRepositoryImpl @Inject constructor(
                 localItemDataSource.upsertItem(originalItem)
                 LoadingResult.Error(res.exception)
             }
+
             is LoadingResult.Success -> LoadingResult.Success(Unit)
         }
     }
@@ -436,7 +439,14 @@ class ItemRepositoryImpl @Inject constructor(
         val userId = accountManager.getPrimaryUserId().first()
             ?: throw CryptoException("UserId cannot be null")
         val share = shareRepository.getById(userId, shareId)
-        return@withContext LoadingResult.Success(performUpdate(userId, share, item, updatedContents))
+        return@withContext LoadingResult.Success(
+            performUpdate(
+                userId,
+                share,
+                item,
+                updatedContents
+            )
+        )
     }
 
     override suspend fun refreshItems(userId: UserId, share: Share): List<Item> =
@@ -521,7 +531,8 @@ class ItemRepositoryImpl @Inject constructor(
         val item = requireNotNull(localItemDataSource.getById(source.id, itemId))
         val destinationKey = shareKeyRepository.getLatestKeyForShare(destination.id).first()
 
-        val body = migrateItem.migrate(destinationKey, item.encryptedContent, item.contentFormatVersion)
+        val body =
+            migrateItem.migrate(destinationKey, item.encryptedContent, item.contentFormatVersion)
         val request = MigrateItemRequest(
             shareId = destination.id.id,
             item = body.toRequest()
@@ -584,6 +595,7 @@ class ItemRepositoryImpl @Inject constructor(
                         itemContentsWithPackageName.withUrl(url.value)
                     }
                 }
+
                 else -> {
                     PassLogger.i(
                         TAG,

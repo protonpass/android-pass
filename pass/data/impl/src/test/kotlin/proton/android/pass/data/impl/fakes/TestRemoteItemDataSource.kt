@@ -88,7 +88,7 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         userId: UserId,
         shareId: ShareId,
         body: TrashItemsRequest
-    ): LoadingResult<Unit> {
+    ) {
         throw IllegalStateException("Not yet implemented")
     }
 

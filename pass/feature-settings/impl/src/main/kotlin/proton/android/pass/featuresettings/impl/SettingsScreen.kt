@@ -25,6 +25,7 @@ fun SettingsScreen(
     SettingsContent(
         modifier = modifier,
         state = state,
+        onUseFaviconsChange = { viewModel.onUseFaviconsChange(it) },
         onViewLogsClick = onViewLogsClick,
         onForceSyncClick = { viewModel.onForceSync() },
         onSelectThemeClick = onSelectThemeClick,

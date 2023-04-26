@@ -36,6 +36,11 @@
     <string name="settings_primary_vault_change_success">The primary vault has been changed</string>
     <string name="settings_primary_vault_change_error">Could not change the primary vault</string>
 
+    <string name="settings_use_favicons_preference_title">Use web icons</string>
+    <string name="settings_use_favicons_preference_subtitle">Decide if you want to view the website icons on your items.</string>
+    <string name="settings_clear_icon_cache_success">Icon cache cleared</string>
+    <string name="settings_clear_icon_cache_error">Could not clear the icon cache</string>
+
 
     <string name="view_logs_title">View logs</string>
     <string name="clipboard_bottomsheet_title">Clipboard</string>

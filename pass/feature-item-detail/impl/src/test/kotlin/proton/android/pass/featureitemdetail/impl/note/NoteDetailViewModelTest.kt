@@ -9,7 +9,6 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
@@ -88,7 +87,7 @@ class NoteDetailViewModelTest {
             assertThat(value.isItemSentToTrash).isFalse()
         }
 
-        trashItem.setResult(LoadingResult.Success(Unit))
+        trashItem.setResult(Result.success(Unit))
         instance.onMoveToTrash(item.shareId, item.id)
 
         instance.state.test {
@@ -109,7 +108,7 @@ class NoteDetailViewModelTest {
             assertThat(value.isItemSentToTrash).isFalse()
         }
 
-        trashItem.setResult(LoadingResult.Error(IllegalStateException("test")))
+        trashItem.setResult(Result.failure(IllegalStateException("test")))
         instance.onMoveToTrash(item.shareId, item.id)
 
         instance.state.test {

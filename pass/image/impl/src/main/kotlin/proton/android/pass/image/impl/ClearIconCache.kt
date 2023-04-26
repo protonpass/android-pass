@@ -4,12 +4,9 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
-
-interface ClearIconCache {
-    suspend operator fun invoke()
-}
 
 class ClearIconCacheImpl @Inject constructor(
     @ApplicationContext private val context: Context

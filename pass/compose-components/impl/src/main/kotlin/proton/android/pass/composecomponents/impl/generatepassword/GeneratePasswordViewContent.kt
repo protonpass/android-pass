@@ -13,8 +13,10 @@ import androidx.compose.material.Switch
 import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -64,22 +66,19 @@ fun GeneratePasswordViewContent(
                 style = PassTypography.body3Regular,
                 fontSize = 16.sp
             )
-            val (length, setLength) = remember { mutableStateOf(state.length.toFloat()) }
+            var sliderPosition by remember { mutableStateOf(state.length.toFloat()) }
+            val valueRange = remember { 4.toFloat()..64.toFloat() }
             Slider(
                 modifier = Modifier.weight(1f),
-                value = length,
-                valueRange = 4.toFloat()..64.toFloat(),
+                value = sliderPosition,
+                valueRange = valueRange,
                 colors = SliderDefaults.colors(
                     thumbColor = PassTheme.colors.loginInteractionNormMajor1,
                     activeTrackColor = PassTheme.colors.loginInteractionNormMajor1,
                     inactiveTrackColor = PassTheme.colors.loginInteractionNormMinor1
                 ),
-                onValueChange = { newLength ->
-                    if (length.toInt() != newLength.toInt()) {
-                        setLength(newLength)
-                        onLengthChange(newLength.toInt())
-                    }
-                }
+                onValueChange = { sliderPosition = it },
+                onValueChangeFinished = { onLengthChange(sliderPosition.toInt()) }
             )
         }
 

@@ -61,15 +61,17 @@ fun GeneratePasswordViewContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
+                modifier = Modifier.weight(SLIDER_TEXT_WEIGHT),
                 text = stringResource(R.string.character_count, state.length),
                 color = PassTheme.colors.textNorm,
                 style = PassTypography.body3Regular,
                 fontSize = 16.sp
             )
+
             var sliderPosition by remember { mutableStateOf(state.length.toFloat()) }
             val valueRange = remember { 4.toFloat()..64.toFloat() }
             Slider(
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(SLIDER_CONTENT_WEIGHT),
                 value = sliderPosition,
                 valueRange = valueRange,
                 colors = SliderDefaults.colors(
@@ -77,8 +79,12 @@ fun GeneratePasswordViewContent(
                     activeTrackColor = PassTheme.colors.loginInteractionNormMajor1,
                     inactiveTrackColor = PassTheme.colors.loginInteractionNormMinor1
                 ),
-                onValueChange = { sliderPosition = it },
-                onValueChangeFinished = { onLengthChange(sliderPosition.toInt()) }
+                onValueChange = { newLength ->
+                    if (sliderPosition.toInt() != newLength.toInt()) {
+                        sliderPosition = newLength
+                        onLengthChange(newLength.toInt())
+                    }
+                }
             )
         }
 
@@ -123,3 +129,6 @@ fun GeneratePasswordViewContentThemePreview(
         }
     }
 }
+
+private const val SLIDER_CONTENT_WEIGHT = 0.7f
+private const val SLIDER_TEXT_WEIGHT = 0.3f

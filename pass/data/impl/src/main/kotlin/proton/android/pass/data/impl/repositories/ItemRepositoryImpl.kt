@@ -20,6 +20,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.CryptoException
@@ -314,40 +315,28 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun clearTrash(userId: UserId): LoadingResult<Unit> =
+    override suspend fun clearTrash(userId: UserId) {
         withContext(Dispatchers.IO) {
             val trashedItems = localItemDataSource.getTrashedItems(userId)
             val trashedPerShare = trashedItems.groupBy { it.shareId }
-            trashedPerShare
+            val results = trashedPerShare
                 .map { entry ->
                     async {
-                        val shareId = ShareId(entry.key)
-                        val shareItems = entry.value
-                        shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).forEach { items ->
-                            val body =
-                                TrashItemsRequest(
-                                    items.map {
-                                        TrashItemRevision(
-                                            it.id,
-                                            it.revision
-                                        )
-                                    }
-                                )
-                            remoteItemDataSource.delete(userId, shareId, body)
-                            database.inTransaction {
-                                items.forEach { item ->
-                                    localItemDataSource.delete(
-                                        shareId,
-                                        ItemId(item.id)
-                                    )
-                                }
-                            }
-                        }
+                        clearItemsForShare(
+                            shareId = ShareId(entry.key),
+                            shareItems = entry.value,
+                            userId = userId
+                        )
                     }
                 }
                 .awaitAll()
-            LoadingResult.Success(Unit)
+                .transpose()
+
+            results.onFailure {
+                throw it
+            }
         }
+    }
 
     override suspend fun restoreItems(userId: UserId): LoadingResult<Unit> =
         withContext(Dispatchers.IO) {
@@ -558,6 +547,37 @@ class ItemRepositoryImpl @Inject constructor(
             entityToDomain(this@withEncryptionContext, resAsEntity)
         }
     }
+
+    private suspend fun clearItemsForShare(
+        userId: UserId,
+        shareId: ShareId,
+        shareItems: List<ItemEntity>
+    ): Result<Unit> = shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).map { items ->
+        val body =
+            TrashItemsRequest(
+                items.map {
+                    TrashItemRevision(
+                        it.id,
+                        it.revision
+                    )
+                }
+            )
+
+        runCatching { remoteItemDataSource.delete(userId, shareId, body) }
+            .onSuccess {
+                database.inTransaction {
+                    items.forEach { item ->
+                        localItemDataSource.delete(
+                            shareId,
+                            ItemId(item.id)
+                        )
+                    }
+                }
+            }
+            .onFailure {
+                PassLogger.w(TAG, it, "Error clearing items for share")
+            }
+    }.transpose().map { }
 
     private fun updateItemContents(
         item: Item,

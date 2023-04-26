@@ -14,6 +14,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import proton.android.pass.image.api.ClearIconCache
 import javax.inject.Singleton
 
 private const val MEMORY_CACHE_SIZE_PERCENTAGE = 0.25

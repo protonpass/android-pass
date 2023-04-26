@@ -287,6 +287,7 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.data.impl)
     implementation(projects.pass.domain)
+    implementation(projects.pass.image.api)
     implementation(projects.pass.image.impl)
     implementation(projects.pass.featureAccount.impl)
     implementation(projects.pass.featureAuth.impl)

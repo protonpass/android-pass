@@ -389,19 +389,29 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): LoadingResult<Unit> = withContext(Dispatchers.IO) {
-        val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-        if (item.state != ItemState.Trashed.value) return@withContext LoadingResult.Success(Unit)
+    ) {
+        withContext(Dispatchers.IO) {
+            val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
+            if (item.state != ItemState.Trashed.value) return@withContext
 
-        val body =
-            TrashItemsRequest(listOf(TrashItemRevision(itemId = item.id, revision = item.revision)))
-        return@withContext when (val result = remoteItemDataSource.delete(userId, shareId, body)) {
-            is LoadingResult.Error -> LoadingResult.Error(result.exception)
-            LoadingResult.Loading -> LoadingResult.Loading
-            is LoadingResult.Success -> {
-                localItemDataSource.delete(shareId, itemId)
-                LoadingResult.Success(Unit)
-            }
+            val body =
+                TrashItemsRequest(
+                    listOf(
+                        TrashItemRevision(
+                            itemId = item.id,
+                            revision = item.revision
+                        )
+                    )
+                )
+
+            runCatching { remoteItemDataSource.delete(userId, shareId, body) }
+                .onSuccess {
+                    localItemDataSource.delete(shareId, itemId)
+                }
+                .onFailure {
+                    PassLogger.w(TAG, it, "Error deleting item")
+                    throw it
+                }
         }
     }
 

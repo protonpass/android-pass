@@ -50,6 +50,7 @@ dependencies {
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
+    implementation(projects.pass.image.api)
     implementation(projects.pass.log.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)

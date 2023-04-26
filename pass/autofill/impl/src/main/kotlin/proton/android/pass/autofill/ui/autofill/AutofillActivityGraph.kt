@@ -16,15 +16,17 @@ import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
+import proton.android.pass.featureitemcreate.impl.login.GenerateLoginPasswordBottomsheet
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
+import proton.android.pass.featureitemcreate.impl.login.generatePasswordGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
 import proton.android.pass.navigation.api.AppNavigator
 
-@Suppress("LongParameterList")
+@Suppress("LongParameterList", "LongMethod")
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -76,8 +78,12 @@ fun NavGraphBuilder.autofillActivityGraph(
                 destination = CreateAliasBottomSheet,
                 route = CreateAliasBottomSheet.createNavRoute(shareId, title)
             )
+        },
+        onGeneratePasswordClick = {
+            appNavigator.navigate(GenerateLoginPasswordBottomsheet)
         }
     )
+    generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
     createTotpGraph(
         onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
         onCloseTotp = { appNavigator.onBackClick() },

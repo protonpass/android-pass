@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -27,6 +28,7 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -35,6 +37,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.password.GeneratePasswordViewModel
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -51,6 +54,7 @@ abstract class BaseLoginViewModel(
     private val draftRepository: DraftRepository,
     observeVaults: ObserveVaultsWithItemCount,
     observeCurrentUser: ObserveCurrentUser,
+    encryptionContextProvider: EncryptionContextProvider,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -65,6 +69,21 @@ abstract class BaseLoginViewModel(
     protected val aliasLocalItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
     private val aliasDraftState: Flow<Option<AliasItem>> = draftRepository
         .get(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+    private val passwordDraftState: Flow<Option<String>> = draftRepository
+        .get<String>(GeneratePasswordViewModel.DRAFT_PASSWORD)
+        .onEach {
+            if (it is Some) {
+                draftRepository.delete<String>(GeneratePasswordViewModel.DRAFT_PASSWORD).value()
+                    ?.let { encryptedPassword ->
+                        loginItemState.update { loginItem ->
+                            encryptionContextProvider.withEncryptionContext {
+                                loginItem.copy(password = decrypt(encryptedPassword))
+                            }
+                        }
+                    }
+            }
+        }
+
     private val aliasState: Flow<Option<AliasItem>> = combine(
         aliasLocalItemState,
         aliasDraftState.onStart { emit(None) }
@@ -75,6 +94,7 @@ abstract class BaseLoginViewModel(
                 draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
                 aliasDraft
             }
+
             None -> aliasItem
         }
     }
@@ -120,13 +140,14 @@ abstract class BaseLoginViewModel(
         val currentVault: VaultWithItemCount
     )
 
-    private val loginAliasItemWrapperState = combine(
+    private val loginAliasItemWrapperState = combineN(
+        passwordDraftState,
         loginItemState,
         loginItemValidationErrorsState,
         canUpdateUsernameState,
         observeCurrentUser().map { it.email },
         aliasState
-    ) { loginItem, loginItemValidationErrors, updateUsername, primaryEmail, aliasItem ->
+    ) { _, loginItem, loginItemValidationErrors, updateUsername, primaryEmail, aliasItem ->
         LoginAliasItemWrapper(
             loginItem,
             loginItemValidationErrors,
@@ -274,7 +295,8 @@ abstract class BaseLoginViewModel(
                         onSuccess = { it },
                         onFailure = {
                             loginItemValidationErrorsState.update { errors ->
-                                errors.toMutableSet().apply { add(LoginItemValidationErrors.InvalidTotp) }
+                                errors.toMutableSet()
+                                    .apply { add(LoginItemValidationErrors.InvalidTotp) }
                             }
                             snackbarDispatcher(LoginSnackbarMessages.InvalidTotpError)
                             return false

@@ -14,7 +14,7 @@ val LoginBottomSheetContentTypeSaver: Saver<LoginBottomSheetContentType, Any> = 
             if (values.isNotEmpty()) {
                 LoginBottomSheetContentType.valueOf(values[variant] as String)
             } else {
-                LoginBottomSheetContentType.GeneratePassword
+                LoginBottomSheetContentType.AliasOptions
             }
         }
     )

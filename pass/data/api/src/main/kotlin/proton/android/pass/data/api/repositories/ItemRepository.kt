@@ -52,7 +52,7 @@ interface ItemRepository {
 
     suspend fun getById(userId: UserId, shareId: ShareId, itemId: ItemId): Item
     suspend fun trashItem(userId: UserId, shareId: ShareId, itemId: ItemId)
-    suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId): LoadingResult<Unit>
+    suspend fun untrashItem(userId: UserId, shareId: ShareId, itemId: ItemId)
     suspend fun deleteItem(userId: UserId, shareId: ShareId, itemId: ItemId): LoadingResult<Unit>
     suspend fun clearTrash(userId: UserId): LoadingResult<Unit>
     suspend fun restoreItems(userId: UserId): LoadingResult<Unit>

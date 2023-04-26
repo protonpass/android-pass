@@ -3,9 +3,6 @@ package proton.android.pass.data.impl.remote
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
-import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.map
-import proton.android.pass.common.api.toLoadingResult
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
@@ -147,11 +144,11 @@ class RemoteItemDataSourceImpl @Inject constructor(
         shareId: ShareId,
         itemId: ItemId,
         now: Long
-    ): LoadingResult<Unit> =
+    ) {
         api.get<PasswordManagerApi>(userId)
             .invoke { updateLastUsedTime(shareId.id, itemId.id, UpdateLastUsedTimeRequest(now)) }
-            .toLoadingResult()
-            .map { }
+            .valueOrThrow
+    }
 
     override suspend fun migrateItem(
         userId: UserId,

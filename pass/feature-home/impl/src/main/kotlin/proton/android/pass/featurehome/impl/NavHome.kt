@@ -5,28 +5,17 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.common.api.Option
-import proton.android.pass.commonuimodels.api.ItemTypeUiState
-import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun NavHome(
-    onAddItemClick: (Option<ShareId>, ItemTypeUiState) -> Unit,
-    homeScreenNavigation: HomeScreenNavigation,
-    onCreateVaultClick: () -> Unit,
-    onEditVaultClick: (ShareId) -> Unit,
-    onDeleteVaultClick: (ShareId) -> Unit,
+    onNavigateEvent: (HomeNavigation) -> Unit,
     viewModel: NavHomeViewModel = hiltViewModel()
 ) {
     val state by viewModel.navHomeUiState.collectAsStateWithLifecycle(NavHomeUiState.Initial)
 
     NavHomeContent(
         state = state,
-        homeScreenNavigation = homeScreenNavigation,
-        onAddItemClick = onAddItemClick,
-        onCreateVaultClick = onCreateVaultClick,
-        onEditVaultClick = onEditVaultClick,
-        onDeleteVaultClick = onDeleteVaultClick
+        onNavigateEvent = onNavigateEvent
     )
 }

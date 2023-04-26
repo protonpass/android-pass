@@ -75,7 +75,8 @@ fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
     finishActivity: () -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit,
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
+    onCurrentSubscription: () -> Unit
 ) {
     homeGraph(
         onNavigateEvent = {
@@ -211,7 +212,8 @@ fun NavGraphBuilder.appGraph(
         onSignOutClick = { appNavigator.navigate(SignOutDialog) },
         onUpClick = { appNavigator.onBackClick() },
         onDismissClick = { appNavigator.onBackClick() },
-        onConfirmSignOutClick = onLogout
+        onConfirmSignOutClick = onLogout,
+        onCurrentSubscriptionClick = { onCurrentSubscription() }
     )
     profileGraph(
         onAccountClick = { appNavigator.navigate(Account) },

@@ -14,10 +14,15 @@ fun NavGraphBuilder.accountGraph(
     onSignOutClick: () -> Unit,
     onDismissClick: () -> Unit,
     onConfirmSignOutClick: () -> Unit,
-    onUpClick: () -> Unit
+    onUpClick: () -> Unit,
+    onCurrentSubscriptionClick: () -> Unit
 ) {
     composable(Account) {
-        AccountScreen(onSignOutClick = onSignOutClick, onUpClick = onUpClick)
+        AccountScreen(
+            onSignOutClick = onSignOutClick,
+            onUpClick = onUpClick,
+            onCurrentSubscriptionClick = onCurrentSubscriptionClick
+        )
     }
 
     dialog(SignOutDialog) {

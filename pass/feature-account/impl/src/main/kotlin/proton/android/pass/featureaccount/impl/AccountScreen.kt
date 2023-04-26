@@ -15,6 +15,7 @@ fun AccountScreen(
     modifier: Modifier = Modifier,
     onSignOutClick: () -> Unit,
     onUpClick: () -> Unit,
+    onCurrentSubscriptionClick: () -> Unit,
     viewModel: AccountViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -31,8 +32,7 @@ fun AccountScreen(
             openWebsite(context, "https://account.proton.me/u/0/pass/account-password")
         },
         onUpgradeClick = {
-            // no-op
+            onCurrentSubscriptionClick()
         }
     )
 }
-

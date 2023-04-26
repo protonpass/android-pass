@@ -115,3 +115,19 @@ inline fun <T, R> Result<T>.flatMap(transform: (T) -> Result<R>): Result<R> =
     )
 
 fun <T> List<Result<T>>.firstError(): Throwable? = firstOrNull { it.isFailure }?.exceptionOrNull()
+
+fun <T> List<Result<T>>.transpose(): Result<List<T>> {
+    val error = this.firstError()
+    if (error != null) {
+        return Result.failure(error)
+    }
+
+    val allValues = this.map { result ->
+        result.fold(
+            onSuccess = { it },
+            onFailure = { return Result.failure(it) }
+        )
+    }
+
+    return Result.success(allValues)
+}

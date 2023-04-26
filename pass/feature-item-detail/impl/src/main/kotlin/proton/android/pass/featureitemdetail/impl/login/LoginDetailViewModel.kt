@@ -21,8 +21,6 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.onError
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -249,12 +247,12 @@ class LoginDetailViewModel @Inject constructor(
 
     fun onMoveToTrash(shareId: ShareId, itemId: ItemId) = viewModelScope.launch {
         isLoadingState.update { IsLoadingState.Loading }
-        trashItem(shareId = shareId, itemId = itemId)
+        runCatching { trashItem(shareId = shareId, itemId = itemId) }
             .onSuccess {
                 isItemSentToTrashState.update { IsSentToTrashState.Sent }
                 snackbarDispatcher(ItemMovedToTrash)
             }
-            .onError {
+            .onFailure {
                 snackbarDispatcher(ItemNotMovedToTrash)
                 PassLogger.d(TAG, it, "Could not delete item")
             }

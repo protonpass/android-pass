@@ -113,11 +113,11 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun refreshItems(userId: UserId, share: Share): LoadingResult<List<Item>> {
+    override suspend fun refreshItems(userId: UserId, share: Share): List<Item> {
         TODO("Not yet implemented")
     }
 
-    override suspend fun refreshItems(userId: UserId, shareId: ShareId): LoadingResult<List<Item>> {
+    override suspend fun refreshItems(userId: UserId, shareId: ShareId): List<Item> {
         TODO("Not yet implemented")
     }
 

@@ -19,10 +19,8 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
-import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.CryptoException
@@ -441,16 +439,14 @@ class ItemRepositoryImpl @Inject constructor(
         return@withContext LoadingResult.Success(performUpdate(userId, share, item, updatedContents))
     }
 
-    override suspend fun refreshItems(userId: UserId, share: Share): LoadingResult<List<Item>> =
+    override suspend fun refreshItems(userId: UserId, share: Share): List<Item> =
         withContext(Dispatchers.IO) {
             val address = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-            remoteItemDataSource.getItems(address.userId, share.id)
-                .flatMap { items ->
-                    decryptItems(address, share, items)
-                }
+            val items = remoteItemDataSource.getItems(address.userId, share.id)
+            decryptItems(address, share, items)
         }
 
-    override suspend fun refreshItems(userId: UserId, shareId: ShareId): LoadingResult<List<Item>> =
+    override suspend fun refreshItems(userId: UserId, shareId: ShareId): List<Item> =
         withContext(Dispatchers.IO) {
             val share = shareRepository.getById(userId, shareId)
             refreshItems(userId, share)
@@ -639,11 +635,11 @@ class ItemRepositoryImpl @Inject constructor(
         userAddress: UserAddress,
         share: Share,
         items: List<ItemRevision>
-    ): LoadingResult<List<Item>> {
-        val shareKeys =
-            shareKeyRepository.getShareKeys(userAddress.userId, userAddress.addressId, share.id)
-                .first()
-        return encryptionContextProvider.withEncryptionContextSuspendable {
+    ): List<Item> {
+        val shareKeys = shareKeyRepository
+            .getShareKeys(userAddress.userId, userAddress.addressId, share.id)
+            .first()
+        val itemsEntities = encryptionContextProvider.withEncryptionContextSuspendable {
             val encryptionContext = this@withEncryptionContextSuspendable
             withContext(Dispatchers.Default) {
                 items.map { item ->
@@ -656,14 +652,14 @@ class ItemRepositoryImpl @Inject constructor(
                             shareKeys = shareKeys
                         )
                     }
-                }.awaitAll().transpose()
+                }.awaitAll()
             }
-        }.map { itemsEntities ->
-            val entities = itemsEntities.map { it.second }
-            localItemDataSource.upsertItems(entities)
-
-            itemsEntities.map { it.first }
         }
+
+        val entities = itemsEntities.map { it.second }
+        localItemDataSource.upsertItems(entities)
+
+        return itemsEntities.map { it.first }
     }
 
     private fun decryptItem(
@@ -672,14 +668,14 @@ class ItemRepositoryImpl @Inject constructor(
         share: Share,
         item: ItemRevision,
         shareKeys: List<ShareKey>
-    ): LoadingResult<Pair<Item, ItemEntity>> {
+    ): Pair<Item, ItemEntity> {
         val entity = itemResponseToEntity(
             userAddress = userAddress,
             itemRevision = item,
             share = share,
             shareKeys = shareKeys
         )
-        return LoadingResult.Success(entityToDomain(encryptionContext, entity) to entity)
+        return entityToDomain(encryptionContext, entity) to entity
     }
 
     private fun itemResponseToEntity(

@@ -66,12 +66,12 @@ interface ItemRepository {
     suspend fun refreshItems(
         userId: UserId,
         share: Share
-    ): LoadingResult<List<Item>>
+    ): List<Item>
 
     suspend fun refreshItems(
         userId: UserId,
         shareId: ShareId
-    ): LoadingResult<List<Item>>
+    ): List<Item>
 
     suspend fun applyEvents(
         userId: UserId,

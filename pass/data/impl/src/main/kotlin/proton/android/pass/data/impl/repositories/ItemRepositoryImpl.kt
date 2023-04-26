@@ -289,32 +289,28 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId
-    ): LoadingResult<Unit> = withContext(Dispatchers.IO) {
-        // Optimistically update the local database
-        val originalItem: ItemEntity = database.inTransaction {
-            val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
-            if (item.state == ItemState.Active.value) return@inTransaction null
-            val updatedItem = item.copy(
-                state = ItemState.Active.value
+    ) {
+        withContext(Dispatchers.IO) {
+            // Optimistically update the local database
+            val originalItem: ItemEntity = database.inTransaction {
+                val item = requireNotNull(localItemDataSource.getById(shareId, itemId))
+                if (item.state == ItemState.Active.value) return@inTransaction null
+                val updatedItem = item.copy(state = ItemState.Active.value)
+                localItemDataSource.upsertItem(updatedItem)
+                item
+            } ?: return@withContext
+
+            // Perform the network request
+            val body = TrashItemsRequest(
+                listOf(TrashItemRevision(originalItem.id, originalItem.revision))
             )
-            localItemDataSource.upsertItem(updatedItem)
-            item
-        } ?: return@withContext LoadingResult.Error(
-            IllegalStateException("UnTrash item could not be updated locally")
-        )
 
-        // Perform the network request
-        val body = TrashItemsRequest(
-            listOf(TrashItemRevision(originalItem.id, originalItem.revision))
-        )
-        return@withContext when (val res = remoteItemDataSource.untrash(userId, shareId, body)) {
-            LoadingResult.Loading -> LoadingResult.Loading
-            is LoadingResult.Error -> {
-                localItemDataSource.upsertItem(originalItem)
-                LoadingResult.Error(res.exception)
-            }
-
-            is LoadingResult.Success -> LoadingResult.Success(Unit)
+            runCatching { remoteItemDataSource.untrash(userId, shareId, body) }
+                .onFailure {
+                    PassLogger.w(TAG, "Error untrashing item. Restoring the original one")
+                    localItemDataSource.upsertItem(originalItem)
+                    throw it
+                }
         }
     }
 

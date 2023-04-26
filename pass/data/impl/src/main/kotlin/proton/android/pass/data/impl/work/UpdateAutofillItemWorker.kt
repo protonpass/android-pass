@@ -7,10 +7,8 @@ import androidx.work.Data
 import androidx.work.WorkerParameters
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
@@ -20,7 +18,6 @@ import proton.pass.domain.ShareId
 import proton.pass.domain.entity.AppName
 import proton.pass.domain.entity.PackageInfo
 import proton.pass.domain.entity.PackageName
-import java.io.IOException
 
 @HiltWorker
 class UpdateAutofillItemWorker @AssistedInject constructor(
@@ -56,38 +53,48 @@ class UpdateAutofillItemWorker @AssistedInject constructor(
             " [packageInfo=${inputData.packageInfo}] " +
             " [url=${inputData.url}]"
         PassLogger.d(TAG, message)
-        val result = itemRepository
-            .addPackageAndUrlToItem(
+
+        return runCatching {
+            itemRepository.addPackageAndUrlToItem(
                 shareId = inputData.shareId,
                 itemId = inputData.itemId,
                 packageInfo = inputData.packageInfo,
                 url = inputData.url
             )
-            .map { updateLastUsed(inputData) }
-        return when (result) {
-            is LoadingResult.Error -> {
-                PassLogger.e(TAG, result.exception)
-                Result.failure()
-            }
-            is LoadingResult.Success -> {
-                val successMessage = "Successfully added package or url and updated last used item"
+        }.mapCatching {
+            updateLastUsed(inputData)
+        }.fold(
+            onSuccess = {
+                val successMessage =
+                    "Successfully added package or url and updated last used item"
                 PassLogger.i(TAG, successMessage)
                 Result.success()
+            },
+            onFailure = {
+                PassLogger.e(TAG, it, "Failed to add package or url and update last used item")
+                Result.failure()
             }
-            LoadingResult.Loading -> Result.failure()
-        }
+        )
     }
 
-    private suspend fun updateLastUsed(inputData: InputData): Result =
-        try {
-            PassLogger.d(TAG, "Start update last used")
-            itemRepository.updateItemLastUsed(inputData.shareId, inputData.itemId)
-            PassLogger.d(TAG, "Completed update last used")
-            Result.success()
-        } catch (e: IOException) {
-            PassLogger.w(TAG, e, "Failed update last used")
-            Result.failure()
-        }
+    private suspend fun updateLastUsed(inputData: InputData): Result {
+        PassLogger.d(TAG, "Start update last used")
+        return runCatching {
+            itemRepository.updateItemLastUsed(
+                inputData.shareId,
+                inputData.itemId
+            )
+        }.fold(
+            onSuccess = {
+                PassLogger.d(TAG, "Completed update last used")
+                Result.success()
+            },
+            onFailure = {
+                PassLogger.w(TAG, it, "Failed update last used")
+                Result.failure()
+            }
+        )
+    }
 
     private fun getData(inputData: Data): kotlin.Result<InputData> {
         val shareId = inputData.getString(ARG_SHARE_ID) ?: return kotlin.Result.failure(

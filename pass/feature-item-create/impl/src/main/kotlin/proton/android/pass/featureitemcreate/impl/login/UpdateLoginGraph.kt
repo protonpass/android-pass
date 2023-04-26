@@ -21,6 +21,7 @@ object EditLogin : NavItem(
         "$baseRoute/${shareId.id}/${itemId.id}"
 }
 
+@Suppress("LongParameterList")
 @OptIn(
     ExperimentalAnimationApi::class,
     ExperimentalLifecycleComposeApi::class
@@ -31,6 +32,7 @@ fun NavGraphBuilder.updateLoginGraph(
     onUpClick: () -> Unit,
     onScanTotp: () -> Unit,
     onCreateAlias: (ShareId, Option<String>) -> Unit,
+    onGeneratePasswordClick: () -> Unit,
 ) {
     composable(EditLogin) {
         val primaryTotp by getPrimaryTotp().collectAsStateWithLifecycle()
@@ -40,7 +42,8 @@ fun NavGraphBuilder.updateLoginGraph(
             onUpClick = onUpClick,
             onSuccess = onSuccess,
             onScanTotp = onScanTotp,
-            onCreateAlias = onCreateAlias
+            onCreateAlias = onCreateAlias,
+            onGeneratePasswordClick = onGeneratePasswordClick
         )
     }
 }

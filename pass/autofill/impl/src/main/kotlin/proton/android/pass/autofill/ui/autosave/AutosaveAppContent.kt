@@ -8,10 +8,12 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featureauth.impl.AUTH_SCREEN_ROUTE
 import proton.android.pass.navigation.api.rememberAppNavigator
@@ -36,10 +38,9 @@ fun AutosaveAppContent(
     val appNavigator = rememberAppNavigator(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
     )
+    val coroutineScope = rememberCoroutineScope()
     PassModalBottomSheetLayout(
-        modifier = Modifier
-            .systemBarsPadding()
-            .imePadding(),
+        modifier = Modifier.systemBarsPadding().imePadding(),
         bottomSheetNavigator = appNavigator.bottomSheetNavigator
     ) {
         AnimatedNavHost(
@@ -51,7 +52,13 @@ fun AutosaveAppContent(
                 appNavigator = appNavigator,
                 arguments = arguments,
                 onAutoSaveCancel = onAutoSaveCancel,
-                onAutoSaveSuccess = onAutoSaveSuccess
+                onAutoSaveSuccess = onAutoSaveSuccess,
+                dismissBottomSheet = { callback ->
+                    coroutineScope.launch {
+                        bottomSheetState.hide()
+                        callback()
+                    }
+                }
             )
         }
     }

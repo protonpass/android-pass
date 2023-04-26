@@ -35,7 +35,6 @@ import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
-import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.GroupedItemList
@@ -445,19 +444,16 @@ class HomeViewModel @Inject constructor(
     fun sendItemToTrash(item: ItemUiModel?) = viewModelScope.launch(coroutineExceptionHandler) {
         if (item == null) return@launch
 
-        trashItem(shareId = item.shareId, itemId = item.id)
+        runCatching { trashItem(shareId = item.shareId, itemId = item.id) }
             .onSuccess {
                 when (item.itemType) {
-                    is ItemType.Alias ->
-                        snackbarDispatcher(AliasMovedToTrash)
-                    is ItemType.Login ->
-                        snackbarDispatcher(LoginMovedToTrash)
-                    is ItemType.Note ->
-                        snackbarDispatcher(NoteMovedToTrash)
+                    is ItemType.Alias -> snackbarDispatcher(AliasMovedToTrash)
+                    is ItemType.Login -> snackbarDispatcher(LoginMovedToTrash)
+                    is ItemType.Note -> snackbarDispatcher(NoteMovedToTrash)
                     ItemType.Password -> {}
                 }
             }
-            .onError {
+            .onFailure {
                 PassLogger.e(TAG, it, "Trash item failed")
                 snackbarDispatcher(HomeSnackbarMessage.MoveToTrashError)
             }

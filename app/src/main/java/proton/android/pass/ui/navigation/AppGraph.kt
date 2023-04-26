@@ -13,7 +13,7 @@ import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
 import proton.android.pass.featurehome.impl.Home
-import proton.android.pass.featurehome.impl.HomeScreenNavigation
+import proton.android.pass.featurehome.impl.HomeNavigation
 import proton.android.pass.featurehome.impl.homeGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
@@ -75,34 +75,81 @@ fun NavGraphBuilder.appGraph(
     onLogout: () -> Unit
 ) {
     homeGraph(
-        homeScreenNavigation = createHomeScreenNavigation(appNavigator),
-        onAddItemClick = { shareId, itemType ->
-            val (destination, route) = when (itemType) {
-                ItemTypeUiState.Unknown -> {
-                    CreateItemBottomsheet to CreateItemBottomsheet.createNavRoute(shareId)
+        onNavigateEvent = {
+            when (it) {
+                is HomeNavigation.AddItem -> {
+                    val (destination, route) = when (it.itemTypeUiState) {
+                        ItemTypeUiState.Unknown ->
+                            CreateItemBottomsheet to CreateItemBottomsheet.createNavRoute(it.shareId)
+
+                        ItemTypeUiState.Login -> CreateLogin to CreateLogin.createNavRoute(it.shareId)
+                        ItemTypeUiState.Note -> CreateNote to CreateNote.createNavRoute(it.shareId)
+                        ItemTypeUiState.Alias -> CreateAlias to CreateAlias.createNavRoute(it.shareId)
+                        ItemTypeUiState.Password -> GeneratePasswordBottomsheet to null
+                    }
+
+                    appNavigator.navigate(destination, route)
                 }
 
-                ItemTypeUiState.Login -> CreateLogin to CreateLogin.createNavRoute(shareId)
-                ItemTypeUiState.Note -> CreateNote to CreateNote.createNavRoute(shareId)
-                ItemTypeUiState.Alias -> CreateAlias to CreateAlias.createNavRoute(shareId)
-                ItemTypeUiState.Password -> GeneratePasswordBottomsheet to null
-            }
+                HomeNavigation.Auth -> {
+                    appNavigator.navigate(Auth)
+                }
 
-            appNavigator.navigate(destination, route)
-        },
-        onCreateVaultClick = { appNavigator.navigate(CreateVaultBottomSheet) },
-        onEditVaultClick = { shareId ->
-            appNavigator.navigate(
-                EditVaultBottomSheet,
-                EditVaultBottomSheet.createNavRoute(shareId.toOption())
-            )
-        },
-        onDeleteVaultClick = { shareId ->
-            appNavigator.navigate(
-                destination = DeleteVaultDialog,
-                route = DeleteVaultDialog.createNavRoute(shareId),
-                backDestination = Home
-            )
+                HomeNavigation.CreateVault -> {
+                    appNavigator.navigate(CreateVaultBottomSheet)
+                }
+
+                is HomeNavigation.DeleteVault -> {
+                    appNavigator.navigate(
+                        destination = DeleteVaultDialog,
+                        route = DeleteVaultDialog.createNavRoute(it.shareId),
+                        backDestination = Home
+                    )
+                }
+
+                is HomeNavigation.EditAlias -> {
+                    appNavigator.navigate(
+                        EditAlias,
+                        EditAlias.createNavRoute(it.shareId, it.itemId)
+                    )
+                }
+
+                is HomeNavigation.EditLogin -> {
+                    appNavigator.navigate(
+                        EditLogin,
+                        EditLogin.createNavRoute(it.shareId, it.itemId)
+                    )
+                }
+
+                is HomeNavigation.EditNote -> {
+                    appNavigator.navigate(
+                        EditNote,
+                        EditNote.createNavRoute(it.shareId, it.itemId)
+                    )
+                }
+
+                is HomeNavigation.EditVault -> {
+                    appNavigator.navigate(
+                        EditVaultBottomSheet,
+                        EditVaultBottomSheet.createNavRoute(it.shareId.toOption())
+                    )
+                }
+
+                is HomeNavigation.ItemDetail -> {
+                    appNavigator.navigate(
+                        ViewItem,
+                        ViewItem.createNavRoute(it.shareId, it.itemId)
+                    )
+                }
+
+                HomeNavigation.OnBoarding -> {
+                    appNavigator.navigate(OnBoarding)
+                }
+
+                HomeNavigation.Profile -> {
+                    appNavigator.navigate(Profile)
+                }
+            }
         }
     )
     bottomsheetCreateItemGraph(
@@ -307,34 +354,3 @@ fun NavGraphBuilder.appGraph(
     )
     featureFlagsGraph()
 }
-
-private fun createHomeScreenNavigation(appNavigator: AppNavigator): HomeScreenNavigation =
-    HomeScreenNavigation(
-        toEditLogin = { shareId: ShareId, itemId: ItemId ->
-            appNavigator.navigate(
-                EditLogin,
-                EditLogin.createNavRoute(shareId, itemId)
-            )
-        },
-        toEditNote = { shareId: ShareId, itemId: ItemId ->
-            appNavigator.navigate(
-                EditNote,
-                EditNote.createNavRoute(shareId, itemId)
-            )
-        },
-        toEditAlias = { shareId: ShareId, itemId: ItemId ->
-            appNavigator.navigate(
-                EditAlias,
-                EditAlias.createNavRoute(shareId, itemId)
-            )
-        },
-        toItemDetail = { shareId: ShareId, itemId: ItemId ->
-            appNavigator.navigate(
-                ViewItem,
-                ViewItem.createNavRoute(shareId, itemId)
-            )
-        },
-        toAuth = { appNavigator.navigate(Auth) },
-        toProfile = { appNavigator.navigate(Profile) },
-        toOnBoarding = { appNavigator.navigate(OnBoarding) },
-    )

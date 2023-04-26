@@ -19,6 +19,7 @@ import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
@@ -68,11 +69,15 @@ class ProfileViewModel @Inject constructor(
             }.count { it.isNotBlank() }
         }
 
+    private val itemsCountFlow = observeItemCount()
+        .distinctUntilChanged()
+        .asLoadingResult()
+
     val state: StateFlow<ProfileUiState> = combine(
         biometricLockState,
         flowOf(biometryManager.getBiometryStatus()),
         autofillStatusFlow,
-        observeItemCount().distinctUntilChanged(),
+        itemsCountFlow,
         mfaCountFlow
     ) { biometricLock, biometryStatus, autofillStatus, itemCountResult, mfaCount ->
         val itemSummaryUiState = itemCountResult.getOrNull()

@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import proton.android.pass.common.api.map
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
@@ -28,7 +27,7 @@ class ObserveActiveItemsImpl @Inject constructor(
     ): Flow<List<Item>> = observeCurrentUser()
         .filterNotNull()
         .combine(observeAllShares()) { user, shares ->
-            user to shares.map { share -> share.map { shareId -> shareId.id } }
+            user to shares.map { share -> share.id }
         }
         .distinctUntilChanged()
         .flatMapLatest { pair ->

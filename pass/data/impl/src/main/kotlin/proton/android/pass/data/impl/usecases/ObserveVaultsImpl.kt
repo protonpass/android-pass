@@ -2,7 +2,6 @@ package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -20,20 +19,13 @@ class ObserveVaultsImpl @Inject constructor(
 ) : ObserveVaults {
 
     override fun invoke(): Flow<List<Vault>> = observeAllShares()
-        .map { result ->
-            when (result) {
-                LoadingResult.Loading -> emptyList()
-                is LoadingResult.Error -> throw result.exception
-                is LoadingResult.Success -> {
-                    val list = result.data
-                    list.map { share ->
-                        when (val res = share.toVault(encryptionContextProvider)) {
-                            None -> throw ShareContentNotAvailableError()
-                            is Some -> res.value
-                        }
-                    }.sorted()
+        .map { shares ->
+            shares.map { share ->
+                when (val res = share.toVault(encryptionContextProvider)) {
+                    None -> throw ShareContentNotAvailableError()
+                    is Some -> res.value
                 }
-            }
+            }.sorted()
         }
 
 }

@@ -152,7 +152,7 @@ android {
     productFlavors {
         create("black") {
             dimension = "env"
-//            applicationIdSuffix = ".black"
+            applicationIdSuffix = ".black"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
             buildConfigField("String", "HOST", "api.proton.black".toBuildConfigValue())
             buildConfigField("String", "HV_HOST", "verify.proton.black".toBuildConfigValue())

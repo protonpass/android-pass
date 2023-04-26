@@ -59,7 +59,8 @@ class MainActivity : FragmentActivity() {
                         onSignOut = { launcherViewModel.signOut(it) },
                         onRemove = { launcherViewModel.remove(it) },
                         onSwitch = { launcherViewModel.switch(it) },
-                        onReport = { launcherViewModel.report() }
+                        onReport = { launcherViewModel.report() },
+                        onCurrentSubscription = { launcherViewModel.onCurrentSubscription() }
                     )
                     PassApp(coreNavigation = coreNavigation, finishActivity = { finish() })
                 }

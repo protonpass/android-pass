@@ -22,6 +22,7 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     implementation(libs.kotlinx.coroutines.core)
 
+    api(projects.pass.common.api)
     api(projects.pass.preferences.api)
 
     implementation(libs.dagger.hilt.android)

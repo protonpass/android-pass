@@ -15,4 +15,5 @@ message UserPreferences {
   BooleanPrefProto has_dismissed_autofill_banner = 5;
   BooleanPrefProto copy_totp_to_clipboard_enabled = 6;
   ClipboardPrefProto clear_clipboard_after = 7;
+  BooleanPrefProto use_favicons = 8;
 }

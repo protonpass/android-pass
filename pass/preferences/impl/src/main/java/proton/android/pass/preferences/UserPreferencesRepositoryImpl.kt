@@ -140,6 +140,29 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 ClearClipboardPreference.from(preferences.clearClipboardAfterValue)
             }
 
+    override suspend fun setUseFaviconsPreference(
+        useFavicons: UseFaviconsPreference
+    ): Result<Unit> = runCatching {
+        dataStore.updateData {
+            it.toBuilder()
+                .setUseFavicons(useFavicons.value().toBooleanPrefProto())
+                .build()
+        }
+        return@runCatching
+    }
+
+    override fun getUseFaviconsPreference(): Flow<UseFaviconsPreference> =
+        dataStore.data
+            .catch { exception -> handleExceptions(exception) }
+            .map { preferences ->
+                UseFaviconsPreference.from(
+                    fromBooleanPrefProto(
+                        pref = preferences.useFavicons,
+                        default = true
+                    )
+                )
+            }
+
     override suspend fun clearPreferences(): Result<Unit> =
         runCatching {
             dataStore.updateData {

@@ -6,26 +6,36 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
+import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
 object Home : NavItem(baseRoute = "home", isTopLevel = true)
 
 @OptIn(ExperimentalAnimationApi::class)
-@Suppress("LongParameterList")
 fun NavGraphBuilder.homeGraph(
-    homeScreenNavigation: HomeScreenNavigation,
-    onAddItemClick: (Option<ShareId>, ItemTypeUiState) -> Unit,
-    onCreateVaultClick: () -> Unit,
-    onEditVaultClick: (ShareId) -> Unit,
-    onDeleteVaultClick: (ShareId) -> Unit
+    onNavigateEvent: (HomeNavigation) -> Unit
 ) {
     composable(Home) {
         NavHome(
-            homeScreenNavigation = homeScreenNavigation,
-            onAddItemClick = onAddItemClick,
-            onCreateVaultClick = onCreateVaultClick,
-            onEditVaultClick = onEditVaultClick,
-            onDeleteVaultClick = onDeleteVaultClick
+            onNavigateEvent = onNavigateEvent
         )
     }
+}
+
+sealed interface HomeNavigation {
+    data class AddItem(
+        val shareId: Option<ShareId>,
+        val itemTypeUiState: ItemTypeUiState
+    ) : HomeNavigation
+
+    data class EditLogin(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+    data class EditNote(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+    data class EditAlias(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+    data class ItemDetail(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
+    object Auth : HomeNavigation
+    object Profile : HomeNavigation
+    object OnBoarding : HomeNavigation
+    object CreateVault : HomeNavigation
+    data class EditVault(val shareId: ShareId) : HomeNavigation
+    data class DeleteVault(val shareId: ShareId) : HomeNavigation
 }

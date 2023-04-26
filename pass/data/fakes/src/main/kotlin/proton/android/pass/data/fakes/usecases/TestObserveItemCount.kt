@@ -1,18 +1,18 @@
 package proton.android.pass.data.fakes.usecases
 
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import proton.android.pass.common.api.LoadingResult
+import kotlinx.coroutines.flow.map
+import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import javax.inject.Inject
 
 class TestObserveItemCount @Inject constructor() : ObserveItemCount {
 
-    private val observeVaultsFlow: MutableSharedFlow<LoadingResult<ItemCountSummary>> =
-        MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val observeVaultsFlow = testFlow<Result<ItemCountSummary>>()
 
-    fun sendResult(result: LoadingResult<ItemCountSummary>) = observeVaultsFlow.tryEmit(result)
-    override fun invoke(): Flow<LoadingResult<ItemCountSummary>> = observeVaultsFlow
+    fun sendResult(result: Result<ItemCountSummary>) = observeVaultsFlow.tryEmit(result)
+    override fun invoke(): Flow<ItemCountSummary> = observeVaultsFlow.map {
+        it.getOrThrow()
+    }
 }

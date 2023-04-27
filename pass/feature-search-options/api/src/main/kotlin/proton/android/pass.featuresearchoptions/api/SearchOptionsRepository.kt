@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 interface SearchOptionsRepository {
     fun observeSearchOptions(): Flow<SearchOptions>
     fun observeSortingOption(): Flow<SortingOption>
-    fun setSearchOption(sortingOption: SortingOption)
+    fun setSortingOption(sortingOption: SortingOption)
     fun clearSearchOptions()
 }
 

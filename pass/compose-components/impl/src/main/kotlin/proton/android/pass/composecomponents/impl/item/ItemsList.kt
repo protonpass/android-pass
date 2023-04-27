@@ -70,7 +70,7 @@ fun ItemsList(
     emptyContent: @Composable () -> Unit
 ) {
     LaunchedEffect(shouldScrollToTop) {
-        if (shouldScrollToTop) {
+        if (shouldScrollToTop && !scrollableState.isScrollInProgress && scrollableState.firstVisibleItemIndex > 0) {
             scrollableState.scrollToItem(0)
             onScrollToTop()
         }
@@ -123,8 +123,10 @@ fun LazyListScope.stickyItemListHeader(key: GroupingKeys) {
     when (key) {
         is GroupingKeys.AlphabeticalKey ->
             stickyHeader { ListHeader(title = key.character.toString()) }
+
         is GroupingKeys.MonthlyKey ->
             stickyHeader { ListHeader(title = key.monthKey) }
+
         is GroupingKeys.MostRecentKey -> stickyHeader {
             when (key.formatResultKey) {
                 Today -> stringResource(R.string.most_recent_today)
@@ -139,6 +141,7 @@ fun LazyListScope.stickyItemListHeader(key: GroupingKeys) {
                 else -> throw IllegalStateException("Unhandled date")
             }.apply { ListHeader(title = this@apply) }
         }
+
         GroupingKeys.NoGrouping -> {}
     }
 }

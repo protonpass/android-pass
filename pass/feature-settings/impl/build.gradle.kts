@@ -61,9 +61,10 @@ dependencies {
     debugImplementation(libs.androidx.compose.uiTestManifest)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
-    androidTestImplementation(projects.pass.commonTest)
-    androidTestImplementation(projects.pass.preferences.fakes)
-    androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.appConfig.fakes)
+    androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.image.fakes)
+    androidTestImplementation(projects.pass.notifications.fakes)
+    androidTestImplementation(projects.pass.preferences.fakes)
 }

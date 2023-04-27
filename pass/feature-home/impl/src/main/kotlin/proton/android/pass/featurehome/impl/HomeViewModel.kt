@@ -78,7 +78,6 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsError
 import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
-import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
@@ -89,6 +88,7 @@ import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
 import javax.inject.Inject
+import proton.android.pass.common.api.combine as combineN
 
 @Suppress("LongParameterList")
 @ExperimentalMaterialApi
@@ -108,7 +108,7 @@ class HomeViewModel @Inject constructor(
     private val deleteAllSearchEntry: DeleteAllSearchEntry,
     private val observeSearchEntry: ObserveSearchEntry,
     private val telemetryManager: TelemetryManager,
-    private val searchOptionsRepository: SearchOptionsRepository,
+    searchOptionsRepository: SearchOptionsRepository,
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
@@ -133,8 +133,10 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(HomeItemTypeSelection.AllItems)
     private val vaultSelectionFlow: MutableStateFlow<HomeVaultSelection> =
         MutableStateFlow(HomeVaultSelection.AllVaults)
+    private val shouldScrollToTopFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val sortingSelectionFlow = searchOptionsRepository.observeSortingOption()
         .distinctUntilChanged()
+        .onEach { shouldScrollToTopFlow.update { true } }
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -352,13 +354,14 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    val homeUiState = combine(
+    val homeUiState = combineN(
         shareListWrapperFlow,
         filtersWrapperFlow,
         resultsFlow,
         searchUiStateFlow,
         refreshingLoadingFlow,
-    ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading ->
+        shouldScrollToTopFlow
+    ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading, shouldScrollToTop ->
         val syncLoading = if (refreshingLoading.syncStatus == ItemSyncStatus.Syncing) {
             IsLoadingState.Loading
         } else {
@@ -392,6 +395,7 @@ class HomeViewModel @Inject constructor(
             homeListUiState = HomeListUiState(
                 isLoading = isLoading,
                 isRefreshing = refreshingLoading.refreshing,
+                shouldScrollToTop = shouldScrollToTop,
                 actionState = refreshingLoading.actionState,
                 items = items,
                 selectedShare = shareListWrapper.selectedShare,
@@ -434,10 +438,6 @@ class HomeViewModel @Inject constructor(
             telemetryManager.sendEvent(SearchTriggered)
         }
         hasEnteredSearch = true
-    }
-
-    fun onSortingTypeChanged(sortingType: SearchSortingType) {
-        searchOptionsRepository.setSearchOption(SortingOption(sortingType))
     }
 
     fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
@@ -593,6 +593,10 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             deleteSearchEntry(shareId, itemId)
         }
+    }
+
+    fun onScrollToTop() {
+        shouldScrollToTopFlow.update { false }
     }
 
     private fun filterByType(

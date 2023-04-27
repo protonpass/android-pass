@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -75,7 +74,6 @@ fun HomeScreen(
     var selectedItem by rememberSaveable(stateSaver = ItemUiModelSaver) {
         mutableStateOf(null)
     }
-    var shouldScrollToTop by remember { mutableStateOf(false) }
     var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowRestoreAllDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowClearTrashDialog by rememberSaveable { mutableStateOf(false) }
@@ -301,7 +299,7 @@ fun HomeScreen(
             HomeContent(
                 modifier = Modifier.background(PassTheme.colors.backgroundStrong),
                 uiState = homeUiState,
-                shouldScrollToTop = shouldScrollToTop,
+                shouldScrollToTop = homeUiState.homeListUiState.shouldScrollToTop,
                 onItemClick = { item ->
                     homeViewModel.onItemClicked(item.shareId, item.id)
                     onNavigateEvent(HomeNavigation.ItemDetail(item.shareId, item.id))
@@ -331,7 +329,7 @@ fun HomeScreen(
                     scope.launch { bottomSheetState.show() }
                 },
                 onRefresh = { homeViewModel.onRefresh() },
-                onScrollToTop = { shouldScrollToTop = false },
+                onScrollToTop = { homeViewModel.onScrollToTop() },
                 onProfileClick = { onNavigateEvent(HomeNavigation.Profile) },
                 onItemTypeSelected = { homeViewModel.setItemTypeSelection(it) },
                 onTrashActionsClick = {

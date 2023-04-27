@@ -38,6 +38,7 @@ data class HomeUiState(
 data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
+    val shouldScrollToTop: Boolean,
     val actionState: ActionState = ActionState.Unknown,
     val items: ImmutableList<GroupedItemList>,
     val selectedShare: Option<ShareUiModel> = None,
@@ -50,6 +51,7 @@ data class HomeListUiState(
         val Loading = HomeListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
+            shouldScrollToTop = false,
             items = persistentListOf(),
             shares = persistentMapOf(),
         )

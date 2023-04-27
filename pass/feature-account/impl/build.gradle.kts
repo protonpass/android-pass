@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.user.domain)
+    implementation(libs.core.payment.domain)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)
@@ -82,6 +83,7 @@ dependencies {
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
+    testImplementation(libs.core.test.kotlin)
     testImplementation(libs.truth)
     testImplementation(libs.turbine)
     testImplementation(libs.coroutines.test)

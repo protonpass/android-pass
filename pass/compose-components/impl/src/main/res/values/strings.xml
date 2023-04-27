@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Sorting -->
+
+    <string name="sort_by_title_asc">Title (A-Z)</string>
+    <string name="sort_by_title_desc">Title (Z-A)</string>
+    <string name="sort_by_creation_asc">Oldest to newest</string>
+    <string name="sort_by_creation_desc">Newest to oldest</string>
+    <string name="sort_by_modification_date">Most recent</string>
+
+    <string name="sorting_icon_content_description">Sorting icon</string>
 
     <!-- List header results -->
     <string name="item_list_header_all_search_results">All</string>

@@ -1,4 +1,4 @@
-package proton.android.pass.featurehome.impl
+package proton.android.pass.composecomponents.impl.item.header
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -17,10 +17,9 @@ import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 @Composable
 fun ItemListHeader(
     modifier: Modifier = Modifier,
-    sortingType: SortingType,
     showSearchResults: Boolean,
     itemCount: Int?,
-    onSortingOptionsClick: () -> Unit
+    sortingContent: @Composable () -> Unit,
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -32,10 +31,7 @@ fun ItemListHeader(
             showSearchResults = showSearchResults,
             itemCount = itemCount
         )
-        SortingButton(
-            sortingType = sortingType,
-            onSortingOptionsClick = onSortingOptionsClick
-        )
+        sortingContent()
     }
 }
 
@@ -47,10 +43,9 @@ fun ItemListHeaderPreview(
     PassTheme(isDark = input.first) {
         Surface {
             ItemListHeader(
-                sortingType = SortingType.TitleAsc,
                 showSearchResults = input.second,
                 itemCount = 56,
-                onSortingOptionsClick = {}
+                sortingContent = {}
             )
         }
     }

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- List header results -->
+    <string name="item_list_header_all_search_results">All</string>
+    <plurals name="item_list_header_results">
+        <item quantity="one">result</item>
+        <item quantity="other">results</item>
+    </plurals>
+
     <!-- Bottomsheets -->
     <string name="bottomsheet_content_description_item_icon">BottomSheet item icon</string>
     <string name="bottomsheet_confirm_button">Confirm</string>

@@ -6,6 +6,7 @@ import com.google.accompanist.navigation.animation.composable
 import proton.android.pass.autofill.entities.usernamePassword
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AUTH_SCREEN_ROUTE
+import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.GenerateLoginPasswordBottomsheet
@@ -28,9 +29,14 @@ fun NavGraphBuilder.autosaveActivityGraph(
 ) {
     composable(AUTH_SCREEN_ROUTE) {
         AuthScreen(
-            onAuthSuccessful = { appNavigator.navigate(CreateLogin) },
-            onAuthFailed = { onAutoSaveCancel() },
-            onAuthDismissed = { onAutoSaveCancel() }
+            navigation = {
+                when (it) {
+                    AuthNavigation.Back -> { onAutoSaveCancel() }
+                    AuthNavigation.Success -> { appNavigator.navigate(CreateLogin) }
+                    AuthNavigation.Dismissed -> { onAutoSaveCancel() }
+                    AuthNavigation.Failed -> { onAutoSaveCancel() }
+                }
+            }
         )
     }
 

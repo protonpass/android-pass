@@ -74,7 +74,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.telemetry.api)
-    implementation(projects.pass.featureSearchOptions.impl)
+    implementation(projects.pass.featureSearchOptions.api)
 
     // Temporarily depend on the impl module until move the bottomsheets to routes
     implementation(projects.pass.featureTrash.impl)
@@ -102,4 +102,8 @@ dependencies {
     androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.telemetry.fakes)
     androidTestImplementation(projects.pass.featureSearchOptions.fakes)
+}
+
+kapt {
+    correctErrorTypes = true
 }

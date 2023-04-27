@@ -13,6 +13,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import dagger.hilt.android.testing.UninstallModules
 import dagger.hilt.components.SingletonComponent
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.runBlocking
@@ -22,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.featuresearchoptions.impl.SearchOptionsModule
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.autofill.fakes.TestAutofillManager
@@ -48,6 +50,7 @@ import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import javax.inject.Inject
 
+@UninstallModules(SearchOptionsModule::class)
 @HiltAndroidTest
 class HomeScreenTest {
 

@@ -25,6 +25,6 @@ class SortingBottomSheetViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.Eagerly, sortingType)
 
     fun onSortingTypeChanged(searchSortingType: SearchSortingType) {
-        searchOptionsRepository.setSearchOption(SortingOption(searchSortingType))
+        searchOptionsRepository.setSortingOption(SortingOption(searchSortingType))
     }
 }

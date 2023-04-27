@@ -23,7 +23,7 @@ class SearchOptionsRepositoryImpl @Inject constructor() : SearchOptionsRepositor
     override fun observeSortingOption(): Flow<SortingOption> =
         _searchOptionsState.map { it.sortingOption }.filterNotNull()
 
-    override fun setSearchOption(sortingOption: SortingOption) {
+    override fun setSortingOption(sortingOption: SortingOption) {
         _searchOptionsState.update {
             it.copy(sortingOption = sortingOption)
         }

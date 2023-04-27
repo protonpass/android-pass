@@ -18,13 +18,13 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIco
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import proton.android.pass.featuresearchoptions.R
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.featuresearchoptions.api.SearchSortingType.CreationAsc
 import proton.android.pass.featuresearchoptions.api.SearchSortingType.CreationDesc
 import proton.android.pass.featuresearchoptions.api.SearchSortingType.MostRecent
 import proton.android.pass.featuresearchoptions.api.SearchSortingType.TitleAsc
 import proton.android.pass.featuresearchoptions.api.SearchSortingType.TitleDesc
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @ExperimentalMaterialApi
 @Composable
@@ -56,11 +56,11 @@ private fun sortingItemList(
                             PassTheme.colors.textNorm
                         }
                         val title = when (it) {
-                            MostRecent -> stringResource(id = R.string.sort_by_modification_date)
-                            TitleAsc -> stringResource(id = R.string.sort_by_title_asc)
-                            TitleDesc -> stringResource(id = R.string.sort_by_title_desc)
-                            CreationAsc -> stringResource(id = R.string.sort_by_creation_asc)
-                            CreationDesc -> stringResource(id = R.string.sort_by_creation_desc)
+                            MostRecent -> stringResource(id = CompR.string.sort_by_modification_date)
+                            TitleAsc -> stringResource(id = CompR.string.sort_by_title_asc)
+                            TitleDesc -> stringResource(id = CompR.string.sort_by_title_desc)
+                            CreationAsc -> stringResource(id = CompR.string.sort_by_creation_asc)
+                            CreationDesc -> stringResource(id = CompR.string.sort_by_creation_desc)
                         }
                         BottomSheetItemTitle(text = title, color = color)
                     }

@@ -16,11 +16,13 @@ import proton.android.pass.ui.navigation.appGraph
     ExperimentalComposeUiApi::class
 )
 @Composable
+@Suppress("LongParameterList")
 fun PassNavHost(
     modifier: Modifier = Modifier,
     appNavigator: AppNavigator,
     onLogout: () -> Unit,
     onSubscriptionClick: () -> Unit,
+    onUpgradeClick: () -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit,
     finishActivity: () -> Unit,
 ) {
@@ -32,9 +34,10 @@ fun PassNavHost(
         appGraph(
             appNavigator = appNavigator,
             onSubscriptionClick = onSubscriptionClick,
+            onUpgradeClick = onUpgradeClick,
             finishActivity = finishActivity,
             dismissBottomSheet = dismissBottomSheet,
-            onLogout = onLogout,
+            onLogout = onLogout
         )
     }
 }

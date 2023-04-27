@@ -14,6 +14,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 
 @HiltAndroidTest
@@ -30,15 +31,16 @@ class ProfileScreenTest {
 
     @Test
     fun onAccountClickCalled() {
-        var isCalled = false
+        val checker = CallChecker<Unit>()
 
         composeTestRule.setContent {
             ProfileScreen(
-                onAccountClick = { isCalled = true },
-                onListClick = {},
-                onCreateItemClick = {},
-                onSettingsClick = {},
-                onFeedbackClick = {}
+                onNavigateEvent = {
+                    when (it) {
+                        is ProfileNavigation.Account -> checker.call()
+                        else -> {}
+                    }
+                },
             )
         }
         composeTestRule
@@ -47,20 +49,21 @@ class ProfileScreenTest {
         composeTestRule
             .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_account))
             .performClick()
-        composeTestRule.waitUntil { isCalled }
+        composeTestRule.waitUntil { checker.isCalled }
     }
 
     @Test
     fun onSettingsClickCalled() {
-        var isCalled = false
+        val checker = CallChecker<Unit>()
 
         composeTestRule.setContent {
             ProfileScreen(
-                onAccountClick = {},
-                onListClick = {},
-                onCreateItemClick = {},
-                onSettingsClick = { isCalled = true },
-                onFeedbackClick = {}
+                onNavigateEvent = {
+                    when (it) {
+                        is ProfileNavigation.Settings -> checker.call()
+                        else -> {}
+                    }
+                },
             )
         }
         composeTestRule
@@ -69,20 +72,21 @@ class ProfileScreenTest {
         composeTestRule
             .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_settings))
             .performClick()
-        composeTestRule.waitUntil { isCalled }
+        composeTestRule.waitUntil { checker.isCalled }
     }
 
     @Test
     fun onFeedbackClickCalled() {
-        var isCalled = false
+        val checker = CallChecker<Unit>()
 
         composeTestRule.setContent {
             ProfileScreen(
-                onAccountClick = {},
-                onListClick = {},
-                onCreateItemClick = {},
-                onSettingsClick = {},
-                onFeedbackClick = { isCalled = true }
+                onNavigateEvent = {
+                    when (it) {
+                        is ProfileNavigation.Feedback -> checker.call()
+                        else -> {}
+                    }
+                },
             )
         }
         composeTestRule.onNodeWithText("0.0.0")
@@ -90,7 +94,7 @@ class ProfileScreenTest {
         composeTestRule
             .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_feedback))
             .performClick()
-        composeTestRule.waitUntil { isCalled }
+        composeTestRule.waitUntil { checker.isCalled }
     }
 
     @Test
@@ -98,11 +102,7 @@ class ProfileScreenTest {
         composeTestRule.setContent {
             PassTheme {
                 ProfileScreen(
-                    onAccountClick = {},
-                    onListClick = {},
-                    onCreateItemClick = {},
-                    onSettingsClick = {},
-                    onFeedbackClick = {}
+                    onNavigateEvent = {},
                 )
             }
         }
@@ -122,11 +122,7 @@ class ProfileScreenTest {
         composeTestRule.setContent {
             PassTheme {
                 ProfileScreen(
-                    onAccountClick = {},
-                    onListClick = {},
-                    onCreateItemClick = {},
-                    onSettingsClick = {},
-                    onFeedbackClick = {}
+                    onNavigateEvent = {},
                 )
             }
         }

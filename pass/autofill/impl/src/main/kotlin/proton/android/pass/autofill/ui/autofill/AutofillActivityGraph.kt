@@ -15,6 +15,7 @@ import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
+import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
@@ -43,16 +44,20 @@ fun NavGraphBuilder.autofillActivityGraph(
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
     authGraph(
-        onNavigateBack = onAutofillCancel,
-        onAuthSuccessful = {
-            if (selectedAutofillItem != null) {
-                onAutofillItemReceived(selectedAutofillItem)
-            } else {
-                appNavigator.navigate(SelectItem)
+        navigation = {
+            when (it) {
+                AuthNavigation.Back -> { onAutofillCancel() }
+                AuthNavigation.Success -> {
+                    if (selectedAutofillItem != null) {
+                        onAutofillItemReceived(selectedAutofillItem)
+                    } else {
+                        appNavigator.navigate(SelectItem)
+                    }
+                }
+                AuthNavigation.Dismissed -> { onAutofillCancel() }
+                AuthNavigation.Failed -> { onAutofillCancel() }
             }
-        },
-        onAuthDismissed = onAutofillCancel,
-        onAuthFailed = onAutofillCancel
+        }
     )
     selectItemGraph(
         state = autofillAppState,

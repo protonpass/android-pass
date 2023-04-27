@@ -20,6 +20,7 @@ import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 
 @Composable
+@Suppress("LongParameterList")
 fun AccountContent(
     modifier: Modifier = Modifier,
     state: AccountUiState,

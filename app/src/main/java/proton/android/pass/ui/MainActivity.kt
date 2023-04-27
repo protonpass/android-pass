@@ -60,7 +60,8 @@ class MainActivity : FragmentActivity() {
                         onRemove = { launcherViewModel.remove(it) },
                         onSwitch = { launcherViewModel.switch(it) },
                         onReport = { launcherViewModel.report() },
-                        onSubscription = { launcherViewModel.subscription() }
+                        onSubscription = { launcherViewModel.subscription() },
+                        onUpgrade = { launcherViewModel.upgrade() }
                     )
                     PassApp(coreNavigation = coreNavigation, finishActivity = { finish() })
                 }

@@ -210,6 +210,7 @@ core-observability = { module = "me.proton.core:observability", version.ref = "c
 core-payment = { module = "me.proton.core:payment", version.ref = "core" }
 core-paymentIap = { module = "me.proton.core:payment-iap", version.ref = "core" }
 # core-payment-iap-test = { module = "me.proton.core:payment-iap-test", version.ref = "core" }
+core-payment-domain = { module = "me.proton.core:payment-domain", version.ref = "core" }
 core-plan = { module = "me.proton.core:plan", version.ref = "core" }
 core-presentation = { module = "me.proton.core:presentation", version.ref = "core" }
 core-presentation-compose = { module = "me.proton.core:presentation-compose", version.ref = "core" }

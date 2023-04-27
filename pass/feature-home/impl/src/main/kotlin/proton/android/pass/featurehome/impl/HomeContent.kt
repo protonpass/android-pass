@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import proton.android.featuresearchoptions.impl.SortingButton
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -36,6 +37,7 @@ import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
+import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.ArrowBackIconButton
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -145,12 +147,16 @@ internal fun HomeContent(
 
             if (shouldShowItemListHeader(uiState)) {
                 ItemListHeader(
-                    sortingType = uiState.homeListUiState.sortingType,
                     showSearchResults = uiState.searchUiState.inSearchMode &&
                         uiState.searchUiState.searchQuery.isNotEmpty(),
                     itemCount = uiState.homeListUiState.items.map { it.items }.flatten().count()
                         .takeIf { !uiState.searchUiState.isProcessingSearch.value() },
-                    onSortingOptionsClick = onSortingOptionsClick
+                    sortingContent = {
+                        SortingButton(
+                            sortingType = uiState.homeListUiState.sortingType,
+                            onSortingOptionsClick = onSortingOptionsClick
+                        )
+                    }
                 )
             }
 
@@ -237,6 +243,7 @@ private fun HomeDrawerIcon(
                             onClick = onDrawerIconClick
                         )
                     }
+
                     HomeVaultSelection.Trash -> {
                         TrashVaultIcon(
                             modifier = modifier,
@@ -245,9 +252,11 @@ private fun HomeDrawerIcon(
                             onClick = onDrawerIconClick
                         )
                     }
+
                     else -> {} // This combination is not possible
                 }
             }
+
             is Some -> {
                 VaultIcon(
                     modifier = modifier.size(48.dp),

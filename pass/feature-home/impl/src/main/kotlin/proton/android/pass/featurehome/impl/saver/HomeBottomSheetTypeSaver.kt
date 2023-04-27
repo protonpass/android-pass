@@ -14,7 +14,7 @@ val HomeBottomSheetTypeSaver: Saver<HomeBottomSheetType, Any> = run {
             if (values.isNotEmpty()) {
                 HomeBottomSheetType.valueOf(values[variant] as String)
             } else {
-                HomeBottomSheetType.Sorting
+                HomeBottomSheetType.TrashOptions
             }
         }
     )

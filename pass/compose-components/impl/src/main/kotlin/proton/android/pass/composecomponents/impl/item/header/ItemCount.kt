@@ -1,4 +1,4 @@
-package proton.android.pass.featurehome.impl
+package proton.android.pass.composecomponents.impl.item.header
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -19,6 +19,7 @@ import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.R
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

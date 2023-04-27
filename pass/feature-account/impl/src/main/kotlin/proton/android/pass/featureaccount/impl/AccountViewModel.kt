@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
+import me.proton.core.payment.domain.PaymentManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -27,6 +28,7 @@ class AccountViewModel @Inject constructor(
     ffPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeCurrentUser: ObserveCurrentUser,
     private val getUserPlan: GetUserPlan,
+    private val paymentManager: PaymentManager,
     private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
 
@@ -59,6 +61,8 @@ class AccountViewModel @Inject constructor(
                 is UserPlan.Paid -> PlanSection.Data(planName = plan.humanReadableName())
             }
         }
+        val isUpgradeAvailable = paymentManager.isUpgradeAvailable()
+        val isPaid = (userPlanResult as? LoadingResult.Success)?.data is UserPlan.Paid
         when (userResult) {
             LoadingResult.Loading -> AccountUiState.Initial
             is LoadingResult.Error -> AccountUiState(
@@ -72,7 +76,7 @@ class AccountViewModel @Inject constructor(
                 email = userResult.data.email,
                 plan = plan,
                 isLoadingState = IsLoadingState.NotLoading,
-                showUpgradeButton = iapEnabled
+                showUpgradeButton = iapEnabled && isUpgradeAvailable && !isPaid
             )
         }
     }

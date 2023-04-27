@@ -181,6 +181,12 @@ class LauncherViewModel @Inject constructor(
         }
     }
 
+    fun upgrade() = viewModelScope.launch {
+        getPrimaryUserIdOrNull()?.let {
+            plansOrchestrator.startUpgradeWorkflow(it)
+        }
+    }
+
     fun report() = viewModelScope.launch {
         reportOrchestrator.startBugReport()
     }

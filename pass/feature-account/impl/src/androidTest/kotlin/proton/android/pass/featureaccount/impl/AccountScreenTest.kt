@@ -34,6 +34,7 @@ class AccountScreenTest {
         composeTestRule.setContent {
             AccountScreen(
                 onSubscriptionClick = {},
+                onUpgradeClick = {},
                 onSignOutClick = { isCalled = true },
                 onUpClick = {}
             )
@@ -54,6 +55,7 @@ class AccountScreenTest {
         composeTestRule.setContent {
             AccountScreen(
                 onSubscriptionClick = {},
+                onUpgradeClick = {},
                 onSignOutClick = {},
                 onUpClick = { isCalled = true }
             )
@@ -71,6 +73,7 @@ class AccountScreenTest {
         composeTestRule.setContent {
             AccountScreen(
                 onSubscriptionClick = {},
+                onUpgradeClick = {},
                 onSignOutClick = {},
                 onUpClick = {}
             )
@@ -90,6 +93,7 @@ class AccountScreenTest {
         composeTestRule.setContent {
             AccountScreen(
                 onSubscriptionClick = { checker.call() },
+                onUpgradeClick = {},
                 onSignOutClick = {},
                 onUpClick = {}
             )

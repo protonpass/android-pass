@@ -12,6 +12,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.composecomponents.impl.R as CompR
 
@@ -32,9 +33,9 @@ class AccountScreenTest {
         var isCalled = false
         composeTestRule.setContent {
             AccountScreen(
+                onSubscriptionClick = {},
                 onSignOutClick = { isCalled = true },
-                onUpClick = {},
-                onCurrentSubscriptionClick = {}
+                onUpClick = {}
             )
         }
         composeTestRule
@@ -52,9 +53,9 @@ class AccountScreenTest {
         var isCalled = false
         composeTestRule.setContent {
             AccountScreen(
+                onSubscriptionClick = {},
                 onSignOutClick = {},
-                onUpClick = { isCalled = true },
-                onCurrentSubscriptionClick = {}
+                onUpClick = { isCalled = true }
             )
         }
         composeTestRule
@@ -69,9 +70,9 @@ class AccountScreenTest {
     fun accountScreenOnDeleteOpensWebsite() {
         composeTestRule.setContent {
             AccountScreen(
+                onSubscriptionClick = {},
                 onSignOutClick = {},
-                onUpClick = {},
-                onCurrentSubscriptionClick = {}
+                onUpClick = {}
             )
         }
         composeTestRule
@@ -83,14 +84,14 @@ class AccountScreenTest {
         intended(hasData("https://account.proton.me/u/0/pass/account-password"))
     }
 
-
     @Test
-    fun accountScreenOnManageSubscriptionOpensWebsite() {
+    fun accountScreenOnManageSubscription() {
+        val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             AccountScreen(
+                onSubscriptionClick = { checker.call() },
                 onSignOutClick = {},
-                onUpClick = {},
-                onCurrentSubscriptionClick = {}
+                onUpClick = {}
             )
         }
         composeTestRule
@@ -98,7 +99,6 @@ class AccountScreenTest {
                 composeTestRule.activity.getString(R.string.manage_subscription_icon_content_description)
             )
             .performClick()
-        intended(hasAction(Intent.ACTION_VIEW))
-        intended(hasData("https://account.proton.me/u/0/pass/dashboard"))
+        composeTestRule.waitUntil { checker.isCalled }
     }
 }

@@ -11,17 +11,17 @@ object SignOutDialog : NavItem(baseRoute = "account/signout/dialog")
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.accountGraph(
+    onSubscriptionClick: () -> Unit,
     onSignOutClick: () -> Unit,
     onDismissClick: () -> Unit,
     onConfirmSignOutClick: () -> Unit,
-    onUpClick: () -> Unit,
-    onCurrentSubscriptionClick: () -> Unit
+    onUpClick: () -> Unit
 ) {
     composable(Account) {
         AccountScreen(
+            onSubscriptionClick = onSubscriptionClick,
             onSignOutClick = onSignOutClick,
-            onUpClick = onUpClick,
-            onCurrentSubscriptionClick = onCurrentSubscriptionClick
+            onUpClick = onUpClick
         )
     }
 

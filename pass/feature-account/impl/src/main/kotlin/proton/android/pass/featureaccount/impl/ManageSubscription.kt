@@ -16,7 +16,7 @@ import proton.android.pass.composecomponents.impl.setting.ColorSettingOption
 @Composable
 fun ManageSubscription(
     modifier: Modifier = Modifier,
-    onManageSubscriptionClick: () -> Unit
+    onSubscriptionClick: () -> Unit
 ) {
     ColorSettingOption(
         modifier = modifier.roundedContainerNorm(),
@@ -30,7 +30,7 @@ fun ManageSubscription(
                 tint = PassTheme.colors.interactionNormMajor2
             )
         },
-        onClick = onManageSubscriptionClick
+        onClick = onSubscriptionClick
     )
 }
 

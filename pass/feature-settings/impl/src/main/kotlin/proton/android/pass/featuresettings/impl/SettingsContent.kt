@@ -58,9 +58,9 @@ fun SettingsContent(
                 onSelectThemeClick = onSelectThemeClick,
                 onClipboardClick = onClipboardClick
             )
-            UseFaviconsSection(
-                value = state.useFavicons.value(),
-                onChange = onUseFaviconsChange
+            PrivacySection(
+                useFavicons = state.useFavicons.value(),
+                onUseFaviconsChange = onUseFaviconsChange
             )
             PrimaryVaultSection(
                 primaryVault = state.primaryVault,

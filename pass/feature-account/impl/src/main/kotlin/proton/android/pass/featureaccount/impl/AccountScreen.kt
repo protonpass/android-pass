@@ -13,9 +13,9 @@ import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 @Composable
 fun AccountScreen(
     modifier: Modifier = Modifier,
+    onSubscriptionClick: () -> Unit,
     onSignOutClick: () -> Unit,
     onUpClick: () -> Unit,
-    onCurrentSubscriptionClick: () -> Unit,
     viewModel: AccountViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -25,14 +25,14 @@ fun AccountScreen(
         state = state,
         onSignOutClick = onSignOutClick,
         onUpClick = onUpClick,
-        onManageSubscriptionClick = {
-            openWebsite(context, "https://account.proton.me/u/0/pass/dashboard")
+        onSubscriptionClick = {
+            onSubscriptionClick()
         },
         onDeleteAccountClick = {
             openWebsite(context, "https://account.proton.me/u/0/pass/account-password")
         },
         onUpgradeClick = {
-            onCurrentSubscriptionClick()
+            // TODO: Add Upgrade Link.
         }
     )
 }

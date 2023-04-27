@@ -23,7 +23,7 @@ import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 fun AccountContent(
     modifier: Modifier = Modifier,
     state: AccountUiState,
-    onManageSubscriptionClick: () -> Unit,
+    onSubscriptionClick: () -> Unit,
     onSignOutClick: () -> Unit,
     onDeleteAccountClick: () -> Unit,
     onUpgradeClick: () -> Unit,
@@ -56,7 +56,7 @@ fun AccountContent(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             AccountInfo(state = state)
-            ManageSubscription(onManageSubscriptionClick = onManageSubscriptionClick)
+            ManageSubscription(onSubscriptionClick = onSubscriptionClick)
             SignOut(onSignOutClick = onSignOutClick)
             DeleteAccount(onDeleteAccountClick = onDeleteAccountClick)
             Text(

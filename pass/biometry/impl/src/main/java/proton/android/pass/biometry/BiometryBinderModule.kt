@@ -11,4 +11,7 @@ abstract class BiometryBinderModule {
 
     @Binds
     abstract fun bindBiometryManager(impl: BiometryManagerImpl): BiometryManager
+
+    @Binds
+    abstract fun bindAuthTimeHolder(impl: BiometryAuthTimeHolderImpl): BiometryAuthTimeHolder
 }

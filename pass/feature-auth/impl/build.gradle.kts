@@ -45,6 +45,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.hilt.navigation.compose)
+    implementation(libs.kotlinx.datetime)
 
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.composeComponents.impl)
@@ -68,7 +69,9 @@ dependencies {
     testImplementation(libs.truth)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(libs.core.presentation.compose)
     androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.commonUi.api)
     androidTestImplementation(projects.pass.preferences.fakes)
     androidTestImplementation(projects.pass.biometry.fakes)
 }

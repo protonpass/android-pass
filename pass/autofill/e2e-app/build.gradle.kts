@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.compose.foundationLayout)
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
+    implementation(libs.kotlinx.datetime)
     implementation(libs.material)
     implementation(libs.kotlinx.datetime)
 

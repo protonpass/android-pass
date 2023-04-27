@@ -1,4 +1,4 @@
-package proton.android.pass.featurehome.impl
+package proton.android.featuresearchoptions.impl
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
@@ -19,22 +19,24 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.captionStrong
+import me.proton.core.compose.theme.captionStrongNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.featuresearchoptions.R
+import proton.android.pass.featuresearchoptions.api.SearchSortingType
 
 @Composable
 fun SortingButton(
     modifier: Modifier = Modifier,
-    sortingType: SortingType,
+    sortingType: SearchSortingType,
     onSortingOptionsClick: () -> Unit
 ) {
     val text = when (sortingType) {
-        SortingType.MostRecent -> stringResource(id = sortingType.titleId)
-        SortingType.TitleAsc -> stringResource(id = sortingType.titleId)
-        SortingType.TitleDesc -> stringResource(id = sortingType.titleId)
-        SortingType.CreationAsc -> stringResource(id = sortingType.titleId)
-        SortingType.CreationDesc -> stringResource(id = sortingType.titleId)
+        SearchSortingType.MostRecent -> stringResource(id = R.string.sort_by_modification_date)
+        SearchSortingType.TitleAsc -> stringResource(id = R.string.sort_by_title_asc)
+        SearchSortingType.TitleDesc -> stringResource(id = R.string.sort_by_title_desc)
+        SearchSortingType.CreationAsc -> stringResource(id = R.string.sort_by_creation_asc)
+        SearchSortingType.CreationDesc -> stringResource(id = R.string.sort_by_creation_desc)
     }
     Button(
         modifier = modifier,
@@ -51,25 +53,25 @@ fun SortingButton(
         Spacer(modifier = Modifier.width(5.dp))
         Text(
             text = text,
-            style = ProtonTheme.typography.captionStrong,
+            style = ProtonTheme.typography.captionStrongNorm,
             color = PassTheme.colors.interactionNormMajor2,
             fontSize = 14.sp
         )
     }
 }
 
-class SortingTypePreviewProvider : PreviewParameterProvider<SortingType> {
-    override val values: Sequence<SortingType>
-        get() = SortingType.values().asSequence()
+class SortingTypePreviewProvider : PreviewParameterProvider<SearchSortingType> {
+    override val values: Sequence<SearchSortingType>
+        get() = SearchSortingType.values().asSequence()
 }
 
 class ThemeAndSortingTypeProvider :
-    ThemePairPreviewProvider<SortingType>(SortingTypePreviewProvider())
+    ThemePairPreviewProvider<SearchSortingType>(SortingTypePreviewProvider())
 
 @Preview
 @Composable
 fun SortingButtonPreview(
-    @PreviewParameter(ThemeAndSortingTypeProvider::class) input: Pair<Boolean, SortingType>
+    @PreviewParameter(ThemeAndSortingTypeProvider::class) input: Pair<Boolean, SearchSortingType>
 ) {
     PassTheme(isDark = input.first) {
         Surface {

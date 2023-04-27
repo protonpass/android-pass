@@ -75,6 +75,9 @@ include(":pass:feature-item-create:impl")
 include(":pass:feature-item-detail:impl")
 include(":pass:feature-onboarding:impl")
 include(":pass:feature-profile:impl")
+include(":pass:feature-search-options:api")
+include(":pass:feature-search-options:fakes")
+include(":pass:feature-search-options:impl")
 include(":pass:feature-settings:impl")
 include(":pass:feature-trash:impl")
 include(":pass:feature-vault:impl")
@@ -101,6 +104,7 @@ include(":pass:totp:api")
 include(":pass:totp:fakes")
 include(":pass:totp:impl")
 include(":pass:tracing:impl")
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {

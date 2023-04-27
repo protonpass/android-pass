@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
 
     implementation(projects.pass.notifications.api)
+    implementation(projects.pass.featureSearchOptions.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.commonUiModels.api)

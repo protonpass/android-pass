@@ -25,6 +25,11 @@ object DestinationShareNavArgId : NavArgId {
     override val navType: NavType<*> = NavType.StringType
 }
 
+object SortingTypeNavArgId : NavArgId {
+    override val key: String = "sortingType"
+    override val navType: NavType<*> = NavType.StringType
+}
+
 sealed interface OptionalNavArgId : NavArgId {
     val default: Any?
         get() = null

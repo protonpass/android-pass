@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
+import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.pass.domain.ItemId
@@ -13,7 +14,7 @@ object Home : NavItem(baseRoute = "home", isTopLevel = true)
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.homeGraph(
-    onNavigateEvent: (HomeNavigation) -> Unit
+    onNavigateEvent: (HomeNavigation) -> Unit,
 ) {
     composable(Home) {
         NavHome(
@@ -38,4 +39,5 @@ sealed interface HomeNavigation {
     object CreateVault : HomeNavigation
     data class EditVault(val shareId: ShareId) : HomeNavigation
     data class DeleteVault(val shareId: ShareId) : HomeNavigation
+    data class SortingBottomsheet(val searchSortingType: SearchSortingType) : HomeNavigation
 }

@@ -73,10 +73,10 @@ import proton.pass.domain.ShareId
 @Suppress("LongParameterList", "LongMethod", "ComplexMethod")
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
+    onSubscriptionClick: () -> Unit,
     finishActivity: () -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit,
     onLogout: () -> Unit,
-    onCurrentSubscription: () -> Unit
 ) {
     homeGraph(
         onNavigateEvent = {
@@ -209,11 +209,11 @@ fun NavGraphBuilder.appGraph(
         onDismiss = { appNavigator.onBackClick() }
     )
     accountGraph(
+        onSubscriptionClick = onSubscriptionClick,
         onSignOutClick = { appNavigator.navigate(SignOutDialog) },
         onUpClick = { appNavigator.onBackClick() },
         onDismissClick = { appNavigator.onBackClick() },
         onConfirmSignOutClick = onLogout,
-        onCurrentSubscriptionClick = { onCurrentSubscription() }
     )
     profileGraph(
         onAccountClick = { appNavigator.navigate(Account) },

@@ -26,7 +26,6 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
@@ -44,10 +43,6 @@ class SettingsViewModel @Inject constructor(
     observeVaults: ObserveVaults
 ) : ViewModel() {
 
-    private val biometricLockState: Flow<BiometricLockState> = preferencesRepository
-        .getBiometricLockState()
-        .distinctUntilChanged()
-
     private val themeState: Flow<ThemePreference> = preferencesRepository
         .getThemePreference()
         .distinctUntilChanged()
@@ -63,18 +58,16 @@ class SettingsViewModel @Inject constructor(
             .distinctUntilChanged()
 
     data class PreferencesState(
-        val biometricLock: BiometricLockState,
         val theme: ThemePreference,
         val copyTotpToClipboard: CopyTotpToClipboard,
         val useFavicons: UseFaviconsPreference,
     )
 
     private val preferencesState: Flow<PreferencesState> = combine(
-        biometricLockState,
         themeState,
         copyTotpToClipboardState,
         useFaviconsState
-    ) { biometric, theme, totp, favicons -> PreferencesState(biometric, theme, totp, favicons) }
+    ) { theme, totp, favicons -> PreferencesState(theme, totp, favicons) }
 
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)

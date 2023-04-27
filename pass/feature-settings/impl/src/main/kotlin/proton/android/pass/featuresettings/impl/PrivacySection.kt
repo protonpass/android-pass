@@ -1,6 +1,7 @@
 package proton.android.pass.featuresettings.impl
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -12,27 +13,35 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.caption
+import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.setting.SettingToggle
 
 @Composable
-fun UseFaviconsSection(
+fun PrivacySection(
     modifier: Modifier = Modifier,
-    value: Boolean,
-    onChange: (Boolean) -> Unit
+    useFavicons: Boolean,
+    onUseFaviconsChange: (Boolean) -> Unit
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = Arrangement.spacedBy(10.dp)
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        SettingToggle(
-            modifier = Modifier.roundedContainerNorm(),
-            text = stringResource(R.string.settings_use_favicons_preference_title),
-            isChecked = value,
-            onClick = { onChange(it) }
+        Text(
+            text = stringResource(R.string.settings_privacy_section_title),
+            style = ProtonTheme.typography.defaultSmallWeak,
         )
+
+        Box(modifier = Modifier.roundedContainerNorm()) {
+            SettingToggle(
+                text = stringResource(R.string.settings_use_favicons_preference_title),
+                isChecked = useFavicons,
+                onClick = { onUseFaviconsChange(it) }
+            )
+        }
+
         Text(
             text = stringResource(R.string.settings_use_favicons_preference_subtitle),
             style = ProtonTheme.typography.caption.copy(PassTheme.colors.textWeak)
@@ -47,9 +56,9 @@ fun UseFaviconsSectionPreview(
 ) {
     PassTheme(isDark = input.first) {
         Surface {
-            UseFaviconsSection(
-                value = input.second,
-                onChange = {}
+            PrivacySection(
+                useFavicons = input.second,
+                onUseFaviconsChange = {}
             )
         }
     }

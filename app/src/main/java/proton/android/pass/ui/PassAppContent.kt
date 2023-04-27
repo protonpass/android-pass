@@ -16,11 +16,13 @@ import androidx.compose.ui.res.stringResource
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import proton.android.pass.commonui.api.OnResumeCallback
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
+import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
@@ -45,6 +47,13 @@ fun PassAppContent(
     val appNavigator = rememberAppNavigator(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
     )
+
+    OnResumeCallback { isFirstTime ->
+        if (!isFirstTime) {
+            appNavigator.navigate(Auth)
+        }
+    }
+
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
 

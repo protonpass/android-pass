@@ -14,6 +14,7 @@ import proton.android.pass.featureaccount.impl.AccountNavigation
 import proton.android.pass.featureaccount.impl.SignOutDialog
 import proton.android.pass.featureaccount.impl.accountGraph
 import proton.android.pass.featureauth.impl.Auth
+import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featurefeatureflags.impl.featureFlagsGraph
 import proton.android.pass.featurehome.impl.Home
@@ -50,8 +51,10 @@ import proton.android.pass.featuremigrate.impl.MigrateSelectVault
 import proton.android.pass.featuremigrate.impl.migrateGraph
 import proton.android.pass.featureonboarding.impl.OnBoarding
 import proton.android.pass.featureonboarding.impl.onBoardingGraph
+import proton.android.pass.featureprofile.impl.AppLockBottomsheet
 import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
 import proton.android.pass.featureprofile.impl.Profile
+import proton.android.pass.featureprofile.impl.ProfileNavigation
 import proton.android.pass.featureprofile.impl.profileGraph
 import proton.android.pass.featuresettings.impl.ClearClipboardOptions
 import proton.android.pass.featuresettings.impl.ClipboardSettings
@@ -229,11 +232,17 @@ fun NavGraphBuilder.appGraph(
         }
     )
     profileGraph(
-        onAccountClick = { appNavigator.navigate(Account) },
-        onSettingsClick = { appNavigator.navigate(Settings) },
-        onListClick = { appNavigator.navigate(Home) },
-        onCreateItemClick = { appNavigator.navigate(CreateItemBottomsheet) },
-        onFeedbackClick = { appNavigator.navigate(FeedbackBottomsheet) }
+        dismissBottomSheet = { dismissBottomSheet({}) },
+        onNavigateEvent = {
+            when (it) {
+                ProfileNavigation.Account -> appNavigator.navigate(Account)
+                ProfileNavigation.Settings -> appNavigator.navigate(Settings)
+                ProfileNavigation.List -> appNavigator.navigate(Home)
+                ProfileNavigation.CreateItem -> appNavigator.navigate(CreateItemBottomsheet)
+                ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)
+                ProfileNavigation.AppLock -> appNavigator.navigate(AppLockBottomsheet)
+            }
+        }
     )
     settingsGraph(
         onSelectThemeClick = { appNavigator.navigate(ThemeSelector) },
@@ -402,10 +411,14 @@ fun NavGraphBuilder.appGraph(
     )
 
     authGraph(
-        onNavigateBack = { onNavigate(AppNavigation.Finish) },
-        onAuthSuccessful = { appNavigator.onBackClick() },
-        onAuthDismissed = { onNavigate(AppNavigation.Finish) },
-        onAuthFailed = { appNavigator.onBackClick() }
+        navigation = {
+            when (it) {
+                AuthNavigation.Back -> { onNavigate(AppNavigation.Finish) }
+                AuthNavigation.Success -> { appNavigator.onBackClick() }
+                AuthNavigation.Dismissed -> { onNavigate(AppNavigation.Finish) }
+                AuthNavigation.Failed -> { appNavigator.onBackClick() }
+            }
+        }
     )
     onBoardingGraph(
         onOnBoardingFinished = { appNavigator.onBackClick() },

@@ -8,19 +8,21 @@ import proton.android.pass.navigation.api.composable
 
 object Auth : NavItem(baseRoute = "auth")
 
+sealed interface AuthNavigation {
+    object Success : AuthNavigation
+    object Failed : AuthNavigation
+    object Dismissed : AuthNavigation
+    object Back : AuthNavigation
+}
+
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.authGraph(
-    onNavigateBack: () -> Unit,
-    onAuthSuccessful: () -> Unit,
-    onAuthDismissed: () -> Unit,
-    onAuthFailed: () -> Unit
+    navigation: (AuthNavigation) -> Unit
 ) {
     composable(Auth) {
-        BackHandler { onNavigateBack() }
+        BackHandler { navigation(AuthNavigation.Back) }
         AuthScreen(
-            onAuthSuccessful = { onAuthSuccessful() },
-            onAuthFailed = { onAuthFailed() },
-            onAuthDismissed = { onAuthDismissed() }
+            navigation = navigation,
         )
     }
 }

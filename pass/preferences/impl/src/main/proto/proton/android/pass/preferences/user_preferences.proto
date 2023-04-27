@@ -3,6 +3,7 @@ syntax = "proto3";
 import "proton/android/pass/preferences/theme_pref.proto";
 import "proton/android/pass/preferences/clipboard_pref.proto";
 import "proton/android/pass/preferences/boolean_pref.proto";
+import "proton/android/pass/preferences/lock_app_pref.proto";
 
 option java_package = "proton.android.pass.preferences";
 option java_multiple_files = true;
@@ -16,4 +17,5 @@ message UserPreferences {
   BooleanPrefProto copy_totp_to_clipboard_enabled = 6;
   ClipboardPrefProto clear_clipboard_after = 7;
   BooleanPrefProto use_favicons = 8;
+  LockAppPrefProto lock_app = 9;
 }

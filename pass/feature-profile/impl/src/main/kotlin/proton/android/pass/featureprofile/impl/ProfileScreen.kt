@@ -17,11 +17,7 @@ import java.lang.ref.WeakReference
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
-    onAccountClick: () -> Unit,
-    onListClick: () -> Unit,
-    onCreateItemClick: () -> Unit,
-    onSettingsClick: () -> Unit,
-    onFeedbackClick: () -> Unit,
+    onNavigateEvent: (ProfileNavigation) -> Unit,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -33,13 +29,14 @@ fun ProfileScreen(
             viewModel.onFingerprintToggle(ContextHolder(WeakReference(context).toOption()), it)
         },
         onAutofillClicked = { viewModel.onToggleAutofill(it) },
-        onAccountClick = onAccountClick,
-        onSettingsClick = onSettingsClick,
-        onFeedbackClick = onFeedbackClick,
+        onAppLockClick = { onNavigateEvent(ProfileNavigation.AppLock) },
+        onAccountClick = { onNavigateEvent(ProfileNavigation.Account) },
+        onSettingsClick = { onNavigateEvent(ProfileNavigation.Settings) },
+        onFeedbackClick = { onNavigateEvent(ProfileNavigation.Feedback) },
         onImportExportClick = { openWebsite(context, PASS_IMPORT) },
         onRateAppClick = { openWebsite(context, PASS_STORE) },
-        onListClick = onListClick,
-        onCreateItemClick = onCreateItemClick,
+        onListClick = { onNavigateEvent(ProfileNavigation.List) },
+        onCreateItemClick = { onNavigateEvent(ProfileNavigation.CreateItem) },
         onCopyAppVersionClick = { viewModel.copyAppVersion(state.appVersion) },
     )
 }

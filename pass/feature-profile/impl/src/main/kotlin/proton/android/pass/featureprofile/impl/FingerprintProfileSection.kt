@@ -1,7 +1,9 @@
 package proton.android.pass.featureprofile.impl
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -11,31 +13,41 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.caption
+import me.proton.core.compose.theme.captionNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.setting.SettingOption
 import proton.android.pass.composecomponents.impl.setting.SettingToggle
 
 @Composable
 fun FingerprintProfileSection(
     modifier: Modifier = Modifier,
-    isChecked: Boolean,
-    onClick: (Boolean) -> Unit
+    isFingerprintEnabled: Boolean,
+    onFingerprintToggle: (Boolean) -> Unit,
+    onAppLockClick: () -> Unit
 ) {
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        SettingToggle(
-            modifier = Modifier.roundedContainerNorm(),
-            text = stringResource(R.string.profile_option_fingerprint),
-            isChecked = isChecked,
-            onClick = { onClick(isChecked) }
-        )
+        Column(modifier = Modifier.roundedContainerNorm()) {
+            SettingToggle(
+                text = stringResource(R.string.profile_option_fingerprint),
+                isChecked = isFingerprintEnabled,
+                onClick = { onFingerprintToggle(isFingerprintEnabled) }
+            )
+            AnimatedVisibility(visible = isFingerprintEnabled) {
+                Divider(color = PassTheme.colors.inputBorderNorm)
+                SettingOption(
+                    text = stringResource(R.string.profile_option_app_lock),
+                    onClick = onAppLockClick
+                )
+            }
+        }
         Text(
             text = stringResource(R.string.profile_option_fingerprint_subtitle),
-            style = ProtonTheme.typography.caption.copy(PassTheme.colors.textWeak)
+            style = ProtonTheme.typography.captionNorm.copy(PassTheme.colors.textWeak)
         )
     }
 }
@@ -43,11 +55,15 @@ fun FingerprintProfileSection(
 @Preview
 @Composable
 fun FingerprintProfileSectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = isDark) {
+    PassTheme(isDark = input.first) {
         Surface {
-            FingerprintProfileSection(isChecked = true) {}
+            FingerprintProfileSection(
+                isFingerprintEnabled = input.second,
+                onFingerprintToggle = {},
+                onAppLockClick = {}
+            )
         }
     }
 }

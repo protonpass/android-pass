@@ -13,6 +13,7 @@
     <string name="profile_option_autofill_subtitle">Automatically fill in your usernames and passwords.</string>
     <string name="profile_option_fingerprint_subtitle">Unlock Proton pass with a touch.</string>
     <string name="profile_option_fingerprint">Fingerprint</string>
+    <string name="profile_option_app_lock">App lock</string>
 
     <string name="profile_error_biometry_failed_to_start">Could not start the biometric authentication</string>
     <string name="profile_error_biometry_failed_to_authenticate">Failed to authenticate</string>
@@ -28,5 +29,14 @@
     <string name="feedback_option_reddit">Check out Proton on Reddit</string>
     <string name="feedback_option_twitter">Message us on Twitter</string>
     <string name="feedback_option_mail">Send us a message</string>
+
+    <string name="app_lock_never">Never</string>
+    <string name="app_lock_immediately">Immediately</string>
+    <string name="app_lock_one_minute">After 1 minute</string>
+    <string name="app_lock_two_minutes">After 2 minutes</string>
+    <string name="app_lock_five_minutes">After 5 minutes</string>
+    <string name="app_lock_ten_minutes">After 10 minutes</string>
+    <string name="app_lock_one_hour">After 1 hour</string>
+    <string name="app_lock_four_hours">After 4 hours</string>
 
 </resources>

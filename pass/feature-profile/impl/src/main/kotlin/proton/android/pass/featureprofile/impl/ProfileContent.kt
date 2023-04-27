@@ -36,6 +36,7 @@ fun ProfileContent(
     onListClick: () -> Unit,
     onCreateItemClick: () -> Unit,
     onFingerprintClicked: (Boolean) -> Unit,
+    onAppLockClick: () -> Unit,
     onAutofillClicked: (Boolean) -> Unit,
     onAccountClick: () -> Unit,
     onSettingsClick: () -> Unit,
@@ -82,8 +83,9 @@ fun ProfileContent(
             )
             if (state.fingerprintSection is FingerprintSectionState.Available) {
                 FingerprintProfileSection(
-                    isChecked = state.fingerprintSection.enabled.value(),
-                    onClick = onFingerprintClicked
+                    isFingerprintEnabled = state.fingerprintSection.enabled.value(),
+                    onFingerprintToggle = onFingerprintClicked,
+                    onAppLockClick = onAppLockClick
                 )
             }
             if (state.autofillStatus is AutofillSupportedStatus.Supported) {

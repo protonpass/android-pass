@@ -33,6 +33,7 @@ dependencies {
     implementation(projects.pass.domain)
     implementation(projects.pass.image.api)
     implementation(projects.pass.log.api)
+    implementation(projects.pass.preferences.api)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

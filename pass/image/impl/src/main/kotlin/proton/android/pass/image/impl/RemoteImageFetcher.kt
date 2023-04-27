@@ -11,6 +11,7 @@ import coil.request.Options
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
@@ -20,6 +21,8 @@ import proton.android.pass.data.api.usecases.ImageResponseResult
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.image.impl.CacheUtils.cacheDir
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.UseFaviconsPreference
+import proton.android.pass.preferences.UserPreferencesRepository
 import proton.pass.domain.WebsiteUrl
 import java.io.File
 import javax.inject.Inject
@@ -30,10 +33,17 @@ import kotlin.random.Random
 class RemoteImageFetcherFactory @Inject constructor(
     private val requestImage: RequestImage,
     @ApplicationContext private val context: Context,
-    private val clock: Clock
+    private val clock: Clock,
+    private val userPreferencesRepository: UserPreferencesRepository
 ) : Fetcher.Factory<WebsiteUrl> {
-    override fun create(data: WebsiteUrl, options: Options, imageLoader: ImageLoader): Fetcher =
-        RemoteImageFetcher(requestImage, context, clock, data)
+    override fun create(data: WebsiteUrl, options: Options, imageLoader: ImageLoader): Fetcher {
+        val canUse = runBlocking { userPreferencesRepository.getUseFaviconsPreference().first() }
+        return if (canUse == UseFaviconsPreference.Enabled) {
+            RemoteImageFetcher(requestImage, context, clock, data)
+        } else {
+            NoOpFetcher()
+        }
+    }
 }
 
 class RemoteImageFetcher(

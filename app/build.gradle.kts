@@ -299,6 +299,7 @@ dependencies {
     implementation(projects.pass.featureVault.impl)
     implementation(projects.pass.featureItemDetail.impl)
     implementation(projects.pass.featureProfile.impl)
+    implementation(projects.pass.featureSearchOptions.api)
     implementation(projects.pass.featureSearchOptions.impl)
     implementation(projects.pass.log.api)
     implementation(projects.pass.log.impl)

@@ -29,7 +29,7 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    api(projects.pass.featureSearchOptions.api)
+    implementation(projects.pass.featureSearchOptions.api)
 
     implementation(libs.kotlinx.collections)
     implementation(libs.core.presentation.compose)

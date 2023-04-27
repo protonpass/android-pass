@@ -1,4 +1,4 @@
-package proton.android.featuresearchoptions.impl
+package proton.android.pass.composecomponents.impl.item.header
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
@@ -22,7 +22,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionStrongNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
-import proton.android.pass.featuresearchoptions.R
+import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 
 @Composable

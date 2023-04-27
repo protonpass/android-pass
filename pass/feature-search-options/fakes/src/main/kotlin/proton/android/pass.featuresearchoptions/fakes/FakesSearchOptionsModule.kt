@@ -1,4 +1,4 @@
-package proton.android.featuresearchoptions.impl
+package proton.android.pass.featuresearchoptions.fakes
 
 import dagger.Binds
 import dagger.Module
@@ -8,9 +8,9 @@ import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class SortingOptionsModule {
+abstract class FakesSearchOptionsModule {
 
     @Binds
-    abstract fun bindSearchOptionsRepository(impl: SearchOptionsRepositoryImpl): SearchOptionsRepository
+    abstract fun bindSearchOptionsRepository(impl: TestSearchOptionsRepository): SearchOptionsRepository
 }
 

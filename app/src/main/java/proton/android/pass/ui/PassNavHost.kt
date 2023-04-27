@@ -20,7 +20,7 @@ fun PassNavHost(
     modifier: Modifier = Modifier,
     appNavigator: AppNavigator,
     onLogout: () -> Unit,
-    onCurrentSubscription: () -> Unit,
+    onSubscriptionClick: () -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit,
     finishActivity: () -> Unit,
 ) {
@@ -31,10 +31,10 @@ fun PassNavHost(
     ) {
         appGraph(
             appNavigator = appNavigator,
+            onSubscriptionClick = onSubscriptionClick,
             finishActivity = finishActivity,
             dismissBottomSheet = dismissBottomSheet,
             onLogout = onLogout,
-            onCurrentSubscription = onCurrentSubscription
         )
     }
 }

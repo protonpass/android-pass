@@ -86,6 +86,7 @@ fun PassAppContent(
                             },
                             onLogout = { coreNavigation.onRemove(null) },
                             onSubscriptionClick = { coreNavigation.onSubscription() },
+                            onUpgradeClick = { coreNavigation.onUpgrade() }
                         )
                     }
                 }

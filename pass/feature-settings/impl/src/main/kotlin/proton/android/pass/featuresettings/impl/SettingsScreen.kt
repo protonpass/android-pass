@@ -7,7 +7,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.commonui.api.BrowserUtils
+import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -30,12 +30,8 @@ fun SettingsScreen(
         onForceSyncClick = { viewModel.onForceSync() },
         onSelectThemeClick = onSelectThemeClick,
         onClipboardClick = onClipboardClick,
-        onPrivacyClick = {
-            BrowserUtils.openWebsite(context, "https://proton.me/legal/privacy")
-        },
-        onTermsClick = {
-            BrowserUtils.openWebsite(context, "https://proton.me/legal/terms")
-        },
+        onPrivacyClick = { openWebsite(context, "https://proton.me/legal/privacy") },
+        onTermsClick = { openWebsite(context, "https://proton.me/legal/terms") },
         onUpClick = onUpClick,
         onPrimaryVaultClick = onPrimaryVaultClick
     )

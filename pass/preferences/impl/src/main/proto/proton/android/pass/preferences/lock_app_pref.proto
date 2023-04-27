@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_package = "me.proton.android.pass.preferences";
+option java_multiple_files = true;
+
+enum LockAppPrefProto {
+  LOCK_APP_UNSPECIFIED = 0;
+  LOCK_APP_IMMEDIATELY = 1;
+  LOCK_APP_NEVER = 2;
+  LOCK_APP_IN_ONE_MINUTE = 3;
+  LOCK_APP_IN_TWO_MINUTES = 4;
+  LOCK_APP_IN_FIVE_MINUTES = 5;
+  LOCK_APP_IN_TEN_MINUTES = 6;
+  LOCK_APP_IN_ONE_HOUR = 7;
+  LOCK_APP_IN_FOUR_HOURS = 8;
+}
+

@@ -14,18 +14,16 @@ const val AUTH_SCREEN_ROUTE = "common/auth"
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun AuthScreen(
-    onAuthSuccessful: () -> Unit,
-    onAuthFailed: () -> Unit,
-    onAuthDismissed: () -> Unit,
+    navigation: (AuthNavigation) -> Unit,
     viewModel: AuthViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LaunchedEffect(state) {
         when (state) {
-            AuthStatus.Success -> onAuthSuccessful()
-            AuthStatus.Failed -> onAuthFailed()
-            AuthStatus.Canceled -> onAuthDismissed()
+            AuthStatus.Success -> { navigation(AuthNavigation.Success) }
+            AuthStatus.Failed -> { navigation(AuthNavigation.Failed) }
+            AuthStatus.Canceled -> { navigation(AuthNavigation.Dismissed) }
             AuthStatus.Pending -> {}
         }
     }

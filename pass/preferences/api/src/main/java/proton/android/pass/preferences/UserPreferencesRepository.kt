@@ -27,5 +27,8 @@ interface UserPreferencesRepository {
     suspend fun setUseFaviconsPreference(useFavicons: UseFaviconsPreference): Result<Unit>
     fun getUseFaviconsPreference(): Flow<UseFaviconsPreference>
 
+    suspend fun setAppLockPreference(preference: AppLockPreference): Result<Unit>
+    fun getAppLockPreference(): Flow<AppLockPreference>
+
     suspend fun clearPreferences(): Result<Unit>
 }

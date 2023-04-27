@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.datetime.Clock
 import proton.android.pass.biometry.extensions.from
 import proton.android.pass.biometry.implementation.R
 import proton.android.pass.common.api.None
@@ -20,7 +21,9 @@ import javax.inject.Singleton
 
 @Singleton
 class BiometryManagerImpl @Inject constructor(
-    private val biometricManager: BiometricManager
+    private val biometricManager: BiometricManager,
+    private val biometryAuthTimeHolder: BiometryAuthTimeHolder,
+    private val clock: Clock
 ) : BiometryManager {
 
     override fun getBiometryStatus(): BiometryStatus =
@@ -61,6 +64,7 @@ class BiometryManagerImpl @Inject constructor(
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 PassLogger.i(TAG, "Auth succeeded")
                 trySend(BiometryResult.Success)
+                biometryAuthTimeHolder.storeBiometryAuthTime(clock.now())
                 close()
             }
         }

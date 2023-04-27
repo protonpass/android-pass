@@ -163,6 +163,24 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 )
             }
 
+    override suspend fun setAppLockPreference(
+        preference: AppLockPreference
+    ): Result<Unit> = runCatching {
+        dataStore.updateData {
+            it.toBuilder()
+                .setLockApp(preference.toProto())
+                .build()
+        }
+        return@runCatching
+    }
+
+    override fun getAppLockPreference(): Flow<AppLockPreference> =
+        dataStore.data
+            .catch { exception -> handleExceptions(exception) }
+            .map { preferences ->
+                preferences.lockApp.toValue(default = AppLockPreference.InTwoMinutes)
+            }
+
     override suspend fun clearPreferences(): Result<Unit> =
         runCatching {
             dataStore.updateData {

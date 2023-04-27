@@ -76,6 +76,9 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.NoteMovedToTrash
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.ObserveItemsError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsError
+import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.SearchSortingType
+import proton.android.pass.featuresearchoptions.api.SortingOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
@@ -105,6 +108,7 @@ class HomeViewModel @Inject constructor(
     private val deleteAllSearchEntry: DeleteAllSearchEntry,
     private val observeSearchEntry: ObserveSearchEntry,
     private val telemetryManager: TelemetryManager,
+    private val searchOptionsRepository: SearchOptionsRepository,
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
@@ -121,7 +125,7 @@ class HomeViewModel @Inject constructor(
 
     private data class FiltersWrapper(
         val vaultSelection: HomeVaultSelection,
-        val sortingSelection: SortingType,
+        val sortingSelection: SearchSortingType,
         val itemTypeSelection: HomeItemTypeSelection
     )
 
@@ -129,6 +133,8 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(HomeItemTypeSelection.AllItems)
     private val vaultSelectionFlow: MutableStateFlow<HomeVaultSelection> =
         MutableStateFlow(HomeVaultSelection.AllVaults)
+    private val sortingSelectionFlow = searchOptionsRepository.observeSortingOption()
+        .distinctUntilChanged()
 
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -183,6 +189,7 @@ class HomeViewModel @Inject constructor(
             when (it) {
                 HomeVaultSelection.AllVaults ->
                     observeSearchEntry(SearchEntrySelection.AllVaults)
+
                 HomeVaultSelection.Trash -> emptyFlow()
                 is HomeVaultSelection.Vault ->
                     observeSearchEntry(SearchEntrySelection.Vault(it.shareId))
@@ -205,9 +212,6 @@ class HomeViewModel @Inject constructor(
 
     private val actionStateFlow: MutableStateFlow<ActionState> =
         MutableStateFlow(ActionState.Unknown)
-
-    private val sortingTypeState: MutableStateFlow<SortingType> =
-        MutableStateFlow(SortingType.MostRecent)
 
     private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = vaultSelectionFlow
         .flatMapLatest { vault ->
@@ -252,14 +256,14 @@ class HomeViewModel @Inject constructor(
 
     private val sortedListItemFlow = combine(
         itemUiModelFlow,
-        sortingTypeState
+        sortingSelectionFlow
     ) { result, sortingType ->
-        when (sortingType) {
-            SortingType.TitleAsc -> result.map { list -> list.sortByTitleAsc() }
-            SortingType.TitleDesc -> result.map { list -> list.sortByTitleDesc() }
-            SortingType.CreationAsc -> result.map { list -> list.sortByCreationAsc() }
-            SortingType.CreationDesc -> result.map { list -> list.sortByCreationDesc() }
-            SortingType.MostRecent -> result.map { list -> list.sortByMostRecent(clock.now()) }
+        when (sortingType.searchSortingType) {
+            SearchSortingType.TitleAsc -> result.map { list -> list.sortByTitleAsc() }
+            SearchSortingType.TitleDesc -> result.map { list -> list.sortByTitleDesc() }
+            SearchSortingType.CreationAsc -> result.map { list -> list.sortByCreationAsc() }
+            SearchSortingType.CreationDesc -> result.map { list -> list.sortByCreationDesc() }
+            SearchSortingType.MostRecent -> result.map { list -> list.sortByMostRecent(clock.now()) }
         }
     }.distinctUntilChanged()
 
@@ -338,10 +342,15 @@ class HomeViewModel @Inject constructor(
 
     private val filtersWrapperFlow = combine(
         vaultSelectionFlow,
-        sortingTypeState,
-        itemTypeSelectionFlow,
-        ::FiltersWrapper
-    )
+        sortingSelectionFlow,
+        itemTypeSelectionFlow
+    ) { vault, sortingOption, itemType ->
+        FiltersWrapper(
+            vaultSelection = vault,
+            sortingSelection = sortingOption.searchSortingType,
+            itemTypeSelection = itemType
+        )
+    }
 
     val homeUiState = combine(
         shareListWrapperFlow,
@@ -368,8 +377,10 @@ class HomeViewModel @Inject constructor(
                     }
                     itemsResult.data to loading
                 }
+
                 else -> itemsResult.data to syncLoading
             }
+
             is LoadingResult.Error -> {
                 PassLogger.e(TAG, itemsResult.exception, "Observe items error")
                 snackbarDispatcher(ObserveItemsError)
@@ -425,8 +436,8 @@ class HomeViewModel @Inject constructor(
         hasEnteredSearch = true
     }
 
-    fun onSortingTypeChanged(sortingType: SortingType) {
-        sortingTypeState.update { sortingType }
+    fun onSortingTypeChanged(sortingType: SearchSortingType) {
+        searchOptionsRepository.setSearchOption(SortingOption(sortingType))
     }
 
     fun onRefresh() = viewModelScope.launch(coroutineExceptionHandler) {
@@ -466,11 +477,13 @@ class HomeViewModel @Inject constructor(
                     clipboardManager.copyToClipboard(text = text)
                     snackbarDispatcher(HomeSnackbarMessage.AliasCopied)
                 }
+
                 HomeClipboardType.Note -> {
                     clipboardManager.copyToClipboard(text = text)
 
                     snackbarDispatcher(HomeSnackbarMessage.NoteCopied)
                 }
+
                 HomeClipboardType.Password -> {
                     clipboardManager.copyToClipboard(
                         text = encryptionContextProvider.withEncryptionContext { decrypt(text) },
@@ -478,6 +491,7 @@ class HomeViewModel @Inject constructor(
                     )
                     snackbarDispatcher(HomeSnackbarMessage.PasswordCopied)
                 }
+
                 HomeClipboardType.Username -> {
                     clipboardManager.copyToClipboard(text = text)
                     snackbarDispatcher(HomeSnackbarMessage.UsernameCopied)

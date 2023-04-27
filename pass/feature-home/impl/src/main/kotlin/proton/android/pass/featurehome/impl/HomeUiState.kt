@@ -12,6 +12,7 @@ import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.pass.domain.ShareId
 
 sealed interface ActionState {
@@ -43,7 +44,7 @@ data class HomeListUiState(
     val shares: ImmutableMap<ShareId, ShareUiModel>,
     val homeVaultSelection: HomeVaultSelection = HomeVaultSelection.AllVaults,
     val homeItemTypeSelection: HomeItemTypeSelection = HomeItemTypeSelection.AllItems,
-    val sortingType: SortingType = SortingType.MostRecent,
+    val sortingType: SearchSortingType = SearchSortingType.MostRecent,
 ) {
     companion object {
         val Loading = HomeListUiState(

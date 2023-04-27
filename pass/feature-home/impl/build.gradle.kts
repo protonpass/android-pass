@@ -74,6 +74,7 @@ dependencies {
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.telemetry.api)
+    implementation(projects.pass.featureSearchOptions.impl)
 
     // Temporarily depend on the impl module until move the bottomsheets to routes
     implementation(projects.pass.featureTrash.impl)

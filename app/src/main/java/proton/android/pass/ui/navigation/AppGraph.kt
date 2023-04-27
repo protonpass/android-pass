@@ -4,6 +4,9 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
+import proton.android.featuresearchoptions.impl.SortingBottomsheet
+import proton.android.featuresearchoptions.impl.SortingNavigation
+import proton.android.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.featureaccount.impl.Account
@@ -149,6 +152,20 @@ fun NavGraphBuilder.appGraph(
                 HomeNavigation.Profile -> {
                     appNavigator.navigate(Profile)
                 }
+
+                is HomeNavigation.SortingBottomsheet -> {
+                    appNavigator.navigate(
+                        SortingBottomsheet,
+                        SortingBottomsheet.createNavRoute(it.searchSortingType)
+                    )
+                }
+            }
+        }
+    )
+    sortingGraph(
+        onNavigateEvent = {
+            when (it) {
+                is SortingNavigation.SelectSorting -> dismissBottomSheet {}
             }
         }
     )

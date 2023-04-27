@@ -34,10 +34,13 @@ import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomShe
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.AliasOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.LoginOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.NoteOptions
+import proton.android.pass.featurehome.impl.HomeBottomSheetType.TrashItemOptions
+import proton.android.pass.featurehome.impl.HomeBottomSheetType.TrashOptions
+import proton.android.pass.featurehome.impl.HomeBottomSheetType.VaultOptions
+import proton.android.pass.featurehome.impl.HomeNavigation.SortingBottomsheet
 import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
-import proton.android.pass.featurehome.impl.bottomsheet.SortingBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.TrashAllBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.VaultOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
@@ -67,7 +70,7 @@ fun HomeScreen(
     val drawerUiState by vaultDrawerViewModel.drawerUiState.collectAsStateWithLifecycle()
 
     var currentBottomSheet by rememberSaveable(stateSaver = HomeBottomSheetTypeSaver) {
-        mutableStateOf(HomeBottomSheetType.Sorting)
+        mutableStateOf(TrashOptions)
     }
     var selectedItem by rememberSaveable(stateSaver = ItemUiModelSaver) {
         mutableStateOf(null)
@@ -112,14 +115,6 @@ fun HomeScreen(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {
-                HomeBottomSheetType.Sorting -> SortingBottomSheetContents(
-                    sortingType = homeUiState.homeListUiState.sortingType
-                ) {
-                    homeViewModel.onSortingTypeChanged(it)
-                    shouldScrollToTop = true
-                    scope.launch { bottomSheetState.hide() }
-                }
-
                 LoginOptions -> LoginOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
@@ -202,7 +197,7 @@ fun HomeScreen(
                     }
                 )
 
-                HomeBottomSheetType.VaultOptions -> {
+                VaultOptions -> {
                     val showDelete = when (val share = homeUiState.homeListUiState.selectedShare) {
                         None -> {
                             // We are in the all vaults view, so we can't delete the primary vault
@@ -234,7 +229,7 @@ fun HomeScreen(
                     )
                 }
 
-                HomeBottomSheetType.TrashItemOptions -> TrashItemBottomSheetContents(
+                TrashItemOptions -> TrashItemBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     onRestoreItem = { shareId, itemId ->
                         scope.launch {
@@ -250,7 +245,7 @@ fun HomeScreen(
                     }
                 )
 
-                HomeBottomSheetType.TrashOptions -> TrashAllBottomSheetContents(
+                TrashOptions -> TrashAllBottomSheetContents(
                     onEmptyTrash = {
                         scope.launch {
                             bottomSheetState.hide()
@@ -294,7 +289,7 @@ fun HomeScreen(
                     },
                     onCreateVaultClick = { onNavigateEvent(HomeNavigation.CreateVault) },
                     onVaultOptionsClick = { share ->
-                        currentBottomSheet = HomeBottomSheetType.VaultOptions
+                        currentBottomSheet = VaultOptions
                         selectedShare = share
                         scope.launch {
                             bottomSheetState.show()
@@ -316,8 +311,7 @@ fun HomeScreen(
                 onStopSearch = { homeViewModel.onStopSearching() },
                 onDrawerIconClick = { scope.launch { drawerState.open() } },
                 onSortingOptionsClick = {
-                    currentBottomSheet = HomeBottomSheetType.Sorting
-                    scope.launch { bottomSheetState.show() }
+                    onNavigateEvent(SortingBottomsheet(homeUiState.homeListUiState.sortingType))
                 },
                 onAddItemClick = { shareId: Option<ShareId>, itemTypeUiState: ItemTypeUiState ->
                     onNavigateEvent(HomeNavigation.AddItem(shareId, itemTypeUiState))
@@ -325,7 +319,7 @@ fun HomeScreen(
                 onItemMenuClick = { item ->
                     selectedItem = item
                     if (isTrashMode) {
-                        currentBottomSheet = HomeBottomSheetType.TrashItemOptions
+                        currentBottomSheet = TrashItemOptions
                     } else {
                         when (item.itemType) {
                             is ItemType.Alias -> currentBottomSheet = AliasOptions
@@ -341,7 +335,7 @@ fun HomeScreen(
                 onProfileClick = { onNavigateEvent(HomeNavigation.Profile) },
                 onItemTypeSelected = { homeViewModel.setItemTypeSelection(it) },
                 onTrashActionsClick = {
-                    currentBottomSheet = HomeBottomSheetType.TrashOptions
+                    currentBottomSheet = TrashOptions
                     scope.launch { bottomSheetState.show() }
                 },
                 onClearRecentSearchClick = homeViewModel::onClearAllRecentSearch

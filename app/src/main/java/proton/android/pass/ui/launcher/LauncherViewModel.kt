@@ -53,6 +53,7 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
+import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.SendUserAccess
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.HasAuthenticated
@@ -71,7 +72,8 @@ class LauncherViewModel @Inject constructor(
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
     private val preferenceRepository: UserPreferencesRepository,
     private val sendUserAccess: SendUserAccess,
-    private val itemSyncStatusRepository: ItemSyncStatusRepository
+    private val itemSyncStatusRepository: ItemSyncStatusRepository,
+    private val clearUserData: ClearUserData
 ) : ViewModel() {
 
     init {
@@ -108,9 +110,15 @@ class LauncherViewModel @Inject constructor(
             viewModelScope.launch {
                 if (result == null && getPrimaryUserIdOrNull() == null) {
                     context.finish()
+                    return@launch
                 }
 
                 if (result != null) {
+                    PassLogger.i(TAG, "Clearing user data")
+                    runCatching { clearUserData(UserId(result.userId)) }
+                        .onSuccess { PassLogger.i(TAG, "Cleared user data") }
+                        .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
+
                     PassLogger.i(TAG, "Sending User Access")
                     itemSyncStatusRepository.emit(ItemSyncStatus.Syncing)
                     sendUserAccess()

@@ -80,6 +80,14 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
     )
     abstract fun setPrimaryShareStatus(userId: String, shareId: String, isPrimary: Boolean)
 
+    @Query(
+        """
+        DELETE FROM ${ShareEntity.TABLE} 
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+        """
+    )
+    abstract suspend fun deleteSharesForUser(userId: String)
+
     @Transaction
     open suspend fun evictAndUpsertShares(userId: UserId, vararg entities: ShareEntity) {
         val insertOrUpdateShares = entities.asList().map { it.id }

@@ -38,4 +38,8 @@ class LocalShareDataSourceImpl @Inject constructor(
         shareId: ShareId,
         isPrimary: Boolean
     ) = database.sharesDao().setPrimaryShareStatus(userId.id, shareId.id, isPrimary)
+
+    override suspend fun deleteSharesForUser(userId: UserId) {
+        database.sharesDao().deleteSharesForUser(userId.id)
+    }
 }

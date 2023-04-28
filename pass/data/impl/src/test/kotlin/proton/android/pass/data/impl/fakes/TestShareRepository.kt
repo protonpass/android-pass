@@ -29,6 +29,8 @@ class TestShareRepository : ShareRepository {
     private var markAsPrimaryResult: Result<Share> =
         Result.failure(IllegalStateException("MarkAsPrimaryResult not set"))
 
+    private var deleteSharesResult: Result<Unit> = Result.success(Unit)
+
     private val deleteVaultMemory: MutableList<ShareId> = mutableListOf()
     fun deleteVaultMemory(): List<ShareId> = deleteVaultMemory
 
@@ -60,6 +62,10 @@ class TestShareRepository : ShareRepository {
         markAsPrimaryResult = value
     }
 
+    fun setDeleteSharesResult(value: Result<Unit>) {
+        deleteSharesResult = value
+    }
+
     override suspend fun createVault(userId: SessionUserId, vault: NewVault): Share =
         createVaultResult.getOrThrow()
 
@@ -82,4 +88,6 @@ class TestShareRepository : ShareRepository {
 
     override suspend fun markAsPrimary(userId: UserId, shareId: ShareId): Share =
         markAsPrimaryResult.getOrThrow()
+
+    override suspend fun deleteSharesForUser(userId: UserId) = deleteSharesResult.getOrThrow()
 }

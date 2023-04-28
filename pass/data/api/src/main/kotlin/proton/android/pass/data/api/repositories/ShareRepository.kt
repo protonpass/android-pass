@@ -31,6 +31,7 @@ interface ShareRepository {
     ): Share
 
     suspend fun markAsPrimary(userId: UserId, shareId: ShareId): Share
+    suspend fun deleteSharesForUser(userId: UserId)
 }
 
 data class RefreshSharesResult(

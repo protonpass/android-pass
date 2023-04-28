@@ -22,6 +22,7 @@ class TestLocalShareDataSource : LocalShareDataSource {
         Result.failure(IllegalStateException("hasShares not set"))
     private var setPrimaryShareStatusResult: Result<Unit> =
         Result.failure(IllegalStateException("primaryShareStatusResult not set"))
+    private var deleteSharesForUserResult: Result<Unit> = Result.success(Unit)
 
     private val getAllSharesForUserFlow = testFlow<List<ShareEntity>>()
     private val getAllSharesForAddressFlow = testFlow<List<ShareEntity>>()
@@ -66,6 +67,10 @@ class TestLocalShareDataSource : LocalShareDataSource {
         getAllSharesForAddressFlow.tryEmit(value)
     }
 
+    fun setDeleteSharesForUserResult(value: Result<Unit>) {
+        deleteSharesForUserResult = value
+    }
+
     override suspend fun upsertShares(shares: List<ShareEntity>) {
         upsertMemory.add(shares)
         upsertResponse.getOrThrow()
@@ -98,6 +103,10 @@ class TestLocalShareDataSource : LocalShareDataSource {
     ) {
         setPrimaryShareStatusMemory.add(SetPrimarySharePayload(userId, shareId, isPrimary))
         setPrimaryShareStatusResult.getOrThrow()
+    }
+
+    override suspend fun deleteSharesForUser(userId: UserId) {
+        deleteSharesForUserResult.getOrThrow()
     }
 
     data class SetPrimarySharePayload(

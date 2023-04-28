@@ -226,6 +226,10 @@ class ShareRepositoryImpl @Inject constructor(
             return@withContext shareEntityToShare(updated)
         }
 
+    override suspend fun deleteSharesForUser(userId: UserId) = withContext(Dispatchers.IO) {
+        localShareDataSource.deleteSharesForUser(userId)
+    }
+
     private suspend fun storeShares(
         userAddress: UserAddress,
         shares: List<ShareResponse>

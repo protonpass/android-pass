@@ -7,6 +7,7 @@ import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.ClearTrash
+import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
@@ -57,6 +58,7 @@ import proton.android.pass.data.impl.autofill.SuggestionSorterImpl
 import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
 import proton.android.pass.data.impl.usecases.ClearTrashImpl
+import proton.android.pass.data.impl.usecases.ClearUserDataImpl
 import proton.android.pass.data.impl.usecases.CreateAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemAndAliasImpl
 import proton.android.pass.data.impl.usecases.CreateItemImpl
@@ -258,4 +260,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetItemByIdWithVaultImpl(impl: GetItemByIdWithVaultImpl): GetItemByIdWithVault
+
+    @Binds
+    abstract fun bindClearUserData(impl: ClearUserDataImpl): ClearUserData
 }

@@ -15,4 +15,5 @@ interface LocalShareDataSource {
     suspend fun hasShares(userId: UserId): Boolean
     suspend fun disablePrimaryShare(userId: UserId)
     suspend fun setPrimaryShareStatus(userId: UserId, shareId: ShareId, isPrimary: Boolean)
+    suspend fun deleteSharesForUser(userId: UserId)
 }

@@ -35,6 +35,7 @@ internal fun UsernameInput(
         modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
         value = value,
         onChange = onChange,
+        moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed && canUpdateUsername),
         editable = isEditAllowed && canUpdateUsername,
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_username_title)) },

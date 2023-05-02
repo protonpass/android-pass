@@ -35,6 +35,7 @@ internal fun TotpInput(
         onChange = onTotpChanged,
         editable = enabled,
         isError = isError,
+        moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm,
         onFocusChange = onFocus,
         label = {

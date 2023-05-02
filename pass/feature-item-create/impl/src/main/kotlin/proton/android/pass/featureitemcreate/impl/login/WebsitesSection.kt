@@ -81,6 +81,7 @@ internal fun WebsitesSection(
                     value = value,
                     editable = isEditAllowed,
                     textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
+                    moveToNextOnEnter = true,
                     onChange = {
                         if (it.isBlank() && websites.size > 1) {
                             onWebsitesChange.onRemoveWebsite(idx)

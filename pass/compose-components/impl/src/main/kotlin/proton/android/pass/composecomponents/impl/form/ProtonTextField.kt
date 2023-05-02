@@ -42,7 +42,7 @@ fun ProtonTextField(
     leadingIcon: @Composable (() -> Unit)? = null,
     trailingIcon: @Composable (() -> Unit)? = null,
     singleLine: Boolean = true,
-    moveToNextOnEnter: Boolean = true,
+    moveToNextOnEnter: Boolean = false,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     editable: Boolean = true,
     isError: Boolean = false,

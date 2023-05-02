@@ -45,6 +45,7 @@ internal fun PasswordInput(
         modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
         value = value,
         editable = isEditAllowed,
+        moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
         onChange = onChange,
         label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_password_title)) },

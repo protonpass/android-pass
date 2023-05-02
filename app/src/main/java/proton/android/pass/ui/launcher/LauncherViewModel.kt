@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
 import me.proton.core.account.domain.entity.isReady
@@ -88,7 +89,10 @@ class LauncherViewModel @Inject constructor(
     val state: StateFlow<State> = accountManager.getAccounts()
         .map { accounts ->
             when {
-                accounts.isEmpty() || accounts.all { it.isDisabled() } -> State.AccountNeeded
+                accounts.isEmpty() || accounts.all { it.isDisabled() } -> {
+                    clearPassUserData(accounts)
+                    State.AccountNeeded
+                }
                 accounts.any { it.isReady() } -> State.PrimaryExist
                 accounts.any { it.isStepNeeded() } -> State.StepNeeded
                 else -> State.Processing
@@ -114,11 +118,6 @@ class LauncherViewModel @Inject constructor(
                 }
 
                 if (result != null) {
-                    PassLogger.i(TAG, "Clearing user data")
-                    runCatching { clearUserData(UserId(result.userId)) }
-                        .onSuccess { PassLogger.i(TAG, "Cleared user data") }
-                        .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
-
                     PassLogger.i(TAG, "Sending User Access")
                     itemSyncStatusRepository.emit(ItemSyncStatus.Syncing)
                     sendUserAccess()
@@ -189,6 +188,16 @@ class LauncherViewModel @Inject constructor(
     fun passwordManagement() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
             userSettingsOrchestrator.startPasswordManagementWorkflow(it)
+        }
+    }
+
+    private suspend fun clearPassUserData(accounts: List<Account>) {
+        val disabledAccounts = accounts.filter { it.isDisabled() }
+        disabledAccounts.forEach { account ->
+            PassLogger.i(TAG, "Clearing user data")
+            runCatching { clearUserData(account.userId) }
+                .onSuccess { PassLogger.i(TAG, "Cleared user data") }
+                .onFailure { PassLogger.i(TAG, it, "Error clearing user data") }
         }
     }
 

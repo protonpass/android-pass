@@ -21,6 +21,9 @@ class LocalShareDataSourceImpl @Inject constructor(
     override fun getAllSharesForUser(userId: UserId): Flow<List<ShareEntity>> =
         database.sharesDao().observeAllForUser(userId.id)
 
+    override fun observeAllActiveSharesForUser(userId: UserId): Flow<List<ShareEntity>> =
+        database.sharesDao().observeAllActiveForUser(userId.id)
+
     override fun getAllSharesForAddress(addressId: AddressId): Flow<List<ShareEntity>> =
         database.sharesDao().observeAllForAddress(addressId.id)
 

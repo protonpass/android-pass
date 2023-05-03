@@ -6,5 +6,7 @@ data class ShareKey(
     val rotation: Long,
     val key: EncryptedByteArray,
     val responseKey: String,
-    val createTime: Long
+    val createTime: Long,
+    val isActive: Boolean,
+    val userKeyId: String
 )

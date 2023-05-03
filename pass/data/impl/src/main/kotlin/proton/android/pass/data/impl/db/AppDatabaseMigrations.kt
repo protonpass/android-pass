@@ -7,8 +7,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.keytransparency.data.local.KeyTransparencyDatabase
 import me.proton.core.observability.data.db.ObservabilityDatabase
-import me.proton.core.usersettings.data.db.OrganizationDatabase
 import me.proton.core.user.data.db.AddressDatabase
+import me.proton.core.usersettings.data.db.OrganizationDatabase
+import proton.android.pass.data.impl.db.entities.ShareEntity
+import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 
 @Suppress("ClassNaming")
 object AppDatabaseMigrations {
@@ -38,6 +40,41 @@ object AppDatabaseMigrations {
             AddressDatabase.MIGRATION_4.migrate(database)
             PublicAddressDatabase.MIGRATION_2.migrate(database)
             KeyTransparencyDatabase.MIGRATION_0.migrate(database)
+        }
+    }
+
+    val MIGRATION_9_10 = object : Migration(9, 10) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                """
+                    ALTER TABLE ${ShareEntity.TABLE}
+                    ADD COLUMN ${ShareEntity.Columns.IS_ACTIVE} INTEGER NOT NULL DEFAULT 1
+                """.trimIndent()
+            )
+            database.execSQL(
+                """
+                    ALTER TABLE ${ShareKeyEntity.TABLE}
+                    ADD COLUMN ${ShareKeyEntity.Columns.USER_KEY_ID} TEXT NOT NULL DEFAULT ''
+                """.trimIndent()
+            )
+            database.execSQL(
+                """
+                    ALTER TABLE ${ShareKeyEntity.TABLE}
+                    ADD COLUMN ${ShareKeyEntity.Columns.IS_ACTIVE} INTEGER NOT NULL DEFAULT 1
+                """.trimIndent()
+            )
+            database.execSQL(
+                """
+                    UPDATE ${ShareKeyEntity.TABLE}
+                    SET ${ShareKeyEntity.Columns.USER_KEY_ID} = (
+                        SELECT keyId
+                        FROM UserKeyEntity
+                        WHERE UserKeyEntity.userId = ${ShareKeyEntity.TABLE}.${ShareKeyEntity.Columns.USER_ID}
+                          AND UserKeyEntity.isPrimary = 1
+                          LIMIT 1
+                    )
+                """.trimIndent()
+            )
         }
     }
 }

@@ -315,9 +315,9 @@ class ShareRepositoryImpl @Inject constructor(
     }
 
     private fun getEncryptionKey(keyRotation: Long?, keys: List<ShareKey>): EncryptionKeyStatus {
-        if (keyRotation == null) return EncryptionKeyStatus.Null
+        if (keyRotation == null) return EncryptionKeyStatus.NotFound
 
-        val encryptionKey = keys.firstOrNull { it.rotation == keyRotation } ?: return EncryptionKeyStatus.Null
+        val encryptionKey = keys.firstOrNull { it.rotation == keyRotation } ?: return EncryptionKeyStatus.NotFound
         if (!encryptionKey.isActive) {
             PassLogger.d(TAG, "Found key but it is not active")
             return EncryptionKeyStatus.Inactive
@@ -334,7 +334,7 @@ class ShareRepositoryImpl @Inject constructor(
     ): ShareEntity {
 
         val (encryptedContent, isActive) = when (key) {
-            EncryptionKeyStatus.Null -> null to true
+            EncryptionKeyStatus.NotFound -> null to true
             is EncryptionKeyStatus.Found -> {
                 reencryptShareContents(shareResponse.content, key.encryptionKey) to true
             }
@@ -424,7 +424,7 @@ class ShareRepositoryImpl @Inject constructor(
     )
 
     internal sealed interface EncryptionKeyStatus {
-        object Null : EncryptionKeyStatus
+        object NotFound : EncryptionKeyStatus
         data class Found(val encryptionKey: EncryptionKey) : EncryptionKeyStatus
         object Inactive : EncryptionKeyStatus
     }

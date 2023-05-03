@@ -40,6 +40,15 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         """
         SELECT * FROM ${ShareEntity.TABLE} 
         WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.IS_ACTIVE} = 1
+        """
+    )
+    abstract fun observeAllActiveForUser(userId: String): Flow<List<ShareEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${ShareEntity.TABLE} 
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
         """
     )
     abstract fun getAllForUser(userId: String): List<ShareEntity>

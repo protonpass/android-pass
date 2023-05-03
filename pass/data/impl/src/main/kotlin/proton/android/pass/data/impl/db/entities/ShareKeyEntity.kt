@@ -47,7 +47,11 @@ data class ShareKeyEntity(
 
     // Keystore Encrypted key
     @ColumnInfo(name = Columns.SYMMETRICALLY_ENCRYPTED_KEY)
-    val symmetricallyEncryptedKey: EncryptedByteArray
+    val symmetricallyEncryptedKey: EncryptedByteArray,
+    @ColumnInfo(name = Columns.USER_KEY_ID)
+    val userKeyId: String,
+    @ColumnInfo(name = Columns.IS_ACTIVE, defaultValue = "1")
+    val isActive: Boolean
 ) {
     object Columns {
         const val ID = "id"
@@ -58,6 +62,8 @@ data class ShareKeyEntity(
         const val KEY = "key"
         const val CREATE_TIME = "create_time"
         const val SYMMETRICALLY_ENCRYPTED_KEY = "symmetrically_encrypted_key"
+        const val USER_KEY_ID = "user_key_id"
+        const val IS_ACTIVE = "is_active"
     }
 
     companion object {

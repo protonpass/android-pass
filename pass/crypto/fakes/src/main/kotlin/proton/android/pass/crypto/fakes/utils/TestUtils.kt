@@ -97,7 +97,9 @@ object TestUtils {
             rotation = 1,
             key = TestEncryptionContext.encrypt(key.value()),
             responseKey = Base64.encodeBase64String(key.value()),
-            createTime = 123456789
+            createTime = 123456789,
+            isActive = true,
+            userKeyId = "userKeyId"
         ) to key
     }
 

@@ -19,6 +19,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.CreateVault
+import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.impl.extensions.toPendingEvent
 import proton.android.pass.data.impl.repositories.EventRepository
@@ -40,7 +41,8 @@ class ApplyPendingEventsImpl @Inject constructor(
     private val createVault: CreateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val workManager: WorkManager,
-    private val itemSyncStatusRepository: ItemSyncStatusRepository
+    private val itemSyncStatusRepository: ItemSyncStatusRepository,
+    private val markVaultAsPrimary: MarkVaultAsPrimary
 ) : ApplyPendingEvents {
 
     override suspend fun invoke() {
@@ -49,6 +51,7 @@ class ApplyPendingEventsImpl @Inject constructor(
             val address = requireNotNull(addressRepository.getAddresses(user.userId).primary())
             val refreshSharesResult = shareRepository.refreshShares(user.userId)
             if (refreshSharesResult.allShareIds.isEmpty()) {
+                PassLogger.d(TAG, "Received an empty list of shares, creating default vault")
                 createDefaultVault(user.userId)
                 itemSyncStatusRepository.emit(ItemSyncStatus.Synced(false))
             } else {
@@ -70,8 +73,6 @@ class ApplyPendingEventsImpl @Inject constructor(
     }
 
     private suspend fun createDefaultVault(userId: UserId) {
-        PassLogger.d(TAG, "Creating default vault")
-
         val vault = encryptionContextProvider.withEncryptionContext {
             NewVault(
                 name = encrypt("Personal"),
@@ -81,8 +82,13 @@ class ApplyPendingEventsImpl @Inject constructor(
             )
         }
         runCatching { createVault(userId, vault) }
-            .onSuccess { PassLogger.d(TAG, "Created default vault") }
             .onFailure { PassLogger.d(TAG, it, "Error creating default vault") }
+            .mapCatching {
+                PassLogger.d(TAG, "Created default vault, marking it as primary")
+                markVaultAsPrimary(userId, it.id)
+            }
+            .onSuccess { PassLogger.d(TAG, "Marked default vault as primary") }
+            .onFailure { PassLogger.d(TAG, it, "Error marking default vault as primary") }
     }
 
     private suspend fun applyPendingEvents(

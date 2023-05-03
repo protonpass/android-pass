@@ -4,12 +4,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.repository.UserRepository
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.crypto.ReencryptShareKey
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
+import proton.android.pass.data.impl.exception.UserKeyNotActive
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
 import proton.pass.domain.ShareId
@@ -91,8 +93,23 @@ class ShareKeyRepositoryImpl @Inject constructor(
 
         return encryptionContextProvider.withEncryptionContext {
             remoteKeys.map { response ->
-                val reencryptedKey =
-                    reencryptShareKey(this@withEncryptionContext, user, response.key)
+                val keyData = runCatching {
+                    reencryptShareKey(
+                        encryptionContext = this@withEncryptionContext,
+                        user = user,
+                        keyResponse = response
+                    )
+                }.fold(
+                    onSuccess = { RemoteKeyData(it, true) },
+                    onFailure = {
+                        if (it is UserKeyNotActive) {
+                            RemoteKeyData(EncryptedByteArray(byteArrayOf()), false)
+                        } else {
+                            throw it
+                        }
+                    }
+                )
+
                 ShareKeyEntity(
                     rotation = response.keyRotation,
                     userId = userId.id,
@@ -100,7 +117,9 @@ class ShareKeyRepositoryImpl @Inject constructor(
                     shareId = shareId.id,
                     key = response.key,
                     createTime = response.createTime,
-                    symmetricallyEncryptedKey = reencryptedKey
+                    symmetricallyEncryptedKey = keyData.encryptedKey,
+                    userKeyId = response.userKeyId,
+                    isActive = keyData.isActive
                 )
             }
         }
@@ -111,6 +130,13 @@ class ShareKeyRepositoryImpl @Inject constructor(
             rotation = entity.rotation,
             key = entity.symmetricallyEncryptedKey,
             responseKey = entity.key,
-            createTime = entity.createTime
+            createTime = entity.createTime,
+            isActive = entity.isActive,
+            userKeyId = entity.userKeyId
         )
+
+    private data class RemoteKeyData(
+        val encryptedKey: EncryptedByteArray,
+        val isActive: Boolean
+    )
 }

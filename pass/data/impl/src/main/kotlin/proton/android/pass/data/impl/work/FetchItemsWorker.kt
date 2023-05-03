@@ -44,7 +44,7 @@ open class FetchItemsWorker @AssistedInject constructor(
                     runCatching {
                         itemRepository.refreshItems(userId, shareId)
                     }.onSuccess {
-                        PassLogger.d(TAG, "Refreshed items on share ${shareId.id}")
+                        PassLogger.d(TAG, "Refreshed items on share ${shareId.id} (has ${it.size} items)")
                     }.onFailure {
                         PassLogger.e(TAG, it, "Error refreshing items on share ${shareId.id}")
                     }
@@ -62,7 +62,7 @@ open class FetchItemsWorker @AssistedInject constructor(
                     return Result.retry()
                 }
             )
-        }
+        }.flatten()
 
         val hasItems = results.any { items.isNotEmpty() }
         itemSyncStatusRepository.emit(ItemSyncStatus.Synced(hasItems))

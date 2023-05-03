@@ -141,7 +141,8 @@ class ShareRepositoryTest {
         contentFormatVersion = null,
         expirationTime = null,
         createTime = 0,
-        encryptedContent = null
+        encryptedContent = null,
+        isActive = true
     )
 
     companion object {

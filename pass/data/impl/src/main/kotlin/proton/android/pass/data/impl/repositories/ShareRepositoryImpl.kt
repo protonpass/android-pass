@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.extension.primary
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.primary
@@ -65,6 +66,7 @@ class ShareRepositoryImpl @Inject constructor(
     ): Share = withContext(Dispatchers.IO) {
         val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
         val user = requireNotNull(userRepository.getUser(userId))
+        val userPrimaryKey = requireNotNull(user.keys.primary()?.keyId?.id)
 
         val (request, shareKey) = runCatching {
             createVaultRequest(user, vault, userAddress)
@@ -80,7 +82,11 @@ class ShareRepositoryImpl @Inject constructor(
         val symmetricallyEncryptedKey = encryptionContextProvider.withEncryptionContext {
             encrypt(shareKey.value())
         }
-        val responseAsEntity = shareResponseToEntity(userAddress, createVaultResponse, shareKey)
+        val responseAsEntity = shareResponseToEntity(
+            userAddress = userAddress,
+            shareResponse = createVaultResponse,
+            key = EncryptionKeyStatus.Found(shareKey)
+        )
 
         val shareKeyEntity = ShareKeyEntity(
             rotation = 1,
@@ -89,7 +95,9 @@ class ShareRepositoryImpl @Inject constructor(
             shareId = createVaultResponse.shareId,
             key = request.encryptedVaultKey,
             createTime = createVaultResponse.createTime,
-            symmetricallyEncryptedKey = symmetricallyEncryptedKey
+            symmetricallyEncryptedKey = symmetricallyEncryptedKey,
+            isActive = true,
+            userKeyId = userPrimaryKey
         )
         database.inTransaction {
             localShareDataSource.upsertShares(listOf(responseAsEntity))
@@ -107,7 +115,7 @@ class ShareRepositoryImpl @Inject constructor(
     }
 
     override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> =
-        localShareDataSource.getAllSharesForUser(userId)
+        localShareDataSource.observeAllActiveSharesForUser(userId)
             .map { shares ->
                 shares.map { shareEntityToShare(it) }
             }
@@ -121,7 +129,7 @@ class ShareRepositoryImpl @Inject constructor(
             val remoteShares = remoteShareDataSource.getShares(userAddress.userId)
             val remoteShareMap = remoteShares.associateBy { ShareId(it.shareId) }
 
-            val toSave = database.inTransaction {
+            val (toSave, inactiveShares) = database.inTransaction {
 
                 // Retrieve local shares and create a map ShareId->ShareEntity
                 val localShares = localShareDataSource
@@ -141,20 +149,37 @@ class ShareRepositoryImpl @Inject constructor(
                     }
                 }
 
+                // Delete from the local data source the shares that are not in remote response
                 val toDelete = localSharesMap.keys.subtract(remoteShareMap.keys)
                 localShareDataSource.deleteShares(toDelete)
 
-                // Return shares that were not in local, so they are saved
-                remoteShares
-                    .filter { !localSharesMap.containsKey(ShareId(it.shareId)) }
+                val sharesNotInLocal = remoteShares
+
+                    // Filter out shares that are not in the local storage
+                    .filterNot { localSharesMap.containsKey(ShareId(it.shareId)) }
                     .map { ShareId(it.shareId) }
+
+                val inactiveShares = localShares.filter { !it.isActive }.map { ShareId(it.id) }
+
+                // Return shares that were not in local, so they are saved, and also the shares
+                // that were marked as inactive, so we can detect if they can be active again
+                sharesNotInLocal to inactiveShares
             }
-            val remoteSharesToSave = remoteShares.filter { toSave.contains(ShareId(it.shareId)) }
-            storeShares(userAddress, remoteSharesToSave)
+
+            val remoteSharesToSave = remoteShares.filter {
+                toSave.contains(ShareId(it.shareId)) || inactiveShares.contains(ShareId(it.shareId))
+            }
+            val storedShares = storeShares(userAddress, remoteSharesToSave)
+
+            val newShares = storedShares.filter {
+                it.isActive && toSave.contains(ShareId(it.id))
+            }
+
+            val allShareIds = remoteShareMap.keys.filterNot { inactiveShares.contains(it) }.toSet()
 
             RefreshSharesResult(
-                allShareIds = remoteShareMap.keys,
-                newShareIds = toSave.toSet()
+                allShareIds = allShareIds,
+                newShareIds = newShares.map { ShareId(it.id) }.toSet()
             )
         }
 
@@ -203,7 +228,11 @@ class ShareRepositoryImpl @Inject constructor(
         val shareKeyAsEncryptionkey = encryptionContextProvider.withEncryptionContext {
             EncryptionKey(decrypt(shareKey.key))
         }
-        val responseAsEntity = shareResponseToEntity(userAddress, response, shareKeyAsEncryptionkey)
+        val responseAsEntity = shareResponseToEntity(
+            userAddress = userAddress,
+            shareResponse = response,
+            key = EncryptionKeyStatus.Found(shareKeyAsEncryptionkey)
+        )
         localShareDataSource.upsertShares(listOf(responseAsEntity))
 
         return@withContext shareEntityToShare(responseAsEntity)
@@ -239,7 +268,7 @@ class ShareRepositoryImpl @Inject constructor(
                 val shareId = ShareId(shareResponse.shareId)
 
                 // First we fetch the shareKeys and not save them, in case the share has not been
-                // inserted yet, as it would cause a FK mismatch in teh database
+                // inserted yet, as it would cause a FK mismatch in the database
                 val shareKeys = shareKeyRepository.getShareKeys(
                     userId = userAddress.userId,
                     addressId = userAddress.addressId,
@@ -272,7 +301,9 @@ class ShareRepositoryImpl @Inject constructor(
                             shareId = responsePair.first.response.shareId,
                             key = shareKey.responseKey,
                             createTime = shareKey.createTime,
-                            symmetricallyEncryptedKey = shareKey.key
+                            symmetricallyEncryptedKey = shareKey.key,
+                            isActive = shareKey.isActive,
+                            userKeyId = shareKey.userKeyId
                         )
                     }
                 }
@@ -283,24 +314,31 @@ class ShareRepositoryImpl @Inject constructor(
         }
     }
 
-    private fun getEncryptionKey(keyRotation: Long?, keys: List<ShareKey>): EncryptionKey? {
-        if (keyRotation == null) return null
+    private fun getEncryptionKey(keyRotation: Long?, keys: List<ShareKey>): EncryptionKeyStatus {
+        if (keyRotation == null) return EncryptionKeyStatus.Null
 
-        val encryptionKey = keys.firstOrNull { it.rotation == keyRotation } ?: return null
-        val decrypted =
-            encryptionContextProvider.withEncryptionContext { decrypt(encryptionKey.key) }
-        return EncryptionKey(decrypted)
+        val encryptionKey = keys.firstOrNull { it.rotation == keyRotation } ?: return EncryptionKeyStatus.Null
+        if (!encryptionKey.isActive) {
+            PassLogger.d(TAG, "Found key but it is not active")
+            return EncryptionKeyStatus.Inactive
+        }
+
+        val decrypted = encryptionContextProvider.withEncryptionContext { decrypt(encryptionKey.key) }
+        return EncryptionKeyStatus.Found(EncryptionKey(decrypted))
     }
 
     private fun shareResponseToEntity(
         userAddress: UserAddress,
         shareResponse: ShareResponse,
-        key: EncryptionKey?
+        key: EncryptionKeyStatus
     ): ShareEntity {
-        val encryptedContent = if (shareResponse.content != null && key != null) {
-            reencryptShareContents(shareResponse.content, key)
-        } else {
-            null
+
+        val (encryptedContent, isActive) = when (key) {
+            EncryptionKeyStatus.Null -> null to true
+            is EncryptionKeyStatus.Found -> {
+                reencryptShareContents(shareResponse.content, key.encryptionKey) to true
+            }
+            EncryptionKeyStatus.Inactive -> null to false
         }
         return ShareEntity(
             id = shareResponse.shareId,
@@ -316,7 +354,8 @@ class ShareRepositoryImpl @Inject constructor(
             expirationTime = shareResponse.expirationTime,
             createTime = shareResponse.createTime,
             encryptedContent = encryptedContent,
-            isPrimary = shareResponse.primary
+            isPrimary = shareResponse.primary,
+            isActive = isActive
         )
     }
 
@@ -383,6 +422,12 @@ class ShareRepositoryImpl @Inject constructor(
         val response: ShareResponse,
         val entity: ShareEntity
     )
+
+    internal sealed interface EncryptionKeyStatus {
+        object Null : EncryptionKeyStatus
+        data class Found(val encryptionKey: EncryptionKey) : EncryptionKeyStatus
+        object Inactive : EncryptionKeyStatus
+    }
 
     companion object {
         private const val TAG = "ShareRepositoryImpl"

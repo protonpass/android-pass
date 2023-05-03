@@ -9,6 +9,8 @@ object TestShareKey {
         rotation = 1,
         key = EncryptedByteArray(byteArrayOf(1, 2, 3)),
         responseKey = "base64ShareKey",
-        createTime = 12345678
+        createTime = 12345678,
+        isActive = true,
+        userKeyId = "userKeyId"
     )
 }

@@ -21,6 +21,8 @@ data class ShareKeysListResponse(
 data class ShareKeyResponse(
     @SerialName("KeyRotation")
     val keyRotation: Long,
+    @SerialName("UserKeyID")
+    val userKeyId: String,
     @SerialName("Key")
     val key: String,
     @SerialName("CreateTime")

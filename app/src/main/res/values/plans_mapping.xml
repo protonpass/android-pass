@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+    <string-array name="plan_mapping_plan_ids">
+        <item>free</item>
+        <item>plus</item>
+        <item>vpnbasic</item>
+        <item>vpnplus</item>
+        <item>professional</item>
+        <item>visionary</item>
+        <item>mail2022</item>
+        <item>vpn2022</item>
+        <item>drive2022</item>
+        <item>bundle2022</item>
+        <item>pass2023</item>
+    </string-array>
+    <!-- region current plan mapping -->
+    <string-array name="plan_mapping_current_plan_layouts">
+        <item>plan_pass_free</item>
+        <item>plan_pass_free</item>
+        <item>plan_pass_free</item>
+        <item>plan_pass_free</item>
+        <item>plan_pass_bundle2022</item>
+        <item>plan_pass_bundle2022</item>
+        <item>plan_pass_free</item>
+        <item>plan_pass_free</item>
+        <item>plan_pass_free</item>
+        <item>plan_pass_bundle2022</item>
+        <item>plan_id_pass2023</item>
+    </string-array>
+    <!-- endregion -->
+    <!-- region paid plan mapping -->
+    <string-array name="plan_mapping_paid_plan_layouts">
+        <item>plan_id_free</item>
+        <item>plan_id_plus</item>
+        <item>plan_id_vpnbasic</item>
+        <item>plan_id_vpnplus</item>
+        <item>plan_id_professional</item>
+        <item>plan_id_visionary</item>
+        <item>plan_id_mail2022</item>
+        <item>plan_id_vpn2022</item>
+        <item>plan_id_drive2022</item>
+        <item>plan_id_bundle2022</item>
+        <item>plan_id_pass2023</item>
+    </string-array>
+    <!-- endregion -->
+</resources>

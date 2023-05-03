@@ -48,7 +48,9 @@ class OpenItemKeyImplTest {
             rotation = KEY_ROTATION,
             key = encryptionContextProvider.withEncryptionContext { encrypt(decodedShareKey) },
             responseKey = OpenItemImplTest.shareKeyBase64,
-            createTime = 1664195804
+            createTime = 1664195804,
+            isActive = true,
+            userKeyId = "userKeyId"
         )
     }
 

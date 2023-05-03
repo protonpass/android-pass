@@ -7,13 +7,17 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
+import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.impl.crypto.ReencryptShareKey
+import proton.android.pass.data.impl.crypto.ReencryptShareKeyInput
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
 import proton.android.pass.data.impl.exception.UserKeyNotActive
 import proton.android.pass.data.impl.local.LocalShareKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.ShareId
 import proton.pass.domain.key.ShareKey
 import javax.inject.Inject
@@ -35,8 +39,10 @@ class ShareKeyRepositoryImpl @Inject constructor(
     ): Flow<List<ShareKey>> = flow {
         if (!forceRefresh) {
             val localKeys = localDataSource.getAllShareKeysForShare(userId, shareId).first()
-            if (localKeys.isNotEmpty()) {
-                emit(localKeys.map(::entityToDomain))
+            val readyKeys = tryToReencryptLocalKeys(userId, localKeys)
+
+            if (readyKeys.isNotEmpty()) {
+                emit(readyKeys.map(::entityToDomain))
                 return@flow
             }
         }
@@ -93,21 +99,13 @@ class ShareKeyRepositoryImpl @Inject constructor(
 
         return encryptionContextProvider.withEncryptionContext {
             remoteKeys.map { response ->
-                val keyData = runCatching {
-                    reencryptShareKey(
-                        encryptionContext = this@withEncryptionContext,
-                        user = user,
-                        keyResponse = response
+                val keyData = reencryptKey(
+                    context = this@withEncryptionContext,
+                    user = user,
+                    input = ReencryptShareKeyInput(
+                        key = response.key,
+                        userKeyId = response.userKeyId
                     )
-                }.fold(
-                    onSuccess = { RemoteKeyData(it, true) },
-                    onFailure = {
-                        if (it is UserKeyNotActive) {
-                            RemoteKeyData(EncryptedByteArray(byteArrayOf()), false)
-                        } else {
-                            throw it
-                        }
-                    }
                 )
 
                 ShareKeyEntity(
@@ -125,6 +123,74 @@ class ShareKeyRepositoryImpl @Inject constructor(
         }
     }
 
+    private suspend fun tryToReencryptLocalKeys(
+        userId: UserId,
+        keys: List<ShareKeyEntity>
+    ): List<ShareKeyEntity> {
+
+        // Separate active keys from inactive keys
+        val activeKeys = keys.filter { it.isActive }
+        val inactiveKeys = keys.filter { !it.isActive }
+
+        // If there are no inactive keys, we're done
+        if (inactiveKeys.isEmpty()) return activeKeys
+
+        // There are inactive keys, try to open and reencrypt them
+        PassLogger.d(TAG, "Trying to reencrypt ${inactiveKeys.size} keys")
+        val user = userRepository.getUser(userId)
+        val reencryptedKeyResults = encryptionContextProvider.withEncryptionContext {
+            inactiveKeys.map {
+                val output = reencryptKey(
+                    context = this@withEncryptionContext,
+                    user = user,
+                    input = ReencryptShareKeyInput(
+                        key = it.key,
+                        userKeyId = it.userKeyId
+                    )
+                )
+
+                if (output.isActive) {
+                    it.copy(
+                        isActive = true,
+                        symmetricallyEncryptedKey = output.encryptedKey
+                    )
+                } else {
+                    it
+                }
+            }
+        }
+
+        val reencryptedKeys = reencryptedKeyResults.filter { it.isActive }
+
+        PassLogger.d(TAG, "Successfully reencrypted ${reencryptedKeys.size} keys")
+        if (reencryptedKeys.isNotEmpty()) {
+            localDataSource.storeShareKeys(reencryptedKeys)
+        }
+
+        return activeKeys + reencryptedKeys
+    }
+
+    private fun reencryptKey(
+        context: EncryptionContext,
+        user: User,
+        input: ReencryptShareKeyInput
+    ): ReencryptedKeyData = runCatching {
+        reencryptShareKey(
+            encryptionContext = context,
+            user = user,
+            input = input
+        )
+    }.fold(
+        onSuccess = { ReencryptedKeyData(it, true) },
+        onFailure = {
+            if (it is UserKeyNotActive) {
+                ReencryptedKeyData(EncryptedByteArray(byteArrayOf()), false)
+            } else {
+                throw it
+            }
+        }
+    )
+
     private fun entityToDomain(entity: ShareKeyEntity): ShareKey =
         ShareKey(
             rotation = entity.rotation,
@@ -135,8 +201,12 @@ class ShareKeyRepositoryImpl @Inject constructor(
             userKeyId = entity.userKeyId
         )
 
-    private data class RemoteKeyData(
+    private data class ReencryptedKeyData(
         val encryptedKey: EncryptedByteArray,
         val isActive: Boolean
     )
+
+    companion object {
+        private const val TAG = "ShareKeyRepositoryImpl"
+    }
 }

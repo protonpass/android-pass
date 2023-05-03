@@ -77,6 +77,7 @@ fun PassAppContent(
                         PassNavHost(
                             modifier = Modifier.weight(1f),
                             appNavigator = appNavigator,
+                            coreNavigation = coreNavigation,
                             finishActivity = finishActivity,
                             dismissBottomSheet = { callback ->
                                 coroutineScope.launch {
@@ -84,9 +85,6 @@ fun PassAppContent(
                                     callback()
                                 }
                             },
-                            onLogout = { coreNavigation.onRemove(null) },
-                            onSubscriptionClick = { coreNavigation.onSubscription() },
-                            onUpgradeClick = { coreNavigation.onUpgrade() }
                         )
                     }
                 }

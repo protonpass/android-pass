@@ -1,6 +1,7 @@
 package proton.android.pass.data.impl.fakes
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import proton.android.pass.common.api.FlowUtils.testFlow
@@ -81,6 +82,9 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     override fun getAllSharesForUser(userId: UserId): Flow<List<ShareEntity>> =
         getAllSharesForUserFlow
+
+    override fun observeAllActiveSharesForUser(userId: UserId): Flow<List<ShareEntity>> =
+        getAllSharesForUserFlow.map { shares -> shares.filter { it.isActive } }
 
     override fun getAllSharesForAddress(addressId: AddressId): Flow<List<ShareEntity>> =
         getAllSharesForAddressFlow

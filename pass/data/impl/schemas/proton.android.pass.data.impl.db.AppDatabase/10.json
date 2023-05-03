@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 10,
-    "identityHash": "a97cbba88d954340048ad13d5fd60efe",
+    "identityHash": "9e30f68d98d6bb52ce6c58709f6f7654",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -2060,7 +2060,7 @@
       },
       {
         "tableName": "ShareEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `vault_id` TEXT NOT NULL, `share_type` INTEGER NOT NULL, `target_id` TEXT NOT NULL, `permission` INTEGER NOT NULL, `is_primary` INTEGER NOT NULL DEFAULT 0, `content` TEXT, `content_key_rotation` INTEGER, `content_format_version` INTEGER, `expiration_time` INTEGER, `create_time` INTEGER NOT NULL, `encrypted_content` BLOB, `is_active` INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(`id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `user_id` TEXT NOT NULL, `address_id` TEXT NOT NULL, `vault_id` TEXT NOT NULL, `share_type` INTEGER NOT NULL, `target_id` TEXT NOT NULL, `permission` INTEGER NOT NULL, `is_primary` INTEGER NOT NULL DEFAULT false, `content` TEXT, `content_key_rotation` INTEGER, `content_format_version` INTEGER, `expiration_time` INTEGER, `create_time` INTEGER NOT NULL, `encrypted_content` BLOB, `is_active` INTEGER NOT NULL DEFAULT 1, PRIMARY KEY(`id`), FOREIGN KEY(`address_id`) REFERENCES `AddressEntity`(`addressId`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`user_id`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "id",
@@ -2109,7 +2109,7 @@
             "columnName": "is_primary",
             "affinity": "INTEGER",
             "notNull": true,
-            "defaultValue": "0"
+            "defaultValue": "false"
           },
           {
             "fieldPath": "content",
@@ -2484,7 +2484,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a97cbba88d954340048ad13d5fd60efe')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9e30f68d98d6bb52ce6c58709f6f7654')"
     ]
   }
 }

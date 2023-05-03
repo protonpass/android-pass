@@ -63,6 +63,7 @@ import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
 import proton.android.pass.featurevault.impl.delete.DeleteVaultDialog
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
+import proton.android.pass.ui.CoreNavigation
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
@@ -73,11 +74,9 @@ import proton.pass.domain.ShareId
 @Suppress("LongParameterList", "LongMethod", "ComplexMethod")
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
-    onSubscriptionClick: () -> Unit,
-    onUpgradeClick: () -> Unit,
+    coreNavigation: CoreNavigation,
     finishActivity: () -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit,
-    onLogout: () -> Unit
 ) {
     homeGraph(
         onNavigateEvent = {
@@ -210,12 +209,12 @@ fun NavGraphBuilder.appGraph(
         onDismiss = { appNavigator.onBackClick() }
     )
     accountGraph(
-        onSubscriptionClick = onSubscriptionClick,
-        onUpgradeClick = onUpgradeClick,
+        onSubscriptionClick = { coreNavigation.onSubscription() },
+        onUpgradeClick = { coreNavigation.onUpgrade() },
         onSignOutClick = { appNavigator.navigate(SignOutDialog) },
-        onUpClick = { appNavigator.onBackClick() },
         onDismissClick = { appNavigator.onBackClick() },
-        onConfirmSignOutClick = onLogout
+        onConfirmSignOutClick = { coreNavigation.onSignOut(null) },
+        onUpClick = { appNavigator.onBackClick() }
     )
     profileGraph(
         onAccountClick = { appNavigator.navigate(Account) },

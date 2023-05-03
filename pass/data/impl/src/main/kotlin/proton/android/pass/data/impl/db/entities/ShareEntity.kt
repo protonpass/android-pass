@@ -40,7 +40,7 @@ data class ShareEntity(
     val targetId: String,
     @ColumnInfo(name = Columns.PERMISSION)
     val permission: Int,
-    @ColumnInfo(name = Columns.IS_PRIMARY, defaultValue = "false")
+    @ColumnInfo(name = Columns.IS_PRIMARY, defaultValue = "0")
     val isPrimary: Boolean,
     @ColumnInfo(name = Columns.CONTENT)
     val content: String?,
@@ -55,7 +55,10 @@ data class ShareEntity(
 
     // Keystore Encrypted contents
     @ColumnInfo(name = Columns.ENCRYPTED_CONTENT)
-    val encryptedContent: EncryptedByteArray?
+    val encryptedContent: EncryptedByteArray?,
+
+    @ColumnInfo(name = Columns.IS_ACTIVE, defaultValue = "1")
+    val isActive: Boolean
 ) {
     object Columns {
         const val ID = "id"
@@ -72,6 +75,7 @@ data class ShareEntity(
         const val EXPIRATION_TIME = "expiration_time"
         const val CREATE_TIME = "create_time"
         const val ENCRYPTED_CONTENT = "encrypted_content"
+        const val IS_ACTIVE = "is_active"
     }
 
     companion object {

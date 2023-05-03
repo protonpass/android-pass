@@ -28,7 +28,7 @@ class TestUserRepository : UserRepository {
         throw IllegalStateException("Not implemented")
     }
 
-    override suspend fun checkUsernameAvailable(username: String) {
+    override suspend fun checkUsernameAvailable(userId: UserId?, username: String) {
         throw IllegalStateException("Not implemented")
     }
 

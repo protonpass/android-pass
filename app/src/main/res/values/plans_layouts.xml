@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- region current plan for Pass -->
+    <string-array name="plan_pass_free_order" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+    </string-array>
+    <integer-array name="plan_pass_free_icons" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_infinite</item>
+        <item>@drawable/ic_proton_infinite</item>
+        <item>@drawable/ic_proton_alias</item>
+        <item>@drawable/ic_proton_vault</item>
+    </integer-array>
+    <integer-array name="plan_pass_free">
+        <item>@string/plan_id_pass2023_header</item>
+        <item>@string/unlimited_logins_and_notes</item>
+        <item>@string/unlimited_devices</item>
+        <item>@string/ten_hide_my_email_aliases</item>
+        <item>@string/one_vault</item>
+    </integer-array>
+    <!-- endregion -->
+    <!-- region bundle 2022 for Pass -->
+    <string-array name="plan_pass_bundle2022_order" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>string</item>
+        <item>string</item>
+        <item>string</item>
+        <item>#proton_storage#</item>
+        <item>#proton_addresses#</item>
+        <item>#proton_vpn#</item>
+    </string-array>
+    <integer-array name="plan_pass_bundle2022_icons" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>@drawable/ic_proton_lock</item>
+        <item>@drawable/ic_proton_vault</item>
+        <item>@drawable/ic_proton_alias</item>
+        <item>@drawable/ic_proton_storage</item>
+        <item>@drawable/ic_proton_at</item>
+        <item>@drawable/ic_proton_shield</item>
+    </integer-array>
+    <integer-array name="plan_pass_bundle2022">
+        <item>@string/plan_id_bundle2022_header</item>
+        <item>@string/integrated_2fa_authenticator</item>
+        <item>@string/multiple_vaults</item>
+        <item>@string/unlimited_email_alias</item>
+        <item>@plurals/item_storage</item>
+        <item>@plurals/item_address</item>
+        <item>@plurals/item_connections</item>
+    </integer-array>
+    <!-- endregion -->
+</resources>

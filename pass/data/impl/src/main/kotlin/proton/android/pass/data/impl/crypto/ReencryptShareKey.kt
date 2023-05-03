@@ -11,14 +11,18 @@ import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.error.InvalidSignature
 import proton.android.pass.data.impl.exception.UserKeyNotActive
-import proton.android.pass.data.impl.responses.ShareKeyResponse
 import javax.inject.Inject
+
+data class ReencryptShareKeyInput(
+    val key: String,
+    val userKeyId: String
+)
 
 interface ReencryptShareKey {
     operator fun invoke(
         encryptionContext: EncryptionContext,
         user: User,
-        keyResponse: ShareKeyResponse
+        input: ReencryptShareKeyInput
     ): EncryptedByteArray
 }
 
@@ -28,18 +32,17 @@ class ReencryptShareKeyImpl @Inject constructor(
     override fun invoke(
         encryptionContext: EncryptionContext,
         user: User,
-        keyResponse: ShareKeyResponse
+        input: ReencryptShareKeyInput
     ): EncryptedByteArray {
-
         val hasUserKey = user.keys.any {
-            it.active == true && keyResponse.userKeyId == it.keyId.id
+            it.active == true && input.userKeyId == it.keyId.id
         }
 
         if (!hasUserKey) {
             throw UserKeyNotActive()
         }
 
-        val decodedKey = Base64.decodeBase64(keyResponse.key)
+        val decodedKey = Base64.decodeBase64(input.key)
         val decrypted = user.useKeys(cryptoContext) {
             decryptAndVerifyData(getArmored(decodedKey))
         }

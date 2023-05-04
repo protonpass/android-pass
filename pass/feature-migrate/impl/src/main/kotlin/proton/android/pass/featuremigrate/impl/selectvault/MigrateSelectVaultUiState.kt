@@ -10,12 +10,23 @@ import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
 
 sealed interface SelectVaultEvent {
-    data class SelectedVault(
+    data class VaultSelectedForMigrateItem(
         val sourceShareId: ShareId,
         val itemId: ItemId,
         val destinationShareId: ShareId
     ) : SelectVaultEvent
+
+    data class VaultSelectedForMigrateAll(
+        val sourceShareId: ShareId,
+        val destinationShareId: ShareId
+    ) : SelectVaultEvent
+
     object Close : SelectVaultEvent
+}
+
+enum class MigrateMode {
+    MigrateItem,
+    MigrateAll
 }
 
 data class VaultEnabledPair(
@@ -26,12 +37,14 @@ data class VaultEnabledPair(
 @Stable
 data class MigrateSelectVaultUiState(
     val vaultList: ImmutableList<VaultEnabledPair>,
-    val event: Option<SelectVaultEvent>
+    val event: Option<SelectVaultEvent>,
+    val mode: MigrateMode
 ) {
     companion object {
         val Initial = MigrateSelectVaultUiState(
             vaultList = persistentListOf(),
-            event = None
+            event = None,
+            mode = MigrateMode.MigrateItem
         )
     }
 }

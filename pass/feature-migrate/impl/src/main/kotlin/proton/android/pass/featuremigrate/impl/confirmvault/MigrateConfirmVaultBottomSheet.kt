@@ -11,14 +11,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.bottomSheet
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.featuremigrate.impl.MigrateNavigation
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun MigrateConfirmVaultBottomSheet(
     modifier: Modifier = Modifier,
-    onMigrated: (ShareId, ItemId) -> Unit,
+    navigation: (MigrateNavigation) -> Unit,
     onCancel: () -> Unit,
     viewModel: MigrateConfirmVaultViewModel = hiltViewModel()
 ) {
@@ -31,7 +30,7 @@ fun MigrateConfirmVaultBottomSheet(
         if (event is Some) {
             when (val value = event.value) {
                 is ConfirmMigrateEvent.Migrated -> {
-                    onMigrated(value.shareId, value.itemId)
+                    navigation(MigrateNavigation.ItemMigrated(value.shareId, value.itemId))
                 }
                 ConfirmMigrateEvent.Close -> onCancel()
             }

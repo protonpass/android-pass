@@ -10,14 +10,13 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.bottomSheet
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
+import proton.android.pass.featuremigrate.impl.MigrateNavigation
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun MigrateSelectVaultBottomSheet(
     modifier: Modifier = Modifier,
-    onVaultSelected: (ShareId, ItemId, ShareId) -> Unit,
+    navigation: (MigrateNavigation) -> Unit,
     onClose: () -> Unit,
     viewModel: MigrateSelectVaultViewModel = hiltViewModel()
 ) {
@@ -30,8 +29,22 @@ fun MigrateSelectVaultBottomSheet(
         if (event is Some) {
             when (val value = event.value) {
                 SelectVaultEvent.Close -> onClose()
-                is SelectVaultEvent.SelectedVault -> {
-                    onVaultSelected(value.sourceShareId, value.itemId, value.destinationShareId)
+                is SelectVaultEvent.VaultSelectedForMigrateItem -> {
+                    navigation(
+                        MigrateNavigation.VaultSelectedForMigrateItem(
+                            sourceShareId = value.sourceShareId,
+                            destShareId = value.destinationShareId,
+                            itemId = value.itemId
+                        )
+                    )
+                }
+                is SelectVaultEvent.VaultSelectedForMigrateAll -> {
+                    navigation(
+                        MigrateNavigation.VaultSelectedForMigrateAll(
+                            sourceShareId = value.sourceShareId,
+                            destShareId = value.destinationShareId
+                        )
+                    )
                 }
             }
             viewModel.clearEvent()

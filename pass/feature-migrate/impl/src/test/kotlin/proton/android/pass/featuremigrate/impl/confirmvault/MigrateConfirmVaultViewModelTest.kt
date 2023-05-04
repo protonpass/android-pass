@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemdetail.impl.migrate.confirmvault
+package proton.android.pass.featuremigrate.impl.confirmvault
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
@@ -11,7 +11,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestMigrateItem
-import proton.android.pass.featureitemdetail.impl.migrate.ItemMigrateSnackbarMessage
+import proton.android.pass.featuremigrate.impl.MigrateSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
@@ -38,16 +38,17 @@ class MigrateConfirmVaultViewModelTest {
         migrateItem = TestMigrateItem()
         snackbarDispatcher = TestSnackbarDispatcher()
         getVaultById = TestGetVaultWithItemCountById()
-        instance = MigrateConfirmVaultViewModel(
-            migrateItem = migrateItem,
-            snackbarDispatcher = snackbarDispatcher,
-            getVaultById = getVaultById,
-            savedStateHandle = TestSavedStateHandle.create().apply {
-                set(CommonNavArgId.ShareId.key, SHARE_ID.id)
-                set(CommonNavArgId.ItemId.key, ITEM_ID.id)
-                set(DestinationShareNavArgId.key, DESTINATION_SHARE_ID.id)
-            }
-        )
+        instance =
+            MigrateConfirmVaultViewModel(
+                migrateItem = migrateItem,
+                snackbarDispatcher = snackbarDispatcher,
+                getVaultById = getVaultById,
+                savedStateHandle = TestSavedStateHandle.create().apply {
+                    set(CommonNavArgId.ShareId.key, SHARE_ID.id)
+                    set(CommonNavArgId.ItemId.key, ITEM_ID.id)
+                    set(DestinationShareNavArgId.key, DESTINATION_SHARE_ID.id)
+                }
+            )
     }
 
     @Test
@@ -117,7 +118,7 @@ class MigrateConfirmVaultViewModelTest {
             assertThat(snackbarMessage.isNotEmpty()).isTrue()
 
             val message = snackbarMessage.value()!!
-            assertThat(message).isInstanceOf(ItemMigrateSnackbarMessage.ItemMigrated::class.java)
+            assertThat(message).isInstanceOf(MigrateSnackbarMessage.ItemMigrated::class.java)
         }
     }
 
@@ -135,7 +136,7 @@ class MigrateConfirmVaultViewModelTest {
             assertThat(snackbarMessage.isNotEmpty()).isTrue()
 
             val message = snackbarMessage.value()!!
-            assertThat(message).isInstanceOf(ItemMigrateSnackbarMessage.ItemNotMigrated::class.java)
+            assertThat(message).isInstanceOf(MigrateSnackbarMessage.ItemNotMigrated::class.java)
         }
     }
 

@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
@@ -17,7 +18,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.featurehome.impl.R
 
 @ExperimentalMaterialApi
@@ -26,16 +27,17 @@ fun VaultOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     showDelete: Boolean,
     onEdit: () -> Unit,
+    onMigrate: () -> Unit,
     onRemove: () -> Unit
 ) {
     Column(modifier.bottomSheet()) {
         BottomSheetItemList(
             items = if (showDelete) {
-                persistentListOf(
+                listOf(
                     editVault(onEdit),
-                    bottomSheetDivider(),
+                    migrateVault(onMigrate),
                     removeVault(onRemove)
-                )
+                ).withDividers().toPersistentList()
             } else {
                 persistentListOf(editVault(onEdit))
             }
@@ -55,6 +57,21 @@ private fun editVault(onEdit: () -> Unit): BottomSheetItem =
             get() = null
         override val onClick: () -> Unit
             get() = { onEdit() }
+        override val isDivider = false
+    }
+
+private fun migrateVault(onMigrate: () -> Unit): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_migrate)) }
+        override val subtitle: (@Composable () -> Unit)?
+            get() = null
+        override val leftIcon: (@Composable () -> Unit)
+            get() = { BottomSheetItemIcon(iconId = me.proton.core.presentation.R.drawable.ic_proton_folder_arrow_in) }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = { onMigrate() }
         override val isDivider = false
     }
 
@@ -94,6 +111,7 @@ fun VaultOptionsBottomSheetContentsPreview(
             VaultOptionsBottomSheetContents(
                 showDelete = input.second,
                 onEdit = {},
+                onMigrate = {},
                 onRemove = {}
             )
         }

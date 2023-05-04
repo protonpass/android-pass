@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="migrate_item_confirm_title_bottom_sheet">Move this item to the following vault?</string>
+    <string name="migrate_item_confirm_confirm_button">Move</string>
+    <string name="migrate_item_success_snackbar">Item moved</string>
+    <string name="migrate_item_error_snackbar">Error moving the item</string>
+</resources>

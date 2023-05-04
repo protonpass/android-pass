@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemdetail.impl.migrate.confirmvault
+package proton.android.pass.featuremigrate.impl.confirmvault
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -21,7 +21,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.MigrateItem
-import proton.android.pass.featureitemdetail.impl.migrate.ItemMigrateSnackbarMessage
+import proton.android.pass.featuremigrate.impl.MigrateSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.DestinationShareNavArgId
@@ -85,11 +85,11 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         }.onSuccess { item ->
             isLoadingFlow.update { IsLoadingState.NotLoading }
             eventFlow.update { ConfirmMigrateEvent.Migrated(item.shareId, item.id).toOption() }
-            snackbarDispatcher(ItemMigrateSnackbarMessage.ItemMigrated)
+            snackbarDispatcher(MigrateSnackbarMessage.ItemMigrated)
         }.onFailure {
             isLoadingFlow.update { IsLoadingState.NotLoading }
             PassLogger.e(TAG, it, "Error migrating item")
-            snackbarDispatcher(ItemMigrateSnackbarMessage.ItemNotMigrated)
+            snackbarDispatcher(MigrateSnackbarMessage.ItemNotMigrated)
         }
     }
 

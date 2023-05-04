@@ -1,11 +1,11 @@
-package proton.android.pass.featureitemdetail.impl.migrate
+package proton.android.pass.featuremigrate.impl
 
 import androidx.annotation.StringRes
-import proton.android.pass.featureitemdetail.impl.R
+import proton.android.pass.featuremigrate.R
 import proton.android.pass.notifications.api.SnackbarMessage
 import proton.android.pass.notifications.api.SnackbarType
 
-enum class ItemMigrateSnackbarMessage(
+enum class MigrateSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
@@ -13,3 +13,4 @@ enum class ItemMigrateSnackbarMessage(
     ItemMigrated(R.string.migrate_item_success_snackbar, SnackbarType.SUCCESS),
     ItemNotMigrated(R.string.migrate_item_error_snackbar, SnackbarType.ERROR)
 }
+

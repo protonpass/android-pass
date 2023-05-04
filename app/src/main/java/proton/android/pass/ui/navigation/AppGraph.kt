@@ -44,9 +44,9 @@ import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
 import proton.android.pass.featureitemdetail.impl.ViewItem
 import proton.android.pass.featureitemdetail.impl.itemDetailGraph
-import proton.android.pass.featureitemdetail.impl.migrate.MigrateConfirmVault
-import proton.android.pass.featureitemdetail.impl.migrate.MigrateSelectVault
-import proton.android.pass.featureitemdetail.impl.migrate.migrateItemGraph
+import proton.android.pass.featuremigrate.impl.MigrateConfirmVault
+import proton.android.pass.featuremigrate.impl.MigrateSelectVault
+import proton.android.pass.featuremigrate.impl.migrateGraph
 import proton.android.pass.featureonboarding.impl.OnBoarding
 import proton.android.pass.featureonboarding.impl.onBoardingGraph
 import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
@@ -348,7 +348,7 @@ fun NavGraphBuilder.appGraph(
         onBackClick = { appNavigator.onBackClick() }
     )
 
-    migrateItemGraph(
+    migrateGraph(
         dismissBottomSheet = dismissBottomSheet,
         onMigrateVaultSelectedClick = { sourceShareId: ShareId, itemId: ItemId, destShareId: ShareId ->
             appNavigator.navigate(

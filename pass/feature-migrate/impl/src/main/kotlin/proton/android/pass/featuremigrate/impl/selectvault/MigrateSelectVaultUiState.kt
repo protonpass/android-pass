@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemdetail.impl.migrate.selectvault
+package proton.android.pass.featuremigrate.impl.selectvault
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList

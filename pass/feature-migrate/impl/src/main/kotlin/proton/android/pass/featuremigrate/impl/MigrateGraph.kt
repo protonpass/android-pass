@@ -1,8 +1,8 @@
-package proton.android.pass.featureitemdetail.impl.migrate
+package proton.android.pass.featuremigrate.impl
 
 import androidx.navigation.NavGraphBuilder
-import proton.android.pass.featureitemdetail.impl.migrate.confirmvault.MigrateConfirmVaultBottomSheet
-import proton.android.pass.featureitemdetail.impl.migrate.selectvault.MigrateSelectVaultBottomSheet
+import proton.android.pass.featuremigrate.impl.confirmvault.MigrateConfirmVaultBottomSheet
+import proton.android.pass.featuremigrate.impl.selectvault.MigrateSelectVaultBottomSheet
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -26,7 +26,7 @@ object MigrateConfirmVault : NavItem(
         "$baseRoute/${sourceShareId.id}/${itemId.id}/${destShareId.id}"
 }
 
-fun NavGraphBuilder.migrateItemGraph(
+fun NavGraphBuilder.migrateGraph(
     onMigrateVaultSelectedClick: (ShareId, ItemId, ShareId) -> Unit,
     onItemMigrated: (ShareId, ItemId) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit,
@@ -53,3 +53,4 @@ fun NavGraphBuilder.migrateItemGraph(
         )
     }
 }
+

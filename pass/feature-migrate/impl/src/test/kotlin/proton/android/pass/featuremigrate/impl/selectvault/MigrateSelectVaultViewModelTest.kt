@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemdetail.impl.migrate.selectvault
+package proton.android.pass.featuremigrate.impl.selectvault
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
@@ -48,7 +48,10 @@ class MigrateSelectVaultViewModelTest {
         observeVaults.sendResult(Result.success(listOf(currentVault, otherVault)))
 
         val expected = listOf(
-            VaultEnabledPair(currentVault, false),
+            VaultEnabledPair(
+                currentVault,
+                false
+            ),
             VaultEnabledPair(otherVault, true)
         )
         instance.state.test {

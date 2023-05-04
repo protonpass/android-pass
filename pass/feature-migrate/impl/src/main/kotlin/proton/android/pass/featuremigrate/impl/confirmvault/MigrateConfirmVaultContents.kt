@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemdetail.impl.migrate.confirmvault
+package proton.android.pass.featuremigrate.impl.confirmvault
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,7 +17,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelC
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetVaultRow
 import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
-import proton.android.pass.featureitemdetail.impl.R
+import proton.android.pass.featuremigrate.R
 
 @Composable
 fun MigrateConfirmVaultContents(

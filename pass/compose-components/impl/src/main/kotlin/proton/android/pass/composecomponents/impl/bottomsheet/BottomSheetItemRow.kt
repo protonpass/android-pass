@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.applyIf
 
 @Composable
@@ -31,7 +32,10 @@ fun ColumnScope.BottomSheetItemRow(
                 condition = onClick != null,
                 ifTrue = { clickable { onClick?.invoke() } }
             )
-            .padding(vertical = 16.dp),
+            .padding(
+                horizontal = PassTheme.dimens.bottomsheetHorizontalPadding,
+                vertical = 16.dp
+            ),
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {

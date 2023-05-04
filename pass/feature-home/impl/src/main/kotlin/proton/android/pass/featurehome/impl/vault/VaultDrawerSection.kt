@@ -9,7 +9,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
@@ -35,12 +34,12 @@ fun VaultDrawerSection(
     onTrashClick: () -> Unit = {}
 ) {
     LazyColumn(
-        modifier = modifier
-            .fillMaxHeight()
-            .padding(horizontal = 16.dp),
+        modifier = modifier.fillMaxHeight(),
     ) {
         item {
             Text(
+                modifier = Modifier
+                    .padding(horizontal = PassTheme.dimens.bottomsheetHorizontalPadding),
                 text = stringResource(R.string.vault_drawer_vaults_title),
                 color = PassTheme.colors.textNorm,
                 style = PassTypography.hero
@@ -57,7 +56,11 @@ fun VaultDrawerSection(
                     showMenuIcon = false,
                     onClick = { onAllVaultsClick() }
                 )
-                Divider(color = PassTheme.colors.inputBackgroundStrong)
+                Divider(
+                    modifier = Modifier
+                        .padding(horizontal = PassTheme.dimens.bottomsheetHorizontalPadding),
+                    color = PassTheme.colors.inputBackgroundStrong
+                )
             }
         }
 
@@ -78,7 +81,11 @@ fun VaultDrawerSection(
                 onOptionsClick = { onVaultOptionsClick(share) },
                 onClick = { onVaultClick(share.id) }
             )
-            Divider(color = PassTheme.colors.inputBackgroundStrong)
+            Divider(
+                modifier = Modifier
+                    .padding(horizontal = PassTheme.dimens.bottomsheetHorizontalPadding),
+                color = PassTheme.colors.inputBackgroundStrong
+            )
         }
         item {
             VaultDrawerRow(

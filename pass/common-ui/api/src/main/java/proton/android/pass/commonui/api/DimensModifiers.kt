@@ -10,7 +10,6 @@ import androidx.compose.ui.composed
 fun Modifier.bottomSheet(): Modifier = composed {
     background(PassTheme.colors.bottomSheetBackground)
         .padding(
-            horizontal = PassTheme.dimens.bottomsheetHorizontalPadding,
             vertical = PassTheme.dimens.bottomsheetVerticalPadding
         )
 }

@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.feature.vault.impl.R
 
@@ -32,7 +33,8 @@ fun CreateVaultBottomSheet(
     }
 
     VaultBottomSheetContent(
-        modifier = modifier.bottomSheet(),
+        modifier = modifier
+            .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
         state = state,
         buttonText = stringResource(R.string.bottomsheet_create_vault_button),
         onNameChange = { viewModel.onNameChange(it) },

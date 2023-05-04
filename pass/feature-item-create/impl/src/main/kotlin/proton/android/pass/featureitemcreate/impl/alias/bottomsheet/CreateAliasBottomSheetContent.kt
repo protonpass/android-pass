@@ -67,7 +67,7 @@ fun CreateAliasBottomSheetContent(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .bottomSheet(),
+            .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         BottomSheetTitle(title = stringResource(R.string.field_alias_you_are_about_to_create))

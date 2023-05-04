@@ -45,7 +45,10 @@ fun VaultDrawerRow(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(vertical = 16.dp),
+            .padding(
+                vertical = 16.dp,
+                horizontal = PassTheme.dimens.bottomsheetHorizontalPadding
+            ),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

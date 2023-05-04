@@ -1,6 +1,7 @@
 package proton.android.pass.composecomponents.impl.bottomsheet
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Divider
@@ -19,7 +20,10 @@ fun BottomSheetItemList(
     ) {
         items.forEach { item ->
             if (item.isDivider) {
-                Divider(color = PassTheme.colors.inputBackgroundStrong)
+                Divider(
+                    modifier = Modifier.padding(horizontal = PassTheme.dimens.bottomsheetHorizontalPadding),
+                    color = PassTheme.colors.inputBackgroundStrong
+                )
             } else {
                 BottomSheetItemRow(
                     title = item.title,

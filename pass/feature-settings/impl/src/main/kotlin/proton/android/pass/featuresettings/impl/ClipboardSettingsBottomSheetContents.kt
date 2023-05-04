@@ -32,7 +32,8 @@ fun ClipboardBottomSheetContents(
     onCopyTotpSettingClick: (Boolean) -> Unit,
 ) {
     Column(
-        modifier = modifier.bottomSheet(),
+        modifier = modifier
+            .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         BottomSheetTitle(title = stringResource(R.string.clipboard_bottomsheet_title))

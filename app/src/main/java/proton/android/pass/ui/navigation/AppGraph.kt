@@ -45,6 +45,7 @@ import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
 import proton.android.pass.featureitemdetail.impl.ViewItem
 import proton.android.pass.featureitemdetail.impl.itemDetailGraph
 import proton.android.pass.featuremigrate.impl.MigrateConfirmVault
+import proton.android.pass.featuremigrate.impl.MigrateNavigation
 import proton.android.pass.featuremigrate.impl.MigrateSelectVault
 import proton.android.pass.featuremigrate.impl.migrateGraph
 import proton.android.pass.featureonboarding.impl.OnBoarding
@@ -136,6 +137,13 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         EditVaultBottomSheet,
                         EditVaultBottomSheet.createNavRoute(it.shareId.toOption())
+                    )
+                }
+
+                is HomeNavigation.MigrateVault -> {
+                    appNavigator.navigate(
+                        MigrateSelectVault,
+                        MigrateSelectVault.createNavRouteForMigrateAll(it.shareId)
                     )
                 }
 
@@ -341,7 +349,7 @@ fun NavGraphBuilder.appGraph(
         onMigrateClick = { shareId: ShareId, itemId: ItemId ->
             appNavigator.navigate(
                 destination = MigrateSelectVault,
-                route = MigrateSelectVault.createNavRoute(shareId, itemId)
+                route = MigrateSelectVault.createNavRouteForMigrateItem(shareId, itemId)
             )
         },
 
@@ -349,21 +357,35 @@ fun NavGraphBuilder.appGraph(
     )
 
     migrateGraph(
+        navigation = {
+            when (it) {
+                is MigrateNavigation.VaultSelectedForMigrateItem -> {
+                    dismissBottomSheet {
+                        appNavigator.navigate(
+                            destination = MigrateConfirmVault,
+                            route = MigrateConfirmVault.createNavRouteForMigrateItem(
+                                shareId = it.sourceShareId,
+                                itemId = it.itemId,
+                                destShareId = it.destShareId
+                            ),
+                            backDestination = ViewItem
+                        )
+                    }
+                }
+                is MigrateNavigation.ItemMigrated -> {
+                    dismissBottomSheet {
+                        appNavigator.navigate(
+                            destination = ViewItem,
+                            route = ViewItem.createNavRoute(it.shareId, it.itemId),
+                            backDestination = Home
+                        )
+                    }
+                }
+                MigrateNavigation.VaultMigrated -> TODO()
+                is MigrateNavigation.VaultSelectedForMigrateAll -> TODO()
+            }
+        },
         dismissBottomSheet = dismissBottomSheet,
-        onMigrateVaultSelectedClick = { sourceShareId: ShareId, itemId: ItemId, destShareId: ShareId ->
-            appNavigator.navigate(
-                destination = MigrateConfirmVault,
-                route = MigrateConfirmVault.createNavRoute(sourceShareId, itemId, destShareId),
-                backDestination = ViewItem
-            )
-        },
-        onItemMigrated = { shareId: ShareId, itemId: ItemId ->
-            appNavigator.navigate(
-                destination = ViewItem,
-                route = ViewItem.createNavRoute(shareId, itemId),
-                backDestination = Home
-            )
-        },
     )
 
     authGraph(

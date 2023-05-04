@@ -70,9 +70,9 @@ class MigrateSelectVaultViewModelTest {
         instance.state.test {
             val event = awaitItem().event.value()
             assertThat(event).isNotNull()
-            assertThat(event!!).isInstanceOf(SelectVaultEvent.SelectedVault::class.java)
+            assertThat(event!!).isInstanceOf(SelectVaultEvent.VaultSelectedForMigrateItem::class.java)
 
-            val castedEvent = event as SelectVaultEvent.SelectedVault
+            val castedEvent = event as SelectVaultEvent.VaultSelectedForMigrateItem
             assertThat(castedEvent.itemId).isEqualTo(ITEM_ID)
             assertThat(castedEvent.sourceShareId).isEqualTo(SHARE_ID)
             assertThat(castedEvent.destinationShareId).isEqualTo(otherVault.vault.shareId)

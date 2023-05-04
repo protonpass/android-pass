@@ -2,16 +2,17 @@ package proton.android.pass.navigation.api
 
 import androidx.navigation.NavType
 
-sealed interface NavArgId {
+interface NavArgId {
     val key: String
     val navType: NavType<*>
 }
 
 private const val SHARE_ID_KEY = "shareId"
+private const val ITEM_ID_KEY = "itemId"
 
 enum class CommonNavArgId : NavArgId {
     ItemId {
-        override val key: String = "itemId"
+        override val key: String = ITEM_ID_KEY
         override val navType: NavType<*> = NavType.StringType
     },
     ShareId {
@@ -30,7 +31,7 @@ object SortingTypeNavArgId : NavArgId {
     override val navType: NavType<*> = NavType.StringType
 }
 
-sealed interface OptionalNavArgId : NavArgId {
+interface OptionalNavArgId : NavArgId {
     val default: Any?
         get() = null
 }
@@ -38,6 +39,10 @@ sealed interface OptionalNavArgId : NavArgId {
 enum class CommonOptionalNavArgId : OptionalNavArgId {
     ShareId {
         override val key: String = SHARE_ID_KEY
+        override val navType: NavType<*> = NavType.StringType
+    },
+    ItemId {
+        override val key: String = ITEM_ID_KEY
         override val navType: NavType<*> = NavType.StringType
     }
 }

@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemdetail.impl.migrate.confirmvault
+package proton.android.pass.featuremigrate.impl.confirmvault
 
 import androidx.compose.runtime.Stable
 import proton.android.pass.common.api.None

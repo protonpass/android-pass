@@ -82,11 +82,11 @@ open class ModuleGenTask : DefaultTask() {
         rootPackageName: String
     ) {
         val modulePathString = modulePath.joinToString(File.separator)
-        val subPackage = modulePath.joinToString(".")
+        val subPackagePath = modulePath.joinToString(File.separator)
         val rootPackagePath = rootPackageName.replace('.', '/')
         for (configuration in configurationSet) {
             val lcConfiguration = configuration.name.lowercase()
-            val configurationPath = "$rootPackagePath/$subPackage/$lcConfiguration".replace("-", "")
+            val configurationPath = "$rootPackagePath/$subPackagePath/$lcConfiguration".replace("-", "")
             mkdir("$modulePathString/$lcConfiguration/src/main/kotlin/$configurationPath")
             if (configuration == Configuration.IMPL) {
                 mkdir("$modulePathString/$lcConfiguration/src/androidTest/kotlin/$configurationPath")

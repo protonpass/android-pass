@@ -34,7 +34,8 @@ fun GeneratePasswordBottomSheetContent(
     onConfirm: (String) -> Unit
 ) {
     Column(
-        modifier = modifier.bottomSheet(),
+        modifier = modifier
+            .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         GeneratePasswordBottomSheetTitle(onRegenerate = { onRegenerateClick() })

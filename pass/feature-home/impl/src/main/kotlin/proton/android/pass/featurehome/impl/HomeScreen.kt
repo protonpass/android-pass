@@ -218,6 +218,12 @@ fun HomeScreen(
                                 selectedShare?.let { onNavigateEvent(HomeNavigation.EditVault(it.id)) }
                             }
                         },
+                        onMigrate = {
+                            scope.launch {
+                                bottomSheetState.hide()
+                                selectedShare?.let { onNavigateEvent(HomeNavigation.MigrateVault(it.id)) }
+                            }
+                        },
                         onRemove = {
                             scope.launch {
                                 bottomSheetState.hide()

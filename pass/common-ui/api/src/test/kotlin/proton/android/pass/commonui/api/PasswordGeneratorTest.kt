@@ -33,7 +33,7 @@ class PasswordGeneratorTest {
             option = PasswordGenerator.Option.LettersNumbersSymbols,
             random = Random(1234)
         )
-        assertThat(res).isEqualTo("55Jy+")
+        assertThat(res).isEqualTo("fY$9&")
     }
 
     @Test
@@ -52,22 +52,22 @@ class PasswordGeneratorTest {
             2 to mapOf(
                 PasswordGenerator.Option.Letters to "Gy",
                 PasswordGenerator.Option.LettersAndNumbers to "9T",
-                PasswordGenerator.Option.LettersNumbersSymbols to "9?"
+                PasswordGenerator.Option.LettersNumbersSymbols to "9^"
             ),
             3 to mapOf(
                 PasswordGenerator.Option.Letters to "Gyu",
                 PasswordGenerator.Option.LettersAndNumbers to "9Tn",
-                PasswordGenerator.Option.LettersNumbersSymbols to "55;"
+                PasswordGenerator.Option.LettersNumbersSymbols to "f5*"
             ),
             4 to mapOf(
                 PasswordGenerator.Option.Letters to "Gyuh",
                 PasswordGenerator.Option.LettersAndNumbers to "9Tnf",
-                PasswordGenerator.Option.LettersNumbersSymbols to "55J."
+                PasswordGenerator.Option.LettersNumbersSymbols to "fY1*"
             ),
             5 to mapOf(
                 PasswordGenerator.Option.Letters to "GyuhU",
                 PasswordGenerator.Option.LettersAndNumbers to "9Tnft",
-                PasswordGenerator.Option.LettersNumbersSymbols to "55Jy+"
+                PasswordGenerator.Option.LettersNumbersSymbols to "fY$9&"
             )
         )
 

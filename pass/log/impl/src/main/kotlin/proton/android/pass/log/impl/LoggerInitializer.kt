@@ -49,7 +49,7 @@ class LoggerInitializer : Initializer<Unit> {
                         Timber.plant(Timber.DebugTree())
                     }
                     Timber.plant(FileLoggingTree(context))
-                    deviceInfo()
+                    deviceInfo(entryPoint.appConfig())
                 } else {
                     Timber.uprootAll()
                 }
@@ -71,12 +71,13 @@ class LoggerInitializer : Initializer<Unit> {
     }
 }
 
-private fun deviceInfo() {
+private fun deviceInfo(appConfig: AppConfig) {
     PassLogger.i(TAG, "-----------------------------------------")
     PassLogger.i(
         TAG,
         "OS:          Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})"
     )
+    PassLogger.i(TAG, "VERSION:     ${appConfig.versionName}")
     PassLogger.i(TAG, "DEVICE:      ${Build.MANUFACTURER} ${Build.MODEL}")
     PassLogger.i(TAG, "FINGERPRINT: ${Build.FINGERPRINT}")
     PassLogger.i(TAG, "ABI:         ${Build.SUPPORTED_ABIS.joinToString(",")}")

@@ -8,7 +8,7 @@ object PasswordGenerator {
     enum class CharacterSet(val value: String) {
         LETTERS("abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ"),
         NUMBERS("0123456789"),
-        SYMBOLS("!#\$%&()*+.:;<=>?@[]^")
+        SYMBOLS("!@#$%^&*")
     }
 
     sealed class Option(characterSets: Set<CharacterSet>) {

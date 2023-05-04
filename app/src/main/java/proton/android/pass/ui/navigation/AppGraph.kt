@@ -381,8 +381,20 @@ fun NavGraphBuilder.appGraph(
                         )
                     }
                 }
-                MigrateNavigation.VaultMigrated -> TODO()
-                is MigrateNavigation.VaultSelectedForMigrateAll -> TODO()
+                MigrateNavigation.VaultMigrated -> {
+                    dismissBottomSheet { appNavigator.onBackClick() }
+                }
+                is MigrateNavigation.VaultSelectedForMigrateAll -> {
+                    dismissBottomSheet {
+                        appNavigator.navigate(
+                            destination = MigrateConfirmVault,
+                            route = MigrateConfirmVault.createNavRouteForMigrateAll(
+                                shareId = it.sourceShareId,
+                                destShareId = it.destShareId
+                            ),
+                        )
+                    }
+                }
             }
         },
         dismissBottomSheet = dismissBottomSheet,

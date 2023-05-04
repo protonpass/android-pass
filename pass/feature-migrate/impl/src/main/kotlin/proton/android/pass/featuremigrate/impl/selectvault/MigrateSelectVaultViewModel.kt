@@ -18,6 +18,8 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.featuremigrate.impl.MigrateModeArg
+import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.pass.domain.ItemId
@@ -30,8 +32,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val sourceShareId = getSourceShareId()
-    private val itemId = getItemId()
+    private val mode = getMode()
 
     private val eventFlow: MutableStateFlow<Option<SelectVaultEvent>> = MutableStateFlow(None)
 
@@ -45,19 +46,21 @@ class MigrateSelectVaultViewModel @Inject constructor(
                 PassLogger.e(TAG, res.exception, "Error observing active vaults")
                 MigrateSelectVaultUiState(
                     vaultList = persistentListOf(),
-                    event = SelectVaultEvent.Close.toOption()
+                    event = SelectVaultEvent.Close.toOption(),
+                    mode = mode.migrateMode()
                 )
             }
             is LoadingResult.Success -> {
                 val vaultEnabledPairs = res.data.map {
                     VaultEnabledPair(
                         vault = it,
-                        isEnabled = it.vault.shareId != sourceShareId
+                        isEnabled = it.vault.shareId != mode.shareId
                     )
                 }
                 MigrateSelectVaultUiState(
                     vaultList = vaultEnabledPairs.toImmutableList(),
-                    event = event
+                    event = event,
+                    mode = mode.migrateMode()
                 )
             }
         }
@@ -68,25 +71,57 @@ class MigrateSelectVaultViewModel @Inject constructor(
     )
 
     fun onVaultSelected(shareId: ShareId) {
-        eventFlow.update {
-            SelectVaultEvent.SelectedVault(
-                sourceShareId = sourceShareId,
-                itemId = itemId,
+        val event = when (mode) {
+            is Mode.MigrateItem -> SelectVaultEvent.VaultSelectedForMigrateItem(
+                sourceShareId = mode.shareId,
+                itemId = mode.itemId,
                 destinationShareId = shareId
-            ).toOption()
+            )
+            is Mode.MigrateAllItems -> SelectVaultEvent.VaultSelectedForMigrateAll(
+                sourceShareId = mode.shareId,
+                destinationShareId = shareId
+            )
         }
+
+        eventFlow.update { event.toOption() }
     }
 
     fun clearEvent() {
         eventFlow.update { None }
     }
 
+    private fun getMode(): Mode {
+        val sourceShareId = getSourceShareId()
+        return when (getNavMode()) {
+            MigrateModeValue.SingleItem -> Mode.MigrateItem(sourceShareId, getItemId())
+            MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(sourceShareId)
+        }
+    }
+
+    private fun getNavMode(): MigrateModeValue = MigrateModeValue.valueOf(getNavArg(MigrateModeArg.key))
     private fun getSourceShareId(): ShareId = ShareId(getNavArg(CommonNavArgId.ShareId.key))
     private fun getItemId(): ItemId = ItemId(getNavArg(CommonNavArgId.ItemId.key))
 
     private fun getNavArg(name: String): String =
         savedStateHandle.get<String>(name)
             ?: throw IllegalStateException("Missing $name nav argument")
+
+    internal sealed interface Mode {
+
+        val shareId: ShareId
+
+        data class MigrateItem(
+            override val shareId: ShareId,
+            val itemId: ItemId
+        ) : Mode
+
+        data class MigrateAllItems(override val shareId: ShareId) : Mode
+
+        fun migrateMode(): MigrateMode = when (this) {
+            is MigrateItem -> MigrateMode.MigrateItem
+            is MigrateAllItems -> MigrateMode.MigrateAll
+        }
+    }
 
     companion object {
         private const val TAG = "MigrateSelectVaultViewModel"

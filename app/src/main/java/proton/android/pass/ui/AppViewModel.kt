@@ -27,6 +27,7 @@ import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.AppLockPreference
+import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -108,6 +109,9 @@ class AppViewModel @Inject constructor(
         }
 
     private suspend fun shouldPerformAuth(): Boolean {
+        val biometricLockState = preferenceRepository.getBiometricLockState().first()
+        if (biometricLockState == BiometricLockState.Disabled) return false
+        
         val lastAuthTime = when (val time = authTimeHolder.getBiometryAuthTime().first()) {
             is Some -> time.value
             None -> {

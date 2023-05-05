@@ -42,7 +42,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
         eventFlow
     ) { vaultResult, event ->
         when (val res = vaultResult) {
-            LoadingResult.Loading -> MigrateSelectVaultUiState.Initial
+            LoadingResult.Loading -> MigrateSelectVaultUiState.Initial(mode.migrateMode())
             is LoadingResult.Error -> {
                 PassLogger.e(TAG, res.exception, "Error observing active vaults")
                 MigrateSelectVaultUiState(
@@ -68,7 +68,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = MigrateSelectVaultUiState.Initial
+        initialValue = MigrateSelectVaultUiState.Initial(mode.migrateMode())
     )
 
     fun onVaultSelected(shareId: ShareId) {

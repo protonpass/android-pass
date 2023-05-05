@@ -2,6 +2,7 @@ package proton.android.pass.featuremigrate.impl.confirmvault
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
@@ -13,18 +14,17 @@ import proton.android.pass.data.fakes.usecases.TestMigrateItem
 import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
+import proton.android.pass.featuremigrate.impl.MigrateSnackbarMessage
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
-import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
 
-class MigrateConfirmVaultViewModelTest {
+class MigrateConfirmVaultForMigrateAllVaultItemsViewModelTest {
 
     @get:Rule
     val dispatcher = MainDispatcherRule()
@@ -50,49 +50,59 @@ class MigrateConfirmVaultViewModelTest {
                 set(CommonNavArgId.ShareId.key, SHARE_ID.id)
                 set(DestinationShareNavArgId.key, DESTINATION_SHARE_ID.id)
                 set(MigrateModeArg.key, MODE.name)
-                set(CommonOptionalNavArgId.ItemId.key, ITEM_ID.id)
             }
         )
     }
 
     @Test
-    fun `stops loading when vault has emitted`() = runTest {
-        val vault = sourceVault()
-        getVaultById.emitValue(vault)
+    fun `emits initial state`() = runTest {
         instance.state.test {
-            val secondState = awaitItem()
-            assertThat(secondState.isLoading).isInstanceOf(IsLoadingState.NotLoading::class.java)
-            assertThat(secondState.vault.isNotEmpty()).isTrue()
-
-            val itemVault = secondState.vault.value()!!
-            assertThat(itemVault).isEqualTo(vault)
+            assertThat(awaitItem()).isEqualTo(MigrateConfirmVaultUiState.Initial(MigrateMode.MigrateAll))
         }
     }
 
     @Test
-    fun `emits close if there is an error in get vault`() = runTest {
-        getVaultById.sendException(IllegalStateException("test"))
-        instance.state.test {
-            val state = awaitItem()
-            assertThat(state.event.isNotEmpty()).isTrue()
-
-            val eventCasted = state.event as Some<ConfirmMigrateEvent>
-            assertThat(eventCasted.value).isInstanceOf(ConfirmMigrateEvent.Close::class.java)
-        }
-    }
-
-    @Test
-    fun `emits close if cancel is clicked`() = runTest {
+    fun `can migrate items`() = runTest {
         getVaultById.emitValue(sourceVault())
-        instance.onCancel()
+
+        instance.onConfirm()
         instance.state.test {
             val state = awaitItem()
             val eventCasted = state.event as Some<ConfirmMigrateEvent>
-            assertThat(eventCasted.value).isInstanceOf(ConfirmMigrateEvent.Close::class.java)
-
-            cancelAndConsumeRemainingEvents()
+            assertThat(eventCasted.value).isInstanceOf(ConfirmMigrateEvent.AllItemsMigrated::class.java)
         }
+
+        val snackbarMessage = snackbarDispatcher.snackbarMessage.first()
+        assertThat(snackbarMessage.isNotEmpty()).isTrue()
+
+        val message = snackbarMessage.value()!!
+        assertThat(message).isInstanceOf(MigrateSnackbarMessage.VaultItemsMigrated::class.java)
+
+        val expected = TestMigrateVault.Memory(SHARE_ID, DESTINATION_SHARE_ID)
+        assertThat(migrateVault.memory()).isEqualTo(listOf(expected))
     }
+
+    @Test
+    fun `displays error if cannot migrate items`() = runTest {
+        getVaultById.emitValue(sourceVault())
+        migrateVault.setResult(Result.failure(IllegalStateException("test")))
+
+        instance.onConfirm()
+        instance.state.test {
+            val state = awaitItem()
+            assertThat(state.isLoading).isInstanceOf(IsLoadingState.NotLoading::class.java)
+        }
+
+        val snackbarMessage = snackbarDispatcher.snackbarMessage.first()
+        assertThat(snackbarMessage.isNotEmpty()).isTrue()
+
+        val message = snackbarMessage.value()!!
+        assertThat(message).isInstanceOf(MigrateSnackbarMessage.VaultItemsNotMigrated::class.java)
+
+        val expected = TestMigrateVault.Memory(SHARE_ID, DESTINATION_SHARE_ID)
+        assertThat(migrateVault.memory()).isEqualTo(listOf(expected))
+    }
+
 
     private fun sourceVault(): VaultWithItemCount = VaultWithItemCount(
         vault = Vault(
@@ -107,8 +117,7 @@ class MigrateConfirmVaultViewModelTest {
     companion object {
         private val SHARE_ID = ShareId("123")
         private val DESTINATION_SHARE_ID = ShareId("456")
-        private val ITEM_ID = ItemId("789")
 
-        private val MODE = MigrateModeValue.SingleItem
+        private val MODE = MigrateModeValue.AllVaultItems
     }
 }

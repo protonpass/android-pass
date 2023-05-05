@@ -69,8 +69,8 @@ fun ItemsList(
     onScrollToTop: () -> Unit,
     emptyContent: @Composable () -> Unit
 ) {
-    LaunchedEffect(shouldScrollToTop) {
-        if (shouldScrollToTop && !scrollableState.isScrollInProgress && scrollableState.firstVisibleItemIndex > 0) {
+    LaunchedEffect(shouldScrollToTop && !scrollableState.isScrollInProgress) {
+        if (shouldScrollToTop && !scrollableState.isScrollInProgress) {
             scrollableState.scrollToItem(0)
             onScrollToTop()
         }

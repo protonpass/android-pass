@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.runtime)
     implementation(libs.material)
+    implementation(libs.kotlinx.datetime)
 
     implementation(projects.pass.autofill.impl)
     implementation(projects.pass.crypto.fakes)

@@ -149,6 +149,9 @@ object ItemSorter {
                 )
             }
 
+    fun List<ItemUiModel>.sortSuggestionsByMostRecent(): List<ItemUiModel> =
+        sortedByDescending { recentDate(it.modificationTime, it.lastAutofillTime) }
+
     private fun recentDate(modificationTime: Instant, lastAutofillTime: Instant?): Instant =
         lastAutofillTime?.let { maxOf(it, modificationTime) } ?: modificationTime
 }

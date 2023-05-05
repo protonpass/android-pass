@@ -11,13 +11,15 @@ import proton.android.pass.preferences.ThemePreference
 data class AppUiState(
     val snackbarMessage: Option<SnackbarMessage>,
     val theme: ThemePreference,
-    val networkStatus: NetworkStatus
+    val networkStatus: NetworkStatus,
+    val needsAuth: Boolean
 ) {
     companion object {
-        fun Initial(theme: ThemePreference) = AppUiState(
+        fun Initial(theme: ThemePreference, needsAuth: Boolean) = AppUiState(
             snackbarMessage = None,
             theme = theme,
-            networkStatus = NetworkStatus.Online
+            networkStatus = NetworkStatus.Online,
+            needsAuth = needsAuth
         )
     }
 }

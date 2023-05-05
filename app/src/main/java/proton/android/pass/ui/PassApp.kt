@@ -13,6 +13,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import me.proton.core.compose.theme.isNightMode
+import proton.android.pass.commonui.api.OnResumeCallback
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.preferences.ThemePreference
 
@@ -35,6 +36,13 @@ fun PassApp(
     LaunchedEffect(systemUiController, isDark) {
         systemUiController.systemBarsDarkContentEnabled = !isDark
     }
+
+    OnResumeCallback { isFirstTime ->
+        if (!isFirstTime) {
+            appViewModel.onAppResumed()
+        }
+    }
+
     PassTheme(isDark = isDark) {
         ProvideWindowInsets {
             PassAppContent(
@@ -44,7 +52,8 @@ fun PassApp(
                     .imePadding(),
                 appUiState = appUiState,
                 onNavigate = onNavigate,
-                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() }
+                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
+                onAuthPerformed = { appViewModel.onAuthPerformed() }
             )
         }
     }

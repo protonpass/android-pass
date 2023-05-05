@@ -3,7 +3,6 @@ package proton.android.pass.featureauth.impl
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -12,7 +11,6 @@ import proton.android.pass.biometry.BiometryResult
 import proton.android.pass.biometry.BiometryStartupError
 import proton.android.pass.biometry.BiometryStatus
 import proton.android.pass.biometry.ContextHolder
-import proton.android.pass.biometry.TestBiometryAuthTimeHolder
 import proton.android.pass.biometry.TestBiometryManager
 import proton.android.pass.common.api.None
 import proton.android.pass.preferences.BiometricLockState
@@ -35,8 +33,6 @@ class AuthViewModelTest {
         viewModel = AuthViewModel(
             preferenceRepository,
             biometryManager,
-            TestBiometryAuthTimeHolder(),
-            Clock.System
         )
     }
 

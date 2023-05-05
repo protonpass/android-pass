@@ -2,6 +2,7 @@ package proton.android.pass.autofill.ui.autofill.select
 
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -15,6 +16,9 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.EmptyList
 import proton.android.pass.composecomponents.impl.item.EmptySearchResults
 import proton.android.pass.composecomponents.impl.item.ItemsList
+import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
+import proton.android.pass.composecomponents.impl.item.header.SortingButton
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 @Composable
 fun SelectItemList(
@@ -58,9 +62,35 @@ fun SelectItemList(
                 suggestions = listUiState.items.suggestions,
                 onItemClicked = onItemClicked
             )
+            item {
+                if (shouldShowItemListHeader(uiState)) {
+                    val count = remember(uiState.listUiState.items) {
+                        uiState.listUiState.items.items.map { it.items }.flatten().count() +
+                            uiState.listUiState.items.suggestions.count()
+                    }
+                    ItemListHeader(
+                        showSearchResults = uiState.searchUiState.inSearchMode &&
+                            uiState.searchUiState.searchQuery.isNotEmpty(),
+                        itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() },
+                        sortingContent = {
+                            SortingButton(
+                                sortingType = uiState.listUiState.sortingType,
+                                onSortingOptionsClick = {
+                                    onNavigate(SelectItemNavigation.SortingBottomsheet(uiState.listUiState.sortingType))
+                                }
+                            )
+                        }
+                    )
+                }
+            }
         }
     )
 }
+
+private fun shouldShowItemListHeader(uiState: SelectItemUiState) =
+    uiState.listUiState.items.items.isNotEmpty() &&
+        uiState.listUiState.isLoading == IsLoadingState.NotLoading &&
+        !uiState.searchUiState.isProcessingSearch.value()
 
 class ThemeAndSelectItemUiStateProvider :
     ThemePairPreviewProvider<SelectItemUiState>(SelectItemUiStatePreviewProvider())

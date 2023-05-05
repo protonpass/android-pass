@@ -15,6 +15,22 @@ import proton.pass.domain.ShareId
 private const val TRANSITION_TIME_MILLIS = 500
 private const val FADE_DELAY_TIME_MILLIS = 100
 
+sealed interface ItemDetailNavigation {
+    data class OnEdit(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val itemType: ItemType
+    ) : ItemDetailNavigation
+
+    data class OnMigrate(
+        val shareId: ShareId,
+        val itemId: ItemId
+    ) : ItemDetailNavigation
+
+    data class OnCreateLoginFromAlias(val alias: String) : ItemDetailNavigation
+    object Back : ItemDetailNavigation
+}
+
 object ViewItem : NavItem(
     baseRoute = "item",
     navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
@@ -25,10 +41,7 @@ object ViewItem : NavItem(
 
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.itemDetailGraph(
-    onEditClick: (ShareId, ItemId, ItemType) -> Unit,
-    onMigrateClick: (ShareId, ItemId) -> Unit,
-    onCreateLoginFromAlias: (String) -> Unit,
-    onBackClick: () -> Unit
+    onNavigate: (ItemDetailNavigation) -> Unit,
 ) {
     composable(
         navItem = ViewItem,
@@ -41,10 +54,7 @@ fun NavGraphBuilder.itemDetailGraph(
         popExitTransition = null
     ) {
         ItemDetailScreen(
-            onUpClick = onBackClick,
-            onEditClick = onEditClick,
-            onMigrateClick = onMigrateClick,
-            onCreateLoginFromAlias = onCreateLoginFromAlias
+            onNavigate = onNavigate
         )
     }
 }

@@ -361,7 +361,7 @@ class SelectItemViewModel @Inject constructor(
         this.autofillAppState.update { autofillAppState.toOption() }
     }
 
-    fun onScrollToTop() {
+    fun onScrolledToTop() {
         shouldScrollToTopFlow.update { false }
     }
 

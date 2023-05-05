@@ -15,11 +15,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.previewproviders.SuggestionsPreviewProvider
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.ActionableItemRow
@@ -38,7 +37,7 @@ fun LazyListScope.SelectItemListHeader(
                 R.string.autofill_suggestions_for_placeholder,
                 suggestionsForTitle
             ),
-            style = ProtonTheme.typography.defaultSmallWeak
+            style = PassTypography.body3Bold
         )
     }
 
@@ -51,16 +50,6 @@ fun LazyListScope.SelectItemListHeader(
             item = item,
             showMenuIcon = false,
             onItemClick = onItemClicked
-        )
-    }
-
-    item { Spacer(modifier = Modifier.height(24.dp)) }
-
-    item {
-        Text(
-            modifier = Modifier.padding(start = 16.dp),
-            text = stringResource(R.string.autofill_suggestions_other_items),
-            style = ProtonTheme.typography.defaultSmallWeak
         )
     }
 }

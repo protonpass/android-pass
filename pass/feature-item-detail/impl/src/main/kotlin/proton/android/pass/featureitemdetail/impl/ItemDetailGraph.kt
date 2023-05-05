@@ -27,6 +27,7 @@ object ViewItem : NavItem(
 fun NavGraphBuilder.itemDetailGraph(
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
     onMigrateClick: (ShareId, ItemId) -> Unit,
+    onCreateLoginFromAlias: (String) -> Unit,
     onBackClick: () -> Unit
 ) {
     composable(
@@ -43,6 +44,7 @@ fun NavGraphBuilder.itemDetailGraph(
             onUpClick = onBackClick,
             onEditClick = onEditClick,
             onMigrateClick = onMigrateClick,
+            onCreateLoginFromAlias = onCreateLoginFromAlias
         )
     }
 }

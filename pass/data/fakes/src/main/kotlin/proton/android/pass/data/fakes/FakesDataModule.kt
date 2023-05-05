@@ -25,6 +25,7 @@ import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
 import proton.android.pass.data.api.usecases.MarkVaultAsPrimary
 import proton.android.pass.data.api.usecases.MigrateItem
+import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -68,6 +69,7 @@ import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
 import proton.android.pass.data.fakes.usecases.TestItemSyncStatusRepository
 import proton.android.pass.data.fakes.usecases.TestMarkVaultAsPrimary
 import proton.android.pass.data.fakes.usecases.TestMigrateItem
+import proton.android.pass.data.fakes.usecases.TestMigrateVault
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
@@ -289,4 +291,9 @@ abstract class FakesDataModule {
     abstract fun bindClearUserData(
         impl: TestClearUserData
     ): ClearUserData
+
+    @Binds
+    abstract fun bindMigrateVault(
+        impl: TestMigrateVault
+    ): MigrateVault
 }

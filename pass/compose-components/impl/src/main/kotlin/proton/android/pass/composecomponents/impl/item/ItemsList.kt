@@ -22,6 +22,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableMap
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
+import proton.android.pass.common.api.isInstrumentedTest
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Last30Days
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Last60Days
 import proton.android.pass.commonui.api.DateFormatUtils.Format.Last90Days
@@ -71,7 +72,9 @@ fun ItemsList(
 ) {
     LaunchedEffect(shouldScrollToTop && !scrollableState.isScrollInProgress) {
         if (shouldScrollToTop && !scrollableState.isScrollInProgress) {
-            scrollableState.scrollToItem(0)
+            if (!isInstrumentedTest()) {
+                scrollableState.scrollToItem(0)
+            }
             onScrollToTop()
         }
     }

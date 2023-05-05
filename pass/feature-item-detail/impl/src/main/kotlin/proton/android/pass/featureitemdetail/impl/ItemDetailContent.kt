@@ -20,7 +20,8 @@ fun ItemDetailContent(
     uiState: ItemDetailScreenUiState,
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
-    onMigrateClick: (ShareId, ItemId) -> Unit
+    onMigrateClick: (ShareId, ItemId) -> Unit,
+    onCreateLoginFromAlias: (String) -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -44,7 +45,8 @@ fun ItemDetailContent(
                 moreInfoUiState = uiState.moreInfoUiState,
                 onUpClick = onUpClick,
                 onEditClick = onEditClick,
-                onMigrateClick = onMigrateClick
+                onMigrateClick = onMigrateClick,
+                onCreateLoginFromAlias = onCreateLoginFromAlias
             )
             ItemTypeUiState.Password -> {}
             else -> {}

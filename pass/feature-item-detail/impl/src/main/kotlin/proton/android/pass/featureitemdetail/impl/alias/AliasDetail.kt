@@ -47,6 +47,7 @@ fun AliasDetail(
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
     onMigrateClick: (ShareId, ItemId) -> Unit,
+    onCreateLoginFromAlias: (String) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     when (val state = uiState) {
@@ -127,7 +128,8 @@ fun AliasDetail(
                         mailboxes = state.mailboxes,
                         isLoading = state.isLoadingMailboxes,
                         onCopyAlias = { viewModel.onCopyAlias(it) },
-                        moreInfoUiState = moreInfoUiState
+                        moreInfoUiState = moreInfoUiState,
+                        onCreateLoginFromAlias = onCreateLoginFromAlias
                     )
                 }
                 ConfirmDeleteItemDialog(

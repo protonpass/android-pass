@@ -20,14 +20,16 @@ fun AliasSection(
     alias: String,
     mailboxes: PersistentList<AliasMailbox>,
     isLoading: Boolean,
-    onCopyAlias: (String) -> Unit
+    onCopyAlias: (String) -> Unit,
+    onCreateLoginFromAlias: (String) -> Unit
 ) {
     RoundedCornersColumn(
         modifier = modifier.fillMaxWidth()
     ) {
         AliasAddressRow(
             alias = alias,
-            onCopyAlias = { onCopyAlias(it) }
+            onCopyAlias = { onCopyAlias(it) },
+            onCreateLoginFromAlias = onCreateLoginFromAlias
         )
         if (!mailboxes.isEmpty() || isLoading) {
             Divider(color = PassTheme.colors.inputBorderNorm)
@@ -52,8 +54,10 @@ fun AliasSectionPreview(
             AliasSection(
                 alias = "myalias@myalias.com",
                 mailboxes = input.second.toPersistentList(),
-                isLoading = false
-            ) {}
+                isLoading = false,
+                onCopyAlias = {},
+                onCreateLoginFromAlias = {}
+            )
         }
     }
 }

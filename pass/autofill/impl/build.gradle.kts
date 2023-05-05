@@ -76,6 +76,8 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.featureAuth.impl)
+    implementation(projects.pass.featureSearchOptions.api)
+    implementation(projects.pass.featureSearchOptions.impl)
     implementation(projects.pass.featureItemCreate.impl)
     implementation(projects.pass.log.api)
     implementation(projects.pass.navigation.api)

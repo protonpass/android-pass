@@ -4,11 +4,14 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.navigation.NavGraphBuilder
+import proton.android.featuresearchoptions.impl.SortingBottomsheet
+import proton.android.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
+import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
@@ -53,10 +56,20 @@ fun NavGraphBuilder.autofillActivityGraph(
     )
     selectItemGraph(
         state = autofillAppState,
-        onCreateLoginClicked = { appNavigator.navigate(CreateLogin) },
-        onAutofillItemClicked = onAutofillSuccess,
-        onAutofillCancel = onAutofillCancel
+        onNavigate = {
+            when (it) {
+                SelectItemNavigation.AddItem -> appNavigator.navigate(CreateLogin)
+                SelectItemNavigation.Cancel -> onAutofillCancel()
+                is SelectItemNavigation.ItemSelected -> onAutofillSuccess(it.autofillMappings)
+                is SelectItemNavigation.SortingBottomsheet ->
+                    appNavigator.navigate(
+                        SortingBottomsheet,
+                        SortingBottomsheet.createNavRoute(it.searchSortingType)
+                    )
+            }
+        }
     )
+    sortingGraph { appNavigator.onBackClick() }
     createLoginGraph(
         initialCreateLoginUiState = InitialCreateLoginUiState(
             title = autofillAppState.title,

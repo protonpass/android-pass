@@ -146,11 +146,13 @@ internal fun HomeContent(
             }
 
             if (shouldShowItemListHeader(uiState)) {
+                val count = remember(uiState.homeListUiState.items) {
+                    uiState.homeListUiState.items.map { it.items }.flatten().count()
+                }
                 ItemListHeader(
                     showSearchResults = uiState.searchUiState.inSearchMode &&
                         uiState.searchUiState.searchQuery.isNotEmpty(),
-                    itemCount = uiState.homeListUiState.items.map { it.items }.flatten().count()
-                        .takeIf { !uiState.searchUiState.isProcessingSearch.value() },
+                    itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() },
                     sortingContent = {
                         SortingButton(
                             sortingType = uiState.homeListUiState.sortingType,

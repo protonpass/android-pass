@@ -8,16 +8,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.autofill.entities.AutofillAppState
-import proton.android.pass.autofill.entities.AutofillMappings
+import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SelectItemScreen(
     modifier: Modifier = Modifier,
     autofillAppState: AutofillAppState,
-    onItemSelected: (AutofillMappings) -> Unit,
-    onCreateLoginClicked: () -> Unit,
-    onClose: () -> Unit,
+    onNavigate: (SelectItemNavigation) -> Unit,
     viewModel: SelectItemViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -26,7 +24,7 @@ fun SelectItemScreen(
         viewModel.setInitialState(autofillAppState)
     }
 
-    OnItemSelectLaunchEffect(uiState.listUiState.itemClickedEvent, onItemSelected)
+    OnItemSelectLaunchEffect(uiState.listUiState.itemClickedEvent, onNavigate)
     SelectItemScreenContent(
         modifier = modifier,
         uiState = uiState,
@@ -38,17 +36,19 @@ fun SelectItemScreen(
         onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
         onEnterSearch = { viewModel.onEnterSearch() },
         onStopSearching = { viewModel.onStopSearching() },
-        onCreateLoginClicked = onCreateLoginClicked,
-        onClose = onClose
+        onScrollToTop = { viewModel.onScrollToTop() },
+        onNavigate = onNavigate
     )
 }
 
 @Composable
 private fun OnItemSelectLaunchEffect(
     event: AutofillItemClickedEvent,
-    onItemSelected: (AutofillMappings) -> Unit
+    onNavigate: (SelectItemNavigation) -> Unit
 ) {
     if (event is AutofillItemClickedEvent.Clicked) {
-        LaunchedEffect(Unit) { onItemSelected(event.autofillMappings) }
+        LaunchedEffect(Unit) {
+            onNavigate(SelectItemNavigation.ItemSelected(event.autofillMappings))
+        }
     }
 }

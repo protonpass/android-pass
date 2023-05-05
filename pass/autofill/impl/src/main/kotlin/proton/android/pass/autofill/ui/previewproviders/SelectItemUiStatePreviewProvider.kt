@@ -15,6 +15,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
@@ -37,7 +38,9 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                         ),
                         suggestionsForTitle = ""
                     ),
-                    shares = persistentMapOf()
+                    shares = persistentMapOf(),
+                    sortingType = SearchSortingType.MostRecent,
+                    shouldScrollToTop = false
                 ),
                 SearchUiState.Initial
             ),
@@ -59,7 +62,9 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                         ),
                         suggestionsForTitle = "some.website.local"
                     ),
-                    shares = persistentMapOf()
+                    shares = persistentMapOf(),
+                    sortingType = SearchSortingType.MostRecent,
+                    shouldScrollToTop = false
                 ),
                 SearchUiState.Initial
             ),
@@ -69,7 +74,9 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     isRefreshing = IsRefreshingState.NotRefreshing,
                     itemClickedEvent = AutofillItemClickedEvent.None,
                     items = SelectItemListItems.Initial,
-                    shares = persistentMapOf()
+                    shares = persistentMapOf(),
+                    sortingType = SearchSortingType.MostRecent,
+                    shouldScrollToTop = false
                 ),
                 SearchUiState(
                     searchQuery = "query",

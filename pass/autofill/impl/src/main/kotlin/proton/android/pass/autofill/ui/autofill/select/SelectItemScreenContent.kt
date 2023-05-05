@@ -95,7 +95,8 @@ internal fun SelectItemScreenContent(
             modifier = Modifier.padding(padding)
         ) {
             val count = remember(uiState.listUiState.items) {
-                uiState.listUiState.items.items.map { it.items }.flatten().count()
+                uiState.listUiState.items.items.map { it.items }.flatten().count() +
+                    uiState.listUiState.items.suggestions.count()
             }
             if (shouldShowItemListHeader(uiState)) {
                 ItemListHeader(

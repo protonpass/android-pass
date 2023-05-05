@@ -211,6 +211,7 @@ fun HomeScreen(
                         }
                     }
                     VaultOptionsBottomSheetContents(
+                        showMigrate = drawerUiState.shares.size > 1,
                         showDelete = showDelete,
                         onEdit = {
                             scope.launch {

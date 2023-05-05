@@ -108,9 +108,9 @@ class MigrateConfirmVaultViewModelTest {
         instance.state.test {
             val state = awaitItem()
             val eventCasted = state.event as Some<ConfirmMigrateEvent>
-            assertThat(eventCasted.value).isInstanceOf(ConfirmMigrateEvent.Migrated::class.java)
+            assertThat(eventCasted.value).isInstanceOf(ConfirmMigrateEvent.ItemMigrated::class.java)
 
-            val migratedEvent = eventCasted.value as ConfirmMigrateEvent.Migrated
+            val migratedEvent = eventCasted.value as ConfirmMigrateEvent.ItemMigrated
             assertThat(migratedEvent.itemId).isEqualTo(expectedItem.id)
             assertThat(migratedEvent.shareId).isEqualTo(expectedItem.shareId)
 

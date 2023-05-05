@@ -30,13 +30,10 @@ class AccountScreenTest {
 
     @Test
     fun accountScreenOnSignOutIsCalled() {
-        var isCalled = false
+        val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             AccountScreen(
-                onSubscriptionClick = {},
-                onUpgradeClick = {},
-                onSignOutClick = { isCalled = true },
-                onUpClick = {}
+                onNavigate = { if (it is AccountNavigation.SignOut) checker.call() }
             )
         }
         composeTestRule
@@ -46,18 +43,15 @@ class AccountScreenTest {
                 )
             )
             .performClick()
-        assert(isCalled)
+        assert(checker.isCalled)
     }
 
     @Test
     fun accountScreenOnBackIsCalled() {
-        var isCalled = false
+        val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             AccountScreen(
-                onSubscriptionClick = {},
-                onUpgradeClick = {},
-                onSignOutClick = {},
-                onUpClick = { isCalled = true }
+                onNavigate = { if (it is AccountNavigation.Back) checker.call() }
             )
         }
         composeTestRule
@@ -65,17 +59,14 @@ class AccountScreenTest {
                 composeTestRule.activity.getString(CompR.string.navigate_back_icon_content_description)
             )
             .performClick()
-        assert(isCalled)
+        assert(checker.isCalled)
     }
 
     @Test
     fun accountScreenOnDeleteOpensWebsite() {
         composeTestRule.setContent {
             AccountScreen(
-                onSubscriptionClick = {},
-                onUpgradeClick = {},
-                onSignOutClick = {},
-                onUpClick = {}
+                onNavigate = {}
             )
         }
         composeTestRule
@@ -92,10 +83,7 @@ class AccountScreenTest {
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             AccountScreen(
-                onSubscriptionClick = { checker.call() },
-                onUpgradeClick = {},
-                onSignOutClick = {},
-                onUpClick = {}
+                onNavigate = { if (it is AccountNavigation.Subscription) checker.call() }
             )
         }
         composeTestRule
@@ -103,6 +91,6 @@ class AccountScreenTest {
                 composeTestRule.activity.getString(R.string.manage_subscription_icon_content_description)
             )
             .performClick()
-        composeTestRule.waitUntil { checker.isCalled }
+        assert(checker.isCalled)
     }
 }

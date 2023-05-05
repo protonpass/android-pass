@@ -19,9 +19,7 @@ class ConfirmSignOutDialogTest {
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             ConfirmSignOutDialog(
-                show = true,
-                onDismiss = {},
-                onConfirm = { checker.call() }
+                onNavigate = { if (it is AccountNavigation.ConfirmSignOut) checker.call() }
             )
         }
         composeTestRule
@@ -35,9 +33,7 @@ class ConfirmSignOutDialogTest {
         val checker = CallChecker<Unit>()
         composeTestRule.setContent {
             ConfirmSignOutDialog(
-                show = true,
-                onDismiss = { checker.call() },
-                onConfirm = {}
+                onNavigate = { if (it is AccountNavigation.DismissDialog) checker.call() }
             )
         }
         composeTestRule

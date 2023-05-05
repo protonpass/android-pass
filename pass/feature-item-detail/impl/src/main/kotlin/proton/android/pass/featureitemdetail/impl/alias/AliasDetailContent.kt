@@ -25,6 +25,7 @@ fun AliasDetailContent(
     mailboxes: PersistentList<AliasMailbox>,
     isLoading: Boolean,
     onCopyAlias: (String) -> Unit,
+    onCreateLoginFromAlias: (String) -> Unit
 ) {
     Column(
         modifier = modifier.padding(horizontal = 16.dp),
@@ -39,7 +40,8 @@ fun AliasDetailContent(
             alias = (itemUiModel.itemType as ItemType.Alias).aliasEmail,
             mailboxes = mailboxes,
             isLoading = isLoading,
-            onCopyAlias = onCopyAlias
+            onCopyAlias = onCopyAlias,
+            onCreateLoginFromAlias = onCreateLoginFromAlias
         )
         NoteSection(
             text = itemUiModel.note,

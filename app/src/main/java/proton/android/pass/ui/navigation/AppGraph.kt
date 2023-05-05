@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.featuresearchoptions.impl.SortingBottomsheet
 import proton.android.featuresearchoptions.impl.SortingNavigation
 import proton.android.featuresearchoptions.impl.sortingGraph
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.featureaccount.impl.Account
@@ -362,7 +363,12 @@ fun NavGraphBuilder.appGraph(
                 route = MigrateSelectVault.createNavRouteForMigrateItem(shareId, itemId)
             )
         },
-
+        onCreateLoginFromAlias = { alias ->
+            appNavigator.navigate(
+                destination = CreateLogin,
+                route = CreateLogin.createNavRoute(username = alias.some()),
+            )
+        },
         onBackClick = { appNavigator.onBackClick() }
     )
 

@@ -25,10 +25,20 @@ import javax.inject.Inject
 @Suppress("NotImplementedDeclaration")
 class TestItemRepository @Inject constructor() : ItemRepository {
 
+    private var migrateItemResult: Result<Item> =
+        Result.failure(IllegalStateException("TestItemRepository.migrateItemResult not initialized"))
     private val observeItemListFlow: MutableSharedFlow<List<Item>> =
         MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
 
+    private val migrateItemMemory = mutableListOf<MigrateItemPayload>()
+
     fun sendObserveItemList(items: List<Item>) = observeItemListFlow.tryEmit(items)
+
+    fun getMigrateItemMemory(): List<MigrateItemPayload> = migrateItemMemory
+
+    fun setMigrateItemResult(value: Result<Item>) {
+        migrateItemResult = value
+    }
 
     override suspend fun createItem(
         userId: UserId,
@@ -158,6 +168,14 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         destination: Share,
         itemId: ItemId
     ): Item {
-        TODO("Not yet implemented")
+        migrateItemMemory.add(MigrateItemPayload(userId, source, destination, itemId))
+        return migrateItemResult.getOrThrow()
     }
+
+    data class MigrateItemPayload(
+        val userId: UserId,
+        val source: Share,
+        val destination: Share,
+        val itemId: ItemId
+    )
 }

@@ -41,10 +41,10 @@ data class MigrateSelectVaultUiState(
     val mode: MigrateMode
 ) {
     companion object {
-        val Initial = MigrateSelectVaultUiState(
+        fun Initial(mode: MigrateMode) = MigrateSelectVaultUiState(
             vaultList = persistentListOf(),
             event = None,
-            mode = MigrateMode.MigrateItem
+            mode = mode
         )
     }
 }

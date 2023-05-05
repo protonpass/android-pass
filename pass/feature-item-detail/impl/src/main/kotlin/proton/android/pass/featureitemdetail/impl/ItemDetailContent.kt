@@ -10,18 +10,12 @@ import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.featureitemdetail.impl.alias.AliasDetail
 import proton.android.pass.featureitemdetail.impl.login.LoginDetail
 import proton.android.pass.featureitemdetail.impl.note.NoteDetail
-import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
-import proton.pass.domain.ShareId
 
 @Composable
 fun ItemDetailContent(
     modifier: Modifier = Modifier,
     uiState: ItemDetailScreenUiState,
-    onUpClick: () -> Unit,
-    onEditClick: (ShareId, ItemId, ItemType) -> Unit,
-    onMigrateClick: (ShareId, ItemId) -> Unit,
-    onCreateLoginFromAlias: (String) -> Unit,
+    onNavigate: (ItemDetailNavigation) -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -31,22 +25,15 @@ fun ItemDetailContent(
         when (uiState.itemTypeUiState) {
             ItemTypeUiState.Login -> LoginDetail(
                 moreInfoUiState = uiState.moreInfoUiState,
-                onUpClick = onUpClick,
-                onEditClick = onEditClick,
-                onMigrateClick = onMigrateClick
+                onNavigate = onNavigate
             )
             ItemTypeUiState.Note -> NoteDetail(
                 moreInfoUiState = uiState.moreInfoUiState,
-                onUpClick = onUpClick,
-                onEditClick = onEditClick,
-                onMigrateClick = onMigrateClick
+                onNavigate = onNavigate
             )
             ItemTypeUiState.Alias -> AliasDetail(
                 moreInfoUiState = uiState.moreInfoUiState,
-                onUpClick = onUpClick,
-                onEditClick = onEditClick,
-                onMigrateClick = onMigrateClick,
-                onCreateLoginFromAlias = onCreateLoginFromAlias
+                onNavigate = onNavigate
             )
             ItemTypeUiState.Password -> {}
             else -> {}

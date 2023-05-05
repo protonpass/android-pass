@@ -81,6 +81,7 @@ fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
     onNavigate: (AppNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit,
+    onAuthPerformed: () -> Unit
 ) {
     homeGraph(
         onNavigateEvent = {
@@ -414,7 +415,10 @@ fun NavGraphBuilder.appGraph(
         navigation = {
             when (it) {
                 AuthNavigation.Back -> { onNavigate(AppNavigation.Finish) }
-                AuthNavigation.Success -> { appNavigator.onBackClick() }
+                AuthNavigation.Success -> {
+                    onAuthPerformed()
+                    appNavigator.onBackClick()
+                }
                 AuthNavigation.Dismissed -> { onNavigate(AppNavigation.Finish) }
                 AuthNavigation.Failed -> { appNavigator.onBackClick() }
             }

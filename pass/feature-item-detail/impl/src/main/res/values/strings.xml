@@ -11,6 +11,7 @@
     <string name="field_alias_title">Alias address</string>
     <string name="alias_copied_to_clipboard">Alias copied</string>
     <string name="alias_detail_field_mailboxes_title">Forwarding to</string>
+    <string name="alias_create_login_from_alias">Create login</string>
 
     <!-- Note details -->
     <string name="field_detail_note_title">Note</string>

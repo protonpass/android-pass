@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
@@ -63,6 +64,9 @@ class CreateLoginViewModel @Inject constructor(
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider
 ) {
+    private val initialUsername: Option<String> = savedStateHandle
+        .get<String>(CreateLoginDefaultUsernameArg.key)
+        .toOption()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -83,16 +87,22 @@ class CreateLoginViewModel @Inject constructor(
             }
         }
         aliasLocalItemState.update { initialContents.aliasItem.toOption() }
+
+        val username = if (initialContents.username != null) {
+            initialContents.username
+        } else if (initialContents.aliasItem?.aliasToBeCreated != null) {
+            initialContents.aliasItem.aliasToBeCreated
+        } else if (initialUsername is Some) {
+            initialUsername.value
+        } else {
+            currentValue.username
+        }
+
+        if (initialContents.aliasItem?.aliasToBeCreated?.isNotEmpty() == true) {
+            canUpdateUsernameState.update { false }
+        }
+
         loginItemState.update {
-            val username = initialContents.username
-                ?: if (initialContents.aliasItem?.aliasToBeCreated != null) {
-                    initialContents.aliasItem.aliasToBeCreated
-                } else {
-                    currentValue.username
-                }
-            if (initialContents.aliasItem?.aliasToBeCreated?.isNotEmpty() == true) {
-                canUpdateUsernameState.update { false }
-            }
             val packageInfoSet = if (initialContents.packageInfoUi != null) {
                 it.packageInfoSet.toMutableSet()
                     .apply { add(initialContents.packageInfoUi) }

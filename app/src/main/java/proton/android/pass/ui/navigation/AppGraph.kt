@@ -10,6 +10,7 @@ import proton.android.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.featureaccount.impl.Account
+import proton.android.pass.featureaccount.impl.AccountNavigation
 import proton.android.pass.featureaccount.impl.SignOutDialog
 import proton.android.pass.featureaccount.impl.accountGraph
 import proton.android.pass.featureauth.impl.Auth
@@ -63,7 +64,7 @@ import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
 import proton.android.pass.featurevault.impl.delete.DeleteVaultDialog
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
-import proton.android.pass.ui.CoreNavigation
+import proton.android.pass.ui.AppNavigation
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
@@ -74,8 +75,7 @@ import proton.pass.domain.ShareId
 @Suppress("LongParameterList", "LongMethod", "ComplexMethod")
 fun NavGraphBuilder.appGraph(
     appNavigator: AppNavigator,
-    coreNavigation: CoreNavigation,
-    finishActivity: () -> Unit,
+    onNavigate: (AppNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit,
 ) {
     homeGraph(
@@ -209,12 +209,16 @@ fun NavGraphBuilder.appGraph(
         onDismiss = { appNavigator.onBackClick() }
     )
     accountGraph(
-        onSubscriptionClick = { coreNavigation.onSubscription() },
-        onUpgradeClick = { coreNavigation.onUpgrade() },
-        onSignOutClick = { appNavigator.navigate(SignOutDialog) },
-        onDismissClick = { appNavigator.onBackClick() },
-        onConfirmSignOutClick = { coreNavigation.onSignOut(null) },
-        onUpClick = { appNavigator.onBackClick() }
+        onNavigate = {
+            when (it) {
+                AccountNavigation.Back -> appNavigator.onBackClick()
+                AccountNavigation.ConfirmSignOut -> onNavigate(AppNavigation.SignOut())
+                AccountNavigation.DismissDialog -> appNavigator.onBackClick()
+                AccountNavigation.SignOut -> appNavigator.navigate(SignOutDialog)
+                AccountNavigation.Subscription -> onNavigate(AppNavigation.Subscription)
+                AccountNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+            }
+        }
     )
     profileGraph(
         onAccountClick = { appNavigator.navigate(Account) },
@@ -363,14 +367,14 @@ fun NavGraphBuilder.appGraph(
     )
 
     authGraph(
-        onNavigateBack = finishActivity,
+        onNavigateBack = { onNavigate(AppNavigation.Finish) },
         onAuthSuccessful = { appNavigator.onBackClick() },
-        onAuthDismissed = finishActivity,
+        onAuthDismissed = { onNavigate(AppNavigation.Finish) },
         onAuthFailed = { appNavigator.onBackClick() }
     )
     onBoardingGraph(
         onOnBoardingFinished = { appNavigator.onBackClick() },
-        onNavigateBack = finishActivity
+        onNavigateBack = { onNavigate(AppNavigation.Finish) }
     )
     featureFlagsGraph()
 }

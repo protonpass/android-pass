@@ -51,19 +51,21 @@ class MainActivity : FragmentActivity() {
                     disableAutofill()
                     launcherViewModel.addAccount()
                 }
+
                 Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
                 StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
                 PrimaryExist -> {
-                    val coreNavigation = CoreNavigation(
-                        onSignIn = { launcherViewModel.signIn(it) },
-                        onSignOut = { launcherViewModel.signOut(it) },
-                        onRemove = { launcherViewModel.remove(it) },
-                        onSwitch = { launcherViewModel.switch(it) },
-                        onReport = { launcherViewModel.report() },
-                        onSubscription = { launcherViewModel.subscription() },
-                        onUpgrade = { launcherViewModel.upgrade() }
+                    PassApp(
+                        onNavigate = {
+                            when (it) {
+                                AppNavigation.Finish -> finish()
+                                AppNavigation.Report -> launcherViewModel.report()
+                                is AppNavigation.SignOut -> launcherViewModel.signOut(it.userId)
+                                AppNavigation.Subscription -> launcherViewModel.subscription()
+                                AppNavigation.Upgrade -> launcherViewModel.upgrade()
+                            }
+                        }
                     )
-                    PassApp(coreNavigation = coreNavigation, finishActivity = { finish() })
                 }
             }
         }

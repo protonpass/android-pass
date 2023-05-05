@@ -11,13 +11,9 @@ import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-@Suppress("LongParameterList")
 fun AccountScreen(
     modifier: Modifier = Modifier,
-    onSubscriptionClick: () -> Unit,
-    onUpgradeClick: () -> Unit,
-    onSignOutClick: () -> Unit,
-    onUpClick: () -> Unit,
+    onNavigate: (AccountNavigation) -> Unit,
     viewModel: AccountViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -25,16 +21,9 @@ fun AccountScreen(
     AccountContent(
         modifier = modifier,
         state = state,
-        onSignOutClick = onSignOutClick,
-        onUpClick = onUpClick,
-        onSubscriptionClick = {
-            onSubscriptionClick()
-        },
+        onNavigate = onNavigate,
         onDeleteAccountClick = {
             openWebsite(context, "https://account.proton.me/u/0/pass/account-password")
-        },
-        onUpgradeClick = {
-            onUpgradeClick()
         }
     )
 }

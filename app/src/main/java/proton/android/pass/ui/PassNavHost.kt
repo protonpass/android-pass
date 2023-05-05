@@ -20,9 +20,8 @@ import proton.android.pass.ui.navigation.appGraph
 fun PassNavHost(
     modifier: Modifier = Modifier,
     appNavigator: AppNavigator,
-    coreNavigation: CoreNavigation,
+    onNavigate: (AppNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit,
-    finishActivity: () -> Unit,
 ) {
     AnimatedNavHost(
         modifier = modifier,
@@ -31,8 +30,7 @@ fun PassNavHost(
     ) {
         appGraph(
             appNavigator = appNavigator,
-            coreNavigation = coreNavigation,
-            finishActivity = finishActivity,
+            onNavigate = onNavigate,
             dismissBottomSheet = dismissBottomSheet,
         )
     }

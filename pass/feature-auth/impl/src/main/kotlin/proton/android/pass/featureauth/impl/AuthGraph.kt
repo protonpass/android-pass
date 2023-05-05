@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 
-object Auth : NavItem(baseRoute = "auth")
+object Auth : NavItem(baseRoute = "auth", isTopLevel = true)
 
 sealed interface AuthNavigation {
     object Success : AuthNavigation

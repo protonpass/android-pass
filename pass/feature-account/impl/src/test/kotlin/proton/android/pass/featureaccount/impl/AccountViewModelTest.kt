@@ -9,12 +9,10 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.UserPlan
+import proton.android.pass.data.fakes.usecases.TestGetUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
-import proton.android.pass.test.TestPaymentManager
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
 
@@ -27,23 +25,18 @@ class AccountViewModelTest {
     private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
-    private lateinit var ffPreferencesRepository: FeatureFlagsPreferencesRepository
-    private lateinit var paymentManager: TestPaymentManager
 
     @Before
     fun setup() {
         observeCurrentUser = TestObserveCurrentUser()
         getUserPlan = TestGetUserPlan()
         snackbarDispatcher = TestSnackbarDispatcher()
-        ffPreferencesRepository = TestFeatureFlagsPreferenceRepository()
-        paymentManager = TestPaymentManager()
 
         instance = AccountViewModel(
-            ffPreferencesRepository = ffPreferencesRepository,
             observeCurrentUser = observeCurrentUser,
             getUserPlan = getUserPlan,
-            paymentManager = paymentManager,
             snackbarDispatcher = snackbarDispatcher,
+            getUpgradeInfo = TestGetUpgradeInfo()
         )
     }
 

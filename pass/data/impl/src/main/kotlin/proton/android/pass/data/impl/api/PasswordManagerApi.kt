@@ -27,6 +27,7 @@ import proton.android.pass.data.impl.responses.GetSharesResponse
 import proton.android.pass.data.impl.responses.LastEventIdResponse
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.responses.UpdateLastUsedTimeResponse
+import proton.android.pass.data.impl.responses.UserAccessResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -177,7 +178,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
 
     // User access
     @POST("$PREFIX/user/access")
-    suspend fun userAccess(): retrofit2.Response<okhttp3.ResponseBody>
+    suspend fun userAccess(): UserAccessResponse
 
     // Telemetry
     @POST("/data/v1/stats/multiple")

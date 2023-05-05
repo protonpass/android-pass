@@ -7,6 +7,7 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isRetryable
 import proton.android.pass.data.impl.api.PasswordManagerApi
+import proton.android.pass.data.impl.local.LocalPlanLimitsDataSource
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -22,7 +23,8 @@ interface SendUserAccessRequest {
 
 class SendUserAccessRequestImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val api: ApiProvider
+    private val api: ApiProvider,
+    private val localPlanLimitsDataSource: LocalPlanLimitsDataSource
 ) : SendUserAccessRequest {
     override suspend fun invoke(): SendUserAccessResult {
         val account = accountManager.getPrimaryAccount().firstOrNull()
@@ -32,7 +34,17 @@ class SendUserAccessRequestImpl @Inject constructor(
         }
 
         return runCatching {
-            api.get<PasswordManagerApi>(account.userId).invoke { userAccess() }.valueOrThrow
+            api.get<PasswordManagerApi>(account.userId)
+                .invoke { userAccess() }
+                .valueOrThrow
+                .also {
+                    localPlanLimitsDataSource.storePlanLimits(
+                        userId = account.userId,
+                        vaultLimit = it.accessResponse.planResponse.vaultLimit ?: -1,
+                        aliasLimit = it.accessResponse.planResponse.aliasLimit ?: -1,
+                        totpLimit = it.accessResponse.planResponse.totpLimit ?: -1
+                    )
+                }
         }.fold(
             onSuccess = {
                 PassLogger.i(TAG, "Successfully sent userAccess")

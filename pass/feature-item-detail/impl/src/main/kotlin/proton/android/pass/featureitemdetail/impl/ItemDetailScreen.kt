@@ -18,6 +18,7 @@ fun ItemDetailScreen(
     onUpClick: () -> Unit,
     onEditClick: (ShareId, ItemId, ItemType) -> Unit,
     onMigrateClick: (ShareId, ItemId) -> Unit,
+    onCreateLoginFromAlias: (String) -> Unit,
     viewModel: ItemDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -31,7 +32,8 @@ fun ItemDetailScreen(
         uiState = uiState,
         onUpClick = onUpClick,
         onEditClick = onEditClick,
-        onMigrateClick = onMigrateClick
+        onMigrateClick = onMigrateClick,
+        onCreateLoginFromAlias = onCreateLoginFromAlias
     )
 }
 

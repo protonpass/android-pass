@@ -7,6 +7,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.autofill.service.R
+import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.autofill.ui.previewproviders.SelectItemUiStatePreviewProvider
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -19,8 +20,9 @@ import proton.android.pass.composecomponents.impl.item.ItemsList
 fun SelectItemList(
     modifier: Modifier = Modifier,
     uiState: SelectItemUiState,
-    onCreateItemClick: () -> Unit,
-    onItemClicked: (ItemUiModel) -> Unit
+    onScrollToTop: () -> Unit,
+    onItemClicked: (ItemUiModel) -> Unit,
+    onNavigate: (SelectItemNavigation) -> Unit,
 ) {
     val searchUiState = uiState.searchUiState
     val listUiState = uiState.listUiState
@@ -29,7 +31,7 @@ fun SelectItemList(
         modifier = modifier,
         items = listUiState.items.items,
         shares = listUiState.shares,
-        shouldScrollToTop = false,
+        shouldScrollToTop = uiState.listUiState.shouldScrollToTop,
         highlight = searchUiState.searchQuery,
         isLoading = listUiState.isLoading,
         isProcessingSearch = searchUiState.isProcessingSearch,
@@ -39,14 +41,14 @@ fun SelectItemList(
         onRefresh = {},
         onItemClick = onItemClicked,
         onItemMenuClick = {},
-        onScrollToTop = {},
+        onScrollToTop = onScrollToTop,
         emptyContent = {
             if (searchUiState.inSearchMode) {
                 EmptySearchResults()
             } else {
                 EmptyList(
                     emptyListMessage = stringResource(id = R.string.error_credentials_not_found),
-                    onCreateItemClick = onCreateItemClick
+                    onCreateItemClick = { onNavigate(SelectItemNavigation.AddItem) }
                 )
             }
         },
@@ -74,7 +76,8 @@ fun SelectItemListPreview(
             SelectItemList(
                 uiState = input.second,
                 onItemClicked = {},
-                onCreateItemClick = {}
+                onScrollToTop = {},
+                onNavigate = {}
             )
         }
     }

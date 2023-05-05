@@ -8,6 +8,8 @@ import proton.android.pass.data.impl.local.LocalEventDataSource
 import proton.android.pass.data.impl.local.LocalEventDataSourceImpl
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.android.pass.data.impl.local.LocalItemDataSourceImpl
+import proton.android.pass.data.impl.local.LocalPlanLimitsDataSource
+import proton.android.pass.data.impl.local.LocalPlanLimitsDataSourceImpl
 import proton.android.pass.data.impl.local.LocalSearchEntryDataSource
 import proton.android.pass.data.impl.local.LocalSearchEntryDataSourceImpl
 import proton.android.pass.data.impl.local.LocalShareDataSource
@@ -38,4 +40,7 @@ abstract class DataLocalDataSourceModule {
 
     @Binds
     abstract fun bindLocalSearchEntryDataSource(impl: LocalSearchEntryDataSourceImpl): LocalSearchEntryDataSource
+
+    @Binds
+    abstract fun bindLocalPlanLimitsDataSource(impl: LocalPlanLimitsDataSourceImpl): LocalPlanLimitsDataSource
 }

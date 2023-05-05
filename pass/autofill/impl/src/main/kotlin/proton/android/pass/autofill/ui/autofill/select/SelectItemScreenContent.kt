@@ -1,6 +1,5 @@
 package proton.android.pass.autofill.ui.autofill.select
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -19,11 +18,8 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
-import proton.android.pass.composecomponents.impl.item.header.ItemListHeader
-import proton.android.pass.composecomponents.impl.item.header.SortingButton
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
-import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.pass.domain.ItemType
 
 @Composable
@@ -91,44 +87,21 @@ internal fun SelectItemScreenContent(
             )
         }
     ) { padding ->
-        Column(
-            modifier = Modifier.padding(padding)
-        ) {
-            val count = remember(uiState.listUiState.items) {
-                uiState.listUiState.items.items.map { it.items }.flatten().count() +
-                    uiState.listUiState.items.suggestions.count()
-            }
-            if (shouldShowItemListHeader(uiState)) {
-                ItemListHeader(
-                    showSearchResults = uiState.searchUiState.inSearchMode &&
-                        uiState.searchUiState.searchQuery.isNotEmpty(),
-                    itemCount = count.takeIf { !uiState.searchUiState.isProcessingSearch.value() },
-                    sortingContent = {
-                        SortingButton(
-                            sortingType = uiState.listUiState.sortingType,
-                            onSortingOptionsClick = {
-                                onNavigate(SelectItemNavigation.SortingBottomsheet(uiState.listUiState.sortingType))
-                            }
-                        )
-                    }
-                )
-            }
-
-            SelectItemList(
-                uiState = uiState,
-                onScrollToTop = onScrollToTop,
-                onItemClicked = {
-                    val item = it.itemType as? ItemType.Login ?: return@SelectItemList
-                    if (shouldAskForAssociation(item, packageInfo?.packageName, webDomain)) {
-                        itemClicked = it.toOption()
-                        showAssociateDialog = true
-                    } else {
-                        onItemClicked(it, false)
-                    }
-                },
-                onNavigate = onNavigate
-            )
-        }
+        SelectItemList(
+            modifier = Modifier.padding(padding),
+            uiState = uiState,
+            onScrollToTop = onScrollToTop,
+            onItemClicked = {
+                val item = it.itemType as? ItemType.Login ?: return@SelectItemList
+                if (shouldAskForAssociation(item, packageInfo?.packageName, webDomain)) {
+                    itemClicked = it.toOption()
+                    showAssociateDialog = true
+                } else {
+                    onItemClicked(it, false)
+                }
+            },
+            onNavigate = onNavigate
+        )
     }
 }
 
@@ -139,8 +112,3 @@ private fun shouldAskForAssociation(
 ): Boolean = !packageName.isNullOrBlank() &&
     !item.packageInfoSet.map { it.packageName.value }.contains(packageName) ||
     !webDomain.isNullOrBlank() && !item.websites.contains(webDomain)
-
-private fun shouldShowItemListHeader(uiState: SelectItemUiState) =
-    uiState.listUiState.items.items.isNotEmpty() &&
-        uiState.listUiState.isLoading == IsLoadingState.NotLoading &&
-        !uiState.searchUiState.isProcessingSearch.value()

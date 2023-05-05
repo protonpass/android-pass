@@ -10,20 +10,28 @@ import proton.pass.domain.VaultWithItemCount
 
 sealed interface ConfirmMigrateEvent {
     object Close : ConfirmMigrateEvent
-    data class Migrated(val shareId: ShareId, val itemId: ItemId) : ConfirmMigrateEvent
+    data class ItemMigrated(val shareId: ShareId, val itemId: ItemId) : ConfirmMigrateEvent
+    object AllItemsMigrated : ConfirmMigrateEvent
+}
+
+enum class MigrateMode {
+    MigrateItem,
+    MigrateAll
 }
 
 @Stable
 data class MigrateConfirmVaultUiState(
     val isLoading: IsLoadingState,
     val event: Option<ConfirmMigrateEvent>,
-    val vault: Option<VaultWithItemCount>
+    val vault: Option<VaultWithItemCount>,
+    val mode: MigrateMode
 ) {
     companion object {
-        val Initial = MigrateConfirmVaultUiState(
+        fun Initial(mode: MigrateMode) = MigrateConfirmVaultUiState(
             isLoading = IsLoadingState.Loading,
             event = None,
-            vault = None
+            vault = None,
+            mode = mode
         )
     }
 }

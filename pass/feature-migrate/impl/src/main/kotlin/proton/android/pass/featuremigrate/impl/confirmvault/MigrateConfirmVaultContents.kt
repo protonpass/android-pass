@@ -26,6 +26,11 @@ fun MigrateConfirmVaultContents(
     onCancel: () -> Unit,
     onConfirm: () -> Unit
 ) {
+    val title = when (state.mode) {
+        MigrateMode.MigrateItem -> stringResource(R.string.migrate_item_confirm_title_bottom_sheet)
+        MigrateMode.MigrateAll -> stringResource(R.string.migrate_all_items_confirm_title_bottom_sheet)
+    }
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -34,7 +39,7 @@ fun MigrateConfirmVaultContents(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            text = stringResource(R.string.migrate_item_confirm_title_bottom_sheet),
+            text = title,
             textAlign = TextAlign.Center,
             color = PassTheme.colors.textNorm
         )

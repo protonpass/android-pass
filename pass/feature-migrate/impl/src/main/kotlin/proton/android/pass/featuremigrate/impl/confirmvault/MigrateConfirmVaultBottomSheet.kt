@@ -29,8 +29,11 @@ fun MigrateConfirmVaultBottomSheet(
         val event = state.event
         if (event is Some) {
             when (val value = event.value) {
-                is ConfirmMigrateEvent.Migrated -> {
+                is ConfirmMigrateEvent.ItemMigrated -> {
                     navigation(MigrateNavigation.ItemMigrated(value.shareId, value.itemId))
+                }
+                is ConfirmMigrateEvent.AllItemsMigrated -> {
+                    navigation(MigrateNavigation.VaultMigrated)
                 }
                 ConfirmMigrateEvent.Close -> onCancel()
             }

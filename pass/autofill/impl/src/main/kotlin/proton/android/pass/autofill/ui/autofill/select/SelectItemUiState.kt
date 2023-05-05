@@ -11,6 +11,7 @@ import proton.android.pass.commonuimodels.api.ShareUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
+import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.pass.domain.ShareId
 
 @Immutable
@@ -31,7 +32,9 @@ data class SelectItemListUiState(
     val isRefreshing: IsRefreshingState,
     val itemClickedEvent: AutofillItemClickedEvent,
     val items: SelectItemListItems,
-    val shares: PersistentMap<ShareId, ShareUiModel>
+    val shares: PersistentMap<ShareId, ShareUiModel>,
+    val sortingType: SearchSortingType,
+    val shouldScrollToTop: Boolean,
 ) {
     companion object {
         val Loading = SelectItemListUiState(
@@ -39,7 +42,9 @@ data class SelectItemListUiState(
             isRefreshing = IsRefreshingState.NotRefreshing,
             itemClickedEvent = AutofillItemClickedEvent.None,
             items = SelectItemListItems.Initial,
-            shares = persistentMapOf()
+            shares = persistentMapOf(),
+            sortingType = SearchSortingType.MostRecent,
+            shouldScrollToTop = false
         )
     }
 }

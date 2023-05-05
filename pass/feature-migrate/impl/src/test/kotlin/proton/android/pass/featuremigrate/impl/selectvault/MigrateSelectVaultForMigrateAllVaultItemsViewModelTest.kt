@@ -10,15 +10,13 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
-import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
 
-class MigrateSelectVaultViewModelTest {
+class MigrateSelectVaultForMigrateAllVaultItemsViewModelTest {
 
     @get:Rule
     val dispatcher = MainDispatcherRule()
@@ -33,28 +31,32 @@ class MigrateSelectVaultViewModelTest {
             observeVaults = observeVaults,
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID.id)
-                set(MigrateModeArg.key, MigrateModeValue.SingleItem.name)
-                set(CommonOptionalNavArgId.ItemId.key, ITEM_ID.id)
+                set(MigrateModeArg.key, MODE.name)
             }
         )
     }
 
     @Test
-    fun `marks the current vault as not enabled`() = runTest {
+    fun `emits initial state`() = runTest {
+        instance.state.test {
+            assertThat(awaitItem()).isEqualTo(MigrateSelectVaultUiState.Initial(MigrateMode.MigrateAll))
+        }
+    }
+
+    @Test
+    fun `emits success when vault selected`() = runTest {
         val (currentVault, otherVault) = initialVaults()
         observeVaults.sendResult(Result.success(listOf(currentVault, otherVault)))
 
-        val expected = listOf(
-            VaultEnabledPair(
-                currentVault,
-                false
-            ),
-            VaultEnabledPair(otherVault, true)
-        )
+        instance.onVaultSelected(otherVault.vault.shareId)
         instance.state.test {
-            val item = awaitItem()
-            assertThat(item.vaultList).isEqualTo(expected)
-            assertThat(item.event.value()).isNull()
+            val event = awaitItem().event.value()
+            assertThat(event).isNotNull()
+            assertThat(event!!).isInstanceOf(SelectVaultEvent.VaultSelectedForMigrateAll::class.java)
+
+            val castedEvent = event as SelectVaultEvent.VaultSelectedForMigrateAll
+            assertThat(castedEvent.sourceShareId).isEqualTo(SHARE_ID)
+            assertThat(castedEvent.destinationShareId).isEqualTo(otherVault.vault.shareId)
         }
     }
 
@@ -82,7 +84,7 @@ class MigrateSelectVaultViewModelTest {
 
     companion object {
         private val SHARE_ID = ShareId("123")
-        private val ITEM_ID = ItemId("456")
-    }
 
+        private val MODE = MigrateModeValue.AllVaultItems
+    }
 }

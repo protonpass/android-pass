@@ -111,7 +111,7 @@ class AppViewModel @Inject constructor(
     private suspend fun shouldPerformAuth(): Boolean {
         val biometricLockState = preferenceRepository.getBiometricLockState().first()
         if (biometricLockState == BiometricLockState.Disabled) return false
-        
+
         val lastAuthTime = when (val time = authTimeHolder.getBiometryAuthTime().first()) {
             is Some -> time.value
             None -> {

@@ -24,11 +24,8 @@ import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
 fun AccountContent(
     modifier: Modifier = Modifier,
     state: AccountUiState,
-    onSubscriptionClick: () -> Unit,
-    onSignOutClick: () -> Unit,
-    onDeleteAccountClick: () -> Unit,
-    onUpgradeClick: () -> Unit,
-    onUpClick: () -> Unit
+    onNavigate: (AccountNavigation) -> Unit,
+    onDeleteAccountClick: () -> Unit
 ) {
     Scaffold(
         modifier = modifier,
@@ -39,11 +36,11 @@ fun AccountContent(
                     if (state.showUpgradeButton) {
                         UpgradeButton(
                             modifier = Modifier.padding(12.dp, 0.dp),
-                            onUpgradeClick = onUpgradeClick
+                            onUpgradeClick = { onNavigate(AccountNavigation.Upgrade) }
                         )
                     }
                 },
-                onUpClick = onUpClick
+                onUpClick = { onNavigate(AccountNavigation.Back) }
             )
         }
     ) { contentPadding ->
@@ -57,8 +54,8 @@ fun AccountContent(
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             AccountInfo(state = state)
-            ManageSubscription(onSubscriptionClick = onSubscriptionClick)
-            SignOut(onSignOutClick = onSignOutClick)
+            ManageSubscription(onSubscriptionClick = { onNavigate(AccountNavigation.Subscription) })
+            SignOut(onSignOutClick = { onNavigate(AccountNavigation.SignOut) })
             DeleteAccount(onDeleteAccountClick = onDeleteAccountClick)
             Text(
                 text = stringResource(R.string.account_permanently_delete_warning),

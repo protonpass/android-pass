@@ -44,6 +44,7 @@ import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
+import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ViewItem
 import proton.android.pass.featureitemdetail.impl.itemDetailGraph
 import proton.android.pass.featuremigrate.impl.MigrateConfirmVault
@@ -339,38 +340,50 @@ fun NavGraphBuilder.appGraph(
         }
     )
     itemDetailGraph(
-        onEditClick = { shareId: ShareId, itemId: ItemId, itemType: ItemType ->
-            val destination = when (itemType) {
-                is ItemType.Login -> EditLogin
-                is ItemType.Note -> EditNote
-                is ItemType.Alias -> EditAlias
-                is ItemType.Password -> null // Edit password does not exist yet
-            }
-            val route = when (itemType) {
-                is ItemType.Login -> EditLogin.createNavRoute(shareId, itemId)
-                is ItemType.Note -> EditNote.createNavRoute(shareId, itemId)
-                is ItemType.Alias -> EditAlias.createNavRoute(shareId, itemId)
-                is ItemType.Password -> null // Edit password does not exist yet
-            }
+        onNavigate = {
+            when (it) {
+                ItemDetailNavigation.Back -> {
+                    appNavigator.onBackClick()
+                }
 
-            if (destination != null && route != null) {
-                appNavigator.navigate(destination, route)
+                is ItemDetailNavigation.OnCreateLoginFromAlias -> {
+                    appNavigator.navigate(
+                        destination = CreateLogin,
+                        route = CreateLogin.createNavRoute(username = it.alias.some()),
+                        backDestination = Home
+                    )
+                }
+
+                is ItemDetailNavigation.OnEdit -> {
+                    val destination = when (it.itemType) {
+                        is ItemType.Login -> EditLogin
+                        is ItemType.Note -> EditNote
+                        is ItemType.Alias -> EditAlias
+                        is ItemType.Password -> null // Edit password does not exist yet
+                    }
+                    val route = when (it.itemType) {
+                        is ItemType.Login -> EditLogin.createNavRoute(it.shareId, it.itemId)
+                        is ItemType.Note -> EditNote.createNavRoute(it.shareId, it.itemId)
+                        is ItemType.Alias -> EditAlias.createNavRoute(it.shareId, it.itemId)
+                        is ItemType.Password -> null // Edit password does not exist yet
+                    }
+
+                    if (destination != null && route != null) {
+                        appNavigator.navigate(destination, route)
+                    }
+                }
+
+                is ItemDetailNavigation.OnMigrate -> {
+                    appNavigator.navigate(
+                        destination = MigrateSelectVault,
+                        route = MigrateSelectVault.createNavRouteForMigrateItem(
+                            shareId = it.shareId,
+                            itemId = it.itemId
+                        )
+                    )
+                }
             }
-        },
-        onMigrateClick = { shareId: ShareId, itemId: ItemId ->
-            appNavigator.navigate(
-                destination = MigrateSelectVault,
-                route = MigrateSelectVault.createNavRouteForMigrateItem(shareId, itemId)
-            )
-        },
-        onCreateLoginFromAlias = { alias ->
-            appNavigator.navigate(
-                destination = CreateLogin,
-                route = CreateLogin.createNavRoute(username = alias.some()),
-                backDestination = Home
-            )
-        },
-        onBackClick = { appNavigator.onBackClick() }
+        }
     )
 
     migrateGraph(
@@ -389,6 +402,7 @@ fun NavGraphBuilder.appGraph(
                         )
                     }
                 }
+
                 is MigrateNavigation.ItemMigrated -> {
                     dismissBottomSheet {
                         appNavigator.navigate(
@@ -398,9 +412,11 @@ fun NavGraphBuilder.appGraph(
                         )
                     }
                 }
+
                 MigrateNavigation.VaultMigrated -> {
                     dismissBottomSheet { appNavigator.onBackClick() }
                 }
+
                 is MigrateNavigation.VaultSelectedForMigrateAll -> {
                     dismissBottomSheet {
                         appNavigator.navigate(

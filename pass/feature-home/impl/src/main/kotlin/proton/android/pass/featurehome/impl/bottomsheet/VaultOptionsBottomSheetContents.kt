@@ -8,11 +8,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
@@ -25,22 +24,27 @@ import proton.android.pass.featurehome.impl.R
 @Composable
 fun VaultOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
+    showMigrate: Boolean,
     showDelete: Boolean,
     onEdit: () -> Unit,
     onMigrate: () -> Unit,
     onRemove: () -> Unit
 ) {
+    val items = mutableListOf(editVault(onEdit))
+    if (showMigrate) {
+        items.add(migrateVault(onMigrate))
+    }
+    if (showDelete) {
+        items.add(removeVault(onRemove))
+    }
+
     Column(modifier.bottomSheet()) {
         BottomSheetItemList(
-            items = if (showDelete) {
-                listOf(
-                    editVault(onEdit),
-                    migrateVault(onMigrate),
-                    removeVault(onRemove)
-                ).withDividers().toPersistentList()
+            items = if (items.size > 1) {
+                items.withDividers()
             } else {
-                persistentListOf(editVault(onEdit))
-            }
+                items
+            }.toPersistentList()
         )
     }
 }
@@ -100,16 +104,20 @@ private fun removeVault(onRemove: () -> Unit): BottomSheetItem =
         override val isDivider = false
     }
 
+class ThemeVaultOptionsInput :
+    ThemePairPreviewProvider<VaultOptionsInput>(VaultOptionsBottomSheetContentsPreviewProvider())
+
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 fun VaultOptionsBottomSheetContentsPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemeVaultOptionsInput::class) input: Pair<Boolean, VaultOptionsInput>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             VaultOptionsBottomSheetContents(
-                showDelete = input.second,
+                showDelete = input.second.showDelete,
+                showMigrate = input.second.showMigrate,
                 onEdit = {},
                 onMigrate = {},
                 onRemove = {}

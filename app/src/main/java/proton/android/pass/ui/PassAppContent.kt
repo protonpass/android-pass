@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import proton.android.pass.commonui.api.OnResumeCallback
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
@@ -39,6 +38,7 @@ fun PassAppContent(
     appUiState: AppUiState,
     onNavigate: (AppNavigation) -> Unit,
     onSnackbarMessageDelivered: () -> Unit,
+    onAuthPerformed: () -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -48,8 +48,8 @@ fun PassAppContent(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
     )
 
-    OnResumeCallback { isFirstTime ->
-        if (!isFirstTime) {
+    LaunchedEffect(appUiState.needsAuth) {
+        if (appUiState.needsAuth) {
             appNavigator.navigate(Auth)
         }
     }
@@ -86,6 +86,7 @@ fun PassAppContent(
                             modifier = Modifier.weight(1f),
                             appNavigator = appNavigator,
                             onNavigate = onNavigate,
+                            onAuthPerformed = onAuthPerformed,
                             dismissBottomSheet = { callback ->
                                 coroutineScope.launch {
                                     bottomSheetState.hide()

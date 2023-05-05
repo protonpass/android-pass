@@ -24,7 +24,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 fun SelectItemList(
     modifier: Modifier = Modifier,
     uiState: SelectItemUiState,
-    onScrollToTop: () -> Unit,
+    onScrolledToTop: () -> Unit,
     onItemClicked: (ItemUiModel) -> Unit,
     onNavigate: (SelectItemNavigation) -> Unit,
 ) {
@@ -45,7 +45,7 @@ fun SelectItemList(
         onRefresh = {},
         onItemClick = onItemClicked,
         onItemMenuClick = {},
-        onScrollToTop = onScrollToTop,
+        onScrollToTop = onScrolledToTop,
         emptyContent = {
             if (searchUiState.inSearchMode) {
                 EmptySearchResults()
@@ -106,7 +106,7 @@ fun SelectItemListPreview(
             SelectItemList(
                 uiState = input.second,
                 onItemClicked = {},
-                onScrollToTop = {},
+                onScrolledToTop = {},
                 onNavigate = {}
             )
         }

@@ -35,9 +35,8 @@ import proton.android.pass.ui.internal.rememberInternalDrawerState
 fun PassAppContent(
     modifier: Modifier = Modifier,
     appUiState: AppUiState,
-    coreNavigation: CoreNavigation,
+    onNavigate: (AppNavigation) -> Unit,
     onSnackbarMessageDelivered: () -> Unit,
-    finishActivity: () -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -77,8 +76,7 @@ fun PassAppContent(
                         PassNavHost(
                             modifier = Modifier.weight(1f),
                             appNavigator = appNavigator,
-                            coreNavigation = coreNavigation,
-                            finishActivity = finishActivity,
+                            onNavigate = onNavigate,
                             dismissBottomSheet = { callback ->
                                 coroutineScope.launch {
                                     bottomSheetState.hide()

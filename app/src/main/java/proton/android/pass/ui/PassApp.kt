@@ -20,8 +20,7 @@ import proton.android.pass.preferences.ThemePreference
 @Composable
 fun PassApp(
     modifier: Modifier = Modifier,
-    coreNavigation: CoreNavigation,
-    finishActivity: () -> Unit,
+    onNavigate: (AppNavigation) -> Unit,
     appViewModel: AppViewModel = hiltViewModel()
 ) {
 
@@ -44,9 +43,8 @@ fun PassApp(
                     .systemBarsPadding()
                     .imePadding(),
                 appUiState = appUiState,
-                coreNavigation = coreNavigation,
-                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
-                finishActivity = finishActivity
+                onNavigate = onNavigate,
+                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() }
             )
         }
     }

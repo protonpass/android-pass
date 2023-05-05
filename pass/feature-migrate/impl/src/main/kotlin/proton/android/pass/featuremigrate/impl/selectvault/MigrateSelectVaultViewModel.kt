@@ -22,6 +22,7 @@ import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
@@ -100,7 +101,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
 
     private fun getNavMode(): MigrateModeValue = MigrateModeValue.valueOf(getNavArg(MigrateModeArg.key))
     private fun getSourceShareId(): ShareId = ShareId(getNavArg(CommonNavArgId.ShareId.key))
-    private fun getItemId(): ItemId = ItemId(getNavArg(CommonNavArgId.ItemId.key))
+    private fun getItemId(): ItemId = ItemId(getNavArg(CommonOptionalNavArgId.ItemId.key))
 
     private fun getNavArg(name: String): String =
         savedStateHandle.get<String>(name)

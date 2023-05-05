@@ -4,14 +4,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
@@ -38,22 +42,30 @@ fun AliasAddressRow(
             .clickable { onCopyAlias(alias) }
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(16.dp)
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
             contentDescription = stringResource(R.string.alias_address_icon_content_description),
             tint = PassTheme.colors.aliasInteractionNorm
         )
-        Column(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            SectionTitle(text = stringResource(R.string.field_alias_title))
-            SectionSubtitle(text = alias.asAnnotatedString())
+        Column {
+            SectionTitle(
+                modifier = Modifier.padding(start = 8.dp),
+                text = stringResource(R.string.field_alias_title)
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            SectionSubtitle(
+                modifier = Modifier.padding(start = 8.dp),
+                text = alias.asAnnotatedString()
+            )
             Text(
                 modifier = Modifier
+                    .clip(RoundedCornerShape(8.dp))
                     .clickable { onCreateLoginFromAlias(alias) }
-                    .padding(),
+                    .padding(8.dp),
                 text = stringResource(R.string.alias_create_login_from_alias),
                 color = PassTheme.colors.aliasInteractionNorm,
                 textDecoration = TextDecoration.Underline

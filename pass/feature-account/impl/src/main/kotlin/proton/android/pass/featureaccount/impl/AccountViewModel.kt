@@ -10,26 +10,23 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
-import me.proton.core.payment.domain.PaymentManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.usecases.GetUpgradeInfo
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.UserPlan
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlags
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    ffPreferencesRepository: FeatureFlagsPreferencesRepository,
     observeCurrentUser: ObserveCurrentUser,
+    getUpgradeInfo: GetUpgradeInfo,
     private val getUserPlan: GetUserPlan,
-    private val paymentManager: PaymentManager,
-    private val snackbarDispatcher: SnackbarDispatcher
+    private val snackbarDispatcher: SnackbarDispatcher,
 ) : ViewModel() {
 
     private val currentUser = observeCurrentUser()
@@ -46,8 +43,8 @@ class AccountViewModel @Inject constructor(
     val state: StateFlow<AccountUiState> = combine(
         currentUser.asLoadingResult(),
         userPlan.asLoadingResult(),
-        ffPreferencesRepository.get<Boolean>(FeatureFlags.IAP_ENABLED)
-    ) { userResult, userPlanResult, iapEnabled ->
+        getUpgradeInfo().asLoadingResult()
+    ) { userResult, userPlanResult, upgradeInfoResult ->
         val plan = when (userPlanResult) {
             LoadingResult.Loading -> PlanSection.Loading
             is LoadingResult.Error -> {
@@ -61,22 +58,25 @@ class AccountViewModel @Inject constructor(
                 is UserPlan.Paid -> PlanSection.Data(planName = plan.humanReadableName())
             }
         }
-        val isUpgradeAvailable = paymentManager.isUpgradeAvailable()
-        val isPaid = (userPlanResult as? LoadingResult.Success)?.data is UserPlan.Paid
+        val showUpgradeButton = when (upgradeInfoResult) {
+            is LoadingResult.Error -> false
+            LoadingResult.Loading -> false
+            is LoadingResult.Success -> upgradeInfoResult.data.isUpgradeAvailable
+        }
         when (userResult) {
             LoadingResult.Loading -> AccountUiState.Initial
             is LoadingResult.Error -> AccountUiState(
                 email = null,
                 plan = PlanSection.Hide,
                 isLoadingState = IsLoadingState.NotLoading,
-                showUpgradeButton = iapEnabled
+                showUpgradeButton = showUpgradeButton
             )
 
             is LoadingResult.Success -> AccountUiState(
                 email = userResult.data.email,
                 plan = plan,
                 isLoadingState = IsLoadingState.NotLoading,
-                showUpgradeButton = iapEnabled && isUpgradeAvailable && !isPaid
+                showUpgradeButton = showUpgradeButton
             )
         }
     }

@@ -392,6 +392,7 @@ fun NavGraphBuilder.appGraph(
                                 shareId = it.sourceShareId,
                                 destShareId = it.destShareId
                             ),
+                            backDestination = Home
                         )
                     }
                 }

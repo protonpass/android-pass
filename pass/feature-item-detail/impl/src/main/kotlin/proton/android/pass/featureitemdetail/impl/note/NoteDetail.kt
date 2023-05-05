@@ -24,15 +24,14 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
+import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
-import proton.pass.domain.ItemId
 import proton.pass.domain.ItemState
 import proton.pass.domain.ItemType
-import proton.pass.domain.ShareId
 
 @OptIn(
     ExperimentalLifecycleComposeApi::class,
@@ -44,18 +43,16 @@ fun NoteDetail(
     modifier: Modifier = Modifier,
     moreInfoUiState: MoreInfoUiState,
     viewModel: NoteDetailViewModel = hiltViewModel(),
-    onUpClick: () -> Unit,
-    onEditClick: (ShareId, ItemId, ItemType) -> Unit,
-    onMigrateClick: (ShareId, ItemId) -> Unit,
+    onNavigate: (ItemDetailNavigation) -> Unit,
 ) {
     val uiState by viewModel.state.collectAsStateWithLifecycle()
     when (val state = uiState) {
         NoteDetailUiState.NotInitialised -> {}
-        NoteDetailUiState.Error -> LaunchedEffect(Unit) { onUpClick() }
+        NoteDetailUiState.Error -> LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
         is NoteDetailUiState.Success -> {
             var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
             if (state.isItemSentToTrash || state.isPermanentlyDeleted || state.isRestoredFromTrash) {
-                LaunchedEffect(Unit) { onUpClick() }
+                LaunchedEffect(Unit) { onNavigate(ItemDetailNavigation.Back) }
             }
             val scope = rememberCoroutineScope()
             val bottomSheetState = rememberModalBottomSheetState(
@@ -68,8 +65,15 @@ fun NoteDetail(
                     when (state.itemUiModel.state) {
                         ItemState.Active.value -> TopBarOptionsBottomSheetContents(
                             onMigrate = {
-                                scope.launch { bottomSheetState.hide() }
-                                onMigrateClick(state.itemUiModel.shareId, state.itemUiModel.id)
+                                scope.launch {
+                                    bottomSheetState.hide()
+                                    onNavigate(
+                                        ItemDetailNavigation.OnMigrate(
+                                            shareId = state.itemUiModel.shareId,
+                                            itemId = state.itemUiModel.id
+                                        )
+                                    )
+                                }
                             },
                             onMoveToTrash = {
                                 scope.launch { bottomSheetState.hide() }
@@ -102,12 +106,14 @@ fun NoteDetail(
                             actionColor = PassTheme.colors.noteInteractionNormMajor1,
                             iconColor = PassTheme.colors.noteInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor2,
-                            onUpClick = onUpClick,
+                            onUpClick = { onNavigate(ItemDetailNavigation.Back) },
                             onEditClick = {
-                                onEditClick(
-                                    state.itemUiModel.shareId,
-                                    state.itemUiModel.id,
-                                    state.itemUiModel.itemType
+                                onNavigate(
+                                    ItemDetailNavigation.OnEdit(
+                                        shareId = state.itemUiModel.shareId,
+                                        itemId = state.itemUiModel.id,
+                                        itemType = state.itemUiModel.itemType
+                                    )
                                 )
                             },
                             onOptionsClick = {

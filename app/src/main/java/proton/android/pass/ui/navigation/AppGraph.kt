@@ -367,6 +367,7 @@ fun NavGraphBuilder.appGraph(
             appNavigator.navigate(
                 destination = CreateLogin,
                 route = CreateLogin.createNavRoute(username = alias.some()),
+                backDestination = Home
             )
         },
         onBackClick = { appNavigator.onBackClick() }

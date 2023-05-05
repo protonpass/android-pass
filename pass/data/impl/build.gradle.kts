@@ -87,6 +87,7 @@ dependencies {
     implementation(projects.pass.data.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
+    implementation(projects.pass.preferences.api)
     implementation(projects.pass.protos)
 
     testImplementation(libs.core.test.kotlin)

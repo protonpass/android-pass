@@ -32,7 +32,7 @@ internal fun SelectItemScreenContent(
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
     onStopSearching: () -> Unit,
-    onScrollToTop: () -> Unit,
+    onScrolledToTop: () -> Unit,
     onNavigate: (SelectItemNavigation) -> Unit
 ) {
     var showAssociateDialog by remember { mutableStateOf(false) }
@@ -90,7 +90,7 @@ internal fun SelectItemScreenContent(
         SelectItemList(
             modifier = Modifier.padding(padding),
             uiState = uiState,
-            onScrollToTop = onScrollToTop,
+            onScrolledToTop = onScrolledToTop,
             onItemClicked = {
                 val item = it.itemType as? ItemType.Login ?: return@SelectItemList
                 if (shouldAskForAssociation(item, packageInfo?.packageName, webDomain)) {

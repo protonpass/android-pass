@@ -36,7 +36,7 @@ fun SelectItemScreen(
         onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
         onEnterSearch = { viewModel.onEnterSearch() },
         onStopSearching = { viewModel.onStopSearching() },
-        onScrollToTop = { viewModel.onScrollToTop() },
+        onScrolledToTop = { viewModel.onScrolledToTop() },
         onNavigate = onNavigate
     )
 }

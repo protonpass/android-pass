@@ -8,6 +8,8 @@ import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.impl.db.entities.ShareEntity
 
+private const val SHARE_TYPE_VAULT = 1
+
 @Dao
 abstract class SharesDao : BaseDao<ShareEntity>() {
     @Query(
@@ -69,6 +71,16 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         """
     )
     abstract suspend fun countShares(userId: String): Int
+
+    @Query(
+        """
+        SELECT COUNT(*) 
+        FROM ${ShareEntity.TABLE}
+        WHERE ${ShareEntity.Columns.USER_ID} = :userId
+          AND ${ShareEntity.Columns.SHARE_TYPE} = $SHARE_TYPE_VAULT
+        """
+    )
+    abstract fun observeVaultCount(userId: String): Flow<Int>
 
     @Query(
         """

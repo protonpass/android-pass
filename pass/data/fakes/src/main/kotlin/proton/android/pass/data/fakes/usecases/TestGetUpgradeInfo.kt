@@ -16,4 +16,16 @@ class TestGetUpgradeInfo @Inject constructor() : GetUpgradeInfo {
     }
 
     override fun invoke(): Flow<UpgradeInfo> = upgradeInfo
+
+    companion object {
+        val DEFAULT = UpgradeInfo(
+            isUpgradeAvailable = false,
+            totalVaults = 0,
+            vaultLimit = 0,
+            totalAlias = 0,
+            aliasLimit = 0,
+            totalTotp = 0,
+            totpLimit = 0
+        )
+    }
 }

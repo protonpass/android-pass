@@ -20,6 +20,7 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
@@ -29,6 +30,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashSt
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.DeleteItem
+import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
@@ -68,6 +70,7 @@ class LoginDetailViewModel @Inject constructor(
     private val trashItem: TrashItem,
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
+    private val getItemByAliasEmail: GetItemByAliasEmail,
     private val telemetryManager: TelemetryManager,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle,
@@ -107,6 +110,8 @@ class LoginDetailViewModel @Inject constructor(
             }
 
             val itemContents = details.item.itemType as ItemType.Login
+            val alias = getAliasForItem(itemContents)
+
             val decryptedTotpUri = encryptionContextProvider.withEncryptionContext {
                 decrypt(itemContents.primaryTotp)
             }
@@ -121,7 +126,8 @@ class LoginDetailViewModel @Inject constructor(
                                 item = details.item,
                                 totp = totp,
                                 vault = details.vault,
-                                hasMoreThanOneVault = details.hasMoreThanOneVault
+                                hasMoreThanOneVault = details.hasMoreThanOneVault,
+                                linkedAlias = alias
                             )
                         )
                     }
@@ -132,7 +138,8 @@ class LoginDetailViewModel @Inject constructor(
                             item = details.item,
                             totp = None,
                             vault = details.vault,
-                            hasMoreThanOneVault = details.hasMoreThanOneVault
+                            hasMoreThanOneVault = details.hasMoreThanOneVault,
+                            linkedAlias = alias
                         )
                     )
                 )
@@ -144,7 +151,8 @@ class LoginDetailViewModel @Inject constructor(
         val item: Item,
         val totp: Option<TotpManager.TotpWrapper>,
         val vault: Vault,
-        val hasMoreThanOneVault: Boolean
+        val hasMoreThanOneVault: Boolean,
+        val linkedAlias: Option<LinkedAliasItem>
     )
 
     val uiState: StateFlow<LoginDetailUiState> = combineN(
@@ -178,6 +186,7 @@ class LoginDetailViewModel @Inject constructor(
                     LoginDetailUiState.Success(
                         itemUiModel = details.item.toUiModel(this),
                         vault = vault,
+                        linkedAlias = details.linkedAlias,
                         passwordState = password,
                         totpUiState = details.totp
                             .map { TotpUiState(it.code, it.remainingSeconds, it.totalSeconds) }
@@ -295,6 +304,26 @@ class LoginDetailViewModel @Inject constructor(
         encryptionContextProvider.withEncryptionContext {
             PasswordState.Concealed(encrypt(""))
         }
+
+    private suspend fun getAliasForItem(item: ItemType.Login): Option<LinkedAliasItem> {
+        val username = item.username
+        if (username.isEmpty()) return None
+
+        return runCatching { getItemByAliasEmail(aliasEmail = username) }
+            .fold(
+                onSuccess = {
+                    if (it == null) {
+                        None
+                    } else {
+                        Some(LinkedAliasItem(shareId = it.shareId, itemId = it.id))
+                    }
+                },
+                onFailure = {
+                    PassLogger.w(TAG, it, "Error fetching alias for item")
+                    None
+                }
+            )
+    }
 
     companion object {
         private const val TAG = "LoginDetailViewModel"

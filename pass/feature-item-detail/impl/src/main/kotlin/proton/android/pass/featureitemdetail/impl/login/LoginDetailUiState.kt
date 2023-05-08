@@ -1,7 +1,10 @@
 package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.runtime.Stable
+import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.pass.domain.ItemId
+import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 
 sealed interface LoginDetailUiState {
@@ -18,6 +21,7 @@ sealed interface LoginDetailUiState {
         val vault: Vault?,
         val passwordState: PasswordState,
         val totpUiState: TotpUiState?,
+        val linkedAlias: Option<LinkedAliasItem>,
         val isLoading: Boolean,
         val isItemSentToTrash: Boolean,
         val isPermanentlyDeleted: Boolean,
@@ -30,4 +34,10 @@ data class TotpUiState(
     val code: String,
     val remainingSeconds: Int,
     val totalSeconds: Int
+)
+
+@Stable
+data class LinkedAliasItem(
+    val shareId: ShareId,
+    val itemId: ItemId
 )

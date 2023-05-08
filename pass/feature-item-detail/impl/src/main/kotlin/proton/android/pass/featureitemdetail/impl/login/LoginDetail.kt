@@ -153,6 +153,7 @@ fun LoginDetail(
                             .verticalScroll(rememberScrollState()),
                         itemUiModel = state.itemUiModel,
                         vault = state.vault,
+                        showViewAlias = state.linkedAlias.isNotEmpty(),
                         passwordState = state.passwordState,
                         totpUiState = state.totpUiState,
                         moreInfoUiState = moreInfoUiState,
@@ -167,6 +168,16 @@ fun LoginDetail(
                         },
                         onCopyTotpClick = {
                             viewModel.copyTotpCodeToClipboard(it)
+                        },
+                        onGoToAliasClick = {
+                            state.linkedAlias.map {
+                                onNavigate(
+                                    ItemDetailNavigation.OnViewItem(
+                                        shareId = it.shareId,
+                                        itemId = it.itemId,
+                                    )
+                                )
+                            }
                         }
                     )
                 }

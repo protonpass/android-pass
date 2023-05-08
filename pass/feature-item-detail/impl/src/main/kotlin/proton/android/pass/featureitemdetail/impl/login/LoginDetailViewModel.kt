@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -118,8 +119,11 @@ class LoginDetailViewModel @Inject constructor(
 
             if (decryptedTotpUri.isNotEmpty()) {
                 observeTotpFromUri(decryptedTotpUri)
-                    .map { totpFlow -> totpFlow.map { it.toOption() } }
-                    .getOrDefault(flowOf(None))
+                    .map(TotpManager.TotpWrapper::toOption)
+                    .catch { e ->
+                        PassLogger.w(TAG, e, "Error observing totp")
+                        emit(None)
+                    }
                     .map { totp ->
                         LoadingResult.Success(
                             LoginItemInfo(

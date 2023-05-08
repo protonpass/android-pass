@@ -17,7 +17,9 @@ fun MainLoginSection(
     username: String,
     passwordState: PasswordState,
     totpUiState: TotpUiState?,
+    showViewAlias: Boolean,
     onUsernameClick: () -> Unit,
+    onGoToAliasClick: () -> Unit,
     onTogglePasswordClick: () -> Unit,
     onCopyPasswordClick: () -> Unit,
     onCopyTotpClick: (String) -> Unit,
@@ -27,7 +29,9 @@ fun MainLoginSection(
     ) {
         LoginUsernameRow(
             username = username,
-            onUsernameClick = onUsernameClick
+            showViewAlias = showViewAlias,
+            onUsernameClick = onUsernameClick,
+            onGoToAliasClick = onGoToAliasClick
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
         LoginPasswordRow(
@@ -57,10 +61,12 @@ fun MainLoginSectionPreview(
                 username = input.second.username,
                 passwordState = input.second.passwordState,
                 totpUiState = input.second.totpUiState,
+                showViewAlias = input.second.showViewAlias,
                 onUsernameClick = {},
                 onTogglePasswordClick = {},
                 onCopyPasswordClick = {},
-                onCopyTotpClick = {}
+                onCopyTotpClick = {},
+                onGoToAliasClick = {}
             )
         }
     }

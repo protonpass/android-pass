@@ -14,11 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.common.api.Option
-import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.featureitemcreate.impl.R
-import proton.pass.domain.ShareId
 
 @OptIn(
     ExperimentalLifecycleComposeApi::class
@@ -28,12 +25,7 @@ fun CreateLoginScreen(
     modifier: Modifier = Modifier,
     initialContents: InitialCreateLoginUiState? = null,
     showCreateAliasButton: Boolean = true,
-    onClose: () -> Unit,
-    onSuccess: (ItemUiModel) -> Unit,
-    onScanTotp: () -> Unit,
-    onCreateAlias: (ShareId, Option<String>) -> Unit,
-    onGeneratePasswordClick: () -> Unit,
-    onUpgrade: () -> Unit,
+    onNavigate: (BaseLoginNavigation) -> Unit,
     viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
     LaunchedEffect(initialContents) {
@@ -48,7 +40,7 @@ fun CreateLoginScreen(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
-            onClose()
+            onNavigate(BaseLoginNavigation.Close)
         }
     }
     BackHandler {
@@ -73,23 +65,20 @@ fun CreateLoginScreen(
             onUpClick = onExit,
             onSuccess = { _, _, item ->
                 viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.LoginCreated)
-                onSuccess(item)
+                onNavigate(BaseLoginNavigation.LoginCreated(item))
             },
             onSubmit = { viewModel.createItem() },
-            onTitleChange = { viewModel.onTitleChange(it) },
-            onUsernameChange = { viewModel.onUsernameChange(it) },
-            onPasswordChange = { viewModel.onPasswordChange(it) },
+            onTitleChange = viewModel::onTitleChange,
+            onUsernameChange = viewModel::onUsernameChange,
+            onPasswordChange = viewModel::onPasswordChange,
             onWebsiteChange = onWebsiteChange,
-            onNoteChange = { viewModel.onNoteChange(it) },
-            onCreateAlias = onCreateAlias,
-            onRemoveAliasClick = { viewModel.onRemoveAlias() },
-            onVaultSelect = { viewModel.changeVault(it) },
+            onNoteChange = viewModel::onNoteChange,
+            onRemoveAliasClick = viewModel::onRemoveAlias,
+            onVaultSelect = viewModel::changeVault,
             onLinkedAppDelete = {},
             onTotpChange = viewModel::onTotpChange,
             onPasteTotpClick = viewModel::onPasteTotp,
-            onScanTotpClick = onScanTotp,
-            onGeneratePasswordClick = onGeneratePasswordClick,
-            onUpgrade = onUpgrade
+            onNavigate = onNavigate
         )
 
         ConfirmCloseDialog(
@@ -100,7 +89,7 @@ fun CreateLoginScreen(
             onConfirm = {
                 showConfirmDialog = false
                 viewModel.onClose()
-                onClose()
+                onNavigate(BaseLoginNavigation.Close)
             }
         )
     }

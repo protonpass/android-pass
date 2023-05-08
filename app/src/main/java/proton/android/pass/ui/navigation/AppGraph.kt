@@ -382,6 +382,13 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
                 }
+
+                is ItemDetailNavigation.OnViewItem -> {
+                    appNavigator.navigate(
+                        destination = ViewItem,
+                        route = ViewItem.createNavRoute(it.shareId, it.itemId)
+                    )
+                }
             }
         }
     )

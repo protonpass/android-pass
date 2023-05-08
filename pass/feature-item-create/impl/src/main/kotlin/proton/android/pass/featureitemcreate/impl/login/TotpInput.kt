@@ -50,7 +50,7 @@ internal fun TotpInput(
         leadingIcon = {
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
-                contentDescription = "",
+                contentDescription = stringResource(R.string.mfa_icon_content_description),
                 tint = ProtonTheme.colors.iconWeak
             )
         },

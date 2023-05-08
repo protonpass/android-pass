@@ -37,6 +37,7 @@ import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.RefreshContent
@@ -90,6 +91,7 @@ import proton.android.pass.data.impl.usecases.ObserveAllSharesImpl
 import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
+import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
 import proton.android.pass.data.impl.usecases.RefreshContentImpl
@@ -273,4 +275,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindGetItemByAliasEmail(impl: GetItemByAliasEmailImpl): GetItemByAliasEmail
+
+    @Binds
+    abstract fun bindObserveMFACount(impl: ObserveMFACountImpl): ObserveMFACount
 }

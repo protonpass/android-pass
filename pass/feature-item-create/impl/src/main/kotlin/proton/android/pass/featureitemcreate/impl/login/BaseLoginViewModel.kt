@@ -188,7 +188,8 @@ abstract class BaseLoginViewModel(
             primaryEmail = loginItemWrapper.primaryEmail,
             aliasItem = loginItemWrapper.aliasItem.value(),
             showVaultSelector = showVaultSelector,
-            hasUserEditedContent = hasUserEditedContent
+            hasUserEditedContent = hasUserEditedContent,
+            hasReachedTotpLimit = false
         )
     }
         .stateIn(

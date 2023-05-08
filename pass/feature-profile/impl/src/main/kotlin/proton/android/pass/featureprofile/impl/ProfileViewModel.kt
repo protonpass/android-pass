@@ -21,12 +21,9 @@ import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
-import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToStartError
@@ -38,7 +35,6 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
-import proton.pass.domain.ItemType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -49,9 +45,8 @@ class ProfileViewModel @Inject constructor(
     private val clipboardManager: ClipboardManager,
     private val snackbarDispatcher: SnackbarDispatcher,
     private val appConfig: AppConfig,
-    encryptionContextProvider: EncryptionContextProvider,
     observeItemCount: ObserveItemCount,
-    observeActiveItems: ObserveActiveItems
+    observeMFACount: ObserveMFACount
 ) : ViewModel() {
 
     private val biometricLockState = preferencesRepository
@@ -62,13 +57,6 @@ class ProfileViewModel @Inject constructor(
         .getAutofillStatus()
         .distinctUntilChanged()
 
-    private val mfaCountFlow = observeActiveItems(ItemTypeFilter.Logins)
-        .map {
-            encryptionContextProvider.withEncryptionContext {
-                it.map { decrypt((it.toUiModel(this).itemType as ItemType.Login).primaryTotp) }
-            }.count { it.isNotBlank() }
-        }
-
     private val itemsCountFlow = observeItemCount()
         .distinctUntilChanged()
         .asLoadingResult()
@@ -78,7 +66,7 @@ class ProfileViewModel @Inject constructor(
         flowOf(biometryManager.getBiometryStatus()),
         autofillStatusFlow,
         itemsCountFlow,
-        mfaCountFlow
+        observeMFACount()
     ) { biometricLock, biometryStatus, autofillStatus, itemCountResult, mfaCount ->
         val itemSummaryUiState = itemCountResult.getOrNull()
             ?.let {

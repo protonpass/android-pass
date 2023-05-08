@@ -60,7 +60,7 @@ class MainActivity : FragmentActivity() {
                             when (it) {
                                 AppNavigation.Finish -> finish()
                                 AppNavigation.Report -> launcherViewModel.report()
-                                is AppNavigation.SignOut -> launcherViewModel.signOut(it.userId)
+                                is AppNavigation.SignOut -> launcherViewModel.remove(it.userId)
                                 AppNavigation.Subscription -> launcherViewModel.subscription()
                                 AppNavigation.Upgrade -> launcherViewModel.upgrade()
                             }

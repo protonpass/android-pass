@@ -12,6 +12,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.fakes.usecases.TestCreateVault
+import proton.android.pass.data.fakes.usecases.TestGetUpgradeInfo
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
@@ -27,15 +28,20 @@ class CreateVaultViewModelTest {
     private lateinit var instance: CreateVaultViewModel
     private lateinit var snackbar: TestSnackbarDispatcher
     private lateinit var createVault: TestCreateVault
+    private lateinit var getUpgradeInfo: TestGetUpgradeInfo
 
     @Before
     fun setup() {
         snackbar = TestSnackbarDispatcher()
         createVault = TestCreateVault()
+        getUpgradeInfo = TestGetUpgradeInfo().apply {
+            setResult(TestGetUpgradeInfo.DEFAULT)
+        }
         instance = CreateVaultViewModel(
             snackbar,
             createVault,
-            TestEncryptionContextProvider()
+            TestEncryptionContextProvider(),
+            getUpgradeInfo
         )
     }
 
@@ -132,6 +138,51 @@ class CreateVaultViewModelTest {
             val message = snackbar.snackbarMessage.first().value()
             assertThat(message).isNotNull()
             assertThat(message).isEqualTo(VaultSnackbarMessage.CreateVaultSuccess)
+        }
+    }
+
+    @Test
+    fun `does not display upgrade ui if vault limit not reached`() = runTest {
+        getUpgradeInfo.setResult(
+            TestGetUpgradeInfo.DEFAULT.copy(
+                isUpgradeAvailable = true,
+                totalVaults = 1,
+                vaultLimit = 2
+            )
+        )
+        instance.createState.test {
+            val item = awaitItem()
+            assertThat(item.displayNeedUpgrade).isFalse()
+        }
+    }
+
+    @Test
+    fun `does not display upgrade ui if vault limit reached but upgrade unavailable`() = runTest {
+        getUpgradeInfo.setResult(
+            TestGetUpgradeInfo.DEFAULT.copy(
+                isUpgradeAvailable = false,
+                totalVaults = 1,
+                vaultLimit = 1
+            )
+        )
+        instance.createState.test {
+            val item = awaitItem()
+            assertThat(item.displayNeedUpgrade).isFalse()
+        }
+    }
+
+    @Test
+    fun `displays upgrade ui if plan is free`() = runTest {
+        getUpgradeInfo.setResult(
+            TestGetUpgradeInfo.DEFAULT.copy(
+                isUpgradeAvailable = true,
+                totalVaults = 1,
+                vaultLimit = 1
+            )
+        )
+        instance.createState.test {
+            val item = awaitItem()
+            assertThat(item.displayNeedUpgrade).isTrue()
         }
     }
 }

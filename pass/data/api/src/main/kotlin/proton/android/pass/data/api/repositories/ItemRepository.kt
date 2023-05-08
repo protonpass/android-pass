@@ -99,4 +99,9 @@ interface ItemRepository {
         destination: Share,
         itemId: ItemId
     ): Item
+
+    suspend fun getItemByAliasEmail(
+        userId: UserId,
+        aliasEmail: String
+    ): Item?
 }

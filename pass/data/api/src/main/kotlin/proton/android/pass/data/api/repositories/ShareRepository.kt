@@ -21,6 +21,7 @@ interface ShareRepository {
     suspend fun refreshShares(userId: UserId): RefreshSharesResult
 
     fun observeAllShares(userId: SessionUserId): Flow<List<Share>>
+    fun observeVaultCount(userId: UserId): Flow<Int>
 
     suspend fun getById(userId: UserId, shareId: ShareId): Share
 

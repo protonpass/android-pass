@@ -12,6 +12,7 @@ interface LocalShareDataSource {
     fun getAllSharesForUser(userId: UserId): Flow<List<ShareEntity>>
     fun observeAllActiveSharesForUser(userId: UserId): Flow<List<ShareEntity>>
     fun getAllSharesForAddress(addressId: AddressId): Flow<List<ShareEntity>>
+    fun observeVaultCount(userId: UserId): Flow<Int>
     suspend fun deleteShares(shareIds: Set<ShareId>): Boolean
     suspend fun hasShares(userId: UserId): Boolean
     suspend fun disablePrimaryShare(userId: UserId)

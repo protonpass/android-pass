@@ -45,4 +45,7 @@ class LocalShareDataSourceImpl @Inject constructor(
     override suspend fun deleteSharesForUser(userId: UserId) {
         database.sharesDao().deleteSharesForUser(userId.id)
     }
+
+    override fun observeVaultCount(userId: UserId): Flow<Int> =
+        database.sharesDao().observeVaultCount(userId.id)
 }

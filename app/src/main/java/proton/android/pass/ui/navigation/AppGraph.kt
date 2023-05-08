@@ -30,6 +30,7 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.generatepassword.GeneratePasswordBottomsheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.generatepassword.generatePasswordBottomsheetGraph
+import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.EditLogin
 import proton.android.pass.featureitemcreate.impl.login.GenerateLoginPasswordBottomsheet
@@ -258,43 +259,51 @@ fun NavGraphBuilder.appGraph(
     )
     createLoginGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
-        onClose = { appNavigator.onBackClick() },
-        onSuccess = { appNavigator.onBackClick() },
-        onScanTotp = { appNavigator.navigate(CameraTotp) },
-        onCreateAlias = { shareId, title ->
-            appNavigator.navigate(
-                destination = CreateAliasBottomSheet,
-                route = CreateAliasBottomSheet.createNavRoute(shareId, title),
-                backDestination = CreateLogin
-            )
-        },
-        onGeneratePasswordClick = {
-            appNavigator.navigate(GenerateLoginPasswordBottomsheet)
-        },
-        onUpgrade = { onNavigate(AppNavigation.Upgrade) }
+        onNavigate = {
+            when (it) {
+                BaseLoginNavigation.Close -> appNavigator.onBackClick()
+                is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
+                    destination = CreateAliasBottomSheet,
+                    route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.title),
+                    backDestination = CreateLogin
+                )
+
+                BaseLoginNavigation.GeneratePassword ->
+                    appNavigator.navigate(GenerateLoginPasswordBottomsheet)
+
+                is BaseLoginNavigation.LoginCreated -> appNavigator.onBackClick()
+                is BaseLoginNavigation.LoginUpdated -> {}
+                BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
+                BaseLoginNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+            }
+        }
     )
     updateLoginGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
-        onSuccess = { shareId, itemId ->
-            appNavigator.navigate(
-                destination = ViewItem,
-                route = ViewItem.createNavRoute(shareId, itemId),
-                backDestination = Home
-            )
-        },
-        onUpClick = { appNavigator.onBackClick() },
-        onScanTotp = { appNavigator.navigate(CameraTotp) },
-        onCreateAlias = { shareId, title ->
-            appNavigator.navigate(
-                destination = CreateAliasBottomSheet,
-                route = CreateAliasBottomSheet.createNavRoute(shareId, title),
-                backDestination = EditLogin
-            )
-        },
-        onGeneratePasswordClick = {
-            appNavigator.navigate(GenerateLoginPasswordBottomsheet)
-        },
-        onUpgrade = { onNavigate(AppNavigation.Upgrade) }
+        onNavigate = {
+            when (it) {
+                BaseLoginNavigation.Close -> appNavigator.onBackClick()
+                is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
+                    destination = CreateAliasBottomSheet,
+                    route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.title),
+                    backDestination = CreateLogin
+                )
+
+                BaseLoginNavigation.GeneratePassword ->
+                    appNavigator.navigate(GenerateLoginPasswordBottomsheet)
+
+                is BaseLoginNavigation.LoginCreated -> {}
+                is BaseLoginNavigation.LoginUpdated ->
+                    appNavigator.navigate(
+                        destination = ViewItem,
+                        route = ViewItem.createNavRoute(it.shareId, it.itemId),
+                        backDestination = Home
+                    )
+
+                BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
+                BaseLoginNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+            }
+        }
     )
     generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
     createTotpGraph(

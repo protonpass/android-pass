@@ -62,9 +62,8 @@ internal fun LoginItemForm(
     onAliasOptionsClick: () -> Unit,
     onVaultSelectorClick: () -> Unit,
     onPasteTotpClick: () -> Unit,
-    onScanTotpClick: () -> Unit,
     onLinkedAppDelete: (PackageInfoUi) -> Unit,
-    onUpgrade: () -> Unit
+    onNavigate: (BaseLoginNavigation) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -122,7 +121,7 @@ internal fun LoginItemForm(
                         None
                     }
                 },
-                onUpgrade = onUpgrade
+                onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) }
             )
             WebsitesSection(
                 websites = loginItem.websiteAddresses.toImmutableList(),
@@ -162,6 +161,7 @@ internal fun LoginItemForm(
                             keyboardController?.hide()
                         }
                     )
+
                 AliasOptions -> StickyUsernameOptions(
                     showCreateAliasButton = showCreateAliasButton,
                     primaryEmail = primaryEmail,
@@ -174,16 +174,18 @@ internal fun LoginItemForm(
                         keyboardController?.hide()
                     }
                 )
+
                 AddTotp -> StickyTotpOptions(
                     onPasteCode = {
                         onPasteTotpClick()
                         keyboardController?.hide()
                     },
                     onScanCode = {
-                        onScanTotpClick()
+                        onNavigate(BaseLoginNavigation.ScanTotp)
                         keyboardController?.hide()
                     }
                 )
+
                 None -> {}
             }
         }

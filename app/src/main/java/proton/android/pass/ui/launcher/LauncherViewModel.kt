@@ -93,6 +93,7 @@ class LauncherViewModel @Inject constructor(
                     clearPassUserData(accounts)
                     State.AccountNeeded
                 }
+
                 accounts.any { it.isReady() } -> State.PrimaryExist
                 accounts.any { it.isStepNeeded() } -> State.StepNeeded
                 else -> State.Processing
@@ -169,6 +170,7 @@ class LauncherViewModel @Inject constructor(
         val accounts = accountManager.getAccounts().first()
         if (accounts.isEmpty()) {
             preferenceRepository.clearPreferences()
+                .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
                 .onFailure {
                     PassLogger.w(TAG, it, "Error clearing preferences")
                 }

@@ -53,7 +53,6 @@ class AccountViewModel @Inject constructor(
             }
 
             is LoadingResult.Success -> when (val plan = userPlanResult.data) {
-                UserPlan.Subuser -> PlanSection.Hide
                 UserPlan.Free -> PlanSection.Data(planName = plan.humanReadableName())
                 is UserPlan.Paid -> PlanSection.Data(planName = plan.humanReadableName())
             }

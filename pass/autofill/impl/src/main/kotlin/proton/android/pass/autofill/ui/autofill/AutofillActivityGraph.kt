@@ -19,6 +19,7 @@ import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
+import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.GenerateLoginPasswordBottomsheet
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
@@ -30,7 +31,7 @@ import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
 import proton.android.pass.navigation.api.AppNavigator
 
-@Suppress("LongParameterList", "LongMethod")
+@Suppress("LongParameterList", "LongMethod", "ComplexMethod")
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @ExperimentalComposeUiApi
@@ -46,7 +47,10 @@ fun NavGraphBuilder.autofillActivityGraph(
     authGraph(
         navigation = {
             when (it) {
-                AuthNavigation.Back -> { onAutofillCancel() }
+                AuthNavigation.Back -> {
+                    onAutofillCancel()
+                }
+
                 AuthNavigation.Success -> {
                     if (selectedAutofillItem != null) {
                         onAutofillItemReceived(selectedAutofillItem)
@@ -54,8 +58,14 @@ fun NavGraphBuilder.autofillActivityGraph(
                         appNavigator.navigate(SelectItem)
                     }
                 }
-                AuthNavigation.Dismissed -> { onAutofillCancel() }
-                AuthNavigation.Failed -> { onAutofillCancel() }
+
+                AuthNavigation.Dismissed -> {
+                    onAutofillCancel()
+                }
+
+                AuthNavigation.Failed -> {
+                    onAutofillCancel()
+                }
             }
         }
     )
@@ -83,24 +93,29 @@ fun NavGraphBuilder.autofillActivityGraph(
             packageInfoUi = autofillAppState.packageInfoUi.takeIf { autofillAppState.webDomain.isEmpty() },
         ),
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
-        onClose = { appNavigator.onBackClick() },
-        onSuccess = {
-            when (val autofillItem = it.toAutoFillItem()) {
-                None -> {}
-                is Some -> onAutofillItemReceived(autofillItem.value)
+        onNavigate = {
+            when (it) {
+                BaseLoginNavigation.Close -> appNavigator.onBackClick()
+                is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
+                    destination = CreateAliasBottomSheet,
+                    route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.title)
+                )
+
+                BaseLoginNavigation.GeneratePassword ->
+                    appNavigator.navigate(GenerateLoginPasswordBottomsheet)
+
+                is BaseLoginNavigation.LoginCreated -> when (
+                    val autofillItem = it.itemUiModel.toAutoFillItem()
+                ) {
+                    None -> {}
+                    is Some -> onAutofillItemReceived(autofillItem.value)
+                }
+
+                is BaseLoginNavigation.LoginUpdated -> {}
+                BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
+                BaseLoginNavigation.Upgrade -> {}
             }
-        },
-        onScanTotp = { appNavigator.navigate(CameraTotp) },
-        onCreateAlias = { shareId, title ->
-            appNavigator.navigate(
-                destination = CreateAliasBottomSheet,
-                route = CreateAliasBottomSheet.createNavRoute(shareId, title)
-            )
-        },
-        onGeneratePasswordClick = {
-            appNavigator.navigate(GenerateLoginPasswordBottomsheet)
-        },
-        onUpgrade = {}
+        }
     )
     generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
     createTotpGraph(

@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.OptionalNavArgId
@@ -53,12 +52,7 @@ fun NavGraphBuilder.createLoginGraph(
     initialCreateLoginUiState: InitialCreateLoginUiState = InitialCreateLoginUiState(),
     showCreateAliasButton: Boolean = true,
     getPrimaryTotp: () -> StateFlow<String?>,
-    onSuccess: (ItemUiModel) -> Unit,
-    onClose: () -> Unit,
-    onScanTotp: () -> Unit,
-    onCreateAlias: (ShareId, Option<String>) -> Unit,
-    onGeneratePasswordClick: () -> Unit,
-    onUpgrade: () -> Unit
+    onNavigate: (BaseLoginNavigation) -> Unit
 ) {
     composable(CreateLogin) {
         val primaryTotp by getPrimaryTotp().collectAsStateWithLifecycle()
@@ -68,12 +62,7 @@ fun NavGraphBuilder.createLoginGraph(
         CreateLoginScreen(
             initialContents = initialContents,
             showCreateAliasButton = showCreateAliasButton,
-            onClose = onClose,
-            onSuccess = onSuccess,
-            onScanTotp = onScanTotp,
-            onCreateAlias = onCreateAlias,
-            onGeneratePasswordClick = onGeneratePasswordClick,
-            onUpgrade = onUpgrade
+            onNavigate = onNavigate
         )
     }
 }

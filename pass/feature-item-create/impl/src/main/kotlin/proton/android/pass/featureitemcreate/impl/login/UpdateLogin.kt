@@ -14,13 +14,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.LoginUpdated
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -28,12 +25,7 @@ fun UpdateLogin(
     modifier: Modifier = Modifier,
     draftAlias: AliasItem?,
     primaryTotp: String?,
-    onUpClick: () -> Unit,
-    onSuccess: (ShareId, ItemId) -> Unit,
-    onScanTotp: () -> Unit,
-    onCreateAlias: (ShareId, Option<String>) -> Unit,
-    onGeneratePasswordClick: () -> Unit,
-    onUpgrade: () -> Unit
+    onNavigate: (BaseLoginNavigation) -> Unit
 ) {
     val viewModel: UpdateLoginViewModel = hiltViewModel()
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
@@ -44,7 +36,7 @@ fun UpdateLogin(
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
-            onUpClick()
+            onNavigate(BaseLoginNavigation.Close)
         }
     }
     BackHandler {
@@ -80,25 +72,22 @@ fun UpdateLogin(
             onUpClick = onExit,
             onSuccess = { shareId, itemId, _ ->
                 viewModel.onEmitSnackbarMessage(LoginUpdated)
-                onSuccess(shareId, itemId)
+                onNavigate(BaseLoginNavigation.LoginUpdated(shareId, itemId))
             },
-            onSubmit = { shareId -> viewModel.updateItem(shareId) },
-            onTitleChange = { viewModel.onTitleChange(it) },
-            onUsernameChange = { viewModel.onUsernameChange(it) },
-            onPasswordChange = { viewModel.onPasswordChange(it) },
+            onSubmit = viewModel::updateItem,
+            onTitleChange = viewModel::onTitleChange,
+            onUsernameChange = viewModel::onUsernameChange,
+            onPasswordChange = viewModel::onPasswordChange,
             onWebsiteChange = onWebsiteChange,
-            onNoteChange = { viewModel.onNoteChange(it) },
-            onCreateAlias = onCreateAlias,
-            onRemoveAliasClick = { viewModel.onRemoveAlias() },
+            onNoteChange = viewModel::onNoteChange,
+            onRemoveAliasClick = viewModel::onRemoveAlias,
             onVaultSelect = {
                 // Migrate element
             },
             onLinkedAppDelete = viewModel::onDeleteLinkedApp,
             onTotpChange = viewModel::onTotpChange,
             onPasteTotpClick = viewModel::onPasteTotp,
-            onScanTotpClick = onScanTotp,
-            onGeneratePasswordClick = onGeneratePasswordClick,
-            onUpgrade = onUpgrade
+            onNavigate = { onNavigate(it) }
         )
 
         ConfirmCloseDialog(
@@ -109,7 +98,7 @@ fun UpdateLogin(
             onConfirm = {
                 showConfirmDialog = false
                 viewModel.onClose()
-                onUpClick()
+                onNavigate(BaseLoginNavigation.Close)
             }
         )
     }

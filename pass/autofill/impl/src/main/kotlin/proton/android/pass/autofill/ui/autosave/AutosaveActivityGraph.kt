@@ -8,6 +8,7 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AUTH_SCREEN_ROUTE
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
+import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.GenerateLoginPasswordBottomsheet
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
@@ -39,19 +40,23 @@ fun NavGraphBuilder.autosaveActivityGraph(
             }
         )
     }
-
     createLoginGraph(
         initialCreateLoginUiState = getInitialState(arguments),
         showCreateAliasButton = false,
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
-        onSuccess = { onAutoSaveSuccess() },
-        onClose = onAutoSaveCancel,
-        onScanTotp = { appNavigator.navigate(CameraTotp) },
-        onCreateAlias = { _, _ -> },
-        onGeneratePasswordClick = {
-            appNavigator.navigate(GenerateLoginPasswordBottomsheet)
-        },
-        onUpgrade = {}
+        onNavigate = {
+            when (it) {
+                BaseLoginNavigation.Close -> onAutoSaveCancel()
+                is BaseLoginNavigation.CreateAlias -> {}
+                BaseLoginNavigation.GeneratePassword ->
+                    appNavigator.navigate(GenerateLoginPasswordBottomsheet)
+
+                is BaseLoginNavigation.LoginCreated -> onAutoSaveSuccess()
+                is BaseLoginNavigation.LoginUpdated -> {}
+                BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
+                BaseLoginNavigation.Upgrade -> {}
+            }
+        }
     )
     generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
     createTotpGraph(

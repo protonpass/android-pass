@@ -160,4 +160,13 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract fun updateLastUsedTime(shareId: String, itemId: String, now: Long)
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.ALIAS_EMAIL} = :aliasEmail
+        """
+    )
+    abstract suspend fun getItemByAliasEmail(userId: String, aliasEmail: String): ItemEntity?
 }

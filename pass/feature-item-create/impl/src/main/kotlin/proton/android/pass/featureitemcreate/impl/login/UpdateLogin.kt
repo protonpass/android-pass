@@ -32,7 +32,8 @@ fun UpdateLogin(
     onSuccess: (ShareId, ItemId) -> Unit,
     onScanTotp: () -> Unit,
     onCreateAlias: (ShareId, Option<String>) -> Unit,
-    onGeneratePasswordClick: () -> Unit
+    onGeneratePasswordClick: () -> Unit,
+    onUpgrade: () -> Unit
 ) {
     val viewModel: UpdateLoginViewModel = hiltViewModel()
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
@@ -96,7 +97,8 @@ fun UpdateLogin(
             onTotpChange = viewModel::onTotpChange,
             onPasteTotpClick = viewModel::onPasteTotp,
             onScanTotpClick = onScanTotp,
-            onGeneratePasswordClick = onGeneratePasswordClick
+            onGeneratePasswordClick = onGeneratePasswordClick,
+            onUpgrade = onUpgrade
         )
 
         ConfirmCloseDialog(

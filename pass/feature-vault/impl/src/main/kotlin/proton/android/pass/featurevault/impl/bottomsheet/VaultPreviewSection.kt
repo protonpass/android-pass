@@ -24,7 +24,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 @Composable
 fun VaultPreviewSection(
     modifier: Modifier = Modifier,
-    state: CreateVaultUiState,
+    state: BaseVaultUiState,
     onNameChange: (String) -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -52,12 +52,12 @@ fun VaultPreviewSection(
     }
 }
 
-class ThemeVaultPreviewProvider : ThemePairPreviewProvider<CreateVaultUiState>(CreateVaultProvider())
+class ThemeVaultPreviewProvider : ThemePairPreviewProvider<BaseVaultUiState>(CreateVaultProvider())
 
 @Preview
 @Composable
 fun VaultPreviewSectionPreview(
-    @PreviewParameter(ThemeVaultPreviewProvider::class) input: Pair<Boolean, CreateVaultUiState>
+    @PreviewParameter(ThemeVaultPreviewProvider::class) input: Pair<Boolean, BaseVaultUiState>
 ) {
     PassTheme(isDark = input.first) {
         Surface {

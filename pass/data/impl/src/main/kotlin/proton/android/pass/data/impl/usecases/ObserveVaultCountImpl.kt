@@ -13,7 +13,7 @@ import javax.inject.Inject
 class ObserveVaultCountImpl @Inject constructor(
     private val accountManager: AccountManager,
     private val shareRepository: ShareRepository
-): ObserveVaultCount {
+) : ObserveVaultCount {
 
     override fun invoke(userId: UserId?): Flow<Int> = flow {
         val id = userId ?: requireNotNull(accountManager.getPrimaryUserId().first())

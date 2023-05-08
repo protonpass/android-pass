@@ -23,14 +23,14 @@ abstract class BaseVaultViewModel : ViewModel() {
     protected val isVaultCreated: MutableStateFlow<IsVaultCreatedEvent> =
         MutableStateFlow(IsVaultCreatedEvent.Unknown)
 
-    val state: StateFlow<CreateVaultUiState> = combine(
+    val state: StateFlow<BaseVaultUiState> = combine(
         formFlow,
         hasEditedTitleFlow,
         isLoadingFlow,
         isVaultCreated
     ) { form, hasEdited, isLoading, vaultCreated ->
         val isTitleRequiredError = hasEdited && form.name.isBlank()
-        CreateVaultUiState(
+        BaseVaultUiState(
             name = form.name,
             color = form.color,
             icon = form.icon,
@@ -42,7 +42,7 @@ abstract class BaseVaultViewModel : ViewModel() {
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = CreateVaultUiState.Initial
+        initialValue = BaseVaultUiState.Initial
     )
 
     fun onNameChange(value: String) {

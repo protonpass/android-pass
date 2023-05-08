@@ -7,12 +7,13 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.featurevault.impl.VaultNavigation
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun DeleteVaultDialog(
     modifier: Modifier = Modifier,
-    onClose: () -> Unit,
+    onNavigate: (VaultNavigation) -> Unit,
     viewModel: DeleteVaultViewModel = hiltViewModel()
 ) {
 
@@ -23,7 +24,7 @@ fun DeleteVaultDialog(
     val state by viewModel.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.event) {
         if (state.event == DeleteVaultEvent.Deleted) {
-            onClose()
+            onNavigate(VaultNavigation.Close)
         }
     }
 
@@ -32,7 +33,7 @@ fun DeleteVaultDialog(
         state = state,
         onVaultTextChange = { viewModel.onTextChange(it) },
         onDelete = { viewModel.onDelete() },
-        onCancel = onClose,
-        onDismiss = onClose
+        onCancel = { onNavigate(VaultNavigation.Close) },
+        onDismiss = { onNavigate(VaultNavigation.Close) }
     )
 }

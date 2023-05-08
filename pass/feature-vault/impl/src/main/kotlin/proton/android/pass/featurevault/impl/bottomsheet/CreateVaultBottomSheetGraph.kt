@@ -3,6 +3,7 @@ package proton.android.pass.featurevault.impl.bottomsheet
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.bottomSheet
@@ -28,20 +29,20 @@ object EditVaultBottomSheet : NavItem(
 }
 
 internal fun NavGraphBuilder.bottomSheetCreateVaultGraph(
-    onClose: () -> Unit
+    onNavigate: (VaultNavigation) -> Unit
 ) {
     bottomSheet(CreateVaultBottomSheet) {
         CreateVaultBottomSheet(
-            onClose = onClose
+            onNavigate = onNavigate
         )
     }
 }
 internal fun NavGraphBuilder.bottomSheetEditVaultGraph(
-    onClose: () -> Unit
+    onNavigate: (VaultNavigation) -> Unit
 ) {
     bottomSheet(EditVaultBottomSheet) {
         EditVaultBottomSheet(
-            onClose = onClose
+            onNavigate = onNavigate
         )
     }
 }

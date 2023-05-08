@@ -66,6 +66,7 @@ import proton.android.pass.featuresettings.impl.SelectPrimaryVault
 import proton.android.pass.featuresettings.impl.Settings
 import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
+import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
 import proton.android.pass.featurevault.impl.delete.DeleteVaultDialog
@@ -217,8 +218,12 @@ fun NavGraphBuilder.appGraph(
         }
     )
     vaultGraph(
-        dismissBottomSheet = { dismissBottomSheet({}) },
-        onClose = { appNavigator.onBackClick() }
+        onNavigate = {
+            when (it) {
+                VaultNavigation.Close -> appNavigator.onBackClick()
+                VaultNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+            }
+        }
     )
     generatePasswordBottomsheetGraph(
         onDismiss = { appNavigator.onBackClick() }

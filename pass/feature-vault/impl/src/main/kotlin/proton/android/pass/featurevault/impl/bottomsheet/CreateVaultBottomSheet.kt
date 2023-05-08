@@ -12,23 +12,25 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.feature.vault.impl.R
+import proton.android.pass.featurevault.impl.VaultNavigation
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun CreateVaultBottomSheet(
     modifier: Modifier = Modifier,
-    onClose: () -> Unit,
+    onNavigate: (VaultNavigation) -> Unit,
     viewModel: CreateVaultViewModel = hiltViewModel()
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val createState by viewModel.createState.collectAsStateWithLifecycle()
+    val state = createState.base
 
     BackHandler {
-        onClose()
+        onNavigate(VaultNavigation.Close)
     }
 
     LaunchedEffect(state.isVaultCreatedEvent) {
         if (state.isVaultCreatedEvent == IsVaultCreatedEvent.Created) {
-            onClose()
+            onNavigate(VaultNavigation.Close)
         }
     }
 
@@ -36,11 +38,13 @@ fun CreateVaultBottomSheet(
         modifier = modifier
             .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
         state = state,
+        showUpgradeUi = createState.displayNeedUpgrade,
         buttonText = stringResource(R.string.bottomsheet_create_vault_button),
         onNameChange = { viewModel.onNameChange(it) },
         onIconChange = { viewModel.onIconChange(it) },
         onColorChange = { viewModel.onColorChange(it) },
-        onClose = onClose,
-        onButtonClick = { viewModel.onCreateClick() }
+        onClose = { onNavigate(VaultNavigation.Close) },
+        onButtonClick = { viewModel.onCreateClick() },
+        onUpgradeClick = { onNavigate(VaultNavigation.Upgrade) }
     )
 }

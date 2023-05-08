@@ -27,6 +27,7 @@ class TestLocalShareDataSource : LocalShareDataSource {
 
     private val getAllSharesForUserFlow = testFlow<List<ShareEntity>>()
     private val getAllSharesForAddressFlow = testFlow<List<ShareEntity>>()
+    private val getShareCountFlow = testFlow<Result<Int>>()
 
     private var deleteMemory: MutableList<Set<ShareId>> = mutableListOf()
     private var upsertMemory: MutableList<List<ShareEntity>> = mutableListOf()
@@ -112,6 +113,9 @@ class TestLocalShareDataSource : LocalShareDataSource {
     override suspend fun deleteSharesForUser(userId: UserId) {
         deleteSharesForUserResult.getOrThrow()
     }
+
+    override fun observeVaultCount(userId: UserId): Flow<Int> = getShareCountFlow
+        .map { it.getOrThrow() }
 
     data class SetPrimarySharePayload(
         val userId: UserId,

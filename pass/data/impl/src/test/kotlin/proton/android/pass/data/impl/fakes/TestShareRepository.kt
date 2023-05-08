@@ -17,7 +17,9 @@ class TestShareRepository : ShareRepository {
         Result.failure(IllegalStateException("CreateVaultResult not set"))
     private var refreshSharesResult: RefreshSharesResult =
         RefreshSharesResult(emptySet(), emptySet())
-    private var observeSharesFlow = testFlow<Result<List<Share>>>()
+    private val observeSharesFlow = testFlow<Result<List<Share>>>()
+    private val observeVaultCountFlow = testFlow<Result<Int>>()
+
     private var deleteVault: Result<Unit> =
         Result.failure(IllegalStateException("DeleteVaultResult not set"))
     private var getByIdResult: Result<Share> =
@@ -54,6 +56,10 @@ class TestShareRepository : ShareRepository {
         observeSharesFlow.tryEmit(value)
     }
 
+    fun emitObserveShareCount(value: Result<Int>) {
+        observeVaultCountFlow.tryEmit(value)
+    }
+
     fun setUpdateVaultResult(value: Result<Share>) {
         updateVaultResult = value
     }
@@ -79,6 +85,9 @@ class TestShareRepository : ShareRepository {
 
     override fun observeAllShares(userId: SessionUserId): Flow<List<Share>> =
         observeSharesFlow.map { it.getOrThrow() }
+
+    override fun observeVaultCount(userId: UserId): Flow<Int> =
+        observeVaultCountFlow.map { it.getOrThrow() }
 
     override suspend fun getById(userId: UserId, shareId: ShareId): Share =
         getByIdResult.getOrThrow()

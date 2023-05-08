@@ -78,9 +78,10 @@ abstract class SharesDao : BaseDao<ShareEntity>() {
         FROM ${ShareEntity.TABLE}
         WHERE ${ShareEntity.Columns.USER_ID} = :userId
           AND ${ShareEntity.Columns.SHARE_TYPE} = $SHARE_TYPE_VAULT
+          AND ${ShareEntity.Columns.IS_ACTIVE} = 1
         """
     )
-    abstract fun observeVaultCount(userId: String): Flow<Int>
+    abstract fun observeActiveVaultCount(userId: String): Flow<Int>
 
     @Query(
         """

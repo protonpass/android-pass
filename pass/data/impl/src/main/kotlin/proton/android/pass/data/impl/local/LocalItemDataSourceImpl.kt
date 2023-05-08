@@ -103,6 +103,9 @@ class LocalItemDataSourceImpl @Inject constructor(
                 }
             }
 
+    override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity? =
+        database.itemsDao().getItemByAliasEmail(userId.id, aliasEmail)
+
     private fun ItemTypeFilter.value(): Int = when (this) {
         ItemTypeFilter.Logins -> ITEM_TYPE_LOGIN
         ItemTypeFilter.Aliases -> ITEM_TYPE_ALIAS

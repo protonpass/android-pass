@@ -40,6 +40,7 @@ internal fun LoginItemForm(
     modifier: Modifier = Modifier,
     isEditAllowed: Boolean,
     loginItem: LoginItem,
+    hasReachedTotpLimit: Boolean,
     selectedShare: VaultWithItemCount?,
     showCreateAliasButton: Boolean,
     primaryEmail: String?,
@@ -62,7 +63,8 @@ internal fun LoginItemForm(
     onVaultSelectorClick: () -> Unit,
     onPasteTotpClick: () -> Unit,
     onScanTotpClick: () -> Unit,
-    onLinkedAppDelete: (PackageInfoUi) -> Unit
+    onLinkedAppDelete: (PackageInfoUi) -> Unit,
+    onUpgrade: () -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -92,6 +94,7 @@ internal fun LoginItemForm(
             MainLoginSection(
                 loginItem = loginItem,
                 canUpdateUsername = canUpdateUsername,
+                hasReachedTotpLimit = hasReachedTotpLimit,
                 isEditAllowed = isEditAllowed,
                 isTotpError = isTotpError,
                 onUsernameChange = onUsernameChange,
@@ -118,7 +121,8 @@ internal fun LoginItemForm(
                     } else {
                         None
                     }
-                }
+                },
+                onUpgrade = onUpgrade
             )
             WebsitesSection(
                 websites = loginItem.websiteAddresses.toImmutableList(),

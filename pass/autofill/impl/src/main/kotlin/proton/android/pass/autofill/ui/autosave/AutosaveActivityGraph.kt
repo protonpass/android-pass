@@ -31,10 +31,10 @@ fun NavGraphBuilder.autosaveActivityGraph(
         AuthScreen(
             navigation = {
                 when (it) {
-                    AuthNavigation.Back -> { onAutoSaveCancel() }
-                    AuthNavigation.Success -> { appNavigator.navigate(CreateLogin) }
-                    AuthNavigation.Dismissed -> { onAutoSaveCancel() }
-                    AuthNavigation.Failed -> { onAutoSaveCancel() }
+                    AuthNavigation.Back -> onAutoSaveCancel()
+                    AuthNavigation.Success -> appNavigator.navigate(CreateLogin)
+                    AuthNavigation.Dismissed -> onAutoSaveCancel()
+                    AuthNavigation.Failed -> onAutoSaveCancel()
                 }
             }
         )
@@ -50,7 +50,8 @@ fun NavGraphBuilder.autosaveActivityGraph(
         onCreateAlias = { _, _ -> },
         onGeneratePasswordClick = {
             appNavigator.navigate(GenerateLoginPasswordBottomsheet)
-        }
+        },
+        onUpgrade = {}
     )
     generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
     createTotpGraph(

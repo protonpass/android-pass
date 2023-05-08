@@ -14,13 +14,15 @@ fun MainLoginSection(
     canUpdateUsername: Boolean,
     isEditAllowed: Boolean,
     isTotpError: Boolean,
+    hasReachedTotpLimit: Boolean,
     onUsernameChange: (String) -> Unit,
     onUsernameFocus: (Boolean) -> Unit,
     onAliasOptionsClick: () -> Unit,
     onPasswordChange: (String) -> Unit,
     onPasswordFocus: (Boolean) -> Unit,
     onTotpChanged: (String) -> Unit,
-    onTotpFocus: (Boolean) -> Unit
+    onTotpFocus: (Boolean) -> Unit,
+    onUpgrade: () -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
@@ -41,12 +43,16 @@ fun MainLoginSection(
             onFocus = onPasswordFocus
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
-        TotpInput(
-            value = loginItem.primaryTotp,
-            enabled = isEditAllowed,
-            isError = isTotpError,
-            onTotpChanged = onTotpChanged,
-            onFocus = onTotpFocus
-        )
+        if (hasReachedTotpLimit) {
+            TotpLimit(onUpgrade = onUpgrade)
+        } else {
+            TotpInput(
+                value = loginItem.primaryTotp,
+                enabled = isEditAllowed,
+                isError = isTotpError,
+                onTotpChanged = onTotpChanged,
+                onFocus = onTotpFocus
+            )
+        }
     }
 }

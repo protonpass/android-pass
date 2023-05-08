@@ -33,6 +33,7 @@ fun NavGraphBuilder.updateLoginGraph(
     onScanTotp: () -> Unit,
     onCreateAlias: (ShareId, Option<String>) -> Unit,
     onGeneratePasswordClick: () -> Unit,
+    onUpgrade: () -> Unit
 ) {
     composable(EditLogin) {
         val primaryTotp by getPrimaryTotp().collectAsStateWithLifecycle()
@@ -43,7 +44,8 @@ fun NavGraphBuilder.updateLoginGraph(
             onSuccess = onSuccess,
             onScanTotp = onScanTotp,
             onCreateAlias = onCreateAlias,
-            onGeneratePasswordClick = onGeneratePasswordClick
+            onGeneratePasswordClick = onGeneratePasswordClick,
+            onUpgrade = onUpgrade
         )
     }
 }

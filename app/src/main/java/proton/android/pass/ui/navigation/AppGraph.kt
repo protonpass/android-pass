@@ -270,7 +270,8 @@ fun NavGraphBuilder.appGraph(
         },
         onGeneratePasswordClick = {
             appNavigator.navigate(GenerateLoginPasswordBottomsheet)
-        }
+        },
+        onUpgrade = { onNavigate(AppNavigation.Upgrade) }
     )
     updateLoginGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
@@ -292,7 +293,8 @@ fun NavGraphBuilder.appGraph(
         },
         onGeneratePasswordClick = {
             appNavigator.navigate(GenerateLoginPasswordBottomsheet)
-        }
+        },
+        onUpgrade = { onNavigate(AppNavigation.Upgrade) }
     )
     generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
     createTotpGraph(
@@ -444,13 +446,14 @@ fun NavGraphBuilder.appGraph(
     authGraph(
         navigation = {
             when (it) {
-                AuthNavigation.Back -> { onNavigate(AppNavigation.Finish) }
+                AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
                 AuthNavigation.Success -> {
                     onAuthPerformed()
                     appNavigator.onBackClick()
                 }
-                AuthNavigation.Dismissed -> { onNavigate(AppNavigation.Finish) }
-                AuthNavigation.Failed -> { appNavigator.onBackClick() }
+
+                AuthNavigation.Dismissed -> onNavigate(AppNavigation.Finish)
+                AuthNavigation.Failed -> appNavigator.onBackClick()
             }
         }
     )

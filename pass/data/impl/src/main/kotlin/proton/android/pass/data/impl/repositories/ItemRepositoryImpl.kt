@@ -532,6 +532,14 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): Item? {
+        val item = localItemDataSource.getItemByAliasEmail(userId, aliasEmail) ?: return null
+
+        return encryptionContextProvider.withEncryptionContext {
+            entityToDomain(this@withEncryptionContext, item)
+        }
+    }
+
     private suspend fun restoreItemsForShare(
         userId: UserId,
         shareId: ShareId,

@@ -9,17 +9,26 @@ class MainLoginSectionParamsPreviewProvider : PreviewParameterProvider<MainLogin
             MainLoginSectionParams(
                 username = "MyUsername",
                 passwordState = PasswordState.Concealed("encrypted"),
-                totpUiState = null
+                totpUiState = null,
+                showViewAlias = false
+            ),
+            MainLoginSectionParams(
+                username = "MyUsername",
+                passwordState = PasswordState.Concealed("encrypted"),
+                totpUiState = null,
+                showViewAlias = true
             ),
             MainLoginSectionParams(
                 username = "MyUsername",
                 passwordState = PasswordState.Revealed("encrypted", "clearText"),
-                totpUiState = null
+                totpUiState = null,
+                showViewAlias = false
             ),
             MainLoginSectionParams(
                 username = "MyUsername",
                 passwordState = PasswordState.Revealed("encrypted", "clearText"),
                 totpUiState = TotpUiState("123456", 12, 20),
+                showViewAlias = false
             )
         )
 }
@@ -27,5 +36,6 @@ class MainLoginSectionParamsPreviewProvider : PreviewParameterProvider<MainLogin
 data class MainLoginSectionParams(
     val username: String,
     val passwordState: PasswordState,
-    val totpUiState: TotpUiState?
+    val totpUiState: TotpUiState?,
+    val showViewAlias: Boolean
 )

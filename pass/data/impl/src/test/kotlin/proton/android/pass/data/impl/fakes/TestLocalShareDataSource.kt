@@ -114,7 +114,7 @@ class TestLocalShareDataSource : LocalShareDataSource {
         deleteSharesForUserResult.getOrThrow()
     }
 
-    override fun observeVaultCount(userId: UserId): Flow<Int> = getShareCountFlow
+    override fun observeActiveVaultCount(userId: UserId): Flow<Int> = getShareCountFlow
         .map { it.getOrThrow() }
 
     data class SetPrimarySharePayload(

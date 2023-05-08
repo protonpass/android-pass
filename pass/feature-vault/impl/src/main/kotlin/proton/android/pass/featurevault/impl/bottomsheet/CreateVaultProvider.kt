@@ -6,8 +6,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 
-class CreateVaultProvider : PreviewParameterProvider<CreateVaultUiState> {
-    override val values: Sequence<CreateVaultUiState>
+class CreateVaultProvider : PreviewParameterProvider<BaseVaultUiState> {
+    override val values: Sequence<BaseVaultUiState>
         get() = sequenceOf(
             stateWith(name = "", isError = true),
             stateWith(name = ""),
@@ -19,7 +19,7 @@ class CreateVaultProvider : PreviewParameterProvider<CreateVaultUiState> {
         name: String,
         isError: Boolean = false,
         isLoading: IsLoadingState = IsLoadingState.NotLoading
-    ) = CreateVaultUiState(
+    ) = BaseVaultUiState(
         name = name,
         color = ShareColor.Color1,
         icon = ShareIcon.Icon1,

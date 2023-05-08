@@ -46,6 +46,6 @@ class LocalShareDataSourceImpl @Inject constructor(
         database.sharesDao().deleteSharesForUser(userId.id)
     }
 
-    override fun observeVaultCount(userId: UserId): Flow<Int> =
-        database.sharesDao().observeVaultCount(userId.id)
+    override fun observeActiveVaultCount(userId: UserId): Flow<Int> =
+        database.sharesDao().observeActiveVaultCount(userId.id)
 }

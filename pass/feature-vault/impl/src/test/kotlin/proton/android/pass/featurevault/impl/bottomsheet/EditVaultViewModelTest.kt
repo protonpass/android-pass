@@ -53,7 +53,7 @@ class EditVaultViewModelTest {
     @Test
     fun `emits initial state`() = runTest {
         instance.state.test {
-            assertThat(awaitItem()).isEqualTo(CreateVaultUiState.Initial)
+            assertThat(awaitItem()).isEqualTo(BaseVaultUiState.Initial)
         }
     }
 

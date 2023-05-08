@@ -19,8 +19,9 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.feature.vault.impl.R
 
@@ -31,8 +32,10 @@ fun CreateVaultBottomSheetTopBar(
     buttonText: String,
     isLoading: Boolean,
     isButtonEnabled: Boolean,
+    showUpgradeButton: Boolean,
     onCloseClick: () -> Unit,
-    onCreateClick: () -> Unit
+    onCreateClick: () -> Unit,
+    onUpgradeClick: () -> Unit
 ) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -58,39 +61,53 @@ fun CreateVaultBottomSheetTopBar(
             PassTheme.colors.loginInteractionNormMinor2
         }
 
-        LoadingCircleButton(
-            modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-            color = buttonColor,
-            isLoading = isLoading,
-            buttonEnabled = isButtonEnabled,
-            text = {
-                Text(
-                    text = buttonText,
-                    color = PassTheme.colors.textInvert,
-                    style = PassTypography.body3Regular
-                )
-            },
-            onClick = {
-                keyboardController?.hide()
-                onCreateClick()
-            }
-        )
+        if (showUpgradeButton) {
+            UpgradeButton(
+                onUpgradeClick = {
+                    keyboardController?.hide()
+                    onUpgradeClick()
+                }
+            )
+        } else {
+            LoadingCircleButton(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
+                color = buttonColor,
+                isLoading = isLoading,
+                buttonEnabled = isButtonEnabled,
+                text = {
+                    Text(
+                        text = buttonText,
+                        color = PassTheme.colors.textInvert,
+                        style = PassTypography.body3Regular
+                    )
+                },
+                onClick = {
+                    keyboardController?.hide()
+                    onCreateClick()
+                }
+            )
+        }
     }
 }
+
+class ThemeCreateVaultTopBarPreviewProvider :
+    ThemePairPreviewProvider<TopBarInput>(CreateVaultBottomSheetTopBarPreviewProvider())
 
 @Preview
 @Composable
 fun CreateVaultBottomSheetTopBarPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemeCreateVaultTopBarPreviewProvider::class) input: Pair<Boolean, TopBarInput>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             CreateVaultBottomSheetTopBar(
                 buttonText = stringResource(R.string.bottomsheet_create_vault_button),
-                isLoading = input.second,
+                isLoading = input.second.isLoading,
                 isButtonEnabled = true,
+                showUpgradeButton = input.second.showUpgrade,
                 onCloseClick = {},
-                onCreateClick = {}
+                onCreateClick = {},
+                onUpgradeClick = {}
             )
         }
     }

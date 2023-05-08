@@ -70,7 +70,8 @@ internal fun LoginContent(
     onScanTotpClick: () -> Unit,
     onLinkedAppDelete: (PackageInfoUi) -> Unit,
     onCreateAlias: (ShareId, Option<String>) -> Unit,
-    onGeneratePasswordClick: () -> Unit
+    onGeneratePasswordClick: () -> Unit,
+    onUpgrade: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
@@ -181,6 +182,7 @@ internal fun LoginContent(
             LoginItemForm(
                 modifier = Modifier.padding(padding),
                 loginItem = uiState.loginItem,
+                hasReachedTotpLimit = uiState.hasReachedTotpLimit,
                 selectedShare = uiState.selectedVault,
                 showCreateAliasButton = showCreateAliasButton,
                 canUpdateUsername = uiState.canUpdateUsername,
@@ -243,7 +245,8 @@ internal fun LoginContent(
                 onTotpChange = onTotpChange,
                 onPasteTotpClick = onPasteTotpClick,
                 onScanTotpClick = onScanTotpClick,
-                onLinkedAppDelete = onLinkedAppDelete
+                onLinkedAppDelete = onLinkedAppDelete,
+                onUpgrade = onUpgrade
             )
 
             ConfirmRemoveAliasDialog(

@@ -120,4 +120,9 @@
 
     <string name="camera_permission_explanation">Camera permission required for this feature to be available.</string>
     <string name="camera_permission_open_settings">Open settings</string>
+
+    <!--  Totp limit  -->
+    <string name="mfa_limit_reached">2FA limit reached</string>
+    <string name="upgrade">Upgrade</string>
+    <string name="mfa_icon_content_description">2fa icon</string>
 </resources>

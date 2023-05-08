@@ -99,7 +99,8 @@ fun NavGraphBuilder.autofillActivityGraph(
         },
         onGeneratePasswordClick = {
             appNavigator.navigate(GenerateLoginPasswordBottomsheet)
-        }
+        },
+        onUpgrade = {}
     )
     generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
     createTotpGraph(

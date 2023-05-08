@@ -33,6 +33,7 @@ fun CreateLoginScreen(
     onScanTotp: () -> Unit,
     onCreateAlias: (ShareId, Option<String>) -> Unit,
     onGeneratePasswordClick: () -> Unit,
+    onUpgrade: () -> Unit,
     viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
     LaunchedEffect(initialContents) {
@@ -87,7 +88,8 @@ fun CreateLoginScreen(
             onTotpChange = viewModel::onTotpChange,
             onPasteTotpClick = viewModel::onPasteTotp,
             onScanTotpClick = onScanTotp,
-            onGeneratePasswordClick = onGeneratePasswordClick
+            onGeneratePasswordClick = onGeneratePasswordClick,
+            onUpgrade = onUpgrade
         )
 
         ConfirmCloseDialog(

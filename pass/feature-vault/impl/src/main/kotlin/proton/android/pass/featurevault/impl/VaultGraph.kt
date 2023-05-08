@@ -5,11 +5,15 @@ import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetCreateVaultG
 import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetEditVaultGraph
 import proton.android.pass.featurevault.impl.delete.deleteVaultDialogGraph
 
+sealed interface VaultNavigation {
+    object Upgrade : VaultNavigation
+    object Close : VaultNavigation
+}
+
 fun NavGraphBuilder.vaultGraph(
-    dismissBottomSheet: () -> Unit,
-    onClose: () -> Unit
+    onNavigate: (VaultNavigation) -> Unit,
 ) {
-    bottomSheetCreateVaultGraph(dismissBottomSheet)
-    bottomSheetEditVaultGraph(dismissBottomSheet)
-    deleteVaultDialogGraph(onClose)
+    bottomSheetCreateVaultGraph(onNavigate)
+    bottomSheetEditVaultGraph(onNavigate)
+    deleteVaultDialogGraph(onNavigate)
 }

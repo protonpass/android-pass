@@ -260,7 +260,7 @@ class ShareRepositoryImpl @Inject constructor(
     }
 
     override fun observeVaultCount(userId: UserId): Flow<Int> =
-        localShareDataSource.observeVaultCount(userId)
+        localShareDataSource.observeActiveVaultCount(userId)
 
     private suspend fun storeShares(
         userAddress: UserAddress,

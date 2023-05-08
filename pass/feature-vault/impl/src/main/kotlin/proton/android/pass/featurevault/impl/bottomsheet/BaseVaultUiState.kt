@@ -13,7 +13,7 @@ sealed interface IsVaultCreatedEvent {
 }
 
 @Stable
-data class CreateVaultUiState(
+data class BaseVaultUiState(
     val name: String,
     val color: ShareColor,
     val icon: ShareIcon,
@@ -23,7 +23,7 @@ data class CreateVaultUiState(
     val isVaultCreatedEvent: IsVaultCreatedEvent
 ) {
     companion object {
-        val Initial = CreateVaultUiState(
+        val Initial = BaseVaultUiState(
             name = "",
             color = ShareColor.Color1,
             icon = ShareIcon.Icon1,
@@ -31,6 +31,19 @@ data class CreateVaultUiState(
             isTitleRequiredError = false,
             isCreateButtonEnabled = IsButtonEnabled.Disabled,
             isVaultCreatedEvent = IsVaultCreatedEvent.Unknown
+        )
+    }
+}
+
+@Stable
+data class CreateVaultUiState(
+    val base: BaseVaultUiState,
+    val displayNeedUpgrade: Boolean
+) {
+    companion object {
+        val Initial = CreateVaultUiState(
+            base = BaseVaultUiState.Initial,
+            displayNeedUpgrade = false
         )
     }
 }

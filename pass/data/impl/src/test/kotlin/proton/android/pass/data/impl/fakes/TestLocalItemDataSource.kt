@@ -81,5 +81,9 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
+    override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity? {
+        throw IllegalStateException("Not yet implemented")
+    }
+
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> = itemCount
 }

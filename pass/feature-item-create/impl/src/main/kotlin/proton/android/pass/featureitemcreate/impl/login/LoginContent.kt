@@ -22,9 +22,7 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.currentCoroutineContext
 import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -67,11 +65,8 @@ internal fun LoginContent(
     onRemoveAliasClick: () -> Unit,
     onVaultSelect: (ShareId) -> Unit,
     onPasteTotpClick: () -> Unit,
-    onScanTotpClick: () -> Unit,
     onLinkedAppDelete: (PackageInfoUi) -> Unit,
-    onCreateAlias: (ShareId, Option<String>) -> Unit,
-    onGeneratePasswordClick: () -> Unit,
-    onUpgrade: () -> Unit
+    onNavigate: (BaseLoginNavigation) -> Unit
 ) {
     val scope = rememberCoroutineScope()
     val bottomSheetState = rememberModalBottomSheetState(
@@ -108,9 +103,11 @@ internal fun LoginContent(
 
                 ActionAfterHideKeyboard.CreateAlias -> {
                     scope.launch {
-                        onCreateAlias(
-                            uiState.selectedVault!!.vault.shareId,
-                            uiState.loginItem.title.some()
+                        onNavigate(
+                            BaseLoginNavigation.CreateAlias(
+                                uiState.selectedVault!!.vault.shareId,
+                                uiState.loginItem.title.some()
+                            )
                         )
                         actionWhenKeyboardDisappears = null // Clear flag
                     }
@@ -118,7 +115,7 @@ internal fun LoginContent(
 
                 ActionAfterHideKeyboard.GeneratePassword -> {
                     scope.launch {
-                        onGeneratePasswordClick()
+                        onNavigate(BaseLoginNavigation.GeneratePassword)
                         actionWhenKeyboardDisappears = null // Clear flag
                     }
                 }
@@ -138,9 +135,11 @@ internal fun LoginContent(
                     onEditAliasClick = {
                         scope.launch {
                             bottomSheetState.hide()
-                            onCreateAlias(
-                                uiState.selectedVault!!.vault.shareId,
-                                uiState.loginItem.title.some()
+                            onNavigate(
+                                BaseLoginNavigation.CreateAlias(
+                                    uiState.selectedVault!!.vault.shareId,
+                                    uiState.loginItem.title.some()
+                                )
                             )
                         }
                     },
@@ -210,7 +209,7 @@ internal fun LoginContent(
                 onGeneratePasswordClick = {
                     if (!keyboardState) {
                         // If keyboard is hidden, call the action directly
-                        onGeneratePasswordClick()
+                        onNavigate(BaseLoginNavigation.GeneratePassword)
                     } else {
                         // If keyboard is present, do it in a deferred way
                         actionWhenKeyboardDisappears = ActionAfterHideKeyboard.GeneratePassword
@@ -220,9 +219,11 @@ internal fun LoginContent(
                 onCreateAliasClick = {
                     if (!keyboardState) {
                         // If keyboard is hidden, call the action directly
-                        onCreateAlias(
-                            uiState.selectedVault!!.vault.shareId,
-                            uiState.loginItem.title.toOption()
+                        onNavigate(
+                            BaseLoginNavigation.CreateAlias(
+                                uiState.selectedVault!!.vault.shareId,
+                                uiState.loginItem.title.some()
+                            )
                         )
                     } else {
                         // If keyboard is present, do it in a deferred way
@@ -244,9 +245,8 @@ internal fun LoginContent(
                 },
                 onTotpChange = onTotpChange,
                 onPasteTotpClick = onPasteTotpClick,
-                onScanTotpClick = onScanTotpClick,
                 onLinkedAppDelete = onLinkedAppDelete,
-                onUpgrade = onUpgrade
+                onNavigate = onNavigate
             )
 
             ConfirmRemoveAliasDialog(

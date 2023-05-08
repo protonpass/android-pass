@@ -12,8 +12,7 @@ class ObserveTotpFromUriImpl @Inject constructor(
 
     override fun invoke(uri: String): Flow<TotpManager.TotpWrapper> {
         val parsed = totpManager.parse(uri)
-        val spec = parsed.getOrNull()
-        spec ?: return emptyFlow()
+        val spec = parsed.getOrNull() ?: return emptyFlow()
         return totpManager.observeCode(spec)
     }
 }

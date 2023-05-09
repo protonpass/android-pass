@@ -6,6 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.AutofillDone
 import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.entities.AutofillAppState
@@ -15,6 +16,7 @@ import proton.android.pass.autofill.service.R
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
@@ -44,22 +46,7 @@ class AutofillAppViewModel @Inject constructor(
         autofillAppState: AutofillAppState
     ): AutofillMappings =
         encryptionContextProvider.withEncryptionContext {
-            val totpUri = decrypt(autofillItem.totp)
-            val copyTotpToClipboard = runBlocking {
-                preferenceRepository.getCopyTotpToClipboardEnabled().first()
-            }
-            if (totpUri.isNotBlank() && copyTotpToClipboard.value()) {
-                viewModelScope.launch {
-                    getTotpCodeFromUri(totpUri)
-                        .onSuccess {
-                            clipboardManager.copyToClipboard(it)
-                            toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
-                        }
-                        .onFailure {
-                            PassLogger.w(TAG, "Could not copy totp code")
-                        }
-                }
-            }
+            handleTotpUri(this@withEncryptionContext, autofillItem.totp)
             updateAutofillItem(
                 UpdateAutofillItemData(
                     shareId = ShareId(autofillItem.shareId),
@@ -81,6 +68,27 @@ class AutofillAppViewModel @Inject constructor(
 
     fun onAutofillItemSelected(source: AutofillTriggerSource) {
         telemetryManager.sendEvent(AutofillDone(source))
+    }
+
+    private fun handleTotpUri(encryptionContext: EncryptionContext, totp: EncryptedString?) {
+        if (totp == null) return
+
+        val totpUri = encryptionContext.decrypt(totp)
+        val copyTotpToClipboard = runBlocking {
+            preferenceRepository.getCopyTotpToClipboardEnabled().first()
+        }
+        if (totpUri.isNotBlank() && copyTotpToClipboard.value()) {
+            viewModelScope.launch {
+                getTotpCodeFromUri(totpUri)
+                    .onSuccess {
+                        clipboardManager.copyToClipboard(it)
+                        toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
+                    }
+                    .onFailure {
+                        PassLogger.w(TAG, "Could not copy totp code")
+                    }
+            }
+        }
     }
 
     companion object {

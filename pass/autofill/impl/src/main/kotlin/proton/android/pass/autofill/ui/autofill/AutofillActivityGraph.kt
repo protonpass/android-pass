@@ -9,7 +9,9 @@ import proton.android.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
 import proton.android.pass.autofill.entities.AutofillMappings
+import proton.android.pass.autofill.extensions.CreatedAlias
 import proton.android.pass.autofill.extensions.toAutoFillItem
+import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
@@ -17,9 +19,14 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.authGraph
+import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.GenerateLoginPasswordBottomsheet
@@ -74,7 +81,9 @@ fun NavGraphBuilder.autofillActivityGraph(
         state = autofillAppState,
         onNavigate = {
             when (it) {
-                SelectItemNavigation.AddItem -> appNavigator.navigate(CreateLogin)
+                SelectItemNavigation.AddItem -> {
+                    appNavigator.navigate(CreateItemBottomsheet)
+                }
                 SelectItemNavigation.Cancel -> onAutofillCancel()
                 is SelectItemNavigation.ItemSelected -> onAutofillSuccess(it.autofillMappings)
                 is SelectItemNavigation.SortingBottomsheet ->
@@ -134,15 +143,35 @@ fun NavGraphBuilder.autofillActivityGraph(
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.Close -> appNavigator.onBackClick()
-                is CreateAliasNavigation.Created -> {
-                    if (it.dismissBottomsheet) {
-                        dismissBottomSheet {
-                            appNavigator.onBackClick()
-                        }
-                    } else {
+                is CreateAliasNavigation.CreatedFromBottomsheet -> {
+                    dismissBottomSheet {
                         appNavigator.onBackClick()
                     }
                 }
+                is CreateAliasNavigation.Created -> {
+                    val created = CreatedAlias(it.shareId, it.itemId, it.alias)
+                    onAutofillItemReceived(created.toAutofillItem())
+                }
+            }
+        }
+    )
+    bottomsheetCreateItemGraph(
+        mode = CreateItemBottomSheetMode.Autofill,
+        onNavigate = {
+            when (it) {
+                is CreateItemBottomsheetNavigation.CreateAlias -> {
+                    appNavigator.navigate(
+                        CreateAlias,
+                        CreateAlias.createNavRoute(it.shareId)
+                    )
+                }
+                is CreateItemBottomsheetNavigation.CreateLogin -> {
+                    appNavigator.navigate(
+                        CreateLogin,
+                        CreateLogin.createNavRoute(it.shareId)
+                    )
+                }
+                else -> {}
             }
         }
     )

@@ -36,18 +36,21 @@ object CreateItemBottomsheet : NavItem(
     }
 }
 
+sealed interface CreateItemBottomsheetNavigation {
+    data class CreateLogin(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
+    data class CreateAlias(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
+    data class CreateNote(val shareId: Option<ShareId>) : CreateItemBottomsheetNavigation
+    object CreatePassword : CreateItemBottomsheetNavigation
+}
+
 fun NavGraphBuilder.bottomsheetCreateItemGraph(
-    onCreateLogin: (Option<ShareId>) -> Unit,
-    onCreateAlias: (Option<ShareId>) -> Unit,
-    onCreateNote: (Option<ShareId>) -> Unit,
-    onCreatePassword: () -> Unit
+    mode: CreateItemBottomSheetMode,
+    onNavigate: (CreateItemBottomsheetNavigation) -> Unit,
 ) {
     bottomSheet(CreateItemBottomsheet) {
         CreateItemBottomSheet(
-            onCreateLogin = onCreateLogin,
-            onCreateAlias = onCreateAlias,
-            onCreateNote = onCreateNote,
-            onCreatePassword = onCreatePassword
+            mode = mode,
+            onNavigate = onNavigate
         )
     }
 }
@@ -56,19 +59,15 @@ fun NavGraphBuilder.bottomsheetCreateItemGraph(
 @Composable
 fun CreateItemBottomSheet(
     modifier: Modifier = Modifier,
-    onCreateLogin: (Option<ShareId>) -> Unit,
-    onCreateAlias: (Option<ShareId>) -> Unit,
-    onCreateNote: (Option<ShareId>) -> Unit,
-    onCreatePassword: () -> Unit,
+    mode: CreateItemBottomSheetMode,
+    onNavigate: (CreateItemBottomsheetNavigation) -> Unit,
     viewModel: CreateItemBottomSheetViewModel = hiltViewModel()
 ) {
     CreateItemBottomSheetContents(
         modifier = modifier,
         shareId = viewModel.navShareId.value(),
-        onCreateLogin = onCreateLogin,
-        onCreateAlias = onCreateAlias,
-        onCreateNote = onCreateNote,
-        onCreatePassword = onCreatePassword
+        mode = mode,
+        onNavigate = onNavigate
     )
 }
 

@@ -6,7 +6,9 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.pass.domain.Item
+import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
+import proton.pass.domain.ShareId
 
 fun ItemUiModel.toAutoFillItem(): Option<AutofillItem> =
     if (itemType is ItemType.Login) {
@@ -35,3 +37,18 @@ fun Item.toAutofillItem(): Option<AutofillItem> =
     } else {
         None
     }
+
+data class CreatedAlias(
+    val shareId: ShareId,
+    val itemId: ItemId,
+    val alias: String
+)
+
+fun CreatedAlias.toAutofillItem(): AutofillItem =
+    AutofillItem(
+        shareId = shareId.id,
+        itemId = itemId.id,
+        username = alias,
+        password = null,
+        totp = null
+    )

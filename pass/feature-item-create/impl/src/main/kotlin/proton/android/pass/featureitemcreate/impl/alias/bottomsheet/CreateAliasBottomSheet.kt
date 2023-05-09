@@ -35,9 +35,8 @@ fun CreateAliasBottomSheet(
     if (isAliasDraftSaved is AliasDraftSavedState.Success) {
         LaunchedEffect(state.selectedVault) {
             state.selectedVault?.let {
-                val event = CreateAliasNavigation.Created(
+                val event = CreateAliasNavigation.CreatedFromBottomsheet(
                     alias = isAliasDraftSaved.aliasItem.aliasToBeCreated ?: "",
-                    dismissBottomsheet = true
                 )
                 onNavigate(event)
                 viewModel.resetAliasDraftSavedState()

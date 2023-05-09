@@ -33,7 +33,7 @@ object ItemFieldMapper {
             )
         }
         val passwordIndex = autofillTypes.indexOfFirst { it == FieldType.Password }
-        if (passwordIndex != -1) {
+        if (passwordIndex != -1 && autofillItem.password != null) {
             mappingList.add(
                 DatasetMapping(
                     autofillFieldId = androidAutofillFieldIds[passwordIndex],

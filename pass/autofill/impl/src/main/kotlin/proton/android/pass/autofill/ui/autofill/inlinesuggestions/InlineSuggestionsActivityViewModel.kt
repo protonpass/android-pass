@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
@@ -33,6 +34,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
@@ -48,7 +50,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InlineSuggestionsActivityViewModel @Inject constructor(
-    preferenceRepository: UserPreferencesRepository,
+    private val preferenceRepository: UserPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
     private val getTotpCodeFromUri: GetTotpCodeFromUri,
@@ -125,17 +127,12 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
         autofillAppState: AutofillAppState
     ): AutofillMappings =
         encryptionContextProvider.withEncryptionContext {
-            val totpUri = decrypt(autofillItem.totp)
-            if (totpUri.isNotBlank() && copyTotpToClipboard.value()) {
-                viewModelScope.launch {
-                    getTotpCodeFromUri(totpUri)
-                        .onSuccess {
-                            clipboardManager.copyToClipboard(it)
-                            toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
-                        }
-                        .onFailure { PassLogger.w(TAG, "Could not copy totp code") }
-                }
-            }
+            handleTotpUri(
+                encryptionContext = this@withEncryptionContext,
+                copyTotpToClipboard = copyTotpToClipboard,
+                totp = autofillItem.totp
+            )
+
             updateAutofillItem(
                 UpdateAutofillItemData(
                     shareId = ShareId(autofillItem.shareId),
@@ -154,6 +151,28 @@ class InlineSuggestionsActivityViewModel @Inject constructor(
                 autofillTypes = autofillAppState.fieldTypes
             )
         }
+
+    private fun handleTotpUri(
+        encryptionContext: EncryptionContext,
+        copyTotpToClipboard: CopyTotpToClipboard,
+        totp: EncryptedString?
+    ) {
+        if (totp == null) return
+
+        val totpUri = encryptionContext.decrypt(totp)
+        if (totpUri.isNotBlank() && copyTotpToClipboard.value()) {
+            viewModelScope.launch {
+                getTotpCodeFromUri(totpUri)
+                    .onSuccess {
+                        clipboardManager.copyToClipboard(it)
+                        toastManager.showToast(R.string.autofill_notification_copy_to_clipboard)
+                    }
+                    .onFailure {
+                        PassLogger.w(TAG, "Could not copy totp code")
+                    }
+            }
+        }
+    }
 
     companion object {
         private const val TAG = "InlineSuggestionsActivityViewModel"

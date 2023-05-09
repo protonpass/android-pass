@@ -12,6 +12,7 @@ import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
+import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
 object CreateAlias : NavItem(
@@ -53,10 +54,8 @@ object CreateAliasBottomSheet : NavItem(
 }
 
 sealed interface CreateAliasNavigation {
-    data class Created(
-        val alias: String,
-        val dismissBottomsheet: Boolean
-    ) : CreateAliasNavigation
+    data class CreatedFromBottomsheet(val alias: String) : CreateAliasNavigation
+    data class Created(val shareId: ShareId, val itemId: ItemId, val alias: String) : CreateAliasNavigation
     object Close : CreateAliasNavigation
 }
 

@@ -1,42 +1,97 @@
 package proton.android.pass.featureitemcreate.impl.alias.mailboxes
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import me.proton.core.compose.component.ProtonAlertDialog
+import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonAlertDialogButton
 import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.headlineSmallNorm
 import me.proton.core.compose.theme.interactionNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.uievents.value
 import proton.android.pass.featureitemcreate.impl.R
-import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
+import me.proton.core.presentation.compose.R as CoreR
+import proton.android.pass.composecomponents.impl.R as ComponentsR
 
 @Composable
 fun SelectMailboxesDialogContent(
     modifier: Modifier = Modifier,
     state: SelectMailboxesUiState,
+    onUpgrade: () -> Unit,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
     onMailboxToggled: (SelectedAliasMailboxUiModel) -> Unit
 ) {
-    ProtonAlertDialog(
-        modifier = modifier,
-        onDismissRequest = onDismiss,
-        confirmButton = {
+    Column(modifier = modifier) {
+        ProtonDialogTitle(
+            modifier = Modifier.padding(16.dp),
+            title = stringResource(R.string.alias_mailbox_dialog_title)
+        )
+        LazyColumn {
+            items(items = state.mailboxes, key = { it.model.id }) { item ->
+                SelectMailboxesMailboxRow(
+                    modifier = Modifier.padding(16.dp, 2.dp),
+                    item = item,
+                    onToggle = { onMailboxToggled(item) }
+                )
+            }
+        }
+        if (state.showUpgrade) {
+            Divider(color = PassTheme.colors.inputBorderNorm)
+            Row(
+                modifier = Modifier
+                    .clickable(onClick = onUpgrade)
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.select_mailbox_upgrade_for_more_inboxes),
+                    style = ProtonTheme.typography.defaultNorm,
+                    color = PassTheme.colors.interactionNormMajor2
+                )
+                Icon(
+                    modifier = Modifier.size(16.dp),
+                    painter = painterResource(CoreR.drawable.ic_proton_arrow_out_square),
+                    contentDescription = stringResource(ComponentsR.string.upgrade_icon_content_description),
+                    tint = PassTheme.colors.interactionNormMajor2
+                )
+            }
+            Divider(color = PassTheme.colors.inputBorderNorm)
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
+            ProtonAlertDialogButton(
+                title = stringResource(R.string.alias_mailbox_dialog_cancel_button),
+                onClick = onDismiss
+            )
             ProtonTextButton(
                 onClick = onConfirm,
                 enabled = state.canApply.value()
@@ -49,56 +104,23 @@ fun SelectMailboxesDialogContent(
                     overflow = TextOverflow.Ellipsis
                 )
             }
-        },
-        dismissButton = {
-            ProtonAlertDialogButton(
-                title = stringResource(R.string.alias_mailbox_dialog_cancel_button),
-                onClick = onDismiss
-            )
-        },
-        title = {
-            ProtonDialogTitle(title = stringResource(R.string.alias_mailbox_dialog_title))
-        },
-        text = {
-            LazyColumn {
-                items(items = state.mailboxes, key = { it.model.id }) { item ->
-                    SelectMailboxesMailboxRow(
-                        item = item,
-                        onToggle = { onMailboxToggled(item) }
-                    )
-                }
-            }
         }
-    )
+    }
 }
+
+class ThemedSelectMailboxesPreviewProvider :
+    ThemePairPreviewProvider<SelectMailboxesUiState>(SelectMailboxesUiStatePreviewProvider())
 
 @Preview
 @Composable
 fun SelectMailboxesDialogContentPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemedSelectMailboxesPreviewProvider::class) input: Pair<Boolean, SelectMailboxesUiState>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             SelectMailboxesDialogContent(
-                state = SelectMailboxesUiState(
-                    mailboxes = listOf(
-                        SelectedAliasMailboxUiModel(
-                            selected = input.second,
-                            model = AliasMailboxUiModel(
-                                id = 1,
-                                email = "eric.norbert@proton.me"
-                            )
-                        ),
-                        SelectedAliasMailboxUiModel(
-                            selected = input.second,
-                            model = AliasMailboxUiModel(
-                                id = 2,
-                                email = "eric.work@proton.me"
-                            )
-                        )
-                    ),
-                    canApply = IsButtonEnabled.from(input.second)
-                ),
+                state = input.second,
+                onUpgrade = {},
                 onConfirm = {},
                 onDismiss = {},
                 onMailboxToggled = {}

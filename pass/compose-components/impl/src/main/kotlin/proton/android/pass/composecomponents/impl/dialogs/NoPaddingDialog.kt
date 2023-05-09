@@ -14,13 +14,13 @@ import androidx.compose.ui.window.DialogProperties
 
 @Composable
 fun NoPaddingDialog(
-    onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit,
     shape: Shape = MaterialTheme.shapes.medium,
     backgroundColor: Color = MaterialTheme.colors.surface,
     contentColor: Color = contentColorFor(backgroundColor),
     properties: DialogProperties = DialogProperties(),
-    content: (@Composable ColumnScope.() -> Unit)? = null
+    content: @Composable ColumnScope.() -> Unit
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -33,7 +33,7 @@ fun NoPaddingDialog(
             contentColor = contentColor
         ) {
             Column {
-                content?.invoke(this)
+                content(this)
             }
         }
     }

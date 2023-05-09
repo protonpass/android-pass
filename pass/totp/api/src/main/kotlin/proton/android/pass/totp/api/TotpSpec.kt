@@ -22,6 +22,11 @@ data class TotpSpec(
     val digits: TotpDigits = TotpDigits.Six,
     val validPeriodSeconds: Int = DEFAULT_VALID_PERIOD_SECONDS
 ) {
+    fun isUsingDefaultParameters(): Boolean =
+        algorithm == TotpAlgorithm.Sha1 &&
+            digits == TotpDigits.Six &&
+            validPeriodSeconds == DEFAULT_VALID_PERIOD_SECONDS
+
     companion object {
         const val DEFAULT_VALID_PERIOD_SECONDS = 30
     }

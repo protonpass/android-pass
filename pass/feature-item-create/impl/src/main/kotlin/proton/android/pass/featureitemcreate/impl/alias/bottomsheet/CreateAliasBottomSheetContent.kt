@@ -72,7 +72,9 @@ fun CreateAliasBottomSheetContent(
     ) {
         BottomSheetTitle(title = stringResource(R.string.field_alias_you_are_about_to_create))
         AliasPrefixSuffixText(
-            modifier = Modifier.align(Alignment.CenterHorizontally).padding(vertical = 8.dp),
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(vertical = 8.dp),
             prefix = state.aliasItem.prefix,
             suffix = state.aliasItem.selectedSuffix?.suffix ?: "",
             suffixColor = PassTheme.colors.loginInteractionNormMajor2,
@@ -122,10 +124,12 @@ fun CreateAliasBottomSheetContent(
                 onMailboxesChanged(it)
                 showMailboxesDialog = false
             },
-            onDismiss = { showMailboxesDialog = false }
+            onDismiss = { showMailboxesDialog = false },
+            onUpgrade = {}
         )
         SelectSuffixDialog(
             show = showSuffixDialog,
+            shouldUpgrade = false,
             suffixes = state.aliasItem.aliasOptions.suffixes.toImmutableList(),
             selectedSuffix = state.aliasItem.selectedSuffix,
             color = PassTheme.colors.loginInteractionNorm,
@@ -133,7 +137,8 @@ fun CreateAliasBottomSheetContent(
                 onSuffixChanged(it)
                 showSuffixDialog = false
             },
-            onDismiss = { showSuffixDialog = false }
+            onDismiss = { showSuffixDialog = false },
+            onUpgrade = {}
         )
     }
 }

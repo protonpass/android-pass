@@ -18,7 +18,8 @@ data class CreateUpdateAliasUiState(
     val isApplyButtonEnabled: IsButtonEnabled,
     val showVaultSelector: Boolean,
     val closeScreenEvent: CloseScreenEvent,
-    val hasUserEditedContent: Boolean
+    val hasUserEditedContent: Boolean,
+    val showUpgrade: Boolean
 ) {
     companion object {
         val Initial = CreateUpdateAliasUiState(
@@ -33,7 +34,8 @@ data class CreateUpdateAliasUiState(
             isApplyButtonEnabled = IsButtonEnabled.Disabled,
             showVaultSelector = false,
             closeScreenEvent = CloseScreenEvent.NotClose,
-            hasUserEditedContent = false
+            hasUserEditedContent = false,
+            showUpgrade = false
         )
     }
 }

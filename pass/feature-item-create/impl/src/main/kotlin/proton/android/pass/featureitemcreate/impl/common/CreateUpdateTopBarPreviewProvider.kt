@@ -42,12 +42,20 @@ class CreateUpdateTopBarPreviewProvider : PreviewParameterProvider<CreateUpdateT
                 actionColor = PassPalette.MacaroniAndCheese100,
                 closeIconColor = PassPalette.MacaroniAndCheese100,
                 closeBackgroundColor = PassPalette.MacaroniAndCheese8
+            ),
+            CreateUpdateTopBarPreview(
+                isLoading = false,
+                actionColor = PassPalette.GreenSheen100,
+                closeIconColor = PassPalette.GreenSheen100,
+                closeBackgroundColor = PassPalette.GreenSheen8,
+                showUpgrade = true
             )
         )
 }
 
 data class CreateUpdateTopBarPreview(
     val isLoading: Boolean,
+    val showUpgrade: Boolean = false,
     val actionColor: Color,
     val closeBackgroundColor: Color,
     val closeIconColor: Color,

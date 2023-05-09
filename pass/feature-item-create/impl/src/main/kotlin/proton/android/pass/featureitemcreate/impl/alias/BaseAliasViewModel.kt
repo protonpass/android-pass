@@ -146,7 +146,8 @@ abstract class BaseAliasViewModel(
             isApplyButtonEnabled = eventWrapper.isApplyButtonEnabled,
             showVaultSelector = showVaultSelector,
             closeScreenEvent = eventWrapper.closeScreenEvent,
-            hasUserEditedContent = hasUserEditedContent
+            hasUserEditedContent = hasUserEditedContent,
+            showUpgrade = false
         )
     }
         .stateIn(

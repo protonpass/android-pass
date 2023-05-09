@@ -27,7 +27,9 @@ import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.EditAlias
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
 import proton.android.pass.featureitemcreate.impl.alias.updateAliasGraph
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.generatepassword.GeneratePasswordBottomsheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.generatepassword.generatePasswordBottomsheetGraph
@@ -188,35 +190,40 @@ fun NavGraphBuilder.appGraph(
         }
     )
     bottomsheetCreateItemGraph(
-        onCreateLogin = { shareId ->
-            appNavigator.navigate(
-                CreateLogin,
-                CreateLogin.createNavRoute(shareId)
-            )
-        },
-        onCreateAlias = { shareId ->
-            appNavigator.navigate(
-                CreateAlias,
-                CreateAlias.createNavRoute(shareId)
-            )
-        },
-        onCreateNote = { shareId ->
-            appNavigator.navigate(
-                CreateNote,
-                CreateNote.createNavRoute(shareId)
-            )
-        },
-        onCreatePassword = {
-            val backDestination = when {
-                appNavigator.hasDestinationInStack(Profile) -> Profile
-                appNavigator.hasDestinationInStack(Home) -> Home
-                else -> null
+        mode = CreateItemBottomSheetMode.Full,
+        onNavigate = {
+            when (it) {
+                is CreateItemBottomsheetNavigation.CreateAlias -> {
+                    appNavigator.navigate(
+                        CreateAlias,
+                        CreateAlias.createNavRoute(it.shareId)
+                    )
+                }
+                is CreateItemBottomsheetNavigation.CreateLogin -> {
+                    appNavigator.navigate(
+                        CreateLogin,
+                        CreateLogin.createNavRoute(it.shareId)
+                    )
+                }
+                is CreateItemBottomsheetNavigation.CreateNote -> {
+                    appNavigator.navigate(
+                        CreateNote,
+                        CreateNote.createNavRoute(it.shareId)
+                    )
+                }
+                CreateItemBottomsheetNavigation.CreatePassword -> {
+                    val backDestination = when {
+                        appNavigator.hasDestinationInStack(Profile) -> Profile
+                        appNavigator.hasDestinationInStack(Home) -> Home
+                        else -> null
+                    }
+                    appNavigator.navigate(
+                        destination = GeneratePasswordBottomsheet,
+                        backDestination = backDestination
+                    )
+                }
             }
-            appNavigator.navigate(
-                destination = GeneratePasswordBottomsheet,
-                backDestination = backDestination
-            )
-        }
+        },
     )
     vaultGraph(
         onNavigate = {
@@ -345,14 +352,13 @@ fun NavGraphBuilder.appGraph(
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.Close -> appNavigator.onBackClick()
-                is CreateAliasNavigation.Created -> {
-                    if (it.dismissBottomsheet) {
-                        dismissBottomSheet {
-                            appNavigator.onBackClick()
-                        }
-                    } else {
+                is CreateAliasNavigation.CreatedFromBottomsheet -> {
+                    dismissBottomSheet {
                         appNavigator.onBackClick()
                     }
+                }
+                is CreateAliasNavigation.Created -> {
+                    appNavigator.onBackClick()
                 }
             }
         },

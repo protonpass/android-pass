@@ -54,8 +54,8 @@ fun CreateAliasScreen(
             isEditAllowed = viewState.isLoadingState == IsLoadingState.NotLoading,
             showVaultSelector = viewState.showVaultSelector,
             onUpClick = onExit,
-            onAliasCreated = { _, _, alias ->
-                val event = CreateAliasNavigation.Created(alias, dismissBottomsheet = false)
+            onAliasCreated = { shareId, itemId, alias ->
+                val event = CreateAliasNavigation.Created(shareId, itemId, alias)
                 onNavigate(event)
             },
             onSubmit = { shareId -> viewModel.createAlias(shareId) },

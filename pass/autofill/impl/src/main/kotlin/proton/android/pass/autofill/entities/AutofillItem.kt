@@ -9,6 +9,6 @@ data class AutofillItem(
     val itemId: String,
     val shareId: String,
     val username: String,
-    val password: EncryptedString,
-    val totp: EncryptedString
+    val password: EncryptedString?,
+    val totp: EncryptedString?
 ) : Parcelable

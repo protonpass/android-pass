@@ -127,4 +127,5 @@
     <string name="mfa_icon_content_description">2fa icon</string>
     <string name="select_suffix_upgrade_for_custom_domains">Upgrade for custom domains</string>
     <string name="select_mailbox_upgrade_for_more_inboxes">Upgrade for more inboxes</string>
+    <string name="create_alias_content_limit_banner">You have reached the limit of aliases you can create. Create unlimited number of aliases when you upgrade your subscription.</string>
 </resources>

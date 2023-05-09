@@ -40,7 +40,7 @@ internal fun LoginItemForm(
     modifier: Modifier = Modifier,
     isEditAllowed: Boolean,
     loginItem: LoginItem,
-    hasReachedTotpLimit: Boolean,
+    totpUiState: TotpUiState,
     selectedShare: VaultWithItemCount?,
     showCreateAliasButton: Boolean,
     primaryEmail: String?,
@@ -93,7 +93,7 @@ internal fun LoginItemForm(
             MainLoginSection(
                 loginItem = loginItem,
                 canUpdateUsername = canUpdateUsername,
-                hasReachedTotpLimit = hasReachedTotpLimit,
+                totpUiState = totpUiState,
                 isEditAllowed = isEditAllowed,
                 isTotpError = isTotpError,
                 onUsernameChange = onUsernameChange,

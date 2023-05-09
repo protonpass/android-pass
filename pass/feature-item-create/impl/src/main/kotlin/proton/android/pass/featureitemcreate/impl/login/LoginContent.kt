@@ -174,7 +174,8 @@ internal fun LoginContent(
                     iconColor = PassTheme.colors.loginInteractionNormMajor2,
                     iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
                     onCloseClick = onUpClick,
-                    onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) }
+                    onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) },
+                    onUpgrade = {}
                 )
             }
         ) { padding ->

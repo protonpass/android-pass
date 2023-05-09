@@ -3,6 +3,7 @@ package proton.android.pass.composecomponents.impl.bottomsheet
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,14 +19,17 @@ import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 
 @Composable
 fun BottomSheetCancelConfirm(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
+    showUpgrade: Boolean = false,
     confirmText: String = stringResource(R.string.bottomsheet_confirm_button),
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
+    onUpgradeClick: () -> Unit = {}
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -49,22 +53,32 @@ fun BottomSheetCancelConfirm(
                 )
             }
         )
-        LoadingCircleButton(
-            modifier = Modifier.weight(1f),
-            isLoading = isLoading,
-            color = PassTheme.colors.loginInteractionNormMajor1,
-            onClick = onConfirm,
-            buttonHeight = 26.dp,
-            text = {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = confirmText,
-                    style = PassTypography.body3RegularInverted,
-                    textAlign = TextAlign.Center,
-                    color = PassTheme.colors.textInvert
-                )
-            }
-        )
+        if (showUpgrade) {
+            UpgradeButton(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(45.dp),
+                color = PassTheme.colors.loginInteractionNormMajor1,
+                onUpgradeClick = onUpgradeClick
+            )
+        } else {
+            LoadingCircleButton(
+                modifier = Modifier.weight(1f),
+                isLoading = isLoading,
+                color = PassTheme.colors.loginInteractionNormMajor1,
+                onClick = onConfirm,
+                buttonHeight = 26.dp,
+                text = {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = confirmText,
+                        style = PassTypography.body3RegularInverted,
+                        textAlign = TextAlign.Center,
+                        color = PassTheme.colors.textInvert
+                    )
+                }
+            )
+        }
     }
 
 }

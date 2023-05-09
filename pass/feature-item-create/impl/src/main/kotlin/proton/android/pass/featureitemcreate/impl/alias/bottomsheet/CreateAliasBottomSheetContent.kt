@@ -25,6 +25,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
+import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
@@ -111,10 +112,19 @@ fun CreateAliasBottomSheetContent(
             isLoading = state.isLoadingState.value(),
             onMailboxClick = { showMailboxesDialog = true }
         )
+        AnimatedVisibility(visible = state.showUpgrade) {
+            InfoBanner(
+                modifier = Modifier.padding(top = 16.dp),
+                text = stringResource(R.string.create_alias_content_limit_banner),
+                backgroundColor = PassTheme.colors.loginInteractionNormMinor1
+            )
+        }
         BottomSheetCancelConfirm(
             modifier = Modifier.padding(top = 36.dp),
+            showUpgrade = state.showUpgrade,
             onCancel = onCancel,
-            onConfirm = onConfirm
+            onConfirm = onConfirm,
+            onUpgradeClick = {}
         )
 
         SelectMailboxesDialog(
@@ -206,7 +216,8 @@ fun CreateAliasBottomSheetContentPreview(
                     isApplyButtonEnabled = IsButtonEnabled.Enabled,
                     showVaultSelector = false,
                     closeScreenEvent = CloseScreenEvent.NotClose,
-                    hasUserEditedContent = false
+                    hasUserEditedContent = false,
+                    showUpgrade = false
                 ),
                 showAdvancedOptionsInitially = true,
                 onCancel = {},

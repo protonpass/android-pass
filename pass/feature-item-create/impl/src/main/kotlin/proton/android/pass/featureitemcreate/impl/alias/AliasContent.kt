@@ -82,6 +82,7 @@ internal fun AliasContent(
                         }
                     }
                 )
+
                 VaultSelection -> VaultSelectionBottomSheet(
                     shareList = uiState.vaultList,
                     selectedShareId = uiState.selectedVault?.vault?.shareId,
@@ -106,7 +107,9 @@ internal fun AliasContent(
                     iconColor = PassTheme.colors.aliasInteractionNormMajor2,
                     iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                     onCloseClick = onUpClick,
-                    onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) }
+                    showUpgrade = false,
+                    onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) },
+                    onUpgrade = {}
                 )
             }
         ) { padding ->
@@ -118,6 +121,7 @@ internal fun AliasContent(
                 isEditAllowed = isEditAllowed,
                 showVaultSelector = showVaultSelector,
                 isLoading = uiState.isLoadingState.value(),
+                showUpgrade = false,
                 onTitleRequiredError = uiState.errorList.contains(BlankTitle),
                 onAliasRequiredError = uiState.errorList.contains(BlankPrefix),
                 onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),

@@ -20,6 +20,7 @@ import me.proton.core.compose.theme.defaultSmallInverted
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
+import proton.android.pass.composecomponents.impl.buttons.UpgradeButton
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.featureitemcreate.impl.R
 
@@ -31,9 +32,11 @@ internal fun CreateUpdateTopBar(
     isLoading: Boolean,
     actionColor: Color,
     iconColor: Color,
+    showUpgrade: Boolean = false,
     iconBackgroundColor: Color,
     onCloseClick: () -> Unit,
-    onActionClick: () -> Unit
+    onActionClick: () -> Unit,
+    onUpgrade: () -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     ProtonTopAppBar(
@@ -56,22 +59,30 @@ internal fun CreateUpdateTopBar(
             }
         },
         actions = {
-            LoadingCircleButton(
-                modifier = Modifier.padding(12.dp, 4.dp),
-                color = actionColor,
-                isLoading = isLoading,
-                text = {
-                    Text(
-                        text = text,
-                        style = ProtonTheme.typography.defaultSmallInverted,
-                        color = PassTheme.colors.textInvert
-                    )
-                },
-                onClick = {
-                    keyboardController?.hide()
-                    onActionClick()
-                }
-            )
+            if (showUpgrade) {
+                UpgradeButton(
+                    modifier = Modifier.padding(12.dp, 0.dp),
+                    color = actionColor,
+                    onUpgradeClick = onUpgrade
+                )
+            } else {
+                LoadingCircleButton(
+                    modifier = Modifier.padding(12.dp, 4.dp),
+                    color = actionColor,
+                    isLoading = isLoading,
+                    text = {
+                        Text(
+                            text = text,
+                            style = ProtonTheme.typography.defaultSmallInverted,
+                            color = PassTheme.colors.textInvert
+                        )
+                    },
+                    onClick = {
+                        keyboardController?.hide()
+                        onActionClick()
+                    }
+                )
+            }
         }
     )
 }
@@ -93,8 +104,10 @@ fun CreateUpdateTopBarPreview(
                 actionColor = input.second.actionColor,
                 iconBackgroundColor = input.second.closeBackgroundColor,
                 iconColor = input.second.closeIconColor,
+                showUpgrade = input.second.showUpgrade,
                 onCloseClick = {},
-                onActionClick = {}
+                onActionClick = {},
+                onUpgrade = {}
             )
         }
     }

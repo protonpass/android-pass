@@ -34,13 +34,7 @@ class CreateVaultViewModel @Inject constructor(
         getUpgradeInfo().asLoadingResult()
     ) { baseState, upgrade ->
         val (isLoading, showUpgradeButton) = when (upgrade) {
-            is LoadingResult.Success -> {
-                val upgradeData = upgrade.data
-                val vaultLimitReached = upgradeData.totalVaults >= upgradeData.vaultLimit
-                val showUpgrade = upgradeData.isUpgradeAvailable && vaultLimitReached
-                baseState.isLoading to showUpgrade
-            }
-
+            is LoadingResult.Success -> baseState.isLoading to upgrade.data.hasReachedVaultLimit()
             LoadingResult.Loading -> IsLoadingState.Loading to false
             is LoadingResult.Error -> {
                 PassLogger.w(TAG, upgrade.exception, "Get upgrade info failed")

@@ -22,7 +22,7 @@ data class CreateUpdateLoginUiState(
     val primaryEmail: String?,
     val showVaultSelector: Boolean,
     val hasUserEditedContent: Boolean,
-    val hasReachedTotpLimit: Boolean
+    val totpUiState: TotpUiState
 ) {
     companion object {
         val Initial = CreateUpdateLoginUiState(
@@ -39,7 +39,24 @@ data class CreateUpdateLoginUiState(
             primaryEmail = null,
             showVaultSelector = false,
             hasUserEditedContent = false,
-            hasReachedTotpLimit = false
+            totpUiState = TotpUiState.NotInitialised
         )
     }
+}
+
+sealed interface TotpUiState {
+    @Immutable
+    object NotInitialised : TotpUiState
+
+    @Immutable
+    object Loading : TotpUiState
+
+    @Immutable
+    object Error : TotpUiState
+
+    @Immutable
+    object Success : TotpUiState
+
+    @Immutable
+    data class Limited(val isEdit: Boolean) : TotpUiState
 }

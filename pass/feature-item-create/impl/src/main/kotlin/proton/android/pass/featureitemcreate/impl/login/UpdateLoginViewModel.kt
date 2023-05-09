@@ -23,6 +23,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.CreateAlias
+import proton.android.pass.data.api.usecases.GetUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpdateItem
@@ -58,6 +59,7 @@ class UpdateLoginViewModel @Inject constructor(
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
+    getUpgradeInfo: GetUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle,
     draftRepository: DraftRepository
@@ -68,6 +70,7 @@ class UpdateLoginViewModel @Inject constructor(
     totpManager = totpManager,
     observeVaults = observeVaults,
     observeCurrentUser = observeCurrentUser,
+    getUpgradeInfo = getUpgradeInfo,
     savedStateHandle = savedStateHandle,
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider
@@ -103,6 +106,10 @@ class UpdateLoginViewModel @Inject constructor(
                                 } else {
                                     itemContents.websites.toImmutableList()
                                 }
+                                val totp = decrypt(itemContents.primaryTotp)
+                                if (totp.isNotBlank()) {
+                                    itemHadTotpState.update { true }
+                                }
                                 LoginItem(
                                     title = decrypt(item.title),
                                     username = itemContents.username,
@@ -111,7 +118,7 @@ class UpdateLoginViewModel @Inject constructor(
                                     note = decrypt(item.note),
                                     packageInfoSet = item.packageInfoSet.map(::PackageInfoUi)
                                         .toImmutableSet(),
-                                    primaryTotp = decrypt(itemContents.primaryTotp),
+                                    primaryTotp = totp,
                                     extraTotpSet = emptySet()
                                 )
                             }

@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.clipboard.api.ClipboardManager
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -31,6 +32,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
+import proton.android.pass.data.api.usecases.GetUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -54,6 +56,7 @@ abstract class BaseLoginViewModel(
     private val draftRepository: DraftRepository,
     observeVaults: ObserveVaultsWithItemCount,
     observeCurrentUser: ObserveCurrentUser,
+    getUpgradeInfo: GetUpgradeInfo,
     encryptionContextProvider: EncryptionContextProvider,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -165,14 +168,31 @@ abstract class BaseLoginViewModel(
         val aliasItem: Option<AliasItem>
     )
 
+    protected val itemHadTotpState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val totpUiStateFlow = combine(
+        itemHadTotpState,
+        getUpgradeInfo().asLoadingResult()
+    ) { itemHadTotp, upgradeInfoResult ->
+        when (upgradeInfoResult) {
+            is LoadingResult.Error -> TotpUiState.Error
+            LoadingResult.Loading -> TotpUiState.Loading
+            is LoadingResult.Success -> if (upgradeInfoResult.data.hasReachedTotpLimit()) {
+                TotpUiState.Limited(itemHadTotp)
+            } else {
+                TotpUiState.Success
+            }
+        }
+    }
+
     val loginUiState: StateFlow<CreateUpdateLoginUiState> = combineN(
         sharesWrapperState,
         loginAliasItemWrapperState,
         isLoadingState,
         eventsFlow,
         focusLastWebsiteState,
-        hasUserEditedContentFlow
-    ) { shareWrapper, loginItemWrapper, isLoading, events, focusLastWebsite, hasUserEditedContent ->
+        hasUserEditedContentFlow,
+        totpUiStateFlow
+    ) { shareWrapper, loginItemWrapper, isLoading, events, focusLastWebsite, hasUserEditedContent, totpUiState ->
         val shares = shareWrapper.getOrNull()
         val showVaultSelector = shares?.let { it.vaultList.size > 1 } ?: false
         CreateUpdateLoginUiState(
@@ -189,7 +209,7 @@ abstract class BaseLoginViewModel(
             aliasItem = loginItemWrapper.aliasItem.value(),
             showVaultSelector = showVaultSelector,
             hasUserEditedContent = hasUserEditedContent,
-            hasReachedTotpLimit = false
+            totpUiState = totpUiState
         )
     }
         .stateIn(

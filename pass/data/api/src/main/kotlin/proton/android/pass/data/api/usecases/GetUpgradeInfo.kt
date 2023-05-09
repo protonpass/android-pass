@@ -14,4 +14,8 @@ data class UpgradeInfo(
     val aliasLimit: Int,
     val totalTotp: Int,
     val totpLimit: Int
-)
+) {
+    fun hasReachedVaultLimit() = isUpgradeAvailable && totalVaults >= vaultLimit
+    fun hasReachedAliasLimit() = isUpgradeAvailable && totalAlias >= aliasLimit
+    fun hasReachedTotpLimit() = isUpgradeAvailable && totalTotp >= totpLimit
+}

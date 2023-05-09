@@ -21,6 +21,7 @@ import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
+import proton.android.pass.data.api.usecases.GetUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
@@ -51,6 +52,7 @@ class CreateLoginViewModel @Inject constructor(
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
+    getUpgradeInfo: GetUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle,
 ) : BaseLoginViewModel(
@@ -60,6 +62,7 @@ class CreateLoginViewModel @Inject constructor(
     totpManager = totpManager,
     observeVaults = observeVaults,
     observeCurrentUser = observeCurrentUser,
+    getUpgradeInfo = getUpgradeInfo,
     savedStateHandle = savedStateHandle,
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider
@@ -72,6 +75,7 @@ class CreateLoginViewModel @Inject constructor(
         PassLogger.e(TAG, throwable)
     }
 
+    @Suppress("ComplexMethod")
     fun setInitialContents(initialContents: InitialCreateLoginUiState) {
 
         val currentValue = loginItemState.value
@@ -88,14 +92,11 @@ class CreateLoginViewModel @Inject constructor(
         }
         aliasLocalItemState.update { initialContents.aliasItem.toOption() }
 
-        val username = if (initialContents.username != null) {
-            initialContents.username
-        } else if (initialContents.aliasItem?.aliasToBeCreated != null) {
-            initialContents.aliasItem.aliasToBeCreated
-        } else if (initialUsername is Some) {
-            initialUsername.value
-        } else {
-            currentValue.username
+        val username = when {
+            initialContents.username != null -> initialContents.username
+            initialContents.aliasItem?.aliasToBeCreated != null -> initialContents.aliasItem.aliasToBeCreated
+            initialUsername is Some -> initialUsername.value
+            else -> currentValue.username
         }
 
         if (initialContents.aliasItem?.aliasToBeCreated?.isNotEmpty() == true) {

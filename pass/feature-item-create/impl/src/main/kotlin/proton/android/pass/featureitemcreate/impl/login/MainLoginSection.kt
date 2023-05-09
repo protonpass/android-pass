@@ -14,7 +14,7 @@ fun MainLoginSection(
     canUpdateUsername: Boolean,
     isEditAllowed: Boolean,
     isTotpError: Boolean,
-    hasReachedTotpLimit: Boolean,
+    totpUiState: TotpUiState,
     onUsernameChange: (String) -> Unit,
     onUsernameFocus: (Boolean) -> Unit,
     onAliasOptionsClick: () -> Unit,
@@ -43,10 +43,30 @@ fun MainLoginSection(
             onFocus = onPasswordFocus
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
-        if (hasReachedTotpLimit) {
-            TotpLimit(onUpgrade = onUpgrade)
-        } else {
-            TotpInput(
+        when (totpUiState) {
+            TotpUiState.NotInitialised,
+            TotpUiState.Loading,
+            TotpUiState.Error -> TotpInput(
+                value = loginItem.primaryTotp,
+                enabled = false,
+                isError = isTotpError,
+                onTotpChanged = onTotpChanged,
+                onFocus = onTotpFocus
+            )
+
+            is TotpUiState.Limited -> if (totpUiState.isEdit) {
+                TotpInput(
+                    value = loginItem.primaryTotp,
+                    enabled = isEditAllowed,
+                    isError = isTotpError,
+                    onTotpChanged = onTotpChanged,
+                    onFocus = onTotpFocus
+                )
+            } else {
+                TotpLimit(onUpgrade = onUpgrade)
+            }
+
+            TotpUiState.Success -> TotpInput(
                 value = loginItem.primaryTotp,
                 enabled = isEditAllowed,
                 isError = isTotpError,

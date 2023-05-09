@@ -17,6 +17,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
+import proton.android.pass.data.fakes.usecases.TestGetUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
@@ -79,14 +80,16 @@ internal class CreateLoginViewModelTest {
             observeVaults = observeVaults,
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
             telemetryManager = telemetryManager,
-            draftRepository = TestDraftRepository()
+            draftRepository = TestDraftRepository(),
+            getUpgradeInfo = TestGetUpgradeInfo()
         )
     }
 
     @Test
     fun `when a create item event without title should return a BlankTitle validation error`() =
         runTest {
-            val vault = VaultWithItemCount(Vault(ShareId("shareId"), "Share", isPrimary = false), 1, 0)
+            val vault =
+                VaultWithItemCount(Vault(ShareId("shareId"), "Share", isPrimary = false), 1, 0)
             observeVaults.sendResult(Result.success(listOf(vault)))
 
             instance.createItem()
@@ -97,7 +100,8 @@ internal class CreateLoginViewModelTest {
                         Initial.copy(
                             vaultList = listOf(vault),
                             selectedVault = vault,
-                            validationErrors = setOf(LoginItemValidationErrors.BlankTitle)
+                            validationErrors = setOf(LoginItemValidationErrors.BlankTitle),
+                            totpUiState = TotpUiState.Success
                         )
                     )
             }
@@ -124,7 +128,8 @@ internal class CreateLoginViewModelTest {
                         selectedVault = vault,
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.NotLoading,
-                        hasUserEditedContent = true
+                        hasUserEditedContent = true,
+                        totpUiState = TotpUiState.Success
                     )
                 )
             assertThat(awaitItem())
@@ -134,7 +139,8 @@ internal class CreateLoginViewModelTest {
                         selectedVault = vault,
                         loginItem = LoginItem.Empty.copy(title = titleInput),
                         isLoadingState = IsLoadingState.Loading,
-                        hasUserEditedContent = true
+                        hasUserEditedContent = true,
+                        totpUiState = TotpUiState.Success
                     )
                 )
             assertThat(awaitItem())
@@ -158,7 +164,8 @@ internal class CreateLoginViewModelTest {
                                 modificationTime = item.modificationTime,
                                 lastAutofillTime = item.lastAutofillTime.value()
                             )
-                        )
+                        ),
+                        totpUiState = TotpUiState.Success
                     )
                 )
         }
@@ -206,7 +213,8 @@ internal class CreateLoginViewModelTest {
                             username = initialContents.username!!,
                             password = initialContents.password!!,
                             websiteAddresses = listOf(initialContents.url!!)
-                        )
+                        ),
+                        totpUiState = TotpUiState.Success
                     )
                 )
         }

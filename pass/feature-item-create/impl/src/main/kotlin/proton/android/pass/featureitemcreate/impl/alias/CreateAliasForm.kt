@@ -1,5 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.alias
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,9 +9,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
+import proton.android.pass.featureitemcreate.impl.R
 import proton.pass.domain.VaultWithItemCount
 
 @Composable
@@ -25,6 +30,7 @@ internal fun CreateAliasForm(
     isEditAllowed: Boolean,
     isLoading: Boolean,
     showVaultSelector: Boolean,
+    showUpgrade: Boolean,
     onTitleChange: (String) -> Unit,
     onPrefixChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
@@ -39,6 +45,12 @@ internal fun CreateAliasForm(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
+        AnimatedVisibility(visible = showUpgrade) {
+            InfoBanner(
+                backgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
+                text = stringResource(R.string.create_alias_content_limit_banner)
+            )
+        }
         TitleVaultSelectionSection(
             titleValue = aliasItem.title,
             onTitleChanged = onTitleChange,

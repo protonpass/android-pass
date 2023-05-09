@@ -21,7 +21,8 @@ class SelectMailboxesDialogViewModel : ViewModel() {
         val canApply = mailboxes.any { it.selected }
         SelectMailboxesUiState(
             mailboxes = mailboxes,
-            canApply = IsButtonEnabled.from(canApply)
+            canApply = IsButtonEnabled.from(canApply),
+            showUpgrade = false
         )
     }.stateIn(
         scope = viewModelScope,

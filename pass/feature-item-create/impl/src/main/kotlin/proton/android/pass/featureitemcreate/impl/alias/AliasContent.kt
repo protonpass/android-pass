@@ -144,6 +144,7 @@ internal fun AliasContent(
 
             SelectSuffixDialog(
                 show = showSuffixDialog,
+                shouldUpgrade = false,
                 suffixes = uiState.aliasItem.aliasOptions.suffixes.toImmutableList(),
                 selectedSuffix = uiState.aliasItem.selectedSuffix,
                 color = PassTheme.colors.aliasInteractionNorm,
@@ -157,7 +158,8 @@ internal fun AliasContent(
                     scope.launch {
                         showSuffixDialog = false
                     }
-                }
+                },
+                onUpgrade = {}
             )
 
             SelectMailboxesDialog(
@@ -167,7 +169,8 @@ internal fun AliasContent(
                     showMailboxDialog = false
                     onMailboxesChanged(it)
                 },
-                onDismiss = { showMailboxDialog = false }
+                onDismiss = { showMailboxDialog = false },
+                onUpgrade = {}
             )
             IsAliasSavedLaunchedEffect(uiState, onAliasCreated)
         }

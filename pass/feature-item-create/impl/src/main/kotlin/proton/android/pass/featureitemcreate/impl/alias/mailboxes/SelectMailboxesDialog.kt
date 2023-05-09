@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -17,22 +18,23 @@ fun SelectMailboxesDialog(
     mailboxes: List<SelectedAliasMailboxUiModel>,
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onDismiss: () -> Unit,
+    onUpgrade: () -> Unit,
 ) {
     if (!show) return
-
     val viewModel: SelectMailboxesDialogViewModel = hiltViewModel()
+
     LaunchedEffect(Unit) {
         viewModel.setMailboxes(mailboxes)
     }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    SelectMailboxesDialogContent(
-        modifier = modifier,
-        state = uiState,
-        onConfirm = {
-            onMailboxesChanged(uiState.mailboxes)
-        },
-        onDismiss = onDismiss,
-        onMailboxToggled = { viewModel.onMailboxChanged(it) }
-    )
+    NoPaddingDialog(modifier = modifier, onDismissRequest = onDismiss) {
+        SelectMailboxesDialogContent(
+            state = uiState,
+            onConfirm = { onMailboxesChanged(uiState.mailboxes) },
+            onDismiss = onDismiss,
+            onUpgrade = onUpgrade,
+            onMailboxToggled = { viewModel.onMailboxChanged(it) }
+        )
+    }
 }

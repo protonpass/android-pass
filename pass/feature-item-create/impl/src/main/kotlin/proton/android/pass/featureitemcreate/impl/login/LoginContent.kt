@@ -181,7 +181,7 @@ internal fun LoginContent(
             LoginItemForm(
                 modifier = Modifier.padding(padding),
                 loginItem = uiState.loginItem,
-                hasReachedTotpLimit = uiState.hasReachedTotpLimit,
+                totpUiState = uiState.totpUiState,
                 selectedShare = uiState.selectedVault,
                 showCreateAliasButton = showCreateAliasButton,
                 canUpdateUsername = uiState.canUpdateUsername,

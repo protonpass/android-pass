@@ -125,4 +125,6 @@
     <string name="mfa_limit_reached">2FA limit reached</string>
     <string name="upgrade">Upgrade</string>
     <string name="mfa_icon_content_description">2fa icon</string>
+    <string name="select_suffix_upgrade_for_custom_domains">Upgrade for custom domains</string>
+    <string name="select_mailbox_upgrade_for_more_inboxes">Upgrade for more inboxes</string>
 </resources>

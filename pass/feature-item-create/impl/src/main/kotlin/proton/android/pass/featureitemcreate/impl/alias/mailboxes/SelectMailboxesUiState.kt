@@ -7,12 +7,14 @@ import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiMo
 @Stable
 data class SelectMailboxesUiState(
     val mailboxes: List<SelectedAliasMailboxUiModel>,
-    val canApply: IsButtonEnabled
+    val canApply: IsButtonEnabled,
+    val showUpgrade: Boolean
 ) {
     companion object {
         val Initial = SelectMailboxesUiState(
             mailboxes = emptyList(),
-            canApply = IsButtonEnabled.Disabled
+            canApply = IsButtonEnabled.Disabled,
+            showUpgrade = false
         )
     }
 }

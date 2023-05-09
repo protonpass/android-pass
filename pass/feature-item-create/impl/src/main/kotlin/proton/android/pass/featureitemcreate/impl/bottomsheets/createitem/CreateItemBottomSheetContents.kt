@@ -8,18 +8,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
@@ -27,27 +27,48 @@ import proton.android.pass.composecomponents.impl.item.icon.PasswordIcon
 import proton.android.pass.featureitemcreate.impl.R
 import proton.pass.domain.ShareId
 
+enum class CreateItemBottomSheetMode {
+    Full,
+    Autofill;
+}
+
 @ExperimentalMaterialApi
 @Composable
 fun CreateItemBottomSheetContents(
     modifier: Modifier = Modifier,
     shareId: ShareId? = null,
-    onCreateLogin: (Option<ShareId>) -> Unit,
-    onCreateAlias: (Option<ShareId>) -> Unit,
-    onCreateNote: (Option<ShareId>) -> Unit,
-    onCreatePassword: () -> Unit
+    mode: CreateItemBottomSheetMode,
+    onNavigate: (CreateItemBottomsheetNavigation) -> Unit
 ) {
+
+    val items = when (mode) {
+        CreateItemBottomSheetMode.Full -> listOf(
+            createLogin(shareId) {
+                onNavigate(CreateItemBottomsheetNavigation.CreateLogin(it))
+            },
+            createAlias(shareId) {
+                onNavigate(CreateItemBottomsheetNavigation.CreateAlias(it))
+            },
+            createNote(shareId) {
+                onNavigate(CreateItemBottomsheetNavigation.CreateNote(it))
+            },
+            createPassword {
+                onNavigate(CreateItemBottomsheetNavigation.CreatePassword)
+            }
+        )
+        CreateItemBottomSheetMode.Autofill -> listOf(
+            createLogin(shareId) {
+                onNavigate(CreateItemBottomsheetNavigation.CreateLogin(it))
+            },
+            createAlias(shareId) {
+                onNavigate(CreateItemBottomsheetNavigation.CreateAlias(it))
+            },
+        )
+    }
+
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
-        items = persistentListOf(
-            createLogin(shareId, onCreateLogin),
-            bottomSheetDivider(),
-            createAlias(shareId, onCreateAlias),
-            bottomSheetDivider(),
-            createNote(shareId, onCreateNote),
-            bottomSheetDivider(),
-            createPassword(onCreatePassword)
-        )
+        items = items.withDividers().toPersistentList()
     )
 }
 
@@ -147,15 +168,14 @@ private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
 @Preview
 @Composable
 fun CreateItemBottomSheetContentsPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = isDark) {
+    val mode = if (input.second) CreateItemBottomSheetMode.Full else CreateItemBottomSheetMode.Autofill
+    PassTheme(isDark = input.first) {
         Surface {
             CreateItemBottomSheetContents(
-                onCreateLogin = {},
-                onCreateAlias = {},
-                onCreateNote = {},
-                onCreatePassword = {}
+                mode = mode,
+                onNavigate = {}
             )
         }
     }

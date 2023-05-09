@@ -22,9 +22,7 @@ import proton.android.pass.featureitemcreate.impl.R
 @Composable
 fun CreateAliasScreen(
     modifier: Modifier = Modifier,
-    onUpClick: () -> Unit,
-    onAliasCreated: (String) -> Unit,
-    onClose: () -> Unit,
+    onNavigate: (CreateAliasNavigation) -> Unit,
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.createAliasUiState.collectAsStateWithLifecycle()
@@ -33,7 +31,7 @@ fun CreateAliasScreen(
         if (viewState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            onUpClick()
+            onNavigate(CreateAliasNavigation.Close)
         }
     }
     BackHandler {
@@ -42,7 +40,7 @@ fun CreateAliasScreen(
 
     LaunchedEffect(viewState.closeScreenEvent) {
         if (viewState.closeScreenEvent is CloseScreenEvent.Close) {
-            onClose()
+            onNavigate(CreateAliasNavigation.Close)
         }
     }
 
@@ -56,7 +54,10 @@ fun CreateAliasScreen(
             isEditAllowed = viewState.isLoadingState == IsLoadingState.NotLoading,
             showVaultSelector = viewState.showVaultSelector,
             onUpClick = onExit,
-            onAliasCreated = { _, _, alias -> onAliasCreated(alias) },
+            onAliasCreated = { _, _, alias ->
+                val event = CreateAliasNavigation.Created(alias, dismissBottomsheet = false)
+                onNavigate(event)
+            },
             onSubmit = { shareId -> viewModel.createAlias(shareId) },
             onSuffixChange = { viewModel.onSuffixChange(it) },
             onMailboxesChanged = { viewModel.onMailboxesChanged(it) },
@@ -73,7 +74,7 @@ fun CreateAliasScreen(
             },
             onConfirm = {
                 showConfirmDialog = false
-                onUpClick()
+                onNavigate(CreateAliasNavigation.Close)
             }
         )
     }

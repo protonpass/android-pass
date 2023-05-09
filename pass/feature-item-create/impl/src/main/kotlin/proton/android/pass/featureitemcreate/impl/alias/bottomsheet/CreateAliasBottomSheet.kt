@@ -8,16 +8,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
-import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.CloseScreenEvent
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun CreateAliasBottomSheet(
     modifier: Modifier = Modifier,
     itemTitle: String,
-    onAliasCreated: (AliasItem) -> Unit,
-    onCancel: () -> Unit,
+    onNavigate: (CreateAliasNavigation) -> Unit,
     viewModel: CreateAliasBottomSheetViewModel = hiltViewModel()
 ) {
     LaunchedEffect(itemTitle) {
@@ -28,7 +27,7 @@ fun CreateAliasBottomSheet(
 
     LaunchedEffect(state.closeScreenEvent) {
         if (state.closeScreenEvent is CloseScreenEvent.Close) {
-            onCancel()
+            onNavigate(CreateAliasNavigation.Close)
         }
     }
 
@@ -36,7 +35,11 @@ fun CreateAliasBottomSheet(
     if (isAliasDraftSaved is AliasDraftSavedState.Success) {
         LaunchedEffect(state.selectedVault) {
             state.selectedVault?.let {
-                onAliasCreated(isAliasDraftSaved.aliasItem)
+                val event = CreateAliasNavigation.Created(
+                    alias = isAliasDraftSaved.aliasItem.aliasToBeCreated ?: "",
+                    dismissBottomsheet = true
+                )
+                onNavigate(event)
                 viewModel.resetAliasDraftSavedState()
             }
         }
@@ -45,7 +48,7 @@ fun CreateAliasBottomSheet(
     CreateAliasBottomSheetContent(
         modifier = modifier,
         state = state,
-        onCancel = onCancel,
+        onCancel = { onNavigate(CreateAliasNavigation.Close) },
         onConfirm = {
             state.selectedVault?.let {
                 viewModel.createAlias(it.vault.shareId)

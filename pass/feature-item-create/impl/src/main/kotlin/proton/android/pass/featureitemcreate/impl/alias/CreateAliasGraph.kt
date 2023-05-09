@@ -52,32 +52,29 @@ object CreateAliasBottomSheet : NavItem(
     }
 }
 
+sealed interface CreateAliasNavigation {
+    data class Created(
+        val alias: String,
+        val dismissBottomsheet: Boolean
+    ) : CreateAliasNavigation
+    object Close : CreateAliasNavigation
+}
+
 @OptIn(
     ExperimentalAnimationApi::class
 )
 fun NavGraphBuilder.createAliasGraph(
-    onAliasCreatedSuccess: () -> Unit,
-    onBackClick: () -> Unit,
-    dismissBottomSheet: (() -> Unit) -> Unit
+    onNavigate: (CreateAliasNavigation) -> Unit,
 ) {
     composable(CreateAlias) {
-        CreateAliasScreen(
-            onClose = onBackClick,
-            onUpClick = onBackClick,
-            onAliasCreated = { onAliasCreatedSuccess() },
-        )
+        CreateAliasScreen(onNavigate = onNavigate)
     }
 
     bottomSheet(CreateAliasBottomSheet) {
         val itemTitle = it.arguments?.getString(AliasOptionalNavArgId.Title.key) ?: ""
         CreateAliasBottomSheet(
             itemTitle = itemTitle,
-            onCancel = onBackClick,
-            onAliasCreated = {
-                dismissBottomSheet {
-                    onAliasCreatedSuccess()
-                }
-            },
+            onNavigate = onNavigate
         )
     }
 }

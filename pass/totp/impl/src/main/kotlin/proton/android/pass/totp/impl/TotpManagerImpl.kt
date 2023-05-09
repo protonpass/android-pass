@@ -17,7 +17,9 @@ import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.api.TotpSpec
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TotpManagerImpl @Inject constructor(
     private val clock: Clock
 ) : TotpManager {

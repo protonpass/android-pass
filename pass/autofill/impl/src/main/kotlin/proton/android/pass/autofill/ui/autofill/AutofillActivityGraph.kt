@@ -18,6 +18,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
@@ -117,6 +118,7 @@ fun NavGraphBuilder.autofillActivityGraph(
             }
         }
     )
+
     generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
     createTotpGraph(
         onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
@@ -129,8 +131,19 @@ fun NavGraphBuilder.autofillActivityGraph(
         }
     )
     createAliasGraph(
-        dismissBottomSheet = dismissBottomSheet,
-        onAliasCreatedSuccess = { appNavigator.onBackClick() },
-        onBackClick = { appNavigator.onBackClick() }
+        onNavigate = {
+            when (it) {
+                CreateAliasNavigation.Close -> appNavigator.onBackClick()
+                is CreateAliasNavigation.Created -> {
+                    if (it.dismissBottomsheet) {
+                        dismissBottomSheet {
+                            appNavigator.onBackClick()
+                        }
+                    } else {
+                        appNavigator.onBackClick()
+                    }
+                }
+            }
+        }
     )
 }

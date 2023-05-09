@@ -23,6 +23,7 @@ import proton.android.pass.featurehome.impl.HomeNavigation
 import proton.android.pass.featurehome.impl.homeGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.EditAlias
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
 import proton.android.pass.featureitemcreate.impl.alias.updateAliasGraph
@@ -341,9 +342,20 @@ fun NavGraphBuilder.appGraph(
         onBackClick = { appNavigator.onBackClick() }
     )
     createAliasGraph(
-        dismissBottomSheet = dismissBottomSheet,
-        onAliasCreatedSuccess = { appNavigator.onBackClick() },
-        onBackClick = { appNavigator.onBackClick() }
+        onNavigate = {
+            when (it) {
+                CreateAliasNavigation.Close -> appNavigator.onBackClick()
+                is CreateAliasNavigation.Created -> {
+                    if (it.dismissBottomsheet) {
+                        dismissBottomSheet {
+                            appNavigator.onBackClick()
+                        }
+                    } else {
+                        appNavigator.onBackClick()
+                    }
+                }
+            }
+        },
     )
     updateAliasGraph(
         onBackClick = { appNavigator.onBackClick() },

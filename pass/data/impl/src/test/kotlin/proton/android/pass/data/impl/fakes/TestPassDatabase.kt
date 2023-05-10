@@ -3,7 +3,7 @@ package proton.android.pass.data.impl.fakes
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.dao.ItemsDao
 import proton.android.pass.data.impl.db.dao.PassEventsDao
-import proton.android.pass.data.impl.db.dao.PlanLimitsDao
+import proton.android.pass.data.impl.db.dao.PlanDao
 import proton.android.pass.data.impl.db.dao.SearchEntryDao
 import proton.android.pass.data.impl.db.dao.ShareKeysDao
 import proton.android.pass.data.impl.db.dao.SharesDao
@@ -34,7 +34,7 @@ class TestPassDatabase : PassDatabase {
         throw IllegalStateException("This method should not be called")
     }
 
-    override fun planLimitsDao(): PlanLimitsDao {
+    override fun planDao(): PlanDao {
         throw IllegalStateException("This method should not be called")
     }
 

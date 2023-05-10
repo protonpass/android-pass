@@ -1,6 +1,7 @@
 package proton.android.pass.data.impl.db
 
 import androidx.room.DeleteTable
+import androidx.room.RenameTable
 import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -77,4 +78,9 @@ object AppDatabaseMigrations {
             )
         }
     }
+
+    @RenameTable.Entries(
+        value = [RenameTable(fromTableName = "PlanLimitsEntity", toTableName = "PlanEntity"), ]
+    )
+    class MIGRATION_11_12 : AutoMigrationSpec
 }

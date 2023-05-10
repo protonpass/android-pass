@@ -1,13 +1,12 @@
 package proton.android.pass.data.impl.usecases
 
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
-import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isRetryable
-import proton.android.pass.data.impl.api.PasswordManagerApi
-import proton.android.pass.data.impl.local.LocalPlanLimitsDataSource
+import proton.android.pass.data.impl.repositories.PlanRepository
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
@@ -23,8 +22,7 @@ interface SendUserAccessRequest {
 
 class SendUserAccessRequestImpl @Inject constructor(
     private val accountManager: AccountManager,
-    private val api: ApiProvider,
-    private val localPlanLimitsDataSource: LocalPlanLimitsDataSource
+    private val planRepository: PlanRepository
 ) : SendUserAccessRequest {
     override suspend fun invoke(): SendUserAccessResult {
         val account = accountManager.getPrimaryAccount().firstOrNull()
@@ -34,17 +32,7 @@ class SendUserAccessRequestImpl @Inject constructor(
         }
 
         return runCatching {
-            api.get<PasswordManagerApi>(account.userId)
-                .invoke { userAccess() }
-                .valueOrThrow
-                .also {
-                    localPlanLimitsDataSource.storePlanLimits(
-                        userId = account.userId,
-                        vaultLimit = it.accessResponse.planResponse.vaultLimit ?: -1,
-                        aliasLimit = it.accessResponse.planResponse.aliasLimit ?: -1,
-                        totpLimit = it.accessResponse.planResponse.totpLimit ?: -1
-                    )
-                }
+            planRepository.sendUserAccessAndObservePlan(account.userId, forceRefresh = true).first()
         }.fold(
             onSuccess = {
                 PassLogger.i(TAG, "Successfully sent userAccess")

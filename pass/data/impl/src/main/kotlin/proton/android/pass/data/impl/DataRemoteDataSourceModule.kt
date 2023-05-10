@@ -14,6 +14,8 @@ import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.remote.RemoteItemDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSource
 import proton.android.pass.data.impl.remote.RemoteItemKeyDataSourceImpl
+import proton.android.pass.data.impl.remote.RemotePlanDataSource
+import proton.android.pass.data.impl.remote.RemotePlanDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteShareDataSource
 import proton.android.pass.data.impl.remote.RemoteShareDataSourceImpl
 import proton.android.pass.data.impl.remote.RemoteShareKeyDataSource
@@ -50,5 +52,10 @@ abstract class DataRemoteDataSourceModule {
     abstract fun bindRemoteTelemetryDataSource(
         impl: RemoteTelemetryDataSourceImpl
     ): RemoteTelemetryDataSource
+
+    @Binds
+    abstract fun bindRemotePlanDataSource(
+        impl: RemotePlanDataSourceImpl
+    ): RemotePlanDataSource
 }
 

@@ -5,14 +5,14 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.GetUserPlan
-import proton.android.pass.data.api.usecases.UserPlan
+import proton.pass.domain.PlanType
 import javax.inject.Inject
 
 class TestGetUserPlan @Inject constructor() : GetUserPlan {
 
-    private var result: MutableSharedFlow<Result<UserPlan>> = testFlow()
+    private var result: MutableSharedFlow<Result<PlanType>> = testFlow()
 
-    fun setResult(value: Result<UserPlan>) {
+    fun setResult(value: Result<PlanType>) {
         result.tryEmit(value)
     }
 

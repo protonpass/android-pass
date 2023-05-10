@@ -22,7 +22,7 @@ class WordPasswordGeneratorTest {
                 count = 1,
                 separator = PasswordGenerator.WordSeparator.Hyphen
             ),
-            expected = "aloft-clamp"
+            expected = "aloft"
         )
     }
 
@@ -34,7 +34,7 @@ class WordPasswordGeneratorTest {
                 separator = PasswordGenerator.WordSeparator.Space,
                 capitalise = true
             ),
-            expected = "Aloft Clamp Outpour"
+            expected = "Aloft Clamp"
         )
     }
 
@@ -46,7 +46,7 @@ class WordPasswordGeneratorTest {
                 separator = PasswordGenerator.WordSeparator.Period,
                 includeNumbers = true
             ),
-            expected = "aloft0.outpour3.tremble8.sinister6"
+            expected = "aloft0.outpour3.tremble8"
         )
     }
 
@@ -59,7 +59,7 @@ class WordPasswordGeneratorTest {
                 capitalise = true,
                 includeNumbers = true
             ),
-            expected = "Aloft0,Outpour3,Tremble8,Sinister6,Opposite1"
+            expected = "Aloft0,Outpour3,Tremble8,Sinister6"
         )
     }
 
@@ -71,7 +71,7 @@ class WordPasswordGeneratorTest {
                 separator = PasswordGenerator.WordSeparator.Underscore,
                 includeNumbers = true
             ),
-            expected = "aloft0_outpour3_tremble8_sinister6_opposite1_cotton0"
+            expected = "aloft0_outpour3_tremble8_sinister6_opposite1"
         )
     }
 
@@ -84,7 +84,7 @@ class WordPasswordGeneratorTest {
                 capitalise = true,
                 includeNumbers = true
             ),
-            expected = "Aloft05Outpour33Tremble85Sinister61Opposite11Cotton02Refueling8"
+            expected = "Aloft01Outpour38Tremble85Sinister63Opposite15Cotton0"
         )
     }
 
@@ -97,7 +97,7 @@ class WordPasswordGeneratorTest {
                 capitalise = true,
                 includeNumbers = true
             ),
-            expected = "Aloft0%Outpour3!Tremble8!Sinister6@Opposite12Cotton0!Refueling8#Gratified3"
+            expected = "Aloft0%Outpour3#Tremble8%Sinister6!Opposite1!Cotton0@Refueling8"
         )
     }
 

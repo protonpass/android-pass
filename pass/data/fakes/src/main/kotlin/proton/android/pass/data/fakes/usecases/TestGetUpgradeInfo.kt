@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.data.api.usecases.GetUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.pass.domain.Plan
+import proton.pass.domain.PlanType
 import javax.inject.Inject
 
 class TestGetUpgradeInfo @Inject constructor() : GetUpgradeInfo {
@@ -20,12 +22,10 @@ class TestGetUpgradeInfo @Inject constructor() : GetUpgradeInfo {
     companion object {
         val DEFAULT = UpgradeInfo(
             isUpgradeAvailable = false,
+            plan = Plan(planType = PlanType.Free, vaultLimit = 0, aliasLimit = 0, totpLimit = 0),
             totalVaults = 0,
-            vaultLimit = 0,
             totalAlias = 0,
-            aliasLimit = 0,
-            totalTotp = 0,
-            totpLimit = 0
+            totalTotp = 0
         )
     }
 }

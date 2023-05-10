@@ -19,6 +19,8 @@ import proton.android.pass.data.impl.repositories.ItemKeyRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.data.impl.repositories.ItemSyncStatusRepositoryImpl
 import proton.android.pass.data.impl.repositories.OnMemoryDraftRepository
+import proton.android.pass.data.impl.repositories.PlanRepository
+import proton.android.pass.data.impl.repositories.PlanRepositoryImpl
 import proton.android.pass.data.impl.repositories.SearchEntryRepositoryImpl
 import proton.android.pass.data.impl.repositories.ShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareKeyRepositoryImpl
@@ -58,4 +60,7 @@ abstract class DataRepositoryModule {
 
     @Binds
     abstract fun bindItemSyncStatusRepository(impl: ItemSyncStatusRepositoryImpl): ItemSyncStatusRepository
+
+    @Binds
+    abstract fun bindPlanRepository(impl: PlanRepositoryImpl): PlanRepository
 }

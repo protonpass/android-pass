@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import proton.android.pass.commonui.api.PasswordGenerator
+import proton.android.pass.password.api.PasswordGenerator
 import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordUiState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DraftRepository

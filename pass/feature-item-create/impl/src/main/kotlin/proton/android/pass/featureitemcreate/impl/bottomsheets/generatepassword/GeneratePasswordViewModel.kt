@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.commonui.api.PasswordGenerator
 import proton.android.pass.composecomponents.impl.generatepassword.GeneratePasswordUiState
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.password.api.PasswordGenerator
 import javax.inject.Inject
 
 @HiltViewModel

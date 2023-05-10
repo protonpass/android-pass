@@ -1,5 +1,6 @@
 package proton.android.pass.password.api
 
+import java.util.Locale
 import kotlin.random.Random
 
 object PasswordGenerator {
@@ -9,6 +10,16 @@ object PasswordGenerator {
         LETTERS("abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ"),
         NUMBERS("0123456789"),
         SYMBOLS("!@#$%^&*")
+    }
+
+    enum class WordSeparator {
+        Hyphen,
+        Space,
+        Period,
+        Comma,
+        Underscore,
+        Numbers,
+        NumbersAndSymbols
     }
 
     sealed class Option(characterSets: Set<CharacterSet>) {
@@ -23,6 +34,37 @@ object PasswordGenerator {
         )
 
         val dictionary = characterSets.joinToString("") { it.value }
+    }
+
+    data class WordPasswordSpec(
+        val count: Int = 4,
+        val separator: WordSeparator = WordSeparator.Hyphen,
+        val capitalise: Boolean = false,
+        val includeNumbers: Boolean = false
+    )
+
+    fun generateWordPassword(
+        spec: WordPasswordSpec,
+        random: Random = Random
+    ): String {
+        if (spec.count == 0) return ""
+        val words = (0..spec.count).map {
+            val randomWord = WORDS.random(random)
+            val capitalisedWord = if (spec.capitalise) {
+                capitalise(randomWord)
+            } else {
+                randomWord
+            }
+
+            if (spec.includeNumbers) {
+                val number = random.nextInt(from = 0, until = 9)
+                "${capitalisedWord}$number"
+            } else {
+                capitalisedWord
+            }
+        }
+
+        return joinWithSeparator(words, spec.separator, random)
     }
 
     fun generatePassword(
@@ -76,4 +118,39 @@ object PasswordGenerator {
             }
         }
     }
+
+    private fun joinWithSeparator(words: List<String>, separator: WordSeparator, random: Random) = buildString {
+        if (words.isEmpty()) return@buildString
+
+        append(words.first())
+
+        words.drop(1).forEach { word ->
+            append(getSeparator(separator, random))
+            append(word)
+        }
+    }
+
+    private fun getSeparator(separator: WordSeparator, random: Random): Char =
+        when (separator) {
+            WordSeparator.Hyphen -> '-'
+            WordSeparator.Space -> ' '
+            WordSeparator.Period -> '.'
+            WordSeparator.Comma -> ','
+            WordSeparator.Underscore -> '_'
+            WordSeparator.Numbers -> random.nextInt(from = 0, until = 9).digitToChar()
+            WordSeparator.NumbersAndSymbols -> {
+                val dictionary = "${CharacterSet.NUMBERS.value}${CharacterSet.SYMBOLS.value}"
+                dictionary.random(random)
+            }
+        }
+
+
+    private fun capitalise(word: String): String =
+        word.replaceFirstChar { firstChar ->
+            if (firstChar.isLowerCase()) {
+                firstChar.titlecase(Locale.getDefault())
+            } else {
+                firstChar.toString()
+            }
+        }
 }

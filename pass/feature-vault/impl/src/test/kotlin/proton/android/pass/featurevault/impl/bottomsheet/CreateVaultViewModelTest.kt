@@ -17,6 +17,8 @@ import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestShare
+import proton.pass.domain.Plan
+import proton.pass.domain.PlanType
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 
@@ -146,8 +148,13 @@ class CreateVaultViewModelTest {
         getUpgradeInfo.setResult(
             TestGetUpgradeInfo.DEFAULT.copy(
                 isUpgradeAvailable = true,
-                totalVaults = 1,
-                vaultLimit = 2
+                plan = Plan(
+                    planType = PlanType.Free,
+                    vaultLimit = 2,
+                    aliasLimit = 0,
+                    totpLimit = 0
+                ),
+                totalVaults = 1
             )
         )
         instance.createState.test {
@@ -161,8 +168,13 @@ class CreateVaultViewModelTest {
         getUpgradeInfo.setResult(
             TestGetUpgradeInfo.DEFAULT.copy(
                 isUpgradeAvailable = false,
-                totalVaults = 1,
-                vaultLimit = 1
+                plan = Plan(
+                    planType = PlanType.Free,
+                    vaultLimit = 1,
+                    aliasLimit = 0,
+                    totpLimit = 0
+                ),
+                totalVaults = 1
             )
         )
         instance.createState.test {
@@ -176,8 +188,13 @@ class CreateVaultViewModelTest {
         getUpgradeInfo.setResult(
             TestGetUpgradeInfo.DEFAULT.copy(
                 isUpgradeAvailable = true,
-                totalVaults = 1,
-                vaultLimit = 1
+                plan = Plan(
+                    planType = PlanType.Free,
+                    vaultLimit = 1,
+                    aliasLimit = 0,
+                    totpLimit = 0
+                ),
+                totalVaults = 1
             )
         )
         instance.createState.test {

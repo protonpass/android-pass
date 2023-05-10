@@ -1,7 +1,8 @@
-package proton.android.pass.commonui.api
+package proton.android.pass.password.impl
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
+import proton.android.pass.password.api.PasswordGenerator
 import kotlin.random.Random
 
 class PasswordGeneratorTest {
@@ -90,3 +91,4 @@ class PasswordGeneratorTest {
         }
     }
 }
+

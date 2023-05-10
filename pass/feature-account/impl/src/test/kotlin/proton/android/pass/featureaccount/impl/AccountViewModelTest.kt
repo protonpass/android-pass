@@ -2,19 +2,19 @@ package proton.android.pass.featureaccount.impl
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.UserPlan
+import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestGetUpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
+import proton.pass.domain.Plan
+import proton.pass.domain.PlanType
 
 class AccountViewModelTest {
 
@@ -23,20 +23,18 @@ class AccountViewModelTest {
 
     private lateinit var instance: AccountViewModel
     private lateinit var observeCurrentUser: TestObserveCurrentUser
-    private lateinit var getUserPlan: TestGetUserPlan
+    private lateinit var getUpgradeInfo: TestGetUpgradeInfo
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     fun setup() {
         observeCurrentUser = TestObserveCurrentUser()
-        getUserPlan = TestGetUserPlan()
+        getUpgradeInfo = TestGetUpgradeInfo()
         snackbarDispatcher = TestSnackbarDispatcher()
 
         instance = AccountViewModel(
             observeCurrentUser = observeCurrentUser,
-            getUserPlan = getUserPlan,
-            snackbarDispatcher = snackbarDispatcher,
-            getUpgradeInfo = TestGetUpgradeInfo()
+            getUpgradeInfo = getUpgradeInfo
         )
     }
 
@@ -50,36 +48,25 @@ class AccountViewModelTest {
     @Test
     fun `emits user email and plan`() = runTest {
         val email = "test@email.local"
-        val plan = UserPlan.Paid(internal = "internal", humanReadable = "testplan")
-
+        val planType = PlanType.Paid(internal = "internal", humanReadable = "testplan")
+        val plan = Plan(planType = planType, vaultLimit = 0, aliasLimit = 0, totpLimit = 0)
         val user = TestUser.create(email = email)
         observeCurrentUser.sendUser(user)
-        getUserPlan.setResult(Result.success(plan))
+        getUpgradeInfo.setResult(
+            UpgradeInfo(
+                plan = plan,
+                isUpgradeAvailable = false,
+                totalVaults = 0,
+                totalAlias = 0,
+                totalTotp = 0
+            )
+        )
 
         instance.state.test {
             val item = awaitItem()
             assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
             assertThat(item.email).isEqualTo(email)
-            assertThat(item.plan).isEqualTo(PlanSection.Data(plan.humanReadable))
+            assertThat(item.plan).isEqualTo(PlanSection.Data(planType.humanReadable))
         }
     }
-
-    @Test
-    fun `emits snackbar message on error getting user plan`() = runTest {
-        val email = "test@email.local"
-        val user = TestUser.create(email = email)
-        observeCurrentUser.sendUser(user)
-        getUserPlan.setResult(Result.failure(IllegalStateException("test")))
-
-        instance.state.test {
-            val item = awaitItem()
-            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-            assertThat(item.email).isEqualTo(email)
-            assertThat(item.plan).isEqualTo(PlanSection.Hide)
-        }
-
-        val message = snackbarDispatcher.snackbarMessage.first().value()
-        assertThat(message).isEqualTo(AccountSnackbarMessage.GetUserInfoError)
-    }
-
 }

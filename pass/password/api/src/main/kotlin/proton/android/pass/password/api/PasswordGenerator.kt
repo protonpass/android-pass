@@ -48,7 +48,7 @@ object PasswordGenerator {
         random: Random = Random
     ): String {
         if (spec.count == 0) return ""
-        val words = (0..spec.count).map {
+        val words = (0 until spec.count).map {
             val randomWord = WORDS.random(random)
             val capitalisedWord = if (spec.capitalise) {
                 capitalise(randomWord)

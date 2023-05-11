@@ -3,7 +3,7 @@ package proton.android.pass.common.api
 import kotlinx.coroutines.flow.Flow
 
 @Suppress("LongParameterList", "MagicNumber")
-inline fun <T1, T2, T3, T4, T5, T6, R> combine(
+inline fun <T1, T2, T3, T4, T5, T6, R> combineN(
     flow: Flow<T1>,
     flow2: Flow<T2>,
     flow3: Flow<T3>,
@@ -33,7 +33,7 @@ inline fun <T1, T2, T3, T4, T5, T6, R> combine(
 }
 
 @Suppress("LongParameterList", "MagicNumber")
-inline fun <T1, T2, T3, T4, T5, T6, T7, R> combine(
+inline fun <T1, T2, T3, T4, T5, T6, T7, R> combineN(
     flow: Flow<T1>,
     flow2: Flow<T2>,
     flow3: Flow<T3>,
@@ -66,7 +66,7 @@ inline fun <T1, T2, T3, T4, T5, T6, T7, R> combine(
 }
 
 @Suppress("LongParameterList", "MagicNumber")
-inline fun <T1, T2, T3, T4, T5, T6, T7, T8, R> combine(
+inline fun <T1, T2, T3, T4, T5, T6, T7, T8, R> combineN(
     flow: Flow<T1>,
     flow2: Flow<T2>,
     flow3: Flow<T3>,
@@ -102,7 +102,7 @@ inline fun <T1, T2, T3, T4, T5, T6, T7, T8, R> combine(
 }
 
 @Suppress("LongParameterList", "MagicNumber")
-inline fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> combine(
+inline fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> combineN(
     flow: Flow<T1>,
     flow2: Flow<T2>,
     flow3: Flow<T3>,
@@ -141,7 +141,7 @@ inline fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, R> combine(
 }
 
 @Suppress("LongParameterList", "MagicNumber")
-inline fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R> combine(
+inline fun <T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, R> combineN(
     flow: Flow<T1>,
     flow2: Flow<T2>,
     flow3: Flow<T3>,

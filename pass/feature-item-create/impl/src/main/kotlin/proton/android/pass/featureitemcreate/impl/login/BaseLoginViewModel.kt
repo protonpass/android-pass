@@ -25,6 +25,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -46,7 +47,6 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
-import proton.android.pass.common.api.combine as combineN
 
 abstract class BaseLoginViewModel(
     protected val accountManager: AccountManager,

@@ -23,6 +23,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -60,7 +61,6 @@ import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import javax.inject.Inject
-import proton.android.pass.common.api.combine as combineN
 
 @HiltViewModel
 class LoginDetailViewModel @Inject constructor(

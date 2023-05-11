@@ -108,7 +108,7 @@ internal fun AliasContent(
                     iconColor = PassTheme.colors.aliasInteractionNormMajor2,
                     iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                     onCloseClick = onUpClick,
-                    showUpgrade = false,
+                    showUpgrade = uiState.showUpgrade,
                     onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) },
                     onUpgrade = onUpgrade
                 )
@@ -122,7 +122,7 @@ internal fun AliasContent(
                 isEditAllowed = isEditAllowed,
                 showVaultSelector = showVaultSelector,
                 isLoading = uiState.isLoadingState.value(),
-                showUpgrade = false,
+                showUpgrade = uiState.showUpgrade,
                 onTitleRequiredError = uiState.errorList.contains(BlankTitle),
                 onAliasRequiredError = uiState.errorList.contains(BlankPrefix),
                 onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),

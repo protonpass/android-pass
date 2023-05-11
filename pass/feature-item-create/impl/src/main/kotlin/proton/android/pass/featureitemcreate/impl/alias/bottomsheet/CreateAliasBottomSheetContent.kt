@@ -39,6 +39,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasPrefixSuffixText
 import proton.android.pass.featureitemcreate.impl.alias.AliasSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 import proton.android.pass.featureitemcreate.impl.alias.CloseScreenEvent
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.CreateUpdateAliasUiState
 import proton.android.pass.featureitemcreate.impl.alias.MailboxSection
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
@@ -55,6 +56,7 @@ fun CreateAliasBottomSheetContent(
     onPrefixChanged: (String) -> Unit,
     onSuffixChanged: (AliasSuffixUiModel) -> Unit,
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
+    onNavigate: (CreateAliasNavigation) -> Unit,
     showAdvancedOptionsInitially: Boolean = false
 ) {
     val isBlankAliasError = state.errorList.contains(AliasItemValidationErrors.BlankPrefix)
@@ -121,10 +123,11 @@ fun CreateAliasBottomSheetContent(
         }
         BottomSheetCancelConfirm(
             modifier = Modifier.padding(top = 36.dp),
+            isLoading = state.isLoadingState == IsLoadingState.Loading,
             showUpgrade = state.showUpgrade,
             onCancel = onCancel,
             onConfirm = onConfirm,
-            onUpgradeClick = {}
+            onUpgradeClick = { onNavigate(CreateAliasNavigation.Upgrade) }
         )
 
         SelectMailboxesDialog(
@@ -135,7 +138,7 @@ fun CreateAliasBottomSheetContent(
                 showMailboxesDialog = false
             },
             onDismiss = { showMailboxesDialog = false },
-            onUpgrade = {}
+            onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) }
         )
         SelectSuffixDialog(
             show = showSuffixDialog,
@@ -148,7 +151,7 @@ fun CreateAliasBottomSheetContent(
                 showSuffixDialog = false
             },
             onDismiss = { showSuffixDialog = false },
-            onUpgrade = {}
+            onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) }
         )
     }
 }
@@ -224,7 +227,8 @@ fun CreateAliasBottomSheetContentPreview(
                 onConfirm = {},
                 onPrefixChanged = {},
                 onSuffixChanged = {},
-                onMailboxesChanged = {}
+                onMailboxesChanged = {},
+                onNavigate = {}
             )
         }
     }

@@ -34,9 +34,10 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
@@ -168,10 +169,11 @@ abstract class BaseLoginViewModel(
         val aliasItem: Option<AliasItem>
     )
 
+    private val upgradeInfoFlow: Flow<UpgradeInfo> = observeUpgradeInfo().distinctUntilChanged()
     protected val itemHadTotpState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val totpUiStateFlow = combine(
         itemHadTotpState,
-        observeUpgradeInfo().asLoadingResult()
+        upgradeInfoFlow.asLoadingResult()
     ) { itemHadTotp, upgradeInfoResult ->
         when (upgradeInfoResult) {
             is LoadingResult.Error -> TotpUiState.Error
@@ -191,8 +193,10 @@ abstract class BaseLoginViewModel(
         eventsFlow,
         focusLastWebsiteState,
         hasUserEditedContentFlow,
-        totpUiStateFlow
-    ) { shareWrapper, loginItemWrapper, isLoading, events, focusLastWebsite, hasUserEditedContent, totpUiState ->
+        totpUiStateFlow,
+        upgradeInfoFlow.asLoadingResult()
+    ) { shareWrapper, loginItemWrapper, isLoading, events,
+        focusLastWebsite, hasUserEditedContent, totpUiState, upgradeInfoResult ->
         val shares = shareWrapper.getOrNull()
         val showVaultSelector = shares?.let { it.vaultList.size > 1 } ?: false
         CreateUpdateLoginUiState(
@@ -209,6 +213,7 @@ abstract class BaseLoginViewModel(
             aliasItem = loginItemWrapper.aliasItem.value(),
             showVaultSelector = showVaultSelector,
             hasUserEditedContent = hasUserEditedContent,
+            hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false,
             totpUiState = totpUiState
         )
     }

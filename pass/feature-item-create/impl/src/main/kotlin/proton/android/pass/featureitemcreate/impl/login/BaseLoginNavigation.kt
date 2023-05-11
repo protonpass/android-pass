@@ -8,7 +8,12 @@ import proton.pass.domain.ShareId
 sealed interface BaseLoginNavigation {
     data class LoginCreated(val itemUiModel: ItemUiModel) : BaseLoginNavigation
     data class LoginUpdated(val shareId: ShareId, val itemId: ItemId) : BaseLoginNavigation
-    data class CreateAlias(val shareId: ShareId, val title: Option<String>) : BaseLoginNavigation
+    data class CreateAlias(
+        val shareId: ShareId,
+        val showUpgrade: Boolean,
+        val title: Option<String>
+    ) : BaseLoginNavigation
+
     object GeneratePassword : BaseLoginNavigation
     object Upgrade : BaseLoginNavigation
     object ScanTotp : BaseLoginNavigation

@@ -55,6 +55,7 @@ fun CreateAliasBottomSheet(
         },
         onPrefixChanged = { viewModel.onPrefixChange(it) },
         onSuffixChanged = { viewModel.onSuffixChange(it) },
-        onMailboxesChanged = { viewModel.onMailboxesChanged(it) }
+        onMailboxesChanged = { viewModel.onMailboxesChanged(it) },
+        onNavigate = onNavigate
     )
 }

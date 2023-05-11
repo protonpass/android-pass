@@ -31,14 +31,10 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
-import proton.android.pass.featureitemcreate.impl.bottomsheets.generatepassword.GeneratePasswordBottomsheet
-import proton.android.pass.featureitemcreate.impl.bottomsheets.generatepassword.generatePasswordBottomsheetGraph
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.EditLogin
-import proton.android.pass.featureitemcreate.impl.login.GenerateLoginPasswordBottomsheet
 import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
-import proton.android.pass.featureitemcreate.impl.login.generatePasswordGraph
 import proton.android.pass.featureitemcreate.impl.login.updateLoginGraph
 import proton.android.pass.featureitemcreate.impl.note.CreateNote
 import proton.android.pass.featureitemcreate.impl.note.EditNote
@@ -57,6 +53,9 @@ import proton.android.pass.featuremigrate.impl.MigrateSelectVault
 import proton.android.pass.featuremigrate.impl.migrateGraph
 import proton.android.pass.featureonboarding.impl.OnBoarding
 import proton.android.pass.featureonboarding.impl.onBoardingGraph
+import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheet
+import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheetModeValue
+import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
 import proton.android.pass.featureprofile.impl.AppLockBottomsheet
 import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
 import proton.android.pass.featureprofile.impl.Profile
@@ -101,7 +100,10 @@ fun NavGraphBuilder.appGraph(
                         ItemTypeUiState.Login -> CreateLogin to CreateLogin.createNavRoute(it.shareId)
                         ItemTypeUiState.Note -> CreateNote to CreateNote.createNavRoute(it.shareId)
                         ItemTypeUiState.Alias -> CreateAlias to CreateAlias.createNavRoute(it.shareId)
-                        ItemTypeUiState.Password -> GeneratePasswordBottomsheet to null
+                        ItemTypeUiState.Password ->
+                            GeneratePasswordBottomsheet to GeneratePasswordBottomsheet.buildRoute(
+                                mode = GeneratePasswordBottomsheetModeValue.CopyAndClose
+                            )
                     }
 
                     appNavigator.navigate(destination, route)
@@ -199,18 +201,21 @@ fun NavGraphBuilder.appGraph(
                         CreateAlias.createNavRoute(it.shareId)
                     )
                 }
+
                 is CreateItemBottomsheetNavigation.CreateLogin -> {
                     appNavigator.navigate(
                         CreateLogin,
                         CreateLogin.createNavRoute(it.shareId)
                     )
                 }
+
                 is CreateItemBottomsheetNavigation.CreateNote -> {
                     appNavigator.navigate(
                         CreateNote,
                         CreateNote.createNavRoute(it.shareId)
                     )
                 }
+
                 CreateItemBottomsheetNavigation.CreatePassword -> {
                     val backDestination = when {
                         appNavigator.hasDestinationInStack(Profile) -> Profile
@@ -219,6 +224,9 @@ fun NavGraphBuilder.appGraph(
                     }
                     appNavigator.navigate(
                         destination = GeneratePasswordBottomsheet,
+                        route = GeneratePasswordBottomsheet.buildRoute(
+                            mode = GeneratePasswordBottomsheetModeValue.CopyAndClose
+                        ),
                         backDestination = backDestination
                     )
                 }
@@ -234,7 +242,9 @@ fun NavGraphBuilder.appGraph(
         }
     )
     generatePasswordBottomsheetGraph(
-        onDismiss = { appNavigator.onBackClick() }
+        onDismiss = {
+            dismissBottomSheet { appNavigator.onBackClick() }
+        }
     )
     accountGraph(
         onNavigate = {
@@ -282,7 +292,12 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 BaseLoginNavigation.GeneratePassword ->
-                    appNavigator.navigate(GenerateLoginPasswordBottomsheet)
+                    appNavigator.navigate(
+                        destination = GeneratePasswordBottomsheet,
+                        route = GeneratePasswordBottomsheet.buildRoute(
+                            mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
+                        )
+                    )
 
                 is BaseLoginNavigation.LoginCreated -> appNavigator.onBackClick()
                 is BaseLoginNavigation.LoginUpdated -> {}
@@ -303,7 +318,12 @@ fun NavGraphBuilder.appGraph(
                 )
 
                 BaseLoginNavigation.GeneratePassword ->
-                    appNavigator.navigate(GenerateLoginPasswordBottomsheet)
+                    appNavigator.navigate(
+                        destination = GeneratePasswordBottomsheet,
+                        route = GeneratePasswordBottomsheet.buildRoute(
+                            mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
+                        )
+                    )
 
                 is BaseLoginNavigation.LoginCreated -> {}
                 is BaseLoginNavigation.LoginUpdated ->
@@ -318,7 +338,11 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
-    generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
+    generatePasswordBottomsheetGraph(
+        onDismiss = {
+            dismissBottomSheet { appNavigator.onBackClick() }
+        }
+    )
     createTotpGraph(
         onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
         onCloseTotp = { appNavigator.onBackClick() },
@@ -357,6 +381,7 @@ fun NavGraphBuilder.appGraph(
                         appNavigator.onBackClick()
                     }
                 }
+
                 is CreateAliasNavigation.Created -> {
                     appNavigator.onBackClick()
                 }

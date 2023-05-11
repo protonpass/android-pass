@@ -298,6 +298,7 @@ dependencies {
     implementation(projects.pass.featureItemDetail.impl)
     implementation(projects.pass.featureMigrate.impl)
     implementation(projects.pass.featureOnboarding.impl)
+    implementation(projects.pass.featurePassword.impl)
     implementation(projects.pass.featureProfile.impl)
     implementation(projects.pass.featureSettings.impl)
     implementation(projects.pass.featureSearchOptions.api)

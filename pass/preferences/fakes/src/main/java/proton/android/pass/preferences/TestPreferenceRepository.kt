@@ -19,6 +19,7 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     private val clearClipboardPreference = testFlow<ClearClipboardPreference>()
     private val useFaviconsPreference = testFlow<UseFaviconsPreference>()
     private val lockAppPreference = testFlow<AppLockPreference>()
+    private val passwordGenerationPreference = testFlow<PasswordGenerationPreference>()
 
     override suspend fun setBiometricLockState(state: BiometricLockState): Result<Unit> {
         biometricLockState.emit(state)
@@ -84,6 +85,16 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     }
 
     override fun getAppLockPreference(): Flow<AppLockPreference> = lockAppPreference
+
+    override suspend fun setPasswordGenerationPreference(
+        preference: PasswordGenerationPreference
+    ): Result<Unit> {
+        passwordGenerationPreference.emit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> =
+        passwordGenerationPreference
 
     override suspend fun clearPreferences(): Result<Unit> = Result.success(Unit)
 

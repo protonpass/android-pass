@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.GetUpgradeInfo
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.PlanType
@@ -20,7 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
-    getUpgradeInfo: GetUpgradeInfo
+    observeUpgradeInfo: ObserveUpgradeInfo
 ) : ViewModel() {
 
     private val currentUser = observeCurrentUser()
@@ -28,7 +28,7 @@ class AccountViewModel @Inject constructor(
 
     val state: StateFlow<AccountUiState> = combine(
         currentUser.asLoadingResult(),
-        getUpgradeInfo(forceRefresh = true).asLoadingResult()
+        observeUpgradeInfo(forceRefresh = true).asLoadingResult()
     ) { userResult, upgradeInfoResult ->
         val plan = when (upgradeInfoResult) {
             is LoadingResult.Error -> {

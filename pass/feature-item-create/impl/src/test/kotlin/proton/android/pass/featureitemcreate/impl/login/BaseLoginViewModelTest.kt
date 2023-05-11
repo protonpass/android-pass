@@ -10,7 +10,7 @@ import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
-import proton.android.pass.data.fakes.usecases.TestGetUpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.login.CreateUpdateLoginUiState.Companion.Initial
@@ -52,7 +52,7 @@ internal class BaseLoginViewModelTest {
             observeVaults = observeVaults,
             observeCurrentUser = observeCurrentUser,
             savedStateHandle = savedStateHandle,
-            getUpgradeInfo = TestGetUpgradeInfo(),
+            observeUpgradeInfo = TestObserveUpgradeInfo(),
             encryptionContextProvider = TestEncryptionContextProvider()
         ) {}
     }

@@ -12,7 +12,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.fakes.usecases.TestCreateVault
-import proton.android.pass.data.fakes.usecases.TestGetUpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
@@ -30,14 +30,14 @@ class CreateVaultViewModelTest {
     private lateinit var instance: CreateVaultViewModel
     private lateinit var snackbar: TestSnackbarDispatcher
     private lateinit var createVault: TestCreateVault
-    private lateinit var getUpgradeInfo: TestGetUpgradeInfo
+    private lateinit var getUpgradeInfo: TestObserveUpgradeInfo
 
     @Before
     fun setup() {
         snackbar = TestSnackbarDispatcher()
         createVault = TestCreateVault()
-        getUpgradeInfo = TestGetUpgradeInfo().apply {
-            setResult(TestGetUpgradeInfo.DEFAULT)
+        getUpgradeInfo = TestObserveUpgradeInfo().apply {
+            setResult(TestObserveUpgradeInfo.DEFAULT)
         }
         instance = CreateVaultViewModel(
             snackbar,
@@ -146,7 +146,7 @@ class CreateVaultViewModelTest {
     @Test
     fun `does not display upgrade ui if vault limit not reached`() = runTest {
         getUpgradeInfo.setResult(
-            TestGetUpgradeInfo.DEFAULT.copy(
+            TestObserveUpgradeInfo.DEFAULT.copy(
                 isUpgradeAvailable = true,
                 plan = Plan(
                     planType = PlanType.Free,
@@ -166,7 +166,7 @@ class CreateVaultViewModelTest {
     @Test
     fun `does not display upgrade ui if vault limit reached but upgrade unavailable`() = runTest {
         getUpgradeInfo.setResult(
-            TestGetUpgradeInfo.DEFAULT.copy(
+            TestObserveUpgradeInfo.DEFAULT.copy(
                 isUpgradeAvailable = false,
                 plan = Plan(
                     planType = PlanType.Free,
@@ -186,7 +186,7 @@ class CreateVaultViewModelTest {
     @Test
     fun `displays upgrade ui if plan is free`() = runTest {
         getUpgradeInfo.setResult(
-            TestGetUpgradeInfo.DEFAULT.copy(
+            TestObserveUpgradeInfo.DEFAULT.copy(
                 isUpgradeAvailable = true,
                 plan = Plan(
                     planType = PlanType.Free,

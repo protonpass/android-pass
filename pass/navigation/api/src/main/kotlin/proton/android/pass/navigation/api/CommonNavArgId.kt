@@ -30,6 +30,10 @@ object SortingTypeNavArgId : NavArgId {
     override val key: String = "sortingType"
     override val navType: NavType<*> = NavType.StringType
 }
+object ShowUpgradeNavArgId : NavArgId {
+    override val key: String = "showUpgrade"
+    override val navType: NavType<*> = NavType.StringType
+}
 
 interface OptionalNavArgId : NavArgId {
     val default: Any?

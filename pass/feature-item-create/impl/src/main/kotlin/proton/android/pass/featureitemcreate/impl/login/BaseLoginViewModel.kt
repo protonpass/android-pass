@@ -31,6 +31,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.GetUpgradeInfo
@@ -40,7 +41,6 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
-import proton.android.pass.featureitemcreate.impl.login.bottomsheet.password.GeneratePasswordViewModel
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -73,10 +73,10 @@ abstract class BaseLoginViewModel(
     private val aliasDraftState: Flow<Option<AliasItem>> = draftRepository
         .get(CreateAliasViewModel.KEY_DRAFT_ALIAS)
     private val passwordDraftState: Flow<Option<String>> = draftRepository
-        .get<String>(GeneratePasswordViewModel.DRAFT_PASSWORD)
+        .get<String>(DRAFT_PASSWORD_KEY)
         .onEach {
             if (it is Some) {
-                draftRepository.delete<String>(GeneratePasswordViewModel.DRAFT_PASSWORD).value()
+                draftRepository.delete<String>(DRAFT_PASSWORD_KEY).value()
                     ?.let { encryptedPassword ->
                         loginItemState.update { loginItem ->
                             encryptionContextProvider.withEncryptionContext {

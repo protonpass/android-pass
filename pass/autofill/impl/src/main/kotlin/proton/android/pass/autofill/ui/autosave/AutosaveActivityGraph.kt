@@ -10,14 +10,15 @@ import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
-import proton.android.pass.featureitemcreate.impl.login.GenerateLoginPasswordBottomsheet
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
-import proton.android.pass.featureitemcreate.impl.login.generatePasswordGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
+import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheet
+import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheetModeValue
+import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -49,7 +50,12 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 BaseLoginNavigation.Close -> onAutoSaveCancel()
                 is BaseLoginNavigation.CreateAlias -> {}
                 BaseLoginNavigation.GeneratePassword ->
-                    appNavigator.navigate(GenerateLoginPasswordBottomsheet)
+                    appNavigator.navigate(
+                        destination = GeneratePasswordBottomsheet,
+                        route = GeneratePasswordBottomsheet.buildRoute(
+                            mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
+                        )
+                    )
 
                 is BaseLoginNavigation.LoginCreated -> onAutoSaveSuccess()
                 is BaseLoginNavigation.LoginUpdated -> {}
@@ -58,7 +64,13 @@ fun NavGraphBuilder.autosaveActivityGraph(
             }
         }
     )
-    generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
+    generatePasswordBottomsheetGraph(
+        onDismiss = {
+            dismissBottomSheet {
+                appNavigator.onBackClick()
+            }
+        }
+    )
     createTotpGraph(
         onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
         onCloseTotp = { appNavigator.onBackClick() },

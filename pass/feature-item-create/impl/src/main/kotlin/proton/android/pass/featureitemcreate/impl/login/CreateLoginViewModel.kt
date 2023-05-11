@@ -21,7 +21,7 @@ import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
-import proton.android.pass.data.api.usecases.GetUpgradeInfo
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
@@ -52,7 +52,7 @@ class CreateLoginViewModel @Inject constructor(
     clipboardManager: ClipboardManager,
     totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
-    getUpgradeInfo: GetUpgradeInfo,
+    observeUpgradeInfo: ObserveUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle,
 ) : BaseLoginViewModel(
@@ -62,7 +62,7 @@ class CreateLoginViewModel @Inject constructor(
     totpManager = totpManager,
     observeVaults = observeVaults,
     observeCurrentUser = observeCurrentUser,
-    getUpgradeInfo = getUpgradeInfo,
+    observeUpgradeInfo = observeUpgradeInfo,
     savedStateHandle = savedStateHandle,
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider

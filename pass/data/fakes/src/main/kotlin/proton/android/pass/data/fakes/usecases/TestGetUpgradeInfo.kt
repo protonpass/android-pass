@@ -17,7 +17,7 @@ class TestGetUpgradeInfo @Inject constructor() : GetUpgradeInfo {
         upgradeInfo.tryEmit(value)
     }
 
-    override fun invoke(): Flow<UpgradeInfo> = upgradeInfo
+    override fun invoke(forceRefresh: Boolean): Flow<UpgradeInfo> = upgradeInfo
 
     companion object {
         val DEFAULT = UpgradeInfo(

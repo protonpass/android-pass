@@ -20,7 +20,7 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
-import proton.android.pass.data.api.usecases.GetUpgradeInfo
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
@@ -65,7 +65,7 @@ import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestGetShareById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
-import proton.android.pass.data.fakes.usecases.TestGetUpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
@@ -298,8 +298,8 @@ abstract class FakesDataModule {
 
     @Binds
     abstract fun bindGetUpgradeInfo(
-        impl: TestGetUpgradeInfo
-    ): GetUpgradeInfo
+        impl: TestObserveUpgradeInfo
+    ): ObserveUpgradeInfo
 
     @Binds
     abstract fun bindMigrateVault(

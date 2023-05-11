@@ -14,7 +14,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreVaultsError
 import proton.android.pass.data.api.usecases.CreateVault
-import proton.android.pass.data.api.usecases.GetUpgradeInfo
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
@@ -26,12 +26,12 @@ class CreateVaultViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val createVault: CreateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
-    getUpgradeInfo: GetUpgradeInfo,
+    observeUpgradeInfo: ObserveUpgradeInfo,
 ) : BaseVaultViewModel() {
 
     val createState: StateFlow<CreateVaultUiState> = combine(
         state,
-        getUpgradeInfo().asLoadingResult()
+        observeUpgradeInfo().asLoadingResult()
     ) { baseState, upgrade ->
         val (isLoading, showUpgradeButton) = when (upgrade) {
             is LoadingResult.Success -> baseState.isLoading to upgrade.data.hasReachedVaultLimit()

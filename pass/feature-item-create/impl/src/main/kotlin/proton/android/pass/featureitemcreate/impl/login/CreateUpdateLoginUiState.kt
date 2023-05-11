@@ -22,6 +22,7 @@ data class CreateUpdateLoginUiState(
     val primaryEmail: String?,
     val showVaultSelector: Boolean,
     val hasUserEditedContent: Boolean,
+    val hasReachedAliasLimit: Boolean,
     val totpUiState: TotpUiState
 ) {
     companion object {
@@ -39,7 +40,8 @@ data class CreateUpdateLoginUiState(
             primaryEmail = null,
             showVaultSelector = false,
             hasUserEditedContent = false,
-            totpUiState = TotpUiState.NotInitialised
+            hasReachedAliasLimit = false,
+            totpUiState = TotpUiState.NotInitialised,
         )
     }
 }

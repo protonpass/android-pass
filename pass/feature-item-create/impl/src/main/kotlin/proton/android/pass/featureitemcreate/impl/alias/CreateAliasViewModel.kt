@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
@@ -23,6 +24,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -30,6 +32,7 @@ import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
@@ -49,6 +52,7 @@ open class CreateAliasViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val telemetryManager: TelemetryManager,
     protected val draftRepository: DraftRepository,
+    observeUpgradeInfo: ObserveUpgradeInfo,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
@@ -91,59 +95,68 @@ open class CreateAliasViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    val createAliasUiState = combine(
+    val createAliasUiState: StateFlow<CreateUpdateAliasUiState> = combine(
         baseAliasUiState,
         aliasOptionsState,
         selectedMailboxListState,
         selectedSuffixState,
-    ) { aliasUiState, aliasOptionsResult, selectedMailboxes, selectedSuffix ->
-        if (aliasOptionsResult is LoadingResult.Success) {
-            val aliasOptions = aliasOptionsResult.data
+        observeUpgradeInfo().asLoadingResult()
+    ) { aliasUiState, aliasOptionsResult, selectedMailboxes, selectedSuffix, upgradeInfoResult ->
+        val showUpgrade = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false
+        val aliasItem = when (aliasOptionsResult) {
+            is LoadingResult.Error -> aliasUiState.aliasItem
+            LoadingResult.Loading -> aliasUiState.aliasItem
+            is LoadingResult.Success -> {
+                val aliasOptions = aliasOptionsResult.data
 
-            val mailboxes = aliasOptions.mailboxes
-                .map { model ->
-                    SelectedAliasMailboxUiModel(
-                        model = model,
-                        selected = selectedMailboxes.contains(model.id)
-                    )
+                val mailboxes = aliasOptions.mailboxes
+                    .map { model ->
+                        SelectedAliasMailboxUiModel(
+                            model = model,
+                            selected = selectedMailboxes.contains(model.id)
+                        )
+                    }
+                    .toMutableList()
+                if (mailboxes.none { it.selected } && mailboxes.isNotEmpty()) {
+                    val mailbox = mailboxes.removeAt(0)
+                    mailboxes.add(0, mailbox.copy(selected = true))
+                        .also { selectedMailboxListState.update { listOf(mailbox.model.id) } }
                 }
-                .toMutableList()
-            if (mailboxes.none { it.selected } && mailboxes.isNotEmpty()) {
-                val mailbox = mailboxes.removeAt(0)
-                mailboxes.add(0, mailbox.copy(selected = true))
-                    .also { selectedMailboxListState.update { listOf(mailbox.model.id) } }
-            }
 
-            val mailboxTitle = getMailboxTitle(mailboxes)
+                val mailboxTitle = getMailboxTitle(mailboxes)
 
-            val suffix = if (
-                selectedSuffix is Some &&
-                aliasOptions.suffixes.contains(selectedSuffix.value)
-            ) {
-                selectedSuffix.value
-            } else {
-                aliasOptions.suffixes.first()
-                    .also { selectedSuffixState.update { it } }
-            }
-            val aliasToBeCreated = if (aliasUiState.aliasItem.prefix.isNotBlank()) {
-                getAliasToBeCreated(aliasUiState.aliasItem.prefix, suffix)
-            } else {
-                aliasUiState.aliasItem.aliasToBeCreated
-            }
-
-            aliasUiState.copy(
-                aliasItem = aliasUiState.aliasItem.copy(
+                val suffix = if (
+                    selectedSuffix is Some &&
+                    aliasOptions.suffixes.contains(selectedSuffix.value)
+                ) {
+                    selectedSuffix.value
+                } else {
+                    aliasOptions.suffixes.first()
+                        .also { selectedSuffixState.update { it } }
+                }
+                val aliasToBeCreated = if (aliasUiState.aliasItem.prefix.isNotBlank()) {
+                    getAliasToBeCreated(aliasUiState.aliasItem.prefix, suffix)
+                } else {
+                    aliasUiState.aliasItem.aliasToBeCreated
+                }
+                aliasUiState.aliasItem.copy(
                     aliasOptions = aliasOptions,
                     selectedSuffix = suffix,
                     mailboxes = mailboxes,
                     mailboxTitle = mailboxTitle,
                     aliasToBeCreated = aliasToBeCreated
                 )
-            )
-
-        } else {
-            aliasUiState
+            }
         }
+
+        aliasUiState.copy(
+            aliasItem = aliasItem,
+            showUpgrade = showUpgrade,
+            isLoadingState = IsLoadingState.from(
+                aliasUiState.isLoadingState is IsLoadingState.Loading ||
+                    upgradeInfoResult is LoadingResult.Loading
+            )
+        )
     }
         .stateIn(
             scope = viewModelScope,

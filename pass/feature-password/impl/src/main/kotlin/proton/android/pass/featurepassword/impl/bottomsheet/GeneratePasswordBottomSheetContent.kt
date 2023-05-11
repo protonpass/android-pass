@@ -36,9 +36,7 @@ fun GeneratePasswordBottomSheetContent(
     ) {
         GeneratePasswordBottomSheetTitle(onRegenerate = { onRegenerateClick() })
         GeneratePasswordViewContent(
-            password = state.password,
-            length = state.length,
-            hasSpecialCharacters = state.hasSpecialCharacters,
+            state = state,
             onLengthChange = onLengthChange,
             onSpecialCharactersChange = onHasSpecialCharactersChange
         )

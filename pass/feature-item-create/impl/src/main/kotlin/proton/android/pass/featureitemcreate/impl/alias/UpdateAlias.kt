@@ -19,8 +19,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
-import proton.pass.domain.ItemId
-import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @ExperimentalMaterialApi
@@ -28,8 +26,7 @@ import proton.pass.domain.ShareId
 @Composable
 fun UpdateAlias(
     modifier: Modifier = Modifier,
-    onUpClick: () -> Unit,
-    onSuccess: (ShareId, ItemId) -> Unit,
+    onNavigate: (UpdateAliasNavigation) -> Unit,
     viewModel: UpdateAliasViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.baseAliasUiState.collectAsStateWithLifecycle()
@@ -38,7 +35,7 @@ fun UpdateAlias(
         if (viewState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
-            onUpClick()
+            onNavigate(UpdateAliasNavigation.Close)
         }
     }
     BackHandler {
@@ -47,7 +44,7 @@ fun UpdateAlias(
 
     LaunchedEffect(viewState.closeScreenEvent) {
         if (viewState.closeScreenEvent is CloseScreenEvent.Close) {
-            onUpClick()
+            onNavigate(UpdateAliasNavigation.Close)
         }
     }
 
@@ -61,14 +58,22 @@ fun UpdateAlias(
             isEditAllowed = viewState.isLoadingState == IsLoadingState.NotLoading,
             showVaultSelector = false,
             onUpClick = onExit,
-            onAliasCreated = { shareId, itemId, _ -> onSuccess(shareId, itemId) },
+            onAliasCreated = { shareId, itemId, _ ->
+                onNavigate(
+                    UpdateAliasNavigation.Updated(
+                        shareId,
+                        itemId
+                    )
+                )
+            },
             onSubmit = { viewModel.updateAlias() },
             onSuffixChange = {},
             onMailboxesChanged = { viewModel.onMailboxesChanged(it) },
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
             onPrefixChange = {},
-            onVaultSelect = {}
+            onVaultSelect = {},
+            onUpgrade = { onNavigate(UpdateAliasNavigation.Upgrade) }
         )
 
         ConfirmCloseDialog(
@@ -78,7 +83,7 @@ fun UpdateAlias(
             },
             onConfirm = {
                 showConfirmDialog = false
-                onUpClick()
+                onNavigate(UpdateAliasNavigation.Close)
             }
         )
     }

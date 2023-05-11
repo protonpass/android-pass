@@ -25,13 +25,17 @@ object EditAlias : NavItem(
     ExperimentalComposeUiApi::class
 )
 fun NavGraphBuilder.updateAliasGraph(
-    onBackClick: () -> Unit,
-    onAliasUpdatedSuccess: (ShareId, ItemId) -> Unit
+    onNavigate: (UpdateAliasNavigation) -> Unit
 ) {
     composable(EditAlias) {
         UpdateAlias(
-            onUpClick = onBackClick,
-            onSuccess = onAliasUpdatedSuccess
+            onNavigate = onNavigate
         )
     }
+}
+
+sealed interface UpdateAliasNavigation {
+    data class Updated(val shareId: ShareId, val itemId: ItemId) : UpdateAliasNavigation
+    object Upgrade : UpdateAliasNavigation
+    object Close : UpdateAliasNavigation
 }

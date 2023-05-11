@@ -15,9 +15,6 @@
     <string name="item_type_note_description">Jot down a PIN, code, or note to self</string>
     <string name="item_type_password_description">Generate a secure password</string>
 
-    <!-- Generate password bottomsheet -->
-    <string name="generate_password_copy">Copy and close</string>
-
     <!-- Create Login -->
     <string name="title_create_login">Create login</string>
     <string name="field_username_title">Username or email</string>
@@ -87,7 +84,6 @@
     <string name="note_hint">Note</string>
 
     <!--  Create password  -->
-    <string name="password_copied_to_clipboard">Password copied</string>
 
     <!--  Common create items  -->
     <string name="changes_saved">Changes saved</string>

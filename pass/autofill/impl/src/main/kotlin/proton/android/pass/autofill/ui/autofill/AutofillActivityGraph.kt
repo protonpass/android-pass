@@ -29,14 +29,15 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
-import proton.android.pass.featureitemcreate.impl.login.GenerateLoginPasswordBottomsheet
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
-import proton.android.pass.featureitemcreate.impl.login.generatePasswordGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
+import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheet
+import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheetModeValue
+import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 @Suppress("LongParameterList", "LongMethod", "ComplexMethod")
@@ -84,6 +85,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                 SelectItemNavigation.AddItem -> {
                     appNavigator.navigate(CreateItemBottomsheet)
                 }
+
                 SelectItemNavigation.Cancel -> onAutofillCancel()
                 is SelectItemNavigation.ItemSelected -> onAutofillSuccess(it.autofillMappings)
                 is SelectItemNavigation.SortingBottomsheet ->
@@ -111,8 +113,14 @@ fun NavGraphBuilder.autofillActivityGraph(
                     route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.title)
                 )
 
-                BaseLoginNavigation.GeneratePassword ->
-                    appNavigator.navigate(GenerateLoginPasswordBottomsheet)
+                BaseLoginNavigation.GeneratePassword -> {
+                    appNavigator.navigate(
+                        destination = GeneratePasswordBottomsheet,
+                        route = GeneratePasswordBottomsheet.buildRoute(
+                            mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
+                        )
+                    )
+                }
 
                 is BaseLoginNavigation.LoginCreated -> when (
                     val autofillItem = it.itemUiModel.toAutoFillItem()
@@ -128,7 +136,13 @@ fun NavGraphBuilder.autofillActivityGraph(
         }
     )
 
-    generatePasswordGraph(dismissBottomSheet = dismissBottomSheet)
+    generatePasswordBottomsheetGraph(
+        onDismiss = {
+            dismissBottomSheet {
+                appNavigator.onBackClick()
+            }
+        }
+    )
     createTotpGraph(
         onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
         onCloseTotp = { appNavigator.onBackClick() },
@@ -148,6 +162,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                         appNavigator.onBackClick()
                     }
                 }
+
                 is CreateAliasNavigation.Created -> {
                     val created = CreatedAlias(it.shareId, it.itemId, it.alias)
                     onAutofillItemReceived(created.toAutofillItem())
@@ -165,12 +180,14 @@ fun NavGraphBuilder.autofillActivityGraph(
                         CreateAlias.createNavRoute(it.shareId)
                     )
                 }
+
                 is CreateItemBottomsheetNavigation.CreateLogin -> {
                     appNavigator.navigate(
                         CreateLogin,
                         CreateLogin.createNavRoute(it.shareId)
                     )
                 }
+
                 else -> {}
             }
         }

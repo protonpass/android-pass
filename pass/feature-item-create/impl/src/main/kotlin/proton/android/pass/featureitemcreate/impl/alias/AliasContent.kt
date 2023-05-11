@@ -50,7 +50,8 @@ internal fun AliasContent(
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onPrefixChange: (String) -> Unit,
-    onVaultSelect: (ShareId) -> Unit
+    onVaultSelect: (ShareId) -> Unit,
+    onUpgrade: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
@@ -109,7 +110,7 @@ internal fun AliasContent(
                     onCloseClick = onUpClick,
                     showUpgrade = false,
                     onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) },
-                    onUpgrade = {}
+                    onUpgrade = onUpgrade
                 )
             }
         ) { padding ->
@@ -163,7 +164,7 @@ internal fun AliasContent(
                         showSuffixDialog = false
                     }
                 },
-                onUpgrade = {}
+                onUpgrade = onUpgrade
             )
 
             SelectMailboxesDialog(
@@ -174,7 +175,7 @@ internal fun AliasContent(
                     onMailboxesChanged(it)
                 },
                 onDismiss = { showMailboxDialog = false },
-                onUpgrade = {}
+                onUpgrade = onUpgrade
             )
             IsAliasSavedLaunchedEffect(uiState, onAliasCreated)
         }

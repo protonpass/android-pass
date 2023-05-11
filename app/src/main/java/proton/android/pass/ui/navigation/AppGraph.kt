@@ -288,7 +288,7 @@ fun NavGraphBuilder.appGraph(
                 BaseLoginNavigation.Close -> appNavigator.onBackClick()
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
-                    route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.title),
+                    route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.showUpgrade, it.title),
                     backDestination = CreateLogin
                 )
 
@@ -314,7 +314,11 @@ fun NavGraphBuilder.appGraph(
                 BaseLoginNavigation.Close -> appNavigator.onBackClick()
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
-                    route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.title),
+                    route = CreateAliasBottomSheet.createNavRoute(
+                        it.shareId,
+                        it.showUpgrade,
+                        it.title
+                    ),
                     backDestination = CreateLogin
                 )
 

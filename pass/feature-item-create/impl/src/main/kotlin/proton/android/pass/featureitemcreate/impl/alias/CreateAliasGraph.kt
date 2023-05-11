@@ -9,6 +9,7 @@ import proton.android.pass.featureitemcreate.impl.alias.bottomsheet.CreateAliasB
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.ShowUpgradeNavArgId
 import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.toPath
@@ -38,11 +39,15 @@ object CreateAlias : NavItem(
 
 object CreateAliasBottomSheet : NavItem(
     baseRoute = "alias/create/bottomsheet",
-    navArgIds = listOf(CommonOptionalNavArgId.ShareId),
+    navArgIds = listOf(CommonOptionalNavArgId.ShareId, ShowUpgradeNavArgId),
     optionalArgIds = listOf(AliasOptionalNavArgId.Title)
 ) {
-    fun createNavRoute(shareId: ShareId, title: Option<String> = None): String = buildString {
-        append("$baseRoute/${shareId.id}")
+    fun createNavRoute(
+        shareId: ShareId,
+        showUpgrade: Boolean,
+        title: Option<String> = None
+    ): String = buildString {
+        append("$baseRoute/${shareId.id}/$showUpgrade")
 
         val map = mutableMapOf<String, Any>()
         if (title is Some) {
@@ -55,7 +60,12 @@ object CreateAliasBottomSheet : NavItem(
 
 sealed interface CreateAliasNavigation {
     data class CreatedFromBottomsheet(val alias: String) : CreateAliasNavigation
-    data class Created(val shareId: ShareId, val itemId: ItemId, val alias: String) : CreateAliasNavigation
+    data class Created(
+        val shareId: ShareId,
+        val itemId: ItemId,
+        val alias: String
+    ) : CreateAliasNavigation
+
     object Upgrade : CreateAliasNavigation
     object Close : CreateAliasNavigation
 }

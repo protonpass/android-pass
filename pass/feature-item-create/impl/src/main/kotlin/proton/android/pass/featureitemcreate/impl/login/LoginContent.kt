@@ -106,6 +106,7 @@ internal fun LoginContent(
                         onNavigate(
                             BaseLoginNavigation.CreateAlias(
                                 uiState.selectedVault!!.vault.shareId,
+                                uiState.hasReachedAliasLimit,
                                 uiState.loginItem.title.some()
                             )
                         )
@@ -138,6 +139,7 @@ internal fun LoginContent(
                             onNavigate(
                                 BaseLoginNavigation.CreateAlias(
                                     uiState.selectedVault!!.vault.shareId,
+                                    uiState.hasReachedAliasLimit,
                                     uiState.loginItem.title.some()
                                 )
                             )
@@ -223,6 +225,7 @@ internal fun LoginContent(
                         onNavigate(
                             BaseLoginNavigation.CreateAlias(
                                 uiState.selectedVault!!.vault.shareId,
+                                uiState.hasReachedAliasLimit,
                                 uiState.loginItem.title.some()
                             )
                         )

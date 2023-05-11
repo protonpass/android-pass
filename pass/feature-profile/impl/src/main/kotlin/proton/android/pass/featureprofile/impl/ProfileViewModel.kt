@@ -57,7 +57,7 @@ class ProfileViewModel @Inject constructor(
         .getAutofillStatus()
         .distinctUntilChanged()
 
-    private val itemsCountFlow = observeItemCount()
+    private val itemsCountFlow = observeItemCount(itemState = null)
         .distinctUntilChanged()
         .asLoadingResult()
 

@@ -16,14 +16,16 @@ interface LocalItemDataSource {
     fun observeItemsForShare(
         userId: UserId,
         shareId: ShareId,
-        itemState: ItemState,
+        itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<ItemEntity>>
+
     fun observeItems(
         userId: UserId,
-        itemState: ItemState,
+        itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<ItemEntity>>
+
     suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity?
     suspend fun setItemState(shareId: ShareId, itemId: ItemId, itemState: ItemState)
     suspend fun getTrashedItems(userId: UserId): List<ItemEntity>
@@ -31,8 +33,10 @@ interface LocalItemDataSource {
     suspend fun hasItemsForShare(userId: UserId, shareId: ShareId): Boolean
     fun observeItemCountSummary(
         userId: UserId,
-        shareIds: List<ShareId>
+        shareIds: List<ShareId>,
+        itemState: ItemState?
     ): Flow<ItemCountSummary>
+
     suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long)
     fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>
     suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity?

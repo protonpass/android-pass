@@ -20,7 +20,7 @@ class ObserveItemsImpl @Inject constructor(
     override fun invoke(
         userId: UserId?,
         selection: ShareSelection,
-        itemState: ItemState,
+        itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<Item>> =
         if (userId == null) {
@@ -35,14 +35,13 @@ class ObserveItemsImpl @Inject constructor(
     private fun observeItems(
         userId: UserId,
         selection: ShareSelection,
-        itemState: ItemState,
+        itemState: ItemState?,
         filter: ItemTypeFilter
-    ): Flow<List<Item>> =
-        itemRepository.observeItems(
-            userId = userId,
-            shareSelection = selection,
-            itemState = itemState,
-            itemTypeFilter = filter
-        )
+    ): Flow<List<Item>> = itemRepository.observeItems(
+        userId = userId,
+        shareSelection = selection,
+        itemState = itemState,
+        itemTypeFilter = filter
+    )
 }
 

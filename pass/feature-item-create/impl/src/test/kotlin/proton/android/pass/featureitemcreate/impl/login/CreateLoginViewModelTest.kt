@@ -17,7 +17,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
-import proton.android.pass.data.fakes.usecases.TestGetUpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
@@ -81,7 +81,7 @@ internal class CreateLoginViewModelTest {
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
             telemetryManager = telemetryManager,
             draftRepository = TestDraftRepository(),
-            getUpgradeInfo = TestGetUpgradeInfo()
+            observeUpgradeInfo = TestObserveUpgradeInfo()
         )
     }
 

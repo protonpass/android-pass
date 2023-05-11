@@ -3,7 +3,7 @@ package proton.android.pass.data.api.usecases
 import kotlinx.coroutines.flow.Flow
 import proton.pass.domain.Plan
 
-interface GetUpgradeInfo {
+interface ObserveUpgradeInfo {
     operator fun invoke(forceRefresh: Boolean = false): Flow<UpgradeInfo>
 }
 

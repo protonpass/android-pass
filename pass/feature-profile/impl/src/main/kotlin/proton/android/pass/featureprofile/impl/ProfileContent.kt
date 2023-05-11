@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionWeak
-import me.proton.core.compose.theme.defaultSmallStrong
+import me.proton.core.compose.theme.defaultSmallStrongNorm
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
 import proton.android.pass.commonui.api.PassTheme
@@ -71,49 +71,55 @@ fun ProfileContent(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .background(PassTheme.colors.backgroundStrong)
-                .padding(padding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+                .padding(padding),
         ) {
-            ItemSummary(itemSummaryUiState = state.itemSummaryUiState)
-            Text(
-                text = stringResource(R.string.profile_manage_profile),
-                style = ProtonTheme.typography.defaultSmallStrong,
-                color = PassTheme.colors.textNorm
+            ItemSummary(
+                modifier = Modifier.padding(0.dp, 16.dp),
+                itemSummaryUiState = state.itemSummaryUiState
             )
-            if (state.fingerprintSection is FingerprintSectionState.Available) {
-                FingerprintProfileSection(
-                    isFingerprintEnabled = state.fingerprintSection.enabled.value(),
-                    onFingerprintToggle = onFingerprintClicked,
-                    onAppLockClick = onAppLockClick
-                )
-            }
-            if (state.autofillStatus is AutofillSupportedStatus.Supported) {
-                AutofillProfileSection(
-                    isChecked = state.autofillStatus.status is AutofillStatus.EnabledByOurService,
-                    onClick = onAutofillClicked
-                )
-            }
-            AccountProfileSection(
-                onAccountClick = onAccountClick,
-                onSettingsClick = onSettingsClick
-            )
-            HelpCenterProfileSection(
-                onFeedbackClick = onFeedbackClick,
-                onImportExportClick = onImportExportClick,
-                onRateAppClick = onRateAppClick
-            )
-            Box(
-                modifier = Modifier
-                    .clickable { onCopyAppVersionClick() }
-                    .fillMaxWidth()
-                    .padding(32.dp),
-                contentAlignment = Alignment.Center
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Text(
-                    text = state.appVersion,
-                    style = ProtonTheme.typography.captionWeak
+                    text = stringResource(R.string.profile_manage_profile),
+                    style = ProtonTheme.typography.defaultSmallStrongNorm,
+                    color = PassTheme.colors.textNorm
                 )
+                if (state.fingerprintSection is FingerprintSectionState.Available) {
+                    FingerprintProfileSection(
+                        isFingerprintEnabled = state.fingerprintSection.enabled.value(),
+                        onFingerprintToggle = onFingerprintClicked,
+                        onAppLockClick = onAppLockClick
+                    )
+                }
+                if (state.autofillStatus is AutofillSupportedStatus.Supported) {
+                    AutofillProfileSection(
+                        isChecked = state.autofillStatus.status is AutofillStatus.EnabledByOurService,
+                        onClick = onAutofillClicked
+                    )
+                }
+                AccountProfileSection(
+                    onAccountClick = onAccountClick,
+                    onSettingsClick = onSettingsClick
+                )
+                HelpCenterProfileSection(
+                    onFeedbackClick = onFeedbackClick,
+                    onImportExportClick = onImportExportClick,
+                    onRateAppClick = onRateAppClick
+                )
+                Box(
+                    modifier = Modifier
+                        .clickable { onCopyAppVersionClick() }
+                        .fillMaxWidth()
+                        .padding(32.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = state.appVersion,
+                        style = ProtonTheme.typography.captionWeak
+                    )
+                }
             }
         }
     }

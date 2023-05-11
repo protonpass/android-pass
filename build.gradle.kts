@@ -106,7 +106,7 @@ fladle {
     serviceAccountCredentials.set(File("/tmp/service-account.json"))
     devices.set(
         listOf(
-            mapOf("model" to "NexusLowRes", "version" to "\"27\""),
+            mapOf("model" to "SmallPhone.arm", "version" to "\"27\""),
             mapOf("model" to "Pixel2.arm", "version" to "\"33\""),
         )
     )

@@ -215,7 +215,7 @@ class ItemRepositoryImpl @Inject constructor(
     override fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,
-        itemState: ItemState,
+        itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter
     ): Flow<List<Item>> =
         when (shareSelection) {
@@ -478,9 +478,10 @@ class ItemRepositoryImpl @Inject constructor(
 
     override fun observeItemCountSummary(
         userId: UserId,
-        shareIds: List<ShareId>
+        shareIds: List<ShareId>,
+        itemState: ItemState?,
     ): Flow<ItemCountSummary> =
-        localItemDataSource.observeItemCountSummary(userId, shareIds)
+        localItemDataSource.observeItemCountSummary(userId, shareIds, itemState)
             .flowOn(Dispatchers.IO)
 
     override suspend fun updateItemLastUsed(shareId: ShareId, itemId: ItemId) {

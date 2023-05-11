@@ -40,7 +40,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
     override fun invoke(
         userId: UserId?,
         selection: ShareSelection,
-        itemState: ItemState,
+        itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<Item>> = flow
 

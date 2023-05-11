@@ -28,7 +28,7 @@ class AccountViewModel @Inject constructor(
 
     val state: StateFlow<AccountUiState> = combine(
         currentUser.asLoadingResult(),
-        getUpgradeInfo().asLoadingResult()
+        getUpgradeInfo(forceRefresh = true).asLoadingResult()
     ) { userResult, upgradeInfoResult ->
         val plan = when (upgradeInfoResult) {
             is LoadingResult.Error -> {

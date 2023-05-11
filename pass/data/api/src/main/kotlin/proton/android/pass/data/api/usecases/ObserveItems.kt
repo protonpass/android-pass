@@ -10,7 +10,7 @@ interface ObserveItems {
     operator fun invoke(
         userId: UserId? = null,
         selection: ShareSelection,
-        itemState: ItemState,
+        itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<Item>>
 }

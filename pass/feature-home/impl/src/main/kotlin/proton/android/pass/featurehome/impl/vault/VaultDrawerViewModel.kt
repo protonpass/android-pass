@@ -25,6 +25,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.log.api.PassLogger
+import proton.pass.domain.ItemState
 import javax.inject.Inject
 
 @HiltViewModel
@@ -89,7 +90,7 @@ class VaultDrawerViewModel @Inject constructor(
         }
     }
         .flatMapLatest { pair ->
-            itemRepository.observeItemCountSummary(pair.first.userId, pair.second.map { it.id })
+            itemRepository.observeItemCountSummary(pair.first.userId, pair.second.map { it.id }, ItemState.Active)
         }
 
     val drawerUiState = combine(

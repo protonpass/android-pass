@@ -167,6 +167,8 @@ fun NavGraphBuilder.autofillActivityGraph(
                     val created = CreatedAlias(it.shareId, it.itemId, it.alias)
                     onAutofillItemReceived(created.toAutofillItem())
                 }
+
+                CreateAliasNavigation.Upgrade -> {}
             }
         }
     )

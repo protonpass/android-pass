@@ -25,6 +25,7 @@ import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.EditAlias
+import proton.android.pass.featureitemcreate.impl.alias.UpdateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.createAliasGraph
 import proton.android.pass.featureitemcreate.impl.alias.updateAliasGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomSheetMode
@@ -385,17 +386,23 @@ fun NavGraphBuilder.appGraph(
                 is CreateAliasNavigation.Created -> {
                     appNavigator.onBackClick()
                 }
+
+                CreateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             }
         },
     )
     updateAliasGraph(
-        onBackClick = { appNavigator.onBackClick() },
-        onAliasUpdatedSuccess = { shareId, itemId ->
-            appNavigator.navigate(
-                destination = ViewItem,
-                route = ViewItem.createNavRoute(shareId, itemId),
-                backDestination = Home
-            )
+        onNavigate = {
+            when (it) {
+                UpdateAliasNavigation.Close -> appNavigator.onBackClick()
+                is UpdateAliasNavigation.Updated -> appNavigator.navigate(
+                    destination = ViewItem,
+                    route = ViewItem.createNavRoute(it.shareId, it.itemId),
+                    backDestination = Home
+                )
+
+                UpdateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+            }
         }
     )
     itemDetailGraph(

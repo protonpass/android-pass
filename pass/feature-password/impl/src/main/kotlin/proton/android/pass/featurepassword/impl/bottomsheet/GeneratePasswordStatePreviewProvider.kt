@@ -7,20 +7,26 @@ class GeneratePasswordStatePreviewProvider : PreviewParameterProvider<GeneratePa
         get() = sequenceOf(
             GeneratePasswordUiState(
                 password = "a1b!c_d3e#fg",
-                length = 12,
-                hasSpecialCharacters = true,
+                content = GeneratePasswordContent.RandomPassword(
+                    length = 12,
+                    hasSpecialCharacters = true,
+                ),
                 mode = GeneratePasswordMode.CopyAndClose
             ),
             GeneratePasswordUiState(
                 password = "a1!2",
-                length = 4,
-                hasSpecialCharacters = false,
+                content = GeneratePasswordContent.RandomPassword(
+                    length = 4,
+                    hasSpecialCharacters = false,
+                ),
                 mode = GeneratePasswordMode.CopyAndClose
             ),
             GeneratePasswordUiState(
                 password = buildString { repeat(64) { append("a") } },
-                length = 64,
-                hasSpecialCharacters = false,
+                content = GeneratePasswordContent.RandomPassword(
+                    length = 64,
+                    hasSpecialCharacters = false,
+                ),
                 mode = GeneratePasswordMode.CancelConfirm
             )
         )

@@ -34,7 +34,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
-import proton.android.pass.data.api.usecases.GetUpgradeInfo
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -56,7 +56,7 @@ abstract class BaseLoginViewModel(
     private val draftRepository: DraftRepository,
     observeVaults: ObserveVaultsWithItemCount,
     observeCurrentUser: ObserveCurrentUser,
-    getUpgradeInfo: GetUpgradeInfo,
+    observeUpgradeInfo: ObserveUpgradeInfo,
     encryptionContextProvider: EncryptionContextProvider,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -171,7 +171,7 @@ abstract class BaseLoginViewModel(
     protected val itemHadTotpState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val totpUiStateFlow = combine(
         itemHadTotpState,
-        getUpgradeInfo().asLoadingResult()
+        observeUpgradeInfo().asLoadingResult()
     ) { itemHadTotp, upgradeInfoResult ->
         when (upgradeInfoResult) {
             is LoadingResult.Error -> TotpUiState.Error

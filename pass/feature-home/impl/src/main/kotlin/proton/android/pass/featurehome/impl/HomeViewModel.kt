@@ -33,6 +33,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onSuccess
@@ -88,7 +89,6 @@ import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
 import javax.inject.Inject
-import proton.android.pass.common.api.combine as combineN
 
 @Suppress("LongParameterList")
 @ExperimentalMaterialApi

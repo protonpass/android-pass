@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -44,7 +45,6 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import javax.inject.Inject
-import proton.android.pass.common.api.combine as combineN
 
 @HiltViewModel
 class AliasDetailViewModel @Inject constructor(

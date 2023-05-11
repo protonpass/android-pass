@@ -181,6 +181,24 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 preferences.lockApp.toValue(default = AppLockPreference.InTwoMinutes)
             }
 
+    override suspend fun setPasswordGenerationPreference(
+        preference: PasswordGenerationPreference
+    ): Result<Unit> = runCatching {
+        dataStore.updateData {
+            it.toBuilder()
+                .setPasswordGeneration(preference.toProto())
+                .build()
+        }
+        return@runCatching
+    }
+
+    override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> =
+        dataStore.data
+            .catch { exception -> handleExceptions(exception) }
+            .map { preferences ->
+                preferences.passwordGeneration.toValue()
+            }
+
     override suspend fun clearPreferences(): Result<Unit> =
         runCatching {
             dataStore.updateData {

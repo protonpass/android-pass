@@ -2,6 +2,7 @@ package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
 
+@Suppress("TooManyFunctions", "ComplexInterface")
 interface UserPreferencesRepository {
     suspend fun setBiometricLockState(state: BiometricLockState): Result<Unit>
     fun getBiometricLockState(): Flow<BiometricLockState>
@@ -29,6 +30,9 @@ interface UserPreferencesRepository {
 
     suspend fun setAppLockPreference(preference: AppLockPreference): Result<Unit>
     fun getAppLockPreference(): Flow<AppLockPreference>
+
+    suspend fun setPasswordGenerationPreference(preference: PasswordGenerationPreference): Result<Unit>
+    fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference>
 
     suspend fun clearPreferences(): Result<Unit>
 }

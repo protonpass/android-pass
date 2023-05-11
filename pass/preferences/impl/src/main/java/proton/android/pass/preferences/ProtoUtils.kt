@@ -2,6 +2,9 @@ package proton.android.pass.preferences
 
 import me.proton.android.pass.preferences.BooleanPrefProto
 import me.proton.android.pass.preferences.LockAppPrefProto
+import me.proton.android.pass.preferences.PasswordGenerationPrefProto
+import me.proton.android.pass.preferences.PasswordGenerationMode as ProtoPasswordGenerationMode
+import me.proton.android.pass.preferences.WordSeparator as ProtoWordSeparator
 
 fun Boolean.toBooleanPrefProto() = if (this) {
     BooleanPrefProto.BOOLEAN_PREFERENCE_TRUE
@@ -38,3 +41,52 @@ fun LockAppPrefProto.toValue(default: AppLockPreference) = when (this) {
     LockAppPrefProto.LOCK_APP_IN_FOUR_HOURS -> AppLockPreference.InFourHours
     else -> default
 }
+
+fun PasswordGenerationPreference.toProto() = PasswordGenerationPrefProto.newBuilder()
+    .setMode(
+        when (mode) {
+            PasswordGenerationMode.Random -> ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_RANDOM
+            PasswordGenerationMode.Words -> ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_WORDS
+        }
+    )
+    .setRandomPasswordLength(randomPasswordLength)
+    .setRandomHasSpecialCharacters(randomHasSpecialCharacters.toBooleanPrefProto())
+    .setWordsCount(wordsCount)
+    .setWordsSeparator(
+        when (wordsSeparator) {
+            WordSeparator.Hyphen -> ProtoWordSeparator.WORD_SEPARATOR_HYPHEN
+            WordSeparator.Space -> ProtoWordSeparator.WORD_SEPARATOR_SPACE
+            WordSeparator.Period -> ProtoWordSeparator.WORD_SEPARATOR_PERIOD
+            WordSeparator.Comma -> ProtoWordSeparator.WORD_SEPARATOR_COMMA
+            WordSeparator.Underscore -> ProtoWordSeparator.WORD_SEPARATOR_UNDERSCORE
+            WordSeparator.Numbers -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS
+            WordSeparator.NumbersAndSymbols -> ProtoWordSeparator.WORD_SEPARATOR_NUMBERS_AND_SYMBOLS
+        }
+    )
+    .setWordsCapitalise(wordsCapitalise.toBooleanPrefProto())
+    .setWordsIncludeNumbers(wordsIncludeNumbers.toBooleanPrefProto())
+    .build()
+
+fun PasswordGenerationPrefProto.toValue() = PasswordGenerationPreference(
+    mode = when (mode) {
+        ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_RANDOM -> PasswordGenerationMode.Random
+        ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_WORDS -> PasswordGenerationMode.Words
+        else -> PasswordGenerationMode.Random
+    },
+    randomPasswordLength = randomPasswordLength,
+    randomHasSpecialCharacters = fromBooleanPrefProto(randomHasSpecialCharacters),
+    wordsCount = wordsCount,
+    wordsSeparator = when (wordsSeparator) {
+        ProtoWordSeparator.WORD_SEPARATOR_HYPHEN -> WordSeparator.Hyphen
+        ProtoWordSeparator.WORD_SEPARATOR_SPACE -> WordSeparator.Space
+        ProtoWordSeparator.WORD_SEPARATOR_PERIOD -> WordSeparator.Period
+        ProtoWordSeparator.WORD_SEPARATOR_COMMA -> WordSeparator.Comma
+        ProtoWordSeparator.WORD_SEPARATOR_UNDERSCORE -> WordSeparator.Underscore
+        ProtoWordSeparator.WORD_SEPARATOR_NUMBERS -> WordSeparator.Numbers
+        ProtoWordSeparator.WORD_SEPARATOR_NUMBERS_AND_SYMBOLS -> WordSeparator.NumbersAndSymbols
+        else -> WordSeparator.Hyphen
+    },
+    wordsCapitalise = fromBooleanPrefProto(wordsCapitalise),
+    wordsIncludeNumbers = fromBooleanPrefProto(wordsIncludeNumbers)
+)
+

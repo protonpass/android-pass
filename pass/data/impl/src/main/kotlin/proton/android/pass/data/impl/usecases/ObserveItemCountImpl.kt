@@ -7,6 +7,7 @@ import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.ObserveAllShares
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.pass.domain.ItemState
 import javax.inject.Inject
 
 class ObserveItemCountImpl @Inject constructor(
@@ -15,13 +16,14 @@ class ObserveItemCountImpl @Inject constructor(
     private val itemRepository: ItemRepository
 ) : ObserveItemCount {
 
-    override fun invoke(): Flow<ItemCountSummary> = observeAllShares()
+    override fun invoke(itemState: ItemState?): Flow<ItemCountSummary> = observeAllShares()
         .flatMapLatest { items ->
             observeCurrentUser()
                 .flatMapLatest { user ->
                     itemRepository.observeItemCountSummary(
                         userId = user.userId,
-                        shareIds = items.map { it.id }
+                        shareIds = items.map { it.id },
+                        itemState = itemState
                     )
                 }
         }

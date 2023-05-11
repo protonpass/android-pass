@@ -41,6 +41,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
@@ -81,7 +82,6 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import java.net.URI
 import javax.inject.Inject
-import proton.android.pass.common.api.combine as combineN
 
 @HiltViewModel
 class SelectItemViewModel @Inject constructor(

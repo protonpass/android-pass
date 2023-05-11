@@ -64,7 +64,8 @@ fun CreateAliasScreen(
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
             onPrefixChange = { viewModel.onPrefixChange(it) },
-            onVaultSelect = { viewModel.changeVault(it) }
+            onVaultSelect = { viewModel.changeVault(it) },
+            onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) }
         )
 
         ConfirmCloseDialog(

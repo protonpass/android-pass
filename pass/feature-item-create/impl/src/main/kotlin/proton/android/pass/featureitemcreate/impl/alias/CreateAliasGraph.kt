@@ -56,6 +56,7 @@ object CreateAliasBottomSheet : NavItem(
 sealed interface CreateAliasNavigation {
     data class CreatedFromBottomsheet(val alias: String) : CreateAliasNavigation
     data class Created(val shareId: ShareId, val itemId: ItemId, val alias: String) : CreateAliasNavigation
+    object Upgrade : CreateAliasNavigation
     object Close : CreateAliasNavigation
 }
 

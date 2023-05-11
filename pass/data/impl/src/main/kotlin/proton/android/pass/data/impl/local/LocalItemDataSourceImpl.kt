@@ -28,25 +28,25 @@ class LocalItemDataSourceImpl @Inject constructor(
     override fun observeItemsForShare(
         userId: UserId,
         shareId: ShareId,
-        itemState: ItemState,
+        itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<ItemEntity>> =
         if (filter == ItemTypeFilter.All) {
-            database.itemsDao().observerAllForShare(userId.id, shareId.id, itemState.value)
+            database.itemsDao().observerAllForShare(userId.id, shareId.id, itemState?.value)
         } else {
             database.itemsDao()
-                .observeAllForShare(userId.id, shareId.id, itemState.value, filter.value())
+                .observeAllForShare(userId.id, shareId.id, itemState?.value, filter.value())
         }
 
     override fun observeItems(
         userId: UserId,
-        itemState: ItemState,
+        itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<ItemEntity>> =
         if (filter == ItemTypeFilter.All) {
-            database.itemsDao().observeAllForAddress(userId.id, itemState.value)
+            database.itemsDao().observeAllForAddress(userId.id, itemState?.value)
         } else {
-            database.itemsDao().observeAllForAddress(userId.id, itemState.value, filter.value())
+            database.itemsDao().observeAllForAddress(userId.id, itemState?.value, filter.value())
         }
 
     override suspend fun getById(shareId: ShareId, itemId: ItemId): ItemEntity? =
@@ -66,10 +66,11 @@ class LocalItemDataSourceImpl @Inject constructor(
 
     override fun observeItemCountSummary(
         userId: UserId,
-        shareIds: List<ShareId>
+        shareIds: List<ShareId>,
+        itemState: ItemState?,
     ): Flow<ItemCountSummary> =
         database.itemsDao()
-            .itemSummary(userId.id, shareIds.map { it.id })
+            .itemSummary(userId.id, shareIds.map { it.id }, itemState?.value)
             .map { values ->
                 val logins = values.firstOrNull { it.itemKind == ITEM_TYPE_LOGIN }?.itemCount ?: 0
                 val aliases = values.firstOrNull { it.itemKind == ITEM_TYPE_ALIAS }?.itemCount ?: 0

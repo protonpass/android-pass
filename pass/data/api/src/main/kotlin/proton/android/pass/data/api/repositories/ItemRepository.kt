@@ -28,6 +28,7 @@ interface ItemRepository {
         share: Share,
         contents: ItemContents
     ): Item
+
     suspend fun createAlias(userId: UserId, share: Share, newAlias: NewAlias): Item
     suspend fun createItemAndAlias(
         userId: UserId,
@@ -35,6 +36,7 @@ interface ItemRepository {
         contents: ItemContents,
         newAlias: NewAlias
     ): Item
+
     suspend fun updateItem(
         userId: UserId,
         share: Share,
@@ -45,7 +47,7 @@ interface ItemRepository {
     fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,
-        itemState: ItemState,
+        itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter = ItemTypeFilter.All
     ): Flow<List<Item>>
 
@@ -81,7 +83,8 @@ interface ItemRepository {
 
     fun observeItemCountSummary(
         userId: UserId,
-        shareIds: List<ShareId>
+        shareIds: List<ShareId>,
+        itemState: ItemState?
     ): Flow<ItemCountSummary>
 
     fun observeItemCount(

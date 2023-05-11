@@ -77,7 +77,7 @@ class TestItemRepository @Inject constructor() : ItemRepository {
     override fun observeItems(
         userId: UserId,
         shareSelection: ShareSelection,
-        itemState: ItemState,
+        itemState: ItemState?,
         itemTypeFilter: ItemTypeFilter
     ): Flow<List<Item>> = observeItemListFlow
 
@@ -141,7 +141,8 @@ class TestItemRepository @Inject constructor() : ItemRepository {
 
     override fun observeItemCountSummary(
         userId: UserId,
-        shareIds: List<ShareId>
+        shareIds: List<ShareId>,
+        itemState: ItemState?
     ): Flow<ItemCountSummary> {
         TODO("Not yet implemented")
     }

@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 import proton.pass.domain.Plan
 
 interface GetUpgradeInfo {
-    operator fun invoke(): Flow<UpgradeInfo>
+    operator fun invoke(forceRefresh: Boolean = false): Flow<UpgradeInfo>
 }
 
 data class UpgradeInfo(

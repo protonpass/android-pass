@@ -40,13 +40,13 @@ class TestLocalItemDataSource : LocalItemDataSource {
     override fun observeItemsForShare(
         userId: UserId,
         shareId: ShareId,
-        itemState: ItemState,
+        itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<ItemEntity>> = flowOf(memory)
 
     override fun observeItems(
         userId: UserId,
-        itemState: ItemState,
+        itemState: ItemState?,
         filter: ItemTypeFilter
     ): Flow<List<ItemEntity>> {
         throw IllegalStateException("Not yet implemented")
@@ -74,7 +74,8 @@ class TestLocalItemDataSource : LocalItemDataSource {
 
     override fun observeItemCountSummary(
         userId: UserId,
-        shareIds: List<ShareId>
+        shareIds: List<ShareId>,
+        itemState: ItemState?
     ): Flow<ItemCountSummary> = summary
 
     override suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long) {

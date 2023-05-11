@@ -26,11 +26,14 @@ class GetUpgradeInfoImpl @Inject constructor(
     private val featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     private val observeVaultCount: ObserveVaultCount
 ) : GetUpgradeInfo {
-    override fun invoke(): Flow<UpgradeInfo> = observeCurrentUser()
+    override fun invoke(forceRefresh: Boolean): Flow<UpgradeInfo> = observeCurrentUser()
         .distinctUntilChanged()
         .flatMapLatest { user ->
             combine(
-                planRepository.sendUserAccessAndObservePlan(user.userId, forceRefresh = false),
+                planRepository.sendUserAccessAndObservePlan(
+                    userId = user.userId,
+                    forceRefresh = forceRefresh
+                ),
                 featureFlagsPreferencesRepository.get<Boolean>(FeatureFlags.IAP_ENABLED),
                 flowOf(paymentManager.isUpgradeAvailable()),
                 observeMFACount(),

@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.map
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.usecases.ObserveItemCount
+import proton.pass.domain.ItemState
 import javax.inject.Inject
 
 class TestObserveItemCount @Inject constructor() : ObserveItemCount {
@@ -12,7 +13,7 @@ class TestObserveItemCount @Inject constructor() : ObserveItemCount {
     private val observeVaultsFlow = testFlow<Result<ItemCountSummary>>()
 
     fun sendResult(result: Result<ItemCountSummary>) = observeVaultsFlow.tryEmit(result)
-    override fun invoke(): Flow<ItemCountSummary> = observeVaultsFlow.map {
+    override fun invoke(itemState: ItemState?): Flow<ItemCountSummary> = observeVaultsFlow.map {
         it.getOrThrow()
     }
 }

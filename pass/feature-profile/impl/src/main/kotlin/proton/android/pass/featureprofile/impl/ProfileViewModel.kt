@@ -24,6 +24,7 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.AppVersionCopied
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToAuthenticateError
 import proton.android.pass.featureprofile.impl.ProfileSnackbarMessage.BiometryFailedToStartError
@@ -46,7 +47,8 @@ class ProfileViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val appConfig: AppConfig,
     observeItemCount: ObserveItemCount,
-    observeMFACount: ObserveMFACount
+    observeMFACount: ObserveMFACount,
+    observeUpgradeInfo: ObserveUpgradeInfo
 ) : ViewModel() {
 
     private val biometricLockState = preferencesRepository
@@ -57,27 +59,30 @@ class ProfileViewModel @Inject constructor(
         .getAutofillStatus()
         .distinctUntilChanged()
 
-    private val itemsCountFlow = observeItemCount(itemState = null)
-        .distinctUntilChanged()
-        .asLoadingResult()
+    private val itemSummaryUiStateFlow = combine(
+        observeItemCount(itemState = null).asLoadingResult(),
+        observeMFACount(),
+        observeUpgradeInfo().asLoadingResult()
+    ) { itemCountResult, mfaCount, upgradeInfoResult ->
+        val itemCount = itemCountResult.getOrNull()
+        val upgradeInfo = upgradeInfoResult.getOrNull()
+        val isUpgradeAvailable = upgradeInfo?.isUpgradeAvailable ?: false
+        ItemSummaryUiState(
+            loginCount = itemCount?.login?.toInt() ?: 0,
+            notesCount = itemCount?.note?.toInt() ?: 0,
+            aliasCount = itemCount?.alias?.toInt() ?: 0,
+            mfaCount = mfaCount,
+            aliasLimit = if (isUpgradeAvailable) upgradeInfo?.plan?.aliasLimit else null,
+            mfaLimit = if (isUpgradeAvailable) upgradeInfo?.plan?.totpLimit else null
+        )
+    }
 
     val state: StateFlow<ProfileUiState> = combine(
         biometricLockState,
         flowOf(biometryManager.getBiometryStatus()),
         autofillStatusFlow,
-        itemsCountFlow,
-        observeMFACount()
-    ) { biometricLock, biometryStatus, autofillStatus, itemCountResult, mfaCount ->
-        val itemSummaryUiState = itemCountResult.getOrNull()
-            ?.let {
-                ItemSummaryUiState(
-                    loginCount = it.login.toInt(),
-                    notesCount = it.note.toInt(),
-                    aliasCount = it.alias.toInt(),
-                    mfaCount = mfaCount,
-                )
-            }
-            ?: ItemSummaryUiState()
+        itemSummaryUiStateFlow
+    ) { biometricLock, biometryStatus, autofillStatus, itemSummaryUiState ->
         val fingerprintSection = when (biometryStatus) {
             BiometryStatus.NotEnrolled -> FingerprintSectionState.NoFingerprintRegistered
             BiometryStatus.NotAvailable -> FingerprintSectionState.NotAvailable
@@ -125,6 +130,7 @@ class ProfileViewModel @Inject constructor(
                                     snackbarDispatcher(ErrorPerformingOperation)
                                 }
                         }
+
                         is BiometryResult.Error -> {
                             when (result.cause) {
                                 // If the user has cancelled it, do nothing

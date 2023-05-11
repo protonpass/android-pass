@@ -33,6 +33,6 @@ data class ItemSummaryUiState(
     val notesCount: Int = 0,
     val aliasCount: Int = 0,
     val mfaCount: Int = 0,
-    val aliasLeft: Int? = null,
-    val mfaLeft: Int? = null
+    val aliasLimit: Int? = null,
+    val mfaLimit: Int? = null
 )

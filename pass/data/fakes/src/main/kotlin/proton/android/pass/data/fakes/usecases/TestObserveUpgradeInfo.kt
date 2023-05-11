@@ -3,13 +3,13 @@ package proton.android.pass.data.fakes.usecases
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import proton.android.pass.data.api.usecases.GetUpgradeInfo
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.pass.domain.Plan
 import proton.pass.domain.PlanType
 import javax.inject.Inject
 
-class TestGetUpgradeInfo @Inject constructor() : GetUpgradeInfo {
+class TestObserveUpgradeInfo @Inject constructor() : ObserveUpgradeInfo {
 
     private var upgradeInfo: MutableSharedFlow<UpgradeInfo> = MutableStateFlow(DEFAULT)
 

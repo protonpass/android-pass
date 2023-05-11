@@ -8,7 +8,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestGetUpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
@@ -23,18 +23,18 @@ class AccountViewModelTest {
 
     private lateinit var instance: AccountViewModel
     private lateinit var observeCurrentUser: TestObserveCurrentUser
-    private lateinit var getUpgradeInfo: TestGetUpgradeInfo
+    private lateinit var getUpgradeInfo: TestObserveUpgradeInfo
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     fun setup() {
         observeCurrentUser = TestObserveCurrentUser()
-        getUpgradeInfo = TestGetUpgradeInfo()
+        getUpgradeInfo = TestObserveUpgradeInfo()
         snackbarDispatcher = TestSnackbarDispatcher()
 
         instance = AccountViewModel(
             observeCurrentUser = observeCurrentUser,
-            getUpgradeInfo = getUpgradeInfo
+            observeUpgradeInfo = getUpgradeInfo
         )
     }
 

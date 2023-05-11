@@ -10,6 +10,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
@@ -25,6 +26,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     snackbarDispatcher: SnackbarDispatcher,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
+    observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandle: SavedStateHandle,
     telemetryManager: TelemetryManager,
     draftRepository: DraftRepository
@@ -34,6 +36,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     snackbarDispatcher,
     telemetryManager,
     draftRepository,
+    observeUpgradeInfo,
     observeAliasOptions,
     observeVaults,
     savedStateHandle
@@ -49,6 +52,7 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
             is Some -> {
                 aliasItemState.update { draft.value }
             }
+
             else -> {
                 if (aliasItemState.value.prefix.isBlank()) {
                     if (title.isBlank()) {

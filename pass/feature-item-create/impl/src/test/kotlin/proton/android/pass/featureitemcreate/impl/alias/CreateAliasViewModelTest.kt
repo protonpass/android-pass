@@ -14,6 +14,7 @@ import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
@@ -44,6 +45,7 @@ class CreateAliasViewModelTest {
     private lateinit var createAlias: TestCreateAlias
     private lateinit var snackbarRepository: TestSnackbarDispatcher
     private lateinit var telemetryManager: TestTelemetryManager
+    private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
     private lateinit var draftRepository: TestDraftRepository
 
     @Before
@@ -57,6 +59,7 @@ class CreateAliasViewModelTest {
         snackbarRepository = TestSnackbarDispatcher()
         telemetryManager = TestTelemetryManager()
         draftRepository = TestDraftRepository()
+        observeUpgradeInfo = TestObserveUpgradeInfo()
     }
 
 
@@ -225,6 +228,7 @@ class CreateAliasViewModelTest {
                 }
             },
             telemetryManager = telemetryManager,
+            observeUpgradeInfo = observeUpgradeInfo,
             draftRepository = draftRepository
         ).apply {
             setDraftStatus(isDraft)

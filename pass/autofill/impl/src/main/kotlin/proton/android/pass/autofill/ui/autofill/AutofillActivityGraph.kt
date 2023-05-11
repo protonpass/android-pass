@@ -110,7 +110,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                 BaseLoginNavigation.Close -> appNavigator.onBackClick()
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
-                    route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.title)
+                    route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.showUpgrade, it.title)
                 )
 
                 BaseLoginNavigation.GeneratePassword -> {

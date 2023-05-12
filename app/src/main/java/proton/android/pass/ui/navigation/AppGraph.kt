@@ -32,6 +32,7 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
+import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.EditLogin
@@ -77,6 +78,7 @@ import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
+import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.featurevault.impl.delete.DeleteVaultDialog
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
@@ -244,6 +246,11 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 VaultNavigation.Close -> appNavigator.onBackClick()
                 VaultNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+                is VaultNavigation.VaultSelected -> {
+                    dismissBottomSheet {
+                        appNavigator.navigateUpWithResult(KEY_VAULT_SELECTED, it.shareId.id)
+                    }
+                }
             }
         }
     )
@@ -334,6 +341,12 @@ fun NavGraphBuilder.appGraph(
                         backDestination = CreateLogin
                     )
                 }
+                is BaseLoginNavigation.SelectVault -> {
+                    appNavigator.navigate(
+                        destination = SelectVaultBottomsheet,
+                        route = SelectVaultBottomsheet.createNavRoute(it.shareId.toOption())
+                    )
+                }
             }
         }
     )
@@ -386,6 +399,9 @@ fun NavGraphBuilder.appGraph(
                         backDestination = EditLogin
                     )
                 }
+
+                // We don't allow to select vault from update
+                is BaseLoginNavigation.SelectVault -> {}
             }
         }
     )
@@ -406,7 +422,13 @@ fun NavGraphBuilder.appGraph(
     )
     createNoteGraph(
         onNoteCreateSuccess = { appNavigator.onBackClick() },
-        onBackClick = { appNavigator.onBackClick() }
+        onBackClick = { appNavigator.onBackClick() },
+        onSelectVault = {
+            appNavigator.navigate(
+                destination = SelectVaultBottomsheet,
+                route = SelectVaultBottomsheet.createNavRoute(it.toOption())
+            )
+        }
     )
     updateNoteGraph(
         onNoteUpdateSuccess = { shareId: ShareId, itemId: ItemId ->
@@ -437,6 +459,13 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 CreateAliasNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+
+                is CreateAliasNavigation.SelectVault -> {
+                    appNavigator.navigate(
+                        destination = SelectVaultBottomsheet,
+                        route = SelectVaultBottomsheet.createNavRoute(it.shareId.toOption())
+                    )
+                }
             }
         },
     )

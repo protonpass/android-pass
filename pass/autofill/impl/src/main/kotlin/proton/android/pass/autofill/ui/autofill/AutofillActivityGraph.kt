@@ -16,6 +16,7 @@ import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
@@ -26,6 +27,7 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
+import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
@@ -42,6 +44,9 @@ import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
 import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
 import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
+import proton.android.pass.featurevault.impl.VaultNavigation
+import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
+import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 @Suppress("LongParameterList", "LongMethod", "ComplexMethod")
@@ -136,13 +141,26 @@ fun NavGraphBuilder.autofillActivityGraph(
                     destination = AliasOptionsBottomSheet,
                     route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
                 )
+
                 BaseLoginNavigation.DeleteAlias -> {
                     appNavigator.navigateUpWithResult(CLEAR_ALIAS_NAV_PARAMETER_KEY, true)
                 }
+
                 is BaseLoginNavigation.EditAlias -> {
                     appNavigator.navigate(
                         destination = CreateAliasBottomSheet,
-                        route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.showUpgrade, isEdit = true)
+                        route = CreateAliasBottomSheet.createNavRoute(
+                            it.shareId,
+                            it.showUpgrade,
+                            isEdit = true
+                        )
+                    )
+                }
+
+                is BaseLoginNavigation.SelectVault -> {
+                    appNavigator.navigate(
+                        destination = SelectVaultBottomsheet,
+                        route = SelectVaultBottomsheet.createNavRoute(it.shareId.toOption())
                     )
                 }
             }
@@ -156,9 +174,11 @@ fun NavGraphBuilder.autofillActivityGraph(
                 GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }
+
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
                     destination = WordSeparatorDialog
                 )
+
                 GeneratePasswordNavigation.OnSelectPasswordMode -> appNavigator.navigate(
                     destination = PasswordModeDialog
                 )
@@ -182,6 +202,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                 CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }
+
                 is CreateAliasNavigation.CreatedFromBottomsheet -> {
                     dismissBottomSheet {
                         appNavigator.onBackClick()
@@ -194,6 +215,12 @@ fun NavGraphBuilder.autofillActivityGraph(
                 }
 
                 CreateAliasNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
+                is CreateAliasNavigation.SelectVault -> {
+                    appNavigator.navigate(
+                        destination = SelectVaultBottomsheet,
+                        route = SelectVaultBottomsheet.createNavRoute(it.shareId.toOption())
+                    )
+                }
             }
         }
     )
@@ -216,6 +243,22 @@ fun NavGraphBuilder.autofillActivityGraph(
                 }
 
                 else -> {}
+            }
+        }
+    )
+
+    vaultGraph(
+        onNavigate = {
+            when (it) {
+                VaultNavigation.Close -> appNavigator.onBackClick()
+                VaultNavigation.Upgrade -> {
+                    throw IllegalStateException("Do not forget to implement this one")
+                }
+                is VaultNavigation.VaultSelected -> {
+                    dismissBottomSheet {
+                        appNavigator.navigateUpWithResult(KEY_VAULT_SELECTED, it.shareId.id)
+                    }
+                }
             }
         }
     )

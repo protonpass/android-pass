@@ -25,6 +25,7 @@ fun CreateLoginScreen(
     modifier: Modifier = Modifier,
     initialContents: InitialCreateLoginUiState? = null,
     showCreateAliasButton: Boolean = true,
+    clearAlias: Boolean,
     onNavigate: (BaseLoginNavigation) -> Unit,
     viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
@@ -33,6 +34,12 @@ fun CreateLoginScreen(
         viewModel.setInitialContents(initialContents)
     }
     val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(clearAlias) {
+        if (clearAlias) {
+            viewModel.onRemoveAlias()
+        }
+    }
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {

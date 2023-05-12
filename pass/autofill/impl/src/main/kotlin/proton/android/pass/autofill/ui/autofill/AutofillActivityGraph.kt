@@ -29,6 +29,8 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottom
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
@@ -129,6 +131,20 @@ fun NavGraphBuilder.autofillActivityGraph(
                 is BaseLoginNavigation.LoginUpdated -> {}
                 BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
                 BaseLoginNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
+
+                is BaseLoginNavigation.AliasOptions -> appNavigator.navigate(
+                    destination = AliasOptionsBottomSheet,
+                    route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
+                )
+                BaseLoginNavigation.DeleteAlias -> {
+                    appNavigator.navigateUpWithResult(CLEAR_ALIAS_NAV_PARAMETER_KEY, true)
+                }
+                is BaseLoginNavigation.EditAlias -> {
+                    appNavigator.navigate(
+                        destination = CreateAliasBottomSheet,
+                        route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.showUpgrade, isEdit = true)
+                    )
+                }
             }
         }
     )
@@ -163,6 +179,9 @@ fun NavGraphBuilder.autofillActivityGraph(
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.Close -> appNavigator.onBackClick()
+                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
                 is CreateAliasNavigation.CreatedFromBottomsheet -> {
                     dismissBottomSheet {
                         appNavigator.onBackClick()

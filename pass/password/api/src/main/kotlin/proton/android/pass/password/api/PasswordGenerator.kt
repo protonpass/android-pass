@@ -43,6 +43,12 @@ object PasswordGenerator {
         val includeNumbers: Boolean = false
     )
 
+    data class RandomPasswordSpec(
+        val length: Int = 12,
+        val hasCapitalLetters: Boolean = false,
+        val option: Option = Option.LettersAndNumbers
+    )
+
     fun generateWordPassword(
         spec: WordPasswordSpec,
         random: Random = Random
@@ -68,20 +74,19 @@ object PasswordGenerator {
     }
 
     fun generatePassword(
-        length: Int = DEFAULT_LENGTH,
-        option: Option = Option.LettersNumbersSymbols,
+        spec: RandomPasswordSpec,
         random: Random = Random
     ): String {
-        if (length == 0) return ""
+        if (spec.length == 0) return ""
 
-        return when (option) {
-            Option.Letters -> (0 until length)
-                .map { option.dictionary.random(random) }
+        return when (spec.option) {
+            Option.Letters -> (0 until spec.length)
+                .map { spec.option.dictionary.random(random) }
                 .joinToString("")
 
             Option.LettersAndNumbers -> {
-                val initial = (0 until length - 1)
-                    .map { option.dictionary.random(random) }
+                val initial = (0 until spec.length - 1)
+                    .map { spec.option.dictionary.random(random) }
                     .joinToString("")
 
                 // Check if it contains at least a number
@@ -89,12 +94,12 @@ object PasswordGenerator {
                 if (!containsNumber) {
                     initial + CharacterSet.NUMBERS.value.random(random)
                 } else {
-                    initial + option.dictionary.random(random)
+                    initial + spec.option.dictionary.random(random)
                 }
             }
             Option.LettersNumbersSymbols -> {
-                val initial = (0 until length - 2)
-                    .map { option.dictionary.random(random) }
+                val initial = (0 until spec.length - 2)
+                    .map { spec.option.dictionary.random(random) }
                     .joinToString("")
 
                 // Check if it contains at least a number
@@ -102,18 +107,18 @@ object PasswordGenerator {
                 val withNumber = if (!containsNumber) {
                     initial + CharacterSet.NUMBERS.value.random(random)
                 } else {
-                    initial + option.dictionary.random(random)
+                    initial + spec.option.dictionary.random(random)
                 }
 
                 // This is an edge case that should not happen, but we need to handle it manually
-                if (length == 1) return withNumber
+                if (spec.length == 1) return withNumber
 
                 // Check if it contains at least a symbol
                 val containsSymbol = CharacterSet.SYMBOLS.value.any { withNumber.contains(it) }
                 if (!containsSymbol) {
                     withNumber + CharacterSet.SYMBOLS.value.random(random)
                 } else {
-                    withNumber + option.dictionary.random(random)
+                    withNumber + spec.option.dictionary.random(random)
                 }
             }
         }

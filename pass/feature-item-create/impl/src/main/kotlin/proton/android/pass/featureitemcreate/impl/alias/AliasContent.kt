@@ -108,7 +108,7 @@ internal fun AliasContent(
                     iconColor = PassTheme.colors.aliasInteractionNormMajor2,
                     iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                     onCloseClick = onUpClick,
-                    showUpgrade = uiState.showUpgrade,
+                    showUpgrade = uiState.hasReachedAliasLimit,
                     onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) },
                     onUpgrade = onUpgrade
                 )
@@ -122,7 +122,7 @@ internal fun AliasContent(
                 isEditAllowed = isEditAllowed,
                 showVaultSelector = showVaultSelector,
                 isLoading = uiState.isLoadingState.value(),
-                showUpgrade = uiState.showUpgrade,
+                showUpgrade = uiState.hasReachedAliasLimit,
                 onTitleRequiredError = uiState.errorList.contains(BlankTitle),
                 onAliasRequiredError = uiState.errorList.contains(BlankPrefix),
                 onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),
@@ -149,7 +149,7 @@ internal fun AliasContent(
 
             SelectSuffixDialog(
                 show = showSuffixDialog,
-                shouldUpgrade = false,
+                canUpgrade = uiState.canUpgrade,
                 suffixes = uiState.aliasItem.aliasOptions.suffixes.toImmutableList(),
                 selectedSuffix = uiState.aliasItem.selectedSuffix,
                 color = PassTheme.colors.aliasInteractionNorm,
@@ -167,16 +167,19 @@ internal fun AliasContent(
                 onUpgrade = onUpgrade
             )
 
-            SelectMailboxesDialog(
-                show = showMailboxDialog,
-                mailboxes = uiState.aliasItem.mailboxes,
-                onMailboxesChanged = {
-                    showMailboxDialog = false
-                    onMailboxesChanged(it)
-                },
-                onDismiss = { showMailboxDialog = false },
-                onUpgrade = onUpgrade
-            )
+            if (showMailboxDialog && uiState.aliasItem.mailboxes.isNotEmpty()) {
+                SelectMailboxesDialog(
+                    mailboxes = uiState.aliasItem.mailboxes,
+                    canUpgrade = uiState.canUpgrade,
+                    onMailboxesChanged = {
+                        showMailboxDialog = false
+                        onMailboxesChanged(it)
+                    },
+                    onDismiss = { showMailboxDialog = false },
+                    onUpgrade = onUpgrade
+                )
+            }
+
             IsAliasSavedLaunchedEffect(uiState, onAliasCreated)
         }
     }

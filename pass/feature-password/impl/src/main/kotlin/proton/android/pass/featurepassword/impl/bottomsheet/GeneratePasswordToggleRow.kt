@@ -12,9 +12,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.unit.sp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 
 @Composable
@@ -32,8 +32,7 @@ fun GeneratePasswordToggleRow(
         Text(
             text = text,
             color = PassTheme.colors.textNorm,
-            style = PassTypography.body3Regular,
-            fontSize = 16.sp
+            style = ProtonTheme.typography.defaultSmallNorm
         )
         Switch(
             checked = value,

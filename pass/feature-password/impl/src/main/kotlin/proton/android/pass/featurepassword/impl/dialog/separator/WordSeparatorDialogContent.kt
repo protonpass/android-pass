@@ -20,9 +20,9 @@ fun WordSeparatorDialogContent(
     onConfirm: () -> Unit,
     onCancel: () -> Unit,
 ) {
-    Column(modifier = modifier.padding(horizontal = 16.dp)) {
+    Column(modifier = modifier) {
         ProtonDialogTitle(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(horizontal = 32.dp, vertical = 16.dp),
             title = stringResource(R.string.word_separator)
         )
 
@@ -33,6 +33,7 @@ fun WordSeparatorDialogContent(
         )
 
         DialogCancelConfirmSection(
+            modifier = Modifier.padding(16.dp),
             color = PassTheme.colors.loginInteractionNormMajor1,
             onDismiss = onCancel,
             onConfirm = onConfirm

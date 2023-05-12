@@ -18,9 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.featurepassword.R
 
@@ -39,8 +39,7 @@ fun GeneratePasswordWordsCountRow(
             modifier = Modifier.weight(SLIDER_TEXT_WEIGHT),
             text = stringResource(R.string.word_count, count),
             color = PassTheme.colors.textNorm,
-            style = PassTypography.body3Regular,
-            fontSize = 16.sp
+            style = ProtonTheme.typography.defaultSmallNorm
         )
 
         var sliderPosition by remember { mutableStateOf(count.toFloat()) }

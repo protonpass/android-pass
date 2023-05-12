@@ -17,14 +17,22 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
+import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun CreateAliasScreen(
     modifier: Modifier = Modifier,
+    selectVault: ShareId?,
     onNavigate: (CreateAliasNavigation) -> Unit,
     viewModel: CreateAliasViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(selectVault) {
+        if (selectVault != null) {
+            viewModel.changeVault(selectVault)
+        }
+    }
+
     val viewState by viewModel.createAliasUiState.collectAsStateWithLifecycle()
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
@@ -64,7 +72,9 @@ fun CreateAliasScreen(
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
             onPrefixChange = { viewModel.onPrefixChange(it) },
-            onVaultSelect = { viewModel.changeVault(it) },
+            onSelectVaultClick = {
+                onNavigate(CreateAliasNavigation.SelectVault(viewState.selectedVault?.vault?.shareId))
+            },
             onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) }
         )
 

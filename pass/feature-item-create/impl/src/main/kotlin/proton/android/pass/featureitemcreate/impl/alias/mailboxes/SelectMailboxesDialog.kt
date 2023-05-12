@@ -14,17 +14,19 @@ import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiMo
 @Composable
 fun SelectMailboxesDialog(
     modifier: Modifier = Modifier,
-    show: Boolean,
     mailboxes: List<SelectedAliasMailboxUiModel>,
+    canUpgrade: Boolean,
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onDismiss: () -> Unit,
     onUpgrade: () -> Unit,
+    viewModel: SelectMailboxesDialogViewModel = hiltViewModel()
 ) {
-    if (!show) return
-    val viewModel: SelectMailboxesDialogViewModel = hiltViewModel()
-
     LaunchedEffect(Unit) {
         viewModel.setMailboxes(mailboxes)
+    }
+
+    LaunchedEffect(canUpgrade) {
+        viewModel.setCanUpgrade(canUpgrade)
     }
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()

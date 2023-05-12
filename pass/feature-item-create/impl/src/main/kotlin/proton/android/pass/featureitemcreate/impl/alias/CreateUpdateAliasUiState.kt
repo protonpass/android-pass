@@ -19,7 +19,8 @@ data class CreateUpdateAliasUiState(
     val showVaultSelector: Boolean,
     val closeScreenEvent: CloseScreenEvent,
     val hasUserEditedContent: Boolean,
-    val showUpgrade: Boolean
+    val hasReachedAliasLimit: Boolean,
+    val canUpgrade: Boolean
 ) {
     companion object {
         val Initial = CreateUpdateAliasUiState(
@@ -35,7 +36,8 @@ data class CreateUpdateAliasUiState(
             showVaultSelector = false,
             closeScreenEvent = CloseScreenEvent.NotClose,
             hasUserEditedContent = false,
-            showUpgrade = false
+            hasReachedAliasLimit = false,
+            canUpgrade = false
         )
     }
 }

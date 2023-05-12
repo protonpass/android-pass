@@ -147,7 +147,8 @@ abstract class BaseAliasViewModel(
             showVaultSelector = showVaultSelector,
             closeScreenEvent = eventWrapper.closeScreenEvent,
             hasUserEditedContent = hasUserEditedContent,
-            showUpgrade = false
+            hasReachedAliasLimit = false,
+            canUpgrade = false
         )
     }
         .stateIn(

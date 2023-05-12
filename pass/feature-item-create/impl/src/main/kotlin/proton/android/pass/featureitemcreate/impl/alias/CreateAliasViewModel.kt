@@ -102,7 +102,8 @@ open class CreateAliasViewModel @Inject constructor(
         selectedSuffixState,
         observeUpgradeInfo().asLoadingResult()
     ) { aliasUiState, aliasOptionsResult, selectedMailboxes, selectedSuffix, upgradeInfoResult ->
-        val showUpgrade = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false
+        val hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false
+        val canUpgrade = upgradeInfoResult.getOrNull()?.isUpgradeAvailable ?: false
         val aliasItem = when (aliasOptionsResult) {
             is LoadingResult.Error -> aliasUiState.aliasItem
             LoadingResult.Loading -> aliasUiState.aliasItem
@@ -151,7 +152,8 @@ open class CreateAliasViewModel @Inject constructor(
 
         aliasUiState.copy(
             aliasItem = aliasItem,
-            showUpgrade = showUpgrade,
+            hasReachedAliasLimit = hasReachedAliasLimit,
+            canUpgrade = canUpgrade,
             isLoadingState = IsLoadingState.from(
                 aliasUiState.isLoadingState is IsLoadingState.Loading ||
                     upgradeInfoResult is LoadingResult.Loading

@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -24,21 +26,21 @@ import proton.android.pass.featurepassword.R
 fun GeneratePasswordBottomSheetContent(
     modifier: Modifier = Modifier,
     state: GeneratePasswordUiState,
-    onLengthChange: (Int) -> Unit,
-    onHasSpecialCharactersChange: (Boolean) -> Unit,
-    onRegenerateClick: () -> Unit,
+    onEvent: (GeneratePasswordEvent) -> Unit,
     buttonSection: @Composable () -> Unit
 ) {
     Column(
         modifier = modifier
-            .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
+            .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        GeneratePasswordBottomSheetTitle(onRegenerate = { onRegenerateClick() })
+        GeneratePasswordBottomSheetTitle(onRegenerate = {
+            onEvent(GeneratePasswordEvent.OnRegeneratePasswordClick)
+        })
         GeneratePasswordViewContent(
             state = state,
-            onLengthChange = onLengthChange,
-            onSpecialCharactersChange = onHasSpecialCharactersChange
+            onEvent = onEvent
         )
         buttonSection()
     }
@@ -57,9 +59,7 @@ fun GenPasswordBottomSheetContentPreview(
         Surface {
             GeneratePasswordBottomSheetContent(
                 state = input.second,
-                onLengthChange = {},
-                onHasSpecialCharactersChange = {},
-                onRegenerateClick = {},
+                onEvent = {},
                 buttonSection = {
                     CircleButton(
                         modifier = Modifier.fillMaxWidth(),

@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.utilKotlin)
+    implementation(libs.kotlinx.collections)
 
     debugImplementation(libs.androidx.compose.uiTooling)
     implementation(libs.androidx.compose.uiToolingPreview)
@@ -63,6 +64,7 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.clipboard.api)
+    implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)
     implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.crypto.api)

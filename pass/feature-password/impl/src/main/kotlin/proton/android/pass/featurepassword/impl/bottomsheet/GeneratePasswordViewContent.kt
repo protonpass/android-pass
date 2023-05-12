@@ -16,13 +16,14 @@ import me.proton.core.compose.theme.subheadlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.toPasswordAnnotatedString
+import proton.android.pass.featurepassword.impl.bottomsheet.random.GeneratePasswordRandomContent
+import proton.android.pass.featurepassword.impl.bottomsheet.words.GeneratePasswordWordsContent
 
 @Composable
 fun GeneratePasswordViewContent(
     modifier: Modifier = Modifier,
     state: GeneratePasswordUiState,
-    onSpecialCharactersChange: (Boolean) -> Unit,
-    onLengthChange: (Int) -> Unit
+    onEvent: (GeneratePasswordEvent) -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -44,12 +45,14 @@ fun GeneratePasswordViewContent(
             is GeneratePasswordContent.RandomPassword -> {
                 GeneratePasswordRandomContent(
                     content = state.content,
-                    onLengthChange = onLengthChange,
-                    onSpecialCharactersChange = onSpecialCharactersChange
+                    onEvent = onEvent
                 )
             }
             is GeneratePasswordContent.WordsPassword -> {
-                Text("TBD")
+                GeneratePasswordWordsContent(
+                    content = state.content,
+                    onEvent = onEvent
+                )
             }
         }
     }
@@ -68,11 +71,12 @@ fun GeneratePasswordViewContentThemePreview(
                     mode = GeneratePasswordMode.CopyAndClose,
                     content = GeneratePasswordContent.RandomPassword(
                         length = 12,
-                        hasSpecialCharacters = true
+                        hasSpecialCharacters = true,
+                        hasCapitalLetters = false,
+                        includeNumbers = true
                     )
                 ),
-                onSpecialCharactersChange = {},
-                onLengthChange = {}
+                onEvent = {}
             )
         }
     }

@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemcreate.impl.login.bottomsheet
+package proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,8 +25,7 @@ import proton.android.pass.featureitemcreate.impl.R
 @Composable
 fun AliasOptionsBottomSheet(
     modifier: Modifier = Modifier,
-    onEditAliasClick: () -> Unit,
-    onRemoveAliasClick: () -> Unit
+    onNavigate: (AliasOptionsNavigation) -> Unit
 ) {
     Column(
         modifier = modifier.bottomSheet(),
@@ -35,9 +34,13 @@ fun AliasOptionsBottomSheet(
         BottomSheetTitle(title = stringResource(id = R.string.alias_bottomsheet_alias_title))
         BottomSheetItemList(
             items = persistentListOf(
-                editAlias(onEditAliasClick),
+                editAlias {
+                    onNavigate(AliasOptionsNavigation.OnEditAlias)
+                },
                 bottomSheetDivider(),
-                createRemoveAlias(onRemoveAliasClick)
+                createRemoveAlias {
+                    onNavigate(AliasOptionsNavigation.OnDeleteAlias)
+                }
             )
         )
     }
@@ -101,8 +104,7 @@ fun AliasOptionsBottomSheetPreview(
     PassTheme(isDark = isDark) {
         Surface {
             AliasOptionsBottomSheet(
-                onEditAliasClick = {},
-                onRemoveAliasClick = {}
+                onNavigate = {}
             )
         }
     }

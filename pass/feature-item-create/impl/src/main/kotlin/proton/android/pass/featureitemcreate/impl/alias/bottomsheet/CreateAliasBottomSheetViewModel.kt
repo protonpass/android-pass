@@ -3,6 +3,7 @@ package proton.android.pass.featureitemcreate.impl.alias.bottomsheet
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
@@ -15,6 +16,7 @@ import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
+import proton.android.pass.featureitemcreate.impl.alias.IsEditAliasNavArg
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
@@ -42,11 +44,36 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     savedStateHandle
 ) {
 
+    private val isEditMode = savedStateHandle.get<Boolean>(IsEditAliasNavArg.key) ?: false
+
     init {
         isDraft = true
     }
 
     fun setInitialState(title: String) = viewModelScope.launch {
+        if (isEditMode) {
+            resetWithDraft()
+        } else {
+            resetWithTitle(title)
+        }
+    }
+
+    fun resetAliasDraftSavedState() {
+        isAliasDraftSavedState.update { AliasDraftSavedState.Unknown }
+    }
+
+    private suspend fun resetWithDraft() {
+        val draft = draftRepository.get<AliasItem>(KEY_DRAFT_ALIAS).firstOrNull()
+        if (draft == null || draft.isEmpty()) {
+            resetWithTitle("")
+            return
+        }
+
+        val draftContent = draft as Some<AliasItem>
+        aliasItemState.update { draftContent.value }
+    }
+
+    private fun resetWithTitle(title: String) {
         val draft = draftRepository.delete<AliasItem>(KEY_DRAFT_ALIAS)
         when (draft) {
             is Some -> {
@@ -64,10 +91,6 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    fun resetAliasDraftSavedState() {
-        isAliasDraftSavedState.update { AliasDraftSavedState.Unknown }
     }
 
     private fun randomPrefix(): String {

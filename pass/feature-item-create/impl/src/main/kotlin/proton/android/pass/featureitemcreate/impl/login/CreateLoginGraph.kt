@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.StateFlow
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.aliasOptionsBottomSheetGraph
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.OptionalNavArgId
@@ -43,7 +45,6 @@ object CreateLogin : NavItem(
     }
 }
 
-@Suppress("LongParameterList")
 @OptIn(
     ExperimentalAnimationApi::class,
     ExperimentalLifecycleComposeApi::class
@@ -56,13 +57,19 @@ fun NavGraphBuilder.createLoginGraph(
 ) {
     composable(CreateLogin) {
         val primaryTotp by getPrimaryTotp().collectAsStateWithLifecycle()
+        val clearAlias by it.savedStateHandle.getStateFlow(CLEAR_ALIAS_NAV_PARAMETER_KEY, false)
+            .collectAsStateWithLifecycle()
         val initialContents = initialCreateLoginUiState.copy(
             primaryTotp = primaryTotp
         )
+
         CreateLoginScreen(
             initialContents = initialContents,
+            clearAlias = clearAlias,
             showCreateAliasButton = showCreateAliasButton,
             onNavigate = onNavigate
         )
     }
+
+    aliasOptionsBottomSheetGraph(onNavigate)
 }

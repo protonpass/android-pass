@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -16,6 +17,7 @@ fun SelectMailboxesDialog(
     modifier: Modifier = Modifier,
     mailboxes: List<SelectedAliasMailboxUiModel>,
     canUpgrade: Boolean,
+    color: Color,
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
     onDismiss: () -> Unit,
     onUpgrade: () -> Unit,
@@ -33,6 +35,7 @@ fun SelectMailboxesDialog(
     NoPaddingDialog(modifier = modifier, onDismissRequest = onDismiss) {
         SelectMailboxesDialogContent(
             state = uiState,
+            color = color,
             onConfirm = { onMailboxesChanged(uiState.mailboxes) },
             onDismiss = onDismiss,
             onUpgrade = onUpgrade,

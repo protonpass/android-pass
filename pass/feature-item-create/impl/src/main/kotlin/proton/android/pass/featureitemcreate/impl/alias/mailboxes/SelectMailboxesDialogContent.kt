@@ -16,19 +16,17 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import me.proton.core.compose.component.ProtonAlertDialogButton
 import me.proton.core.compose.component.ProtonDialogTitle
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.compose.theme.headlineSmallNorm
-import me.proton.core.compose.theme.interactionNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.uievents.value
@@ -41,6 +39,7 @@ import proton.android.pass.composecomponents.impl.R as ComponentsR
 fun SelectMailboxesDialogContent(
     modifier: Modifier = Modifier,
     state: SelectMailboxesUiState,
+    color: Color,
     onUpgrade: () -> Unit,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
@@ -55,6 +54,7 @@ fun SelectMailboxesDialogContent(
             items(items = state.mailboxes, key = { it.model.id }) { item ->
                 SelectMailboxesMailboxRow(
                     item = item,
+                    color = color,
                     onToggle = { onMailboxToggled(item) }
                 )
             }
@@ -87,18 +87,21 @@ fun SelectMailboxesDialogContent(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.End
         ) {
-            ProtonAlertDialogButton(
-                title = stringResource(R.string.alias_mailbox_dialog_cancel_button),
-                onClick = onDismiss
-            )
+            ProtonTextButton(onClick = onDismiss) {
+                Text(
+                    text = stringResource(R.string.alias_mailbox_dialog_cancel_button),
+                    color = color,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
             ProtonTextButton(
                 onClick = onConfirm,
                 enabled = state.canApply.value()
             ) {
                 Text(
                     text = stringResource(R.string.alias_mailbox_dialog_confirm_button),
-                    style = ProtonTheme.typography.headlineSmallNorm,
-                    color = ProtonTheme.colors.interactionNorm(enabled = state.canApply.value()),
+                    color = if (state.canApply.value()) color else ProtonTheme.colors.interactionDisabled,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -119,10 +122,11 @@ fun SelectMailboxesDialogContentPreview(
         Surface {
             SelectMailboxesDialogContent(
                 state = input.second,
+                color = PassTheme.colors.interactionNormMajor2,
                 onUpgrade = {},
                 onConfirm = {},
                 onDismiss = {},
-                onMailboxToggled = {}
+                onMailboxToggled = {},
             )
         }
     }

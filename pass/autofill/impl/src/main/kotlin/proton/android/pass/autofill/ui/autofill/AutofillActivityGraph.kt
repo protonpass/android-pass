@@ -37,6 +37,9 @@ import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
 import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheet
 import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheetModeValue
+import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
+import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
+import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
 import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
 import proton.android.pass.navigation.api.AppNavigator
 
@@ -137,9 +140,18 @@ fun NavGraphBuilder.autofillActivityGraph(
     )
 
     generatePasswordBottomsheetGraph(
-        onDismiss = {
-            dismissBottomSheet {
-                appNavigator.onBackClick()
+        onNavigate = {
+            when (it) {
+                GeneratePasswordNavigation.CloseDialog -> appNavigator.onBackClick()
+                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
+                GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
+                    destination = WordSeparatorDialog
+                )
+                GeneratePasswordNavigation.OnSelectPasswordMode -> appNavigator.navigate(
+                    destination = PasswordModeDialog
+                )
             }
         }
     )

@@ -1,11 +1,14 @@
 package proton.android.pass.featurepassword.impl.dialog.separator
 
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import me.proton.core.compose.component.ProtonDialogTitle
+import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.featurepassword.R
 import proton.android.pass.password.api.PasswordGenerator
 
@@ -16,30 +19,23 @@ fun WordSeparatorDialogContent(
     onOptionSelected: (PasswordGenerator.WordSeparator) -> Unit,
     onConfirm: () -> Unit,
     onCancel: () -> Unit,
-    onDismiss: () -> Unit
 ) {
-    AlertDialog(
-        modifier = modifier,
-        onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.word_separator)) },
-        text = {
-            WordSeparatorList(
-                options = state.options,
-                selected = state.selected,
-                onSelected = onOptionSelected
-            )
-        },
-        confirmButton = {
-            TextButton(onClick = {
-                onConfirm()
-            }) {
-                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_ok))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onCancel) {
-                Text(text = stringResource(id = me.proton.core.presentation.R.string.presentation_alert_cancel))
-            }
-        }
-    )
+    Column(modifier = modifier.padding(horizontal = 16.dp)) {
+        ProtonDialogTitle(
+            modifier = Modifier.padding(16.dp),
+            title = stringResource(R.string.word_separator)
+        )
+
+        WordSeparatorList(
+            options = state.options,
+            selected = state.selected,
+            onSelected = onOptionSelected
+        )
+
+        DialogCancelConfirmSection(
+            color = PassTheme.colors.loginInteractionNormMajor1,
+            onDismiss = onCancel,
+            onConfirm = onConfirm
+        )
+    }
 }

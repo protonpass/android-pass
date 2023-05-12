@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 
 @Composable
 fun GeneratePasswordSelectorRow(
@@ -34,8 +34,7 @@ fun GeneratePasswordSelectorRow(
         Text(
             text = title,
             color = PassTheme.colors.textNorm,
-            style = PassTypography.body3Regular,
-            fontSize = 16.sp
+            style = ProtonTheme.typography.defaultSmallNorm,
         )
 
         Row(
@@ -48,7 +47,7 @@ fun GeneratePasswordSelectorRow(
             Text(
                 text = value,
                 color = PassTheme.colors.textNorm,
-                fontSize = 16.sp
+                style = ProtonTheme.typography.defaultSmallNorm
             )
 
             Icon(

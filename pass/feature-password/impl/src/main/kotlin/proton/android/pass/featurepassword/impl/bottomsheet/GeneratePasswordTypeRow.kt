@@ -18,9 +18,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.featurepassword.R
 import proton.android.pass.featurepassword.impl.extensions.toResourceString
@@ -41,8 +41,7 @@ fun GeneratePasswordTypeRow(
         Text(
             text = stringResource(R.string.password_type),
             color = PassTheme.colors.textNorm,
-            style = PassTypography.body3Regular,
-            fontSize = 16.sp
+            style = ProtonTheme.typography.defaultSmallNorm,
         )
 
         Row(
@@ -55,7 +54,7 @@ fun GeneratePasswordTypeRow(
             Text(
                 text = current.toResourceString(),
                 color = PassTheme.colors.textNorm,
-                fontSize = 16.sp
+                style = ProtonTheme.typography.defaultSmallNorm,
             )
 
             Icon(

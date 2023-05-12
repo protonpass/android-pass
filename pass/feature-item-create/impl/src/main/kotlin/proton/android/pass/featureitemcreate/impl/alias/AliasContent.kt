@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featureitemcreate.impl.alias.AliasBottomSheetContentType.AliasOptions
-import proton.android.pass.featureitemcreate.impl.alias.AliasBottomSheetContentType.VaultSelection
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankPrefix
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.InvalidAliasContent
@@ -28,7 +27,6 @@ import proton.android.pass.featureitemcreate.impl.alias.mailboxes.SelectMailboxe
 import proton.android.pass.featureitemcreate.impl.alias.saver.AliasBottomSheetContentTypeSaver
 import proton.android.pass.featureitemcreate.impl.alias.suffixes.SelectSuffixDialog
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
-import proton.android.pass.featureitemcreate.impl.login.bottomsheet.VaultSelectionBottomSheet
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -50,7 +48,7 @@ internal fun AliasContent(
     onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onPrefixChange: (String) -> Unit,
-    onVaultSelect: (ShareId) -> Unit,
+    onSelectVaultClick: () -> Unit,
     onUpgrade: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
@@ -58,7 +56,7 @@ internal fun AliasContent(
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
-    var currentBottomSheet by rememberSaveable(stateSaver = AliasBottomSheetContentTypeSaver) {
+    val currentBottomSheet by rememberSaveable(stateSaver = AliasBottomSheetContentTypeSaver) {
         mutableStateOf(AliasOptions)
     }
 
@@ -80,17 +78,6 @@ internal fun AliasContent(
                         scope.launch {
                             bottomSheetState.hide()
                             onSuffixChange(suffix)
-                        }
-                    }
-                )
-
-                VaultSelection -> VaultSelectionBottomSheet(
-                    shareList = uiState.vaultList,
-                    selectedShareId = uiState.selectedVault?.vault?.shareId,
-                    onVaultClick = {
-                        onVaultSelect(it)
-                        scope.launch {
-                            bottomSheetState.hide()
                         }
                     }
                 )
@@ -139,12 +126,7 @@ internal fun AliasContent(
                 onTitleChange = { onTitleChange(it) },
                 onNoteChange = { onNoteChange(it) },
                 onPrefixChange = { onPrefixChange(it) },
-                onVaultSelectorClick = {
-                    scope.launch {
-                        currentBottomSheet = VaultSelection
-                        bottomSheetState.show()
-                    }
-                }
+                onVaultSelectorClick = onSelectVaultClick
             )
 
             SelectSuffixDialog(

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -14,15 +14,19 @@ import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiMo
 
 class SelectMailboxesDialogViewModel : ViewModel() {
 
+    private val canUpgradeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val mailboxesState: MutableStateFlow<List<SelectedAliasMailboxUiModel>> =
         MutableStateFlow(emptyList())
 
-    val uiState: StateFlow<SelectMailboxesUiState> = mailboxesState.map { mailboxes ->
+    val uiState: StateFlow<SelectMailboxesUiState> = combine(
+        mailboxesState,
+        canUpgradeState
+    ) { mailboxes, canUpgrade ->
         val canApply = mailboxes.any { it.selected }
         SelectMailboxesUiState(
             mailboxes = mailboxes,
             canApply = IsButtonEnabled.from(canApply),
-            showUpgrade = false
+            canUpgrade = canUpgrade
         )
     }.stateIn(
         scope = viewModelScope,
@@ -32,6 +36,10 @@ class SelectMailboxesDialogViewModel : ViewModel() {
 
     fun setMailboxes(mailboxes: List<SelectedAliasMailboxUiModel>) {
         mailboxesState.update { mailboxes }
+    }
+
+    fun setCanUpgrade(canUpgrade: Boolean) {
+        canUpgradeState.update { canUpgrade }
     }
 
     fun onMailboxChanged(mailbox: SelectedAliasMailboxUiModel) = viewModelScope.launch {

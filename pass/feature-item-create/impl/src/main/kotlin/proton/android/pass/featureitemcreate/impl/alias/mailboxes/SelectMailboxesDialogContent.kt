@@ -60,7 +60,7 @@ fun SelectMailboxesDialogContent(
                 )
             }
         }
-        if (state.showUpgrade) {
+        if (state.canUpgrade) {
             Divider(color = PassTheme.colors.inputBorderNorm)
             Row(
                 modifier = Modifier

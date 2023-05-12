@@ -2,100 +2,141 @@ package proton.android.pass.password.api
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
+import proton.android.pass.password.api.PasswordGenerator.containsCapitalLetters
+import proton.android.pass.password.api.PasswordGenerator.containsNumbers
+import proton.android.pass.password.api.PasswordGenerator.containsSymbols
 import kotlin.random.Random
 
 class PasswordGeneratorTest {
 
     @Test
-    fun `can generate password with only letters`() {
-        val res = PasswordGenerator.generatePassword(
+    fun `4 characters with no capital letters, no numbers no symbols`() {
+        test(
             spec = PasswordGenerator.RandomPasswordSpec(
-                length = 5,
-                option = PasswordGenerator.Option.Letters,
+                length = 4,
+                hasCapitalLetters = false,
+                hasNumbers = false,
+                hasSymbols = false
             ),
-            random = Random(1234)
+            expected = "gyuh"
         )
-        assertThat(res).isEqualTo("GyuhU")
     }
 
     @Test
-    fun `can generate password with letters and numbers`() {
-        val res = PasswordGenerator.generatePassword(
+    fun `4 characters with yes capital letters, no numbers no symbols`() {
+        test(
             spec = PasswordGenerator.RandomPasswordSpec(
-                length = 5,
-                option = PasswordGenerator.Option.LettersAndNumbers,
+                length = 4,
+                hasCapitalLetters = true,
+                hasNumbers = false,
+                hasSymbols = false
             ),
-            random = Random(1234)
+            expected = "Gyuh"
         )
-        assertThat(res).isEqualTo("9Tnft")
     }
 
     @Test
-    fun `can generate password with letters numbers and symbols`() {
-        val res = PasswordGenerator.generatePassword(
+    fun `4 characters with no capital letters, yes numbers no symbols`() {
+        test(
             spec = PasswordGenerator.RandomPasswordSpec(
-                length = 5,
-                option = PasswordGenerator.Option.LettersNumbersSymbols,
+                length = 4,
+                hasCapitalLetters = false,
+                hasNumbers = true,
+                hasSymbols = false
             ),
-            random = Random(1234)
+            expected = "b1jd"
         )
-        assertThat(res).isEqualTo("fY$9&")
     }
 
     @Test
-    fun `can generate passwords of many lengths`() {
-        val expectedMap = mapOf(
-            0 to mapOf(
-                PasswordGenerator.Option.Letters to "",
-                PasswordGenerator.Option.LettersAndNumbers to "",
-                PasswordGenerator.Option.LettersNumbersSymbols to ""
+    fun `4 characters with no capital letters, no numbers yes symbols`() {
+        test(
+            spec = PasswordGenerator.RandomPasswordSpec(
+                length = 4,
+                hasCapitalLetters = false,
+                hasNumbers = false,
+                hasSymbols = true
             ),
-            1 to mapOf(
-                PasswordGenerator.Option.Letters to "G",
-                PasswordGenerator.Option.LettersAndNumbers to "9",
-                PasswordGenerator.Option.LettersNumbersSymbols to "9"
+            expected = "!%!w"
+        )
+    }
+
+    @Test
+    fun `4 characters with yes capital letters, yes numbers no symbols`() {
+        test(
+            spec = PasswordGenerator.RandomPasswordSpec(
+                length = 4,
+                hasCapitalLetters = true,
+                hasNumbers = true,
+                hasSymbols = false
             ),
-            2 to mapOf(
-                PasswordGenerator.Option.Letters to "Gy",
-                PasswordGenerator.Option.LettersAndNumbers to "9T",
-                PasswordGenerator.Option.LettersNumbersSymbols to "9^"
+            expected = "ZG1f"
+        )
+    }
+
+
+    @Test
+    fun `4 characters with yes capital letters, no numbers yes symbols`() {
+        test(
+            spec = PasswordGenerator.RandomPasswordSpec(
+                length = 4,
+                hasCapitalLetters = true,
+                hasNumbers = false,
+                hasSymbols = true
             ),
-            3 to mapOf(
-                PasswordGenerator.Option.Letters to "Gyu",
-                PasswordGenerator.Option.LettersAndNumbers to "9Tn",
-                PasswordGenerator.Option.LettersNumbersSymbols to "f5*"
+            expected = "wYV*"
+        )
+    }
+
+    @Test
+    fun `4 characters with no capital letters, yes numbers yes symbols`() {
+        test(
+            spec = PasswordGenerator.RandomPasswordSpec(
+                length = 4,
+                hasCapitalLetters = false,
+                hasNumbers = true,
+                hasSymbols = true
             ),
-            4 to mapOf(
-                PasswordGenerator.Option.Letters to "Gyuh",
-                PasswordGenerator.Option.LettersAndNumbers to "9Tnf",
-                PasswordGenerator.Option.LettersNumbersSymbols to "fY1*"
-            ),
-            5 to mapOf(
-                PasswordGenerator.Option.Letters to "GyuhU",
-                PasswordGenerator.Option.LettersAndNumbers to "9Tnft",
-                PasswordGenerator.Option.LettersNumbersSymbols to "fY$9&"
+            expected = "ra1*"
+        )
+    }
+
+    @Test
+    fun `multiple characters`() {
+        val cases = mapOf(
+            5 to "fN\$9&",
+            6 to "fN\$*8y",
+            7 to "fN\$*&3!",
+            8 to "fN\$*&y5D",
+            9 to "fN\$*&y!1^",
+        )
+        cases.forEach { (length, expected) ->
+            test(
+                spec = PasswordGenerator.RandomPasswordSpec(
+                    length = length,
+                    hasCapitalLetters = true,
+                    hasNumbers = true,
+                    hasSymbols = true
+                ),
+                expected = expected
             )
-        )
-
-        val options = listOf(
-            PasswordGenerator.Option.Letters,
-            PasswordGenerator.Option.LettersAndNumbers,
-            PasswordGenerator.Option.LettersNumbersSymbols
-        )
-        for (length in 0..5) {
-            for (option in options) {
-                val res = PasswordGenerator.generatePassword(
-                    spec = PasswordGenerator.RandomPasswordSpec(
-                        length = length,
-                        option = option,
-                    ),
-                    random = Random(1234)
-                )
-                assertThat(res.length).isEqualTo(length)
-                val expected = expectedMap[length]?.get(option)
-                assertThat(res).isEqualTo(expected)
-            }
         }
+    }
+
+
+    private fun test(spec: PasswordGenerator.RandomPasswordSpec, expected: String): String {
+        val res = PasswordGenerator.generatePassword(
+            spec = spec,
+            random = Random(1234)
+        )
+        assertThat(res.length).isEqualTo(spec.length)
+        assertThat(res).isEqualTo(expected)
+
+        assertThat(res.containsCapitalLetters()).isEqualTo(spec.hasCapitalLetters)
+        assertThat(res.containsNumbers()).isEqualTo(spec.hasNumbers)
+        assertThat(res.containsSymbols()).isEqualTo(spec.hasSymbols)
+
+        return res
     }
 }
 

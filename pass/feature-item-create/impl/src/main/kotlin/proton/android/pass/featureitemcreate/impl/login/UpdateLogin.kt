@@ -80,9 +80,6 @@ fun UpdateLogin(
             onPasswordChange = viewModel::onPasswordChange,
             onWebsiteChange = onWebsiteChange,
             onNoteChange = viewModel::onNoteChange,
-            onVaultSelect = {
-                // Migrate element
-            },
             onLinkedAppDelete = viewModel::onDeleteLinkedApp,
             onTotpChange = viewModel::onTotpChange,
             onPasteTotpClick = viewModel::onPasteTotp,

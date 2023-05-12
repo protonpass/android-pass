@@ -19,16 +19,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonDialogTitle
-import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
+import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.composecomponents.impl.uievents.value
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
@@ -83,30 +82,13 @@ fun SelectMailboxesDialogContent(
             }
             Divider(color = PassTheme.colors.inputBorderNorm)
         }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
-            ProtonTextButton(onClick = onDismiss) {
-                Text(
-                    text = stringResource(R.string.alias_mailbox_dialog_cancel_button),
-                    color = color,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-            ProtonTextButton(
-                onClick = onConfirm,
-                enabled = state.canApply.value()
-            ) {
-                Text(
-                    text = stringResource(R.string.alias_mailbox_dialog_confirm_button),
-                    color = if (state.canApply.value()) color else ProtonTheme.colors.interactionDisabled,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
-        }
+        DialogCancelConfirmSection(
+            color = color,
+            disabledColor = ProtonTheme.colors.interactionDisabled,
+            confirmEnabled = state.canApply.value(),
+            onDismiss = onDismiss,
+            onConfirm = onConfirm
+        )
     }
 }
 

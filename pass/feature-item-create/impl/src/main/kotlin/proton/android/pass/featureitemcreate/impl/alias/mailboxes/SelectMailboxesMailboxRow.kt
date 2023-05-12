@@ -37,7 +37,7 @@ fun SelectMailboxesMailboxRow(
     Row(
         modifier = modifier
             .clickable { onToggle() }
-            .padding(vertical = 12.dp)
+            .padding(16.dp, 12.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {

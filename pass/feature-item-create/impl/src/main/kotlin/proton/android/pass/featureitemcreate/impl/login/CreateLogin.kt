@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.featureitemcreate.impl.R
+import proton.pass.domain.ShareId
 
 @OptIn(
     ExperimentalLifecycleComposeApi::class
@@ -26,6 +27,7 @@ fun CreateLoginScreen(
     initialContents: InitialCreateLoginUiState? = null,
     showCreateAliasButton: Boolean = true,
     clearAlias: Boolean,
+    selectVault: ShareId?,
     onNavigate: (BaseLoginNavigation) -> Unit,
     viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
@@ -38,6 +40,12 @@ fun CreateLoginScreen(
     LaunchedEffect(clearAlias) {
         if (clearAlias) {
             viewModel.onRemoveAlias()
+        }
+    }
+
+    LaunchedEffect(selectVault) {
+        if (selectVault != null) {
+            viewModel.changeVault(selectVault)
         }
     }
 
@@ -80,7 +88,6 @@ fun CreateLoginScreen(
             onPasswordChange = viewModel::onPasswordChange,
             onWebsiteChange = onWebsiteChange,
             onNoteChange = viewModel::onNoteChange,
-            onVaultSelect = viewModel::changeVault,
             onLinkedAppDelete = {},
             onTotpChange = viewModel::onTotpChange,
             onPasteTotpClick = viewModel::onPasteTotp,

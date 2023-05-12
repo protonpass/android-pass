@@ -51,6 +51,8 @@ fun PasswordGenerationPreference.toProto() = PasswordGenerationPrefProto.newBuil
     )
     .setRandomPasswordLength(randomPasswordLength)
     .setRandomHasSpecialCharacters(randomHasSpecialCharacters.toBooleanPrefProto())
+    .setRandomIncludeCapitalLetters(randomHasCapitalLetters.toBooleanPrefProto())
+    .setRandomIncludeNumbers(randomIncludeNumbers.toBooleanPrefProto())
     .setWordsCount(wordsCount)
     .setWordsSeparator(
         when (wordsSeparator) {
@@ -67,15 +69,18 @@ fun PasswordGenerationPreference.toProto() = PasswordGenerationPrefProto.newBuil
     .setWordsIncludeNumbers(wordsIncludeNumbers.toBooleanPrefProto())
     .build()
 
+@Suppress("MagicNumber")
 fun PasswordGenerationPrefProto.toValue() = PasswordGenerationPreference(
     mode = when (mode) {
         ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_RANDOM -> PasswordGenerationMode.Random
         ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_WORDS -> PasswordGenerationMode.Words
         else -> PasswordGenerationMode.Random
     },
-    randomPasswordLength = randomPasswordLength,
+    randomPasswordLength = if (randomPasswordLength > 3) { randomPasswordLength } else 12,
     randomHasSpecialCharacters = fromBooleanPrefProto(randomHasSpecialCharacters),
-    wordsCount = wordsCount,
+    randomHasCapitalLetters = fromBooleanPrefProto(randomIncludeCapitalLetters),
+    randomIncludeNumbers = fromBooleanPrefProto(randomIncludeNumbers, default = true),
+    wordsCount = if (wordsCount > 0) { wordsCount } else 4,
     wordsSeparator = when (wordsSeparator) {
         ProtoWordSeparator.WORD_SEPARATOR_HYPHEN -> WordSeparator.Hyphen
         ProtoWordSeparator.WORD_SEPARATOR_SPACE -> WordSeparator.Space
@@ -87,6 +92,6 @@ fun PasswordGenerationPrefProto.toValue() = PasswordGenerationPreference(
         else -> WordSeparator.Hyphen
     },
     wordsCapitalise = fromBooleanPrefProto(wordsCapitalise),
-    wordsIncludeNumbers = fromBooleanPrefProto(wordsIncludeNumbers)
+    wordsIncludeNumbers = fromBooleanPrefProto(wordsIncludeNumbers),
 )
 

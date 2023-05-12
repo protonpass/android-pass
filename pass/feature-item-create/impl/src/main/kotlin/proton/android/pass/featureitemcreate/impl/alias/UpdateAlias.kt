@@ -72,7 +72,7 @@ fun UpdateAlias(
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
             onPrefixChange = {},
-            onVaultSelect = {},
+            onSelectVaultClick = {},
             onUpgrade = { onNavigate(UpdateAliasNavigation.Upgrade) }
         )
 

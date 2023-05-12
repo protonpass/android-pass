@@ -133,6 +133,7 @@ fun CreateAliasBottomSheetContent(
         if (showMailboxesDialog && state.aliasItem.mailboxes.isNotEmpty()) {
             SelectMailboxesDialog(
                 mailboxes = state.aliasItem.mailboxes,
+                color = PassTheme.colors.loginInteractionNorm,
                 canUpgrade = state.canUpgrade,
                 onMailboxesChanged = {
                     onMailboxesChanged(it)

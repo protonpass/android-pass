@@ -4,13 +4,10 @@ import java.util.Locale
 import kotlin.random.Random
 
 object PasswordGenerator {
-    const val DEFAULT_LENGTH = 16
-
-    enum class CharacterSet(val value: String) {
-        LETTERS("abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ"),
-        NUMBERS("0123456789"),
-        SYMBOLS("!@#$%^&*")
-    }
+    private const val LOWERCASE_LETTERS = "abcdefghjkmnpqrstuvwxyz"
+    private const val CAPITAL_LETTERS = "ABCDEFGHJKMNPQRSTUVWXYZ"
+    private const val NUMBERS = "0123456789"
+    private const val SYMBOLS = "!@#$%^&*"
 
     enum class WordSeparator {
         Hyphen,
@@ -20,20 +17,6 @@ object PasswordGenerator {
         Underscore,
         Numbers,
         NumbersAndSymbols
-    }
-
-    sealed class Option(characterSets: Set<CharacterSet>) {
-        object Letters : Option(setOf(CharacterSet.LETTERS))
-        object LettersAndNumbers : Option(setOf(CharacterSet.LETTERS, CharacterSet.NUMBERS))
-        object LettersNumbersSymbols : Option(
-            setOf(
-                CharacterSet.LETTERS,
-                CharacterSet.NUMBERS,
-                CharacterSet.SYMBOLS
-            )
-        )
-
-        val dictionary = characterSets.joinToString("") { it.value }
     }
 
     data class WordPasswordSpec(
@@ -46,7 +29,8 @@ object PasswordGenerator {
     data class RandomPasswordSpec(
         val length: Int = 12,
         val hasCapitalLetters: Boolean = false,
-        val option: Option = Option.LettersAndNumbers
+        val hasNumbers: Boolean = true,
+        val hasSymbols: Boolean = true
     )
 
     fun generateWordPassword(
@@ -73,67 +57,75 @@ object PasswordGenerator {
         return joinWithSeparator(words, spec.separator, random)
     }
 
+    @Suppress("MagicNumber")
     fun generatePassword(
         spec: RandomPasswordSpec,
         random: Random = Random
     ): String {
         if (spec.length == 0) return ""
+        val dictionary = getRandomDictionary(spec)
 
-        return when (spec.option) {
-            Option.Letters -> (0 until spec.length)
-                .map { spec.option.dictionary.random(random) }
-                .joinToString("")
-
-            Option.LettersAndNumbers -> {
-                val initial = (0 until spec.length - 1)
-                    .map { spec.option.dictionary.random(random) }
-                    .joinToString("")
-
-                // Check if it contains at least a number
-                val containsNumber = CharacterSet.NUMBERS.value.any { initial.contains(it) }
-                if (!containsNumber) {
-                    initial + CharacterSet.NUMBERS.value.random(random)
-                } else {
-                    initial + spec.option.dictionary.random(random)
+        return when {
+            // We don't allow to generate passwords with less than 3, so we will just do a
+            // best-effort policy here
+            spec.length <= 3 -> buildString {
+                repeat(spec.length) {
+                    append(dictionary.random(random))
                 }
             }
-            Option.LettersNumbersSymbols -> {
-                val initial = (0 until spec.length - 2)
-                    .map { spec.option.dictionary.random(random) }
-                    .joinToString("")
-
-                // Check if it contains at least a number
-                val containsNumber = CharacterSet.NUMBERS.value.any { initial.contains(it) }
-                val withNumber = if (!containsNumber) {
-                    initial + CharacterSet.NUMBERS.value.random(random)
-                } else {
-                    initial + spec.option.dictionary.random(random)
+            else -> {
+                var generated = ""
+                (0 until spec.length - 3).forEach { _ ->
+                    generated += dictionary.random(random)
                 }
 
-                // This is an edge case that should not happen, but we need to handle it manually
-                if (spec.length == 1) return withNumber
-
-                // Check if it contains at least a symbol
-                val containsSymbol = CharacterSet.SYMBOLS.value.any { withNumber.contains(it) }
-                if (!containsSymbol) {
-                    withNumber + CharacterSet.SYMBOLS.value.random(random)
+                generated += if (spec.hasCapitalLetters && !generated.containsCapitalLetters()) {
+                    CAPITAL_LETTERS.random(random)
                 } else {
-                    withNumber + spec.option.dictionary.random(random)
+                    dictionary.random(random)
                 }
+
+                generated += if (spec.hasNumbers && !generated.containsNumbers()) {
+                    NUMBERS.random(random)
+                } else {
+                    dictionary.random(random)
+                }
+
+                generated += if (spec.hasSymbols && !generated.containsSymbols()) {
+                    SYMBOLS.random(random)
+                } else {
+                    dictionary.random(random)
+                }
+
+                generated
             }
         }
     }
 
-    private fun joinWithSeparator(words: List<String>, separator: WordSeparator, random: Random) = buildString {
-        if (words.isEmpty()) return@buildString
-
-        append(words.first())
-
-        words.drop(1).forEach { word ->
-            append(getSeparator(separator, random))
-            append(word)
+    private fun getRandomDictionary(spec: RandomPasswordSpec): String = buildString {
+        append(LOWERCASE_LETTERS)
+        if (spec.hasNumbers) {
+            append(NUMBERS)
+        }
+        if (spec.hasCapitalLetters) {
+            append(CAPITAL_LETTERS)
+        }
+        if (spec.hasSymbols) {
+            append(SYMBOLS)
         }
     }
+
+    private fun joinWithSeparator(words: List<String>, separator: WordSeparator, random: Random) =
+        buildString {
+            if (words.isEmpty()) return@buildString
+
+            append(words.first())
+
+            words.drop(1).forEach { word ->
+                append(getSeparator(separator, random))
+                append(word)
+            }
+        }
 
     private fun getSeparator(separator: WordSeparator, random: Random): Char =
         when (separator) {
@@ -144,7 +136,7 @@ object PasswordGenerator {
             WordSeparator.Underscore -> '_'
             WordSeparator.Numbers -> random.nextInt(from = 0, until = 9).digitToChar()
             WordSeparator.NumbersAndSymbols -> {
-                val dictionary = "${CharacterSet.NUMBERS.value}${CharacterSet.SYMBOLS.value}"
+                val dictionary = "${NUMBERS}$SYMBOLS"
                 dictionary.random(random)
             }
         }
@@ -158,4 +150,10 @@ object PasswordGenerator {
                 firstChar.toString()
             }
         }
+
+    fun String.containsCapitalLetters(): Boolean = containsList(CAPITAL_LETTERS)
+    fun String.containsNumbers(): Boolean = containsList(NUMBERS)
+    fun String.containsSymbols(): Boolean = containsList(SYMBOLS)
+
+    private fun String.containsList(list: String): Boolean = any { list.contains(it) }
 }

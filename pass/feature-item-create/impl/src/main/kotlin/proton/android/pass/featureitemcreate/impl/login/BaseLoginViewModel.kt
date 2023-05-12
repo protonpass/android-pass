@@ -95,7 +95,6 @@ abstract class BaseLoginViewModel(
         when (aliasDraft) {
             is Some -> {
                 onAliasCreated(aliasDraft.value)
-                draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
                 aliasDraft
             }
 

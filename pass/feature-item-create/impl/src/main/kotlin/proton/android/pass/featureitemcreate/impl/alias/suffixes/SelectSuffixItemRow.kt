@@ -30,7 +30,7 @@ fun SelectSuffixItemRow(
         modifier = modifier
             .fillMaxWidth()
             .clickable(onClick = onSelect)
-            .padding(vertical = 8.dp, horizontal = 16.dp),
+            .padding(vertical = 12.dp, horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         RadioButton(

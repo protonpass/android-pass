@@ -2,10 +2,15 @@ package proton.android.pass.featureitemcreate.impl.note
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
+import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
@@ -30,16 +35,24 @@ object CreateNote : NavItem(
 @OptIn(
     ExperimentalAnimationApi::class,
     ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class
+    ExperimentalComposeUiApi::class,
+    ExperimentalLifecycleComposeApi::class
 )
 fun NavGraphBuilder.createNoteGraph(
     onNoteCreateSuccess: () -> Unit,
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    onSelectVault: (ShareId?) -> Unit
 ) {
-    composable(CreateNote) {
+    composable(CreateNote) { navBackStack ->
+        val selectVault by navBackStack.savedStateHandle
+            .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
+            .collectAsStateWithLifecycle()
+
         CreateNoteScreen(
+            selectVault = selectVault.toOption().map { ShareId(it) }.value(),
             onUpClick = onBackClick,
-            onSuccess = onNoteCreateSuccess
+            onSuccess = onNoteCreateSuccess,
+            onSelectVault = onSelectVault
         )
     }
 }

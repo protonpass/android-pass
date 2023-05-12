@@ -170,6 +170,7 @@ internal fun AliasContent(
             if (showMailboxDialog && uiState.aliasItem.mailboxes.isNotEmpty()) {
                 SelectMailboxesDialog(
                     mailboxes = uiState.aliasItem.mailboxes,
+                    color = PassTheme.colors.aliasInteractionNorm,
                     canUpgrade = uiState.canUpgrade,
                     onMailboxesChanged = {
                         showMailboxDialog = false

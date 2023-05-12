@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -17,6 +18,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.featureitemcreate.impl.R
+import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @ExperimentalMaterialApi
@@ -24,10 +26,18 @@ import proton.android.pass.featureitemcreate.impl.R
 @Composable
 fun CreateNoteScreen(
     modifier: Modifier = Modifier,
+    selectVault: ShareId?,
     onUpClick: () -> Unit,
     onSuccess: () -> Unit,
+    onSelectVault: (ShareId?) -> Unit,
     viewModel: CreateNoteViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(selectVault) {
+        if (selectVault != null) {
+            viewModel.changeVault(selectVault)
+        }
+    }
+
     val noteUiState by viewModel.noteUiState.collectAsStateWithLifecycle()
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
@@ -53,7 +63,9 @@ fun CreateNoteScreen(
             onSubmit = { shareId -> viewModel.createNote(shareId) },
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
-            onVaultSelect = { viewModel.changeVault(it) }
+            onSelectVault = {
+                onSelectVault(noteUiState.selectedVault?.vault?.shareId)
+            }
         )
 
         ConfirmCloseDialog(

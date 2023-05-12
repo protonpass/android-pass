@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.VaultSelector
@@ -17,6 +19,7 @@ import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
 import proton.pass.domain.VaultWithItemCount
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun CreateNoteItemForm(
     modifier: Modifier = Modifier,
@@ -29,6 +32,7 @@ internal fun CreateNoteItemForm(
     onNoteChange: (String) -> Unit,
     onVaultSelectorClick: () -> Unit
 ) {
+    val keyboard = LocalSoftwareKeyboardController.current
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -43,7 +47,10 @@ internal fun CreateNoteItemForm(
                     vaultName = selectedVault?.vault?.name ?: "",
                     color = selectedVault?.vault?.color ?: ShareColor.Color1,
                     icon = selectedVault?.vault?.icon ?: ShareIcon.Icon1,
-                    onVaultClicked = onVaultSelectorClick
+                    onVaultClicked = {
+                        keyboard?.hide()
+                        onVaultSelectorClick()
+                    }
                 )
                 Spacer(modifier = Modifier.height(8.dp)) // 16 come from spacedBy + 8 = 24
             }

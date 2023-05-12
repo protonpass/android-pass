@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.kotlinx.datetime)
 
+    implementation(projects.pass.account.fakes)
     implementation(projects.pass.autofill.impl)
     implementation(projects.pass.crypto.fakes)
     implementation(projects.pass.data.fakes)

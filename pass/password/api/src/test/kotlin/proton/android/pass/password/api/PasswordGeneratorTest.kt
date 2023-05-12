@@ -9,8 +9,10 @@ class PasswordGeneratorTest {
     @Test
     fun `can generate password with only letters`() {
         val res = PasswordGenerator.generatePassword(
-            length = 5,
-            option = PasswordGenerator.Option.Letters,
+            spec = PasswordGenerator.RandomPasswordSpec(
+                length = 5,
+                option = PasswordGenerator.Option.Letters,
+            ),
             random = Random(1234)
         )
         assertThat(res).isEqualTo("GyuhU")
@@ -19,8 +21,10 @@ class PasswordGeneratorTest {
     @Test
     fun `can generate password with letters and numbers`() {
         val res = PasswordGenerator.generatePassword(
-            length = 5,
-            option = PasswordGenerator.Option.LettersAndNumbers,
+            spec = PasswordGenerator.RandomPasswordSpec(
+                length = 5,
+                option = PasswordGenerator.Option.LettersAndNumbers,
+            ),
             random = Random(1234)
         )
         assertThat(res).isEqualTo("9Tnft")
@@ -29,8 +33,10 @@ class PasswordGeneratorTest {
     @Test
     fun `can generate password with letters numbers and symbols`() {
         val res = PasswordGenerator.generatePassword(
-            length = 5,
-            option = PasswordGenerator.Option.LettersNumbersSymbols,
+            spec = PasswordGenerator.RandomPasswordSpec(
+                length = 5,
+                option = PasswordGenerator.Option.LettersNumbersSymbols,
+            ),
             random = Random(1234)
         )
         assertThat(res).isEqualTo("fY$9&")
@@ -79,8 +85,10 @@ class PasswordGeneratorTest {
         for (length in 0..5) {
             for (option in options) {
                 val res = PasswordGenerator.generatePassword(
-                    length = length,
-                    option = option,
+                    spec = PasswordGenerator.RandomPasswordSpec(
+                        length = length,
+                        option = option,
+                    ),
                     random = Random(1234)
                 )
                 assertThat(res.length).isEqualTo(length)

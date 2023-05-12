@@ -19,6 +19,8 @@ data class PasswordGenerationPreference(
     val mode: PasswordGenerationMode,
     val randomPasswordLength: Int,
     val randomHasSpecialCharacters: Boolean,
+    val randomHasCapitalLetters: Boolean,
+    val randomIncludeNumbers: Boolean,
     val wordsCount: Int,
     val wordsSeparator: WordSeparator,
     val wordsCapitalise: Boolean,

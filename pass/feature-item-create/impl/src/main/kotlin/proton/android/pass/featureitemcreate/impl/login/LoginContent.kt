@@ -32,7 +32,6 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.alias.saver.LoginBottomSheetContentTypeSaver
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
-import proton.android.pass.featureitemcreate.impl.login.bottomsheet.AliasOptionsBottomSheet
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.LoginBottomSheetContentType
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.VaultSelectionBottomSheet
 import proton.pass.domain.ItemId
@@ -85,7 +84,7 @@ internal fun LoginContent(
     }
 
     var currentBottomSheet by rememberSaveable(stateSaver = LoginBottomSheetContentTypeSaver) {
-        mutableStateOf(LoginBottomSheetContentType.AliasOptions)
+        mutableStateOf(LoginBottomSheetContentType.VaultSelection)
     }
     var showRemoveAliasDialog by rememberSaveable { mutableStateOf(false) }
     var actionWhenKeyboardDisappears by remember { mutableStateOf<ActionAfterHideKeyboard?>(null) }
@@ -131,8 +130,7 @@ internal fun LoginContent(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {
-                LoginBottomSheetContentType.AliasOptions -> AliasOptionsBottomSheet(
-                    modifier = modifier,
+                /*LoginBottomSheetContentType.AliasOptions -> AliasOptionsBottomSheet(
                     onEditAliasClick = {
                         scope.launch {
                             bottomSheetState.hide()
@@ -151,7 +149,7 @@ internal fun LoginContent(
                             bottomSheetState.hide()
                         }
                     }
-                )
+                )*/
 
                 LoginBottomSheetContentType.VaultSelection -> VaultSelectionBottomSheet(
                     shareList = uiState.vaultList,
@@ -236,10 +234,12 @@ internal fun LoginContent(
                     }
                 },
                 onAliasOptionsClick = {
-                    scope.launch {
-                        currentBottomSheet = LoginBottomSheetContentType.AliasOptions
-                        bottomSheetState.show()
-                    }
+                    onNavigate(
+                        BaseLoginNavigation.AliasOptions(
+                            shareId = uiState.selectedVault!!.vault.shareId,
+                            showUpgrade = uiState.hasReachedAliasLimit,
+                        )
+                    )
                 },
                 onVaultSelectorClick = {
                     scope.launch {

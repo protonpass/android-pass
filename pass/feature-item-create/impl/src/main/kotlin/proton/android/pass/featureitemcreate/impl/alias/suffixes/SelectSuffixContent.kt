@@ -42,7 +42,7 @@ import proton.android.pass.composecomponents.impl.R as ComponentsR
 fun SelectSuffixContent(
     modifier: Modifier = Modifier,
     suffixes: List<AliasSuffixUiModel>,
-    shouldUpgrade: Boolean,
+    canUpgrade: Boolean,
     selectedSuffix: AliasSuffixUiModel?,
     color: Color,
     onSuffixChanged: (AliasSuffixUiModel) -> Unit,
@@ -67,7 +67,7 @@ fun SelectSuffixContent(
                 )
             }
         }
-        if (shouldUpgrade) {
+        if (canUpgrade) {
             Divider(color = PassTheme.colors.inputBorderNorm)
             Row(
                 modifier = Modifier
@@ -141,7 +141,7 @@ fun SelectSuffixContentPreview(
                         domain = ""
                     )
                 ),
-                shouldUpgrade = input.second,
+                canUpgrade = input.second,
                 selectedSuffix = selected,
                 color = PassTheme.colors.loginInteractionNorm,
                 onSuffixChanged = {},

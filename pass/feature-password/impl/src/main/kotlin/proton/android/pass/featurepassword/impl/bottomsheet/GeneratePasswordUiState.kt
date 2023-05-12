@@ -21,6 +21,8 @@ sealed interface GeneratePasswordContent {
     data class RandomPassword(
         val length: Int,
         val hasSpecialCharacters: Boolean,
+        val hasCapitalLetters: Boolean,
+        val includeNumbers: Boolean
     ) : GeneratePasswordContent
 
     @Immutable

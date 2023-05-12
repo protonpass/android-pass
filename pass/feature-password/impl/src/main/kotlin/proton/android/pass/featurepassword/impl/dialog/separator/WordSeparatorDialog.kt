@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
@@ -24,17 +25,20 @@ fun WordSeparatorDialog(
         }
     }
 
-    WordSeparatorDialogContent(
+    NoPaddingDialog(
         modifier = modifier,
-        state = state,
-        onOptionSelected = viewModel::onChange,
-        onConfirm = viewModel::onConfirm,
-        onCancel = {
-            onNavigate(GeneratePasswordNavigation.CloseDialog)
-        },
-        onDismiss = {
+        onDismissRequest = {
             onNavigate(GeneratePasswordNavigation.CloseDialog)
         }
-    )
+    ) {
+        WordSeparatorDialogContent(
+            state = state,
+            onOptionSelected = viewModel::onChange,
+            onConfirm = viewModel::onConfirm,
+            onCancel = {
+                onNavigate(GeneratePasswordNavigation.CloseDialog)
+            }
+        )
+    }
 }
 

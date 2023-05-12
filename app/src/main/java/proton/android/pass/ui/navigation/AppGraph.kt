@@ -35,6 +35,8 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottom
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.EditLogin
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
 import proton.android.pass.featureitemcreate.impl.login.updateLoginGraph
 import proton.android.pass.featureitemcreate.impl.note.CreateNote
@@ -318,6 +320,20 @@ fun NavGraphBuilder.appGraph(
                 is BaseLoginNavigation.LoginUpdated -> {}
                 BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
                 BaseLoginNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+
+                is BaseLoginNavigation.AliasOptions -> appNavigator.navigate(
+                    destination = AliasOptionsBottomSheet,
+                    route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
+                )
+                BaseLoginNavigation.DeleteAlias ->
+                    appNavigator.navigateUpWithResult(CLEAR_ALIAS_NAV_PARAMETER_KEY, true)
+                is BaseLoginNavigation.EditAlias -> {
+                    appNavigator.navigate(
+                        destination = CreateAliasBottomSheet,
+                        route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.showUpgrade, isEdit = true),
+                        backDestination = CreateLogin
+                    )
+                }
             }
         }
     )
@@ -354,6 +370,22 @@ fun NavGraphBuilder.appGraph(
 
                 BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
                 BaseLoginNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+
+                is BaseLoginNavigation.AliasOptions -> appNavigator.navigate(
+                    destination = AliasOptionsBottomSheet,
+                    route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
+                )
+                BaseLoginNavigation.DeleteAlias -> {
+                    appNavigator.navigateUpWithResult(CLEAR_ALIAS_NAV_PARAMETER_KEY, true)
+                }
+
+                is BaseLoginNavigation.EditAlias -> {
+                    appNavigator.navigate(
+                        destination = CreateAliasBottomSheet,
+                        route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.showUpgrade, isEdit = true),
+                        backDestination = EditLogin
+                    )
+                }
             }
         }
     )
@@ -390,6 +422,10 @@ fun NavGraphBuilder.appGraph(
         onNavigate = {
             when (it) {
                 CreateAliasNavigation.Close -> appNavigator.onBackClick()
+                CreateAliasNavigation.CloseBottomsheet -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
+
                 is CreateAliasNavigation.CreatedFromBottomsheet -> {
                     dismissBottomSheet {
                         appNavigator.onBackClick()

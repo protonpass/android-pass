@@ -18,4 +18,14 @@ sealed interface BaseLoginNavigation {
     object Upgrade : BaseLoginNavigation
     object ScanTotp : BaseLoginNavigation
     object Close : BaseLoginNavigation
+
+    data class AliasOptions(
+        val shareId: ShareId,
+        val showUpgrade: Boolean,
+    ) : BaseLoginNavigation
+    object DeleteAlias : BaseLoginNavigation
+    data class EditAlias(
+        val shareId: ShareId,
+        val showUpgrade: Boolean
+    ) : BaseLoginNavigation
 }

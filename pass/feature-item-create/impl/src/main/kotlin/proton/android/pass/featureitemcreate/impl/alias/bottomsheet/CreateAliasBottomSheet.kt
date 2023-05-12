@@ -27,7 +27,7 @@ fun CreateAliasBottomSheet(
 
     LaunchedEffect(state.closeScreenEvent) {
         if (state.closeScreenEvent is CloseScreenEvent.Close) {
-            onNavigate(CreateAliasNavigation.Close)
+            onNavigate(CreateAliasNavigation.CloseBottomsheet)
         }
     }
 

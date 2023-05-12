@@ -65,6 +65,11 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is BaseLoginNavigation.LoginUpdated -> {}
                 BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
                 BaseLoginNavigation.Upgrade -> {}
+
+                // Alias generation in Autosave is not supported
+                is BaseLoginNavigation.AliasOptions -> {}
+                BaseLoginNavigation.DeleteAlias -> {}
+                is BaseLoginNavigation.EditAlias -> {}
             }
         }
     )

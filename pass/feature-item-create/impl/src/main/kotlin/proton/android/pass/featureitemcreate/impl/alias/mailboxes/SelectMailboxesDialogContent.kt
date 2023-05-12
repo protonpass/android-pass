@@ -54,7 +54,6 @@ fun SelectMailboxesDialogContent(
         LazyColumn {
             items(items = state.mailboxes, key = { it.model.id }) { item ->
                 SelectMailboxesMailboxRow(
-                    modifier = Modifier.padding(16.dp, 2.dp),
                     item = item,
                     onToggle = { onMailboxToggled(item) }
                 )

@@ -41,6 +41,9 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 include(":app")
 include(":benchmark")
+include(":pass:account:api")
+include(":pass:account:fakes")
+include(":pass:account:impl")
 include(":pass:app-config:api")
 include(":pass:app-config:fakes")
 include(":pass:autofill:api")
@@ -107,6 +110,7 @@ include(":pass:totp:api")
 include(":pass:totp:fakes")
 include(":pass:totp:impl")
 include(":pass:tracing:impl")
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {

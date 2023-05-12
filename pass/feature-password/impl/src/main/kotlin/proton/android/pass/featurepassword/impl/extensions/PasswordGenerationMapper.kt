@@ -22,10 +22,8 @@ fun PasswordGenerationPreference.toRandomSpec(): PasswordGenerator.RandomPasswor
     return PasswordGenerator.RandomPasswordSpec(
         length = randomPasswordLength,
         hasCapitalLetters = randomHasCapitalLetters,
-        option = when {
-            randomHasSpecialCharacters -> PasswordGenerator.Option.LettersNumbersSymbols
-            else -> PasswordGenerator.Option.LettersAndNumbers
-        }
+        hasNumbers = randomIncludeNumbers,
+        hasSymbols = randomHasSpecialCharacters
     )
 }
 

@@ -10,6 +10,8 @@ class GeneratePasswordStatePreviewProvider : PreviewParameterProvider<GeneratePa
                 content = GeneratePasswordContent.RandomPassword(
                     length = 12,
                     hasSpecialCharacters = true,
+                    hasCapitalLetters = false,
+                    includeNumbers = true
                 ),
                 mode = GeneratePasswordMode.CopyAndClose
             ),
@@ -18,6 +20,8 @@ class GeneratePasswordStatePreviewProvider : PreviewParameterProvider<GeneratePa
                 content = GeneratePasswordContent.RandomPassword(
                     length = 4,
                     hasSpecialCharacters = false,
+                    hasCapitalLetters = false,
+                    includeNumbers = true
                 ),
                 mode = GeneratePasswordMode.CopyAndClose
             ),
@@ -26,6 +30,8 @@ class GeneratePasswordStatePreviewProvider : PreviewParameterProvider<GeneratePa
                 content = GeneratePasswordContent.RandomPassword(
                     length = 64,
                     hasSpecialCharacters = false,
+                    hasCapitalLetters = true,
+                    includeNumbers = false
                 ),
                 mode = GeneratePasswordMode.CancelConfirm
             )

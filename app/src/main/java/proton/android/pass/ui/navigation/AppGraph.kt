@@ -56,6 +56,9 @@ import proton.android.pass.featureonboarding.impl.OnBoarding
 import proton.android.pass.featureonboarding.impl.onBoardingGraph
 import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheet
 import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheetModeValue
+import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
+import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
+import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
 import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
 import proton.android.pass.featureprofile.impl.AppLockBottomsheet
 import proton.android.pass.featureprofile.impl.FeedbackBottomsheet
@@ -243,8 +246,19 @@ fun NavGraphBuilder.appGraph(
         }
     )
     generatePasswordBottomsheetGraph(
-        onDismiss = {
-            dismissBottomSheet { appNavigator.onBackClick() }
+        onNavigate = {
+            when (it) {
+                GeneratePasswordNavigation.CloseDialog -> appNavigator.onBackClick()
+                GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
+                GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
+                    destination = WordSeparatorDialog
+                )
+                GeneratePasswordNavigation.OnSelectPasswordMode -> appNavigator.navigate(
+                    destination = PasswordModeDialog
+                )
+            }
         }
     )
     accountGraph(
@@ -341,11 +355,6 @@ fun NavGraphBuilder.appGraph(
                 BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
                 BaseLoginNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             }
-        }
-    )
-    generatePasswordBottomsheetGraph(
-        onDismiss = {
-            dismissBottomSheet { appNavigator.onBackClick() }
         }
     )
     createTotpGraph(

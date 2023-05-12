@@ -80,7 +80,6 @@ fun CreateLoginScreen(
             onPasswordChange = viewModel::onPasswordChange,
             onWebsiteChange = onWebsiteChange,
             onNoteChange = viewModel::onNoteChange,
-            onRemoveAliasClick = viewModel::onRemoveAlias,
             onVaultSelect = viewModel::changeVault,
             onLinkedAppDelete = {},
             onTotpChange = viewModel::onTotpChange,

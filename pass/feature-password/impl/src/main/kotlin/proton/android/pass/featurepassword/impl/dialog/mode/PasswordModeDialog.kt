@@ -32,7 +32,6 @@ fun PasswordModeDialog(
         }
     ) {
         PasswordModeDialogContent(
-            modifier = modifier,
             state = state,
             onOptionSelected = viewModel::onChange,
             onConfirm = viewModel::onConfirm,

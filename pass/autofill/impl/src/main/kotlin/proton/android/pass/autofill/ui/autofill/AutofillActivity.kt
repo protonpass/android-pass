@@ -37,6 +37,8 @@ class AutofillActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.register(this)
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collectLatest(::onStateReceived)
@@ -49,14 +51,21 @@ class AutofillActivity : FragmentActivity() {
             AutofillUiState.NotValidAutofillUiState -> onAutofillCancel()
             is AutofillUiState.StartAutofillUiState -> {
                 WindowCompat.setDecorFitsSystemWindows(window, false)
+
                 setContent {
                     AutofillApp(
                         autofillUiState = autofillUiState,
-                        onAutofillSuccess = ::onAutofillSuccess,
-                        onAutofillCancel = ::onAutofillCancel
+                        onNavigate = {
+                            when (it) {
+                                AutofillNavigation.Cancel -> onAutofillCancel()
+                                is AutofillNavigation.Selected -> onAutofillSuccess(it.autofillMappings)
+                                AutofillNavigation.Upgrade -> viewModel.upgrade()
+                            }
+                        }
                     )
                 }
             }
+
             AutofillUiState.UninitialisedAutofillUiState -> {}
         }
     }

@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 import proton.android.pass.autofill.entities.usernamePassword
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AUTH_SCREEN_ROUTE
 import proton.android.pass.featureauth.impl.AuthNavigation
@@ -22,6 +23,7 @@ import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
 import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
 import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
+import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.navigation.api.AppNavigator
 
 @Suppress("ComplexMethod", "LongMethod")
@@ -70,6 +72,13 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 is BaseLoginNavigation.AliasOptions -> {}
                 BaseLoginNavigation.DeleteAlias -> {}
                 is BaseLoginNavigation.EditAlias -> {}
+
+                is BaseLoginNavigation.SelectVault -> {
+                    appNavigator.navigate(
+                        destination = SelectVaultBottomsheet,
+                        route = SelectVaultBottomsheet.createNavRoute(it.shareId.toOption())
+                    )
+                }
             }
         }
     )

@@ -1,12 +1,17 @@
 package proton.android.pass.featureitemcreate.impl.alias
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.featureitemcreate.impl.alias.bottomsheet.CreateAliasBottomSheet
+import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -80,16 +85,25 @@ sealed interface CreateAliasNavigation {
     object Upgrade : CreateAliasNavigation
     object Close : CreateAliasNavigation
     object CloseBottomsheet : CreateAliasNavigation
+
+    data class SelectVault(val shareId: ShareId?) : CreateAliasNavigation
 }
 
 @OptIn(
-    ExperimentalAnimationApi::class
+    ExperimentalAnimationApi::class, ExperimentalLifecycleComposeApi::class
 )
 fun NavGraphBuilder.createAliasGraph(
     onNavigate: (CreateAliasNavigation) -> Unit,
 ) {
-    composable(CreateAlias) {
-        CreateAliasScreen(onNavigate = onNavigate)
+    composable(CreateAlias) { navBackStack ->
+        val selectVault by navBackStack.savedStateHandle
+            .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
+            .collectAsStateWithLifecycle()
+
+        CreateAliasScreen(
+            selectVault = selectVault.toOption().map { ShareId(it) }.value(),
+            onNavigate = onNavigate
+        )
     }
 
     bottomSheet(CreateAliasBottomSheet) {

@@ -20,7 +20,7 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
-const val CODE_CANNOT_CREATE_MORE_ALIASES = 2011
+const val CODE_CANNOT_CREATE_MORE_ALIASES = 300_007
 
 class RemoteItemDataSourceImpl @Inject constructor(
     private val api: ApiProvider

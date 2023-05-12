@@ -61,7 +61,6 @@ internal fun LoginContent(
     onWebsiteChange: OnWebsiteChange,
     onNoteChange: (String) -> Unit,
     onTotpChange: (String) -> Unit,
-    onRemoveAliasClick: () -> Unit,
     onVaultSelect: (ShareId) -> Unit,
     onPasteTotpClick: () -> Unit,
     onLinkedAppDelete: (PackageInfoUi) -> Unit,
@@ -86,7 +85,6 @@ internal fun LoginContent(
     var currentBottomSheet by rememberSaveable(stateSaver = LoginBottomSheetContentTypeSaver) {
         mutableStateOf(LoginBottomSheetContentType.VaultSelection)
     }
-    var showRemoveAliasDialog by rememberSaveable { mutableStateOf(false) }
     var actionWhenKeyboardDisappears by remember { mutableStateOf<ActionAfterHideKeyboard?>(null) }
 
     val keyboardState by keyboardAsState()
@@ -130,27 +128,6 @@ internal fun LoginContent(
         sheetState = bottomSheetState,
         sheetContent = {
             when (currentBottomSheet) {
-                /*LoginBottomSheetContentType.AliasOptions -> AliasOptionsBottomSheet(
-                    onEditAliasClick = {
-                        scope.launch {
-                            bottomSheetState.hide()
-                            onNavigate(
-                                BaseLoginNavigation.CreateAlias(
-                                    uiState.selectedVault!!.vault.shareId,
-                                    uiState.hasReachedAliasLimit,
-                                    uiState.loginItem.title.some()
-                                )
-                            )
-                        }
-                    },
-                    onRemoveAliasClick = {
-                        scope.launch {
-                            showRemoveAliasDialog = true
-                            bottomSheetState.hide()
-                        }
-                    }
-                )*/
-
                 LoginBottomSheetContentType.VaultSelection -> VaultSelectionBottomSheet(
                     shareList = uiState.vaultList,
                     selectedShareId = uiState.selectedVault?.vault?.shareId,
@@ -251,16 +228,6 @@ internal fun LoginContent(
                 onPasteTotpClick = onPasteTotpClick,
                 onLinkedAppDelete = onLinkedAppDelete,
                 onNavigate = onNavigate
-            )
-
-            ConfirmRemoveAliasDialog(
-                show = showRemoveAliasDialog,
-                onDismiss = { showRemoveAliasDialog = false },
-                onCancel = { showRemoveAliasDialog = false },
-                onConfirm = {
-                    showRemoveAliasDialog = false
-                    onRemoveAliasClick()
-                }
             )
 
             ItemSavedLaunchedEffect(

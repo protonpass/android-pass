@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemcreate.impl.alias
+package proton.android.pass.composecomponents.impl.buttons
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
-import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun ShowAdvancedOptionsButton(
@@ -45,9 +45,9 @@ fun ShowAdvancedOptionsButton(
         )
 
         val text = if (currentValue) {
-            stringResource(R.string.field_alias_hide_advanced_options)
+            stringResource(R.string.hide_advanced_options)
         } else {
-            stringResource(R.string.field_alias_show_advanced_options)
+            stringResource(R.string.show_advanced_options)
         }
         Text(
             text = text,
@@ -69,3 +69,4 @@ fun ShowAdvancedOptionsButtonPreview(
         }
     }
 }
+

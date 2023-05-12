@@ -16,7 +16,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import me.proton.core.compose.theme.isNightMode
-import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.ui.SnackBarLaunchedEffect
 import proton.android.pass.autofill.ui.SnackBarViewModel
 import proton.android.pass.commonui.api.PassTheme
@@ -29,8 +28,7 @@ import proton.android.pass.preferences.ThemePreference
 fun AutofillApp(
     modifier: Modifier = Modifier,
     autofillUiState: AutofillUiState.StartAutofillUiState,
-    onAutofillSuccess: (AutofillMappings) -> Unit,
-    onAutofillCancel: () -> Unit,
+    onNavigate: (AutofillNavigation) -> Unit,
     snackBarViewModel: SnackBarViewModel = hiltViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -69,8 +67,10 @@ fun AutofillApp(
                     autofillAppState = autofillUiState.autofillAppState,
                     selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),
                     isFingerprintRequired = autofillUiState.isFingerprintRequiredPreference,
-                    onAutofillSuccess = onAutofillSuccess,
-                    onAutofillCancel = onAutofillCancel
+                    onNavigate = {
+                        snackBarViewModel.onSnackbarMessageDelivered()
+                        onNavigate(it)
+                    }
                 )
             }
         }

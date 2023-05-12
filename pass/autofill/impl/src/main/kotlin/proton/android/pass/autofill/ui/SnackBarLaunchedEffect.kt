@@ -15,11 +15,11 @@ fun SnackBarLaunchedEffect(
     snackBarMessage ?: return
     val snackBarMessageLocale = stringResource(id = snackBarMessage.id)
     LaunchedEffect(snackBarMessage) {
-        onSnackBarMessageDelivered()
         passSnackBarHostState.showSnackbar(
             snackBarMessage.type,
             snackBarMessageLocale
         )
+        onSnackBarMessageDelivered()
     }
 }
 

@@ -8,7 +8,6 @@ import proton.android.featuresearchoptions.impl.SortingBottomsheet
 import proton.android.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.extensions.CreatedAlias
 import proton.android.pass.autofill.extensions.toAutoFillItem
 import proton.android.pass.autofill.extensions.toAutofillItem
@@ -51,33 +50,24 @@ fun NavGraphBuilder.autofillActivityGraph(
     appNavigator: AppNavigator,
     autofillAppState: AutofillAppState,
     selectedAutofillItem: AutofillItem?,
-    onAutofillSuccess: (AutofillMappings) -> Unit,
-    onAutofillCancel: () -> Unit,
+    onNavigate: (AutofillNavigation) -> Unit,
     onAutofillItemReceived: (AutofillItem) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
     authGraph(
         navigation = {
             when (it) {
-                AuthNavigation.Back -> {
-                    onAutofillCancel()
+                AuthNavigation.Back -> onNavigate(AutofillNavigation.Cancel)
+
+                AuthNavigation.Success -> if (selectedAutofillItem != null) {
+                    onAutofillItemReceived(selectedAutofillItem)
+                } else {
+                    appNavigator.navigate(SelectItem)
                 }
 
-                AuthNavigation.Success -> {
-                    if (selectedAutofillItem != null) {
-                        onAutofillItemReceived(selectedAutofillItem)
-                    } else {
-                        appNavigator.navigate(SelectItem)
-                    }
-                }
+                AuthNavigation.Dismissed -> onNavigate(AutofillNavigation.Cancel)
 
-                AuthNavigation.Dismissed -> {
-                    onAutofillCancel()
-                }
-
-                AuthNavigation.Failed -> {
-                    onAutofillCancel()
-                }
+                AuthNavigation.Failed -> onNavigate(AutofillNavigation.Cancel)
             }
         }
     )
@@ -89,8 +79,8 @@ fun NavGraphBuilder.autofillActivityGraph(
                     appNavigator.navigate(CreateItemBottomsheet)
                 }
 
-                SelectItemNavigation.Cancel -> onAutofillCancel()
-                is SelectItemNavigation.ItemSelected -> onAutofillSuccess(it.autofillMappings)
+                SelectItemNavigation.Cancel -> onNavigate(AutofillNavigation.Cancel)
+                is SelectItemNavigation.ItemSelected -> onNavigate(AutofillNavigation.Selected(it.autofillMappings))
                 is SelectItemNavigation.SortingBottomsheet ->
                     appNavigator.navigate(
                         SortingBottomsheet,
@@ -113,7 +103,11 @@ fun NavGraphBuilder.autofillActivityGraph(
                 BaseLoginNavigation.Close -> appNavigator.onBackClick()
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
-                    route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.showUpgrade, it.title)
+                    route = CreateAliasBottomSheet.createNavRoute(
+                        it.shareId,
+                        it.showUpgrade,
+                        it.title
+                    )
                 )
 
                 BaseLoginNavigation.GeneratePassword -> {
@@ -134,7 +128,7 @@ fun NavGraphBuilder.autofillActivityGraph(
 
                 is BaseLoginNavigation.LoginUpdated -> {}
                 BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
-                BaseLoginNavigation.Upgrade -> {}
+                BaseLoginNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
             }
         }
     )
@@ -180,7 +174,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                     onAutofillItemReceived(created.toAutofillItem())
                 }
 
-                CreateAliasNavigation.Upgrade -> {}
+                CreateAliasNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
             }
         }
     )

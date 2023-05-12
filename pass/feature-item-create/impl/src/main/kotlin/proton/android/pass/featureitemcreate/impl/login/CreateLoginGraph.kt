@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.StateFlow
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
+import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.aliasOptionsBottomSheetGraph
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -55,10 +57,15 @@ fun NavGraphBuilder.createLoginGraph(
     getPrimaryTotp: () -> StateFlow<String?>,
     onNavigate: (BaseLoginNavigation) -> Unit
 ) {
-    composable(CreateLogin) {
+    composable(CreateLogin) { navBackStack ->
         val primaryTotp by getPrimaryTotp().collectAsStateWithLifecycle()
-        val clearAlias by it.savedStateHandle.getStateFlow(CLEAR_ALIAS_NAV_PARAMETER_KEY, false)
+        val clearAlias by navBackStack.savedStateHandle
+            .getStateFlow(CLEAR_ALIAS_NAV_PARAMETER_KEY, false)
             .collectAsStateWithLifecycle()
+        val selectVault by navBackStack.savedStateHandle
+            .getStateFlow<String?>(KEY_VAULT_SELECTED, null)
+            .collectAsStateWithLifecycle()
+
         val initialContents = initialCreateLoginUiState.copy(
             primaryTotp = primaryTotp
         )
@@ -66,6 +73,7 @@ fun NavGraphBuilder.createLoginGraph(
         CreateLoginScreen(
             initialContents = initialContents,
             clearAlias = clearAlias,
+            selectVault = selectVault.toOption().map { ShareId(it) }.value(),
             showCreateAliasButton = showCreateAliasButton,
             onNavigate = onNavigate
         )

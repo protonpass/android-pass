@@ -28,4 +28,8 @@ sealed interface BaseLoginNavigation {
         val shareId: ShareId,
         val showUpgrade: Boolean
     ) : BaseLoginNavigation
+
+    data class SelectVault(
+        val shareId: ShareId?
+    ) : BaseLoginNavigation
 }

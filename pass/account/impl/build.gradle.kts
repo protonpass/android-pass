@@ -1,10 +1,12 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    id("dagger.hilt.android.plugin")
+    id("org.jetbrains.kotlin.kapt")
 }
 
 android {
-    namespace = "proton.android.pass.account"
+    namespace = "proton.android.pass.account.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
     
     defaultConfig {
@@ -19,4 +21,10 @@ androidComponents.beforeVariants { variant ->
 
 dependencies {
     implementation(projects.pass.account.api)
+
+    implementation(libs.core.plan)
+
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.android.compiler)
+    kapt(libs.androidx.hilt.compiler)
 }

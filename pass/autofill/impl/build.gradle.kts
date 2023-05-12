@@ -54,7 +54,6 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.core.accountManager.domain)
-    implementation(libs.core.plan)
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.core.utilKotlin)
@@ -66,6 +65,7 @@ dependencies {
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
 
+    implementation(projects.pass.account.api)
     implementation(projects.pass.biometry.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.clipboard.api)

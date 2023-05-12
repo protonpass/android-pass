@@ -275,6 +275,7 @@ dependencies {
     debugImplementation(libs.showkase)
     kspDebug(libs.showkaseProcessor)
 
+    implementation(projects.pass.account.impl)
     implementation(projects.pass.appConfig.api)
     implementation(projects.pass.autofill.impl)
     implementation(projects.pass.biometry.api)

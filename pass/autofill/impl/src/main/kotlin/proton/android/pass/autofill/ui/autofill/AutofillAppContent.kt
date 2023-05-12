@@ -20,7 +20,6 @@ import kotlinx.coroutines.launch
 import proton.android.pass.autofill.AutofillTriggerSource
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
-import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featureauth.impl.Auth
@@ -39,8 +38,7 @@ fun AutofillAppContent(
     autofillAppState: AutofillAppState,
     selectedAutofillItem: AutofillItem?,
     isFingerprintRequired: Boolean,
-    onAutofillSuccess: (AutofillMappings) -> Unit,
-    onAutofillCancel: () -> Unit,
+    onNavigate: (AutofillNavigation) -> Unit
 ) {
     val startDestination = remember {
         if (isFingerprintRequired) {
@@ -60,7 +58,9 @@ fun AutofillAppContent(
     )
     val coroutineScope = rememberCoroutineScope()
     PassModalBottomSheetLayout(
-        modifier = Modifier.systemBarsPadding().imePadding(),
+        modifier = Modifier
+            .systemBarsPadding()
+            .imePadding(),
         bottomSheetNavigator = appNavigator.bottomSheetNavigator
     ) {
         AnimatedNavHost(
@@ -72,8 +72,7 @@ fun AutofillAppContent(
                 appNavigator = appNavigator,
                 autofillAppState = autofillAppState,
                 selectedAutofillItem = selectedAutofillItem,
-                onAutofillSuccess = onAutofillSuccess,
-                onAutofillCancel = onAutofillCancel,
+                onNavigate = onNavigate,
                 onAutofillItemReceived = { autofillItem ->
                     val source = if (selectedAutofillItem == null) {
                         // We didn't have an item selected, so the user must have opened the app
@@ -83,7 +82,8 @@ fun AutofillAppContent(
                         AutofillTriggerSource.Source
                     }
                     viewModel.onAutofillItemSelected(source)
-                    onAutofillSuccess(viewModel.getMappings(autofillItem, autofillAppState))
+                    val mappings = viewModel.getMappings(autofillItem, autofillAppState)
+                    onNavigate(AutofillNavigation.Selected(mappings))
                 },
                 dismissBottomSheet = { callback ->
                     coroutineScope.launch {

@@ -16,8 +16,8 @@ import androidx.compose.ui.unit.sp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.buttons.CircleIconButton
+import proton.android.pass.featurepassword.R
 
 @Composable
 fun GeneratePasswordBottomSheetTitle(

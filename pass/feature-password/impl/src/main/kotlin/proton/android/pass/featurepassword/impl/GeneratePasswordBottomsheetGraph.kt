@@ -3,6 +3,8 @@ package proton.android.pass.featurepassword.impl
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.featurepassword.impl.bottomsheet.GeneratePasswordBottomSheet
+import proton.android.pass.featurepassword.impl.dialog.mode.passwordModeDialog
+import proton.android.pass.featurepassword.impl.dialog.separator.wordSeparatorDialog
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.bottomSheet
@@ -25,10 +27,20 @@ object GeneratePasswordBottomsheet : NavItem(
         "$baseRoute/${mode.name}"
 }
 
+sealed interface GeneratePasswordNavigation {
+    object DismissBottomsheet : GeneratePasswordNavigation
+    object CloseDialog : GeneratePasswordNavigation
+    object OnSelectWordSeparator : GeneratePasswordNavigation
+    object OnSelectPasswordMode : GeneratePasswordNavigation
+}
+
 fun NavGraphBuilder.generatePasswordBottomsheetGraph(
-    onDismiss: () -> Unit
+    onNavigate: (GeneratePasswordNavigation) -> Unit
 ) {
     bottomSheet(GeneratePasswordBottomsheet) {
-        GeneratePasswordBottomSheet(onDismiss = onDismiss)
+        GeneratePasswordBottomSheet(onNavigate = onNavigate)
     }
+
+    wordSeparatorDialog(onNavigate = onNavigate)
+    passwordModeDialog(onNavigate = onNavigate)
 }

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -21,6 +22,9 @@ import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheetMode
 import proton.android.pass.featurepassword.impl.GeneratePasswordBottomsheetModeValue
 import proton.android.pass.featurepassword.impl.GeneratePasswordSnackbarMessage
+import proton.android.pass.featurepassword.impl.extensions.toContent
+import proton.android.pass.featurepassword.impl.extensions.toRandomSpec
+import proton.android.pass.featurepassword.impl.extensions.toWordSpec
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.password.api.PasswordGenerator
 import proton.android.pass.preferences.PasswordGenerationMode
@@ -41,11 +45,15 @@ class GeneratePasswordViewModel @Inject constructor(
 
     private val mode = getMode()
 
+    private val passwordFlow: MutableStateFlow<String> = MutableStateFlow(getInitialPassword())
+
+
     private val passwordGenerationPreference = userPreferencesRepository
         .getPasswordGenerationPreference()
         .distinctUntilChanged()
-
-    private val passwordFlow: MutableStateFlow<String> = MutableStateFlow(getInitialPassword())
+        .onEach { pref ->
+            passwordFlow.update { generatePassword(pref) }
+        }
 
     val state: StateFlow<GeneratePasswordUiState> = combine(
         passwordGenerationPreference,
@@ -80,6 +88,41 @@ class GeneratePasswordViewModel @Inject constructor(
         updateAndRegenerate(updated)
     }
 
+    fun onCapitalLettersChange(value: Boolean) = viewModelScope.launch {
+        val updated = getCurrentPreference().copy(randomHasCapitalLetters = value)
+        updateAndRegenerate(updated)
+    }
+
+    fun onIncludeNumbersChange(value: Boolean) = viewModelScope.launch {
+        val updated = getCurrentPreference().copy(randomIncludeNumbers = value)
+        updateAndRegenerate(updated)
+    }
+
+    fun onPasswordModeChange(value: PasswordGenerationMode) = viewModelScope.launch {
+        val updated = getCurrentPreference().copy(mode = value)
+        updateAndRegenerate(updated)
+    }
+
+    fun onWordsCapitalizeChange(value: Boolean) = viewModelScope.launch {
+        val updated = getCurrentPreference().copy(wordsCapitalise = value)
+        updateAndRegenerate(updated)
+    }
+
+    fun onWordsIncludeNumbersChange(value: Boolean) = viewModelScope.launch {
+        val updated = getCurrentPreference().copy(wordsIncludeNumbers = value)
+        updateAndRegenerate(updated)
+    }
+
+    fun onWordsCountChange(value: Int) = viewModelScope.launch {
+        val updated = getCurrentPreference().copy(wordsCount = value)
+        updateAndRegenerate(updated)
+    }
+
+    fun onWordsSeparatorChange(value: WordSeparator) = viewModelScope.launch {
+        val updated = getCurrentPreference().copy(wordsSeparator = value)
+        updateAndRegenerate(updated)
+    }
+
     fun regenerate() = viewModelScope.launch {
         val current = getCurrentPreference()
         passwordFlow.update { generatePassword(current) }
@@ -94,7 +137,7 @@ class GeneratePasswordViewModel @Inject constructor(
 
     private suspend fun updateAndRegenerate(pref: PasswordGenerationPreference) {
         userPreferencesRepository.setPasswordGenerationPreference(pref)
-        passwordFlow.update { generatePassword(pref) }
+//        passwordFlow.update { generatePassword(pref) }
     }
 
     private fun storeDraft() {
@@ -131,53 +174,12 @@ class GeneratePasswordViewModel @Inject constructor(
 
         private fun generatePassword(preference: PasswordGenerationPreference) =
             when (preference.mode) {
-                PasswordGenerationMode.Random -> generateRandomPassword(preference)
+                PasswordGenerationMode.Random -> PasswordGenerator.generatePassword(
+                    spec = preference.toRandomSpec()
+                )
                 PasswordGenerationMode.Words -> PasswordGenerator.generateWordPassword(
                     spec = preference.toWordSpec()
                 )
             }
-
-        private fun generateRandomPassword(preference: PasswordGenerationPreference) =
-            PasswordGenerator.generatePassword(
-                length = preference.randomPasswordLength,
-                option = when {
-                    preference.randomHasSpecialCharacters -> PasswordGenerator.Option.LettersNumbersSymbols
-                    else -> PasswordGenerator.Option.LettersAndNumbers
-                }
-            )
-
-
-        private fun PasswordGenerationPreference.toWordSpec(): PasswordGenerator.WordPasswordSpec {
-            return PasswordGenerator.WordPasswordSpec(
-                count = wordsCount,
-                separator = wordsSeparator.toDomain(),
-                capitalise = wordsCapitalise,
-                includeNumbers = wordsIncludeNumbers
-            )
-        }
-
-        private fun WordSeparator.toDomain(): PasswordGenerator.WordSeparator = when (this) {
-            WordSeparator.Hyphen -> PasswordGenerator.WordSeparator.Hyphen
-            WordSeparator.Space -> PasswordGenerator.WordSeparator.Space
-            WordSeparator.Period -> PasswordGenerator.WordSeparator.Period
-            WordSeparator.Comma -> PasswordGenerator.WordSeparator.Comma
-            WordSeparator.Underscore -> PasswordGenerator.WordSeparator.Underscore
-            WordSeparator.Numbers -> PasswordGenerator.WordSeparator.Numbers
-            WordSeparator.NumbersAndSymbols -> PasswordGenerator.WordSeparator.NumbersAndSymbols
-        }
-
-        private fun PasswordGenerationPreference.toContent(): GeneratePasswordContent = when (mode) {
-            PasswordGenerationMode.Words -> GeneratePasswordContent.WordsPassword(
-                count = wordsCount,
-                wordSeparator = wordsSeparator.toDomain(),
-                capitalise = wordsCapitalise,
-                includeNumbers = wordsIncludeNumbers
-            )
-
-            PasswordGenerationMode.Random -> GeneratePasswordContent.RandomPassword(
-                length = randomPasswordLength,
-                hasSpecialCharacters = randomHasSpecialCharacters
-            )
-        }
     }
 }

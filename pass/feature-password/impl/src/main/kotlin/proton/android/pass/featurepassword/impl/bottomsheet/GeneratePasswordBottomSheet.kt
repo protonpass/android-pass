@@ -18,13 +18,14 @@ import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 import proton.android.pass.featurepassword.R
+import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 
-
+@Suppress("CyclomaticComplexMethod", "ComplexMethod")
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun GeneratePasswordBottomSheet(
     modifier: Modifier = Modifier,
-    onDismiss: () -> Unit
+    onNavigate: (GeneratePasswordNavigation) -> Unit,
 ) {
     val viewModel = hiltViewModel<GeneratePasswordViewModel>()
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -32,9 +33,46 @@ fun GeneratePasswordBottomSheet(
     GeneratePasswordBottomSheetContent(
         modifier = modifier,
         state = state,
-        onLengthChange = { viewModel.onLengthChange(it) },
-        onRegenerateClick = { viewModel.regenerate() },
-        onHasSpecialCharactersChange = { viewModel.onHasSpecialCharactersChange(it) },
+        onEvent = {
+            when (it) {
+                is GeneratePasswordEvent.OnPasswordModeChange -> {
+                    viewModel.onPasswordModeChange(it.mode)
+                }
+                GeneratePasswordEvent.OnPasswordModeChangeClick -> {
+                    onNavigate(GeneratePasswordNavigation.OnSelectPasswordMode)
+                }
+                is GeneratePasswordEvent.OnRandomIncludeNumbersChange -> {
+                    viewModel.onIncludeNumbersChange(it.value)
+                }
+                is GeneratePasswordEvent.OnRandomLengthChange -> {
+                    viewModel.onLengthChange(it.length)
+                }
+                is GeneratePasswordEvent.OnRandomUseCapitalLettersChange -> {
+                    viewModel.onCapitalLettersChange(it.value)
+                }
+                is GeneratePasswordEvent.OnRandomUseSpecialCharactersChange -> {
+                    viewModel.onHasSpecialCharactersChange(it.value)
+                }
+                GeneratePasswordEvent.OnRegeneratePasswordClick -> {
+                    viewModel.regenerate()
+                }
+                is GeneratePasswordEvent.OnWordsCapitalizeChange -> {
+                    viewModel.onWordsCapitalizeChange(it.value)
+                }
+                is GeneratePasswordEvent.OnWordsIncludeNumbersChange -> {
+                    viewModel.onWordsIncludeNumbersChange(it.value)
+                }
+                is GeneratePasswordEvent.OnWordsCountChange -> {
+                    viewModel.onWordsCountChange(it.count)
+                }
+                GeneratePasswordEvent.OnWordsSeparatorClick -> {
+                    onNavigate(GeneratePasswordNavigation.OnSelectWordSeparator)
+                }
+                is GeneratePasswordEvent.OnWordsSeparatorChange -> {
+                    viewModel.onWordsSeparatorChange(it.separator)
+                }
+            }
+        },
         buttonSection = {
             when (state.mode) {
                 GeneratePasswordMode.CopyAndClose ->
@@ -47,7 +85,7 @@ fun GeneratePasswordBottomSheet(
                             elevation = ButtonDefaults.elevation(0.dp),
                             onClick = {
                                 viewModel.onConfirm()
-                                onDismiss()
+                                onNavigate(GeneratePasswordNavigation.DismissBottomsheet)
                             }
                         ) {
                             Text(
@@ -61,10 +99,10 @@ fun GeneratePasswordBottomSheet(
                 GeneratePasswordMode.CancelConfirm -> @Composable {
                     BottomSheetCancelConfirm(
                         modifier = Modifier.padding(top = 40.dp),
-                        onCancel = onDismiss,
+                        onCancel = { onNavigate(GeneratePasswordNavigation.DismissBottomsheet) },
                         onConfirm = {
                             viewModel.onConfirm()
-                            onDismiss()
+                            onNavigate(GeneratePasswordNavigation.DismissBottomsheet)
                         }
                     )
                 }

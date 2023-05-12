@@ -1,15 +1,11 @@
-package proton.android.pass.featurepassword.impl.bottomsheet
+package proton.android.pass.featurepassword.impl.bottomsheet.random
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Slider
 import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Surface
-import androidx.compose.material.Switch
-import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,14 +22,13 @@ import androidx.compose.ui.unit.sp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.featurepassword.R
 
 @Composable
-fun ColumnScope.GeneratePasswordRandomContent(
+fun GeneratePasswordRandomCountRow(
     modifier: Modifier = Modifier,
-    content: GeneratePasswordContent.RandomPassword,
-    onLengthChange: (Int) -> Unit,
-    onSpecialCharactersChange: (Boolean) -> Unit
+    length: Int,
+    onLengthChange: (Int) -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -42,13 +37,13 @@ fun ColumnScope.GeneratePasswordRandomContent(
     ) {
         Text(
             modifier = Modifier.weight(SLIDER_TEXT_WEIGHT),
-            text = stringResource(R.string.character_count, content.length),
+            text = stringResource(R.string.character_count, length),
             color = PassTheme.colors.textNorm,
             style = PassTypography.body3Regular,
             fontSize = 16.sp
         )
 
-        var sliderPosition by remember { mutableStateOf(content.length.toFloat()) }
+        var sliderPosition by remember { mutableStateOf(length.toFloat()) }
         val valueRange = remember { 4.toFloat()..64.toFloat() }
         Slider(
             modifier = Modifier.weight(SLIDER_CONTENT_WEIGHT),
@@ -67,49 +62,22 @@ fun ColumnScope.GeneratePasswordRandomContent(
             }
         )
     }
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = stringResource(R.string.special_characters),
-            color = PassTheme.colors.textNorm,
-            style = PassTypography.body3Regular,
-            fontSize = 16.sp
-        )
-        Switch(
-            checked = content.hasSpecialCharacters,
-            colors = SwitchDefaults.colors(
-                checkedThumbColor = PassTheme.colors.loginInteractionNormMajor1,
-            ),
-            onCheckedChange = { onSpecialCharactersChange(it) }
-        )
-    }
 }
 
 @Preview
 @Composable
-fun GeneratePasswordRandomContentPreview(
+fun GeneratePasswordRandomCountRowPreview(
     @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            Column {
-                GeneratePasswordRandomContent(
-                    content = GeneratePasswordContent.RandomPassword(
-                        length = 12,
-                        hasSpecialCharacters = true
-                    ),
-                    onLengthChange = {},
-                    onSpecialCharactersChange = {}
-                )
-            }
+            GeneratePasswordRandomCountRow(
+                length = 4,
+                onLengthChange = {}
+            )
         }
     }
 }
 
-
-private const val SLIDER_CONTENT_WEIGHT = 0.7f
-private const val SLIDER_TEXT_WEIGHT = 0.3f
+private const val SLIDER_CONTENT_WEIGHT = 0.65f
+private const val SLIDER_TEXT_WEIGHT = 0.35f

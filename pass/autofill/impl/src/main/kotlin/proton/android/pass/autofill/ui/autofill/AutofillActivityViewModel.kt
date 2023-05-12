@@ -12,11 +12,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.plan.presentation.PlansOrchestrator
+import proton.android.pass.account.api.AccountOrchestrators
+import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.entities.AutofillItem
@@ -44,8 +43,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AutofillActivityViewModel @Inject constructor(
-    private val accountManager: AccountManager,
-    private val plansOrchestrator: PlansOrchestrator,
+    private val accountOrchestrators: AccountOrchestrators,
     preferenceRepository: UserPreferencesRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -124,15 +122,11 @@ class AutofillActivityViewModel @Inject constructor(
         )
 
     fun register(context: ComponentActivity) {
-        plansOrchestrator.register(context)
+        accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
     }
 
 
     fun upgrade() = viewModelScope.launch {
-        getPrimaryUserIdOrNull()?.let {
-            plansOrchestrator.startUpgradeWorkflow(it)
-        }
+        accountOrchestrators.start(Orchestrator.PlansOrchestrator)
     }
-
-    private suspend fun getPrimaryUserIdOrNull() = accountManager.getPrimaryUserId().firstOrNull()
 }

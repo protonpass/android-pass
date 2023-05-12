@@ -114,7 +114,7 @@ fun CreateAliasBottomSheetContent(
             isLoading = state.isLoadingState.value(),
             onMailboxClick = { showMailboxesDialog = true }
         )
-        AnimatedVisibility(visible = state.showUpgrade) {
+        AnimatedVisibility(visible = state.hasReachedAliasLimit) {
             InfoBanner(
                 modifier = Modifier.padding(top = 16.dp),
                 text = stringResource(R.string.create_alias_content_limit_banner),
@@ -124,25 +124,27 @@ fun CreateAliasBottomSheetContent(
         BottomSheetCancelConfirm(
             modifier = Modifier.padding(top = 36.dp),
             isLoading = state.isLoadingState == IsLoadingState.Loading,
-            showUpgrade = state.showUpgrade,
+            showUpgrade = state.hasReachedAliasLimit,
             onCancel = onCancel,
             onConfirm = onConfirm,
             onUpgradeClick = { onNavigate(CreateAliasNavigation.Upgrade) }
         )
 
-        SelectMailboxesDialog(
-            show = showMailboxesDialog,
-            mailboxes = state.aliasItem.mailboxes,
-            onMailboxesChanged = {
-                onMailboxesChanged(it)
-                showMailboxesDialog = false
-            },
-            onDismiss = { showMailboxesDialog = false },
-            onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) }
-        )
+        if (showMailboxesDialog && state.aliasItem.mailboxes.isNotEmpty()) {
+            SelectMailboxesDialog(
+                mailboxes = state.aliasItem.mailboxes,
+                canUpgrade = state.canUpgrade,
+                onMailboxesChanged = {
+                    onMailboxesChanged(it)
+                    showMailboxesDialog = false
+                },
+                onDismiss = { showMailboxesDialog = false },
+                onUpgrade = { onNavigate(CreateAliasNavigation.Upgrade) }
+            )
+        }
         SelectSuffixDialog(
             show = showSuffixDialog,
-            shouldUpgrade = false,
+            canUpgrade = false,
             suffixes = state.aliasItem.aliasOptions.suffixes.toImmutableList(),
             selectedSuffix = state.aliasItem.selectedSuffix,
             color = PassTheme.colors.loginInteractionNorm,
@@ -220,7 +222,8 @@ fun CreateAliasBottomSheetContentPreview(
                     showVaultSelector = false,
                     closeScreenEvent = CloseScreenEvent.NotClose,
                     hasUserEditedContent = false,
-                    showUpgrade = false
+                    hasReachedAliasLimit = false,
+                    canUpgrade = false
                 ),
                 showAdvancedOptionsInitially = true,
                 onCancel = {},

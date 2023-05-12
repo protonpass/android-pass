@@ -11,7 +11,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 fun SelectSuffixDialog(
     modifier: Modifier = Modifier,
     show: Boolean,
-    shouldUpgrade: Boolean,
+    canUpgrade: Boolean,
     suffixes: ImmutableList<AliasSuffixUiModel>,
     selectedSuffix: AliasSuffixUiModel?,
     color: Color,
@@ -28,7 +28,7 @@ fun SelectSuffixDialog(
         SelectSuffixContent(
             modifier = Modifier,
             suffixes = suffixes,
-            shouldUpgrade = shouldUpgrade,
+            canUpgrade = canUpgrade,
             selectedSuffix = selectedSuffix,
             color = color,
             onSuffixChanged = onSuffixChanged,

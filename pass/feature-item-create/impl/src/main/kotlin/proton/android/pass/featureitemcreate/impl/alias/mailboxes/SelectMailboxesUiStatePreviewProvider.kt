@@ -26,7 +26,7 @@ class SelectMailboxesUiStatePreviewProvider : PreviewParameterProvider<SelectMai
                     )
                 ),
                 canApply = IsButtonEnabled.from(false),
-                showUpgrade = false
+                canUpgrade = false
             ),
             SelectMailboxesUiState(
                 mailboxes = listOf(
@@ -46,7 +46,7 @@ class SelectMailboxesUiStatePreviewProvider : PreviewParameterProvider<SelectMai
                     )
                 ),
                 canApply = IsButtonEnabled.from(true),
-                showUpgrade = false
+                canUpgrade = false
             ),
             SelectMailboxesUiState(
                 mailboxes = listOf(
@@ -66,7 +66,7 @@ class SelectMailboxesUiStatePreviewProvider : PreviewParameterProvider<SelectMai
                     )
                 ),
                 canApply = IsButtonEnabled.from(false),
-                showUpgrade = true
+                canUpgrade = true
             )
         )
 }

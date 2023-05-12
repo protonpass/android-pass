@@ -25,6 +25,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
+import proton.android.pass.composecomponents.impl.buttons.ShowAdvancedOptionsButton
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -43,7 +44,6 @@ import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.alias.CreateUpdateAliasUiState
 import proton.android.pass.featureitemcreate.impl.alias.MailboxSection
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
-import proton.android.pass.featureitemcreate.impl.alias.ShowAdvancedOptionsButton
 import proton.android.pass.featureitemcreate.impl.alias.mailboxes.SelectMailboxesDialog
 import proton.android.pass.featureitemcreate.impl.alias.suffixes.SelectSuffixDialog
 

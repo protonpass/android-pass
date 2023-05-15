@@ -36,6 +36,7 @@ fun rememberAnimatedVisibilityState(initialState: Boolean): AnimatedVisibilitySt
 fun AnimatedVisibilityWithOnComplete(
     modifier: Modifier = Modifier,
     visibilityState: AnimatedVisibilityState,
+    delayBeforeCallback: Long = DELAY_BEFORE_CALLBACK_MS,
     onComplete: () -> Unit,
     content: @Composable AnimatedVisibilityScope.() -> Unit
 ) {
@@ -46,9 +47,9 @@ fun AnimatedVisibilityWithOnComplete(
         visibleState = visibilityState.state,
     ) {
         if (!this.transition.isRunning && !visibilityState.state.targetState) {
-            LaunchedEffect(true) {
+            LaunchedEffect(Unit) {
                 scope.launch {
-                    delay(DELAY_BEFORE_CALLBACK_MS)
+                    delay(delayBeforeCallback)
                     onComplete()
                 }
             }
@@ -57,4 +58,4 @@ fun AnimatedVisibilityWithOnComplete(
     }
 }
 
-private const val DELAY_BEFORE_CALLBACK_MS = 350L
+private const val DELAY_BEFORE_CALLBACK_MS = 100L

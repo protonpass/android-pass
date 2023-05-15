@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -69,6 +71,7 @@ fun CreateAliasBottomSheetContent(
 
     Column(
         modifier = modifier
+            .verticalScroll(rememberScrollState())
             .fillMaxWidth()
             .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
         verticalArrangement = Arrangement.spacedBy(16.dp)

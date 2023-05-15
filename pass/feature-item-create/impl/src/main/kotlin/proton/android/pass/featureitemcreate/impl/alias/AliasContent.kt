@@ -19,12 +19,10 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
-import proton.android.pass.featureitemcreate.impl.alias.AliasBottomSheetContentType.AliasOptions
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankPrefix
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.InvalidAliasContent
 import proton.android.pass.featureitemcreate.impl.alias.mailboxes.SelectMailboxesDialog
-import proton.android.pass.featureitemcreate.impl.alias.saver.AliasBottomSheetContentTypeSaver
 import proton.android.pass.featureitemcreate.impl.alias.suffixes.SelectSuffixDialog
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
 import proton.pass.domain.ItemId
@@ -56,9 +54,6 @@ internal fun AliasContent(
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
-    val currentBottomSheet by rememberSaveable(stateSaver = AliasBottomSheetContentTypeSaver) {
-        mutableStateOf(AliasOptions)
-    }
 
     // If the BottomSheet is visible and the user presses back, dismiss the BottomSheet
     BackHandler(enabled = bottomSheetState.isVisible) {
@@ -71,18 +66,15 @@ internal fun AliasContent(
     PassModalBottomSheetLayout(
         sheetState = bottomSheetState,
         sheetContent = {
-            when (currentBottomSheet) {
-                AliasOptions -> AliasBottomSheetContents(
-                    modelState = uiState.aliasItem,
-                    onSuffixSelect = { suffix ->
-                        scope.launch {
-                            bottomSheetState.hide()
-                            onSuffixChange(suffix)
-                        }
+            AliasBottomSheetContents(
+                modelState = uiState.aliasItem,
+                onSuffixSelect = { suffix ->
+                    scope.launch {
+                        bottomSheetState.hide()
+                        onSuffixChange(suffix)
                     }
-                )
-            }
-
+                }
+            )
         }
     ) {
         Scaffold(

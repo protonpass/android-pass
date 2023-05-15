@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import proton.android.pass.composecomponents.impl.buttons.ShowAdvancedOptionsButton
+import proton.android.pass.composecomponents.impl.container.AnimatedVisibilityWithOnComplete
+import proton.android.pass.composecomponents.impl.container.rememberAnimatedVisibilityState
 import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featurepassword.R
 import proton.android.pass.featurepassword.impl.bottomsheet.GeneratePasswordContent
@@ -32,6 +34,8 @@ fun GeneratePasswordWordsContent(
     onEvent: (GeneratePasswordEvent) -> Unit
 ) {
     var showAdvancedOptions by rememberSaveable { mutableStateOf(false) }
+    val state = rememberAnimatedVisibilityState(initialState = true)
+
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -59,15 +63,17 @@ fun GeneratePasswordWordsContent(
         )
         PassDivider()
 
-
-        if (!showAdvancedOptions) {
+        AnimatedVisibilityWithOnComplete(
+            visibilityState = state,
+            onComplete = { showAdvancedOptions = true }
+        ) {
             Box(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.CenterEnd
             ) {
                 ShowAdvancedOptionsButton(
                     currentValue = false,
-                    onClick = { showAdvancedOptions = true }
+                    onClick = { state.toggle() }
                 )
             }
         }

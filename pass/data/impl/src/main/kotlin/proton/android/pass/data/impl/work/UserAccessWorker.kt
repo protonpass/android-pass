@@ -22,4 +22,8 @@ class UserAccessWorker @AssistedInject constructor(
             SendUserAccessResult.Failure -> Result.failure()
             SendUserAccessResult.Success -> Result.success()
         }
+
+    companion object {
+        const val WORKER_UNIQUE_NAME = "user_access_worker"
+    }
 }

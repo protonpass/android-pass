@@ -7,6 +7,7 @@ import android.view.autofill.AutofillManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -55,6 +56,9 @@ class MainActivity : FragmentActivity() {
                 Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
                 StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
                 PrimaryExist -> {
+                    LaunchedEffect(Unit) {
+                        launcherViewModel.onUserIsLoggedIn()
+                    }
                     PassApp(
                         onNavigate = {
                             when (it) {

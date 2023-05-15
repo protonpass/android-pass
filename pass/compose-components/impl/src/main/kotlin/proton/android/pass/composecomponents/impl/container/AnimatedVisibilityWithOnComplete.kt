@@ -23,7 +23,7 @@ class AnimatedVisibilityState(initialState: Boolean) {
 }
 
 @Composable
-fun rememberAnimatedVisibilityState(initialState: Boolean) : AnimatedVisibilityState =
+fun rememberAnimatedVisibilityState(initialState: Boolean): AnimatedVisibilityState =
     remember {
         AnimatedVisibilityState(
             initialState = initialState,

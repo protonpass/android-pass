@@ -3,6 +3,8 @@ package proton.android.pass.navigation.api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -34,6 +36,9 @@ class AppNavigator(
             ?.destination
 
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
+        // Discard duplicated nav events
+        if (navController.currentBackStackEntry?.lifecycleIsResumed() != true) return
+
         val destinationRoute = route ?: destination.route
         PassLogger.i(TAG, "Navigating to $destinationRoute")
 
@@ -79,6 +84,14 @@ class AppNavigator(
             ?.remove<T>(key)
             ?: default
     )
+
+    /**
+     * If the lifecycle is not resumed it means this NavBackStackEntry already processed a nav event.
+     *
+     * This is used to de-duplicate navigation events.
+     */
+    private fun NavBackStackEntry.lifecycleIsResumed() =
+        this.lifecycle.currentState == Lifecycle.State.RESUMED
 
     companion object {
         private const val TAG = "AppNavigator"

@@ -121,7 +121,6 @@ class LauncherViewModel @Inject constructor(
                 if (result != null) {
                     PassLogger.i(TAG, "Sending User Access")
                     itemSyncStatusRepository.emit(ItemSyncStatus.Syncing)
-                    sendUserAccess()
                 }
             }
         }
@@ -133,6 +132,10 @@ class LauncherViewModel @Inject constructor(
             .onSessionSecondFactorNeeded { authOrchestrator.startSecondFactorWorkflow(it) }
             .onAccountTwoPassModeNeeded { authOrchestrator.startTwoPassModeWorkflow(it) }
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
+    }
+
+    fun onUserIsLoggedIn() = viewModelScope.launch {
+        sendUserAccess()
     }
 
     fun addAccount() = viewModelScope.launch {

@@ -8,8 +8,8 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.UpgradeInfo
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
@@ -49,7 +49,13 @@ class AccountViewModelTest {
     fun `emits user email and plan`() = runTest {
         val email = "test@email.local"
         val planType = PlanType.Paid(internal = "internal", humanReadable = "testplan")
-        val plan = Plan(planType = planType, vaultLimit = 0, aliasLimit = 0, totpLimit = 0)
+        val plan = Plan(
+            planType = planType,
+            vaultLimit = 0,
+            aliasLimit = 0,
+            totpLimit = 0,
+            updatedAt = 0
+        )
         val user = TestUser.create(email = email)
         observeCurrentUser.sendUser(user)
         getUpgradeInfo.setResult(

@@ -31,7 +31,9 @@ data class PlanEntity(
     @ColumnInfo(name = Columns.ALIAS_LIMIT)
     val aliasLimit: Int,
     @ColumnInfo(name = Columns.TOTP_LIMIT)
-    val totpLimit: Int
+    val totpLimit: Int,
+    @ColumnInfo(name = Columns.UPDATED_AT, defaultValue = "0")
+    val updatedAt: Long
 ) {
     object Columns {
         const val USER_ID = "user_id"
@@ -41,6 +43,7 @@ data class PlanEntity(
         const val VAULT_LIMIT = "vault_limit"
         const val ALIAS_LIMIT = "alias_limit"
         const val TOTP_LIMIT = "totp_limit"
+        const val UPDATED_AT = "updated_at"
     }
 
     companion object {

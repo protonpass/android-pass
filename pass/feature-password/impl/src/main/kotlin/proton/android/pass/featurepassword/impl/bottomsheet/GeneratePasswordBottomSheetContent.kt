@@ -31,8 +31,8 @@ fun GeneratePasswordBottomSheetContent(
 ) {
     Column(
         modifier = modifier
-            .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding)
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(rememberScrollState())
+            .bottomSheet(horizontalPadding = PassTheme.dimens.bottomsheetHorizontalPadding),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         GeneratePasswordBottomSheetTitle(onRegenerate = {

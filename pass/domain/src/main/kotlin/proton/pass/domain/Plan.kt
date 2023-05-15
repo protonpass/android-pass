@@ -4,7 +4,8 @@ data class Plan(
     val planType: PlanType,
     val vaultLimit: Int,
     val aliasLimit: Int,
-    val totpLimit: Int
+    val totpLimit: Int,
+    val updatedAt: Long
 )
 
 sealed interface PlanType {

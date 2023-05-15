@@ -1,19 +1,25 @@
 package proton.android.pass.featureitemcreate.impl.bottomsheets.createitem
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.toPersistentList
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
@@ -25,6 +31,10 @@ import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.composecomponents.impl.item.icon.PasswordIcon
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateAlias
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateLogin
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreateNote
+import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation.CreatePassword
 import proton.pass.domain.ShareId
 
 enum class CreateItemBottomSheetMode {
@@ -36,33 +46,25 @@ enum class CreateItemBottomSheetMode {
 @Composable
 fun CreateItemBottomSheetContents(
     modifier: Modifier = Modifier,
-    shareId: ShareId? = null,
+    state: CreateItemBottomSheetUIState,
     mode: CreateItemBottomSheetMode,
-    onNavigate: (CreateItemBottomsheetNavigation) -> Unit
+    onNavigate: (CreateItemBottomsheetNavigation) -> Unit,
 ) {
 
     val items = when (mode) {
         CreateItemBottomSheetMode.Full -> listOf(
-            createLogin(shareId) {
-                onNavigate(CreateItemBottomsheetNavigation.CreateLogin(it))
-            },
-            createAlias(shareId) {
-                onNavigate(CreateItemBottomsheetNavigation.CreateAlias(it))
-            },
-            createNote(shareId) {
-                onNavigate(CreateItemBottomsheetNavigation.CreateNote(it))
-            },
-            createPassword {
-                onNavigate(CreateItemBottomsheetNavigation.CreatePassword)
-            }
+            createLogin(state.shareId) { onNavigate(CreateLogin(it)) },
+            createAlias(
+                state.shareId,
+                state.createItemAliasUIState
+            ) { onNavigate(CreateAlias(it)) },
+            createNote(state.shareId) { onNavigate(CreateNote(it)) },
+            createPassword { onNavigate(CreatePassword) }
         )
+
         CreateItemBottomSheetMode.Autofill -> listOf(
-            createLogin(shareId) {
-                onNavigate(CreateItemBottomsheetNavigation.CreateLogin(it))
-            },
-            createAlias(shareId) {
-                onNavigate(CreateItemBottomsheetNavigation.CreateAlias(it))
-            },
+            createLogin(state.shareId) { onNavigate(CreateLogin(it)) },
+            createAlias(state.shareId, state.createItemAliasUIState) { onNavigate(CreateAlias(it)) }
         )
     }
 
@@ -97,11 +99,36 @@ private fun createLogin(
 
 private fun createAlias(
     shareId: ShareId?,
+    createItemAliasUIState: CreateItemAliasUIState,
     onCreateAlias: (Option<ShareId>) -> Unit
 ): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_alias)) }
+            get() = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.action_alias),
+                        style = ProtonTheme.typography.defaultNorm,
+                        color = PassTheme.colors.textNorm
+                    )
+                    if (createItemAliasUIState.canUpgrade) {
+                        val color =
+                            if (createItemAliasUIState.aliasCount >= createItemAliasUIState.aliasLimit) {
+                                PassTheme.colors.signalDanger
+                            } else {
+                                PassTheme.colors.textWeak
+                            }
+                        Text(
+                            text = "(${createItemAliasUIState.aliasCount}/${createItemAliasUIState.aliasLimit})",
+                            style = ProtonTheme.typography.defaultNorm,
+                            color = color
+                        )
+                    }
+                }
+            }
         override val subtitle: (@Composable () -> Unit)
             get() = {
                 Text(
@@ -164,18 +191,43 @@ private fun createPassword(onCreatePassword: () -> Unit): BottomSheetItem =
         override val isDivider = false
     }
 
+
+class ThemeCreateItemBSPreviewProvider : ThemePairPreviewProvider<CreateItemBottomSheetUIState>(
+    CreateItemBottomSheetUIStatePreviewProvider()
+)
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview
+@Composable
+fun CreateItemBottomSheetLimitPreview(
+    @PreviewParameter(ThemeCreateItemBSPreviewProvider::class) input: Pair<Boolean, CreateItemBottomSheetUIState>
+) {
+    PassTheme(isDark = input.first) {
+        Surface {
+            CreateItemBottomSheetContents(
+                mode = CreateItemBottomSheetMode.Full,
+                onNavigate = {},
+                state = input.second
+            )
+        }
+    }
+}
+
+
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 fun CreateItemBottomSheetContentsPreview(
     @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    val mode = if (input.second) CreateItemBottomSheetMode.Full else CreateItemBottomSheetMode.Autofill
+    val mode =
+        if (input.second) CreateItemBottomSheetMode.Full else CreateItemBottomSheetMode.Autofill
     PassTheme(isDark = input.first) {
         Surface {
             CreateItemBottomSheetContents(
                 mode = mode,
-                onNavigate = {}
+                onNavigate = {},
+                state = CreateItemBottomSheetUIState.DEFAULT
             )
         }
     }

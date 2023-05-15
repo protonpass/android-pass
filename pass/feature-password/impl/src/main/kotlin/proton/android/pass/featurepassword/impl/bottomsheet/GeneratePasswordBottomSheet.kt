@@ -2,7 +2,6 @@ package proton.android.pass.featurepassword.impl.bottomsheet
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -98,7 +97,7 @@ fun GeneratePasswordBottomSheet(
 
                 GeneratePasswordMode.CancelConfirm -> @Composable {
                     BottomSheetCancelConfirm(
-                        modifier = Modifier.padding(top = 40.dp),
+                        modifier = Modifier.fillMaxWidth(),
                         onCancel = { onNavigate(GeneratePasswordNavigation.DismissBottomsheet) },
                         onConfirm = {
                             viewModel.onConfirm()

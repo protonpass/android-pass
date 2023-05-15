@@ -152,7 +152,8 @@ class CreateVaultViewModelTest {
                     planType = PlanType.Free,
                     vaultLimit = 2,
                     aliasLimit = 0,
-                    totpLimit = 0
+                    totpLimit = 0,
+                    updatedAt = 0
                 ),
                 totalVaults = 1
             )
@@ -172,7 +173,8 @@ class CreateVaultViewModelTest {
                     planType = PlanType.Free,
                     vaultLimit = 1,
                     aliasLimit = 0,
-                    totpLimit = 0
+                    totpLimit = 0,
+                    updatedAt = 0
                 ),
                 totalVaults = 1
             )
@@ -192,7 +194,8 @@ class CreateVaultViewModelTest {
                     planType = PlanType.Free,
                     vaultLimit = 1,
                     aliasLimit = 0,
-                    totpLimit = 0
+                    totpLimit = 0,
+                    updatedAt = 0
                 ),
                 totalVaults = 1
             )

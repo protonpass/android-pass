@@ -22,7 +22,13 @@ class TestObserveUpgradeInfo @Inject constructor() : ObserveUpgradeInfo {
     companion object {
         val DEFAULT = UpgradeInfo(
             isUpgradeAvailable = false,
-            plan = Plan(planType = PlanType.Free, vaultLimit = 0, aliasLimit = 0, totpLimit = 0),
+            plan = Plan(
+                planType = PlanType.Free,
+                vaultLimit = 0,
+                aliasLimit = 0,
+                totpLimit = 0,
+                updatedAt = 0
+            ),
             totalVaults = 0,
             totalAlias = 0,
             totalTotp = 0

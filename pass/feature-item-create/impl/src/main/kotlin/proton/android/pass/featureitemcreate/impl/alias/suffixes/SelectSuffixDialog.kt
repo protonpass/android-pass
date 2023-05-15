@@ -7,6 +7,7 @@ import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 
+@Suppress("UnusedPrivateMember")
 @Composable
 fun SelectSuffixDialog(
     modifier: Modifier = Modifier,
@@ -28,7 +29,7 @@ fun SelectSuffixDialog(
         SelectSuffixContent(
             modifier = Modifier,
             suffixes = suffixes,
-            canUpgrade = canUpgrade,
+            canUpgrade = false, // deactivate upgrade temporarily
             selectedSuffix = selectedSuffix,
             color = color,
             onSuffixChanged = onSuffixChanged,

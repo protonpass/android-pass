@@ -14,13 +14,13 @@ import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
+import proton.android.pass.data.api.usecases.CreateVault
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.DeleteVault
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
@@ -33,6 +33,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.RefreshContent
@@ -57,6 +58,7 @@ import proton.android.pass.data.fakes.usecases.TestClearUserData
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
+import proton.android.pass.data.fakes.usecases.TestCreateVault
 import proton.android.pass.data.fakes.usecases.TestDeleteAllSearchEntry
 import proton.android.pass.data.fakes.usecases.TestDeleteItem
 import proton.android.pass.data.fakes.usecases.TestDeleteSearchEntry
@@ -65,7 +67,6 @@ import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
 import proton.android.pass.data.fakes.usecases.TestGetShareById
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestGetVaultById
 import proton.android.pass.data.fakes.usecases.TestGetVaultWithItemCountById
@@ -80,6 +81,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveItemCount
 import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveMFACount
 import proton.android.pass.data.fakes.usecases.TestObserveSearchEntry
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestRefreshContent
@@ -310,4 +312,9 @@ abstract class FakesDataModule {
     abstract fun bindObserveMFACount(
         impl: TestObserveMFACount
     ): ObserveMFACount
+
+    @Binds
+    abstract fun bindCreateVault(
+        impl: TestCreateVault
+    ): CreateVault
 }

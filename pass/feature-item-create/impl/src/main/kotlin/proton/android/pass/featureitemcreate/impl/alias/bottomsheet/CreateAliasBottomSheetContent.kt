@@ -28,7 +28,9 @@ import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetCancelConfirm
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
 import proton.android.pass.composecomponents.impl.buttons.ShowAdvancedOptionsButton
+import proton.android.pass.composecomponents.impl.container.AnimatedVisibilityWithOnComplete
 import proton.android.pass.composecomponents.impl.container.InfoBanner
+import proton.android.pass.composecomponents.impl.container.rememberAnimatedVisibilityState
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
@@ -68,6 +70,7 @@ fun CreateAliasBottomSheetContent(
     var showAdvancedOptions by rememberSaveable { mutableStateOf(showAdvancedOptionsInitially) }
     var showMailboxesDialog by rememberSaveable { mutableStateOf(false) }
     var showSuffixDialog by rememberSaveable { mutableStateOf(false) }
+    val visibilityState = rememberAnimatedVisibilityState(initialState = true)
 
     Column(
         modifier = modifier
@@ -98,14 +101,17 @@ fun CreateAliasBottomSheetContent(
                 onSuffixClicked = { showSuffixDialog = true }
             )
         }
-        if (!showAdvancedOptions) {
+        AnimatedVisibilityWithOnComplete(
+            visibilityState = visibilityState,
+            onComplete = { showAdvancedOptions = true }
+        ) {
             Box(
                 modifier = Modifier.fillMaxWidth(),
                 contentAlignment = Alignment.CenterEnd
             ) {
                 ShowAdvancedOptionsButton(
                     currentValue = showAdvancedOptions,
-                    onClick = { showAdvancedOptions = true }
+                    onClick = { visibilityState.toggle() }
                 )
             }
         }

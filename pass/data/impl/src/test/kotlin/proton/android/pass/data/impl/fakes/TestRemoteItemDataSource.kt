@@ -7,6 +7,7 @@ import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
+import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.responses.CreateItemAliasBundle
@@ -106,6 +107,14 @@ class TestRemoteItemDataSource : RemoteItemDataSource {
         itemId: ItemId,
         body: MigrateItemRequest
     ): ItemRevision {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override suspend fun migrateItems(
+        userId: UserId,
+        shareId: ShareId,
+        body: MigrateItemsRequest
+    ): List<ItemRevision> {
         throw IllegalStateException("Not yet implemented")
     }
 

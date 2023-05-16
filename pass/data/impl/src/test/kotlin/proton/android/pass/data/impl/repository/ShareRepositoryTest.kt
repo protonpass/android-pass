@@ -15,8 +15,8 @@ import proton.android.pass.data.impl.fakes.TestRemoteShareDataSource
 import proton.android.pass.data.impl.fakes.TestShareKeyRepository
 import proton.android.pass.data.impl.repositories.ShareRepositoryImpl
 import proton.android.pass.data.impl.responses.ShareResponse
-import proton.android.pass.test.TestUserAddressRepository
-import proton.android.pass.test.TestUserRepository
+import proton.android.pass.account.fakes.TestUserAddressRepository
+import proton.android.pass.account.fakes.TestUserRepository
 import proton.android.pass.test.domain.TestShare
 import proton.pass.domain.Share
 import proton.pass.domain.ShareId

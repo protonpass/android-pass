@@ -2,7 +2,6 @@ package proton.android.pass.composecomponents.impl.item.icon
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,7 +25,6 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
-import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.pass.domain.ItemType
 import proton.pass.domain.WebsiteUrl
 import me.proton.core.presentation.R as CoreR
@@ -36,7 +34,8 @@ fun LoginIcon(
     modifier: Modifier = Modifier,
     text: String,
     itemType: ItemType.Login,
-    size: Int = 40
+    size: Int = 40,
+    canLoadExternalImages: Boolean,
 ) {
     val sortedPackages = itemType.packageInfoSet.sortedBy { it.packageName.value }
     val packageName = sortedPackages.firstOrNull()?.packageName?.value
@@ -47,6 +46,7 @@ fun LoginIcon(
         website = website,
         packageName = packageName,
         size = size,
+        canLoadExternalImages = canLoadExternalImages
     )
 }
 
@@ -73,8 +73,9 @@ fun LoginIcon(
     packageName: String?,
     size: Int = 40,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
+    canLoadExternalImages: Boolean,
 ) {
-    if (website == null) {
+    if (website == null || !canLoadExternalImages) {
         FallbackLoginIcon(
             modifier = modifier,
             text = text,
@@ -92,10 +93,9 @@ fun LoginIcon(
         ) {
             when (painter.state) {
                 is AsyncImagePainter.State.Loading -> {
-                    Box(
-                        modifier = Modifier
-                            .placeholder()
-                            .fillMaxSize()
+                    TwoLetterLoginIcon(
+                        text = text,
+                        shape = shape
                     )
                 }
                 is AsyncImagePainter.State.Success -> {
@@ -179,7 +179,12 @@ fun LoginIconPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            LoginIcon(text = "login text", website = null, packageName = null)
+            LoginIcon(
+                text = "login text",
+                website = null,
+                packageName = null,
+                canLoadExternalImages = false
+            )
         }
     }
 }

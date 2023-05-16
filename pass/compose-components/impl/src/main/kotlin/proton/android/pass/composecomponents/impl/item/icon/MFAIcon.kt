@@ -23,7 +23,6 @@ fun MFAIcon(
     BoxedIcon(
         modifier = modifier,
         backgroundColor = PassTheme.colors.passwordInteractionNormMinor1,
-        backgroundAlpha = 1.0f,
         size = size,
         shape = shape
     ) {

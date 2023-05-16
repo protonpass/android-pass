@@ -20,7 +20,7 @@ fun PasswordIcon(
 ) {
     BoxedIcon(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.passwordInteractionNormMajor1,
+        backgroundColor = PassTheme.colors.passwordInteractionNormMinor1,
         size = size,
     ) {
         Icon(

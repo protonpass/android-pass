@@ -31,6 +31,7 @@ fun ActionableItemRow(
     vaultIcon: Int? = null,
     highlight: String = "",
     showMenuIcon: Boolean,
+    canLoadExternalImages: Boolean,
     onItemClick: (ItemUiModel) -> Unit = {},
     onItemMenuClick: (ItemUiModel) -> Unit = {},
 ) {
@@ -46,7 +47,8 @@ fun ActionableItemRow(
             modifier = Modifier.weight(1f),
             item = item,
             highlight = highlight,
-            vaultIcon = vaultIcon
+            vaultIcon = vaultIcon,
+            canLoadExternalImages = canLoadExternalImages
         )
         if (showMenuIcon) {
             IconButton(
@@ -76,7 +78,8 @@ fun ActionableItemRowPreviewWithMenuIcon(
             ActionableItemRow(
                 item = input.second,
                 showMenuIcon = true,
-                vaultIcon = null
+                vaultIcon = null,
+                canLoadExternalImages = false
             )
         }
     }
@@ -92,7 +95,8 @@ fun ActionableItemRowPreviewWithoutMenuIcon(
             ActionableItemRow(
                 item = input.second,
                 showMenuIcon = false,
-                vaultIcon = null
+                vaultIcon = null,
+                canLoadExternalImages = false
             )
         }
     }
@@ -108,7 +112,8 @@ fun ActionableItemRowPreviewWithVaultIcon(
             ActionableItemRow(
                 item = ItemUiModelPreviewProvider().values.first(),
                 showMenuIcon = false,
-                vaultIcon = R.drawable.ic_bookmark_small
+                vaultIcon = R.drawable.ic_bookmark_small,
+                canLoadExternalImages = false
             )
         }
     }

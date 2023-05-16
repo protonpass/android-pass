@@ -33,6 +33,7 @@ fun LoginOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     isRecentSearch: Boolean = false,
+    canLoadExternalImages: Boolean,
     onCopyUsername: (String) -> Unit,
     onCopyPassword: (String) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
@@ -44,7 +45,13 @@ fun LoginOptionsBottomSheetContents(
         BottomSheetItemRow(
             title = { BottomSheetItemTitle(text = itemUiModel.name) },
             subtitle = { BottomSheetItemSubtitle(text = itemType.username) },
-            leftIcon = { LoginIcon(text = itemUiModel.name, itemType = itemType) }
+            leftIcon = {
+                LoginIcon(
+                    text = itemUiModel.name,
+                    itemType = itemType,
+                    canLoadExternalImages = canLoadExternalImages
+                )
+            }
         )
         val list = mutableListOf(
             copyUsername(itemType.username, onCopyUsername),
@@ -123,7 +130,8 @@ fun LoginOptionsBottomSheetContentsPreview(
                 onCopyPassword = {},
                 onEdit = { _, _ -> },
                 onMoveToTrash = {},
-                onRemoveFromRecentSearch = { _, _ -> }
+                onRemoveFromRecentSearch = { _, _ -> },
+                canLoadExternalImages = false
             )
         }
     }

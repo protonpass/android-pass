@@ -176,6 +176,7 @@ internal fun HomeContent(
                 shouldScrollToTop = shouldScrollToTop,
                 scrollableState = scrollableState,
                 highlight = uiState.searchUiState.searchQuery,
+                canLoadExternalImages = uiState.homeListUiState.canLoadExternalImages,
                 onItemClick = { item ->
                     keyboardController?.hide()
                     onItemClick(item)

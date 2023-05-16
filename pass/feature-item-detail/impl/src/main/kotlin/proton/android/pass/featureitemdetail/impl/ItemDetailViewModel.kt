@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.Clock
 import proton.android.pass.common.api.LoadingResult
@@ -18,6 +18,8 @@ import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.Item
@@ -32,7 +34,8 @@ class ItemDetailViewModel @Inject constructor(
     private val clock: Clock,
     private val telemetryManager: TelemetryManager,
     getItemById: GetItemById,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    userPreferenceRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private val shareId: ShareId =
@@ -40,28 +43,33 @@ class ItemDetailViewModel @Inject constructor(
     private val itemId: ItemId =
         ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
 
-    val uiState: StateFlow<ItemDetailScreenUiState> = getItemById(shareId, itemId)
+    private val itemFlow = getItemById(shareId, itemId)
         .asLoadingResult()
         .distinctUntilChanged()
-        .map { result ->
-            when (result) {
-                is LoadingResult.Error -> {
-                    PassLogger.e(TAG, result.exception, "Get by id error")
-                    snackbarDispatcher(DetailSnackbarMessages.InitError)
-                    ItemDetailScreenUiState.Initial
-                }
-                LoadingResult.Loading -> ItemDetailScreenUiState.Initial
-                is LoadingResult.Success -> ItemDetailScreenUiState(
-                    itemTypeUiState = when (result.data.itemType) {
-                        is ItemType.Login -> ItemTypeUiState.Login
-                        is ItemType.Note -> ItemTypeUiState.Note
-                        is ItemType.Alias -> ItemTypeUiState.Alias
-                        ItemType.Password -> ItemTypeUiState.Password
-                    },
-                    moreInfoUiState = getMoreInfoUiState(result.data)
-                )
+
+    val uiState: StateFlow<ItemDetailScreenUiState> = combine(
+        itemFlow,
+        userPreferenceRepository.getUseFaviconsPreference()
+    ) { result, favicons ->
+        when (result) {
+            is LoadingResult.Error -> {
+                PassLogger.e(TAG, result.exception, "Get by id error")
+                snackbarDispatcher(DetailSnackbarMessages.InitError)
+                ItemDetailScreenUiState.Initial
             }
+            LoadingResult.Loading -> ItemDetailScreenUiState.Initial
+            is LoadingResult.Success -> ItemDetailScreenUiState(
+                itemTypeUiState = when (result.data.itemType) {
+                    is ItemType.Login -> ItemTypeUiState.Login
+                    is ItemType.Note -> ItemTypeUiState.Note
+                    is ItemType.Alias -> ItemTypeUiState.Alias
+                    ItemType.Password -> ItemTypeUiState.Password
+                },
+                moreInfoUiState = getMoreInfoUiState(result.data),
+                canLoadExternalImages = favicons.value()
+            )
         }
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),

@@ -1,19 +1,16 @@
 package proton.android.pass.featureprofile.impl
 
-import android.content.Intent
-import android.content.Intent.ACTION_SENDTO
-import android.net.Uri
 import androidx.annotation.VisibleForTesting
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 
 @Composable
-fun FeedbackBottomsheet() {
+fun FeedbackBottomsheet(onNavigateEvent: (ProfileNavigation) -> Unit) {
     val context = LocalContext.current
     FeedbackBottomsheetContent(
-        onSendEmail = {
-            context.startActivity(Intent(ACTION_SENDTO, Uri.parse(PASS_EMAIL)))
+        onSendReport = {
+            onNavigateEvent(ProfileNavigation.Report)
         },
         onOpenTwitter = {
             openWebsite(context, PASS_TWITTER)

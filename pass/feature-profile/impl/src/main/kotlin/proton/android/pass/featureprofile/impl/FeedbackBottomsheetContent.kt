@@ -20,14 +20,14 @@ import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 @Suppress("UnusedPrivateMember")
 fun FeedbackBottomsheetContent(
     modifier: Modifier = Modifier,
-    onSendEmail: () -> Unit,
+    onSendReport: () -> Unit,
     onOpenTwitter: () -> Unit,
     onOpenReddit: () -> Unit,
 ) {
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = listOf(
-            sendEmail(onClick = onSendEmail),
+            sendReport(onClick = onSendReport),
 //            openPassTwitter(onClick = onOpenTwitter),
             openProtonReddit(onClick = onOpenReddit),
         ).withDividers().toPersistentList()
@@ -42,7 +42,7 @@ fun FeedbackBottomsheetContentPreview(
     PassTheme(isDark = isDark) {
         Surface {
             FeedbackBottomsheetContent(
-                onSendEmail = {},
+                onSendReport = {},
                 onOpenTwitter = {},
                 onOpenReddit = {}
             )
@@ -50,7 +50,7 @@ fun FeedbackBottomsheetContentPreview(
     }
 }
 
-private fun sendEmail(onClick: () -> Unit): BottomSheetItem =
+private fun sendReport(onClick: () -> Unit): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
             get() = { BottomSheetItemTitle(text = stringResource(R.string.feedback_option_mail)) }

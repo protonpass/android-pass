@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -68,6 +69,7 @@ fun ItemsList(
     onItemClick: (ItemUiModel) -> Unit,
     onItemMenuClick: (ItemUiModel) -> Unit,
     onScrollToTop: () -> Unit,
+    canLoadExternalImages: Boolean,
     emptyContent: @Composable () -> Unit
 ) {
     LaunchedEffect(shouldScrollToTop && !scrollableState.isScrollInProgress) {
@@ -99,14 +101,17 @@ fun ItemsList(
                 items.forEach { (key, value) ->
                     stickyItemListHeader(key)
                     items(items = value, key = { it.id.id }) { item ->
-                        ActionableItemRow(
-                            item = item,
-                            vaultIcon = shares[item.shareId]
+                        val icon = remember {
+                            shares[item.shareId]
                                 ?.takeIf { !isShareSelected }
                                 ?.icon
-                                ?.toSmallResource(),
+                        }
+                        ActionableItemRow(
+                            item = item,
+                            vaultIcon = icon?.toSmallResource(),
                             highlight = highlight,
                             showMenuIcon = showMenuIcon,
+                            canLoadExternalImages = canLoadExternalImages,
                             onItemClick = onItemClick,
                             onItemMenuClick = onItemMenuClick
                         )

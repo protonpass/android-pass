@@ -10,14 +10,16 @@ internal fun ItemRowContents(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
     highlight: String,
-    vaultIcon: Int? = null
+    vaultIcon: Int? = null,
+    canLoadExternalImages: Boolean,
 ) {
     when (item.itemType) {
         is ItemType.Login -> LoginRow(
             modifier = modifier,
             item = item,
             highlight = highlight,
-            vaultIcon = vaultIcon
+            vaultIcon = vaultIcon,
+            canLoadExternalImages = canLoadExternalImages
         )
         is ItemType.Note -> NoteRow(
             modifier = modifier,

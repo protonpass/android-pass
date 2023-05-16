@@ -40,7 +40,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     ),
                     shares = persistentMapOf(),
                     sortingType = SearchSortingType.MostRecent,
-                    shouldScrollToTop = false
+                    shouldScrollToTop = false,
+                    canLoadExternalImages = false
                 ),
                 SearchUiState.Initial
             ),
@@ -64,7 +65,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     ),
                     shares = persistentMapOf(),
                     sortingType = SearchSortingType.MostRecent,
-                    shouldScrollToTop = false
+                    shouldScrollToTop = false,
+                    canLoadExternalImages = false
                 ),
                 SearchUiState.Initial
             ),
@@ -76,7 +78,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     items = SelectItemListItems.Initial,
                     shares = persistentMapOf(),
                     sortingType = SearchSortingType.MostRecent,
-                    shouldScrollToTop = false
+                    shouldScrollToTop = false,
+                    canLoadExternalImages = false
                 ),
                 SearchUiState(
                     searchQuery = "query",

@@ -39,19 +39,21 @@ data class HomeListUiState(
     val isLoading: IsLoadingState,
     val isRefreshing: IsRefreshingState,
     val shouldScrollToTop: Boolean,
+    val canLoadExternalImages: Boolean,
     val actionState: ActionState = ActionState.Unknown,
     val items: ImmutableList<GroupedItemList>,
     val selectedShare: Option<ShareUiModel> = None,
     val shares: ImmutableMap<ShareId, ShareUiModel>,
     val homeVaultSelection: HomeVaultSelection = HomeVaultSelection.AllVaults,
     val homeItemTypeSelection: HomeItemTypeSelection = HomeItemTypeSelection.AllItems,
-    val sortingType: SearchSortingType = SearchSortingType.MostRecent,
+    val sortingType: SearchSortingType = SearchSortingType.MostRecent
 ) {
     companion object {
         val Loading = HomeListUiState(
             isLoading = IsLoadingState.Loading,
             isRefreshing = IsRefreshingState.NotRefreshing,
             shouldScrollToTop = false,
+            canLoadExternalImages = false,
             items = persistentListOf(),
             shares = persistentMapOf(),
         )

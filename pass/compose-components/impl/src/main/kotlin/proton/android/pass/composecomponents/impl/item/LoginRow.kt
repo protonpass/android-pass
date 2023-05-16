@@ -18,7 +18,8 @@ fun LoginRow(
     modifier: Modifier = Modifier,
     item: ItemUiModel,
     highlight: String = "",
-    vaultIcon: Int? = null
+    vaultIcon: Int? = null,
+    canLoadExternalImages: Boolean,
 ) {
     with(item.itemType as ItemType.Login) {
         var title = AnnotatedString(item.name)
@@ -51,7 +52,13 @@ fun LoginRow(
 
         ItemRow(
             modifier = modifier,
-            icon = { LoginIcon(text = title.text, itemType = this) },
+            icon = {
+                LoginIcon(
+                    text = title.text,
+                    itemType = this,
+                    canLoadExternalImages = canLoadExternalImages
+                )
+            },
             title = title,
             subtitles = (listOfNotNull(username, note) + websites).toImmutableList(),
             vaultIcon = vaultIcon
@@ -72,7 +79,8 @@ fun LoginRowPreview(
         Surface {
             LoginRow(
                 item = input.second.model,
-                highlight = input.second.highlight
+                highlight = input.second.highlight,
+                canLoadExternalImages = false
             )
         }
     }

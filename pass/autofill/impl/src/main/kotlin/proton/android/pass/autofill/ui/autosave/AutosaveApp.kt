@@ -7,21 +7,19 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.autofill.ui.SnackBarLaunchedEffect
 import proton.android.pass.autofill.ui.SnackBarViewModel
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
-import proton.android.pass.preferences.ThemePreference
+import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
+import proton.android.pass.composecomponents.impl.theme.isDark
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -30,7 +28,8 @@ fun AutoSaveApp(
     arguments: AutoSaveArguments,
     onAutoSaveSuccess: () -> Unit,
     onAutoSaveCancel: () -> Unit,
-    snackBarViewModel: SnackBarViewModel = hiltViewModel()
+    snackBarViewModel: SnackBarViewModel = hiltViewModel(),
+    viewModel: AutoSaveAppViewModel = hiltViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
@@ -42,17 +41,10 @@ fun AutoSaveApp(
         onSnackBarMessageDelivered = { snackBarViewModel.onSnackbarMessageDelivered() }
     )
 
-    val viewModel = hiltViewModel<AutoSaveAppViewModel>()
-    val state by viewModel.state.collectAsStateWithLifecycle()
-    val isDark = when (state) {
-        ThemePreference.Light -> false
-        ThemePreference.Dark -> true
-        ThemePreference.System -> isNightMode()
-    }
-    val systemUiController = rememberSystemUiController()
-    LaunchedEffect(systemUiController, isDark) {
-        systemUiController.systemBarsDarkContentEnabled = !isDark
-    }
+    val themePreference by viewModel.state.collectAsStateWithLifecycle()
+    val isDark = isDark(themePreference)
+
+    SystemUIEffect(isDark = isDark)
 
     PassTheme(isDark = isDark) {
         ProvideWindowInsets {

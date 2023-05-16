@@ -1,5 +1,7 @@
 package proton.android.pass.composecomponents.impl.item.icon
 
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +10,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -85,6 +91,17 @@ fun LoginIcon(
             shape = shape
         )
     } else {
+        var isLoaded by remember { mutableStateOf(false) }
+
+        val backgroundColor: Color by animateColorAsState(
+            targetValue = if (isLoaded) {
+                Color.White
+            } else PassTheme.colors.loginInteractionNormMinor2,
+            animationSpec = tween(
+                durationMillis = CROSSFADE_ANIMATION_MS
+            )
+        )
+
         SubcomposeAsyncImage(
             modifier = modifier
                 .clip(shape)
@@ -92,7 +109,7 @@ fun LoginIcon(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(WebsiteUrl(website))
                 .size(size)
-                .crossfade(true)
+                .crossfade(CROSSFADE_ANIMATION_MS)
                 .build(),
             loading = {
                 TwoLetterLoginIcon(
@@ -108,6 +125,9 @@ fun LoginIcon(
                     shape = shape
                 )
             },
+            onSuccess = {
+                isLoaded = true
+            },
             success = {
                 SubcomposeAsyncImageContent(
                     modifier = Modifier
@@ -117,7 +137,7 @@ fun LoginIcon(
                             color = PassTheme.colors.loginIconBorder,
                             shape = shape
                         )
-                        .background(Color.White)
+                        .background(backgroundColor)
                         .padding(8.dp)
                 )
             },
@@ -190,3 +210,5 @@ fun LoginIconPreview(
         }
     }
 }
+
+private const val CROSSFADE_ANIMATION_MS = 150

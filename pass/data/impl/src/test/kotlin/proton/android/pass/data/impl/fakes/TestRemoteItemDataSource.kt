@@ -1,6 +1,7 @@
 package proton.android.pass.data.impl.fakes
 
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
@@ -12,7 +13,6 @@ import proton.android.pass.data.impl.responses.CreateItemAliasBundle
 import proton.android.pass.data.impl.responses.ItemRevision
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.util.TimeUtil
-import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemStateValues

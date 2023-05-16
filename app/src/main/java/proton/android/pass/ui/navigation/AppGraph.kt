@@ -292,6 +292,7 @@ fun NavGraphBuilder.appGraph(
                 ProfileNavigation.CreateItem -> appNavigator.navigate(CreateItemBottomsheet)
                 ProfileNavigation.Feedback -> appNavigator.navigate(FeedbackBottomsheet)
                 ProfileNavigation.AppLock -> appNavigator.navigate(AppLockBottomsheet)
+                ProfileNavigation.Report -> onNavigate(AppNavigation.Report)
             }
         }
     )

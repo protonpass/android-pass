@@ -1,4 +1,4 @@
-package proton.android.pass.test
+package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails

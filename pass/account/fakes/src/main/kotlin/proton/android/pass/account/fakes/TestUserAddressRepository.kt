@@ -1,4 +1,4 @@
-package proton.android.pass.test
+package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf

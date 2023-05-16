@@ -25,8 +25,6 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemSub
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
-import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
-import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.featuretrash.R
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -39,7 +37,8 @@ fun TrashItemBottomSheetContents(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     onRestoreItem: (ShareId, ItemId) -> Unit,
-    onDeleteItem: (ShareId, ItemId) -> Unit
+    onDeleteItem: (ShareId, ItemId) -> Unit,
+    icon: @Composable () -> Unit
 ) {
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
@@ -54,15 +53,7 @@ fun TrashItemBottomSheetContents(
                 BottomSheetItemSubtitle(text = text)
             },
             leftIcon = {
-                when (val itemType = itemUiModel.itemType) {
-                    is ItemType.Alias -> AliasIcon()
-                    is ItemType.Login -> LoginIcon(
-                        text = itemUiModel.name,
-                        itemType = itemType
-                    )
-                    is ItemType.Note -> NoteIcon()
-                    else -> {}
-                }
+                icon()
             }
         )
         Divider(modifier = Modifier.fillMaxWidth())
@@ -144,6 +135,7 @@ fun TrashItemBottomSheetContentsPreview(
                 ),
                 onRestoreItem = { _: ShareId, _: ItemId -> },
                 onDeleteItem = { _: ShareId, _: ItemId -> },
+                icon = { AliasIcon() }
             )
         }
     }

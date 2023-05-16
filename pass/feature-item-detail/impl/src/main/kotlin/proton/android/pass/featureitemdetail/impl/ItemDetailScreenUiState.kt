@@ -7,12 +7,14 @@ import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 @Immutable
 data class ItemDetailScreenUiState(
     val itemTypeUiState: ItemTypeUiState,
-    val moreInfoUiState: MoreInfoUiState
+    val moreInfoUiState: MoreInfoUiState,
+    val canLoadExternalImages: Boolean
 ) {
     companion object {
         val Initial = ItemDetailScreenUiState(
             itemTypeUiState = ItemTypeUiState.Unknown,
-            moreInfoUiState = MoreInfoUiState.Initial
+            moreInfoUiState = MoreInfoUiState.Initial,
+            canLoadExternalImages = false
         )
     }
 }

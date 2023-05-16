@@ -25,6 +25,7 @@ fun ItemDetailContent(
         when (uiState.itemTypeUiState) {
             ItemTypeUiState.Login -> LoginDetail(
                 moreInfoUiState = uiState.moreInfoUiState,
+                canLoadExternalImages = uiState.canLoadExternalImages,
                 onNavigate = onNavigate
             )
             ItemTypeUiState.Note -> NoteDetail(

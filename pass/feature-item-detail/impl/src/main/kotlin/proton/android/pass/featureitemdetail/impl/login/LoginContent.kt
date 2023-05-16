@@ -27,6 +27,7 @@ fun LoginContent(
     totpUiState: TotpUiState?,
     moreInfoUiState: MoreInfoUiState,
     showViewAlias: Boolean,
+    canLoadExternalImages: Boolean,
     onTogglePasswordClick: () -> Unit,
     onUsernameClick: () -> Unit,
     onGoToAliasClick: () -> Unit,
@@ -45,7 +46,8 @@ fun LoginContent(
             title = itemUiModel.name,
             vault = vault,
             website = itemType.websites.firstOrNull(),
-            packageName = itemType.packageInfoSet.minByOrNull { it.packageName.value }?.packageName?.value
+            packageName = itemType.packageInfoSet.minByOrNull { it.packageName.value }?.packageName?.value,
+            canLoadExternalImages = canLoadExternalImages
         )
         MainLoginSection(
             username = itemType.username,

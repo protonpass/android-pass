@@ -30,6 +30,9 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
+import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
+import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
+import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.AliasOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.LoginOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.NoteOptions
@@ -116,6 +119,7 @@ fun HomeScreen(
                 LoginOptions -> LoginOptionsBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                    canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages,
                     onCopyUsername = {
                         scope.launch { bottomSheetState.hide() }
                         homeViewModel.copyToClipboard(it, HomeClipboardType.Username)
@@ -246,6 +250,18 @@ fun HomeScreen(
                         scope.launch {
                             bottomSheetState.hide()
                             shouldShowDeleteItemDialog = true
+                        }
+                    },
+                    icon = {
+                        when (val itemType = selectedItem!!.itemType) {
+                            is ItemType.Login -> LoginIcon(
+                                text = selectedItem!!.name,
+                                itemType = itemType,
+                                canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages
+                            )
+                            is ItemType.Alias -> AliasIcon()
+                            is ItemType.Note -> NoteIcon()
+                            is ItemType.Password -> {}
                         }
                     }
                 )

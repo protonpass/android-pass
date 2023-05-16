@@ -42,6 +42,7 @@ fun SelectItemList(
         isRefreshing = listUiState.isRefreshing,
         showMenuIcon = false,
         enableSwipeRefresh = false,
+        canLoadExternalImages = listUiState.canLoadExternalImages,
         onRefresh = {},
         onItemClick = onItemClicked,
         onItemMenuClick = {},
@@ -60,6 +61,7 @@ fun SelectItemList(
             SelectItemListHeader(
                 suggestionsForTitle = listUiState.items.suggestionsForTitle,
                 suggestions = listUiState.items.suggestions,
+                canLoadExternalImages = listUiState.canLoadExternalImages,
                 onItemClicked = onItemClicked
             )
             item {

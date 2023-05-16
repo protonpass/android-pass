@@ -6,6 +6,7 @@ import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.CreateVaultRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
+import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TelemetryRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateAliasMailboxesRequest
@@ -25,6 +26,7 @@ import proton.android.pass.data.impl.responses.GetShareKeysResponse
 import proton.android.pass.data.impl.responses.GetShareResponse
 import proton.android.pass.data.impl.responses.GetSharesResponse
 import proton.android.pass.data.impl.responses.LastEventIdResponse
+import proton.android.pass.data.impl.responses.MigrateItemsResponse
 import proton.android.pass.data.impl.responses.TrashItemsResponse
 import proton.android.pass.data.impl.responses.UpdateLastUsedTimeResponse
 import proton.android.pass.data.impl.responses.UserAccessResponse
@@ -131,6 +133,12 @@ interface PasswordManagerApi : BaseRetrofitApi {
         @Path("itemId") itemId: String,
         @Body request: MigrateItemRequest
     ): CreateItemResponse
+
+    @PUT("$PREFIX/share/{shareId}/item/share")
+    suspend fun migrateItems(
+        @Path("shareId") shareId: String,
+        @Body request: MigrateItemsRequest
+    ): MigrateItemsResponse
 
     // ItemKey
     @GET("$PREFIX/share/{shareId}/item/{itemId}/key/latest")

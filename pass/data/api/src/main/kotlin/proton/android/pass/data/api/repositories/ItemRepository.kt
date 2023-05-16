@@ -22,6 +22,7 @@ data class ShareItemCount(
     val trashedItems: Long
 )
 
+@Suppress("ComplexInterface", "TooManyFunctions")
 interface ItemRepository {
     suspend fun createItem(
         userId: UserId,
@@ -102,6 +103,12 @@ interface ItemRepository {
         destination: Share,
         itemId: ItemId
     ): Item
+
+    suspend fun migrateItems(
+        userId: UserId,
+        source: ShareId,
+        destination: ShareId,
+    )
 
     suspend fun getItemByAliasEmail(
         userId: UserId,

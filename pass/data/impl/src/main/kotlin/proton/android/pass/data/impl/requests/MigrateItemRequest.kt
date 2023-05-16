@@ -12,6 +12,22 @@ data class MigrateItemRequest(
 )
 
 @Serializable
+data class MigrateItemsRequest(
+    @SerialName("ShareID")
+    val shareId: String,
+    @SerialName("Items")
+    val items: List<MigrateItemsBody>
+)
+
+@Serializable
+data class MigrateItemsBody(
+    @SerialName("ItemID")
+    val itemId: String,
+    @SerialName("Item")
+    val item: MigrateItemBody
+)
+
+@Serializable
 data class MigrateItemBody(
     @SerialName("KeyRotation")
     val keyRotation: Long,

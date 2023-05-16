@@ -173,6 +173,11 @@ class TestItemRepository @Inject constructor() : ItemRepository {
         return migrateItemResult.getOrThrow()
     }
 
+
+    override suspend fun migrateItems(userId: UserId, source: ShareId, destination: ShareId) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): Item? {
         TODO("Not yet implemented")
     }

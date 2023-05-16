@@ -10,6 +10,7 @@ import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
+import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.requests.UpdateItemRequest
 import proton.android.pass.data.impl.requests.UpdateLastUsedTimeRequest
@@ -158,5 +159,14 @@ class RemoteItemDataSourceImpl @Inject constructor(
     ): ItemRevision =
         api.get<PasswordManagerApi>(userId)
             .invoke { migrateItem(shareId.id, itemId.id, body).item }
+            .valueOrThrow
+
+    override suspend fun migrateItems(
+        userId: UserId,
+        shareId: ShareId,
+        body: MigrateItemsRequest
+    ) : List<ItemRevision> =
+         api.get<PasswordManagerApi>(userId)
+            .invoke { migrateItems(shareId.id, body).items }
             .valueOrThrow
 }

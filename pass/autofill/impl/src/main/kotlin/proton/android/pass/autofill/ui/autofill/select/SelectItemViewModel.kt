@@ -97,7 +97,7 @@ class SelectItemViewModel @Inject constructor(
     telemetryManager: TelemetryManager,
     observeVaults: ObserveVaults,
     searchOptionsRepository: SearchOptionsRepository,
-    clock: Clock
+    clock: Clock,
 ) : ViewModel() {
 
     init {
@@ -254,8 +254,9 @@ class SelectItemViewModel @Inject constructor(
         itemClickedFlow,
         searchWrapper,
         sortingSelectionFlow,
-        shouldScrollToTopFlow
-    ) { itemsResult, shares, isRefreshing, itemClicked, search, sortingSelection, shouldScrollToTop ->
+        shouldScrollToTopFlow,
+        preferenceRepository.getUseFaviconsPreference()
+    ) { itemsResult, shares, isRefreshing, itemClicked, search, sortingSelection, shouldScrollToTop, useFavicons ->
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
         val items = when (itemsResult) {
             LoadingResult.Loading -> SelectItemListItems.Initial
@@ -279,7 +280,8 @@ class SelectItemViewModel @Inject constructor(
                 items = items,
                 shares = shares,
                 sortingType = sortingSelection.searchSortingType,
-                shouldScrollToTop = shouldScrollToTop
+                shouldScrollToTop = shouldScrollToTop,
+                canLoadExternalImages = useFavicons.value()
             ),
             SearchUiState(
                 searchQuery = search.searchQuery,

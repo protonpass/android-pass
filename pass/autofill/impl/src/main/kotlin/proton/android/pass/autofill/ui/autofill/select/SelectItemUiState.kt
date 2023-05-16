@@ -35,6 +35,7 @@ data class SelectItemListUiState(
     val shares: PersistentMap<ShareId, ShareUiModel>,
     val sortingType: SearchSortingType,
     val shouldScrollToTop: Boolean,
+    val canLoadExternalImages: Boolean
 ) {
     companion object {
         val Loading = SelectItemListUiState(
@@ -44,7 +45,8 @@ data class SelectItemListUiState(
             items = SelectItemListItems.Initial,
             shares = persistentMapOf(),
             sortingType = SearchSortingType.MostRecent,
-            shouldScrollToTop = false
+            shouldScrollToTop = false,
+            canLoadExternalImages = false
         )
     }
 }

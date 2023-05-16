@@ -25,7 +25,8 @@ fun LoginTitle(
     title: String,
     website: String?,
     packageName: String?,
-    vault: Vault?
+    vault: Vault?,
+    canLoadExternalImages: Boolean
 ) {
     Row(
         modifier = modifier,
@@ -37,7 +38,8 @@ fun LoginTitle(
             shape = PassTheme.shapes.squircleMediumLargeShape,
             text = title,
             website = website,
-            packageName = packageName
+            packageName = packageName,
+            canLoadExternalImages = canLoadExternalImages
         )
         Column(modifier = Modifier.fillMaxWidth()) {
             ItemTitleText(text = title)
@@ -57,7 +59,8 @@ fun LoginTitlePreview(
                 title = input.second.title,
                 website = null,
                 packageName = null,
-                vault = input.second.vault
+                vault = input.second.vault,
+                canLoadExternalImages = false
             )
         }
     }

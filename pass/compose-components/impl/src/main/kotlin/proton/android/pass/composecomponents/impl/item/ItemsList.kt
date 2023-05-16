@@ -64,6 +64,7 @@ fun ItemsList(
     showMenuIcon: Boolean = true,
     enableSwipeRefresh: Boolean = true,
     header: LazyListScope.() -> Unit = {},
+    forceContent: Boolean = false,
     footer: LazyListScope.() -> Unit = {},
     onRefresh: () -> Unit,
     onItemClick: (ItemUiModel) -> Unit,
@@ -95,7 +96,7 @@ fun ItemsList(
                     PlaceholderItemRow()
                 }
             }
-        } else if (items.isNotEmpty()) {
+        } else if (items.isNotEmpty() || forceContent) {
             LazyColumn(modifier = Modifier.fillMaxSize(), state = scrollableState) {
                 header()
                 items.forEach { (key, value) ->

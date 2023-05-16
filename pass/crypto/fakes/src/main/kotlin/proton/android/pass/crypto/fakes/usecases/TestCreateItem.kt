@@ -1,12 +1,12 @@
 package proton.android.pass.crypto.fakes.usecases
 
+import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.CreateItemPayload
 import proton.android.pass.crypto.api.usecases.EncryptedCreateItem
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
-import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.ItemContents
 import proton.pass.domain.key.ShareKey
 

@@ -5,9 +5,9 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.encrypt
+import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.common.api.None
 import proton.android.pass.test.TestUtils.randomString
-import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType

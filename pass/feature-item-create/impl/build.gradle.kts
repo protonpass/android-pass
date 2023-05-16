@@ -94,6 +94,7 @@ dependencies {
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.telemetry.fakes)
     testImplementation(projects.pass.totp.fakes)
+    testImplementation(projects.pass.account.fakes)
 
     kaptAndroidTest(libs.dagger.hilt.android.compiler)
     androidTestImplementation(libs.kotlinTest)

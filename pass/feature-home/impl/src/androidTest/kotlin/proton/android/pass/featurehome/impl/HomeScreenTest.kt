@@ -37,6 +37,7 @@ import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.preferences.HasCompletedOnBoarding
 import proton.android.pass.preferences.HasDismissedAutofillBanner
 import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
@@ -220,6 +221,7 @@ class HomeScreenTest {
         runBlocking {
             preferencesRepository.setHasCompletedOnBoarding(HasCompletedOnBoarding.Completed)
             preferencesRepository.setHasDismissedAutofillBanner(HasDismissedAutofillBanner.Dismissed)
+            preferencesRepository.setUseFaviconsPreference(UseFaviconsPreference.Disabled)
         }
 
         val vaults = items

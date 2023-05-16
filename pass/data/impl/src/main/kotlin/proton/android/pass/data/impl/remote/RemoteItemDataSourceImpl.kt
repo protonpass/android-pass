@@ -165,8 +165,8 @@ class RemoteItemDataSourceImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         body: MigrateItemsRequest
-    ) : List<ItemRevision> =
-         api.get<PasswordManagerApi>(userId)
+    ): List<ItemRevision> =
+        api.get<PasswordManagerApi>(userId)
             .invoke { migrateItems(shareId.id, body).items }
             .valueOrThrow
 }

@@ -545,7 +545,7 @@ class ItemRepositoryImpl @Inject constructor(
         val destinationKey = shareKeyRepository.getLatestKeyForShare(destination).first()
 
         items.chunked(MAX_BATCH_ITEMS_PER_REQUEST).forEach { chunk ->
-            val migrations = chunk.map {item ->
+            val migrations = chunk.map { item ->
                 val req = migrateItem.migrate(
                     destinationKey = destinationKey,
                     encryptedItemContents = item.encryptedContent,

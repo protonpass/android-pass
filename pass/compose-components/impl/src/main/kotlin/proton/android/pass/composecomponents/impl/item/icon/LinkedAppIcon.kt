@@ -10,10 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
+import coil.request.ImageRequest
 import proton.android.pass.commonui.api.PassTheme
 import proton.pass.domain.entity.PackageName
 
@@ -46,28 +47,29 @@ fun LinkedAppIcon(
         modifier = modifier
             .clip(shape)
             .size(size.dp),
-        model = packageName,
+        model = ImageRequest.Builder(LocalContext.current)
+            .data(packageName)
+            .size(size)
+            .crossfade(true)
+            .build(),
+        loading = {
+            emptyContent()
+        },
+        error = {
+            emptyContent()
+        },
+        success = {
+            SubcomposeAsyncImageContent(
+                modifier = Modifier.fillMaxSize()
+                    .border(
+                        width = 1.dp,
+                        color = PassTheme.colors.loginIconBorder,
+                        shape = shape
+                    )
+                    .background(Color.White)
+                    .padding(8.dp)
+            )
+        },
         contentDescription = null
-    ) {
-        when (painter.state) {
-            is AsyncImagePainter.State.Loading -> {
-                emptyContent()
-            }
-            is AsyncImagePainter.State.Success -> {
-                SubcomposeAsyncImageContent(
-                    modifier = Modifier.fillMaxSize()
-                        .border(
-                            width = 1.dp,
-                            color = PassTheme.colors.loginIconBorder,
-                            shape = shape
-                        )
-                        .background(Color.White)
-                        .padding(8.dp)
-                )
-            }
-            else -> {
-                emptyContent()
-            }
-        }
-    }
+    )
 }

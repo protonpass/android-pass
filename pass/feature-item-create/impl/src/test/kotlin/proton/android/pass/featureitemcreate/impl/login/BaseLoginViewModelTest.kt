@@ -16,7 +16,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.login.CreateUpdateLoginUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestAccountManager
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager

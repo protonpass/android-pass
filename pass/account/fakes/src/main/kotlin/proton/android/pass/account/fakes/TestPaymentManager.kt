@@ -1,4 +1,4 @@
-package proton.android.pass.test
+package proton.android.pass.account.fakes
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.PaymentManager

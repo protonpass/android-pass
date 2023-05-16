@@ -51,6 +51,8 @@ import proton.android.pass.data.impl.remote.RemoteItemDataSource
 import proton.android.pass.data.impl.requests.CreateAliasRequest
 import proton.android.pass.data.impl.requests.CreateItemAliasRequest
 import proton.android.pass.data.impl.requests.MigrateItemRequest
+import proton.android.pass.data.impl.requests.MigrateItemsBody
+import proton.android.pass.data.impl.requests.MigrateItemsRequest
 import proton.android.pass.data.impl.requests.TrashItemRevision
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.responses.ItemRevision
@@ -533,6 +535,49 @@ class ItemRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun migrateItems(userId: UserId, source: ShareId, destination: ShareId) {
+        val items = localItemDataSource.observeItemsForShare(
+            userId = userId,
+            shareId = source,
+            itemState = ItemState.Active,
+            filter = ItemTypeFilter.All
+        ).first()
+        val destinationKey = shareKeyRepository.getLatestKeyForShare(destination).first()
+
+        items.chunked(MAX_BATCH_ITEMS_PER_REQUEST).forEach { chunk ->
+            val migrations = chunk.map {item ->
+                val req = migrateItem.migrate(
+                    destinationKey = destinationKey,
+                    encryptedItemContents = item.encryptedContent,
+                    contentFormatVersion = item.contentFormatVersion
+                )
+                MigrateItemsBody(
+                    itemId = item.id,
+                    item = req.toRequest()
+                )
+            }
+
+            val body = MigrateItemsRequest(
+                shareId = destination.id,
+                items = migrations
+            )
+            val res = remoteItemDataSource.migrateItems(userId, source, body)
+
+            val destinationShare = shareRepository.getById(userId, destination)
+            val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
+            val resAsEntities = res.map {
+                itemResponseToEntity(userAddress, it, destinationShare, listOf(destinationKey))
+            }
+
+            database.inTransaction {
+                localItemDataSource.upsertItems(resAsEntities)
+                chunk.forEach {
+                    localItemDataSource.delete(source, ItemId(it.id))
+                }
+            }
+        }
+    }
+
     override suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): Item? {
         val item = localItemDataSource.getItemByAliasEmail(userId, aliasEmail) ?: return null
 
@@ -545,7 +590,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         shareItems: List<ItemEntity>
-    ): Result<Unit> = shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).map { items ->
+    ): Result<Unit> = shareItems.chunked(MAX_BATCH_ITEMS_PER_REQUEST).map { items ->
         val body = TrashItemsRequest(
             items.map {
                 TrashItemRevision(
@@ -572,7 +617,7 @@ class ItemRepositoryImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         shareItems: List<ItemEntity>
-    ): Result<Unit> = shareItems.chunked(MAX_TRASH_ITEMS_PER_REQUEST).map { items ->
+    ): Result<Unit> = shareItems.chunked(MAX_BATCH_ITEMS_PER_REQUEST).map { items ->
         val body =
             TrashItemsRequest(
                 items.map {
@@ -791,7 +836,7 @@ class ItemRepositoryImpl @Inject constructor(
     }
 
     companion object {
-        const val MAX_TRASH_ITEMS_PER_REQUEST = 50
+        const val MAX_BATCH_ITEMS_PER_REQUEST = 50
         const val TAG = "ItemRepositoryImpl"
     }
 }

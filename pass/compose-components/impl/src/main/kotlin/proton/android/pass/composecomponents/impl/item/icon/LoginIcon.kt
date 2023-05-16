@@ -4,7 +4,6 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -93,14 +92,18 @@ fun LoginIcon(
     } else {
         var isLoaded by remember { mutableStateOf(false) }
 
-        val backgroundColor: Color by animateColorAsState(
-            targetValue = if (isLoaded) {
-                Color.White
-            } else PassTheme.colors.loginInteractionNormMinor2,
-            animationSpec = tween(
-                durationMillis = CROSSFADE_ANIMATION_MS
+        val backgroundColor by if (CROSSFADE_ENABLED) {
+            animateColorAsState(
+                targetValue = if (isLoaded) {
+                    Color.White
+                } else PassTheme.colors.loginInteractionNormMinor2,
+                animationSpec = tween(
+                    durationMillis = CROSSFADE_ANIMATION_MS
+                )
             )
-        )
+        } else {
+            remember { mutableStateOf(Color.White) }
+        }
 
         SubcomposeAsyncImage(
             modifier = modifier
@@ -109,7 +112,11 @@ fun LoginIcon(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(WebsiteUrl(website))
                 .size(size)
-                .crossfade(CROSSFADE_ANIMATION_MS)
+                .apply {
+                    if (CROSSFADE_ENABLED) {
+                        crossfade(CROSSFADE_ANIMATION_MS)
+                    }
+                }
                 .build(),
             loading = {
                 TwoLetterLoginIcon(
@@ -131,7 +138,7 @@ fun LoginIcon(
             success = {
                 SubcomposeAsyncImageContent(
                     modifier = Modifier
-                        .fillMaxSize()
+                        .size(size.dp)
                         .border(
                             width = 1.dp,
                             color = PassTheme.colors.loginIconBorder,
@@ -212,4 +219,5 @@ fun LoginIconPreview(
     }
 }
 
-private const val CROSSFADE_ANIMATION_MS = 150
+internal const val CROSSFADE_ANIMATION_MS = 150
+internal const val CROSSFADE_ENABLED = false

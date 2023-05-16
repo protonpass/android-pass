@@ -10,7 +10,7 @@ import proton.android.pass.data.api.usecases.MigrateVault
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.impl.fakes.TestShareRepository
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestAccountManager
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
 import proton.pass.domain.ItemId

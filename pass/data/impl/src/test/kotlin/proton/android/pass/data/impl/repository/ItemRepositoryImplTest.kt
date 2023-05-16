@@ -20,7 +20,7 @@ import proton.android.pass.data.impl.fakes.TestShareRepository
 import proton.android.pass.data.impl.generator.TestProtoItemGenerator
 import proton.android.pass.data.impl.repositories.ItemRepositoryImpl
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestAccountManager
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.test.TestUserAddressRepository
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare

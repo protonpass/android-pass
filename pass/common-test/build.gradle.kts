@@ -27,12 +27,10 @@ dependencies {
 
     api(libs.androidx.lifecycle.viewmodel.savedstate)
     api(libs.core.account.domain)
-    api(libs.core.accountManager.domain)
     api(libs.core.cryptoCommon)
     api(libs.core.domain)
     api(libs.core.key.domain)
     api(libs.core.network.domain)
-    api(libs.core.payment.domain)
     api(libs.core.user.domain)
     api(libs.junit)
 

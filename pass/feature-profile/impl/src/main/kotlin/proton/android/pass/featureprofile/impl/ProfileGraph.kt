@@ -18,6 +18,7 @@ sealed interface ProfileNavigation {
     object CreateItem : ProfileNavigation
     object Settings : ProfileNavigation
     object Feedback : ProfileNavigation
+    object Report : ProfileNavigation
 }
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -30,7 +31,7 @@ fun NavGraphBuilder.profileGraph(
     }
 
     bottomSheet(FeedbackBottomsheet) {
-        FeedbackBottomsheet()
+        FeedbackBottomsheet(onNavigateEvent = onNavigateEvent)
     }
 
     bottomSheet(AppLockBottomsheet) {

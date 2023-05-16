@@ -1,8 +1,6 @@
 package proton.android.pass.featureprofile.impl
 
-import android.content.Intent.ACTION_SENDTO
 import android.content.Intent.ACTION_VIEW
-import android.net.Uri
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -13,6 +11,7 @@ import androidx.test.espresso.intent.matcher.IntentMatchers.hasData
 import androidx.test.espresso.intent.rule.IntentsRule
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.test.CallChecker
 
 class FeedbackBottomsheetTest {
 
@@ -24,20 +23,27 @@ class FeedbackBottomsheetTest {
 
     @Test
     fun feedbackSendEmailCalled() {
+        val checker = CallChecker<Unit>()
         composeTestRule.setContent {
-            FeedbackBottomsheet()
+            FeedbackBottomsheet(
+                onNavigateEvent = {
+                    when (it) {
+                        is ProfileNavigation.Report -> checker.call()
+                        else -> {}
+                    }
+                }
+            )
         }
         composeTestRule
             .onNodeWithText(composeTestRule.activity.resources.getString(R.string.feedback_option_mail))
             .performClick()
-        intended(hasAction(ACTION_SENDTO))
-        intended(hasData(Uri.parse(PASS_EMAIL)))
+        composeTestRule.waitUntil { checker.isCalled }
     }
 
     @Test
     fun feedbackOpenRedditCalled() {
         composeTestRule.setContent {
-            FeedbackBottomsheet()
+            FeedbackBottomsheet { }
         }
         composeTestRule
             .onNodeWithText(composeTestRule.activity.resources.getString(R.string.feedback_option_reddit))

@@ -12,14 +12,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
+import coil.request.ImageRequest
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
@@ -88,39 +89,40 @@ fun LoginIcon(
             modifier = modifier
                 .clip(shape)
                 .size(size.dp),
-            model = WebsiteUrl(website),
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(WebsiteUrl(website))
+                .size(size)
+                .crossfade(true)
+                .build(),
+            loading = {
+                TwoLetterLoginIcon(
+                    text = text,
+                    shape = shape
+                )
+            },
+            error = {
+                FallbackLoginIcon(
+                    text = text,
+                    packageName = packageName,
+                    size = size,
+                    shape = shape
+                )
+            },
+            success = {
+                SubcomposeAsyncImageContent(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .border(
+                            width = 1.dp,
+                            color = PassTheme.colors.loginIconBorder,
+                            shape = shape
+                        )
+                        .background(Color.White)
+                        .padding(8.dp)
+                )
+            },
             contentDescription = null
-        ) {
-            when (painter.state) {
-                is AsyncImagePainter.State.Loading -> {
-                    TwoLetterLoginIcon(
-                        text = text,
-                        shape = shape
-                    )
-                }
-                is AsyncImagePainter.State.Success -> {
-                    SubcomposeAsyncImageContent(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .border(
-                                width = 1.dp,
-                                color = PassTheme.colors.loginIconBorder,
-                                shape = shape
-                            )
-                            .background(Color.White)
-                            .padding(8.dp)
-                    )
-                }
-                else -> {
-                    FallbackLoginIcon(
-                        text = text,
-                        packageName = packageName,
-                        size = size,
-                        shape = shape
-                    )
-                }
-            }
-        }
+        )
     }
 }
 

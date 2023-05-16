@@ -14,6 +14,7 @@ import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
+import proton.android.pass.data.impl.sync.SyncWorker.Companion.WORKER_UNIQUE_NAME
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -63,7 +64,8 @@ class SyncManagerImpl @Inject constructor(
                         AppLifecycleProvider.State.Background -> enqueueWorker(initialDelay)
                     }
                 } else {
-                    workManager.cancelUniqueWork(SyncWorker.WORKER_UNIQUE_NAME)
+                    workManager.cancelUniqueWork(WORKER_UNIQUE_NAME)
+                    PassLogger.i(TAG, "$WORKER_UNIQUE_NAME cancelled")
                 }
             }
         }
@@ -72,10 +74,11 @@ class SyncManagerImpl @Inject constructor(
     private fun enqueueWorker(initialDelay: Duration) {
         val request = SyncWorker.getRequestFor(initialDelay)
         workManager.enqueueUniquePeriodicWork(
-            SyncWorker.WORKER_UNIQUE_NAME,
-            ExistingPeriodicWorkPolicy.REPLACE,
+            WORKER_UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
             request
         )
+        PassLogger.i(TAG, "$WORKER_UNIQUE_NAME enqueued")
     }
 
     companion object {

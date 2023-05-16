@@ -9,6 +9,7 @@ import me.proton.core.util.kotlin.CoroutineScopeProvider
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.telemetry.impl.work.TelemetrySenderWorker
+import proton.android.pass.telemetry.impl.work.TelemetrySenderWorker.Companion.WORKER_UNIQUE_NAME
 import javax.inject.Inject
 import kotlin.random.Random
 import kotlin.time.Duration.Companion.hours
@@ -36,11 +37,11 @@ class TelemetryStartupManagerImpl @Inject constructor(
         accountManager.getPrimaryUserId().collectLatest {
             if (it == null) {
                 // User not logged in
-                workManager.cancelUniqueWork(TelemetrySenderWorker.WORKER_UNIQUE_NAME)
-                PassLogger.i(TAG, "TelemetryWorker cancelled")
+                workManager.cancelUniqueWork(WORKER_UNIQUE_NAME)
+                PassLogger.i(TAG, "$WORKER_UNIQUE_NAME cancelled")
             } else {
                 enqueueWorker()
-                PassLogger.i(TAG, "TelemetryWorker enqueued")
+                PassLogger.i(TAG, "$WORKER_UNIQUE_NAME enqueued")
             }
         }
     }
@@ -52,8 +53,8 @@ class TelemetryStartupManagerImpl @Inject constructor(
             initialDelay = initialDelay.hours
         )
         workManager.enqueueUniquePeriodicWork(
-            TelemetrySenderWorker.WORKER_UNIQUE_NAME,
-            ExistingPeriodicWorkPolicy.REPLACE,
+            WORKER_UNIQUE_NAME,
+            ExistingPeriodicWorkPolicy.KEEP,
             request
         )
     }

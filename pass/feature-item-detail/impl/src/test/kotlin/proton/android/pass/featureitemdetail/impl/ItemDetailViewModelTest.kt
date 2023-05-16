@@ -3,6 +3,7 @@ package proton.android.pass.featureitemdetail.impl
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import kotlinx.datetime.Instant
 import org.junit.Before
@@ -12,6 +13,8 @@ import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestPreferenceRepository
+import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.FixedClock
@@ -39,11 +42,17 @@ class ItemDetailViewModelTest {
         clock = FixedClock(Instant.fromEpochSeconds(TEST_TIMESTAMP))
         telemetryManager = TestTelemetryManager()
         getItemById = TestGetItemById()
+
         instance = ItemDetailViewModel(
             snackbarDispatcher = snackbarDispatcher,
             clock = clock,
             telemetryManager = telemetryManager,
             getItemById = getItemById,
+            userPreferenceRepository = TestPreferenceRepository().apply {
+                runBlocking {
+                    setUseFaviconsPreference(UseFaviconsPreference.Disabled)
+                }
+            },
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID)
                 set(CommonNavArgId.ItemId.key, ITEM_ID)

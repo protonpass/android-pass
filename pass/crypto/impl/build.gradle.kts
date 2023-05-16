@@ -66,6 +66,7 @@ dependencies {
     androidTestImplementation(projects.pass.commonTest)
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.account.fakes)
     androidTestImplementation(libs.core.crypto)
 
     androidTestImplementation(libs.androidx.compose.ui.test.junit)

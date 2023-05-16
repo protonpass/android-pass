@@ -9,12 +9,12 @@ import me.proton.core.key.domain.decryptAndVerifyData
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.entity.User
 import org.junit.Test
+import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.context.EncryptionTag
 import proton.android.pass.crypto.api.usecases.EncryptedCreateVault
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.utils.TestUtils
-import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton_pass_vault_v1.VaultV1
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals

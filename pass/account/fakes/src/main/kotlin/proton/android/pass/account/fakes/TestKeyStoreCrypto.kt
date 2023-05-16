@@ -1,4 +1,4 @@
-package proton.android.pass.test.crypto
+package proton.android.pass.account.fakes
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString

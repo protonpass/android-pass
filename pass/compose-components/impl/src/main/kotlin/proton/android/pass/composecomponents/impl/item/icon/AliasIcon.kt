@@ -22,7 +22,7 @@ fun AliasIcon(
 ) {
     BoxedIcon(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.aliasInteractionNormMajor1,
+        backgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
         size = size,
         shape = shape
     ) {

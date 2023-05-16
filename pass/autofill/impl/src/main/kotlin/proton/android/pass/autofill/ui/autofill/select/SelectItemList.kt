@@ -57,6 +57,7 @@ fun SelectItemList(
                 )
             }
         },
+        forceContent = listUiState.items.suggestions.isNotEmpty(),
         header = {
             SelectItemListHeader(
                 suggestionsForTitle = listUiState.items.suggestionsForTitle,

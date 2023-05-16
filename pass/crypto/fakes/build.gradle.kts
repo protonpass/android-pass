@@ -33,4 +33,5 @@ dependencies {
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.protos)
+    implementation(projects.pass.account.fakes)
 }

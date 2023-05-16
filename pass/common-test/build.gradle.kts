@@ -7,12 +7,11 @@ plugins {
 
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
-    namespace = "me.proton.pass.test"
+    namespace = "proton.android.pass.test"
 
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
@@ -25,18 +24,13 @@ dependencies {
     implementation(libs.coroutines.test)
     implementation(libs.kotlinx.datetime)
 
-    api(libs.androidx.lifecycle.viewmodel.savedstate)
-    api(libs.core.account.domain)
-    api(libs.core.cryptoCommon)
-    api(libs.core.domain)
-    api(libs.core.key.domain)
-    api(libs.core.network.domain)
-    api(libs.core.user.domain)
-    api(libs.junit)
+    implementation(libs.androidx.lifecycle.viewmodel.savedstate)
+    implementation(libs.junit)
+    implementation(libs.core.user.domain)
 
-    api(projects.pass.common.api)
-    api(projects.pass.data.api)
-    api(projects.pass.domain)
+    implementation(projects.pass.common.api)
+    implementation(projects.pass.data.api)
+    implementation(projects.pass.domain)
     implementation(projects.pass.account.fakes)
 
     implementation(libs.dagger.hilt.android)

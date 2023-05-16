@@ -16,7 +16,7 @@ import proton.android.pass.data.impl.repositories.TelemetryRepositoryImpl
 import proton.android.pass.data.impl.util.DimensionsSerializer
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestAccountManager
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.pass.domain.PlanType
 
 class TelemetryRepositoryTest {

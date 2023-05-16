@@ -1,4 +1,4 @@
-package proton.android.pass.test
+package proton.android.pass.account.fakes
 
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
@@ -32,6 +32,7 @@ class TestAccountManager @Inject constructor() : AccountManager(Product.Drive) {
 
     override suspend fun getPreviousPrimaryUserId(): UserId? = null
 
+    @Suppress("MagicNumber")
     override fun getPrimaryUserId(): Flow<UserId?> = primaryUserIdFlow
         .onStart { delay(500) }
 

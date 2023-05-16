@@ -22,7 +22,7 @@ import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestAccountManager
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.api.TotpSpec

@@ -26,6 +26,7 @@ import proton.android.pass.composecomponents.impl.item.ActionableItemRow
 fun LazyListScope.SelectItemListHeader(
     suggestionsForTitle: String,
     suggestions: List<ItemUiModel>,
+    canLoadExternalImages: Boolean,
     onItemClicked: (ItemUiModel) -> Unit
 ) {
     if (suggestions.isEmpty()) return
@@ -49,7 +50,8 @@ fun LazyListScope.SelectItemListHeader(
         ActionableItemRow(
             item = item,
             showMenuIcon = false,
-            onItemClick = onItemClicked
+            onItemClick = onItemClicked,
+            canLoadExternalImages = canLoadExternalImages
         )
     }
 }
@@ -68,7 +70,8 @@ fun SelectItemListHeaderPreview(
                 SelectItemListHeader(
                     suggestionsForTitle = "some.website",
                     suggestions = input.second,
-                    onItemClicked = {}
+                    onItemClicked = {},
+                    canLoadExternalImages = false
                 )
             }
         }

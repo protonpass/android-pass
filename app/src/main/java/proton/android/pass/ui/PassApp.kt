@@ -4,18 +4,16 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import me.proton.core.compose.theme.isNightMode
 import proton.android.pass.commonui.api.OnResumeCallback
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.preferences.ThemePreference
+import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
+import proton.android.pass.composecomponents.impl.theme.isDark
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -24,18 +22,10 @@ fun PassApp(
     onNavigate: (AppNavigation) -> Unit,
     appViewModel: AppViewModel = hiltViewModel()
 ) {
-
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
+    val isDark = isDark(appUiState.theme)
 
-    val isDark = when (appUiState.theme) {
-        ThemePreference.Dark -> true
-        ThemePreference.Light -> false
-        ThemePreference.System -> isNightMode()
-    }
-    val systemUiController = rememberSystemUiController()
-    LaunchedEffect(systemUiController, isDark) {
-        systemUiController.systemBarsDarkContentEnabled = !isDark
-    }
+    SystemUIEffect(isDark = isDark)
 
     OnResumeCallback { isFirstTime ->
         if (!isFirstTime) {

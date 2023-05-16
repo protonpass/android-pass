@@ -31,6 +31,7 @@ dependencies {
     implementation(libs.accompanist.pager.indicators)
     implementation(libs.accompanist.placeholder)
     implementation(libs.accompanist.navigation.material)
+    implementation(libs.accompanist.systemUiController)
     implementation(libs.accompanist.swipeRefresh)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.annotation)
@@ -50,6 +51,7 @@ dependencies {
     implementation(libs.androidx.compose.uiToolingPreview)
 
     implementation(projects.pass.notifications.api)
+    implementation(projects.pass.preferences.api)
     implementation(projects.pass.featureSearchOptions.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.commonUi.api)

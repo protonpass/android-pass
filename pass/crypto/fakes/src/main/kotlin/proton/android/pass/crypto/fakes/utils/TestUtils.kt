@@ -14,18 +14,18 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.entity.UserKey
+import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.test.TestUtils
-import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.pass.domain.key.ItemKey
 import proton.pass.domain.key.ShareKey
 
 @Suppress("MagicNumber", "UnderscoresInNumericLiterals")
 object TestUtils {
 
-    val cryptoContext: CryptoContext = AndroidCryptoContext(
+    private val cryptoContext: CryptoContext = AndroidCryptoContext(
         keyStoreCrypto = TestKeyStoreCrypto,
         pgpCrypto = GOpenPGPCrypto()
     )

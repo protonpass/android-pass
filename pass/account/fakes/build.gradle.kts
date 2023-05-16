@@ -21,6 +21,7 @@ androidComponents.beforeVariants { variant ->
 
 dependencies {
     implementation(projects.pass.account.api)
+    implementation(libs.core.cryptoCommon)
 
     implementation(libs.androidx.activity)
 

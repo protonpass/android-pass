@@ -7,6 +7,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
@@ -14,7 +15,6 @@ import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.crypto.TestKeyStoreCrypto
 import proton.android.pass.test.domain.TestItem
 import proton.pass.domain.Item
 import kotlin.test.assertEquals

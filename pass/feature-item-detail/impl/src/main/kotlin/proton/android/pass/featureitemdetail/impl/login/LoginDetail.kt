@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
+import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -37,6 +38,7 @@ import proton.android.pass.featureitemdetail.impl.login.bottomsheet.WebsiteOptio
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 import proton.pass.domain.ItemState
+import proton.pass.domain.ItemType
 
 @OptIn(
     ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class,
@@ -46,6 +48,7 @@ import proton.pass.domain.ItemState
 fun LoginDetail(
     modifier: Modifier = Modifier,
     moreInfoUiState: MoreInfoUiState,
+    canLoadExternalImages: Boolean,
     viewModel: LoginDetailViewModel = hiltViewModel(),
     onNavigate: (ItemDetailNavigation) -> Unit,
 ) {
@@ -113,6 +116,13 @@ fun LoginDetail(
                                 onDeleteItem = { _, _ ->
                                     scope.launch { bottomSheetState.hide() }
                                     shouldShowDeleteItemDialog = true
+                                },
+                                icon = {
+                                    LoginIcon(
+                                        text = state.itemUiModel.name,
+                                        itemType = state.itemUiModel.itemType as ItemType.Login,
+                                        canLoadExternalImages = canLoadExternalImages
+                                    )
                                 }
                             )
                         }
@@ -157,6 +167,7 @@ fun LoginDetail(
                         passwordState = state.passwordState,
                         totpUiState = state.totpUiState,
                         moreInfoUiState = moreInfoUiState,
+                        canLoadExternalImages = canLoadExternalImages,
                         onTogglePasswordClick = { viewModel.togglePassword() },
                         onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },
                         onUsernameClick = { viewModel.copyUsernameToClipboard() },

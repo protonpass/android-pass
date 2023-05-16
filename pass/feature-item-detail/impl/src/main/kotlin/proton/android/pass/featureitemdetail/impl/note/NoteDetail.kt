@@ -24,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
+import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailTopBar
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -92,7 +93,8 @@ fun NoteDetail(
                             onDeleteItem = { _, _ ->
                                 scope.launch { bottomSheetState.hide() }
                                 shouldShowDeleteItemDialog = true
-                            }
+                            },
+                            icon = { NoteIcon() }
                         )
                     }
                 }

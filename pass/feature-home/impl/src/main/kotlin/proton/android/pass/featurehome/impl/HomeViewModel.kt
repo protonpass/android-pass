@@ -81,6 +81,8 @@ import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.UserPreferencesRepository
+import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ItemId
@@ -112,7 +114,8 @@ class HomeViewModel @Inject constructor(
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
-    itemSyncStatusRepository: ItemSyncStatusRepository
+    itemSyncStatusRepository: ItemSyncStatusRepository,
+    preferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -360,8 +363,10 @@ class HomeViewModel @Inject constructor(
         resultsFlow,
         searchUiStateFlow,
         refreshingLoadingFlow,
-        shouldScrollToTopFlow
-    ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading, shouldScrollToTop ->
+        shouldScrollToTopFlow,
+        preferencesRepository.getUseFaviconsPreference()
+    ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading,
+        shouldScrollToTop, useFavicons ->
         val syncLoading = if (refreshingLoading.syncStatus == ItemSyncStatus.Syncing) {
             IsLoadingState.Loading
         } else {
@@ -402,7 +407,8 @@ class HomeViewModel @Inject constructor(
                 shares = shareListWrapper.shares,
                 homeVaultSelection = filtersWrapper.vaultSelection,
                 homeItemTypeSelection = filtersWrapper.itemTypeSelection,
-                sortingType = filtersWrapper.sortingSelection
+                sortingType = filtersWrapper.sortingSelection,
+                canLoadExternalImages = useFavicons.value()
             ),
             searchUiState = searchUiState
         )

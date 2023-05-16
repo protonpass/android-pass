@@ -22,7 +22,7 @@ fun NoteIcon(
 ) {
     BoxedIcon(
         modifier = modifier,
-        backgroundColor = PassTheme.colors.noteInteractionNormMajor1,
+        backgroundColor = PassTheme.colors.noteInteractionNormMinor1,
         size = size,
         shape = shape
     ) {

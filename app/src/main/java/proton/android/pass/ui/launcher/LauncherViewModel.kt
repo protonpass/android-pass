@@ -55,7 +55,7 @@ import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ClearUserData
-import proton.android.pass.data.api.usecases.SendUserAccess
+import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -72,7 +72,7 @@ class LauncherViewModel @Inject constructor(
     private val reportOrchestrator: ReportOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
     private val preferenceRepository: UserPreferencesRepository,
-    private val sendUserAccess: SendUserAccess,
+    private val userPlanWorkerLauncher: UserPlanWorkerLauncher,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val clearUserData: ClearUserData
 ) : ViewModel() {
@@ -134,8 +134,15 @@ class LauncherViewModel @Inject constructor(
             .onAccountCreateAddressNeeded { authOrchestrator.startChooseAddressWorkflow(it) }
     }
 
-    fun onUserIsLoggedIn() = viewModelScope.launch {
-        sendUserAccess()
+    fun onUserStateChanced(state: State) = viewModelScope.launch {
+        when (state) {
+            State.AccountNeeded -> userPlanWorkerLauncher.cancel()
+            State.PrimaryExist -> userPlanWorkerLauncher.start()
+            State.Processing,
+            State.StepNeeded -> {
+                // no-op
+            }
+        }
     }
 
     fun addAccount() = viewModelScope.launch {

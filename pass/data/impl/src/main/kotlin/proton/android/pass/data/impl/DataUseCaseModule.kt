@@ -45,7 +45,7 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
-import proton.android.pass.data.api.usecases.SendUserAccess
+import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
@@ -100,7 +100,7 @@ import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
 import proton.android.pass.data.impl.usecases.RestoreItemsImpl
-import proton.android.pass.data.impl.usecases.SendUserAccessImpl
+import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
@@ -220,7 +220,7 @@ abstract class DataUseCaseModule {
     abstract fun bindGetVaultById(impl: GetVaultByIdImpl): GetVaultById
 
     @Binds
-    abstract fun bindSendUserAccess(impl: SendUserAccessImpl): SendUserAccess
+    abstract fun bindSendUserAccess(impl: UserPlanWorkerLauncherImpl): UserPlanWorkerLauncher
 
     @Binds
     abstract fun bindSendUserAccessRequest(impl: SendUserAccessRequestImpl): SendUserAccessRequest

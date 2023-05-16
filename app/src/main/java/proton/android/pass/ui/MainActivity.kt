@@ -47,6 +47,9 @@ class MainActivity : FragmentActivity() {
                 state == Processing || state == StepNeeded
             }
 
+            LaunchedEffect(state) {
+                launcherViewModel.onUserStateChanced(state)
+            }
             when (state) {
                 AccountNeeded -> {
                     disableAutofill()
@@ -55,10 +58,7 @@ class MainActivity : FragmentActivity() {
 
                 Processing -> ProtonCenteredProgress(Modifier.fillMaxSize())
                 StepNeeded -> ProtonCenteredProgress(Modifier.fillMaxSize())
-                PrimaryExist -> {
-                    LaunchedEffect(Unit) {
-                        launcherViewModel.onUserIsLoggedIn()
-                    }
+                PrimaryExist ->
                     PassApp(
                         onNavigate = {
                             when (it) {
@@ -70,7 +70,6 @@ class MainActivity : FragmentActivity() {
                             }
                         }
                     )
-                }
             }
         }
     }

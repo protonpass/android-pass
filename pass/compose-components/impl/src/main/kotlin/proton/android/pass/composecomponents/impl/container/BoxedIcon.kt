@@ -21,7 +21,6 @@ fun BoxedIcon(
     size: Int = 40,
     shape: Shape = PassTheme.shapes.squircleMediumShape,
     backgroundColor: Color,
-    backgroundAlpha: Float = 0.25f,
     onClick: (() -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit
 ) {
@@ -33,7 +32,7 @@ fun BoxedIcon(
                 condition = onClick != null,
                 ifTrue = { clickable { onClick?.invoke() } }
             )
-            .background(backgroundColor.copy(backgroundAlpha)),
+            .background(backgroundColor),
         contentAlignment = Alignment.Center
     ) {
         content()

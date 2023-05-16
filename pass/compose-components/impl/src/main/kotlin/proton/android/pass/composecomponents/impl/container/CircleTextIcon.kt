@@ -18,21 +18,20 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 fun CircleTextIcon(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color,
-    backgroundAlpha: Float = 0.25f,
+    backgroundColor: Color,
+    textColor: Color,
     size: Int = 40,
     shape: Shape
 ) {
     BoxedIcon(
         modifier = modifier,
-        backgroundColor = color,
-        backgroundAlpha = backgroundAlpha,
+        backgroundColor = backgroundColor,
         size = size,
         shape = shape
     ) {
         Text(
             text = text.filter { !it.isWhitespace() }.take(2).uppercase(),
-            color = color,
+            color = textColor,
             style = ProtonTheme.typography.defaultNorm,
             textAlign = TextAlign.Center
         )
@@ -48,7 +47,8 @@ fun CircleTextIconPreview(
         Surface {
             CircleTextIcon(
                 text = "This is an example",
-                color = PassTheme.colors.loginInteractionNormMajor1,
+                backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+                textColor = PassTheme.colors.loginInteractionNormMajor2,
                 shape = PassTheme.shapes.squircleMediumShape
             )
         }

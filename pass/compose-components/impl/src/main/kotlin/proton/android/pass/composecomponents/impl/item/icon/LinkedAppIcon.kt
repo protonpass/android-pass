@@ -2,7 +2,6 @@ package proton.android.pass.composecomponents.impl.item.icon
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,7 +15,6 @@ import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.composecomponents.impl.item.placeholder
 import proton.pass.domain.entity.PackageName
 
 @Composable
@@ -53,11 +51,7 @@ fun LinkedAppIcon(
     ) {
         when (painter.state) {
             is AsyncImagePainter.State.Loading -> {
-                Box(
-                    modifier = Modifier
-                        .placeholder()
-                        .fillMaxSize()
-                )
+                emptyContent()
             }
             is AsyncImagePainter.State.Success -> {
                 SubcomposeAsyncImageContent(

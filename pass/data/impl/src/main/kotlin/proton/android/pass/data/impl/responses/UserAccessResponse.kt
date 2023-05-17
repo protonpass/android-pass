@@ -30,5 +30,9 @@ data class PlanResponse(
     @SerialName("AliasLimit")
     val aliasLimit: Int?,
     @SerialName("TotpLimit")
-    val totpLimit: Int?
+    val totpLimit: Int?,
+    @SerialName("HideUpgrade")
+    val hideUpgrade: Boolean,
+    @SerialName("TrialEnd")
+    val trialEnd: Long?
 )

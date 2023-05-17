@@ -9,6 +9,8 @@ import proton.android.pass.autofill.ui.autofill.select.SelectItemScreen
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
+import proton.pass.domain.ItemId
+import proton.pass.domain.ShareId
 
 object SelectItem : NavItem(baseRoute = "item/select", isTopLevel = true)
 
@@ -32,5 +34,6 @@ sealed interface SelectItemNavigation {
     object AddItem : SelectItemNavigation
     data class ItemSelected(val autofillMappings: AutofillMappings) : SelectItemNavigation
     data class SortingBottomsheet(val searchSortingType: SearchSortingType) : SelectItemNavigation
+    data class ItemOptions(val shareId: ShareId, val itemId: ItemId) : SelectItemNavigation
     object Cancel : SelectItemNavigation
 }

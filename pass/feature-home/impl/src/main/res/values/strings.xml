@@ -31,7 +31,6 @@
     <string name="bottomsheet_copy_note">Copy note</string>
     <string name="bottomsheet_edit">Edit</string>
     <string name="bottomsheet_migrate">Move all items to another vault</string>
-    <string name="bottomsheet_move_to_trash">Move to trash</string>
     <string name="bottomsheet_delete_vault">Delete vault</string>
 
     <!-- Clipboard -->

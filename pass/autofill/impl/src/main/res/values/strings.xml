@@ -18,4 +18,7 @@
 
     <string name="autofill_notification_copy_to_clipboard">Totp has been copied to clipboard</string>
     <string name="autofill_dialog_associate_title">Use login?</string>
+
+    <string name="snackbar_item_move_to_trash_success">Item moved to trash</string>
+    <string name="snackbar_item_move_to_trash_error">Could not move to trash</string>
 </resources>

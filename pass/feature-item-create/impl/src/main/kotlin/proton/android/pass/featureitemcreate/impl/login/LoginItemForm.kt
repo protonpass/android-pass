@@ -22,6 +22,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
@@ -50,12 +51,12 @@ internal fun LoginItemForm(
     isTotpError: Boolean,
     focusLastWebsite: Boolean,
     canUpdateUsername: Boolean,
+    websitesWithErrors: ImmutableList<Int>,
     onTitleChange: (String) -> Unit,
     onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onTotpChange: (String) -> Unit,
     onWebsiteChange: OnWebsiteChange,
-    doesWebsiteIndexHaveError: (Int) -> Boolean,
     onNoteChange: (String) -> Unit,
     onGeneratePasswordClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
@@ -63,7 +64,7 @@ internal fun LoginItemForm(
     onVaultSelectorClick: () -> Unit,
     onPasteTotpClick: () -> Unit,
     onLinkedAppDelete: (PackageInfoUi) -> Unit,
-    onNavigate: (BaseLoginNavigation) -> Unit
+    onNavigate: (BaseLoginNavigation) -> Unit,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -126,9 +127,9 @@ internal fun LoginItemForm(
             WebsitesSection(
                 websites = loginItem.websiteAddresses.toImmutableList(),
                 isEditAllowed = isEditAllowed,
-                onWebsitesChange = onWebsiteChange,
+                websitesWithErrors = websitesWithErrors,
                 focusLastWebsite = focusLastWebsite,
-                doesWebsiteIndexHaveError = doesWebsiteIndexHaveError
+                onWebsitesChange = onWebsiteChange
             )
             SimpleNoteSection(
                 value = loginItem.note,

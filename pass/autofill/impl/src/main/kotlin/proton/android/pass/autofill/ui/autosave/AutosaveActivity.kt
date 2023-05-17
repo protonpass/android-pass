@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -14,8 +15,11 @@ import proton.android.pass.autofill.extensions.marshalParcelable
 @AndroidEntryPoint
 class AutoSaveActivity : FragmentActivity() {
 
+    private val viewModel: AutosaveActivityViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.register(this)
 
         val arguments = getArguments() ?: run {
             finishApp()
@@ -25,8 +29,13 @@ class AutoSaveActivity : FragmentActivity() {
         setContent {
             AutoSaveApp(
                 arguments = arguments,
-                onAutoSaveSuccess = { finishApp() },
-                onAutoSaveCancel = { finishApp() }
+                onNavigate = {
+                    when (it) {
+                        AutosaveNavigation.Success -> finishApp()
+                        AutosaveNavigation.Cancel -> finishApp()
+                        AutosaveNavigation.Upgrade -> { viewModel.upgrade() }
+                    }
+                }
             )
         }
     }

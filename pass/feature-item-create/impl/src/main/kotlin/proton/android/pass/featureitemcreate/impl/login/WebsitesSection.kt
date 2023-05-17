@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -32,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
@@ -44,14 +46,15 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolde
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
 
+@Suppress("ComplexMethod")
 @Composable
 internal fun WebsitesSection(
     modifier: Modifier = Modifier,
     websites: ImmutableList<String>,
+    websitesWithErrors: ImmutableList<Int>,
     focusLastWebsite: Boolean,
     isEditAllowed: Boolean,
-    onWebsitesChange: OnWebsiteChange,
-    doesWebsiteIndexHaveError: (Int) -> Boolean
+    onWebsitesChange: OnWebsiteChange
 ) {
     var isFocused: Boolean by rememberSaveable { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -66,7 +69,11 @@ internal fun WebsitesSection(
             modifier = Modifier.padding(12.dp, 0.dp, 0.dp, 0.dp),
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_earth),
             contentDescription = "",
-            tint = ProtonTheme.colors.iconWeak
+            tint = if (websitesWithErrors.isNotEmpty()) {
+                PassTheme.colors.signalDanger
+            } else {
+                ProtonTheme.colors.iconWeak
+            }
         )
         Column {
             websites.forEachIndexed { idx, value ->
@@ -76,12 +83,14 @@ internal fun WebsitesSection(
                     Modifier.focusRequester(focusRequester)
                 }
                 ProtonTextField(
-                    modifier = textFieldModifier.padding(start = 0.dp, top = 0.dp, end = 4.dp, bottom = 0.dp),
-                    isError = doesWebsiteIndexHaveError(idx),
+                    modifier = Modifier.heightIn(min = 48.dp),
+                    textFieldModifier = textFieldModifier,
+                    isError = websitesWithErrors.contains(idx),
+                    errorMessage = stringResource(id = R.string.field_website_address_invalid),
                     value = value,
                     editable = isEditAllowed,
                     textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
-                    moveToNextOnEnter = true,
+                    moveToNextOnEnter = false,
                     onChange = {
                         if (it.isBlank() && websites.size > 1) {
                             onWebsitesChange.onRemoveWebsite(idx)
@@ -91,7 +100,12 @@ internal fun WebsitesSection(
                     },
                     onFocusChange = { isFocused = it },
                     label = if (idx == 0) {
-                        { ProtonTextFieldLabel(text = stringResource(id = R.string.field_website_address_title)) }
+                        {
+                            ProtonTextFieldLabel(
+                                text = stringResource(id = R.string.field_website_address_title),
+                                isError = websitesWithErrors.isNotEmpty()
+                            )
+                        }
                     } else {
                         null
                     },
@@ -172,8 +186,8 @@ fun WebsitesSectionPreview(
         Surface {
             WebsitesSection(
                 websites = input.second.websites.toImmutableList(),
-                isEditAllowed = input.second.isEditAllowed,
                 focusLastWebsite = false,
+                isEditAllowed = input.second.isEditAllowed,
                 onWebsitesChange = object : OnWebsiteChange {
                     override val onAddWebsite: () -> Unit
                         get() = {}
@@ -182,7 +196,7 @@ fun WebsitesSectionPreview(
                     override val onWebsiteValueChanged: (String, Int) -> Unit
                         get() = { _, _ -> }
                 },
-                doesWebsiteIndexHaveError = { false }
+                websitesWithErrors = persistentListOf()
             )
         }
     }

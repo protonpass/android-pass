@@ -18,12 +18,12 @@ fun ProtonTextFieldLabel(
         modifier = modifier,
         text = text,
         color = if (isError) {
-            ProtonTheme.colors.notificationError
+            PassTheme.colors.signalDanger
         } else {
             PassTheme.colors.textWeak
         },
         style = if (isError) {
-            ProtonTheme.typography.defaultSmallWeak.copy(color = ProtonTheme.colors.notificationError)
+            ProtonTheme.typography.defaultSmallWeak
         } else {
             PassTypography.body3Regular
         }

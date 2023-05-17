@@ -37,6 +37,7 @@
     <!-- Field -->
     <string name="field_title_title">Title</string>
     <string name="field_title_hint">Untitled</string>
+    <string name="field_title_required">Title required</string>
     <string name="small_cross_icon_content_description">Small cross icon</string>
 
     <string name="field_note_title">Note</string>

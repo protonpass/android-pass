@@ -252,7 +252,7 @@ fun NavGraphBuilder.autofillActivityGraph(
             when (it) {
                 VaultNavigation.Close -> appNavigator.onBackClick()
                 VaultNavigation.Upgrade -> {
-                    throw IllegalStateException("Do not forget to implement this one")
+                    onNavigate(AutofillNavigation.Upgrade)
                 }
                 is VaultNavigation.VaultSelected -> {
                     dismissBottomSheet {

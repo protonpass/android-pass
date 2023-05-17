@@ -47,13 +47,6 @@ fun PassAppContent(
     val appNavigator = rememberAppNavigator(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
     )
-
-    LaunchedEffect(appUiState.needsAuth) {
-        if (appUiState.needsAuth) {
-            appNavigator.navigate(Auth)
-        }
-    }
-
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
 
@@ -98,6 +91,12 @@ fun PassAppContent(
                 }
             }
         )
+    }
+
+    LaunchedEffect(appUiState.needsAuth) {
+        if (appUiState.needsAuth) {
+            appNavigator.navigate(Auth)
+        }
     }
 }
 

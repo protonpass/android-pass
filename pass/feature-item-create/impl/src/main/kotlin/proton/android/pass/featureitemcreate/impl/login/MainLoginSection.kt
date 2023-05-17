@@ -43,32 +43,20 @@ fun MainLoginSection(
             onFocus = onPasswordFocus
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
-        when (totpUiState) {
+        val enabled = when (totpUiState) {
             TotpUiState.NotInitialised,
             TotpUiState.Loading,
-            TotpUiState.Error -> TotpInput(
-                value = loginItem.primaryTotp,
-                enabled = false,
-                isError = isTotpError,
-                onTotpChanged = onTotpChanged,
-                onFocus = onTotpFocus
-            )
+            TotpUiState.Error -> false
 
-            is TotpUiState.Limited -> if (totpUiState.isEdit) {
-                TotpInput(
-                    value = loginItem.primaryTotp,
-                    enabled = isEditAllowed,
-                    isError = isTotpError,
-                    onTotpChanged = onTotpChanged,
-                    onFocus = onTotpFocus
-                )
-            } else {
-                TotpLimit(onUpgrade = onUpgrade)
-            }
-
-            TotpUiState.Success -> TotpInput(
+            is TotpUiState.Limited -> totpUiState.isEdit && isEditAllowed
+            TotpUiState.Success -> isEditAllowed
+        }
+        if (totpUiState is TotpUiState.Limited) {
+            TotpLimit(onUpgrade = onUpgrade)
+        } else {
+            TotpInput(
                 value = loginItem.primaryTotp,
-                enabled = isEditAllowed,
+                enabled = enabled,
                 isError = isTotpError,
                 onTotpChanged = onTotpChanged,
                 onFocus = onTotpFocus

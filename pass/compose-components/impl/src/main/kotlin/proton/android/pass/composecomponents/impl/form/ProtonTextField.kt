@@ -5,7 +5,10 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -128,11 +131,16 @@ fun ProtonTextField(
             }
         )
         AnimatedVisibility(isError && errorMessage.isNotBlank()) {
-            Text(
-                text = errorMessage,
-                style = ProtonTheme.typography.captionNorm,
-                color = PassTheme.colors.signalDanger
-            )
+            Row {
+                if (leadingIcon != null) {
+                    Spacer(modifier = Modifier.width(50.dp))
+                }
+                Text(
+                    text = errorMessage,
+                    style = ProtonTheme.typography.captionNorm,
+                    color = PassTheme.colors.signalDanger
+                )
+            }
         }
     }
 }

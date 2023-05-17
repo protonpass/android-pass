@@ -1,6 +1,9 @@
 package proton.android.pass.composecomponents.impl.form
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.BasicTextField
@@ -8,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.captionNorm
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -46,6 +51,7 @@ fun ProtonTextField(
     visualTransformation: VisualTransformation = VisualTransformation.None,
     editable: Boolean = true,
     isError: Boolean = false,
+    errorMessage: String = "",
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     onChange: (String) -> Unit,
     onFocusChange: ((Boolean) -> Unit)? = null,
@@ -66,58 +72,67 @@ fun ProtonTextField(
     }
     var isFocused: Boolean by rememberSaveable { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
-    BasicTextField(
-        modifier = modifier
-            .fillMaxWidth()
-            .onFocusChanged { state ->
-                onFocusChange?.let { it(state.isFocused) }
-                    ?: run { isFocused = state.isFocused }
+    Column(modifier = modifier, verticalArrangement = Arrangement.Center) {
+        BasicTextField(
+            modifier = Modifier
+                .fillMaxWidth()
+                .onFocusChanged { state ->
+                    onFocusChange?.let { it(state.isFocused) }
+                        ?: run { isFocused = state.isFocused }
+                },
+            value = value,
+            enabled = editable,
+            onValueChange = {
+                if (singleLine && it.contains("\n")) {
+                    // If is set to SingleLine and enter is pressed, go to the next field
+                    goToNextField()
+                } else {
+                    onChange(it)
+                }
             },
-        value = value,
-        enabled = editable,
-        onValueChange = {
-            if (singleLine && it.contains("\n")) {
-                // If is set to SingleLine and enter is pressed, go to the next field
-                goToNextField()
-            } else {
-                onChange(it)
-            }
-        },
-        textStyle = textStyle,
-        interactionSource = interactionSource,
-        visualTransformation = visualTransformation,
-        singleLine = singleLine,
-        maxLines = maxLines,
-        keyboardActions = KeyboardActions(
-            onNext = { goToNextField() },
-            onDone = { goToNextField() },
-            onSend = { goToNextField() }
-        ),
-        keyboardOptions = keyboardOptions,
-        readOnly = !editable,
-        cursorBrush = SolidColor(ProtonTheme.colors.textNorm),
-        decorationBox = { innerTextField ->
-            TextFieldDefaults.TextFieldDecorationBox(
-                value = value,
-                placeholder = placeholder,
-                visualTransformation = visualTransformation,
-                innerTextField = innerTextField,
-                singleLine = singleLine,
-                enabled = editable,
-                interactionSource = interactionSource,
-                contentPadding = PaddingValues(0.dp),
-                label = label,
-                trailingIcon = trailingIcon,
-                leadingIcon = leadingIcon,
-                isError = isError,
-                colors = TextFieldDefaults.textFieldColors(
-                    disabledIndicatorColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
+            textStyle = textStyle,
+            interactionSource = interactionSource,
+            visualTransformation = visualTransformation,
+            singleLine = singleLine,
+            maxLines = maxLines,
+            keyboardActions = KeyboardActions(
+                onNext = { goToNextField() },
+                onDone = { goToNextField() },
+                onSend = { goToNextField() }
+            ),
+            keyboardOptions = keyboardOptions,
+            readOnly = !editable,
+            cursorBrush = SolidColor(ProtonTheme.colors.textNorm),
+            decorationBox = { innerTextField ->
+                TextFieldDefaults.TextFieldDecorationBox(
+                    value = value,
+                    placeholder = placeholder,
+                    visualTransformation = visualTransformation,
+                    innerTextField = innerTextField,
+                    singleLine = singleLine,
+                    enabled = editable,
+                    interactionSource = interactionSource,
+                    contentPadding = PaddingValues(0.dp),
+                    label = label,
+                    trailingIcon = trailingIcon,
+                    leadingIcon = leadingIcon,
+                    isError = isError,
+                    colors = TextFieldDefaults.textFieldColors(
+                        disabledIndicatorColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
                 )
+            }
+        )
+        AnimatedVisibility(isError && errorMessage.isNotBlank()) {
+            Text(
+                text = errorMessage,
+                style = ProtonTheme.typography.captionNorm,
+                color = PassTheme.colors.signalDanger
             )
         }
-    )
+    }
 }
 
 class ThemeAndProtonTextFieldProvider :

@@ -63,7 +63,7 @@ internal fun CreateNoteItemForm(
             onValueChanged = onTitleChange
         )
         FullNoteSection(
-            modifier = modifier.weight(1f),
+            modifier = Modifier.weight(1f),
             enabled = enabled,
             value = noteItem.note,
             onChange = onNoteChange

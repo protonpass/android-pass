@@ -263,6 +263,9 @@ abstract class BaseLoginViewModel(
                     .apply { this[index] = newValue }
             )
         }
+        loginItemValidationErrorsState.update {
+            it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidUrl(index)) }
+        }
         focusLastWebsiteState.update { false }
     }
 
@@ -283,6 +286,9 @@ abstract class BaseLoginViewModel(
             it.copy(
                 websiteAddresses = it.websiteAddresses.toMutableList().apply { removeAt(index) }
             )
+        }
+        loginItemValidationErrorsState.update {
+            it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidUrl(index)) }
         }
         focusLastWebsiteState.update { false }
     }

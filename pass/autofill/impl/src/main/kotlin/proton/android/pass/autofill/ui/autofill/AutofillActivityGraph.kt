@@ -14,6 +14,9 @@ import proton.android.pass.autofill.extensions.toAutofillItem
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItem
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.autofill.ui.autofill.navigation.selectItemGraph
+import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptionsBottomSheet
+import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptionsNavigation
+import proton.android.pass.autofill.ui.bottomsheet.itemoptions.autofillItemOptionsGraph
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
@@ -93,6 +96,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                         SortingBottomsheet,
                         SortingBottomsheet.createNavRoute(it.searchSortingType)
                     )
+                is SelectItemNavigation.ItemOptions -> appNavigator.navigate(
+                    destination = AutofillItemOptionsBottomSheet,
+                    route = AutofillItemOptionsBottomSheet.createRoute(it.shareId, it.itemId)
+                )
             }
         }
     )
@@ -262,4 +269,12 @@ fun NavGraphBuilder.autofillActivityGraph(
             }
         }
     )
+
+    autofillItemOptionsGraph {
+        when (it) {
+            AutofillItemOptionsNavigation.Close -> dismissBottomSheet {
+                appNavigator.onBackClick()
+            }
+        }
+    }
 }

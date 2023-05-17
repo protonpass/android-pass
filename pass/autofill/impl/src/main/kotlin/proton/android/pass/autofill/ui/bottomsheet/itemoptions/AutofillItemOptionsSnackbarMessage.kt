@@ -9,7 +9,7 @@ enum class AutofillItemOptionsSnackbarMessage(
     @StringRes override val id: Int,
     override val type: SnackbarType,
     override val isClipboard: Boolean = false
-): SnackbarMessage {
+) : SnackbarMessage {
     SentToTrashSuccess(R.string.snackbar_item_move_to_trash_success, SnackbarType.SUCCESS),
     SentToTrashError(R.string.snackbar_item_move_to_trash_error, SnackbarType.ERROR)
 }

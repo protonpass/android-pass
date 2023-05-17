@@ -9,7 +9,7 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
 sealed interface AutofillItemOptionsNavigation {
-    object Close: AutofillItemOptionsNavigation
+    object Close : AutofillItemOptionsNavigation
 }
 
 object AutofillItemOptionsBottomSheet : NavItem(

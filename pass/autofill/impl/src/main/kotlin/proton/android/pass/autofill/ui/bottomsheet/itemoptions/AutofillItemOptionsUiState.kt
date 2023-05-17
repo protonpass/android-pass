@@ -4,8 +4,8 @@ import androidx.compose.runtime.Stable
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 
 sealed interface AutofillItemOptionsEvent {
-    object Unknown: AutofillItemOptionsEvent
-    object Close: AutofillItemOptionsEvent
+    object Unknown : AutofillItemOptionsEvent
+    object Close : AutofillItemOptionsEvent
 }
 
 @Stable

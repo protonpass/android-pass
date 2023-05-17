@@ -1,5 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.note
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -22,12 +23,14 @@ import proton.android.pass.featureitemcreate.impl.R
 @Composable
 fun FullNoteSection(
     modifier: Modifier = Modifier,
+    textFieldModifier: Modifier = Modifier,
     value: String,
     enabled: Boolean = true,
     onChange: (String) -> Unit
 ) {
     ProtonTextField(
         modifier = modifier,
+        textFieldModifier = textFieldModifier,
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
         placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.note_hint)) },
         editable = enabled,
@@ -35,6 +38,7 @@ fun FullNoteSection(
         onChange = onChange,
         singleLine = false,
         moveToNextOnEnter = false,
+        verticalArrangement = Arrangement.Top,
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
     )
 }

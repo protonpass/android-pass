@@ -40,6 +40,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 @Composable
 fun ProtonTextField(
     modifier: Modifier = Modifier,
+    textFieldModifier: Modifier = Modifier,
     value: String,
     textStyle: TextStyle,
     label: @Composable (() -> Unit)? = null,
@@ -53,6 +54,7 @@ fun ProtonTextField(
     isError: Boolean = false,
     errorMessage: String = "",
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    verticalArrangement: Arrangement.Vertical = Arrangement.Center,
     onChange: (String) -> Unit,
     onFocusChange: ((Boolean) -> Unit)? = null,
     onDoneClick: (() -> Unit)? = null,
@@ -72,9 +74,9 @@ fun ProtonTextField(
     }
     var isFocused: Boolean by rememberSaveable { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
-    Column(modifier = modifier, verticalArrangement = Arrangement.Center) {
+    Column(modifier = modifier, verticalArrangement = verticalArrangement) {
         BasicTextField(
-            modifier = Modifier
+            modifier = textFieldModifier
                 .fillMaxWidth()
                 .onFocusChanged { state ->
                     onFocusChange?.let { it(state.isFocused) }

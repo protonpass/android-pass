@@ -48,7 +48,7 @@ internal fun LoginContent(
     onTitleChange: (String) -> Unit,
     onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
-    onWebsiteChange: OnWebsiteChange,
+    onWebsiteSectionEvent: (WebsiteSectionEvent) -> Unit,
     onNoteChange: (String) -> Unit,
     onTotpChange: (String) -> Unit,
     onPasteTotpClick: () -> Unit,
@@ -134,7 +134,7 @@ internal fun LoginContent(
             isTotpError = uiState.validationErrors.contains(LoginItemValidationErrors.InvalidTotp),
             onUsernameChange = onUsernameChange,
             onPasswordChange = onPasswordChange,
-            onWebsiteChange = onWebsiteChange,
+            onWebsiteSectionEvent = onWebsiteSectionEvent,
             focusLastWebsite = uiState.focusLastWebsite,
             websitesWithErrors = uiState.validationErrors
                 .filterIsInstance<InvalidUrl>()

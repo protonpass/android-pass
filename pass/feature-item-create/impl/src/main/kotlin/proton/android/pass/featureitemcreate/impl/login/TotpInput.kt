@@ -35,6 +35,7 @@ internal fun TotpInput(
         onChange = onTotpChanged,
         editable = enabled,
         isError = isError,
+        errorMessage = stringResource(id = R.string.totp_create_login_field_invalid),
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm,
         onFocusChange = onFocus,
@@ -51,7 +52,11 @@ internal fun TotpInput(
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
                 contentDescription = stringResource(R.string.mfa_icon_content_description),
-                tint = ProtonTheme.colors.iconWeak
+                tint = if (isError) {
+                    PassTheme.colors.signalDanger
+                } else {
+                    ProtonTheme.colors.iconWeak
+                }
             )
         },
         trailingIcon = {

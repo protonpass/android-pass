@@ -28,8 +28,7 @@ import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 fun AutosaveAppContent(
     modifier: Modifier = Modifier,
     arguments: AutoSaveArguments,
-    onAutoSaveSuccess: () -> Unit,
-    onAutoSaveCancel: () -> Unit
+    onNavigate: (AutosaveNavigation) -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -51,8 +50,7 @@ fun AutosaveAppContent(
             autosaveActivityGraph(
                 appNavigator = appNavigator,
                 arguments = arguments,
-                onAutoSaveCancel = onAutoSaveCancel,
-                onAutoSaveSuccess = onAutoSaveSuccess,
+                onNavigate = onNavigate,
                 dismissBottomSheet = { callback ->
                     coroutineScope.launch {
                         bottomSheetState.hide()

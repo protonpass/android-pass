@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
@@ -22,6 +23,7 @@ import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.common.CreateUpdateTopBar
+import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors.InvalidUrl
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -134,15 +136,10 @@ internal fun LoginContent(
             onPasswordChange = onPasswordChange,
             onWebsiteChange = onWebsiteChange,
             focusLastWebsite = uiState.focusLastWebsite,
-            doesWebsiteIndexHaveError = { idx ->
-                uiState.validationErrors.any {
-                    if (it is LoginItemValidationErrors.InvalidUrl) {
-                        it.index == idx
-                    } else {
-                        false
-                    }
-                }
-            },
+            websitesWithErrors = uiState.validationErrors
+                .filterIsInstance<InvalidUrl>()
+                .map { it.index }
+                .toPersistentList(),
             onNoteChange = onNoteChange,
             onGeneratePasswordClick = {
                 if (!keyboardState) {

@@ -58,7 +58,7 @@ fun SelectMailboxesDialogContent(
                 )
             }
         }
-        if (state.canUpgrade) {
+        if (ALLOW_UPGRADE_FROM_MAILBOXES) {
             Divider(color = PassTheme.colors.inputBorderNorm)
             Row(
                 modifier = Modifier
@@ -91,6 +91,8 @@ fun SelectMailboxesDialogContent(
         )
     }
 }
+
+private const val ALLOW_UPGRADE_FROM_MAILBOXES = false
 
 class ThemedSelectMailboxesPreviewProvider :
     ThemePairPreviewProvider<SelectMailboxesUiState>(SelectMailboxesUiStatePreviewProvider())

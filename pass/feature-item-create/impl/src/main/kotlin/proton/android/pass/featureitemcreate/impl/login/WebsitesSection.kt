@@ -34,7 +34,6 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
@@ -177,21 +176,42 @@ internal fun WebsitesSection(
     }
 }
 
-class ThemedWebsitesSectionPreviewProvider :
+class ThemedWebsitesSectionPP :
     ThemePairPreviewProvider<WebsitesPreviewParameter>(WebsitesSectionPreviewProvider())
 
 @Preview
 @Composable
 fun WebsitesSectionPreview(
-    @PreviewParameter(ThemedWebsitesSectionPreviewProvider::class) input: Pair<Boolean, WebsitesPreviewParameter>
+    @PreviewParameter(ThemedWebsitesSectionPP::class) input: Pair<Boolean, WebsitesPreviewParameter>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             WebsitesSection(
-                websites = input.second.websites.toImmutableList(),
+                websites = input.second.websites,
                 focusLastWebsite = false,
                 isEditAllowed = input.second.isEditAllowed,
                 websitesWithErrors = persistentListOf(),
+                onWebsiteSectionEvent = {},
+            )
+        }
+    }
+}
+
+class ThemedWebsitesSectionErrorsPP :
+    ThemePairPreviewProvider<WebsitesPreviewParameter>(WebsitesSectionPreviewProvider(withErrors = true))
+
+@Preview
+@Composable
+fun WebsitesSectionWithErrorsPreview(
+    @PreviewParameter(ThemedWebsitesSectionErrorsPP::class) input: Pair<Boolean, WebsitesPreviewParameter>
+) {
+    PassTheme(isDark = input.first) {
+        Surface {
+            WebsitesSection(
+                websites = input.second.websites,
+                focusLastWebsite = false,
+                isEditAllowed = input.second.isEditAllowed,
+                websitesWithErrors = input.second.websitesWithErrors,
                 onWebsiteSectionEvent = {},
             )
         }

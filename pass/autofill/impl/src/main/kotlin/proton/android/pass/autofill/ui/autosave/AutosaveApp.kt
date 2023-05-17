@@ -28,8 +28,7 @@ import proton.android.pass.preferences.ThemePreference
 fun AutoSaveApp(
     modifier: Modifier = Modifier,
     arguments: AutoSaveArguments,
-    onAutoSaveSuccess: () -> Unit,
-    onAutoSaveCancel: () -> Unit,
+    onNavigate: (AutosaveNavigation) -> Unit,
     snackBarViewModel: SnackBarViewModel = hiltViewModel()
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -67,11 +66,12 @@ fun AutoSaveApp(
                         .imePadding()
                         .padding(padding),
                     arguments = arguments,
-                    onAutoSaveSuccess = {
-                        viewModel.onItemAutoSaved()
-                        onAutoSaveSuccess()
-                    },
-                    onAutoSaveCancel = onAutoSaveCancel
+                    onNavigate = {
+                        if (it == AutosaveNavigation.Success) {
+                            viewModel.onItemAutoSaved()
+                        }
+                        onNavigate(it)
+                    }
                 )
             }
         }

@@ -34,18 +34,17 @@ import proton.android.pass.navigation.api.AppNavigator
 fun NavGraphBuilder.autosaveActivityGraph(
     appNavigator: AppNavigator,
     arguments: AutoSaveArguments,
-    onAutoSaveCancel: () -> Unit,
-    onAutoSaveSuccess: () -> Unit,
+    onNavigate: (AutosaveNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
     composable(AUTH_SCREEN_ROUTE) {
         AuthScreen(
             navigation = {
                 when (it) {
-                    AuthNavigation.Back -> onAutoSaveCancel()
+                    AuthNavigation.Back -> onNavigate(AutosaveNavigation.Cancel)
                     AuthNavigation.Success -> appNavigator.navigate(CreateLogin)
-                    AuthNavigation.Dismissed -> onAutoSaveCancel()
-                    AuthNavigation.Failed -> onAutoSaveCancel()
+                    AuthNavigation.Dismissed -> onNavigate(AutosaveNavigation.Cancel)
+                    AuthNavigation.Failed -> onNavigate(AutosaveNavigation.Cancel)
                 }
             }
         )
@@ -56,7 +55,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
         onNavigate = {
             when (it) {
-                BaseLoginNavigation.Close -> onAutoSaveCancel()
+                BaseLoginNavigation.Close -> onNavigate(AutosaveNavigation.Cancel)
                 is BaseLoginNavigation.CreateAlias -> {}
                 BaseLoginNavigation.GeneratePassword ->
                     appNavigator.navigate(
@@ -66,7 +65,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
                         )
                     )
 
-                is BaseLoginNavigation.LoginCreated -> onAutoSaveSuccess()
+                is BaseLoginNavigation.LoginCreated -> onNavigate(AutosaveNavigation.Success)
                 is BaseLoginNavigation.LoginUpdated -> {}
                 BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
                 BaseLoginNavigation.Upgrade -> {}
@@ -117,7 +116,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
             when (it) {
                 VaultNavigation.Close -> appNavigator.onBackClick()
                 VaultNavigation.Upgrade -> {
-                    throw IllegalStateException("Do not forget to implement this one")
+                    onNavigate(AutosaveNavigation.Upgrade)
                 }
                 is VaultNavigation.VaultSelected -> {
                     dismissBottomSheet {

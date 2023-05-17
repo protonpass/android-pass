@@ -52,14 +52,6 @@ fun UpdateLogin(
         viewModel.setTotp(primaryTotp)
     }
 
-    val onWebsiteChange = object : OnWebsiteChange {
-        override val onWebsiteValueChanged: (String, Int) -> Unit = { value: String, idx: Int ->
-            viewModel.onWebsiteChange(value, idx)
-        }
-        override val onAddWebsite: () -> Unit = { viewModel.onAddWebsite() }
-        override val onRemoveWebsite: (Int) -> Unit = { idx: Int -> viewModel.onRemoveWebsite(idx) }
-    }
-
     Box(
         modifier = modifier.fillMaxSize()
     ) {
@@ -78,7 +70,14 @@ fun UpdateLogin(
             onTitleChange = viewModel::onTitleChange,
             onUsernameChange = viewModel::onUsernameChange,
             onPasswordChange = viewModel::onPasswordChange,
-            onWebsiteChange = onWebsiteChange,
+            onWebsiteSectionEvent = {
+                when (it) {
+                    WebsiteSectionEvent.AddWebsite -> viewModel.onAddWebsite()
+                    is WebsiteSectionEvent.RemoveWebsite -> viewModel.onRemoveWebsite(it.index)
+                    is WebsiteSectionEvent.WebsiteValueChanged ->
+                        viewModel.onWebsiteChange(it.value, it.index)
+                }
+            },
             onNoteChange = viewModel::onNoteChange,
             onLinkedAppDelete = viewModel::onDeleteLinkedApp,
             onTotpChange = viewModel::onTotpChange,

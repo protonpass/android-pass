@@ -1,8 +1,12 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 
-class WebsitesSectionPreviewProvider : PreviewParameterProvider<WebsitesPreviewParameter> {
+class WebsitesSectionPreviewProvider(val withErrors: Boolean = false) :
+    PreviewParameterProvider<WebsitesPreviewParameter> {
     override val values: Sequence<WebsitesPreviewParameter>
         get() = sequence {
             for (isEditAllowed in listOf(true, false)) {
@@ -10,6 +14,11 @@ class WebsitesSectionPreviewProvider : PreviewParameterProvider<WebsitesPreviewP
                     yield(
                         WebsitesPreviewParameter(
                             websites = websiteList,
+                            websitesWithErrors = if (withErrors) {
+                                websiteList.indices.toImmutableList()
+                            } else {
+                                persistentListOf()
+                            },
                             isEditAllowed = isEditAllowed
                         )
                     )
@@ -18,13 +27,14 @@ class WebsitesSectionPreviewProvider : PreviewParameterProvider<WebsitesPreviewP
         }
 
     private val websites = listOf(
-        emptyList(),
-        listOf("https://one.website"),
-        listOf("https://one.website", "https://two.websites")
+        persistentListOf(),
+        persistentListOf("https://one.website"),
+        persistentListOf("https://one.website", "https://two.websites")
     )
 }
 
 data class WebsitesPreviewParameter(
-    val websites: List<String>,
+    val websites: ImmutableList<String>,
+    val websitesWithErrors: ImmutableList<Int>,
     val isEditAllowed: Boolean
 )

@@ -49,13 +49,13 @@ fun AutofillApp(
         ProvideWindowInsets {
             Scaffold(
                 modifier = modifier
+                    .background(PassTheme.colors.backgroundStrong)
                     .systemBarsPadding()
                     .imePadding(),
                 snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
             ) { padding ->
                 AutofillAppContent(
                     modifier = Modifier
-                        .background(PassTheme.colors.backgroundStrong)
                         .padding(padding),
                     autofillAppState = autofillUiState.autofillAppState,
                     selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),

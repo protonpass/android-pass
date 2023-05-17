@@ -45,6 +45,9 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.login.WebsiteSectionEvent.AddWebsite
+import proton.android.pass.featureitemcreate.impl.login.WebsiteSectionEvent.RemoveWebsite
+import proton.android.pass.featureitemcreate.impl.login.WebsiteSectionEvent.WebsiteValueChanged
 
 @Suppress("ComplexMethod")
 @Composable
@@ -54,7 +57,7 @@ internal fun WebsitesSection(
     websitesWithErrors: ImmutableList<Int>,
     focusLastWebsite: Boolean,
     isEditAllowed: Boolean,
-    onWebsitesChange: OnWebsiteChange
+    onWebsiteSectionEvent: (WebsiteSectionEvent) -> Unit,
 ) {
     var isFocused: Boolean by rememberSaveable { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
@@ -93,9 +96,9 @@ internal fun WebsitesSection(
                     moveToNextOnEnter = false,
                     onChange = {
                         if (it.isBlank() && websites.size > 1) {
-                            onWebsitesChange.onRemoveWebsite(idx)
+                            onWebsiteSectionEvent(RemoveWebsite(idx))
                         } else {
-                            onWebsitesChange.onWebsiteValueChanged(it, idx)
+                            onWebsiteSectionEvent(WebsiteValueChanged(it, idx))
                         }
                     },
                     onFocusChange = { isFocused = it },
@@ -116,9 +119,9 @@ internal fun WebsitesSection(
                         {
                             SmallCrossIconButton {
                                 if (websites[idx].isNotBlank() && websites.size > 1) {
-                                    onWebsitesChange.onRemoveWebsite(idx)
+                                    onWebsiteSectionEvent(RemoveWebsite(idx))
                                 } else {
-                                    onWebsitesChange.onWebsiteValueChanged("", idx)
+                                    onWebsiteSectionEvent(WebsiteValueChanged("", idx))
                                 }
                             }
                         }
@@ -149,7 +152,7 @@ internal fun WebsitesSection(
                         disabledElevation = 0.dp
                     ),
                     contentPadding = PaddingValues(0.dp),
-                    onClick = { onWebsitesChange.onAddWebsite() },
+                    onClick = { onWebsiteSectionEvent(AddWebsite) },
                     colors = ButtonDefaults.buttonColors(
                         backgroundColor = Color.Transparent,
                         disabledBackgroundColor = Color.Transparent,
@@ -188,15 +191,8 @@ fun WebsitesSectionPreview(
                 websites = input.second.websites.toImmutableList(),
                 focusLastWebsite = false,
                 isEditAllowed = input.second.isEditAllowed,
-                onWebsitesChange = object : OnWebsiteChange {
-                    override val onAddWebsite: () -> Unit
-                        get() = {}
-                    override val onRemoveWebsite: (Int) -> Unit
-                        get() = {}
-                    override val onWebsiteValueChanged: (String, Int) -> Unit
-                        get() = { _, _ -> }
-                },
-                websitesWithErrors = persistentListOf()
+                websitesWithErrors = persistentListOf(),
+                onWebsiteSectionEvent = {},
             )
         }
     }

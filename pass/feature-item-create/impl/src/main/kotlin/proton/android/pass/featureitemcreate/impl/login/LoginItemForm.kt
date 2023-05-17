@@ -56,7 +56,7 @@ internal fun LoginItemForm(
     onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onTotpChange: (String) -> Unit,
-    onWebsiteChange: OnWebsiteChange,
+    onWebsiteSectionEvent: (WebsiteSectionEvent) -> Unit,
     onNoteChange: (String) -> Unit,
     onGeneratePasswordClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
@@ -129,7 +129,7 @@ internal fun LoginItemForm(
                 isEditAllowed = isEditAllowed,
                 websitesWithErrors = websitesWithErrors,
                 focusLastWebsite = focusLastWebsite,
-                onWebsitesChange = onWebsiteChange
+                onWebsiteSectionEvent = onWebsiteSectionEvent
             )
             SimpleNoteSection(
                 value = loginItem.note,

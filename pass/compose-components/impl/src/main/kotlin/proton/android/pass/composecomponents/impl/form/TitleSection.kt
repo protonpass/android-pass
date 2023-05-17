@@ -73,6 +73,7 @@ fun TitleSection(
         moveToNextOnEnter = moveToNextOnEnter,
         onDoneClick = onDoneClick,
         isError = onTitleRequiredError,
+        errorMessage = stringResource(id = R.string.field_title_required),
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
     )
 

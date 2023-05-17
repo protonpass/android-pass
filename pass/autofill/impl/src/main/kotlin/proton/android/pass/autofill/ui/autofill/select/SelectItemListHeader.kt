@@ -27,6 +27,7 @@ fun LazyListScope.SelectItemListHeader(
     suggestionsForTitle: String,
     suggestions: List<ItemUiModel>,
     canLoadExternalImages: Boolean,
+    onItemOptionsClicked: (ItemUiModel) -> Unit,
     onItemClicked: (ItemUiModel) -> Unit
 ) {
     if (suggestions.isEmpty()) return
@@ -49,8 +50,9 @@ fun LazyListScope.SelectItemListHeader(
     items(items = suggestions, key = { "suggestion-${it.id.id}" }) { item ->
         ActionableItemRow(
             item = item,
-            showMenuIcon = false,
+            showMenuIcon = true,
             onItemClick = onItemClicked,
+            onItemMenuClick = onItemOptionsClicked,
             canLoadExternalImages = canLoadExternalImages
         )
     }
@@ -71,6 +73,7 @@ fun SelectItemListHeaderPreview(
                     suggestionsForTitle = "some.website",
                     suggestions = input.second,
                     onItemClicked = {},
+                    onItemOptionsClicked = {},
                     canLoadExternalImages = false
                 )
             }

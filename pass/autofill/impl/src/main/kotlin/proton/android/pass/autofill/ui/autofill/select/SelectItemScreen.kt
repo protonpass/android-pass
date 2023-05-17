@@ -33,6 +33,9 @@ fun SelectItemScreen(
         onItemClicked = { item, shouldAssociate ->
             viewModel.onItemClicked(item, autofillAppState, shouldAssociate)
         },
+        onItemOptionsClicked = { item ->
+            onNavigate(SelectItemNavigation.ItemOptions(item.shareId, item.id))
+        },
         onSearchQueryChange = { viewModel.onSearchQueryChange(it) },
         onEnterSearch = { viewModel.onEnterSearch() },
         onStopSearching = { viewModel.onStopSearching() },

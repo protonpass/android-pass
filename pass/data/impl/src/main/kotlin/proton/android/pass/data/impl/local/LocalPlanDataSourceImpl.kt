@@ -29,6 +29,8 @@ class LocalPlanDataSourceImpl @Inject constructor(
             type = planResponse.type,
             internalName = planResponse.internalName,
             displayName = planResponse.displayName,
+            hideUpgrade = planResponse.hideUpgrade,
+            trialEnd = planResponse.trialEnd,
             updatedAt = clock.now().epochSeconds
         )
         database.planDao().insertOrUpdate(entity)

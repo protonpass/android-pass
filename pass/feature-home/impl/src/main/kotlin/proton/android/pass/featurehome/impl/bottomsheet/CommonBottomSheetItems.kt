@@ -10,6 +10,7 @@ import proton.android.pass.featurehome.impl.R
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import me.proton.core.presentation.R as CoreR
+import proton.android.pass.composecomponents.impl.R as ComponentR
 
 internal fun edit(
     itemUiModel: ItemUiModel,
@@ -37,7 +38,7 @@ internal fun moveToTrash(
         override val title: @Composable () -> Unit
             get() = {
                 BottomSheetItemTitle(
-                    text = stringResource(id = R.string.bottomsheet_move_to_trash)
+                    text = stringResource(id = ComponentR.string.bottomsheet_move_to_trash)
                 )
             }
         override val subtitle: (@Composable () -> Unit)?

@@ -26,6 +26,7 @@ fun SelectItemList(
     uiState: SelectItemUiState,
     onScrolledToTop: () -> Unit,
     onItemClicked: (ItemUiModel) -> Unit,
+    onItemOptionsClicked: (ItemUiModel) -> Unit,
     onNavigate: (SelectItemNavigation) -> Unit,
 ) {
     val searchUiState = uiState.searchUiState
@@ -40,12 +41,12 @@ fun SelectItemList(
         isLoading = listUiState.isLoading,
         isProcessingSearch = searchUiState.isProcessingSearch,
         isRefreshing = listUiState.isRefreshing,
-        showMenuIcon = false,
+        showMenuIcon = true,
         enableSwipeRefresh = false,
         canLoadExternalImages = listUiState.canLoadExternalImages,
         onRefresh = {},
         onItemClick = onItemClicked,
-        onItemMenuClick = {},
+        onItemMenuClick = onItemOptionsClicked,
         onScrollToTop = onScrolledToTop,
         emptyContent = {
             if (searchUiState.inSearchMode) {
@@ -63,6 +64,7 @@ fun SelectItemList(
                 suggestionsForTitle = listUiState.items.suggestionsForTitle,
                 suggestions = listUiState.items.suggestions,
                 canLoadExternalImages = listUiState.canLoadExternalImages,
+                onItemOptionsClicked = onItemOptionsClicked,
                 onItemClicked = onItemClicked
             )
             item {
@@ -109,6 +111,7 @@ fun SelectItemListPreview(
             SelectItemList(
                 uiState = input.second,
                 onItemClicked = {},
+                onItemOptionsClicked = {},
                 onScrolledToTop = {},
                 onNavigate = {}
             )

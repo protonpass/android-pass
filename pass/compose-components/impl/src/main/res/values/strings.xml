@@ -21,6 +21,7 @@
     <string name="bottomsheet_content_description_item_icon">BottomSheet item icon</string>
     <string name="bottomsheet_confirm_button">Confirm</string>
     <string name="bottomsheet_cancel_button">Cancel</string>
+    <string name="bottomsheet_move_to_trash">Move to trash</string>
 
     <!-- Actions -->
     <string name="action_content_description_menu">Item action menu</string>

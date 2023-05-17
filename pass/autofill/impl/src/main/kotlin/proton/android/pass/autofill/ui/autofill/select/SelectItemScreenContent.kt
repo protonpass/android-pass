@@ -29,6 +29,7 @@ internal fun SelectItemScreenContent(
     packageInfo: PackageInfoUi?,
     webDomain: String?,
     onItemClicked: (ItemUiModel, Boolean) -> Unit,
+    onItemOptionsClicked: (ItemUiModel) -> Unit,
     onSearchQueryChange: (String) -> Unit,
     onEnterSearch: () -> Unit,
     onStopSearching: () -> Unit,
@@ -91,6 +92,7 @@ internal fun SelectItemScreenContent(
             modifier = Modifier.padding(padding),
             uiState = uiState,
             onScrolledToTop = onScrolledToTop,
+            onItemOptionsClicked = onItemOptionsClicked,
             onItemClicked = {
                 val item = it.itemType as? ItemType.Login ?: return@SelectItemList
                 if (shouldAskForAssociation(item, packageInfo?.packageName, webDomain)) {

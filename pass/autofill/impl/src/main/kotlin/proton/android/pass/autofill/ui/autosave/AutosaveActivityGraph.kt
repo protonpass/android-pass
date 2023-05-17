@@ -9,6 +9,7 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AUTH_SCREEN_ROUTE
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
+import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
@@ -23,7 +24,9 @@ import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 import proton.android.pass.featurepassword.impl.dialog.mode.PasswordModeDialog
 import proton.android.pass.featurepassword.impl.dialog.separator.WordSeparatorDialog
 import proton.android.pass.featurepassword.impl.generatePasswordBottomsheetGraph
+import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
+import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 
 @Suppress("ComplexMethod", "LongMethod")
@@ -106,6 +109,22 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 destination = PhotoPickerTotp,
                 backDestination = CreateLogin
             )
+        }
+    )
+
+    vaultGraph(
+        onNavigate = {
+            when (it) {
+                VaultNavigation.Close -> appNavigator.onBackClick()
+                VaultNavigation.Upgrade -> {
+                    throw IllegalStateException("Do not forget to implement this one")
+                }
+                is VaultNavigation.VaultSelected -> {
+                    dismissBottomSheet {
+                        appNavigator.navigateUpWithResult(KEY_VAULT_SELECTED, it.shareId.id)
+                    }
+                }
+            }
         }
     )
 }

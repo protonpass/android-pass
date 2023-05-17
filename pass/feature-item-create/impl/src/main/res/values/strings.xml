@@ -22,6 +22,7 @@
     <string name="field_password_title">Password</string>
     <string name="field_password_hint">Add password</string>
     <string name="field_website_address_title">Website</string>
+    <string name="field_website_address_invalid">Invalid url</string>
     <string name="field_website_address_hint">https://</string>
     <string name="field_website_add_another">Add</string>
     <string name="sticky_button_generate_password">Generate a new password</string>

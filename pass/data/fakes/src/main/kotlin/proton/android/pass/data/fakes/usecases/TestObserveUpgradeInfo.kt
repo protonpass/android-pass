@@ -27,7 +27,8 @@ class TestObserveUpgradeInfo @Inject constructor() : ObserveUpgradeInfo {
                 vaultLimit = 0,
                 aliasLimit = 0,
                 totpLimit = 0,
-                updatedAt = 0
+                updatedAt = 0,
+                hideUpgrade = false,
             ),
             totalVaults = 0,
             totalAlias = 0,

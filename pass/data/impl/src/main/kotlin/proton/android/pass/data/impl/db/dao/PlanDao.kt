@@ -36,5 +36,7 @@ data class PlanTypeFields(
     @ColumnInfo(name = PlanEntity.Columns.INTERNAL_NAME)
     val internalName: String,
     @ColumnInfo(name = PlanEntity.Columns.DISPLAY_NAME)
-    val displayName: String
+    val displayName: String,
+    @ColumnInfo(name = PlanEntity.Columns.TRIAL_END)
+    val trialEnd: Long?
 )

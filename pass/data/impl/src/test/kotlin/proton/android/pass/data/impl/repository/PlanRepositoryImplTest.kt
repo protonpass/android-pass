@@ -48,7 +48,7 @@ class PlanRepositoryImplTest {
     @Test
     fun `sendUserAccessAndObservePlan return paid if trial is not expired and paid`() = runTest {
         val future = clock.now().plus(2.days)
-        local.emitPlan(planEntity(type = "paid", trialEnd = future))
+        local.emitPlan(planEntity(type = PlanType.PLAN_NAME_PLUS, trialEnd = future))
 
         val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Paid::class.java)
@@ -57,7 +57,7 @@ class PlanRepositoryImplTest {
     @Test
     fun `sendUserAccessAndObservePlan return free if trial is expired and is not paid`() = runTest {
         val past = clock.now().minus(2.days)
-        local.emitPlan(planEntity(type = "free", trialEnd = past))
+        local.emitPlan(planEntity(type = PlanType.PLAN_NAME_FREE, trialEnd = past))
 
         val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Free::class.java)
@@ -66,10 +66,28 @@ class PlanRepositoryImplTest {
     @Test
     fun `sendUserAccessAndObservePlan return paid if trial is expired and is paid`() = runTest {
         val past = clock.now().minus(2.days)
-        local.emitPlan(planEntity(type = "paid", trialEnd = past))
+        local.emitPlan(planEntity(type = PlanType.PLAN_NAME_PLUS, trialEnd = past))
 
         val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
         assertThat(plan.planType).isInstanceOf(PlanType.Paid::class.java)
+    }
+
+    @Test
+    fun `sendUserAccessAndObservePlan return unknown if trial is expired and is unknown`() = runTest {
+        val past = clock.now().minus(2.days)
+        local.emitPlan(planEntity(type = "unknown", trialEnd = past))
+
+        val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
+        assertThat(plan.planType).isInstanceOf(PlanType.Unknown::class.java)
+    }
+
+    @Test
+    fun `sendUserAccessAndObservePlan return unknown if trial is not expired and is unknown`() = runTest {
+        val future = clock.now().plus(2.days)
+        local.emitPlan(planEntity(type = "unknown", trialEnd = future))
+
+        val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
+        assertThat(plan.planType).isInstanceOf(PlanType.Unknown::class.java)
     }
 
 
@@ -85,7 +103,7 @@ class PlanRepositoryImplTest {
     @Test
     fun `observePlanType return paid if trial is not expired and paid`() = runTest {
         val future = clock.now().plus(2.days)
-        local.emitPlanTypeFields(planTypeFields(type = "paid", trialEnd = future))
+        local.emitPlanTypeFields(planTypeFields(type = PlanType.PLAN_NAME_PLUS, trialEnd = future))
 
         val plan = instance.observePlanType(USER_ID).first()
         assertThat(plan).isInstanceOf(PlanType.Paid::class.java)
@@ -94,7 +112,7 @@ class PlanRepositoryImplTest {
     @Test
     fun `observePlanType return free if trial is expired and is not paid`() = runTest {
         val past = clock.now().minus(2.days)
-        local.emitPlanTypeFields(planTypeFields(type = "free", trialEnd = past))
+        local.emitPlanTypeFields(planTypeFields(type = PlanType.PLAN_NAME_FREE, trialEnd = past))
 
         val plan = instance.observePlanType(USER_ID).first()
         assertThat(plan).isInstanceOf(PlanType.Free::class.java)
@@ -103,14 +121,32 @@ class PlanRepositoryImplTest {
     @Test
     fun `observePlanType return paid if trial is expired and is paid`() = runTest {
         val past = clock.now().minus(2.days)
-        local.emitPlanTypeFields(planTypeFields(type = "paid", trialEnd = past))
+        local.emitPlanTypeFields(planTypeFields(type = PlanType.PLAN_NAME_PLUS, trialEnd = past))
 
         val plan = instance.observePlanType(USER_ID).first()
         assertThat(plan).isInstanceOf(PlanType.Paid::class.java)
     }
 
+    @Test
+    fun `observePlanType return unknown if trial is expired and is unknown`() = runTest {
+        val past = clock.now().minus(2.days)
+        local.emitPlanTypeFields(planTypeFields(type = "unknown", trialEnd = past))
+
+        val plan = instance.observePlanType(USER_ID).first()
+        assertThat(plan).isInstanceOf(PlanType.Unknown::class.java)
+    }
+
+    @Test
+    fun `observePlanType return unknown if trial is not expired and is unknown`() = runTest {
+        val future = clock.now().plus(2.days)
+        local.emitPlanTypeFields(planTypeFields(type = "unknown", trialEnd = future))
+
+        val plan = instance.observePlanType(USER_ID).first()
+        assertThat(plan).isInstanceOf(PlanType.Unknown::class.java)
+    }
+
     private fun planTypeFields(
-        type: String = "free",
+        type: String = PlanType.PLAN_NAME_FREE,
         trialEnd: Instant?
     ) = PlanTypeFields(
         type = type,
@@ -120,7 +156,7 @@ class PlanRepositoryImplTest {
     )
 
     private fun planEntity(
-        type: String = "free",
+        type: String = PlanType.PLAN_NAME_FREE,
         trialEnd: Instant?
     ) = PlanEntity(
         userId = USER_ID.id,

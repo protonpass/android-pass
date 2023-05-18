@@ -89,29 +89,32 @@ class PlanRepositoryImpl @Inject constructor(
     private fun PlanTypeFields.toPlanType(): PlanType {
         val isTrial = isTrialActive(trialEnd)
         return when (type) {
-            PlanType.Free.internalName() -> if (isTrial) {
+            PlanType.PLAN_NAME_FREE -> if (isTrial) {
                 PlanType.Trial(internal = internalName, humanReadable = displayName)
             } else {
                 PlanType.Free
             }
 
-            else -> PlanType.Paid(
+            PlanType.PLAN_NAME_PLUS -> PlanType.Paid(
                 internal = internalName,
                 humanReadable = displayName
             )
+
+            else -> PlanType.Unknown(internal = internalName, humanReadable = displayName)
         }
     }
 
     private fun PlanEntity.toPlanType(isTrial: Boolean): PlanType = when (type) {
-        PlanType.Free.internalName() -> if (isTrial) {
+        PlanType.PLAN_NAME_FREE -> if (isTrial) {
             PlanType.Trial(internal = internalName, humanReadable = displayName)
         } else {
             PlanType.Free
         }
-        else -> PlanType.Paid(
+        PlanType.PLAN_NAME_PLUS -> PlanType.Paid(
             internal = internalName,
             humanReadable = displayName
         )
+        else -> PlanType.Unknown(internal = internalName, humanReadable = displayName)
     }
 
     companion object {

@@ -19,6 +19,11 @@ sealed interface PlanType {
         override fun internalName(): String = "free"
     }
 
+    data class Unknown(val internal: String, val humanReadable: String) : PlanType {
+        override fun humanReadableName(): String = humanReadable
+        override fun internalName(): String = internal
+    }
+
     data class Trial(val internal: String, val humanReadable: String) : PlanType {
         override fun humanReadableName(): String = humanReadable
         override fun internalName(): String = internal
@@ -27,5 +32,10 @@ sealed interface PlanType {
     data class Paid(val internal: String, val humanReadable: String) : PlanType {
         override fun humanReadableName(): String = humanReadable
         override fun internalName(): String = internal
+    }
+
+    companion object {
+        const val PLAN_NAME_FREE = "free"
+        const val PLAN_NAME_PLUS = "plus"
     }
 }

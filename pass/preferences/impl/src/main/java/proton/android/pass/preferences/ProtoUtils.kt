@@ -61,7 +61,7 @@ fun LockAppPrefProto.toValue(default: AppLockPreference) = when (this) {
     else -> default
 }
 
-fun PasswordGenerationPreference.toProto() = PasswordGenerationPrefProto.newBuilder()
+fun PasswordGenerationPreference.toProto(): PasswordGenerationPrefProto = PasswordGenerationPrefProto.newBuilder()
     .setMode(
         when (mode) {
             PasswordGenerationMode.Random -> ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_RANDOM

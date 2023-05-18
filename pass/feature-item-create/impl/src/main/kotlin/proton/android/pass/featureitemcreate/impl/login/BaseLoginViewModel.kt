@@ -372,7 +372,7 @@ abstract class BaseLoginViewModel(
                     if (isUri) {
                         Result.failure(it)
                     } else {
-                        Result.success(totpManager.generateUriWithDefaults(otp))
+                        totpManager.generateUriWithDefaults(otp)
                     }
                 }
             )

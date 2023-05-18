@@ -30,18 +30,12 @@ class PlanRepositoryImpl @Inject constructor(
                     refreshPlan(userId)
                     null
                 } else {
-                    val difference =
-                        clock.now().minus(Instant.fromEpochSeconds(planEntity.updatedAt))
+                    val planUpdatedAt = Instant.fromEpochSeconds(planEntity.updatedAt)
+                    val difference = clock.now().minus(planUpdatedAt)
                     if (difference.inWholeDays >= 1) {
                         refreshPlan(userId)
                     }
-                    Plan(
-                        planType = planEntity.toPlanType(),
-                        vaultLimit = planEntity.vaultLimit,
-                        aliasLimit = planEntity.aliasLimit,
-                        totpLimit = planEntity.totpLimit,
-                        updatedAt = planEntity.updatedAt
-                    )
+                    planEntity.toPlan()
                 }
             }
             .onStart {
@@ -71,16 +65,49 @@ class PlanRepositoryImpl @Inject constructor(
             }
     }
 
-    private fun PlanTypeFields.toPlanType(): PlanType = when (type) {
-        PlanType.Free.internalName() -> PlanType.Free
-        else -> PlanType.Paid(
-            internal = internalName,
-            humanReadable = displayName
+    private fun isTrialActive(trialEnd: Long?): Boolean = if (trialEnd != null) {
+        Instant.fromEpochSeconds(trialEnd) > clock.now()
+    } else false
+
+    private fun PlanEntity.toPlan(): Plan {
+        val plan = if (trialEnd != null) {
+            val isTrial = isTrialActive(trialEnd)
+            toPlanType(isTrial)
+        } else {
+            toPlanType(false)
+        }
+        return Plan(
+            planType = plan,
+            vaultLimit = vaultLimit,
+            aliasLimit = aliasLimit,
+            totpLimit = totpLimit,
+            updatedAt = updatedAt,
+            hideUpgrade = hideUpgrade
         )
     }
 
-    private fun PlanEntity.toPlanType(): PlanType = when (type) {
-        PlanType.Free.internalName() -> PlanType.Free
+    private fun PlanTypeFields.toPlanType(): PlanType {
+        val isTrial = isTrialActive(trialEnd)
+        return when (type) {
+            PlanType.Free.internalName() -> if (isTrial) {
+                PlanType.Trial
+            } else {
+                PlanType.Free
+            }
+
+            else -> PlanType.Paid(
+                internal = internalName,
+                humanReadable = displayName
+            )
+        }
+    }
+
+    private fun PlanEntity.toPlanType(isTrial: Boolean): PlanType = when (type) {
+        PlanType.Free.internalName() -> if (isTrial) {
+            PlanType.Trial
+        } else {
+            PlanType.Free
+        }
         else -> PlanType.Paid(
             internal = internalName,
             humanReadable = displayName

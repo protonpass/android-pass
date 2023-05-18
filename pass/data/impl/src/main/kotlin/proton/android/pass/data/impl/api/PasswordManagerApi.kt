@@ -185,7 +185,7 @@ interface PasswordManagerApi : BaseRetrofitApi {
     ): retrofit2.Response<okhttp3.ResponseBody>
 
     // User access
-    @POST("$PREFIX/user/access")
+    @GET("$PREFIX/user/access")
     suspend fun userAccess(): UserAccessResponse
 
     // Telemetry

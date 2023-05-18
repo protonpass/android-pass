@@ -38,8 +38,12 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                 observeVaultCount(user.userId)
             ) { plan, isUpgradeAvailable, mfaCount, itemCount, vaultCount ->
                 val isPaid = plan.planType is PlanType.Paid
+                val displayUpgrade = when {
+                    plan.hideUpgrade -> false
+                    else -> isUpgradeAvailable && !isPaid
+                }
                 UpgradeInfo(
-                    isUpgradeAvailable = isUpgradeAvailable && !isPaid,
+                    isUpgradeAvailable = displayUpgrade,
                     plan = plan.copy(
                         vaultLimit = plan.vaultLimit.takeIf { it >= 0 } ?: Int.MAX_VALUE,
                         aliasLimit = plan.aliasLimit.takeIf { it >= 0 } ?: Int.MAX_VALUE,

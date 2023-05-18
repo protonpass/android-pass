@@ -86,7 +86,7 @@ object OtpUriParser {
             PassLogger.d(TAG, "No label found in URI, using default")
             return DEFAULT_LABEL
         }
-        return parsed.path.removePrefix("/")
+        return parsed.path.removePrefix("/").replace(":", "")
     }
 
     private fun extractSecret(query: Map<String, List<String?>>): String {

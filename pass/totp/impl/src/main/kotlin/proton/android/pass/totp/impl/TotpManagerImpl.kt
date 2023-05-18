@@ -26,7 +26,7 @@ class TotpManagerImpl @Inject constructor(
 
     override fun generateUri(spec: TotpSpec): String {
         val builder = OtpAuthUriBuilder.forTotp(spec.secret.encodeToByteArray())
-        builder.label(spec.label, spec.issuer.value())
+        builder.label(spec.label, issuer = null)
         spec.issuer.value()?.let { builder.issuer(it) }
         builder.digits(spec.digits.digits)
         val algorithm = when (spec.algorithm) {
@@ -40,13 +40,18 @@ class TotpManagerImpl @Inject constructor(
     }
 
     @Suppress("MagicNumber")
-    override fun generateUriWithDefaults(secret: String): String =
-        OtpAuthUriBuilder.forTotp(secret.encodeToByteArray())
-            .digits(6)
-            .algorithm(HmacAlgorithm.SHA1)
-            .period(30, TimeUnit.SECONDS)
-            .label(OtpUriParser.DEFAULT_LABEL, null)
-            .buildToString()
+    override fun generateUriWithDefaults(secret: String): Result<String> =
+        if (secret.matches(Regex("^[a-zA-Z0-9]+"))) {
+            val uri = OtpAuthUriBuilder.forTotp(secret.encodeToByteArray())
+                .digits(6)
+                .algorithm(HmacAlgorithm.SHA1)
+                .period(30, TimeUnit.SECONDS)
+                .label(OtpUriParser.DEFAULT_LABEL, null)
+                .buildToString()
+            Result.success(uri)
+        } else {
+            Result.failure(IllegalArgumentException("Secret must be base32 encoded"))
+        }
 
     override fun observeCode(spec: TotpSpec): Flow<TotpManager.TotpWrapper> {
         val config = TimeBasedOneTimePasswordConfig(

@@ -11,10 +11,9 @@ import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.PlanType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,10 +36,10 @@ class AccountViewModel @Inject constructor(
             }
 
             LoadingResult.Loading -> PlanSection.Loading
-            is LoadingResult.Success -> when (val plan = upgradeInfoResult.data.plan.planType) {
-                PlanType.Free -> PlanSection.Data(planName = plan.humanReadableName())
-                is PlanType.Paid -> PlanSection.Data(planName = plan.humanReadableName())
-            }
+            is LoadingResult.Success ->
+                PlanSection.Data(
+                    planName = upgradeInfoResult.data.plan.planType.humanReadableName()
+                )
         }
         val showUpgradeButton = when (upgradeInfoResult) {
             is LoadingResult.Error -> false

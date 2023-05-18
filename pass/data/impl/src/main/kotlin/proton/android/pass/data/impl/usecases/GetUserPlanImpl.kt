@@ -11,6 +11,5 @@ class GetUserPlanImpl @Inject constructor(
     private val planRepository: PlanRepository
 ) : GetUserPlan {
 
-    @Suppress("ReturnCount")
     override fun invoke(userId: UserId): Flow<PlanType> = planRepository.observePlanType(userId)
 }

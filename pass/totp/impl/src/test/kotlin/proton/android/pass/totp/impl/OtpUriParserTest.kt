@@ -151,4 +151,15 @@ class OtpUriParserTest {
         val parsed = OtpUriParser.parse(input)
         assertThat(parsed).isEqualTo(Result.failure<TotpSpec>(MalformedOtpUri.InvalidValidity("notanumber")))
     }
+
+    @Test
+    fun `cleans semicolon from label`() {
+        val input = "otpauth://totp/first:second?secret=JBSWY3DPEHPK3PXP&period=30&digits=6&issuer=asdf"
+
+        val parsed = OtpUriParser.parse(input)
+        assertThat(parsed.isSuccess).isTrue()
+
+        val spec = parsed.getOrThrow()
+        assertThat(spec.label).isEqualTo("firstsecond")
+    }
 }

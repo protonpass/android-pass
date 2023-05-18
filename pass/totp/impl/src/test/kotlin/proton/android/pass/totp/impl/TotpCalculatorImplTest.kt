@@ -55,6 +55,15 @@ class TotpCalculatorImplTest {
             }
     }
 
+    @Test
+    fun `generate uri with default params wrong secret`() {
+        val res = instance.generateUriWithDefaults("JBSWY3DPEHPK3PXP&period30&digits6&issuera")
+        assertThat(res.isSuccess).isFalse()
+
+        val exception = res.exceptionOrNull()!!
+        assertThat(exception).isInstanceOf(IllegalArgumentException::class.java)
+    }
+
     companion object {
         @Suppress("UnderscoresInNumericLiterals")
         private const val TIMESTAMP = 1673941666206

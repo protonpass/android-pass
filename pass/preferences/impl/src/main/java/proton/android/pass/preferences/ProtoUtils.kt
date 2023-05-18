@@ -6,6 +6,25 @@ import me.proton.android.pass.preferences.PasswordGenerationPrefProto
 import me.proton.android.pass.preferences.PasswordGenerationMode as ProtoPasswordGenerationMode
 import me.proton.android.pass.preferences.WordSeparator as ProtoWordSeparator
 
+private object PasswordDefaults {
+    val PASSWORD_DEFAULT_MODE = PasswordGenerationMode.Words
+
+    object Words {
+        const val COUNT = 4
+        const val CAPITALIZE = true
+        const val INCLUDE_NUMBER = true
+        val WORD_SEPARATOR = WordSeparator.Hyphen
+    }
+
+    object Random {
+        const val LENGTH = 12
+        const val SPECIAL_CHARACTERS = true
+        const val INCLUDE_NUMBER = true
+        const val CAPITAL_LETTERS = true
+    }
+}
+
+
 fun Boolean.toBooleanPrefProto() = if (this) {
     BooleanPrefProto.BOOLEAN_PREFERENCE_TRUE
 } else {
@@ -74,13 +93,28 @@ fun PasswordGenerationPrefProto.toValue() = PasswordGenerationPreference(
     mode = when (mode) {
         ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_RANDOM -> PasswordGenerationMode.Random
         ProtoPasswordGenerationMode.PASSWORD_GENERATION_MODE_WORDS -> PasswordGenerationMode.Words
-        else -> PasswordGenerationMode.Random
+        else -> PasswordDefaults.PASSWORD_DEFAULT_MODE
     },
-    randomPasswordLength = if (randomPasswordLength > 3) { randomPasswordLength } else 12,
-    randomHasSpecialCharacters = fromBooleanPrefProto(randomHasSpecialCharacters),
-    randomHasCapitalLetters = fromBooleanPrefProto(randomIncludeCapitalLetters),
-    randomIncludeNumbers = fromBooleanPrefProto(randomIncludeNumbers, default = true),
-    wordsCount = if (wordsCount > 0) { wordsCount } else 4,
+    randomPasswordLength = if (randomPasswordLength > 3) {
+        randomPasswordLength
+    } else {
+        PasswordDefaults.Random.LENGTH
+    },
+    randomHasSpecialCharacters = fromBooleanPrefProto(
+        pref = randomHasSpecialCharacters,
+        default = PasswordDefaults.Random.SPECIAL_CHARACTERS
+    ),
+    randomHasCapitalLetters = fromBooleanPrefProto(
+        pref = randomIncludeCapitalLetters,
+        default = PasswordDefaults.Random.CAPITAL_LETTERS
+    ),
+    randomIncludeNumbers = fromBooleanPrefProto(
+        pref = randomIncludeNumbers,
+        default = PasswordDefaults.Random.INCLUDE_NUMBER
+    ),
+    wordsCount = if (wordsCount > 0) {
+        wordsCount
+    } else PasswordDefaults.Words.COUNT,
     wordsSeparator = when (wordsSeparator) {
         ProtoWordSeparator.WORD_SEPARATOR_HYPHEN -> WordSeparator.Hyphen
         ProtoWordSeparator.WORD_SEPARATOR_SPACE -> WordSeparator.Space
@@ -89,9 +123,15 @@ fun PasswordGenerationPrefProto.toValue() = PasswordGenerationPreference(
         ProtoWordSeparator.WORD_SEPARATOR_UNDERSCORE -> WordSeparator.Underscore
         ProtoWordSeparator.WORD_SEPARATOR_NUMBERS -> WordSeparator.Numbers
         ProtoWordSeparator.WORD_SEPARATOR_NUMBERS_AND_SYMBOLS -> WordSeparator.NumbersAndSymbols
-        else -> WordSeparator.Hyphen
+        else -> PasswordDefaults.Words.WORD_SEPARATOR
     },
-    wordsCapitalise = fromBooleanPrefProto(wordsCapitalise),
-    wordsIncludeNumbers = fromBooleanPrefProto(wordsIncludeNumbers),
+    wordsCapitalise = fromBooleanPrefProto(
+        pref = wordsCapitalise,
+        default = PasswordDefaults.Words.CAPITALIZE
+    ),
+    wordsIncludeNumbers = fromBooleanPrefProto(
+        pref = wordsIncludeNumbers,
+        default = PasswordDefaults.Words.INCLUDE_NUMBER
+    ),
 )
 

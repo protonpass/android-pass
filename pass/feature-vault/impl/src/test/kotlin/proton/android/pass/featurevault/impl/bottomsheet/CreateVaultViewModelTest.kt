@@ -153,7 +153,8 @@ class CreateVaultViewModelTest {
                     vaultLimit = 2,
                     aliasLimit = 0,
                     totpLimit = 0,
-                    updatedAt = 0
+                    updatedAt = 0,
+                    hideUpgrade = false
                 ),
                 totalVaults = 1
             )
@@ -174,7 +175,8 @@ class CreateVaultViewModelTest {
                     vaultLimit = 1,
                     aliasLimit = 0,
                     totpLimit = 0,
-                    updatedAt = 0
+                    updatedAt = 0,
+                    hideUpgrade = false
                 ),
                 totalVaults = 1
             )
@@ -195,7 +197,8 @@ class CreateVaultViewModelTest {
                     vaultLimit = 1,
                     aliasLimit = 0,
                     totpLimit = 0,
-                    updatedAt = 0
+                    updatedAt = 0,
+                    hideUpgrade = false
                 ),
                 totalVaults = 1
             )

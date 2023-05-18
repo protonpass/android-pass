@@ -54,7 +54,8 @@ class AccountViewModelTest {
             vaultLimit = 0,
             aliasLimit = 0,
             totpLimit = 0,
-            updatedAt = 0
+            updatedAt = 0,
+            hideUpgrade = false
         )
         val user = TestUser.create(email = email)
         observeCurrentUser.sendUser(user)

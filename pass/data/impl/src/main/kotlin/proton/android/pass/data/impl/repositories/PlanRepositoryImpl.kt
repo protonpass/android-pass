@@ -90,7 +90,7 @@ class PlanRepositoryImpl @Inject constructor(
         val isTrial = isTrialActive(trialEnd)
         return when (type) {
             PlanType.Free.internalName() -> if (isTrial) {
-                PlanType.Trial
+                PlanType.Trial(internal = internalName, humanReadable = displayName)
             } else {
                 PlanType.Free
             }
@@ -104,7 +104,7 @@ class PlanRepositoryImpl @Inject constructor(
 
     private fun PlanEntity.toPlanType(isTrial: Boolean): PlanType = when (type) {
         PlanType.Free.internalName() -> if (isTrial) {
-            PlanType.Trial
+            PlanType.Trial(internal = internalName, humanReadable = displayName)
         } else {
             PlanType.Free
         }

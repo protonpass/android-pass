@@ -19,9 +19,9 @@ sealed interface PlanType {
         override fun internalName(): String = "free"
     }
 
-    object Trial : PlanType {
-        override fun humanReadableName(): String = "Trial"
-        override fun internalName(): String = "trial"
+    data class Trial(val internal: String, val humanReadable: String) : PlanType {
+        override fun humanReadableName(): String = humanReadable
+        override fun internalName(): String = internal
     }
 
     data class Paid(val internal: String, val humanReadable: String) : PlanType {

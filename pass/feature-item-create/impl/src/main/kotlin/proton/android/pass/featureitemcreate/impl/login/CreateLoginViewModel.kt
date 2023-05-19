@@ -121,6 +121,7 @@ class CreateLoginViewModel @Inject constructor(
             allShares
                 .firstOrNull { it.vault.shareId == selectedShareId.value() }
                 ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
+                ?: allShares.firstOrNull { it.vault.isPrimary }
                 ?: allShares.firstOrNull()
                 ?: return@combine ShareUiState.Error(ShareError.EmptyShareList)
         }

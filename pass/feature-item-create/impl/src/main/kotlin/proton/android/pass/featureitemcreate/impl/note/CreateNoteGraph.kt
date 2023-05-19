@@ -39,9 +39,7 @@ object CreateNote : NavItem(
     ExperimentalLifecycleComposeApi::class
 )
 fun NavGraphBuilder.createNoteGraph(
-    onNoteCreateSuccess: () -> Unit,
-    onBackClick: () -> Unit,
-    onSelectVault: (ShareId?) -> Unit
+    onNavigate: (CreateNoteNavigation) -> Unit
 ) {
     composable(CreateNote) { navBackStack ->
         val selectVault by navBackStack.savedStateHandle
@@ -50,9 +48,13 @@ fun NavGraphBuilder.createNoteGraph(
 
         CreateNoteScreen(
             selectVault = selectVault.toOption().map { ShareId(it) }.value(),
-            onUpClick = onBackClick,
-            onSuccess = onNoteCreateSuccess,
-            onSelectVault = onSelectVault
+            onNavigate = onNavigate
         )
     }
+}
+
+sealed interface CreateNoteNavigation {
+    data class SelectVault(val shareId: ShareId?) : CreateNoteNavigation
+    object Success : CreateNoteNavigation
+    object Back : CreateNoteNavigation
 }

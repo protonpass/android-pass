@@ -8,57 +8,20 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
-import proton.android.pass.navigation.api.CommonNavArgId
-import proton.pass.domain.ShareId
-import proton.pass.domain.VaultWithItemCount
 
-abstract class BaseAliasViewModel(
-    observeVaults: ObserveVaultsWithItemCount,
-    savedStateHandle: SavedStateHandle
-) : ViewModel() {
-
-    protected val navShareId = savedStateHandle.get<String>(CommonNavArgId.ShareId.key)
-        .toOption()
-        .map { ShareId(it) }
-    private val navShareIdState = MutableStateFlow(navShareId)
-    private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
+abstract class BaseAliasViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     private val title: Option<String> = savedStateHandle
         .get<String>(AliasOptionalNavArgId.Title.key)
         .toOption()
     protected var isDraft: Boolean = false
-
-    private val observeAllVaultsFlow = observeVaults().distinctUntilChanged()
-
-    protected val sharesWrapperState = combine(
-        navShareIdState,
-        selectedShareIdState,
-        observeAllVaultsFlow
-    ) { navShareId, selectedShareId, allShares ->
-        val selectedShare = allShares
-            .firstOrNull { it.vault.shareId == selectedShareId.value() }
-            ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
-            ?: allShares.first()
-        SharesWrapper(allShares, selectedShare)
-    }.asLoadingResult()
-
-    protected data class SharesWrapper(
-        val vaultList: List<VaultWithItemCount>,
-        val currentVault: VaultWithItemCount
-    )
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val aliasItemState: MutableStateFlow<AliasItem> = MutableStateFlow(
@@ -124,19 +87,14 @@ abstract class BaseAliasViewModel(
         val closeScreenEvent: CloseScreenEvent
     )
 
-    val baseAliasUiState: StateFlow<CreateUpdateAliasUiState> = combine(
-        sharesWrapperState,
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
+    val baseAliasUiState: StateFlow<BaseAliasUiState> = combine(
         aliasItemWrapperState,
         isLoadingState,
         eventWrapperState,
         hasUserEditedContentFlow
-    ) { shareWrapper, aliasItemWrapper, isLoading, eventWrapper, hasUserEditedContent ->
-        val shares = shareWrapper.getOrNull()
-        val showVaultSelector = shares?.let { it.vaultList.size > 1 } ?: false
-
-        CreateUpdateAliasUiState(
-            vaultList = shares?.vaultList ?: emptyList(),
-            selectedVault = shares?.currentVault,
+    ) { aliasItemWrapper, isLoading, eventWrapper, hasUserEditedContent ->
+        BaseAliasUiState(
             aliasItem = aliasItemWrapper.aliasItem,
             isDraft = isDraft,
             errorList = aliasItemWrapper.aliasItemValidationErrors,
@@ -144,7 +102,6 @@ abstract class BaseAliasViewModel(
             isAliasSavedState = eventWrapper.isAliasSaved,
             isAliasDraftSavedState = eventWrapper.isAliasDraftSaved,
             isApplyButtonEnabled = eventWrapper.isApplyButtonEnabled,
-            showVaultSelector = showVaultSelector,
             closeScreenEvent = eventWrapper.closeScreenEvent,
             hasUserEditedContent = hasUserEditedContent,
             hasReachedAliasLimit = false,
@@ -154,7 +111,7 @@ abstract class BaseAliasViewModel(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = CreateUpdateAliasUiState.Initial
+            initialValue = BaseAliasUiState.Initial
         )
 
     abstract fun onTitleChange(value: String)
@@ -189,12 +146,6 @@ abstract class BaseAliasViewModel(
             return "$alias${suffix.suffix}"
         }
         return null
-    }
-
-    fun changeVault(shareId: ShareId) = viewModelScope.launch {
-        onUserEditedContent()
-        isLoadingState.update { IsLoadingState.Loading }
-        selectedShareIdState.update { shareId.toOption() }
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)

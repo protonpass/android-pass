@@ -8,6 +8,7 @@ import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.data.impl.local.ItemWithTotp
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemState
@@ -89,6 +90,17 @@ class TestLocalItemDataSource : LocalItemDataSource {
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> = itemCount
 
     override suspend fun getItemsPendingForTotpMigration(): List<ItemEntity> {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>> {
+        throw IllegalStateException("Not yet implemented")
+    }
+
+    override fun observeItemsWithTotpForShare(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<List<ItemWithTotp>> {
         throw IllegalStateException("Not yet implemented")
     }
 }

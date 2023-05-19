@@ -181,4 +181,28 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract suspend fun getItemsPendingForTotpMigration(): List<ItemEntity>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.HAS_TOTP} = 1
+        ORDER BY ${ItemEntity.Columns.CREATE_TIME} ASC
+        """
+    )
+    abstract fun observeAllItemsWithTotp(userId: String): Flow<List<ItemEntity>>
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.USER_ID} = :userId
+          AND ${ItemEntity.Columns.SHARE_ID} = :shareId 
+          AND ${ItemEntity.Columns.HAS_TOTP} = 1
+        ORDER BY ${ItemEntity.Columns.CREATE_TIME} ASC
+        """
+    )
+    abstract fun observeItemsWithTotpForShare(
+        userId: String,
+        shareId: String
+    ): Flow<List<ItemEntity>>
 }

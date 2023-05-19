@@ -6,6 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.data.api.url.HostParser
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
+import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.CreateAlias
@@ -23,7 +24,6 @@ import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.GetPublicSuffixList
 import proton.android.pass.data.api.usecases.GetShareById
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.GetVaultById
 import proton.android.pass.data.api.usecases.GetVaultWithItemCountById
@@ -38,6 +38,7 @@ import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveMFACount
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
@@ -45,12 +46,12 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.data.api.usecases.RequestImage
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
-import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.data.api.usecases.UpdateVault
+import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.data.api.usecases.searchentry.AddSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteAllSearchEntry
 import proton.android.pass.data.api.usecases.searchentry.DeleteSearchEntry
@@ -61,6 +62,7 @@ import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.data.impl.autofill.SuggestionSorterImpl
 import proton.android.pass.data.impl.url.HostParserImpl
 import proton.android.pass.data.impl.usecases.ApplyPendingEventsImpl
+import proton.android.pass.data.impl.usecases.CanDisplayTotpImpl
 import proton.android.pass.data.impl.usecases.ClearTrashImpl
 import proton.android.pass.data.impl.usecases.ClearUserDataImpl
 import proton.android.pass.data.impl.usecases.CreateAliasImpl
@@ -78,7 +80,6 @@ import proton.android.pass.data.impl.usecases.GetItemByIdWithVaultImpl
 import proton.android.pass.data.impl.usecases.GetPublicSuffixListImpl
 import proton.android.pass.data.impl.usecases.GetShareByIdImpl
 import proton.android.pass.data.impl.usecases.GetSuggestedLoginItemsImpl
-import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
 import proton.android.pass.data.impl.usecases.GetUserPlanImpl
 import proton.android.pass.data.impl.usecases.GetVaultByIdImpl
 import proton.android.pass.data.impl.usecases.GetVaultWithItemCountByIdImpl
@@ -93,6 +94,7 @@ import proton.android.pass.data.impl.usecases.ObserveCurrentUserImpl
 import proton.android.pass.data.impl.usecases.ObserveItemCountImpl
 import proton.android.pass.data.impl.usecases.ObserveItemsImpl
 import proton.android.pass.data.impl.usecases.ObserveMFACountImpl
+import proton.android.pass.data.impl.usecases.ObserveUpgradeInfoImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultCountImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsImpl
 import proton.android.pass.data.impl.usecases.ObserveVaultsWithItemCountImpl
@@ -100,7 +102,6 @@ import proton.android.pass.data.impl.usecases.RefreshContentImpl
 import proton.android.pass.data.impl.usecases.RequestImageImpl
 import proton.android.pass.data.impl.usecases.RestoreItemImpl
 import proton.android.pass.data.impl.usecases.RestoreItemsImpl
-import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.SendUserAccessRequest
 import proton.android.pass.data.impl.usecases.SendUserAccessRequestImpl
 import proton.android.pass.data.impl.usecases.TrashItemImpl
@@ -108,6 +109,7 @@ import proton.android.pass.data.impl.usecases.UpdateAliasImpl
 import proton.android.pass.data.impl.usecases.UpdateAutofillItemImpl
 import proton.android.pass.data.impl.usecases.UpdateItemImpl
 import proton.android.pass.data.impl.usecases.UpdateVaultImpl
+import proton.android.pass.data.impl.usecases.UserPlanWorkerLauncherImpl
 import proton.android.pass.data.impl.usecases.searchentry.AddSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteAllSearchEntryImpl
 import proton.android.pass.data.impl.usecases.searchentry.DeleteSearchEntryImpl
@@ -283,4 +285,7 @@ abstract class DataUseCaseModule {
 
     @Binds
     abstract fun bindObserveVaultCount(impl: ObserveVaultCountImpl): ObserveVaultCount
+
+    @Binds
+    abstract fun bindCanDisplayTotp(impl: CanDisplayTotpImpl): CanDisplayTotp
 }

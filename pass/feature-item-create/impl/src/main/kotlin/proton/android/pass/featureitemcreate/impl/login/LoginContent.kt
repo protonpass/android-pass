@@ -1,6 +1,7 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -29,23 +30,21 @@ import proton.pass.domain.ShareId
 
 private enum class ActionAfterHideKeyboard {
     GeneratePassword,
-    CreateAlias,
-    SelectVault
+    CreateAlias
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun LoginContent(
     modifier: Modifier = Modifier,
+    uiState: BaseLoginUiState,
+    selectedShareId: ShareId?,
     topBarActionName: String,
-    uiState: CreateUpdateLoginUiState,
     showCreateAliasButton: Boolean,
     isUpdate: Boolean,
-    showVaultSelector: Boolean,
     onUpClick: () -> Unit,
     onSuccess: (ShareId, ItemId, ItemUiModel) -> Unit,
     onSubmit: (ShareId) -> Unit,
-    onTitleChange: (String) -> Unit,
     onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onWebsiteSectionEvent: (WebsiteSectionEvent) -> Unit,
@@ -53,7 +52,8 @@ internal fun LoginContent(
     onTotpChange: (String) -> Unit,
     onPasteTotpClick: () -> Unit,
     onLinkedAppDelete: (PackageInfoUi) -> Unit,
-    onNavigate: (BaseLoginNavigation) -> Unit
+    onNavigate: (BaseLoginNavigation) -> Unit,
+    titleSection: @Composable ColumnScope.() -> Unit
 ) {
     BackHandler {
         onUpClick()
@@ -63,14 +63,16 @@ internal fun LoginContent(
 
     val scope = rememberCoroutineScope()
     val keyboardState by keyboardAsState()
+
     LaunchedEffect(keyboardState, actionWhenKeyboardDisappears) {
         if (!keyboardState) {
             when (actionWhenKeyboardDisappears) {
                 ActionAfterHideKeyboard.CreateAlias -> {
+                    selectedShareId ?: return@LaunchedEffect
                     scope.launch {
                         onNavigate(
                             BaseLoginNavigation.CreateAlias(
-                                uiState.selectedVault!!.vault.shareId,
+                                selectedShareId,
                                 uiState.hasReachedAliasLimit,
                                 uiState.loginItem.title.some()
                             )
@@ -82,17 +84,6 @@ internal fun LoginContent(
                 ActionAfterHideKeyboard.GeneratePassword -> {
                     scope.launch {
                         onNavigate(BaseLoginNavigation.GeneratePassword)
-                        actionWhenKeyboardDisappears = null // Clear flag
-                    }
-                }
-
-                ActionAfterHideKeyboard.SelectVault -> {
-                    scope.launch {
-                        onNavigate(
-                            BaseLoginNavigation.SelectVault(
-                                shareId = uiState.selectedVault?.vault?.shareId
-                            )
-                        )
                         actionWhenKeyboardDisappears = null // Clear flag
                     }
                 }
@@ -113,7 +104,10 @@ internal fun LoginContent(
                 iconColor = PassTheme.colors.loginInteractionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
                 onCloseClick = onUpClick,
-                onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) },
+                onActionClick = {
+                    selectedShareId ?: return@CreateUpdateTopBar
+                    onSubmit(selectedShareId)
+                },
                 onUpgrade = {}
             )
         }
@@ -122,15 +116,12 @@ internal fun LoginContent(
             modifier = Modifier.padding(padding),
             loginItem = uiState.loginItem,
             totpUiState = uiState.totpUiState,
-            selectedShare = uiState.selectedVault,
+            selectedShareId = selectedShareId,
             showCreateAliasButton = showCreateAliasButton,
             canUpdateUsername = uiState.canUpdateUsername,
             primaryEmail = uiState.primaryEmail,
             isUpdate = isUpdate,
             isEditAllowed = uiState.isLoadingState == IsLoadingState.NotLoading,
-            showVaultSelector = showVaultSelector,
-            onTitleChange = onTitleChange,
-            onTitleRequiredError = uiState.validationErrors.contains(LoginItemValidationErrors.BlankTitle),
             isTotpError = uiState.validationErrors.contains(LoginItemValidationErrors.InvalidTotp),
             onUsernameChange = onUsernameChange,
             onPasswordChange = onPasswordChange,
@@ -154,9 +145,10 @@ internal fun LoginContent(
             onCreateAliasClick = {
                 if (!keyboardState) {
                     // If keyboard is hidden, call the action directly
+                    selectedShareId ?: return@LoginItemForm
                     onNavigate(
                         BaseLoginNavigation.CreateAlias(
-                            uiState.selectedVault!!.vault.shareId,
+                            selectedShareId,
                             uiState.hasReachedAliasLimit,
                             uiState.loginItem.title.some()
                         )
@@ -168,26 +160,24 @@ internal fun LoginContent(
                 }
             },
             onAliasOptionsClick = {
+                selectedShareId ?: return@LoginItemForm
                 onNavigate(
                     BaseLoginNavigation.AliasOptions(
-                        shareId = uiState.selectedVault!!.vault.shareId,
+                        shareId = selectedShareId,
                         showUpgrade = uiState.hasReachedAliasLimit,
                     )
                 )
             },
-            onVaultSelectorClick = {
-                actionWhenKeyboardDisappears = ActionAfterHideKeyboard.SelectVault
-                keyboardController?.hide()
-            },
             onTotpChange = onTotpChange,
             onPasteTotpClick = onPasteTotpClick,
             onLinkedAppDelete = onLinkedAppDelete,
-            onNavigate = onNavigate
+            onNavigate = onNavigate,
+            titleSection = titleSection
         )
 
         ItemSavedLaunchedEffect(
             isItemSaved = uiState.isItemSaved,
-            selectedShareId = uiState.selectedVault?.vault?.shareId,
+            selectedShareId = selectedShareId,
             onSuccess = onSuccess
         )
     }

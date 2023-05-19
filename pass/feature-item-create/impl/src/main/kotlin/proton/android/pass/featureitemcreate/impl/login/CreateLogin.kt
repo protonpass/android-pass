@@ -7,19 +7,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
+import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
+import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
+import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.pass.domain.ShareId
 
+private enum class CLActionAfterHideKeyboard {
+    SelectVault
+}
+
 @OptIn(
-    ExperimentalLifecycleComposeApi::class
+    ExperimentalLifecycleComposeApi::class, ExperimentalComposeUiApi::class
 )
 @Composable
 fun CreateLoginScreen(
@@ -35,7 +47,11 @@ fun CreateLoginScreen(
         initialContents ?: return@LaunchedEffect
         viewModel.setInitialContents(initialContents)
     }
-    val uiState by viewModel.loginUiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.createLoginUiState.collectAsStateWithLifecycle()
+    val scope = rememberCoroutineScope()
+    val keyboardState by keyboardAsState()
+    val keyboardController = LocalSoftwareKeyboardController.current
+    var actionWhenKeyboardDisappears by remember { mutableStateOf<CLActionAfterHideKeyboard?>(null) }
 
     LaunchedEffect(clearAlias) {
         if (clearAlias) {
@@ -51,7 +67,7 @@ fun CreateLoginScreen(
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
-        if (uiState.hasUserEditedContent) {
+        if (uiState.baseLoginUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
             viewModel.onClose()
@@ -62,12 +78,19 @@ fun CreateLoginScreen(
         onExit()
     }
 
+    val (showVaultSelector, selectedVault) = when (val shares = uiState.shareUiState) {
+        is ShareUiState.Error,
+        ShareUiState.Loading,
+        ShareUiState.NotInitialised -> false to null
+
+        is ShareUiState.Success -> (shares.vaultList.size > 1) to shares.currentVault
+    }
     Box(modifier = modifier.fillMaxSize()) {
         LoginContent(
-            uiState = uiState,
+            uiState = uiState.baseLoginUiState,
+            selectedShareId = selectedVault?.vault?.shareId,
             showCreateAliasButton = showCreateAliasButton,
             isUpdate = false,
-            showVaultSelector = uiState.showVaultSelector,
             topBarActionName = stringResource(id = R.string.title_create_login),
             onUpClick = onExit,
             onSuccess = { _, _, item ->
@@ -75,7 +98,6 @@ fun CreateLoginScreen(
                 onNavigate(BaseLoginNavigation.LoginCreated(item))
             },
             onSubmit = { viewModel.createItem() },
-            onTitleChange = viewModel::onTitleChange,
             onUsernameChange = viewModel::onUsernameChange,
             onPasswordChange = viewModel::onPasswordChange,
             onWebsiteSectionEvent = {
@@ -90,7 +112,25 @@ fun CreateLoginScreen(
             onLinkedAppDelete = {},
             onTotpChange = viewModel::onTotpChange,
             onPasteTotpClick = viewModel::onPasteTotp,
-            onNavigate = onNavigate
+            onNavigate = onNavigate,
+            titleSection = {
+                TitleVaultSelectionSection(
+                    titleValue = uiState.baseLoginUiState.loginItem.title,
+                    showVaultSelector = showVaultSelector,
+                    onTitleChanged = viewModel::onTitleChange,
+                    onTitleRequiredError = uiState.baseLoginUiState.validationErrors.contains(
+                        LoginItemValidationErrors.BlankTitle
+                    ),
+                    enabled = uiState.baseLoginUiState.isLoadingState == IsLoadingState.NotLoading,
+                    vaultName = selectedVault?.vault?.name,
+                    vaultColor = selectedVault?.vault?.color,
+                    vaultIcon = selectedVault?.vault?.icon,
+                    onVaultClicked = {
+                        actionWhenKeyboardDisappears = CLActionAfterHideKeyboard.SelectVault
+                        keyboardController?.hide()
+                    }
+                )
+            }
         )
 
         ConfirmCloseDialog(
@@ -104,5 +144,24 @@ fun CreateLoginScreen(
                 onNavigate(BaseLoginNavigation.Close)
             }
         )
+    }
+    LaunchedEffect(keyboardState, actionWhenKeyboardDisappears) {
+        if (!keyboardState) {
+            when (actionWhenKeyboardDisappears) {
+                CLActionAfterHideKeyboard.SelectVault -> {
+                    selectedVault ?: return@LaunchedEffect
+                    scope.launch {
+                        onNavigate(
+                            BaseLoginNavigation.SelectVault(
+                                shareId = selectedVault.vault.shareId
+                            )
+                        )
+                        actionWhenKeyboardDisappears = null // Clear flag
+                    }
+                }
+
+                null -> {}
+            }
+        }
     }
 }

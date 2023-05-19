@@ -24,6 +24,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
@@ -34,14 +35,19 @@ import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
+import proton.android.pass.featureitemcreate.impl.login.ShareError
+import proton.android.pass.featureitemcreate.impl.login.ShareUiState
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ShareId
+import proton.pass.domain.VaultWithItemCount
 import proton.pass.domain.entity.NewAlias
 import javax.inject.Inject
 
@@ -56,25 +62,77 @@ open class CreateAliasViewModel @Inject constructor(
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
-) : BaseAliasViewModel(observeVaults, savedStateHandle) {
+) : BaseAliasViewModel(savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
 
+    private val navShareId: Option<ShareId> =
+        savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)
+            .toOption()
+            .map { ShareId(it) }
+
     private val selectedSuffixState: MutableStateFlow<Option<AliasSuffixUiModel>> =
         MutableStateFlow(None)
 
-    private val aliasOptionsState: Flow<LoadingResult<AliasOptionsUiModel>> = sharesWrapperState
-        .flatMapLatest { res ->
-            when (res) {
-                LoadingResult.Loading -> flowOf(LoadingResult.Loading)
-                is LoadingResult.Error -> flowOf(LoadingResult.Error(res.exception))
-                is LoadingResult.Success -> {
-                    observeAliasOptions(res.data.currentVault.vault.shareId)
-                        .map(::AliasOptionsUiModel)
-                        .asLoadingResult()
-                }
+    private val navShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(navShareId)
+
+    private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
+    private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
+        observeVaults().distinctUntilChanged()
+    private val upgradeInfoFlow: Flow<UpgradeInfo> = observeUpgradeInfo().distinctUntilChanged()
+
+    private val shareUiState: StateFlow<ShareUiState> = combine(
+        navShareIdState,
+        selectedShareIdState,
+        observeAllVaultsFlow.asLoadingResult(),
+        upgradeInfoFlow.asLoadingResult()
+    ) { navShareId, selectedShareId, allSharesResult, upgradeInfoResult ->
+        val allShares = when (allSharesResult) {
+            is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)
+            LoadingResult.Loading -> return@combine ShareUiState.Loading
+            is LoadingResult.Success -> allSharesResult.data
+        }
+        val upgradeInfo = when (upgradeInfoResult) {
+            is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.UpgradeInfoNotAvailable)
+            LoadingResult.Loading -> return@combine ShareUiState.Loading
+            is LoadingResult.Success -> upgradeInfoResult.data
+        }
+
+        if (allShares.isEmpty()) {
+            return@combine ShareUiState.Error(ShareError.EmptyShareList)
+        }
+        val selectedVault = if (upgradeInfo.isUpgradeAvailable) {
+            allShares.firstOrNull { it.vault.isPrimary }
+                ?: return@combine ShareUiState.Error(ShareError.NoPrimaryVault)
+        } else {
+            allShares
+                .firstOrNull { it.vault.shareId == selectedShareId.value() }
+                ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
+                ?: allShares.firstOrNull { it.vault.isPrimary }
+                ?: allShares.firstOrNull()
+                ?: return@combine ShareUiState.Error(ShareError.EmptyShareList)
+        }
+        ShareUiState.Success(
+            vaultList = allShares,
+            currentVault = selectedVault
+        )
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = ShareUiState.NotInitialised
+    )
+
+    private val aliasOptionsState: Flow<LoadingResult<AliasOptionsUiModel>> = shareUiState
+        .flatMapLatest { state ->
+            when (state) {
+                is ShareUiState.Error -> flowOf(LoadingResult.Error(RuntimeException()))
+                ShareUiState.Loading -> flowOf(LoadingResult.Loading)
+                ShareUiState.NotInitialised -> flowOf(LoadingResult.Loading)
+                is ShareUiState.Success -> observeAliasOptions(state.currentVault.vault.shareId)
+                    .map(::AliasOptionsUiModel)
+                    .asLoadingResult()
             }
         }
         .onEach {
@@ -95,13 +153,14 @@ open class CreateAliasViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    val createAliasUiState: StateFlow<CreateUpdateAliasUiState> = combine(
+    val createAliasUiState: StateFlow<CreateAliasUiState> = combineN(
         baseAliasUiState,
+        shareUiState,
         aliasOptionsState,
         selectedMailboxListState,
         selectedSuffixState,
         observeUpgradeInfo().asLoadingResult()
-    ) { aliasUiState, aliasOptionsResult, selectedMailboxes, selectedSuffix, upgradeInfoResult ->
+    ) { aliasUiState, shareUiState, aliasOptionsResult, selectedMailboxes, selectedSuffix, upgradeInfoResult ->
         val hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false
         val canUpgrade = upgradeInfoResult.getOrNull()?.isUpgradeAvailable ?: false
         val aliasItem = when (aliasOptionsResult) {
@@ -150,20 +209,23 @@ open class CreateAliasViewModel @Inject constructor(
             }
         }
 
-        aliasUiState.copy(
-            aliasItem = aliasItem,
-            hasReachedAliasLimit = hasReachedAliasLimit,
-            canUpgrade = canUpgrade,
-            isLoadingState = IsLoadingState.from(
-                aliasUiState.isLoadingState is IsLoadingState.Loading ||
-                    upgradeInfoResult is LoadingResult.Loading
-            )
+        CreateAliasUiState(
+            baseAliasUiState = aliasUiState.copy(
+                aliasItem = aliasItem,
+                hasReachedAliasLimit = hasReachedAliasLimit,
+                canUpgrade = canUpgrade,
+                isLoadingState = IsLoadingState.from(
+                    aliasUiState.isLoadingState is IsLoadingState.Loading ||
+                        upgradeInfoResult is LoadingResult.Loading
+                )
+            ),
+            shareUiState = shareUiState
         )
     }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = CreateUpdateAliasUiState.Initial
+            initialValue = CreateAliasUiState.Initial
         )
 
     protected var titlePrefixInSync = true
@@ -220,7 +282,7 @@ open class CreateAliasViewModel @Inject constructor(
     }
 
     fun createAlias(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
-        val aliasItem = createAliasUiState.value.aliasItem
+        val aliasItem = createAliasUiState.value.baseAliasUiState.aliasItem
         if (aliasItem.selectedSuffix == null) return@launch
 
         val mailboxes = aliasItem.mailboxes.filter { it.selected }.map { it.model }
@@ -282,6 +344,12 @@ open class CreateAliasViewModel @Inject constructor(
             PassLogger.e(TAG, cause ?: Exception(defaultMessage), defaultMessage)
             snackbarDispatcher(ItemCreationError)
         }
+    }
+
+    fun changeVault(shareId: ShareId) = viewModelScope.launch {
+        onUserEditedContent()
+        isLoadingState.update { IsLoadingState.Loading }
+        selectedShareIdState.update { shareId.toOption() }
     }
 
     companion object {

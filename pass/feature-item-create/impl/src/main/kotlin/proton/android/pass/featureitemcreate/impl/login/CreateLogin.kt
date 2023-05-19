@@ -159,11 +159,7 @@ fun CreateLoginScreen(
             when (actionWhenKeyboardDisappears) {
                 CLActionAfterHideKeyboard.SelectVault -> {
                     selectedVault ?: return@LaunchedEffect
-                    onNavigate(
-                        BaseLoginNavigation.SelectVault(
-                            shareId = selectedVault.vault.shareId
-                        )
-                    )
+                    onNavigate(BaseLoginNavigation.SelectVault(selectedVault.vault.shareId))
                     actionWhenKeyboardDisappears = null // Clear flag
                 }
 

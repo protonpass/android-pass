@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import kotlinx.coroutines.delay
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -55,6 +56,7 @@ fun NoteTitle(
 
     LaunchedEffect(requestFocus) {
         if (requestFocus) {
+            delay(DELAY_BEFORE_FOCUS_MS)
             focusRequester.requestFocus()
         }
     }
@@ -80,3 +82,5 @@ fun NoteTitlePreview(
         }
     }
 }
+
+private const val DELAY_BEFORE_FOCUS_MS = 200L

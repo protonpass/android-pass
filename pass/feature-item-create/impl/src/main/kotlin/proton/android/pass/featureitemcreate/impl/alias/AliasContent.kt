@@ -15,7 +15,6 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankPrefix
-import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankTitle
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.InvalidAliasContent
 import proton.android.pass.featureitemcreate.impl.alias.mailboxes.SelectMailboxesDialog
 import proton.android.pass.featureitemcreate.impl.alias.suffixes.SelectSuffixDialog
@@ -28,21 +27,20 @@ import proton.pass.domain.ShareId
 @Suppress("LongParameterList", "LongMethod")
 internal fun AliasContent(
     modifier: Modifier = Modifier,
-    uiState: CreateUpdateAliasUiState,
+    uiState: BaseAliasUiState,
+    selectedShareId: ShareId?,
     topBarActionName: String,
     isCreateMode: Boolean,
     isEditAllowed: Boolean,
-    showVaultSelector: Boolean,
     onUpClick: () -> Unit,
     onSubmit: (ShareId) -> Unit,
     onAliasCreated: (ShareId, ItemId, String) -> Unit,
     onSuffixChange: (AliasSuffixUiModel) -> Unit,
     onMailboxesChanged: (List<SelectedAliasMailboxUiModel>) -> Unit,
-    onTitleChange: (String) -> Unit,
     onNoteChange: (String) -> Unit,
     onPrefixChange: (String) -> Unit,
-    onSelectVaultClick: () -> Unit,
-    onUpgrade: () -> Unit
+    onUpgrade: () -> Unit,
+    titleSection: @Composable () -> Unit
 ) {
     val scope = rememberCoroutineScope()
 
@@ -60,7 +58,7 @@ internal fun AliasContent(
                 iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                 onCloseClick = onUpClick,
                 showUpgrade = uiState.hasReachedAliasLimit,
-                onActionClick = { uiState.selectedVault?.vault?.shareId?.let(onSubmit) },
+                onActionClick = { selectedShareId?.let(onSubmit) },
                 onUpgrade = onUpgrade
             )
         }
@@ -68,13 +66,10 @@ internal fun AliasContent(
         CreateAliasForm(
             modifier = Modifier.padding(padding),
             aliasItem = uiState.aliasItem,
-            selectedVault = uiState.selectedVault,
             isCreateMode = isCreateMode,
             isEditAllowed = isEditAllowed,
-            showVaultSelector = showVaultSelector,
             isLoading = uiState.isLoadingState.value(),
             showUpgrade = uiState.hasReachedAliasLimit,
-            onTitleRequiredError = uiState.errorList.contains(BlankTitle),
             onAliasRequiredError = uiState.errorList.contains(BlankPrefix),
             onInvalidAliasError = uiState.errorList.contains(InvalidAliasContent),
             onSuffixClick = {
@@ -87,10 +82,9 @@ internal fun AliasContent(
                     showMailboxDialog = true
                 }
             },
-            onTitleChange = { onTitleChange(it) },
             onNoteChange = { onNoteChange(it) },
             onPrefixChange = { onPrefixChange(it) },
-            onVaultSelectorClick = onSelectVaultClick
+            titleSection = titleSection
         )
 
         SelectSuffixDialog(
@@ -127,20 +121,20 @@ internal fun AliasContent(
             )
         }
 
-        IsAliasSavedLaunchedEffect(uiState, onAliasCreated)
+        IsAliasSavedLaunchedEffect(uiState.isAliasSavedState, selectedShareId, onAliasCreated)
     }
 }
 
 @Composable
 private fun IsAliasSavedLaunchedEffect(
-    uiState: CreateUpdateAliasUiState,
+    aliasSavedState: AliasSavedState,
+    selectedShareId: ShareId?,
     onAliasCreated: (ShareId, ItemId, String) -> Unit
 ) {
-    val isAliasSaved = uiState.isAliasSavedState
-    if (isAliasSaved is AliasSavedState.Success) {
-        LaunchedEffect(uiState.selectedVault) {
-            uiState.selectedVault?.let {
-                onAliasCreated(it.vault.shareId, isAliasSaved.itemId, isAliasSaved.alias)
+    if (aliasSavedState is AliasSavedState.Success) {
+        LaunchedEffect(selectedShareId) {
+            selectedShareId?.let {
+                onAliasCreated(it, aliasSavedState.itemId, aliasSavedState.alias)
             }
         }
     }

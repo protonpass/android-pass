@@ -54,7 +54,7 @@ class CreateNoteViewModel @Inject constructor(
     observeVaults: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     savedStateHandle: SavedStateHandle
-) : BaseNoteViewModel(snackbarDispatcher, savedStateHandle) {
+) : BaseNoteViewModel(snackbarDispatcher) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)

@@ -43,9 +43,9 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasOptionsUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasPrefixSuffixText
 import proton.android.pass.featureitemcreate.impl.alias.AliasSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
+import proton.android.pass.featureitemcreate.impl.alias.BaseAliasUiState
 import proton.android.pass.featureitemcreate.impl.alias.CloseScreenEvent
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
-import proton.android.pass.featureitemcreate.impl.alias.CreateUpdateAliasUiState
 import proton.android.pass.featureitemcreate.impl.alias.MailboxSection
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.mailboxes.SelectMailboxesDialog
@@ -54,7 +54,7 @@ import proton.android.pass.featureitemcreate.impl.alias.suffixes.SelectSuffixDia
 @Composable
 fun CreateAliasBottomSheetContent(
     modifier: Modifier = Modifier,
-    state: CreateUpdateAliasUiState,
+    state: BaseAliasUiState,
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
     onPrefixChanged: (String) -> Unit,
@@ -176,9 +176,7 @@ fun CreateAliasBottomSheetContentPreview(
     PassTheme(isDark = isDark) {
         Surface {
             CreateAliasBottomSheetContent(
-                state = CreateUpdateAliasUiState(
-                    vaultList = emptyList(),
-                    selectedVault = null,
+                state = BaseAliasUiState(
                     aliasItem = AliasItem(
                         title = "some title",
                         prefix = "some alias",
@@ -229,7 +227,6 @@ fun CreateAliasBottomSheetContentPreview(
                     isAliasSavedState = AliasSavedState.Unknown,
                     isAliasDraftSavedState = AliasDraftSavedState.Unknown,
                     isApplyButtonEnabled = IsButtonEnabled.Enabled,
-                    showVaultSelector = false,
                     closeScreenEvent = CloseScreenEvent.NotClose,
                     hasUserEditedContent = false,
                     hasReachedAliasLimit = false,

@@ -31,6 +31,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedS
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
@@ -75,6 +76,7 @@ class LoginDetailViewModel @Inject constructor(
     private val telemetryManager: TelemetryManager,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle,
+    canDisplayTotp: CanDisplayTotp
 ) : ViewModel() {
 
     private val shareId: ShareId =
@@ -96,6 +98,8 @@ class LoginDetailViewModel @Inject constructor(
         MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
+
+    private val canDisplayTotpFlow = canDisplayTotp(shareId = shareId, itemId = itemId)
 
     private val itemDetailsFlow: Flow<LoadingResult<LoginItemInfo>> = getItemByIdWithVault(shareId, itemId)
         .asLoadingResult()
@@ -165,13 +169,15 @@ class LoginDetailViewModel @Inject constructor(
         isLoadingState,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
-        isRestoredFromTrashState
+        isRestoredFromTrashState,
+        canDisplayTotpFlow
     ) { itemDetails,
         password,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
-        isRestoredFromTrash ->
+        isRestoredFromTrash,
+        canDisplayTotp ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -186,15 +192,20 @@ class LoginDetailViewModel @Inject constructor(
                 } else {
                     null
                 }
+                val totpState = details.totp.map {
+                    if (canDisplayTotp) {
+                        TotpUiState.Visible(it.code, it.remainingSeconds, it.totalSeconds)
+                    } else {
+                        TotpUiState.Hidden
+                    }
+                }
                 encryptionContextProvider.withEncryptionContext {
                     LoginDetailUiState.Success(
                         itemUiModel = details.item.toUiModel(this),
                         vault = vault,
                         linkedAlias = details.linkedAlias,
                         passwordState = password,
-                        totpUiState = details.totp
-                            .map { TotpUiState(it.code, it.remainingSeconds, it.totalSeconds) }
-                            .value(),
+                        totpUiState = totpState.value(),
                         isLoading = isLoading.value(),
                         isItemSentToTrash = isItemSentToTrash.value(),
                         isPermanentlyDeleted = isPermanentlyDeleted.value(),

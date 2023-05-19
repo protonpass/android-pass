@@ -35,6 +35,7 @@ fun LoginContent(
     onWebsiteClicked: (String) -> Unit,
     onWebsiteLongClicked: (String) -> Unit,
     onCopyTotpClick: (String) -> Unit,
+    onUpgradeClick: () -> Unit
 ) {
     val itemType = itemUiModel.itemType as ItemType.Login
     Column(
@@ -58,7 +59,8 @@ fun LoginContent(
             onGoToAliasClick = onGoToAliasClick,
             onTogglePasswordClick = onTogglePasswordClick,
             onCopyPasswordClick = onCopyPasswordClick,
-            onCopyTotpClick = onCopyTotpClick
+            onCopyTotpClick = onCopyTotpClick,
+            onUpgradeClick = onUpgradeClick
         )
         WebsiteSection(
             websites = itemType.websites.toPersistentList(),

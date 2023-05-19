@@ -53,7 +53,7 @@ object TestItem {
             password = randomString().encrypt(TestKeyStoreCrypto),
             websites = emptyList(),
             packageInfoSet = emptySet(),
-            primaryTotp = randomString()
+            primaryTotp = randomString().encrypt(TestKeyStoreCrypto),
         )
         val titleParam = title ?: randomString()
         val noteParam = note ?: randomString()

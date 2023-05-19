@@ -87,4 +87,8 @@ class TestLocalItemDataSource : LocalItemDataSource {
     }
 
     override fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>> = itemCount
+
+    override suspend fun getItemsPendingForTotpMigration(): List<ItemEntity> {
+        throw IllegalStateException("Not yet implemented")
+    }
 }

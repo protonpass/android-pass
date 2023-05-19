@@ -1,6 +1,5 @@
 package proton.android.pass.crypto.fakes.usecases
 
-import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.EncryptionKey
 import proton.android.pass.crypto.api.usecases.CreateItem
@@ -29,7 +28,7 @@ class TestCreateItem : CreateItem {
             return CreateItemPayload(
                 request = EncryptedCreateItem(
                     contentFormatVersion = 1,
-                    content = TestKeyStoreCrypto.encrypt("content"),
+                    content = TestEncryptionContext.encrypt("content"),
                     keyRotation = 1,
                     itemKey = Base64.encodeBase64String(TestEncryptionContext.encrypt(key.value()).array)
                 ),

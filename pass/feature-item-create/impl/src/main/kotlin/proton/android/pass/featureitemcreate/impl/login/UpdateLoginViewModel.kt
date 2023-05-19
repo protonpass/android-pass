@@ -19,7 +19,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
@@ -42,7 +41,6 @@ import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.In
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemUpdateError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -79,16 +77,14 @@ class UpdateLoginViewModel @Inject constructor(
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider
 ) {
-    private val navShareId =
-        ShareId(requireNotNull(savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)))
+    private val navShareId: ShareId =
+        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
+    private val navItemId: ItemId =
+        ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
     private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
-
-    private val itemId: Option<ItemId> = savedStateHandle.get<String>(CommonNavArgId.ItemId.key)
-        .toOption()
-        .map { ItemId(it) }
 
     private var _item: Item? = null
 
@@ -97,20 +93,15 @@ class UpdateLoginViewModel @Inject constructor(
             if (_item != null) return@launch
 
             isLoadingState.update { IsLoadingState.Loading }
-            if (itemId is Some) {
-                runCatching { getItemById.invoke(navShareId, itemId.value).first() }
-                    .onSuccess { item ->
-                        _item = item
-                        onItemReceived(item)
-                    }
-                    .onFailure {
-                        PassLogger.i(TAG, it, "Get by id error")
-                        snackbarDispatcher(InitError)
-                    }
-            } else {
-                PassLogger.i(TAG, "Empty share/item Id")
-                snackbarDispatcher(InitError)
-            }
+            runCatching { getItemById.invoke(navShareId, navItemId).first() }
+                .onSuccess { item ->
+                    _item = item
+                    onItemReceived(item)
+                }
+                .onFailure {
+                    PassLogger.i(TAG, it, "Get by id error")
+                    snackbarDispatcher(InitError)
+                }
             isLoadingState.update { IsLoadingState.NotLoading }
         }
     }

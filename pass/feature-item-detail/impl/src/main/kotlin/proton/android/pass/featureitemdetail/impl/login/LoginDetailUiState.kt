@@ -29,12 +29,16 @@ sealed interface LoginDetailUiState {
     ) : LoginDetailUiState
 }
 
-@Stable
-data class TotpUiState(
-    val code: String,
-    val remainingSeconds: Int,
-    val totalSeconds: Int
-)
+sealed interface TotpUiState {
+    object Hidden : TotpUiState
+
+    @Stable
+    data class Visible(
+        val code: String,
+        val remainingSeconds: Int,
+        val totalSeconds: Int
+    ) : TotpUiState
+}
 
 @Stable
 data class LinkedAliasItem(

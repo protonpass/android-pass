@@ -1,4 +1,4 @@
-package proton.android.pass.featureitemdetail.impl.login
+package proton.android.pass.featureitemdetail.impl.login.totp
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material.CircularProgressIndicator

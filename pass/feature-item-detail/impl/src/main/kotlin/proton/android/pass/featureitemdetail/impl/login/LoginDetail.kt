@@ -189,6 +189,9 @@ fun LoginDetail(
                                     )
                                 )
                             }
+                        },
+                        onUpgradeClick = {
+                            onNavigate(ItemDetailNavigation.Upgrade)
                         }
                     )
                 }

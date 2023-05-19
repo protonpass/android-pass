@@ -4,26 +4,28 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.onError
 import proton.android.pass.common.api.onSuccess
-import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.AliasRepository
 import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpdateAlias
 import proton.android.pass.data.api.usecases.UpdateAliasContent
 import proton.android.pass.data.api.usecases.UpdateAliasItemContent
@@ -53,18 +55,18 @@ class UpdateAliasViewModel @Inject constructor(
     private val updateAliasUseCase: UpdateAlias,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
-    observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
-) : BaseAliasViewModel(observeVaults, savedStateHandle) {
+) : BaseAliasViewModel(savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
 
-    private val itemId: Option<ItemId> =
-        savedStateHandle.get<String>(CommonNavArgId.ItemId.key)
-            .toOption()
-            .map { ItemId(it) }
+    private val navShareId: ShareId =
+        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
+    private val navItemId: ItemId =
+        ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
+    private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
 
     private var _item: Item? = null
 
@@ -77,6 +79,16 @@ class UpdateAliasViewModel @Inject constructor(
             setupInitialState()
         }
     }
+
+    val updateAliasUiState: StateFlow<UpdateAliasUiState> = combine(
+        navShareIdState,
+        baseAliasUiState,
+        ::UpdateAliasUiState
+    ).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = UpdateAliasUiState.Initial
+    )
 
     override fun onMailboxesChanged(mailboxes: List<SelectedAliasMailboxUiModel>) {
         super.onMailboxesChanged(mailboxes)
@@ -106,8 +118,8 @@ class UpdateAliasViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.Loading }
 
         val userId = accountManager.getPrimaryUserId().first { userId -> userId != null }
-        if (userId != null && navShareId is Some && itemId is Some) {
-            fetchInitialData(userId, navShareId.value, itemId.value)
+        if (userId != null) {
+            fetchInitialData(userId, navShareId, navItemId)
         } else {
             showError("Empty user/share/item Id", InitError)
         }

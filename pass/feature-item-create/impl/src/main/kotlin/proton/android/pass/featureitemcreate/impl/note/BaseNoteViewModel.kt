@@ -1,7 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.note
 
 import androidx.annotation.VisibleForTesting
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,23 +10,11 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
-import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.pass.domain.ItemId
 
-abstract class BaseNoteViewModel(
-    private val snackbarDispatcher: SnackbarDispatcher,
-    savedStateHandle: SavedStateHandle
-) : ViewModel() {
-
-    protected val itemId: Option<ItemId> =
-        savedStateHandle.get<String>(CommonNavArgId.ItemId.key)
-            .toOption()
-            .map { ItemId(it) }
+abstract class BaseNoteViewModel(private val snackbarDispatcher: SnackbarDispatcher) : ViewModel() {
 
     protected val noteItemState: MutableStateFlow<NoteItem> = MutableStateFlow(NoteItem.Empty)
     protected val isLoadingState: MutableStateFlow<IsLoadingState> =

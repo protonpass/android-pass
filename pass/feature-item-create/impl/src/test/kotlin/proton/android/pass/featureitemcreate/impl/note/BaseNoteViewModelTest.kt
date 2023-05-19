@@ -9,7 +9,6 @@ import org.junit.Test
 import proton.android.pass.featureitemcreate.impl.note.BaseNoteUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
 
 internal class BaseNoteViewModelTest {
 
@@ -23,8 +22,7 @@ internal class BaseNoteViewModelTest {
     fun setUp() {
         snackbarDispatcher = TestSnackbarDispatcher()
         baseNoteViewModel = object : BaseNoteViewModel(
-            snackbarDispatcher,
-            TestSavedStateHandle.create()
+            snackbarDispatcher
         ) {}
     }
 

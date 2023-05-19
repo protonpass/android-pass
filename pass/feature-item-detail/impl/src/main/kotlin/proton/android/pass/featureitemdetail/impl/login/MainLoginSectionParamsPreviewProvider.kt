@@ -27,7 +27,13 @@ class MainLoginSectionParamsPreviewProvider : PreviewParameterProvider<MainLogin
             MainLoginSectionParams(
                 username = "MyUsername",
                 passwordState = PasswordState.Revealed("encrypted", "clearText"),
-                totpUiState = TotpUiState("123456", 12, 20),
+                totpUiState = TotpUiState.Visible("123456", 12, 20),
+                showViewAlias = false
+            ),
+            MainLoginSectionParams(
+                username = "MyUsername",
+                passwordState = PasswordState.Revealed("encrypted", "clearText"),
+                totpUiState = TotpUiState.Hidden,
                 showViewAlias = false
             )
         )

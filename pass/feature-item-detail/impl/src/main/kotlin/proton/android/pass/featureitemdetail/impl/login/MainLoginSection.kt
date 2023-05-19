@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
+import proton.android.pass.featureitemdetail.impl.login.totp.TotpRow
 
 @Composable
 fun MainLoginSection(
@@ -23,6 +24,7 @@ fun MainLoginSection(
     onTogglePasswordClick: () -> Unit,
     onCopyPasswordClick: () -> Unit,
     onCopyTotpClick: (String) -> Unit,
+    onUpgradeClick: () -> Unit
 ) {
     RoundedCornersColumn(
         modifier = modifier.fillMaxWidth()
@@ -41,7 +43,11 @@ fun MainLoginSection(
         )
         if (totpUiState != null) {
             Divider(color = PassTheme.colors.inputBorderNorm)
-            TotpRow(state = totpUiState) { onCopyTotpClick(it) }
+            TotpRow(
+                state = totpUiState,
+                onCopyTotpClick = onCopyTotpClick,
+                onUpgradeClick = onUpgradeClick
+            )
         }
     }
 }
@@ -66,7 +72,8 @@ fun MainLoginSectionPreview(
                 onTogglePasswordClick = {},
                 onCopyPasswordClick = {},
                 onCopyTotpClick = {},
-                onGoToAliasClick = {}
+                onGoToAliasClick = {},
+                onUpgradeClick = {}
             )
         }
     }

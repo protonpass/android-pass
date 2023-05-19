@@ -56,7 +56,7 @@ class UpdateAliasViewModel @Inject constructor(
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
     savedStateHandle: SavedStateHandle
-) : BaseAliasViewModel(savedStateHandle) {
+) : BaseAliasViewModel(snackbarDispatcher, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)

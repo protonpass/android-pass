@@ -1,7 +1,10 @@
 package proton.android.pass.data.impl.usecases
 
 import app.cash.turbine.test
+import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import kotlinx.datetime.Clock
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -11,12 +14,21 @@ import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+import proton.android.pass.data.api.usecases.ItemTypeFilter
+import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import proton.pass.domain.Item
+import proton.pass.domain.Plan
+import proton.pass.domain.PlanType
+import proton.pass.domain.ShareId
+import proton.pass.domain.ShareSelection
+import proton.pass.domain.Vault
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
@@ -51,20 +63,28 @@ class GetSuggestedLoginItemsImplTest {
     private lateinit var observeActiveItems: TestObserveActiveItems
     private lateinit var filter: FakeSuggestionItemFilterer
     private lateinit var getSuggestedLoginItems: GetSuggestedLoginItems
+    private lateinit var upgradeInfo: TestObserveUpgradeInfo
+    private lateinit var observeVaults: TestObserveVaults
 
     @Before
     fun setUp() {
         observeActiveItems = TestObserveActiveItems()
         filter = FakeSuggestionItemFilterer()
+        upgradeInfo = TestObserveUpgradeInfo()
+        observeVaults = TestObserveVaults()
         getSuggestedLoginItems = GetSuggestedLoginItemsImpl(
-            observeActiveItems,
-            filter,
-            FakeSuggestionSorter()
+            upgradeInfo = upgradeInfo,
+            observeVaults = observeVaults,
+            observeActiveItems = observeActiveItems,
+            suggestionItemFilter = filter,
+            suggestionSorter = FakeSuggestionSorter()
         )
     }
 
     @Test
     fun `filter is invoked`() = runTest {
+        emitDefaultVaultAndPlan()
+
         val fixedTitle = "item1"
         val item1 = TestItem.random(title = fixedTitle)
         val item2 = TestItem.random()
@@ -76,10 +96,19 @@ class GetSuggestedLoginItemsImplTest {
         getSuggestedLoginItems.invoke(None, None).test {
             assertEquals(awaitItem(), listOf(item1))
         }
+
+        val memory = observeActiveItems.getMemory()
+        val expected = TestObserveActiveItems.Payload(
+            filter = ItemTypeFilter.Logins,
+            shareSelection = ShareSelection.AllShares
+        )
+        assertThat(memory).isEqualTo(listOf(expected))
     }
 
     @Test
     fun `error is propagated`() = runTest {
+        emitDefaultVaultAndPlan()
+
         val message = "test exception"
 
         filter.setFilter { true }
@@ -90,6 +119,76 @@ class GetSuggestedLoginItemsImplTest {
             assertTrue(e is Exception)
             assertEquals(e.message, message)
         }
+
+        val memory = observeActiveItems.getMemory()
+        val expected = TestObserveActiveItems.Payload(
+            filter = ItemTypeFilter.Logins,
+            shareSelection = ShareSelection.AllShares
+        )
+        assertThat(memory).isEqualTo(listOf(expected))
     }
+
+    @Test
+    fun `only suggestions from the primary vault if plan is free`() = runTest {
+        // GIVEN
+        val primaryShareId = ShareId("123")
+        val vaults = listOf(
+            Vault(
+                shareId = primaryShareId,
+                name = "default",
+                isPrimary = true
+            ),
+            Vault(
+                shareId = ShareId("456"),
+                name = "other",
+                isPrimary = false
+            )
+        )
+        observeVaults.sendResult(Result.success(vaults))
+        upgradeInfo.setResult(createUpgradeWithPlan(PlanType.Free))
+
+        filter.setFilter { true }
+
+        val items = listOf(TestItem.random())
+        observeActiveItems.sendItemList(items)
+
+        // WHEN
+        val res = getSuggestedLoginItems.invoke(None, None).first()
+
+        // THEN
+        assertThat(res).isEqualTo(items)
+
+        val memory = observeActiveItems.getMemory()
+        val expected = TestObserveActiveItems.Payload(
+            filter = ItemTypeFilter.Logins,
+            shareSelection = ShareSelection.Share(primaryShareId)
+        )
+        assertThat(memory).isEqualTo(listOf(expected))
+    }
+
+    private fun emitDefaultVaultAndPlan() {
+        val defaultVault = Vault(
+            shareId = ShareId("123"),
+            name = "default",
+            isPrimary = true
+        )
+        observeVaults.sendResult(Result.success(listOf(defaultVault)))
+        upgradeInfo.setResult(createUpgradeWithPlan(PlanType.Paid("", "")))
+    }
+
+    private fun createUpgradeWithPlan(planType: PlanType) = UpgradeInfo(
+        isUpgradeAvailable = true,
+        plan = Plan(
+            planType = planType,
+            hideUpgrade = false,
+            vaultLimit = 1,
+            aliasLimit = 1,
+            totpLimit = 1,
+            updatedAt = Clock.System.now().epochSeconds
+        ),
+        totalVaults = 1,
+        totalAlias = 0,
+        totalTotp = 0
+    )
 }
 

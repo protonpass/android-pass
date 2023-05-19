@@ -4,7 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
@@ -14,13 +19,13 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.usecases.GetShareById
-import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.InitError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.ItemUpdateError
 import proton.android.pass.featureitemcreate.impl.note.NoteSnackbarMessage.NoteUpdated
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -36,13 +41,16 @@ class UpdateNoteViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val telemetryManager: TelemetryManager,
-    observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle
-) : BaseNoteViewModel(observeVaults, savedStateHandle) {
+) : BaseNoteViewModel(snackbarDispatcher, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
+
+    private val navShareId: ShareId =
+        ShareId(requireNotNull(savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)))
+    private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
 
     private var _item: Item? = null
 
@@ -52,8 +60,8 @@ class UpdateNoteViewModel @Inject constructor(
             isLoadingState.update { IsLoadingState.Loading }
             val userId = accountManager.getPrimaryUserId()
                 .first { userId -> userId != null }
-            if (userId != null && navShareId is Some && itemId is Some) {
-                runCatching { itemRepository.getById(userId, navShareId.value, itemId.value) }
+            if (userId != null && itemId is Some) {
+                runCatching { itemRepository.getById(userId, navShareId, itemId.value) }
                     .onSuccess { item: Item ->
                         _item = item
                         noteItemState.update {
@@ -76,6 +84,17 @@ class UpdateNoteViewModel @Inject constructor(
             isLoadingState.update { IsLoadingState.NotLoading }
         }
     }
+
+    val updateNoteUiState: StateFlow<UpdateNoteUiState> = combine(
+        navShareIdState,
+        baseNoteUiState,
+        ::UpdateNoteUiState
+    ).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = UpdateNoteUiState.Initial
+    )
+
 
     fun updateItem(shareId: ShareId) = viewModelScope.launch(coroutineExceptionHandler) {
         requireNotNull(_item)

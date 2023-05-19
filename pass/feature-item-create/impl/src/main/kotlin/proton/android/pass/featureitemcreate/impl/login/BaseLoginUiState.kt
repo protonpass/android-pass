@@ -5,12 +5,10 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
-import proton.pass.domain.VaultWithItemCount
+import proton.pass.domain.ShareId
 
 @Immutable
-data class CreateUpdateLoginUiState(
-    val vaultList: List<VaultWithItemCount>,
-    val selectedVault: VaultWithItemCount?,
+data class BaseLoginUiState(
     val loginItem: LoginItem,
     val aliasItem: AliasItem?,
     val validationErrors: Set<LoginItemValidationErrors>,
@@ -20,15 +18,12 @@ data class CreateUpdateLoginUiState(
     val focusLastWebsite: Boolean,
     val canUpdateUsername: Boolean,
     val primaryEmail: String?,
-    val showVaultSelector: Boolean,
     val hasUserEditedContent: Boolean,
     val hasReachedAliasLimit: Boolean,
     val totpUiState: TotpUiState
 ) {
     companion object {
-        val Initial = CreateUpdateLoginUiState(
-            vaultList = emptyList(),
-            selectedVault = null,
+        val Initial = BaseLoginUiState(
             aliasItem = null,
             isLoadingState = IsLoadingState.NotLoading,
             loginItem = LoginItem.Empty,
@@ -38,13 +33,39 @@ data class CreateUpdateLoginUiState(
             focusLastWebsite = false,
             canUpdateUsername = true,
             primaryEmail = null,
-            showVaultSelector = false,
             hasUserEditedContent = false,
             hasReachedAliasLimit = false,
             totpUiState = TotpUiState.NotInitialised,
         )
     }
 }
+
+@Immutable
+data class CreateLoginUiState(
+    val shareUiState: ShareUiState,
+    val baseLoginUiState: BaseLoginUiState
+) {
+    companion object {
+        val Initial = CreateLoginUiState(
+            shareUiState = ShareUiState.NotInitialised,
+            baseLoginUiState = BaseLoginUiState.Initial
+        )
+    }
+}
+
+@Immutable
+data class UpdateLoginUiState(
+    val selectedShareId: ShareId?,
+    val baseLoginUiState: BaseLoginUiState
+) {
+    companion object {
+        val Initial = UpdateLoginUiState(
+            selectedShareId = null,
+            baseLoginUiState = BaseLoginUiState.Initial
+        )
+    }
+}
+
 
 sealed interface TotpUiState {
     @Immutable

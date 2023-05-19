@@ -7,22 +7,21 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestGetItemById
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveItems
-import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestUpdateItem
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.api.TotpSpec
@@ -60,9 +59,6 @@ class UpdateLoginViewModelTest {
                 set(CommonNavArgId.ItemId.key, ITEM_ID)
             },
             encryptionContextProvider = TestEncryptionContextProvider(),
-            observeVaults = TestObserveVaultsWithItemCount().apply {
-                sendResult(Result.success(listOf(defaultVault())))
-            },
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
             telemetryManager = TestTelemetryManager(),
             draftRepository = TestDraftRepository(),
@@ -91,9 +87,9 @@ class UpdateLoginViewModelTest {
         totpManager.setParseResult(Result.success(TotpSpec(secret = secret, label = "label")))
         getItemById.emitValue(Result.success(item))
 
-        instance.loginUiState.test {
+        instance.updateLoginUiState.test {
             val state = awaitItem()
-            assertThat(state.loginItem.primaryTotp).isEqualTo(secret)
+            assertThat(state.baseLoginUiState.loginItem.primaryTotp).isEqualTo(secret)
         }
     }
 
@@ -115,9 +111,9 @@ class UpdateLoginViewModelTest {
         )
         getItemById.emitValue(Result.success(item))
 
-        instance.loginUiState.test {
+        instance.updateLoginUiState.test {
             val state = awaitItem()
-            assertThat(state.loginItem.primaryTotp).isEqualTo(uri)
+            assertThat(state.baseLoginUiState.loginItem.primaryTotp).isEqualTo(uri)
         }
     }
 

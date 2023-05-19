@@ -41,6 +41,7 @@ import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions
 import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
 import proton.android.pass.featureitemcreate.impl.login.updateLoginGraph
 import proton.android.pass.featureitemcreate.impl.note.CreateNote
+import proton.android.pass.featureitemcreate.impl.note.CreateNoteNavigation
 import proton.android.pass.featureitemcreate.impl.note.EditNote
 import proton.android.pass.featureitemcreate.impl.note.createNoteGraph
 import proton.android.pass.featureitemcreate.impl.note.updateNoteGraph
@@ -261,9 +262,11 @@ fun NavGraphBuilder.appGraph(
                 GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }
+
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
                     destination = WordSeparatorDialog
                 )
+
                 GeneratePasswordNavigation.OnSelectPasswordMode -> appNavigator.navigate(
                     destination = PasswordModeDialog
                 )
@@ -312,7 +315,11 @@ fun NavGraphBuilder.appGraph(
                 BaseLoginNavigation.Close -> appNavigator.onBackClick()
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
-                    route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.showUpgrade, it.title),
+                    route = CreateAliasBottomSheet.createNavRoute(
+                        it.shareId,
+                        it.showUpgrade,
+                        it.title
+                    ),
                     backDestination = CreateLogin
                 )
 
@@ -333,15 +340,22 @@ fun NavGraphBuilder.appGraph(
                     destination = AliasOptionsBottomSheet,
                     route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
                 )
+
                 BaseLoginNavigation.DeleteAlias ->
                     appNavigator.navigateUpWithResult(CLEAR_ALIAS_NAV_PARAMETER_KEY, true)
+
                 is BaseLoginNavigation.EditAlias -> {
                     appNavigator.navigate(
                         destination = CreateAliasBottomSheet,
-                        route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.showUpgrade, isEdit = true),
+                        route = CreateAliasBottomSheet.createNavRoute(
+                            it.shareId,
+                            it.showUpgrade,
+                            isEdit = true
+                        ),
                         backDestination = CreateLogin
                     )
                 }
+
                 is BaseLoginNavigation.SelectVault -> {
                     appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
@@ -389,6 +403,7 @@ fun NavGraphBuilder.appGraph(
                     destination = AliasOptionsBottomSheet,
                     route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
                 )
+
                 BaseLoginNavigation.DeleteAlias -> {
                     appNavigator.navigateUpWithResult(CLEAR_ALIAS_NAV_PARAMETER_KEY, true)
                 }
@@ -396,7 +411,11 @@ fun NavGraphBuilder.appGraph(
                 is BaseLoginNavigation.EditAlias -> {
                     appNavigator.navigate(
                         destination = CreateAliasBottomSheet,
-                        route = CreateAliasBottomSheet.createNavRoute(it.shareId, it.showUpgrade, isEdit = true),
+                        route = CreateAliasBottomSheet.createNavRoute(
+                            it.shareId,
+                            it.showUpgrade,
+                            isEdit = true
+                        ),
                         backDestination = EditLogin
                     )
                 }
@@ -422,13 +441,16 @@ fun NavGraphBuilder.appGraph(
         }
     )
     createNoteGraph(
-        onNoteCreateSuccess = { appNavigator.onBackClick() },
-        onBackClick = { appNavigator.onBackClick() },
-        onSelectVault = {
-            appNavigator.navigate(
-                destination = SelectVaultBottomsheet,
-                route = SelectVaultBottomsheet.createNavRoute(it.toOption())
-            )
+        onNavigate = {
+            when (it) {
+                CreateNoteNavigation.Back -> appNavigator.onBackClick()
+                is CreateNoteNavigation.SelectVault -> appNavigator.navigate(
+                    destination = SelectVaultBottomsheet,
+                    route = SelectVaultBottomsheet.createNavRoute(it.shareId.toOption())
+                )
+
+                CreateNoteNavigation.Success -> appNavigator.onBackClick()
+            }
         }
     )
     updateNoteGraph(

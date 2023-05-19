@@ -152,7 +152,7 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    @VisibleForTesting
+    @VisibleForTesting(otherwise = VisibleForTesting.PROTECTED)
     val baseLoginUiState: StateFlow<BaseLoginUiState> = combineN(
         loginAliasItemWrapperState,
         isLoadingState,

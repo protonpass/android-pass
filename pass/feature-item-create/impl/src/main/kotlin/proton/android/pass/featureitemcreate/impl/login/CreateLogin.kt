@@ -22,12 +22,15 @@ import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSectio
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.login.ShareError.EmptyShareList
+import proton.android.pass.featureitemcreate.impl.login.ShareError.SharesNotAvailable
 import proton.pass.domain.ShareId
 
 private enum class CLActionAfterHideKeyboard {
     SelectVault
 }
 
+@Suppress("ComplexMethod")
 @OptIn(
     ExperimentalLifecycleComposeApi::class, ExperimentalComposeUiApi::class
 )
@@ -76,9 +79,18 @@ fun CreateLoginScreen(
     }
 
     val (showVaultSelector, selectedVault) = when (val shares = uiState.shareUiState) {
-        is ShareUiState.Error,
         ShareUiState.Loading,
         ShareUiState.NotInitialised -> false to null
+
+        is ShareUiState.Error -> {
+            if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
+                viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.InitError)
+                LaunchedEffect(Unit) {
+                    onNavigate(BaseLoginNavigation.Close)
+                }
+            }
+            false to null
+        }
 
         is ShareUiState.Success -> (shares.vaultList.size > 1) to shares.currentVault
     }

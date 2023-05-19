@@ -8,7 +8,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -18,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
@@ -48,7 +46,6 @@ fun CreateLoginScreen(
         viewModel.setInitialContents(initialContents)
     }
     val uiState by viewModel.createLoginUiState.collectAsStateWithLifecycle()
-    val scope = rememberCoroutineScope()
     val keyboardState by keyboardAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
     var actionWhenKeyboardDisappears by remember { mutableStateOf<CLActionAfterHideKeyboard?>(null) }
@@ -150,14 +147,12 @@ fun CreateLoginScreen(
             when (actionWhenKeyboardDisappears) {
                 CLActionAfterHideKeyboard.SelectVault -> {
                     selectedVault ?: return@LaunchedEffect
-                    scope.launch {
-                        onNavigate(
-                            BaseLoginNavigation.SelectVault(
-                                shareId = selectedVault.vault.shareId
-                            )
+                    onNavigate(
+                        BaseLoginNavigation.SelectVault(
+                            shareId = selectedVault.vault.shareId
                         )
-                        actionWhenKeyboardDisappears = null // Clear flag
-                    }
+                    )
+                    actionWhenKeyboardDisappears = null // Clear flag
                 }
 
                 null -> {}

@@ -1,6 +1,7 @@
 package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
@@ -9,6 +10,12 @@ import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemState
 import proton.pass.domain.ShareId
+
+data class ItemWithTotp(
+    val shareId: ShareId,
+    val itemId: ItemId,
+    val createTime: Instant
+)
 
 interface LocalItemDataSource {
     suspend fun upsertItem(item: ItemEntity)
@@ -42,4 +49,6 @@ interface LocalItemDataSource {
     suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity?
 
     suspend fun getItemsPendingForTotpMigration(): List<ItemEntity>
+    fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>>
+    fun observeItemsWithTotpForShare(userId: UserId, shareId: ShareId): Flow<List<ItemWithTotp>>
 }

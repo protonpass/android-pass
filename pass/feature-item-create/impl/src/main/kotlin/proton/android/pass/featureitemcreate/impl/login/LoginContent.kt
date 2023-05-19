@@ -9,13 +9,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.launch
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
@@ -61,7 +59,6 @@ internal fun LoginContent(
 
     var actionWhenKeyboardDisappears by remember { mutableStateOf<ActionAfterHideKeyboard?>(null) }
 
-    val scope = rememberCoroutineScope()
     val keyboardState by keyboardAsState()
 
     LaunchedEffect(keyboardState, actionWhenKeyboardDisappears) {
@@ -69,23 +66,19 @@ internal fun LoginContent(
             when (actionWhenKeyboardDisappears) {
                 ActionAfterHideKeyboard.CreateAlias -> {
                     selectedShareId ?: return@LaunchedEffect
-                    scope.launch {
-                        onNavigate(
-                            BaseLoginNavigation.CreateAlias(
-                                selectedShareId,
-                                uiState.hasReachedAliasLimit,
-                                uiState.loginItem.title.some()
-                            )
+                    onNavigate(
+                        BaseLoginNavigation.CreateAlias(
+                            selectedShareId,
+                            uiState.hasReachedAliasLimit,
+                            uiState.loginItem.title.some()
                         )
-                        actionWhenKeyboardDisappears = null // Clear flag
-                    }
+                    )
+                    actionWhenKeyboardDisappears = null // Clear flag
                 }
 
                 ActionAfterHideKeyboard.GeneratePassword -> {
-                    scope.launch {
-                        onNavigate(BaseLoginNavigation.GeneratePassword)
-                        actionWhenKeyboardDisappears = null // Clear flag
-                    }
+                    onNavigate(BaseLoginNavigation.GeneratePassword)
+                    actionWhenKeyboardDisappears = null // Clear flag
                 }
 
                 null -> Unit

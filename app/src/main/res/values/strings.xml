@@ -5,4 +5,7 @@
     <string name="snackbar_could_not_refresh_items">Could not refresh your items</string>
     <string name="description_no_pass_scope">Proton Pass is currently in early access and only available to invited users of Proton</string>
 
+    <string name="twenty_vaults">20 vaults</string>
+    <string name="multiple_forwarding_mailboxes">Up to 5 forwarding mailboxes</string>
+    <string name="unlimited_email_alias">Unlimited email aliases</string>
 </resources>

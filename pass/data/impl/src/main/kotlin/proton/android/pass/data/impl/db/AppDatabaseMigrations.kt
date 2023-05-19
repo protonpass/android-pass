@@ -5,13 +5,16 @@ import androidx.room.RenameTable
 import androidx.room.migration.AutoMigrationSpec
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.keytransparency.data.local.KeyTransparencyDatabase
 import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
+import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
 import proton.android.pass.data.impl.db.entities.ShareKeyEntity
+import proton.pass.domain.ITEM_TYPE_LOGIN
 
 @Suppress("ClassNaming")
 object AppDatabaseMigrations {
@@ -83,4 +86,25 @@ object AppDatabaseMigrations {
         value = [RenameTable(fromTableName = "PlanLimitsEntity", toTableName = "PlanEntity"), ]
     )
     class MIGRATION_11_12 : AutoMigrationSpec
+
+    val MIGRATION_14_15 = object : Migration(14, 15) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.addTableColumn(
+                table = ItemEntity.TABLE,
+                column = ItemEntity.Columns.HAS_TOTP,
+                type = "INTEGER",
+                defaultValue = "NULL",
+            )
+            // Set all items that are not login to HAS_TOTP = false
+            database.execSQL(
+                """
+                    UPDATE ${ItemEntity.TABLE}
+                    SET ${ItemEntity.Columns.HAS_TOTP} = 0
+                    WHERE ${ItemEntity.Columns.HAS_TOTP} IS NULL
+                      AND ${ItemEntity.Columns.ITEM_TYPE} != $ITEM_TYPE_LOGIN 
+                    
+                """.trimIndent()
+            )
+        }
+    }
 }

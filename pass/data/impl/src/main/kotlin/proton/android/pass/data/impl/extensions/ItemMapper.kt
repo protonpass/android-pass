@@ -1,8 +1,13 @@
 package proton.android.pass.data.impl.extensions
 
+import kotlinx.datetime.Instant
+import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.pass.domain.Item
+import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
+import proton.pass.domain.ShareId
 import proton.pass.domain.entity.AppName
 import proton.pass.domain.entity.PackageInfo
 import proton.pass.domain.entity.PackageName
@@ -45,4 +50,25 @@ fun ItemEntity.allowedApps(context: EncryptionContext): Set<PackageInfo> {
     return parsed.platformSpecific.android.allowedAppsList.map {
         PackageInfo(PackageName(it.packageName), AppName(it.appName))
     }.toSet()
+}
+
+fun ItemEntity.toDomain(context: EncryptionContext): Item {
+    val decrypted = context.decrypt(encryptedContent)
+    val parsed = ItemV1.Item.parseFrom(decrypted)
+
+    return Item(
+        id = ItemId(id),
+        itemUuid = parsed.metadata.itemUuid,
+        revision = revision,
+        shareId = ShareId(shareId),
+        itemType = ItemType.fromParsed(context, parsed, aliasEmail),
+        title = encryptedTitle,
+        note = encryptedNote,
+        content = encryptedContent,
+        state = state,
+        packageInfoSet = allowedApps(context),
+        modificationTime = Instant.fromEpochSeconds(modifyTime),
+        createTime = Instant.fromEpochSeconds(createTime),
+        lastAutofillTime = lastUsedTime.toOption().map(Instant::fromEpochSeconds)
+    )
 }

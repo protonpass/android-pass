@@ -40,4 +40,6 @@ interface LocalItemDataSource {
     suspend fun updateLastUsedTime(shareId: ShareId, itemId: ItemId, now: Long)
     fun observeItemCount(shareIds: List<ShareId>): Flow<Map<ShareId, ShareItemCount>>
     suspend fun getItemByAliasEmail(userId: UserId, aliasEmail: String): ItemEntity?
+
+    suspend fun getItemsPendingForTotpMigration(): List<ItemEntity>
 }

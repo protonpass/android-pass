@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Instant
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
@@ -18,7 +17,6 @@ import me.proton.core.user.domain.repository.UserAddressRepository
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -37,11 +35,11 @@ import proton.android.pass.data.api.repositories.ShareRepository
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
-import proton.android.pass.data.impl.extensions.allowedApps
-import proton.android.pass.data.impl.extensions.fromParsed
 import proton.android.pass.data.impl.extensions.hasPackageName
+import proton.android.pass.data.impl.extensions.hasTotp
 import proton.android.pass.data.impl.extensions.hasWebsite
 import proton.android.pass.data.impl.extensions.toCrypto
+import proton.android.pass.data.impl.extensions.toDomain
 import proton.android.pass.data.impl.extensions.toItemRevision
 import proton.android.pass.data.impl.extensions.toRequest
 import proton.android.pass.data.impl.extensions.with
@@ -116,7 +114,7 @@ class ItemRepositoryImpl @Inject constructor(
             localItemDataSource.upsertItem(entity)
 
             encryptionContextProvider.withEncryptionContext {
-                entityToDomain(this@withEncryptionContext, entity)
+                entity.toDomain(this@withEncryptionContext)
             }
         }
     }
@@ -148,7 +146,7 @@ class ItemRepositoryImpl @Inject constructor(
             )
             localItemDataSource.upsertItem(entity)
             encryptionContextProvider.withEncryptionContext {
-                entityToDomain(this@withEncryptionContext, entity)
+                entity.toDomain(this@withEncryptionContext)
             }
         }
     }
@@ -195,7 +193,7 @@ class ItemRepositoryImpl @Inject constructor(
             }
 
             encryptionContextProvider.withEncryptionContext {
-                entityToDomain(this@withEncryptionContext, itemEntity)
+                itemEntity.toDomain(this@withEncryptionContext)
             }
         }
     }
@@ -239,7 +237,7 @@ class ItemRepositoryImpl @Inject constructor(
                 val isAccountStillAvailable = accountManager.getAccount(userId).first() != null
                 if (!isAccountStillAvailable) return@map emptyList()
                 encryptionContextProvider.withEncryptionContext {
-                    items.map { entityToDomain(this@withEncryptionContext, it) }
+                    items.map { it.toDomain(this@withEncryptionContext) }
                 }
             }
             .flowOn(Dispatchers.IO)
@@ -253,7 +251,7 @@ class ItemRepositoryImpl @Inject constructor(
             val item = localItemDataSource.getById(shareId, itemId)
             requireNotNull(item)
             encryptionContextProvider.withEncryptionContext {
-                entityToDomain(this@withEncryptionContext, item)
+                item.toDomain(this@withEncryptionContext)
             }
         }
 
@@ -402,7 +400,7 @@ class ItemRepositoryImpl @Inject constructor(
         val itemEntity = requireNotNull(localItemDataSource.getById(shareId, itemId))
 
         val (item, itemProto) = encryptionContextProvider.withEncryptionContext {
-            val item = entityToDomain(this@withEncryptionContext, itemEntity)
+            val item = itemEntity.toDomain(this@withEncryptionContext)
             val itemContents = decrypt(item.content)
             item to ItemV1.Item.parseFrom(itemContents)
         }
@@ -531,7 +529,7 @@ class ItemRepositoryImpl @Inject constructor(
         }
 
         return encryptionContextProvider.withEncryptionContext {
-            entityToDomain(this@withEncryptionContext, resAsEntity)
+            resAsEntity.toDomain(this@withEncryptionContext)
         }
     }
 
@@ -582,7 +580,7 @@ class ItemRepositoryImpl @Inject constructor(
         val item = localItemDataSource.getItemByAliasEmail(userId, aliasEmail) ?: return null
 
         return encryptionContextProvider.withEncryptionContext {
-            entityToDomain(this@withEncryptionContext, item)
+            item.toDomain(this@withEncryptionContext)
         }
     }
 
@@ -729,7 +727,7 @@ class ItemRepositoryImpl @Inject constructor(
             )
             localItemDataSource.upsertItem(entity)
             encryptionContextProvider.withEncryptionContext {
-                entityToDomain(this@withEncryptionContext, entity)
+                entity.toDomain(this@withEncryptionContext)
             }
         }
     }
@@ -778,7 +776,7 @@ class ItemRepositoryImpl @Inject constructor(
             share = share,
             shareKeys = shareKeys
         )
-        return entityToDomain(encryptionContext, entity) to entity
+        return entity.toDomain(encryptionContext) to entity
     }
 
     private fun itemResponseToEntity(
@@ -788,6 +786,9 @@ class ItemRepositoryImpl @Inject constructor(
         shareKeys: List<ShareKey>
     ): ItemEntity {
         val output = openItem.open(itemRevision.toCrypto(), share, shareKeys)
+        val hasTotp = encryptionContextProvider.withEncryptionContext {
+            output.item.hasTotp(this@withEncryptionContext)
+        }
         return ItemEntity(
             id = itemRevision.itemId,
             userId = userAddress.userId.id,
@@ -807,31 +808,8 @@ class ItemRepositoryImpl @Inject constructor(
             aliasEmail = itemRevision.aliasEmail,
             keyRotation = itemRevision.keyRotation,
             key = itemRevision.itemKey,
-            encryptedKey = output.itemKey
-        )
-    }
-
-    private fun entityToDomain(
-        encryptionContext: EncryptionContext,
-        entity: ItemEntity
-    ): Item {
-        val decrypted = encryptionContext.decrypt(entity.encryptedContent)
-        val parsed = ItemV1.Item.parseFrom(decrypted)
-
-        return Item(
-            id = ItemId(entity.id),
-            itemUuid = parsed.metadata.itemUuid,
-            revision = entity.revision,
-            shareId = ShareId(entity.shareId),
-            itemType = ItemType.fromParsed(encryptionContext, parsed, entity.aliasEmail),
-            title = entity.encryptedTitle,
-            note = entity.encryptedNote,
-            content = entity.encryptedContent,
-            state = entity.state,
-            packageInfoSet = entity.allowedApps(encryptionContext),
-            modificationTime = Instant.fromEpochSeconds(entity.modifyTime),
-            createTime = Instant.fromEpochSeconds(entity.createTime),
-            lastAutofillTime = entity.lastUsedTime.toOption().map(Instant::fromEpochSeconds)
+            encryptedKey = output.itemKey,
+            hasTotp = hasTotp,
         )
     }
 

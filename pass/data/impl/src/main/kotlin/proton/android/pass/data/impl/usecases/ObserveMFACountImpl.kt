@@ -1,27 +1,22 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import proton.android.pass.crypto.api.context.EncryptionContextProvider
-import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.api.usecases.ObserveItems
+import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.data.api.usecases.ObserveMFACount
-import proton.pass.domain.ItemType
-import proton.pass.domain.ShareSelection
+import proton.android.pass.data.impl.local.LocalItemDataSource
 import javax.inject.Inject
 
 class ObserveMFACountImpl @Inject constructor(
-    private val observeItems: ObserveItems,
-    private val encryptionContextProvider: EncryptionContextProvider
+    private val accountManager: AccountManager,
+    private val localItemDataSource: LocalItemDataSource
 ) : ObserveMFACount {
-    override fun invoke(): Flow<Int> = observeItems(
-        selection = ShareSelection.AllShares,
-        itemState = null,
-        filter = ItemTypeFilter.Logins
-    )
-        .map {
-            encryptionContextProvider.withEncryptionContext {
-                it.map { decrypt((it.itemType as ItemType.Login).primaryTotp) }
-            }.count { it.isNotBlank() }
+    override fun invoke(): Flow<Int> = accountManager.getPrimaryUserId()
+        .filterNotNull()
+        .flatMapLatest {
+            localItemDataSource.observeAllItemsWithTotp(it)
         }
+        .map { it.size }
 }

@@ -7,7 +7,12 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
@@ -25,9 +30,8 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.GetItemById
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
-import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
@@ -38,6 +42,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.In
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemUpdateError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
@@ -62,7 +67,6 @@ class UpdateLoginViewModel @Inject constructor(
     private val totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle,
     draftRepository: DraftRepository
 ) : BaseLoginViewModel(
@@ -70,14 +74,14 @@ class UpdateLoginViewModel @Inject constructor(
     snackbarDispatcher = snackbarDispatcher,
     clipboardManager = clipboardManager,
     totpManager = totpManager,
-    observeVaults = observeVaults,
     observeCurrentUser = observeCurrentUser,
     observeUpgradeInfo = observeUpgradeInfo,
-    savedStateHandle = savedStateHandle,
     draftRepository = draftRepository,
     encryptionContextProvider = encryptionContextProvider
 ) {
-
+    private val navShareId =
+        ShareId(requireNotNull(savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)))
+    private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
     }
@@ -93,8 +97,8 @@ class UpdateLoginViewModel @Inject constructor(
             if (_item != null) return@launch
 
             isLoadingState.update { IsLoadingState.Loading }
-            if (navShareId is Some && itemId is Some) {
-                runCatching { getItemById.invoke(navShareId.value, itemId.value).first() }
+            if (itemId is Some) {
+                runCatching { getItemById.invoke(navShareId, itemId.value).first() }
                     .onSuccess { item ->
                         _item = item
                         onItemReceived(item)
@@ -110,6 +114,16 @@ class UpdateLoginViewModel @Inject constructor(
             isLoadingState.update { IsLoadingState.NotLoading }
         }
     }
+
+    val updateLoginUiState: StateFlow<UpdateLoginUiState> = combine(
+        navShareIdState,
+        baseLoginUiState,
+        ::UpdateLoginUiState
+    ).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = UpdateLoginUiState.Initial
+    )
 
     fun setAliasItem(aliasItem: AliasItem) {
         canUpdateUsernameState.update { false }

@@ -8,6 +8,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonui.api.itemName
@@ -28,12 +29,10 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasOptionsUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
-import proton.android.pass.featureitemcreate.impl.login.CreateUpdateLoginUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestItem
@@ -57,6 +56,7 @@ internal class CreateLoginViewModelTest {
     private lateinit var observeVaults: TestObserveVaultsWithItemCount
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
+    private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
 
     @Before
     fun setUp() {
@@ -68,6 +68,7 @@ internal class CreateLoginViewModelTest {
         observeVaults = TestObserveVaultsWithItemCount()
         telemetryManager = TestTelemetryManager()
         snackbarDispatcher = TestSnackbarDispatcher()
+        observeUpgradeInfo = TestObserveUpgradeInfo()
         instance = CreateLoginViewModel(
             accountManager = accountManager,
             createItem = createItem,
@@ -81,7 +82,7 @@ internal class CreateLoginViewModelTest {
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
             telemetryManager = telemetryManager,
             draftRepository = TestDraftRepository(),
-            observeUpgradeInfo = TestObserveUpgradeInfo()
+            observeUpgradeInfo = observeUpgradeInfo
         )
     }
 
@@ -94,14 +95,18 @@ internal class CreateLoginViewModelTest {
 
             instance.createItem()
 
-            instance.loginUiState.test {
+            instance.createLoginUiState.test {
                 assertThat(awaitItem())
                     .isEqualTo(
-                        Initial.copy(
-                            vaultList = listOf(vault),
-                            selectedVault = vault,
-                            validationErrors = setOf(LoginItemValidationErrors.BlankTitle),
-                            totpUiState = TotpUiState.Success
+                        CreateLoginUiState.Initial.copy(
+                            ShareUiState.Success(
+                                vaultList = listOf(vault),
+                                currentVault = vault
+                            ),
+                            BaseLoginUiState.Initial.copy(
+                                validationErrors = setOf(LoginItemValidationErrors.BlankTitle),
+                                totpUiState = TotpUiState.Success
+                            )
                         )
                     )
             }
@@ -119,53 +124,65 @@ internal class CreateLoginViewModelTest {
         accountManager.sendPrimaryUserId(userId)
         createItem.sendItem(Result.success(item))
 
-        instance.loginUiState.test {
+        instance.createLoginUiState.test {
             instance.createItem()
             assertThat(awaitItem())
                 .isEqualTo(
-                    Initial.copy(
-                        vaultList = listOf(vault),
-                        selectedVault = vault,
-                        loginItem = LoginItem.Empty.copy(title = titleInput),
-                        isLoadingState = IsLoadingState.NotLoading,
-                        hasUserEditedContent = true,
-                        totpUiState = TotpUiState.Success
-                    )
-                )
-            assertThat(awaitItem())
-                .isEqualTo(
-                    Initial.copy(
-                        vaultList = listOf(vault),
-                        selectedVault = vault,
-                        loginItem = LoginItem.Empty.copy(title = titleInput),
-                        isLoadingState = IsLoadingState.Loading,
-                        hasUserEditedContent = true,
-                        totpUiState = TotpUiState.Success
-                    )
-                )
-            assertThat(awaitItem())
-                .isEqualTo(
-                    Initial.copy(
-                        vaultList = listOf(vault),
-                        selectedVault = vault,
-                        loginItem = LoginItem.Empty.copy(title = titleInput),
-                        isLoadingState = IsLoadingState.NotLoading,
-                        hasUserEditedContent = true,
-                        isItemSaved = ItemSavedState.Success(
-                            item.id,
-                            ItemUiModel(
-                                id = item.id,
-                                shareId = item.shareId,
-                                name = item.itemName(TestEncryptionContext),
-                                note = TestEncryptionContext.decrypt(item.note),
-                                itemType = item.itemType,
-                                createTime = item.createTime,
-                                state = 0,
-                                modificationTime = item.modificationTime,
-                                lastAutofillTime = item.lastAutofillTime.value()
-                            )
+                    CreateLoginUiState.Initial.copy(
+                        ShareUiState.Success(
+                            vaultList = listOf(vault),
+                            currentVault = vault
                         ),
-                        totpUiState = TotpUiState.Success
+                        BaseLoginUiState.Initial.copy(
+                            loginItem = LoginItem.Empty.copy(title = titleInput),
+                            isLoadingState = IsLoadingState.NotLoading,
+                            hasUserEditedContent = true,
+                            totpUiState = TotpUiState.Success
+                        )
+                    )
+                )
+            assertThat(awaitItem())
+                .isEqualTo(
+                    CreateLoginUiState.Initial.copy(
+                        ShareUiState.Success(
+                            vaultList = listOf(vault),
+                            currentVault = vault
+                        ),
+                        BaseLoginUiState.Initial.copy(
+                            loginItem = LoginItem.Empty.copy(title = titleInput),
+                            isLoadingState = IsLoadingState.Loading,
+                            hasUserEditedContent = true,
+                            totpUiState = TotpUiState.Success
+                        )
+                    )
+                )
+            assertThat(awaitItem())
+                .isEqualTo(
+                    CreateLoginUiState.Initial.copy(
+                        ShareUiState.Success(
+                            vaultList = listOf(vault),
+                            currentVault = vault
+                        ),
+                        BaseLoginUiState.Initial.copy(
+                            loginItem = LoginItem.Empty.copy(title = titleInput),
+                            isLoadingState = IsLoadingState.NotLoading,
+                            hasUserEditedContent = true,
+                            isItemSaved = ItemSavedState.Success(
+                                item.id,
+                                ItemUiModel(
+                                    id = item.id,
+                                    shareId = item.shareId,
+                                    name = item.itemName(TestEncryptionContext),
+                                    note = TestEncryptionContext.decrypt(item.note),
+                                    itemType = item.itemType,
+                                    createTime = item.createTime,
+                                    state = 0,
+                                    modificationTime = item.modificationTime,
+                                    lastAutofillTime = item.lastAutofillTime.value()
+                                )
+                            ),
+                            totpUiState = TotpUiState.Success
+                        )
                     )
                 )
         }
@@ -180,12 +197,25 @@ internal class CreateLoginViewModelTest {
         val vault = sendInitialVault(ShareId("shareId"))
         val initialContents = setInitialContents()
 
-        instance.loginUiState.test {
+        instance.createLoginUiState.test {
             assertThat(awaitItem())
                 .isEqualTo(
-                    Initial.copy(
-                        vaultList = listOf(
-                            VaultWithItemCount(
+                    CreateLoginUiState.Initial.copy(
+                        shareUiState = ShareUiState.Success(
+                            vaultList = listOf(
+                                VaultWithItemCount(
+                                    vault = Vault(
+                                        vault.vault.shareId,
+                                        vault.vault.name,
+                                        vault.vault.color,
+                                        vault.vault.icon,
+                                        false
+                                    ),
+                                    activeItemCount = 1,
+                                    trashedItemCount = 0
+                                )
+                            ),
+                            currentVault = VaultWithItemCount(
                                 vault = Vault(
                                     vault.vault.shareId,
                                     vault.vault.name,
@@ -197,24 +227,15 @@ internal class CreateLoginViewModelTest {
                                 trashedItemCount = 0
                             )
                         ),
-                        selectedVault = VaultWithItemCount(
-                            vault = Vault(
-                                vault.vault.shareId,
-                                vault.vault.name,
-                                vault.vault.color,
-                                vault.vault.icon,
-                                false
+                        baseLoginUiState = BaseLoginUiState.Initial.copy(
+                            loginItem = LoginItem.Empty.copy(
+                                title = initialContents.title!!,
+                                username = initialContents.username!!,
+                                password = initialContents.password!!,
+                                websiteAddresses = listOf(initialContents.url!!)
                             ),
-                            activeItemCount = 1,
-                            trashedItemCount = 0
-                        ),
-                        loginItem = LoginItem.Empty.copy(
-                            title = initialContents.title!!,
-                            username = initialContents.username!!,
-                            password = initialContents.password!!,
-                            websiteAddresses = listOf(initialContents.url!!)
-                        ),
-                        totpUiState = TotpUiState.Success
+                            totpUiState = TotpUiState.Success
+                        )
                     )
                 )
         }
@@ -227,7 +248,7 @@ internal class CreateLoginViewModelTest {
         sendInitialVault(shareId)
         createItem.sendItem(Result.failure(IllegalStateException("Test")))
 
-        instance.loginUiState.test {
+        instance.createLoginUiState.test {
             skipItems(1) // Initial state
             instance.createItem()
 
@@ -235,8 +256,8 @@ internal class CreateLoginViewModelTest {
             val item = awaitItem()
             assertThat(createItem.hasBeenInvoked()).isTrue()
 
-            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-            assertThat(item.isItemSaved).isEqualTo(ItemSavedState.Unknown)
+            assertThat(item.baseLoginUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.baseLoginUiState.isItemSaved).isEqualTo(ItemSavedState.Unknown)
 
             val message = snackbarDispatcher.snackbarMessage.first().value()!!
             assertThat(message).isInstanceOf(LoginSnackbarMessages.ItemCreationError::class.java)
@@ -251,7 +272,7 @@ internal class CreateLoginViewModelTest {
         setTestAlias()
         createItemAndAlias.setResult(Result.failure(IllegalStateException("Test")))
 
-        instance.loginUiState.test {
+        instance.createLoginUiState.test {
             skipItems(1) // Initial state
             instance.createItem()
 
@@ -259,8 +280,8 @@ internal class CreateLoginViewModelTest {
             val item = awaitItem()
             assertThat(createItemAndAlias.hasBeenInvoked()).isTrue()
 
-            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-            assertThat(item.isItemSaved).isEqualTo(ItemSavedState.Unknown)
+            assertThat(item.baseLoginUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.baseLoginUiState.isItemSaved).isEqualTo(ItemSavedState.Unknown)
 
             val message = snackbarDispatcher.snackbarMessage.first().value()!!
             assertThat(message).isInstanceOf(LoginSnackbarMessages.ItemCreationError::class.java)
@@ -275,12 +296,16 @@ internal class CreateLoginViewModelTest {
 
         instance.onTotpChange("invalid://uri")
         instance.createItem()
-        instance.loginUiState.test {
+        instance.createLoginUiState.test {
             val item = awaitItem()
             assertThat(createItem.hasBeenInvoked()).isFalse()
 
-            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-            assertThat(item.validationErrors).isEqualTo(setOf(LoginItemValidationErrors.InvalidTotp))
+            assertThat(item.baseLoginUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.baseLoginUiState.validationErrors).isEqualTo(
+                setOf(
+                    LoginItemValidationErrors.InvalidTotp
+                )
+            )
 
             val message = snackbarDispatcher.snackbarMessage.first().value()!!
             assertThat(message).isInstanceOf(LoginSnackbarMessages.InvalidTotpError::class.java)

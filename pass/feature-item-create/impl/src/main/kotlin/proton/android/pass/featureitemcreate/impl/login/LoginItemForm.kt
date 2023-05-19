@@ -5,6 +5,7 @@ import androidx.compose.animation.expandVertically
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -26,13 +27,12 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
-import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AddTotp
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AliasOptions
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.GeneratePassword
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.None
-import proton.pass.domain.VaultWithItemCount
+import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Suppress("UnusedPrivateMember")
@@ -42,17 +42,14 @@ internal fun LoginItemForm(
     isEditAllowed: Boolean,
     loginItem: LoginItem,
     totpUiState: TotpUiState,
-    selectedShare: VaultWithItemCount?,
+    selectedShareId: ShareId?,
     showCreateAliasButton: Boolean,
     primaryEmail: String?,
     isUpdate: Boolean,
-    showVaultSelector: Boolean,
-    onTitleRequiredError: Boolean,
     isTotpError: Boolean,
     focusLastWebsite: Boolean,
     canUpdateUsername: Boolean,
     websitesWithErrors: ImmutableList<Int>,
-    onTitleChange: (String) -> Unit,
     onUsernameChange: (String) -> Unit,
     onPasswordChange: (String) -> Unit,
     onTotpChange: (String) -> Unit,
@@ -61,10 +58,10 @@ internal fun LoginItemForm(
     onGeneratePasswordClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
     onAliasOptionsClick: () -> Unit,
-    onVaultSelectorClick: () -> Unit,
     onPasteTotpClick: () -> Unit,
     onLinkedAppDelete: (PackageInfoUi) -> Unit,
     onNavigate: (BaseLoginNavigation) -> Unit,
+    titleSection: @Composable ColumnScope.() -> Unit
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -80,17 +77,7 @@ internal fun LoginItemForm(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            TitleVaultSelectionSection(
-                titleValue = loginItem.title,
-                onTitleChanged = onTitleChange,
-                onTitleRequiredError = onTitleRequiredError,
-                enabled = isEditAllowed,
-                showVaultSelector = showVaultSelector,
-                vaultName = selectedShare?.vault?.name,
-                vaultColor = selectedShare?.vault?.color,
-                vaultIcon = selectedShare?.vault?.icon,
-                onVaultClicked = onVaultSelectorClick
-            )
+            titleSection()
             MainLoginSection(
                 loginItem = loginItem,
                 canUpdateUsername = canUpdateUsername,

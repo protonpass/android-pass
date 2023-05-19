@@ -1,6 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.login
 
-import androidx.lifecycle.SavedStateHandle
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.toImmutableSet
@@ -36,18 +36,14 @@ import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
-import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.totp.api.TotpManager
-import proton.pass.domain.ShareId
-import proton.pass.domain.VaultWithItemCount
 
 abstract class BaseLoginViewModel(
     protected val accountManager: AccountManager,
@@ -55,18 +51,10 @@ abstract class BaseLoginViewModel(
     private val clipboardManager: ClipboardManager,
     private val totpManager: TotpManager,
     private val draftRepository: DraftRepository,
-    observeVaults: ObserveVaultsWithItemCount,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    encryptionContextProvider: EncryptionContextProvider,
-    savedStateHandle: SavedStateHandle
+    encryptionContextProvider: EncryptionContextProvider
 ) : ViewModel() {
-
-    protected val navShareId = savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)
-        .toOption()
-        .map { ShareId(it) }
-    private val navShareIdState = MutableStateFlow(navShareId)
-    private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
@@ -109,10 +97,7 @@ abstract class BaseLoginViewModel(
     private val openScanState: MutableStateFlow<OpenScanState> =
         MutableStateFlow(OpenScanState.Unknown)
 
-    private val eventsFlow: Flow<Events> = combine(
-        isItemSavedState,
-        openScanState
-    ) { isItemSaved, openScan -> Events(isItemSaved, openScan) }
+    private val eventsFlow: Flow<Events> = combine(isItemSavedState, openScanState, ::Events)
 
     data class Events(
         val itemSavedState: ItemSavedState,
@@ -124,24 +109,7 @@ abstract class BaseLoginViewModel(
     private val focusLastWebsiteState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val canUpdateUsernameState: MutableStateFlow<Boolean> = MutableStateFlow(true)
 
-    private val observeAllVaultsFlow = observeVaults().distinctUntilChanged()
-
-    private val sharesWrapperState = combine(
-        navShareIdState,
-        selectedShareIdState,
-        observeAllVaultsFlow
-    ) { navShareId, selectedShareId, allShares ->
-        val selectedShare = allShares
-            .firstOrNull { it.vault.shareId == selectedShareId.value() }
-            ?: allShares.firstOrNull { it.vault.shareId == navShareId.value() }
-            ?: allShares.first()
-        SharesWrapper(allShares, selectedShare)
-    }.asLoadingResult()
-
-    private data class SharesWrapper(
-        val vaultList: List<VaultWithItemCount>,
-        val currentVault: VaultWithItemCount
-    )
+    protected val upgradeInfoFlow: Flow<UpgradeInfo> = observeUpgradeInfo().distinctUntilChanged()
 
     private val loginAliasItemWrapperState = combineN(
         passwordDraftState,
@@ -168,7 +136,6 @@ abstract class BaseLoginViewModel(
         val aliasItem: Option<AliasItem>
     )
 
-    private val upgradeInfoFlow: Flow<UpgradeInfo> = observeUpgradeInfo().distinctUntilChanged()
     protected val itemHadTotpState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val totpUiStateFlow = combine(
         itemHadTotpState,
@@ -185,8 +152,8 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    val loginUiState: StateFlow<CreateUpdateLoginUiState> = combineN(
-        sharesWrapperState,
+    @VisibleForTesting
+    val baseLoginUiState: StateFlow<BaseLoginUiState> = combineN(
         loginAliasItemWrapperState,
         isLoadingState,
         eventsFlow,
@@ -194,13 +161,9 @@ abstract class BaseLoginViewModel(
         hasUserEditedContentFlow,
         totpUiStateFlow,
         upgradeInfoFlow.asLoadingResult()
-    ) { shareWrapper, loginItemWrapper, isLoading, events,
+    ) { loginItemWrapper, isLoading, events,
         focusLastWebsite, hasUserEditedContent, totpUiState, upgradeInfoResult ->
-        val shares = shareWrapper.getOrNull()
-        val showVaultSelector = shares?.let { it.vaultList.size > 1 } ?: false
-        CreateUpdateLoginUiState(
-            vaultList = shares?.vaultList ?: emptyList(),
-            selectedVault = shares?.currentVault,
+        BaseLoginUiState(
             loginItem = loginItemWrapper.loginItem,
             validationErrors = loginItemWrapper.loginItemValidationErrors,
             isLoadingState = isLoading,
@@ -210,7 +173,6 @@ abstract class BaseLoginViewModel(
             canUpdateUsername = loginItemWrapper.canUpdateUsername,
             primaryEmail = loginItemWrapper.primaryEmail,
             aliasItem = loginItemWrapper.aliasItem.value(),
-            showVaultSelector = showVaultSelector,
             hasUserEditedContent = hasUserEditedContent,
             hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false,
             totpUiState = totpUiState
@@ -219,7 +181,7 @@ abstract class BaseLoginViewModel(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = CreateUpdateLoginUiState.Initial
+            initialValue = BaseLoginUiState.Initial
         )
 
     fun onTitleChange(value: String) {
@@ -376,10 +338,6 @@ abstract class BaseLoginViewModel(
                     }
                 }
             )
-    }
-
-    fun changeVault(shareId: ShareId) = viewModelScope.launch {
-        selectedShareIdState.update { shareId.toOption() }
     }
 
     fun onDeleteLinkedApp(packageInfo: PackageInfoUi) {

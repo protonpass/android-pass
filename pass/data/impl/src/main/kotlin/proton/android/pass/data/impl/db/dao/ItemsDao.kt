@@ -173,4 +173,12 @@ abstract class ItemsDao : BaseDao<ItemEntity>() {
         """
     )
     abstract suspend fun getItemByAliasEmail(userId: String, aliasEmail: String): ItemEntity?
+
+    @Query(
+        """
+        SELECT * FROM ${ItemEntity.TABLE}
+        WHERE ${ItemEntity.Columns.HAS_TOTP} IS NULL
+        """
+    )
+    abstract suspend fun getItemsPendingForTotpMigration(): List<ItemEntity>
 }

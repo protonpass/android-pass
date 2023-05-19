@@ -63,6 +63,8 @@ data class ItemEntity(
     val modifyTime: Long,
     @ColumnInfo(name = Columns.LAST_USED_TIME)
     val lastUsedTime: Long?,
+    @ColumnInfo(name = Columns.HAS_TOTP)
+    val hasTotp: Boolean?,
 
     // Keystore Encrypted contents
     @ColumnInfo(name = Columns.ENCRYPTED_TITLE)
@@ -94,6 +96,7 @@ data class ItemEntity(
         const val ENCRYPTED_CONTENT = "encrypted_content"
         const val ENCRYPTED_NOTE = "encrypted_note"
         const val ENCRYPTED_KEY = "encrypted_key"
+        const val HAS_TOTP = "has_totp"
     }
 
     companion object {

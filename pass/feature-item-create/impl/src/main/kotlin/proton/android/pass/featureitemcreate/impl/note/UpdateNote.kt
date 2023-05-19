@@ -27,11 +27,11 @@ fun UpdateNote(
     onSuccess: (ShareId, ItemId) -> Unit,
     viewModel: UpdateNoteViewModel = hiltViewModel()
 ) {
-    val noteUiState by viewModel.noteUiState.collectAsStateWithLifecycle()
+    val noteUiState by viewModel.updateNoteUiState.collectAsStateWithLifecycle()
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
     val onExit = {
-        if (noteUiState.hasUserEditedContent) {
+        if (noteUiState.baseNoteUiState.hasUserEditedContent) {
             showConfirmDialog = !showConfirmDialog
         } else {
             onUpClick()
@@ -43,15 +43,15 @@ fun UpdateNote(
 
     Box(modifier = modifier.fillMaxSize()) {
         NoteContent(
-            uiState = noteUiState,
+            uiState = noteUiState.baseNoteUiState,
+            selectedShareId = noteUiState.selectedShareId,
             topBarActionName = stringResource(R.string.action_save),
-            showVaultSelector = false,
             onUpClick = onExit,
             onSuccess = { shareId, itemId -> onSuccess(shareId, itemId) },
             onSubmit = { shareId -> viewModel.updateItem(shareId) },
             onTitleChange = { viewModel.onTitleChange(it) },
             onNoteChange = { viewModel.onNoteChange(it) },
-            onSelectVault = {} // no-op
+            vaultSelect = {},
         )
 
         ConfirmCloseDialog(
@@ -65,5 +65,4 @@ fun UpdateNote(
             }
         )
     }
-
 }

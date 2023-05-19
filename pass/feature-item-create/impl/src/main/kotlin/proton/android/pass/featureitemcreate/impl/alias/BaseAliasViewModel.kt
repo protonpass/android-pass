@@ -10,13 +10,18 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.navigation.api.AliasOptionalNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 
-abstract class BaseAliasViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+abstract class BaseAliasViewModel(
+    private val snackbarDispatcher: SnackbarDispatcher,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val title: Option<String> = savedStateHandle
         .get<String>(AliasOptionalNavArgId.Title.key)
@@ -157,4 +162,10 @@ abstract class BaseAliasViewModel(savedStateHandle: SavedStateHandle) : ViewMode
         if (hasUserEditedContentFlow.value) return
         hasUserEditedContentFlow.update { true }
     }
+
+    fun onEmitSnackbarMessage(snackbarMessage: AliasSnackbarMessage) =
+        viewModelScope.launch {
+            snackbarDispatcher(snackbarMessage)
+        }
+
 }

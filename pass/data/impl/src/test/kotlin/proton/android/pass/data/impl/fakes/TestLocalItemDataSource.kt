@@ -3,7 +3,9 @@ package proton.android.pass.data.impl.fakes
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
+import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
 import proton.android.pass.data.api.usecases.ItemTypeFilter
@@ -19,6 +21,7 @@ class TestLocalItemDataSource : LocalItemDataSource {
     private val memory: MutableList<ItemEntity> = mutableListOf()
     private var summary: MutableStateFlow<ItemCountSummary> = MutableStateFlow(ItemCountSummary.Initial)
     private var itemCount: MutableStateFlow<Map<ShareId, ShareItemCount>> = MutableStateFlow(emptyMap())
+    private val itemsWithTotpFlow = testFlow<Result<List<ItemWithTotp>>>()
 
     fun getMemory(): List<ItemEntity> = memory
 
@@ -28,6 +31,10 @@ class TestLocalItemDataSource : LocalItemDataSource {
 
     fun emitItemCount(value: Map<ShareId, ShareItemCount>) {
         itemCount.tryEmit(value)
+    }
+
+    fun emitItemsWithTotp(value: Result<List<ItemWithTotp>>) {
+        itemsWithTotpFlow.tryEmit(value)
     }
 
     override suspend fun upsertItem(item: ItemEntity) {
@@ -93,14 +100,11 @@ class TestLocalItemDataSource : LocalItemDataSource {
         throw IllegalStateException("Not yet implemented")
     }
 
-    override fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>> {
-        throw IllegalStateException("Not yet implemented")
-    }
+    override fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>> =
+        itemsWithTotpFlow.map { it.getOrThrow() }
 
     override fun observeItemsWithTotpForShare(
         userId: UserId,
         shareId: ShareId
-    ): Flow<List<ItemWithTotp>> {
-        throw IllegalStateException("Not yet implemented")
-    }
+    ): Flow<List<ItemWithTotp>> = itemsWithTotpFlow.map { it.getOrThrow() }
 }

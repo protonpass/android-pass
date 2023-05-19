@@ -1,7 +1,6 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -41,9 +40,9 @@ class GetSuggestedLoginItemsImpl @Inject constructor(
                 .map { suggestions -> suggestionSorter.sort(suggestions, url) }
         }
 
-    private suspend fun observeActiveItemsForPrimaryVault(): Flow<List<Item>> =
-        getPrimaryVault()
-            .fold(
+    private fun observeActiveItemsForPrimaryVault(): Flow<List<Item>> = getPrimaryVault()
+        .flatMapLatest {
+            it.fold(
                 onSuccess = { shareId ->
                     observeActiveItems(
                         filter = ItemTypeFilter.Logins,
@@ -55,15 +54,19 @@ class GetSuggestedLoginItemsImpl @Inject constructor(
                     flowOf(emptyList())
                 }
             )
+        }
 
-    private suspend fun getPrimaryVault(): Result<ShareId> {
-        val vaults = observeVaults().first()
-        val primary = vaults.firstOrNull { it.isPrimary }
-            ?: vaults.firstOrNull()
-            ?: return Result.failure(IllegalStateException("No vaults found"))
+    private fun getPrimaryVault(): Flow<Result<ShareId>> = observeVaults()
+        .map { vaults ->
+            val primary = vaults.firstOrNull { it.isPrimary }
+                ?: vaults.firstOrNull()
 
-        return Result.success(primary.shareId)
-    }
+            if (primary == null) {
+                Result.failure(IllegalStateException("No vaults found"))
+            } else {
+                Result.success(primary.shareId)
+            }
+        }
 
     companion object {
         private const val TAG = "GetSuggestedLoginItemsImpl"

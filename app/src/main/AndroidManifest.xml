@@ -74,6 +74,10 @@
                 android:value="androidx.startup"
                 tools:node="remove" />
             <meta-data
+                android:name="proton.android.pass.data.impl.migration.DataMigrationInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+            <meta-data
                 android:name="me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer"
                 android:value="androidx.startup"
                 tools:node="remove" />

@@ -26,6 +26,7 @@ import me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitiali
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
 import me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer
 import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
+import proton.android.pass.data.impl.migration.DataMigrationInitializer
 import proton.android.pass.data.impl.sync.SyncInitializer
 import proton.android.pass.log.impl.LoggerInitializer
 import proton.android.pass.telemetry.impl.startup.TelemetryInitializer
@@ -48,6 +49,7 @@ class MainInitializer : Initializer<Unit> {
         StrictModeInitializer::class.java,
         SyncInitializer::class.java,
         TelemetryInitializer::class.java,
+        DataMigrationInitializer::class.java,
         UnAuthSessionFetcherInitializer::class.java,
         UnredeemedPurchaseInitializer::class.java,
     )

@@ -1,9 +1,8 @@
 package proton.android.pass.data.fakes.usecases
 
-import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.onSubscription
+import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -17,16 +16,22 @@ import javax.inject.Inject
 class TestObserveActiveItems @Inject constructor() : ObserveActiveItems {
 
     private var exceptionOption: Option<Exception> = None
-    private val itemsFlow: MutableSharedFlow<List<Item>> =
-        MutableSharedFlow(replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST)
+    private val itemsFlow = testFlow<List<Item>>()
+
+    private val memory = mutableListOf<Payload>()
+
+    fun getMemory(): List<Payload> = memory
 
     override fun invoke(
         filter: ItemTypeFilter,
         shareSelection: ShareSelection
-    ): Flow<List<Item>> = itemsFlow.onSubscription {
-        when (val exception = exceptionOption) {
-            None -> {}
-            is Some -> throw exception.value
+    ): Flow<List<Item>> {
+        memory.add(Payload(filter, shareSelection))
+        return itemsFlow.onSubscription {
+            when (val exception = exceptionOption) {
+                None -> {}
+                is Some -> throw exception.value
+            }
         }
     }
 
@@ -35,4 +40,9 @@ class TestObserveActiveItems @Inject constructor() : ObserveActiveItems {
     fun sendException(exception: Exception) {
         exceptionOption = exception.toOption()
     }
+
+    data class Payload(
+        val filter: ItemTypeFilter,
+        val shareSelection: ShareSelection
+    )
 }

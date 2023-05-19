@@ -556,6 +556,8 @@ fun NavGraphBuilder.appGraph(
                         route = ViewItem.createNavRoute(it.shareId, it.itemId)
                     )
                 }
+
+                ItemDetailNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
             }
         }
     )

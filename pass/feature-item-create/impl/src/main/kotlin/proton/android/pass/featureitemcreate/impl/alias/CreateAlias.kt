@@ -23,7 +23,8 @@ import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasItemValidationErrors.BlankTitle
-import proton.android.pass.featureitemcreate.impl.login.ShareError
+import proton.android.pass.featureitemcreate.impl.login.ShareError.EmptyShareList
+import proton.android.pass.featureitemcreate.impl.login.ShareError.SharesNotAvailable
 import proton.android.pass.featureitemcreate.impl.login.ShareUiState
 import proton.pass.domain.ShareId
 
@@ -72,8 +73,8 @@ fun CreateAliasScreen(
         ShareUiState.NotInitialised -> false to null
 
         is ShareUiState.Error -> {
-            if (shares.shareError == ShareError.EmptyShareList || shares.shareError == ShareError.SharesNotAvailable) {
-                // viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.InitError)
+            if (shares.shareError == EmptyShareList || shares.shareError == SharesNotAvailable) {
+                viewModel.onEmitSnackbarMessage(AliasSnackbarMessage.InitError)
                 LaunchedEffect(Unit) {
                     onNavigate(CreateAliasNavigation.Close)
                 }

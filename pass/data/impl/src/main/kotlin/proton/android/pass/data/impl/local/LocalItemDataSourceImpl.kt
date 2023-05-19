@@ -2,6 +2,7 @@ package proton.android.pass.data.impl.local
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.ItemCountSummary
 import proton.android.pass.data.api.repositories.ShareItemCount
@@ -109,6 +110,24 @@ class LocalItemDataSourceImpl @Inject constructor(
 
     override suspend fun getItemsPendingForTotpMigration(): List<ItemEntity> =
         database.itemsDao().getItemsPendingForTotpMigration()
+
+    override fun observeAllItemsWithTotp(userId: UserId): Flow<List<ItemWithTotp>> =
+        database.itemsDao()
+            .observeAllItemsWithTotp(userId.id)
+            .map { items -> items.map { it.toItemWithTotp() } }
+
+    override fun observeItemsWithTotpForShare(
+        userId: UserId,
+        shareId: ShareId
+    ): Flow<List<ItemWithTotp>> = database.itemsDao()
+        .observeItemsWithTotpForShare(userId = userId.id, shareId = shareId.id)
+        .map { items -> items.map { it.toItemWithTotp() } }
+
+    private fun ItemEntity.toItemWithTotp(): ItemWithTotp = ItemWithTotp(
+        shareId = ShareId(shareId),
+        itemId = ItemId(id),
+        createTime = Instant.fromEpochSeconds(createTime),
+    )
 
     private fun ItemTypeFilter.value(): Int = when (this) {
         ItemTypeFilter.Logins -> ITEM_TYPE_LOGIN

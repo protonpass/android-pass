@@ -9,6 +9,7 @@ import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
@@ -23,7 +24,6 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestShare
@@ -74,9 +74,9 @@ class CreateAliasViewModelTest {
 
         viewModel.createAliasUiState.test {
             val item = awaitItem()
-            assertThat(item.aliasItem.title).isEqualTo(titleInput)
-            assertThat(item.aliasItem.prefix).isEqualTo("title-changed")
-            assertThat(item.aliasItem.aliasToBeCreated).isEqualTo("title-changed${suffix.suffix}")
+            assertThat(item.baseAliasUiState.aliasItem.title).isEqualTo(titleInput)
+            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo("title-changed")
+            assertThat(item.baseAliasUiState.aliasItem.aliasToBeCreated).isEqualTo("title-changed${suffix.suffix}")
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -86,9 +86,9 @@ class CreateAliasViewModelTest {
 
         viewModel.createAliasUiState.test {
             val item = awaitItem()
-            assertThat(item.aliasItem.title).isEqualTo(titleInput)
-            assertThat(item.aliasItem.prefix).isEqualTo(newAlias)
-            assertThat(item.aliasItem.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
+            assertThat(item.baseAliasUiState.aliasItem.title).isEqualTo(titleInput)
+            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo(newAlias)
+            assertThat(item.baseAliasUiState.aliasItem.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -98,9 +98,9 @@ class CreateAliasViewModelTest {
 
         viewModel.createAliasUiState.test {
             val item = awaitItem()
-            assertThat(item.aliasItem.title).isEqualTo(newTitle)
-            assertThat(item.aliasItem.prefix).isEqualTo(newAlias)
-            assertThat(item.aliasItem.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
+            assertThat(item.baseAliasUiState.aliasItem.title).isEqualTo(newTitle)
+            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo(newAlias)
+            assertThat(item.baseAliasUiState.aliasItem.aliasToBeCreated).isEqualTo("${newAlias}${suffix.suffix}")
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -114,8 +114,8 @@ class CreateAliasViewModelTest {
         viewModel.onPrefixChange(aliasInput)
 
         viewModel.createAliasUiState.test {
-            assertThat(awaitItem().aliasItem)
-                .isEqualTo(CreateUpdateAliasUiState.Initial.aliasItem.copy(prefix = aliasInput))
+            assertThat(awaitItem().baseAliasUiState.aliasItem)
+                .isEqualTo(BaseAliasUiState.Initial.aliasItem.copy(prefix = aliasInput))
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -152,8 +152,8 @@ class CreateAliasViewModelTest {
             skipItems(1)
             val item = awaitItem()
 
-            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-            assertThat(item.isAliasSavedState).isInstanceOf(AliasSavedState.Success::class.java)
+            assertThat(item.baseAliasUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.baseAliasUiState.isAliasSavedState).isInstanceOf(AliasSavedState.Success::class.java)
         }
 
         val events = telemetryManager.getMemory()
@@ -173,8 +173,9 @@ class CreateAliasViewModelTest {
         viewModel.createAliasUiState.test {
             val item = awaitItem()
 
-            assertThat(item.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
-            assertThat(item.isAliasDraftSavedState).isInstanceOf(AliasDraftSavedState.Success::class.java)
+            assertThat(item.baseAliasUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.baseAliasUiState.isAliasDraftSavedState)
+                .isInstanceOf(AliasDraftSavedState.Success::class.java)
         }
 
         // No telemetry events should be emitted
@@ -198,7 +199,7 @@ class CreateAliasViewModelTest {
         viewModel.onTitleChange(titleInput)
         viewModel.createAliasUiState.test {
             val item = awaitItem()
-            assertThat(item.aliasItem.prefix).isEqualTo("this-is-a-test")
+            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo("this-is-a-test")
         }
     }
 
@@ -208,7 +209,7 @@ class CreateAliasViewModelTest {
         setupAliasOptions()
         viewModel.createAliasUiState.test {
             val item = awaitItem()
-            assertThat(item.aliasItem.prefix).isEqualTo("this.is_a-test")
+            assertThat(item.baseAliasUiState.aliasItem.prefix).isEqualTo("this.is_a-test")
         }
     }
 

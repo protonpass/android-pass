@@ -126,7 +126,7 @@ class FileLoggingTree(private val context: Context) : Timber.Tree() {
                         }
                     )
                 } catch (e: IndexOutOfBoundsException) {
-                    PassLogger.e(TAG, e, "Could not sanitise id")
+                    PassLogger.w(TAG, e, "Could not sanitise id")
                     it
                 }
             } else {

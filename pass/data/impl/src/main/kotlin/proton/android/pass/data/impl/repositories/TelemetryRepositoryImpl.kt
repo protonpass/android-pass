@@ -43,13 +43,14 @@ class TelemetryRepositoryImpl @Inject constructor(
     override suspend fun sendEvents() {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
         val planName = requireNotNull(getUserPlan(userId).firstOrNull())
+        val planInternalName = planName.planType.internalName()
 
         passDatabase.inTransaction {
             val all = localDataSource.getAll(userId)
             if (all.isNotEmpty()) {
                 all.chunked(MAX_EVENT_BATCH_SIZE).forEach { eventChunk ->
                     runCatching {
-                        performSend(userId, planName.internalName(), eventChunk)
+                        performSend(userId, planInternalName, eventChunk)
                     }.onSuccess {
                         val min = eventChunk.first().id
                         val max = eventChunk.last().id

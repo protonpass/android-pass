@@ -6,9 +6,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
@@ -20,7 +20,7 @@ import proton.pass.domain.ShareSelection
 import javax.inject.Inject
 
 class GetSuggestedLoginItemsImpl @Inject constructor(
-    private val upgradeInfo: ObserveUpgradeInfo,
+    private val getUserPlan: GetUserPlan,
     private val observeActiveItems: ObserveActiveItems,
     private val suggestionItemFilter: SuggestionItemFilterer,
     private val suggestionSorter: SuggestionSorter,
@@ -29,9 +29,9 @@ class GetSuggestedLoginItemsImpl @Inject constructor(
     override fun invoke(
         packageName: Option<String>,
         url: Option<String>
-    ): Flow<List<Item>> = upgradeInfo()
+    ): Flow<List<Item>> = getUserPlan()
         .flatMapLatest {
-            val flow = when (it.plan.planType) {
+            val flow = when (it.planType) {
                 is PlanType.Paid, is PlanType.Trial -> observeActiveItems(filter = ItemTypeFilter.Logins)
                 else -> observeActiveItemsForPrimaryVault()
             }

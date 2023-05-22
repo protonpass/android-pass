@@ -15,9 +15,8 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.ItemTypeFilter
-import proton.android.pass.data.api.usecases.UpgradeInfo
+import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.fakes.usecases.TestObserveActiveItems
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.impl.autofill.SuggestionItemFilterer
 import proton.android.pass.data.impl.autofill.SuggestionSorter
@@ -63,17 +62,17 @@ class GetSuggestedLoginItemsImplTest {
     private lateinit var observeActiveItems: TestObserveActiveItems
     private lateinit var filter: FakeSuggestionItemFilterer
     private lateinit var getSuggestedLoginItems: GetSuggestedLoginItems
-    private lateinit var upgradeInfo: TestObserveUpgradeInfo
+    private lateinit var getUserPlan: TestGetUserPlan
     private lateinit var observeVaults: TestObserveVaults
 
     @Before
     fun setUp() {
         observeActiveItems = TestObserveActiveItems()
         filter = FakeSuggestionItemFilterer()
-        upgradeInfo = TestObserveUpgradeInfo()
+        getUserPlan = TestGetUserPlan()
         observeVaults = TestObserveVaults()
         getSuggestedLoginItems = GetSuggestedLoginItemsImpl(
-            upgradeInfo = upgradeInfo,
+            getUserPlan = getUserPlan,
             observeVaults = observeVaults,
             observeActiveItems = observeActiveItems,
             suggestionItemFilter = filter,
@@ -145,7 +144,7 @@ class GetSuggestedLoginItemsImplTest {
             )
         )
         observeVaults.sendResult(Result.success(vaults))
-        upgradeInfo.setResult(createUpgradeWithPlan(PlanType.Free))
+        getUserPlan.setResult(Result.success(createPlan(PlanType.Free)))
 
         filter.setFilter { true }
 
@@ -173,22 +172,16 @@ class GetSuggestedLoginItemsImplTest {
             isPrimary = true
         )
         observeVaults.sendResult(Result.success(listOf(defaultVault)))
-        upgradeInfo.setResult(createUpgradeWithPlan(PlanType.Paid("", "")))
+        getUserPlan.setResult(Result.success(createPlan(PlanType.Paid("", ""))))
     }
 
-    private fun createUpgradeWithPlan(planType: PlanType) = UpgradeInfo(
-        isUpgradeAvailable = true,
-        plan = Plan(
-            planType = planType,
-            hideUpgrade = false,
-            vaultLimit = 1,
-            aliasLimit = 1,
-            totpLimit = 1,
-            updatedAt = Clock.System.now().epochSeconds
-        ),
-        totalVaults = 1,
-        totalAlias = 0,
-        totalTotp = 0
+    private fun createPlan(planType: PlanType) = Plan(
+        planType = planType,
+        hideUpgrade = false,
+        vaultLimit = 1,
+        aliasLimit = 1,
+        totpLimit = 1,
+        updatedAt = Clock.System.now().epochSeconds
     )
 }
 

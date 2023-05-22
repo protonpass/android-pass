@@ -21,11 +21,9 @@ fun SelectVaultBottomsheet(
     when (val state = uiState) {
         is SelectVaultUiState.Success -> SelectVaultBottomsheetContent(
             modifier = modifier,
-            shareList = state.vaults,
-            selectedShareId = state.selected.vault.shareId,
-            onVaultClick = {
-                onNavigate(VaultNavigation.VaultSelected(it))
-            }
+            state = state,
+            onVaultClick = { onNavigate(VaultNavigation.VaultSelected(it)) },
+            onUpgrade = { onNavigate(VaultNavigation.Upgrade) }
         )
 
         SelectVaultUiState.Error -> {

@@ -54,7 +54,7 @@ fun NavGraphBuilder.createNoteGraph(
 }
 
 sealed interface CreateNoteNavigation {
-    data class SelectVault(val shareId: ShareId?) : CreateNoteNavigation
+    data class SelectVault(val shareId: ShareId) : CreateNoteNavigation
     object Success : CreateNoteNavigation
     object Back : CreateNoteNavigation
 }

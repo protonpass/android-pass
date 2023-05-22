@@ -359,7 +359,7 @@ fun NavGraphBuilder.appGraph(
                 is BaseLoginNavigation.SelectVault -> {
                     appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(it.shareId.toOption())
+                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                     )
                 }
             }
@@ -446,7 +446,7 @@ fun NavGraphBuilder.appGraph(
                 CreateNoteNavigation.Back -> appNavigator.onBackClick()
                 is CreateNoteNavigation.SelectVault -> appNavigator.navigate(
                     destination = SelectVaultBottomsheet,
-                    route = SelectVaultBottomsheet.createNavRoute(it.shareId.toOption())
+                    route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                 )
 
                 CreateNoteNavigation.Success -> appNavigator.onBackClick()
@@ -486,7 +486,7 @@ fun NavGraphBuilder.appGraph(
                 is CreateAliasNavigation.SelectVault -> {
                     appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(it.shareId.toOption())
+                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                     )
                 }
             }

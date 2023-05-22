@@ -9,6 +9,8 @@
     <string name="snackbar_delete_vault_success">Vault deleted</string>
     <string name="snackbar_delete_vault_error">Vault not deleted</string>
     <string name="snackbar_retrieve_vault_error">Vault not found</string>
+    <string name="snackbar_find_vault_error">Cannot find selected vault</string>
+    <string name="snackbar_get_vault_list_error">Vault list could not be loaded</string>
 
     <string name="vault_delete_dialog_title">Delete vault</string>
     <string name="vault_delete_dialog_body">This will permanently delete the vault __VAULT_NAME__ and all its contents. Enter the vault name to confirm deletion.</string>

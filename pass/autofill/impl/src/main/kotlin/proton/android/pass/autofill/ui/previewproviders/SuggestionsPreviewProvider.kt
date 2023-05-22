@@ -7,14 +7,22 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
-class SuggestionsPreviewProvider : PreviewParameterProvider<List<ItemUiModel>> {
-    override val values: Sequence<List<ItemUiModel>>
-        get() = sequenceOf(
-            listOf(
-                item("item 1", "some username"),
-                item("item 2", "other username")
-            )
-        )
+class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
+    override val values: Sequence<SuggestionsInput>
+        get() = sequence {
+            for (showUpgrade in listOf(true, false)) {
+                yield(
+                    SuggestionsInput(
+                        items = listOf(
+                            item("item 1", "some username"),
+                            item("item 2", "other username")
+                        ),
+                        showUpgradeMessage = showUpgrade
+                    )
+                )
+            }
+        }
+
 
     private fun item(name: String, username: String): ItemUiModel =
         ItemUiModel(
@@ -35,3 +43,8 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<List<ItemUiModel>> {
             lastAutofillTime = Clock.System.now(),
         )
 }
+
+data class SuggestionsInput(
+    val items: List<ItemUiModel>,
+    val showUpgradeMessage: Boolean
+)

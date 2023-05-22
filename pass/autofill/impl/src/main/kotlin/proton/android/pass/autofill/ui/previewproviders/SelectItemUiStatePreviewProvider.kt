@@ -5,6 +5,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.datetime.Clock
 import proton.android.pass.autofill.ui.autofill.select.AutofillItemClickedEvent
+import proton.android.pass.autofill.ui.autofill.select.SearchInMode
 import proton.android.pass.autofill.ui.autofill.select.SearchUiState
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListItems
 import proton.android.pass.autofill.ui.autofill.select.SelectItemListUiState
@@ -41,7 +42,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     shares = persistentMapOf(),
                     sortingType = SearchSortingType.MostRecent,
                     shouldScrollToTop = false,
-                    canLoadExternalImages = false
+                    canLoadExternalImages = false,
+                    displayOnlyPrimaryVaultMessage = false
                 ),
                 SearchUiState.Initial
             ),
@@ -66,7 +68,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     shares = persistentMapOf(),
                     sortingType = SearchSortingType.MostRecent,
                     shouldScrollToTop = false,
-                    canLoadExternalImages = false
+                    canLoadExternalImages = false,
+                    displayOnlyPrimaryVaultMessage = true
                 ),
                 SearchUiState.Initial
             ),
@@ -79,12 +82,14 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     shares = persistentMapOf(),
                     sortingType = SearchSortingType.MostRecent,
                     shouldScrollToTop = false,
-                    canLoadExternalImages = false
+                    canLoadExternalImages = false,
+                    displayOnlyPrimaryVaultMessage = false
                 ),
                 SearchUiState(
                     searchQuery = "query",
                     inSearchMode = true,
-                    isProcessingSearch = IsProcessingSearchState.NotLoading
+                    isProcessingSearch = IsProcessingSearchState.NotLoading,
+                    searchInMode = SearchInMode.AllVaults
                 )
             )
         )

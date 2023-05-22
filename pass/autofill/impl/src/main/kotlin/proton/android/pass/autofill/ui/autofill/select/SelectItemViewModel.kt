@@ -294,8 +294,17 @@ class SelectItemViewModel @Inject constructor(
         searchWrapper,
         sortingSelectionFlow,
         shouldScrollToTopFlow,
-        preferenceRepository.getUseFaviconsPreference()
-    ) { itemsResult, shares, isRefreshing, itemClicked, search, sortingSelection, shouldScrollToTop, useFavicons ->
+        preferenceRepository.getUseFaviconsPreference(),
+        planTypeFlow
+    ) { itemsResult,
+        shares,
+        isRefreshing,
+        itemClicked,
+        search,
+        sortingSelection,
+        shouldScrollToTop,
+        useFavicons,
+        plan ->
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
         val items = when (itemsResult) {
             LoadingResult.Loading -> SelectItemListItems.Initial
@@ -311,6 +320,11 @@ class SelectItemViewModel @Inject constructor(
             }
         }
 
+        val (displayOnlyPrimaryVaultMessage, searchIn) = when (plan) {
+            is PlanType.Free -> (shares.size > 1) to SearchInMode.PrimaryVault
+            else -> false to SearchInMode.AllVaults
+        }
+
         SelectItemUiState(
             SelectItemListUiState(
                 isLoading = isLoading,
@@ -320,12 +334,14 @@ class SelectItemViewModel @Inject constructor(
                 shares = shares,
                 sortingType = sortingSelection.searchSortingType,
                 shouldScrollToTop = shouldScrollToTop,
-                canLoadExternalImages = useFavicons.value()
+                canLoadExternalImages = useFavicons.value(),
+                displayOnlyPrimaryVaultMessage = true,
             ),
             SearchUiState(
                 searchQuery = search.searchQuery,
                 inSearchMode = search.isInSearchMode,
-                isProcessingSearch = search.isProcessingSearch
+                isProcessingSearch = search.isProcessingSearch,
+                searchInMode = searchIn
             )
         )
     }

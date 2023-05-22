@@ -93,7 +93,7 @@ object AppDatabaseMigrations {
                 table = ItemEntity.TABLE,
                 column = ItemEntity.Columns.HAS_TOTP,
                 type = "INTEGER",
-                defaultValue = "NULL",
+                defaultValue = null,
             )
             // Set all items that are not login to HAS_TOTP = false
             database.execSQL(

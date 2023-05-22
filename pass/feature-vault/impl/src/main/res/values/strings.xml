@@ -22,6 +22,8 @@
     <string name="bottomsheet_create_vault_button">Create vault</string>
     <string name="bottomsheet_edit_vault_button">Save</string>
     <string name="bottomsheet_cannot_create_more_vaults">You have reached the limit of vaults you can create. Create unlimited vaults when you upgrade your subscription.</string>
+    <string name="bottomsheet_cannot_select_not_primary_vault">To interact with your other vaults, you need to upgrade your account.</string>
+    <string name="bottomsheet_upgrade_now">Upgrade now</string>
 
     <string name="vault_title">Vault</string>
 </resources>

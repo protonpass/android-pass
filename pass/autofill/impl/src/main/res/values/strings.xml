@@ -5,7 +5,9 @@
     <string name="error_credentials_not_saved">Could not save the credentials</string>
     <string name="error_loading_items">Could not load the items</string>
     <string name="topbar_search_query">Search in all vaults…</string>
+    <string name="topbar_search_query_primary_vault">Search in primary vault…</string>
     <string name="inline_suggestions_open_app">Open Proton Pass</string>
+    <string name="autofill_only_searching_in_primary_vault">Your plan only allows to use items in your primary vault for autofill purposes.</string>
 
     <!-- Placeholder will contain the domain / app name we are trying to autofill -->
     <string name="autofill_suggestions_for_placeholder">Suggestions for %s</string>

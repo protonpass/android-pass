@@ -59,13 +59,15 @@ class DataMigratorImpl @Inject constructor(
     }
 
     private suspend fun waitForRoomToBeInitialized(): Boolean {
+        var retryDelay = DATABASE_OPEN_RETRY_DELAY
         for (i in 0..MAX_DATABASE_OPEN_RETRIES) {
             // Once this call finishes we can be sure that Room is initialized
             val database = appDatabase.openHelper.readableDatabase
             if (database.isOpen) {
                 return true
             }
-            delay(DATABASE_OPEN_RETRY_DELAY)
+            delay(retryDelay)
+            retryDelay *= 2
         }
         return false
     }

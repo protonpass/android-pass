@@ -1,5 +1,6 @@
 package proton.android.pass.data.fakes.usecases
 
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
@@ -16,7 +17,9 @@ class TestGetUserPlan @Inject constructor() : GetUserPlan {
         result.tryEmit(value)
     }
 
-    override fun invoke(userId: UserId) = result.map {
+    override fun invoke(): Flow<Plan> = result.map {
         it.getOrThrow()
     }
+
+    override fun invoke(userId: UserId) = invoke()
 }

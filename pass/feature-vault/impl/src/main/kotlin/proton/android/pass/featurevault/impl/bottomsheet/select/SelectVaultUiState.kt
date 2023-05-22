@@ -12,6 +12,7 @@ sealed interface SelectVaultUiState {
     @Immutable
     data class Success(
         val vaults: ImmutableList<VaultWithItemCount>,
-        val selected: VaultWithItemCount
+        val selected: VaultWithItemCount,
+        val canUpgrade: Boolean
     ) : SelectVaultUiState
 }

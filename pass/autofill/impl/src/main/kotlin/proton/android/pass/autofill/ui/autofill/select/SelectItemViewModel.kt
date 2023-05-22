@@ -64,6 +64,7 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -79,7 +80,9 @@ import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.GetTotpCodeFromUri
 import proton.pass.domain.ItemId
+import proton.pass.domain.PlanType
 import proton.pass.domain.ShareId
+import proton.pass.domain.ShareSelection
 import java.net.URI
 import javax.inject.Inject
 
@@ -97,6 +100,7 @@ class SelectItemViewModel @Inject constructor(
     telemetryManager: TelemetryManager,
     observeVaults: ObserveVaults,
     searchOptionsRepository: SearchOptionsRepository,
+    getUserPlan: GetUserPlan,
     clock: Clock,
 ) : ViewModel() {
 
@@ -129,8 +133,13 @@ class SelectItemViewModel @Inject constructor(
         val isProcessingSearch: IsProcessingSearchState
     )
 
-    private val sharesFlow = observeVaults()
-        .asLoadingResult()
+    private val planTypeFlow: Flow<PlanType> = getUserPlan()
+        .map { it.planType }
+        .distinctUntilChanged()
+
+    private val vaultsFlow = observeVaults().asLoadingResult()
+
+    private val shareIdToSharesFlow = vaultsFlow
         .map { vaultsResult ->
             val vaults = vaultsResult.getOrNull() ?: emptyList()
             vaults.associate { it.shareId to ShareUiModel.fromVault(it) }
@@ -138,17 +147,47 @@ class SelectItemViewModel @Inject constructor(
         }
         .distinctUntilChanged()
 
-    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> =
-        observeActiveItems(filter = ItemTypeFilter.Logins)
-            .asResultWithoutLoading()
-            .map { itemResult ->
-                itemResult.map { list ->
-                    encryptionContextProvider.withEncryptionContext {
-                        list.map { it.toUiModel(this@withEncryptionContext) }
-                    }
+    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = combine(
+        planTypeFlow,
+        vaultsFlow
+    ) { plan, vaults -> plan to vaults }
+        .flatMapLatest { planAndVaults ->
+            val (planType, vaultsRes) = planAndVaults
+
+            val vaults = when (vaultsRes) {
+                is LoadingResult.Success -> vaultsRes.data
+                is LoadingResult.Error -> {
+                    PassLogger.w(TAG, vaultsRes.exception, "Error observing vaults")
+                    return@flatMapLatest flowOf(LoadingResult.Error(vaultsRes.exception))
+                }
+
+                LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
+            }
+
+            val selection = when (planType) {
+                is PlanType.Paid, is PlanType.Trial -> ShareSelection.AllShares
+                else -> {
+                    val primaryVault = vaults.firstOrNull { it.isPrimary }
+                        ?: vaults.firstOrNull()
+                        ?: return@flatMapLatest flowOf(LoadingResult.Error(IllegalStateException("No vaults found")))
+                    ShareSelection.Share(primaryVault.shareId)
                 }
             }
-            .distinctUntilChanged()
+
+            observeActiveItems(
+                filter = ItemTypeFilter.Logins,
+                shareSelection = selection
+            ).asResultWithoutLoading()
+
+        }
+        .map { itemResult ->
+            itemResult.map { list ->
+                encryptionContextProvider.withEncryptionContext {
+                    list.map { it.toUiModel(this@withEncryptionContext) }
+                }
+            }
+        }
+        .distinctUntilChanged()
 
     private val sortedListItemFlow: Flow<LoadingResult<List<GroupedItemList>>> = combine(
         itemUiModelFlow,
@@ -249,7 +288,7 @@ class SelectItemViewModel @Inject constructor(
 
     val uiState: StateFlow<SelectItemUiState> = combineN(
         resultsFlow,
-        sharesFlow,
+        shareIdToSharesFlow,
         isRefreshing,
         itemClickedFlow,
         searchWrapper,

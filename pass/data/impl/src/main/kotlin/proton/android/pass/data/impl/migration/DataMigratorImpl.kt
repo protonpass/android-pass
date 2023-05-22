@@ -1,6 +1,8 @@
 package proton.android.pass.data.impl.migration
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import proton.android.pass.data.impl.db.AppDatabase
 import proton.android.pass.data.impl.db.PassDatabase
 import proton.android.pass.data.impl.local.LocalDataMigrationDataSource
 import proton.android.pass.data.impl.migration.itemhastotp.ItemHasTotpMigrator
@@ -11,6 +13,7 @@ import javax.inject.Singleton
 @Singleton
 class DataMigratorImpl @Inject constructor(
     private val database: PassDatabase,
+    private val appDatabase: AppDatabase,
     private val migrationDataSource: LocalDataMigrationDataSource,
     itemHasTotpMigrator: ItemHasTotpMigrator
 ) : DataMigrator {
@@ -20,6 +23,10 @@ class DataMigratorImpl @Inject constructor(
     )
 
     override suspend fun areMigrationsNeeded(): Boolean {
+        if (!waitForRoomToBeInitialized()) {
+            PassLogger.w(TAG, "Room is not initialized yet, we can't check if migrations are needed")
+            return true
+        }
         val migrationsToExecute = getPendingMigrations()
         return migrationsToExecute.isNotEmpty()
     }
@@ -27,6 +34,10 @@ class DataMigratorImpl @Inject constructor(
     override fun run(): Result<Unit> = runBlocking { runCatching { runMigrations() } }
 
     private suspend fun runMigrations() {
+        if (!waitForRoomToBeInitialized()) {
+            PassLogger.w(TAG, "Room is not initialized yet, we can't perform any operation")
+            return
+        }
         val pendingMigrations = getPendingMigrations()
         database.inTransaction {
             pendingMigrations.forEach {
@@ -47,8 +58,23 @@ class DataMigratorImpl @Inject constructor(
             .mapNotNull { allMigrationNames[it.migrationName] }
     }
 
+    private suspend fun waitForRoomToBeInitialized(): Boolean {
+        for (i in 0..MAX_DATABASE_OPEN_RETRIES) {
+            // Once this call finishes we can be sure that Room is initialized
+            val database = appDatabase.openHelper.readableDatabase
+            if (database.isOpen) {
+                return true
+            }
+            delay(DATABASE_OPEN_RETRY_DELAY)
+        }
+        return false
+    }
+
     companion object {
         private const val TAG = "DataMigratorImpl"
+
+        private const val MAX_DATABASE_OPEN_RETRIES = 10
+        private const val DATABASE_OPEN_RETRY_DELAY = 100L
     }
 
 }

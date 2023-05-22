@@ -9,6 +9,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -27,8 +29,8 @@ import proton.pass.domain.VaultWithItemCount
 @Composable
 fun SelectVaultBottomsheetContent(
     modifier: Modifier = Modifier,
-    shareList: List<VaultWithItemCount>,
-    selectedShareId: ShareId?,
+    shareList: ImmutableList<VaultWithItemCount>,
+    selectedShareId: ShareId,
     onVaultClick: (ShareId) -> Unit
 ) {
     Column(
@@ -60,7 +62,7 @@ fun SelectVaultBottomsheetContentPreview(
     PassTheme(isDark = isDark) {
         Surface {
             SelectVaultBottomsheetContent(
-                shareList = listOf(
+                shareList = persistentListOf(
                     VaultWithItemCount(
                         vault = Vault(
                             shareId = ShareId(shareId),

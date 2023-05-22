@@ -1,24 +1,17 @@
 package proton.android.pass.featurevault.impl.bottomsheet.select
 
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Option
+import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.ImmutableList
 import proton.pass.domain.VaultWithItemCount
 
-sealed interface SelectVaultUiEvent {
-    object Unknown : SelectVaultUiEvent
-    object Close : SelectVaultUiEvent
-}
+sealed interface SelectVaultUiState {
+    object Uninitialised : SelectVaultUiState
+    object Loading : SelectVaultUiState
+    object Error : SelectVaultUiState
 
-data class SelectVaultUiState(
-    val vaults: List<VaultWithItemCount>,
-    val selected: Option<VaultWithItemCount>,
-    val event: SelectVaultUiEvent
-) {
-    companion object {
-        val Initial = SelectVaultUiState(
-            vaults = emptyList(),
-            selected = None,
-            event = SelectVaultUiEvent.Unknown
-        )
-    }
+    @Immutable
+    data class Success(
+        val vaults: ImmutableList<VaultWithItemCount>,
+        val selected: VaultWithItemCount
+    ) : SelectVaultUiState
 }

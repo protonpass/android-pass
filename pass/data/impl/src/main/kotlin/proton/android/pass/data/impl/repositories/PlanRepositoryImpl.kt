@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.onStart
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import me.proton.core.domain.entity.UserId
-import proton.android.pass.data.impl.db.dao.PlanTypeFields
 import proton.android.pass.data.impl.db.entities.PlanEntity
 import proton.android.pass.data.impl.local.LocalPlanDataSource
 import proton.android.pass.data.impl.remote.RemotePlanDataSource
@@ -44,10 +43,11 @@ class PlanRepositoryImpl @Inject constructor(
                 }
             }
 
-    override fun observePlanType(userId: UserId): Flow<PlanType> =
-        localPlanDataSource.observePlanType(userId)
+    override fun observePlan(userId: UserId): Flow<Plan> =
+        localPlanDataSource.observePlan(userId)
             .filterNotNull()
-            .map { it.toPlanType() }
+            .map { it.toPlan() }
+
 
     private suspend fun refreshPlan(userId: UserId) {
         runCatching {
@@ -84,24 +84,6 @@ class PlanRepositoryImpl @Inject constructor(
             updatedAt = updatedAt,
             hideUpgrade = hideUpgrade
         )
-    }
-
-    private fun PlanTypeFields.toPlanType(): PlanType {
-        val isTrial = isTrialActive(trialEnd)
-        return when (type) {
-            PlanType.PLAN_NAME_FREE -> if (isTrial) {
-                PlanType.Trial(internal = internalName, humanReadable = displayName)
-            } else {
-                PlanType.Free
-            }
-
-            PlanType.PLAN_NAME_PLUS -> PlanType.Paid(
-                internal = internalName,
-                humanReadable = displayName
-            )
-
-            else -> PlanType.Unknown(internal = internalName, humanReadable = displayName)
-        }
     }
 
     private fun PlanEntity.toPlanType(isTrial: Boolean): PlanType = when (type) {

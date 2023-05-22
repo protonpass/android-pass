@@ -64,6 +64,7 @@ fun SelectItemList(
                 suggestionsForTitle = listUiState.items.suggestionsForTitle,
                 suggestions = listUiState.items.suggestions,
                 canLoadExternalImages = listUiState.canLoadExternalImages,
+                showUpgradeMessage = listUiState.displayOnlyPrimaryVaultMessage,
                 onItemOptionsClicked = onItemOptionsClicked,
                 onItemClicked = onItemClicked
             )

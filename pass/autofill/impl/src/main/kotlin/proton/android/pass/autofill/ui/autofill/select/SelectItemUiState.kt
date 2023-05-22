@@ -14,6 +14,11 @@ import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
 import proton.pass.domain.ShareId
 
+sealed interface SearchInMode {
+    object PrimaryVault : SearchInMode
+    object AllVaults : SearchInMode
+}
+
 @Immutable
 data class SelectItemUiState(
     val listUiState: SelectItemListUiState,
@@ -35,7 +40,8 @@ data class SelectItemListUiState(
     val shares: PersistentMap<ShareId, ShareUiModel>,
     val sortingType: SearchSortingType,
     val shouldScrollToTop: Boolean,
-    val canLoadExternalImages: Boolean
+    val canLoadExternalImages: Boolean,
+    val displayOnlyPrimaryVaultMessage: Boolean,
 ) {
     companion object {
         val Loading = SelectItemListUiState(
@@ -46,7 +52,8 @@ data class SelectItemListUiState(
             shares = persistentMapOf(),
             sortingType = SearchSortingType.MostRecent,
             shouldScrollToTop = false,
-            canLoadExternalImages = false
+            canLoadExternalImages = false,
+            displayOnlyPrimaryVaultMessage = false,
         )
     }
 }
@@ -69,13 +76,16 @@ data class SelectItemListItems(
 data class SearchUiState(
     val searchQuery: String,
     val inSearchMode: Boolean,
-    val isProcessingSearch: IsProcessingSearchState
+    val isProcessingSearch: IsProcessingSearchState,
+    val searchInMode: SearchInMode
+
 ) {
     companion object {
         val Initial = SearchUiState(
             searchQuery = "",
             inSearchMode = false,
-            isProcessingSearch = IsProcessingSearchState.NotLoading
+            isProcessingSearch = IsProcessingSearchState.NotLoading,
+            searchInMode = SearchInMode.AllVaults
         )
     }
 }

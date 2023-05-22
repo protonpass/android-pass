@@ -86,7 +86,7 @@ sealed interface CreateAliasNavigation {
     object Close : CreateAliasNavigation
     object CloseBottomsheet : CreateAliasNavigation
 
-    data class SelectVault(val shareId: ShareId?) : CreateAliasNavigation
+    data class SelectVault(val shareId: ShareId) : CreateAliasNavigation
 }
 
 @OptIn(

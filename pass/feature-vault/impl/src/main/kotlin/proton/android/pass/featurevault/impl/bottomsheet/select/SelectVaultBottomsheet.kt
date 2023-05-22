@@ -1,6 +1,7 @@
 package proton.android.pass.featurevault.impl.bottomsheet.select
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,15 +16,27 @@ fun SelectVaultBottomsheet(
     onNavigate: (VaultNavigation) -> Unit,
     viewModel: SelectVaultViewModel = hiltViewModel()
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
 
-    SelectVaultBottomsheetContent(
-        modifier = modifier,
-        shareList = state.vaults,
-        selectedShareId = state.selected.value()?.vault?.shareId,
-        onVaultClick = {
-            onNavigate(VaultNavigation.VaultSelected(it))
+    when (val state = uiState) {
+        is SelectVaultUiState.Success -> SelectVaultBottomsheetContent(
+            modifier = modifier,
+            shareList = state.vaults,
+            selectedShareId = state.selected.vault.shareId,
+            onVaultClick = {
+                onNavigate(VaultNavigation.VaultSelected(it))
+            }
+        )
+
+        SelectVaultUiState.Error -> {
+            LaunchedEffect(Unit) {
+                onNavigate(VaultNavigation.Close)
+            }
         }
-    )
 
+        SelectVaultUiState.Uninitialised,
+        SelectVaultUiState.Loading -> {
+            // no-op
+        }
+    }
 }

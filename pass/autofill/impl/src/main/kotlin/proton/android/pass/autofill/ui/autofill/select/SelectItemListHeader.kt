@@ -16,20 +16,37 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.autofill.service.R
+import proton.android.pass.autofill.ui.previewproviders.SuggestionsInput
 import proton.android.pass.autofill.ui.previewproviders.SuggestionsPreviewProvider
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.item.ActionableItemRow
 
+@Suppress("LongParameterList")
 fun LazyListScope.SelectItemListHeader(
     suggestionsForTitle: String,
     suggestions: List<ItemUiModel>,
     canLoadExternalImages: Boolean,
+    showUpgradeMessage: Boolean,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
     onItemClicked: (ItemUiModel) -> Unit
 ) {
+
+    if (showUpgradeMessage) {
+        item {
+            InfoBanner(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                backgroundColor = PassTheme.colors.interactionNormMinor1,
+                text = stringResource(R.string.autofill_only_searching_in_primary_vault)
+            )
+        }
+
+        item { Spacer(modifier = Modifier.height(8.dp)) }
+    }
+
     if (suggestions.isEmpty()) return
 
     item {
@@ -59,22 +76,23 @@ fun LazyListScope.SelectItemListHeader(
 }
 
 class ThemedSuggestionsPreviewProvider :
-    ThemePairPreviewProvider<List<ItemUiModel>>(SuggestionsPreviewProvider())
+    ThemePairPreviewProvider<SuggestionsInput>(SuggestionsPreviewProvider())
 
 @Preview
 @Composable
 fun SelectItemListHeaderPreview(
-    @PreviewParameter(ThemedSuggestionsPreviewProvider::class) input: Pair<Boolean, List<ItemUiModel>>
+    @PreviewParameter(ThemedSuggestionsPreviewProvider::class) input: Pair<Boolean, SuggestionsInput>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 SelectItemListHeader(
                     suggestionsForTitle = "some.website",
-                    suggestions = input.second,
+                    suggestions = input.second.items,
                     onItemClicked = {},
                     onItemOptionsClicked = {},
-                    canLoadExternalImages = false
+                    canLoadExternalImages = false,
+                    showUpgradeMessage = input.second.showUpgradeMessage
                 )
             }
         }

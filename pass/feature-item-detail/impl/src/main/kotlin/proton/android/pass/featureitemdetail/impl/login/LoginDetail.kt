@@ -49,8 +49,8 @@ fun LoginDetail(
     modifier: Modifier = Modifier,
     moreInfoUiState: MoreInfoUiState,
     canLoadExternalImages: Boolean,
-    viewModel: LoginDetailViewModel = hiltViewModel(),
     onNavigate: (ItemDetailNavigation) -> Unit,
+    viewModel: LoginDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -85,8 +85,10 @@ fun LoginDetail(
                                 scope.launch { bottomSheetState.hide() }
                             }
                         )
+
                         TopBarOptions -> when (state.itemUiModel.state) {
                             ItemState.Active.value -> TopBarOptionsBottomSheetContents(
+                                canMigrate = state.canMigrate,
                                 onMigrate = {
                                     scope.launch {
                                         bottomSheetState.hide()
@@ -107,6 +109,7 @@ fun LoginDetail(
                                     scope.launch { bottomSheetState.hide() }
                                 }
                             )
+
                             ItemState.Trashed.value -> TrashItemBottomSheetContents(
                                 itemUiModel = state.itemUiModel,
                                 onRestoreItem = { shareId, itemId ->

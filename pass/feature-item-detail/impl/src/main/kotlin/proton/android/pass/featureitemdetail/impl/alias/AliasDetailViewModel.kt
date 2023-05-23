@@ -17,6 +17,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
@@ -26,6 +27,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
@@ -55,15 +57,14 @@ class AliasDetailViewModel @Inject constructor(
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
+    observeUpgradeInfo: ObserveUpgradeInfo,
     getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val shareId: ShareId =
-        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
-    private val itemId: ItemId =
-        ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
+    private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
+    private val itemId: ItemId = ItemId(savedStateHandle.require(CommonNavArgId.ItemId.key))
 
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -80,36 +81,46 @@ class AliasDetailViewModel @Inject constructor(
         isLoadingState,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
-        isRestoredFromTrashState
+        isRestoredFromTrashState,
+        observeUpgradeInfo().asLoadingResult()
     ) { itemLoadingResult,
         aliasDetailsResult,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
-        isRestoredFromTrash ->
+        isRestoredFromTrash,
+        upgradeInfoResult ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
                 AliasDetailUiState.Error
             }
+
             LoadingResult.Loading -> AliasDetailUiState.NotInitialised
             is LoadingResult.Success -> {
                 val details = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
 
-                encryptionContextProvider.withEncryptionContext {
-                    AliasDetailUiState.Success(
-                        itemUiModel = details.item.toUiModel(this),
-                        vault = vault,
-                        mailboxes = aliasDetailsResult.getOrNull()?.mailboxes?.toPersistentList()
-                            ?: persistentListOf(),
-                        isLoading = aliasDetailsResult is LoadingResult.Loading || isLoading.value(),
-                        isLoadingMailboxes = aliasDetailsResult is LoadingResult.Loading,
-                        isItemSentToTrash = isItemSentToTrash.value(),
-                        isPermanentlyDeleted = isPermanentlyDeleted.value(),
-                        isRestoredFromTrash = isRestoredFromTrash.value()
-                    )
-                }
+                val canMigrate =
+                    if (upgradeInfoResult.getOrNull()?.isUpgradeAvailable == true) {
+                        !(vault?.isPrimary ?: false)
+                    } else {
+                        true
+                    }
+                AliasDetailUiState.Success(
+                    itemUiModel = encryptionContextProvider.withEncryptionContext {
+                        details.item.toUiModel(this)
+                    },
+                    vault = vault,
+                    mailboxes = aliasDetailsResult.getOrNull()?.mailboxes?.toPersistentList()
+                        ?: persistentListOf(),
+                    isLoading = aliasDetailsResult is LoadingResult.Loading || isLoading.value(),
+                    isLoadingMailboxes = aliasDetailsResult is LoadingResult.Loading,
+                    isItemSentToTrash = isItemSentToTrash.value(),
+                    isPermanentlyDeleted = isPermanentlyDeleted.value(),
+                    isRestoredFromTrash = isRestoredFromTrash.value(),
+                    canMigrate = canMigrate
+                )
             }
         }
     }

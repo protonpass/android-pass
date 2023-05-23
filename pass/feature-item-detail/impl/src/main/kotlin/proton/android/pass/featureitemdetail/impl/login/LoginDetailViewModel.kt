@@ -24,8 +24,10 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
@@ -37,6 +39,7 @@ import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -77,14 +80,13 @@ class LoginDetailViewModel @Inject constructor(
     private val getItemByAliasEmail: GetItemByAliasEmail,
     private val telemetryManager: TelemetryManager,
     private val canDisplayTotp: CanDisplayTotp,
+    observeUpgradeInfo: ObserveUpgradeInfo,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val shareId: ShareId =
-        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
-    private val itemId: ItemId =
-        ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
+    private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
+    private val itemId: ItemId = ItemId(savedStateHandle.require(CommonNavArgId.ItemId.key))
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -159,12 +161,14 @@ class LoginDetailViewModel @Inject constructor(
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
+        observeUpgradeInfo().asLoadingResult()
     ) { itemDetails,
         password,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
-        isRestoredFromTrash ->
+        isRestoredFromTrash,
+        upgradeInfoResult ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -179,19 +183,26 @@ class LoginDetailViewModel @Inject constructor(
                 } else {
                     null
                 }
-                encryptionContextProvider.withEncryptionContext {
-                    LoginDetailUiState.Success(
-                        itemUiModel = details.item.toUiModel(this),
-                        vault = vault,
-                        linkedAlias = details.linkedAlias,
-                        passwordState = password,
-                        totpUiState = details.totp.value(),
-                        isLoading = isLoading.value(),
-                        isItemSentToTrash = isItemSentToTrash.value(),
-                        isPermanentlyDeleted = isPermanentlyDeleted.value(),
-                        isRestoredFromTrash = isRestoredFromTrash.value()
-                    )
-                }
+                val canMigrate =
+                    if (upgradeInfoResult.getOrNull()?.isUpgradeAvailable == true) {
+                        !(vault?.isPrimary ?: false)
+                    } else {
+                        true
+                    }
+                LoginDetailUiState.Success(
+                    itemUiModel = encryptionContextProvider.withEncryptionContext {
+                        details.item.toUiModel(this)
+                    },
+                    vault = vault,
+                    linkedAlias = details.linkedAlias,
+                    passwordState = password,
+                    totpUiState = details.totp.value(),
+                    isLoading = isLoading.value(),
+                    isItemSentToTrash = isItemSentToTrash.value(),
+                    isPermanentlyDeleted = isPermanentlyDeleted.value(),
+                    isRestoredFromTrash = isRestoredFromTrash.value(),
+                    canMigrate = canMigrate
+                )
             }
         }
     }

@@ -65,6 +65,7 @@ fun NoteDetail(
                 sheetContent = {
                     when (state.itemUiModel.state) {
                         ItemState.Active.value -> TopBarOptionsBottomSheetContents(
+                            canMigrate = state.canMigrate,
                             onMigrate = {
                                 scope.launch {
                                     bottomSheetState.hide()
@@ -84,6 +85,7 @@ fun NoteDetail(
                                 )
                             }
                         )
+
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
                             itemUiModel = state.itemUiModel,
                             onRestoreItem = { shareId, itemId ->

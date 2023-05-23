@@ -13,7 +13,7 @@ import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.component.ProtonAlertDialogText
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.headline
+import me.proton.core.compose.theme.headlineNorm
 
 @Composable
 fun ConfirmWithLoadingDialog(
@@ -83,7 +83,7 @@ fun ConfirmWithLoadingDialog(
         title = {
             Text(
                 text = title,
-                style = ProtonTheme.typography.headline,
+                style = ProtonTheme.typography.headlineNorm,
                 color = ProtonTheme.colors.textNorm
             )
         },

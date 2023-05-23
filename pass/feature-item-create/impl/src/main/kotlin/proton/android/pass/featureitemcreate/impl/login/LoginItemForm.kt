@@ -32,7 +32,6 @@ import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsCo
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AliasOptions
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.GeneratePassword
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.None
-import proton.pass.domain.ShareId
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Suppress("UnusedPrivateMember")
@@ -42,7 +41,6 @@ internal fun LoginItemForm(
     isEditAllowed: Boolean,
     loginItem: LoginItem,
     totpUiState: TotpUiState,
-    selectedShareId: ShareId?,
     showCreateAliasButton: Boolean,
     primaryEmail: String?,
     isUpdate: Boolean,

@@ -22,7 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
-import me.proton.core.compose.theme.headline
+import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.composecomponents.impl.R
@@ -52,7 +52,7 @@ fun EmptyList(
         Spacer(modifier = Modifier.height(16.dp))
         Text(
             text = emptyListTitle,
-            style = ProtonTheme.typography.headline,
+            style = ProtonTheme.typography.headlineNorm,
             textAlign = TextAlign.Center
         )
         Text(

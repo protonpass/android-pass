@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.headline
+import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
@@ -36,7 +36,7 @@ fun EmptySearchResults(modifier: Modifier = Modifier) {
         )
         Text(
             text = stringResource(id = R.string.empty_search_results_title),
-            style = ProtonTheme.typography.headline
+            style = ProtonTheme.typography.headlineNorm
         )
     }
 }

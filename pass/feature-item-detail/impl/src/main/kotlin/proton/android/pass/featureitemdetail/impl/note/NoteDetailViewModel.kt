@@ -21,9 +21,9 @@ import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedS
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
@@ -52,7 +52,7 @@ class NoteDetailViewModel @Inject constructor(
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
-    observeUpgradeInfo: ObserveUpgradeInfo,
+    canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -75,8 +75,13 @@ class NoteDetailViewModel @Inject constructor(
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
-        observeUpgradeInfo().asLoadingResult()
-    ) { itemLoadingResult, isLoading, isItemSentToTrash, isPermanentlyDeleted, isRestoredFromTrash, upgradeInfoResult ->
+        canPerformPaidAction().asLoadingResult()
+    ) { itemLoadingResult,
+        isLoading,
+        isItemSentToTrash,
+        isPermanentlyDeleted,
+        isRestoredFromTrash,
+        canPerformPaidActionResult ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -87,12 +92,11 @@ class NoteDetailViewModel @Inject constructor(
             is LoadingResult.Success -> {
                 val details = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
-                val canMigrate =
-                    if (upgradeInfoResult.getOrNull()?.isUpgradeAvailable == true) {
-                        !(vault?.isPrimary ?: false)
-                    } else {
-                        true
-                    }
+                val canMigrate = if (canPerformPaidActionResult.getOrNull() == true) {
+                    true
+                } else {
+                    !(vault?.isPrimary ?: false)
+                }
                 NoteDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {
                         details.item.toUiModel(this)

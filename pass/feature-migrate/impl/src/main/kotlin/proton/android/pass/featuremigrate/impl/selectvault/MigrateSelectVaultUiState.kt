@@ -2,8 +2,6 @@ package proton.android.pass.featuremigrate.impl.selectvault
 
 import androidx.compose.runtime.Stable
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
@@ -34,17 +32,20 @@ data class VaultEnabledPair(
     val isEnabled: Boolean
 )
 
-@Stable
-data class MigrateSelectVaultUiState(
-    val vaultList: ImmutableList<VaultEnabledPair>,
-    val event: Option<SelectVaultEvent>,
-    val mode: MigrateMode
-) {
-    companion object {
-        fun Initial(mode: MigrateMode) = MigrateSelectVaultUiState(
-            vaultList = persistentListOf(),
-            event = None,
-            mode = mode
-        )
-    }
+sealed class MigrateSelectVaultUiState {
+    @Stable
+    object Uninitialised : MigrateSelectVaultUiState()
+
+    @Stable
+    object Loading : MigrateSelectVaultUiState()
+
+    @Stable
+    object Error : MigrateSelectVaultUiState()
+
+    @Stable
+    data class Success(
+        val vaultList: ImmutableList<VaultEnabledPair>,
+        val event: Option<SelectVaultEvent>,
+        val mode: MigrateMode
+    ) : MigrateSelectVaultUiState()
 }

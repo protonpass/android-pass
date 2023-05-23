@@ -7,4 +7,5 @@
     <string name="migrate_item_error_snackbar">Error moving the item</string>
     <string name="migrate_all_items_success_snackbar">All items moved</string>
     <string name="migrate_all_items_error_snackbar">Error moving all vault items</string>
+    <string name="migrate_init_error_snackbar">Could not prepare migrate screen</string>
 </resources>

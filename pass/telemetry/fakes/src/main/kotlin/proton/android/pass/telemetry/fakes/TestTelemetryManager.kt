@@ -3,7 +3,9 @@ package proton.android.pass.telemetry.fakes
 import proton.android.pass.telemetry.api.TelemetryEvent
 import proton.android.pass.telemetry.api.TelemetryManager
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestTelemetryManager @Inject constructor() : TelemetryManager {
 
     private val memory: MutableList<TelemetryEvent> = mutableListOf()

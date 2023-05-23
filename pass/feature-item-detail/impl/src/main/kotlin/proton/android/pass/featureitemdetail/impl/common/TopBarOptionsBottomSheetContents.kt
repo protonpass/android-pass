@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -14,22 +14,24 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItem
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIcon
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
-import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
+import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.featureitemdetail.impl.R
 
 @Composable
 fun TopBarOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
+    canMigrate: Boolean,
     onMigrate: () -> Unit,
     onMoveToTrash: () -> Unit
 ) {
+    val items = mutableListOf<BottomSheetItem>()
+    if (canMigrate) {
+        items.add(migrate(onClick = onMigrate))
+    }
+    items.add(moveToTrash(onClick = onMoveToTrash))
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
-        items = persistentListOf(
-            migrate(onClick = onMigrate),
-            bottomSheetDivider(),
-            moveToTrash(onClick = onMoveToTrash),
-        )
+        items = items.withDividers().toPersistentList()
     )
 }
 
@@ -71,6 +73,7 @@ fun TopBarOptionsBottomSheetContentsPreview(
     PassTheme(isDark = isDark) {
         Surface {
             TopBarOptionsBottomSheetContents(
+                canMigrate = true,
                 onMigrate = {},
                 onMoveToTrash = {}
             )

@@ -72,6 +72,7 @@ object DatasetUtils {
         return datasetBuilder.build()
     }
 
+    @Suppress("DEPRECATION")
     private fun buildDatasetLT33(
         context: Context,
         dsbOptions: DatasetBuilderOptions,

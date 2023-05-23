@@ -31,6 +31,7 @@ dependencies {
     implementation(libs.core.presentation)
     implementation(libs.core.presentation.compose)
     implementation(libs.kotlinx.collections)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
 
     implementation(libs.dagger.hilt.android)

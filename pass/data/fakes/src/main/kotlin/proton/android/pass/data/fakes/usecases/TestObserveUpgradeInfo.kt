@@ -8,7 +8,9 @@ import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.pass.domain.Plan
 import proton.pass.domain.PlanType
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestObserveUpgradeInfo @Inject constructor() : ObserveUpgradeInfo {
 
     private var upgradeInfo: MutableSharedFlow<UpgradeInfo> = MutableStateFlow(DEFAULT)

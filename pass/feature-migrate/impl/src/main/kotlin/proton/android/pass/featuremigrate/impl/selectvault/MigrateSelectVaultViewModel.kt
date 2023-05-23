@@ -4,7 +4,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -17,58 +16,79 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
+import proton.android.pass.featuremigrate.impl.MigrateSnackbarMessage.CouldNotInit
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
 class MigrateSelectVaultViewModel @Inject constructor(
+    observeUpgradeInfo: ObserveUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
+    snackbarDispatcher: SnackbarDispatcher,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val mode = getMode()
+    private val mode: Mode = getMode()
 
     private val eventFlow: MutableStateFlow<Option<SelectVaultEvent>> = MutableStateFlow(None)
 
     val state: StateFlow<MigrateSelectVaultUiState> = combine(
+        observeUpgradeInfo().asLoadingResult(),
         observeVaults().asLoadingResult(),
         eventFlow
-    ) { vaultResult, event ->
-        when (val res = vaultResult) {
-            LoadingResult.Loading -> MigrateSelectVaultUiState.Initial(mode.migrateMode())
+    ) { upgradeInfoResult, vaultResult, event ->
+        val upgradeInfo = when (upgradeInfoResult) {
             is LoadingResult.Error -> {
-                PassLogger.e(TAG, res.exception, "Error observing active vaults")
-                MigrateSelectVaultUiState(
-                    vaultList = persistentListOf(),
-                    event = SelectVaultEvent.Close.toOption(),
-                    mode = mode.migrateMode()
-                )
+                snackbarDispatcher(CouldNotInit)
+                PassLogger.w(TAG, upgradeInfoResult.exception, "Error observing upgrade info")
+                return@combine MigrateSelectVaultUiState.Error
             }
-            is LoadingResult.Success -> {
-                val vaultEnabledPairs = res.data.map {
-                    VaultEnabledPair(
-                        vault = it,
-                        isEnabled = it.vault.shareId != mode.shareId
-                    )
-                }
-                MigrateSelectVaultUiState(
-                    vaultList = vaultEnabledPairs.toImmutableList(),
-                    event = event,
-                    mode = mode.migrateMode()
-                )
+
+            LoadingResult.Loading -> return@combine MigrateSelectVaultUiState.Loading
+            is LoadingResult.Success -> upgradeInfoResult.data
+        }
+        when (vaultResult) {
+            LoadingResult.Loading -> MigrateSelectVaultUiState.Loading
+            is LoadingResult.Error -> {
+                snackbarDispatcher(CouldNotInit)
+                PassLogger.w(TAG, vaultResult.exception, "Error observing active vaults")
+                MigrateSelectVaultUiState.Error
             }
+
+            is LoadingResult.Success -> MigrateSelectVaultUiState.Success(
+                vaultList = vaultResult.data
+                    .map {
+                        if (upgradeInfo.isUpgradeAvailable) {
+                            VaultEnabledPair(
+                                vault = it,
+                                isEnabled = it.vault.isPrimary
+                            )
+                        } else {
+                            VaultEnabledPair(
+                                vault = it,
+                                isEnabled = it.vault.shareId != mode.shareId
+                            )
+                        }
+                    }
+                    .toImmutableList(),
+                event = event,
+                mode = mode.migrateMode()
+            )
         }
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000L),
-        initialValue = MigrateSelectVaultUiState.Initial(mode.migrateMode())
+        initialValue = MigrateSelectVaultUiState.Uninitialised
     )
 
     fun onVaultSelected(shareId: ShareId) {
@@ -78,6 +98,7 @@ class MigrateSelectVaultViewModel @Inject constructor(
                 itemId = mode.itemId,
                 destinationShareId = shareId
             )
+
             is Mode.MigrateAllItems -> SelectVaultEvent.VaultSelectedForMigrateAll(
                 sourceShareId = mode.shareId,
                 destinationShareId = shareId
@@ -92,20 +113,16 @@ class MigrateSelectVaultViewModel @Inject constructor(
     }
 
     private fun getMode(): Mode {
-        val sourceShareId = getSourceShareId()
-        return when (getNavMode()) {
-            MigrateModeValue.SingleItem -> Mode.MigrateItem(sourceShareId, getItemId())
+        val sourceShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
+        return when (MigrateModeValue.valueOf(savedStateHandle.require(MigrateModeArg.key))) {
+            MigrateModeValue.SingleItem -> Mode.MigrateItem(
+                shareId = sourceShareId,
+                itemId = ItemId(savedStateHandle.require(CommonOptionalNavArgId.ItemId.key))
+            )
+
             MigrateModeValue.AllVaultItems -> Mode.MigrateAllItems(sourceShareId)
         }
     }
-
-    private fun getNavMode(): MigrateModeValue = MigrateModeValue.valueOf(getNavArg(MigrateModeArg.key))
-    private fun getSourceShareId(): ShareId = ShareId(getNavArg(CommonNavArgId.ShareId.key))
-    private fun getItemId(): ItemId = ItemId(getNavArg(CommonOptionalNavArgId.ItemId.key))
-
-    private fun getNavArg(name: String): String =
-        savedStateHandle.get<String>(name)
-            ?: throw IllegalStateException("Missing $name nav argument")
 
     internal sealed interface Mode {
 

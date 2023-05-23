@@ -1,6 +1,5 @@
 package proton.android.pass.featuremigrate.impl.selectvault
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,44 +15,52 @@ import proton.android.pass.featuremigrate.impl.MigrateNavigation
 @Composable
 fun MigrateSelectVaultBottomSheet(
     modifier: Modifier = Modifier,
-    navigation: (MigrateNavigation) -> Unit,
-    onClose: () -> Unit,
+    onNavigate: (MigrateNavigation) -> Unit,
     viewModel: MigrateSelectVaultViewModel = hiltViewModel()
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
 
-    BackHandler { onClose() }
+    when (val state = uiState) {
+        MigrateSelectVaultUiState.Error -> onNavigate(MigrateNavigation.Close)
+        MigrateSelectVaultUiState.Loading,
+        MigrateSelectVaultUiState.Uninitialised -> {
+            // no-op
+        }
 
-    LaunchedEffect(state.event) {
-        val event = state.event
-        if (event is Some) {
-            when (val value = event.value) {
-                SelectVaultEvent.Close -> onClose()
-                is SelectVaultEvent.VaultSelectedForMigrateItem -> {
-                    navigation(
-                        MigrateNavigation.VaultSelectedForMigrateItem(
-                            sourceShareId = value.sourceShareId,
-                            destShareId = value.destinationShareId,
-                            itemId = value.itemId
-                        )
-                    )
-                }
-                is SelectVaultEvent.VaultSelectedForMigrateAll -> {
-                    navigation(
-                        MigrateNavigation.VaultSelectedForMigrateAll(
-                            sourceShareId = value.sourceShareId,
-                            destShareId = value.destinationShareId
-                        )
-                    )
+        is MigrateSelectVaultUiState.Success -> {
+            LaunchedEffect(state.event) {
+                val event = state.event
+                if (event is Some) {
+                    when (val value = event.value) {
+                        SelectVaultEvent.Close -> onNavigate(MigrateNavigation.Close)
+                        is SelectVaultEvent.VaultSelectedForMigrateItem -> {
+                            onNavigate(
+                                MigrateNavigation.VaultSelectedForMigrateItem(
+                                    sourceShareId = value.sourceShareId,
+                                    destShareId = value.destinationShareId,
+                                    itemId = value.itemId
+                                )
+                            )
+                        }
+
+                        is SelectVaultEvent.VaultSelectedForMigrateAll -> {
+                            onNavigate(
+                                MigrateNavigation.VaultSelectedForMigrateAll(
+                                    sourceShareId = value.sourceShareId,
+                                    destShareId = value.destinationShareId
+                                )
+                            )
+                        }
+                    }
+                    viewModel.clearEvent()
                 }
             }
-            viewModel.clearEvent()
+
+            MigrateSelectVaultContents(
+                modifier = modifier.bottomSheet(),
+                vaults = state.vaultList,
+                onVaultSelected = { viewModel.onVaultSelected(it) }
+            )
         }
     }
-
-    MigrateSelectVaultContents(
-        modifier = modifier.bottomSheet(),
-        vaults = state.vaultList,
-        onVaultSelected = { viewModel.onVaultSelected(it) }
-    )
 }

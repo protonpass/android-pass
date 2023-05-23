@@ -35,11 +35,11 @@ import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashSt
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
@@ -80,7 +80,7 @@ class LoginDetailViewModel @Inject constructor(
     private val getItemByAliasEmail: GetItemByAliasEmail,
     private val telemetryManager: TelemetryManager,
     private val canDisplayTotp: CanDisplayTotp,
-    observeUpgradeInfo: ObserveUpgradeInfo,
+    canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -161,14 +161,14 @@ class LoginDetailViewModel @Inject constructor(
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
-        observeUpgradeInfo().asLoadingResult()
+        canPerformPaidAction().asLoadingResult()
     ) { itemDetails,
         password,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
-        upgradeInfoResult ->
+        canPerformPaidActionResult ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -183,12 +183,11 @@ class LoginDetailViewModel @Inject constructor(
                 } else {
                     null
                 }
-                val canMigrate =
-                    if (upgradeInfoResult.getOrNull()?.isUpgradeAvailable == true) {
-                        !(vault?.isPrimary ?: false)
-                    } else {
-                        true
-                    }
+                val canMigrate = if (canPerformPaidActionResult.getOrNull() == true) {
+                    true
+                } else {
+                    !(vault?.isPrimary ?: false)
+                }
                 LoginDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {
                         details.item.toUiModel(this)

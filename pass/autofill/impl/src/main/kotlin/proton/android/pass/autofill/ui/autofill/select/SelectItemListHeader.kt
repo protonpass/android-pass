@@ -12,6 +12,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -24,6 +28,7 @@ import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.container.InfoBanner
 import proton.android.pass.composecomponents.impl.item.ActionableItemRow
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Suppress("LongParameterList")
 fun LazyListScope.SelectItemListHeader(
@@ -39,10 +44,25 @@ fun LazyListScope.SelectItemListHeader(
 
     if (showUpgradeMessage) {
         item {
+            val text = buildAnnotatedString {
+                append(stringResource(R.string.autofill_only_searching_in_primary_vault))
+                append(' ')
+                if (canUpgrade) {
+                    withStyle(
+                        style = SpanStyle(
+                            textDecoration = TextDecoration.Underline,
+                            color = PassTheme.colors.loginInteractionNormMajor2
+                        )
+                    ) {
+                        append(stringResource(CompR.string.action_upgrade_now))
+                    }
+                }
+            }
+
             InfoBanner(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
-                text = stringResource(R.string.autofill_only_searching_in_primary_vault),
+                text = text,
                 onClick = if (canUpgrade) { onUpgradeClick } else null
             )
         }
@@ -94,7 +114,7 @@ fun SelectItemListHeaderPreview(
                     suggestions = input.second.items,
                     canLoadExternalImages = false,
                     showUpgradeMessage = input.second.showUpgradeMessage,
-                    canUpgrade = false,
+                    canUpgrade = input.second.canUpgrade,
                     onItemClicked = {},
                     onItemOptionsClicked = {},
                     onUpgradeClick = {}

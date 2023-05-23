@@ -30,6 +30,7 @@ import proton.pass.domain.ShareIcon
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun SelectVaultBottomsheetContent(
@@ -55,7 +56,7 @@ fun SelectVaultBottomsheetContent(
                             color = PassTheme.colors.loginInteractionNormMajor2
                         )
                     ) {
-                        append(stringResource(R.string.bottomsheet_upgrade_now))
+                        append(stringResource(CompR.string.action_upgrade_now))
                     }
                 },
                 onClick = onUpgrade

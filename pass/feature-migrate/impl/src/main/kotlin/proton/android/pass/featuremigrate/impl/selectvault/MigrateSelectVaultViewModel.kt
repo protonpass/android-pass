@@ -17,7 +17,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.require
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
@@ -32,7 +32,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MigrateSelectVaultViewModel @Inject constructor(
-    observeUpgradeInfo: ObserveUpgradeInfo,
+    canPerformPaidAction: CanPerformPaidAction,
     observeVaults: ObserveVaultsWithItemCount,
     snackbarDispatcher: SnackbarDispatcher,
     private val savedStateHandle: SavedStateHandle
@@ -43,19 +43,23 @@ class MigrateSelectVaultViewModel @Inject constructor(
     private val eventFlow: MutableStateFlow<Option<SelectVaultEvent>> = MutableStateFlow(None)
 
     val state: StateFlow<MigrateSelectVaultUiState> = combine(
-        observeUpgradeInfo().asLoadingResult(),
+        canPerformPaidAction().asLoadingResult(),
         observeVaults().asLoadingResult(),
         eventFlow
-    ) { upgradeInfoResult, vaultResult, event ->
-        val upgradeInfo = when (upgradeInfoResult) {
+    ) { canPerformPaidActionResult, vaultResult, event ->
+        val canPerformPaidActionValue = when (canPerformPaidActionResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(CouldNotInit)
-                PassLogger.w(TAG, upgradeInfoResult.exception, "Error observing upgrade info")
+                PassLogger.w(
+                    TAG,
+                    canPerformPaidActionResult.exception,
+                    "Error observing CanPerformPaidAction"
+                )
                 return@combine MigrateSelectVaultUiState.Error
             }
 
             LoadingResult.Loading -> return@combine MigrateSelectVaultUiState.Loading
-            is LoadingResult.Success -> upgradeInfoResult.data
+            is LoadingResult.Success -> canPerformPaidActionResult.data
         }
         when (vaultResult) {
             LoadingResult.Loading -> MigrateSelectVaultUiState.Loading
@@ -68,15 +72,15 @@ class MigrateSelectVaultViewModel @Inject constructor(
             is LoadingResult.Success -> MigrateSelectVaultUiState.Success(
                 vaultList = vaultResult.data
                     .map {
-                        if (upgradeInfo.isUpgradeAvailable) {
+                        if (canPerformPaidActionValue) {
                             VaultEnabledPair(
                                 vault = it,
-                                isEnabled = it.vault.isPrimary
+                                isEnabled = it.vault.shareId != mode.shareId
                             )
                         } else {
                             VaultEnabledPair(
                                 vault = it,
-                                isEnabled = it.vault.shareId != mode.shareId
+                                isEnabled = it.vault.isPrimary
                             )
                         }
                     }

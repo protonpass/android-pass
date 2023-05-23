@@ -26,11 +26,12 @@ class EditVaultViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val updateVault: UpdateVault,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val savedStateHandle: SavedStateHandle,
-    private val getVaultById: GetVaultById
+    private val getVaultById: GetVaultById,
+    savedStateHandle: SavedStateHandle
 ) : BaseVaultViewModel() {
 
-    private val shareId = getNavShareId()
+    private val shareId =
+        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)
@@ -46,11 +47,13 @@ class EditVaultViewModel @Inject constructor(
                     LoadingResult.Loading -> {
                         isLoadingFlow.update { IsLoadingState.Loading }
                     }
+
                     is LoadingResult.Error -> {
                         PassLogger.w(TAG, it.exception, "Error getting vault by id")
                         snackbarDispatcher(VaultSnackbarMessage.CannotRetrieveVaultError)
                         isLoadingFlow.update { IsLoadingState.NotLoading }
                     }
+
                     is LoadingResult.Success -> {
                         setInitialValues(it.data)
                         isLoadingFlow.update { IsLoadingState.NotLoading }
@@ -98,12 +101,6 @@ class EditVaultViewModel @Inject constructor(
                 color = vault.color
             )
         }
-    }
-
-    private fun getNavShareId(): ShareId {
-        val arg = savedStateHandle.get<String>(CommonNavArgId.ShareId.key)
-            ?: throw IllegalStateException("Missing ShareID nav argument")
-        return ShareId(arg)
     }
 
     companion object {

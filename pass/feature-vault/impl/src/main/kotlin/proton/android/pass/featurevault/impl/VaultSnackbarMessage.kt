@@ -22,5 +22,6 @@ enum class VaultSnackbarMessage(
     CreateVaultError(R.string.snackbar_create_vault_error, SnackbarType.ERROR),
     CannotRetrieveVaultError(R.string.snackbar_retrieve_vault_error, SnackbarType.ERROR),
     CannotFindVaultError(R.string.snackbar_find_vault_error, SnackbarType.ERROR),
-    CannotGetVaultListError(R.string.snackbar_get_vault_list_error, SnackbarType.ERROR)
+    CannotGetVaultListError(R.string.snackbar_get_vault_list_error, SnackbarType.ERROR),
+    CannotGetVaultUpgradeInfoError(R.string.snackbar_get_upgrade_info_error, SnackbarType.ERROR)
 }

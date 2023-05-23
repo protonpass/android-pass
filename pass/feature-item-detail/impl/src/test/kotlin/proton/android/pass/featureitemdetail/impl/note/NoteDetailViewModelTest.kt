@@ -12,9 +12,9 @@ import org.junit.Test
 import proton.android.pass.common.api.None
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
+import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestDeleteItem
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
-import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
 import proton.android.pass.data.fakes.usecases.TestTrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
@@ -47,7 +47,7 @@ class NoteDetailViewModelTest {
     private lateinit var deleteItem: TestDeleteItem
     private lateinit var restoreItem: TestRestoreItem
     private lateinit var encryptionContextProvider: TestEncryptionContextProvider
-    private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    private lateinit var canPerformPaidAction: TestCanPerformPaidAction
 
     @Before
     fun setup() {
@@ -58,7 +58,7 @@ class NoteDetailViewModelTest {
         deleteItem = TestDeleteItem()
         restoreItem = TestRestoreItem()
         encryptionContextProvider = TestEncryptionContextProvider()
-        observeUpgradeInfo = TestObserveUpgradeInfo()
+        canPerformPaidAction = TestCanPerformPaidAction()
         instance = NoteDetailViewModel(
             snackbarDispatcher = snackbarDispatcher,
             telemetryManager = telemetryManager,
@@ -71,7 +71,7 @@ class NoteDetailViewModelTest {
             trashItem = trashItem,
             deleteItem = deleteItem,
             restoreItem = restoreItem,
-            observeUpgradeInfo = observeUpgradeInfo
+            canPerformPaidAction = canPerformPaidAction
         )
     }
 

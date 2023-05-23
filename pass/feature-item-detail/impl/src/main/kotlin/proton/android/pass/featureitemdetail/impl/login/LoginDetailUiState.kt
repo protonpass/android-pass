@@ -25,7 +25,8 @@ sealed interface LoginDetailUiState {
         val isLoading: Boolean,
         val isItemSentToTrash: Boolean,
         val isPermanentlyDeleted: Boolean,
-        val isRestoredFromTrash: Boolean
+        val isRestoredFromTrash: Boolean,
+        val canMigrate: Boolean,
     ) : LoginDetailUiState
 }
 

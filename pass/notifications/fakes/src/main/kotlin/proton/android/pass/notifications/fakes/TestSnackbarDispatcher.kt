@@ -9,7 +9,9 @@ import proton.android.pass.common.api.some
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.notifications.api.SnackbarMessage
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestSnackbarDispatcher @Inject constructor() : SnackbarDispatcher {
     private val snackbarState = MutableSharedFlow<Option<SnackbarMessage>>(
         replay = 1, onBufferOverflow = BufferOverflow.DROP_OLDEST

@@ -25,6 +25,7 @@
 
     <!-- Actions -->
     <string name="action_content_description_menu">Item action menu</string>
+    <string name="action_upgrade_now">Upgrade now</string>
 
     <!-- Empty list -->
     <string name="empty_list_title">Add your first item</string>

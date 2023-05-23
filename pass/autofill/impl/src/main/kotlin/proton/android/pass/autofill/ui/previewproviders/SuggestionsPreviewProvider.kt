@@ -17,10 +17,21 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
                             item("item 1", "some username"),
                             item("item 2", "other username")
                         ),
-                        showUpgradeMessage = showUpgrade
+                        showUpgradeMessage = showUpgrade,
+                        canUpgrade = false
                     )
                 )
             }
+            yield(
+                SuggestionsInput(
+                    items = listOf(
+                        item("item 1", "some username"),
+                        item("item 2", "other username")
+                    ),
+                    showUpgradeMessage = true,
+                    canUpgrade = true
+                )
+            )
         }
 
 
@@ -46,5 +57,6 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
 
 data class SuggestionsInput(
     val items: List<ItemUiModel>,
-    val showUpgradeMessage: Boolean
+    val showUpgradeMessage: Boolean,
+    val canUpgrade: Boolean
 )

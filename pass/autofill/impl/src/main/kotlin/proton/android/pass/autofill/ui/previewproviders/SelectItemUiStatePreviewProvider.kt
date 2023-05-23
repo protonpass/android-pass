@@ -43,7 +43,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     sortingType = SearchSortingType.MostRecent,
                     shouldScrollToTop = false,
                     canLoadExternalImages = false,
-                    displayOnlyPrimaryVaultMessage = false
+                    displayOnlyPrimaryVaultMessage = false,
+                    canUpgrade = false
                 ),
                 SearchUiState.Initial
             ),
@@ -69,7 +70,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     sortingType = SearchSortingType.MostRecent,
                     shouldScrollToTop = false,
                     canLoadExternalImages = false,
-                    displayOnlyPrimaryVaultMessage = true
+                    displayOnlyPrimaryVaultMessage = true,
+                    canUpgrade = false
                 ),
                 SearchUiState.Initial
             ),
@@ -83,7 +85,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
                     sortingType = SearchSortingType.MostRecent,
                     shouldScrollToTop = false,
                     canLoadExternalImages = false,
-                    displayOnlyPrimaryVaultMessage = false
+                    displayOnlyPrimaryVaultMessage = false,
+                    canUpgrade = false
                 ),
                 SearchUiState(
                     searchQuery = "query",

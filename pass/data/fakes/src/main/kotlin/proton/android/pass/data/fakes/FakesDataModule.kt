@@ -9,6 +9,7 @@ import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.repositories.ItemRepository
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.CreateAlias
@@ -53,6 +54,7 @@ import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.repositories.TestItemRepository
 import proton.android.pass.data.fakes.usecases.TestAddSearchEntry
 import proton.android.pass.data.fakes.usecases.TestApplyPendingEvents
+import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestClearTrash
 import proton.android.pass.data.fakes.usecases.TestClearUserData
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
@@ -317,4 +319,9 @@ abstract class FakesDataModule {
     abstract fun bindCreateVault(
         impl: TestCreateVault
     ): CreateVault
+
+    @Binds
+    abstract fun bindCanPerformPaidAction(
+        impl: TestCanPerformPaidAction
+    ): CanPerformPaidAction
 }

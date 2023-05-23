@@ -5,110 +5,79 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filterNotNull
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
-import proton.android.pass.data.api.ItemCountSummary
-import proton.android.pass.data.api.repositories.ItemRepository
-import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.log.api.PassLogger
-import proton.pass.domain.ItemState
 import javax.inject.Inject
 
 @HiltViewModel
 class VaultDrawerViewModel @Inject constructor(
-    observeCurrentUser: ObserveCurrentUser,
-    observeVaults: ObserveVaultsWithItemCount,
-    itemRepository: ItemRepository
+    observeVaultsWithItemCount: ObserveVaultsWithItemCount
 ) : ViewModel() {
 
-    private val currentUserFlow = observeCurrentUser().filterNotNull()
-    private val vaultSelectionState =
-        MutableStateFlow<HomeVaultSelection>(HomeVaultSelection.AllVaults)
+    private val vaultSelectionState: MutableStateFlow<HomeVaultSelection> =
+        MutableStateFlow(HomeVaultSelection.AllVaults)
 
-    data class ShareUiModelsWithTrashedCount(
-        val models: List<ShareUiModelWithItemCount>,
-        val trashedCount: Long
-    )
+    val drawerUiState: StateFlow<VaultDrawerUiState> = combine(
+        observeVaultsWithItemCount().asLoadingResult(),
+        vaultSelectionState
+    ) { shares, selectedVault ->
+        when (shares) {
+            LoadingResult.Loading -> VaultDrawerUiState(
+                vaultSelection = selectedVault,
+                shares = persistentListOf(),
+                totalTrashedItems = 0
+            )
 
-    private val allShareUiModelFlow: Flow<ShareUiModelsWithTrashedCount> = observeVaults()
-        .asLoadingResult()
-        .map { shares ->
-            when (shares) {
-                LoadingResult.Loading -> ShareUiModelsWithTrashedCount(emptyList(), 0)
-                is LoadingResult.Error -> {
-                    PassLogger.e(TAG, shares.exception, "Cannot retrieve all shares")
-                    ShareUiModelsWithTrashedCount(emptyList(), 0)
+            is LoadingResult.Error -> {
+                PassLogger.w(TAG, shares.exception, "Cannot retrieve all shares")
+                VaultDrawerUiState(
+                    vaultSelection = selectedVault,
+                    shares = persistentListOf(),
+                    totalTrashedItems = 0
+                )
+            }
+
+            is LoadingResult.Success -> {
+                val shareIdList = shares.data.map { it.vault.shareId }
+                if (selectedVault is HomeVaultSelection.Vault && !shareIdList.contains(selectedVault.shareId)) {
+                    vaultSelectionState.update { HomeVaultSelection.AllVaults }
                 }
-                is LoadingResult.Success -> {
-                    var totalTrashed = 0L
-                    val res = shares.data
-                        .map {
-                            totalTrashed += it.trashedItemCount
-                            ShareUiModelWithItemCount(
-                                id = it.vault.shareId,
-                                name = it.vault.name,
-                                activeItemCount = it.activeItemCount,
-                                trashedItemCount = it.trashedItemCount,
-                                color = it.vault.color,
-                                icon = it.vault.icon,
-                                isPrimary = it.vault.isPrimary
-                            )
-                        }
-
-                    ShareUiModelsWithTrashedCount(
-                        models = res,
-                        trashedCount = totalTrashed
-                    )
-                }
+                val sharesWithCount = shares.data
+                    .map {
+                        ShareUiModelWithItemCount(
+                            id = it.vault.shareId,
+                            name = it.vault.name,
+                            activeItemCount = it.activeItemCount,
+                            trashedItemCount = it.trashedItemCount,
+                            color = it.vault.color,
+                            icon = it.vault.icon,
+                            isPrimary = it.vault.isPrimary
+                        )
+                    }
+                    .toImmutableList()
+                val totalTrashed = shares.data.sumOf { it.trashedItemCount }
+                VaultDrawerUiState(
+                    vaultSelection = selectedVault,
+                    shares = sharesWithCount,
+                    totalTrashedItems = totalTrashed
+                )
             }
         }
-        .distinctUntilChanged()
-
-    private val itemCountSummaryFlow = combine(
-        currentUserFlow,
-        vaultSelectionState,
-        allShareUiModelFlow
-    ) { user, selectedVault, allShares ->
-        user to when (selectedVault) {
-            is HomeVaultSelection.Vault -> allShares.models.filter { share -> share.id == selectedVault.shareId }
-            HomeVaultSelection.AllVaults -> allShares.models
-            HomeVaultSelection.Trash -> allShares.models // handle trash state
-        }
-    }
-        .flatMapLatest { pair ->
-            itemRepository.observeItemCountSummary(pair.first.userId, pair.second.map { it.id }, ItemState.Active)
-        }
-
-    val drawerUiState = combine(
-        itemCountSummaryFlow,
-        allShareUiModelFlow,
-        vaultSelectionState
-    ) { itemCountSummary, shares, selectedVault ->
-        VaultDrawerUiState(
-            itemCountSummary = itemCountSummary,
-            vaultSelection = selectedVault,
-            shares = shares.models.toImmutableList(),
-            totalTrashedItems = shares.trashedCount
-        )
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = VaultDrawerUiState(
-            ItemCountSummary.Initial,
             HomeVaultSelection.AllVaults,
             persistentListOf(),
             0

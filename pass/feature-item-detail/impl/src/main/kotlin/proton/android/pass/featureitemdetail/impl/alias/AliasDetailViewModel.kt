@@ -101,10 +101,10 @@ class AliasDetailViewModel @Inject constructor(
                 val details = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
 
-                val canMigrate = if (canPerformPaidActionResult.getOrNull() == true) {
-                    true
-                } else {
-                    !(vault?.isPrimary ?: false)
+                val canMigrate = when {
+                    canPerformPaidActionResult.getOrNull() == true -> true
+                    vault?.isPrimary == true -> false
+                    else -> true
                 }
                 AliasDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {

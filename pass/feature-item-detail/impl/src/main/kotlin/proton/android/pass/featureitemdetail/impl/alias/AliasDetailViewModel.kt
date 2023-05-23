@@ -24,10 +24,10 @@ import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedS
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetAliasDetails
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
@@ -57,7 +57,7 @@ class AliasDetailViewModel @Inject constructor(
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
-    observeUpgradeInfo: ObserveUpgradeInfo,
+    canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
     getAliasDetails: GetAliasDetails,
     savedStateHandle: SavedStateHandle
@@ -82,14 +82,14 @@ class AliasDetailViewModel @Inject constructor(
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
-        observeUpgradeInfo().asLoadingResult()
+        canPerformPaidAction().asLoadingResult()
     ) { itemLoadingResult,
         aliasDetailsResult,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
-        upgradeInfoResult ->
+        canPerformPaidActionResult ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -101,12 +101,11 @@ class AliasDetailViewModel @Inject constructor(
                 val details = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
 
-                val canMigrate =
-                    if (upgradeInfoResult.getOrNull()?.isUpgradeAvailable == true) {
-                        !(vault?.isPrimary ?: false)
-                    } else {
-                        true
-                    }
+                val canMigrate = if (canPerformPaidActionResult.getOrNull() == true) {
+                    true
+                } else {
+                    !(vault?.isPrimary ?: false)
+                }
                 AliasDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {
                         details.item.toUiModel(this)

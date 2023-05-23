@@ -95,6 +95,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                         SortingBottomsheet,
                         SortingBottomsheet.createNavRoute(it.searchSortingType)
                     )
+
                 is SelectItemNavigation.ItemOptions -> appNavigator.navigate(
                     destination = AutofillItemOptionsBottomSheet,
                     route = AutofillItemOptionsBottomSheet.createRoute(it.shareId, it.itemId)
@@ -257,14 +258,14 @@ fun NavGraphBuilder.autofillActivityGraph(
         onNavigate = {
             when (it) {
                 VaultNavigation.Close -> appNavigator.onBackClick()
-                VaultNavigation.Upgrade -> {
-                    onNavigate(AutofillNavigation.Upgrade)
+                VaultNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
+                is VaultNavigation.VaultSelected -> dismissBottomSheet {
+                    appNavigator.navigateUpWithResult(KEY_VAULT_SELECTED, it.shareId.id)
                 }
-                is VaultNavigation.VaultSelected -> {
-                    dismissBottomSheet {
-                        appNavigator.navigateUpWithResult(KEY_VAULT_SELECTED, it.shareId.id)
-                    }
-                }
+
+                is VaultNavigation.VaultEdit -> {}
+                is VaultNavigation.VaultMigrate -> {}
+                is VaultNavigation.VaultRemove -> {}
             }
         }
     )

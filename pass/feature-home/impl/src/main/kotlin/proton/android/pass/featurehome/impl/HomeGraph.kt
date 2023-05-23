@@ -37,8 +37,6 @@ sealed interface HomeNavigation {
     object Profile : HomeNavigation
     object OnBoarding : HomeNavigation
     object CreateVault : HomeNavigation
-    data class EditVault(val shareId: ShareId) : HomeNavigation
-    data class DeleteVault(val shareId: ShareId) : HomeNavigation
-    data class MigrateVault(val shareId: ShareId) : HomeNavigation
+    data class VaultOptions(val shareId: ShareId) : HomeNavigation
     data class SortingBottomsheet(val searchSortingType: SearchSortingType) : HomeNavigation
 }

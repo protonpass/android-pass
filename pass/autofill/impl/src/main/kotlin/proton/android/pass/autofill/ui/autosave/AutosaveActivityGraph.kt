@@ -90,9 +90,11 @@ fun NavGraphBuilder.autosaveActivityGraph(
                 GeneratePasswordNavigation.DismissBottomsheet -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }
+
                 GeneratePasswordNavigation.OnSelectWordSeparator -> appNavigator.navigate(
                     destination = WordSeparatorDialog
                 )
+
                 GeneratePasswordNavigation.OnSelectPasswordMode -> appNavigator.navigate(
                     destination = PasswordModeDialog
                 )
@@ -114,14 +116,14 @@ fun NavGraphBuilder.autosaveActivityGraph(
         onNavigate = {
             when (it) {
                 VaultNavigation.Close -> appNavigator.onBackClick()
-                VaultNavigation.Upgrade -> {
-                    onNavigate(AutosaveNavigation.Upgrade)
+                VaultNavigation.Upgrade -> onNavigate(AutosaveNavigation.Upgrade)
+                is VaultNavigation.VaultSelected -> dismissBottomSheet {
+                    appNavigator.navigateUpWithResult(KEY_VAULT_SELECTED, it.shareId.id)
                 }
-                is VaultNavigation.VaultSelected -> {
-                    dismissBottomSheet {
-                        appNavigator.navigateUpWithResult(KEY_VAULT_SELECTED, it.shareId.id)
-                    }
-                }
+
+                is VaultNavigation.VaultEdit -> {}
+                is VaultNavigation.VaultMigrate -> {}
+                is VaultNavigation.VaultRemove -> {}
             }
         }
     )

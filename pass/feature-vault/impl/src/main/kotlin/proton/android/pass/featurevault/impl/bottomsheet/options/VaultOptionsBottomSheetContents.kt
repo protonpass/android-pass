@@ -1,4 +1,4 @@
-package proton.android.pass.featurehome.impl.bottomsheet
+package proton.android.pass.featurevault.impl.bottomsheet.options
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.ExperimentalMaterialApi
@@ -18,23 +18,25 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemIco
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
-import proton.android.pass.featurehome.impl.R
+import proton.android.pass.feature.vault.impl.R
 
 @ExperimentalMaterialApi
 @Composable
 fun VaultOptionsBottomSheetContents(
     modifier: Modifier = Modifier,
-    showMigrate: Boolean,
-    showDelete: Boolean,
+    state: VaultOptionsUiState.Success,
     onEdit: () -> Unit,
     onMigrate: () -> Unit,
     onRemove: () -> Unit
 ) {
-    val items = mutableListOf(editVault(onEdit))
-    if (showMigrate) {
+    val items = mutableListOf<BottomSheetItem>()
+    if (state.showEdit) {
+        items.add(editVault(onEdit))
+    }
+    if (state.showMigrate) {
         items.add(migrateVault(onMigrate))
     }
-    if (showDelete) {
+    if (state.showDelete) {
         items.add(removeVault(onRemove))
     }
 
@@ -105,19 +107,18 @@ private fun removeVault(onRemove: () -> Unit): BottomSheetItem =
     }
 
 class ThemeVaultOptionsInput :
-    ThemePairPreviewProvider<VaultOptionsInput>(VaultOptionsBottomSheetContentsPreviewProvider())
+    ThemePairPreviewProvider<VaultOptionsUiState.Success>(VaultOptionsBottomSheetContentsPreviewProvider())
 
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 fun VaultOptionsBottomSheetContentsPreview(
-    @PreviewParameter(ThemeVaultOptionsInput::class) input: Pair<Boolean, VaultOptionsInput>
+    @PreviewParameter(ThemeVaultOptionsInput::class) input: Pair<Boolean, VaultOptionsUiState.Success>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             VaultOptionsBottomSheetContents(
-                showDelete = input.second.showDelete,
-                showMigrate = input.second.showMigrate,
+                state = input.second,
                 onEdit = {},
                 onMigrate = {},
                 onRemove = {}

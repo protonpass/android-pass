@@ -42,8 +42,8 @@ import proton.pass.domain.ItemState
 fun AliasDetail(
     modifier: Modifier = Modifier,
     moreInfoUiState: MoreInfoUiState,
-    viewModel: AliasDetailViewModel = hiltViewModel(),
     onNavigate: (ItemDetailNavigation) -> Unit,
+    viewModel: AliasDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     when (val state = uiState) {
@@ -64,6 +64,7 @@ fun AliasDetail(
                 sheetContent = {
                     when (state.itemUiModel.state) {
                         ItemState.Active.value -> TopBarOptionsBottomSheetContents(
+                            canMigrate = state.canMigrate,
                             onMigrate = {
                                 scope.launch {
                                     bottomSheetState.hide()
@@ -83,6 +84,7 @@ fun AliasDetail(
                                 )
                             }
                         )
+
                         ItemState.Trashed.value -> TrashItemBottomSheetContents(
                             itemUiModel = state.itemUiModel,
                             onRestoreItem = { shareId, itemId ->

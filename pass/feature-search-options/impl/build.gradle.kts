@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.featuresearchoptions"
+    namespace = "proton.android.pass.featuresearchoptions.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
     
     defaultConfig {

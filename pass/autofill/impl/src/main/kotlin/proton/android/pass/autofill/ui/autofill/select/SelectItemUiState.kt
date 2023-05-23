@@ -17,6 +17,7 @@ import proton.pass.domain.ShareId
 sealed interface SearchInMode {
     object PrimaryVault : SearchInMode
     object AllVaults : SearchInMode
+    object Uninitialized : SearchInMode
 }
 
 @Immutable
@@ -85,7 +86,7 @@ data class SearchUiState(
             searchQuery = "",
             inSearchMode = false,
             isProcessingSearch = IsProcessingSearchState.NotLoading,
-            searchInMode = SearchInMode.AllVaults
+            searchInMode = SearchInMode.Uninitialized
         )
     }
 }

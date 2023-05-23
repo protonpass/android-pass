@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.captionStrong
+import me.proton.core.compose.theme.captionStrongNorm
 import me.proton.core.compose.theme.captionWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
@@ -55,7 +55,7 @@ fun RecentSearchListHeader(
         ) {
             Text(
                 text = stringResource(R.string.recent_search_clear),
-                style = ProtonTheme.typography.captionStrong,
+                style = ProtonTheme.typography.captionStrongNorm,
                 color = PassTheme.colors.interactionNorm
             )
         }

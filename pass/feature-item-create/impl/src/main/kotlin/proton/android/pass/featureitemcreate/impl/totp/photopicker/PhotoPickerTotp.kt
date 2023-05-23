@@ -16,6 +16,7 @@ import proton.android.pass.log.api.PassLogger
 import java.io.FileNotFoundException
 import java.io.IOException
 
+@Suppress("DEPRECATION")
 @Composable
 fun PhotoPickerTotpScreen(
     onQrReceived: (String) -> Unit,

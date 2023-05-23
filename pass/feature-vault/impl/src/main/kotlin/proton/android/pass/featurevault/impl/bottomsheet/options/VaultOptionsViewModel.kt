@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CannotGetVaultListError
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage.CannotGetVaultUpgradeInfoError
@@ -23,7 +23,7 @@ import javax.inject.Inject
 @HiltViewModel
 class VaultOptionsViewModel @Inject constructor(
     snackbarDispatcher: SnackbarDispatcher,
-    observeUpgradeInfo: ObserveUpgradeInfo,
+    canPerformPaidAction: CanPerformPaidAction,
     observeVaults: ObserveVaults,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -33,34 +33,39 @@ class VaultOptionsViewModel @Inject constructor(
 
     val state: StateFlow<VaultOptionsUiState> = combine(
         observeVaults().asLoadingResult(),
-        observeUpgradeInfo().asLoadingResult()
-    ) { vaultResult, upgradeInfoResult ->
+        canPerformPaidAction().asLoadingResult()
+    ) { vaultResult, canPerformPaidActionResult ->
         val vaultList = when (vaultResult) {
             is LoadingResult.Error -> return@combine run {
                 snackbarDispatcher(CannotGetVaultListError)
                 PassLogger.w(TAG, vaultResult.exception, "Cannot get vault list")
                 VaultOptionsUiState.Error
             }
+
             LoadingResult.Loading -> return@combine VaultOptionsUiState.Loading
             is LoadingResult.Success -> vaultResult.data
         }
-        val upgradeInfo = when (upgradeInfoResult) {
+        val canPerformPaidActionValue = when (canPerformPaidActionResult) {
             is LoadingResult.Error -> return@combine run {
                 snackbarDispatcher(CannotGetVaultUpgradeInfoError)
-                PassLogger.w(TAG, upgradeInfoResult.exception, "Cannot get upgrade info")
+                PassLogger.w(
+                    TAG,
+                    canPerformPaidActionResult.exception,
+                    "Cannot get CanPerformPaidAction"
+                )
                 VaultOptionsUiState.Error
             }
+
             LoadingResult.Loading -> return@combine VaultOptionsUiState.Loading
-            is LoadingResult.Success -> upgradeInfoResult.data
+            is LoadingResult.Success -> canPerformPaidActionResult.data
         }
         val selectedVault = vaultList.firstOrNull { it.shareId == navShareId }
             ?: return@combine VaultOptionsUiState.Error
-        val canUpgrade = upgradeInfo.isUpgradeAvailable
-        val canEdit = !canUpgrade || selectedVault.isPrimary
-        val canMigrate = if (canUpgrade) {
-            vaultList.size > 1 && !selectedVault.isPrimary
-        } else {
+        val canEdit = canPerformPaidActionValue || selectedVault.isPrimary
+        val canMigrate = if (canPerformPaidActionValue) {
             vaultList.size > 1
+        } else {
+            vaultList.size > 1 && !selectedVault.isPrimary
         }
         val canDelete = !selectedVault.isPrimary
         VaultOptionsUiState.Success(

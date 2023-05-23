@@ -23,7 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultHighlight
+import me.proton.core.compose.theme.defaultHighlightNorm
 import proton.android.pass.commonui.api.PassPalette
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
@@ -59,7 +59,7 @@ fun AutofillCard(
                 ) {
                     Text(
                         text = stringResource(id = R.string.home_autofill_banner_title),
-                        style = ProtonTheme.typography.defaultHighlight,
+                        style = ProtonTheme.typography.defaultHighlightNorm,
                         color = PassTheme.colors.textInvert
                     )
                     Text(
@@ -70,7 +70,7 @@ fun AutofillCard(
                     Spacer(modifier = Modifier.size(4.dp))
                     Text(
                         text = stringResource(id = R.string.home_autofill_banner_settings),
-                        style = ProtonTheme.typography.defaultHighlight,
+                        style = ProtonTheme.typography.defaultHighlightNorm,
                         color = PassTheme.colors.textInvert
                     )
                 }

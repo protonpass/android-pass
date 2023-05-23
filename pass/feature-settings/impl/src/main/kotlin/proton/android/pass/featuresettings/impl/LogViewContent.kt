@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.overline
+import me.proton.core.compose.theme.overlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.topbar.BackArrowTopAppBar
@@ -58,7 +58,7 @@ fun LogViewContent(
         ) {
             Text(
                 text = content,
-                style = ProtonTheme.typography.overline
+                style = ProtonTheme.typography.overlineNorm
             )
         }
     }

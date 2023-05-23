@@ -13,6 +13,7 @@ object AndroidUtils {
 
     const val TAG = "AndroidUtils"
 
+    @Suppress("DEPRECATION")
     fun getApplicationName(context: Context, packageName: String): Option<String> =
         try {
             val packageManager = context.packageManager

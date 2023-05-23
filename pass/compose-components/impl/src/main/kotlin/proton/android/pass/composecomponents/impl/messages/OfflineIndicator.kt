@@ -21,7 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmall
+import me.proton.core.compose.theme.defaultSmallNorm
 import me.proton.core.compose.theme.textWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
@@ -47,7 +47,7 @@ fun OfflineIndicator(
         Spacer(modifier = Modifier.width(12.dp))
         Text(
             text = stringResource(R.string.indicator_no_network),
-            style = ProtonTheme.typography.defaultSmall
+            style = ProtonTheme.typography.defaultSmallNorm
         )
     }
 }

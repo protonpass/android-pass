@@ -92,10 +92,10 @@ class NoteDetailViewModel @Inject constructor(
             is LoadingResult.Success -> {
                 val details = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
-                val canMigrate = if (canPerformPaidActionResult.getOrNull() == true) {
-                    true
-                } else {
-                    !(vault?.isPrimary ?: false)
+                val canMigrate = when {
+                    canPerformPaidActionResult.getOrNull() == true -> true
+                    vault?.isPrimary == true -> false
+                    else -> true
                 }
                 NoteDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {

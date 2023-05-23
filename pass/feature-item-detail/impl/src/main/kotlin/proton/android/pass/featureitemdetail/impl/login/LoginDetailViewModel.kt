@@ -183,10 +183,10 @@ class LoginDetailViewModel @Inject constructor(
                 } else {
                     null
                 }
-                val canMigrate = if (canPerformPaidActionResult.getOrNull() == true) {
-                    true
-                } else {
-                    !(vault?.isPrimary ?: false)
+                val canMigrate = when {
+                    canPerformPaidActionResult.getOrNull() == true -> true
+                    vault?.isPrimary == true -> false
+                    else -> true
                 }
                 LoginDetailUiState.Success(
                     itemUiModel = encryptionContextProvider.withEncryptionContext {

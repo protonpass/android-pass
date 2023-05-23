@@ -1,8 +1,7 @@
 package proton.android.pass.data.impl.usecases
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.pass.domain.PlanType
@@ -15,10 +14,7 @@ class CanPerformPaidActionImpl @Inject constructor(
 ) : CanPerformPaidAction {
 
     override fun invoke(): Flow<Boolean> = getUserPlan()
-        .flatMapLatest { plan ->
-            when (plan.planType) {
-                is PlanType.Paid, is PlanType.Trial -> flowOf(true)
-                else -> flowOf(false)
-            }
+        .map { plan ->
+            plan.planType is PlanType.Paid || plan.planType is PlanType.Trial
         }
 }

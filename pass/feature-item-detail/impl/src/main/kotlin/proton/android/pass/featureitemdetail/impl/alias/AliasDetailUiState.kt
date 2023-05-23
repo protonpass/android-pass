@@ -23,6 +23,7 @@ sealed interface AliasDetailUiState {
         val isLoadingMailboxes: Boolean,
         val isItemSentToTrash: Boolean,
         val isPermanentlyDeleted: Boolean,
-        val isRestoredFromTrash: Boolean
+        val isRestoredFromTrash: Boolean,
+        val canMigrate: Boolean
     ) : AliasDetailUiState
 }

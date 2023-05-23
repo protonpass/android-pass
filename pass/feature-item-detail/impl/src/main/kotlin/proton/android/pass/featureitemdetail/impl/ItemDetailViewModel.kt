@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.Clock
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -38,10 +39,8 @@ class ItemDetailViewModel @Inject constructor(
     userPreferenceRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val shareId: ShareId =
-        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
-    private val itemId: ItemId =
-        ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
+    private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
+    private val itemId: ItemId = ItemId(savedStateHandle.require(CommonNavArgId.ItemId.key))
 
     private val itemFlow = getItemById(shareId, itemId)
         .asLoadingResult()
@@ -57,6 +56,7 @@ class ItemDetailViewModel @Inject constructor(
                 snackbarDispatcher(DetailSnackbarMessages.InitError)
                 ItemDetailScreenUiState.Initial
             }
+
             LoadingResult.Loading -> ItemDetailScreenUiState.Initial
             is LoadingResult.Success -> ItemDetailScreenUiState(
                 itemTypeUiState = when (result.data.itemType) {

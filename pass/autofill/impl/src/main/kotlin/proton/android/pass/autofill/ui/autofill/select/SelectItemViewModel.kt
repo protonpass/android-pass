@@ -335,7 +335,7 @@ class SelectItemViewModel @Inject constructor(
                 sortingType = sortingSelection.searchSortingType,
                 shouldScrollToTop = shouldScrollToTop,
                 canLoadExternalImages = useFavicons.value(),
-                displayOnlyPrimaryVaultMessage = true,
+                displayOnlyPrimaryVaultMessage = displayOnlyPrimaryVaultMessage,
             ),
             SearchUiState(
                 searchQuery = search.searchQuery,

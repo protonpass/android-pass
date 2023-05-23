@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.core.presentation.compose)
     implementation(libs.core.user.domain)
     implementation(libs.kotlinx.collections)
+    implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.datetime)
     implementation(libs.kotlinx.serialization.json)
 

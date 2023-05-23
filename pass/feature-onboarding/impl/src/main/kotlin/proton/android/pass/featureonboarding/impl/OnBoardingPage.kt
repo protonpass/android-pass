@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
-import me.proton.core.compose.theme.headline
+import me.proton.core.compose.theme.headlineNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
 
@@ -45,7 +45,7 @@ fun OnBoardingPage(
             Text(
                 modifier = Modifier.padding(32.dp, 0.dp),
                 color = ProtonTheme.colors.textNorm,
-                style = ProtonTheme.typography.headline,
+                style = ProtonTheme.typography.headlineNorm,
                 text = onBoardingPageData.title,
                 textAlign = TextAlign.Center
             )

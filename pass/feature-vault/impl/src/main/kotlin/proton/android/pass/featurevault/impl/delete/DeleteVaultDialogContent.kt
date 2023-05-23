@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
@@ -85,7 +85,7 @@ fun DeleteVaultDialogContent(
                                 text = stringResource(R.string.vault_delete_dialog_placeholder)
                             )
                         },
-                        textStyle = ProtonTheme.typography.default
+                        textStyle = ProtonTheme.typography.defaultNorm
                     )
                 }
             }

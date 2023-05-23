@@ -11,7 +11,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.caption
+import me.proton.core.compose.theme.captionWeak
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.PassTheme
@@ -51,7 +51,7 @@ fun PrimaryVaultSection(
         }
         Text(
             text = stringResource(R.string.settings_primary_vault_section_subtitle),
-            style = ProtonTheme.typography.caption.copy(PassTheme.colors.textWeak)
+            style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
         )
     }
 }

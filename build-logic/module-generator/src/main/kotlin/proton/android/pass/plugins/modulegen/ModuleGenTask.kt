@@ -86,7 +86,8 @@ open class ModuleGenTask : DefaultTask() {
         val rootPackagePath = rootPackageName.replace('.', '/')
         for (configuration in configurationSet) {
             val lcConfiguration = configuration.name.lowercase()
-            val configurationPath = "$rootPackagePath/$subPackagePath/$lcConfiguration".replace("-", "")
+            val configurationPath =
+                "$rootPackagePath/$subPackagePath/$lcConfiguration".replace("-", "")
             mkdir("$modulePathString/$lcConfiguration/src/main/kotlin/$configurationPath")
             if (configuration == Configuration.IMPL) {
                 mkdir("$modulePathString/$lcConfiguration/src/androidTest/kotlin/$configurationPath")
@@ -114,9 +115,10 @@ open class ModuleGenTask : DefaultTask() {
                     appendJvmPlugin()
                     appendLine()
                 }
+
                 Configuration.IMPL,
                 Configuration.FAKES -> buildString {
-                    appendAndroidLibraryPlugin(namespace)
+                    appendAndroidLibraryPlugin("$namespace.$lcConfiguration")
                     appendLine()
                     appendLine()
                     appendLibraryDependency(asProjectAccessor)
@@ -151,7 +153,7 @@ open class ModuleGenTask : DefaultTask() {
         val includes = existingIncludes + newIncludes
         val output = lines.take(firstIncludeIndex) +
             includes.sorted() +
-            lines.takeLast(lines.size - (firstIncludeIndex + includes.size))
+            lines.drop(firstIncludeIndex + existingIncludes.size)
         file(settingsFile).writeText(output.joinToString(separator = "\n", postfix = "\n"))
     }
 

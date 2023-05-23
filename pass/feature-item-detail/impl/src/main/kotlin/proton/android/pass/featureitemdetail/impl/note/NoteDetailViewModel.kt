@@ -7,12 +7,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.getOrNull
+import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
@@ -21,6 +23,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
@@ -49,14 +52,13 @@ class NoteDetailViewModel @Inject constructor(
     private val deleteItem: DeleteItem,
     private val restoreItem: RestoreItem,
     private val telemetryManager: TelemetryManager,
+    observeUpgradeInfo: ObserveUpgradeInfo,
     getItemByIdWithVault: GetItemByIdWithVault,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val shareId: ShareId =
-        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
-    private val itemId: ItemId =
-        ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
+    private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
+    private val itemId: ItemId = ItemId(savedStateHandle.require(CommonNavArgId.ItemId.key))
 
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
@@ -67,29 +69,40 @@ class NoteDetailViewModel @Inject constructor(
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
 
-    val state: StateFlow<NoteDetailUiState> = combine(
+    val state: StateFlow<NoteDetailUiState> = combineN(
         getItemByIdWithVault(shareId, itemId).asLoadingResult(),
         isLoadingState,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
-        isRestoredFromTrashState
-    ) { itemLoadingResult, isLoading, isItemSentToTrash, isPermanentlyDeleted, isRestoredFromTrash ->
+        isRestoredFromTrashState,
+        observeUpgradeInfo().asLoadingResult()
+    ) { itemLoadingResult, isLoading, isItemSentToTrash, isPermanentlyDeleted, isRestoredFromTrash, upgradeInfoResult ->
         when (itemLoadingResult) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
                 NoteDetailUiState.Error
             }
+
             LoadingResult.Loading -> NoteDetailUiState.NotInitialised
-            is LoadingResult.Success -> encryptionContextProvider.withEncryptionContext {
+            is LoadingResult.Success -> {
                 val details = itemLoadingResult.data
                 val vault = details.vault.takeIf { details.hasMoreThanOneVault }
+                val canMigrate =
+                    if (upgradeInfoResult.getOrNull()?.isUpgradeAvailable == true) {
+                        !(vault?.isPrimary ?: false)
+                    } else {
+                        true
+                    }
                 NoteDetailUiState.Success(
-                    itemUiModel = details.item.toUiModel(this),
+                    itemUiModel = encryptionContextProvider.withEncryptionContext {
+                        details.item.toUiModel(this)
+                    },
                     vault = vault,
                     isLoading = isLoading.value(),
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
+                    canMigrate = canMigrate
                 )
             }
         }

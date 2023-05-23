@@ -20,5 +20,6 @@ sealed interface NoteDetailUiState {
         val isItemSentToTrash: Boolean,
         val isPermanentlyDeleted: Boolean,
         val isRestoredFromTrash: Boolean,
+        val canMigrate: Boolean
     ) : NoteDetailUiState
 }

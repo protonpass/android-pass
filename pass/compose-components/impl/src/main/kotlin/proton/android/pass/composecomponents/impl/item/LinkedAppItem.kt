@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.default
+import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.AndroidUtils.getApplicationName
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -60,7 +60,7 @@ fun LinkedAppItem(
         Text(
             modifier = Modifier.weight(1f),
             text = appName,
-            style = ProtonTheme.typography.default
+            style = ProtonTheme.typography.defaultNorm
         )
         if (isEditable) {
             SmallCrossIconButton { onLinkedAppDelete(packageInfoUi) }

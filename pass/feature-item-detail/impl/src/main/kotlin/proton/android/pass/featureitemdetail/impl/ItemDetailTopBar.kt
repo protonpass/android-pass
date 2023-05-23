@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultSmall
+import me.proton.core.compose.theme.defaultSmallNorm
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.buttons.LoadingCircleButton
@@ -67,7 +67,7 @@ internal fun ItemDetailTopBar(
                         text = {
                             Text(
                                 text = stringResource(R.string.top_bar_edit_button_text),
-                                style = ProtonTheme.typography.defaultSmall,
+                                style = ProtonTheme.typography.defaultSmallNorm,
                                 color = PassTheme.colors.textInvert
                             )
                         },

@@ -62,18 +62,21 @@ tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
 
-kotlinCompilerArgs(
-    "-opt-in=kotlin.RequiresOptIn",
-    // Enables experimental Coroutines (runBlockingTest).
-    "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-    // Enables experimental Time (Turbine).
-    "-opt-in=kotlin.time.ExperimentalTime"
-)
-
-fun Project.kotlinCompilerArgs(vararg extraCompilerArgs: String) {
-    for (sub in subprojects) {
-        sub.tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-            kotlinOptions { freeCompilerArgs = freeCompilerArgs + extraCompilerArgs }
+for (project in subprojects) {
+    project.tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions {
+            freeCompilerArgs = freeCompilerArgs + listOf(
+                "-opt-in=kotlin.RequiresOptIn",
+                // Enables experimental Time (Turbine).
+                "-opt-in=kotlin.time.ExperimentalTime"
+            )
+            val hasCoroutines = project.configurations.findByName("implementation")
+                ?.dependencies
+                ?.any { it.name.contains("kotlinx-coroutines-core") } == true
+            if (hasCoroutines) {
+                freeCompilerArgs =
+                    freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+            }
         }
     }
 }
@@ -88,11 +91,11 @@ allprojects {
             // Trigger this with:
             // ./gradlew assembleRelease -PenableMultiModuleComposeReports=true --rerun-tasks
             if (project.findProperty("enableMultiModuleComposeReports") == "true") {
-                freeCompilerArgs += listOf(
+                freeCompilerArgs = freeCompilerArgs + listOf(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" + rootProject.buildDir.absolutePath + "/compose_metrics/"
                 )
-                freeCompilerArgs += listOf(
+                freeCompilerArgs = freeCompilerArgs + listOf(
                     "-P",
                     "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" + rootProject.buildDir.absolutePath + "/compose_metrics/"
                 )

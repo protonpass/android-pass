@@ -21,14 +21,12 @@ import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 fun FeedbackBottomsheetContent(
     modifier: Modifier = Modifier,
     onSendReport: () -> Unit,
-    onOpenTwitter: () -> Unit,
     onOpenReddit: () -> Unit,
 ) {
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = listOf(
             sendReport(onClick = onSendReport),
-//            openPassTwitter(onClick = onOpenTwitter),
             openProtonReddit(onClick = onOpenReddit),
         ).withDividers().toPersistentList()
     )
@@ -43,7 +41,6 @@ fun FeedbackBottomsheetContentPreview(
         Surface {
             FeedbackBottomsheetContent(
                 onSendReport = {},
-                onOpenTwitter = {},
                 onOpenReddit = {}
             )
         }
@@ -58,22 +55,6 @@ private fun sendReport(onClick: () -> Unit): BottomSheetItem =
             get() = null
         override val leftIcon: (@Composable () -> Unit)
             get() = { BottomSheetItemIcon(iconId = R.drawable.ic_paper_plane) }
-        override val endIcon: (@Composable () -> Unit)?
-            get() = null
-        override val onClick: () -> Unit
-            get() = onClick
-        override val isDivider = false
-    }
-
-@Suppress("UnusedPrivateMember")
-private fun openPassTwitter(onClick: () -> Unit): BottomSheetItem =
-    object : BottomSheetItem {
-        override val title: @Composable () -> Unit
-            get() = { BottomSheetItemTitle(text = stringResource(R.string.feedback_option_twitter)) }
-        override val subtitle: (@Composable () -> Unit)?
-            get() = null
-        override val leftIcon: (@Composable () -> Unit)
-            get() = { BottomSheetItemIcon(iconId = R.drawable.ic_twitter) }
         override val endIcon: (@Composable () -> Unit)?
             get() = null
         override val onClick: () -> Unit

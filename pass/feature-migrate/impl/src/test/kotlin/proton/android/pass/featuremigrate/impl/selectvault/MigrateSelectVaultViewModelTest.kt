@@ -6,11 +6,13 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.pass.domain.ItemId
@@ -25,12 +27,18 @@ class MigrateSelectVaultViewModelTest {
 
     private lateinit var instance: MigrateSelectVaultViewModel
     private lateinit var observeVaults: TestObserveVaultsWithItemCount
+    private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     fun setup() {
         observeVaults = TestObserveVaultsWithItemCount()
+        observeUpgradeInfo = TestObserveUpgradeInfo()
+        snackbarDispatcher = TestSnackbarDispatcher()
         instance = MigrateSelectVaultViewModel(
             observeVaults = observeVaults,
+            observeUpgradeInfo = observeUpgradeInfo,
+            snackbarDispatcher = snackbarDispatcher,
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID.id)
                 set(MigrateModeArg.key, MigrateModeValue.SingleItem.name)
@@ -53,6 +61,7 @@ class MigrateSelectVaultViewModelTest {
         )
         instance.state.test {
             val item = awaitItem()
+            require(item is MigrateSelectVaultUiState.Success)
             assertThat(item.vaultList).isEqualTo(expected)
             assertThat(item.event.value()).isNull()
         }

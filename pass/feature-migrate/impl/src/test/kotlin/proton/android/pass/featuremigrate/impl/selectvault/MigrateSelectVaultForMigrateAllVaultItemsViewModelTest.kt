@@ -6,10 +6,12 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featuremigrate.impl.MigrateModeArg
 import proton.android.pass.featuremigrate.impl.MigrateModeValue
 import proton.android.pass.navigation.api.CommonNavArgId
+import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.pass.domain.ShareId
@@ -23,24 +25,23 @@ class MigrateSelectVaultForMigrateAllVaultItemsViewModelTest {
 
     private lateinit var instance: MigrateSelectVaultViewModel
     private lateinit var observeVaults: TestObserveVaultsWithItemCount
+    private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    private lateinit var snackbarDispatcher: TestSnackbarDispatcher
 
     @Before
     fun setup() {
         observeVaults = TestObserveVaultsWithItemCount()
+        observeUpgradeInfo = TestObserveUpgradeInfo()
+        snackbarDispatcher = TestSnackbarDispatcher()
         instance = MigrateSelectVaultViewModel(
             observeVaults = observeVaults,
+            observeUpgradeInfo = observeUpgradeInfo,
+            snackbarDispatcher = snackbarDispatcher,
             savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID.id)
                 set(MigrateModeArg.key, MODE.name)
             }
         )
-    }
-
-    @Test
-    fun `emits initial state`() = runTest {
-        instance.state.test {
-            assertThat(awaitItem()).isEqualTo(MigrateSelectVaultUiState.Initial(MigrateMode.MigrateAll))
-        }
     }
 
     @Test
@@ -50,7 +51,9 @@ class MigrateSelectVaultForMigrateAllVaultItemsViewModelTest {
 
         instance.onVaultSelected(otherVault.vault.shareId)
         instance.state.test {
-            val event = awaitItem().event.value()
+            val item = awaitItem()
+            require(item is MigrateSelectVaultUiState.Success)
+            val event = item.event.value()
             assertThat(event).isNotNull()
             assertThat(event!!).isInstanceOf(SelectVaultEvent.VaultSelectedForMigrateAll::class.java)
 

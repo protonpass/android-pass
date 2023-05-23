@@ -602,9 +602,10 @@ fun NavGraphBuilder.appGraph(
                         )
                     }
                 }
+
+                MigrateNavigation.Close -> dismissBottomSheet { appNavigator.onBackClick() }
             }
-        },
-        dismissBottomSheet = dismissBottomSheet,
+        }
     )
 
     authGraph(

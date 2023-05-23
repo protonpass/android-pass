@@ -29,6 +29,7 @@ sealed interface MigrateNavigation {
         val itemId: ItemId
     ) : MigrateNavigation
     object VaultMigrated : MigrateNavigation
+    object Close : MigrateNavigation
 }
 
 object MigrateModeArg : NavArgId {
@@ -77,19 +78,16 @@ object MigrateConfirmVault : NavItem(
 
 fun NavGraphBuilder.migrateGraph(
     navigation: (MigrateNavigation) -> Unit,
-    dismissBottomSheet: (() -> Unit) -> Unit,
 ) {
     bottomSheet(MigrateSelectVault) {
         MigrateSelectVaultBottomSheet(
-            navigation = navigation,
-            onClose = { dismissBottomSheet({}) },
+            onNavigate = navigation,
         )
     }
 
     bottomSheet(MigrateConfirmVault) {
         MigrateConfirmVaultBottomSheet(
-            navigation = navigation,
-            onCancel = { dismissBottomSheet({}) },
+            navigation = navigation
         )
     }
 }

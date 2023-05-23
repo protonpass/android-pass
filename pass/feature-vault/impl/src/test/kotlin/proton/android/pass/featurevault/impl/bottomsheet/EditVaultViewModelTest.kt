@@ -40,13 +40,13 @@ class EditVaultViewModelTest {
         getVaultById = TestGetVaultById()
         encryptionContextProvider = TestEncryptionContextProvider()
         instance = EditVaultViewModel(
-            snackbar,
-            updateVault,
-            encryptionContextProvider,
-            TestSavedStateHandle.create().apply {
+            snackbarDispatcher = snackbar,
+            updateVault = updateVault,
+            encryptionContextProvider = encryptionContextProvider,
+            getVaultById = getVaultById,
+            savedStateHandle = TestSavedStateHandle.create().apply {
                 set(CommonNavArgId.ShareId.key, SHARE_ID)
-            },
-            getVaultById
+            }
         )
     }
 

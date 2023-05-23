@@ -8,7 +8,6 @@ import proton.android.featuresearchoptions.impl.SortingBottomsheet
 import proton.android.featuresearchoptions.impl.SortingNavigation
 import proton.android.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.common.api.some
-import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.AccountNavigation
@@ -79,6 +78,7 @@ import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
+import proton.android.pass.featurevault.impl.bottomsheet.options.VaultOptionsBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.select.SelectVaultBottomsheet
 import proton.android.pass.featurevault.impl.delete.DeleteVaultDialog
 import proton.android.pass.featurevault.impl.vaultGraph
@@ -126,14 +126,6 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(CreateVaultBottomSheet)
                 }
 
-                is HomeNavigation.DeleteVault -> {
-                    appNavigator.navigate(
-                        destination = DeleteVaultDialog,
-                        route = DeleteVaultDialog.createNavRoute(it.shareId),
-                        backDestination = Home
-                    )
-                }
-
                 is HomeNavigation.EditAlias -> {
                     appNavigator.navigate(
                         EditAlias,
@@ -152,20 +144,6 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         EditNote,
                         EditNote.createNavRoute(it.shareId, it.itemId)
-                    )
-                }
-
-                is HomeNavigation.EditVault -> {
-                    appNavigator.navigate(
-                        EditVaultBottomSheet,
-                        EditVaultBottomSheet.createNavRoute(it.shareId.toOption())
-                    )
-                }
-
-                is HomeNavigation.MigrateVault -> {
-                    appNavigator.navigate(
-                        MigrateSelectVault,
-                        MigrateSelectVault.createNavRouteForMigrateAll(it.shareId)
                     )
                 }
 
@@ -190,6 +168,11 @@ fun NavGraphBuilder.appGraph(
                         SortingBottomsheet.createNavRoute(it.searchSortingType)
                     )
                 }
+
+                is HomeNavigation.VaultOptions -> appNavigator.navigate(
+                    VaultOptionsBottomSheet,
+                    VaultOptionsBottomSheet.createNavRoute(it.shareId)
+                )
             }
         }
     )
@@ -247,11 +230,25 @@ fun NavGraphBuilder.appGraph(
             when (it) {
                 VaultNavigation.Close -> appNavigator.onBackClick()
                 VaultNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-                is VaultNavigation.VaultSelected -> {
-                    dismissBottomSheet {
-                        appNavigator.navigateUpWithResult(KEY_VAULT_SELECTED, it.shareId.id)
-                    }
+                is VaultNavigation.VaultSelected -> dismissBottomSheet {
+                    appNavigator.navigateUpWithResult(KEY_VAULT_SELECTED, it.shareId.id)
                 }
+
+                is VaultNavigation.VaultEdit -> appNavigator.navigate(
+                    EditVaultBottomSheet,
+                    EditVaultBottomSheet.createNavRoute(it.shareId)
+                )
+
+                is VaultNavigation.VaultMigrate -> appNavigator.navigate(
+                    MigrateSelectVault,
+                    MigrateSelectVault.createNavRouteForMigrateAll(it.shareId)
+                )
+
+                is VaultNavigation.VaultRemove -> appNavigator.navigate(
+                    destination = DeleteVaultDialog,
+                    route = DeleteVaultDialog.createNavRoute(it.shareId),
+                    backDestination = Home
+                )
             }
         }
     )

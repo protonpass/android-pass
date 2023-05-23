@@ -169,9 +169,11 @@ class HomeViewModel @Inject constructor(
             HomeVaultSelection.AllVaults -> None
             HomeVaultSelection.Trash -> None
             is HomeVaultSelection.Vault -> {
-                vaults.find { it.shareId == vaultSelection.shareId }
-                    .toOption()
-                    .map { ShareUiModel.fromVault(it) }
+                val match = vaults.firstOrNull { it.shareId == vaultSelection.shareId }.toOption()
+                if (match is None) {
+                    vaultSelectionFlow.update { HomeVaultSelection.AllVaults }
+                }
+                match.map { ShareUiModel.fromVault(it) }
             }
         }
         ShareListWrapper(

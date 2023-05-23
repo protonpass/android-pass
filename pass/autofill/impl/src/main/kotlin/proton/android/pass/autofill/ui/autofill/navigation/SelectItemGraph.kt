@@ -36,4 +36,5 @@ sealed interface SelectItemNavigation {
     data class SortingBottomsheet(val searchSortingType: SearchSortingType) : SelectItemNavigation
     data class ItemOptions(val shareId: ShareId, val itemId: ItemId) : SelectItemNavigation
     object Cancel : SelectItemNavigation
+    object Upgrade : SelectItemNavigation
 }

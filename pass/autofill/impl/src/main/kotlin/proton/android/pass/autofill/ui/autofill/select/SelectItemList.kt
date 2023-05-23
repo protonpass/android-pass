@@ -58,15 +58,17 @@ fun SelectItemList(
                 )
             }
         },
-        forceContent = listUiState.items.suggestions.isNotEmpty(),
+        forceContent = listUiState.items.suggestions.isNotEmpty() || listUiState.displayOnlyPrimaryVaultMessage,
         header = {
             SelectItemListHeader(
                 suggestionsForTitle = listUiState.items.suggestionsForTitle,
                 suggestions = listUiState.items.suggestions,
                 canLoadExternalImages = listUiState.canLoadExternalImages,
                 showUpgradeMessage = listUiState.displayOnlyPrimaryVaultMessage,
+                canUpgrade = listUiState.canUpgrade,
                 onItemOptionsClicked = onItemOptionsClicked,
-                onItemClicked = onItemClicked
+                onItemClicked = onItemClicked,
+                onUpgradeClick = { onNavigate(SelectItemNavigation.Upgrade) }
             )
             item {
                 if (shouldShowItemListHeader(uiState)) {

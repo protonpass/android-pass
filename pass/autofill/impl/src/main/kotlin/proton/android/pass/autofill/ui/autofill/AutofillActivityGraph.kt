@@ -100,6 +100,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                     destination = AutofillItemOptionsBottomSheet,
                     route = AutofillItemOptionsBottomSheet.createRoute(it.shareId, it.itemId)
                 )
+                SelectItemNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
             }
         }
     )

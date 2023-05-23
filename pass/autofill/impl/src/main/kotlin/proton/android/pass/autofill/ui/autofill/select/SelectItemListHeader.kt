@@ -31,8 +31,10 @@ fun LazyListScope.SelectItemListHeader(
     suggestions: List<ItemUiModel>,
     canLoadExternalImages: Boolean,
     showUpgradeMessage: Boolean,
+    canUpgrade: Boolean,
     onItemOptionsClicked: (ItemUiModel) -> Unit,
-    onItemClicked: (ItemUiModel) -> Unit
+    onItemClicked: (ItemUiModel) -> Unit,
+    onUpgradeClick: () -> Unit
 ) {
 
     if (showUpgradeMessage) {
@@ -40,7 +42,8 @@ fun LazyListScope.SelectItemListHeader(
             InfoBanner(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
-                text = stringResource(R.string.autofill_only_searching_in_primary_vault)
+                text = stringResource(R.string.autofill_only_searching_in_primary_vault),
+                onClick = if (canUpgrade) { onUpgradeClick } else null
             )
         }
 
@@ -89,10 +92,12 @@ fun SelectItemListHeaderPreview(
                 SelectItemListHeader(
                     suggestionsForTitle = "some.website",
                     suggestions = input.second.items,
+                    canLoadExternalImages = false,
+                    showUpgradeMessage = input.second.showUpgradeMessage,
+                    canUpgrade = false,
                     onItemClicked = {},
                     onItemOptionsClicked = {},
-                    canLoadExternalImages = false,
-                    showUpgradeMessage = input.second.showUpgradeMessage
+                    onUpgradeClick = {}
                 )
             }
         }

@@ -67,6 +67,7 @@ import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveActiveItems
+import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.UpdateAutofillItem
 import proton.android.pass.data.api.usecases.UpdateAutofillItemData
@@ -101,6 +102,7 @@ class SelectItemViewModel @Inject constructor(
     observeVaults: ObserveVaults,
     searchOptionsRepository: SearchOptionsRepository,
     getUserPlan: GetUserPlan,
+    observeUpgradeInfo: ObserveUpgradeInfo,
     clock: Clock,
 ) : ViewModel() {
 
@@ -295,7 +297,8 @@ class SelectItemViewModel @Inject constructor(
         sortingSelectionFlow,
         shouldScrollToTopFlow,
         preferenceRepository.getUseFaviconsPreference(),
-        planTypeFlow
+        planTypeFlow,
+        observeUpgradeInfo().asLoadingResult()
     ) { itemsResult,
         shares,
         isRefreshing,
@@ -304,7 +307,8 @@ class SelectItemViewModel @Inject constructor(
         sortingSelection,
         shouldScrollToTop,
         useFavicons,
-        plan ->
+        plan,
+        upgradeInfo ->
         val isLoading = IsLoadingState.from(itemsResult is LoadingResult.Loading)
         val items = when (itemsResult) {
             LoadingResult.Loading -> SelectItemListItems.Initial
@@ -325,6 +329,8 @@ class SelectItemViewModel @Inject constructor(
             else -> false to SearchInMode.AllVaults
         }
 
+        val canUpgrade = upgradeInfo.getOrNull()?.isUpgradeAvailable ?: false
+
         SelectItemUiState(
             SelectItemListUiState(
                 isLoading = isLoading,
@@ -336,6 +342,7 @@ class SelectItemViewModel @Inject constructor(
                 shouldScrollToTop = shouldScrollToTop,
                 canLoadExternalImages = useFavicons.value(),
                 displayOnlyPrimaryVaultMessage = displayOnlyPrimaryVaultMessage,
+                canUpgrade = canUpgrade
             ),
             SearchUiState(
                 searchQuery = search.searchQuery,

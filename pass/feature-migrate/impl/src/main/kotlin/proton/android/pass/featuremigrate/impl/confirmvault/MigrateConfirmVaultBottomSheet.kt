@@ -18,12 +18,11 @@ import proton.android.pass.featuremigrate.impl.MigrateNavigation
 fun MigrateConfirmVaultBottomSheet(
     modifier: Modifier = Modifier,
     navigation: (MigrateNavigation) -> Unit,
-    onCancel: () -> Unit,
     viewModel: MigrateConfirmVaultViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    BackHandler { onCancel() }
+    BackHandler { navigation(MigrateNavigation.Close) }
 
     LaunchedEffect(state.event) {
         val event = state.event
@@ -35,7 +34,7 @@ fun MigrateConfirmVaultBottomSheet(
                 is ConfirmMigrateEvent.AllItemsMigrated -> {
                     navigation(MigrateNavigation.VaultMigrated)
                 }
-                ConfirmMigrateEvent.Close -> onCancel()
+                ConfirmMigrateEvent.Close -> navigation(MigrateNavigation.Close)
             }
         }
     }

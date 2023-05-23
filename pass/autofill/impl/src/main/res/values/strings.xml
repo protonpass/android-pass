@@ -6,6 +6,7 @@
     <string name="error_loading_items">Could not load the items</string>
     <string name="topbar_search_query">Search in all vaults…</string>
     <string name="topbar_search_query_primary_vault">Search in primary vault…</string>
+    <string name="topbar_search_query_uninitialized">Search…</string>
     <string name="inline_suggestions_open_app">Open Proton Pass</string>
     <string name="autofill_only_searching_in_primary_vault">Your plan only allows to use items in your primary vault for autofill purposes.</string>
 

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.featuresearchoptions"
+    namespace = "proton.android.pass.featuresearchoptions.fakes"
     compileSdk = libs.versions.compileSdk.get().toInt()
     
     defaultConfig {

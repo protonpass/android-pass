@@ -23,12 +23,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
-import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
-import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
-import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
@@ -38,13 +35,11 @@ import proton.android.pass.featurehome.impl.HomeBottomSheetType.LoginOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.NoteOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.TrashItemOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.TrashOptions
-import proton.android.pass.featurehome.impl.HomeBottomSheetType.VaultOptions
 import proton.android.pass.featurehome.impl.HomeNavigation.SortingBottomsheet
 import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.TrashAllBottomSheetContents
-import proton.android.pass.featurehome.impl.bottomsheet.VaultOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.saver.HomeBottomSheetTypeSaver
 import proton.android.pass.featurehome.impl.trash.ConfirmClearTrashDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmRestoreAllDialog
@@ -80,9 +75,6 @@ fun HomeScreen(
     var shouldShowDeleteItemDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowRestoreAllDialog by rememberSaveable { mutableStateOf(false) }
     var shouldShowClearTrashDialog by rememberSaveable { mutableStateOf(false) }
-    var selectedShare: ShareUiModelWithItemCount? by rememberSaveable(stateSaver = ShareUiModelWithItemCountSaver) {
-        mutableStateOf(null)
-    }
 
     val actionState = homeUiState.homeListUiState.actionState
     LaunchedEffect(actionState) {
@@ -199,45 +191,6 @@ fun HomeScreen(
                     }
                 )
 
-                VaultOptions -> {
-                    val showDelete = when (val share = homeUiState.homeListUiState.selectedShare) {
-                        None -> {
-                            // We are in the all vaults view, so we can't delete the primary vault
-                            selectedShare?.isPrimary != true
-                        }
-
-                        is Some -> {
-                            // We are in the vault view, so we can't delete the actively selected
-                            // vault nor the primary one
-                            val isSelectedVault = share.value.id.id == selectedShare?.id?.id
-                            val isPrimaryVault = selectedShare?.isPrimary ?: false
-                            !isSelectedVault && !isPrimaryVault
-                        }
-                    }
-                    VaultOptionsBottomSheetContents(
-                        showMigrate = drawerUiState.shares.size > 1,
-                        showDelete = showDelete,
-                        onEdit = {
-                            scope.launch {
-                                bottomSheetState.hide()
-                                selectedShare?.let { onNavigateEvent(HomeNavigation.EditVault(it.id)) }
-                            }
-                        },
-                        onMigrate = {
-                            scope.launch {
-                                bottomSheetState.hide()
-                                selectedShare?.let { onNavigateEvent(HomeNavigation.MigrateVault(it.id)) }
-                            }
-                        },
-                        onRemove = {
-                            scope.launch {
-                                bottomSheetState.hide()
-                                selectedShare?.let { onNavigateEvent(HomeNavigation.DeleteVault(it.id)) }
-                            }
-                        }
-                    )
-                }
-
                 TrashItemOptions -> TrashItemBottomSheetContents(
                     itemUiModel = selectedItem!!,
                     onRestoreItem = { shareId, itemId ->
@@ -259,6 +212,7 @@ fun HomeScreen(
                                 itemType = itemType,
                                 canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages
                             )
+
                             is ItemType.Alias -> AliasIcon()
                             is ItemType.Note -> NoteIcon()
                             is ItemType.Password -> {}
@@ -309,13 +263,7 @@ fun HomeScreen(
                         homeViewModel.setVaultSelection(HomeVaultSelection.Trash)
                     },
                     onCreateVaultClick = { onNavigateEvent(HomeNavigation.CreateVault) },
-                    onVaultOptionsClick = { share ->
-                        currentBottomSheet = VaultOptions
-                        selectedShare = share
-                        scope.launch {
-                            bottomSheetState.show()
-                        }
-                    }
+                    onVaultOptionsClick = { onNavigateEvent(HomeNavigation.VaultOptions(it.id)) }
                 )
             }
         ) {

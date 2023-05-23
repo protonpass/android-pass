@@ -3,6 +3,7 @@ package proton.android.pass.featurevault.impl
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetCreateVaultGraph
 import proton.android.pass.featurevault.impl.bottomsheet.bottomSheetEditVaultGraph
+import proton.android.pass.featurevault.impl.bottomsheet.options.bottomSheetVaultOptionsGraph
 import proton.android.pass.featurevault.impl.bottomsheet.select.selectVaultBottomsheetGraph
 import proton.android.pass.featurevault.impl.delete.deleteVaultDialogGraph
 import proton.pass.domain.ShareId
@@ -10,9 +11,10 @@ import proton.pass.domain.ShareId
 sealed interface VaultNavigation {
     object Upgrade : VaultNavigation
     object Close : VaultNavigation
-    data class VaultSelected(
-        val shareId: ShareId
-    ) : VaultNavigation
+    data class VaultSelected(val shareId: ShareId) : VaultNavigation
+    data class VaultMigrate(val shareId: ShareId) : VaultNavigation
+    data class VaultEdit(val shareId: ShareId) : VaultNavigation
+    data class VaultRemove(val shareId: ShareId) : VaultNavigation
 }
 
 fun NavGraphBuilder.vaultGraph(
@@ -22,4 +24,5 @@ fun NavGraphBuilder.vaultGraph(
     bottomSheetEditVaultGraph(onNavigate)
     deleteVaultDialogGraph(onNavigate)
     selectVaultBottomsheetGraph(onNavigate)
+    bottomSheetVaultOptionsGraph(onNavigate)
 }

@@ -2,24 +2,41 @@ package proton.android.pass.preferences
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import proton.android.pass.common.api.FlowUtils.testFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository {
 
-    private val biometricLockState = testFlow<BiometricLockState>()
+    private val biometricLockState =
+        MutableStateFlow<BiometricLockState>(BiometricLockState.Disabled)
     private val themePreference = MutableStateFlow(ThemePreference.Dark)
 
-    private val hasAuthenticated = testFlow<HasAuthenticated>()
-    private val hasCompletedOnBoarding = testFlow<HasCompletedOnBoarding>()
-    private val hasDismissedAutofillBanner = testFlow<HasDismissedAutofillBanner>()
-    private val copyTotpToClipboard = testFlow<CopyTotpToClipboard>()
-    private val clearClipboardPreference = testFlow<ClearClipboardPreference>()
-    private val useFaviconsPreference = testFlow<UseFaviconsPreference>()
-    private val lockAppPreference = testFlow<AppLockPreference>()
-    private val passwordGenerationPreference = testFlow<PasswordGenerationPreference>()
+    private val hasAuthenticated =
+        MutableStateFlow<HasAuthenticated>(HasAuthenticated.Authenticated)
+    private val hasCompletedOnBoarding =
+        MutableStateFlow<HasCompletedOnBoarding>(HasCompletedOnBoarding.Completed)
+    private val hasDismissedAutofillBanner =
+        MutableStateFlow<HasDismissedAutofillBanner>(HasDismissedAutofillBanner.Dismissed)
+    private val copyTotpToClipboard =
+        MutableStateFlow<CopyTotpToClipboard>(CopyTotpToClipboard.NotEnabled)
+    private val clearClipboardPreference = MutableStateFlow(ClearClipboardPreference.Never)
+    private val useFaviconsPreference =
+        MutableStateFlow<UseFaviconsPreference>(UseFaviconsPreference.Disabled)
+    private val lockAppPreference = MutableStateFlow(AppLockPreference.Never)
+    private val passwordGenerationPreference = MutableStateFlow(
+        PasswordGenerationPreference(
+            mode = PasswordGenerationMode.Words,
+            randomPasswordLength = 12,
+            randomHasSpecialCharacters = false,
+            randomHasCapitalLetters = false,
+            randomIncludeNumbers = false,
+            wordsCount = 4,
+            wordsSeparator = WordSeparator.Hyphen,
+            wordsCapitalise = false,
+            wordsIncludeNumbers = false
+        )
+    )
 
     override suspend fun setBiometricLockState(state: BiometricLockState): Result<Unit> {
         biometricLockState.emit(state)

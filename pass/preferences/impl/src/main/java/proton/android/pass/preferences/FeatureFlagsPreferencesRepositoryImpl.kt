@@ -35,15 +35,15 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
                         .filterNotNull()
                         .flatMapLatest { userId ->
                             featureFlagManager.observe(userId = userId, featureId = FeatureId(key))
-                                .flatMapLatest { ff ->
-                                    dataStore.data
-                                        .catch { exception -> handleExceptions(exception) }
-                                        .map { preferences ->
-                                            fromBooleanPrefProto(
-                                                preferences.customFieldsEnabled.value,
-                                                ff?.value ?: false
-                                            ) as T
-                                        }
+                        }
+                        .flatMapLatest { ff ->
+                            dataStore.data
+                                .catch { exception -> handleExceptions(exception) }
+                                .map { preferences ->
+                                    fromBooleanPrefProto(
+                                        preferences.customFieldsEnabled.value,
+                                        ff?.value ?: false
+                                    ) as T
                                 }
                         }
                 } else {

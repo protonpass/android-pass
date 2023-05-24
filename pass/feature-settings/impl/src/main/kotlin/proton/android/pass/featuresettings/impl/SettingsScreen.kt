@@ -24,6 +24,8 @@ fun SettingsScreen(
         onEvent = {
             when (it) {
                 is SettingsContentEvent.UseFaviconsChange -> viewModel.onUseFaviconsChange(it.value)
+                is SettingsContentEvent.TelemetryChange -> viewModel.onTelemetryChange(it.value)
+                is SettingsContentEvent.CrashReportChange -> viewModel.onCrashReportChange(it.value)
                 SettingsContentEvent.ViewLogs -> onNavigate(SettingsNavigation.ViewLogs)
                 SettingsContentEvent.ForceSync -> viewModel.onForceSync()
                 SettingsContentEvent.SelectTheme -> onNavigate(SettingsNavigation.SelectTheme)

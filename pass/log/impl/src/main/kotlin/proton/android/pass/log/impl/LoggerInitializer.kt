@@ -44,14 +44,13 @@ class LoggerInitializer : Initializer<Unit> {
 
         entryPoint.handler()
             .onDeviceSettingsChanged {
+                Timber.uprootAll()
                 if (it.isCrashReportEnabled) {
                     if (entryPoint.appConfig().isDebug) {
                         Timber.plant(Timber.DebugTree())
                     }
                     Timber.plant(FileLoggingTree(context))
                     deviceInfo(entryPoint.appConfig())
-                } else {
-                    Timber.uprootAll()
                 }
             }
 

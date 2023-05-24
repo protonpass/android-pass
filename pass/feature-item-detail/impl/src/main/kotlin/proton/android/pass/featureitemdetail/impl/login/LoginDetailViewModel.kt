@@ -26,6 +26,8 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
@@ -55,7 +57,6 @@ import proton.android.pass.featureitemdetail.impl.ItemDelete
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.state.api.SavedStateInterface
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.ObserveTotpFromUri
@@ -81,11 +82,13 @@ class LoginDetailViewModel @Inject constructor(
     private val canDisplayTotp: CanDisplayTotp,
     canPerformPaidAction: CanPerformPaidAction,
     getItemByIdWithVault: GetItemByIdWithVault,
-    savedStateHandle: SavedStateInterface
+    savedStateHandle: SavedStateHandleProvider
 ) : ViewModel() {
 
-    private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
-    private val itemId: ItemId = ItemId(savedStateHandle.require(CommonNavArgId.ItemId.key))
+    private val shareId: ShareId =
+        ShareId(savedStateHandle.savedStateHandle.require(CommonNavArgId.ShareId.key))
+    private val itemId: ItemId =
+        ItemId(savedStateHandle.savedStateHandle.require(CommonNavArgId.ItemId.key))
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)

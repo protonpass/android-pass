@@ -67,7 +67,6 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
-    implementation(projects.pass.state.api)
     implementation(projects.pass.telemetry.api)
     implementation(projects.pass.totp.api)
 
@@ -85,6 +84,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.datetime)
     testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)
     testImplementation(projects.pass.notifications.fakes)
@@ -98,11 +98,11 @@ dependencies {
 
     androidTestImplementation(projects.pass.clipboard.fakes)
     androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.commonUi.fakes)
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)
     androidTestImplementation(projects.pass.preferences.fakes)
-    androidTestImplementation(projects.pass.state.fakes)
     androidTestImplementation(projects.pass.telemetry.fakes)
     androidTestImplementation(projects.pass.totp.fakes)
 }

@@ -33,6 +33,9 @@ androidComponents {
     beforeVariants(selector().withBuildType("release")) { builder ->
         builder.enable = false
     }
+    beforeVariants { variant ->
+        variant.enableAndroidTest = false
+    }
 }
 
 dependencies {

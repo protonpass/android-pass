@@ -43,6 +43,10 @@ android {
     }
 }
 
+androidComponents.beforeVariants { variant ->
+    variant.enableAndroidTest = false
+}
+
 dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.activity.compose)

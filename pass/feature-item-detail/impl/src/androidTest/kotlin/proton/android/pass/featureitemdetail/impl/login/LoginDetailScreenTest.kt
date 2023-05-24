@@ -16,6 +16,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
@@ -24,7 +25,6 @@ import proton.android.pass.featureitemdetail.impl.ItemDetailNavigation
 import proton.android.pass.featureitemdetail.impl.ItemDetailScreen
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.navigation.api.CommonNavArgId
-import proton.android.pass.state.fakes.TestSavedStateInterface
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
@@ -47,7 +47,7 @@ class LoginDetailScreenTest {
     val composeTestRule = createAndroidComposeRule<HiltComponentActivity>()
 
     @Inject
-    lateinit var savedStateHandle: TestSavedStateInterface
+    lateinit var savedStateHandle: TestSavedStateHandleProvider
 
     @Inject
     lateinit var getItemById: TestGetItemById
@@ -65,9 +65,8 @@ class LoginDetailScreenTest {
     fun setup() {
         hiltRule.inject()
         savedStateHandle.apply {
-            clear()
-            set(CommonNavArgId.ShareId.key, SHARE_ID)
-            set(CommonNavArgId.ItemId.key, ITEM_ID)
+            savedStateHandle[CommonNavArgId.ShareId.key] = SHARE_ID
+            savedStateHandle[CommonNavArgId.ItemId.key] = ITEM_ID
         }
     }
 

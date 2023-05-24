@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.Clock
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -19,7 +21,6 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
-import proton.android.pass.state.api.SavedStateInterface
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.Item
@@ -34,12 +35,12 @@ class ItemDetailViewModel @Inject constructor(
     private val clock: Clock,
     private val telemetryManager: TelemetryManager,
     getItemById: GetItemById,
-    savedStateHandle: SavedStateInterface,
+    savedStateHandle: SavedStateHandleProvider,
     userPreferenceRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val shareId: ShareId = ShareId(savedStateHandle.require(CommonNavArgId.ShareId.key))
-    private val itemId: ItemId = ItemId(savedStateHandle.require(CommonNavArgId.ItemId.key))
+    private val shareId: ShareId = ShareId(savedStateHandle.savedStateHandle.require(CommonNavArgId.ShareId.key))
+    private val itemId: ItemId = ItemId(savedStateHandle.savedStateHandle.require(CommonNavArgId.ItemId.key))
 
     private val itemFlow = getItemById(shareId, itemId)
         .asLoadingResult()

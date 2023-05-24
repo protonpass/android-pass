@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "proton.android.pass.state.fakes"
+    namespace = "proton.android.pass.commonui.impl"
     compileSdk = libs.versions.compileSdk.get().toInt()
     
     defaultConfig {
@@ -20,7 +20,7 @@ androidComponents.beforeVariants { variant ->
 }
 
 dependencies {
-    implementation(projects.pass.state.api)
+    implementation(projects.pass.commonUi.api)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

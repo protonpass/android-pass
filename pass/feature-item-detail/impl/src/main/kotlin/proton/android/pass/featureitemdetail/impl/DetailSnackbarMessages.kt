@@ -20,5 +20,6 @@ enum class DetailSnackbarMessages(
     ItemPermanentlyDeleted(R.string.item_permanently_deleted_message, SnackbarType.NORM),
     ItemNotPermanentlyDeleted(R.string.item_permanently_deleted_message_error, SnackbarType.ERROR),
     ItemRestored(R.string.item_restored_message, SnackbarType.NORM),
-    ItemNotRestored(R.string.item_restored_message_error, SnackbarType.ERROR)
+    ItemNotRestored(R.string.item_restored_message_error, SnackbarType.ERROR),
+    GenerateTotpError(R.string.login_item_generate_totp_error, SnackbarType.ERROR),
 }

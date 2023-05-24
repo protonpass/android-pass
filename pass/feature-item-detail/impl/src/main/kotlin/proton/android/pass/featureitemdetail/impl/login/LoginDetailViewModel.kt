@@ -42,6 +42,7 @@ import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotMovedToTrash
@@ -335,16 +336,6 @@ class LoginDetailViewModel @Inject constructor(
         totpUri: String
     ): Flow<LoginItemInfo> = observeTotpFromUri(totpUri)
         .map(TotpManager.TotpWrapper::toOption)
-        .catch { e ->
-            PassLogger.w(TAG, e, "Error observing totp")
-            LoginItemInfo(
-                item = details.item,
-                totp = None,
-                vault = details.vault,
-                hasMoreThanOneVault = details.hasMoreThanOneVault,
-                linkedAlias = alias
-            )
-        }
         .map { totpValue ->
             val totp = totpValue.map {
                 TotpUiState.Visible(it.code, it.remainingSeconds, it.totalSeconds)
@@ -357,6 +348,19 @@ class LoginDetailViewModel @Inject constructor(
                 linkedAlias = alias
             )
 
+        }
+        .catch { e ->
+            PassLogger.w(TAG, e, "Error observing totp")
+            snackbarDispatcher(DetailSnackbarMessages.GenerateTotpError)
+            emit(
+                LoginItemInfo(
+                    item = details.item,
+                    totp = None,
+                    vault = details.vault,
+                    hasMoreThanOneVault = details.hasMoreThanOneVault,
+                    linkedAlias = alias
+                )
+            )
         }
 
 

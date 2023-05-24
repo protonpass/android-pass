@@ -8,7 +8,9 @@ import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestGetItemById @Inject constructor() : GetItemById {
 
     private var result = testFlow<Result<Item>>()

@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import proton.android.pass.totp.api.GetTotpCodeFromUri
+import proton.android.pass.totp.api.ObserveTotpFromUri
 import proton.android.pass.totp.api.TotpManager
 
 @Module
@@ -16,4 +17,7 @@ abstract class FakesTotpModule {
 
     @Binds
     abstract fun bindGetCodeFromUri(impl: TestGetTotpCodeFromUri): GetTotpCodeFromUri
+
+    @Binds
+    abstract fun bindObserveTotpFromUri(impl: TestObserveTotpFromUri): ObserveTotpFromUri
 }

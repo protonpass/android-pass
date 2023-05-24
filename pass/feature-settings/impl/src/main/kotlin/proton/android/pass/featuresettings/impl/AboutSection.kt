@@ -21,8 +21,7 @@ import proton.android.pass.composecomponents.impl.setting.SettingOption
 @Composable
 fun AboutSection(
     modifier: Modifier = Modifier,
-    onPrivacyClick: () -> Unit,
-    onTermsClick: () -> Unit
+    onEvent: (SettingsContentEvent) -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
@@ -34,12 +33,12 @@ fun AboutSection(
         ) {
             SettingOption(
                 text = stringResource(R.string.settings_option_privacy_policy),
-                onClick = onPrivacyClick
+                onClick = { onEvent(SettingsContentEvent.Privacy) }
             )
             Divider(color = PassTheme.colors.inputBorderNorm)
             SettingOption(
                 text = stringResource(R.string.settings_option_terms_of_service),
-                onClick = onTermsClick
+                onClick = { onEvent(SettingsContentEvent.Terms) }
             )
         }
     }
@@ -52,7 +51,7 @@ fun AboutSectionPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            AboutSection(onPrivacyClick = {}, onTermsClick = {})
+            AboutSection(onEvent = {})
         }
     }
 }

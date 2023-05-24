@@ -52,11 +52,11 @@ class MigrateConfirmVaultViewModel @Inject constructor(
         MutableStateFlow(None)
 
     private val getVaultFlow = getVaultById(shareId = mode.destShareId)
-        .asLoadingResult()
         .catch {
             PassLogger.e(TAG, it, "Error getting Vault by id")
             eventFlow.update { ConfirmMigrateEvent.Close.toOption() }
         }
+        .asLoadingResult()
 
     val state: StateFlow<MigrateConfirmVaultUiState> = combine(
         isLoadingFlow,

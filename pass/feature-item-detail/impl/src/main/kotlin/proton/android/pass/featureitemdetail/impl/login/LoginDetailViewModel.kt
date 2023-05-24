@@ -86,9 +86,9 @@ class LoginDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val shareId: ShareId =
-        ShareId(savedStateHandle.savedStateHandle.require(CommonNavArgId.ShareId.key))
+        ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
     private val itemId: ItemId =
-        ItemId(savedStateHandle.savedStateHandle.require(CommonNavArgId.ItemId.key))
+        ItemId(savedStateHandle.get().require(CommonNavArgId.ItemId.key))
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)

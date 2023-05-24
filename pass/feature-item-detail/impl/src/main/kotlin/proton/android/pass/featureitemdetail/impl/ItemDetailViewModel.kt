@@ -39,8 +39,8 @@ class ItemDetailViewModel @Inject constructor(
     userPreferenceRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    private val shareId: ShareId = ShareId(savedStateHandle.savedStateHandle.require(CommonNavArgId.ShareId.key))
-    private val itemId: ItemId = ItemId(savedStateHandle.savedStateHandle.require(CommonNavArgId.ItemId.key))
+    private val shareId: ShareId = ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
+    private val itemId: ItemId = ItemId(savedStateHandle.get().require(CommonNavArgId.ItemId.key))
 
     private val itemFlow = getItemById(shareId, itemId)
         .asLoadingResult()

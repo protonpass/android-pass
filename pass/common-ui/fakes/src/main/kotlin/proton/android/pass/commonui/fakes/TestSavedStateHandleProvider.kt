@@ -10,5 +10,5 @@ class TestSavedStateHandleProvider @Inject constructor() : SavedStateHandleProvi
 
     private val instance = SavedStateHandle()
 
-    override val savedStateHandle: SavedStateHandle = instance
+    override fun get(): SavedStateHandle = instance
 }

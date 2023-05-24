@@ -15,7 +15,9 @@ data class SettingsUiState(
     val copyTotpToClipboard: CopyTotpToClipboard,
     val isLoadingState: IsLoadingState,
     val primaryVault: Option<Vault>,
-    val useFavicons: UseFaviconsPreference
+    val useFavicons: UseFaviconsPreference,
+    val shareTelemetry: Boolean,
+    val shareCrashes: Boolean
 ) {
     companion object {
         val Initial = SettingsUiState(
@@ -23,7 +25,9 @@ data class SettingsUiState(
             copyTotpToClipboard = CopyTotpToClipboard.NotEnabled,
             isLoadingState = IsLoadingState.NotLoading,
             primaryVault = None,
-            useFavicons = UseFaviconsPreference.Enabled
+            useFavicons = UseFaviconsPreference.Enabled,
+            shareTelemetry = true,
+            shareCrashes = true,
         )
     }
 }

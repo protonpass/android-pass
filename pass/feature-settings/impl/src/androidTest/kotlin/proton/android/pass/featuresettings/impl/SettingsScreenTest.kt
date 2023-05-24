@@ -48,11 +48,11 @@ class SettingsScreenTest {
         composeTestRule.setContent {
             PassTheme {
                 SettingsScreen(
-                    onSelectThemeClick = { checker.call() },
-                    onClipboardClick = { },
-                    onUpClick = { },
-                    onViewLogsClick = { },
-                    onPrimaryVaultClick = { }
+                    onNavigate = {
+                        if (it == SettingsNavigation.SelectTheme) {
+                            checker.call()
+                        }
+                    }
                 )
             }
         }
@@ -68,11 +68,11 @@ class SettingsScreenTest {
         composeTestRule.setContent {
             PassTheme {
                 SettingsScreen(
-                    onSelectThemeClick = { },
-                    onClipboardClick = { checker.call() },
-                    onUpClick = { },
-                    onViewLogsClick = { },
-                    onPrimaryVaultClick = { }
+                    onNavigate = {
+                        if (it is SettingsNavigation.ClipboardSettings) {
+                            checker.call()
+                        }
+                    }
                 )
             }
         }
@@ -88,11 +88,11 @@ class SettingsScreenTest {
         composeTestRule.setContent {
             PassTheme {
                 SettingsScreen(
-                    onSelectThemeClick = { },
-                    onClipboardClick = { },
-                    onUpClick = { },
-                    onViewLogsClick = { },
-                    onPrimaryVaultClick = { checker.call()  }
+                    onNavigate = {
+                        if (it is SettingsNavigation.PrimaryVault) {
+                            checker.call()
+                        }
+                    }
                 )
             }
         }
@@ -108,11 +108,11 @@ class SettingsScreenTest {
         composeTestRule.setContent {
             PassTheme {
                 SettingsScreen(
-                    onSelectThemeClick = { },
-                    onClipboardClick = { },
-                    onUpClick = { checker.call() },
-                    onViewLogsClick = { },
-                    onPrimaryVaultClick = { }
+                    onNavigate = {
+                        if (it is SettingsNavigation.Close) {
+                            checker.call()
+                        }
+                    }
                 )
             }
         }
@@ -148,11 +148,7 @@ class SettingsScreenTest {
         composeTestRule.setContent {
             PassTheme {
                 SettingsScreen(
-                    onSelectThemeClick = { },
-                    onClipboardClick = { },
-                    onUpClick = { },
-                    onViewLogsClick = { },
-                    onPrimaryVaultClick = { }
+                    onNavigate = {}
                 )
             }
         }

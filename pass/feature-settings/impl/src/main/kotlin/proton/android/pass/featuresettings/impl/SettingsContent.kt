@@ -22,22 +22,14 @@ import proton.android.pass.preferences.value
 fun SettingsContent(
     modifier: Modifier = Modifier,
     state: SettingsUiState,
-    onUseFaviconsChange: (Boolean) -> Unit,
-    onSelectThemeClick: () -> Unit,
-    onClipboardClick: () -> Unit,
-    onViewLogsClick: () -> Unit,
-    onForceSyncClick: () -> Unit,
-    onPrivacyClick: () -> Unit,
-    onTermsClick: () -> Unit,
-    onPrimaryVaultClick: () -> Unit,
-    onUpClick: () -> Unit
+    onEvent: (SettingsContentEvent) -> Unit
 ) {
     Scaffold(
         modifier = modifier,
         topBar = {
             BackArrowTopAppBar(
                 title = stringResource(R.string.title_settings),
-                onUpClick = onUpClick
+                onUpClick = { onEvent(SettingsContentEvent.Up) }
             )
         }
     ) { contentPadding ->
@@ -55,24 +47,21 @@ fun SettingsContent(
         ) {
             PreferencesSection(
                 theme = state.themePreference,
-                onSelectThemeClick = onSelectThemeClick,
-                onClipboardClick = onClipboardClick
+                onEvent = onEvent,
             )
             PrivacySection(
                 useFavicons = state.useFavicons.value(),
-                onUseFaviconsChange = onUseFaviconsChange
+                onEvent = onEvent
             )
             PrimaryVaultSection(
                 primaryVault = state.primaryVault,
-                onPrimaryVaultClick = onPrimaryVaultClick
+                onEvent = onEvent
             )
             AboutSection(
-                onPrivacyClick = onPrivacyClick,
-                onTermsClick = onTermsClick
+                onEvent = onEvent
             )
             ApplicationSection(
-                onViewLogsClick = onViewLogsClick,
-                onForceSyncClick = onForceSyncClick
+                onEvent = onEvent
             )
         }
     }

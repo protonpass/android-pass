@@ -9,12 +9,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun ThemeSelectionBottomSheet(
-    dismissBottomSheet: () -> Unit,
+    onNavigate: (SettingsNavigation) -> Unit,
     viewModel: ThemeSelectorViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     ThemeSelectionBottomSheetContents(themePreference = state) {
         viewModel.onThemePreferenceChange(it)
-        dismissBottomSheet()
+        onNavigate(SettingsNavigation.DismissBottomSheet)
     }
 }

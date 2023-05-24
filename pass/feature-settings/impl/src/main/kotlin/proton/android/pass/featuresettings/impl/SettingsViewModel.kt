@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -40,6 +41,7 @@ class SettingsViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val refreshContent: RefreshContent,
     private val clearIconCache: ClearIconCache,
+    private val deviceSettingsRepository: DeviceSettingsRepository,
     observeVaults: ObserveVaults
 ) : ViewModel() {
 
@@ -92,14 +94,17 @@ class SettingsViewModel @Inject constructor(
     val state: StateFlow<SettingsUiState> = combine(
         preferencesState,
         primaryVaultFlow,
-        isLoadingState
-    ) { preferences, primaryVault, loading ->
+        isLoadingState,
+        deviceSettingsRepository.observeDeviceSettings()
+    ) { preferences, primaryVault, loading, deviceSettings ->
         SettingsUiState(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
             isLoadingState = loading,
             primaryVault = primaryVault,
-            useFavicons = preferences.useFavicons
+            useFavicons = preferences.useFavicons,
+            shareTelemetry = deviceSettings.isTelemetryEnabled,
+            shareCrashes = deviceSettings.isCrashReportEnabled,
         )
     }.stateIn(
         scope = viewModelScope,
@@ -120,6 +125,16 @@ class SettingsViewModel @Inject constructor(
                     snackbarDispatcher(SettingsSnackbarMessage.ClearIconCacheError)
                 }
         }
+    }
+
+    fun onTelemetryChange(value: Boolean) = viewModelScope.launch {
+        deviceSettingsRepository.updateIsTelemetryEnabled(value)
+        snackbarDispatcher(SettingsSnackbarMessage.PreferenceUpdated)
+    }
+
+    fun onCrashReportChange(value: Boolean) = viewModelScope.launch {
+        deviceSettingsRepository.updateIsCrashReportEnabled(value)
+        snackbarDispatcher(SettingsSnackbarMessage.PreferenceUpdated)
     }
 
     fun onForceSync() = viewModelScope.launch {

@@ -7,6 +7,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 
@@ -22,14 +23,22 @@ class ThemeSelectionBottomSheetTest {
     @Test
     fun onThemeSelectShouldDismissBottomsheet() {
         val checker = CallChecker<Unit>()
-        composeTestRule.setContent {
-            ThemeSelectionBottomSheet(
-                dismissBottomSheet = { checker.call() }
-            )
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    ThemeSelectionBottomSheet(
+                        onNavigate = {
+                            if (it is SettingsNavigation.DismissBottomSheet) {
+                                checker.call()
+                            }
+                        }
+                    )
+                }
+            }
+
+            val text = activity.getString(R.string.settings_appearance_preference_subtitle_dark)
+            onNodeWithText(text).performClick()
+            waitUntil { checker.isCalled }
         }
-        composeTestRule
-            .onNodeWithText(composeTestRule.activity.getString(R.string.settings_appearance_preference_subtitle_dark))
-            .performClick()
-        composeTestRule.waitUntil { checker.isCalled }
     }
 }

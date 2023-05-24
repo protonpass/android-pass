@@ -28,7 +28,7 @@ data class MigrateConfirmVaultUiState(
 ) {
     companion object {
         fun Initial(mode: MigrateMode) = MigrateConfirmVaultUiState(
-            isLoading = IsLoadingState.Loading,
+            isLoading = IsLoadingState.NotLoading,
             event = None,
             vault = None,
             mode = mode

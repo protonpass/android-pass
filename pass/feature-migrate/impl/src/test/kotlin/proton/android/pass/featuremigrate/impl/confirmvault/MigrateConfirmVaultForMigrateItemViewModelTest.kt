@@ -61,7 +61,10 @@ class MigrateConfirmVaultForMigrateItemViewModelTest {
     @Test
     fun `emits initial state`() = runTest {
         instance.state.test {
-            assertThat(awaitItem()).isEqualTo(MigrateConfirmVaultUiState.Initial(MigrateMode.MigrateItem))
+            val expected = MigrateConfirmVaultUiState.Initial(MigrateMode.MigrateItem).copy(
+                isLoading = IsLoadingState.Loading // Retrieve vault is loading
+            )
+            assertThat(awaitItem()).isEqualTo(expected)
         }
     }
 

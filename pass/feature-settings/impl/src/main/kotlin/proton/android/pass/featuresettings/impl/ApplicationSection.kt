@@ -2,7 +2,6 @@ package proton.android.pass.featuresettings.impl
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -16,15 +15,19 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultSmallWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.composecomponents.impl.setting.ColorSettingOption
 import proton.android.pass.composecomponents.impl.setting.SettingOption
+import proton.android.pass.composecomponents.impl.setting.SettingToggle
 import me.proton.core.presentation.compose.R as CoreR
 
 @Composable
 fun ApplicationSection(
     modifier: Modifier = Modifier,
+    shareTelemetry: Boolean,
+    shareCrashes: Boolean,
     onEvent: (SettingsContentEvent) -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -39,7 +42,7 @@ fun ApplicationSection(
                 text = stringResource(R.string.settings_option_view_logs),
                 onClick = { onEvent(SettingsContentEvent.ViewLogs) }
             )
-            Divider(color = PassTheme.colors.inputBorderNorm)
+            PassDivider()
             ColorSettingOption(
                 text = stringResource(R.string.settings_option_force_sync),
                 textColor = PassTheme.colors.interactionNormMajor2,
@@ -53,6 +56,18 @@ fun ApplicationSection(
                 },
                 onClick = { onEvent(SettingsContentEvent.ForceSync) }
             )
+            PassDivider()
+            SettingToggle(
+                text = stringResource(R.string.settings_share_telemetry),
+                isChecked = shareTelemetry,
+                onClick = { onEvent(SettingsContentEvent.TelemetryChange(it)) }
+            )
+            PassDivider()
+            SettingToggle(
+                text = stringResource(R.string.settings_share_crashes),
+                isChecked = shareCrashes,
+                onClick = { onEvent(SettingsContentEvent.CrashReportChange(it)) }
+            )
         }
     }
 }
@@ -60,11 +75,15 @@ fun ApplicationSection(
 @Preview
 @Composable
 fun ApplicationSectionPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
-    PassTheme(isDark = isDark) {
+    PassTheme(isDark = input.first) {
         Surface {
-            ApplicationSection(onEvent = {})
+            ApplicationSection(
+                shareTelemetry = input.second,
+                shareCrashes = input.second,
+                onEvent = {}
+            )
         }
     }
 }

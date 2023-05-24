@@ -4,19 +4,19 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
+import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -33,7 +33,6 @@ import proton.android.pass.navigation.api.DestinationShareNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
-import proton.pass.domain.VaultWithItemCount
 import javax.inject.Inject
 
 @HiltViewModel
@@ -48,29 +47,26 @@ class MigrateConfirmVaultViewModel @Inject constructor(
     private val mode = getMode()
 
     private val isLoadingFlow: MutableStateFlow<IsLoadingState> =
-        MutableStateFlow(IsLoadingState.Loading)
+        MutableStateFlow(IsLoadingState.NotLoading)
     private val eventFlow: MutableStateFlow<Option<ConfirmMigrateEvent>> =
         MutableStateFlow(None)
 
-    private val getVaultFlow: Flow<Option<VaultWithItemCount>> =
-        getVaultById(shareId = mode.destShareId)
-            .map {
-                isLoadingFlow.update { IsLoadingState.NotLoading }
-                it.toOption()
-            }
-            .onStart { emit(None) }
-            .catch {
-                PassLogger.e(TAG, it, "Error getting Vault by id")
-                eventFlow.update { ConfirmMigrateEvent.Close.toOption() }
-            }
+    private val getVaultFlow = getVaultById(shareId = mode.destShareId)
+        .asLoadingResult()
+        .catch {
+            PassLogger.e(TAG, it, "Error getting Vault by id")
+            eventFlow.update { ConfirmMigrateEvent.Close.toOption() }
+        }
 
     val state: StateFlow<MigrateConfirmVaultUiState> = combine(
         isLoadingFlow,
         getVaultFlow,
         eventFlow
-    ) { isLoading, vault, event ->
+    ) { isLoading, vaultRes, event ->
+        val loading = isLoading is IsLoadingState.Loading || vaultRes is LoadingResult.Loading
+        val vault = vaultRes.getOrNull().toOption()
         MigrateConfirmVaultUiState(
-            isLoading = isLoading,
+            isLoading = IsLoadingState.from(loading),
             vault = vault,
             event = event,
             mode = mode.migrateMode()
@@ -107,9 +103,9 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 dest = destShareId
             )
         }.onSuccess {
-            isLoadingFlow.update { IsLoadingState.NotLoading }
             eventFlow.update { ConfirmMigrateEvent.AllItemsMigrated.some() }
             snackbarDispatcher(MigrateSnackbarMessage.VaultItemsMigrated)
+            isLoadingFlow.update { IsLoadingState.NotLoading }
         }.onFailure {
             isLoadingFlow.update { IsLoadingState.NotLoading }
             PassLogger.e(TAG, it, "Error migrating all items")
@@ -130,9 +126,9 @@ class MigrateConfirmVaultViewModel @Inject constructor(
                 destinationShare = destShareId
             )
         }.onSuccess { item ->
-            isLoadingFlow.update { IsLoadingState.NotLoading }
             eventFlow.update { ConfirmMigrateEvent.ItemMigrated(item.shareId, item.id).toOption() }
             snackbarDispatcher(MigrateSnackbarMessage.ItemMigrated)
+            isLoadingFlow.update { IsLoadingState.NotLoading }
         }.onFailure {
             isLoadingFlow.update { IsLoadingState.NotLoading }
             PassLogger.e(TAG, it, "Error migrating item")

@@ -54,8 +54,8 @@ class ItemDetailViewModelTest {
                 }
             },
             savedStateHandle = TestSavedStateHandleProvider().apply {
-                savedStateHandle.set(CommonNavArgId.ShareId.key, SHARE_ID)
-                savedStateHandle.set(CommonNavArgId.ItemId.key, ITEM_ID)
+                get().set(CommonNavArgId.ShareId.key, SHARE_ID)
+                get().set(CommonNavArgId.ItemId.key, ITEM_ID)
             }
         )
     }

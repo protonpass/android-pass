@@ -64,9 +64,9 @@ class LoginDetailScreenTest {
     @Before
     fun setup() {
         hiltRule.inject()
-        savedStateHandle.apply {
-            savedStateHandle[CommonNavArgId.ShareId.key] = SHARE_ID
-            savedStateHandle[CommonNavArgId.ItemId.key] = ITEM_ID
+        savedStateHandle.get().apply {
+            set(CommonNavArgId.ShareId.key, SHARE_ID)
+            set(CommonNavArgId.ItemId.key, ITEM_ID)
         }
     }
 

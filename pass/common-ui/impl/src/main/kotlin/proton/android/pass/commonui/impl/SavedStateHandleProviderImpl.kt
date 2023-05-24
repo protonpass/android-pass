@@ -7,5 +7,7 @@ import javax.inject.Inject
 
 @ViewModelScoped
 class SavedStateHandleProviderImpl @Inject constructor(
-    override val savedStateHandle: SavedStateHandle
-) : SavedStateHandleProvider
+    private val savedStateHandle: SavedStateHandle
+) : SavedStateHandleProvider {
+    override fun get(): SavedStateHandle = savedStateHandle
+}

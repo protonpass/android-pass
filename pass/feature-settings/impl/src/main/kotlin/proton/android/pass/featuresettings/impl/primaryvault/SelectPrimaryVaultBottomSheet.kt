@@ -9,21 +9,21 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.bottomSheet
+import proton.android.pass.featuresettings.impl.SettingsNavigation
 
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SelectPrimaryVaultBottomSheet(
     modifier: Modifier = Modifier,
-    onSuccess: () -> Unit,
-    onClose: () -> Unit,
+    onNavigate: (SettingsNavigation) -> Unit,
     viewModel: SelectPrimaryVaultViewModel = hiltViewModel()
 ) {
-    BackHandler { onClose() }
+    BackHandler { onNavigate(SettingsNavigation.DismissBottomSheet) }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
     if (state.event == SelectPrimaryVaultEvent.Selected) {
-        LaunchedEffect(Unit) { onSuccess() }
+        LaunchedEffect(Unit) { onNavigate(SettingsNavigation.DismissBottomSheet) }
     }
 
     SelectPrimaryVaultContents(

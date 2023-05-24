@@ -41,6 +41,7 @@
     <string name="settings_use_favicons_preference_subtitle">Decide if you want to view the website icons on your items.</string>
     <string name="settings_clear_icon_cache_success">Icon cache cleared</string>
     <string name="settings_clear_icon_cache_error">Could not clear the icon cache</string>
+    <string name="settings_preference_updated">Your preference has been updated</string>
 
 
     <string name="view_logs_title">View logs</string>

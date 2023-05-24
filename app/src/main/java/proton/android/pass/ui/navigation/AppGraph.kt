@@ -73,6 +73,7 @@ import proton.android.pass.featuresettings.impl.ClipboardSettings
 import proton.android.pass.featuresettings.impl.LogView
 import proton.android.pass.featuresettings.impl.SelectPrimaryVault
 import proton.android.pass.featuresettings.impl.Settings
+import proton.android.pass.featuresettings.impl.SettingsNavigation
 import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
 import proton.android.pass.featurevault.impl.VaultNavigation
@@ -297,13 +298,21 @@ fun NavGraphBuilder.appGraph(
         }
     )
     settingsGraph(
-        onSelectThemeClick = { appNavigator.navigate(ThemeSelector) },
-        onUpClick = { appNavigator.onBackClick() },
-        dismissBottomSheet = { dismissBottomSheet({}) },
-        onViewLogsClick = { appNavigator.navigate(LogView) },
-        onClipboardClick = { appNavigator.navigate(ClipboardSettings) },
-        onClearClipboardSettingClick = { appNavigator.navigate(ClearClipboardOptions) },
-        onPrimaryVaultClick = { appNavigator.navigate(SelectPrimaryVault) }
+        onNavigate = {
+            when (it) {
+                SettingsNavigation.SelectTheme -> appNavigator.navigate(ThemeSelector)
+                SettingsNavigation.Close -> appNavigator.onBackClick()
+                SettingsNavigation.DismissBottomSheet -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
+                SettingsNavigation.ViewLogs -> appNavigator.navigate(LogView)
+                SettingsNavigation.ClipboardSettings -> appNavigator.navigate(ClipboardSettings)
+                SettingsNavigation.ClearClipboardSettings -> dismissBottomSheet {
+                    appNavigator.navigate(ClearClipboardOptions)
+                }
+                SettingsNavigation.PrimaryVault -> appNavigator.navigate(SelectPrimaryVault)
+            }
+        }
     )
     createLoginGraph(
         getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },

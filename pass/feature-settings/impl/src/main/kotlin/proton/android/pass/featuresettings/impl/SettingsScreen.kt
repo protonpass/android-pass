@@ -13,11 +13,7 @@ import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
-    onSelectThemeClick: () -> Unit,
-    onClipboardClick: () -> Unit,
-    onUpClick: () -> Unit,
-    onViewLogsClick: () -> Unit,
-    onPrimaryVaultClick: () -> Unit,
+    onNavigate: (SettingsNavigation) -> Unit,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -25,14 +21,18 @@ fun SettingsScreen(
     SettingsContent(
         modifier = modifier,
         state = state,
-        onUseFaviconsChange = { viewModel.onUseFaviconsChange(it) },
-        onViewLogsClick = onViewLogsClick,
-        onForceSyncClick = { viewModel.onForceSync() },
-        onSelectThemeClick = onSelectThemeClick,
-        onClipboardClick = onClipboardClick,
-        onPrivacyClick = { openWebsite(context, "https://proton.me/legal/privacy") },
-        onTermsClick = { openWebsite(context, "https://proton.me/legal/terms") },
-        onUpClick = onUpClick,
-        onPrimaryVaultClick = onPrimaryVaultClick
+        onEvent = {
+            when (it) {
+                is SettingsContentEvent.UseFaviconsChange -> viewModel.onUseFaviconsChange(it.value)
+                SettingsContentEvent.ViewLogs -> onNavigate(SettingsNavigation.ViewLogs)
+                SettingsContentEvent.ForceSync -> viewModel.onForceSync()
+                SettingsContentEvent.SelectTheme -> onNavigate(SettingsNavigation.SelectTheme)
+                SettingsContentEvent.Clipboard -> onNavigate(SettingsNavigation.ClipboardSettings)
+                SettingsContentEvent.Privacy -> { openWebsite(context, "https://proton.me/legal/privacy") }
+                SettingsContentEvent.Terms -> { openWebsite(context, "https://proton.me/legal/terms") }
+                SettingsContentEvent.Up -> onNavigate(SettingsNavigation.Close)
+                SettingsContentEvent.PrimaryVault -> onNavigate(SettingsNavigation.PrimaryVault)
+            }
+        }
     )
 }

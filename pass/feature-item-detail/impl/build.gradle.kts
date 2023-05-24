@@ -13,12 +13,26 @@ android {
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
+
+        testInstrumentationRunner = "proton.android.pass.test.HiltRunner"
     }
     buildFeatures {
         compose = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.androidx.compose.compiler.get()
+    }
+
+    testOptions {
+        managedDevices {
+            devices {
+                maybeCreate<com.android.build.api.dsl.ManagedVirtualDevice>("pixel2api30").apply {
+                    device = "Pixel 2"
+                    apiLevel = 30
+                    systemImageSource = "aosp-atd"
+                }
+            }
+        }
     }
 }
 
@@ -53,6 +67,7 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.preferences.api)
+    implementation(projects.pass.state.api)
     implementation(projects.pass.telemetry.api)
     implementation(projects.pass.totp.api)
 
@@ -75,4 +90,19 @@ dependencies {
     testImplementation(projects.pass.notifications.fakes)
     testImplementation(projects.pass.preferences.fakes)
     testImplementation(projects.pass.telemetry.fakes)
+
+    kaptAndroidTest(libs.dagger.hilt.android.compiler)
+    androidTestImplementation(libs.androidx.lifecycle.viewmodel.savedstate)
+    androidTestImplementation(libs.androidx.test.espresso.core)
+    androidTestImplementation(libs.kotlinTest)
+
+    androidTestImplementation(projects.pass.clipboard.fakes)
+    androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.crypto.fakes)
+    androidTestImplementation(projects.pass.data.fakes)
+    androidTestImplementation(projects.pass.notifications.fakes)
+    androidTestImplementation(projects.pass.preferences.fakes)
+    androidTestImplementation(projects.pass.state.fakes)
+    androidTestImplementation(projects.pass.telemetry.fakes)
+    androidTestImplementation(projects.pass.totp.fakes)
 }

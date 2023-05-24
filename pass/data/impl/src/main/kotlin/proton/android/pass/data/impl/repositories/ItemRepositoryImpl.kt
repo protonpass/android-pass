@@ -542,37 +542,12 @@ class ItemRepositoryImpl @Inject constructor(
         ).first()
         val destinationKey = shareKeyRepository.getLatestKeyForShare(destination).first()
 
-        items.chunked(MAX_BATCH_ITEMS_PER_REQUEST).forEach { chunk ->
-            val migrations = chunk.map { item ->
-                val req = migrateItem.migrate(
-                    destinationKey = destinationKey,
-                    encryptedItemContents = item.encryptedContent,
-                    contentFormatVersion = item.contentFormatVersion
-                )
-                MigrateItemsBody(
-                    itemId = item.id,
-                    item = req.toRequest()
-                )
-            }
-
-            val body = MigrateItemsRequest(
-                shareId = destination.id,
-                items = migrations
-            )
-            val res = remoteItemDataSource.migrateItems(userId, source, body)
-
-            val destinationShare = shareRepository.getById(userId, destination)
-            val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
-            val resAsEntities = res.map {
-                itemResponseToEntity(userAddress, it, destinationShare, listOf(destinationKey))
-            }
-
-            database.inTransaction {
-                localItemDataSource.upsertItems(resAsEntities)
-                chunk.forEach {
-                    localItemDataSource.delete(source, ItemId(it.id))
+        withContext(Dispatchers.Default) {
+            items.chunked(MAX_BATCH_ITEMS_PER_REQUEST).map { chunk ->
+                async {
+                    migrateChunk(userId, source, destination, destinationKey, chunk)
                 }
-            }
+            }.awaitAll()
         }
     }
 
@@ -581,6 +556,47 @@ class ItemRepositoryImpl @Inject constructor(
 
         return encryptionContextProvider.withEncryptionContext {
             item.toDomain(this@withEncryptionContext)
+        }
+    }
+
+    private suspend fun migrateChunk(
+        userId: UserId,
+        source: ShareId,
+        destination: ShareId,
+        destinationKey: ShareKey,
+        chunk: List<ItemEntity>
+    ) {
+        val migrations = chunk.map { item ->
+            val req = migrateItem.migrate(
+                destinationKey = destinationKey,
+                encryptedItemContents = item.encryptedContent,
+                contentFormatVersion = item.contentFormatVersion
+            )
+            MigrateItemsBody(
+                itemId = item.id,
+                item = req.toRequest()
+            )
+        }
+
+        val body = MigrateItemsRequest(
+            shareId = destination.id,
+            items = migrations
+        )
+
+        val destinationShare = shareRepository.getById(userId, destination)
+        val userAddress = requireNotNull(userAddressRepository.getAddresses(userId).primary())
+
+        val res = remoteItemDataSource.migrateItems(userId, source, body)
+
+        val resAsEntities = res.map {
+            itemResponseToEntity(userAddress, it, destinationShare, listOf(destinationKey))
+        }
+
+        database.inTransaction {
+            localItemDataSource.upsertItems(resAsEntities)
+            chunk.forEach {
+                localItemDataSource.delete(source, ItemId(it.id))
+            }
         }
     }
 

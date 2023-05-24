@@ -6,6 +6,7 @@ import kotlinx.datetime.Clock
 import kotlinx.serialization.json.JsonPrimitive
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import me.proton.core.usersettings.domain.repository.DeviceSettingsRepository
 import proton.android.pass.data.api.repositories.TelemetryRepository
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.impl.db.PassDatabase
@@ -24,7 +25,8 @@ class TelemetryRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteTelemetryDataSource,
     private val accountManager: AccountManager,
     private val getUserPlan: GetUserPlan,
-    private val clock: Clock
+    private val clock: Clock,
+    private val deviceSettingsRepository: DeviceSettingsRepository
 ) : TelemetryRepository {
     override suspend fun storeEntry(event: String, dimensions: Map<String, String>) {
         val userId = requireNotNull(accountManager.getPrimaryUserId().first())
@@ -64,8 +66,10 @@ class TelemetryRepositoryImpl @Inject constructor(
     }
 
     private suspend fun performSend(userId: UserId, planName: String, events: List<TelemetryEntity>) {
-        val request = buildRequest(planName, events)
-        remoteDataSource.send(userId, request)
+        if (shouldSendTelemetry()) {
+            val request = buildRequest(planName, events)
+            remoteDataSource.send(userId, request)
+        }
     }
 
     private fun buildRequest(planName: String, events: List<TelemetryEntity>): TelemetryRequest =
@@ -82,6 +86,11 @@ class TelemetryRepositoryImpl @Inject constructor(
                 )
             }
         )
+
+    private suspend fun shouldSendTelemetry(): Boolean {
+        val settings = deviceSettingsRepository.getDeviceSettings()
+        return settings.isTelemetryEnabled
+    }
 
     companion object {
         private const val TAG = "TelemetryRepositoryImpl"

@@ -1,6 +1,5 @@
 package proton.android.pass.featureitemdetail.impl
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -8,11 +7,11 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.Clock
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
-import proton.android.pass.commonui.api.require
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
@@ -21,6 +20,7 @@ import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
+import proton.android.pass.state.api.SavedStateInterface
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.Item
@@ -35,7 +35,7 @@ class ItemDetailViewModel @Inject constructor(
     private val clock: Clock,
     private val telemetryManager: TelemetryManager,
     getItemById: GetItemById,
-    savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateInterface,
     userPreferenceRepository: UserPreferencesRepository
 ) : ViewModel() {
 
@@ -47,8 +47,8 @@ class ItemDetailViewModel @Inject constructor(
         .distinctUntilChanged()
 
     val uiState: StateFlow<ItemDetailScreenUiState> = combine(
-        itemFlow,
-        userPreferenceRepository.getUseFaviconsPreference()
+        itemFlow.onEach { println("CarlosLog: itemFlow: $it") },
+        userPreferenceRepository.getUseFaviconsPreference().onEach { println("CarlosLog: favicons: $it") }
     ) { result, favicons ->
         when (result) {
             is LoadingResult.Error -> {

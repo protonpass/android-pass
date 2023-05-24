@@ -8,9 +8,11 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 
 @Module
 @InstallIn(ViewModelComponent::class)
-abstract class StateModule {
+abstract class CommonUiModule {
 
     @Binds
-    abstract fun bindSavedStateInterface(impl: SavedStateHandleProviderImpl): SavedStateHandleProvider
+    abstract fun bindSavedStateHandleProvider(
+        impl: SavedStateHandleProviderImpl
+    ): SavedStateHandleProvider
 
 }

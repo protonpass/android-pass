@@ -55,6 +55,8 @@ dependencies {
     implementation(libs.core.utilKotlin)
     implementation(libs.google.protobuf.kotlin.lite)
     implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.core.featureFlag.domain)
+    implementation(libs.core.accountManager.domain)
 
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)

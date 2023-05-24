@@ -198,6 +198,7 @@ core-dataRoom = { module = "me.proton.core:data-room", version.ref = "core" }
 core-domain = { module = "me.proton.core:domain", version.ref = "core" }
 core-eventManager = { module = "me.proton.core:event-manager", version.ref = "core" }
 core-featureFlag = { module = "me.proton.core:feature-flag", version.ref = "core" }
+core-featureFlag-domain = { module = "me.proton.core:feature-flag-domain", version.ref = "core" }
 core-humanVerification = { module = "me.proton.core:human-verification", version.ref = "core" }
 core-humanVerification-test = { module = "me.proton.core:human-verification-test", version.ref = "core" }
 core-key = { module = "me.proton.core:key", version.ref = "core" }

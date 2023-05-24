@@ -24,6 +24,7 @@ dependencies {
     implementation(libs.core.cryptoCommon)
     implementation(libs.core.accountManager.domain)
     implementation(libs.core.payment.domain)
+    implementation(libs.core.userSettings.domain)
 
     implementation(libs.androidx.activity)
 

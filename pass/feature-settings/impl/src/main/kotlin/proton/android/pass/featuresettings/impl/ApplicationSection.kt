@@ -25,8 +25,7 @@ import me.proton.core.presentation.compose.R as CoreR
 @Composable
 fun ApplicationSection(
     modifier: Modifier = Modifier,
-    onViewLogsClick: () -> Unit,
-    onForceSyncClick: () -> Unit
+    onEvent: (SettingsContentEvent) -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
@@ -38,7 +37,7 @@ fun ApplicationSection(
         ) {
             SettingOption(
                 text = stringResource(R.string.settings_option_view_logs),
-                onClick = onViewLogsClick
+                onClick = { onEvent(SettingsContentEvent.ViewLogs) }
             )
             Divider(color = PassTheme.colors.inputBorderNorm)
             ColorSettingOption(
@@ -52,7 +51,7 @@ fun ApplicationSection(
                         tint = PassTheme.colors.interactionNormMajor2
                     )
                 },
-                onClick = onForceSyncClick,
+                onClick = { onEvent(SettingsContentEvent.ForceSync) }
             )
         }
     }
@@ -65,7 +64,7 @@ fun ApplicationSectionPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            ApplicationSection(onViewLogsClick = {}, onForceSyncClick = {})
+            ApplicationSection(onEvent = {})
         }
     }
 }

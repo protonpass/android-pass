@@ -14,49 +14,48 @@ object ClipboardSettings : NavItem(baseRoute = "clipboard/settings/bottomsheet")
 object ClearClipboardOptions : NavItem(baseRoute = "clipboard/clearOptions/bottomsheet")
 object SelectPrimaryVault : NavItem(baseRoute = "vault/primary/bottomsheet")
 
+sealed interface SettingsNavigation {
+    object SelectTheme : SettingsNavigation
+    object ClipboardSettings : SettingsNavigation
+    object ClearClipboardSettings : SettingsNavigation
+    object Close : SettingsNavigation
+    object DismissBottomSheet : SettingsNavigation
+    object ViewLogs : SettingsNavigation
+    object PrimaryVault : SettingsNavigation
+}
+
 @Suppress("LongParameterList")
 @OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.settingsGraph(
-    onSelectThemeClick: () -> Unit,
-    onClipboardClick: () -> Unit,
-    onClearClipboardSettingClick: () -> Unit,
-    onUpClick: () -> Unit,
-    onViewLogsClick: () -> Unit,
-    onPrimaryVaultClick: () -> Unit,
-    dismissBottomSheet: () -> Unit
+    onNavigate: (SettingsNavigation) -> Unit
 ) {
     composable(Settings) {
         SettingsScreen(
-            onSelectThemeClick = onSelectThemeClick,
-            onUpClick = onUpClick,
-            onViewLogsClick = onViewLogsClick,
-            onClipboardClick = onClipboardClick,
-            onPrimaryVaultClick = onPrimaryVaultClick
+            onNavigate = onNavigate
         )
     }
 
     bottomSheet(ThemeSelector) {
-        ThemeSelectionBottomSheet(dismissBottomSheet)
+        ThemeSelectionBottomSheet(onNavigate = onNavigate)
     }
 
     composable(LogView) {
-        LogViewScreen(onUpClick = onUpClick)
+        LogViewScreen(onUpClick = { onNavigate(SettingsNavigation.Close) })
     }
 
     bottomSheet(ClipboardSettings) {
         ClipboardBottomSheet(
-            onClearClipboardSettingClick = onClearClipboardSettingClick
+            onClearClipboardSettingClick = { onNavigate(SettingsNavigation.ClearClipboardSettings) },
         )
     }
 
     bottomSheet(ClearClipboardOptions) {
-        ClearClipboardOptionsBottomSheet(onSuccess = dismissBottomSheet)
+        ClearClipboardOptionsBottomSheet(onNavigate = onNavigate)
     }
 
     bottomSheet(SelectPrimaryVault) {
         SelectPrimaryVaultBottomSheet(
-            onSuccess = dismissBottomSheet,
-            onClose = dismissBottomSheet
+            onNavigate = onNavigate
         )
     }
 }

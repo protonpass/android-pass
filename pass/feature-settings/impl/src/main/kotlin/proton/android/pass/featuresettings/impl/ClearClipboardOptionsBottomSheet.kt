@@ -12,12 +12,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun ClearClipboardOptionsBottomSheet(
     modifier: Modifier = Modifier,
-    onSuccess: () -> Unit,
+    onNavigate: (SettingsNavigation) -> Unit,
     viewModel: ClearClipboardOptionsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     if (state.isClearClipboardOptionSaved == IsClearClipboardOptionSaved.Success) {
-        LaunchedEffect(Unit) { onSuccess() }
+        LaunchedEffect(Unit) { onNavigate(SettingsNavigation.DismissBottomSheet) }
     }
     ClearClipboardOptionsBottomSheetContents(
         modifier = modifier,

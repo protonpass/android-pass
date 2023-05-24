@@ -314,6 +314,7 @@ dependencies {
     implementation(projects.pass.notifications.impl)
     implementation(projects.pass.preferences.api)
     implementation(projects.pass.preferences.impl)
+    implementation(projects.pass.state.impl)
     implementation(projects.pass.telemetry.impl)
     implementation(projects.pass.totp.impl)
     implementation(projects.pass.tracing.impl)

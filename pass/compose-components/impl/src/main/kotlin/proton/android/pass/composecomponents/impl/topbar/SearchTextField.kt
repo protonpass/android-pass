@@ -62,6 +62,7 @@ fun SearchTextField(
                 ifTrue = { background(PassTheme.colors.searchBarBackground) }
             ),
         value = searchQuery,
+        singleLine = true,
         placeholder = {
             Row(
                 verticalAlignment = Alignment.CenterVertically,

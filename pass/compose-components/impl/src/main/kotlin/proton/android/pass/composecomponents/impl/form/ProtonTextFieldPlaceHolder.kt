@@ -4,6 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 
@@ -16,6 +17,8 @@ fun ProtonTextFieldPlaceHolder(
     Text(
         modifier = modifier,
         text = text,
-        style = textStyle
+        style = textStyle,
+        maxLines = 1,
+        overflow = TextOverflow.Ellipsis
     )
 }

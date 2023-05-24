@@ -8,7 +8,9 @@ import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestGetItemByIdWithVault @Inject constructor() : GetItemByIdWithVault {
 
     private val result = testFlow<Result<ItemWithVaultInfo>>()

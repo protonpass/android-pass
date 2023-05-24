@@ -9,6 +9,7 @@ import kotlinx.datetime.Instant
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.navigation.api.CommonNavArgId
@@ -19,7 +20,6 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.FixedClock
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestItem
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -53,9 +53,9 @@ class ItemDetailViewModelTest {
                     setUseFaviconsPreference(UseFaviconsPreference.Disabled)
                 }
             },
-            savedStateHandle = TestSavedStateHandle.create().apply {
-                set(CommonNavArgId.ShareId.key, SHARE_ID)
-                set(CommonNavArgId.ItemId.key, ITEM_ID)
+            savedStateHandle = TestSavedStateHandleProvider().apply {
+                savedStateHandle.set(CommonNavArgId.ShareId.key, SHARE_ID)
+                savedStateHandle.set(CommonNavArgId.ItemId.key, ITEM_ID)
             }
         )
     }

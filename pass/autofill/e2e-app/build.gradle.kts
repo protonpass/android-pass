@@ -60,12 +60,12 @@ dependencies {
     implementation(projects.pass.autofill.impl)
     implementation(projects.pass.biometry.fakes)
     implementation(projects.pass.clipboard.fakes)
+    implementation(projects.pass.commonUi.fakes)
     implementation(projects.pass.commonTest)
     implementation(projects.pass.crypto.fakes)
     implementation(projects.pass.data.fakes)
     implementation(projects.pass.notifications.fakes)
     implementation(projects.pass.preferences.fakes)
-    implementation(projects.pass.state.impl)
     implementation(projects.pass.telemetry.fakes)
     implementation(projects.pass.totp.fakes)
 

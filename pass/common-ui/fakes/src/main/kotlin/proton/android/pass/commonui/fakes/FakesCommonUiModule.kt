@@ -8,9 +8,11 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class FakesStateModule {
+abstract class FakesCommonUiModule {
 
     @Binds
-    abstract fun bindSavedStateInterface(impl: TestSavedStateHandleProvider): SavedStateHandleProvider
+    abstract fun bindSavedStateHandleProvider(
+        impl: TestSavedStateHandleProvider
+    ): SavedStateHandleProvider
 
 }

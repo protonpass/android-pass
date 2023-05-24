@@ -7,6 +7,5 @@ option java_package = "me.proton.android.pass.preferences";
 option java_multiple_files = true;
 
 message BoolFlagPrefProto {
-  BooleanPrefProto value = 2;
-  BooleanPrefProto overridden = 3;
+  BooleanPrefProto value = 1;
 }

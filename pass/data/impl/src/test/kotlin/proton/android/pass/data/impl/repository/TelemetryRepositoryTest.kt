@@ -8,6 +8,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
+import proton.android.pass.account.fakes.TestDeviceSettingsRepository
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
 import proton.android.pass.data.impl.db.entities.TelemetryEntity
 import proton.android.pass.data.impl.fakes.TestLocalTelemetryDataSource
@@ -31,6 +32,7 @@ class TelemetryRepositoryTest {
     private lateinit var localDataSource: TestLocalTelemetryDataSource
     private lateinit var remoteDataSource: TestRemoteTelemetryDataSource
     private lateinit var clock: Clock
+    private lateinit var deviceSettingsRepository: TestDeviceSettingsRepository
 
     @Before
     fun setup() {
@@ -39,6 +41,7 @@ class TelemetryRepositoryTest {
         localDataSource = TestLocalTelemetryDataSource()
         remoteDataSource = TestRemoteTelemetryDataSource()
         clock = FixedClock(Clock.System.now())
+        deviceSettingsRepository = TestDeviceSettingsRepository()
 
         instance = TelemetryRepositoryImpl(
             passDatabase = TestPassDatabase(),
@@ -46,7 +49,8 @@ class TelemetryRepositoryTest {
             remoteDataSource = remoteDataSource,
             accountManager = accountManager,
             getUserPlan = getUserPlan,
-            clock = clock
+            clock = clock,
+            deviceSettingsRepository = deviceSettingsRepository
         )
     }
 
@@ -129,6 +133,25 @@ class TelemetryRepositoryTest {
 
         assertThat(removalOperations[1].min).isEqualTo(TelemetryRepositoryImpl.MAX_EVENT_BATCH_SIZE)
         assertThat(removalOperations[1].max).isEqualTo(TelemetryRepositoryImpl.MAX_EVENT_BATCH_SIZE)
+    }
+
+    @Test
+    fun `sendEvents does not send events if telemetry is disabled`() = runTest {
+        // GIVEN
+        val plan = "theplan"
+        val event = "testEvent"
+
+        runSetup(1, "123", plan, event)
+        remoteDataSource.setResult(Result.success(Unit))
+        deviceSettingsRepository.updateIsTelemetryEnabled(false)
+
+        // WHEN
+        instance.sendEvents()
+
+        // THEN
+        // Verify remote data source was not called
+        val memory = remoteDataSource.getMemory()
+        assertThat(memory).isEmpty()
     }
 
     @Test

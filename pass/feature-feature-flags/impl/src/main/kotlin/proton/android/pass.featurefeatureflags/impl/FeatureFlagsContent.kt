@@ -8,13 +8,13 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import proton.android.pass.preferences.FeatureFlags
+import proton.android.pass.preferences.FeatureFlag
 
 @Composable
 fun FeatureFlagsContent(
     modifier: Modifier = Modifier,
-    state: Map<FeatureFlags, Any>,
-    onToggle: (FeatureFlags, Boolean) -> Unit
+    state: Map<FeatureFlag, Any>,
+    onToggle: (FeatureFlag, Boolean) -> Unit
 ) {
     Scaffold(
         modifier = modifier.fillMaxSize(),

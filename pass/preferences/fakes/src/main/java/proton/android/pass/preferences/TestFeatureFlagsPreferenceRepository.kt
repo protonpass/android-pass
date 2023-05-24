@@ -8,10 +8,10 @@ import javax.inject.Singleton
 @Singleton
 class TestFeatureFlagsPreferenceRepository @Inject constructor() :
     FeatureFlagsPreferencesRepository {
-    override fun <T> get(featureFlags: FeatureFlags): Flow<T> = when (featureFlags) {
-        FeatureFlags.IAP_ENABLED -> flowOf(true as T)
+    override fun <T> get(featureFlag: FeatureFlag): Flow<T> = when (featureFlag) {
+        FeatureFlag.CUSTOM_FIELDS_ENABLED -> flowOf(true as T)
     }
 
-    override fun <T> set(featureFlags: FeatureFlags, value: T?, override: T?): Result<Unit> =
+    override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> =
         Result.success(Unit)
 }

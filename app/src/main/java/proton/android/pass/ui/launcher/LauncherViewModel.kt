@@ -49,12 +49,14 @@ import me.proton.core.auth.presentation.onAddAccountResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.presentation.PlansOrchestrator
+import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ClearUserData
+import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.HasAuthenticated
@@ -74,7 +76,8 @@ class LauncherViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
     private val userPlanWorkerLauncher: UserPlanWorkerLauncher,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
-    private val clearUserData: ClearUserData
+    private val clearUserData: ClearUserData,
+    private val refreshPlan: RefreshPlan
 ) : ViewModel() {
 
     init {
@@ -195,7 +198,18 @@ class LauncherViewModel @Inject constructor(
 
     fun upgrade() = viewModelScope.launch {
         getPrimaryUserIdOrNull()?.let {
-            plansOrchestrator.startUpgradeWorkflow(it)
+            plansOrchestrator
+                .onUpgradeResult { result ->
+                    if (result != null) {
+                        viewModelScope.launch {
+                            runCatching { refreshPlan() }
+                                .onFailure { e ->
+                                    PassLogger.w(TAG, e, "Failed refreshing plan")
+                                }
+                        }
+                    }
+                }
+                .startUpgradeWorkflow(it)
         }
     }
 

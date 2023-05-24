@@ -38,6 +38,7 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaults
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.data.api.usecases.RefreshContent
+import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.RestoreItems
 import proton.android.pass.data.api.usecases.TrashItem
@@ -87,6 +88,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.data.fakes.usecases.TestRefreshContent
+import proton.android.pass.data.fakes.usecases.TestRefreshPlan
 import proton.android.pass.data.fakes.usecases.TestRestoreItem
 import proton.android.pass.data.fakes.usecases.TestRestoreItems
 import proton.android.pass.data.fakes.usecases.TestTrashItem
@@ -324,4 +326,9 @@ abstract class FakesDataModule {
     abstract fun bindCanPerformPaidAction(
         impl: TestCanPerformPaidAction
     ): CanPerformPaidAction
+
+    @Binds
+    abstract fun bindRefreshPlan(
+        impl: TestRefreshPlan
+    ): RefreshPlan
 }

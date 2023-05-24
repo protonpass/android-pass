@@ -73,7 +73,10 @@ for (project in subprojects) {
             val hasCoroutines = project.configurations.findByName("implementation")
                 ?.dependencies
                 ?.any { it.name.contains("kotlinx-coroutines-core") } == true
-            if (hasCoroutines) {
+            val hasCoroutinesInTest = project.configurations.findByName("testImplementation")
+                ?.dependencies
+                ?.any { it.name.contains("kotlinx-coroutines-test") } == true
+            if (hasCoroutines || hasCoroutinesInTest) {
                 freeCompilerArgs =
                     freeCompilerArgs + "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
             }

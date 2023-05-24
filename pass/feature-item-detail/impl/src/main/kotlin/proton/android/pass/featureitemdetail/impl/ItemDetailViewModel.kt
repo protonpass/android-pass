@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.datetime.Clock
 import proton.android.pass.common.api.LoadingResult
@@ -47,8 +46,8 @@ class ItemDetailViewModel @Inject constructor(
         .distinctUntilChanged()
 
     val uiState: StateFlow<ItemDetailScreenUiState> = combine(
-        itemFlow.onEach { println("CarlosLog: itemFlow: $it") },
-        userPreferenceRepository.getUseFaviconsPreference().onEach { println("CarlosLog: favicons: $it") }
+        itemFlow,
+        userPreferenceRepository.getUseFaviconsPreference()
     ) { result, favicons ->
         when (result) {
             is LoadingResult.Error -> {

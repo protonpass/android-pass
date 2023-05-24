@@ -26,7 +26,7 @@ import proton.android.pass.composecomponents.impl.R as PassR
 fun PrimaryVaultSection(
     modifier: Modifier = Modifier,
     primaryVault: Option<Vault>,
-    onPrimaryVaultClick: () -> Unit
+    onEvent: (SettingsContentEvent) -> Unit
 ) {
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(16.dp)) {
         Text(
@@ -46,7 +46,7 @@ fun PrimaryVaultSection(
                         tint = PassTheme.colors.textHint
                     )
                 },
-                onVaultClicked = onPrimaryVaultClick
+                onVaultClicked = { onEvent(SettingsContentEvent.PrimaryVault) }
             )
         }
         Text(

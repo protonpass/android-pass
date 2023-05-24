@@ -18,8 +18,7 @@ import proton.android.pass.preferences.ThemePreference
 fun PreferencesSection(
     modifier: Modifier = Modifier,
     theme: ThemePreference,
-    onSelectThemeClick: () -> Unit,
-    onClipboardClick: () -> Unit
+    onEvent: (SettingsContentEvent) -> Unit,
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
@@ -34,12 +33,12 @@ fun PreferencesSection(
         SettingOption(
             text = subtitle,
             label = stringResource(R.string.settings_appearance_preference_title),
-            onClick = onSelectThemeClick
+            onClick = { onEvent(SettingsContentEvent.SelectTheme) }
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
         SettingOption(
             text = stringResource(R.string.settings_option_clipboard),
-            onClick = onClipboardClick
+            onClick = { onEvent(SettingsContentEvent.Clipboard) }
         )
     }
 }
@@ -53,8 +52,7 @@ fun PreferencesSectionPreview(
         Surface {
             PreferencesSection(
                 theme = ThemePreference.Dark,
-                onSelectThemeClick = {},
-                onClipboardClick = {}
+                onEvent = {}
             )
         }
     }

@@ -23,7 +23,7 @@ import proton.android.pass.composecomponents.impl.setting.SettingToggle
 fun PrivacySection(
     modifier: Modifier = Modifier,
     useFavicons: Boolean,
-    onUseFaviconsChange: (Boolean) -> Unit
+    onEvent: (SettingsContentEvent) -> Unit
 ) {
     Column(
         modifier = modifier,
@@ -38,7 +38,7 @@ fun PrivacySection(
             SettingToggle(
                 text = stringResource(R.string.settings_use_favicons_preference_title),
                 isChecked = useFavicons,
-                onClick = { onUseFaviconsChange(it) }
+                onClick = { onEvent(SettingsContentEvent.UseFaviconsChange(it)) }
             )
         }
 
@@ -58,7 +58,7 @@ fun UseFaviconsSectionPreview(
         Surface {
             PrivacySection(
                 useFavicons = input.second,
-                onUseFaviconsChange = {}
+                onEvent = {}
             )
         }
     }

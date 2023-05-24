@@ -6,5 +6,5 @@ option java_package = "proton.android.pass.preferences";
 option java_multiple_files = true;
 
 message FeatureFlagsPreferences {
-  BoolFlagPrefProto iap_enabled = 1;
+  BoolFlagPrefProto custom_fields_enabled = 1;
 }

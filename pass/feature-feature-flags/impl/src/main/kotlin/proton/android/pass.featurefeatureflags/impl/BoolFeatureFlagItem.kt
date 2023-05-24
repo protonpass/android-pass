@@ -8,14 +8,14 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import proton.android.pass.preferences.FeatureFlags
+import proton.android.pass.preferences.FeatureFlag
 
 @Composable
 fun BoolFeatureFlagItem(
     modifier: Modifier = Modifier,
-    featureFlag: FeatureFlags,
+    featureFlag: FeatureFlag,
     value: Boolean,
-    onToggle: (FeatureFlags, Boolean) -> Unit
+    onToggle: (FeatureFlag, Boolean) -> Unit
 ) {
     Row(modifier.padding(16.dp)) {
         Column(modifier.weight(1f)) {

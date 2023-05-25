@@ -4,6 +4,7 @@ import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.pass.domain.entity.PackageInfo
 
+const val ITEM_TYPE_UNKNOWN = -1
 const val ITEM_TYPE_LOGIN = 0
 const val ITEM_TYPE_ALIAS = 1
 const val ITEM_TYPE_NOTE = 2
@@ -30,12 +31,16 @@ sealed interface ItemType {
     @Serializable
     object Password : ItemType
 
+    @Serializable
+    object Unknown : ItemType
+
     @Suppress("MagicNumber")
     fun toWeightedInt(): Int = when (this) {
         is Login -> ITEM_TYPE_LOGIN
         is Alias -> ITEM_TYPE_ALIAS
         is Note -> ITEM_TYPE_NOTE
         is Password -> ITEM_TYPE_PASSWORD
+        is Unknown -> ITEM_TYPE_UNKNOWN
     }
 
     companion object // Needed for being able to define static extension functions

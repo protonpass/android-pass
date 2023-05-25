@@ -64,6 +64,7 @@ class ItemDetailViewModel @Inject constructor(
                     is ItemType.Note -> ItemTypeUiState.Note
                     is ItemType.Alias -> ItemTypeUiState.Alias
                     ItemType.Password -> ItemTypeUiState.Password
+                    ItemType.Unknown -> ItemTypeUiState.Unknown
                 },
                 moreInfoUiState = getMoreInfoUiState(result.data),
                 canLoadExternalImages = favicons.value()

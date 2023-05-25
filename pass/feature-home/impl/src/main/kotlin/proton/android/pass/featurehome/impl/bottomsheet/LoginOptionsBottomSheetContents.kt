@@ -118,7 +118,8 @@ fun LoginOptionsBottomSheetContentsPreview(
                         password = "My password",
                         websites = emptyList(),
                         packageInfoSet = emptySet(),
-                        primaryTotp = ""
+                        primaryTotp = "",
+                        customFields = emptyList()
                     ),
                     state = 0,
                     createTime = Clock.System.now(),

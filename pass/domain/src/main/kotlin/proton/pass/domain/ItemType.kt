@@ -11,6 +11,24 @@ const val ITEM_TYPE_NOTE = 2
 const val ITEM_TYPE_PASSWORD = 3
 
 @Serializable
+sealed interface CustomField {
+    val label: String
+
+    @Serializable
+    data class Text(override val label: String, val value: String) : CustomField
+
+    @Serializable
+    data class Hidden(override val label: String, val value: EncryptedString) : CustomField
+
+    @Serializable
+    data class Totp(override val label: String, val value: EncryptedString) : CustomField
+
+    object Unknown : CustomField {
+        override val label: String = "UNKNOWN"
+    }
+}
+
+@Serializable
 sealed interface ItemType {
 
     @Serializable
@@ -20,6 +38,7 @@ sealed interface ItemType {
         val websites: List<String>,
         val packageInfoSet: Set<PackageInfo>,
         val primaryTotp: EncryptedString,
+        val customFields: List<CustomField>
     ) : ItemType
 
     @Serializable

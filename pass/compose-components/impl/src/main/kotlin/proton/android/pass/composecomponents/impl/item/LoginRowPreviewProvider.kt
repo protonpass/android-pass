@@ -59,7 +59,8 @@ class LoginRowPreviewProvider : PreviewParameterProvider<LoginRowParameter> {
                         password = "",
                         websites = websites,
                         packageInfoSet = emptySet(),
-                        primaryTotp = ""
+                        primaryTotp = "",
+                        customFields = emptyList()
                     ),
                     state = 0,
                     createTime = Clock.System.now(),

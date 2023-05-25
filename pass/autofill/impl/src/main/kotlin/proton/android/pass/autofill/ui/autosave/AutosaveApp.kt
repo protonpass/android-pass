@@ -48,15 +48,14 @@ fun AutoSaveApp(
     PassTheme(isDark = isDark) {
         ProvideWindowInsets {
             Scaffold(
-                modifier = modifier,
+                modifier = modifier
+                    .background(PassTheme.colors.backgroundStrong)
+                    .systemBarsPadding()
+                    .imePadding(),
                 snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
             ) { padding ->
                 AutosaveAppContent(
-                    modifier = Modifier
-                        .background(PassTheme.colors.backgroundStrong)
-                        .systemBarsPadding()
-                        .imePadding()
-                        .padding(padding),
+                    modifier = Modifier.padding(padding),
                     arguments = arguments,
                     onNavigate = {
                         if (it == AutosaveNavigation.Success) {

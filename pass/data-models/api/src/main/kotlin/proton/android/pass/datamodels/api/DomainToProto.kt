@@ -1,4 +1,4 @@
-package proton.android.pass.crypto.api.extensions
+package proton.android.pass.datamodels.api
 
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.ItemContents

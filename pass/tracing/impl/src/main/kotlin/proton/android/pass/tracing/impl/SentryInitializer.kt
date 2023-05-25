@@ -25,9 +25,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import io.sentry.SentryLevel
-import io.sentry.SentryOptions
 import io.sentry.android.core.SentryAndroid
 import io.sentry.android.timber.SentryTimberIntegration
+import me.proton.core.usersettings.domain.DeviceSettingsHandler
+import me.proton.core.usersettings.domain.onDeviceSettingsChanged
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.appconfig.api.BuildFlavor.Companion.toValue
 
@@ -40,21 +41,31 @@ class SentryInitializer : Initializer<Unit> {
         )
         val appConfig = entryPoint.appConfig()
 
-        if (appConfig.sentryDSN?.isNotBlank() == true) {
-            SentryAndroid.init(context) { options: SentryOptions ->
-                options.dsn = appConfig.sentryDSN
-                options.release = appConfig.versionName
-                options.environment = appConfig.flavor.toValue()
-                if (!appConfig.isDebug) {
-                    options.addIntegration(
-                        SentryTimberIntegration(
-                            minEventLevel = SentryLevel.ERROR,
-                            minBreadcrumbLevel = SentryLevel.INFO
-                        )
-                    )
+        entryPoint.deviceSettingsHandler()
+            .onDeviceSettingsChanged { settings ->
+                if (settings.isCrashReportEnabled) {
+                    if (appConfig.sentryDSN?.isNotBlank() == true) {
+                        SentryAndroid.init(context) { options ->
+                            options.isDebug = appConfig.isDebug
+                            options.dsn = appConfig.sentryDSN
+                            options.release = appConfig.versionName
+                            options.environment = appConfig.flavor.toValue()
+                            if (!appConfig.isDebug) {
+                                options.addIntegration(
+                                    SentryTimberIntegration(
+                                        minEventLevel = SentryLevel.ERROR,
+                                        minBreadcrumbLevel = SentryLevel.INFO
+                                    )
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    SentryAndroid.init(context) { options ->
+                        options.dsn = ""
+                    }
                 }
             }
-        }
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
@@ -63,5 +74,6 @@ class SentryInitializer : Initializer<Unit> {
     @InstallIn(SingletonComponent::class)
     interface SentryInitializerEntryPoint {
         fun appConfig(): AppConfig
+        fun deviceSettingsHandler(): DeviceSettingsHandler
     }
 }

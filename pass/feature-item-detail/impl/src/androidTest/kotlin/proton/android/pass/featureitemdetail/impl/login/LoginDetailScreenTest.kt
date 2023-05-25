@@ -230,7 +230,6 @@ class LoginDetailScreenTest {
                 urls = urls,
                 packageInfoSet = emptySet(),
                 primaryTotp = primaryTotp,
-                extraTotpSet = emptySet(),
                 customFields = emptyList()
             )
         )

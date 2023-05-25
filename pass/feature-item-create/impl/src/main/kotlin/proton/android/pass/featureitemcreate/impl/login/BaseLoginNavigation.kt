@@ -2,6 +2,7 @@ package proton.android.pass.featureitemcreate.impl.login
 
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
@@ -31,5 +32,8 @@ sealed interface BaseLoginNavigation {
 
     data class SelectVault(
         val shareId: ShareId
+    ) : BaseLoginNavigation
+    data class CustomFieldAdded(
+        val type: CustomFieldType
     ) : BaseLoginNavigation
 }

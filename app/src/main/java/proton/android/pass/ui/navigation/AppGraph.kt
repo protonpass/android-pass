@@ -31,6 +31,7 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.ADD_CUSTOM_FIELD_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
@@ -305,11 +306,13 @@ fun NavGraphBuilder.appGraph(
                 SettingsNavigation.DismissBottomSheet -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }
+
                 SettingsNavigation.ViewLogs -> appNavigator.navigate(LogView)
                 SettingsNavigation.ClipboardSettings -> appNavigator.navigate(ClipboardSettings)
                 SettingsNavigation.ClearClipboardSettings -> dismissBottomSheet {
                     appNavigator.navigate(ClearClipboardOptions)
                 }
+
                 SettingsNavigation.PrimaryVault -> appNavigator.navigate(SelectPrimaryVault)
             }
         }
@@ -366,6 +369,13 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = SelectVaultBottomsheet,
                         route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                    )
+                }
+
+                is BaseLoginNavigation.CustomFieldAdded -> {
+                    appNavigator.navigateUpWithResult(
+                        ADD_CUSTOM_FIELD_NAV_PARAMETER_KEY,
+                        it.type.name
                     )
                 }
             }
@@ -428,6 +438,13 @@ fun NavGraphBuilder.appGraph(
 
                 // We don't allow to select vault from update
                 is BaseLoginNavigation.SelectVault -> {}
+
+                is BaseLoginNavigation.CustomFieldAdded -> {
+                    appNavigator.navigateUpWithResult(
+                        ADD_CUSTOM_FIELD_NAV_PARAMETER_KEY,
+                        it.type.name
+                    )
+                }
             }
         }
     )

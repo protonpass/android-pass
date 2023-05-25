@@ -27,7 +27,7 @@ fun LoginRow(
         var note: AnnotatedString? = null
         val websites: MutableList<AnnotatedString> = mutableListOf()
         if (highlight.isNotBlank()) {
-            val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
+            val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
             val titleMatches = regex.findAll(item.name)
             if (titleMatches.any()) {
                 title = item.name.highlight(titleMatches)

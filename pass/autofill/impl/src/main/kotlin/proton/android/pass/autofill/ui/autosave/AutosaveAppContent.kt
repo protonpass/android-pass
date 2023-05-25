@@ -2,8 +2,6 @@ package proton.android.pass.autofill.ui.autosave
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
@@ -38,10 +36,7 @@ fun AutosaveAppContent(
         bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
     )
     val coroutineScope = rememberCoroutineScope()
-    PassModalBottomSheetLayout(
-        modifier = Modifier.systemBarsPadding().imePadding(),
-        bottomSheetNavigator = appNavigator.bottomSheetNavigator
-    ) {
+    PassModalBottomSheetLayout(bottomSheetNavigator = appNavigator.bottomSheetNavigator) {
         AnimatedNavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
             navController = appNavigator.navController,

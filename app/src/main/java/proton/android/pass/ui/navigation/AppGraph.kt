@@ -318,7 +318,6 @@ fun NavGraphBuilder.appGraph(
         }
     )
     createLoginGraph(
-        getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
         onNavigate = {
             when (it) {
                 BaseLoginNavigation.Close -> appNavigator.onBackClick()
@@ -382,7 +381,6 @@ fun NavGraphBuilder.appGraph(
         }
     )
     updateLoginGraph(
-        getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
         onNavigate = {
             when (it) {
                 BaseLoginNavigation.Close -> appNavigator.onBackClick()

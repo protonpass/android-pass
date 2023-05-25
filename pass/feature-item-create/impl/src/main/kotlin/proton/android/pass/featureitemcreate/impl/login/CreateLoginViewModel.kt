@@ -185,6 +185,7 @@ class CreateLoginViewModel @Inject constructor(
             } else {
                 it.packageInfoSet
             }
+
             it.copy(
                 title = initialContents.title ?: currentValue.title,
                 username = username,

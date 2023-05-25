@@ -45,7 +45,7 @@ fun CreateLoginScreen(
     onNavigate: (BaseLoginNavigation) -> Unit,
     viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
-    OneTimeLaunchedEffect(initialContents) {
+    OneTimeLaunchedEffect(key = initialContents, saver = InitialCreateLoginUiStateSaver) {
         initialContents ?: return@OneTimeLaunchedEffect
         viewModel.setInitialContents(initialContents)
     }

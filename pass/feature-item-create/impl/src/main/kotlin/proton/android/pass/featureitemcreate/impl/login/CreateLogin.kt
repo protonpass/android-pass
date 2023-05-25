@@ -17,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import proton.android.pass.commonui.api.OneTimeLaunchedEffect
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
 import proton.android.pass.composecomponents.impl.form.TitleVaultSelectionSection
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
@@ -44,8 +45,8 @@ fun CreateLoginScreen(
     onNavigate: (BaseLoginNavigation) -> Unit,
     viewModel: CreateLoginViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(initialContents) {
-        initialContents ?: return@LaunchedEffect
+    OneTimeLaunchedEffect(initialContents) {
+        initialContents ?: return@OneTimeLaunchedEffect
         viewModel.setInitialContents(initialContents)
     }
     val uiState by viewModel.createLoginUiState.collectAsStateWithLifecycle()

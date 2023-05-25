@@ -184,7 +184,8 @@ class UpdateLoginViewModel @Inject constructor(
                 note = decrypt(item.note),
                 packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toImmutableSet(),
                 primaryTotp = totp,
-                extraTotpSet = emptySet()
+                extraTotpSet = emptySet(),
+                customFields = emptyList()
             )
         }
 

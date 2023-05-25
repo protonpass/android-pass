@@ -2,6 +2,14 @@ package proton.pass.domain
 
 import proton.pass.domain.entity.PackageInfo
 
+sealed interface CustomFieldContent {
+    val label: String
+
+    data class Text(override val label: String, val value: String) : CustomFieldContent
+    data class Hidden(override val label: String, val value: String) : CustomFieldContent
+    data class Totp(override val label: String, val value: String) : CustomFieldContent
+}
+
 sealed class ItemContents(open val title: String, open val note: String) {
     data class Login(
         override val title: String,
@@ -11,7 +19,7 @@ sealed class ItemContents(open val title: String, open val note: String) {
         val urls: List<String>,
         val packageInfoSet: Set<PackageInfo>,
         val primaryTotp: String,
-        val extraTotpSet: Set<String>
+        val customFields: List<CustomFieldContent>
     ) : ItemContents(title, note)
 
     data class Note(

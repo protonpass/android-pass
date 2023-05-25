@@ -6,6 +6,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.data.api.url.UrlSanitizer
+import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.ItemContents
 
 @Immutable
@@ -17,7 +18,8 @@ data class LoginItem(
     val packageInfoSet: ImmutableSet<PackageInfoUi>,
     val primaryTotp: String,
     val extraTotpSet: Set<String>,
-    val note: String
+    val note: String,
+    val customFields: List<CustomFieldContent>
 ) {
 
     fun validate(): Set<LoginItemValidationErrors> {
@@ -45,7 +47,7 @@ data class LoginItem(
             urls = addresses,
             packageInfoSet = packageInfoSet.map(PackageInfoUi::toPackageInfo).toSet(),
             primaryTotp = primaryTotp,
-            extraTotpSet = extraTotpSet,
+            customFields = customFields
         )
     }
 
@@ -58,7 +60,8 @@ data class LoginItem(
             packageInfoSet = persistentSetOf(),
             primaryTotp = "",
             extraTotpSet = emptySet(),
-            note = ""
+            note = "",
+            customFields = emptyList()
         )
     }
 }

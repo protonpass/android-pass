@@ -23,6 +23,7 @@ dependencies {
     implementation(projects.pass.appConfig.api)
 
     implementation(libs.androidx.startup.runtime)
+    implementation(libs.core.userSettings.domain)
     implementation(libs.sentry)
     implementation(libs.sentry.android.core)
     implementation(libs.sentry.android.timber)

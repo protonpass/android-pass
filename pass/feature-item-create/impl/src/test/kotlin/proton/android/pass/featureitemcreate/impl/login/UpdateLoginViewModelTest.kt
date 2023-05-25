@@ -27,9 +27,6 @@ import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.api.TotpSpec
 import proton.android.pass.totp.fakes.TestTotpManager
 import proton.pass.domain.ItemContents
-import proton.pass.domain.ShareId
-import proton.pass.domain.Vault
-import proton.pass.domain.VaultWithItemCount
 
 class UpdateLoginViewModelTest {
 
@@ -81,7 +78,8 @@ class UpdateLoginViewModelTest {
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = uri,
-                extraTotpSet = emptySet()
+                extraTotpSet = emptySet(),
+                customFields = emptyList()
             )
         )
         totpManager.setParseResult(Result.success(TotpSpec(secret = secret, label = "label")))
@@ -106,7 +104,8 @@ class UpdateLoginViewModelTest {
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = uri,
-                extraTotpSet = emptySet()
+                extraTotpSet = emptySet(),
+                customFields = emptyList()
             )
         )
         getItemById.emitValue(Result.success(item))
@@ -120,15 +119,6 @@ class UpdateLoginViewModelTest {
     companion object {
         private const val SHARE_ID = "shareId"
         private const val ITEM_ID = "itemId"
-
-        fun defaultVault() = VaultWithItemCount(
-            Vault(
-                shareId = ShareId(SHARE_ID),
-                name = "vault",
-                isPrimary = true
-            ),
-            1, 1
-        )
     }
 
 }

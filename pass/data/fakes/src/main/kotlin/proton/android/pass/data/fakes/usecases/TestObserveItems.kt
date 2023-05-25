@@ -104,7 +104,8 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = "",
-                extraTotpSet = emptySet()
+                extraTotpSet = emptySet(),
+                customFields = emptyList()
             )
         )
 

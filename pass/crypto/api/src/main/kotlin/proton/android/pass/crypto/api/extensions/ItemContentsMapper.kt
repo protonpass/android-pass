@@ -1,11 +1,15 @@
 package proton.android.pass.crypto.api.extensions
 
+import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
 import proton_pass_item_v1.extraField
+import proton_pass_item_v1.extraHiddenField
+import proton_pass_item_v1.extraTextField
 import proton_pass_item_v1.extraTotp
 import java.util.UUID
 
+@Suppress("LongMethod")
 fun ItemContents.serializeToProto(itemUuid: String? = null): ItemV1.Item {
     val uuid = itemUuid ?: UUID.randomUUID().toString()
     val builder = ItemV1.Item.newBuilder()
@@ -34,13 +38,42 @@ fun ItemContents.serializeToProto(itemUuid: String? = null): ItemV1.Item {
                     )
                     .build()
             }
-            for (entry in extraTotpSet) {
-                builder.addExtraFields(
-                    extraField {
-                        totp = extraTotp { totpUri = entry }
+
+            for (customField in customFields) {
+                when (customField) {
+                    is CustomFieldContent.Text -> {
+                        builder.addExtraFields(
+                            extraField {
+                                fieldName = customField.label
+                                text = extraTextField {
+                                    content = customField.value
+                                }
+                            }
+                        )
                     }
-                )
+                    is CustomFieldContent.Hidden -> {
+                        builder.addExtraFields(
+                            extraField {
+                                fieldName = customField.label
+                                hidden = extraHiddenField {
+                                    content = customField.value
+                                }
+                            }
+                        )
+                    }
+                    is CustomFieldContent.Totp -> {
+                        builder.addExtraFields(
+                            extraField {
+                                fieldName = customField.label
+                                totp = extraTotp {
+                                    totpUri = customField.value
+                                }
+                            }
+                        )
+                    }
+                }
             }
+
             contentBuilder.setLogin(
                 ItemV1.ItemLogin.newBuilder()
                     .setUsername(username)

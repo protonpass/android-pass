@@ -4,6 +4,7 @@ import kotlinx.datetime.Instant
 import proton.android.pass.common.api.toOption
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.data.impl.db.entities.ItemEntity
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
@@ -34,7 +35,10 @@ fun ItemType.Companion.fromParsed(
             requireNotNull(aliasEmail)
             ItemType.Alias(aliasEmail = aliasEmail)
         }
-        else -> throw Exception("Unknown ItemType")
+        else -> {
+            PassLogger.d("ItemType", "Unknown item type")
+            ItemType.Unknown
+        }
     }
 }
 

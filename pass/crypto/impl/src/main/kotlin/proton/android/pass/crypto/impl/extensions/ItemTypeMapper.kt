@@ -1,6 +1,7 @@
 package proton.android.pass.crypto.impl.extensions
 
 import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.ItemType
 import proton.pass.domain.entity.AppName
 import proton.pass.domain.entity.PackageInfo
@@ -29,6 +30,9 @@ fun ItemType.Companion.fromParsed(
             requireNotNull(aliasEmail)
             ItemType.Alias(aliasEmail = aliasEmail)
         }
-        else -> throw Exception("Unknown ItemType")
+        else -> {
+            PassLogger.d("ItemType", "Unknown item type")
+            ItemType.Unknown
+        }
     }
 }

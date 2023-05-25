@@ -216,6 +216,7 @@ fun HomeScreen(
                             is ItemType.Alias -> AliasIcon()
                             is ItemType.Note -> NoteIcon()
                             is ItemType.Password -> {}
+                            is ItemType.Unknown -> {}
                         }
                     }
                 )
@@ -295,6 +296,7 @@ fun HomeScreen(
                             is ItemType.Login -> currentBottomSheet = LoginOptions
                             is ItemType.Note -> currentBottomSheet = NoteOptions
                             ItemType.Password -> {}
+                            ItemType.Unknown -> {}
                         }
                     }
                     scope.launch { bottomSheetState.show() }

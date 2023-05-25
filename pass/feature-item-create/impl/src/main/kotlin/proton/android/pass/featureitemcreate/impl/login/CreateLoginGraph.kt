@@ -11,6 +11,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.addCustomFieldBottomSheetGraph
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.aliasOptionsBottomSheetGraph
@@ -80,4 +81,5 @@ fun NavGraphBuilder.createLoginGraph(
     }
 
     aliasOptionsBottomSheetGraph(onNavigate)
+    addCustomFieldBottomSheetGraph(onNavigate)
 }

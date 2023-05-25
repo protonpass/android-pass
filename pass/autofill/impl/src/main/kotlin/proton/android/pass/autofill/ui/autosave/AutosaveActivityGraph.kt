@@ -52,7 +52,6 @@ fun NavGraphBuilder.autosaveActivityGraph(
     createLoginGraph(
         initialCreateLoginUiState = getInitialState(arguments),
         showCreateAliasButton = false,
-        getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
         onNavigate = {
             when (it) {
                 BaseLoginNavigation.Close -> onNavigate(AutosaveNavigation.Cancel)

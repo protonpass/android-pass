@@ -12,8 +12,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
 import proton.android.pass.log.api.PassLogger
 
 @OptIn(ExperimentalMaterialNavigationApi::class)
@@ -77,13 +75,6 @@ class AppNavigator(
             ?.set(key, value)
         navController.popBackStack()
     }
-
-    fun <T> navState(key: String, default: T?): StateFlow<T?> = MutableStateFlow(
-        navController.currentBackStackEntry
-            ?.savedStateHandle
-            ?.remove<T>(key)
-            ?: default
-    )
 
     /**
      * If the lifecycle is not resumed it means this NavBackStackEntry already processed a nav event.

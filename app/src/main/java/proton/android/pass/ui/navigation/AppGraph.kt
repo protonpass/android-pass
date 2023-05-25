@@ -533,12 +533,14 @@ fun NavGraphBuilder.appGraph(
                         is ItemType.Note -> EditNote
                         is ItemType.Alias -> EditAlias
                         is ItemType.Password -> null // Edit password does not exist yet
+                        is ItemType.Unknown -> null
                     }
                     val route = when (it.itemType) {
                         is ItemType.Login -> EditLogin.createNavRoute(it.shareId, it.itemId)
                         is ItemType.Note -> EditNote.createNavRoute(it.shareId, it.itemId)
                         is ItemType.Alias -> EditAlias.createNavRoute(it.shareId, it.itemId)
                         is ItemType.Password -> null // Edit password does not exist yet
+                        is ItemType.Unknown -> null
                     }
 
                     if (destination != null && route != null) {

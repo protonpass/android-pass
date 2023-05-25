@@ -470,6 +470,7 @@ class HomeViewModel @Inject constructor(
                     is ItemType.Login -> snackbarDispatcher(LoginMovedToTrash)
                     is ItemType.Note -> snackbarDispatcher(NoteMovedToTrash)
                     ItemType.Password -> {}
+                    ItemType.Unknown -> {}
                 }
             }
             .onFailure {

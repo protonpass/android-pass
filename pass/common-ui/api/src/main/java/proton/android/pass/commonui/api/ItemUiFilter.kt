@@ -28,6 +28,7 @@ object ItemUiFilter {
             is ItemType.Login -> isLoginMatch(itemType, query)
             is ItemType.Note -> isNoteMatch(itemType, query)
             is ItemType.Password -> false
+            is ItemType.Unknown -> false
         }
     }
 

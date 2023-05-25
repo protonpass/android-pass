@@ -34,5 +34,6 @@ internal fun ItemRowContents(
             vaultIcon = vaultIcon
         )
         ItemType.Password -> {}
+        ItemType.Unknown -> {}
     }
 }

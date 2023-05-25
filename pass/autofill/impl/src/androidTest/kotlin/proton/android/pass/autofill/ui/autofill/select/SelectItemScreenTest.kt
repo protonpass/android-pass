@@ -310,7 +310,6 @@ class SelectItemScreenTest {
                     urls = emptyList(),
                     packageInfoSet = emptySet(),
                     primaryTotp = "",
-                    extraTotpSet = emptySet(),
                     customFields = emptyList()
                 )
             )
@@ -329,7 +328,6 @@ class SelectItemScreenTest {
                     urls = emptyList(),
                     packageInfoSet = emptySet(),
                     primaryTotp = "",
-                    extraTotpSet = emptySet(),
                     customFields = emptyList()
                 )
             )

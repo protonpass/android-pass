@@ -85,6 +85,7 @@ dependencies {
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.common.api)
     implementation(projects.pass.data.api)
+    implementation(projects.pass.dataModels.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
     implementation(projects.pass.preferences.api)

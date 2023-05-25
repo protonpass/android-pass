@@ -11,7 +11,7 @@ import proton.android.pass.crypto.api.error.KeyNotFound
 import proton.android.pass.crypto.api.usecases.EncryptedItemRevision
 import proton.android.pass.crypto.api.usecases.OpenItem
 import proton.android.pass.crypto.api.usecases.OpenItemOutput
-import proton.android.pass.crypto.impl.extensions.fromParsed
+import proton.android.pass.datamodels.api.fromParsed
 import proton.pass.domain.Item
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType

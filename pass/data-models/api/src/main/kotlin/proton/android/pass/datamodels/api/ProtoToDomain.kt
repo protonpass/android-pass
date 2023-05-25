@@ -1,7 +1,6 @@
-package proton.android.pass.crypto.impl.extensions
+package proton.android.pass.datamodels.api
 
 import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.CustomField
 import proton.pass.domain.ItemType
 import proton.pass.domain.entity.AppName
@@ -32,10 +31,8 @@ fun ItemType.Companion.fromParsed(
             requireNotNull(aliasEmail)
             ItemType.Alias(aliasEmail = aliasEmail)
         }
-        else -> {
-            PassLogger.d("ItemType", "Unknown item type")
-            ItemType.Unknown
-        }
+        else -> ItemType.Unknown
+
     }
 }
 
@@ -53,9 +50,6 @@ fun ItemV1.ExtraField.toDomain(context: EncryptionContext): CustomField {
             label = this.fieldName,
             value = context.encrypt(this.totp.totpUri)
         )
-        else -> {
-            PassLogger.d("ItemType", "Unknown Custom field")
-            CustomField.Unknown
-        }
+        else -> CustomField.Unknown
     }
 }

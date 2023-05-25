@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     implementation(projects.pass.crypto.api)
+    implementation(projects.pass.dataModels.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
     implementation(projects.pass.protos)

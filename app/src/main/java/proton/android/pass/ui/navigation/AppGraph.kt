@@ -181,7 +181,9 @@ fun NavGraphBuilder.appGraph(
     sortingGraph(
         onNavigateEvent = {
             when (it) {
-                is SortingNavigation.SelectSorting -> dismissBottomSheet {}
+                is SortingNavigation.SelectSorting -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
             }
         }
     )
@@ -285,7 +287,7 @@ fun NavGraphBuilder.appGraph(
         }
     )
     profileGraph(
-        dismissBottomSheet = { dismissBottomSheet({}) },
+        dismissBottomSheet = { dismissBottomSheet { appNavigator.onBackClick() } },
         onNavigateEvent = {
             when (it) {
                 ProfileNavigation.Account -> appNavigator.navigate(Account)

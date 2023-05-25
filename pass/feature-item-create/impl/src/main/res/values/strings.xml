@@ -42,6 +42,12 @@
     <string name="create_login_invalid_totp">The 2FA contents are not valid</string>
     <string name="login_created">Login created</string>
     <string name="bottomsheet_modify_alias_title">Modify alias</string>
+    <string name="bottomsheet_custom_field_type_text">Text</string>
+    <string name="bottomsheet_custom_field_type_text_content_description">Text custom field</string>
+    <string name="bottomsheet_custom_field_type_hidden">Hidden</string>
+    <string name="bottomsheet_custom_field_type_hidden_content_description">Hidden custom field</string>
+    <string name="bottomsheet_custom_field_type_totp">2FA secret (TOTP)</string>
+    <string name="bottomsheet_custom_field_type_totp_content_description">2FA custom field</string>
 
     <!-- Create Note -->
     <string name="title_create_note">Create note</string>

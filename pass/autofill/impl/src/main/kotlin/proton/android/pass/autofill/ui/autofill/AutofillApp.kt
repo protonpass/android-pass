@@ -55,8 +55,7 @@ fun AutofillApp(
                 snackbarHost = { PassSnackbarHost(snackbarHostState = passSnackbarHostState) }
             ) { padding ->
                 AutofillAppContent(
-                    modifier = Modifier
-                        .padding(padding),
+                    modifier = Modifier.padding(padding),
                     autofillAppState = autofillUiState.autofillAppState,
                     selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),
                     isFingerprintRequired = autofillUiState.isFingerprintRequiredPreference,

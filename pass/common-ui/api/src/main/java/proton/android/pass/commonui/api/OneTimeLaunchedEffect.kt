@@ -11,8 +11,8 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun OneTimeLaunchedEffect(key1: Any?, block: suspend CoroutineScope.() -> Unit) {
     var executed by rememberSaveable { mutableStateOf(false) }
-    LaunchedEffect(key1) {
-        if (!executed) {
+    if (!executed) {
+        LaunchedEffect(key1) {
             block()
             executed = true
         }

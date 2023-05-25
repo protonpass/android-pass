@@ -1,12 +1,12 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
-import kotlinx.coroutines.flow.StateFlow
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -15,6 +15,7 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.addCu
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.aliasOptionsBottomSheetGraph
+import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.OptionalNavArgId
@@ -55,11 +56,15 @@ object CreateLogin : NavItem(
 fun NavGraphBuilder.createLoginGraph(
     initialCreateLoginUiState: InitialCreateLoginUiState = InitialCreateLoginUiState(),
     showCreateAliasButton: Boolean = true,
-    getPrimaryTotp: () -> StateFlow<String?>,
     onNavigate: (BaseLoginNavigation) -> Unit
 ) {
     composable(CreateLogin) { navBackStack ->
-        val primaryTotp by getPrimaryTotp().collectAsStateWithLifecycle()
+        val primaryTotp by navBackStack.savedStateHandle
+            .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
+            .collectAsStateWithLifecycle()
+        LaunchedEffect(primaryTotp) {
+            navBackStack.savedStateHandle.remove<String?>(TOTP_NAV_PARAMETER_KEY)
+        }
         val clearAlias by navBackStack.savedStateHandle
             .getStateFlow(CLEAR_ALIAS_NAV_PARAMETER_KEY, false)
             .collectAsStateWithLifecycle()

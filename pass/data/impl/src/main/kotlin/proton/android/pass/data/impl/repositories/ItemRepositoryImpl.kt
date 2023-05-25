@@ -21,7 +21,6 @@ import proton.android.pass.common.api.transpose
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.crypto.api.error.CryptoException
-import proton.android.pass.crypto.api.extensions.serializeToProto
 import proton.android.pass.crypto.api.usecases.CreateItem
 import proton.android.pass.crypto.api.usecases.MigrateItem
 import proton.android.pass.crypto.api.usecases.OpenItem
@@ -55,6 +54,7 @@ import proton.android.pass.data.impl.requests.TrashItemRevision
 import proton.android.pass.data.impl.requests.TrashItemsRequest
 import proton.android.pass.data.impl.responses.ItemRevision
 import proton.android.pass.data.impl.util.TimeUtil
+import proton.android.pass.datamodels.api.serializeToProto
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents

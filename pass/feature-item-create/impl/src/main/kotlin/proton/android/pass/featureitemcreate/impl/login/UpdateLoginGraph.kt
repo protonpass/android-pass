@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
-import kotlinx.coroutines.flow.StateFlow
+import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
@@ -21,16 +21,14 @@ object EditLogin : NavItem(
 }
 
 @Suppress("LongParameterList")
-@OptIn(
-    ExperimentalAnimationApi::class,
-    ExperimentalLifecycleComposeApi::class
-)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalLifecycleComposeApi::class)
 fun NavGraphBuilder.updateLoginGraph(
-    getPrimaryTotp: () -> StateFlow<String?>,
     onNavigate: (BaseLoginNavigation) -> Unit
 ) {
-    composable(EditLogin) {
-        val primaryTotp by getPrimaryTotp().collectAsStateWithLifecycle()
+    composable(EditLogin) { navBackStack ->
+        val primaryTotp by navBackStack.savedStateHandle
+            .getStateFlow<String?>(TOTP_NAV_PARAMETER_KEY, null)
+            .collectAsStateWithLifecycle()
         UpdateLogin(
             draftAlias = null,
             primaryTotp = primaryTotp,

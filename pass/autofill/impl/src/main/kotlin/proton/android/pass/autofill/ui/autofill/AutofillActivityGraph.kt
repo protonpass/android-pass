@@ -114,7 +114,6 @@ fun NavGraphBuilder.autofillActivityGraph(
             aliasItem = null,
             packageInfoUi = autofillAppState.packageInfoUi.takeIf { autofillAppState.webDomain.isEmpty() },
         ),
-        getPrimaryTotp = { appNavigator.navState<String>(TOTP_NAV_PARAMETER_KEY, null) },
         onNavigate = {
             when (it) {
                 BaseLoginNavigation.Close -> appNavigator.onBackClick()

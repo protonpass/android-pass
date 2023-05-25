@@ -5,11 +5,11 @@ import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.None
-import proton.android.pass.crypto.api.context.EncryptionContext
-import proton.android.pass.crypto.api.extensions.serializeToProto
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
+import proton.android.pass.datamodels.api.fromParsed
+import proton.android.pass.datamodels.api.serializeToProto
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
@@ -17,10 +17,6 @@ import proton.pass.domain.ItemState
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
-import proton.pass.domain.entity.AppName
-import proton.pass.domain.entity.PackageInfo
-import proton.pass.domain.entity.PackageName
-import proton_pass_item_v1.ItemV1
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -104,7 +100,6 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = "",
-                extraTotpSet = emptySet(),
                 customFields = emptyList()
             )
         )
@@ -138,33 +133,5 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                 note = note,
             )
         )
-    }
-
-}
-
-// Copy of the snippet from pass/data/impl/src/main/kotlin/proton/android/pass/data/impl/extensions/ItemMapper.kt
-// We should move it to a common place
-@Suppress("TooGenericExceptionThrown")
-fun ItemType.Companion.fromParsed(
-    context: EncryptionContext,
-    parsed: ItemV1.Item,
-    aliasEmail: String? = null
-): ItemType {
-    return when (parsed.content.contentCase) {
-        ItemV1.Content.ContentCase.LOGIN -> ItemType.Login(
-            username = parsed.content.login.username,
-            password = context.encrypt(parsed.content.login.password),
-            websites = parsed.content.login.urlsList,
-            packageInfoSet = parsed.platformSpecific.android.allowedAppsList.map {
-                PackageInfo(PackageName(it.packageName), AppName(it.appName))
-            }.toSet(),
-            primaryTotp = context.encrypt(parsed.content.login.totpUri)
-        )
-        ItemV1.Content.ContentCase.NOTE -> ItemType.Note(parsed.metadata.note)
-        ItemV1.Content.ContentCase.ALIAS -> {
-            requireNotNull(aliasEmail)
-            ItemType.Alias(aliasEmail = aliasEmail)
-        }
-        else -> throw Exception("Unknown ItemType")
     }
 }

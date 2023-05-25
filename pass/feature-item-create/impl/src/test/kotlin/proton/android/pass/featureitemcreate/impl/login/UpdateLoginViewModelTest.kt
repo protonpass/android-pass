@@ -78,7 +78,6 @@ class UpdateLoginViewModelTest {
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = uri,
-                extraTotpSet = emptySet(),
                 customFields = emptyList()
             )
         )
@@ -104,7 +103,6 @@ class UpdateLoginViewModelTest {
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = uri,
-                extraTotpSet = emptySet(),
                 customFields = emptyList()
             )
         )

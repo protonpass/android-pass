@@ -16,6 +16,7 @@ object TestItemType {
             password = password ?: TestUtils.randomString(),
             websites = websites,
             packageInfoSet = packageInfoSet,
-            primaryTotp = TestUtils.randomString()
+            primaryTotp = TestUtils.randomString(),
+            customFields = emptyList()
         )
 }

@@ -13,7 +13,6 @@ import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultCount
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.impl.repositories.PlanRepository
-import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.PlanType
 import javax.inject.Inject
 
@@ -43,10 +42,6 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                     plan.hideUpgrade -> false
                     else -> isUpgradeAvailable && !isPaid
                 }
-                PassLogger.i(TAG, "isUpgradeAvailable: $isUpgradeAvailable")
-                PassLogger.i(TAG, "plan: $plan")
-                PassLogger.i(TAG, "displayUpgrade: $displayUpgrade")
-
                 UpgradeInfo(
                     isUpgradeAvailable = displayUpgrade,
                     plan = plan.copy(
@@ -61,8 +56,4 @@ class ObserveUpgradeInfoImpl @Inject constructor(
             }
         }
         .distinctUntilChanged()
-
-    companion object {
-        private const val TAG = "ObserveUpgradeInfoImpl"
-    }
 }

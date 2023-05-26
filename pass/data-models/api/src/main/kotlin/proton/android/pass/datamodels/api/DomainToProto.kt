@@ -56,7 +56,7 @@ fun ItemContents.serializeToProto(itemUuid: String? = null): ItemV1.Item {
                             extraField {
                                 fieldName = customField.label
                                 hidden = extraHiddenField {
-                                    content = customField.value
+                                    content = customField.value.encrypted
                                 }
                             }
                         )
@@ -66,7 +66,7 @@ fun ItemContents.serializeToProto(itemUuid: String? = null): ItemV1.Item {
                             extraField {
                                 fieldName = customField.label
                                 totp = extraTotp {
-                                    totpUri = customField.value
+                                    totpUri = customField.value.encrypted
                                 }
                             }
                         )

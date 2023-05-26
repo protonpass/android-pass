@@ -32,6 +32,7 @@ import proton.android.pass.data.api.usecases.GetItemById
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpdateItem
+import proton.android.pass.datamodels.api.toContent
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.ItemUpdate
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
@@ -188,7 +189,9 @@ class UpdateLoginViewModel @Inject constructor(
                 packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toImmutableSet(),
                 primaryTotp = totp,
                 extraTotpSet = emptySet(),
-                customFields = emptyList()
+                customFields = itemContents.customFields.mapNotNull {
+                    it.toContent(this@withEncryptionContext)
+                }.toImmutableList()
             )
         }
 

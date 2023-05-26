@@ -190,7 +190,7 @@ class UpdateLoginViewModel @Inject constructor(
                 primaryTotp = totp,
                 extraTotpSet = emptySet(),
                 customFields = itemContents.customFields.mapNotNull {
-                    it.toContent(this@withEncryptionContext)
+                    it.toContent(this@withEncryptionContext, isConcealed = false)
                 }.toImmutableList()
             )
         }

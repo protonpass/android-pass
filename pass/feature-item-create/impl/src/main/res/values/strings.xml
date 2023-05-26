@@ -49,6 +49,15 @@
     <string name="bottomsheet_custom_field_type_totp">2FA secret (TOTP)</string>
     <string name="bottomsheet_custom_field_type_totp_content_description">2FA custom field</string>
 
+    <string name="create_login_add_custom_field_button">Add more</string>
+    <string name="create_login_add_custom_field_button_content_description">Add more fields icon</string>
+    <string name="custom_field_hidden_placeholder">Your hidden content</string>
+    <string name="custom_field_hidden_icon_content_description">Hidden custom field icon</string>
+    <string name="custom_field_text_placeholder">Your content</string>
+    <string name="custom_field_text_icon_content_description">Text custom field icon</string>
+    <string name="custom_field_totp_placeholder">@string/bottomsheet_custom_field_type_totp</string>
+    <string name="custom_field_totp_icon_content_description">2FA custom field icon</string>
+
     <!-- Create Note -->
     <string name="title_create_note">Create note</string>
 

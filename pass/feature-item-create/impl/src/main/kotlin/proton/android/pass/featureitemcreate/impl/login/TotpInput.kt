@@ -24,6 +24,7 @@ import proton.android.pass.featureitemcreate.impl.R
 internal fun TotpInput(
     modifier: Modifier = Modifier,
     value: String,
+    label: String = stringResource(R.string.totp_create_login_field_title),
     enabled: Boolean,
     isError: Boolean,
     onTotpChanged: (String) -> Unit,
@@ -39,12 +40,7 @@ internal fun TotpInput(
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm,
         onFocusChange = onFocus,
-        label = {
-            ProtonTextFieldLabel(
-                text = stringResource(R.string.totp_create_login_field_title),
-                isError = isError
-            )
-        },
+        label = { ProtonTextFieldLabel(text = label, isError = isError) },
         placeholder = {
             ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.totp_create_login_field_placeholder))
         },

@@ -76,6 +76,7 @@ dependencies {
     implementation(projects.pass.navigation.api)
     implementation(projects.pass.notifications.api)
     implementation(projects.pass.password.api)
+    implementation(projects.pass.preferences.api)
     implementation(projects.pass.telemetry.api)
     implementation(projects.pass.totp.api)
 

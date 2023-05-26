@@ -109,6 +109,7 @@ internal fun LoginContent(
             modifier = Modifier.padding(padding),
             loginItem = uiState.loginItem,
             totpUiState = uiState.totpUiState,
+            customFieldsState = uiState.customFieldsState,
             showCreateAliasButton = showCreateAliasButton,
             canUpdateUsername = uiState.canUpdateUsername,
             primaryEmail = uiState.primaryEmail,

@@ -43,7 +43,10 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.totp.api.TotpManager
+import proton.pass.domain.PlanType
 
 abstract class BaseLoginViewModel(
     protected val accountManager: AccountManager,
@@ -53,7 +56,8 @@ abstract class BaseLoginViewModel(
     private val draftRepository: DraftRepository,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    encryptionContextProvider: EncryptionContextProvider
+    encryptionContextProvider: EncryptionContextProvider,
+    ffRepo: FeatureFlagsPreferencesRepository,
 ) : ViewModel() {
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -160,9 +164,30 @@ abstract class BaseLoginViewModel(
         focusLastWebsiteState,
         hasUserEditedContentFlow,
         totpUiStateFlow,
-        upgradeInfoFlow.asLoadingResult()
+        upgradeInfoFlow.asLoadingResult(),
+        ffRepo.get<Boolean>(FeatureFlag.CUSTOM_FIELDS_ENABLED)
     ) { loginItemWrapper, isLoading, events,
-        focusLastWebsite, hasUserEditedContent, totpUiState, upgradeInfoResult ->
+        focusLastWebsite, hasUserEditedContent,
+        totpUiState, upgradeInfoResult, customFieldsEnabled ->
+
+        val customFieldsState = if (!customFieldsEnabled) {
+            CustomFieldsState.Disabled
+        } else {
+            val plan = upgradeInfoResult.getOrNull()?.plan
+            when (plan?.planType) {
+                is PlanType.Paid, is PlanType.Trial -> {
+                    CustomFieldsState.Enabled(loginItemWrapper.loginItem.customFields)
+                }
+                else -> {
+                    if (loginItemWrapper.loginItem.customFields.isNotEmpty()) {
+                        CustomFieldsState.Limited
+                    } else {
+                        CustomFieldsState.Disabled
+                    }
+                }
+            }
+        }
+
         BaseLoginUiState(
             loginItem = loginItemWrapper.loginItem,
             validationErrors = loginItemWrapper.loginItemValidationErrors,
@@ -175,7 +200,8 @@ abstract class BaseLoginViewModel(
             aliasItem = loginItemWrapper.aliasItem.value(),
             hasUserEditedContent = hasUserEditedContent,
             hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false,
-            totpUiState = totpUiState
+            totpUiState = totpUiState,
+            customFieldsState = customFieldsState
         )
     }
         .stateIn(

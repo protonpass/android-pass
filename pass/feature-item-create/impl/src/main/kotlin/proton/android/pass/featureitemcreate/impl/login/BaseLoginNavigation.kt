@@ -33,6 +33,8 @@ sealed interface BaseLoginNavigation {
     data class SelectVault(
         val shareId: ShareId
     ) : BaseLoginNavigation
+
+    object AddCustomField : BaseLoginNavigation
     data class CustomFieldAdded(
         val type: CustomFieldType
     ) : BaseLoginNavigation

@@ -30,6 +30,7 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.ADD_CUSTOM_FIELD_NAV_PARAMETER_KEY
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
@@ -172,6 +173,11 @@ fun NavGraphBuilder.autofillActivityGraph(
                         route = SelectVaultBottomsheet.createNavRoute(it.shareId)
                     )
                 }
+
+                BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
+                    destination = AddCustomFieldBottomSheet
+                )
+
 
                 is BaseLoginNavigation.CustomFieldAdded -> {
                     appNavigator.navigateUpWithResult(

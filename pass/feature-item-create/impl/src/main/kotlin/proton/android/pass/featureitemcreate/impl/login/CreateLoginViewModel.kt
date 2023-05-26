@@ -44,6 +44,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.It
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
@@ -67,6 +68,7 @@ class CreateLoginViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandle,
+    ffRepo: FeatureFlagsPreferencesRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -75,7 +77,8 @@ class CreateLoginViewModel @Inject constructor(
     observeCurrentUser = observeCurrentUser,
     observeUpgradeInfo = observeUpgradeInfo,
     draftRepository = draftRepository,
-    encryptionContextProvider = encryptionContextProvider
+    encryptionContextProvider = encryptionContextProvider,
+    ffRepo = ffRepo
 ) {
     private val navShareId: Option<ShareId> =
         savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)

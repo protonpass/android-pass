@@ -1,5 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.login
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
@@ -30,6 +31,10 @@ import proton.android.pass.featureitemcreate.impl.R
 internal fun PasswordInput(
     modifier: Modifier = Modifier,
     value: String,
+    label: String = stringResource(id = R.string.field_password_title),
+    placeholder: String = stringResource(id = R.string.field_password_hint),
+    @DrawableRes icon: Int = me.proton.core.presentation.R.drawable.ic_proton_key,
+    iconContentDescription: String = "",
     isEditAllowed: Boolean,
     onChange: (String) -> Unit,
     onFocus: (Boolean) -> Unit
@@ -48,12 +53,12 @@ internal fun PasswordInput(
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
         onChange = onChange,
-        label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_password_title)) },
-        placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_password_hint)) },
+        label = { ProtonTextFieldLabel(text = label) },
+        placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) },
         leadingIcon = {
             Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
-                contentDescription = "",
+                painter = painterResource(icon),
+                contentDescription = iconContentDescription,
                 tint = ProtonTheme.colors.iconWeak
             )
         },

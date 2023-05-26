@@ -30,6 +30,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasOptionsUiModel
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 import proton.android.pass.featureitemcreate.impl.alias.SelectedAliasMailboxUiModel
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
@@ -82,7 +83,8 @@ internal class CreateLoginViewModelTest {
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },
             telemetryManager = telemetryManager,
             draftRepository = TestDraftRepository(),
-            observeUpgradeInfo = observeUpgradeInfo
+            observeUpgradeInfo = observeUpgradeInfo,
+            ffRepo = TestFeatureFlagsPreferenceRepository()
         )
     }
 
@@ -105,7 +107,8 @@ internal class CreateLoginViewModelTest {
                             ),
                             BaseLoginUiState.Initial.copy(
                                 validationErrors = setOf(LoginItemValidationErrors.BlankTitle),
-                                totpUiState = TotpUiState.Success
+                                totpUiState = TotpUiState.Success,
+                                customFieldsState = CustomFieldsState.Disabled,
                             )
                         )
                     )
@@ -137,7 +140,8 @@ internal class CreateLoginViewModelTest {
                             loginItem = LoginItem.Empty.copy(title = titleInput),
                             isLoadingState = IsLoadingState.NotLoading,
                             hasUserEditedContent = true,
-                            totpUiState = TotpUiState.Success
+                            totpUiState = TotpUiState.Success,
+                            customFieldsState = CustomFieldsState.Disabled,
                         )
                     )
                 )
@@ -152,7 +156,8 @@ internal class CreateLoginViewModelTest {
                             loginItem = LoginItem.Empty.copy(title = titleInput),
                             isLoadingState = IsLoadingState.Loading,
                             hasUserEditedContent = true,
-                            totpUiState = TotpUiState.Success
+                            totpUiState = TotpUiState.Success,
+                            customFieldsState = CustomFieldsState.Disabled,
                         )
                     )
                 )
@@ -181,7 +186,8 @@ internal class CreateLoginViewModelTest {
                                     lastAutofillTime = item.lastAutofillTime.value()
                                 )
                             ),
-                            totpUiState = TotpUiState.Success
+                            totpUiState = TotpUiState.Success,
+                            customFieldsState = CustomFieldsState.Disabled
                         )
                     )
                 )
@@ -234,7 +240,8 @@ internal class CreateLoginViewModelTest {
                                 password = initialContents.password!!,
                                 websiteAddresses = listOf(initialContents.url!!)
                             ),
-                            totpUiState = TotpUiState.Success
+                            totpUiState = TotpUiState.Success,
+                            customFieldsState = CustomFieldsState.Disabled,
                         )
                     )
                 )

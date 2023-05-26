@@ -14,6 +14,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
+import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
@@ -41,7 +42,8 @@ internal class BaseLoginViewModelTest {
             draftRepository = TestDraftRepository(),
             observeCurrentUser = observeCurrentUser,
             observeUpgradeInfo = TestObserveUpgradeInfo(),
-            encryptionContextProvider = TestEncryptionContextProvider()
+            encryptionContextProvider = TestEncryptionContextProvider(),
+            ffRepo = TestFeatureFlagsPreferenceRepository()
         ) {}
     }
 
@@ -50,7 +52,8 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem()).isEqualTo(
                 Initial.copy(
-                    totpUiState = TotpUiState.Success
+                    totpUiState = TotpUiState.Success,
+                    customFieldsState = CustomFieldsState.Disabled,
                 )
             )
         }

@@ -1,6 +1,7 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.ImmutableSet
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentSetOf
@@ -19,7 +20,7 @@ data class LoginItem(
     val primaryTotp: String,
     val extraTotpSet: Set<String>,
     val note: String,
-    val customFields: List<CustomFieldContent>
+    val customFields: ImmutableList<CustomFieldContent>
 ) {
 
     fun validate(): Set<LoginItemValidationErrors> {
@@ -61,7 +62,7 @@ data class LoginItem(
             primaryTotp = "",
             extraTotpSet = emptySet(),
             note = "",
-            customFields = emptyList()
+            customFields = persistentListOf()
         )
     }
 }

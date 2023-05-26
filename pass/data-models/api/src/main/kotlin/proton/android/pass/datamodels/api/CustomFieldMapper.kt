@@ -3,12 +3,20 @@ package proton.android.pass.datamodels.api
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.pass.domain.CustomField
 import proton.pass.domain.CustomFieldContent
+import proton.pass.domain.HiddenState
 
-fun CustomField.toContent(encryptionContext: EncryptionContext): CustomFieldContent? = when (this) {
+fun CustomField.toContent(
+    encryptionContext: EncryptionContext,
+    isConcealed: Boolean
+): CustomFieldContent? = when (this) {
     CustomField.Unknown -> null
     is CustomField.Hidden -> {
-        val decryptedValue = encryptionContext.decrypt(this.value)
-        CustomFieldContent.Hidden(label = this.label, value = decryptedValue)
+        val value = if (isConcealed) {
+            HiddenState.Concealed(this.value)
+        } else {
+            HiddenState.Revealed(this.value, encryptionContext.decrypt(this.value))
+        }
+        CustomFieldContent.Hidden(label = this.label, value = value)
     }
 
     is CustomField.Text -> {
@@ -16,7 +24,11 @@ fun CustomField.toContent(encryptionContext: EncryptionContext): CustomFieldCont
     }
 
     is CustomField.Totp -> {
-        val decryptedValue = encryptionContext.decrypt(this.value)
-        CustomFieldContent.Totp(label = this.label, value = decryptedValue)
+        val value = if (isConcealed) {
+            HiddenState.Concealed(this.value)
+        } else {
+            HiddenState.Revealed(this.value, encryptionContext.decrypt(this.value))
+        }
+        CustomFieldContent.Totp(label = this.label, value = value)
     }
 }

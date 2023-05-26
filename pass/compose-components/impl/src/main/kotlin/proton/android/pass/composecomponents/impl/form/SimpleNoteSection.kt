@@ -1,5 +1,6 @@
 package proton.android.pass.composecomponents.impl.form
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
@@ -23,6 +24,10 @@ import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 fun SimpleNoteSection(
     modifier: Modifier = Modifier,
     value: String,
+    label: String = stringResource(id = R.string.field_note_title),
+    placeholder: String = stringResource(id = R.string.field_note_hint),
+    @DrawableRes icon: Int = me.proton.core.presentation.R.drawable.ic_proton_note,
+    iconContentDescription: String = "",
     enabled: Boolean = true,
     onChange: (String) -> Unit
 ) {
@@ -31,8 +36,8 @@ fun SimpleNoteSection(
             .roundedContainerNorm()
             .padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
         textStyle = ProtonTheme.typography.defaultNorm(enabled),
-        label = { ProtonTextFieldLabel(text = stringResource(id = R.string.field_note_title)) },
-        placeholder = { ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.field_note_hint)) },
+        label = { ProtonTextFieldLabel(text = label) },
+        placeholder = { ProtonTextFieldPlaceHolder(text = placeholder) },
         editable = enabled,
         value = value,
         onChange = onChange,
@@ -40,8 +45,8 @@ fun SimpleNoteSection(
         moveToNextOnEnter = false,
         leadingIcon = {
             Icon(
-                painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_note),
-                contentDescription = null,
+                painter = painterResource(icon),
+                contentDescription = iconContentDescription,
                 tint = PassTheme.colors.textWeak
             )
         },

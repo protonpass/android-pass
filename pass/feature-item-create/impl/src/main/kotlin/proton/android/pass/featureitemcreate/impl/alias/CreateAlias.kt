@@ -89,7 +89,7 @@ fun CreateAliasScreen(
     ) {
         AliasContent(
             uiState = uiState.baseAliasUiState,
-            selectedShareId = null,
+            selectedShareId = selectedVault?.vault?.shareId,
             topBarActionName = stringResource(id = R.string.title_create_alias),
             isCreateMode = true,
             isEditAllowed = uiState.baseAliasUiState.isLoadingState == IsLoadingState.NotLoading,

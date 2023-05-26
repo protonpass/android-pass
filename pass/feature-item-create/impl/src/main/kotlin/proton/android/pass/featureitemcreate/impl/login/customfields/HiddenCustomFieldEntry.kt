@@ -11,6 +11,7 @@ import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.login.PasswordInput
 import proton.pass.domain.CustomFieldContent
+import proton.pass.domain.HiddenState
 import me.proton.core.presentation.R as CoreR
 
 @Composable
@@ -20,10 +21,14 @@ fun HiddenCustomFieldEntry(
     canEdit: Boolean,
     onChange: (String) -> Unit
 ) {
+    val value = when (val state = content.value) {
+        is HiddenState.Concealed -> ""
+        is HiddenState.Revealed -> state.clearText
+    }
     PasswordInput(
         modifier = modifier,
         label = content.label,
-        value = content.value,
+        value = value,
         icon = CoreR.drawable.ic_proton_lock,
         placeholder = stringResource(R.string.custom_field_hidden_placeholder),
         iconContentDescription = stringResource(R.string.custom_field_hidden_icon_content_description),
@@ -43,7 +48,7 @@ fun HiddenCustomFieldEntryPreview(
             HiddenCustomFieldEntry(
                 content = CustomFieldContent.Hidden(
                     label = "label",
-                    value = "value"
+                    value = HiddenState.Revealed("", "value")
                 ),
                 canEdit = input.second,
                 onChange = {}

@@ -9,6 +9,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.featureitemcreate.impl.login.TotpInput
 import proton.pass.domain.CustomFieldContent
+import proton.pass.domain.HiddenState
 
 @Composable
 fun TotpCustomFieldEntry(
@@ -17,9 +18,13 @@ fun TotpCustomFieldEntry(
     canEdit: Boolean,
     onChange: (String) -> Unit
 ) {
+    val value = when (val state = content.value) {
+        is HiddenState.Concealed -> ""
+        is HiddenState.Revealed -> state.clearText
+    }
     TotpInput(
         modifier = modifier,
-        value = content.value,
+        value = value,
         enabled = canEdit,
         isError = false,
         onTotpChanged = onChange,
@@ -37,7 +42,7 @@ fun TotpCustomFieldEntryPreview(
             TotpCustomFieldEntry(
                 content = CustomFieldContent.Totp(
                     label = "label",
-                    value = "value"
+                    value = HiddenState.Revealed("", "value")
                 ),
                 canEdit = input.second,
                 onChange = {}

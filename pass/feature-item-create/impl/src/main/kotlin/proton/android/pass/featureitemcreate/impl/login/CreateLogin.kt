@@ -123,12 +123,14 @@ fun CreateLoginScreen(
                     is LoginContentEvent.OnTotpChange -> viewModel.onTotpChange(it.totp)
                     LoginContentEvent.PasteTotp -> viewModel.onPasteTotp()
                     is LoginContentEvent.OnCustomFieldEvent -> {} // To be done
+                    is LoginContentEvent.OnFocusChange ->
+                        viewModel.onFocusChange(it.field, it.isFocused)
                 }
             },
             onNavigate = onNavigate,
             titleSection = {
                 TitleVaultSelectionSection(
-                    titleValue = uiState.baseLoginUiState.loginItem.title,
+                    titleValue = uiState.baseLoginUiState.contents.title,
                     showVaultSelector = showVaultSelector,
                     onTitleChanged = viewModel::onTitleChange,
                     onTitleRequiredError = uiState.baseLoginUiState.validationErrors.contains(

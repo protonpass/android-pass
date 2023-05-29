@@ -29,6 +29,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
@@ -216,7 +217,7 @@ class LoginDetailViewModel @Inject constructor(
 
     fun copyPasswordToClipboard() = viewModelScope.launch(coroutineExceptionHandler) {
         val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
-        val itemType = state.itemUiModel.itemType as? ItemType.Login ?: return@launch
+        val itemType = state.itemUiModel.contents as? ItemType.Login ?: return@launch
         val text = when (val password = passwordState.value) {
             is PasswordState.Revealed -> password.clearText
             is PasswordState.Concealed -> encryptionContextProvider.withEncryptionContext {
@@ -229,7 +230,7 @@ class LoginDetailViewModel @Inject constructor(
 
     fun copyUsernameToClipboard() = viewModelScope.launch {
         val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
-        val itemType = state.itemUiModel.itemType as? ItemType.Login ?: return@launch
+        val itemType = state.itemUiModel.contents as? ItemType.Login ?: return@launch
         clipboardManager.copyToClipboard(itemType.username)
         snackbarDispatcher(UsernameCopiedToClipboard)
     }
@@ -246,7 +247,7 @@ class LoginDetailViewModel @Inject constructor(
 
     fun togglePassword() = viewModelScope.launch(coroutineExceptionHandler) {
         val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
-        val itemType = state.itemUiModel.itemType as? ItemType.Login ?: return@launch
+        val itemType = state.itemUiModel.contents as? ItemType.Login ?: return@launch
 
         when (passwordState.value) {
             is PasswordState.Concealed ->
@@ -276,13 +277,13 @@ class LoginDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    fun onPermanentlyDelete(shareId: ShareId, itemId: ItemId, itemType: ItemType) =
+    fun onPermanentlyDelete(itemUiModel: ItemUiModel) =
         viewModelScope.launch {
             isLoadingState.update { IsLoadingState.Loading }
             runCatching {
-                deleteItem(shareId = shareId, itemId = itemId)
+                deleteItem(shareId = itemUiModel.shareId, itemId = itemUiModel.id)
             }.onSuccess {
-                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemType)))
+                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
                 isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
                 snackbarDispatcher(ItemPermanentlyDeleted)
                 PassLogger.i(TAG, "Item deleted successfully")

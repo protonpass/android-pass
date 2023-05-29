@@ -23,8 +23,8 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.featurehome.impl.R
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 @ExperimentalMaterialApi
@@ -38,12 +38,12 @@ fun NoteOptionsBottomSheetContents(
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
-    val itemType = itemUiModel.itemType as ItemType.Note
+    val contents = itemUiModel.contents as ItemContents.Note
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
-            title = { BottomSheetItemTitle(text = itemUiModel.name) },
+            title = { BottomSheetItemTitle(text = contents.title) },
             subtitle = {
-                val processedText = itemType.text.replace("\n", " ")
+                val processedText = contents.note.replace("\n", " ")
                 BottomSheetItemSubtitle(
                     text = processedText
                 )
@@ -51,7 +51,7 @@ fun NoteOptionsBottomSheetContents(
             leftIcon = { NoteIcon() }
         )
         val list = mutableListOf(
-            copyNote(itemType.text, onCopyNote),
+            copyNote(contents.note, onCopyNote),
             edit(itemUiModel, onEdit),
             moveToTrash(itemUiModel, onMoveToTrash)
         )
@@ -92,9 +92,10 @@ fun NoteOptionsBottomSheetContentsPreview(
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
-                    name = "My Note",
-                    note = "Note content",
-                    itemType = ItemType.Note("My note text"),
+                    contents = ItemContents.Note(
+                        "My Note",
+                        "My note text"
+                    ),
                     state = 0,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),

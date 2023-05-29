@@ -5,22 +5,18 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.composable
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 private const val TRANSITION_TIME_MILLIS = 500
 private const val FADE_DELAY_TIME_MILLIS = 100
 
 sealed interface ItemDetailNavigation {
-    data class OnEdit(
-        val shareId: ShareId,
-        val itemId: ItemId,
-        val itemType: ItemType
-    ) : ItemDetailNavigation
+    data class OnEdit(val itemUiModel: ItemUiModel) : ItemDetailNavigation
 
     data class OnMigrate(
         val shareId: ShareId,

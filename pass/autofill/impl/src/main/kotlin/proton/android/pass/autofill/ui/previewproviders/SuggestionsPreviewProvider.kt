@@ -3,8 +3,9 @@ package proton.android.pass.autofill.ui.previewproviders
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.pass.domain.HiddenState
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
@@ -39,14 +40,14 @@ class SuggestionsPreviewProvider : PreviewParameterProvider<SuggestionsInput> {
         ItemUiModel(
             id = ItemId(name),
             shareId = ShareId(name),
-            name = name,
-            note = "",
-            itemType = ItemType.Login(
+            contents = ItemContents.Login(
+                title = name,
+                note = "",
                 username = username,
-                password = "",
-                websites = emptyList(),
+                password = HiddenState.Concealed(""),
+                urls = emptyList(),
                 packageInfoSet = emptySet(),
-                primaryTotp = "",
+                primaryTotp = HiddenState.Concealed(""),
                 customFields = emptyList()
             ),
             state = 0,

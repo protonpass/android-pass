@@ -1,5 +1,6 @@
 package proton.pass.domain
 
+import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.pass.domain.entity.PackageInfo
 
@@ -11,34 +12,67 @@ sealed interface CustomFieldContent {
     data class Totp(override val label: String, val value: HiddenState) : CustomFieldContent
 }
 
-sealed class HiddenState(open val encrypted: EncryptedString) {
-    data class Concealed(override val encrypted: EncryptedString) : HiddenState(encrypted)
+@Serializable
+sealed class HiddenState {
+    abstract val encrypted: EncryptedString
 
+    @Serializable
+    data class Concealed(override val encrypted: EncryptedString) : HiddenState()
+
+    @Serializable
     data class Revealed(
         override val encrypted: EncryptedString,
         val clearText: String
-    ) : HiddenState(encrypted)
+    ) : HiddenState()
 }
 
-sealed class ItemContents(open val title: String, open val note: String) {
+@Serializable
+sealed class ItemContents {
+    abstract val title: String
+    abstract val note: String
+
+    @Serializable
     data class Login(
         override val title: String,
         override val note: String,
         val username: String,
-        val password: String,
+        val password: HiddenState,
         val urls: List<String>,
         val packageInfoSet: Set<PackageInfo>,
-        val primaryTotp: String,
+        val primaryTotp: HiddenState,
         val customFields: List<CustomFieldContent>
-    ) : ItemContents(title, note)
+    ) : ItemContents() {
+        companion object {
+            val Empty = Login(
+                title = "",
+                username = "",
+                password = HiddenState.Concealed(""),
+                urls = emptyList(),
+                packageInfoSet = emptySet(),
+                primaryTotp = HiddenState.Concealed(""),
+                note = "",
+                customFields = emptyList()
+            )
+        }
+    }
 
+    @Serializable
     data class Note(
         override val title: String,
         override val note: String
-    ) : ItemContents(title, note)
+    ) : ItemContents()
 
+    @Serializable
     data class Alias(
         override val title: String,
+        override val note: String,
+        val aliasEmail: String
+    ) : ItemContents()
+
+    @Serializable
+    data class Unknown(
+        override val title: String,
         override val note: String
-    ) : ItemContents(title, note)
+    ) : ItemContents()
+
 }

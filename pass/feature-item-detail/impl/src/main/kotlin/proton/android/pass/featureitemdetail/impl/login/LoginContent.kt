@@ -15,7 +15,7 @@ import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
-import proton.pass.domain.ItemType
+import proton.pass.domain.ItemContents
 import proton.pass.domain.Vault
 
 @Composable
@@ -37,21 +37,21 @@ fun LoginContent(
     onCopyTotpClick: (String) -> Unit,
     onUpgradeClick: () -> Unit
 ) {
-    val itemType = itemUiModel.itemType as ItemType.Login
+    val contents = itemUiModel.contents as ItemContents.Login
     Column(
         modifier = modifier.padding(horizontal = 16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         LoginTitle(
             modifier = Modifier.padding(0.dp, 12.dp),
-            title = itemUiModel.name,
+            title = itemUiModel.contents.title,
             vault = vault,
-            website = itemType.websites.firstOrNull(),
-            packageName = itemType.packageInfoSet.minByOrNull { it.packageName.value }?.packageName?.value,
+            website = contents.urls.firstOrNull(),
+            packageName = contents.packageInfoSet.minByOrNull { it.packageName.value }?.packageName?.value,
             canLoadExternalImages = canLoadExternalImages
         )
         MainLoginSection(
-            username = itemType.username,
+            username = contents.username,
             passwordState = passwordState,
             totpUiState = totpUiState,
             showViewAlias = showViewAlias,
@@ -63,16 +63,16 @@ fun LoginContent(
             onUpgradeClick = onUpgradeClick
         )
         WebsiteSection(
-            websites = itemType.websites.toPersistentList(),
+            websites = contents.urls.toPersistentList(),
             onWebsiteClicked = onWebsiteClicked,
             onWebsiteLongClicked = onWebsiteLongClicked
         )
         NoteSection(
-            text = itemUiModel.note,
+            text = itemUiModel.contents.note,
             accentColor = PassTheme.colors.loginInteractionNorm
         )
         LinkedAppsListSection(
-            packageInfoUiSet = itemType.packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet(),
+            packageInfoUiSet = contents.packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet(),
             isEditable = false,
             onLinkedAppDelete = {}
         )

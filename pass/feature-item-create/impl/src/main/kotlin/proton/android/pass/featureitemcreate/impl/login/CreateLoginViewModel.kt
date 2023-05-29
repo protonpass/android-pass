@@ -48,6 +48,7 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
+import proton.pass.domain.HiddenState
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
 import proton.pass.domain.entity.NewAlias
@@ -155,8 +156,8 @@ class CreateLoginViewModel @Inject constructor(
     @Suppress("ComplexMethod")
     fun setInitialContents(initialContents: InitialCreateLoginUiState) {
 
-        val currentValue = loginItemState.value
-        val websites = currentValue.websiteAddresses.toMutableList()
+        val currentValue = itemContentState.value
+        val websites = currentValue.urls.toMutableList()
 
         if (initialContents.url != null) {
             // Check if we are in the initial state, and if so, clear the list
@@ -180,22 +181,32 @@ class CreateLoginViewModel @Inject constructor(
             canUpdateUsernameState.update { false }
         }
 
-        loginItemState.update {
+        itemContentState.update {
             val packageInfoSet = if (initialContents.packageInfoUi != null) {
                 it.packageInfoSet.toMutableSet()
-                    .apply { add(initialContents.packageInfoUi) }
+                    .apply { add(initialContents.packageInfoUi.toPackageInfo()) }
                     .toImmutableSet()
             } else {
                 it.packageInfoSet
             }
 
+            val password = initialContents.password
+                ?.let { encrypted -> HiddenState.Concealed(encrypted) }
+                ?: currentValue.password
+            val primaryTotp = initialContents.primaryTotp
+                ?.let { encrypted ->
+                    val decrypted =
+                        encryptionContextProvider.withEncryptionContext { decrypt(encrypted) }
+                    HiddenState.Revealed(encrypted, decrypted)
+                }
+                ?: currentValue.primaryTotp
             it.copy(
                 title = initialContents.title ?: currentValue.title,
                 username = username,
-                password = initialContents.password ?: currentValue.password,
-                websiteAddresses = websites,
+                password = password,
+                urls = websites,
                 packageInfoSet = packageInfoSet,
-                primaryTotp = initialContents.primaryTotp ?: currentValue.primaryTotp
+                primaryTotp = primaryTotp
             )
         }
     }
@@ -243,7 +254,7 @@ class CreateLoginViewModel @Inject constructor(
             createItemAndAlias(
                 userId = userId,
                 shareId = shareId,
-                itemContents = loginItemState.value.toItemContents(),
+                itemContents = itemContentState.value,
                 newAlias = NewAlias(
                     title = aliasItem.title,
                     note = aliasItem.note,
@@ -289,7 +300,7 @@ class CreateLoginViewModel @Inject constructor(
             createItem(
                 userId = userId,
                 shareId = shareId,
-                itemContents = loginItemState.value.toItemContents()
+                itemContents = itemContentState.value
             )
         }.onSuccess { item ->
             isItemSavedState.update {

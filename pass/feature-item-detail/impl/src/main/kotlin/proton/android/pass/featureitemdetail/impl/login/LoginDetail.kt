@@ -37,8 +37,8 @@ import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetTy
 import proton.android.pass.featureitemdetail.impl.login.bottomsheet.WebsiteOptionsBottomSheetContents
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemState
-import proton.pass.domain.ItemType
 
 @OptIn(
     ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class,
@@ -122,8 +122,8 @@ fun LoginDetail(
                                 },
                                 icon = {
                                     LoginIcon(
-                                        text = state.itemUiModel.name,
-                                        itemType = state.itemUiModel.itemType as ItemType.Login,
+                                        text = state.itemUiModel.contents.title,
+                                        content = state.itemUiModel.contents as ItemContents.Login,
                                         canLoadExternalImages = canLoadExternalImages
                                     )
                                 }
@@ -142,15 +142,7 @@ fun LoginDetail(
                             iconColor = PassTheme.colors.loginInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
-                            onEditClick = {
-                                onNavigate(
-                                    ItemDetailNavigation.OnEdit(
-                                        shareId = state.itemUiModel.shareId,
-                                        itemId = state.itemUiModel.id,
-                                        itemType = state.itemUiModel.itemType
-                                    )
-                                )
-                            },
+                            onEditClick = { onNavigate(ItemDetailNavigation.OnEdit(state.itemUiModel)) },
                             onOptionsClick = {
                                 currentBottomSheet = TopBarOptions
                                 scope.launch { bottomSheetState.show() }
@@ -203,11 +195,7 @@ fun LoginDetail(
                     show = shouldShowDeleteItemDialog,
                     onConfirm = {
                         shouldShowDeleteItemDialog = false
-                        viewModel.onPermanentlyDelete(
-                            state.itemUiModel.shareId,
-                            state.itemUiModel.id,
-                            state.itemUiModel.itemType
-                        )
+                        viewModel.onPermanentlyDelete(state.itemUiModel)
                     },
                     onDismiss = { shouldShowDeleteItemDialog = false }
                 )

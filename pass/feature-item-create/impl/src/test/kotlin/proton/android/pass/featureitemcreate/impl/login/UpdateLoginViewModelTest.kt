@@ -88,7 +88,7 @@ class UpdateLoginViewModelTest {
 
         instance.updateLoginUiState.test {
             val state = awaitItem()
-            assertThat(state.baseLoginUiState.loginItem.primaryTotp).isEqualTo(secret)
+            assertThat(state.baseLoginUiState.contents.primaryTotp).isEqualTo(secret)
         }
     }
 
@@ -112,7 +112,7 @@ class UpdateLoginViewModelTest {
 
         instance.updateLoginUiState.test {
             val state = awaitItem()
-            assertThat(state.baseLoginUiState.loginItem.primaryTotp).isEqualTo(uri)
+            assertThat(state.baseLoginUiState.contents.primaryTotp).isEqualTo(uri)
         }
     }
 

@@ -19,6 +19,7 @@ import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
@@ -44,7 +45,6 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
@@ -150,13 +150,13 @@ class AliasDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    fun onPermanentlyDelete(shareId: ShareId, itemId: ItemId, itemType: ItemType) =
+    fun onPermanentlyDelete(itemUiModel: ItemUiModel) =
         viewModelScope.launch {
             isLoadingState.update { IsLoadingState.Loading }
             runCatching {
-                deleteItem(shareId = shareId, itemId = itemId)
+                deleteItem(shareId = itemUiModel.shareId, itemId = itemUiModel.id)
             }.onSuccess {
-                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemType)))
+                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
                 isPermanentlyDeletedState.update { IsPermanentlyDeletedState.Deleted }
                 snackbarDispatcher(DetailSnackbarMessages.ItemPermanentlyDeleted)
                 PassLogger.i(TAG, "Item deleted successfully")

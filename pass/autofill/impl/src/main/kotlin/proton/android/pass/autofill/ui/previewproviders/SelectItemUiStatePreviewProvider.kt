@@ -17,8 +17,8 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiState> {
@@ -100,9 +100,8 @@ class SelectItemUiStatePreviewProvider : PreviewParameterProvider<SelectItemUiSt
     private fun item(name: String): ItemUiModel = ItemUiModel(
         id = ItemId(name),
         shareId = ShareId("345"),
-        name = name,
-        note = "Note content",
-        itemType = ItemType.Note(
+        contents = ItemContents.Note(
+            name,
             "Some very very long test that should be ellipsized as we type"
         ),
         state = 0,

@@ -26,8 +26,8 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.bottomSheetDivider
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.featuretrash.R
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import me.proton.core.presentation.R as CoreR
 
@@ -42,12 +42,12 @@ fun TrashItemBottomSheetContents(
 ) {
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
-            title = { BottomSheetItemTitle(text = itemUiModel.name) },
+            title = { BottomSheetItemTitle(text = itemUiModel.contents.title) },
             subtitle = {
-                val text = when (val itemType = itemUiModel.itemType) {
-                    is ItemType.Alias -> itemType.aliasEmail
-                    is ItemType.Login -> itemType.username
-                    is ItemType.Note -> itemType.text.replace("\n", " ")
+                val text = when (val itemType = itemUiModel.contents) {
+                    is ItemContents.Alias -> itemType.aliasEmail
+                    is ItemContents.Login -> itemType.username
+                    is ItemContents.Note -> itemType.note.replace("\n", " ")
                     else -> ""
                 }
                 BottomSheetItemSubtitle(text = text)
@@ -125,9 +125,11 @@ fun TrashItemBottomSheetContentsPreview(
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
-                    name = "My Alias",
-                    note = "Note",
-                    itemType = ItemType.Alias("alias.email@proton.me"),
+                    contents = ItemContents.Alias(
+                        title = "My Alias",
+                        note = "Note",
+                        aliasEmail = "alias.email@proton.me"
+                    ),
                     createTime = Clock.System.now(),
                     state = 0,
                     modificationTime = Clock.System.now(),

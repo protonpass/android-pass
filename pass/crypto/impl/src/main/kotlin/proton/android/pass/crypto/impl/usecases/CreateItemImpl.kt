@@ -21,7 +21,9 @@ class CreateItemImpl @Inject constructor(
         shareKey: ShareKey,
         itemContents: ItemContents
     ): CreateItemPayload {
-        val serializedItem = itemContents.serializeToProto(itemUuid = generateUuid()).toByteArray()
+        val serializedItem = encryptionContextProvider.withEncryptionContext {
+            itemContents.serializeToProto(itemUuid = generateUuid(), this).toByteArray()
+        }
         val itemKey = EncryptionKey.generate()
 
         val encryptedContents = encryptionContextProvider.withEncryptionContext(itemKey.clone()) {

@@ -23,8 +23,8 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
 import proton.android.pass.featurehome.impl.R
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 @ExperimentalMaterialApi
@@ -38,19 +38,19 @@ fun AliasOptionsBottomSheetContents(
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
-    val itemType = itemUiModel.itemType as ItemType.Alias
+    val contents = itemUiModel.contents as ItemContents.Alias
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
-            title = { BottomSheetItemTitle(text = itemUiModel.name) },
+            title = { BottomSheetItemTitle(text = contents.title) },
             subtitle = {
                 BottomSheetItemSubtitle(
-                    text = itemType.aliasEmail
+                    text = contents.aliasEmail
                 )
             },
             leftIcon = { AliasIcon() }
         )
         val list = mutableListOf(
-            copyAlias(itemType.aliasEmail, onCopyAlias),
+            copyAlias(contents.aliasEmail, onCopyAlias),
             edit(itemUiModel, onEdit),
             moveToTrash(itemUiModel, onMoveToTrash)
         )
@@ -90,9 +90,11 @@ fun AliasOptionsBottomSheetContentsPreview(
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
-                    name = "My Alias",
-                    note = "Note content",
-                    itemType = ItemType.Alias("alias.email@proton.me"),
+                    contents = ItemContents.Alias(
+                        "My Alias",
+                        "Note content",
+                        "alias.email@proton.me"
+                    ),
                     state = 0,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),

@@ -6,11 +6,12 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.pass.domain.CustomFieldContent
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 
 @Immutable
 data class BaseLoginUiState(
-    val loginItem: LoginItem,
+    val contents: ItemContents.Login,
     val aliasItem: AliasItem?,
     val validationErrors: Set<LoginItemValidationErrors>,
     val isLoadingState: IsLoadingState,
@@ -28,7 +29,7 @@ data class BaseLoginUiState(
         val Initial = BaseLoginUiState(
             aliasItem = null,
             isLoadingState = IsLoadingState.NotLoading,
-            loginItem = LoginItem.Empty,
+            contents = ItemContents.Login.Empty,
             validationErrors = emptySet(),
             isItemSaved = ItemSavedState.Unknown,
             openScanState = OpenScanState.Unknown,

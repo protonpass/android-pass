@@ -102,26 +102,29 @@ fun CreateLoginScreen(
             showCreateAliasButton = showCreateAliasButton,
             isUpdate = false,
             topBarActionName = stringResource(id = R.string.title_create_login),
-            onUpClick = onExit,
-            onSuccess = { _, _, item ->
-                viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.LoginCreated)
-                onNavigate(BaseLoginNavigation.LoginCreated(item))
-            },
-            onSubmit = { viewModel.createItem() },
-            onUsernameChange = viewModel::onUsernameChange,
-            onPasswordChange = viewModel::onPasswordChange,
-            onWebsiteSectionEvent = {
+            onEvent = {
                 when (it) {
-                    WebsiteSectionEvent.AddWebsite -> viewModel.onAddWebsite()
-                    is WebsiteSectionEvent.RemoveWebsite -> viewModel.onRemoveWebsite(it.index)
-                    is WebsiteSectionEvent.WebsiteValueChanged ->
-                        viewModel.onWebsiteChange(it.value, it.index)
+                    LoginContentEvent.Up -> onExit()
+                    is LoginContentEvent.Success -> {
+                        viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.LoginCreated)
+                        onNavigate(BaseLoginNavigation.LoginCreated(it.model))
+                    }
+                    is LoginContentEvent.Submit -> viewModel.createItem()
+                    is LoginContentEvent.OnUsernameChange -> viewModel.onUsernameChange(it.username)
+                    is LoginContentEvent.OnPasswordChange -> viewModel.onPasswordChange(it.password)
+                    is LoginContentEvent.OnWebsiteEvent -> when (val event = it.event) {
+                        WebsiteSectionEvent.AddWebsite -> viewModel.onAddWebsite()
+                        is WebsiteSectionEvent.RemoveWebsite -> viewModel.onRemoveWebsite(event.index)
+                        is WebsiteSectionEvent.WebsiteValueChanged ->
+                            viewModel.onWebsiteChange(event.value, event.index)
+                    }
+                    is LoginContentEvent.OnNoteChange -> viewModel.onNoteChange(it.note)
+                    is LoginContentEvent.OnLinkedAppDelete -> {}
+                    is LoginContentEvent.OnTotpChange -> viewModel.onTotpChange(it.totp)
+                    LoginContentEvent.PasteTotp -> viewModel.onPasteTotp()
+                    is LoginContentEvent.OnCustomFieldEvent -> {} // To be done
                 }
             },
-            onNoteChange = viewModel::onNoteChange,
-            onLinkedAppDelete = {},
-            onTotpChange = viewModel::onTotpChange,
-            onPasteTotpClick = viewModel::onPasteTotp,
             onNavigate = onNavigate,
             titleSection = {
                 TitleVaultSelectionSection(

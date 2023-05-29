@@ -17,7 +17,6 @@ import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.common.api.some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -40,21 +39,12 @@ internal fun LoginContent(
     topBarActionName: String,
     showCreateAliasButton: Boolean,
     isUpdate: Boolean,
-    onUpClick: () -> Unit,
-    onSuccess: (ShareId, ItemId, ItemUiModel) -> Unit,
-    onSubmit: (ShareId) -> Unit,
-    onUsernameChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onWebsiteSectionEvent: (WebsiteSectionEvent) -> Unit,
-    onNoteChange: (String) -> Unit,
-    onTotpChange: (String) -> Unit,
-    onPasteTotpClick: () -> Unit,
-    onLinkedAppDelete: (PackageInfoUi) -> Unit,
+    onEvent: (LoginContentEvent) -> Unit,
     onNavigate: (BaseLoginNavigation) -> Unit,
     titleSection: @Composable ColumnScope.() -> Unit
 ) {
     BackHandler {
-        onUpClick()
+        onEvent(LoginContentEvent.Up)
     }
 
     var actionWhenKeyboardDisappears by remember { mutableStateOf<ActionAfterHideKeyboard?>(null) }
@@ -96,10 +86,10 @@ internal fun LoginContent(
                 actionColor = PassTheme.colors.loginInteractionNormMajor1,
                 iconColor = PassTheme.colors.loginInteractionNormMajor2,
                 iconBackgroundColor = PassTheme.colors.loginInteractionNormMinor1,
-                onCloseClick = onUpClick,
+                onCloseClick = { onEvent(LoginContentEvent.Up) },
                 onActionClick = {
                     selectedShareId ?: return@CreateUpdateTopBar
-                    onSubmit(selectedShareId)
+                    onEvent(LoginContentEvent.Submit(selectedShareId))
                 },
                 onUpgrade = {}
             )
@@ -116,15 +106,12 @@ internal fun LoginContent(
             isUpdate = isUpdate,
             isEditAllowed = uiState.isLoadingState == IsLoadingState.NotLoading,
             isTotpError = uiState.validationErrors.contains(LoginItemValidationErrors.InvalidTotp),
-            onUsernameChange = onUsernameChange,
-            onPasswordChange = onPasswordChange,
-            onWebsiteSectionEvent = onWebsiteSectionEvent,
+            onEvent = onEvent,
             focusLastWebsite = uiState.focusLastWebsite,
             websitesWithErrors = uiState.validationErrors
                 .filterIsInstance<InvalidUrl>()
                 .map { it.index }
                 .toPersistentList(),
-            onNoteChange = onNoteChange,
             onGeneratePasswordClick = {
                 if (!keyboardState) {
                     // If keyboard is hidden, call the action directly
@@ -161,9 +148,6 @@ internal fun LoginContent(
                     )
                 )
             },
-            onTotpChange = onTotpChange,
-            onPasteTotpClick = onPasteTotpClick,
-            onLinkedAppDelete = onLinkedAppDelete,
             onNavigate = onNavigate,
             titleSection = titleSection
         )
@@ -171,7 +155,9 @@ internal fun LoginContent(
         ItemSavedLaunchedEffect(
             isItemSaved = uiState.isItemSaved,
             selectedShareId = selectedShareId,
-            onSuccess = onSuccess
+            onSuccess = { shareId, itemId, model ->
+                onEvent(LoginContentEvent.Success(shareId, itemId, model))
+            }
         )
     }
 }

@@ -20,7 +20,6 @@ package proton.android.pass.featureitemcreate.impl.alias
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -108,9 +107,7 @@ sealed interface CreateAliasNavigation {
     data class SelectVault(val shareId: ShareId) : CreateAliasNavigation
 }
 
-@OptIn(
-    ExperimentalAnimationApi::class, ExperimentalLifecycleComposeApi::class
-)
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.createAliasGraph(
     onNavigate: (CreateAliasNavigation) -> Unit,
 ) {

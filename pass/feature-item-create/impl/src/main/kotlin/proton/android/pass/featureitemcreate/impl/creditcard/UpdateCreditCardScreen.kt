@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
@@ -26,7 +25,6 @@ import proton.android.pass.featureitemcreate.impl.creditcard.BaseCreditCardNavig
 import proton.android.pass.featureitemcreate.impl.creditcard.CreditCardValidationErrors.BlankTitle
 
 @Suppress("ComplexMethod")
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun UpdateCreditCardScreen(
     modifier: Modifier = Modifier,

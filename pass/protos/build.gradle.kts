@@ -1,8 +1,4 @@
-import com.google.protobuf.gradle.builtins
-import com.google.protobuf.gradle.generateProtoTasks
 import com.google.protobuf.gradle.id
-import com.google.protobuf.gradle.protobuf
-import com.google.protobuf.gradle.protoc
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
@@ -15,21 +11,15 @@ sourceSets {
             srcDir("contents-proto-definition/protos")
         }
         java.srcDirs(
-            "${protobuf.protobuf.generatedFilesBaseDir}/main/java",
-            "${protobuf.protobuf.generatedFilesBaseDir}/main/kotlin"
+            "${protobuf.generatedFilesBaseDir}/main/java",
+            "${protobuf.generatedFilesBaseDir}/main/kotlin"
         )
-    }
-}
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(11))
     }
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
 
@@ -42,8 +32,8 @@ protobuf {
         artifact = project.libs.google.protobuf.protoc.get().toString()
     }
     generateProtoTasks {
-        all().configureEach {
-            builtins {
+        all().forEach { task ->
+            task.builtins {
                 named("java") {
                     option("lite")
                 }

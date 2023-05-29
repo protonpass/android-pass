@@ -25,14 +25,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.feature.vault.impl.R
 import proton.android.pass.featurevault.impl.VaultNavigation
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun EditVaultBottomSheet(
     modifier: Modifier = Modifier,

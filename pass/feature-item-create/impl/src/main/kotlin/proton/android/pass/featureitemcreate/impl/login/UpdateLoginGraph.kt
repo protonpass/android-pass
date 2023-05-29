@@ -21,7 +21,6 @@ package proton.android.pass.featureitemcreate.impl.login
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.customFieldBottomSheetGraph
@@ -45,7 +44,7 @@ object EditLogin : NavItem(
 }
 
 @Suppress("LongParameterList")
-@OptIn(ExperimentalAnimationApi::class, ExperimentalLifecycleComposeApi::class)
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.updateLoginGraph(
     onNavigate: (BaseLoginNavigation) -> Unit
 ) {

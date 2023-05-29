@@ -21,7 +21,6 @@ package proton.android.pass.featureitemcreate.impl.login
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -66,10 +65,7 @@ object CreateLogin : NavItem(
     }
 }
 
-@OptIn(
-    ExperimentalAnimationApi::class,
-    ExperimentalLifecycleComposeApi::class
-)
+@OptIn(ExperimentalAnimationApi::class,)
 fun NavGraphBuilder.createLoginGraph(
     initialCreateLoginUiState: InitialCreateLoginUiState = InitialCreateLoginUiState(),
     showCreateAliasButton: Boolean = true,

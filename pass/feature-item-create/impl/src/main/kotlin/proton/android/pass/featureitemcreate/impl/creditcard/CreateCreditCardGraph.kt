@@ -2,7 +2,6 @@ package proton.android.pass.featureitemcreate.impl.creditcard
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.None
@@ -40,9 +39,7 @@ sealed interface CreateCreditCardNavigation : BaseCreditCardNavigation {
     value class SelectVault(val shareId: ShareId) : CreateCreditCardNavigation
 }
 
-@OptIn(
-    ExperimentalAnimationApi::class, ExperimentalLifecycleComposeApi::class
-)
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.createCreditCardGraph(
     onNavigate: (BaseCreditCardNavigation) -> Unit,
 ) {

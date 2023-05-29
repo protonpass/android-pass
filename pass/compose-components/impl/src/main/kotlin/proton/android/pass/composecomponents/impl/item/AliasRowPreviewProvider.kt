@@ -3,8 +3,8 @@ package proton.android.pass.composecomponents.impl.item
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 class AliasRowPreviewProvider : PreviewParameterProvider<AliasRowParameter> {
@@ -39,9 +39,7 @@ class AliasRowPreviewProvider : PreviewParameterProvider<AliasRowParameter> {
                 model = ItemUiModel(
                     id = ItemId("123"),
                     shareId = ShareId("456"),
-                    name = title,
-                    note = note,
-                    itemType = ItemType.Alias(aliasEmail = alias),
+                    contents = ItemContents.Alias(title, note, alias),
                     state = 0,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),

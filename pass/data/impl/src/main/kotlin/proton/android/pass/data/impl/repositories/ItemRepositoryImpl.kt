@@ -126,7 +126,11 @@ class ItemRepositoryImpl @Inject constructor(
     ): Item = withContext(Dispatchers.IO) {
         withUserAddress(userId) { userAddress ->
             val shareKey = shareKeyRepository.getLatestKeyForShare(share.id).first()
-            val itemContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
+            val itemContents = ItemContents.Alias(
+                title = newAlias.title,
+                note = newAlias.note,
+                aliasEmail = "" // Not used when creating the payload
+            )
             val body = createItem.create(shareKey, itemContents)
 
             val mailboxIds = newAlias.mailboxes.map { it.id }
@@ -162,7 +166,11 @@ class ItemRepositoryImpl @Inject constructor(
             val shareKey = shareKeyRepository.getLatestKeyForShare(shareId).first()
             val request = runCatching {
                 val itemBody = createItem.create(shareKey, contents)
-                val aliasContents = ItemContents.Alias(title = newAlias.title, note = newAlias.note)
+                val aliasContents = ItemContents.Alias(
+                    title = newAlias.title,
+                    note = newAlias.note,
+                    aliasEmail = "" // Not used when creating the payload
+                )
                 val aliasBody = createItem.create(shareKey, aliasContents)
 
                 CreateItemAliasRequest(
@@ -204,11 +212,14 @@ class ItemRepositoryImpl @Inject constructor(
         item: Item,
         contents: ItemContents
     ): Item = withContext(Dispatchers.IO) {
+        val itemContents = encryptionContextProvider.withEncryptionContext {
+            contents.serializeToProto(itemUuid = item.itemUuid, this)
+        }
         performUpdate(
             userId,
             share,
             item,
-            contents.serializeToProto(itemUuid = item.itemUuid)
+            itemContents
         )
     }
 

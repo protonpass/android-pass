@@ -23,14 +23,10 @@ fun HiddenCustomFieldEntry(
     canEdit: Boolean,
     onChange: (String) -> Unit
 ) {
-    val value = when (val state = content.value) {
-        is HiddenState.Concealed -> ""
-        is HiddenState.Revealed -> state.clearText
-    }
     Box(modifier = modifier.roundedContainerNorm()) {
         PasswordInput(
             label = content.label,
-            value = value,
+            value = content.value,
             icon = CoreR.drawable.ic_proton_eye_slash,
             placeholder = stringResource(R.string.custom_field_hidden_placeholder),
             iconContentDescription = stringResource(R.string.custom_field_hidden_icon_content_description),

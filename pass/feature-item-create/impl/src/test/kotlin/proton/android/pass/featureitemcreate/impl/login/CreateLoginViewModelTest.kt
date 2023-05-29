@@ -137,7 +137,7 @@ internal class CreateLoginViewModelTest {
                             currentVault = vault
                         ),
                         BaseLoginUiState.Initial.copy(
-                            loginItem = LoginItem.Empty.copy(title = titleInput),
+                            contents = LoginItem.Empty.copy(title = titleInput),
                             isLoadingState = IsLoadingState.NotLoading,
                             hasUserEditedContent = true,
                             totpUiState = TotpUiState.Success,
@@ -153,7 +153,7 @@ internal class CreateLoginViewModelTest {
                             currentVault = vault
                         ),
                         BaseLoginUiState.Initial.copy(
-                            loginItem = LoginItem.Empty.copy(title = titleInput),
+                            contents = LoginItem.Empty.copy(title = titleInput),
                             isLoadingState = IsLoadingState.Loading,
                             hasUserEditedContent = true,
                             totpUiState = TotpUiState.Success,
@@ -169,7 +169,7 @@ internal class CreateLoginViewModelTest {
                             currentVault = vault
                         ),
                         BaseLoginUiState.Initial.copy(
-                            loginItem = LoginItem.Empty.copy(title = titleInput),
+                            contents = LoginItem.Empty.copy(title = titleInput),
                             isLoadingState = IsLoadingState.NotLoading,
                             hasUserEditedContent = true,
                             isItemSaved = ItemSavedState.Success(
@@ -179,7 +179,7 @@ internal class CreateLoginViewModelTest {
                                     shareId = item.shareId,
                                     name = item.itemName(TestEncryptionContext),
                                     note = TestEncryptionContext.decrypt(item.note),
-                                    itemType = item.itemType,
+                                    contents = item.itemType,
                                     createTime = item.createTime,
                                     state = 0,
                                     modificationTime = item.modificationTime,
@@ -234,7 +234,7 @@ internal class CreateLoginViewModelTest {
                             )
                         ),
                         baseLoginUiState = BaseLoginUiState.Initial.copy(
-                            loginItem = LoginItem.Empty.copy(
+                            contents = LoginItem.Empty.copy(
                                 title = initialContents.title!!,
                                 username = initialContents.username!!,
                                 password = initialContents.password!!,

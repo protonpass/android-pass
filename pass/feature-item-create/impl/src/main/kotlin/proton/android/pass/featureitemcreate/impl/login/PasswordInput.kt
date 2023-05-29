@@ -5,10 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,11 +22,12 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
+import proton.pass.domain.HiddenState
 
 @Composable
 internal fun PasswordInput(
     modifier: Modifier = Modifier,
-    value: String,
+    value: HiddenState,
     label: String = stringResource(id = R.string.field_password_title),
     placeholder: String = stringResource(id = R.string.field_password_hint),
     @DrawableRes icon: Int = me.proton.core.presentation.R.drawable.ic_proton_key,
@@ -39,16 +36,13 @@ internal fun PasswordInput(
     onChange: (String) -> Unit,
     onFocus: (Boolean) -> Unit
 ) {
-    var isFocused by remember { mutableStateOf(false) }
-    val visualTransformation = if (isFocused) {
-        VisualTransformation.None
-    } else {
-        PasswordVisualTransformation()
+    val (text, visualTransformation) = when (value) {
+        is HiddenState.Concealed -> "" to PasswordVisualTransformation()
+        is HiddenState.Revealed -> value.clearText to VisualTransformation.None
     }
-
     ProtonTextField(
         modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-        value = value,
+        value = text,
         editable = isEditAllowed,
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm(isEditAllowed),
@@ -62,16 +56,13 @@ internal fun PasswordInput(
                 tint = ProtonTheme.colors.iconWeak
             )
         },
-        trailingIcon = if (value.isNotEmpty()) {
+        trailingIcon = if (text.isNotEmpty()) {
             { SmallCrossIconButton { onChange("") } }
         } else {
             null
         },
         visualTransformation = visualTransformation,
-        onFocusChange = {
-            isFocused = it
-            onFocus(it)
-        }
+        onFocusChange = { onFocus(it) }
     )
 }
 
@@ -83,7 +74,7 @@ fun PasswordInputPreview(
     PassTheme(isDark = input.first) {
         Surface {
             PasswordInput(
-                value = "someValue",
+                value = HiddenState.Revealed("", "someValue"),
                 isEditAllowed = input.second,
                 onChange = {},
                 onFocus = {}

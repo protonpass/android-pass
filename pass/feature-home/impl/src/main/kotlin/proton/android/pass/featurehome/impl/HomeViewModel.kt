@@ -85,9 +85,9 @@ import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemState
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
 import javax.inject.Inject
@@ -329,9 +329,9 @@ class HomeViewModel @Inject constructor(
             is LoadingResult.Success -> {
                 result.data.map { it.items }.flatten().let { list ->
                     ItemTypeCount(
-                        loginCount = list.count { it.itemType is ItemType.Login },
-                        aliasCount = list.count { it.itemType is ItemType.Alias },
-                        noteCount = list.count { it.itemType is ItemType.Note }
+                        loginCount = list.count { it.contents is ItemContents.Login },
+                        aliasCount = list.count { it.contents is ItemContents.Alias },
+                        noteCount = list.count { it.contents is ItemContents.Note }
                     )
                 }
             }
@@ -465,12 +465,11 @@ class HomeViewModel @Inject constructor(
 
         runCatching { trashItem(shareId = item.shareId, itemId = item.id) }
             .onSuccess {
-                when (item.itemType) {
-                    is ItemType.Alias -> snackbarDispatcher(AliasMovedToTrash)
-                    is ItemType.Login -> snackbarDispatcher(LoginMovedToTrash)
-                    is ItemType.Note -> snackbarDispatcher(NoteMovedToTrash)
-                    ItemType.Password -> {}
-                    ItemType.Unknown -> {}
+                when (item.contents) {
+                    is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
+                    is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
+                    is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
+                    is ItemContents.Unknown -> {}
                 }
             }
             .onFailure {
@@ -536,20 +535,21 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun deleteItem(shareId: ShareId, itemId: ItemId, itemType: ItemType) = viewModelScope.launch {
-        actionStateFlow.update { ActionState.Loading }
-        runCatching {
-            deleteItem.invoke(shareId = shareId, itemId = itemId)
-        }.onSuccess {
-            actionStateFlow.update { ActionState.Done }
-            PassLogger.i(TAG, "Item deleted successfully")
-            telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemType)))
-        }.onFailure {
-            PassLogger.e(TAG, it, "Error deleting item")
-            actionStateFlow.update { ActionState.Done }
-            snackbarDispatcher(DeleteItemError)
+    fun deleteItem(itemUiModel: ItemUiModel) =
+        viewModelScope.launch {
+            actionStateFlow.update { ActionState.Loading }
+            runCatching {
+                deleteItem.invoke(shareId = itemUiModel.shareId, itemId = itemUiModel.id)
+            }.onSuccess {
+                actionStateFlow.update { ActionState.Done }
+                PassLogger.i(TAG, "Item deleted successfully")
+                telemetryManager.sendEvent(ItemDelete(EventItemType.from(itemUiModel.contents)))
+            }.onFailure {
+                PassLogger.e(TAG, it, "Error deleting item")
+                actionStateFlow.update { ActionState.Done }
+                snackbarDispatcher(DeleteItemError)
+            }
         }
-    }
 
     fun clearTrash() = viewModelScope.launch {
         actionStateFlow.update { ActionState.Loading }
@@ -614,16 +614,16 @@ class HomeViewModel @Inject constructor(
     ) = items.filter { item ->
         when (itemTypeSelection) {
             HomeItemTypeSelection.AllItems -> true
-            HomeItemTypeSelection.Aliases -> item.itemType is ItemType.Alias
-            HomeItemTypeSelection.Logins -> item.itemType is ItemType.Login
-            HomeItemTypeSelection.Notes -> item.itemType is ItemType.Note
+            HomeItemTypeSelection.Aliases -> item.contents is ItemContents.Alias
+            HomeItemTypeSelection.Logins -> item.contents is ItemContents.Login
+            HomeItemTypeSelection.Notes -> item.contents is ItemContents.Note
         }
     }
 
     private fun emitDeletedItems(items: List<GroupedItemList>) {
         items.forEach { list ->
             list.items.forEach { item ->
-                telemetryManager.sendEvent(ItemDelete(EventItemType.from(item.itemType)))
+                telemetryManager.sendEvent(ItemDelete(EventItemType.from(item.contents)))
             }
         }
     }

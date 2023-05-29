@@ -31,8 +31,8 @@ import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomSheetContents
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemState
-import proton.pass.domain.ItemType
 
 @OptIn(
     ExperimentalLifecycleComposeApi::class,
@@ -111,15 +111,7 @@ fun NoteDetail(
                             iconColor = PassTheme.colors.noteInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.noteInteractionNormMinor2,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
-                            onEditClick = {
-                                onNavigate(
-                                    ItemDetailNavigation.OnEdit(
-                                        shareId = state.itemUiModel.shareId,
-                                        itemId = state.itemUiModel.id,
-                                        itemType = state.itemUiModel.itemType
-                                    )
-                                )
-                            },
+                            onEditClick = { onNavigate(ItemDetailNavigation.OnEdit(state.itemUiModel)) },
                             onOptionsClick = {
                                 scope.launch { bottomSheetState.show() }
                             }
@@ -132,8 +124,8 @@ fun NoteDetail(
                             .background(PassTheme.colors.itemDetailBackground)
                             .padding(padding)
                             .verticalScroll(rememberScrollState()),
-                        name = state.itemUiModel.name,
-                        note = (state.itemUiModel.itemType as ItemType.Note).text,
+                        name = state.itemUiModel.contents.title,
+                        note = (state.itemUiModel.contents as ItemContents.Note).note,
                         vault = state.vault,
                         moreInfoUiState = moreInfoUiState
                     )
@@ -143,11 +135,7 @@ fun NoteDetail(
                     show = shouldShowDeleteItemDialog,
                     onConfirm = {
                         shouldShowDeleteItemDialog = false
-                        viewModel.onPermanentlyDelete(
-                            state.itemUiModel.shareId,
-                            state.itemUiModel.id,
-                            state.itemUiModel.itemType
-                        )
+                        viewModel.onPermanentlyDelete(state.itemUiModel)
                     },
                     onDismiss = { shouldShowDeleteItemDialog = false }
                 )

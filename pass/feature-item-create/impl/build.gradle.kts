@@ -104,6 +104,7 @@ dependencies {
     androidTestImplementation(libs.kotlinTest)
     androidTestImplementation(projects.pass.clipboard.fakes)
     androidTestImplementation(projects.pass.commonTest)
+    androidTestImplementation(projects.pass.commonUi.fakes)
     androidTestImplementation(projects.pass.crypto.fakes)
     androidTestImplementation(projects.pass.data.fakes)
     androidTestImplementation(projects.pass.notifications.fakes)

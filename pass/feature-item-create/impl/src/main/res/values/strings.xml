@@ -57,6 +57,9 @@
     <string name="custom_field_text_icon_content_description">Text custom field icon</string>
     <string name="custom_field_totp_placeholder">@string/bottomsheet_custom_field_type_totp</string>
     <string name="custom_field_totp_icon_content_description">2FA custom field icon</string>
+    <string name="custom_field_dialog_title">Custom field name</string>
+    <string name="custom_field_dialog_body">Enter a name for your custom field</string>
+    <string name="custom_field_dialog_placeholder">Name of the custom field</string>
 
     <!-- Create Note -->
     <string name="title_create_note">Create note</string>

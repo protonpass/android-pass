@@ -28,7 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
@@ -38,7 +37,6 @@ import proton.android.pass.featurepassword.R
 import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 
 @Suppress("CyclomaticComplexMethod", "ComplexMethod")
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun GeneratePasswordBottomSheet(
     modifier: Modifier = Modifier,

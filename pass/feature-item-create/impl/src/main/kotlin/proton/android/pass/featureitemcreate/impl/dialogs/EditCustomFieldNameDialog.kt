@@ -23,11 +23,9 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun EditCustomFieldNameDialog(
     modifier: Modifier = Modifier,

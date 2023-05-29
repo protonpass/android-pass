@@ -23,12 +23,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.dialogs.NoPaddingDialog
 import proton.android.pass.featurepassword.impl.GeneratePasswordNavigation
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun WordSeparatorDialog(
     modifier: Modifier = Modifier,

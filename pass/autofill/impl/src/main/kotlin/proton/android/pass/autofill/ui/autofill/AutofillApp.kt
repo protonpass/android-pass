@@ -28,7 +28,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import proton.android.pass.autofill.ui.SnackBarLaunchedEffect
@@ -40,7 +39,6 @@ import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.preferences.ThemePreference
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun AutofillApp(
     modifier: Modifier = Modifier,

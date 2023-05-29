@@ -37,7 +37,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.ConfirmCloseDialog
@@ -57,7 +56,7 @@ private enum class CNActionAfterHideKeyboard {
 }
 
 @Suppress("ComplexMethod")
-@OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CreateNoteScreen(
     modifier: Modifier = Modifier,

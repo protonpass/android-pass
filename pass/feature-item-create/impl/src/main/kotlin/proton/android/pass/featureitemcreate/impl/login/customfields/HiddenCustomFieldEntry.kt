@@ -1,5 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.login.customfields
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -8,6 +9,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.login.PasswordInput
 import proton.pass.domain.CustomFieldContent
@@ -25,17 +27,18 @@ fun HiddenCustomFieldEntry(
         is HiddenState.Concealed -> ""
         is HiddenState.Revealed -> state.clearText
     }
-    PasswordInput(
-        modifier = modifier,
-        label = content.label,
-        value = value,
-        icon = CoreR.drawable.ic_proton_lock,
-        placeholder = stringResource(R.string.custom_field_hidden_placeholder),
-        iconContentDescription = stringResource(R.string.custom_field_hidden_icon_content_description),
-        isEditAllowed = canEdit,
-        onChange = onChange,
-        onFocus = {}
-    )
+    Box(modifier = modifier.roundedContainerNorm()) {
+        PasswordInput(
+            label = content.label,
+            value = value,
+            icon = CoreR.drawable.ic_proton_eye_slash,
+            placeholder = stringResource(R.string.custom_field_hidden_placeholder),
+            iconContentDescription = stringResource(R.string.custom_field_hidden_icon_content_description),
+            isEditAllowed = canEdit,
+            onChange = onChange,
+            onFocus = {}
+        )
+    }
 }
 
 @Preview

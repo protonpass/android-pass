@@ -1,10 +1,12 @@
 package proton.android.pass.featureitemcreate.impl.login.customfields
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.featureitemcreate.impl.R
@@ -19,7 +21,10 @@ fun EnabledCustomFieldsContent(
     canEdit: Boolean,
     onNavigate: (BaseLoginNavigation) -> Unit
 ) {
-    Column(modifier = modifier.fillMaxWidth()) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         state.customFields.forEach { field ->
             CustomFieldEntry(
                 entry = field,

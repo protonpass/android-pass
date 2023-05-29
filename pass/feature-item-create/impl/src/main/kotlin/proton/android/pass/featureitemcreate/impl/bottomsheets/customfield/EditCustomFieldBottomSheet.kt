@@ -27,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.bottomSheet
@@ -38,7 +37,6 @@ import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.featureitemcreate.impl.R
 import me.proton.core.presentation.R as CoreR
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun EditCustomFieldBottomSheet(
     modifier: Modifier = Modifier,

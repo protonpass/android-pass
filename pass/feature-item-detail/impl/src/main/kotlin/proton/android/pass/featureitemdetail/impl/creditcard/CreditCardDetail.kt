@@ -37,7 +37,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
@@ -53,7 +52,7 @@ import proton.pass.domain.ItemState
 
 @Suppress("ComplexMethod")
 @OptIn(
-    ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class,
+    ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class
 )
 @Composable

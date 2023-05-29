@@ -25,12 +25,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.pager.ExperimentalPagerApi
 import proton.android.pass.biometry.ContextHolder
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalLifecycleComposeApi::class)
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnBoardingScreen(
     modifier: Modifier = Modifier,

@@ -23,14 +23,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.featureitemcreate.impl.alias.AliasDraftSavedState
 import proton.android.pass.featureitemcreate.impl.alias.CloseScreenEvent
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasNavigation
 import proton.android.pass.featureitemcreate.impl.common.ShareUiState
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun CreateAliasBottomSheet(
     modifier: Modifier = Modifier,

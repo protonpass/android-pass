@@ -60,7 +60,7 @@ internal fun LoginContent(
                         BaseLoginNavigation.CreateAlias(
                             selectedShareId,
                             uiState.hasReachedAliasLimit,
-                            uiState.loginItem.title.some()
+                            uiState.contents.title.some()
                         )
                     )
                     actionWhenKeyboardDisappears = null // Clear flag
@@ -97,7 +97,7 @@ internal fun LoginContent(
     ) { padding ->
         LoginItemForm(
             modifier = Modifier.padding(padding),
-            loginItem = uiState.loginItem,
+            contents = uiState.contents,
             totpUiState = uiState.totpUiState,
             customFieldsState = uiState.customFieldsState,
             showCreateAliasButton = showCreateAliasButton,
@@ -130,7 +130,7 @@ internal fun LoginContent(
                         BaseLoginNavigation.CreateAlias(
                             selectedShareId,
                             uiState.hasReachedAliasLimit,
-                            uiState.loginItem.title.some()
+                            uiState.contents.title.some()
                         )
                     )
                 } else {

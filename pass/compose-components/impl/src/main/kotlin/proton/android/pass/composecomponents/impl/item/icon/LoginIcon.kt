@@ -31,7 +31,7 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
-import proton.pass.domain.ItemType
+import proton.pass.domain.ItemContents
 import proton.pass.domain.WebsiteUrl
 import me.proton.core.presentation.R as CoreR
 
@@ -39,13 +39,13 @@ import me.proton.core.presentation.R as CoreR
 fun LoginIcon(
     modifier: Modifier = Modifier,
     text: String,
-    itemType: ItemType.Login,
+    content: ItemContents.Login,
     size: Int = 40,
     canLoadExternalImages: Boolean,
 ) {
-    val sortedPackages = itemType.packageInfoSet.sortedBy { it.packageName.value }
+    val sortedPackages = content.packageInfoSet.sortedBy { it.packageName.value }
     val packageName = sortedPackages.firstOrNull()?.packageName?.value
-    val website = itemType.websites.firstOrNull()
+    val website = content.urls.firstOrNull()
     LoginIcon(
         modifier = modifier,
         text = text,
@@ -57,7 +57,10 @@ fun LoginIcon(
 }
 
 @Composable
-fun LoginIcon(modifier: Modifier = Modifier, shape: Shape = PassTheme.shapes.squircleMediumShape) {
+fun LoginIcon(
+    modifier: Modifier = Modifier,
+    shape: Shape = PassTheme.shapes.squircleMediumShape
+) {
     BoxedIcon(
         modifier = modifier,
         shape = shape,

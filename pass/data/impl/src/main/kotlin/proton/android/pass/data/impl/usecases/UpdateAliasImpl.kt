@@ -65,7 +65,8 @@ class UpdateAliasImpl @Inject constructor(
         val share = getShareById(userId, item.shareId)
         val itemContents = ItemContents.Alias(
             title = content.title,
-            note = content.note
+            note = content.note,
+            aliasEmail = "" // Not used when creating the payload
         )
         return itemRepository.updateItem(userId, share, item, itemContents)
     }

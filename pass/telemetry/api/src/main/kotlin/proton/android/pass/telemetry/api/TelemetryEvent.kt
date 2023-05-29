@@ -1,5 +1,6 @@
 package proton.android.pass.telemetry.api
 
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemType
 
 enum class EventItemType(val itemTypeName: String) {
@@ -16,6 +17,13 @@ enum class EventItemType(val itemTypeName: String) {
             is ItemType.Alias -> Alias
             is ItemType.Note -> Note
             is ItemType.Login -> Login
+        }
+
+        fun from(itemContents: ItemContents): EventItemType = when (itemContents) {
+            is ItemContents.Alias -> Alias
+            is ItemContents.Login -> Login
+            is ItemContents.Note -> Note
+            is ItemContents.Unknown -> Unknown
         }
     }
 }

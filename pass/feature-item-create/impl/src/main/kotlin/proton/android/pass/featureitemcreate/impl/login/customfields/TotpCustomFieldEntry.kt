@@ -20,13 +20,9 @@ fun TotpCustomFieldEntry(
     canEdit: Boolean,
     onChange: (String) -> Unit
 ) {
-    val value = when (val state = content.value) {
-        is HiddenState.Concealed -> ""
-        is HiddenState.Revealed -> state.clearText
-    }
     Box(modifier = modifier.roundedContainerNorm()) {
         TotpInput(
-            value = value,
+            value = content.value,
             label = content.label,
             enabled = canEdit,
             isError = false,

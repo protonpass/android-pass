@@ -3,8 +3,8 @@ package proton.android.pass.composecomponents.impl.item
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import kotlinx.datetime.Clock
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 class NoteRowPreviewProvider : PreviewParameterProvider<NoteRowParameter> {
@@ -31,9 +31,7 @@ class NoteRowPreviewProvider : PreviewParameterProvider<NoteRowParameter> {
                 model = ItemUiModel(
                     id = ItemId("123"),
                     shareId = ShareId("345"),
-                    name = title,
-                    note = "Note content",
-                    itemType = ItemType.Note(text = text),
+                    contents = ItemContents.Note(title = title, note = text),
                     state = 0,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),

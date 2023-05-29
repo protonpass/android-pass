@@ -1,5 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.dialogs
 
+import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
@@ -13,13 +14,16 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.android.pass.test.waitUntilExists
 import proton.pass.domain.CustomFieldContent
+import proton.pass.domain.HiddenState
 import javax.inject.Inject
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -40,10 +44,12 @@ class CustomFieldNameDialogTest {
     @Inject
     lateinit var draftRepository: TestDraftRepository
 
+
     @Before
     fun setup() {
         hiltRule.inject()
     }
+
     @Test
     fun testAddTextField() {
         performTest(CustomFieldType.Text, CustomFieldContent.Text(label = LABEL, value = ""))
@@ -51,12 +57,24 @@ class CustomFieldNameDialogTest {
 
     @Test
     fun testAddTotpField() {
-        performTest(CustomFieldType.Totp, CustomFieldContent.Totp(label = LABEL, value = ""))
+        performTest(
+            CustomFieldType.Totp,
+            CustomFieldContent.Totp(
+                label = LABEL,
+                value = HiddenState.Concealed(TestEncryptionContext.encrypt(""))
+            )
+        )
     }
 
     @Test
     fun testAddHiddenField() {
-        performTest(CustomFieldType.Hidden, CustomFieldContent.Hidden(label = LABEL, value = ""))
+        performTest(
+            CustomFieldType.Hidden,
+            CustomFieldContent.Hidden(
+                label = LABEL,
+                value = HiddenState.Concealed(TestEncryptionContext.encrypt(""))
+            )
+        )
     }
 
     private fun performTest(type: CustomFieldType, expected: CustomFieldContent) {
@@ -78,6 +96,8 @@ class CustomFieldNameDialogTest {
 
             val placeholder = activity.getString(R.string.custom_field_dialog_placeholder)
             val confirmText = activity.getString(CoreR.string.presentation_alert_ok)
+
+            waitUntilExists(hasText(placeholder))
             onNodeWithText(placeholder).performTextInput(LABEL)
             onNodeWithText(confirmText).performClick()
 
@@ -95,7 +115,7 @@ class CustomFieldNameDialogTest {
     }
 
     companion object {
-        private const val LABEL ="Custom field name"
+        private const val LABEL = "Custom field name"
     }
 
 }

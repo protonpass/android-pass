@@ -92,10 +92,14 @@ class PlanRepositoryImpl @Inject constructor(
         } else {
             PlanType.Free
         }
-        PlanType.PLAN_NAME_PLUS -> PlanType.Paid(
-            internal = internalName,
-            humanReadable = displayName
-        )
+        PlanType.PLAN_NAME_PLUS -> if (isTrial) {
+            PlanType.Trial(internal = internalName, humanReadable = displayName)
+        } else {
+            PlanType.Paid(
+                internal = internalName,
+                humanReadable = displayName
+            )
+        }
         else -> PlanType.Unknown(internal = internalName, humanReadable = displayName)
     }
 

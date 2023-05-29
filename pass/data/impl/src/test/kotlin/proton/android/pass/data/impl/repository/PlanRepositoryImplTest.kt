@@ -50,7 +50,7 @@ class PlanRepositoryImplTest {
         local.emitPlan(planEntity(type = PlanType.PLAN_NAME_PLUS, trialEnd = future))
 
         val plan = instance.sendUserAccessAndObservePlan(USER_ID, false).first()
-        assertThat(plan.planType).isInstanceOf(PlanType.Paid::class.java)
+        assertThat(plan.planType).isInstanceOf(PlanType.Trial::class.java)
     }
 
     @Test
@@ -105,7 +105,7 @@ class PlanRepositoryImplTest {
         local.emitPlan(planEntity(type = PlanType.PLAN_NAME_PLUS, trialEnd = future))
 
         val plan = instance.observePlan(USER_ID).first()
-        assertThat(plan.planType).isInstanceOf(PlanType.Paid::class.java)
+        assertThat(plan.planType).isInstanceOf(PlanType.Trial::class.java)
     }
 
     @Test

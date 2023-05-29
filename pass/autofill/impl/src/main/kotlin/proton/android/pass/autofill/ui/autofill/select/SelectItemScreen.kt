@@ -23,12 +23,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.autofill.entities.AutofillAppState
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SelectItemScreen(
     modifier: Modifier = Modifier,

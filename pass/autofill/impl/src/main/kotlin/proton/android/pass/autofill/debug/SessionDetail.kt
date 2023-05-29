@@ -55,7 +55,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import proton.android.pass.commonui.api.applyIf
@@ -75,7 +74,6 @@ object SessionDetail : NavItem(
     fun buildRoute(session: String): String = "$baseRoute/$session"
 }
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SessionDetail(
     modifier: Modifier = Modifier,

@@ -25,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.common.api.toOption
@@ -33,7 +32,6 @@ import proton.android.pass.commonui.api.BrowserUtils.openWebsite
 import java.lang.ref.WeakReference
 
 @Suppress("CyclomaticComplexMethod", "ComplexMethod")
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,

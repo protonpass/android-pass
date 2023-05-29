@@ -31,7 +31,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -43,7 +42,6 @@ import proton.android.pass.composecomponents.impl.theme.isDark
 import proton.android.pass.navigation.api.composable
 import proton.android.pass.navigation.api.rememberAppNavigator
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun AutofillDebugApp(
     modifier: Modifier = Modifier,

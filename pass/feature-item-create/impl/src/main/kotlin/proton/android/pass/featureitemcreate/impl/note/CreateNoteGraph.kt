@@ -22,7 +22,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.Option
@@ -53,8 +52,7 @@ object CreateNote : NavItem(
 @OptIn(
     ExperimentalAnimationApi::class,
     ExperimentalMaterialApi::class,
-    ExperimentalComposeUiApi::class,
-    ExperimentalLifecycleComposeApi::class
+    ExperimentalComposeUiApi::class
 )
 fun NavGraphBuilder.createNoteGraph(
     onNavigate: (CreateNoteNavigation) -> Unit

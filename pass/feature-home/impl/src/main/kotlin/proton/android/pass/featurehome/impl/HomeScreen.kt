@@ -38,7 +38,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import proton.android.pass.common.api.Option
@@ -74,7 +73,6 @@ import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 
 @OptIn(
-    ExperimentalLifecycleComposeApi::class,
     ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class
 )

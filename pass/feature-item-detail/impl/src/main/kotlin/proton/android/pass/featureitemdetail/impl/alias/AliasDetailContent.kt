@@ -13,7 +13,7 @@ import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
 import proton.pass.domain.AliasMailbox
-import proton.pass.domain.ItemType
+import proton.pass.domain.ItemContents
 import proton.pass.domain.Vault
 
 @Composable
@@ -33,18 +33,18 @@ fun AliasDetailContent(
     ) {
         AliasTitle(
             modifier = Modifier.padding(0.dp, 12.dp),
-            title = itemUiModel.name,
+            title = itemUiModel.contents.title,
             vault = vault,
         )
         AliasSection(
-            alias = (itemUiModel.itemType as ItemType.Alias).aliasEmail,
+            alias = (itemUiModel.contents as ItemContents.Alias).aliasEmail,
             mailboxes = mailboxes,
             isLoading = isLoading,
             onCopyAlias = onCopyAlias,
             onCreateLoginFromAlias = onCreateLoginFromAlias
         )
         NoteSection(
-            text = itemUiModel.note,
+            text = itemUiModel.contents.note,
             accentColor = PassTheme.colors.aliasInteractionNorm
         )
         MoreInfo(moreInfoUiState = moreInfoUiState)

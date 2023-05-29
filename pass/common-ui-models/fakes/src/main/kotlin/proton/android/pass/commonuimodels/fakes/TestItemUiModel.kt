@@ -20,7 +20,7 @@ object TestItemUiModel {
         return ItemUiModel(
             id = ItemId(id = "item-id"),
             shareId = ShareId(id = "share-id"),
-            itemType = itemType,
+            contents = itemType,
             name = title,
             note = note,
             createTime = createTime,

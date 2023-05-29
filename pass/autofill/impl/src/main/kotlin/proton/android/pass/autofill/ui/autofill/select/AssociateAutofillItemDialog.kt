@@ -27,8 +27,8 @@ import proton.android.pass.autofill.service.R
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 @Composable
@@ -59,7 +59,7 @@ internal fun AssociateAutofillItemDialog(
                     modifier = Modifier.padding(horizontal = 8.dp),
                     text = stringResource(
                         R.string.autofill_associate_web_app_name_dialog_title,
-                        itemUiModel.name
+                        itemUiModel.contents.title
                     ),
                     style = ProtonTheme.typography.defaultNorm
                 )
@@ -110,9 +110,10 @@ fun AssociateAutofillItemDialogPreview(
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = "ferri"),
                     shareId = ShareId(id = "rutrum"),
-                    name = "Willie Lowe",
-                    note = "repudiandae",
-                    itemType = ItemType.Password,
+                    contents = ItemContents.Note(
+                        title = "Willie Lowe",
+                        note = "repudiandae",
+                    ),
                     state = 6128,
                     createTime = Clock.System.now(),
                     modificationTime = Clock.System.now(),

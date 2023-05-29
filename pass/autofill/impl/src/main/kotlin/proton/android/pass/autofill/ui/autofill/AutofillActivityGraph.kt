@@ -29,9 +29,9 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.ADD_CUSTOM_FIELD_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
+import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
@@ -178,13 +178,13 @@ fun NavGraphBuilder.autofillActivityGraph(
                     destination = AddCustomFieldBottomSheet
                 )
 
+                is BaseLoginNavigation.CustomFieldTypeSelected -> appNavigator.navigate(
+                    destination = CustomFieldNameDialog,
+                    route = CustomFieldNameDialog.buildRoute(it.type),
+                    backDestination = CreateLogin
+                )
 
-                is BaseLoginNavigation.CustomFieldAdded -> {
-                    appNavigator.navigateUpWithResult(
-                        ADD_CUSTOM_FIELD_NAV_PARAMETER_KEY,
-                        it.type.name
-                    )
-                }
+                BaseLoginNavigation.CustomFieldAdded -> appNavigator.onBackClick()
             }
         }
     )

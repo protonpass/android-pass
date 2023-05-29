@@ -12,7 +12,9 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.repositories.DraftRepository
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestDraftRepository @Inject constructor() : DraftRepository {
     private val storeFlow = MutableStateFlow(persistentMapOf<String, Any>())
 

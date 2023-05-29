@@ -5,8 +5,6 @@ import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.bottomSheet
 
-const val ADD_CUSTOM_FIELD_NAV_PARAMETER_KEY = "addCustomField"
-
 object AddCustomFieldBottomSheet : NavItem("item/create/customfield/add/bottomsheet")
 
 enum class CustomFieldType {
@@ -32,13 +30,13 @@ fun NavGraphBuilder.addCustomFieldBottomSheetGraph(
                     onNavigate(BaseLoginNavigation.Close)
                 }
                 is CustomFieldNavigation.AddText -> {
-                    onNavigate(BaseLoginNavigation.CustomFieldAdded(CustomFieldType.Text))
+                    onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Text))
                 }
                 is CustomFieldNavigation.AddHidden -> {
-                    onNavigate(BaseLoginNavigation.CustomFieldAdded(CustomFieldType.Hidden))
+                    onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Hidden))
                 }
                 is CustomFieldNavigation.AddTotp -> {
-                    onNavigate(BaseLoginNavigation.CustomFieldAdded(CustomFieldType.Totp))
+                    onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Totp))
                 }
             }
         }

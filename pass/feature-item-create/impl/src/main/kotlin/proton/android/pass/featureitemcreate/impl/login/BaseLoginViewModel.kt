@@ -4,6 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.toImmutableSet
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -31,6 +31,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
@@ -46,6 +47,7 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.totp.api.TotpManager
+import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.PlanType
 
 abstract class BaseLoginViewModel(
@@ -54,9 +56,9 @@ abstract class BaseLoginViewModel(
     private val clipboardManager: ClipboardManager,
     private val totpManager: TotpManager,
     private val draftRepository: DraftRepository,
+    private val encryptionContextProvider: EncryptionContextProvider,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    encryptionContextProvider: EncryptionContextProvider,
     ffRepo: FeatureFlagsPreferencesRepository,
 ) : ViewModel() {
 
@@ -65,20 +67,13 @@ abstract class BaseLoginViewModel(
     protected val aliasLocalItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
     private val aliasDraftState: Flow<Option<AliasItem>> = draftRepository
         .get(CreateAliasViewModel.KEY_DRAFT_ALIAS)
-    private val passwordDraftState: Flow<Option<String>> = draftRepository
-        .get<String>(DRAFT_PASSWORD_KEY)
-        .onEach {
-            if (it is Some) {
-                draftRepository.delete<String>(DRAFT_PASSWORD_KEY).value()
-                    ?.let { encryptedPassword ->
-                        loginItemState.update { loginItem ->
-                            encryptionContextProvider.withEncryptionContext {
-                                loginItem.copy(password = decrypt(encryptedPassword))
-                            }
-                        }
-                    }
-            }
+
+    init {
+        viewModelScope.launch {
+            launch { observeGeneratedPassword() }
+            launch { observeNewCustomField() }
         }
+    }
 
     private val aliasState: Flow<Option<AliasItem>> = combine(
         aliasLocalItemState,
@@ -115,14 +110,13 @@ abstract class BaseLoginViewModel(
 
     protected val upgradeInfoFlow: Flow<UpgradeInfo> = observeUpgradeInfo().distinctUntilChanged()
 
-    private val loginAliasItemWrapperState = combineN(
-        passwordDraftState,
+    private val loginAliasItemWrapperState = combine(
         loginItemState,
         loginItemValidationErrorsState,
         canUpdateUsernameState,
         observeCurrentUser().map { it.email },
         aliasState
-    ) { _, loginItem, loginItemValidationErrors, updateUsername, primaryEmail, aliasItem ->
+    ) { loginItem, loginItemValidationErrors, updateUsername, primaryEmail, aliasItem ->
         LoginAliasItemWrapper(
             loginItem,
             loginItemValidationErrors,
@@ -402,6 +396,40 @@ abstract class BaseLoginViewModel(
     protected fun onUserEditedContent() {
         if (hasUserEditedContentFlow.value) return
         hasUserEditedContentFlow.update { true }
+    }
+
+    private suspend fun observeGeneratedPassword() {
+        draftRepository
+            .get<String>(DRAFT_PASSWORD_KEY)
+            .collect {
+                if (it is Some) {
+                    draftRepository.delete<String>(DRAFT_PASSWORD_KEY).value()
+                        ?.let { encryptedPassword ->
+                            loginItemState.update { loginItem ->
+                                encryptionContextProvider.withEncryptionContext {
+                                    loginItem.copy(password = decrypt(encryptedPassword))
+                                }
+                            }
+                        }
+                }
+            }
+    }
+
+    private suspend fun observeNewCustomField() {
+        draftRepository
+            .get<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
+            .collect {
+                if (it is Some) {
+                    draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY).value()
+                        ?.let { customField ->
+                            loginItemState.update { loginItem ->
+                                val customFields = loginItem.customFields.toMutableList()
+                                customFields.add(customField)
+                                loginItem.copy(customFields = customFields.toPersistentList())
+                            }
+                        }
+                }
+            }
     }
 
     companion object {

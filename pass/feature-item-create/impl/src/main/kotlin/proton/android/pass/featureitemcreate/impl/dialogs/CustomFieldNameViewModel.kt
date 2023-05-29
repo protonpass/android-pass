@@ -12,15 +12,18 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
+import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 import proton.pass.domain.CustomFieldContent
+import proton.pass.domain.HiddenState
 import javax.inject.Inject
 
 @HiltViewModel
 class CustomFieldNameViewModel @Inject constructor(
     private val draftRepository: DraftRepository,
+    private val encryptionContextProvider: EncryptionContextProvider,
     savedStateHandleProvider: SavedStateHandleProvider
 ) : ViewModel() {
 
@@ -56,8 +59,21 @@ class CustomFieldNameViewModel @Inject constructor(
     fun onSave() = viewModelScope.launch {
         val field = when (customFieldType) {
             CustomFieldType.Text -> CustomFieldContent.Text(label = nameFlow.value, value = "")
-            CustomFieldType.Hidden -> CustomFieldContent.Hidden(label = nameFlow.value, value = "")
-            CustomFieldType.Totp -> CustomFieldContent.Totp(label = nameFlow.value, value = "")
+            CustomFieldType.Hidden -> {
+                val value = encryptionContextProvider.withEncryptionContext { encrypt("") }
+                CustomFieldContent.Hidden(
+                    label = nameFlow.value,
+                    value = HiddenState.Concealed(encrypted = value)
+                )
+            }
+
+            CustomFieldType.Totp -> {
+                val value = encryptionContextProvider.withEncryptionContext { encrypt("") }
+                CustomFieldContent.Totp(
+                    label = nameFlow.value,
+                    value = HiddenState.Concealed(encrypted = value)
+                )
+            }
         }
 
         draftRepository.save(DRAFT_CUSTOM_FIELD_KEY, field)

@@ -24,6 +24,7 @@ import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.LoginUpdated
 
+@Suppress("ComplexMethod")
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun UpdateLogin(
@@ -66,26 +67,29 @@ fun UpdateLogin(
             showCreateAliasButton = true,
             topBarActionName = stringResource(id = R.string.action_save),
             isUpdate = true,
-            onUpClick = onExit,
-            onSuccess = { shareId, itemId, _ ->
-                viewModel.onEmitSnackbarMessage(LoginUpdated)
-                onNavigate(BaseLoginNavigation.LoginUpdated(shareId, itemId))
-            },
-            onSubmit = viewModel::updateItem,
-            onUsernameChange = viewModel::onUsernameChange,
-            onPasswordChange = viewModel::onPasswordChange,
-            onWebsiteSectionEvent = {
+            onEvent = {
                 when (it) {
-                    WebsiteSectionEvent.AddWebsite -> viewModel.onAddWebsite()
-                    is WebsiteSectionEvent.RemoveWebsite -> viewModel.onRemoveWebsite(it.index)
-                    is WebsiteSectionEvent.WebsiteValueChanged ->
-                        viewModel.onWebsiteChange(it.value, it.index)
+                    LoginContentEvent.Up -> onExit()
+                    is LoginContentEvent.Success -> {
+                        viewModel.onEmitSnackbarMessage(LoginUpdated)
+                        onNavigate(BaseLoginNavigation.LoginUpdated(it.shareId, it.itemId))
+                    }
+                    is LoginContentEvent.Submit -> viewModel.updateItem(it.shareId)
+                    is LoginContentEvent.OnUsernameChange -> viewModel.onUsernameChange(it.username)
+                    is LoginContentEvent.OnPasswordChange -> viewModel.onPasswordChange(it.password)
+                    is LoginContentEvent.OnWebsiteEvent -> when (val event = it.event) {
+                        WebsiteSectionEvent.AddWebsite -> viewModel.onAddWebsite()
+                        is WebsiteSectionEvent.RemoveWebsite -> viewModel.onRemoveWebsite(event.index)
+                        is WebsiteSectionEvent.WebsiteValueChanged ->
+                            viewModel.onWebsiteChange(event.value, event.index)
+                    }
+                    is LoginContentEvent.OnNoteChange -> viewModel.onNoteChange(it.note)
+                    is LoginContentEvent.OnLinkedAppDelete -> viewModel.onDeleteLinkedApp(it.app)
+                    is LoginContentEvent.OnTotpChange -> viewModel.onTotpChange(it.totp)
+                    LoginContentEvent.PasteTotp -> viewModel.onPasteTotp()
+                    is LoginContentEvent.OnCustomFieldEvent -> {} // To be done
                 }
             },
-            onNoteChange = viewModel::onNoteChange,
-            onLinkedAppDelete = viewModel::onDeleteLinkedApp,
-            onTotpChange = viewModel::onTotpChange,
-            onPasteTotpClick = viewModel::onPasteTotp,
             onNavigate = { onNavigate(it) },
             titleSection = {
                 TitleSection(

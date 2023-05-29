@@ -25,7 +25,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
-import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AddTotp
@@ -50,16 +49,10 @@ internal fun LoginItemForm(
     focusLastWebsite: Boolean,
     canUpdateUsername: Boolean,
     websitesWithErrors: ImmutableList<Int>,
-    onUsernameChange: (String) -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onTotpChange: (String) -> Unit,
-    onWebsiteSectionEvent: (WebsiteSectionEvent) -> Unit,
-    onNoteChange: (String) -> Unit,
+    onEvent: (LoginContentEvent) -> Unit,
     onGeneratePasswordClick: () -> Unit,
     onCreateAliasClick: () -> Unit,
     onAliasOptionsClick: () -> Unit,
-    onPasteTotpClick: () -> Unit,
-    onLinkedAppDelete: (PackageInfoUi) -> Unit,
     onNavigate: (BaseLoginNavigation) -> Unit,
     titleSection: @Composable ColumnScope.() -> Unit
 ) {
@@ -84,30 +77,19 @@ internal fun LoginItemForm(
                 totpUiState = totpUiState,
                 isEditAllowed = isEditAllowed,
                 isTotpError = isTotpError,
-                onUsernameChange = onUsernameChange,
-                onUsernameFocus = { isFocused ->
-                    currentStickyFormOption = if (isFocused) {
-                        AliasOptions
-                    } else {
-                        None
-                    }
-                },
+                onEvent = onEvent,
                 onAliasOptionsClick = onAliasOptionsClick,
-                onPasswordChange = onPasswordChange,
-                onPasswordFocus = { isFocused ->
-                    currentStickyFormOption = if (isFocused) {
-                        GeneratePassword
-                    } else {
+                onFocusChange = { field, isFocused ->
+                    currentStickyFormOption = if (!isFocused) {
                         None
-                    }
-                },
-                onTotpChanged = onTotpChange,
-                onTotpFocus = { isFocused ->
-                    currentStickyFormOption = if (isFocused) {
-                        AddTotp
                     } else {
-                        None
+                        when (field) {
+                            MainLoginField.Username -> AliasOptions
+                            MainLoginField.Password -> GeneratePassword
+                            MainLoginField.Totp -> AddTotp
+                        }
                     }
+
                 },
                 onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) }
             )
@@ -116,25 +98,25 @@ internal fun LoginItemForm(
                 isEditAllowed = isEditAllowed,
                 websitesWithErrors = websitesWithErrors,
                 focusLastWebsite = focusLastWebsite,
-                onWebsiteSectionEvent = onWebsiteSectionEvent
+                onWebsiteSectionEvent = { onEvent(LoginContentEvent.OnWebsiteEvent(it)) }
             )
             SimpleNoteSection(
                 value = loginItem.note,
                 enabled = isEditAllowed,
-                onChange = onNoteChange
+                onChange = { onEvent(LoginContentEvent.OnNoteChange(it)) }
             )
             if (isUpdate) {
                 LinkedAppsListSection(
                     packageInfoUiSet = loginItem.packageInfoSet,
                     isEditable = true,
-                    onLinkedAppDelete = onLinkedAppDelete
+                    onLinkedAppDelete = { onEvent(LoginContentEvent.OnLinkedAppDelete(it)) }
                 )
             }
 
             CustomFieldsContent(
                 state = customFieldsState,
                 canEdit = isEditAllowed,
-                onNavigate = onNavigate
+                onEvent = { onEvent(LoginContentEvent.OnCustomFieldEvent(it)) }
             )
 
             if (isCurrentStickyVisible) {
@@ -166,14 +148,14 @@ internal fun LoginItemForm(
                         keyboardController?.hide()
                     },
                     onPrefillCurrentEmailClick = {
-                        onUsernameChange(it)
+                        onEvent(LoginContentEvent.OnUsernameChange(it))
                         keyboardController?.hide()
                     }
                 )
 
                 AddTotp -> StickyTotpOptions(
                     onPasteCode = {
-                        onPasteTotpClick()
+                        onEvent(LoginContentEvent.PasteTotp)
                         keyboardController?.hide()
                     },
                     onScanCode = {

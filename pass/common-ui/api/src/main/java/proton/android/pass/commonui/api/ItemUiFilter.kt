@@ -1,7 +1,7 @@
 package proton.android.pass.commonui.api
 
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.pass.domain.ItemType
+import proton.pass.domain.ItemContents
 
 object ItemUiFilter {
     fun filterByQuery(
@@ -20,32 +20,31 @@ object ItemUiFilter {
         }
 
     private fun isItemMatch(item: ItemUiModel, query: String): Boolean {
-        if (item.name.lowercase().contains(query)) return true
-        if (item.note.lowercase().contains(query)) return true
+        if (item.contents.title.lowercase().contains(query)) return true
+        if (item.contents.note.lowercase().contains(query)) return true
 
-        return when (val itemType = item.itemType) {
-            is ItemType.Alias -> isAliasMatch(itemType, query)
-            is ItemType.Login -> isLoginMatch(itemType, query)
-            is ItemType.Note -> isNoteMatch(itemType, query)
-            is ItemType.Password -> false
-            is ItemType.Unknown -> false
+        return when (val contents = item.contents) {
+            is ItemContents.Alias -> isAliasMatch(contents, query)
+            is ItemContents.Login -> isLoginMatch(contents, query)
+            is ItemContents.Note -> isNoteMatch(contents, query)
+            is ItemContents.Unknown -> return false
         }
     }
 
-    private fun isAliasMatch(itemType: ItemType.Alias, query: String): Boolean =
-        itemType.aliasEmail.lowercase().contains(query)
+    private fun isAliasMatch(content: ItemContents.Alias, query: String): Boolean =
+        content.aliasEmail.lowercase().contains(query)
 
-    private fun isLoginMatch(itemType: ItemType.Login, query: String): Boolean {
-        if (itemType.username.lowercase().contains(query)) return true
+    private fun isLoginMatch(content: ItemContents.Login, query: String): Boolean {
+        if (content.username.lowercase().contains(query)) return true
 
-        val anyWebsiteMatches = itemType.websites.any { it.lowercase().contains(query) }
+        val anyWebsiteMatches = content.urls.any { it.lowercase().contains(query) }
         if (anyWebsiteMatches) return true
 
         return false
     }
 
-    private fun isNoteMatch(itemType: ItemType.Note, query: String): Boolean =
-        itemType.text.lowercase().contains(query)
+    private fun isNoteMatch(content: ItemContents.Note, query: String): Boolean =
+        content.note.lowercase().contains(query)
 
     private fun ItemUiModel.matchesQuery(query: String): Boolean =
         isItemMatch(this, query)

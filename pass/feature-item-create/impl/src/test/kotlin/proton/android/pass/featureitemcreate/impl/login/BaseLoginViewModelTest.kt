@@ -64,8 +64,8 @@ internal class BaseLoginViewModelTest {
         val titleInput = "Title Changed"
         baseLoginViewModel.onTitleChange(titleInput)
         baseLoginViewModel.baseLoginUiState.test {
-            assertThat(awaitItem().loginItem)
-                .isEqualTo(Initial.loginItem.copy(title = titleInput))
+            assertThat(awaitItem().contents)
+                .isEqualTo(Initial.contents.copy(title = titleInput))
         }
     }
 
@@ -74,8 +74,8 @@ internal class BaseLoginViewModelTest {
         val usernameInput = "Username Changed"
         baseLoginViewModel.onUsernameChange(usernameInput)
         baseLoginViewModel.baseLoginUiState.test {
-            assertThat(awaitItem().loginItem)
-                .isEqualTo(Initial.loginItem.copy(username = usernameInput))
+            assertThat(awaitItem().contents)
+                .isEqualTo(Initial.contents.copy(username = usernameInput))
         }
     }
 
@@ -84,8 +84,8 @@ internal class BaseLoginViewModelTest {
         val passwordInput = "Password Changed"
         baseLoginViewModel.onPasswordChange(passwordInput)
         baseLoginViewModel.baseLoginUiState.test {
-            assertThat(awaitItem().loginItem)
-                .isEqualTo(Initial.loginItem.copy(password = passwordInput))
+            assertThat(awaitItem().contents)
+                .isEqualTo(Initial.contents.copy(password = passwordInput))
         }
     }
 
@@ -94,8 +94,8 @@ internal class BaseLoginViewModelTest {
         val noteInput = "Note Changed"
         baseLoginViewModel.onNoteChange(noteInput)
         baseLoginViewModel.baseLoginUiState.test {
-            assertThat(awaitItem().loginItem)
-                .isEqualTo(Initial.loginItem.copy(note = noteInput))
+            assertThat(awaitItem().contents)
+                .isEqualTo(Initial.contents.copy(note = noteInput))
         }
     }
 
@@ -104,8 +104,8 @@ internal class BaseLoginViewModelTest {
         val url = "proton.me"
         baseLoginViewModel.onWebsiteChange(url, 0)
         baseLoginViewModel.baseLoginUiState.test {
-            assertThat(awaitItem().loginItem)
-                .isEqualTo(Initial.loginItem.copy(websiteAddresses = listOf(url)))
+            assertThat(awaitItem().contents)
+                .isEqualTo(Initial.contents.copy(websiteAddresses = listOf(url)))
         }
     }
 
@@ -113,8 +113,8 @@ internal class BaseLoginViewModelTest {
     fun `when a website has been added the state should add it`() = runTest {
         baseLoginViewModel.onAddWebsite()
         baseLoginViewModel.baseLoginUiState.test {
-            assertThat(awaitItem().loginItem)
-                .isEqualTo(Initial.loginItem.copy(websiteAddresses = listOf("", "")))
+            assertThat(awaitItem().contents)
+                .isEqualTo(Initial.contents.copy(websiteAddresses = listOf("", "")))
         }
     }
 
@@ -122,8 +122,8 @@ internal class BaseLoginViewModelTest {
     fun `when a website has been removed the state should remove it`() = runTest {
         baseLoginViewModel.onRemoveWebsite(0)
         baseLoginViewModel.baseLoginUiState.test {
-            assertThat(awaitItem().loginItem)
-                .isEqualTo(Initial.loginItem.copy(websiteAddresses = emptyList()))
+            assertThat(awaitItem().contents)
+                .isEqualTo(Initial.contents.copy(websiteAddresses = emptyList()))
         }
     }
 }

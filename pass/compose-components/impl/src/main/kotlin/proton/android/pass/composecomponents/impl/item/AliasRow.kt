@@ -11,7 +11,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
-import proton.pass.domain.ItemType
+import proton.pass.domain.ItemContents
 
 @Composable
 internal fun AliasRow(
@@ -20,35 +20,34 @@ internal fun AliasRow(
     highlight: String = "",
     vaultIcon: Int? = null
 ) {
-    with(item.itemType as ItemType.Alias) {
-        var title = AnnotatedString(item.name)
-        var aliasEmail = AnnotatedString(this.aliasEmail)
-        var note: AnnotatedString? = null
-        if (highlight.isNotBlank()) {
-            val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
-            val titleMatches = regex.findAll(item.name)
-            if (titleMatches.any()) {
-                title = item.name.highlight(titleMatches)
-            }
-            val aliasEmailMatches = regex.findAll(this.aliasEmail)
-            if (aliasEmailMatches.any()) {
-                aliasEmail = this.aliasEmail.highlight(aliasEmailMatches)
-            }
-            val cleanNote = item.note.replace("\n", " ")
-            val noteMatches = regex.findAll(cleanNote)
-            if (noteMatches.any()) {
-                note = cleanNote.highlight(noteMatches)
-            }
+    val content = item.contents as ItemContents.Alias
+    var title = AnnotatedString(content.title)
+    var aliasEmail = AnnotatedString(content.aliasEmail)
+    var note: AnnotatedString? = null
+    if (highlight.isNotBlank()) {
+        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
+        val titleMatches = regex.findAll(content.title)
+        if (titleMatches.any()) {
+            title = content.title.highlight(titleMatches)
         }
-
-        ItemRow(
-            modifier = modifier,
-            icon = { AliasIcon() },
-            title = title,
-            subtitles = listOfNotNull(aliasEmail, note).toImmutableList(),
-            vaultIcon = vaultIcon
-        )
+        val aliasEmailMatches = regex.findAll(content.aliasEmail)
+        if (aliasEmailMatches.any()) {
+            aliasEmail = content.aliasEmail.highlight(aliasEmailMatches)
+        }
+        val cleanNote = content.note.replace("\n", " ")
+        val noteMatches = regex.findAll(cleanNote)
+        if (noteMatches.any()) {
+            note = cleanNote.highlight(noteMatches)
+        }
     }
+
+    ItemRow(
+        modifier = modifier,
+        icon = { AliasIcon() },
+        title = title,
+        subtitles = listOfNotNull(aliasEmail, note).toImmutableList(),
+        vaultIcon = vaultIcon
+    )
 }
 
 class ThemedAliasItemPreviewProvider :

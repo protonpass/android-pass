@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -22,7 +21,6 @@ import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.toUiModel
-import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -47,7 +45,9 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
+import proton.pass.domain.HiddenState
 import proton.pass.domain.Item
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
@@ -123,7 +123,7 @@ class UpdateLoginViewModel @Inject constructor(
     fun setAliasItem(aliasItem: AliasItem) {
         canUpdateUsernameState.update { false }
         aliasLocalItemState.update { aliasItem.toOption() }
-        loginItemState.update {
+        itemContentState.update {
             it.copy(
                 username = aliasItem.aliasToBeCreated ?: it.username
             )
@@ -132,11 +132,17 @@ class UpdateLoginViewModel @Inject constructor(
 
     fun setTotp(uri: String?) {
         onUserEditedContent()
-        val currentValue = loginItemState.value
-        loginItemState.update {
-            it.copy(
-                primaryTotp = uri ?: currentValue.primaryTotp
+        val primaryTotp = if (uri != null) {
+            HiddenState.Revealed(
+                encryptionContextProvider.withEncryptionContext { encrypt(uri) },
+                uri
             )
+        } else {
+            itemContentState.value.primaryTotp
+        }
+
+        itemContentState.update {
+            it.copy(primaryTotp = primaryTotp)
         }
     }
 
@@ -147,7 +153,7 @@ class UpdateLoginViewModel @Inject constructor(
         if (!shouldUpdate) return@launch
 
         isLoadingState.update { IsLoadingState.Loading }
-        val loginItem = loginItemState.value
+        val loginItem = itemContentState.value
         val userId = accountManager.getPrimaryUserId()
             .first { userId -> userId != null }
         if (userId != null) {
@@ -180,22 +186,21 @@ class UpdateLoginViewModel @Inject constructor(
                 primaryTotp = itemContents.primaryTotp
             )
 
-            LoginItem(
+            ItemContents.Login(
                 title = decrypt(item.title),
                 username = itemContents.username,
-                password = decrypt(itemContents.password),
-                websiteAddresses = websites,
+                password = HiddenState.Concealed(itemContents.password),
+                urls = websites,
                 note = decrypt(item.note),
-                packageInfoSet = item.packageInfoSet.map(::PackageInfoUi).toImmutableSet(),
-                primaryTotp = totp,
-                extraTotpSet = emptySet(),
+                packageInfoSet = item.packageInfoSet,
+                primaryTotp = HiddenState.Concealed(totp),
                 customFields = itemContents.customFields.mapNotNull {
                     it.toContent(this@withEncryptionContext, isConcealed = false)
                 }.toImmutableList()
             )
         }
 
-        loginItemState.update { loginItem }
+        itemContentState.update { loginItem }
     }
 
     private suspend fun performCreateAlias(
@@ -233,10 +238,10 @@ class UpdateLoginViewModel @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         currentItem: Item,
-        loginItem: LoginItem
+        contents: ItemContents.Login
     ) {
         runCatching {
-            updateItem(userId, shareId, currentItem, loginItem.toItemContents())
+            updateItem(userId, shareId, currentItem, contents)
         }.onSuccess { item ->
             isItemSavedState.update {
                 encryptionContextProvider.withEncryptionContext {

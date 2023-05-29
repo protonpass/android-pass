@@ -47,7 +47,7 @@ import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
-import proton.pass.domain.ItemType
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 
 @OptIn(
@@ -118,10 +118,7 @@ fun HomeScreen(
                     },
                     onCopyPassword = {
                         scope.launch { bottomSheetState.hide() }
-                        homeViewModel.copyToClipboard(
-                            text = it,
-                            HomeClipboardType.Password
-                        )
+                        homeViewModel.copyToClipboard(it, HomeClipboardType.Password)
                     },
                     onEdit = { shareId, itemId ->
                         scope.launch { bottomSheetState.hide() }
@@ -206,17 +203,16 @@ fun HomeScreen(
                         }
                     },
                     icon = {
-                        when (val itemType = selectedItem!!.itemType) {
-                            is ItemType.Login -> LoginIcon(
-                                text = selectedItem!!.name,
-                                itemType = itemType,
+                        when (val contents = selectedItem!!.contents) {
+                            is ItemContents.Login -> LoginIcon(
+                                text = selectedItem!!.contents.title,
+                                content = contents,
                                 canLoadExternalImages = homeUiState.homeListUiState.canLoadExternalImages
                             )
 
-                            is ItemType.Alias -> AliasIcon()
-                            is ItemType.Note -> NoteIcon()
-                            is ItemType.Password -> {}
-                            is ItemType.Unknown -> {}
+                            is ItemContents.Alias -> AliasIcon()
+                            is ItemContents.Note -> NoteIcon()
+                            is ItemContents.Unknown -> {}
                         }
                     }
                 )
@@ -288,17 +284,17 @@ fun HomeScreen(
                 },
                 onItemMenuClick = { item ->
                     selectedItem = item
-                    if (isTrashMode) {
-                        currentBottomSheet = TrashItemOptions
-                    } else {
-                        when (item.itemType) {
-                            is ItemType.Alias -> currentBottomSheet = AliasOptions
-                            is ItemType.Login -> currentBottomSheet = LoginOptions
-                            is ItemType.Note -> currentBottomSheet = NoteOptions
-                            ItemType.Password -> {}
-                            ItemType.Unknown -> {}
+                    currentBottomSheet =
+                        if (isTrashMode) {
+                            TrashItemOptions
+                        } else {
+                            when (item.contents) {
+                                is ItemContents.Alias -> AliasOptions
+                                is ItemContents.Login -> LoginOptions
+                                is ItemContents.Note -> NoteOptions
+                                is ItemContents.Unknown -> LoginOptions
+                            }
                         }
-                    }
                     scope.launch { bottomSheetState.show() }
                 },
                 onRefresh = { homeViewModel.onRefresh() },
@@ -338,8 +334,8 @@ fun HomeScreen(
                 isLoading = actionState == ActionState.Loading,
                 show = shouldShowDeleteItemDialog,
                 onConfirm = {
-                    val item = selectedItem ?: return@ConfirmDeleteItemDialog
-                    homeViewModel.deleteItem(item.shareId, item.id, item.itemType)
+                    val itemUiModel = selectedItem ?: return@ConfirmDeleteItemDialog
+                    homeViewModel.deleteItem(itemUiModel)
                 },
                 onDismiss = { shouldShowDeleteItemDialog = false }
             )

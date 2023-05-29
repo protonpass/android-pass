@@ -6,19 +6,20 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.pass.domain.Item
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 fun ItemUiModel.toAutoFillItem(): Option<AutofillItem> =
-    if (itemType is ItemType.Login) {
-        val asLogin = itemType as ItemType.Login
+    if (contents is ItemContents.Login) {
+        val asLogin = contents as ItemContents.Login
         AutofillItem(
             shareId = shareId.id,
             itemId = id.id,
             username = asLogin.username,
-            password = asLogin.password,
-            totp = asLogin.primaryTotp
+            password = asLogin.password.encrypted,
+            totp = asLogin.primaryTotp.encrypted
         ).toOption()
     } else {
         None

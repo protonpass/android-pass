@@ -20,7 +20,7 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.buttons.PassFloatingActionButton
 import proton.android.pass.composecomponents.impl.topbar.SearchTopBar
 import proton.android.pass.composecomponents.impl.topbar.iconbutton.BackArrowCircleIconButton
-import proton.pass.domain.ItemType
+import proton.pass.domain.ItemContents
 
 @Composable
 internal fun SelectItemScreenContent(
@@ -100,7 +100,7 @@ internal fun SelectItemScreenContent(
             onScrolledToTop = onScrolledToTop,
             onItemOptionsClicked = onItemOptionsClicked,
             onItemClicked = {
-                val item = it.itemType as? ItemType.Login ?: return@SelectItemList
+                val item = it.contents as? ItemContents.Login ?: return@SelectItemList
                 if (shouldAskForAssociation(item, packageInfo?.packageName, webDomain)) {
                     itemClicked = it.toOption()
                     showAssociateDialog = true
@@ -114,9 +114,9 @@ internal fun SelectItemScreenContent(
 }
 
 private fun shouldAskForAssociation(
-    item: ItemType.Login,
+    item: ItemContents.Login,
     packageName: String?,
     webDomain: String?
 ): Boolean = !packageName.isNullOrBlank() &&
     !item.packageInfoSet.map { it.packageName.value }.contains(packageName) ||
-    !webDomain.isNullOrBlank() && !item.websites.contains(webDomain)
+    !webDomain.isNullOrBlank() && !item.urls.contains(webDomain)

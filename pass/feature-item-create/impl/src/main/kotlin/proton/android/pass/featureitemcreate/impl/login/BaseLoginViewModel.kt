@@ -3,7 +3,6 @@ package proton.android.pass.featureitemcreate.impl.login
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.collections.immutable.toImmutableSet
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -48,6 +47,8 @@ import proton.android.pass.preferences.FeatureFlag
 import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.CustomFieldContent
+import proton.pass.domain.HiddenState
+import proton.pass.domain.ItemContents
 import proton.pass.domain.PlanType
 
 abstract class BaseLoginViewModel(
@@ -63,7 +64,8 @@ abstract class BaseLoginViewModel(
 ) : ViewModel() {
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    protected val loginItemState: MutableStateFlow<LoginItem> = MutableStateFlow(LoginItem.Empty)
+    protected val itemContentState: MutableStateFlow<ItemContents.Login> =
+        MutableStateFlow(ItemContents.Login.Empty)
     protected val aliasLocalItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
     private val aliasDraftState: Flow<Option<AliasItem>> = draftRepository
         .get(CreateAliasViewModel.KEY_DRAFT_ALIAS)
@@ -111,7 +113,7 @@ abstract class BaseLoginViewModel(
     protected val upgradeInfoFlow: Flow<UpgradeInfo> = observeUpgradeInfo().distinctUntilChanged()
 
     private val loginAliasItemWrapperState = combine(
-        loginItemState,
+        itemContentState,
         loginItemValidationErrorsState,
         canUpdateUsernameState,
         observeCurrentUser().map { it.email },
@@ -127,7 +129,7 @@ abstract class BaseLoginViewModel(
     }
 
     private data class LoginAliasItemWrapper(
-        val loginItem: LoginItem,
+        val content: ItemContents.Login,
         val loginItemValidationErrors: Set<LoginItemValidationErrors>,
         val canUpdateUsername: Boolean,
         val primaryEmail: String?,
@@ -170,10 +172,11 @@ abstract class BaseLoginViewModel(
             val plan = upgradeInfoResult.getOrNull()?.plan
             when (plan?.planType) {
                 is PlanType.Paid, is PlanType.Trial -> {
-                    CustomFieldsState.Enabled(loginItemWrapper.loginItem.customFields)
+                    CustomFieldsState.Enabled(loginItemWrapper.content.customFields)
                 }
+
                 else -> {
-                    if (loginItemWrapper.loginItem.customFields.isNotEmpty()) {
+                    if (loginItemWrapper.content.customFields.isNotEmpty()) {
                         CustomFieldsState.Limited
                     } else {
                         CustomFieldsState.Disabled
@@ -183,7 +186,7 @@ abstract class BaseLoginViewModel(
         }
 
         BaseLoginUiState(
-            loginItem = loginItemWrapper.loginItem,
+            contents = loginItemWrapper.content,
             validationErrors = loginItemWrapper.loginItemValidationErrors,
             isLoadingState = isLoading,
             isItemSaved = events.itemSavedState,
@@ -206,7 +209,7 @@ abstract class BaseLoginViewModel(
 
     fun onTitleChange(value: String) {
         onUserEditedContent()
-        loginItemState.update { it.copy(title = value) }
+        itemContentState.update { it.copy(title = value) }
         loginItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(LoginItemValidationErrors.BlankTitle) }
         }
@@ -219,18 +222,26 @@ abstract class BaseLoginViewModel(
 
     fun onUsernameChange(value: String) {
         onUserEditedContent()
-        loginItemState.update { it.copy(username = value) }
+        itemContentState.update { it.copy(username = value) }
     }
 
     fun onPasswordChange(value: String) {
         onUserEditedContent()
-        loginItemState.update { it.copy(password = value) }
+        encryptionContextProvider.withEncryptionContext {
+            itemContentState.update {
+                it.copy(password = HiddenState.Revealed(encrypt(value), value))
+            }
+        }
     }
 
     fun onTotpChange(value: String) {
         onUserEditedContent()
         val newValue = value.replace(" ", "").replace("\n", "")
-        loginItemState.update { it.copy(primaryTotp = newValue) }
+        encryptionContextProvider.withEncryptionContext {
+            itemContentState.update {
+                it.copy(primaryTotp = HiddenState.Revealed(encrypt(newValue), newValue))
+            }
+        }
         loginItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidTotp) }
         }
@@ -239,9 +250,9 @@ abstract class BaseLoginViewModel(
     fun onWebsiteChange(value: String, index: Int) {
         onUserEditedContent()
         val newValue = value.replace(" ", "").replace("\n", "")
-        loginItemState.update {
+        itemContentState.update {
             it.copy(
-                websiteAddresses = it.websiteAddresses.toMutableList()
+                urls = it.urls.toMutableList()
                     .apply { this[index] = newValue }
             )
         }
@@ -253,21 +264,19 @@ abstract class BaseLoginViewModel(
 
     fun onAddWebsite() {
         onUserEditedContent()
-        loginItemState.update {
-            val websites = sanitizeWebsites(it.websiteAddresses).toMutableList()
+        itemContentState.update {
+            val websites = sanitizeWebsites(it.urls).toMutableList()
             websites.add("")
 
-            it.copy(websiteAddresses = websites)
+            it.copy(urls = websites)
         }
         focusLastWebsiteState.update { true }
     }
 
     fun onRemoveWebsite(index: Int) {
         onUserEditedContent()
-        loginItemState.update {
-            it.copy(
-                websiteAddresses = it.websiteAddresses.toMutableList().apply { removeAt(index) }
-            )
+        itemContentState.update {
+            it.copy(urls = it.urls.toMutableList().apply { removeAt(index) })
         }
         loginItemValidationErrorsState.update {
             it.toMutableSet().apply { remove(LoginItemValidationErrors.InvalidUrl(index)) }
@@ -277,7 +286,7 @@ abstract class BaseLoginViewModel(
 
     fun onNoteChange(value: String) {
         onUserEditedContent()
-        loginItemState.update { it.copy(note = value) }
+        itemContentState.update { it.copy(note = value) }
     }
 
     fun onEmitSnackbarMessage(snackbarMessage: LoginSnackbarMessages) =
@@ -290,7 +299,7 @@ abstract class BaseLoginViewModel(
         aliasLocalItemState.update { aliasItem.toOption() }
         val alias = aliasItem.aliasToBeCreated
         if (alias != null) {
-            loginItemState.update { it.copy(username = alias) }
+            itemContentState.update { it.copy(username = alias) }
             canUpdateUsernameState.update { false }
         }
     }
@@ -300,10 +309,13 @@ abstract class BaseLoginViewModel(
     }
 
     protected suspend fun validateItem(): Boolean {
-        loginItemState.update { state ->
-            val websites = sanitizeWebsites(state.websiteAddresses)
-            val otp = if (state.primaryTotp.isNotBlank()) {
-                sanitizeOTP(state.primaryTotp)
+        itemContentState.update { state ->
+            val websites = sanitizeWebsites(state.urls)
+            val decryptedTotp = encryptionContextProvider.withEncryptionContext {
+                decrypt(state.primaryTotp.encrypted)
+            }
+            val sanitisedPrimaryTotp = if (decryptedTotp.isNotBlank()) {
+                sanitizeOTP(decryptedTotp)
                     .fold(
                         onSuccess = { it },
                         onFailure = {
@@ -318,9 +330,12 @@ abstract class BaseLoginViewModel(
             } else {
                 ""
             }
-            state.copy(websiteAddresses = websites, primaryTotp = otp)
+            val hiddenState = encryptionContextProvider.withEncryptionContext {
+                HiddenState.Revealed(encrypt(sanitisedPrimaryTotp), sanitisedPrimaryTotp)
+            }
+            state.copy(urls = websites, primaryTotp = hiddenState)
         }
-        val loginItem = loginItemState.value
+        val loginItem = itemContentState.value
         val loginItemValidationErrors = loginItem.validate()
         if (loginItemValidationErrors.isNotEmpty()) {
             loginItemValidationErrorsState.update { loginItemValidationErrors }
@@ -362,8 +377,8 @@ abstract class BaseLoginViewModel(
 
     fun onDeleteLinkedApp(packageInfo: PackageInfoUi) {
         onUserEditedContent()
-        loginItemState.update {
-            it.copy(packageInfoSet = it.packageInfoSet.minus(packageInfo).toImmutableSet())
+        itemContentState.update {
+            it.copy(packageInfoSet = it.packageInfoSet.minus(packageInfo.toPackageInfo()))
         }
     }
 
@@ -371,12 +386,16 @@ abstract class BaseLoginViewModel(
         onUserEditedContent()
         clipboardManager.getClipboardContent()
             .onSuccess { clipboardContent ->
+                val sanitisedContent = clipboardContent
+                    .replace(" ", "")
+                    .replace("\n", "")
+                val encryptedContent = encryptionContextProvider.withEncryptionContext {
+                    encrypt(sanitisedContent)
+                }
                 withContext(Dispatchers.Main) {
-                    loginItemState.update {
+                    itemContentState.update {
                         it.copy(
-                            primaryTotp = clipboardContent
-                                .replace(" ", "")
-                                .replace("\n", "")
+                            primaryTotp = HiddenState.Revealed(encryptedContent, sanitisedContent)
                         )
                     }
                 }
@@ -389,7 +408,7 @@ abstract class BaseLoginViewModel(
         aliasLocalItemState.update { None }
         draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
 
-        loginItemState.update { it.copy(username = "") }
+        itemContentState.update { it.copy(username = "") }
         canUpdateUsernameState.update { true }
     }
 
@@ -405,9 +424,14 @@ abstract class BaseLoginViewModel(
                 if (it is Some) {
                     draftRepository.delete<String>(DRAFT_PASSWORD_KEY).value()
                         ?.let { encryptedPassword ->
-                            loginItemState.update { loginItem ->
+                            itemContentState.update { content ->
                                 encryptionContextProvider.withEncryptionContext {
-                                    loginItem.copy(password = decrypt(encryptedPassword))
+                                    content.copy(
+                                        password = HiddenState.Revealed(
+                                            encryptedPassword,
+                                            decrypt(encryptedPassword)
+                                        )
+                                    )
                                 }
                             }
                         }
@@ -422,7 +446,7 @@ abstract class BaseLoginViewModel(
                 if (it is Some) {
                     draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY).value()
                         ?.let { customField ->
-                            loginItemState.update { loginItem ->
+                            itemContentState.update { loginItem ->
                                 val customFields = loginItem.customFields.toMutableList()
                                 customFields.add(customField)
                                 loginItem.copy(customFields = customFields.toPersistentList())
@@ -430,6 +454,46 @@ abstract class BaseLoginViewModel(
                         }
                 }
             }
+    }
+
+    fun onFocusChange(field: MainLoginField, focused: Boolean) {
+        itemContentState.update {
+            when (field) {
+                MainLoginField.Password -> {
+                    val password = encryptionContextProvider.withEncryptionContext {
+                        if (focused) {
+                            if (it.password.encrypted.isNotBlank()) {
+                                HiddenState.Revealed(
+                                    it.password.encrypted,
+                                    decrypt(it.password.encrypted)
+                                )
+                            } else {
+                                HiddenState.Revealed(encrypt(""), "")
+                            }
+                        } else {
+                            HiddenState.Concealed(it.password.encrypted)
+                        }
+                    }
+                    it.copy(password = password)
+                }
+
+                MainLoginField.Totp -> {
+                    val primaryTotp = encryptionContextProvider.withEncryptionContext {
+                        if (it.primaryTotp.encrypted.isNotBlank()) {
+                            HiddenState.Revealed(
+                                it.primaryTotp.encrypted,
+                                decrypt(it.primaryTotp.encrypted)
+                            )
+                        } else {
+                            HiddenState.Revealed(encrypt(""), "")
+                        }
+                    }
+                    it.copy(primaryTotp = primaryTotp)
+                }
+
+                else -> it
+            }
+        }
     }
 
     companion object {

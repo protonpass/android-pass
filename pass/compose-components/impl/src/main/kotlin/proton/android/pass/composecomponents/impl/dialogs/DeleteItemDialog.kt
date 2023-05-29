@@ -16,7 +16,7 @@ fun ConfirmItemDeletionDialog(
     val item = state ?: return
     ConfirmDialog(
         title = stringResource(title),
-        message = stringResource(message, item.name),
+        message = stringResource(message, item.contents.title),
         state = state,
         onDismiss = onDismiss,
         onConfirm = onConfirm

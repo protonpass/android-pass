@@ -3,7 +3,7 @@ package proton.android.pass.composecomponents.impl.item
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import proton.android.pass.commonuimodels.api.ItemUiModel
-import proton.pass.domain.ItemType
+import proton.pass.domain.ItemContents
 
 @Composable
 internal fun ItemRowContents(
@@ -13,27 +13,30 @@ internal fun ItemRowContents(
     vaultIcon: Int? = null,
     canLoadExternalImages: Boolean,
 ) {
-    when (item.itemType) {
-        is ItemType.Login -> LoginRow(
+    when (item.contents) {
+        is ItemContents.Login -> LoginRow(
             modifier = modifier,
             item = item,
             highlight = highlight,
             vaultIcon = vaultIcon,
             canLoadExternalImages = canLoadExternalImages
         )
-        is ItemType.Note -> NoteRow(
+
+        is ItemContents.Note -> NoteRow(
             modifier = modifier,
             item = item,
             highlight = highlight,
             vaultIcon = vaultIcon
         )
-        is ItemType.Alias -> AliasRow(
+
+        is ItemContents.Alias -> AliasRow(
             modifier = modifier,
             item = item,
             highlight = highlight,
             vaultIcon = vaultIcon
         )
-        ItemType.Password -> {}
-        ItemType.Unknown -> {}
+
+        is ItemContents.Unknown -> {
+        }
     }
 }

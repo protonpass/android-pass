@@ -87,8 +87,8 @@ import proton.android.pass.featurevault.impl.delete.DeleteVaultDialog
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.AppNavigation
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 @ExperimentalAnimationApi
@@ -557,19 +557,29 @@ fun NavGraphBuilder.appGraph(
                 }
 
                 is ItemDetailNavigation.OnEdit -> {
-                    val destination = when (it.itemType) {
-                        is ItemType.Login -> EditLogin
-                        is ItemType.Note -> EditNote
-                        is ItemType.Alias -> EditAlias
-                        is ItemType.Password -> null // Edit password does not exist yet
-                        is ItemType.Unknown -> null
+                    val destination = when (it.itemUiModel.contents) {
+                        is ItemContents.Login -> EditLogin
+                        is ItemContents.Note -> EditNote
+                        is ItemContents.Alias -> EditAlias
+                        is ItemContents.Unknown -> null
                     }
-                    val route = when (it.itemType) {
-                        is ItemType.Login -> EditLogin.createNavRoute(it.shareId, it.itemId)
-                        is ItemType.Note -> EditNote.createNavRoute(it.shareId, it.itemId)
-                        is ItemType.Alias -> EditAlias.createNavRoute(it.shareId, it.itemId)
-                        is ItemType.Password -> null // Edit password does not exist yet
-                        is ItemType.Unknown -> null
+                    val route = when (it.itemUiModel.contents) {
+                        is ItemContents.Login -> EditLogin.createNavRoute(
+                            it.itemUiModel.shareId,
+                            it.itemUiModel.id
+                        )
+
+                        is ItemContents.Note -> EditNote.createNavRoute(
+                            it.itemUiModel.shareId,
+                            it.itemUiModel.id
+                        )
+
+                        is ItemContents.Alias -> EditAlias.createNavRoute(
+                            it.itemUiModel.shareId,
+                            it.itemUiModel.id
+                        )
+
+                        is ItemContents.Unknown -> null
                     }
 
                     if (destination != null && route != null) {

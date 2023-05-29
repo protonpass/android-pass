@@ -11,7 +11,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
-import proton.pass.domain.ItemType
+import proton.pass.domain.ItemContents
 
 @Composable
 fun LoginRow(
@@ -21,49 +21,48 @@ fun LoginRow(
     vaultIcon: Int? = null,
     canLoadExternalImages: Boolean,
 ) {
-    with(item.itemType as ItemType.Login) {
-        var title = AnnotatedString(item.name)
-        var username = AnnotatedString(this.username)
-        var note: AnnotatedString? = null
-        val websites: MutableList<AnnotatedString> = mutableListOf()
-        if (highlight.isNotBlank()) {
-            val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
-            val titleMatches = regex.findAll(item.name)
-            if (titleMatches.any()) {
-                title = item.name.highlight(titleMatches)
-            }
-            val usernameMatches = regex.findAll(this.username)
-            if (usernameMatches.any()) {
-                username = this.username.highlight(usernameMatches)
-            }
-            val cleanNote = item.note.replace("\n", " ")
-            val noteMatches = regex.findAll(cleanNote)
-            if (noteMatches.any()) {
-                note = cleanNote.highlight(noteMatches)
-            }
-            this.websites.forEach {
-                val websiteMatch = regex.findAll(it)
-                if (websiteMatch.any()) {
-                    websites.add(it.highlight(websiteMatch))
-                }
-                if (websites.size >= 2) return@forEach
-            }
+    val content = item.contents as ItemContents.Login
+    var title = AnnotatedString(content.title)
+    var username = AnnotatedString(content.username)
+    var note: AnnotatedString? = null
+    val websites: MutableList<AnnotatedString> = mutableListOf()
+    if (highlight.isNotBlank()) {
+        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE, RegexOption.LITERAL))
+        val titleMatches = regex.findAll(content.title)
+        if (titleMatches.any()) {
+            title = content.title.highlight(titleMatches)
         }
-
-        ItemRow(
-            modifier = modifier,
-            icon = {
-                LoginIcon(
-                    text = title.text,
-                    itemType = this,
-                    canLoadExternalImages = canLoadExternalImages
-                )
-            },
-            title = title,
-            subtitles = (listOfNotNull(username, note) + websites).toImmutableList(),
-            vaultIcon = vaultIcon
-        )
+        val usernameMatches = regex.findAll(content.username)
+        if (usernameMatches.any()) {
+            username = content.username.highlight(usernameMatches)
+        }
+        val cleanNote = content.note.replace("\n", " ")
+        val noteMatches = regex.findAll(cleanNote)
+        if (noteMatches.any()) {
+            note = cleanNote.highlight(noteMatches)
+        }
+        content.urls.forEach {
+            val websiteMatch = regex.findAll(it)
+            if (websiteMatch.any()) {
+                websites.add(it.highlight(websiteMatch))
+            }
+            if (websites.size >= 2) return@forEach
+        }
     }
+
+    ItemRow(
+        modifier = modifier,
+        icon = {
+            LoginIcon(
+                text = title.text,
+                content = content,
+                canLoadExternalImages = canLoadExternalImages
+            )
+        },
+        title = title,
+        subtitles = (listOfNotNull(username, note) + websites).toImmutableList(),
+        vaultIcon = vaultIcon
+    )
 }
 
 class ThemedLoginItemPreviewProvider : ThemePairPreviewProvider<LoginRowParameter>(

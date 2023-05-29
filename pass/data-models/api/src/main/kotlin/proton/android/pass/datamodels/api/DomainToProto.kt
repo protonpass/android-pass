@@ -1,5 +1,6 @@
 package proton.android.pass.datamodels.api
 
+import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
@@ -10,7 +11,10 @@ import proton_pass_item_v1.extraTotp
 import java.util.UUID
 
 @Suppress("LongMethod")
-fun ItemContents.serializeToProto(itemUuid: String? = null): ItemV1.Item {
+fun ItemContents.serializeToProto(
+    itemUuid: String? = null,
+    encryptionContext: EncryptionContext
+): ItemV1.Item {
     val uuid = itemUuid ?: UUID.randomUUID().toString()
     val builder = ItemV1.Item.newBuilder()
         .setMetadata(
@@ -51,22 +55,24 @@ fun ItemContents.serializeToProto(itemUuid: String? = null): ItemV1.Item {
                             }
                         )
                     }
+
                     is CustomFieldContent.Hidden -> {
                         builder.addExtraFields(
                             extraField {
                                 fieldName = customField.label
                                 hidden = extraHiddenField {
-                                    content = customField.value.encrypted
+                                    content = encryptionContext.decrypt(customField.value.encrypted)
                                 }
                             }
                         )
                     }
+
                     is CustomFieldContent.Totp -> {
                         builder.addExtraFields(
                             extraField {
                                 fieldName = customField.label
                                 totp = extraTotp {
-                                    totpUri = customField.value.encrypted
+                                    totpUri = encryptionContext.decrypt(customField.value.encrypted)
                                 }
                             }
                         )
@@ -77,18 +83,22 @@ fun ItemContents.serializeToProto(itemUuid: String? = null): ItemV1.Item {
             contentBuilder.setLogin(
                 ItemV1.ItemLogin.newBuilder()
                     .setUsername(username)
-                    .setPassword(password)
+                    .setPassword(encryptionContext.decrypt(password.encrypted))
                     .addAllUrls(urls)
-                    .setTotpUri(primaryTotp)
+                    .setTotpUri(encryptionContext.decrypt(primaryTotp.encrypted))
                     .build()
             )
         }
+
         is ItemContents.Note -> contentBuilder.setNote(
             ItemV1.ItemNote.newBuilder().build()
         )
+
         is ItemContents.Alias -> contentBuilder.setAlias(
             ItemV1.ItemAlias.newBuilder().build()
         )
+
+        is ItemContents.Unknown -> throw IllegalStateException("Cannot be unknown")
     }.build()
 
     return builder

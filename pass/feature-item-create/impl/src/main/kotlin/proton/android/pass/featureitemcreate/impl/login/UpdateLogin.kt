@@ -74,6 +74,7 @@ fun UpdateLogin(
                         viewModel.onEmitSnackbarMessage(LoginUpdated)
                         onNavigate(BaseLoginNavigation.LoginUpdated(it.shareId, it.itemId))
                     }
+
                     is LoginContentEvent.Submit -> viewModel.updateItem(it.shareId)
                     is LoginContentEvent.OnUsernameChange -> viewModel.onUsernameChange(it.username)
                     is LoginContentEvent.OnPasswordChange -> viewModel.onPasswordChange(it.password)
@@ -83,11 +84,14 @@ fun UpdateLogin(
                         is WebsiteSectionEvent.WebsiteValueChanged ->
                             viewModel.onWebsiteChange(event.value, event.index)
                     }
+
                     is LoginContentEvent.OnNoteChange -> viewModel.onNoteChange(it.note)
                     is LoginContentEvent.OnLinkedAppDelete -> viewModel.onDeleteLinkedApp(it.app)
                     is LoginContentEvent.OnTotpChange -> viewModel.onTotpChange(it.totp)
                     LoginContentEvent.PasteTotp -> viewModel.onPasteTotp()
                     is LoginContentEvent.OnCustomFieldEvent -> {} // To be done
+                    is LoginContentEvent.OnFocusChange ->
+                        viewModel.onFocusChange(it.field, it.isFocused)
                 }
             },
             onNavigate = { onNavigate(it) },
@@ -96,7 +100,7 @@ fun UpdateLogin(
                     modifier = Modifier
                         .roundedContainerNorm()
                         .padding(start = 16.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-                    value = uiState.baseLoginUiState.loginItem.title,
+                    value = uiState.baseLoginUiState.contents.title,
                     requestFocus = true,
                     onTitleRequiredError = uiState.baseLoginUiState.validationErrors
                         .contains(LoginItemValidationErrors.BlankTitle),

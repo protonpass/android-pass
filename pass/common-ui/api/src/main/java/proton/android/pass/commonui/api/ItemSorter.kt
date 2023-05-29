@@ -70,7 +70,7 @@ object ItemSorter {
     private val monthlyFormatter = DateTimeFormatter.ofPattern("LLLL yyyy")
 
     private fun List<ItemUiModel>.groupByFirstChar(): Map<GroupingKeys.AlphabeticalKey, List<ItemUiModel>> =
-        groupBy { it.name.firstOrNull()?.takeIf { char -> char.isLetter() }?.uppercaseChar() ?: '#' }
+        groupBy { it.contents.title.firstOrNull()?.takeIf { char -> char.isLetter() }?.uppercaseChar() ?: '#' }
             .mapKeys { GroupingKeys.AlphabeticalKey(it.key) }
 
     fun List<ItemUiModel>.sortByTitleAsc(): List<GroupedItemList> =
@@ -79,7 +79,7 @@ object ItemSorter {
             .map { entry ->
                 GroupedItemList(
                     entry.key,
-                    entry.value.sortedBy { it.name.lowercase() }
+                    entry.value.sortedBy { it.contents.title.lowercase() }
                 )
             }
 
@@ -89,7 +89,7 @@ object ItemSorter {
             .map { entry ->
                 GroupedItemList(
                     entry.key,
-                    entry.value.sortedByDescending { it.name.lowercase() }
+                    entry.value.sortedByDescending { it.contents.title.lowercase() }
                 )
             }
 

@@ -13,9 +13,7 @@ import proton.pass.domain.ShareId
 val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
     val itemId = "item_id"
     val shareId = "share_id"
-    val name = "name"
-    val note = "note"
-    val itemType = "item_type"
+    val itemContent = "item_content"
     val createTime = "create_time"
     val modificationTime = "modification_time"
     val lastAutofillTime = "last_autofill_time"
@@ -25,9 +23,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                 mapOf(
                     itemId to it.id.id,
                     shareId to it.shareId.id,
-                    name to it.name,
-                    note to it.note,
-                    itemType to Json.encodeToString(it.itemType),
+                    itemContent to Json.encodeToString(it.contents),
                     createTime to it.createTime.toString(),
                     modificationTime to it.modificationTime.toString(),
                     lastAutofillTime to it.lastAutofillTime?.toString(),
@@ -41,9 +37,7 @@ val ItemUiModelSaver: Saver<ItemUiModel?, Any> = run {
                 ItemUiModel(
                     id = ItemId(id = values[itemId] as String),
                     shareId = ShareId(id = values[shareId] as String),
-                    name = values[name] as String,
-                    note = values[note] as String,
-                    itemType = Json.decodeFromString(values[itemType] as String),
+                    contents = Json.decodeFromString(values[itemContent] as String),
                     state = 0,
                     createTime = (values[createTime] as String).let { Instant.parse(it) },
                     modificationTime = (values[modificationTime] as String).let { Instant.parse(it) },

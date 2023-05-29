@@ -110,15 +110,7 @@ fun AliasDetail(
                             iconColor = PassTheme.colors.aliasInteractionNormMajor2,
                             iconBackgroundColor = PassTheme.colors.aliasInteractionNormMinor1,
                             onUpClick = { onNavigate(ItemDetailNavigation.Back) },
-                            onEditClick = {
-                                onNavigate(
-                                    ItemDetailNavigation.OnEdit(
-                                        shareId = state.itemUiModel.shareId,
-                                        itemId = state.itemUiModel.id,
-                                        itemType = state.itemUiModel.itemType
-                                    )
-                                )
-                            },
+                            onEditClick = { onNavigate(ItemDetailNavigation.OnEdit(state.itemUiModel)) },
                             onOptionsClick = {
                                 scope.launch { bottomSheetState.show() }
                             }
@@ -147,11 +139,7 @@ fun AliasDetail(
                     show = shouldShowDeleteItemDialog,
                     onConfirm = {
                         shouldShowDeleteItemDialog = false
-                        viewModel.onPermanentlyDelete(
-                            state.itemUiModel.shareId,
-                            state.itemUiModel.id,
-                            state.itemUiModel.itemType
-                        )
+                        viewModel.onPermanentlyDelete(state.itemUiModel)
                     },
                     onDismiss = { shouldShowDeleteItemDialog = false }
                 )

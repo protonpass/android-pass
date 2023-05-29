@@ -34,6 +34,7 @@ dependencies {
     implementation(projects.pass.commonUiModels.api)
     implementation(projects.pass.crypto.api)
     implementation(projects.pass.data.api)
+    implementation(projects.pass.dataModels.api)
     implementation(projects.pass.domain)
     implementation(projects.pass.log.api)
     implementation(projects.pass.protos)

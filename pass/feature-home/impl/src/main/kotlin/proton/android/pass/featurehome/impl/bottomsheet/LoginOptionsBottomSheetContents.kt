@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.datetime.Clock
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
@@ -23,8 +24,9 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTit
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.featurehome.impl.R
+import proton.pass.domain.HiddenState
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
-import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
 
 @ExperimentalMaterialApi
@@ -35,27 +37,27 @@ fun LoginOptionsBottomSheetContents(
     isRecentSearch: Boolean = false,
     canLoadExternalImages: Boolean,
     onCopyUsername: (String) -> Unit,
-    onCopyPassword: (String) -> Unit,
+    onCopyPassword: (EncryptedString) -> Unit,
     onEdit: (ShareId, ItemId) -> Unit,
     onMoveToTrash: (ItemUiModel) -> Unit,
     onRemoveFromRecentSearch: (ShareId, ItemId) -> Unit
 ) {
-    val itemType = itemUiModel.itemType as ItemType.Login
+    val contents = itemUiModel.contents as ItemContents.Login
     Column(modifier.bottomSheet()) {
         BottomSheetItemRow(
-            title = { BottomSheetItemTitle(text = itemUiModel.name) },
-            subtitle = { BottomSheetItemSubtitle(text = itemType.username) },
+            title = { BottomSheetItemTitle(text = contents.title) },
+            subtitle = { BottomSheetItemSubtitle(text = contents.username) },
             leftIcon = {
                 LoginIcon(
-                    text = itemUiModel.name,
-                    itemType = itemType,
+                    text = contents.title,
+                    content = contents,
                     canLoadExternalImages = canLoadExternalImages
                 )
             }
         )
         val list = mutableListOf(
-            copyUsername(itemType.username, onCopyUsername),
-            copyPassword(itemType.password, onCopyPassword),
+            copyUsername(contents.username, onCopyUsername),
+            copyPassword(contents.password.encrypted, onCopyPassword),
             edit(itemUiModel, onEdit),
             moveToTrash(itemUiModel, onMoveToTrash)
         )
@@ -84,7 +86,10 @@ private fun copyUsername(username: String, onCopyUsername: (String) -> Unit): Bo
         override val isDivider = false
     }
 
-private fun copyPassword(password: String, onCopyPassword: (String) -> Unit): BottomSheetItem =
+private fun copyPassword(
+    password: EncryptedString,
+    onCopyPassword: (EncryptedString) -> Unit
+): BottomSheetItem =
     object : BottomSheetItem {
         override val title: @Composable () -> Unit
             get() = { BottomSheetItemTitle(text = stringResource(id = R.string.bottomsheet_copy_password)) }
@@ -111,14 +116,14 @@ fun LoginOptionsBottomSheetContentsPreview(
                 itemUiModel = ItemUiModel(
                     id = ItemId(id = ""),
                     shareId = ShareId(id = ""),
-                    name = "My Login",
-                    note = "Note content",
-                    itemType = ItemType.Login(
+                    contents = ItemContents.Login(
+                        title = "My Login",
+                        note = "Note content",
                         username = "My username",
-                        password = "My password",
-                        websites = emptyList(),
+                        password = HiddenState.Revealed("", "My password"),
+                        urls = emptyList(),
                         packageInfoSet = emptySet(),
-                        primaryTotp = "",
+                        primaryTotp = HiddenState.Revealed("", ""),
                         customFields = emptyList()
                     ),
                     state = 0,

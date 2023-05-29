@@ -11,7 +11,7 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
-import proton.pass.domain.ItemType
+import proton.pass.domain.ItemContents
 
 private const val MAX_LINES_NOTE_DETAIL = 1
 
@@ -22,34 +22,33 @@ fun NoteRow(
     highlight: String = "",
     vaultIcon: Int? = null
 ) {
-    with(item.itemType as ItemType.Note) {
-        var title = AnnotatedString(item.name)
-        val note = if (highlight.isNotBlank()) {
-            val processedText = this.text.replace("\n", " ")
-            val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
-            val titleMatches = regex.findAll(item.name)
-            if (titleMatches.any()) {
-                title = item.name.highlight(titleMatches)
-            }
-            val noteMatches = regex.findAll(processedText)
-            if (noteMatches.any()) {
-                processedText.highlight(noteMatches)
-            } else {
-                AnnotatedString(processedText)
-            }
-        } else {
-            val firstLines = this.text.lines().take(MAX_LINES_NOTE_DETAIL)
-            AnnotatedString(firstLines.joinToString(" "))
+    val content = item.contents as ItemContents.Note
+    var title = AnnotatedString(content.title)
+    val note = if (highlight.isNotBlank()) {
+        val processedText = content.note.replace("\n", " ")
+        val regex = highlight.toRegex(setOf(RegexOption.IGNORE_CASE))
+        val titleMatches = regex.findAll(content.title)
+        if (titleMatches.any()) {
+            title = content.title.highlight(titleMatches)
         }
-
-        ItemRow(
-            modifier = modifier,
-            icon = { NoteIcon() },
-            title = title,
-            subtitles = persistentListOf(note),
-            vaultIcon = vaultIcon
-        )
+        val noteMatches = regex.findAll(processedText)
+        if (noteMatches.any()) {
+            processedText.highlight(noteMatches)
+        } else {
+            AnnotatedString(processedText)
+        }
+    } else {
+        val firstLines = content.note.lines().take(MAX_LINES_NOTE_DETAIL)
+        AnnotatedString(firstLines.joinToString(" "))
     }
+
+    ItemRow(
+        modifier = modifier,
+        icon = { NoteIcon() },
+        title = title,
+        subtitles = persistentListOf(note),
+        vaultIcon = vaultIcon
+    )
 }
 
 class ThemedNoteItemPreviewProvider :

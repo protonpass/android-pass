@@ -25,6 +25,8 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableSet
+import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.AddTotp
@@ -32,6 +34,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsCo
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.GeneratePassword
 import proton.android.pass.featureitemcreate.impl.login.LoginStickyFormOptionsContentType.None
 import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldsContent
+import proton.pass.domain.ItemContents
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Suppress("UnusedPrivateMember")
@@ -39,7 +42,7 @@ import proton.android.pass.featureitemcreate.impl.login.customfields.CustomField
 internal fun LoginItemForm(
     modifier: Modifier = Modifier,
     isEditAllowed: Boolean,
-    loginItem: LoginItem,
+    contents: ItemContents.Login,
     totpUiState: TotpUiState,
     customFieldsState: CustomFieldsState,
     showCreateAliasButton: Boolean,
@@ -72,7 +75,7 @@ internal fun LoginItemForm(
         ) {
             titleSection()
             MainLoginSection(
-                loginItem = loginItem,
+                contents = contents,
                 canUpdateUsername = canUpdateUsername,
                 totpUiState = totpUiState,
                 isEditAllowed = isEditAllowed,
@@ -89,25 +92,26 @@ internal fun LoginItemForm(
                             MainLoginField.Totp -> AddTotp
                         }
                     }
-
+                    onEvent(LoginContentEvent.OnFocusChange(field, isFocused))
                 },
                 onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) }
             )
             WebsitesSection(
-                websites = loginItem.websiteAddresses.toImmutableList(),
+                websites = contents.urls.toImmutableList(),
                 isEditAllowed = isEditAllowed,
                 websitesWithErrors = websitesWithErrors,
                 focusLastWebsite = focusLastWebsite,
                 onWebsiteSectionEvent = { onEvent(LoginContentEvent.OnWebsiteEvent(it)) }
             )
             SimpleNoteSection(
-                value = loginItem.note,
+                value = contents.note,
                 enabled = isEditAllowed,
                 onChange = { onEvent(LoginContentEvent.OnNoteChange(it)) }
             )
             if (isUpdate) {
                 LinkedAppsListSection(
-                    packageInfoUiSet = loginItem.packageInfoSet,
+                    packageInfoUiSet = contents.packageInfoSet.map(::PackageInfoUi)
+                        .toImmutableSet(),
                     isEditable = true,
                     onLinkedAppDelete = { onEvent(LoginContentEvent.OnLinkedAppDelete(it)) }
                 )

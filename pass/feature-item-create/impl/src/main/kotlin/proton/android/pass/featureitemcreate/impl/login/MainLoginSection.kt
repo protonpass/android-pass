@@ -7,6 +7,12 @@ import androidx.compose.ui.Modifier
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 
+enum class MainLoginField {
+    Username,
+    Password,
+    Totp
+}
+
 @Composable
 fun MainLoginSection(
     modifier: Modifier = Modifier,
@@ -15,13 +21,9 @@ fun MainLoginSection(
     isEditAllowed: Boolean,
     isTotpError: Boolean,
     totpUiState: TotpUiState,
-    onUsernameChange: (String) -> Unit,
-    onUsernameFocus: (Boolean) -> Unit,
+    onEvent: (LoginContentEvent) -> Unit,
+    onFocusChange: (MainLoginField, Boolean) -> Unit,
     onAliasOptionsClick: () -> Unit,
-    onPasswordChange: (String) -> Unit,
-    onPasswordFocus: (Boolean) -> Unit,
-    onTotpChanged: (String) -> Unit,
-    onTotpFocus: (Boolean) -> Unit,
     onUpgrade: () -> Unit
 ) {
     Column(
@@ -31,16 +33,16 @@ fun MainLoginSection(
             value = loginItem.username,
             canUpdateUsername = canUpdateUsername,
             isEditAllowed = isEditAllowed,
-            onChange = onUsernameChange,
+            onChange = { onEvent(LoginContentEvent.OnUsernameChange(it)) },
             onAliasOptionsClick = onAliasOptionsClick,
-            onFocus = onUsernameFocus
+            onFocus = { onFocusChange(MainLoginField.Username, it) }
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
         PasswordInput(
             value = loginItem.password,
             isEditAllowed = isEditAllowed,
-            onChange = onPasswordChange,
-            onFocus = onPasswordFocus
+            onChange = { onEvent(LoginContentEvent.OnPasswordChange(it)) },
+            onFocus = { onFocusChange(MainLoginField.Password, it) }
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
         val enabled = when (totpUiState) {
@@ -58,8 +60,8 @@ fun MainLoginSection(
                 value = loginItem.primaryTotp,
                 enabled = enabled,
                 isError = isTotpError,
-                onTotpChanged = onTotpChanged,
-                onFocus = onTotpFocus
+                onTotpChanged = { onEvent(LoginContentEvent.OnTotpChange(it)) },
+                onFocus = { onFocusChange(MainLoginField.Totp, it) }
             )
         }
     }

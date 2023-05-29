@@ -39,7 +39,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.BrowserUtils.openWebsite
@@ -60,7 +59,7 @@ import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemState
 
 @OptIn(
-    ExperimentalLifecycleComposeApi::class, ExperimentalMaterialApi::class,
+    ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class
 )
 @Composable

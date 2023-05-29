@@ -25,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
 import proton.android.pass.commonui.api.LifecycleEffect
@@ -33,7 +32,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun PassApp(
     modifier: Modifier = Modifier,

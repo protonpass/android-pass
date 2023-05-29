@@ -1,5 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.login.customfields
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -7,6 +8,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.featureitemcreate.impl.login.TotpInput
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
@@ -22,14 +24,16 @@ fun TotpCustomFieldEntry(
         is HiddenState.Concealed -> ""
         is HiddenState.Revealed -> state.clearText
     }
-    TotpInput(
-        modifier = modifier,
-        value = value,
-        enabled = canEdit,
-        isError = false,
-        onTotpChanged = onChange,
-        onFocus = {}
-    )
+    Box(modifier = modifier.roundedContainerNorm()) {
+        TotpInput(
+            value = value,
+            label = content.label,
+            enabled = canEdit,
+            isError = false,
+            onTotpChanged = onChange,
+            onFocus = {}
+        )
+    }
 }
 
 @Preview

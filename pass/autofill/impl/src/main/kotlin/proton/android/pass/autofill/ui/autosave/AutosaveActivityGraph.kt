@@ -88,23 +88,29 @@ fun NavGraphBuilder.autosaveActivityGraph(
                     destination = AddCustomFieldBottomSheet
                 )
 
-                is BaseLoginNavigation.CustomFieldTypeSelected -> appNavigator.navigate(
-                    destination = CustomFieldNameDialog,
-                    route = CustomFieldNameDialog.buildRoute(it.type),
-                    backDestination = CreateLogin
-                )
+                is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = CustomFieldNameDialog,
+                        route = CustomFieldNameDialog.buildRoute(it.type),
+                        backDestination = CreateLogin
+                    )
+                }
 
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheet,
-                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index),
-                    backDestination = CreateLogin
+                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index)
                 )
-                is BaseLoginNavigation.EditCustomField -> appNavigator.navigate(
-                    destination = EditCustomFieldNameDialog,
-                    route = EditCustomFieldNameDialog.buildRoute(it.index),
-                    backDestination = CreateLogin
-                )
-                BaseLoginNavigation.RemovedCustomField -> appNavigator.onBackClick()
+
+                is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialog,
+                        route = EditCustomFieldNameDialog.buildRoute(it.index),
+                        backDestination = CreateLogin
+                    )
+                }
+                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
             }
         }
     )

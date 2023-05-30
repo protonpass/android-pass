@@ -159,7 +159,6 @@ fun LoginDetail(
                         itemUiModel = state.itemUiModel,
                         vault = state.vault,
                         showViewAlias = state.linkedAlias.isNotEmpty(),
-                        passwordState = state.passwordState,
                         totpUiState = state.totpUiState,
                         moreInfoUiState = moreInfoUiState,
                         canLoadExternalImages = canLoadExternalImages,

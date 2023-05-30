@@ -1,6 +1,7 @@
 package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import proton.pass.domain.HiddenState
 
 @Suppress("MagicNumber")
 class MainLoginSectionParamsPreviewProvider : PreviewParameterProvider<MainLoginSectionParams> {
@@ -8,31 +9,31 @@ class MainLoginSectionParamsPreviewProvider : PreviewParameterProvider<MainLogin
         get() = sequenceOf(
             MainLoginSectionParams(
                 username = "MyUsername",
-                passwordState = PasswordState.Concealed("encrypted"),
+                passwordState = HiddenState.Concealed("encrypted"),
                 totpUiState = null,
                 showViewAlias = false
             ),
             MainLoginSectionParams(
                 username = "MyUsername",
-                passwordState = PasswordState.Concealed("encrypted"),
+                passwordState = HiddenState.Concealed("encrypted"),
                 totpUiState = null,
                 showViewAlias = true
             ),
             MainLoginSectionParams(
                 username = "MyUsername",
-                passwordState = PasswordState.Revealed("encrypted", "clearText"),
+                passwordState = HiddenState.Revealed("encrypted", "clearText"),
                 totpUiState = null,
                 showViewAlias = false
             ),
             MainLoginSectionParams(
                 username = "MyUsername",
-                passwordState = PasswordState.Revealed("encrypted", "clearText"),
+                passwordState = HiddenState.Revealed("encrypted", "clearText"),
                 totpUiState = TotpUiState.Visible("123456", 12, 20),
                 showViewAlias = false
             ),
             MainLoginSectionParams(
                 username = "MyUsername",
-                passwordState = PasswordState.Revealed("encrypted", "clearText"),
+                passwordState = HiddenState.Revealed("encrypted", "clearText"),
                 totpUiState = TotpUiState.Hidden,
                 showViewAlias = false
             )
@@ -41,7 +42,7 @@ class MainLoginSectionParamsPreviewProvider : PreviewParameterProvider<MainLogin
 
 data class MainLoginSectionParams(
     val username: String,
-    val passwordState: PasswordState,
+    val passwordState: HiddenState,
     val totpUiState: TotpUiState?,
     val showViewAlias: Boolean
 )

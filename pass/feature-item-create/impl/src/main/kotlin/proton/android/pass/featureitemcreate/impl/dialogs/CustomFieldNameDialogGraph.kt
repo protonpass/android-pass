@@ -2,6 +2,7 @@ package proton.android.pass.featureitemcreate.impl.dialogs
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldIndexNavArgId
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldType
 import proton.android.pass.navigation.api.NavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -19,6 +20,13 @@ object CustomFieldNameDialog : NavItem(
     fun buildRoute(type: CustomFieldType) = "$baseRoute/${type.name}"
 }
 
+object EditCustomFieldNameDialog : NavItem(
+    baseRoute = "item/create/customfield/edit/dialog",
+    navArgIds = listOf(CustomFieldIndexNavArgId)
+) {
+    fun buildRoute(index: Int) = "$baseRoute/$index"
+}
+
 sealed interface CustomFieldNameNavigation {
     object Close : CustomFieldNameNavigation
 }
@@ -28,5 +36,9 @@ fun NavGraphBuilder.customFieldNameDialogGraph(
 ) {
     dialog(CustomFieldNameDialog) {
         CustomFieldNameDialog(onNavigate = onNavigate)
+    }
+
+    dialog(EditCustomFieldNameDialog) {
+        EditCustomFieldNameDialog(onNavigate = onNavigate)
     }
 }

@@ -1,6 +1,5 @@
 package proton.android.pass.featureitemcreate.impl.login
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.toImmutableSet
@@ -24,6 +23,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
@@ -68,7 +68,7 @@ class CreateLoginViewModel @Inject constructor(
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
-    savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandleProvider,
     ffRepo: FeatureFlagsPreferencesRepository
 ) : BaseLoginViewModel(
     accountManager = accountManager,
@@ -82,11 +82,11 @@ class CreateLoginViewModel @Inject constructor(
     ffRepo = ffRepo
 ) {
     private val navShareId: Option<ShareId> =
-        savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)
+        savedStateHandle.get().get<String>(CommonOptionalNavArgId.ShareId.key)
             .toOption()
             .map { ShareId(it) }
     private val navShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(navShareId)
-    private val initialUsername: Option<String> = savedStateHandle
+    private val initialUsername: Option<String> = savedStateHandle.get()
         .get<String>(CreateLoginDefaultUsernameArg.key)
         .toOption()
 

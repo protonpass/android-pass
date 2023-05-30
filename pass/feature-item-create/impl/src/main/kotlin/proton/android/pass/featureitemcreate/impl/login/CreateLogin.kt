@@ -110,6 +110,7 @@ fun CreateLoginScreen(
                         viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.LoginCreated)
                         onNavigate(BaseLoginNavigation.LoginCreated(it.model))
                     }
+
                     is LoginContentEvent.Submit -> viewModel.createItem()
                     is LoginContentEvent.OnUsernameChange -> viewModel.onUsernameChange(it.username)
                     is LoginContentEvent.OnPasswordChange -> viewModel.onPasswordChange(it.password)
@@ -119,6 +120,7 @@ fun CreateLoginScreen(
                         is WebsiteSectionEvent.WebsiteValueChanged ->
                             viewModel.onWebsiteChange(event.value, event.index)
                     }
+
                     is LoginContentEvent.OnNoteChange -> viewModel.onNoteChange(it.note)
                     is LoginContentEvent.OnLinkedAppDelete -> {}
                     is LoginContentEvent.OnTotpChange -> viewModel.onTotpChange(it.totp)
@@ -130,12 +132,20 @@ fun CreateLoginScreen(
                             CustomFieldEvent.AddCustomField -> {
                                 onNavigate(BaseLoginNavigation.AddCustomField)
                             }
+
                             is CustomFieldEvent.OnCustomFieldOptions -> {
-                                onNavigate(BaseLoginNavigation.CustomFieldOptions(event.index))
+                                onNavigate(
+                                    BaseLoginNavigation.CustomFieldOptions(
+                                        currentValue = event.currentLabel,
+                                        index = event.index
+                                    )
+                                )
                             }
+
                             is CustomFieldEvent.OnValueChange -> {
                                 viewModel.onCustomFieldChange(event.index, event.value)
                             }
+
                             CustomFieldEvent.Upgrade -> {
                                 onNavigate(BaseLoginNavigation.Upgrade)
                             }

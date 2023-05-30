@@ -34,7 +34,7 @@ class MainLoginSectionParamsPreviewProvider : PreviewParameterProvider<MainLogin
             MainLoginSectionParams(
                 username = "MyUsername",
                 passwordState = HiddenState.Revealed("encrypted", "clearText"),
-                totpUiState = TotpUiState.Hidden,
+                totpUiState = TotpUiState.Limited,
                 showViewAlias = false
             )
         )

@@ -31,6 +31,7 @@ sealed interface LoginDetailUiState {
 
 sealed interface TotpUiState {
     object Hidden : TotpUiState
+    object Limited : TotpUiState
 
     @Stable
     data class Visible(

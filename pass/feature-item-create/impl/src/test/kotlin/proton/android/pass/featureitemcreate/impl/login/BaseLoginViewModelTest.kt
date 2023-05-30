@@ -8,6 +8,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
@@ -18,6 +19,7 @@ import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
+import proton.pass.domain.HiddenState
 
 internal class BaseLoginViewModelTest {
 
@@ -82,10 +84,15 @@ internal class BaseLoginViewModelTest {
     @Test
     fun `when the password has changed the state should hold it`() = runTest {
         val passwordInput = "Password Changed"
+        val encryptedPassword = TestEncryptionContext.encrypt("Password Changed")
         baseLoginViewModel.onPasswordChange(passwordInput)
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem().contents)
-                .isEqualTo(Initial.contents.copy(password = passwordInput))
+                .isEqualTo(
+                    Initial.contents.copy(
+                        password = HiddenState.Revealed(encryptedPassword, passwordInput)
+                    )
+                )
         }
     }
 
@@ -105,7 +112,7 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.onWebsiteChange(url, 0)
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem().contents)
-                .isEqualTo(Initial.contents.copy(websiteAddresses = listOf(url)))
+                .isEqualTo(Initial.contents.copy(urls = listOf(url)))
         }
     }
 
@@ -114,7 +121,7 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.onAddWebsite()
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem().contents)
-                .isEqualTo(Initial.contents.copy(websiteAddresses = listOf("", "")))
+                .isEqualTo(Initial.contents.copy(urls = listOf("", "")))
         }
     }
 
@@ -123,7 +130,7 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.onRemoveWebsite(0)
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem().contents)
-                .isEqualTo(Initial.contents.copy(websiteAddresses = emptyList()))
+                .isEqualTo(Initial.contents.copy(urls = emptyList()))
         }
     }
 }

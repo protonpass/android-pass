@@ -24,11 +24,12 @@ import proton.android.pass.composecomponents.impl.container.Circle
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
+import proton.pass.domain.HiddenState
 
 @Composable
 internal fun LoginPasswordRow(
     modifier: Modifier = Modifier,
-    password: PasswordState,
+    passwordHiddenState: HiddenState,
     onTogglePasswordClick: () -> Unit,
     onCopyPasswordClick: () -> Unit
 ) {
@@ -44,29 +45,29 @@ internal fun LoginPasswordRow(
             contentDescription = stringResource(R.string.password_key_icon_content_description),
             tint = PassTheme.colors.loginInteractionNorm
         )
-        val sectionContent = remember(password) {
-            when (password) {
-                is PasswordState.Concealed -> "•".repeat(12)
-                is PasswordState.Revealed -> password.clearText
+        val sectionContent = remember(passwordHiddenState) {
+            when (passwordHiddenState) {
+                is HiddenState.Concealed -> "•".repeat(12)
+                is HiddenState.Revealed -> passwordHiddenState.clearText
             }
         }
-        val icon = remember(password) {
-            when (password) {
-                is PasswordState.Concealed -> me.proton.core.presentation.R.drawable.ic_proton_eye
-                is PasswordState.Revealed -> me.proton.core.presentation.R.drawable.ic_proton_eye_slash
+        val icon = remember(passwordHiddenState) {
+            when (passwordHiddenState) {
+                is HiddenState.Concealed -> me.proton.core.presentation.R.drawable.ic_proton_eye
+                is HiddenState.Revealed -> me.proton.core.presentation.R.drawable.ic_proton_eye_slash
             }
         }
-        val actionContent = when (password) {
-            is PasswordState.Concealed -> stringResource(R.string.action_reveal_password)
-            is PasswordState.Revealed -> stringResource(R.string.action_conceal_password)
+        val actionContent = when (passwordHiddenState) {
+            is HiddenState.Concealed -> stringResource(R.string.action_reveal_password)
+            is HiddenState.Revealed -> stringResource(R.string.action_conceal_password)
         }
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
             SectionTitle(text = stringResource(R.string.field_password))
             Spacer(modifier = Modifier.height(8.dp))
-            when (password) {
-                is PasswordState.Concealed -> SectionSubtitle(text = sectionContent.asAnnotatedString())
-                is PasswordState.Revealed -> {
+            when (passwordHiddenState) {
+                is HiddenState.Concealed -> SectionSubtitle(text = sectionContent.asAnnotatedString())
+                is HiddenState.Revealed -> {
                     SectionSubtitle(
                         text = sectionContent.toPasswordAnnotatedString(
                             digitColor = ProtonTheme.colors.notificationError,

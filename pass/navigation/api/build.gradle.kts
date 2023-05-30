@@ -39,4 +39,9 @@ dependencies {
     api(libs.androidx.compose.runtime)
 
     implementation(projects.pass.log.api)
+
+    testImplementation(libs.core.test.kotlin)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlinTest)
+    testImplementation(libs.truth)
 }

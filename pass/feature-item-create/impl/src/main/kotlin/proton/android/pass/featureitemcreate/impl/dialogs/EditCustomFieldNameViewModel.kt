@@ -15,7 +15,9 @@ import proton.android.pass.commonui.api.require
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldIndexNavArgId
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldTitleNavArgId
 import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
+import proton.android.pass.navigation.api.NavParamEncoder
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,9 +30,14 @@ class EditCustomFieldNameViewModel @Inject constructor(
         .get()
         .require(CustomFieldIndexNavArgId.key)
 
+    private val customFieldTitle: String = savedStateHandleProvider
+        .get()
+        .require<String>(CustomFieldTitleNavArgId.key)
+        .let { NavParamEncoder.decode(it) }
+
     private val eventFlow: MutableStateFlow<CustomFieldEvent> =
         MutableStateFlow(CustomFieldEvent.Unknown)
-    private val nameFlow: MutableStateFlow<String> = MutableStateFlow("")
+    private val nameFlow: MutableStateFlow<String> = MutableStateFlow(customFieldTitle)
 
     val state: StateFlow<CustomFieldNameUiState> = combine(
         eventFlow,

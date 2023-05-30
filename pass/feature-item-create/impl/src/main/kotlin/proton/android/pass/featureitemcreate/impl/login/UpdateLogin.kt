@@ -98,7 +98,12 @@ fun UpdateLogin(
                                 onNavigate(BaseLoginNavigation.AddCustomField)
                             }
                             is CustomFieldEvent.OnCustomFieldOptions -> {
-                                onNavigate(BaseLoginNavigation.CustomFieldOptions(event.index))
+                                onNavigate(
+                                    BaseLoginNavigation.CustomFieldOptions(
+                                        currentValue = event.currentLabel,
+                                        index = event.index
+                                    )
+                                )
                             }
                             is CustomFieldEvent.OnValueChange -> {
                                 viewModel.onCustomFieldChange(event.index, event.value)

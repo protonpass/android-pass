@@ -51,7 +51,14 @@ fun EnabledCustomFieldsContent(
                 entry = field,
                 canEdit = canEdit,
                 onValueChange = { onEvent(CustomFieldEvent.OnValueChange(value = it, index = idx)) },
-                onOptionsClick = { onEvent(CustomFieldEvent.OnCustomFieldOptions(index = idx)) }
+                onOptionsClick = {
+                    onEvent(
+                        CustomFieldEvent.OnCustomFieldOptions(
+                            index = idx,
+                            currentLabel = field.label
+                        )
+                    )
+                }
             )
         }
 

@@ -98,13 +98,13 @@ fun NavGraphBuilder.autosaveActivityGraph(
 
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheet,
-                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index)
+                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.currentValue)
                 )
 
                 is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialog,
-                        route = EditCustomFieldNameDialog.buildRoute(it.index),
+                        route = EditCustomFieldNameDialog.buildRoute(it.index, it.currentValue),
                         backDestination = CreateLogin
                     )
                 }

@@ -25,6 +25,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.login.ShareError.EmptyShareList
 import proton.android.pass.featureitemcreate.impl.login.ShareError.SharesNotAvailable
+import proton.android.pass.featureitemcreate.impl.login.customfields.CustomFieldEvent
 import proton.pass.domain.ShareId
 
 private enum class CLActionAfterHideKeyboard {
@@ -122,9 +123,24 @@ fun CreateLoginScreen(
                     is LoginContentEvent.OnLinkedAppDelete -> {}
                     is LoginContentEvent.OnTotpChange -> viewModel.onTotpChange(it.totp)
                     LoginContentEvent.PasteTotp -> viewModel.onPasteTotp()
-                    is LoginContentEvent.OnCustomFieldEvent -> {} // To be done
                     is LoginContentEvent.OnFocusChange ->
                         viewModel.onFocusChange(it.field, it.isFocused)
+                    is LoginContentEvent.OnCustomFieldEvent -> {
+                        when (val event = it.event) {
+                            CustomFieldEvent.AddCustomField -> {
+                                onNavigate(BaseLoginNavigation.AddCustomField)
+                            }
+                            is CustomFieldEvent.OnCustomFieldOptions -> {
+                                onNavigate(BaseLoginNavigation.CustomFieldOptions(event.index))
+                            }
+                            is CustomFieldEvent.OnValueChange -> {
+                                viewModel.onCustomFieldChange(event.index, event.value)
+                            }
+                            CustomFieldEvent.Upgrade -> {
+                                onNavigate(BaseLoginNavigation.Upgrade)
+                            }
+                        }
+                    }
                 }
             },
             onNavigate = onNavigate,

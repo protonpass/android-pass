@@ -31,7 +31,9 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
+import proton.android.pass.data.api.repositories.DRAFT_REMOVE_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.url.UrlSanitizer
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -41,6 +43,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
+import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.FeatureFlag
@@ -81,6 +84,8 @@ abstract class BaseLoginViewModel(
         viewModelScope.launch {
             launch { observeGeneratedPassword() }
             launch { observeNewCustomField() }
+            launch { observeRemoveCustomField() }
+            launch { observeRenameCustomField() }
         }
     }
 
@@ -316,6 +321,7 @@ abstract class BaseLoginViewModel(
 
     fun onClose() {
         draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+        draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
     }
 
     protected suspend fun validateItem(): Boolean {
@@ -422,6 +428,42 @@ abstract class BaseLoginViewModel(
         canUpdateUsernameState.update { true }
     }
 
+    fun onCustomFieldChange(index: Int, value: String) = viewModelScope.launch {
+        itemContentState.update {
+            val customFields = it.customFields.toMutableList()
+
+            val updated = encryptionContextProvider.withEncryptionContext {
+                when (val field = customFields[index]) {
+                    is CustomFieldContent.Hidden -> {
+                        CustomFieldContent.Hidden(
+                            label = field.label,
+                            value = HiddenState.Revealed(
+                                encrypted = encrypt(value),
+                                clearText = value
+                            )
+                        )
+                    }
+
+                    is CustomFieldContent.Text -> CustomFieldContent.Text(
+                        label = field.label,
+                        value = value
+                    )
+
+                    is CustomFieldContent.Totp -> CustomFieldContent.Totp(
+                        label = field.label,
+                        value = HiddenState.Revealed(
+                            encrypted = encrypt(value),
+                            clearText = value
+                        )
+                    )
+                }
+            }
+
+            customFields[index] = updated
+            it.copy(customFields = customFields.toPersistentList())
+        }
+    }
+
     protected fun onUserEditedContent() {
         if (hasUserEditedContentFlow.value) return
         hasUserEditedContentFlow.update { true }
@@ -495,6 +537,67 @@ abstract class BaseLoginViewModel(
 
                 else -> it
             }
+        }
+    }
+
+    private suspend fun observeRemoveCustomField() {
+        draftRepository
+            .get<Int>(DRAFT_REMOVE_CUSTOM_FIELD_KEY)
+            .collect {
+                if (it is Some) {
+                    draftRepository.delete<Int>(DRAFT_REMOVE_CUSTOM_FIELD_KEY)
+                        .value()
+                        ?.let { index -> removeCustomField(index) }
+                }
+            }
+    }
+
+    private suspend fun observeRenameCustomField() {
+        draftRepository
+            .get<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
+            .collect {
+                if (it is Some) {
+                    draftRepository.delete<CustomFieldIndexTitle>(DRAFT_CUSTOM_FIELD_TITLE_KEY)
+                        .value()
+                        ?.let { customField ->
+                            renameCustomField(customField)
+                        }
+                }
+            }
+    }
+
+    private fun renameCustomField(indexTitle: CustomFieldIndexTitle) {
+        itemContentState.update { loginItem ->
+            val customFields = loginItem.customFields.toMutableList()
+            val updated = when (val field = customFields[indexTitle.index]) {
+                is CustomFieldContent.Hidden -> {
+                    CustomFieldContent.Hidden(
+                        label = indexTitle.title,
+                        value = field.value
+                    )
+                }
+
+                is CustomFieldContent.Text -> CustomFieldContent.Text(
+                    label = indexTitle.title,
+                    value = field.value
+                )
+
+                is CustomFieldContent.Totp -> CustomFieldContent.Totp(
+                    label = indexTitle.title,
+                    value = field.value
+                )
+            }
+            customFields[indexTitle.index] = updated
+            loginItem.copy(customFields = customFields.toPersistentList())
+        }
+    }
+
+    private fun removeCustomField(index: Int) = viewModelScope.launch {
+        onUserEditedContent()
+        itemContentState.update {
+            val customFields = it.customFields.toMutableList()
+            customFields.removeAt(index)
+            it.copy(customFields = customFields.toPersistentList())
         }
     }
 

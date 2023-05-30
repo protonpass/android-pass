@@ -11,7 +11,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
-import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.addCustomFieldBottomSheetGraph
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.customFieldBottomSheetGraph
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameNavigation
 import proton.android.pass.featureitemcreate.impl.dialogs.customFieldNameDialogGraph
@@ -88,7 +88,7 @@ fun NavGraphBuilder.createLoginGraph(
     }
 
     aliasOptionsBottomSheetGraph(onNavigate)
-    addCustomFieldBottomSheetGraph(onNavigate)
+    customFieldBottomSheetGraph(onNavigate)
     customFieldNameDialogGraph {
         when (it) {
             is CustomFieldNameNavigation.Close -> {

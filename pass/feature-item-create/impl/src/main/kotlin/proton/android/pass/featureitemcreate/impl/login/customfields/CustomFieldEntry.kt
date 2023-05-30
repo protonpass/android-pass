@@ -9,26 +9,30 @@ fun CustomFieldEntry(
     modifier: Modifier = Modifier,
     entry: CustomFieldContent,
     canEdit: Boolean,
-    onValueChange: (String) -> Unit
+    onValueChange: (String) -> Unit,
+    onOptionsClick: () -> Unit
 ) {
     when (entry) {
         is CustomFieldContent.Text -> TextCustomFieldEntry(
             modifier = modifier,
             content = entry,
             canEdit = canEdit,
-            onChange = onValueChange
+            onChange = onValueChange,
+            onOptionsClick = onOptionsClick
         )
         is CustomFieldContent.Hidden -> HiddenCustomFieldEntry(
             modifier = modifier,
             content = entry,
             canEdit = canEdit,
-            onChange = onValueChange
+            onChange = onValueChange,
+            onOptionsClick = onOptionsClick
         )
         is CustomFieldContent.Totp -> TotpCustomFieldEntry(
             modifier = modifier,
             content = entry,
             canEdit = canEdit,
-            onChange = onValueChange
+            onChange = onValueChange,
+            onOptionsClick = onOptionsClick
         )
     }
 }

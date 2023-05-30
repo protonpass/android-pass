@@ -32,8 +32,10 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheet
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.EditLogin
@@ -378,14 +380,22 @@ fun NavGraphBuilder.appGraph(
                     destination = AddCustomFieldBottomSheet
                 )
 
-
                 is BaseLoginNavigation.CustomFieldTypeSelected -> appNavigator.navigate(
                     destination = CustomFieldNameDialog,
                     route = CustomFieldNameDialog.buildRoute(it.type),
                     backDestination = CreateLogin
                 )
 
-                BaseLoginNavigation.CustomFieldAdded -> appNavigator.onBackClick()
+                is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
+                    destination = CustomFieldOptionsBottomSheet,
+                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index)
+                )
+                is BaseLoginNavigation.EditCustomField -> appNavigator.navigate(
+                    destination = EditCustomFieldNameDialog,
+                    route = EditCustomFieldNameDialog.buildRoute(it.index),
+                    backDestination = CreateLogin
+                )
+                BaseLoginNavigation.RemovedCustomField -> appNavigator.onBackClick()
             }
         }
     )
@@ -453,10 +463,20 @@ fun NavGraphBuilder.appGraph(
                 is BaseLoginNavigation.CustomFieldTypeSelected -> appNavigator.navigate(
                     destination = CustomFieldNameDialog,
                     route = CustomFieldNameDialog.buildRoute(it.type),
-                    backDestination = CreateLogin
+                    backDestination = EditLogin
                 )
 
-                BaseLoginNavigation.CustomFieldAdded -> appNavigator.onBackClick()
+                is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
+                    destination = CustomFieldOptionsBottomSheet,
+                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index),
+                    backDestination = EditLogin
+                )
+                is BaseLoginNavigation.EditCustomField -> appNavigator.navigate(
+                    destination = EditCustomFieldNameDialog,
+                    route = EditCustomFieldNameDialog.buildRoute(it.index),
+                    backDestination = EditLogin
+                )
+                BaseLoginNavigation.RemovedCustomField -> appNavigator.onBackClick()
             }
         }
     )

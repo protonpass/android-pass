@@ -91,17 +91,17 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             title: String = "login-item",
             username: String = "username",
             note: String = "note"
-        ) = createItem(
+        ): Item = createItem(
             shareId = shareId,
             itemId = itemId,
             itemContents = ItemContents.Login(
                 title = title,
                 note = note,
                 username = username,
-                password = HiddenState.Concealed(""),
+                password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
-                primaryTotp = HiddenState.Concealed(""),
+                primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
                 customFields = emptyList()
             )
         )

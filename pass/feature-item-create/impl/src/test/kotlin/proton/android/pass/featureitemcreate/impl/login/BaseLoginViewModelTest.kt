@@ -32,7 +32,7 @@ internal class BaseLoginViewModelTest {
 
     private val initial = BaseLoginUiState.create(
         HiddenState.Concealed(TestEncryptionContext.encrypt("")),
-        HiddenState.Concealed(TestEncryptionContext.encrypt(""))
+        HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
     )
 
     @Before

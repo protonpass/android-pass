@@ -9,8 +9,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
-import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.commonui.api.toItemContents
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
@@ -19,6 +19,7 @@ import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
+import proton.android.pass.data.fakes.usecases.TestObserveItems
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestObserveVaultsWithItemCount
 import proton.android.pass.featureitemcreate.impl.ItemCreate
@@ -35,10 +36,10 @@ import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.TestUtils
-import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
 import proton.pass.domain.HiddenState
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
@@ -58,11 +59,6 @@ internal class CreateLoginViewModelTest {
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
-
-    private val initial = BaseLoginUiState.create(
-        HiddenState.Concealed(TestEncryptionContext.encrypt("")),
-        HiddenState.Concealed(TestEncryptionContext.encrypt(""))
-    )
 
     @Before
     fun setUp() {
@@ -100,17 +96,21 @@ internal class CreateLoginViewModelTest {
                 VaultWithItemCount(Vault(ShareId("shareId"), "Share", isPrimary = false), 1, 0)
             observeVaults.sendResult(Result.success(listOf(vault)))
 
+            val state = CreateLoginUiState.create(
+                HiddenState.Concealed(TestEncryptionContext.encrypt("")),
+                HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
+            )
             instance.createItem()
 
             instance.createLoginUiState.test {
                 assertThat(awaitItem())
                     .isEqualTo(
-                        CreateLoginUiState.Initial.copy(
+                        state.copy(
                             ShareUiState.Success(
                                 vaultList = listOf(vault),
                                 currentVault = vault
                             ),
-                            initial.copy(
+                            state.baseLoginUiState.copy(
                                 validationErrors = setOf(LoginItemValidationErrors.BlankTitle),
                                 totpUiState = TotpUiState.Success,
                                 customFieldsState = CustomFieldsState.Disabled,
@@ -122,9 +122,12 @@ internal class CreateLoginViewModelTest {
 
     @Test
     fun `given valid data when a create item event should return a success event`() = runTest {
-        val item = TestItem.create(keyStoreCrypto = TestKeyStoreCrypto)
+        val item = TestObserveItems.createLogin()
         val vault = sendInitialVault(item.shareId)
-
+        val baseState = CreateLoginUiState.create(
+            password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
+            primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
+        )
         val titleInput = "Title input"
         instance.onTitleChange(titleInput)
 
@@ -134,66 +137,51 @@ internal class CreateLoginViewModelTest {
 
         instance.createLoginUiState.test {
             instance.createItem()
-            assertThat(awaitItem())
-                .isEqualTo(
-                    CreateLoginUiState.Initial.copy(
-                        ShareUiState.Success(
-                            vaultList = listOf(vault),
-                            currentVault = vault
-                        ),
-                        initial.copy(
-                            contents = initial.contents.copy(title = titleInput),
-                            isLoadingState = IsLoadingState.NotLoading,
-                            hasUserEditedContent = true,
-                            totpUiState = TotpUiState.Success,
-                            customFieldsState = CustomFieldsState.Disabled,
+            val firstItem = awaitItem()
+            val firstExpected = baseState.copy(
+                shareUiState = ShareUiState.Success(
+                    vaultList = listOf(vault),
+                    currentVault = vault
+                ),
+                baseLoginUiState = baseState.baseLoginUiState.copy(
+                    contents = baseState.baseLoginUiState.contents.copy(title = titleInput),
+                    isLoadingState = IsLoadingState.NotLoading,
+                    hasUserEditedContent = true,
+                    totpUiState = TotpUiState.Success,
+                    customFieldsState = CustomFieldsState.Disabled,
+                )
+            )
+            assertThat(firstItem).isEqualTo(firstExpected)
+            val secondItem = awaitItem()
+            val secondExpected = firstExpected.copy(
+                baseLoginUiState = firstExpected.baseLoginUiState.copy(
+                    isLoadingState = IsLoadingState.Loading
+                )
+            )
+            assertThat(secondItem).isEqualTo(secondExpected)
+            val thirdItem = awaitItem()
+            val thirdExpected = secondExpected.copy(
+                baseLoginUiState = secondExpected.baseLoginUiState.copy(
+                    contents = ItemContents.Login.create(
+                        password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
+                        primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
+                    ).copy(title = titleInput),
+                    isLoadingState = IsLoadingState.NotLoading,
+                    isItemSaved = ItemSavedState.Success(
+                        item.id,
+                        ItemUiModel(
+                            id = item.id,
+                            shareId = item.shareId,
+                            contents = item.toItemContents(TestEncryptionContext),
+                            createTime = item.createTime,
+                            state = 0,
+                            modificationTime = item.modificationTime,
+                            lastAutofillTime = item.lastAutofillTime.value()
                         )
                     )
                 )
-            assertThat(awaitItem())
-                .isEqualTo(
-                    CreateLoginUiState.Initial.copy(
-                        ShareUiState.Success(
-                            vaultList = listOf(vault),
-                            currentVault = vault
-                        ),
-                        initial.copy(
-                            contents = initial.contents.copy(title = titleInput),
-                            isLoadingState = IsLoadingState.Loading,
-                            hasUserEditedContent = true,
-                            totpUiState = TotpUiState.Success,
-                            customFieldsState = CustomFieldsState.Disabled,
-                        )
-                    )
-                )
-            assertThat(awaitItem())
-                .isEqualTo(
-                    CreateLoginUiState.Initial.copy(
-                        ShareUiState.Success(
-                            vaultList = listOf(vault),
-                            currentVault = vault
-                        ),
-                        initial.copy(
-                            contents = initial.contents.copy(title = titleInput),
-                            isLoadingState = IsLoadingState.NotLoading,
-                            hasUserEditedContent = true,
-                            isItemSaved = ItemSavedState.Success(
-                                item.id,
-                                ItemUiModel(
-                                    id = item.id,
-                                    shareId = item.shareId,
-                                    contents = initial.contents,
-                                    createTime = item.createTime,
-                                    state = 0,
-                                    modificationTime = item.modificationTime,
-                                    lastAutofillTime = item.lastAutofillTime.value()
-                                )
-                            ),
-                            totpUiState = TotpUiState.Success,
-                            customFieldsState = CustomFieldsState.Disabled
-                        )
-                    )
-                )
+            )
+            assertThat(thirdItem).isEqualTo(thirdExpected)
         }
 
         val memory = telemetryManager.getMemory()
@@ -205,11 +193,14 @@ internal class CreateLoginViewModelTest {
     fun `setting initial data emits the proper contents`() = runTest {
         val vault = sendInitialVault(ShareId("shareId"))
         val initialContents = setInitialContents()
-
+        val state = CreateLoginUiState.create(
+            HiddenState.Concealed(TestEncryptionContext.encrypt("")),
+            HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
+        )
         instance.createLoginUiState.test {
             assertThat(awaitItem())
                 .isEqualTo(
-                    CreateLoginUiState.Initial.copy(
+                    state.copy(
                         shareUiState = ShareUiState.Success(
                             vaultList = listOf(
                                 VaultWithItemCount(
@@ -236,8 +227,8 @@ internal class CreateLoginViewModelTest {
                                 trashedItemCount = 0
                             )
                         ),
-                        baseLoginUiState = initial.copy(
-                            contents = initial.contents.copy(
+                        baseLoginUiState = state.baseLoginUiState.copy(
+                            contents = state.baseLoginUiState.contents.copy(
                                 title = initialContents.title!!,
                                 username = initialContents.username!!,
                                 password = HiddenState.Concealed(initialContents.password!!),

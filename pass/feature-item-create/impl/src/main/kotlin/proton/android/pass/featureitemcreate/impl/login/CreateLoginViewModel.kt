@@ -146,7 +146,12 @@ class CreateLoginViewModel @Inject constructor(
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = CreateLoginUiState.Initial
+        initialValue = encryptionContextProvider.withEncryptionContext {
+            CreateLoginUiState.create(
+                password = HiddenState.Concealed(encrypt("")),
+                primaryTotp = HiddenState.Revealed(encrypt(""), ""),
+            )
+        }
     )
 
     fun changeVault(shareId: ShareId) = viewModelScope.launch {

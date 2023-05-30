@@ -54,9 +54,12 @@ data class CreateLoginUiState(
     val baseLoginUiState: BaseLoginUiState
 ) {
     companion object {
-        val Initial = CreateLoginUiState(
+        fun create(
+            password: HiddenState,
+            primaryTotp: HiddenState
+        ) = CreateLoginUiState(
             shareUiState = ShareUiState.NotInitialised,
-            baseLoginUiState = BaseLoginUiState.create(HiddenState.Concealed(""), HiddenState.Concealed(""))
+            baseLoginUiState = BaseLoginUiState.create(password, primaryTotp)
         )
     }
 }
@@ -67,9 +70,12 @@ data class UpdateLoginUiState(
     val baseLoginUiState: BaseLoginUiState
 ) {
     companion object {
-        fun create() = UpdateLoginUiState(
+        fun create(
+            password: HiddenState,
+            primaryTotp: HiddenState
+        ) = UpdateLoginUiState(
             selectedShareId = null,
-            baseLoginUiState = BaseLoginUiState.create(HiddenState.Concealed(""), HiddenState.Concealed(""))
+            baseLoginUiState = BaseLoginUiState.create(password, primaryTotp)
         )
     }
 }

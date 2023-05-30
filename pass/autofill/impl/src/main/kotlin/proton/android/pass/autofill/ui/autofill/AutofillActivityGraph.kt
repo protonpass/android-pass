@@ -30,8 +30,10 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.Create
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.CreateItemBottomsheetNavigation
 import proton.android.pass.featureitemcreate.impl.bottomsheets.createitem.bottomsheetCreateItemGraph
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheet
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
 import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
+import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
@@ -174,6 +176,7 @@ fun NavGraphBuilder.autofillActivityGraph(
                     )
                 }
 
+
                 BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
                     destination = AddCustomFieldBottomSheet
                 )
@@ -184,7 +187,17 @@ fun NavGraphBuilder.autofillActivityGraph(
                     backDestination = CreateLogin
                 )
 
-                BaseLoginNavigation.CustomFieldAdded -> appNavigator.onBackClick()
+                is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
+                    destination = CustomFieldOptionsBottomSheet,
+                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index),
+                    backDestination = CreateLogin
+                )
+                is BaseLoginNavigation.EditCustomField -> appNavigator.navigate(
+                    destination = EditCustomFieldNameDialog,
+                    route = EditCustomFieldNameDialog.buildRoute(it.index),
+                    backDestination = CreateLogin
+                )
+                BaseLoginNavigation.RemovedCustomField -> appNavigator.onBackClick()
             }
         }
     )

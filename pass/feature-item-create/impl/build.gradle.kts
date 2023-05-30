@@ -92,6 +92,7 @@ dependencies {
     testImplementation(libs.kotlinx.datetime)
     testImplementation(projects.pass.account.fakes)
     testImplementation(projects.pass.commonTest)
+    testImplementation(projects.pass.commonUi.fakes)
     testImplementation(projects.pass.clipboard.fakes)
     testImplementation(projects.pass.crypto.fakes)
     testImplementation(projects.pass.data.fakes)

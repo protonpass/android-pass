@@ -111,6 +111,8 @@ fun UpdateLogin(
                             CustomFieldEvent.Upgrade -> {
                                 onNavigate(BaseLoginNavigation.Upgrade)
                             }
+
+                            CustomFieldEvent.FocusRequested -> viewModel.onCustomFieldFocused()
                         }
                     }
                 }

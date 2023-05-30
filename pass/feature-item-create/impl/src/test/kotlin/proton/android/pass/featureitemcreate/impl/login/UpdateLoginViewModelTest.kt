@@ -73,13 +73,17 @@ class UpdateLoginViewModelTest {
     fun `item with totp using default parameters shows only secret`() = runTest {
         val secret = "secret"
         val uri = "otpauth://totp/label?secret=$secret&algorithm=SHA1&period=30&digits=6"
-        val primaryTotp = HiddenState.Revealed("", uri)
+        val primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(uri), uri)
+        val primaryTotpWithDefaults = HiddenState.Revealed(TestEncryptionContext.encrypt(secret), secret)
         val item = TestObserveItems.createItem(
             itemContents = ItemContents.Login(
                 title = "item",
                 note = "note",
                 username = "username",
-                password = HiddenState.Revealed("", "password"),
+                password = HiddenState.Revealed(
+                    TestEncryptionContext.encrypt("password"),
+                    "password"
+                ),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = primaryTotp,
@@ -91,7 +95,7 @@ class UpdateLoginViewModelTest {
 
         instance.updateLoginUiState.test {
             val state = awaitItem()
-            assertThat(state.baseLoginUiState.contents.primaryTotp).isEqualTo(primaryTotp)
+            assertThat(state.baseLoginUiState.contents.primaryTotp).isEqualTo(primaryTotpWithDefaults)
         }
     }
 

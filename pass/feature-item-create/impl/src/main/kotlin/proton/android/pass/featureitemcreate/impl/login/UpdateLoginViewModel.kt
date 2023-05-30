@@ -117,7 +117,12 @@ class UpdateLoginViewModel @Inject constructor(
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = UpdateLoginUiState.create()
+        initialValue = encryptionContextProvider.withEncryptionContext {
+            UpdateLoginUiState.create(
+                HiddenState.Concealed(encrypt("")),
+                HiddenState.Revealed(encrypt(""), ""),
+            )
+        }
     )
 
     fun setAliasItem(aliasItem: AliasItem) {
@@ -193,7 +198,7 @@ class UpdateLoginViewModel @Inject constructor(
                 urls = websites,
                 note = decrypt(item.note),
                 packageInfoSet = item.packageInfoSet,
-                primaryTotp = HiddenState.Revealed(itemContents.primaryTotp, decryptedTotp),
+                primaryTotp = HiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
                 customFields = itemContents.customFields.mapNotNull {
                     it.toContent(this@withEncryptionContext, isConcealed = false)
                 }.toImmutableList()

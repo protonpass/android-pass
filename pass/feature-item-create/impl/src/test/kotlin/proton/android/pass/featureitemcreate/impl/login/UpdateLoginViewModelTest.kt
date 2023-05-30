@@ -10,6 +10,7 @@ import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
@@ -24,7 +25,6 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.api.TotpSpec
 import proton.android.pass.totp.fakes.TestTotpManager
@@ -54,9 +54,9 @@ class UpdateLoginViewModelTest {
             clipboardManager = TestClipboardManager(),
             totpManager = totpManager,
             snackbarDispatcher = TestSnackbarDispatcher(),
-            savedStateHandle = TestSavedStateHandle.create().apply {
-                set(CommonOptionalNavArgId.ShareId.key, SHARE_ID)
-                set(CommonNavArgId.ItemId.key, ITEM_ID)
+            savedStateHandle = TestSavedStateHandleProvider().apply {
+                get().set(CommonOptionalNavArgId.ShareId.key, SHARE_ID)
+                get().set(CommonNavArgId.ItemId.key, ITEM_ID)
             },
             encryptionContextProvider = TestEncryptionContextProvider(),
             observeCurrentUser = TestObserveCurrentUser().apply { sendUser(TestUser.create()) },

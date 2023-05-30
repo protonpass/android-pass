@@ -11,6 +11,8 @@ import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonui.api.toItemContents
+import proton.android.pass.commonui.api.itemName
+import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
@@ -34,7 +36,6 @@ import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.fakes.TestTelemetryManager
 import proton.android.pass.test.MainDispatcherRule
-import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
@@ -77,7 +78,7 @@ internal class CreateLoginViewModelTest {
             clipboardManager = clipboardManager,
             totpManager = totpManager,
             snackbarDispatcher = snackbarDispatcher,
-            savedStateHandle = TestSavedStateHandle.create(),
+            savedStateHandle = TestSavedStateHandleProvider(),
             encryptionContextProvider = TestEncryptionContextProvider(),
             createItemAndAlias = createItemAndAlias,
             observeVaults = observeVaults,

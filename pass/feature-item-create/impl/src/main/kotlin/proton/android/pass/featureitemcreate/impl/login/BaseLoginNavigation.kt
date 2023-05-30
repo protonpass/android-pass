@@ -39,7 +39,7 @@ sealed interface BaseLoginNavigation {
         val type: CustomFieldType
     ) : BaseLoginNavigation
 
-    data class CustomFieldOptions(val index: Int) : BaseLoginNavigation
-    data class EditCustomField(val index: Int) : BaseLoginNavigation
+    data class CustomFieldOptions(val currentValue: String, val index: Int) : BaseLoginNavigation
+    data class EditCustomField(val currentValue: String, val index: Int) : BaseLoginNavigation
     object RemovedCustomField : BaseLoginNavigation
 }

@@ -17,6 +17,8 @@ import org.junit.Test
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.TestGetItemById
 import proton.android.pass.data.fakes.usecases.TestGetItemByIdWithVault
@@ -30,6 +32,7 @@ import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
 import proton.android.pass.totp.api.TotpManager
 import proton.android.pass.totp.fakes.TestObserveTotpFromUri
+import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
@@ -186,14 +189,14 @@ class LoginDetailScreenTest {
     @Test
     fun navigateToEdit() {
         val title = performSetup()
-        val checker = CallChecker<Pair<ShareId, ItemId>>()
+        val checker = CallChecker<ItemUiModel>()
         composeTestRule.apply {
             setContent {
                 PassTheme(isDark = true) {
                     ItemDetailScreen(
                         onNavigate = {
                             if (it is ItemDetailNavigation.OnEdit) {
-                                checker.call(it.shareId to it.itemId)
+                                checker.call(it.itemUiModel)
                             }
                         }
                     )
@@ -204,8 +207,8 @@ class LoginDetailScreenTest {
 
             onNode(hasText(activity.getString(R.string.top_bar_edit_button_text))).performClick()
             waitUntil { checker.isCalled }
-            assertEquals(SHARE_ID, checker.memory?.first?.id)
-            assertEquals(ITEM_ID, checker.memory?.second?.id)
+            assertEquals(SHARE_ID, checker.memory?.shareId?.id)
+            assertEquals(ITEM_ID, checker.memory?.id?.id)
         }
     }
 
@@ -225,11 +228,14 @@ class LoginDetailScreenTest {
             itemContents = ItemContents.Login(
                 title = title,
                 username = username,
-                password = password,
+                password = HiddenState.Concealed(TestEncryptionContext.encrypt(password)),
                 note = note,
                 urls = urls,
                 packageInfoSet = emptySet(),
-                primaryTotp = primaryTotp,
+                primaryTotp = HiddenState.Revealed(
+                    encrypted = TestEncryptionContext.encrypt(primaryTotp),
+                    clearText = primaryTotp
+                ),
                 customFields = emptyList()
             )
         )

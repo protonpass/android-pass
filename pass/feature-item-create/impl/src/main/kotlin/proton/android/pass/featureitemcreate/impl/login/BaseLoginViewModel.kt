@@ -26,6 +26,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.some
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
@@ -80,6 +81,7 @@ abstract class BaseLoginViewModel(
     protected val aliasLocalItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
     private val aliasDraftState: Flow<Option<AliasItem>> = draftRepository
         .get(CreateAliasViewModel.KEY_DRAFT_ALIAS)
+    private val focusCustomFieldFlow: MutableStateFlow<Option<Int>> = MutableStateFlow(None)
 
     init {
         viewModelScope.launch {
@@ -174,10 +176,11 @@ abstract class BaseLoginViewModel(
         hasUserEditedContentFlow,
         totpUiStateFlow,
         upgradeInfoFlow.asLoadingResult(),
-        ffRepo.get<Boolean>(FeatureFlag.CUSTOM_FIELDS_ENABLED)
+        ffRepo.get<Boolean>(FeatureFlag.CUSTOM_FIELDS_ENABLED),
+        focusCustomFieldFlow
     ) { loginItemWrapper, isLoading, events,
         focusLastWebsite, hasUserEditedContent,
-        totpUiState, upgradeInfoResult, customFieldsEnabled ->
+        totpUiState, upgradeInfoResult, customFieldsEnabled, focusCustomField ->
 
         val customFieldsState = if (!customFieldsEnabled) {
             CustomFieldsState.Disabled
@@ -185,7 +188,10 @@ abstract class BaseLoginViewModel(
             val plan = upgradeInfoResult.getOrNull()?.plan
             when (plan?.planType) {
                 is PlanType.Paid, is PlanType.Trial -> {
-                    CustomFieldsState.Enabled(loginItemWrapper.content.customFields)
+                    CustomFieldsState.Enabled(
+                        customFields = loginItemWrapper.content.customFields,
+                        focusCustomField = focusCustomField
+                    )
                 }
 
                 else -> {
@@ -465,6 +471,10 @@ abstract class BaseLoginViewModel(
         }
     }
 
+    fun onCustomFieldFocused() {
+        focusCustomFieldFlow.update { None }
+    }
+
     protected fun onUserEditedContent() {
         if (hasUserEditedContentFlow.value) return
         hasUserEditedContentFlow.update { true }
@@ -504,6 +514,7 @@ abstract class BaseLoginViewModel(
                                 customFields.add(customField)
                                 loginItem.copy(customFields = customFields.toPersistentList())
                             }
+                            focusCustomFieldFlow.update { (itemContentState.value.customFields.size - 1).some() }
                         }
                 }
             }
@@ -591,6 +602,8 @@ abstract class BaseLoginViewModel(
             customFields[indexTitle.index] = updated
             loginItem.copy(customFields = customFields.toPersistentList())
         }
+
+        focusCustomFieldFlow.update { indexTitle.index.some() }
     }
 
     private fun removeCustomField(index: Int) = viewModelScope.launch {

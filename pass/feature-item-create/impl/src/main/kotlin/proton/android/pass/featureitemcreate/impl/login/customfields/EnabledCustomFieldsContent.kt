@@ -11,11 +11,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.featureitemcreate.impl.R
@@ -31,6 +36,7 @@ fun EnabledCustomFieldsContent(
     onEvent: (CustomFieldEvent) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
     val keyboardController = LocalSoftwareKeyboardController.current
     var addCustomFieldAction by remember { mutableStateOf(false) }
     val keyboardState by keyboardAsState()
@@ -47,7 +53,19 @@ fun EnabledCustomFieldsContent(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         state.customFields.forEachIndexed { idx, field ->
+            val entryModifier = when (val focusCustomField = state.focusCustomField) {
+                is Some -> {
+                    if (focusCustomField.value == idx) {
+                        Modifier.focusRequester(focusRequester)
+                    } else {
+                        Modifier
+                    }
+                }
+                None -> Modifier
+            }
+
             CustomFieldEntry(
+                modifier = entryModifier,
                 entry = field,
                 canEdit = canEdit,
                 onValueChange = { onEvent(CustomFieldEvent.OnValueChange(value = it, index = idx)) },
@@ -74,4 +92,10 @@ fun EnabledCustomFieldsContent(
             }
         )
     }
+
+    RequestFocusLaunchedEffect(
+        focusRequester = focusRequester,
+        requestFocus = state.focusCustomField.isNotEmpty(),
+        callback = { onEvent(CustomFieldEvent.FocusRequested) }
+    )
 }

@@ -6,11 +6,16 @@ import androidx.compose.ui.focus.FocusRequester
 import kotlinx.coroutines.delay
 
 @Composable
-fun RequestFocusLaunchedEffect(focusRequester: FocusRequester, requestFocus: Boolean = true) {
+fun RequestFocusLaunchedEffect(
+    focusRequester: FocusRequester,
+    requestFocus: Boolean = true,
+    callback: () -> Unit = {}
+) {
     if (requestFocus) {
         LaunchedEffect(requestFocus) {
             delay(DELAY_BEFORE_FOCUS_MS)
             focusRequester.requestFocus()
+            callback()
         }
     }
 }

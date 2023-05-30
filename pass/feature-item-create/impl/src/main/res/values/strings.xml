@@ -48,6 +48,10 @@
     <string name="bottomsheet_custom_field_type_hidden_content_description">Hidden custom field</string>
     <string name="bottomsheet_custom_field_type_totp">2FA secret (TOTP)</string>
     <string name="bottomsheet_custom_field_type_totp_content_description">2FA custom field</string>
+    <string name="bottomsheet_custom_field_option_edit">Edit title</string>
+    <string name="bottomsheet_custom_field_option_edit_content_description">Edit custom field title</string>
+    <string name="bottomsheet_custom_field_option_remove">Remove field</string>
+    <string name="bottomsheet_custom_field_option_remove_content_description">Remove custom field</string>
 
     <string name="create_login_add_custom_field_button">Add more</string>
     <string name="create_login_add_custom_field_button_content_description">Add more fields icon</string>
@@ -60,6 +64,7 @@
     <string name="custom_field_dialog_title">Custom field name</string>
     <string name="custom_field_dialog_body">Enter a name for your custom field</string>
     <string name="custom_field_dialog_placeholder">Name of the custom field</string>
+    <string name="custom_field_options_content_description">Custom field options</string>
 
     <!-- Create Note -->
     <string name="title_create_note">Create note</string>

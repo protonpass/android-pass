@@ -1,6 +1,5 @@
 package proton.android.pass.featureitemcreate.impl.login
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
@@ -20,6 +19,8 @@ import me.proton.core.domain.entity.UserId
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
@@ -67,7 +68,7 @@ class UpdateLoginViewModel @Inject constructor(
     private val totpManager: TotpManager,
     observeCurrentUser: ObserveCurrentUser,
     observeUpgradeInfo: ObserveUpgradeInfo,
-    savedStateHandle: SavedStateHandle,
+    savedStateHandle: SavedStateHandleProvider,
     draftRepository: DraftRepository,
     ffRepo: FeatureFlagsPreferencesRepository
 ) : BaseLoginViewModel(
@@ -82,9 +83,9 @@ class UpdateLoginViewModel @Inject constructor(
     ffRepo = ffRepo
 ) {
     private val navShareId: ShareId =
-        ShareId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ShareId.key)))
+        ShareId(savedStateHandle.get().require(CommonNavArgId.ShareId.key))
     private val navItemId: ItemId =
-        ItemId(requireNotNull(savedStateHandle.get<String>(CommonNavArgId.ItemId.key)))
+        ItemId(savedStateHandle.get().require(CommonNavArgId.ItemId.key))
     private val navShareIdState: MutableStateFlow<ShareId> = MutableStateFlow(navShareId)
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         PassLogger.e(TAG, throwable)

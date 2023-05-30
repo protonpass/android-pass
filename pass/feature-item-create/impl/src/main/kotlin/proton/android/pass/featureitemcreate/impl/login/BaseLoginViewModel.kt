@@ -65,7 +65,14 @@ abstract class BaseLoginViewModel(
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
     protected val itemContentState: MutableStateFlow<ItemContents.Login> =
-        MutableStateFlow(ItemContents.Login.Empty)
+        MutableStateFlow(
+            encryptionContextProvider.withEncryptionContext {
+                ItemContents.Login.create(
+                    HiddenState.Concealed(encrypt("")),
+                    HiddenState.Concealed(encrypt(""))
+                )
+            }
+        )
     protected val aliasLocalItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
     private val aliasDraftState: Flow<Option<AliasItem>> = draftRepository
         .get(CreateAliasViewModel.KEY_DRAFT_ALIAS)
@@ -204,7 +211,7 @@ abstract class BaseLoginViewModel(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = BaseLoginUiState.Initial
+            initialValue = BaseLoginUiState.create(HiddenState.Concealed(""), HiddenState.Concealed(""))
         )
 
     fun onTitleChange(value: String) {
@@ -462,14 +469,10 @@ abstract class BaseLoginViewModel(
                 MainLoginField.Password -> {
                     val password = encryptionContextProvider.withEncryptionContext {
                         if (focused) {
-                            if (it.password.encrypted.isNotBlank()) {
-                                HiddenState.Revealed(
-                                    it.password.encrypted,
-                                    decrypt(it.password.encrypted)
-                                )
-                            } else {
-                                HiddenState.Revealed(encrypt(""), "")
-                            }
+                            HiddenState.Revealed(
+                                it.password.encrypted,
+                                decrypt(it.password.encrypted)
+                            )
                         } else {
                             HiddenState.Concealed(it.password.encrypted)
                         }
@@ -479,14 +482,10 @@ abstract class BaseLoginViewModel(
 
                 MainLoginField.Totp -> {
                     val primaryTotp = encryptionContextProvider.withEncryptionContext {
-                        if (it.primaryTotp.encrypted.isNotBlank()) {
-                            HiddenState.Revealed(
-                                it.primaryTotp.encrypted,
-                                decrypt(it.primaryTotp.encrypted)
-                            )
-                        } else {
-                            HiddenState.Revealed(encrypt(""), "")
-                        }
+                        HiddenState.Revealed(
+                            it.primaryTotp.encrypted,
+                            decrypt(it.primaryTotp.encrypted)
+                        )
                     }
                     it.copy(primaryTotp = primaryTotp)
                 }

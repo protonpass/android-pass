@@ -13,7 +13,6 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
-import proton.android.pass.featureitemcreate.impl.login.BaseLoginUiState.Companion.Initial
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
@@ -30,6 +29,11 @@ internal class BaseLoginViewModelTest {
     private lateinit var clipboardManager: TestClipboardManager
     private lateinit var observeCurrentUser: TestObserveCurrentUser
     private lateinit var baseLoginViewModel: BaseLoginViewModel
+
+    private val initial = BaseLoginUiState.create(
+        HiddenState.Concealed(TestEncryptionContext.encrypt("")),
+        HiddenState.Concealed(TestEncryptionContext.encrypt(""))
+    )
 
     @Before
     fun setUp() {
@@ -53,7 +57,7 @@ internal class BaseLoginViewModelTest {
     fun `should start with the initial state`() = runTest {
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem()).isEqualTo(
-                Initial.copy(
+                initial.copy(
                     totpUiState = TotpUiState.Success,
                     customFieldsState = CustomFieldsState.Disabled,
                 )
@@ -67,7 +71,7 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.onTitleChange(titleInput)
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem().contents)
-                .isEqualTo(Initial.contents.copy(title = titleInput))
+                .isEqualTo(initial.contents.copy(title = titleInput))
         }
     }
 
@@ -77,7 +81,7 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.onUsernameChange(usernameInput)
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem().contents)
-                .isEqualTo(Initial.contents.copy(username = usernameInput))
+                .isEqualTo(initial.contents.copy(username = usernameInput))
         }
     }
 
@@ -89,7 +93,7 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem().contents)
                 .isEqualTo(
-                    Initial.contents.copy(
+                    initial.contents.copy(
                         password = HiddenState.Revealed(encryptedPassword, passwordInput)
                     )
                 )
@@ -102,7 +106,7 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.onNoteChange(noteInput)
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem().contents)
-                .isEqualTo(Initial.contents.copy(note = noteInput))
+                .isEqualTo(initial.contents.copy(note = noteInput))
         }
     }
 
@@ -112,7 +116,7 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.onWebsiteChange(url, 0)
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem().contents)
-                .isEqualTo(Initial.contents.copy(urls = listOf(url)))
+                .isEqualTo(initial.contents.copy(urls = listOf(url)))
         }
     }
 
@@ -121,7 +125,7 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.onAddWebsite()
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem().contents)
-                .isEqualTo(Initial.contents.copy(urls = listOf("", "")))
+                .isEqualTo(initial.contents.copy(urls = listOf("", "")))
         }
     }
 
@@ -130,7 +134,7 @@ internal class BaseLoginViewModelTest {
         baseLoginViewModel.onRemoveWebsite(0)
         baseLoginViewModel.baseLoginUiState.test {
             assertThat(awaitItem().contents)
-                .isEqualTo(Initial.contents.copy(urls = emptyList()))
+                .isEqualTo(initial.contents.copy(urls = emptyList()))
         }
     }
 }

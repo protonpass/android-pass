@@ -117,7 +117,7 @@ class UpdateLoginViewModel @Inject constructor(
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
-        initialValue = UpdateLoginUiState.Initial
+        initialValue = UpdateLoginUiState.create()
     )
 
     fun setAliasItem(aliasItem: AliasItem) {
@@ -181,7 +181,7 @@ class UpdateLoginViewModel @Inject constructor(
         }
 
         val loginItem = encryptionContextProvider.withEncryptionContext {
-            val totp = handleTotp(
+            val decryptedTotp = handleTotp(
                 encryptionContext = this@withEncryptionContext,
                 primaryTotp = itemContents.primaryTotp
             )
@@ -193,7 +193,7 @@ class UpdateLoginViewModel @Inject constructor(
                 urls = websites,
                 note = decrypt(item.note),
                 packageInfoSet = item.packageInfoSet,
-                primaryTotp = HiddenState.Concealed(totp),
+                primaryTotp = HiddenState.Revealed(itemContents.primaryTotp, decryptedTotp),
                 customFields = itemContents.customFields.mapNotNull {
                     it.toContent(this@withEncryptionContext, isConcealed = false)
                 }.toImmutableList()

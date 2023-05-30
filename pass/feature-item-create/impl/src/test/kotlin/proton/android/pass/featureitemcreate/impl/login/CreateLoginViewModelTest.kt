@@ -13,6 +13,7 @@ import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.clipboard.fakes.TestClipboardManager
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateItem
@@ -38,7 +39,6 @@ import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
 import proton.pass.domain.HiddenState
-import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
@@ -58,6 +58,11 @@ internal class CreateLoginViewModelTest {
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var snackbarDispatcher: TestSnackbarDispatcher
     private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+
+    private val initial = BaseLoginUiState.create(
+        HiddenState.Concealed(TestEncryptionContext.encrypt("")),
+        HiddenState.Concealed(TestEncryptionContext.encrypt(""))
+    )
 
     @Before
     fun setUp() {
@@ -105,7 +110,7 @@ internal class CreateLoginViewModelTest {
                                 vaultList = listOf(vault),
                                 currentVault = vault
                             ),
-                            BaseLoginUiState.Initial.copy(
+                            initial.copy(
                                 validationErrors = setOf(LoginItemValidationErrors.BlankTitle),
                                 totpUiState = TotpUiState.Success,
                                 customFieldsState = CustomFieldsState.Disabled,
@@ -136,8 +141,8 @@ internal class CreateLoginViewModelTest {
                             vaultList = listOf(vault),
                             currentVault = vault
                         ),
-                        BaseLoginUiState.Initial.copy(
-                            contents = ItemContents.Login.Empty.copy(title = titleInput),
+                        initial.copy(
+                            contents = initial.contents.copy(title = titleInput),
                             isLoadingState = IsLoadingState.NotLoading,
                             hasUserEditedContent = true,
                             totpUiState = TotpUiState.Success,
@@ -152,8 +157,8 @@ internal class CreateLoginViewModelTest {
                             vaultList = listOf(vault),
                             currentVault = vault
                         ),
-                        BaseLoginUiState.Initial.copy(
-                            contents = ItemContents.Login.Empty.copy(title = titleInput),
+                        initial.copy(
+                            contents = initial.contents.copy(title = titleInput),
                             isLoadingState = IsLoadingState.Loading,
                             hasUserEditedContent = true,
                             totpUiState = TotpUiState.Success,
@@ -168,8 +173,8 @@ internal class CreateLoginViewModelTest {
                             vaultList = listOf(vault),
                             currentVault = vault
                         ),
-                        BaseLoginUiState.Initial.copy(
-                            contents = ItemContents.Login.Empty.copy(title = titleInput),
+                        initial.copy(
+                            contents = initial.contents.copy(title = titleInput),
                             isLoadingState = IsLoadingState.NotLoading,
                             hasUserEditedContent = true,
                             isItemSaved = ItemSavedState.Success(
@@ -177,7 +182,7 @@ internal class CreateLoginViewModelTest {
                                 ItemUiModel(
                                     id = item.id,
                                     shareId = item.shareId,
-                                    contents = ItemContents.Login.Empty,
+                                    contents = initial.contents,
                                     createTime = item.createTime,
                                     state = 0,
                                     modificationTime = item.modificationTime,
@@ -231,8 +236,8 @@ internal class CreateLoginViewModelTest {
                                 trashedItemCount = 0
                             )
                         ),
-                        baseLoginUiState = BaseLoginUiState.Initial.copy(
-                            contents = ItemContents.Login.Empty.copy(
+                        baseLoginUiState = initial.copy(
+                            contents = initial.contents.copy(
                                 title = initialContents.title!!,
                                 username = initialContents.username!!,
                                 password = HiddenState.Concealed(initialContents.password!!),

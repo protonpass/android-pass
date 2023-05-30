@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
@@ -27,6 +28,7 @@ import proton.android.pass.test.TestSavedStateHandle
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.api.TotpSpec
 import proton.android.pass.totp.fakes.TestTotpManager
+import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemContents
 
 class UpdateLoginViewModelTest {
@@ -71,15 +73,16 @@ class UpdateLoginViewModelTest {
     fun `item with totp using default parameters shows only secret`() = runTest {
         val secret = "secret"
         val uri = "otpauth://totp/label?secret=$secret&algorithm=SHA1&period=30&digits=6"
+        val primaryTotp = HiddenState.Revealed("", uri)
         val item = TestObserveItems.createItem(
             itemContents = ItemContents.Login(
                 title = "item",
                 note = "note",
                 username = "username",
-                password = "password",
+                password = HiddenState.Revealed("", "password"),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
-                primaryTotp = uri,
+                primaryTotp = primaryTotp,
                 customFields = emptyList()
             )
         )
@@ -88,7 +91,7 @@ class UpdateLoginViewModelTest {
 
         instance.updateLoginUiState.test {
             val state = awaitItem()
-            assertThat(state.baseLoginUiState.contents.primaryTotp).isEqualTo(secret)
+            assertThat(state.baseLoginUiState.contents.primaryTotp).isEqualTo(primaryTotp)
         }
     }
 
@@ -96,15 +99,19 @@ class UpdateLoginViewModelTest {
     fun `item with totp using non-default parameters shows full URI`() = runTest {
         val secret = "secret"
         val uri = "otpauth://totp/label?secret=$secret&algorithm=SHA256&period=10&digits=8"
+        val primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(uri), uri)
         val item = TestObserveItems.createItem(
             itemContents = ItemContents.Login(
                 title = "item",
                 note = "note",
                 username = "username",
-                password = "password",
+                password = HiddenState.Revealed(
+                    TestEncryptionContext.encrypt("password"),
+                    "password"
+                ),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
-                primaryTotp = uri,
+                primaryTotp = primaryTotp,
                 customFields = emptyList()
             )
         )
@@ -112,7 +119,7 @@ class UpdateLoginViewModelTest {
 
         instance.updateLoginUiState.test {
             val state = awaitItem()
-            assertThat(state.baseLoginUiState.contents.primaryTotp).isEqualTo(uri)
+            assertThat(state.baseLoginUiState.contents.primaryTotp).isEqualTo(primaryTotp)
         }
     }
 

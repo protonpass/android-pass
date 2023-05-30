@@ -4,7 +4,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
@@ -13,9 +12,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import kotlinx.coroutines.delay
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
@@ -54,12 +53,7 @@ fun NoteTitle(
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
     )
 
-    LaunchedEffect(requestFocus) {
-        if (requestFocus) {
-            delay(DELAY_BEFORE_FOCUS_MS)
-            focusRequester.requestFocus()
-        }
-    }
+    RequestFocusLaunchedEffect(focusRequester, requestFocus)
 }
 
 class ThemeNoteTitlePreviewProvider :
@@ -83,4 +77,3 @@ fun NoteTitlePreview(
     }
 }
 
-private const val DELAY_BEFORE_FOCUS_MS = 200L

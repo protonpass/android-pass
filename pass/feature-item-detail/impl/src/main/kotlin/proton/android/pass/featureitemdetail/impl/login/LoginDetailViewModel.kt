@@ -338,7 +338,7 @@ class LoginDetailViewModel @Inject constructor(
                 if (canDisplay) {
                     observeTotpValue(decryptedTotpUri)
                 } else {
-                    flowOf(TotpUiState.Hidden)
+                    flowOf(TotpUiState.Limited)
                 }
             }
 
@@ -359,7 +359,7 @@ class LoginDetailViewModel @Inject constructor(
         .catch { e ->
             PassLogger.w(TAG, e, "Error observing totp")
             snackbarDispatcher(DetailSnackbarMessages.GenerateTotpError)
-            emit(TotpUiState.Hidden)
+            emit(TotpUiState.Limited)
         }
 
     private suspend fun getAliasForItem(item: ItemType.Login): Option<LinkedAliasItem> {

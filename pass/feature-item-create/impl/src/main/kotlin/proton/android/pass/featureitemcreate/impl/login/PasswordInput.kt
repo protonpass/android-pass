@@ -24,6 +24,8 @@ import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
 import proton.pass.domain.HiddenState
 
+private const val PASSWORD_CONCEALED_LENGTH = 8
+
 @Composable
 internal fun PasswordInput(
     modifier: Modifier = Modifier,
@@ -37,7 +39,7 @@ internal fun PasswordInput(
     onFocus: (Boolean) -> Unit
 ) {
     val (text, visualTransformation) = when (value) {
-        is HiddenState.Concealed -> "" to PasswordVisualTransformation()
+        is HiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
         is HiddenState.Revealed -> value.clearText to VisualTransformation.None
     }
     ProtonTextField(
@@ -56,7 +58,7 @@ internal fun PasswordInput(
                 tint = ProtonTheme.colors.iconWeak
             )
         },
-        trailingIcon = if (text.isNotEmpty()) {
+        trailingIcon = if (value is HiddenState.Revealed && text.isNotEmpty()) {
             { SmallCrossIconButton { onChange("") } }
         } else {
             null

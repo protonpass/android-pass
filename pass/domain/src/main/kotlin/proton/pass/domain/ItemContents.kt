@@ -43,13 +43,16 @@ sealed class ItemContents {
         val customFields: List<CustomFieldContent>
     ) : ItemContents() {
         companion object {
-            val Empty = Login(
+            fun create(
+                password: HiddenState,
+                primaryTotp: HiddenState
+            ) = Login(
                 title = "",
                 username = "",
-                password = HiddenState.Concealed(""),
+                password = password,
                 urls = listOf(""),
                 packageInfoSet = emptySet(),
-                primaryTotp = HiddenState.Concealed(""),
+                primaryTotp = primaryTotp,
                 note = "",
                 customFields = emptyList()
             )

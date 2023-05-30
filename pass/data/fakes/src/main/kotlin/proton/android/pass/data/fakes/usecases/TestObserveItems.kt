@@ -5,11 +5,13 @@ import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.common.api.None
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.datamodels.api.fromParsed
 import proton.android.pass.datamodels.api.serializeToProto
+import proton.pass.domain.HiddenState
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
@@ -63,7 +65,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             itemContents: ItemContents
         ): Item {
             val now = Clock.System.now()
-            val asProto = itemContents.serializeToProto("123")
+            val asProto = itemContents.serializeToProto("123", TestEncryptionContext)
             return TestEncryptionContextProvider().withEncryptionContext {
                 Item(
                     id = itemId,
@@ -96,10 +98,10 @@ class TestObserveItems @Inject constructor() : ObserveItems {
                 title = title,
                 note = note,
                 username = username,
-                password = "",
+                password = HiddenState.Concealed(""),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
-                primaryTotp = "",
+                primaryTotp = HiddenState.Concealed(""),
                 customFields = emptyList()
             )
         )
@@ -117,6 +119,7 @@ class TestObserveItems @Inject constructor() : ObserveItems {
             itemContents = ItemContents.Alias(
                 title = title,
                 note = note,
+                aliasEmail = alias
             )
         )
 

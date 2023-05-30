@@ -19,7 +19,6 @@ sealed interface LoginDetailUiState {
     data class Success(
         val itemUiModel: ItemUiModel,
         val vault: Vault?,
-        val passwordState: PasswordState,
         val totpUiState: TotpUiState?,
         val linkedAlias: Option<LinkedAliasItem>,
         val isLoading: Boolean,

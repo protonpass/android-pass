@@ -6,5 +6,6 @@ sealed interface CustomFieldEvent {
     object Upgrade : CustomFieldEvent
     data class OnValueChange(val value: String, val index: Int) : CustomFieldEvent
     data class OnCustomFieldOptions(val currentLabel: String, val index: Int) : CustomFieldEvent
+    object FocusRequested : CustomFieldEvent
 
 }

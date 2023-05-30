@@ -1,6 +1,7 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.runtime.Immutable
+import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
@@ -107,7 +108,8 @@ sealed interface CustomFieldsState {
 
     @Immutable
     data class Enabled(
-        val customFields: List<CustomFieldContent>
+        val customFields: List<CustomFieldContent>,
+        val focusCustomField: Option<Int>
     ) : CustomFieldsState
 
     @Immutable

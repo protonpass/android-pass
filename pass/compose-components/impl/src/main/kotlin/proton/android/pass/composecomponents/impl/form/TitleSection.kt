@@ -4,9 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
@@ -15,10 +13,9 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.commonui.api.applyIf
 import proton.android.pass.composecomponents.impl.R
@@ -37,7 +34,6 @@ fun TitleSection(
     onDoneClick: (() -> Unit)? = null
 ) {
     val focusRequester = remember { FocusRequester() }
-    val scope = rememberCoroutineScope()
 
     ProtonTextField(
         modifier = modifier
@@ -77,14 +73,7 @@ fun TitleSection(
         keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
     )
 
-    LaunchedEffect(requestFocus) {
-        if (requestFocus) {
-            scope.launch {
-                delay(DELAY_BEFORE_FOCUS_MS)
-                focusRequester.requestFocus()
-            }
-        }
-    }
+    RequestFocusLaunchedEffect(focusRequester, requestFocus)
 }
 
 class ThemeAndTitleInputProvider :
@@ -106,5 +95,3 @@ fun TitleInputPreview(
         }
     }
 }
-
-private const val DELAY_BEFORE_FOCUS_MS = 200L

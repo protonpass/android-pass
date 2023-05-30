@@ -47,7 +47,7 @@ sealed class ItemContents {
                 title = "",
                 username = "",
                 password = HiddenState.Concealed(""),
-                urls = emptyList(),
+                urls = listOf(""),
                 packageInfoSet = emptySet(),
                 primaryTotp = HiddenState.Concealed(""),
                 note = "",

@@ -9,10 +9,8 @@ import kotlinx.coroutines.delay
 fun RequestFocusLaunchedEffect(focusRequester: FocusRequester, requestFocus: Boolean = true) {
     if (requestFocus) {
         LaunchedEffect(requestFocus) {
-            if (requestFocus) {
-                delay(DELAY_BEFORE_FOCUS_MS)
-                focusRequester.requestFocus()
-            }
+            delay(DELAY_BEFORE_FOCUS_MS)
+            focusRequester.requestFocus()
         }
     }
 }

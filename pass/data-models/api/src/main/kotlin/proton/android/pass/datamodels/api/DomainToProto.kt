@@ -1,6 +1,5 @@
 package proton.android.pass.datamodels.api
 
-import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.ItemContents
@@ -83,25 +82,9 @@ fun ItemContents.serializeToProto(
 
             val itemBuilder = ItemV1.ItemLogin.newBuilder()
             itemBuilder.username = username
-            password.encrypted
-                .takeIf(EncryptedString::isNotBlank)
-                ?.let { encrypted ->
-                    encryptionContext.decrypt(encrypted)
-                        .takeIf { encrypted.isNotBlank() }
-                        ?.let { decrypted ->
-                            itemBuilder.password = decrypted
-                        }
-                }
+            itemBuilder.password = encryptionContext.decrypt(password.encrypted)
             itemBuilder.addAllUrls(urls.filter { it.isNotBlank() })
-            primaryTotp.encrypted
-                .takeIf(EncryptedString::isNotBlank)
-                ?.let { encrypted ->
-                    encryptionContext.decrypt(encrypted)
-                        .takeIf { encrypted.isNotBlank() }
-                        ?.let { decrypted ->
-                            itemBuilder.totpUri = decrypted
-                        }
-                }
+            itemBuilder.totpUri = encryptionContext.decrypt(primaryTotp.encrypted)
             contentBuilder.setLogin(itemBuilder.build())
         }
 

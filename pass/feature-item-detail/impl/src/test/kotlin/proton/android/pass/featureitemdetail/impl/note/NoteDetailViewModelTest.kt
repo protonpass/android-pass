@@ -10,6 +10,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.common.api.None
+import proton.android.pass.commonui.api.toUiModel
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
@@ -172,7 +174,7 @@ class NoteDetailViewModelTest {
             assertThat(value.isPermanentlyDeleted).isFalse()
         }
 
-        instance.onPermanentlyDelete(item.shareId, item.id, item.itemType)
+        instance.onPermanentlyDelete(item.toUiModel(TestEncryptionContext))
         instance.state.test {
             val value = awaitItem() as NoteDetailUiState.Success
             assertThat(value.isPermanentlyDeleted).isTrue()
@@ -196,7 +198,7 @@ class NoteDetailViewModelTest {
         }
 
         deleteItem.setResult(Result.failure(IllegalStateException("test")))
-        instance.onPermanentlyDelete(item.shareId, item.id, item.itemType)
+        instance.onPermanentlyDelete(item.toUiModel(TestEncryptionContext))
         instance.state.test {
             val value = awaitItem() as NoteDetailUiState.Success
             assertThat(value.isPermanentlyDeleted).isFalse()

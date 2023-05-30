@@ -23,7 +23,6 @@ fun LoginContent(
     modifier: Modifier = Modifier,
     itemUiModel: ItemUiModel,
     vault: Vault?,
-    passwordState: PasswordState,
     totpUiState: TotpUiState?,
     moreInfoUiState: MoreInfoUiState,
     showViewAlias: Boolean,
@@ -52,7 +51,7 @@ fun LoginContent(
         )
         MainLoginSection(
             username = contents.username,
-            passwordState = passwordState,
+            passwordState = contents.password,
             totpUiState = totpUiState,
             showViewAlias = showViewAlias,
             onUsernameClick = onUsernameClick,

@@ -22,6 +22,7 @@ import proton.android.pass.autofill.service.R
 import proton.android.pass.autofill.ui.autofill.navigation.SelectItemNavigation
 import proton.android.pass.common.api.None
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.data.fakes.usecases.TestGetSuggestedLoginItems
 import proton.android.pass.data.fakes.usecases.TestGetUserPlan
@@ -32,6 +33,7 @@ import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
 import proton.android.pass.test.waitUntilExists
+import proton.pass.domain.HiddenState
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
@@ -271,7 +273,7 @@ class SelectItemScreenTest {
             waitUntilExists(hasText(text))
             onNode(hasText(text)).performClick()
             onNode(hasText(text)).performTextInput(query)
-            
+
             Espresso.closeSoftKeyboard()
 
             waitUntilExists(hasText(itemText))
@@ -286,7 +288,7 @@ class SelectItemScreenTest {
         suggestions: Int,
         otherItems: Int,
         planType: PlanType
-    ) : SetupData {
+    ): SetupData {
         val vaultList = (0 until vaults).map {
             val shareId = ShareId("shareid-test-$it")
             Vault(
@@ -306,10 +308,10 @@ class SelectItemScreenTest {
                     title = "${SUGGESTION_TITLE_PREFIX}$it",
                     note = "",
                     username = "${SUGGESTION_USERNAME_PREFIX}$it",
-                    password = "",
+                    password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
                     urls = emptyList(),
                     packageInfoSet = emptySet(),
-                    primaryTotp = "",
+                    primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
                     customFields = emptyList()
                 )
             )
@@ -324,10 +326,10 @@ class SelectItemScreenTest {
                     title = "${OTHER_ITEM_TITLE_PREFIX}$it",
                     note = "",
                     username = "${SUGGESTION_USERNAME_PREFIX}$it",
-                    password = "",
+                    password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
                     urls = emptyList(),
                     packageInfoSet = emptySet(),
-                    primaryTotp = "",
+                    primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), ""),
                     customFields = emptyList()
                 )
             )

@@ -4,6 +4,7 @@ import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import org.junit.Test
 import proton.android.pass.crypto.api.Base64
 import proton.android.pass.crypto.api.context.EncryptionTag
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.crypto.fakes.utils.TestUtils
 import proton.android.pass.datamodels.api.serializeToProto
@@ -28,7 +29,7 @@ class UpdateItemImplTest {
         )
         val body = instance.createRequest(
             itemKey,
-            contents.serializeToProto(),
+            contents.serializeToProto(encryptionContext = TestEncryptionContext),
             lastRevision
         )
 

@@ -11,12 +11,13 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.featureitemdetail.impl.login.totp.TotpRow
+import proton.pass.domain.HiddenState
 
 @Composable
 fun MainLoginSection(
     modifier: Modifier = Modifier,
     username: String,
-    passwordState: PasswordState,
+    passwordState: HiddenState,
     totpUiState: TotpUiState?,
     showViewAlias: Boolean,
     onUsernameClick: () -> Unit,
@@ -37,7 +38,7 @@ fun MainLoginSection(
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
         LoginPasswordRow(
-            password = passwordState,
+            passwordHiddenState = passwordState,
             onTogglePasswordClick = onTogglePasswordClick,
             onCopyPasswordClick = onCopyPasswordClick
         )

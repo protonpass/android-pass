@@ -6,6 +6,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.pass.domain.CustomFieldContent
+import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 
@@ -26,10 +27,13 @@ data class BaseLoginUiState(
     val customFieldsState: CustomFieldsState,
 ) {
     companion object {
-        val Initial = BaseLoginUiState(
+        fun create(
+            password: HiddenState,
+            primaryTotp: HiddenState
+        ) = BaseLoginUiState(
             aliasItem = null,
             isLoadingState = IsLoadingState.NotLoading,
-            contents = ItemContents.Login.Empty,
+            contents = ItemContents.Login.create(password, primaryTotp),
             validationErrors = emptySet(),
             isItemSaved = ItemSavedState.Unknown,
             openScanState = OpenScanState.Unknown,
@@ -52,7 +56,7 @@ data class CreateLoginUiState(
     companion object {
         val Initial = CreateLoginUiState(
             shareUiState = ShareUiState.NotInitialised,
-            baseLoginUiState = BaseLoginUiState.Initial
+            baseLoginUiState = BaseLoginUiState.create(HiddenState.Concealed(""), HiddenState.Concealed(""))
         )
     }
 }
@@ -63,9 +67,9 @@ data class UpdateLoginUiState(
     val baseLoginUiState: BaseLoginUiState
 ) {
     companion object {
-        val Initial = UpdateLoginUiState(
+        fun create() = UpdateLoginUiState(
             selectedShareId = null,
-            baseLoginUiState = BaseLoginUiState.Initial
+            baseLoginUiState = BaseLoginUiState.create(HiddenState.Concealed(""), HiddenState.Concealed(""))
         )
     }
 }

@@ -69,7 +69,7 @@ abstract class BaseLoginViewModel(
             encryptionContextProvider.withEncryptionContext {
                 ItemContents.Login.create(
                     HiddenState.Concealed(encrypt("")),
-                    HiddenState.Concealed(encrypt(""))
+                    HiddenState.Revealed(encrypt(""), "")
                 )
             }
         )
@@ -211,7 +211,10 @@ abstract class BaseLoginViewModel(
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = BaseLoginUiState.create(HiddenState.Concealed(""), HiddenState.Concealed(""))
+            initialValue = BaseLoginUiState.create(
+                HiddenState.Concealed(""),
+                HiddenState.Concealed("")
+            )
         )
 
     fun onTitleChange(value: String) {

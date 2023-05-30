@@ -6,7 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.component.ProtonDialogTitle
@@ -14,6 +17,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSection
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
@@ -29,6 +33,8 @@ fun CustomFieldNameDialogContent(
     onConfirm: () -> Unit,
     onCancel: () -> Unit
 ) {
+    val focusRequester = remember { FocusRequester() }
+
     Column(modifier = modifier) {
         Column(
             modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp),
@@ -51,7 +57,7 @@ fun CustomFieldNameDialogContent(
                     .padding(16.dp),
             ) {
                 ProtonTextField(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),
                     value = value,
                     onChange = onChange,
                     placeholder = {
@@ -73,4 +79,6 @@ fun CustomFieldNameDialogContent(
             onConfirm = onConfirm
         )
     }
+
+    RequestFocusLaunchedEffect(focusRequester)
 }

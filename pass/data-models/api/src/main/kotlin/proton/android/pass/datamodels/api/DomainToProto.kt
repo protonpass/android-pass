@@ -1,5 +1,6 @@
 package proton.android.pass.datamodels.api
 
+import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.ItemContents
@@ -10,7 +11,7 @@ import proton_pass_item_v1.extraTextField
 import proton_pass_item_v1.extraTotp
 import java.util.UUID
 
-@Suppress("LongMethod")
+@Suppress("LongMethod", "ComplexMethod")
 fun ItemContents.serializeToProto(
     itemUuid: String? = null,
     encryptionContext: EncryptionContext
@@ -80,14 +81,28 @@ fun ItemContents.serializeToProto(
                 }
             }
 
-            contentBuilder.setLogin(
-                ItemV1.ItemLogin.newBuilder()
-                    .setUsername(username)
-                    .setPassword(encryptionContext.decrypt(password.encrypted))
-                    .addAllUrls(urls)
-                    .setTotpUri(encryptionContext.decrypt(primaryTotp.encrypted))
-                    .build()
-            )
+            val itemBuilder = ItemV1.ItemLogin.newBuilder()
+            itemBuilder.username = username
+            password.encrypted
+                .takeIf(EncryptedString::isNotBlank)
+                ?.let { encrypted ->
+                    encryptionContext.decrypt(encrypted)
+                        .takeIf { encrypted.isNotBlank() }
+                        ?.let { decrypted ->
+                            itemBuilder.password = decrypted
+                        }
+                }
+            itemBuilder.addAllUrls(urls)
+            primaryTotp.encrypted
+                .takeIf(EncryptedString::isNotBlank)
+                ?.let { encrypted ->
+                    encryptionContext.decrypt(encrypted)
+                        .takeIf { encrypted.isNotBlank() }
+                        ?.let { decrypted ->
+                            itemBuilder.totpUri = decrypted
+                        }
+                }
+            contentBuilder.setLogin(itemBuilder.build())
         }
 
         is ItemContents.Note -> contentBuilder.setNote(

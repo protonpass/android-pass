@@ -92,7 +92,7 @@ fun ItemContents.serializeToProto(
                             itemBuilder.password = decrypted
                         }
                 }
-            itemBuilder.addAllUrls(urls)
+            itemBuilder.addAllUrls(urls.filter { it.isNotBlank() })
             primaryTotp.encrypted
                 .takeIf(EncryptedString::isNotBlank)
                 ?.let { encrypted ->

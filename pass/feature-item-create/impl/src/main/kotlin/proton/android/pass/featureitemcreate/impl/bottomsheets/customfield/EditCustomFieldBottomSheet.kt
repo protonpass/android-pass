@@ -1,5 +1,6 @@
 package proton.android.pass.featureitemcreate.impl.bottomsheets.customfield
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,6 +23,8 @@ fun EditCustomFieldBottomSheet(
     onNavigate: (CustomFieldOptionsNavigation) -> Unit,
     viewModel: EditCustomFieldViewModel = hiltViewModel()
 ) {
+    BackHandler { onNavigate(CustomFieldNavigation.Close) }
+
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = listOf(

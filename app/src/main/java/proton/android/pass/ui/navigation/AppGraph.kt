@@ -325,7 +325,7 @@ fun NavGraphBuilder.appGraph(
     createLoginGraph(
         onNavigate = {
             when (it) {
-                BaseLoginNavigation.Close -> appNavigator.onBackClick()
+                BaseLoginNavigation.Close -> dismissBottomSheet { appNavigator.onBackClick() }
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
                     route = CreateAliasBottomSheet.createNavRoute(
@@ -380,29 +380,36 @@ fun NavGraphBuilder.appGraph(
                     destination = AddCustomFieldBottomSheet
                 )
 
-                is BaseLoginNavigation.CustomFieldTypeSelected -> appNavigator.navigate(
-                    destination = CustomFieldNameDialog,
-                    route = CustomFieldNameDialog.buildRoute(it.type),
-                    backDestination = CreateLogin
-                )
+                is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = CustomFieldNameDialog,
+                        route = CustomFieldNameDialog.buildRoute(it.type),
+                        backDestination = CreateLogin
+                    )
+                }
 
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheet,
                     route = CustomFieldOptionsBottomSheet.buildRoute(it.index)
                 )
-                is BaseLoginNavigation.EditCustomField -> appNavigator.navigate(
-                    destination = EditCustomFieldNameDialog,
-                    route = EditCustomFieldNameDialog.buildRoute(it.index),
-                    backDestination = CreateLogin
-                )
-                BaseLoginNavigation.RemovedCustomField -> appNavigator.onBackClick()
+
+                is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialog,
+                        route = EditCustomFieldNameDialog.buildRoute(it.index),
+                        backDestination = CreateLogin
+                    )
+                }
+                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
             }
         }
     )
     updateLoginGraph(
         onNavigate = {
             when (it) {
-                BaseLoginNavigation.Close -> appNavigator.onBackClick()
+                BaseLoginNavigation.Close -> dismissBottomSheet { appNavigator.onBackClick() }
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
                     route = CreateAliasBottomSheet.createNavRoute(
@@ -460,23 +467,31 @@ fun NavGraphBuilder.appGraph(
                     destination = AddCustomFieldBottomSheet
                 )
 
-                is BaseLoginNavigation.CustomFieldTypeSelected -> appNavigator.navigate(
-                    destination = CustomFieldNameDialog,
-                    route = CustomFieldNameDialog.buildRoute(it.type),
-                    backDestination = EditLogin
-                )
+                is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = CustomFieldNameDialog,
+                        route = CustomFieldNameDialog.buildRoute(it.type),
+                        backDestination = EditLogin
+                    )
+                }
 
                 is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
                     destination = CustomFieldOptionsBottomSheet,
                     route = CustomFieldOptionsBottomSheet.buildRoute(it.index),
                     backDestination = EditLogin
                 )
-                is BaseLoginNavigation.EditCustomField -> appNavigator.navigate(
-                    destination = EditCustomFieldNameDialog,
-                    route = EditCustomFieldNameDialog.buildRoute(it.index),
-                    backDestination = EditLogin
-                )
-                BaseLoginNavigation.RemovedCustomField -> appNavigator.onBackClick()
+
+                is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
+                    appNavigator.navigate(
+                        destination = EditCustomFieldNameDialog,
+                        route = EditCustomFieldNameDialog.buildRoute(it.index),
+                        backDestination = EditLogin
+                    )
+                }
+
+                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
             }
         }
     )

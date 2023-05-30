@@ -11,10 +11,8 @@ import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.account.fakes.TestKeyStoreCrypto
 import proton.android.pass.clipboard.fakes.TestClipboardManager
-import proton.android.pass.commonui.api.itemName
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateItem
@@ -39,6 +37,8 @@ import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestItem
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
+import proton.pass.domain.HiddenState
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
@@ -137,7 +137,7 @@ internal class CreateLoginViewModelTest {
                             currentVault = vault
                         ),
                         BaseLoginUiState.Initial.copy(
-                            contents = LoginItem.Empty.copy(title = titleInput),
+                            contents = ItemContents.Login.Empty.copy(title = titleInput),
                             isLoadingState = IsLoadingState.NotLoading,
                             hasUserEditedContent = true,
                             totpUiState = TotpUiState.Success,
@@ -153,7 +153,7 @@ internal class CreateLoginViewModelTest {
                             currentVault = vault
                         ),
                         BaseLoginUiState.Initial.copy(
-                            contents = LoginItem.Empty.copy(title = titleInput),
+                            contents = ItemContents.Login.Empty.copy(title = titleInput),
                             isLoadingState = IsLoadingState.Loading,
                             hasUserEditedContent = true,
                             totpUiState = TotpUiState.Success,
@@ -169,7 +169,7 @@ internal class CreateLoginViewModelTest {
                             currentVault = vault
                         ),
                         BaseLoginUiState.Initial.copy(
-                            contents = LoginItem.Empty.copy(title = titleInput),
+                            contents = ItemContents.Login.Empty.copy(title = titleInput),
                             isLoadingState = IsLoadingState.NotLoading,
                             hasUserEditedContent = true,
                             isItemSaved = ItemSavedState.Success(
@@ -177,9 +177,7 @@ internal class CreateLoginViewModelTest {
                                 ItemUiModel(
                                     id = item.id,
                                     shareId = item.shareId,
-                                    name = item.itemName(TestEncryptionContext),
-                                    note = TestEncryptionContext.decrypt(item.note),
-                                    contents = item.itemType,
+                                    contents = ItemContents.Login.Empty,
                                     createTime = item.createTime,
                                     state = 0,
                                     modificationTime = item.modificationTime,
@@ -234,11 +232,11 @@ internal class CreateLoginViewModelTest {
                             )
                         ),
                         baseLoginUiState = BaseLoginUiState.Initial.copy(
-                            contents = LoginItem.Empty.copy(
+                            contents = ItemContents.Login.Empty.copy(
                                 title = initialContents.title!!,
                                 username = initialContents.username!!,
-                                password = initialContents.password!!,
-                                websiteAddresses = listOf(initialContents.url!!)
+                                password = HiddenState.Concealed(initialContents.password!!),
+                                urls = listOf(initialContents.url!!)
                             ),
                             totpUiState = TotpUiState.Success,
                             customFieldsState = CustomFieldsState.Disabled,

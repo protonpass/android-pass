@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -24,7 +25,7 @@ import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
-import proton.android.pass.common.api.some
+import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.require
@@ -40,7 +41,6 @@ import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItem
 import proton.android.pass.data.api.usecases.GetItemByAliasEmail
 import proton.android.pass.data.api.usecases.GetItemByIdWithVault
-import proton.android.pass.data.api.usecases.ItemWithVaultInfo
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
@@ -63,7 +63,8 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.ObserveTotpFromUri
 import proton.android.pass.totp.api.TotpManager
-import proton.pass.domain.Item
+import proton.pass.domain.HiddenState
+import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ItemType
 import proton.pass.domain.ShareId
@@ -96,8 +97,6 @@ class LoginDetailViewModel @Inject constructor(
         PassLogger.e(TAG, throwable)
     }
 
-    private val passwordState: MutableStateFlow<PasswordState> =
-        MutableStateFlow(getInitialPasswordState())
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
     private val isItemSentToTrashState: MutableStateFlow<IsSentToTrashState> =
@@ -106,68 +105,103 @@ class LoginDetailViewModel @Inject constructor(
         MutableStateFlow(IsPermanentlyDeletedState.NotDeleted)
     private val isRestoredFromTrashState: MutableStateFlow<IsRestoredFromTrashState> =
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
+    private val revealedFieldsState: MutableStateFlow<List<DetailFields>> =
+        MutableStateFlow(emptyList())
 
-    private val itemDetailsFlow: Flow<LoadingResult<LoginItemInfo>> =
+    sealed interface DetailFields {
+        object Password : DetailFields
+    }
+
+    private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> =
         getItemByIdWithVault(shareId, itemId)
             .asLoadingResult()
-            .flatMapLatest { res ->
-                val details = when (res) {
-                    LoadingResult.Loading -> return@flatMapLatest flowOf(LoadingResult.Loading)
-                    is LoadingResult.Error -> {
-                        PassLogger.e(TAG, res.exception, "Error loading item")
-                        return@flatMapLatest flowOf(res)
-                    }
-
-                    is LoadingResult.Success -> res.data
-                }
-
-                val itemContents = details.item.itemType as ItemType.Login
-                val alias = getAliasForItem(itemContents)
-
-                val decryptedTotpUri = encryptionContextProvider.withEncryptionContext {
-                    decrypt(itemContents.primaryTotp)
-                }
-
-                if (decryptedTotpUri.isNotEmpty()) {
-                    observeTotp(
-                        details = details,
-                        alias = alias,
-                        totpUri = decryptedTotpUri,
-                    ).asLoadingResult()
-                } else {
-                    flowOf(
-                        LoadingResult.Success(
-                            LoginItemInfo(
-                                item = details.item,
-                                totp = None,
-                                vault = details.vault,
-                                hasMoreThanOneVault = details.hasMoreThanOneVault,
-                                linkedAlias = alias
-                            )
-                        )
+            .map { detailsResult ->
+                detailsResult.map { details ->
+                    val itemType = details.item.itemType as ItemType.Login
+                    val alias = getAliasForItem(itemType)
+                    LoginItemInfo(
+                        itemUiModel = encryptionContextProvider.withEncryptionContext {
+                            details.item.toUiModel(this)
+                        },
+                        vault = details.vault,
+                        hasMoreThanOneVault = details.hasMoreThanOneVault,
+                        linkedAlias = alias
                     )
                 }
             }
             .distinctUntilChanged()
 
+    private val revealedLoginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
+        loginItemInfoFlow,
+        revealedFieldsState
+    ) { loginItemResult, revealed ->
+        loginItemResult.map { item ->
+            encryptionContextProvider.withEncryptionContext {
+                val contents =
+                    (item.itemUiModel.contents as ItemContents.Login).let { loginContents ->
+                        val updatedPassword = if (revealed.contains(DetailFields.Password)) {
+                            HiddenState.Revealed(
+                                loginContents.password.encrypted,
+                                decrypt(loginContents.password.encrypted)
+                            )
+                        } else {
+                            loginContents.password
+                        }
+
+                        val updatedPrimaryTotp = HiddenState.Revealed(
+                            loginContents.primaryTotp.encrypted,
+                            decrypt(loginContents.primaryTotp.encrypted)
+                        )
+
+                        loginContents.copy(
+                            password = updatedPassword,
+                            primaryTotp = updatedPrimaryTotp
+                        )
+                    }
+
+                item.copy(itemUiModel = item.itemUiModel.copy(contents = contents))
+            }
+        }
+    }.distinctUntilChanged()
+
+    private val totpUiStateFlow: Flow<TotpUiState> =
+        revealedLoginItemInfoFlow
+            .flatMapLatest { result ->
+                val loginItemInfo = when (result) {
+                    is LoadingResult.Error -> return@flatMapLatest flowOf(TotpUiState.Hidden)
+                    LoadingResult.Loading -> return@flatMapLatest flowOf(TotpUiState.Hidden)
+                    is LoadingResult.Success -> result.data
+                }
+                val contents = loginItemInfo.itemUiModel.contents as ItemContents.Login
+                val decryptedTotpUri = when (val primaryTotp = contents.primaryTotp) {
+                    is HiddenState.Concealed -> null
+                    is HiddenState.Revealed -> primaryTotp.clearText
+                }
+                if (!decryptedTotpUri.isNullOrBlank()) {
+                    observeTotp(decryptedTotpUri)
+                } else {
+                    flowOf(TotpUiState.Hidden)
+                }
+            }
+            .distinctUntilChanged()
+
     private data class LoginItemInfo(
-        val item: Item,
-        val totp: Option<TotpUiState>,
+        val itemUiModel: ItemUiModel,
         val vault: Vault,
         val hasMoreThanOneVault: Boolean,
         val linkedAlias: Option<LinkedAliasItem>
     )
 
     val uiState: StateFlow<LoginDetailUiState> = combineN(
-        itemDetailsFlow,
-        passwordState,
+        revealedLoginItemInfoFlow,
+        totpUiStateFlow,
         isLoadingState,
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
         canPerformPaidAction().asLoadingResult()
     ) { itemDetails,
-        password,
+        totpUiState,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
@@ -193,13 +227,10 @@ class LoginDetailViewModel @Inject constructor(
                     else -> true
                 }
                 LoginDetailUiState.Success(
-                    itemUiModel = encryptionContextProvider.withEncryptionContext {
-                        details.item.toUiModel(this)
-                    },
+                    itemUiModel = details.itemUiModel,
                     vault = vault,
                     linkedAlias = details.linkedAlias,
-                    passwordState = password,
-                    totpUiState = details.totp.value(),
+                    totpUiState = totpUiState,
                     isLoading = isLoading.value(),
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
@@ -217,11 +248,11 @@ class LoginDetailViewModel @Inject constructor(
 
     fun copyPasswordToClipboard() = viewModelScope.launch(coroutineExceptionHandler) {
         val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
-        val itemType = state.itemUiModel.contents as? ItemType.Login ?: return@launch
-        val text = when (val password = passwordState.value) {
-            is PasswordState.Revealed -> password.clearText
-            is PasswordState.Concealed -> encryptionContextProvider.withEncryptionContext {
-                decrypt(itemType.password)
+        val contents = state.itemUiModel.contents as? ItemContents.Login ?: return@launch
+        val text = when (val password = contents.password) {
+            is HiddenState.Revealed -> password.clearText
+            is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
+                decrypt(contents.password.encrypted)
             }
         }
         clipboardManager.copyToClipboard(text = text, isSecure = true)
@@ -230,7 +261,7 @@ class LoginDetailViewModel @Inject constructor(
 
     fun copyUsernameToClipboard() = viewModelScope.launch {
         val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
-        val itemType = state.itemUiModel.contents as? ItemType.Login ?: return@launch
+        val itemType = state.itemUiModel.contents as? ItemContents.Login ?: return@launch
         clipboardManager.copyToClipboard(itemType.username)
         snackbarDispatcher(UsernameCopiedToClipboard)
     }
@@ -246,20 +277,12 @@ class LoginDetailViewModel @Inject constructor(
     }
 
     fun togglePassword() = viewModelScope.launch(coroutineExceptionHandler) {
-        val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
-        val itemType = state.itemUiModel.contents as? ItemType.Login ?: return@launch
-
-        when (passwordState.value) {
-            is PasswordState.Concealed ->
-                encryptionContextProvider.withEncryptionContext {
-                    passwordState.value = PasswordState.Revealed(
-                        encrypted = itemType.password,
-                        clearText = decrypt(itemType.password)
-                    )
-                }
-
-            is PasswordState.Revealed ->
-                passwordState.value = PasswordState.Concealed(itemType.password)
+        revealedFieldsState.update {
+            if (it.contains(DetailFields.Password)) {
+                it.toMutableList().apply { remove(DetailFields.Password) }
+            } else {
+                it.toMutableList().apply { add(DetailFields.Password) }
+            }
         }
     }
 
@@ -309,65 +332,34 @@ class LoginDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
-    private fun observeTotp(
-        details: ItemWithVaultInfo,
-        alias: Option<LinkedAliasItem>,
-        totpUri: String
-    ): Flow<LoginItemInfo> = canDisplayTotp(shareId = shareId, itemId = itemId)
-        .flatMapLatest { canDisplay ->
-            if (canDisplay) {
-                observeTotpValue(details, alias, totpUri)
-            } else {
-                flowOf(
-                    LoginItemInfo(
-                        item = details.item,
-                        totp = TotpUiState.Hidden.some(),
-                        vault = details.vault,
-                        hasMoreThanOneVault = details.hasMoreThanOneVault,
-                        linkedAlias = alias
-                    )
-                )
-
+    private fun observeTotp(decryptedTotpUri: String): Flow<TotpUiState> =
+        canDisplayTotp(shareId = shareId, itemId = itemId)
+            .flatMapLatest { canDisplay ->
+                if (canDisplay) {
+                    observeTotpValue(decryptedTotpUri)
+                } else {
+                    flowOf(TotpUiState.Hidden)
+                }
             }
-        }
 
     private fun observeTotpValue(
-        details: ItemWithVaultInfo,
-        alias: Option<LinkedAliasItem>,
-        totpUri: String
-    ): Flow<LoginItemInfo> = observeTotpFromUri(totpUri)
+        decryptedTotpUri: String
+    ): Flow<TotpUiState> = observeTotpFromUri(decryptedTotpUri)
         .map(TotpManager.TotpWrapper::toOption)
         .map { totpValue ->
-            val totp = totpValue.map {
-                TotpUiState.Visible(it.code, it.remainingSeconds, it.totalSeconds)
+            when (totpValue) {
+                None -> TotpUiState.Hidden
+                is Some -> TotpUiState.Visible(
+                    code = totpValue.value.code,
+                    remainingSeconds = totpValue.value.remainingSeconds,
+                    totalSeconds = totpValue.value.totalSeconds
+                )
             }
-            LoginItemInfo(
-                item = details.item,
-                totp = totp,
-                vault = details.vault,
-                hasMoreThanOneVault = details.hasMoreThanOneVault,
-                linkedAlias = alias
-            )
-
         }
         .catch { e ->
             PassLogger.w(TAG, e, "Error observing totp")
             snackbarDispatcher(DetailSnackbarMessages.GenerateTotpError)
-            emit(
-                LoginItemInfo(
-                    item = details.item,
-                    totp = None,
-                    vault = details.vault,
-                    hasMoreThanOneVault = details.hasMoreThanOneVault,
-                    linkedAlias = alias
-                )
-            )
-        }
-
-
-    private fun getInitialPasswordState(): PasswordState =
-        encryptionContextProvider.withEncryptionContext {
-            PasswordState.Concealed(encrypt(""))
+            emit(TotpUiState.Hidden)
         }
 
     private suspend fun getAliasForItem(item: ItemType.Login): Option<LinkedAliasItem> {

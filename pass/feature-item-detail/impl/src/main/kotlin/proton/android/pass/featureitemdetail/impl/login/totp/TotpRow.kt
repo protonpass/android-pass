@@ -12,14 +12,17 @@ fun TotpRow(
     onUpgradeClick: () -> Unit
 ) {
     when (state) {
-        TotpUiState.Hidden -> TotpUpgradeContent(
+        TotpUiState.Limited -> TotpUpgradeContent(
             modifier = modifier,
             onUpgrade = onUpgradeClick
         )
+
         is TotpUiState.Visible -> TotpRowContent(
             modifier = modifier,
             state = state,
             onCopyTotpClick = onCopyTotpClick
         )
+
+        TotpUiState.Hidden -> {}
     }
 }

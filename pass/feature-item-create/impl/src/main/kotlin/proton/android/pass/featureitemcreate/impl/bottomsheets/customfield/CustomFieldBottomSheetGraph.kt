@@ -26,14 +26,16 @@ enum class CustomFieldType {
     Totp
 }
 
-sealed interface CustomFieldNavigation {
-    object Close : CustomFieldNavigation
-    object AddText : CustomFieldNavigation
-    object AddHidden : CustomFieldNavigation
-    object AddTotp : CustomFieldNavigation
+sealed interface AddCustomFieldNavigation {
+    object Close : AddCustomFieldNavigation
+    object AddText : AddCustomFieldNavigation
+    object AddHidden : AddCustomFieldNavigation
+    object AddTotp : AddCustomFieldNavigation
+}
 
-    object EditCustomField : CustomFieldNavigation
-    object RemoveCustomField : CustomFieldNavigation
+sealed interface CustomFieldOptionsNavigation {
+    object EditCustomField : CustomFieldOptionsNavigation
+    object RemoveCustomField : CustomFieldOptionsNavigation
 }
 
 fun NavGraphBuilder.customFieldBottomSheetGraph(
@@ -42,20 +44,18 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
     bottomSheet(AddCustomFieldBottomSheet) {
         AddCustomFieldBottomSheet {
             when (it) {
-                is CustomFieldNavigation.Close -> {
+                is AddCustomFieldNavigation.Close -> {
                     onNavigate(BaseLoginNavigation.Close)
                 }
-                is CustomFieldNavigation.AddText -> {
+                is AddCustomFieldNavigation.AddText -> {
                     onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Text))
                 }
-                is CustomFieldNavigation.AddHidden -> {
+                is AddCustomFieldNavigation.AddHidden -> {
                     onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Hidden))
                 }
-                is CustomFieldNavigation.AddTotp -> {
+                is AddCustomFieldNavigation.AddTotp -> {
                     onNavigate(BaseLoginNavigation.CustomFieldTypeSelected(CustomFieldType.Totp))
                 }
-
-                else -> {}
             }
         }
     }
@@ -67,14 +67,12 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
             index = index,
             onNavigate = {
                 when (it) {
-                    CustomFieldNavigation.EditCustomField -> {
+                    CustomFieldOptionsNavigation.EditCustomField -> {
                         onNavigate(BaseLoginNavigation.EditCustomField(index))
                     }
-                    CustomFieldNavigation.RemoveCustomField -> {
+                    CustomFieldOptionsNavigation.RemoveCustomField -> {
                         onNavigate(BaseLoginNavigation.RemovedCustomField)
                     }
-
-                    else -> {}
                 }
             }
         )

@@ -36,10 +36,11 @@ import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
+import proton.android.pass.featureitemcreate.impl.login.CreateLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
-import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
+import proton.android.pass.featureitemcreate.impl.login.createUpdateLoginGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
@@ -110,7 +111,8 @@ fun NavGraphBuilder.autofillActivityGraph(
         }
     )
     sortingGraph { appNavigator.onBackClick() }
-    createLoginGraph(
+
+    createUpdateLoginGraph(
         initialCreateLoginUiState = InitialCreateLoginUiState(
             title = autofillAppState.title,
             url = autofillAppState.webDomain.value(),
@@ -119,7 +121,10 @@ fun NavGraphBuilder.autofillActivityGraph(
         ),
         onNavigate = {
             when (it) {
-                BaseLoginNavigation.Close -> appNavigator.onBackClick()
+                BaseLoginNavigation.Close -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
+
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
                     route = CreateAliasBottomSheet.createNavRoute(
@@ -129,23 +134,29 @@ fun NavGraphBuilder.autofillActivityGraph(
                     )
                 )
 
-                BaseLoginNavigation.GeneratePassword -> {
-                    appNavigator.navigate(
-                        destination = GeneratePasswordBottomsheet,
-                        route = GeneratePasswordBottomsheet.buildRoute(
-                            mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
-                        )
+                BaseLoginNavigation.GeneratePassword -> appNavigator.navigate(
+                    destination = GeneratePasswordBottomsheet,
+                    route = GeneratePasswordBottomsheet.buildRoute(
+                        mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
                     )
+                )
+
+                is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = it.event) {
+                    is CreateLoginNavigation.LoginCreated -> {
+                        when (val autofillItem = event.itemUiModel.toAutoFillItem()) {
+                            None -> {}
+                            is Some -> onAutofillItemReceived(autofillItem.value)
+                        }
+                    }
+
+                    is CreateLoginNavigation.SelectVault -> {
+                        appNavigator.navigate(
+                            destination = SelectVaultBottomsheet,
+                            route = SelectVaultBottomsheet.createNavRoute(event.shareId)
+                        )
+                    }
                 }
 
-                is BaseLoginNavigation.LoginCreated -> when (
-                    val autofillItem = it.itemUiModel.toAutoFillItem()
-                ) {
-                    None -> {}
-                    is Some -> onAutofillItemReceived(autofillItem.value)
-                }
-
-                is BaseLoginNavigation.LoginUpdated -> {}
                 BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
                 BaseLoginNavigation.Upgrade -> onNavigate(AutofillNavigation.Upgrade)
 
@@ -154,9 +165,10 @@ fun NavGraphBuilder.autofillActivityGraph(
                     route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
                 )
 
-                BaseLoginNavigation.DeleteAlias -> {
-                    appNavigator.navigateUpWithResult(CLEAR_ALIAS_NAV_PARAMETER_KEY, true)
-                }
+                BaseLoginNavigation.DeleteAlias -> appNavigator.navigateUpWithResult(
+                    key = CLEAR_ALIAS_NAV_PARAMETER_KEY,
+                    value = true
+                )
 
                 is BaseLoginNavigation.EditAlias -> {
                     appNavigator.navigate(
@@ -168,14 +180,6 @@ fun NavGraphBuilder.autofillActivityGraph(
                         )
                     )
                 }
-
-                is BaseLoginNavigation.SelectVault -> {
-                    appNavigator.navigate(
-                        destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
-                    )
-                }
-
 
                 BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
                     destination = AddCustomFieldBottomSheet
@@ -201,9 +205,13 @@ fun NavGraphBuilder.autofillActivityGraph(
                         backDestination = CreateLogin
                     )
                 }
+
                 BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }
+
+                // Updates cannot happen
+                is BaseLoginNavigation.OnUpdateLoginEvent -> {}
             }
         }
     )

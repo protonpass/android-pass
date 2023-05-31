@@ -6,9 +6,19 @@ import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.Custo
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
+sealed interface CreateLoginNavigation {
+    data class LoginCreated(val itemUiModel: ItemUiModel) : CreateLoginNavigation
+    data class SelectVault(val shareId: ShareId) : CreateLoginNavigation
+}
+
+sealed interface UpdateLoginNavigation {
+    data class LoginUpdated(val shareId: ShareId, val itemId: ItemId) : UpdateLoginNavigation
+}
+
 sealed interface BaseLoginNavigation {
-    data class LoginCreated(val itemUiModel: ItemUiModel) : BaseLoginNavigation
-    data class LoginUpdated(val shareId: ShareId, val itemId: ItemId) : BaseLoginNavigation
+    data class OnCreateLoginEvent(val event: CreateLoginNavigation) : BaseLoginNavigation
+    data class OnUpdateLoginEvent(val event: UpdateLoginNavigation) : BaseLoginNavigation
+
     data class CreateAlias(
         val shareId: ShareId,
         val showUpgrade: Boolean,
@@ -28,10 +38,6 @@ sealed interface BaseLoginNavigation {
     data class EditAlias(
         val shareId: ShareId,
         val showUpgrade: Boolean
-    ) : BaseLoginNavigation
-
-    data class SelectVault(
-        val shareId: ShareId
     ) : BaseLoginNavigation
 
     object AddCustomField : BaseLoginNavigation

@@ -25,7 +25,7 @@ fun AddCustomFieldBottomSheet(
     modifier: Modifier = Modifier,
     onNavigate: (AddCustomFieldNavigation) -> Unit
 ) {
-    BackHandler { onNavigate(CustomFieldNavigation.Close) }
+    BackHandler { onNavigate(AddCustomFieldNavigation.Close) }
 
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),

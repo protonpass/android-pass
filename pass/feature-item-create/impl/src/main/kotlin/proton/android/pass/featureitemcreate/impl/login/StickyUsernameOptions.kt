@@ -13,6 +13,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -34,13 +35,17 @@ fun StickyUsernameOptions(
     onPrefillCurrentEmailClick: (String) -> Unit
 ) {
     if (!showCreateAliasButton && primaryEmail == null) return
+    val focusManager = LocalFocusManager.current
 
     StickyImeRow(modifier) {
         if (showCreateAliasButton) {
             Row(
                 modifier = Modifier
                     .weight(1f)
-                    .clickable { onCreateAliasClick() }
+                    .clickable {
+                        focusManager.clearFocus()
+                        onCreateAliasClick()
+                    }
                     .fillMaxHeight()
                     .padding(6.dp, 0.dp),
                 verticalAlignment = Alignment.CenterVertically,
@@ -70,7 +75,10 @@ fun StickyUsernameOptions(
             Row(
                 modifier = Modifier
                     .weight(1f)
-                    .clickable { onPrefillCurrentEmailClick(primaryEmail) }
+                    .clickable {
+                        focusManager.clearFocus()
+                        onPrefillCurrentEmailClick(primaryEmail)
+                    }
                     .fillMaxHeight()
                     .padding(6.dp, 0.dp),
                 verticalAlignment = Alignment.CenterVertically,

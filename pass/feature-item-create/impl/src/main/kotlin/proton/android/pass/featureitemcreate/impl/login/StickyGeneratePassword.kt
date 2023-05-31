@@ -8,6 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -25,8 +26,12 @@ fun StickyGeneratePassword(
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
     StickyImeRow(
-        modifier = modifier.clickable { onClick() }
+        modifier = modifier.clickable {
+            focusManager.clearFocus()
+            onClick()
+        }
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),

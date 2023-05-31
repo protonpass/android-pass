@@ -32,7 +32,7 @@ internal fun TotpInput(
     onFocus: (Boolean) -> Unit
 ) {
     val text = when (value) {
-        is HiddenState.Concealed -> "Concealed"
+        is HiddenState.Concealed -> "" // This state cannot happen as TOTP is always revealed
         is HiddenState.Revealed -> value.clearText
     }
     ProtonTextField(

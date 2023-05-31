@@ -38,11 +38,12 @@ import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
+import proton.android.pass.featureitemcreate.impl.login.CreateLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.EditLogin
+import proton.android.pass.featureitemcreate.impl.login.UpdateLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.AliasOptionsBottomSheet
 import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.CLEAR_ALIAS_NAV_PARAMETER_KEY
-import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
-import proton.android.pass.featureitemcreate.impl.login.updateLoginGraph
+import proton.android.pass.featureitemcreate.impl.login.createUpdateLoginGraph
 import proton.android.pass.featureitemcreate.impl.note.CreateNote
 import proton.android.pass.featureitemcreate.impl.note.CreateNoteNavigation
 import proton.android.pass.featureitemcreate.impl.note.EditNote
@@ -322,10 +323,17 @@ fun NavGraphBuilder.appGraph(
             }
         }
     )
-    createLoginGraph(
+    createUpdateLoginGraph(
         onNavigate = {
+            val backDestination = when {
+                appNavigator.hasDestinationInStack(CreateLogin) -> CreateLogin
+                appNavigator.hasDestinationInStack(EditLogin) -> EditLogin
+                else -> null
+            }
             when (it) {
-                BaseLoginNavigation.Close -> dismissBottomSheet { appNavigator.onBackClick() }
+                BaseLoginNavigation.Close -> dismissBottomSheet {
+                    appNavigator.onBackClick()
+                }
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
                     route = CreateAliasBottomSheet.createNavRoute(
@@ -333,7 +341,7 @@ fun NavGraphBuilder.appGraph(
                         it.showUpgrade,
                         it.title
                     ),
-                    backDestination = CreateLogin
+                    backDestination = backDestination
                 )
 
                 BaseLoginNavigation.GeneratePassword ->
@@ -344,8 +352,26 @@ fun NavGraphBuilder.appGraph(
                         )
                     )
 
-                is BaseLoginNavigation.LoginCreated -> appNavigator.onBackClick()
-                is BaseLoginNavigation.LoginUpdated -> {}
+                is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = it.event) {
+                    is CreateLoginNavigation.LoginCreated -> appNavigator.onBackClick()
+                    is CreateLoginNavigation.SelectVault -> {
+                        appNavigator.navigate(
+                            destination = SelectVaultBottomsheet,
+                            route = SelectVaultBottomsheet.createNavRoute(event.shareId)
+                        )
+                    }
+                }
+
+                is BaseLoginNavigation.OnUpdateLoginEvent -> when (val event = it.event) {
+                    is UpdateLoginNavigation.LoginUpdated -> {
+                        appNavigator.navigate(
+                            destination = ViewItem,
+                            route = ViewItem.createNavRoute(event.shareId, event.itemId),
+                            backDestination = Home
+                        )
+                    }
+                }
+
                 BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
                 BaseLoginNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
 
@@ -365,14 +391,7 @@ fun NavGraphBuilder.appGraph(
                             it.showUpgrade,
                             isEdit = true
                         ),
-                        backDestination = CreateLogin
-                    )
-                }
-
-                is BaseLoginNavigation.SelectVault -> {
-                    appNavigator.navigate(
-                        destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
+                        backDestination = backDestination
                     )
                 }
 
@@ -384,7 +403,7 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = CustomFieldNameDialog,
                         route = CustomFieldNameDialog.buildRoute(it.type),
-                        backDestination = CreateLogin
+                        backDestination = backDestination
                     )
                 }
 
@@ -397,98 +416,9 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(
                         destination = EditCustomFieldNameDialog,
                         route = EditCustomFieldNameDialog.buildRoute(it.index, it.currentValue),
-                        backDestination = CreateLogin
+                        backDestination = backDestination
                     )
                 }
-                BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
-                    appNavigator.onBackClick()
-                }
-            }
-        }
-    )
-    updateLoginGraph(
-        onNavigate = {
-            when (it) {
-                BaseLoginNavigation.Close -> dismissBottomSheet { appNavigator.onBackClick() }
-                is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
-                    destination = CreateAliasBottomSheet,
-                    route = CreateAliasBottomSheet.createNavRoute(
-                        it.shareId,
-                        it.showUpgrade,
-                        it.title
-                    ),
-                    backDestination = CreateLogin
-                )
-
-                BaseLoginNavigation.GeneratePassword ->
-                    appNavigator.navigate(
-                        destination = GeneratePasswordBottomsheet,
-                        route = GeneratePasswordBottomsheet.buildRoute(
-                            mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
-                        )
-                    )
-
-                is BaseLoginNavigation.LoginCreated -> {}
-                is BaseLoginNavigation.LoginUpdated ->
-                    appNavigator.navigate(
-                        destination = ViewItem,
-                        route = ViewItem.createNavRoute(it.shareId, it.itemId),
-                        backDestination = Home
-                    )
-
-                BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
-                BaseLoginNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
-
-                is BaseLoginNavigation.AliasOptions -> appNavigator.navigate(
-                    destination = AliasOptionsBottomSheet,
-                    route = AliasOptionsBottomSheet.createNavRoute(it.shareId, it.showUpgrade)
-                )
-
-                BaseLoginNavigation.DeleteAlias -> {
-                    appNavigator.navigateUpWithResult(CLEAR_ALIAS_NAV_PARAMETER_KEY, true)
-                }
-
-                is BaseLoginNavigation.EditAlias -> {
-                    appNavigator.navigate(
-                        destination = CreateAliasBottomSheet,
-                        route = CreateAliasBottomSheet.createNavRoute(
-                            it.shareId,
-                            it.showUpgrade,
-                            isEdit = true
-                        ),
-                        backDestination = EditLogin
-                    )
-                }
-
-                // We don't allow to select vault from update
-                is BaseLoginNavigation.SelectVault -> {}
-
-                BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
-                    destination = AddCustomFieldBottomSheet
-                )
-
-                is BaseLoginNavigation.CustomFieldTypeSelected -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        destination = CustomFieldNameDialog,
-                        route = CustomFieldNameDialog.buildRoute(it.type),
-                        backDestination = EditLogin
-                    )
-                }
-
-                is BaseLoginNavigation.CustomFieldOptions -> appNavigator.navigate(
-                    destination = CustomFieldOptionsBottomSheet,
-                    route = CustomFieldOptionsBottomSheet.buildRoute(it.index, it.currentValue),
-                    backDestination = EditLogin
-                )
-
-                is BaseLoginNavigation.EditCustomField -> dismissBottomSheet {
-                    appNavigator.navigate(
-                        destination = EditCustomFieldNameDialog,
-                        route = EditCustomFieldNameDialog.buildRoute(it.index, it.currentValue),
-                        backDestination = EditLogin
-                    )
-                }
-
                 BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }

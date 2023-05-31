@@ -22,14 +22,14 @@ import me.proton.core.presentation.compose.R as CoreR
 @Composable
 fun AddCustomFieldBottomSheet(
     modifier: Modifier = Modifier,
-    onNavigate: (CustomFieldNavigation) -> Unit
+    onNavigate: (AddCustomFieldNavigation) -> Unit
 ) {
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = listOf(
-            textField { onNavigate(CustomFieldNavigation.AddText) },
-            totpField { onNavigate(CustomFieldNavigation.AddTotp) },
-            hiddenField { onNavigate(CustomFieldNavigation.AddHidden) },
+            textField { onNavigate(AddCustomFieldNavigation.AddText) },
+            totpField { onNavigate(AddCustomFieldNavigation.AddTotp) },
+            hiddenField { onNavigate(AddCustomFieldNavigation.AddHidden) },
         ).withDividers().toPersistentList()
     )
 }

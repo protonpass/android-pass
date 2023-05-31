@@ -19,16 +19,16 @@ import me.proton.core.presentation.R as CoreR
 fun EditCustomFieldBottomSheet(
     modifier: Modifier = Modifier,
     index: Int,
-    onNavigate: (CustomFieldNavigation) -> Unit,
+    onNavigate: (CustomFieldOptionsNavigation) -> Unit,
     viewModel: EditCustomFieldViewModel = hiltViewModel()
 ) {
     BottomSheetItemList(
         modifier = modifier.bottomSheet(),
         items = listOf(
-            editField { onNavigate(CustomFieldNavigation.EditCustomField) },
+            editField { onNavigate(CustomFieldOptionsNavigation.EditCustomField) },
             deleteField {
                 viewModel.onRemove(index)
-                onNavigate(CustomFieldNavigation.RemoveCustomField)
+                onNavigate(CustomFieldOptionsNavigation.RemoveCustomField)
             }
         ).withDividers().toPersistentList()
     )

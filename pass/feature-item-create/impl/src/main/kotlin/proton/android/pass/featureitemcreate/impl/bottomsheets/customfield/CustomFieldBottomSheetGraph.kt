@@ -1,6 +1,5 @@
 package proton.android.pass.featureitemcreate.impl.bottomsheets.customfield
 
-import androidx.compose.runtime.remember
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
@@ -42,7 +41,8 @@ sealed interface AddCustomFieldNavigation {
 }
 
 sealed interface CustomFieldOptionsNavigation {
-    object EditCustomField : CustomFieldOptionsNavigation
+    object Close : CustomFieldOptionsNavigation
+    data class EditCustomField(val index: Int, val title: String) : CustomFieldOptionsNavigation
     object RemoveCustomField : CustomFieldOptionsNavigation
 }
 
@@ -68,23 +68,18 @@ fun NavGraphBuilder.customFieldBottomSheetGraph(
         }
     }
 
-    bottomSheet(CustomFieldOptionsBottomSheet) { navStack ->
-        val index = navStack.arguments?.getInt(CustomFieldIndexNavArgId.key)
-            ?: throw IllegalStateException("Index is required")
-        val title = remember {
-            val value = navStack.arguments?.getString(CustomFieldTitleNavArgId.key)
-                ?: throw IllegalStateException("Title is required")
-            NavParamEncoder.decode(value)
-        }
+    bottomSheet(CustomFieldOptionsBottomSheet) {
         EditCustomFieldBottomSheet(
-            index = index,
             onNavigate = {
                 when (it) {
-                    CustomFieldOptionsNavigation.EditCustomField -> {
-                        onNavigate(BaseLoginNavigation.EditCustomField(title, index))
+                    is CustomFieldOptionsNavigation.EditCustomField -> {
+                        onNavigate(BaseLoginNavigation.EditCustomField(it.title, it.index))
                     }
                     CustomFieldOptionsNavigation.RemoveCustomField -> {
                         onNavigate(BaseLoginNavigation.RemovedCustomField)
+                    }
+                    CustomFieldOptionsNavigation.Close -> {
+                        onNavigate(BaseLoginNavigation.Close)
                     }
                 }
             }

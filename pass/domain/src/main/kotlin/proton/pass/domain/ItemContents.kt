@@ -4,11 +4,17 @@ import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.pass.domain.entity.PackageInfo
 
+@Serializable
 sealed interface CustomFieldContent {
     val label: String
 
+    @Serializable
     data class Text(override val label: String, val value: String) : CustomFieldContent
+
+    @Serializable
     data class Hidden(override val label: String, val value: HiddenState) : CustomFieldContent
+
+    @Serializable
     data class Totp(override val label: String, val value: HiddenState) : CustomFieldContent
 }
 

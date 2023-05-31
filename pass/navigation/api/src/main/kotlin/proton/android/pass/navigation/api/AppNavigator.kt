@@ -51,6 +51,7 @@ class AppNavigator(
         } else {
             navController.navigate(destinationRoute) {
                 if (backDestination != null) {
+                    println("CarlosLog: navigating back to ${backDestination.route}")
                     popUpTo(backDestination.route)
                 }
             }
@@ -66,6 +67,7 @@ class AppNavigator(
     }
 
     fun onBackClick() {
+        println("CarlosLog: OnBackClick called")
         navController.popBackStack()
     }
 
@@ -73,6 +75,7 @@ class AppNavigator(
         navController.previousBackStackEntry
             ?.savedStateHandle
             ?.set(key, value)
+        println("CarlosLog: navigateUpWithResult called")
         navController.popBackStack()
     }
 

@@ -8,6 +8,7 @@ import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AUTH_SCREEN_ROUTE
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.AuthScreen
+import proton.android.pass.featureitemcreate.impl.alias.CreateAliasBottomSheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.AddCustomFieldBottomSheet
 import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.CustomFieldOptionsBottomSheet
 import proton.android.pass.featureitemcreate.impl.common.KEY_VAULT_SELECTED
@@ -15,8 +16,9 @@ import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.dialogs.EditCustomFieldNameDialog
 import proton.android.pass.featureitemcreate.impl.login.BaseLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.CreateLogin
+import proton.android.pass.featureitemcreate.impl.login.CreateLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
-import proton.android.pass.featureitemcreate.impl.login.createLoginGraph
+import proton.android.pass.featureitemcreate.impl.login.createUpdateLoginGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
@@ -52,37 +54,44 @@ fun NavGraphBuilder.autosaveActivityGraph(
             }
         )
     }
-    createLoginGraph(
+    createUpdateLoginGraph(
         initialCreateLoginUiState = getInitialState(arguments),
         showCreateAliasButton = false,
         onNavigate = {
             when (it) {
-                BaseLoginNavigation.Close -> onNavigate(AutosaveNavigation.Cancel)
-                is BaseLoginNavigation.CreateAlias -> {}
-                BaseLoginNavigation.GeneratePassword ->
-                    appNavigator.navigate(
-                        destination = GeneratePasswordBottomsheet,
-                        route = GeneratePasswordBottomsheet.buildRoute(
-                            mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
-                        )
-                    )
-
-                is BaseLoginNavigation.LoginCreated -> onNavigate(AutosaveNavigation.Success)
-                is BaseLoginNavigation.LoginUpdated -> {}
-                BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
-                BaseLoginNavigation.Upgrade -> {}
-
-                // Alias generation in Autosave is not supported
-                is BaseLoginNavigation.AliasOptions -> {}
-                BaseLoginNavigation.DeleteAlias -> {}
-                is BaseLoginNavigation.EditAlias -> {}
-
-                is BaseLoginNavigation.SelectVault -> {
-                    appNavigator.navigate(
-                        destination = SelectVaultBottomsheet,
-                        route = SelectVaultBottomsheet.createNavRoute(it.shareId)
-                    )
+                BaseLoginNavigation.Close -> dismissBottomSheet {
+                    onNavigate(AutosaveNavigation.Cancel)
                 }
+
+                is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
+                    destination = CreateAliasBottomSheet,
+                    route = CreateAliasBottomSheet.createNavRoute(
+                        it.shareId,
+                        it.showUpgrade,
+                        it.title
+                    )
+                )
+
+                BaseLoginNavigation.GeneratePassword -> appNavigator.navigate(
+                    destination = GeneratePasswordBottomsheet,
+                    route = GeneratePasswordBottomsheet.buildRoute(
+                        mode = GeneratePasswordBottomsheetModeValue.CancelConfirm
+                    )
+                )
+
+                is BaseLoginNavigation.OnCreateLoginEvent -> when (val event = it.event) {
+                    is CreateLoginNavigation.LoginCreated -> onNavigate(AutosaveNavigation.Success)
+
+                    is CreateLoginNavigation.SelectVault -> {
+                        appNavigator.navigate(
+                            destination = SelectVaultBottomsheet,
+                            route = SelectVaultBottomsheet.createNavRoute(event.shareId)
+                        )
+                    }
+                }
+
+                BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
+                BaseLoginNavigation.Upgrade -> onNavigate(AutosaveNavigation.Upgrade)
 
                 BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
                     destination = AddCustomFieldBottomSheet
@@ -108,9 +117,17 @@ fun NavGraphBuilder.autosaveActivityGraph(
                         backDestination = CreateLogin
                     )
                 }
+
                 BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }
+
+                // Updates cannot happen
+                is BaseLoginNavigation.OnUpdateLoginEvent -> {}
+                // Aliases not allowed
+                is BaseLoginNavigation.AliasOptions -> {}
+                BaseLoginNavigation.DeleteAlias -> {}
+                is BaseLoginNavigation.EditAlias -> {}
             }
         }
     )

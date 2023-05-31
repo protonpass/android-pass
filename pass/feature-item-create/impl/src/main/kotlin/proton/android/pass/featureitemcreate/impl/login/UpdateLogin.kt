@@ -73,7 +73,14 @@ fun UpdateLogin(
                     LoginContentEvent.Up -> onExit()
                     is LoginContentEvent.Success -> {
                         viewModel.onEmitSnackbarMessage(LoginUpdated)
-                        onNavigate(BaseLoginNavigation.LoginUpdated(it.shareId, it.itemId))
+                        onNavigate(
+                            BaseLoginNavigation.OnUpdateLoginEvent(
+                                UpdateLoginNavigation.LoginUpdated(
+                                    it.shareId,
+                                    it.itemId
+                                )
+                            )
+                        )
                     }
 
                     is LoginContentEvent.Submit -> viewModel.updateItem(it.shareId)
@@ -92,6 +99,7 @@ fun UpdateLogin(
                     LoginContentEvent.PasteTotp -> viewModel.onPasteTotp()
                     is LoginContentEvent.OnFocusChange ->
                         viewModel.onFocusChange(it.field, it.isFocused)
+
                     is LoginContentEvent.OnCustomFieldEvent -> {
                         when (val event = it.event) {
                             CustomFieldEvent.AddCustomField -> {

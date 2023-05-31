@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
@@ -68,16 +68,19 @@ internal fun PasswordInput(
     )
 }
 
+class ThemePasswordInputPreviewProvider :
+    ThemePairPreviewProvider<PasswordInputPreviewParams>(PasswordInputPreviewProvider())
+
 @Preview
 @Composable
 fun PasswordInputPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemePasswordInputPreviewProvider::class) input: Pair<Boolean, PasswordInputPreviewParams>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             PasswordInput(
-                value = HiddenState.Revealed("", "someValue"),
-                isEditAllowed = input.second,
+                value = input.second.hiddenState,
+                isEditAllowed = input.second.isEditAllowed,
                 onChange = {},
                 onFocus = {}
             )

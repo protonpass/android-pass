@@ -27,7 +27,7 @@ plugins {
 }
 
 includeCoreBuild {
-    commit.set("bfaae7ef7f0090745f0e58f41c902d909b6646f7")
+    branch.set("main")
     includeBuild("gopenpgp")
 
     includeRepo("contents-proto-definition") {

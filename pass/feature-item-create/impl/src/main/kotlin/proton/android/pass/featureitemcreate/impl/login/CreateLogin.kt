@@ -108,7 +108,13 @@ fun CreateLoginScreen(
                     LoginContentEvent.Up -> onExit()
                     is LoginContentEvent.Success -> {
                         viewModel.onEmitSnackbarMessage(LoginSnackbarMessages.LoginCreated)
-                        onNavigate(BaseLoginNavigation.LoginCreated(it.model))
+                        onNavigate(
+                            BaseLoginNavigation.OnCreateLoginEvent(
+                                CreateLoginNavigation.LoginCreated(
+                                    it.model
+                                )
+                            )
+                        )
                     }
 
                     is LoginContentEvent.Submit -> viewModel.createItem()
@@ -127,6 +133,7 @@ fun CreateLoginScreen(
                     LoginContentEvent.PasteTotp -> viewModel.onPasteTotp()
                     is LoginContentEvent.OnFocusChange ->
                         viewModel.onFocusChange(it.field, it.isFocused)
+
                     is LoginContentEvent.OnCustomFieldEvent -> {
                         when (val event = it.event) {
                             CustomFieldEvent.AddCustomField -> {
@@ -193,7 +200,13 @@ fun CreateLoginScreen(
             when (actionWhenKeyboardDisappears) {
                 CLActionAfterHideKeyboard.SelectVault -> {
                     selectedVault ?: return@LaunchedEffect
-                    onNavigate(BaseLoginNavigation.SelectVault(selectedVault.vault.shareId))
+                    onNavigate(
+                        BaseLoginNavigation.OnCreateLoginEvent(
+                            CreateLoginNavigation.SelectVault(
+                                selectedVault.vault.shareId
+                            )
+                        )
+                    )
                     actionWhenKeyboardDisappears = null // Clear flag
                 }
 

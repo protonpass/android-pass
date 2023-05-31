@@ -54,6 +54,7 @@ import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemContents
 import proton.pass.domain.PlanType
 
+@Suppress("TooManyFunctions")
 abstract class BaseLoginViewModel(
     protected val accountManager: AccountManager,
     private val snackbarDispatcher: SnackbarDispatcher,

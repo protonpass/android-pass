@@ -24,20 +24,20 @@ class AddCustomFieldBottomsheetTest {
 
     @Test
     fun testAddTextField() {
-        performTest(R.string.bottomsheet_custom_field_type_text, CustomFieldNavigation.AddText)
+        performTest(R.string.bottomsheet_custom_field_type_text, AddCustomFieldNavigation.AddText)
     }
 
     @Test
     fun testAddTotpField() {
-        performTest(R.string.bottomsheet_custom_field_type_totp, CustomFieldNavigation.AddTotp)
+        performTest(R.string.bottomsheet_custom_field_type_totp, AddCustomFieldNavigation.AddTotp)
     }
 
     @Test
     fun testAddHiddenField() {
-        performTest(R.string.bottomsheet_custom_field_type_hidden, CustomFieldNavigation.AddHidden)
+        performTest(R.string.bottomsheet_custom_field_type_hidden, AddCustomFieldNavigation.AddHidden)
     }
 
-    private fun performTest(@StringRes text: Int, navigation: CustomFieldNavigation) {
+    private fun performTest(@StringRes text: Int, navigation: AddCustomFieldNavigation) {
         val checker = CallChecker<Unit>()
         composeTestRule.apply {
             setContent {

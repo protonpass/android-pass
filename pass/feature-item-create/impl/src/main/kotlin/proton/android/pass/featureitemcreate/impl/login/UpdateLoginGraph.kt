@@ -5,6 +5,10 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraphBuilder
+import proton.android.pass.featureitemcreate.impl.bottomsheets.customfield.customFieldBottomSheetGraph
+import proton.android.pass.featureitemcreate.impl.dialogs.CustomFieldNameNavigation
+import proton.android.pass.featureitemcreate.impl.dialogs.customFieldNameDialogGraph
+import proton.android.pass.featureitemcreate.impl.login.bottomsheet.aliasoptions.aliasOptionsBottomSheetGraph
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.navigation.api.CommonNavArgId
 import proton.android.pass.navigation.api.NavItem
@@ -34,5 +38,15 @@ fun NavGraphBuilder.updateLoginGraph(
             primaryTotp = primaryTotp,
             onNavigate = onNavigate
         )
+    }
+
+    aliasOptionsBottomSheetGraph(onNavigate)
+    customFieldBottomSheetGraph(onNavigate)
+    customFieldNameDialogGraph {
+        when (it) {
+            is CustomFieldNameNavigation.Close -> {
+                onNavigate(BaseLoginNavigation.Close)
+            }
+        }
     }
 }

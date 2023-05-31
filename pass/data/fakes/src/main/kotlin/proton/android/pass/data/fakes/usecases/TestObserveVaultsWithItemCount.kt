@@ -7,7 +7,9 @@ import proton.android.pass.common.api.FlowUtils.testFlow
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.pass.domain.VaultWithItemCount
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class TestObserveVaultsWithItemCount @Inject constructor() : ObserveVaultsWithItemCount {
 
     private val observeVaultsFlow: MutableSharedFlow<Result<List<VaultWithItemCount>>> = testFlow()

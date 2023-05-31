@@ -43,7 +43,7 @@ class CustomFieldNameViewModel @Inject constructor(
     ) { event, value ->
         CustomFieldNameUiState(
             value = value,
-            canConfirm = value.isNotEmpty(),
+            canConfirm = value.isNotBlank(),
             event = event
         )
     }.stateIn(
@@ -53,6 +53,7 @@ class CustomFieldNameViewModel @Inject constructor(
     )
 
     fun onNameChanged(name: String) {
+        if (name.contains("\n")) return
         nameFlow.update { name }
     }
 
@@ -62,7 +63,7 @@ class CustomFieldNameViewModel @Inject constructor(
             CustomFieldType.Hidden -> {
                 val value = encryptionContextProvider.withEncryptionContext { encrypt("") }
                 CustomFieldContent.Hidden(
-                    label = nameFlow.value,
+                    label = nameFlow.value.trim(),
                     value = HiddenState.Concealed(encrypted = value)
                 )
             }

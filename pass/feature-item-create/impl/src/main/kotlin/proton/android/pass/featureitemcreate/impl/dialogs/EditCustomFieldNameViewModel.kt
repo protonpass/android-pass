@@ -45,7 +45,7 @@ class EditCustomFieldNameViewModel @Inject constructor(
     ) { event, value ->
         CustomFieldNameUiState(
             value = value,
-            canConfirm = value.isNotEmpty(),
+            canConfirm = value.isNotBlank(),
             event = event
         )
     }.stateIn(
@@ -55,6 +55,7 @@ class EditCustomFieldNameViewModel @Inject constructor(
     )
 
     fun onNameChanged(name: String) {
+        if (name.contains("\n")) return
         nameFlow.update { name }
     }
 
@@ -62,7 +63,7 @@ class EditCustomFieldNameViewModel @Inject constructor(
         draftRepository.save(
             key = DRAFT_CUSTOM_FIELD_TITLE_KEY,
             value = CustomFieldIndexTitle(
-                title = nameFlow.value,
+                title = nameFlow.value.trim(),
                 index = customFieldIndex
             )
         )

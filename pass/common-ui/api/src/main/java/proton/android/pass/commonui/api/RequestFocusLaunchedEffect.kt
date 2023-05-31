@@ -1,7 +1,6 @@
 package proton.android.pass.commonui.api
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.focus.FocusRequester
 import kotlinx.coroutines.delay
 
@@ -12,7 +11,7 @@ fun RequestFocusLaunchedEffect(
     callback: () -> Unit = {}
 ) {
     if (requestFocus) {
-        LaunchedEffect(requestFocus) {
+        OneTimeLaunchedEffect(requestFocus) {
             delay(DELAY_BEFORE_FOCUS_MS)
             focusRequester.requestFocus()
             callback()

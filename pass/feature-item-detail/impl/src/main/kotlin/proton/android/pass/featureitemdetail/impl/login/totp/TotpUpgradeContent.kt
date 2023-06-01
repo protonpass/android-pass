@@ -31,6 +31,7 @@ import proton.android.pass.composecomponents.impl.R as CompR
 @Composable
 fun TotpUpgradeContent(
     modifier: Modifier = Modifier,
+    label: String = stringResource(id = R.string.mfa_limit_reached),
     onUpgrade: () -> Unit
 ) {
     Row(
@@ -45,7 +46,7 @@ fun TotpUpgradeContent(
         Column(modifier = Modifier.padding(start = 8.dp)) {
             SectionTitle(
                 modifier = Modifier.padding(start = 8.dp),
-                text = stringResource(id = R.string.mfa_limit_reached),
+                text = label,
             )
             Row(
                 modifier = Modifier

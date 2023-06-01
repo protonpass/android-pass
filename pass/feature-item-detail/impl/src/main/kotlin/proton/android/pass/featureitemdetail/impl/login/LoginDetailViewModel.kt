@@ -120,28 +120,29 @@ class LoginDetailViewModel @Inject constructor(
         data class CustomField(val index: Int) : DetailFields
     }
 
-    private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> =
-        getItemByIdWithVault(shareId, itemId)
-            .asLoadingResult()
-            .map { detailsResult ->
-                detailsResult.map { details ->
-                    val itemType = details.item.itemType as ItemType.Login
-                    val alias = getAliasForItem(itemType)
+    private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
+        getItemByIdWithVault(shareId, itemId).asLoadingResult(),
+        canPerformPaidActionFlow
+    ) { detailsResult, paidActionResult ->
+        val canDisplayTotp = paidActionResult.getOrNull() ?: return@combine LoadingResult.Loading
 
-                    val itemUiModel = encryptionContextProvider.withEncryptionContext {
-                        details.item.toUiModel(this)
-                    }
-                    startObservingTotpCustomFields(itemUiModel)
+        detailsResult.map { details ->
+            val itemType = details.item.itemType as ItemType.Login
+            val alias = getAliasForItem(itemType)
 
-                    LoginItemInfo(
-                        itemUiModel = itemUiModel,
-                        vault = details.vault,
-                        hasMoreThanOneVault = details.hasMoreThanOneVault,
-                        linkedAlias = alias
-                    )
-                }
+            val itemUiModel = encryptionContextProvider.withEncryptionContext {
+                details.item.toUiModel(this)
             }
-            .distinctUntilChanged()
+            startObservingTotpCustomFields(canDisplayTotp, itemUiModel)
+
+            LoginItemInfo(
+                itemUiModel = itemUiModel,
+                vault = details.vault,
+                hasMoreThanOneVault = details.hasMoreThanOneVault,
+                linkedAlias = alias
+            )
+        }
+    }.distinctUntilChanged()
 
     private val revealedLoginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
         loginItemInfoFlow,
@@ -544,16 +545,16 @@ class LoginDetailViewModel @Inject constructor(
         }
     }
 
-    private fun startObservingTotpCustomFields(itemUiModel: ItemUiModel) {
+    private fun startObservingTotpCustomFields(canDisplayTotp: Boolean, itemUiModel: ItemUiModel) {
         viewModelScope.launch {
             val asLogin = itemUiModel.contents as? ItemContents.Login
             if (asLogin != null) {
-                observeTotpCustomFields(asLogin)
+                observeTotpCustomFields(canDisplayTotp, asLogin)
             }
         }
     }
 
-    private fun observeTotpCustomFields(content: ItemContents.Login) {
+    private fun observeTotpCustomFields(canDisplayTotp: Boolean, content: ItemContents.Login) {
         val contents = content.customFields.mapIndexed { idx, field ->
             when (field) {
                 is CustomFieldContent.Hidden -> CustomFieldUiContent.Hidden(
@@ -567,14 +568,18 @@ class LoginDetailViewModel @Inject constructor(
                 )
 
                 is CustomFieldContent.Totp -> {
-                    observeTotpCustomField(idx, field)
+                    if (canDisplayTotp) {
+                        observeTotpCustomField(idx, field)
 
-                    CustomFieldUiContent.Totp(
-                        label = field.label,
-                        code = "",
-                        remainingSeconds = 0,
-                        totalSeconds = 10
-                    )
+                        CustomFieldUiContent.Totp.Visible(
+                            label = field.label,
+                            code = "",
+                            remainingSeconds = 0,
+                            totalSeconds = 10
+                        )
+                    } else {
+                        CustomFieldUiContent.Totp.Limited(label = field.label)
+                    }
                 }
             }
         }
@@ -593,7 +598,7 @@ class LoginDetailViewModel @Inject constructor(
                     customFieldsState.update { fieldsList ->
                         val mutableList = fieldsList.toMutableList()
 
-                        mutableList[index] = CustomFieldUiContent.Totp(
+                        mutableList[index] = CustomFieldUiContent.Totp.Visible(
                             label = field.label,
                             code = totpState.code,
                             remainingSeconds = totpState.remainingSeconds,

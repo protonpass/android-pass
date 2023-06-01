@@ -17,6 +17,7 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import proton.android.pass.clipboard.api.ClipboardManager
@@ -26,6 +27,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.combineN
+import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
 import proton.android.pass.common.api.toOption
@@ -122,27 +124,33 @@ class LoginDetailViewModel @Inject constructor(
     }
 
     private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
-        getItemByIdWithVault(shareId, itemId).asLoadingResult(),
+        // REFACTOR: This take(1) is added in order to avoid flow re-emitting of the item in case
+        // we receive a BE event that updates the item. That would cause the jobs that observe the
+        // TOTP custom fields to be rescheduled, but the previous ones would not be cancelled
+        // We should try to keep a reference to the running jobs and cancel them if this flow
+        // re-emits
+        getItemByIdWithVault(shareId, itemId).take(1).asLoadingResult(),
         canPerformPaidActionFlow
     ) { detailsResult, paidActionResult ->
-        val canDisplayTotp = paidActionResult.getOrNull() ?: return@combine LoadingResult.Loading
+        paidActionResult.flatMap { canShowCustomFields ->
+            detailsResult.map { details ->
+                val itemType = details.item.itemType as ItemType.Login
+                val alias = getAliasForItem(itemType)
 
-        detailsResult.map { details ->
-            val itemType = details.item.itemType as ItemType.Login
-            val alias = getAliasForItem(itemType)
+                val itemUiModel = encryptionContextProvider.withEncryptionContext {
+                    details.item.toUiModel(this)
+                }
+                startObservingTotpCustomFields(canShowCustomFields, itemUiModel)
 
-            val itemUiModel = encryptionContextProvider.withEncryptionContext {
-                details.item.toUiModel(this)
+                LoginItemInfo(
+                    itemUiModel = itemUiModel,
+                    vault = details.vault,
+                    hasMoreThanOneVault = details.hasMoreThanOneVault,
+                    linkedAlias = alias
+                )
             }
-            startObservingTotpCustomFields(canDisplayTotp, itemUiModel)
-
-            LoginItemInfo(
-                itemUiModel = itemUiModel,
-                vault = details.vault,
-                hasMoreThanOneVault = details.hasMoreThanOneVault,
-                linkedAlias = alias
-            )
         }
+
     }.distinctUntilChanged()
 
     private val revealedLoginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(

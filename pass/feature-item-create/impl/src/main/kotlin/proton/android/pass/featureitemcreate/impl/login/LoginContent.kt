@@ -100,6 +100,9 @@ internal fun LoginContent(
             contents = uiState.contents,
             totpUiState = uiState.totpUiState,
             customFieldsState = uiState.customFieldsState,
+            customFieldValidationErrors = uiState.validationErrors
+                .filterIsInstance<LoginItemValidationErrors.CustomFieldValidationError>()
+                .toPersistentList(),
             showCreateAliasButton = showCreateAliasButton,
             canUpdateUsername = uiState.canUpdateUsername,
             primaryEmail = uiState.primaryEmail,

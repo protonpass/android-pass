@@ -24,20 +24,20 @@ import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
 import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
-import proton.pass.domain.CustomFieldContent
+import proton.android.pass.featureitemdetail.impl.login.CustomFieldUiContent
 import me.proton.core.presentation.R as CoreR
 
 @Composable
 fun CustomFieldText(
     modifier: Modifier = Modifier,
-    entry: CustomFieldContent.Text,
-    onCopyValue: () -> Unit
+    entry: CustomFieldUiContent.Text,
+    onCopyValue: (String) -> Unit
 ) {
     RoundedCornersColumn(modifier = modifier) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { onCopyValue() }
+                .clickable { onCopyValue(entry.content) }
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -50,7 +50,7 @@ fun CustomFieldText(
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 SectionTitle(text = entry.label)
                 SelectionContainer {
-                    SectionSubtitle(text = entry.value.asAnnotatedString())
+                    SectionSubtitle(text = entry.content.asAnnotatedString())
                 }
             }
         }
@@ -65,7 +65,7 @@ fun CustomFieldTextPreview(
     PassTheme(isDark = isDark) {
         Surface {
             CustomFieldText(
-                entry = CustomFieldContent.Text("label", "some value"),
+                entry = CustomFieldUiContent.Text("label", "some value"),
                 onCopyValue = {}
             )
         }

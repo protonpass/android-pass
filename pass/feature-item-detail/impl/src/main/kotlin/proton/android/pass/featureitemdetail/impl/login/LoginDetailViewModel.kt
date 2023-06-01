@@ -112,6 +112,8 @@ class LoginDetailViewModel @Inject constructor(
     private val revealedFieldsState: MutableStateFlow<List<DetailFields>> =
         MutableStateFlow(emptyList())
     private val canPerformPaidActionFlow = canPerformPaidAction().asLoadingResult()
+    private val customFieldsState: MutableStateFlow<List<CustomFieldUiContent>> =
+        MutableStateFlow(emptyList())
 
     sealed interface DetailFields {
         object Password : DetailFields
@@ -125,10 +127,14 @@ class LoginDetailViewModel @Inject constructor(
                 detailsResult.map { details ->
                     val itemType = details.item.itemType as ItemType.Login
                     val alias = getAliasForItem(itemType)
+
+                    val itemUiModel = encryptionContextProvider.withEncryptionContext {
+                        details.item.toUiModel(this)
+                    }
+                    startObservingTotpCustomFields(itemUiModel)
+
                     LoginItemInfo(
-                        itemUiModel = encryptionContextProvider.withEncryptionContext {
-                            details.item.toUiModel(this)
-                        },
+                        itemUiModel = itemUiModel,
                         vault = details.vault,
                         hasMoreThanOneVault = details.hasMoreThanOneVault,
                         linkedAlias = alias
@@ -213,14 +219,16 @@ class LoginDetailViewModel @Inject constructor(
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
-        canPerformPaidActionFlow
+        canPerformPaidActionFlow,
+        customFieldsState
     ) { itemDetails,
         totpUiState,
         isLoading,
         isItemSentToTrash,
         isPermanentlyDeleted,
         isRestoredFromTrash,
-        canPerformPaidActionResult ->
+        canPerformPaidActionResult,
+        customFields ->
         when (itemDetails) {
             is LoadingResult.Error -> {
                 snackbarDispatcher(InitError)
@@ -242,6 +250,9 @@ class LoginDetailViewModel @Inject constructor(
                     vault?.isPrimary == true -> false
                     else -> true
                 }
+
+                val customFieldsList = if (!isPaid) emptyList() else customFields
+
                 LoginDetailUiState.Success(
                     itemUiModel = details.itemUiModel,
                     vault = vault,
@@ -252,7 +263,7 @@ class LoginDetailViewModel @Inject constructor(
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
                     canMigrate = canMigrate,
-                    canDisplayCustomFields = isPaid
+                    customFields = customFieldsList.toPersistentList()
                 )
             }
         }
@@ -362,10 +373,12 @@ class LoginDetailViewModel @Inject constructor(
                             decrypt(value.encrypted)
                         }
                     }
+
                     is HiddenState.Revealed -> value.clearText
 
                 }
             }
+
             is CustomFieldContent.Text -> field.value
             is CustomFieldContent.Totp -> {
                 val totpUri = when (val value = field.value) {
@@ -374,6 +387,7 @@ class LoginDetailViewModel @Inject constructor(
                             decrypt(value.encrypted)
                         }
                     }
+
                     is HiddenState.Revealed -> value.clearText
                 }
 
@@ -382,9 +396,13 @@ class LoginDetailViewModel @Inject constructor(
         }
 
         if (content.isNotEmpty()) {
-            clipboardManager.copyToClipboard(content)
-            snackbarDispatcher(FieldCopiedToClipboard)
+            copyCustomFieldContent(content)
         }
+    }
+
+    fun copyCustomFieldContent(content: String) = viewModelScope.launch {
+        clipboardManager.copyToClipboard(content)
+        snackbarDispatcher(FieldCopiedToClipboard)
     }
 
     fun toggleCustomFieldVisibility(index: Int) = viewModelScope.launch {
@@ -486,6 +504,7 @@ class LoginDetailViewModel @Inject constructor(
                                         is HiddenState.Revealed -> HiddenState.Concealed(
                                             encrypted = content.value.encrypted
                                         )
+
                                         is HiddenState.Concealed -> content.value
                                     }
                                 )
@@ -513,11 +532,75 @@ class LoginDetailViewModel @Inject constructor(
                                         is HiddenState.Revealed -> HiddenState.Concealed(
                                             encrypted = content.value.encrypted
                                         )
+
                                         is HiddenState.Concealed -> content.value
                                     }
                                 )
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun startObservingTotpCustomFields(itemUiModel: ItemUiModel) {
+        viewModelScope.launch {
+            val asLogin = itemUiModel.contents as? ItemContents.Login
+            if (asLogin != null) {
+                observeTotpCustomFields(asLogin)
+            }
+        }
+    }
+
+    private fun observeTotpCustomFields(content: ItemContents.Login) {
+        val contents = content.customFields.mapIndexed { idx, field ->
+            when (field) {
+                is CustomFieldContent.Hidden -> CustomFieldUiContent.Hidden(
+                    label = field.label,
+                    content = field.value
+                )
+
+                is CustomFieldContent.Text -> CustomFieldUiContent.Text(
+                    label = field.label,
+                    content = field.value
+                )
+
+                is CustomFieldContent.Totp -> {
+                    observeTotpCustomField(idx, field)
+
+                    CustomFieldUiContent.Totp(
+                        label = field.label,
+                        code = "",
+                        remainingSeconds = 0,
+                        totalSeconds = 10
+                    )
+                }
+            }
+        }
+
+        customFieldsState.update { contents }
+    }
+
+    private fun observeTotpCustomField(index: Int, field: CustomFieldContent.Totp) {
+        viewModelScope.launch {
+            val decryptedUri = encryptionContextProvider.withEncryptionContext {
+                decrypt(field.value.encrypted)
+            }
+
+            observeTotpValue(decryptedUri).collect { totpState ->
+                if (totpState is TotpUiState.Visible) {
+                    customFieldsState.update { fieldsList ->
+                        val mutableList = fieldsList.toMutableList()
+
+                        mutableList[index] = CustomFieldUiContent.Totp(
+                            label = field.label,
+                            code = totpState.code,
+                            remainingSeconds = totpState.remainingSeconds,
+                            totalSeconds = totpState.totalSeconds
+                        )
+
+                        mutableList
                     }
                 }
             }

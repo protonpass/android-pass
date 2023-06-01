@@ -545,41 +545,47 @@ class LoginDetailViewModel @Inject constructor(
         }
     }
 
-    private fun startObservingTotpCustomFields(canDisplayTotp: Boolean, itemUiModel: ItemUiModel) {
+    private fun startObservingTotpCustomFields(canSeeCustomFields: Boolean, itemUiModel: ItemUiModel) {
         viewModelScope.launch {
             val asLogin = itemUiModel.contents as? ItemContents.Login
             if (asLogin != null) {
-                observeTotpCustomFields(canDisplayTotp, asLogin)
+                observeTotpCustomFields(canSeeCustomFields, asLogin)
             }
         }
     }
 
-    private fun observeTotpCustomFields(canDisplayTotp: Boolean, content: ItemContents.Login) {
+    private fun observeTotpCustomFields(canSeeCustomFields: Boolean, content: ItemContents.Login) {
         val contents = content.customFields.mapIndexed { idx, field ->
             when (field) {
-                is CustomFieldContent.Hidden -> CustomFieldUiContent.Hidden(
-                    label = field.label,
-                    content = field.value
-                )
+                is CustomFieldContent.Hidden -> if (canSeeCustomFields) {
+                    CustomFieldUiContent.Hidden(
+                        label = field.label,
+                        content = field.value
+                    )
+                } else {
+                    CustomFieldUiContent.Limited.Hidden(field.label)
+                }
 
-                is CustomFieldContent.Text -> CustomFieldUiContent.Text(
-                    label = field.label,
-                    content = field.value
-                )
+                is CustomFieldContent.Text -> if (canSeeCustomFields) {
+                    CustomFieldUiContent.Text(
+                        label = field.label,
+                        content = field.value
+                    )
+                } else {
+                    CustomFieldUiContent.Limited.Text(field.label)
+                }
 
-                is CustomFieldContent.Totp -> {
-                    if (canDisplayTotp) {
-                        observeTotpCustomField(idx, field)
+                is CustomFieldContent.Totp -> if (canSeeCustomFields) {
+                    observeTotpCustomField(idx, field)
 
-                        CustomFieldUiContent.Totp.Visible(
-                            label = field.label,
-                            code = "",
-                            remainingSeconds = 0,
-                            totalSeconds = 10
-                        )
-                    } else {
-                        CustomFieldUiContent.Totp.Limited(label = field.label)
-                    }
+                    CustomFieldUiContent.Totp(
+                        label = field.label,
+                        code = "",
+                        remainingSeconds = 0,
+                        totalSeconds = 10
+                    )
+                } else {
+                    CustomFieldUiContent.Limited.Totp(label = field.label)
                 }
             }
         }
@@ -598,7 +604,7 @@ class LoginDetailViewModel @Inject constructor(
                     customFieldsState.update { fieldsList ->
                         val mutableList = fieldsList.toMutableList()
 
-                        mutableList[index] = CustomFieldUiContent.Totp.Visible(
+                        mutableList[index] = CustomFieldUiContent.Totp(
                             label = field.label,
                             code = totpState.code,
                             remainingSeconds = totpState.remainingSeconds,

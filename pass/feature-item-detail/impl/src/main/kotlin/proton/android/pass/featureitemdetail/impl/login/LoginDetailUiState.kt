@@ -52,6 +52,21 @@ data class LinkedAliasItem(
 
 @Stable
 sealed interface CustomFieldUiContent {
+
+    @Stable
+    sealed interface Limited : CustomFieldUiContent {
+        val label: String
+
+        @Stable
+        data class Text(override val label: String) : Limited
+
+        @Stable
+        data class Hidden(override val label: String) : Limited
+
+        @Stable
+        data class Totp(override val label: String) : Limited
+    }
+
     @Stable
     data class Text(val label: String, val content: String) : CustomFieldUiContent
 
@@ -59,16 +74,10 @@ sealed interface CustomFieldUiContent {
     data class Hidden(val label: String, val content: HiddenState) : CustomFieldUiContent
 
     @Stable
-    sealed interface Totp : CustomFieldUiContent {
-        @Stable
-        data class Limited(val label: String) : Totp
-
-        @Stable
-        data class Visible(
-            val label: String,
-            val code: String,
-            val remainingSeconds: Int,
-            val totalSeconds: Int
-        ) : Totp
-    }
+    data class Totp(
+        val label: String,
+        val code: String,
+        val remainingSeconds: Int,
+        val totalSeconds: Int
+    ) : CustomFieldUiContent
 }

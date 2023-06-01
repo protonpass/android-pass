@@ -13,5 +13,5 @@ class CustomFieldLimitedPreviewProvider : PreviewParameterProvider<CustomFieldUi
         )
 }
 
-class ThemedCFLimitedPRovider :
+class ThemedCFLimitedProvider :
     ThemePairPreviewProvider<CustomFieldUiContent.Limited>(CustomFieldLimitedPreviewProvider())

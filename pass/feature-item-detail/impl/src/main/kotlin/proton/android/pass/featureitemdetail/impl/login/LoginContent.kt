@@ -15,6 +15,7 @@ import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
 import proton.android.pass.featureitemdetail.impl.common.MoreInfo
 import proton.android.pass.featureitemdetail.impl.common.MoreInfoUiState
 import proton.android.pass.featureitemdetail.impl.common.NoteSection
+import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldDetails
 import proton.pass.domain.ItemContents
 import proton.pass.domain.Vault
 
@@ -27,14 +28,8 @@ fun LoginContent(
     moreInfoUiState: MoreInfoUiState,
     showViewAlias: Boolean,
     canLoadExternalImages: Boolean,
-    onTogglePasswordClick: () -> Unit,
-    onUsernameClick: () -> Unit,
-    onGoToAliasClick: () -> Unit,
-    onCopyPasswordClick: () -> Unit,
-    onWebsiteClicked: (String) -> Unit,
-    onWebsiteLongClicked: (String) -> Unit,
-    onCopyTotpClick: (String) -> Unit,
-    onUpgradeClick: () -> Unit
+    canDisplayCustomFields: Boolean,
+    onEvent: (LoginDetailEvent) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
     Column(
@@ -54,22 +49,24 @@ fun LoginContent(
             passwordState = contents.password,
             totpUiState = totpUiState,
             showViewAlias = showViewAlias,
-            onUsernameClick = onUsernameClick,
-            onGoToAliasClick = onGoToAliasClick,
-            onTogglePasswordClick = onTogglePasswordClick,
-            onCopyPasswordClick = onCopyPasswordClick,
-            onCopyTotpClick = onCopyTotpClick,
-            onUpgradeClick = onUpgradeClick
+            onEvent = onEvent
         )
         WebsiteSection(
             websites = contents.urls.toPersistentList(),
-            onWebsiteClicked = onWebsiteClicked,
-            onWebsiteLongClicked = onWebsiteLongClicked
+            onEvent = onEvent
         )
         NoteSection(
             text = itemUiModel.contents.note,
             accentColor = PassTheme.colors.loginInteractionNorm
         )
+
+        if (canDisplayCustomFields) {
+            CustomFieldDetails(
+                fields = contents.customFields,
+                onEvent = { onEvent(LoginDetailEvent.OnCustomFieldEvent(it)) }
+            )
+        }
+
         LinkedAppsListSection(
             packageInfoUiSet = contents.packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet(),
             isEditable = false,

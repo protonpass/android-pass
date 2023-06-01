@@ -1,5 +1,6 @@
 package proton.android.pass.featureitemdetail.impl.login
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,6 +31,9 @@ import proton.pass.domain.HiddenState
 internal fun LoginPasswordRow(
     modifier: Modifier = Modifier,
     passwordHiddenState: HiddenState,
+    label: String = stringResource(R.string.field_password),
+    @DrawableRes iconRes: Int = me.proton.core.presentation.R.drawable.ic_proton_key,
+    iconContentDescription: String = stringResource(R.string.password_key_icon_content_description),
     onTogglePasswordClick: () -> Unit,
     onCopyPasswordClick: () -> Unit
 ) {
@@ -41,8 +45,8 @@ internal fun LoginPasswordRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
-            painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
-            contentDescription = stringResource(R.string.password_key_icon_content_description),
+            painter = painterResource(iconRes),
+            contentDescription = iconContentDescription,
             tint = PassTheme.colors.loginInteractionNorm
         )
         val sectionContent = remember(passwordHiddenState) {
@@ -63,7 +67,7 @@ internal fun LoginPasswordRow(
         }
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
-            SectionTitle(text = stringResource(R.string.field_password))
+            SectionTitle(text = label)
             Spacer(modifier = Modifier.height(8.dp))
             when (passwordHiddenState) {
                 is HiddenState.Concealed -> SectionSubtitle(text = sectionContent.asAnnotatedString())

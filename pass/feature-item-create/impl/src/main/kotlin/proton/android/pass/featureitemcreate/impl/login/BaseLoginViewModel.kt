@@ -82,7 +82,7 @@ abstract class BaseLoginViewModel(
     protected val aliasLocalItemState: MutableStateFlow<Option<AliasItem>> = MutableStateFlow(None)
     private val aliasDraftState: Flow<Option<AliasItem>> = draftRepository
         .get(CreateAliasViewModel.KEY_DRAFT_ALIAS)
-    private val focusCustomFieldFlow: MutableStateFlow<Option<Int>> = MutableStateFlow(None)
+    private val focusedFieldFlow: MutableStateFlow<Option<LoginField>> = MutableStateFlow(None)
 
     init {
         viewModelScope.launch {
@@ -133,16 +133,9 @@ abstract class BaseLoginViewModel(
         loginItemValidationErrorsState,
         canUpdateUsernameState,
         observeCurrentUser().map { it.email },
-        aliasState
-    ) { loginItem, loginItemValidationErrors, updateUsername, primaryEmail, aliasItem ->
-        LoginAliasItemWrapper(
-            loginItem,
-            loginItemValidationErrors,
-            updateUsername,
-            primaryEmail,
-            aliasItem
-        )
-    }
+        aliasState,
+        ::LoginAliasItemWrapper
+    )
 
     private data class LoginAliasItemWrapper(
         val content: ItemContents.Login,
@@ -178,10 +171,10 @@ abstract class BaseLoginViewModel(
         totpUiStateFlow,
         upgradeInfoFlow.asLoadingResult(),
         ffRepo.get<Boolean>(FeatureFlag.CUSTOM_FIELDS_ENABLED),
-        focusCustomFieldFlow
+        focusedFieldFlow
     ) { loginItemWrapper, isLoading, events,
         focusLastWebsite, hasUserEditedContent,
-        totpUiState, upgradeInfoResult, customFieldsEnabled, focusCustomField ->
+        totpUiState, upgradeInfoResult, customFieldsEnabled, focusedField ->
 
         val customFieldsState = if (!customFieldsEnabled) {
             CustomFieldsState.Disabled
@@ -191,7 +184,6 @@ abstract class BaseLoginViewModel(
                 is PlanType.Paid, is PlanType.Trial -> {
                     CustomFieldsState.Enabled(
                         customFields = loginItemWrapper.content.customFields,
-                        focusCustomField = focusCustomField,
                         isLimited = false
                     )
                 }
@@ -200,7 +192,6 @@ abstract class BaseLoginViewModel(
                     if (loginItemWrapper.content.customFields.isNotEmpty()) {
                         CustomFieldsState.Enabled(
                             customFields = loginItemWrapper.content.customFields,
-                            focusCustomField = focusCustomField,
                             isLimited = true
                         )
                     } else {
@@ -223,7 +214,8 @@ abstract class BaseLoginViewModel(
             hasUserEditedContent = hasUserEditedContent,
             hasReachedAliasLimit = upgradeInfoResult.getOrNull()?.hasReachedAliasLimit() ?: false,
             totpUiState = totpUiState,
-            customFieldsState = customFieldsState
+            customFieldsState = customFieldsState,
+            focusedField = focusedField.value()
         )
     }
         .stateIn(
@@ -398,7 +390,10 @@ abstract class BaseLoginViewModel(
         return fields to hasCustomFieldErrors
     }
 
-    private fun validateTotpField(field: CustomFieldContent.Totp, index: Int): Pair<CustomFieldContent.Totp, Boolean> {
+    private fun validateTotpField(
+        field: CustomFieldContent.Totp,
+        index: Int
+    ): Pair<CustomFieldContent.Totp, Boolean> {
         val content = when (val hiddenState = field.value) {
             is HiddenState.Revealed -> hiddenState.clearText
             is HiddenState.Concealed -> {
@@ -560,10 +555,6 @@ abstract class BaseLoginViewModel(
         }
     }
 
-    fun onCustomFieldFocused() {
-        focusCustomFieldFlow.update { None }
-    }
-
     protected fun onUserEditedContent() {
         if (hasUserEditedContentFlow.value) return
         hasUserEditedContentFlow.update { true }
@@ -603,18 +594,31 @@ abstract class BaseLoginViewModel(
                                 customFields.add(customField)
                                 loginItem.copy(customFields = customFields.toPersistentList())
                             }
-                            focusCustomFieldFlow.update { (itemContentState.value.customFields.size - 1).some() }
+                            val index = itemContentState.value.customFields.size - 1
+                            when (customField) {
+                                is CustomFieldContent.Hidden -> focusedFieldFlow.update {
+                                    LoginCustomField.CustomFieldHidden(index).some()
+                                }
+
+                                is CustomFieldContent.Text -> focusedFieldFlow.update {
+                                    LoginCustomField.CustomFieldText(index).some()
+                                }
+
+                                is CustomFieldContent.Totp -> focusedFieldFlow.update {
+                                    LoginCustomField.CustomFieldTOTP(index).some()
+                                }
+                            }
                         }
                 }
             }
     }
 
-    fun onFocusChange(field: MainLoginField, focused: Boolean) {
-        itemContentState.update {
-            when (field) {
-                MainLoginField.Password -> {
+    fun onFocusChange(field: LoginField, isFocused: Boolean) {
+        when (field) {
+            LoginField.Password -> {
+                itemContentState.update {
                     val password = encryptionContextProvider.withEncryptionContext {
-                        if (focused) {
+                        if (isFocused) {
                             HiddenState.Revealed(
                                 it.password.encrypted,
                                 decrypt(it.password.encrypted)
@@ -625,8 +629,10 @@ abstract class BaseLoginViewModel(
                     }
                     it.copy(password = password)
                 }
+            }
 
-                MainLoginField.Totp -> {
+            LoginField.PrimaryTotp -> {
+                itemContentState.update {
                     val primaryTotp = encryptionContextProvider.withEncryptionContext {
                         HiddenState.Revealed(
                             it.primaryTotp.encrypted,
@@ -635,9 +641,19 @@ abstract class BaseLoginViewModel(
                     }
                     it.copy(primaryTotp = primaryTotp)
                 }
-
-                else -> it
             }
+
+            LoginField.Username,
+            is LoginCustomField.CustomFieldHidden,
+            is LoginCustomField.CustomFieldTOTP,
+            is LoginCustomField.CustomFieldText,
+            LoginField.Title -> {
+            }
+        }
+        if (isFocused) {
+            focusedFieldFlow.update { field.some() }
+        } else {
+            focusedFieldFlow.update { None }
         }
     }
 
@@ -692,7 +708,21 @@ abstract class BaseLoginViewModel(
             loginItem.copy(customFields = customFields.toPersistentList())
         }
 
-        focusCustomFieldFlow.update { indexTitle.index.some() }
+        when (itemContentState.value.customFields.getOrNull(indexTitle.index)) {
+            is CustomFieldContent.Hidden -> focusedFieldFlow.update {
+                LoginCustomField.CustomFieldHidden(indexTitle.index).some()
+            }
+
+            is CustomFieldContent.Text -> focusedFieldFlow.update {
+                LoginCustomField.CustomFieldText(indexTitle.index).some()
+            }
+
+            is CustomFieldContent.Totp -> focusedFieldFlow.update {
+                LoginCustomField.CustomFieldTOTP(indexTitle.index).some()
+            }
+
+            null -> {}
+        }
     }
 
     private fun removeCustomField(index: Int) = viewModelScope.launch {

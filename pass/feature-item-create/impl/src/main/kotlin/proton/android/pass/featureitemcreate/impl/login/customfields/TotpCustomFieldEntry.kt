@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultNorm
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.android.pass.composecomponents.impl.form.ProtonTextField
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
@@ -91,17 +90,17 @@ fun TotpCustomFieldEntry(
 @Preview
 @Composable
 fun TotpCustomFieldEntryPreview(
-    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+    @PreviewParameter(ThemeTotpCustomFieldInput::class) input: Pair<Boolean, TotpCustomFieldInput>
 ) {
     PassTheme(isDark = input.first) {
         Surface {
             TotpCustomFieldEntry(
                 content = CustomFieldContent.Totp(
                     label = "label",
-                    value = HiddenState.Revealed("", "value")
+                    value = HiddenState.Revealed("", input.second.text)
                 ),
-                validationError = null,
-                canEdit = input.second,
+                validationError = input.second.error,
+                canEdit = input.second.isEnabled,
                 onChange = {},
                 onOptionsClick = {}
             )

@@ -109,9 +109,7 @@ sealed interface CustomFieldsState {
     @Immutable
     data class Enabled(
         val customFields: List<CustomFieldContent>,
-        val focusCustomField: Option<Int>
+        val focusCustomField: Option<Int>,
+        val isLimited: Boolean
     ) : CustomFieldsState
-
-    @Immutable
-    object Limited : CustomFieldsState
 }

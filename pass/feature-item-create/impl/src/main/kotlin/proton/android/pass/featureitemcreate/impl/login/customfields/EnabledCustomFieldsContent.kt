@@ -61,6 +61,7 @@ fun EnabledCustomFieldsContent(
                         Modifier
                     }
                 }
+
                 None -> Modifier
             }
 
@@ -68,7 +69,14 @@ fun EnabledCustomFieldsContent(
                 modifier = entryModifier,
                 entry = field,
                 canEdit = canEdit,
-                onValueChange = { onEvent(CustomFieldEvent.OnValueChange(value = it, index = idx)) },
+                onValueChange = {
+                    onEvent(
+                        CustomFieldEvent.OnValueChange(
+                            value = it,
+                            index = idx
+                        )
+                    )
+                },
                 onOptionsClick = {
                     onEvent(
                         CustomFieldEvent.OnCustomFieldOptions(
@@ -80,17 +88,21 @@ fun EnabledCustomFieldsContent(
             )
         }
 
-        TransparentTextButton(
-            text = stringResource(R.string.create_login_add_custom_field_button),
-            icon = CoreR.drawable.ic_proton_plus,
-            iconContentDescription = stringResource(R.string.create_login_add_custom_field_button_content_description),
-            color = PassTheme.colors.loginInteractionNormMajor2,
-            onClick = {
-                focusManager.clearFocus(true)
-                addCustomFieldAction = true
-                keyboardController?.hide()
-            }
-        )
+        if (!state.isLimited) {
+            TransparentTextButton(
+                text = stringResource(R.string.create_login_add_custom_field_button),
+                icon = CoreR.drawable.ic_proton_plus,
+                iconContentDescription = stringResource(
+                    R.string.create_login_add_custom_field_button_content_description
+                ),
+                color = PassTheme.colors.loginInteractionNormMajor2,
+                onClick = {
+                    focusManager.clearFocus(true)
+                    addCustomFieldAction = true
+                    keyboardController?.hide()
+                }
+            )
+        }
     }
 
     RequestFocusLaunchedEffect(

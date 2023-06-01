@@ -19,8 +19,5 @@ fun CustomFieldsContent(
             canEdit = canEdit,
             onEvent = onEvent
         )
-        CustomFieldsState.Limited -> LimitedCustomFieldsContent(
-            modifier = modifier
-        )
     }
 }

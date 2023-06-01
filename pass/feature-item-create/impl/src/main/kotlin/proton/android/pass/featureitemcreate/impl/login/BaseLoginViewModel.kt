@@ -190,13 +190,18 @@ abstract class BaseLoginViewModel(
                 is PlanType.Paid, is PlanType.Trial -> {
                     CustomFieldsState.Enabled(
                         customFields = loginItemWrapper.content.customFields,
-                        focusCustomField = focusCustomField
+                        focusCustomField = focusCustomField,
+                        isLimited = false
                     )
                 }
 
                 else -> {
                     if (loginItemWrapper.content.customFields.isNotEmpty()) {
-                        CustomFieldsState.Limited
+                        CustomFieldsState.Enabled(
+                            customFields = loginItemWrapper.content.customFields,
+                            focusCustomField = focusCustomField,
+                            isLimited = true
+                        )
                     } else {
                         CustomFieldsState.Disabled
                     }

@@ -184,14 +184,17 @@ fun LoginDetail(
                                         is CustomFieldEvent.CopyValueContent -> {
                                             viewModel.copyCustomFieldContent(event.content)
                                         }
+                                        CustomFieldEvent.Upgrade -> {
+                                            onNavigate(ItemDetailNavigation.Upgrade)
+                                        }
                                     }
                                 }
                                 LoginDetailEvent.OnGoToAliasClick -> {
-                                    state.linkedAlias.map {
+                                    state.linkedAlias.map { aliasItem ->
                                         onNavigate(
                                             ItemDetailNavigation.OnViewItem(
-                                                shareId = it.shareId,
-                                                itemId = it.itemId,
+                                                shareId = aliasItem.shareId,
+                                                itemId = aliasItem.itemId,
                                             )
                                         )
                                     }

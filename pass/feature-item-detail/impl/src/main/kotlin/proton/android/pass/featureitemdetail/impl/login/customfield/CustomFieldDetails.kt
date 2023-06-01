@@ -27,7 +27,8 @@ fun CustomFieldDetails(
                 onCopyValue = {
                     onEvent(CustomFieldEvent.CopyValue(idx))
                 },
-                onCopyValueWithContent = { onEvent(CustomFieldEvent.CopyValueContent(it)) }
+                onCopyValueWithContent = { onEvent(CustomFieldEvent.CopyValueContent(it)) },
+                onUpgradeClick = { onEvent(CustomFieldEvent.Upgrade) }
             )
         }
     }

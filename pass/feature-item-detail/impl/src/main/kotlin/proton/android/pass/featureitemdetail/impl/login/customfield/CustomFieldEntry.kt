@@ -10,7 +10,8 @@ fun CustomFieldEntry(
     entry: CustomFieldUiContent,
     onToggleVisibility: () -> Unit,
     onCopyValue: () -> Unit,
-    onCopyValueWithContent: (String) -> Unit
+    onCopyValueWithContent: (String) -> Unit,
+    onUpgradeClick: () -> Unit
 ) {
     when (entry) {
         is CustomFieldUiContent.Text -> CustomFieldText(
@@ -27,7 +28,8 @@ fun CustomFieldEntry(
         is CustomFieldUiContent.Totp -> CustomFieldTotp(
             modifier = modifier,
             entry = entry,
-            onCopyTotpClick = onCopyValueWithContent
+            onCopyTotpClick = onCopyValueWithContent,
+            onUpgradeClick = onUpgradeClick
         )
     }
 }

@@ -59,10 +59,16 @@ sealed interface CustomFieldUiContent {
     data class Hidden(val label: String, val content: HiddenState) : CustomFieldUiContent
 
     @Stable
-    data class Totp(
-        val label: String,
-        val code: String,
-        val remainingSeconds: Int,
-        val totalSeconds: Int
-    ) : CustomFieldUiContent
+    sealed interface Totp : CustomFieldUiContent {
+        @Stable
+        data class Limited(val label: String) : Totp
+
+        @Stable
+        data class Visible(
+            val label: String,
+            val code: String,
+            val remainingSeconds: Int,
+            val totalSeconds: Int
+        ) : Totp
+    }
 }

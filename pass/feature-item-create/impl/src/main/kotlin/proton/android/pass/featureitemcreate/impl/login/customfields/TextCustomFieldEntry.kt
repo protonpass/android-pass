@@ -23,6 +23,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.pass.domain.CustomFieldContent
 import me.proton.core.presentation.R as CoreR
 
@@ -30,8 +31,10 @@ import me.proton.core.presentation.R as CoreR
 fun TextCustomFieldEntry(
     modifier: Modifier = Modifier,
     content: CustomFieldContent.Text,
+    index: Int,
     canEdit: Boolean,
     onChange: (String) -> Unit,
+    onFocusChange: (LoginCustomField, Boolean) -> Unit,
     onOptionsClick: () -> Unit
 ) {
     ProtonTextField(
@@ -61,7 +64,8 @@ fun TextCustomFieldEntry(
                 CustomFieldOptionsButton(onClick = onOptionsClick)
             }
         },
-        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences)
+        keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Sentences),
+        onFocusChange = { onFocusChange(LoginCustomField.CustomFieldText(index), it) }
     )
 }
 
@@ -75,7 +79,9 @@ fun TextCustomFieldEntryPreview(
             TextCustomFieldEntry(
                 content = CustomFieldContent.Text(label = "label", value = input.second.text),
                 canEdit = input.second.enabled,
+                index = 0,
                 onChange = {},
+                onFocusChange = { _, _ -> },
                 onOptionsClick = {}
             )
         }

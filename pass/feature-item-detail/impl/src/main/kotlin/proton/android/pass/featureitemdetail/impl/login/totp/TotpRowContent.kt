@@ -44,7 +44,7 @@ fun TotpRowContent(
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_lock),
             contentDescription = stringResource(R.string.totp_icon_content_description),
-            tint = PassTheme.colors.loginInteractionNormMajor1
+            tint = PassTheme.colors.loginInteractionNorm
         )
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)

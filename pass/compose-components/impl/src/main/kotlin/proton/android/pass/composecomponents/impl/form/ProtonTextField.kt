@@ -75,15 +75,17 @@ fun ProtonTextField(
             onDoneClick?.invoke()
         }
     }
-    var isFocused: Boolean by rememberSaveable { mutableStateOf(false) }
+    var hasBeenFocused: Boolean by rememberSaveable { mutableStateOf(false) }
     val interactionSource = remember { MutableInteractionSource() }
     Column(modifier = modifier, verticalArrangement = verticalArrangement) {
         BasicTextField(
             modifier = textFieldModifier
                 .fillMaxWidth()
                 .onFocusChanged { state ->
-                    onFocusChange?.let { it(state.isFocused) }
-                        ?: run { isFocused = state.isFocused }
+                    if (onFocusChange != null && (state.isFocused || hasBeenFocused)) {
+                        hasBeenFocused = true
+                        onFocusChange(state.isFocused)
+                    }
                 },
             value = value,
             enabled = editable,

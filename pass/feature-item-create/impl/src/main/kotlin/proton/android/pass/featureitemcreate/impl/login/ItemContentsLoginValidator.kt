@@ -22,4 +22,9 @@ sealed interface LoginItemValidationErrors {
     object BlankTitle : LoginItemValidationErrors
     data class InvalidUrl(val index: Int) : LoginItemValidationErrors
     object InvalidTotp : LoginItemValidationErrors
+
+    sealed interface CustomFieldValidationError : LoginItemValidationErrors {
+        data class EmptyField(val index: Int) : CustomFieldValidationError
+        data class InvalidTotp(val index: Int) : CustomFieldValidationError
+    }
 }

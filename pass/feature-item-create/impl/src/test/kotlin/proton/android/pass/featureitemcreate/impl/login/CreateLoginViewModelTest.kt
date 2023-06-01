@@ -2,6 +2,7 @@ package proton.android.pass.featureitemcreate.impl.login
 
 import app.cash.turbine.test
 import com.google.common.truth.Truth.assertThat
+import kotlinx.collections.immutable.persistentSetOf
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
@@ -111,7 +112,7 @@ internal class CreateLoginViewModelTest {
                                 currentVault = vault
                             ),
                             state.baseLoginUiState.copy(
-                                validationErrors = setOf(LoginItemValidationErrors.BlankTitle),
+                                validationErrors = persistentSetOf(LoginItemValidationErrors.BlankTitle),
                                 totpUiState = TotpUiState.Success,
                                 customFieldsState = CustomFieldsState.Disabled,
                             )

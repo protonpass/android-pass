@@ -22,6 +22,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolde
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
+import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
 
@@ -32,7 +33,9 @@ fun TotpCustomFieldEntry(
     validationError: LoginItemValidationErrors.CustomFieldValidationError?,
     canEdit: Boolean,
     onChange: (String) -> Unit,
-    onOptionsClick: () -> Unit
+    onFocusChange: (LoginCustomField, Boolean) -> Unit,
+    onOptionsClick: () -> Unit,
+    index: Int
 ) {
     val value = when (val state = content.value) {
         is HiddenState.Concealed -> ""
@@ -60,7 +63,7 @@ fun TotpCustomFieldEntry(
         errorMessage = errorMessage,
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm,
-        onFocusChange = {},
+        onFocusChange = { onFocusChange(LoginCustomField.CustomFieldTOTP(index), it) },
         label = { ProtonTextFieldLabel(text = content.label, isError = isError) },
         placeholder = {
             ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.totp_create_login_field_placeholder))
@@ -101,8 +104,10 @@ fun TotpCustomFieldEntryPreview(
                 ),
                 validationError = input.second.error,
                 canEdit = input.second.isEnabled,
+                index = 0,
                 onChange = {},
-                onOptionsClick = {}
+                onFocusChange = { _, _ -> },
+                onOptionsClick = {},
             )
         }
     }

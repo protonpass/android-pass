@@ -14,10 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -44,6 +40,7 @@ internal fun LoginItemForm(
     isEditAllowed: Boolean,
     contents: ItemContents.Login,
     totpUiState: TotpUiState,
+    focusedField: LoginField?,
     customFieldsState: CustomFieldsState,
     customFieldValidationErrors: ImmutableList<LoginItemValidationErrors.CustomFieldValidationError>,
     showCreateAliasButton: Boolean,
@@ -63,10 +60,20 @@ internal fun LoginItemForm(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Box(modifier = modifier) {
-        var currentStickyFormOption by remember { mutableStateOf(None) }
-        val isCurrentStickyVisible by remember(currentStickyFormOption) {
-            mutableStateOf(currentStickyFormOption != None)
+        val currentStickyFormOption = when (focusedField) {
+            LoginField.Username -> AliasOptions
+            LoginField.Password -> GeneratePassword
+            LoginField.PrimaryTotp,
+            is LoginCustomField.CustomFieldTOTP -> AddTotp
+
+            is LoginCustomField.CustomFieldHidden,
+            is LoginCustomField.CustomFieldText,
+            LoginField.Title,
+            null -> None
         }
+
+        val isCurrentStickyVisible = currentStickyFormOption != None
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -84,15 +91,6 @@ internal fun LoginItemForm(
                 onEvent = onEvent,
                 onAliasOptionsClick = onAliasOptionsClick,
                 onFocusChange = { field, isFocused ->
-                    currentStickyFormOption = if (!isFocused) {
-                        None
-                    } else {
-                        when (field) {
-                            MainLoginField.Username -> AliasOptions
-                            MainLoginField.Password -> GeneratePassword
-                            MainLoginField.Totp -> AddTotp
-                        }
-                    }
                     onEvent(LoginContentEvent.OnFocusChange(field, isFocused))
                 },
                 onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) }
@@ -109,6 +107,13 @@ internal fun LoginItemForm(
                 enabled = isEditAllowed,
                 onChange = { onEvent(LoginContentEvent.OnNoteChange(it)) }
             )
+            CustomFieldsContent(
+                state = customFieldsState,
+                focusedField = focusedField as? LoginCustomField,
+                canEdit = isEditAllowed,
+                validationErrors = customFieldValidationErrors,
+                onEvent = { onEvent(LoginContentEvent.OnCustomFieldEvent(it)) }
+            )
             if (isUpdate) {
                 LinkedAppsListSection(
                     packageInfoUiSet = contents.packageInfoSet.map(::PackageInfoUi)
@@ -117,14 +122,6 @@ internal fun LoginItemForm(
                     onLinkedAppDelete = { onEvent(LoginContentEvent.OnLinkedAppDelete(it)) }
                 )
             }
-
-            CustomFieldsContent(
-                state = customFieldsState,
-                canEdit = isEditAllowed,
-                validationErrors = customFieldValidationErrors,
-                onEvent = { onEvent(LoginContentEvent.OnCustomFieldEvent(it)) }
-            )
-
             if (isCurrentStickyVisible) {
                 Spacer(modifier = Modifier.height(48.dp))
             }

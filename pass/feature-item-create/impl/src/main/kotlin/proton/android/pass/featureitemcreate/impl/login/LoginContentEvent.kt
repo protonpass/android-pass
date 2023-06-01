@@ -22,5 +22,5 @@ sealed interface LoginContentEvent {
     object PasteTotp : LoginContentEvent
     data class OnLinkedAppDelete(val app: PackageInfoUi) : LoginContentEvent
     data class OnCustomFieldEvent(val event: CustomFieldEvent) : LoginContentEvent
-    data class OnFocusChange(val field: MainLoginField, val isFocused: Boolean) : LoginContentEvent
+    data class OnFocusChange(val field: LoginField, val isFocused: Boolean) : LoginContentEvent
 }

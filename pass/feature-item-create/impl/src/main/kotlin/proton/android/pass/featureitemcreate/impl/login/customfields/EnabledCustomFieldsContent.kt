@@ -18,15 +18,15 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.RequestFocusLaunchedEffect
 import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.login.CustomFieldsState
+import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
+import proton.pass.domain.CustomFieldContent
 import me.proton.core.presentation.R as CoreR
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -35,8 +35,9 @@ fun EnabledCustomFieldsContent(
     modifier: Modifier = Modifier,
     state: CustomFieldsState.Enabled,
     validationErrors: ImmutableList<LoginItemValidationErrors.CustomFieldValidationError>,
+    focusedField: LoginCustomField?,
     canEdit: Boolean,
-    onEvent: (CustomFieldEvent) -> Unit
+    onEvent: (CustomFieldEvent) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
@@ -55,23 +56,18 @@ fun EnabledCustomFieldsContent(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        state.customFields.forEachIndexed { idx, field ->
-            val entryModifier = when (val focusCustomField = state.focusCustomField) {
-                is Some -> {
-                    if (focusCustomField.value == idx) {
-                        Modifier.focusRequester(focusRequester)
-                    } else {
-                        Modifier
-                    }
-                }
-
-                None -> Modifier
+        state.customFields.forEachIndexed { idx, field: CustomFieldContent ->
+            val entryModifier = if (focusedField?.index == idx) {
+                Modifier.focusRequester(focusRequester)
+            } else {
+                Modifier
             }
             val validationError = validationErrors.firstOrNull {
                 when (it) {
                     is LoginItemValidationErrors.CustomFieldValidationError.EmptyField -> {
                         it.index == idx
                     }
+
                     is LoginItemValidationErrors.CustomFieldValidationError.InvalidTotp -> {
                         it.index == idx
                     }
@@ -82,14 +78,13 @@ fun EnabledCustomFieldsContent(
                 modifier = entryModifier,
                 entry = field,
                 validationError = validationError,
+                index = idx,
                 canEdit = canEdit,
-                onValueChange = {
-                    onEvent(
-                        CustomFieldEvent.OnValueChange(
-                            value = it,
-                            index = idx
-                        )
-                    )
+                onValueChange = { value ->
+                    onEvent(CustomFieldEvent.OnValueChange(value, idx))
+                },
+                onFocusChange = { loginCustomField, isFocused ->
+                    onEvent(CustomFieldEvent.FocusRequested(loginCustomField, isFocused))
                 },
                 onOptionsClick = {
                     onEvent(
@@ -119,9 +114,12 @@ fun EnabledCustomFieldsContent(
         }
     }
 
+    var fieldWithRequestedFocus by remember { mutableStateOf<LoginCustomField?>(null) }
     RequestFocusLaunchedEffect(
         focusRequester = focusRequester,
-        requestFocus = state.focusCustomField.isNotEmpty(),
-        callback = { onEvent(CustomFieldEvent.FocusRequested) }
+        requestFocus = fieldWithRequestedFocus != focusedField,
+        callback = {
+            fieldWithRequestedFocus = focusedField
+        }
     )
 }

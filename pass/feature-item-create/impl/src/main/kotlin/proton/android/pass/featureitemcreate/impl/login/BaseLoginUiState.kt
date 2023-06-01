@@ -3,7 +3,6 @@ package proton.android.pass.featureitemcreate.impl.login
 import androidx.compose.runtime.Immutable
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentSetOf
-import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.OpenScanState
@@ -28,16 +27,17 @@ data class BaseLoginUiState(
     val hasReachedAliasLimit: Boolean,
     val totpUiState: TotpUiState,
     val customFieldsState: CustomFieldsState,
+    val focusedField: LoginField?,
 ) {
     companion object {
         fun create(
             password: HiddenState,
             primaryTotp: HiddenState
         ) = BaseLoginUiState(
-            aliasItem = null,
-            isLoadingState = IsLoadingState.NotLoading,
             contents = ItemContents.Login.create(password, primaryTotp),
+            aliasItem = null,
             validationErrors = persistentSetOf(),
+            isLoadingState = IsLoadingState.NotLoading,
             isItemSaved = ItemSavedState.Unknown,
             openScanState = OpenScanState.Unknown,
             focusLastWebsite = false,
@@ -47,6 +47,7 @@ data class BaseLoginUiState(
             hasReachedAliasLimit = false,
             totpUiState = TotpUiState.NotInitialised,
             customFieldsState = CustomFieldsState.NotInitialised,
+            focusedField = null
         )
     }
 }
@@ -111,7 +112,6 @@ sealed interface CustomFieldsState {
     @Immutable
     data class Enabled(
         val customFields: List<CustomFieldContent>,
-        val focusCustomField: Option<Int>,
         val isLimited: Boolean
     ) : CustomFieldsState
 }

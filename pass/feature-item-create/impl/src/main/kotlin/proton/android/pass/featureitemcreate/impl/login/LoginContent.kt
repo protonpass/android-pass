@@ -103,6 +103,7 @@ internal fun LoginContent(
             customFieldValidationErrors = uiState.validationErrors
                 .filterIsInstance<LoginItemValidationErrors.CustomFieldValidationError>()
                 .toPersistentList(),
+            focusedField = uiState.focusedField,
             showCreateAliasButton = showCreateAliasButton,
             canUpdateUsername = uiState.canUpdateUsername,
             primaryEmail = uiState.primaryEmail,

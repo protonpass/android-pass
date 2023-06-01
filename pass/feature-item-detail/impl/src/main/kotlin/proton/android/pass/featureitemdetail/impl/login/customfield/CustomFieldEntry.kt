@@ -28,8 +28,13 @@ fun CustomFieldEntry(
         is CustomFieldUiContent.Totp -> CustomFieldTotp(
             modifier = modifier,
             entry = entry,
-            onCopyTotpClick = onCopyValueWithContent,
-            onUpgradeClick = onUpgradeClick
+            onCopyTotpClick = onCopyValueWithContent
+        )
+
+        is CustomFieldUiContent.Limited -> CustomFieldLimited(
+            modifier = modifier,
+            entry = entry,
+            onUpgrade = onUpgradeClick
         )
     }
 }

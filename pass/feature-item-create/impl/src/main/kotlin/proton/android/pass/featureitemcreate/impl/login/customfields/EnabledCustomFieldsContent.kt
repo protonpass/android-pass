@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
@@ -34,7 +34,7 @@ import me.proton.core.presentation.R as CoreR
 fun EnabledCustomFieldsContent(
     modifier: Modifier = Modifier,
     state: CustomFieldsState.Enabled,
-    validationErrors: PersistentList<LoginItemValidationErrors.CustomFieldValidationError>,
+    validationErrors: ImmutableList<LoginItemValidationErrors.CustomFieldValidationError>,
     canEdit: Boolean,
     onEvent: (CustomFieldEvent) -> Unit
 ) {

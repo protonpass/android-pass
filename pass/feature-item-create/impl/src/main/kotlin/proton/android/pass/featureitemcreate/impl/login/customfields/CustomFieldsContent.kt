@@ -2,7 +2,7 @@ package proton.android.pass.featureitemcreate.impl.login.customfields
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import kotlinx.collections.immutable.PersistentList
+import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.featureitemcreate.impl.login.CustomFieldsState
 import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
 
@@ -10,7 +10,7 @@ import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationError
 fun CustomFieldsContent(
     modifier: Modifier = Modifier,
     state: CustomFieldsState,
-    validationErrors: PersistentList<LoginItemValidationErrors.CustomFieldValidationError>,
+    validationErrors: ImmutableList<LoginItemValidationErrors.CustomFieldValidationError>,
     canEdit: Boolean,
     onEvent: (CustomFieldEvent) -> Unit
 ) {

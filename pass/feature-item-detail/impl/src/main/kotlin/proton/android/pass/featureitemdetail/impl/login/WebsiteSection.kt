@@ -36,8 +36,7 @@ import proton.android.pass.featureitemdetail.impl.R
 fun WebsiteSection(
     modifier: Modifier = Modifier,
     websites: ImmutableList<String>,
-    onWebsiteClicked: (String) -> Unit,
-    onWebsiteLongClicked: (String) -> Unit
+    onEvent: (LoginDetailEvent) -> Unit
 ) {
     if (websites.isEmpty()) return
     RoundedCornersColumn(
@@ -61,8 +60,10 @@ fun WebsiteSection(
                         modifier = Modifier
                             .fillMaxWidth()
                             .combinedClickable(
-                                onClick = { onWebsiteClicked(website) },
-                                onLongClick = { onWebsiteLongClicked(website) }
+                                onClick = { onEvent(LoginDetailEvent.OnWebsiteClicked(website)) },
+                                onLongClick = {
+                                    onEvent(LoginDetailEvent.OnWebsiteLongClicked(website))
+                                }
                             )
                             .padding(vertical = 8.dp),
                         text = website,
@@ -90,8 +91,7 @@ fun WebsitesSectionPreview(
         Surface {
             WebsiteSection(
                 websites = input.second.toImmutableList(),
-                onWebsiteClicked = {},
-                onWebsiteLongClicked = {}
+                onEvent = {}
             )
         }
     }

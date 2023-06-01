@@ -35,6 +35,7 @@ import proton.android.pass.featureitemdetail.impl.common.TopBarOptionsBottomShee
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.TopBarOptions
 import proton.android.pass.featureitemdetail.impl.login.LoginDetailBottomSheetType.WebsiteOptions
 import proton.android.pass.featureitemdetail.impl.login.bottomsheet.WebsiteOptionsBottomSheetContents
+import proton.android.pass.featureitemdetail.impl.login.customfield.CustomFieldEvent
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 import proton.pass.domain.ItemContents
@@ -45,6 +46,7 @@ import proton.pass.domain.ItemState
     ExperimentalComposeUiApi::class
 )
 @Composable
+@Suppress("ComplexMethod")
 fun LoginDetail(
     modifier: Modifier = Modifier,
     moreInfoUiState: MoreInfoUiState,
@@ -162,30 +164,53 @@ fun LoginDetail(
                         totpUiState = state.totpUiState,
                         moreInfoUiState = moreInfoUiState,
                         canLoadExternalImages = canLoadExternalImages,
-                        onTogglePasswordClick = { viewModel.togglePassword() },
-                        onCopyPasswordClick = { viewModel.copyPasswordToClipboard() },
-                        onUsernameClick = { viewModel.copyUsernameToClipboard() },
-                        onWebsiteClicked = { website -> openWebsite(context, website) },
-                        onWebsiteLongClicked = { website ->
-                            selectedWebsite = website
-                            currentBottomSheet = WebsiteOptions
-                            scope.launch { bottomSheetState.show() }
-                        },
-                        onCopyTotpClick = {
-                            viewModel.copyTotpCodeToClipboard(it)
-                        },
-                        onGoToAliasClick = {
-                            state.linkedAlias.map {
-                                onNavigate(
-                                    ItemDetailNavigation.OnViewItem(
-                                        shareId = it.shareId,
-                                        itemId = it.itemId,
-                                    )
-                                )
+                        canDisplayCustomFields = state.canDisplayCustomFields,
+                        onEvent = {
+                            when (it) {
+                                LoginDetailEvent.OnCopyPasswordClick -> {
+                                    viewModel.copyPasswordToClipboard()
+                                }
+                                is LoginDetailEvent.OnCopyTotpClick -> {
+                                    viewModel.copyTotpCodeToClipboard(it.totpCode)
+                                }
+                                is LoginDetailEvent.OnCustomFieldEvent -> {
+                                    when (val event = it.event) {
+                                        is CustomFieldEvent.CopyValue -> {
+                                            viewModel.copyCustomFieldValue(event.index)
+                                        }
+                                        is CustomFieldEvent.ToggleFieldVisibility -> {
+                                            viewModel.toggleCustomFieldVisibility(event.index)
+                                        }
+                                    }
+                                }
+                                LoginDetailEvent.OnGoToAliasClick -> {
+                                    state.linkedAlias.map {
+                                        onNavigate(
+                                            ItemDetailNavigation.OnViewItem(
+                                                shareId = it.shareId,
+                                                itemId = it.itemId,
+                                            )
+                                        )
+                                    }
+                                }
+                                LoginDetailEvent.OnTogglePasswordClick -> {
+                                    viewModel.togglePassword()
+                                }
+                                LoginDetailEvent.OnUpgradeClick -> {
+                                    onNavigate(ItemDetailNavigation.Upgrade)
+                                }
+                                LoginDetailEvent.OnUsernameClick -> {
+                                    viewModel.copyUsernameToClipboard()
+                                }
+                                is LoginDetailEvent.OnWebsiteClicked -> {
+                                    openWebsite(context, it.website)
+                                }
+                                is LoginDetailEvent.OnWebsiteLongClicked -> {
+                                    selectedWebsite = it.website
+                                    currentBottomSheet = WebsiteOptions
+                                    scope.launch { bottomSheetState.show() }
+                                }
                             }
-                        },
-                        onUpgradeClick = {
-                            onNavigate(ItemDetailNavigation.Upgrade)
                         }
                     )
                 }

@@ -20,34 +20,39 @@ fun MainLoginSection(
     passwordState: HiddenState,
     totpUiState: TotpUiState?,
     showViewAlias: Boolean,
-    onUsernameClick: () -> Unit,
-    onGoToAliasClick: () -> Unit,
-    onTogglePasswordClick: () -> Unit,
-    onCopyPasswordClick: () -> Unit,
-    onCopyTotpClick: (String) -> Unit,
-    onUpgradeClick: () -> Unit
+    onEvent: (LoginDetailEvent) -> Unit
 ) {
-    RoundedCornersColumn(
-        modifier = modifier.fillMaxWidth()
-    ) {
+    RoundedCornersColumn(modifier = modifier.fillMaxWidth()) {
         LoginUsernameRow(
             username = username,
             showViewAlias = showViewAlias,
-            onUsernameClick = onUsernameClick,
-            onGoToAliasClick = onGoToAliasClick
+            onUsernameClick = {
+                onEvent(LoginDetailEvent.OnUsernameClick)
+            },
+            onGoToAliasClick = {
+                onEvent(LoginDetailEvent.OnGoToAliasClick)
+            }
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
         LoginPasswordRow(
             passwordHiddenState = passwordState,
-            onTogglePasswordClick = onTogglePasswordClick,
-            onCopyPasswordClick = onCopyPasswordClick
+            onTogglePasswordClick = {
+                onEvent(LoginDetailEvent.OnTogglePasswordClick)
+            },
+            onCopyPasswordClick = {
+                onEvent(LoginDetailEvent.OnCopyPasswordClick)
+            }
         )
         if (totpUiState != null) {
             Divider(color = PassTheme.colors.inputBorderNorm)
             TotpRow(
                 state = totpUiState,
-                onCopyTotpClick = onCopyTotpClick,
-                onUpgradeClick = onUpgradeClick
+                onCopyTotpClick = {
+                    onEvent(LoginDetailEvent.OnCopyTotpClick(it))
+                },
+                onUpgradeClick = {
+                    onEvent(LoginDetailEvent.OnUpgradeClick)
+                }
             )
         }
     }
@@ -69,12 +74,7 @@ fun MainLoginSectionPreview(
                 passwordState = input.second.passwordState,
                 totpUiState = input.second.totpUiState,
                 showViewAlias = input.second.showViewAlias,
-                onUsernameClick = {},
-                onTogglePasswordClick = {},
-                onCopyPasswordClick = {},
-                onCopyTotpClick = {},
-                onGoToAliasClick = {},
-                onUpgradeClick = {}
+                onEvent = {}
             )
         }
     }

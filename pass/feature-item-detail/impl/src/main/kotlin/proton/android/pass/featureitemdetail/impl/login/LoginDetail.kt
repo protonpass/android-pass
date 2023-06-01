@@ -164,7 +164,7 @@ fun LoginDetail(
                         totpUiState = state.totpUiState,
                         moreInfoUiState = moreInfoUiState,
                         canLoadExternalImages = canLoadExternalImages,
-                        canDisplayCustomFields = state.canDisplayCustomFields,
+                        customFields = state.customFields,
                         onEvent = {
                             when (it) {
                                 LoginDetailEvent.OnCopyPasswordClick -> {
@@ -180,6 +180,9 @@ fun LoginDetail(
                                         }
                                         is CustomFieldEvent.ToggleFieldVisibility -> {
                                             viewModel.toggleCustomFieldVisibility(event.index)
+                                        }
+                                        is CustomFieldEvent.CopyValueContent -> {
+                                            viewModel.copyCustomFieldContent(event.content)
                                         }
                                     }
                                 }

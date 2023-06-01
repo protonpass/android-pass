@@ -2,29 +2,32 @@ package proton.android.pass.featureitemdetail.impl.login.customfield
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import proton.pass.domain.CustomFieldContent
+import proton.android.pass.featureitemdetail.impl.login.CustomFieldUiContent
 
 @Composable
 fun CustomFieldEntry(
     modifier: Modifier = Modifier,
-    entry: CustomFieldContent,
+    entry: CustomFieldUiContent,
     onToggleVisibility: () -> Unit,
-    onCopyValue: () -> Unit
+    onCopyValue: () -> Unit,
+    onCopyValueWithContent: (String) -> Unit
 ) {
     when (entry) {
-        is CustomFieldContent.Text -> CustomFieldText(
+        is CustomFieldUiContent.Text -> CustomFieldText(
             modifier = modifier,
             entry = entry,
-            onCopyValue = onCopyValue
+            onCopyValue = onCopyValueWithContent
         )
-        is CustomFieldContent.Hidden -> CustomFieldHidden(
+        is CustomFieldUiContent.Hidden -> CustomFieldHidden(
             modifier = modifier,
             entry = entry,
             onToggleVisibility = onToggleVisibility,
             onCopyValue = onCopyValue
         )
-        is CustomFieldContent.Totp -> CustomFieldTotp(
+        is CustomFieldUiContent.Totp -> CustomFieldTotp(
             modifier = modifier,
+            entry = entry,
+            onCopyTotpClick = onCopyValueWithContent
         )
     }
 }

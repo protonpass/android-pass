@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.collections.immutable.toPersistentSet
 import proton.android.pass.commonui.api.PassTheme
@@ -28,7 +29,7 @@ fun LoginContent(
     moreInfoUiState: MoreInfoUiState,
     showViewAlias: Boolean,
     canLoadExternalImages: Boolean,
-    canDisplayCustomFields: Boolean,
+    customFields: ImmutableList<CustomFieldUiContent>,
     onEvent: (LoginDetailEvent) -> Unit
 ) {
     val contents = itemUiModel.contents as ItemContents.Login
@@ -60,12 +61,10 @@ fun LoginContent(
             accentColor = PassTheme.colors.loginInteractionNorm
         )
 
-        if (canDisplayCustomFields) {
-            CustomFieldDetails(
-                fields = contents.customFields,
-                onEvent = { onEvent(LoginDetailEvent.OnCustomFieldEvent(it)) }
-            )
-        }
+        CustomFieldDetails(
+            fields = customFields,
+            onEvent = { onEvent(LoginDetailEvent.OnCustomFieldEvent(it)) }
+        )
 
         LinkedAppsListSection(
             packageInfoUiSet = contents.packageInfoSet.map { PackageInfoUi(it) }.toPersistentSet(),

@@ -28,6 +28,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
 import me.proton.core.presentation.R as CoreR
@@ -38,7 +39,9 @@ fun HiddenCustomFieldEntry(
     content: CustomFieldContent.Hidden,
     canEdit: Boolean,
     onChange: (String) -> Unit,
-    onOptionsClick: () -> Unit
+    onFocusChange: (LoginCustomField, Boolean) -> Unit,
+    onOptionsClick: () -> Unit,
+    index: Int
 ) {
     val value = when (val state = content.value) {
         is HiddenState.Concealed -> ""
@@ -81,6 +84,7 @@ fun HiddenCustomFieldEntry(
             visualTransformation = visualTransformation,
             onFocusChange = {
                 isFocused = it
+                onFocusChange(LoginCustomField.CustomFieldHidden(index), it)
             }
         )
     }
@@ -100,7 +104,9 @@ fun HiddenCustomFieldEntryPreview(
                 ),
                 canEdit = input.second.enabled,
                 onChange = {},
-                onOptionsClick = {}
+                onFocusChange = { _, _ -> },
+                onOptionsClick = {},
+                index = 0
             )
         }
     }

@@ -8,12 +8,6 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.container.roundedContainerNorm
 import proton.pass.domain.ItemContents
 
-enum class MainLoginField {
-    Username,
-    Password,
-    Totp
-}
-
 @Composable
 fun MainLoginSection(
     modifier: Modifier = Modifier,
@@ -23,7 +17,7 @@ fun MainLoginSection(
     isTotpError: Boolean,
     totpUiState: TotpUiState,
     onEvent: (LoginContentEvent) -> Unit,
-    onFocusChange: (MainLoginField, Boolean) -> Unit,
+    onFocusChange: (LoginField, Boolean) -> Unit,
     onAliasOptionsClick: () -> Unit,
     onUpgrade: () -> Unit
 ) {
@@ -36,14 +30,14 @@ fun MainLoginSection(
             isEditAllowed = isEditAllowed,
             onChange = { onEvent(LoginContentEvent.OnUsernameChange(it)) },
             onAliasOptionsClick = onAliasOptionsClick,
-            onFocus = { onFocusChange(MainLoginField.Username, it) }
+            onFocus = { onFocusChange(LoginField.Username, it) }
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
         PasswordInput(
             value = contents.password,
             isEditAllowed = isEditAllowed,
             onChange = { onEvent(LoginContentEvent.OnPasswordChange(it)) },
-            onFocus = { onFocusChange(MainLoginField.Password, it) }
+            onFocus = { onFocusChange(LoginField.Password, it) }
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
         val enabled = when (totpUiState) {
@@ -62,7 +56,7 @@ fun MainLoginSection(
                 enabled = enabled,
                 isError = isTotpError,
                 onTotpChanged = { onEvent(LoginContentEvent.OnTotpChange(it)) },
-                onFocus = { onFocusChange(MainLoginField.Totp, it) }
+                onFocus = { onFocusChange(LoginField.PrimaryTotp, it) }
             )
         }
     }

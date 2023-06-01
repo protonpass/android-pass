@@ -157,7 +157,8 @@ fun CreateLoginScreen(
                                 onNavigate(BaseLoginNavigation.Upgrade)
                             }
 
-                            CustomFieldEvent.FocusRequested -> viewModel.onCustomFieldFocused()
+                            is CustomFieldEvent.FocusRequested ->
+                                viewModel.onFocusChange(event.loginCustomField, event.isFocused)
                         }
                     }
                 }

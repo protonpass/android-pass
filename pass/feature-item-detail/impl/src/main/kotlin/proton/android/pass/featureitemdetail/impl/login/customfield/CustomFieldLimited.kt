@@ -91,7 +91,7 @@ fun CustomFieldLimited(
 @Preview
 @Composable
 fun CustomFieldLimitedPreview(
-    @PreviewParameter(ThemeCustomFieldLimitedInputPreviewProvider::class)
+    @PreviewParameter(ThemedCFLimitedPRovider::class)
     input: Pair<Boolean, CustomFieldUiContent.Limited>
 ) {
     PassTheme(isDark = input.first) {

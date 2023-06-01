@@ -56,6 +56,7 @@ fun HiddenCustomFieldEntry(
             value = value,
             editable = canEdit,
             moveToNextOnEnter = true,
+            singleLine = false,
             textStyle = ProtonTheme.typography.defaultNorm(canEdit),
             onChange = onChange,
             label = { ProtonTextFieldLabel(text = content.label) },

@@ -22,6 +22,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
+import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
 
@@ -29,15 +30,26 @@ import proton.pass.domain.HiddenState
 fun TotpCustomFieldEntry(
     modifier: Modifier = Modifier,
     content: CustomFieldContent.Totp,
+    validationError: LoginItemValidationErrors.CustomFieldValidationError?,
     canEdit: Boolean,
     onChange: (String) -> Unit,
     onOptionsClick: () -> Unit
 ) {
-
     val value = when (val state = content.value) {
         is HiddenState.Concealed -> ""
         is HiddenState.Revealed -> state.clearText
     }
+
+    val (isError, errorMessage) = when (validationError) {
+        is LoginItemValidationErrors.CustomFieldValidationError.EmptyField ->
+            true to
+                stringResource(R.string.field_cannot_be_empty)
+        is LoginItemValidationErrors.CustomFieldValidationError.InvalidTotp ->
+            true to
+                stringResource(R.string.totp_create_login_field_invalid)
+        null -> false to ""
+    }
+
     ProtonTextField(
         modifier = modifier
             .roundedContainerNorm()
@@ -45,12 +57,12 @@ fun TotpCustomFieldEntry(
         value = value,
         onChange = onChange,
         editable = canEdit,
-        isError = false,
-        errorMessage = stringResource(id = R.string.totp_create_login_field_invalid),
+        isError = isError,
+        errorMessage = errorMessage,
         moveToNextOnEnter = true,
         textStyle = ProtonTheme.typography.defaultNorm,
         onFocusChange = {},
-        label = { ProtonTextFieldLabel(text = content.label, isError = false) },
+        label = { ProtonTextFieldLabel(text = content.label, isError = isError) },
         placeholder = {
             ProtonTextFieldPlaceHolder(text = stringResource(id = R.string.totp_create_login_field_placeholder))
         },
@@ -58,7 +70,11 @@ fun TotpCustomFieldEntry(
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_lock),
                 contentDescription = stringResource(R.string.mfa_icon_content_description),
-                tint = ProtonTheme.colors.iconWeak
+                tint = if (isError) {
+                    PassTheme.colors.signalDanger
+                } else {
+                    ProtonTheme.colors.iconWeak
+                }
             )
         },
         trailingIcon = {
@@ -84,6 +100,7 @@ fun TotpCustomFieldEntryPreview(
                     label = "label",
                     value = HiddenState.Revealed("", "value")
                 ),
+                validationError = null,
                 canEdit = input.second,
                 onChange = {},
                 onOptionsClick = {}

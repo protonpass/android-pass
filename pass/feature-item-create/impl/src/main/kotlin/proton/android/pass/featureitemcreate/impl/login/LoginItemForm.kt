@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
 import proton.android.pass.commonuimodels.api.PackageInfoUi
@@ -45,6 +46,7 @@ internal fun LoginItemForm(
     contents: ItemContents.Login,
     totpUiState: TotpUiState,
     customFieldsState: CustomFieldsState,
+    customFieldValidationErrors: PersistentList<LoginItemValidationErrors.CustomFieldValidationError>,
     showCreateAliasButton: Boolean,
     primaryEmail: String?,
     isUpdate: Boolean,
@@ -120,6 +122,7 @@ internal fun LoginItemForm(
             CustomFieldsContent(
                 state = customFieldsState,
                 canEdit = isEditAllowed,
+                validationErrors = customFieldValidationErrors,
                 onEvent = { onEvent(LoginContentEvent.OnCustomFieldEvent(it)) }
             )
 

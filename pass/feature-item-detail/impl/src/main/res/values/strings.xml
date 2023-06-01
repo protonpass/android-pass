@@ -21,6 +21,7 @@
     <string name="password_copied_to_clipboard">Password copied</string>
     <string name="website_copied_to_clipboard">Website copied</string>
     <string name="totp_copied_to_clipboard">TOTP copied</string>
+    <string name="field_copied_to_clipboard">Field copied</string>
     <string name="move_item_to_trash_message">Item moved to trash</string>
     <string name="error_move_item_to_trash_message">Error moving to trash</string>
     <string name="item_permanently_deleted_message">Item permanently deleted</string>
@@ -60,6 +61,10 @@
     <string name="open_menu_icon_content_description">Open menu icon</string>
     <string name="mfa_limit_reached">2FA limit reached</string>
     <string name="mfa_icon_content_description">2fa icon</string>
+
+    <string name="custom_field_text_icon_description">Text custom field</string>
+    <string name="custom_field_hidden_icon_description">Hidden custom field</string>
+    <string name="custom_field_totp_icon_description">2FA custom field</string>
 
     <!-- Bottomsheet -->
     <string name="move_to_trash_item_detail_bottom_sheet">Move to trash</string>

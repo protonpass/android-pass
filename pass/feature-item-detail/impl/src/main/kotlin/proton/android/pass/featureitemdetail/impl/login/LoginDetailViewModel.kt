@@ -3,6 +3,7 @@ package proton.android.pass.featureitemdetail.impl.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
@@ -44,6 +46,7 @@ import proton.android.pass.data.api.usecases.GetItemByIdWithVault
 import proton.android.pass.data.api.usecases.RestoreItem
 import proton.android.pass.data.api.usecases.TrashItem
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages
+import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.FieldCopiedToClipboard
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.InitError
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemMovedToTrash
 import proton.android.pass.featureitemdetail.impl.DetailSnackbarMessages.ItemNotMovedToTrash
@@ -63,6 +66,7 @@ import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.ObserveTotpFromUri
 import proton.android.pass.totp.api.TotpManager
+import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
@@ -107,9 +111,11 @@ class LoginDetailViewModel @Inject constructor(
         MutableStateFlow(IsRestoredFromTrashState.NotRestored)
     private val revealedFieldsState: MutableStateFlow<List<DetailFields>> =
         MutableStateFlow(emptyList())
+    private val canPerformPaidActionFlow = canPerformPaidAction().asLoadingResult()
 
     sealed interface DetailFields {
         object Password : DetailFields
+        data class CustomField(val index: Int) : DetailFields
     }
 
     private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> =
@@ -133,8 +139,9 @@ class LoginDetailViewModel @Inject constructor(
 
     private val revealedLoginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
         loginItemInfoFlow,
-        revealedFieldsState
-    ) { loginItemResult, revealed ->
+        revealedFieldsState,
+        canPerformPaidActionFlow
+    ) { loginItemResult, revealed, canPerformPaidAction ->
         loginItemResult.map { item ->
             encryptionContextProvider.withEncryptionContext {
                 val contents =
@@ -153,9 +160,16 @@ class LoginDetailViewModel @Inject constructor(
                             decrypt(loginContents.primaryTotp.encrypted)
                         )
 
+                        val customFields = prepareCustomFields(
+                            revealed = revealed,
+                            canPerformPaidAction = canPerformPaidAction,
+                            customFields = loginContents.customFields
+                        )
+
                         loginContents.copy(
                             password = updatedPassword,
-                            primaryTotp = updatedPrimaryTotp
+                            primaryTotp = updatedPrimaryTotp,
+                            customFields = customFields
                         )
                     }
 
@@ -199,7 +213,7 @@ class LoginDetailViewModel @Inject constructor(
         isItemSentToTrashState,
         isPermanentlyDeletedState,
         isRestoredFromTrashState,
-        canPerformPaidAction().asLoadingResult()
+        canPerformPaidActionFlow
     ) { itemDetails,
         totpUiState,
         isLoading,
@@ -221,8 +235,10 @@ class LoginDetailViewModel @Inject constructor(
                 } else {
                     null
                 }
+
+                val isPaid = canPerformPaidActionResult.getOrNull() == true
                 val canMigrate = when {
-                    canPerformPaidActionResult.getOrNull() == true -> true
+                    isPaid -> true
                     vault?.isPrimary == true -> false
                     else -> true
                 }
@@ -235,7 +251,8 @@ class LoginDetailViewModel @Inject constructor(
                     isItemSentToTrash = isItemSentToTrash.value(),
                     isPermanentlyDeleted = isPermanentlyDeleted.value(),
                     isRestoredFromTrash = isRestoredFromTrash.value(),
-                    canMigrate = canMigrate
+                    canMigrate = canMigrate,
+                    canDisplayCustomFields = isPaid
                 )
             }
         }
@@ -332,6 +349,57 @@ class LoginDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
+    fun copyCustomFieldValue(index: Int) = viewModelScope.launch {
+        val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
+        val itemContents = state.itemUiModel.contents as? ItemContents.Login ?: return@launch
+        if (index >= itemContents.customFields.size) return@launch
+
+        val content = when (val field = itemContents.customFields[index]) {
+            is CustomFieldContent.Hidden -> {
+                when (val value = field.value) {
+                    is HiddenState.Concealed -> {
+                        encryptionContextProvider.withEncryptionContext {
+                            decrypt(value.encrypted)
+                        }
+                    }
+                    is HiddenState.Revealed -> value.clearText
+
+                }
+            }
+            is CustomFieldContent.Text -> field.value
+            is CustomFieldContent.Totp -> {
+                val totpUri = when (val value = field.value) {
+                    is HiddenState.Concealed -> {
+                        encryptionContextProvider.withEncryptionContext {
+                            decrypt(value.encrypted)
+                        }
+                    }
+                    is HiddenState.Revealed -> value.clearText
+                }
+
+                observeTotpFromUri(totpUri).firstOrNull()?.code ?: ""
+            }
+        }
+
+        if (content.isNotEmpty()) {
+            clipboardManager.copyToClipboard(content)
+            snackbarDispatcher(FieldCopiedToClipboard)
+        }
+    }
+
+    fun toggleCustomFieldVisibility(index: Int) = viewModelScope.launch {
+        revealedFieldsState.update { fields ->
+            val target = DetailFields.CustomField(index)
+            val asMutable = fields.toMutableList()
+            if (fields.contains(target)) {
+                asMutable.remove(target)
+            } else {
+                asMutable.add(target)
+            }
+            asMutable.toPersistentList()
+        }
+    }
+
     private fun observeTotp(decryptedTotpUri: String): Flow<TotpUiState> =
         canDisplayTotp(shareId = shareId, itemId = itemId)
             .flatMapLatest { canDisplay ->
@@ -380,6 +448,80 @@ class LoginDetailViewModel @Inject constructor(
                     None
                 }
             )
+    }
+
+    @Suppress("CyclomaticComplexMethod", "LongMethod", "ComplexMethod")
+    private fun prepareCustomFields(
+        canPerformPaidAction: LoadingResult<Boolean>,
+        customFields: List<CustomFieldContent>,
+        revealed: List<DetailFields>
+    ): List<CustomFieldContent> {
+        val canDisplayCustomFields = canPerformPaidAction.getOrNull() == true
+        return if (!canDisplayCustomFields) {
+            customFields
+        } else {
+            encryptionContextProvider.withEncryptionContext {
+                customFields.mapIndexed { idx, content ->
+                    val canShow = revealed.contains(DetailFields.CustomField(idx))
+                    when (content) {
+                        is CustomFieldContent.Text -> content
+                        is CustomFieldContent.Hidden -> {
+                            if (canShow) {
+                                CustomFieldContent.Hidden(
+                                    label = content.label,
+                                    value = when (content.value) {
+                                        is HiddenState.Revealed -> content.value
+                                        is HiddenState.Concealed -> {
+                                            HiddenState.Revealed(
+                                                encrypted = content.value.encrypted,
+                                                clearText = decrypt(content.value.encrypted)
+                                            )
+                                        }
+                                    }
+                                )
+                            } else {
+                                CustomFieldContent.Hidden(
+                                    label = content.label,
+                                    value = when (content.value) {
+                                        is HiddenState.Revealed -> HiddenState.Concealed(
+                                            encrypted = content.value.encrypted
+                                        )
+                                        is HiddenState.Concealed -> content.value
+                                    }
+                                )
+                            }
+                        }
+
+                        is CustomFieldContent.Totp -> {
+                            if (canShow) {
+                                CustomFieldContent.Totp(
+                                    label = content.label,
+                                    value = when (content.value) {
+                                        is HiddenState.Revealed -> content.value
+                                        is HiddenState.Concealed -> {
+                                            HiddenState.Revealed(
+                                                encrypted = content.value.encrypted,
+                                                clearText = decrypt(content.value.encrypted)
+                                            )
+                                        }
+                                    }
+                                )
+                            } else {
+                                CustomFieldContent.Totp(
+                                    label = content.label,
+                                    value = when (content.value) {
+                                        is HiddenState.Revealed -> HiddenState.Concealed(
+                                            encrypted = content.value.encrypted
+                                        )
+                                        is HiddenState.Concealed -> content.value
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     companion object {

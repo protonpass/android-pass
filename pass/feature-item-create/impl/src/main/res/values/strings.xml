@@ -135,6 +135,7 @@
     <string name="scan_code_icon_content_description">Scan code icon</string>
     <string name="totp_paste_code_action">Paste code</string>
     <string name="totp_scan_code_action">Scan code</string>
+    <string name="field_cannot_be_empty">This field cannot be empty</string>
 
     <string name="camera_permission_explanation">Camera permission required for this feature to be available.</string>
     <string name="camera_permission_open_settings">Open settings</string>

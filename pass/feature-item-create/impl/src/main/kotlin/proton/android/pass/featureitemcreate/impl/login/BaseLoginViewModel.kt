@@ -4,6 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toPersistentSet
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -55,7 +56,7 @@ import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemContents
 import proton.pass.domain.PlanType
 
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions", "LargeClass")
 abstract class BaseLoginViewModel(
     protected val accountManager: AccountManager,
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -211,7 +212,7 @@ abstract class BaseLoginViewModel(
 
         BaseLoginUiState(
             contents = loginItemWrapper.content,
-            validationErrors = loginItemWrapper.loginItemValidationErrors,
+            validationErrors = loginItemWrapper.loginItemValidationErrors.toPersistentSet(),
             isLoadingState = isLoading,
             isItemSaved = events.itemSavedState,
             openScanState = events.openScanState,
@@ -336,6 +337,7 @@ abstract class BaseLoginViewModel(
         draftRepository.delete<CustomFieldContent>(DRAFT_CUSTOM_FIELD_KEY)
     }
 
+    @Suppress("ReturnCount")
     protected suspend fun validateItem(): Boolean {
         itemContentState.update { state ->
             val websites = sanitizeWebsites(state.urls)
@@ -347,10 +349,7 @@ abstract class BaseLoginViewModel(
                     .fold(
                         onSuccess = { it },
                         onFailure = {
-                            loginItemValidationErrorsState.update { errors ->
-                                errors.toMutableSet()
-                                    .apply { add(LoginItemValidationErrors.InvalidTotp) }
-                            }
+                            addValidationError(LoginItemValidationErrors.InvalidTotp)
                             snackbarDispatcher(LoginSnackbarMessages.InvalidTotpError)
                             return false
                         }
@@ -358,11 +357,18 @@ abstract class BaseLoginViewModel(
             } else {
                 ""
             }
-            val hiddenState = encryptionContextProvider.withEncryptionContext {
+            val totpHiddenState = encryptionContextProvider.withEncryptionContext {
                 HiddenState.Revealed(encrypt(sanitisedPrimaryTotp), sanitisedPrimaryTotp)
             }
-            state.copy(urls = websites, primaryTotp = hiddenState)
+
+            val (customFields, hasCustomFieldErrors) = validateCustomFields(state.customFields)
+            if (hasCustomFieldErrors) {
+                return false
+            }
+
+            state.copy(urls = websites, primaryTotp = totpHiddenState, customFields = customFields)
         }
+
         val loginItem = itemContentState.value
         val loginItemValidationErrors = loginItem.validate()
         if (loginItemValidationErrors.isNotEmpty()) {
@@ -370,6 +376,77 @@ abstract class BaseLoginViewModel(
             return false
         }
         return true
+    }
+
+    private fun validateCustomFields(customFields: List<CustomFieldContent>): Pair<List<CustomFieldContent>, Boolean> {
+        var hasCustomFieldErrors = false
+        val fields = customFields.mapIndexed { idx, field ->
+            when (field) {
+                is CustomFieldContent.Hidden -> field
+                is CustomFieldContent.Text -> field
+                is CustomFieldContent.Totp -> {
+                    val (validated, hasErrors) = validateTotpField(field, idx)
+                    if (hasErrors) {
+                        PassLogger.i(TAG, "TOTP custom field on index $idx had errors")
+                        hasCustomFieldErrors = true
+                    }
+                    validated
+                }
+            }
+        }
+
+        return fields to hasCustomFieldErrors
+    }
+
+    private fun validateTotpField(field: CustomFieldContent.Totp, index: Int): Pair<CustomFieldContent.Totp, Boolean> {
+        val content = when (val hiddenState = field.value) {
+            is HiddenState.Revealed -> hiddenState.clearText
+            is HiddenState.Concealed -> {
+                encryptionContextProvider.withEncryptionContext {
+                    decrypt(hiddenState.encrypted)
+                }
+            }
+        }
+
+        if (content.isBlank()) {
+            addValidationError(
+                LoginItemValidationErrors.CustomFieldValidationError.EmptyField(index)
+            )
+            return field to true
+        }
+
+        val sanitized = sanitizeOTP(content)
+            .fold(
+                onSuccess = { it },
+                onFailure = {
+                    addValidationError(
+                        LoginItemValidationErrors.CustomFieldValidationError.InvalidTotp(
+                            index = index
+                        )
+                    )
+                    return field to true
+                }
+            )
+
+        val encryptedSanitized = encryptionContextProvider.withEncryptionContext {
+            encrypt(sanitized)
+        }
+
+        return CustomFieldContent.Totp(
+            label = field.label,
+            value = when (field.value) {
+                is HiddenState.Revealed -> {
+                    HiddenState.Revealed(
+                        encrypted = encryptedSanitized,
+                        clearText = sanitized
+                    )
+                }
+
+                is HiddenState.Concealed -> {
+                    HiddenState.Concealed(encryptedSanitized)
+                }
+            }
+        ) to false
     }
 
     private fun sanitizeWebsites(websites: List<String>): List<String> =
@@ -441,6 +518,13 @@ abstract class BaseLoginViewModel(
     }
 
     fun onCustomFieldChange(index: Int, value: String) = viewModelScope.launch {
+        loginItemValidationErrorsState.update {
+            it.toMutableSet().apply {
+                remove(LoginItemValidationErrors.CustomFieldValidationError.EmptyField(index))
+                remove(LoginItemValidationErrors.CustomFieldValidationError.InvalidTotp(index))
+            }
+        }
+
         itemContentState.update {
             val customFields = it.customFields.toMutableList()
 
@@ -617,6 +701,12 @@ abstract class BaseLoginViewModel(
             val customFields = it.customFields.toMutableList()
             customFields.removeAt(index)
             it.copy(customFields = customFields.toPersistentList())
+        }
+    }
+
+    private fun addValidationError(error: LoginItemValidationErrors) {
+        loginItemValidationErrorsState.update { errors ->
+            errors.toMutableSet().apply { add(error) }
         }
     }
 

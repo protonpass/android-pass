@@ -1,6 +1,8 @@
 package proton.android.pass.featureitemcreate.impl.login
 
 import androidx.compose.runtime.Immutable
+import kotlinx.collections.immutable.PersistentSet
+import kotlinx.collections.immutable.persistentSetOf
 import proton.android.pass.common.api.Option
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
@@ -15,7 +17,7 @@ import proton.pass.domain.ShareId
 data class BaseLoginUiState(
     val contents: ItemContents.Login,
     val aliasItem: AliasItem?,
-    val validationErrors: Set<LoginItemValidationErrors>,
+    val validationErrors: PersistentSet<LoginItemValidationErrors>,
     val isLoadingState: IsLoadingState,
     val isItemSaved: ItemSavedState,
     val openScanState: OpenScanState,
@@ -35,7 +37,7 @@ data class BaseLoginUiState(
             aliasItem = null,
             isLoadingState = IsLoadingState.NotLoading,
             contents = ItemContents.Login.create(password, primaryTotp),
-            validationErrors = emptySet(),
+            validationErrors = persistentSetOf(),
             isItemSaved = ItemSavedState.Unknown,
             openScanState = OpenScanState.Unknown,
             focusLastWebsite = false,

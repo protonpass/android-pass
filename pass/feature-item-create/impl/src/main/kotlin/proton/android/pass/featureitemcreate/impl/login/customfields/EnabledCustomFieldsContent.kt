@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import kotlinx.collections.immutable.PersistentList
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
 import proton.android.pass.commonui.api.PassTheme
@@ -25,6 +26,7 @@ import proton.android.pass.composecomponents.impl.buttons.TransparentTextButton
 import proton.android.pass.composecomponents.impl.keyboard.keyboardAsState
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.login.CustomFieldsState
+import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
 import me.proton.core.presentation.R as CoreR
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -32,6 +34,7 @@ import me.proton.core.presentation.R as CoreR
 fun EnabledCustomFieldsContent(
     modifier: Modifier = Modifier,
     state: CustomFieldsState.Enabled,
+    validationErrors: PersistentList<LoginItemValidationErrors.CustomFieldValidationError>,
     canEdit: Boolean,
     onEvent: (CustomFieldEvent) -> Unit
 ) {
@@ -64,10 +67,21 @@ fun EnabledCustomFieldsContent(
 
                 None -> Modifier
             }
+            val validationError = validationErrors.firstOrNull {
+                when (it) {
+                    is LoginItemValidationErrors.CustomFieldValidationError.EmptyField -> {
+                        it.index == idx
+                    }
+                    is LoginItemValidationErrors.CustomFieldValidationError.InvalidTotp -> {
+                        it.index == idx
+                    }
+                }
+            }
 
             CustomFieldEntry(
                 modifier = entryModifier,
                 entry = field,
+                validationError = validationError,
                 canEdit = canEdit,
                 onValueChange = {
                     onEvent(

@@ -15,6 +15,7 @@ enum class DetailSnackbarMessages(
     PasswordCopiedToClipboard(R.string.password_copied_to_clipboard, SnackbarType.NORM, true),
     WebsiteCopiedToClipboard(R.string.website_copied_to_clipboard, SnackbarType.NORM, true),
     TotpCopiedToClipboard(R.string.totp_copied_to_clipboard, SnackbarType.NORM, true),
+    FieldCopiedToClipboard(R.string.field_copied_to_clipboard, SnackbarType.NORM, true),
     ItemMovedToTrash(R.string.move_item_to_trash_message, SnackbarType.NORM),
     ItemNotMovedToTrash(R.string.error_move_item_to_trash_message, SnackbarType.ERROR),
     ItemPermanentlyDeleted(R.string.item_permanently_deleted_message, SnackbarType.NORM),

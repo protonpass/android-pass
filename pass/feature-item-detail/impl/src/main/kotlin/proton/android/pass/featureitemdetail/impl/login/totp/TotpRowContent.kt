@@ -29,6 +29,7 @@ import me.proton.core.presentation.R as CoreR
 @Composable
 fun TotpRowContent(
     modifier: Modifier = Modifier,
+    label: String = stringResource(R.string.totp_section_title),
     state: TotpUiState.Visible,
     onCopyTotpClick: (String) -> Unit,
 ) {
@@ -48,7 +49,7 @@ fun TotpRowContent(
         Column(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            SectionTitle(text = stringResource(R.string.totp_section_title))
+            SectionTitle(text = label)
             val half = state.code.length / 2
             SectionSubtitle(
                 text = (state.code.take(half) + "•" + state.code.takeLast(half)).asAnnotatedString()

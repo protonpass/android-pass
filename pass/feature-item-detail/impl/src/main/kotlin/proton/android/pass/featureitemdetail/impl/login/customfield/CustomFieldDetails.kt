@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import proton.pass.domain.CustomFieldContent
+import proton.android.pass.featureitemdetail.impl.login.CustomFieldUiContent
 
 @Composable
 fun CustomFieldDetails(
     modifier: Modifier = Modifier,
-    fields: List<CustomFieldContent>,
+    fields: List<CustomFieldUiContent>,
     onEvent: (CustomFieldEvent) -> Unit
 ) {
     Column(
@@ -26,7 +26,8 @@ fun CustomFieldDetails(
                 },
                 onCopyValue = {
                     onEvent(CustomFieldEvent.CopyValue(idx))
-                }
+                },
+                onCopyValueWithContent = { onEvent(CustomFieldEvent.CopyValueContent(it)) }
             )
         }
     }

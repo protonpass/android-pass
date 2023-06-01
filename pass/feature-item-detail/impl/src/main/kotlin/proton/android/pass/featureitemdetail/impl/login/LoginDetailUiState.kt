@@ -1,8 +1,10 @@
 package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.runtime.Stable
+import kotlinx.collections.immutable.ImmutableList
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemUiModel
+import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
@@ -26,7 +28,7 @@ sealed interface LoginDetailUiState {
         val isPermanentlyDeleted: Boolean,
         val isRestoredFromTrash: Boolean,
         val canMigrate: Boolean,
-        val canDisplayCustomFields: Boolean
+        val customFields: ImmutableList<CustomFieldUiContent>
     ) : LoginDetailUiState
 }
 
@@ -47,3 +49,20 @@ data class LinkedAliasItem(
     val shareId: ShareId,
     val itemId: ItemId
 )
+
+@Stable
+sealed interface CustomFieldUiContent {
+    @Stable
+    data class Text(val label: String, val content: String) : CustomFieldUiContent
+
+    @Stable
+    data class Hidden(val label: String, val content: HiddenState) : CustomFieldUiContent
+
+    @Stable
+    data class Totp(
+        val label: String,
+        val code: String,
+        val remainingSeconds: Int,
+        val totalSeconds: Int
+    ) : CustomFieldUiContent
+}

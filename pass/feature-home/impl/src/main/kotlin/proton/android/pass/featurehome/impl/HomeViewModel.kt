@@ -49,6 +49,7 @@ import proton.android.pass.commonui.api.ItemUiFilter.filterByQuery
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.commonuimodels.api.ShareUiModel
+import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
@@ -58,6 +59,7 @@ import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
 import proton.android.pass.data.api.usecases.ClearTrash
 import proton.android.pass.data.api.usecases.DeleteItem
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ItemTypeFilter
 import proton.android.pass.data.api.usecases.ObserveItems
 import proton.android.pass.data.api.usecases.ObserveVaults
@@ -115,7 +117,8 @@ class HomeViewModel @Inject constructor(
     clock: Clock,
     observeItems: ObserveItems,
     itemSyncStatusRepository: ItemSyncStatusRepository,
-    preferencesRepository: UserPreferencesRepository
+    preferencesRepository: UserPreferencesRepository,
+    getUserPlan: GetUserPlan
 ) : ViewModel() {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -366,9 +369,10 @@ class HomeViewModel @Inject constructor(
         searchUiStateFlow,
         refreshingLoadingFlow,
         shouldScrollToTopFlow,
-        preferencesRepository.getUseFaviconsPreference()
+        preferencesRepository.getUseFaviconsPreference(),
+        getUserPlan().asLoadingResult()
     ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading,
-        shouldScrollToTop, useFavicons ->
+        shouldScrollToTop, useFavicons, userPlan ->
         val syncLoading = if (refreshingLoading.syncStatus == ItemSyncStatus.Syncing) {
             IsLoadingState.Loading
         } else {
@@ -412,7 +416,8 @@ class HomeViewModel @Inject constructor(
                 sortingType = filtersWrapper.sortingSelection,
                 canLoadExternalImages = useFavicons.value()
             ),
-            searchUiState = searchUiState
+            searchUiState = searchUiState,
+            accountType = AccountType.fromPlan(userPlan)
         )
     }
         .stateIn(

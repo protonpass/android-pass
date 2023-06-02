@@ -8,6 +8,7 @@ import proton.android.featuresearchoptions.impl.SortingBottomsheet
 import proton.android.featuresearchoptions.impl.SortingNavigation
 import proton.android.featuresearchoptions.impl.sortingGraph
 import proton.android.pass.common.api.some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.featureaccount.impl.Account
 import proton.android.pass.featureaccount.impl.AccountNavigation
@@ -452,6 +453,7 @@ fun NavGraphBuilder.appGraph(
             }
             appNavigator.navigate(
                 destination = PhotoPickerTotp,
+                route = PhotoPickerTotp.createNavRoute(it.toOption()),
                 backDestination = backDestination
             )
         }

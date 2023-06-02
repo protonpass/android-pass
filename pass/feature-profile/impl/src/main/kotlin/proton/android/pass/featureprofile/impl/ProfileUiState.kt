@@ -12,7 +12,7 @@ data class ProfileUiState(
     val autofillStatus: AutofillSupportedStatus,
     val itemSummaryUiState: ItemSummaryUiState,
     val appVersion: String,
-    val accountType: AccountType
+    val accountType: PlanInfo
 ) {
     companion object {
         fun getInitialState(appVersion: String) = ProfileUiState(
@@ -20,9 +20,31 @@ data class ProfileUiState(
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
             itemSummaryUiState = ItemSummaryUiState(),
             appVersion = appVersion,
-            accountType = AccountType.Free
+            accountType = PlanInfo.Hide
         )
     }
+}
+
+@Stable
+sealed interface PlanInfo {
+
+    val accountType: AccountType
+
+    @Stable
+    object Hide : PlanInfo {
+        override val accountType = AccountType.Free
+    }
+
+    @Stable
+    object Trial : PlanInfo {
+        override val accountType = AccountType.Trial
+    }
+
+    @Stable
+    data class Unlimited(
+        val planName: String,
+        override val accountType: AccountType = AccountType.Unlimited
+    ) : PlanInfo
 }
 
 sealed interface FingerprintSectionState {

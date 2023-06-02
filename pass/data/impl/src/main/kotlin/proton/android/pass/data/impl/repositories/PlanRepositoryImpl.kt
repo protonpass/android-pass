@@ -14,6 +14,7 @@ import proton.android.pass.data.impl.remote.RemotePlanDataSource
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.Plan
 import proton.pass.domain.PlanType
+import java.lang.Math.ceil
 import javax.inject.Inject
 
 class PlanRepositoryImpl @Inject constructor(
@@ -65,14 +66,29 @@ class PlanRepositoryImpl @Inject constructor(
             }
     }
 
-    private fun isTrialActive(trialEnd: Long?): Boolean = if (trialEnd != null) {
-        Instant.fromEpochSeconds(trialEnd) > clock.now()
-    } else false
+    private fun getTrialStatus(trialEnd: Long?): TrialStatus {
+        if (trialEnd != null) {
+            val parsedTrial = Instant.fromEpochSeconds(trialEnd)
+            val now = clock.now()
+            val isInTrial = parsedTrial > now
+            if (isInTrial) {
+                val remainingHours = (parsedTrial - now).inWholeHours
+                val days = remainingHours / 24f
+                val daysAsInt = ceil(days.toDouble())
+
+                return TrialStatus.Trial(daysAsInt.toInt())
+            }
+        }
+
+        return TrialStatus.NotTrial
+    }
 
     private fun PlanEntity.toPlan(): Plan {
         val plan = if (trialEnd != null) {
-            val isTrial = isTrialActive(trialEnd)
-            toPlanType(isTrial)
+            when (val trial = getTrialStatus(trialEnd)) {
+                TrialStatus.NotTrial -> toPlanType(false)
+                is TrialStatus.Trial -> toPlanType(true, trial.remainingDays)
+            }
         } else {
             toPlanType(false)
         }
@@ -86,21 +102,37 @@ class PlanRepositoryImpl @Inject constructor(
         )
     }
 
-    private fun PlanEntity.toPlanType(isTrial: Boolean): PlanType = when (type) {
-        PlanType.PLAN_NAME_FREE -> if (isTrial) {
-            PlanType.Trial(internal = internalName, humanReadable = displayName)
-        } else {
-            PlanType.Free
+    private fun PlanEntity.toPlanType(isTrial: Boolean, remainingTrialDays: Int = 0): PlanType =
+        when (type) {
+            PlanType.PLAN_NAME_FREE -> if (isTrial) {
+                PlanType.Trial(
+                    internal = internalName,
+                    humanReadable = displayName,
+                    remainingDays = remainingTrialDays
+                )
+            } else {
+                PlanType.Free
+            }
+
+            PlanType.PLAN_NAME_PLUS -> if (isTrial) {
+                PlanType.Trial(
+                    internal = internalName,
+                    humanReadable = displayName,
+                    remainingDays = remainingTrialDays
+                )
+            } else {
+                PlanType.Paid(
+                    internal = internalName,
+                    humanReadable = displayName
+                )
+            }
+
+            else -> PlanType.Unknown(internal = internalName, humanReadable = displayName)
         }
-        PlanType.PLAN_NAME_PLUS -> if (isTrial) {
-            PlanType.Trial(internal = internalName, humanReadable = displayName)
-        } else {
-            PlanType.Paid(
-                internal = internalName,
-                humanReadable = displayName
-            )
-        }
-        else -> PlanType.Unknown(internal = internalName, humanReadable = displayName)
+
+    internal sealed interface TrialStatus {
+        object NotTrial : TrialStatus
+        data class Trial(val remainingDays: Int) : TrialStatus
     }
 
     companion object {

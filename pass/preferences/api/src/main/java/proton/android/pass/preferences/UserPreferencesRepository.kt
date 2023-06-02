@@ -19,6 +19,9 @@ interface UserPreferencesRepository {
     suspend fun setHasDismissedAutofillBanner(state: HasDismissedAutofillBanner): Result<Unit>
     fun getHasDismissedAutofillBanner(): Flow<HasDismissedAutofillBanner>
 
+    suspend fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit>
+    fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner>
+
     suspend fun setCopyTotpToClipboardEnabled(state: CopyTotpToClipboard): Result<Unit>
     fun getCopyTotpToClipboardEnabled(): Flow<CopyTotpToClipboard>
 

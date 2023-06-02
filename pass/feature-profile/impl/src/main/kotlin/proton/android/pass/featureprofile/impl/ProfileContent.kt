@@ -61,7 +61,7 @@ fun ProfileContent(
         bottomBar = {
             BottomBar(
                 bottomBarSelected = BottomBarSelected.Profile,
-                accountType = state.accountType,
+                accountType = state.accountType.accountType,
                 onListClick = onListClick,
                 onCreateClick = onCreateItemClick,
                 onProfileClick = {}
@@ -101,6 +101,7 @@ fun ProfileContent(
                     )
                 }
                 AccountProfileSection(
+                    planInfo = state.accountType,
                     onAccountClick = onAccountClick,
                     onSettingsClick = onSettingsClick
                 )

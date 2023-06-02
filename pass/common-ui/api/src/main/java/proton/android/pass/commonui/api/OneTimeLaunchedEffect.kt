@@ -16,11 +16,11 @@ fun <T> OneTimeLaunchedEffect(
     saver: Saver<T?, out Any> = autoSaver(),
     block: suspend CoroutineScope.() -> Unit
 ) {
-    var oldkey by rememberSaveable(stateSaver = saver) { mutableStateOf(null) }
-    if (oldkey != key) {
+    var oldKey by rememberSaveable(stateSaver = saver) { mutableStateOf(null) }
+    if (oldKey != key) {
         LaunchedEffect(key) {
             block()
-            oldkey = key
+            oldKey = key
         }
     }
 }

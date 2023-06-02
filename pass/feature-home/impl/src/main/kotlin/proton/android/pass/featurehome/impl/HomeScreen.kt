@@ -305,7 +305,8 @@ fun HomeScreen(
                     currentBottomSheet = TrashOptions
                     scope.launch { bottomSheetState.show() }
                 },
-                onClearRecentSearchClick = homeViewModel::onClearAllRecentSearch
+                onClearRecentSearchClick = homeViewModel::onClearAllRecentSearch,
+                onTrialInfoClick = { onNavigateEvent(HomeNavigation.TrialInfo) }
             )
 
             ConfirmRestoreAllDialog(

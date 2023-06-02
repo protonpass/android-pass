@@ -81,6 +81,9 @@ import proton.android.pass.featuresettings.impl.Settings
 import proton.android.pass.featuresettings.impl.SettingsNavigation
 import proton.android.pass.featuresettings.impl.ThemeSelector
 import proton.android.pass.featuresettings.impl.settingsGraph
+import proton.android.pass.featuretrial.impl.TrialNavigation
+import proton.android.pass.featuretrial.impl.TrialScreen
+import proton.android.pass.featuretrial.impl.trialGraph
 import proton.android.pass.featurevault.impl.VaultNavigation
 import proton.android.pass.featurevault.impl.bottomsheet.CreateVaultBottomSheet
 import proton.android.pass.featurevault.impl.bottomsheet.EditVaultBottomSheet
@@ -179,6 +182,8 @@ fun NavGraphBuilder.appGraph(
                     VaultOptionsBottomSheet,
                     VaultOptionsBottomSheet.createNavRoute(it.shareId)
                 )
+
+                HomeNavigation.TrialInfo -> appNavigator.navigate(TrialScreen)
             }
         }
     )
@@ -642,4 +647,10 @@ fun NavGraphBuilder.appGraph(
         onNavigateBack = { onNavigate(AppNavigation.Finish) }
     )
     featureFlagsGraph()
+    trialGraph {
+        when (it) {
+            TrialNavigation.Close -> appNavigator.onBackClick()
+            TrialNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
+        }
+    }
 }

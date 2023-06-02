@@ -68,7 +68,8 @@ internal fun HomeContent(
     onScrollToTop: () -> Unit,
     onProfileClick: () -> Unit,
     onItemTypeSelected: (HomeItemTypeSelection) -> Unit,
-    onTrashActionsClick: () -> Unit
+    onTrashActionsClick: () -> Unit,
+    onTrialInfoClick: () -> Unit
 ) {
     val isTrashMode = uiState.homeListUiState.homeVaultSelection == HomeVaultSelection.Trash
     Scaffold(
@@ -210,7 +211,11 @@ internal fun HomeContent(
                         )
                     }
                 },
-                header = { item { OnBoardingTips() } },
+                header = {
+                    item {
+                        OnBoardingTips(onTrialInfoClick = onTrialInfoClick)
+                    }
+                },
             )
         }
     }

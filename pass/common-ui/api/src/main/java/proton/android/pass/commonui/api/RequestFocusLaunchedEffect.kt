@@ -11,7 +11,7 @@ fun RequestFocusLaunchedEffect(
     callback: () -> Unit = {}
 ) {
     if (requestFocus) {
-        OneTimeLaunchedEffect(Unit) {
+        OneTimeLaunchedEffect(true) {
             delay(DELAY_BEFORE_FOCUS_MS)
             focusRequester.requestFocus()
             callback()

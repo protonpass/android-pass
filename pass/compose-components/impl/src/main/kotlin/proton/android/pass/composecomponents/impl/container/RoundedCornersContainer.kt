@@ -2,6 +2,7 @@ package proton.android.pass.composecomponents.impl.container
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import proton.android.pass.commonui.api.applyIf
 @Composable
 fun RoundedCornersColumn(
     modifier: Modifier = Modifier,
+    verticalArrangement: Arrangement.Vertical = Arrangement.Top,
     onClick: (() -> Unit)? = null,
     content: @Composable () -> Unit
 ) {
@@ -29,7 +31,8 @@ fun RoundedCornersColumn(
                 width = 1.dp,
                 color = ProtonTheme.colors.separatorNorm,
                 shape = cornerShape
-            )
+            ),
+        verticalArrangement = verticalArrangement
     ) {
         content()
     }

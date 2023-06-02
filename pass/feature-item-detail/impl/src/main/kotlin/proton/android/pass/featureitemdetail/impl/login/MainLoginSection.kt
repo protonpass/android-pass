@@ -33,16 +33,18 @@ fun MainLoginSection(
                 onEvent(LoginDetailEvent.OnGoToAliasClick)
             }
         )
-        Divider(color = PassTheme.colors.inputBorderNorm)
-        LoginPasswordRow(
-            passwordHiddenState = passwordState,
-            onTogglePasswordClick = {
-                onEvent(LoginDetailEvent.OnTogglePasswordClick)
-            },
-            onCopyPasswordClick = {
-                onEvent(LoginDetailEvent.OnCopyPasswordClick)
-            }
-        )
+        if (passwordState !is HiddenState.Empty) {
+            Divider(color = PassTheme.colors.inputBorderNorm)
+            LoginPasswordRow(
+                passwordHiddenState = passwordState,
+                onTogglePasswordClick = {
+                    onEvent(LoginDetailEvent.OnTogglePasswordClick)
+                },
+                onCopyPasswordClick = {
+                    onEvent(LoginDetailEvent.OnCopyPasswordClick)
+                }
+            )
+        }
         if (totpUiState != null) {
             Divider(color = PassTheme.colors.inputBorderNorm)
             TotpRow(

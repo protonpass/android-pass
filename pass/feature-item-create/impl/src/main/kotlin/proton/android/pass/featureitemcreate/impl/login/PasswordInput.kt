@@ -41,6 +41,7 @@ internal fun PasswordInput(
     val (text, visualTransformation) = when (value) {
         is HiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
         is HiddenState.Revealed -> value.clearText to VisualTransformation.None
+        is HiddenState.Empty -> "" to VisualTransformation.None
     }
     ProtonTextField(
         modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),

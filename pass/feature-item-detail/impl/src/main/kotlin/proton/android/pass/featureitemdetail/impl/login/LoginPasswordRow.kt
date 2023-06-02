@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,6 +25,9 @@ import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.common.SectionSubtitle
 import proton.pass.domain.HiddenState
+import me.proton.core.presentation.R as CoreR
+
+private const val CHAR_AMOUNT = 12
 
 @Composable
 internal fun LoginPasswordRow(
@@ -37,6 +39,25 @@ internal fun LoginPasswordRow(
     onTogglePasswordClick: () -> Unit,
     onCopyPasswordClick: () -> Unit
 ) {
+    val (sectionContent, icon, actionContent) = when (passwordHiddenState) {
+        is HiddenState.Concealed -> LoginPasswordUIState(
+            sectionContent = "•".repeat(CHAR_AMOUNT),
+            icon = CoreR.drawable.ic_proton_eye,
+            actionContent = R.string.action_conceal_password
+        )
+
+        is HiddenState.Revealed -> LoginPasswordUIState(
+            sectionContent = passwordHiddenState.clearText,
+            icon = CoreR.drawable.ic_proton_eye_slash,
+            actionContent = R.string.action_conceal_password
+        )
+
+        is HiddenState.Empty -> LoginPasswordUIState(
+            sectionContent = "",
+            icon = null,
+            actionContent = null
+        )
+    }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -49,27 +70,12 @@ internal fun LoginPasswordRow(
             contentDescription = iconContentDescription,
             tint = PassTheme.colors.loginInteractionNorm
         )
-        val sectionContent = remember(passwordHiddenState) {
-            when (passwordHiddenState) {
-                is HiddenState.Concealed -> "•".repeat(12)
-                is HiddenState.Revealed -> passwordHiddenState.clearText
-            }
-        }
-        val icon = remember(passwordHiddenState) {
-            when (passwordHiddenState) {
-                is HiddenState.Concealed -> me.proton.core.presentation.R.drawable.ic_proton_eye
-                is HiddenState.Revealed -> me.proton.core.presentation.R.drawable.ic_proton_eye_slash
-            }
-        }
-        val actionContent = when (passwordHiddenState) {
-            is HiddenState.Concealed -> stringResource(R.string.action_reveal_password)
-            is HiddenState.Revealed -> stringResource(R.string.action_conceal_password)
-        }
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
             SectionTitle(text = label)
             Spacer(modifier = Modifier.height(8.dp))
             when (passwordHiddenState) {
+                is HiddenState.Empty -> {}
                 is HiddenState.Concealed -> SectionSubtitle(text = sectionContent.asAnnotatedString())
                 is HiddenState.Revealed -> {
                     SectionSubtitle(
@@ -80,17 +86,26 @@ internal fun LoginPasswordRow(
                         )
                     )
                 }
+
             }
         }
-        Circle(
-            backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
-            onClick = { onTogglePasswordClick() }
-        ) {
-            Icon(
-                painter = painterResource(icon),
-                contentDescription = actionContent,
-                tint = PassTheme.colors.loginInteractionNormMajor2
-            )
+        if (icon != null && actionContent != null) {
+            Circle(
+                backgroundColor = PassTheme.colors.loginInteractionNormMinor1,
+                onClick = { onTogglePasswordClick() }
+            ) {
+                Icon(
+                    painter = painterResource(icon),
+                    contentDescription = stringResource(actionContent),
+                    tint = PassTheme.colors.loginInteractionNormMajor2
+                )
+            }
         }
     }
 }
+
+data class LoginPasswordUIState(
+    val sectionContent: String,
+    val icon: Int?,
+    val actionContent: Int?
+)

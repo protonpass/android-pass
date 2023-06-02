@@ -16,14 +16,15 @@ import proton.android.pass.composecomponents.impl.setting.SettingOption
 @Composable
 fun AccountProfileSection(
     modifier: Modifier = Modifier,
+    planInfo: PlanInfo,
     onAccountClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
     Column(
         modifier = modifier.roundedContainerNorm()
     ) {
-        SettingOption(
-            text = stringResource(R.string.profile_option_account),
+        AccountSetting(
+            planInfo = planInfo,
             onClick = onAccountClick
         )
         Divider(color = PassTheme.colors.inputBorderNorm)
@@ -41,7 +42,11 @@ fun AccountSettingsSectionPreview(
 ) {
     PassTheme(isDark = isDark) {
         Surface {
-            AccountProfileSection(Modifier, {}, {})
+            AccountProfileSection(
+                planInfo = PlanInfo.Hide,
+                onAccountClick = {},
+                onSettingsClick = {}
+            )
         }
     }
 }

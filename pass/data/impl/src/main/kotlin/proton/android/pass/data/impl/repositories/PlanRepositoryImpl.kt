@@ -13,6 +13,7 @@ import proton.android.pass.data.impl.local.LocalPlanDataSource
 import proton.android.pass.data.impl.remote.RemotePlanDataSource
 import proton.android.pass.log.api.PassLogger
 import proton.pass.domain.Plan
+import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 import java.lang.Math.ceil
 import javax.inject.Inject
@@ -94,9 +95,9 @@ class PlanRepositoryImpl @Inject constructor(
         }
         return Plan(
             planType = plan,
-            vaultLimit = vaultLimit,
-            aliasLimit = aliasLimit,
-            totpLimit = totpLimit,
+            vaultLimit = toPlanLimit(vaultLimit),
+            aliasLimit = toPlanLimit(aliasLimit),
+            totpLimit = toPlanLimit(totpLimit),
             updatedAt = updatedAt,
             hideUpgrade = hideUpgrade
         )
@@ -129,6 +130,12 @@ class PlanRepositoryImpl @Inject constructor(
 
             else -> PlanType.Unknown(internal = internalName, humanReadable = displayName)
         }
+
+    private fun toPlanLimit(value: Int): PlanLimit = if (value == -1) {
+        PlanLimit.Unlimited
+    } else {
+        PlanLimit.Limited(value)
+    }
 
     internal sealed interface TrialStatus {
         object NotTrial : TrialStatus

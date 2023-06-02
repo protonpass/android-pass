@@ -45,9 +45,9 @@ class ObserveUpgradeInfoImpl @Inject constructor(
                 UpgradeInfo(
                     isUpgradeAvailable = displayUpgrade,
                     plan = plan.copy(
-                        vaultLimit = plan.vaultLimit.takeIf { it >= 0 } ?: Int.MAX_VALUE,
-                        aliasLimit = plan.aliasLimit.takeIf { it >= 0 } ?: Int.MAX_VALUE,
-                        totpLimit = plan.totpLimit.takeIf { it >= 0 } ?: Int.MAX_VALUE
+                        vaultLimit = plan.vaultLimit,
+                        aliasLimit = plan.aliasLimit,
+                        totpLimit = plan.totpLimit,
                     ),
                     totalVaults = vaultCount,
                     totalAlias = itemCount.alias.toInt(),

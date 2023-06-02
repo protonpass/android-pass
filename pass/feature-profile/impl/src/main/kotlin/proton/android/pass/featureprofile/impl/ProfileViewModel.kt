@@ -21,6 +21,7 @@ import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.common.api.map
 import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.data.api.usecases.GetUserPlan
@@ -38,6 +39,7 @@ import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
+import proton.pass.domain.PlanType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -99,12 +101,25 @@ class ProfileViewModel @Inject constructor(
             }
         }
 
+        val accountType = userPlan.map {
+            when (val plan = it.planType) {
+                PlanType.Free -> PlanInfo.Hide
+                is PlanType.Paid -> PlanInfo.Unlimited(
+                    planName = plan.humanReadable,
+                    accountType = AccountType.Unlimited
+                )
+
+                is PlanType.Trial -> PlanInfo.Trial
+                is PlanType.Unknown -> PlanInfo.Hide
+            }
+        }.getOrNull() ?: PlanInfo.Hide
+
         ProfileUiState(
             fingerprintSection = fingerprintSection,
             autofillStatus = autofillStatus,
             itemSummaryUiState = itemSummaryUiState,
             appVersion = appConfig.versionName,
-            accountType = AccountType.fromPlan(userPlan)
+            accountType = accountType
         )
     }.stateIn(
         scope = viewModelScope,

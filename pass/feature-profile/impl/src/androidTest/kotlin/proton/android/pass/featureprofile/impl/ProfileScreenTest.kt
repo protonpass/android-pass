@@ -34,14 +34,16 @@ class ProfileScreenTest {
         val checker = CallChecker<Unit>()
 
         composeTestRule.setContent {
-            ProfileScreen(
-                onNavigateEvent = {
-                    when (it) {
-                        is ProfileNavigation.Account -> checker.call()
-                        else -> {}
-                    }
-                },
-            )
+            PassTheme {
+                ProfileScreen(
+                    onNavigateEvent = {
+                        when (it) {
+                            is ProfileNavigation.Account -> checker.call()
+                            else -> {}
+                        }
+                    },
+                )
+            }
         }
         composeTestRule
             .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_settings))
@@ -57,14 +59,16 @@ class ProfileScreenTest {
         val checker = CallChecker<Unit>()
 
         composeTestRule.setContent {
-            ProfileScreen(
-                onNavigateEvent = {
-                    when (it) {
-                        is ProfileNavigation.Settings -> checker.call()
-                        else -> {}
-                    }
-                },
-            )
+            PassTheme {
+                ProfileScreen(
+                    onNavigateEvent = {
+                        when (it) {
+                            is ProfileNavigation.Settings -> checker.call()
+                            else -> {}
+                        }
+                    },
+                )
+            }
         }
         composeTestRule
             .onNodeWithText(composeTestRule.activity.resources.getString(R.string.profile_option_feedback))
@@ -80,14 +84,16 @@ class ProfileScreenTest {
         val checker = CallChecker<Unit>()
 
         composeTestRule.setContent {
-            ProfileScreen(
-                onNavigateEvent = {
-                    when (it) {
-                        is ProfileNavigation.Feedback -> checker.call()
-                        else -> {}
-                    }
-                },
-            )
+            PassTheme {
+                ProfileScreen(
+                    onNavigateEvent = {
+                        when (it) {
+                            is ProfileNavigation.Feedback -> checker.call()
+                            else -> {}
+                        }
+                    },
+                )
+            }
         }
         composeTestRule.onNodeWithText("0.0.0")
             .performScrollTo()

@@ -30,11 +30,12 @@ import proton.android.pass.featureitemcreate.impl.login.customfields.CustomField
 @Composable
 fun UpdateLogin(
     modifier: Modifier = Modifier,
-    draftAlias: AliasItem?,
-    primaryTotp: String?,
-    onNavigate: (BaseLoginNavigation) -> Unit
+    draftAlias: AliasItem? = null,
+    navTotpUri: String? = null,
+    navTotpIndex: Int? = null,
+    onNavigate: (BaseLoginNavigation) -> Unit,
+    viewModel: UpdateLoginViewModel = hiltViewModel(),
 ) {
-    val viewModel: UpdateLoginViewModel = hiltViewModel()
     val uiState by viewModel.updateLoginUiState.collectAsStateWithLifecycle()
 
     var showConfirmDialog by rememberSaveable { mutableStateOf(false) }
@@ -54,9 +55,9 @@ fun UpdateLogin(
         draftAlias ?: return@LaunchedEffect
         viewModel.setAliasItem(draftAlias)
     }
-    LaunchedEffect(primaryTotp) {
-        primaryTotp ?: return@LaunchedEffect
-        viewModel.setTotp(primaryTotp)
+    LaunchedEffect(navTotpUri) {
+        navTotpUri ?: return@LaunchedEffect
+        viewModel.setTotp(navTotpUri, navTotpIndex)
     }
 
     Box(

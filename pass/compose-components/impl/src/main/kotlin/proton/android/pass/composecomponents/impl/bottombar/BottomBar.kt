@@ -25,6 +25,7 @@ enum class BottomBarSelected {
 fun BottomBar(
     modifier: Modifier = Modifier,
     bottomBarSelected: BottomBarSelected,
+    accountType: AccountType,
     onListClick: () -> Unit,
     onCreateClick: () -> Unit,
     onProfileClick: () -> Unit
@@ -63,10 +64,7 @@ fun BottomBar(
             unselectedContentColor = PassTheme.colors.textNorm,
             onClick = onProfileClick,
             icon = {
-                Icon(
-                    painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_user),
-                    contentDescription = stringResource(R.string.bottom_bar_profile_icon_content_description)
-                )
+                ProfileBottomBarIcon(accountType = accountType)
             }
         )
     }
@@ -82,6 +80,7 @@ fun BottomBarPreview(
         Surface {
             BottomBar(
                 bottomBarSelected = BottomBarSelected.Home,
+                accountType = AccountType.Free,
                 onListClick = {},
                 onCreateClick = {},
                 onProfileClick = {}

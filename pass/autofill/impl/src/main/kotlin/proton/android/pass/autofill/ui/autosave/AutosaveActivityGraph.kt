@@ -20,6 +20,7 @@ import proton.android.pass.featureitemcreate.impl.login.CreateLoginNavigation
 import proton.android.pass.featureitemcreate.impl.login.InitialCreateLoginUiState
 import proton.android.pass.featureitemcreate.impl.login.createUpdateLoginGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
+import proton.android.pass.featureitemcreate.impl.totp.INDEX_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
@@ -90,7 +91,11 @@ fun NavGraphBuilder.autosaveActivityGraph(
                     }
                 }
 
-                BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
+                is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
+                    destination = CameraTotp,
+                    route = CameraTotp.createNavRoute(it.index)
+                )
+
                 BaseLoginNavigation.Upgrade -> onNavigate(AutosaveNavigation.Upgrade)
 
                 BaseLoginNavigation.AddCustomField -> appNavigator.navigate(
@@ -150,7 +155,11 @@ fun NavGraphBuilder.autosaveActivityGraph(
         }
     )
     createTotpGraph(
-        onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
+        onSuccess = { totp, index ->
+            val values = mutableMapOf<String, Any>(TOTP_NAV_PARAMETER_KEY to totp)
+            index?.let { values.put(INDEX_NAV_PARAMETER_KEY, it) }
+            appNavigator.navigateUpWithResult(values)
+        },
         onCloseTotp = { appNavigator.onBackClick() },
         onOpenImagePicker = {
             appNavigator.navigate(

@@ -76,6 +76,17 @@ class AppNavigator(
         navController.popBackStack()
     }
 
+    fun navigateUpWithResult(values: Map<String, Any>) {
+        navController.previousBackStackEntry
+            ?.savedStateHandle
+            ?.let {
+                values.forEach { (key, value) ->
+                    it[key] = value
+                }
+            }
+        navController.popBackStack()
+    }
+
     /**
      * If the lifecycle is not resumed it means this NavBackStackEntry already processed a nav event.
      *

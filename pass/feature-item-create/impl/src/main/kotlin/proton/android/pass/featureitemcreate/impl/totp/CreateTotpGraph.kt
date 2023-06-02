@@ -7,43 +7,67 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
+import proton.android.pass.common.api.None
+import proton.android.pass.common.api.Option
 import proton.android.pass.featureitemcreate.impl.totp.camera.CameraPreviewTotp
 import proton.android.pass.featureitemcreate.impl.totp.photopicker.PhotoPickerTotpScreen
 import proton.android.pass.navigation.api.NavItem
+import proton.android.pass.navigation.api.OptionalNavArgId
 import proton.android.pass.navigation.api.composable
+import proton.android.pass.navigation.api.toPath
 
-object CreateTotp : NavItem(baseRoute = "totp/create")
-object CameraTotp : NavItem(baseRoute = "totp/camera")
+const val TOTP_NAV_PARAMETER_KEY = "totp_nav_parameter_key"
+const val INDEX_NAV_PARAMETER_KEY = "index_nav_parameter_key"
+
+object CameraTotp : NavItem(
+    baseRoute = "totp/camera",
+    optionalArgIds = listOf(TotpOptionalNavArgId.TotpIndexField)
+) {
+    fun createNavRoute(index: Option<Int> = None) = buildString {
+        append(baseRoute)
+        val map = mutableMapOf<String, Any>()
+        map[TotpOptionalNavArgId.TotpIndexField.key] = index.value() ?: -1
+        val path = map.toPath()
+        append(path)
+    }
+}
+
+enum class TotpOptionalNavArgId : OptionalNavArgId {
+    TotpIndexField {
+        override val key: String = "index"
+        override val navType: NavType<*> = NavType.IntType
+    },
+}
+
 object PhotoPickerTotp : NavItem(baseRoute = "totp/photopicker")
 
 @OptIn(
     ExperimentalAnimationApi::class
 )
 fun NavGraphBuilder.createTotpGraph(
-    onUriReceived: (String) -> Unit,
+    onSuccess: (String, Int?) -> Unit,
     onCloseTotp: () -> Unit,
-    onOpenImagePicker: () -> Unit
+    onOpenImagePicker: (Int?) -> Unit
 ) {
-    composable(CreateTotp) {
-        CreateManualTotp(
-            onAddManualTotp = onUriReceived,
-            onCloseManualTotp = onCloseTotp
-        )
-    }
-    composable(CameraTotp) {
+    composable(CameraTotp) { backStackEntry ->
+        val totpIndexField =
+            backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpIndexField.key)
         var uriFound: String? by remember { mutableStateOf(null) }
         uriFound?.let { uri ->
-            LaunchedEffect(Unit) { onUriReceived(uri) }
+            LaunchedEffect(Unit) { onSuccess(uri, totpIndexField) }
         }
         CameraPreviewTotp(
             onUriReceived = { uri -> uriFound = uri },
-            onOpenImagePicker = onOpenImagePicker,
+            onOpenImagePicker = { onOpenImagePicker(totpIndexField) },
             onClosePreview = onCloseTotp
         )
     }
-    composable(PhotoPickerTotp) {
+    composable(PhotoPickerTotp) { backStackEntry ->
+        val totpIndexField =
+            backStackEntry.arguments?.getInt(TotpOptionalNavArgId.TotpIndexField.key)
         PhotoPickerTotpScreen(
-            onQrReceived = onUriReceived,
+            onQrReceived = { uri -> onSuccess(uri, totpIndexField) },
             onQrNotDetected = onCloseTotp,
             onPhotoPickerDismissed = onCloseTotp
         )

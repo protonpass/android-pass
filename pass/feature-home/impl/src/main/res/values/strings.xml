@@ -24,6 +24,10 @@
     <string name="home_autofill_banner_settings">Turn on Autofill ›</string>
     <string name="home_autofill_banner_image_content_description">Autofill banner image</string>
 
+    <string name="home_trial_banner_title">Enjoy your free trial</string>
+    <string name="home_trial_banner_text">Check out all the exclusive features that are available to you for a limited time.</string>
+    <string name="home_trial_banner_settings">Learn more ›</string>
+
     <!-- Common bottomsheet -->
     <string name="bottomsheet_copy_password">Copy password</string>
     <string name="bottomsheet_copy_username">Copy username</string>

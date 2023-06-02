@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.data.api.usecases.GetUserPlan
+import proton.pass.domain.PlanType
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,8 +18,12 @@ class TrialViewModel @Inject constructor(
 ) : ViewModel() {
 
     val state: StateFlow<TrialUiState> = getUserPlan().map {
+        val remainingDays = when (val plan = it.planType) {
+            is PlanType.Trial -> plan.remainingDays
+            else -> 0
+        }
         TrialUiState(
-            remainingTrialDays = 1
+            remainingTrialDays = remainingDays
         )
     }.stateIn(
         scope = viewModelScope,

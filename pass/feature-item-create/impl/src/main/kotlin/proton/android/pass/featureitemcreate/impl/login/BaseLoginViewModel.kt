@@ -772,6 +772,48 @@ abstract class BaseLoginViewModel(
         }
     }
 
+    protected fun updatePrimaryTotpIfNeeded(
+        navTotpUri: String?,
+        navTotpIndex: Int?,
+        currentValue: ItemContents.Login
+    ) = navTotpUri
+        ?.takeIf { navTotpIndex == -1 }
+        ?.let { decrypted ->
+            val encrypted =
+                encryptionContextProvider.withEncryptionContext { encrypt(decrypted) }
+            HiddenState.Revealed(encrypted, decrypted)
+        }
+        ?: currentValue.primaryTotp
+
+    protected fun updateCustomFieldsIfNeeded(
+        navTotpUri: String?,
+        navTotpIndex: Int,
+        currentValue: ItemContents.Login
+    ) = if (navTotpUri != null) {
+        navTotpUri
+            .takeIf { navTotpIndex >= 0 }
+            ?.let { decrypted ->
+                currentValue.customFields
+                    .mapIndexed { index, customFieldContent ->
+                        if (
+                            navTotpIndex == index &&
+                            customFieldContent is CustomFieldContent.Totp
+                        ) {
+                            val encrypted = encryptionContextProvider.withEncryptionContext {
+                                encrypt(decrypted)
+                            }
+                            val hiddenState = HiddenState.Revealed(encrypted, decrypted)
+                            customFieldContent.copy(value = hiddenState)
+                        } else {
+                            customFieldContent
+                        }
+                    }
+            }
+            ?: currentValue.customFields
+    } else {
+        currentValue.customFields
+    }
+
     companion object {
         private const val TAG = "BaseLoginViewModel"
     }

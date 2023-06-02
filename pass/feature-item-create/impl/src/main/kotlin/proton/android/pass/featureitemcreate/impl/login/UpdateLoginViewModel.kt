@@ -136,19 +136,16 @@ class UpdateLoginViewModel @Inject constructor(
         }
     }
 
-    fun setTotp(uri: String?) {
+    fun setTotp(navTotpUri: String?, navTotpIndex: Int?) {
         onUserEditedContent()
-        val primaryTotp = if (uri != null) {
-            HiddenState.Revealed(
-                encryptionContextProvider.withEncryptionContext { encrypt(uri) },
-                uri
-            )
-        } else {
-            itemContentState.value.primaryTotp
-        }
-
+        val currentValue = itemContentState.value
+        val primaryTotp = updatePrimaryTotpIfNeeded(navTotpUri, navTotpIndex, currentValue)
+        val customFields = updateCustomFieldsIfNeeded(navTotpUri, navTotpIndex ?: -1, currentValue)
         itemContentState.update {
-            it.copy(primaryTotp = primaryTotp)
+            it.copy(
+                primaryTotp = primaryTotp,
+                customFields = customFields
+            )
         }
     }
 

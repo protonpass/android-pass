@@ -199,6 +199,24 @@ class UserPreferencesRepositoryImpl @Inject constructor(
                 preferences.passwordGeneration.toValue()
             }
 
+
+    override suspend fun setHasDismissedTrialBanner(state: HasDismissedTrialBanner): Result<Unit> =
+        runCatching {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setHasDismissedTrialBanner(state.value().toBooleanPrefProto())
+                    .build()
+            }
+            return@runCatching
+        }
+
+    override fun getHasDismissedTrialBanner(): Flow<HasDismissedTrialBanner> =
+        dataStore.data
+            .catch { exception -> handleExceptions(exception) }
+            .map { preferences ->
+                HasDismissedTrialBanner.from(fromBooleanPrefProto(preferences.hasDismissedTrialBanner))
+            }
+
     override suspend fun clearPreferences(): Result<Unit> =
         runCatching {
             dataStore.updateData {

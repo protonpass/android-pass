@@ -16,10 +16,13 @@ import proton.android.pass.composecomponents.impl.topbar.iconbutton.CrossBackIco
 fun TrialScreenContent(
     modifier: Modifier = Modifier,
     state: TrialUiState,
-    onNavigate: (TrialNavigation) -> Unit
+    onNavigate: (TrialNavigation) -> Unit,
+    onLearnMore: () -> Unit
 ) {
     Scaffold(
-        modifier = modifier.fillMaxSize().background(PassTheme.colors.backgroundStrong),
+        modifier = modifier
+            .fillMaxSize()
+            .background(PassTheme.colors.backgroundStrong),
         topBar = {
             ProtonTopAppBar(
                 backgroundColor = PassTheme.colors.itemDetailBackground,
@@ -35,7 +38,8 @@ fun TrialScreenContent(
         TrialContent(
             modifier = Modifier.padding(padding),
             state = state,
-            onNavigate = onNavigate
+            onNavigate = onNavigate,
+            onLearnMore = onLearnMore
         )
     }
 }

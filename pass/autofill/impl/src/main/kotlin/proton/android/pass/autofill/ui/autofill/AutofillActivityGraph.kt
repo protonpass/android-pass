@@ -19,6 +19,7 @@ import proton.android.pass.autofill.ui.bottomsheet.itemoptions.AutofillItemOptio
 import proton.android.pass.autofill.ui.bottomsheet.itemoptions.autofillItemOptionsGraph
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Some
+import proton.android.pass.common.api.toOption
 import proton.android.pass.featureauth.impl.AuthNavigation
 import proton.android.pass.featureauth.impl.authGraph
 import proton.android.pass.featureitemcreate.impl.alias.CreateAlias
@@ -249,6 +250,7 @@ fun NavGraphBuilder.autofillActivityGraph(
         onOpenImagePicker = {
             appNavigator.navigate(
                 destination = PhotoPickerTotp,
+                route = PhotoPickerTotp.createNavRoute(it.toOption()),
                 backDestination = CreateLogin
             )
         }

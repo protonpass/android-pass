@@ -493,10 +493,42 @@ abstract class BaseLoginViewModel(
                     encrypt(sanitisedContent)
                 }
                 withContext(Dispatchers.Main) {
-                    itemContentState.update {
-                        it.copy(
-                            primaryTotp = HiddenState.Revealed(encryptedContent, sanitisedContent)
-                        )
+                    when (focusedFieldFlow.value.value()) {
+                        is LoginCustomField.CustomFieldTOTP -> {
+                            val customFieldTOTP =
+                                focusedFieldFlow.value.value() as? LoginCustomField.CustomFieldTOTP
+                            val customFields = itemContentState.value.customFields
+                            if (customFieldTOTP != null && customFields.size - 1 >= customFieldTOTP.index) {
+                                val updatedCustomFields = customFields.toMutableList()
+                                    .mapIndexed { index, customFieldContent ->
+                                        if (
+                                            customFieldContent is CustomFieldContent.Totp &&
+                                            index == customFieldTOTP.index
+                                        ) {
+                                            customFieldContent.copy(
+                                                value = HiddenState.Revealed(
+                                                    encryptedContent,
+                                                    sanitisedContent
+                                                )
+                                            )
+                                        } else {
+                                            customFieldContent
+                                        }
+                                    }
+                                itemContentState.update {
+                                    it.copy(customFields = updatedCustomFields)
+                                }
+                            }
+                        }
+
+                        else -> itemContentState.update {
+                            it.copy(
+                                primaryTotp = HiddenState.Revealed(
+                                    encryptedContent,
+                                    sanitisedContent
+                                )
+                            )
+                        }
                     }
                 }
             }

@@ -39,7 +39,6 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedState
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
-import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
@@ -120,7 +119,6 @@ class LoginDetailViewModel @Inject constructor(
 
     sealed interface DetailFields {
         object Password : DetailFields
-        data class CustomField(val index: Int) : DetailFields
     }
 
     private val loginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
@@ -155,9 +153,8 @@ class LoginDetailViewModel @Inject constructor(
 
     private val revealedLoginItemInfoFlow: Flow<LoadingResult<LoginItemInfo>> = combine(
         loginItemInfoFlow,
-        revealedFieldsState,
-        canPerformPaidActionFlow
-    ) { loginItemResult, revealed, canPerformPaidAction ->
+        revealedFieldsState
+    ) { loginItemResult, revealed ->
         loginItemResult.map { item ->
             encryptionContextProvider.withEncryptionContext {
                 val contents =
@@ -176,16 +173,9 @@ class LoginDetailViewModel @Inject constructor(
                             decrypt(loginContents.primaryTotp.encrypted)
                         )
 
-                        val customFields = prepareCustomFields(
-                            revealed = revealed,
-                            canPerformPaidAction = canPerformPaidAction,
-                            customFields = loginContents.customFields
-                        )
-
                         loginContents.copy(
                             password = updatedPassword,
-                            primaryTotp = updatedPrimaryTotp,
-                            customFields = customFields
+                            primaryTotp = updatedPrimaryTotp
                         )
                     }
 
@@ -416,14 +406,34 @@ class LoginDetailViewModel @Inject constructor(
     }
 
     fun toggleCustomFieldVisibility(index: Int) = viewModelScope.launch {
-        revealedFieldsState.update { fields ->
-            val target = DetailFields.CustomField(index)
+        customFieldsState.update { fields ->
             val asMutable = fields.toMutableList()
-            if (fields.contains(target)) {
-                asMutable.remove(target)
-            } else {
-                asMutable.add(target)
+            val updated = when (val field = fields[index]) {
+                is CustomFieldUiContent.Limited,
+                is CustomFieldUiContent.Text,
+                is CustomFieldUiContent.Totp -> field
+
+                // It only applies to Hidden custom fields
+                is CustomFieldUiContent.Hidden -> {
+                    val content = when (val content = field.content) {
+                        is HiddenState.Concealed -> {
+                            encryptionContextProvider.withEncryptionContext {
+                                HiddenState.Revealed(
+                                    encrypted = content.encrypted,
+                                    clearText = decrypt(content.encrypted)
+                                )
+                            }
+                        }
+                        is HiddenState.Revealed -> HiddenState.Concealed(encrypted = content.encrypted)
+                    }
+
+                    CustomFieldUiContent.Hidden(
+                        label = field.label,
+                        content = content
+                    )
+                }
             }
+            asMutable[index] = updated
             asMutable.toPersistentList()
         }
     }
@@ -477,96 +487,6 @@ class LoginDetailViewModel @Inject constructor(
                 }
             )
     }
-
-    @Suppress("CyclomaticComplexMethod", "LongMethod", "ComplexMethod")
-    private fun prepareCustomFields(
-        canPerformPaidAction: LoadingResult<Boolean>,
-        customFields: List<CustomFieldContent>,
-        revealed: List<DetailFields>
-    ): List<CustomFieldContent> {
-        val canDisplayCustomFields = canPerformPaidAction.getOrNull() == true
-        return if (!canDisplayCustomFields) {
-            customFields
-        } else {
-            encryptionContextProvider.withEncryptionContext {
-                customFields.mapIndexed { idx, content ->
-                    val canShow = revealed.contains(DetailFields.CustomField(idx))
-                    mapCustomField(canShow, content, this@withEncryptionContext)
-                }
-            }
-        }
-    }
-
-    private fun mapCustomField(
-        canShow: Boolean,
-        content: CustomFieldContent,
-        context: EncryptionContext
-    ): CustomFieldContent = when (content) {
-        is CustomFieldContent.Text -> content
-        is CustomFieldContent.Hidden -> mapHiddenField(canShow, content, context)
-        is CustomFieldContent.Totp -> mapTotpField(canShow, content, context)
-    }
-
-    private fun mapHiddenField(
-        canShow: Boolean,
-        content: CustomFieldContent.Hidden,
-        context: EncryptionContext
-    ): CustomFieldContent = if (canShow) {
-        CustomFieldContent.Hidden(
-            label = content.label,
-            value = when (content.value) {
-                is HiddenState.Revealed -> content.value
-                is HiddenState.Concealed -> {
-                    HiddenState.Revealed(
-                        encrypted = content.value.encrypted,
-                        clearText = context.decrypt(content.value.encrypted)
-                    )
-                }
-            }
-        )
-    } else {
-        CustomFieldContent.Hidden(
-            label = content.label,
-            value = when (content.value) {
-                is HiddenState.Revealed -> HiddenState.Concealed(
-                    encrypted = content.value.encrypted
-                )
-
-                is HiddenState.Concealed -> content.value
-            }
-        )
-    }
-
-    private fun mapTotpField(
-        canShow: Boolean,
-        content: CustomFieldContent.Totp,
-        context: EncryptionContext
-    ): CustomFieldContent = if (canShow) {
-        CustomFieldContent.Totp(
-            label = content.label,
-            value = when (content.value) {
-                is HiddenState.Revealed -> content.value
-                is HiddenState.Concealed -> {
-                    HiddenState.Revealed(
-                        encrypted = content.value.encrypted,
-                        clearText = context.decrypt(content.value.encrypted)
-                    )
-                }
-            }
-        )
-    } else {
-        CustomFieldContent.Totp(
-            label = content.label,
-            value = when (content.value) {
-                is HiddenState.Revealed -> HiddenState.Concealed(
-                    encrypted = content.value.encrypted
-                )
-
-                is HiddenState.Concealed -> content.value
-            }
-        )
-    }
-
 
     private fun startObservingTotpCustomFields(
         canSeeCustomFields: Boolean,

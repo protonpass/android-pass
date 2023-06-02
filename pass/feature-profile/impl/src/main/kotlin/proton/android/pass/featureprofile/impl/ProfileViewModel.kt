@@ -21,7 +21,9 @@ import proton.android.pass.biometry.ContextHolder
 import proton.android.pass.clipboard.api.ClipboardManager
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
+import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.api.usecases.ObserveItemCount
 import proton.android.pass.data.api.usecases.ObserveMFACount
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -48,7 +50,8 @@ class ProfileViewModel @Inject constructor(
     private val appConfig: AppConfig,
     observeItemCount: ObserveItemCount,
     observeMFACount: ObserveMFACount,
-    observeUpgradeInfo: ObserveUpgradeInfo
+    observeUpgradeInfo: ObserveUpgradeInfo,
+    getUserPlan: GetUserPlan
 ) : ViewModel() {
 
     private val biometricLockState = preferencesRepository
@@ -81,8 +84,9 @@ class ProfileViewModel @Inject constructor(
         biometricLockState,
         flowOf(biometryManager.getBiometryStatus()),
         autofillStatusFlow,
-        itemSummaryUiStateFlow
-    ) { biometricLock, biometryStatus, autofillStatus, itemSummaryUiState ->
+        itemSummaryUiStateFlow,
+        getUserPlan().asLoadingResult()
+    ) { biometricLock, biometryStatus, autofillStatus, itemSummaryUiState, userPlan ->
         val fingerprintSection = when (biometryStatus) {
             BiometryStatus.NotEnrolled -> FingerprintSectionState.NoFingerprintRegistered
             BiometryStatus.NotAvailable -> FingerprintSectionState.NotAvailable
@@ -94,11 +98,13 @@ class ProfileViewModel @Inject constructor(
                 FingerprintSectionState.Available(available)
             }
         }
+
         ProfileUiState(
             fingerprintSection = fingerprintSection,
             autofillStatus = autofillStatus,
             itemSummaryUiState = itemSummaryUiState,
-            appVersion = appConfig.versionName
+            appVersion = appConfig.versionName,
+            accountType = AccountType.fromPlan(userPlan)
         )
     }.stateIn(
         scope = viewModelScope,

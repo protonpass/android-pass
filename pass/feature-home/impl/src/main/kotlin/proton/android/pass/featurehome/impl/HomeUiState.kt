@@ -9,6 +9,7 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonuimodels.api.ShareUiModel
+import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
@@ -24,12 +25,14 @@ sealed interface ActionState {
 @Immutable
 data class HomeUiState(
     val homeListUiState: HomeListUiState,
-    val searchUiState: SearchUiState
+    val searchUiState: SearchUiState,
+    val accountType: AccountType
 ) {
     companion object {
         val Loading = HomeUiState(
             homeListUiState = HomeListUiState.Loading,
-            searchUiState = SearchUiState.Initial
+            searchUiState = SearchUiState.Initial,
+            accountType = AccountType.Free
         )
     }
 }

@@ -117,6 +117,7 @@ internal fun HomeContent(
         bottomBar = {
             BottomBar(
                 bottomBarSelected = BottomBarSelected.Home,
+                accountType = uiState.accountType,
                 onListClick = {},
                 onCreateClick = {
                     val shareId = uiState.homeListUiState.selectedShare.map { it.id }

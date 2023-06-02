@@ -48,7 +48,6 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
-import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
@@ -199,37 +198,17 @@ class CreateLoginViewModel @Inject constructor(
             val password = initialContents.password
                 ?.let { encrypted -> HiddenState.Concealed(encrypted) }
                 ?: currentValue.password
-            val primaryTotp = initialContents.navTotpUri
-                ?.takeIf { initialContents.navTotpIndex == -1 }
-                ?.let { decrypted ->
-                    val encrypted =
-                        encryptionContextProvider.withEncryptionContext { encrypt(decrypted) }
-                    HiddenState.Revealed(encrypted, decrypted)
-                }
-                ?: currentValue.primaryTotp
-            val customFields = if (initialContents.navTotpUri != null) {
-                initialContents.navTotpUri
-                    .takeIf { initialContents.navTotpIndex >= -1 }
-                    ?.let { decrypted ->
-                        currentValue.customFields.mapIndexed { index, customFieldContent ->
-                            if (
-                                initialContents.navTotpIndex == index &&
-                                customFieldContent is CustomFieldContent.Totp
-                            ) {
-                                val encrypted = encryptionContextProvider.withEncryptionContext {
-                                    encrypt(decrypted)
-                                }
-                                val hiddenState = HiddenState.Revealed(encrypted, decrypted)
-                                customFieldContent.copy(value = hiddenState)
-                            } else {
-                                customFieldContent
-                            }
-                        }
-                    }
-                    ?: currentValue.customFields
-            } else {
-                currentValue.customFields
-            }
+            val primaryTotp = updatePrimaryTotpIfNeeded(
+                navTotpUri = initialContents.navTotpUri,
+                navTotpIndex = initialContents.navTotpIndex,
+                currentValue = currentValue
+            )
+            val customFields = updateCustomFieldsIfNeeded(
+                navTotpUri = initialContents.navTotpUri,
+                navTotpIndex = initialContents.navTotpIndex,
+                currentValue = currentValue
+            )
+
             it.copy(
                 title = initialContents.title ?: currentValue.title,
                 username = username,

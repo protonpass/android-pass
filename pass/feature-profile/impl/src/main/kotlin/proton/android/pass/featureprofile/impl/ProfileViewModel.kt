@@ -72,13 +72,22 @@ class ProfileViewModel @Inject constructor(
         val itemCount = itemCountResult.getOrNull()
         val upgradeInfo = upgradeInfoResult.getOrNull()
         val isUpgradeAvailable = upgradeInfo?.isUpgradeAvailable ?: false
+
+        val aliasLimit = if (isUpgradeAvailable) {
+            upgradeInfo?.plan?.aliasLimit?.limitOrNull()
+        } else null
+
+        val mfaLimit = if (isUpgradeAvailable) {
+            upgradeInfo?.plan?.totpLimit?.limitOrNull()
+        } else null
+
         ItemSummaryUiState(
             loginCount = itemCount?.login?.toInt() ?: 0,
             notesCount = itemCount?.note?.toInt() ?: 0,
             aliasCount = itemCount?.alias?.toInt() ?: 0,
             mfaCount = mfaCount,
-            aliasLimit = if (isUpgradeAvailable) upgradeInfo?.plan?.aliasLimit else null,
-            mfaLimit = if (isUpgradeAvailable) upgradeInfo?.plan?.totpLimit else null
+            aliasLimit = aliasLimit,
+            mfaLimit = mfaLimit
         )
     }
 

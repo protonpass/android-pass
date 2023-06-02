@@ -31,7 +31,7 @@ class CreateItemBottomSheetViewModel @Inject constructor(
                 createItemAliasUIState = CreateItemAliasUIState(
                     canUpgrade = upgradeInfo.isUpgradeAvailable,
                     aliasCount = upgradeInfo.totalAlias,
-                    aliasLimit = upgradeInfo.plan.aliasLimit
+                    aliasLimit = upgradeInfo.plan.aliasLimit.limitOrNull() ?: 0
                 )
             )
         }

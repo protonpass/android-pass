@@ -12,7 +12,7 @@ import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.android.pass.data.impl.local.LocalItemDataSource
 import proton.pass.domain.ItemId
-import proton.pass.domain.Plan
+import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 import proton.pass.domain.ShareId
 import javax.inject.Inject
@@ -36,12 +36,19 @@ class CanDisplayTotpImpl @Inject constructor(
             .flatMapLatest { plan ->
                 when (plan.planType) {
                     is PlanType.Paid, is PlanType.Trial -> flowOf(true)
-                    else -> observeCanDisplayTotp(
-                        userId = id,
-                        shareId = shareId,
-                        itemId = itemId,
-                        plan = plan
-                    )
+                    else -> {
+                        when (val limit = plan.totpLimit) {
+                            PlanLimit.Unlimited -> flowOf(true)
+                            is PlanLimit.Limited -> {
+                                observeCanDisplayTotp(
+                                    userId = id,
+                                    shareId = shareId,
+                                    itemId = itemId,
+                                    limit = limit.limit
+                                )
+                            }
+                        }
+                    }
                 }
             }
     }
@@ -50,10 +57,10 @@ class CanDisplayTotpImpl @Inject constructor(
         userId: UserId,
         shareId: ShareId,
         itemId: ItemId,
-        plan: Plan
+        limit: Int
     ): Flow<Boolean> = localItemDataSource.observeAllItemsWithTotp(userId = userId)
         .map { itemsWithTotp ->
-            val allowedItems = itemsWithTotp.take(plan.totpLimit)
+            val allowedItems = itemsWithTotp.take(limit)
             allowedItems.any { it.shareId == shareId && it.itemId == itemId }
         }
 

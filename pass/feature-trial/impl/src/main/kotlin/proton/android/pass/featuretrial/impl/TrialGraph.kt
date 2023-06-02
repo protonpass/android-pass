@@ -8,7 +8,6 @@ import proton.android.pass.navigation.api.composable
 sealed interface TrialNavigation {
     object Close : TrialNavigation
     object Upgrade : TrialNavigation
-    object LearnMore : TrialNavigation
 }
 
 object TrialScreen : NavItem(baseRoute = "trial/screen")

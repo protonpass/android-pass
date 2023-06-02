@@ -23,6 +23,9 @@ sealed class HiddenState {
     abstract val encrypted: EncryptedString
 
     @Serializable
+    data class Empty(override val encrypted: EncryptedString) : HiddenState()
+
+    @Serializable
     data class Concealed(override val encrypted: EncryptedString) : HiddenState()
 
     @Serializable

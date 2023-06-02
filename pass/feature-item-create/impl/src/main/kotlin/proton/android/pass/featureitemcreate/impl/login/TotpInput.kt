@@ -34,6 +34,7 @@ internal fun TotpInput(
     val text = when (value) {
         is HiddenState.Concealed -> "" // This state cannot happen as TOTP is always revealed
         is HiddenState.Revealed -> value.clearText
+        is HiddenState.Empty -> ""
     }
     ProtonTextField(
         modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),

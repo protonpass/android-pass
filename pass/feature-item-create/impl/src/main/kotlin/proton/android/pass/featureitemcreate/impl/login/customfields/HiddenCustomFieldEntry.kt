@@ -46,6 +46,7 @@ fun HiddenCustomFieldEntry(
     val value = when (val state = content.value) {
         is HiddenState.Concealed -> ""
         is HiddenState.Revealed -> state.clearText
+        is HiddenState.Empty -> ""
     }
     var isFocused by remember { mutableStateOf(false) }
     val visualTransformation = if (isFocused) {

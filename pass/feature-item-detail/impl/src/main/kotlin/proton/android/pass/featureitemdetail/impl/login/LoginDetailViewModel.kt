@@ -40,6 +40,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsPermanentlyDeletedS
 import proton.android.pass.composecomponents.impl.uievents.IsRestoredFromTrashState
 import proton.android.pass.composecomponents.impl.uievents.IsSentToTrashState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.usecases.CanDisplayTotp
 import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.DeleteItem
@@ -77,6 +78,7 @@ import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import javax.inject.Inject
 
+@Suppress("LargeClass")
 @HiltViewModel
 class LoginDetailViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
@@ -136,7 +138,39 @@ class LoginDetailViewModel @Inject constructor(
                 val alias = getAliasForItem(itemType)
 
                 val itemUiModel = encryptionContextProvider.withEncryptionContext {
-                    details.item.toUiModel(this)
+                    val model = details.item.toUiModel(this)
+                    val contents = model.contents as ItemContents.Login
+
+                    val isPasswordEmpty =
+                        decrypt(contents.password.encrypted.toEncryptedByteArray())
+                            .isEmpty()
+                    val passwordHiddenState = if (isPasswordEmpty) {
+                        HiddenState.Empty(encrypt(""))
+                    } else {
+                        contents.password
+                    }
+                    val customFields = contents.customFields
+                        .map { customField ->
+                            if (customField is CustomFieldContent.Hidden) {
+                                val isCustomFieldEmpty =
+                                    decrypt(customField.value.encrypted.toEncryptedByteArray())
+                                        .isEmpty()
+                                if (isCustomFieldEmpty) {
+                                    customField.copy(value = HiddenState.Empty(encrypt("")))
+                                } else {
+                                    customField
+                                }
+                            } else {
+                                customField
+                            }
+                        }
+
+                    model.copy(
+                        contents = contents.copy(
+                            password = passwordHiddenState,
+                            customFields = customFields
+                        )
+                    )
                 }
                 startObservingTotpCustomFields(canShowCustomFields, itemUiModel)
 
@@ -196,6 +230,7 @@ class LoginDetailViewModel @Inject constructor(
                 val decryptedTotpUri = when (val primaryTotp = contents.primaryTotp) {
                     is HiddenState.Concealed -> null
                     is HiddenState.Revealed -> primaryTotp.clearText
+                    is HiddenState.Empty -> null
                 }
                 if (!decryptedTotpUri.isNullOrBlank()) {
                     observeTotp(decryptedTotpUri)
@@ -282,6 +317,8 @@ class LoginDetailViewModel @Inject constructor(
             is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
                 decrypt(contents.password.encrypted)
             }
+
+            is HiddenState.Empty -> ""
         }
         clipboardManager.copyToClipboard(text = text, isSecure = true)
         snackbarDispatcher(PasswordCopiedToClipboard)
@@ -360,6 +397,7 @@ class LoginDetailViewModel @Inject constructor(
         isLoadingState.update { IsLoadingState.NotLoading }
     }
 
+    @Suppress("ComplexMethod")
     fun copyCustomFieldValue(index: Int) = viewModelScope.launch {
         val state = uiState.value as? LoginDetailUiState.Success ?: return@launch
         val itemContents = state.itemUiModel.contents as? ItemContents.Login ?: return@launch
@@ -368,27 +406,24 @@ class LoginDetailViewModel @Inject constructor(
         val (content, isSecure) = when (val field = itemContents.customFields[index]) {
             is CustomFieldContent.Hidden -> {
                 when (val value = field.value) {
-                    is HiddenState.Concealed -> {
-                        encryptionContextProvider.withEncryptionContext {
-                            decrypt(value.encrypted)
-                        }
+                    is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
+                        decrypt(value.encrypted)
                     }
 
                     is HiddenState.Revealed -> value.clearText
-
+                    is HiddenState.Empty -> ""
                 } to true
             }
 
             is CustomFieldContent.Text -> field.value to false
             is CustomFieldContent.Totp -> {
                 val totpUri = when (val value = field.value) {
-                    is HiddenState.Concealed -> {
-                        encryptionContextProvider.withEncryptionContext {
-                            decrypt(value.encrypted)
-                        }
+                    is HiddenState.Concealed -> encryptionContextProvider.withEncryptionContext {
+                        decrypt(value.encrypted)
                     }
 
                     is HiddenState.Revealed -> value.clearText
+                    is HiddenState.Empty -> ""
                 }
 
                 val totpCode = observeTotpFromUri(totpUri).firstOrNull()?.code ?: ""
@@ -425,7 +460,9 @@ class LoginDetailViewModel @Inject constructor(
                                 )
                             }
                         }
+
                         is HiddenState.Revealed -> HiddenState.Concealed(encrypted = content.encrypted)
+                        is HiddenState.Empty -> HiddenState.Empty(encrypted = content.encrypted)
                     }
 
                     CustomFieldUiContent.Hidden(

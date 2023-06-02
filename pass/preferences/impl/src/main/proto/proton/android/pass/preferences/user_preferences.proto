@@ -20,4 +20,5 @@ message UserPreferences {
   BooleanPrefProto use_favicons = 8;
   LockAppPrefProto lock_app = 9;
   PasswordGenerationPrefProto password_generation = 10;
+  BooleanPrefProto has_dismissed_trial_banner = 11;
 }

@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -33,10 +35,13 @@ import proton.android.pass.commonui.api.ThemePreviewProvider
 fun TrialContent(
     modifier: Modifier = Modifier,
     state: TrialUiState,
-    onNavigate: (TrialNavigation) -> Unit
+    onNavigate: (TrialNavigation) -> Unit,
+    onLearnMore: () -> Unit
 ) {
     Column(
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(state = rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
@@ -81,7 +86,7 @@ fun TrialContent(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .clickable {
-                    onNavigate(TrialNavigation.LearnMore)
+                    onLearnMore()
                 }
                 .padding(8.dp),
             text = stringResource(R.string.trial_learn_more),
@@ -100,7 +105,8 @@ fun TrialContentPreview(
         Surface {
             TrialContent(
                 state = TrialUiState(remainingTrialDays = 1),
-                onNavigate = {}
+                onNavigate = {},
+                onLearnMore = {}
             )
         }
     }

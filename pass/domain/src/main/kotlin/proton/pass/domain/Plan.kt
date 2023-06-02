@@ -3,11 +3,23 @@ package proton.pass.domain
 data class Plan(
     val planType: PlanType,
     val hideUpgrade: Boolean,
-    val vaultLimit: Int,
-    val aliasLimit: Int,
-    val totpLimit: Int,
+    val vaultLimit: PlanLimit,
+    val aliasLimit: PlanLimit,
+    val totpLimit: PlanLimit,
     val updatedAt: Long
 )
+
+sealed interface PlanLimit {
+
+    fun limitOrNull(): Int?
+
+    object Unlimited : PlanLimit {
+        override fun limitOrNull() = null
+    }
+    data class Limited(val limit: Int) : PlanLimit {
+        override fun limitOrNull() = limit
+    }
+}
 
 sealed interface PlanType {
 

@@ -105,7 +105,7 @@ class CanDisplayTotpImplTest {
 
     companion object {
         private val PAID_PLAN = PlanType.Paid("", "")
-        private val TRIAL_PLAN = PlanType.Trial("", "")
+        private val TRIAL_PLAN = PlanType.Trial("", "", 1)
     }
 
 }

@@ -3,6 +3,7 @@ package proton.android.pass.featureprofile.impl
 import androidx.compose.runtime.Stable
 import proton.android.pass.autofill.api.AutofillStatus
 import proton.android.pass.autofill.api.AutofillSupportedStatus
+import proton.android.pass.composecomponents.impl.bottombar.AccountType
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 
 @Stable
@@ -10,14 +11,16 @@ data class ProfileUiState(
     val fingerprintSection: FingerprintSectionState,
     val autofillStatus: AutofillSupportedStatus,
     val itemSummaryUiState: ItemSummaryUiState,
-    val appVersion: String
+    val appVersion: String,
+    val accountType: AccountType
 ) {
     companion object {
         fun getInitialState(appVersion: String) = ProfileUiState(
             fingerprintSection = FingerprintSectionState.Available(IsButtonEnabled.Disabled),
             autofillStatus = AutofillSupportedStatus.Supported(AutofillStatus.Disabled),
             itemSummaryUiState = ItemSummaryUiState(),
-            appVersion = appVersion
+            appVersion = appVersion,
+            accountType = AccountType.Free
         )
     }
 }

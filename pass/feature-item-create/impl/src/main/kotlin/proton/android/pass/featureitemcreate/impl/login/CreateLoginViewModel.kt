@@ -48,6 +48,7 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
+import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
 import proton.pass.domain.ShareId
 import proton.pass.domain.VaultWithItemCount
@@ -158,7 +159,7 @@ class CreateLoginViewModel @Inject constructor(
         selectedShareIdState.update { shareId.toOption() }
     }
 
-    @Suppress("ComplexMethod")
+    @Suppress("ComplexMethod", "LongMethod")
     fun setInitialContents(initialContents: InitialCreateLoginUiState) {
 
         val currentValue = itemContentState.value
@@ -198,20 +199,44 @@ class CreateLoginViewModel @Inject constructor(
             val password = initialContents.password
                 ?.let { encrypted -> HiddenState.Concealed(encrypted) }
                 ?: currentValue.password
-            val primaryTotp = initialContents.primaryTotp
-                ?.let { encrypted ->
-                    val decrypted =
-                        encryptionContextProvider.withEncryptionContext { decrypt(encrypted) }
+            val primaryTotp = initialContents.navTotpUri
+                ?.takeIf { initialContents.navTotpIndex == -1 }
+                ?.let { decrypted ->
+                    val encrypted =
+                        encryptionContextProvider.withEncryptionContext { encrypt(decrypted) }
                     HiddenState.Revealed(encrypted, decrypted)
                 }
                 ?: currentValue.primaryTotp
+            val customFields = if (initialContents.navTotpUri != null) {
+                initialContents.navTotpUri
+                    .takeIf { initialContents.navTotpIndex >= -1 }
+                    ?.let { decrypted ->
+                        val encrypted =
+                            encryptionContextProvider.withEncryptionContext { encrypt(decrypted) }
+                        val hiddenState = HiddenState.Revealed(encrypted, decrypted)
+                        currentValue.customFields.mapIndexed { index, customFieldContent ->
+                            if (
+                                initialContents.navTotpIndex == index &&
+                                customFieldContent is CustomFieldContent.Totp
+                            ) {
+                                customFieldContent.copy(value = hiddenState)
+                            } else {
+                                customFieldContent
+                            }
+                        }
+                    }
+                    ?: currentValue.customFields
+            } else {
+                currentValue.customFields
+            }
             it.copy(
                 title = initialContents.title ?: currentValue.title,
                 username = username,
                 password = password,
                 urls = websites,
                 packageInfoSet = packageInfoSet,
-                primaryTotp = primaryTotp
+                primaryTotp = primaryTotp,
+                customFields = customFields
             )
         }
     }

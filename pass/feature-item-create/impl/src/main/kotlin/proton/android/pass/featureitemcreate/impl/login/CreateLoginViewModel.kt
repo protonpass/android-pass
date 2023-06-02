@@ -211,14 +211,15 @@ class CreateLoginViewModel @Inject constructor(
                 initialContents.navTotpUri
                     .takeIf { initialContents.navTotpIndex >= -1 }
                     ?.let { decrypted ->
-                        val encrypted =
-                            encryptionContextProvider.withEncryptionContext { encrypt(decrypted) }
-                        val hiddenState = HiddenState.Revealed(encrypted, decrypted)
                         currentValue.customFields.mapIndexed { index, customFieldContent ->
                             if (
                                 initialContents.navTotpIndex == index &&
                                 customFieldContent is CustomFieldContent.Totp
                             ) {
+                                val encrypted = encryptionContextProvider.withEncryptionContext {
+                                    encrypt(decrypted)
+                                }
+                                val hiddenState = HiddenState.Revealed(encrypted, decrypted)
                                 customFieldContent.copy(value = hiddenState)
                             } else {
                                 customFieldContent

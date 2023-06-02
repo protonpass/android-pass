@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.navigation.NavGraphBuilder
 import com.google.accompanist.navigation.animation.composable
 import proton.android.pass.autofill.entities.usernamePassword
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.featureauth.impl.AUTH_SCREEN_ROUTE
 import proton.android.pass.featureauth.impl.AuthNavigation
@@ -164,6 +165,7 @@ fun NavGraphBuilder.autosaveActivityGraph(
         onOpenImagePicker = {
             appNavigator.navigate(
                 destination = PhotoPickerTotp,
+                route = PhotoPickerTotp.createNavRoute(it.toOption()),
                 backDestination = CreateLogin
             )
         }

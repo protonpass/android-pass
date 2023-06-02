@@ -74,8 +74,8 @@ abstract class BaseLoginViewModel(
         MutableStateFlow(
             encryptionContextProvider.withEncryptionContext {
                 ItemContents.Login.create(
-                    HiddenState.Concealed(encrypt("")),
-                    HiddenState.Revealed(encrypt(""), "")
+                    HiddenState.Empty(encrypt("")),
+                    HiddenState.Empty(encrypt(""))
                 )
             }
         )
@@ -222,8 +222,8 @@ abstract class BaseLoginViewModel(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = BaseLoginUiState.create(
-                HiddenState.Concealed(""),
-                HiddenState.Concealed("")
+                HiddenState.Empty(""),
+                HiddenState.Empty("")
             )
         )
 
@@ -401,6 +401,8 @@ abstract class BaseLoginViewModel(
                     decrypt(hiddenState.encrypted)
                 }
             }
+
+            is HiddenState.Empty -> ""
         }
 
         if (content.isBlank()) {
@@ -440,6 +442,8 @@ abstract class BaseLoginViewModel(
                 is HiddenState.Concealed -> {
                     HiddenState.Concealed(encryptedSanitized)
                 }
+
+                is HiddenState.Empty -> HiddenState.Empty(encryptedSanitized)
             }
         ) to false
     }
@@ -650,16 +654,14 @@ abstract class BaseLoginViewModel(
             LoginField.Password -> {
                 itemContentState.update {
                     val password = encryptionContextProvider.withEncryptionContext {
-                        if (isFocused) {
-                            HiddenState.Revealed(
-                                it.password.encrypted,
-                                decrypt(it.password.encrypted)
-                            )
-                        } else {
-                            HiddenState.Concealed(it.password.encrypted)
-                        }
+                        decrypt(it.password.encrypted)
                     }
-                    it.copy(password = password)
+                    val passwordHiddenState = when {
+                        isFocused -> HiddenState.Revealed(it.password.encrypted, password)
+                        password.isBlank() -> HiddenState.Empty(it.password.encrypted)
+                        else -> HiddenState.Concealed(it.password.encrypted)
+                    }
+                    it.copy(password = passwordHiddenState)
                 }
             }
 

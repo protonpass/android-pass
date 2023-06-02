@@ -25,6 +25,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.GetItemById
@@ -120,7 +121,7 @@ class UpdateLoginViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = encryptionContextProvider.withEncryptionContext {
             UpdateLoginUiState.create(
-                HiddenState.Concealed(encrypt("")),
+                HiddenState.Empty(encrypt("")),
                 HiddenState.Revealed(encrypt(""), ""),
             )
         }
@@ -188,11 +189,18 @@ class UpdateLoginViewModel @Inject constructor(
                 encryptionContext = this@withEncryptionContext,
                 primaryTotp = itemContents.primaryTotp
             )
+            val isPasswordEmpty = decrypt(itemContents.password.toEncryptedByteArray())
+                .isEmpty()
+            val passwordHiddenState = if (isPasswordEmpty) {
+                HiddenState.Empty(itemContents.password)
+            } else {
+                HiddenState.Concealed(itemContents.password)
+            }
 
             ItemContents.Login(
                 title = decrypt(item.title),
                 username = itemContents.username,
-                password = HiddenState.Concealed(itemContents.password),
+                password = passwordHiddenState,
                 urls = websites,
                 note = decrypt(item.note),
                 packageInfoSet = item.packageInfoSet,

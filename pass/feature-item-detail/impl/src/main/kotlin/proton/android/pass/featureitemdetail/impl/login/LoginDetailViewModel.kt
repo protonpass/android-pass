@@ -365,7 +365,7 @@ class LoginDetailViewModel @Inject constructor(
         val itemContents = state.itemUiModel.contents as? ItemContents.Login ?: return@launch
         if (index >= itemContents.customFields.size) return@launch
 
-        val content = when (val field = itemContents.customFields[index]) {
+        val (content, isSecure) = when (val field = itemContents.customFields[index]) {
             is CustomFieldContent.Hidden -> {
                 when (val value = field.value) {
                     is HiddenState.Concealed -> {
@@ -376,10 +376,10 @@ class LoginDetailViewModel @Inject constructor(
 
                     is HiddenState.Revealed -> value.clearText
 
-                }
+                } to true
             }
 
-            is CustomFieldContent.Text -> field.value
+            is CustomFieldContent.Text -> field.value to false
             is CustomFieldContent.Totp -> {
                 val totpUri = when (val value = field.value) {
                     is HiddenState.Concealed -> {
@@ -391,17 +391,18 @@ class LoginDetailViewModel @Inject constructor(
                     is HiddenState.Revealed -> value.clearText
                 }
 
-                observeTotpFromUri(totpUri).firstOrNull()?.code ?: ""
+                val totpCode = observeTotpFromUri(totpUri).firstOrNull()?.code ?: ""
+                totpCode to false
             }
         }
 
         if (content.isNotEmpty()) {
-            copyCustomFieldContent(content)
+            copyCustomFieldContent(content, isSecure)
         }
     }
 
-    fun copyCustomFieldContent(content: String) = viewModelScope.launch {
-        clipboardManager.copyToClipboard(content)
+    fun copyCustomFieldContent(content: String, isSecure: Boolean = false) = viewModelScope.launch {
+        clipboardManager.copyToClipboard(content, isSecure = isSecure)
         snackbarDispatcher(FieldCopiedToClipboard)
     }
 

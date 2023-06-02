@@ -33,14 +33,25 @@ object CameraTotp : NavItem(
     }
 }
 
+object PhotoPickerTotp : NavItem(
+    baseRoute = "totp/photopicker",
+    optionalArgIds = listOf(TotpOptionalNavArgId.TotpIndexField)
+) {
+    fun createNavRoute(index: Option<Int> = None) = buildString {
+        append(baseRoute)
+        val map = mutableMapOf<String, Any>()
+        map[TotpOptionalNavArgId.TotpIndexField.key] = index.value() ?: -1
+        val path = map.toPath()
+        append(path)
+    }
+}
+
 enum class TotpOptionalNavArgId : OptionalNavArgId {
     TotpIndexField {
         override val key: String = "index"
         override val navType: NavType<*> = NavType.IntType
     },
 }
-
-object PhotoPickerTotp : NavItem(baseRoute = "totp/photopicker")
 
 @OptIn(
     ExperimentalAnimationApi::class

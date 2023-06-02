@@ -12,7 +12,8 @@ data class InitialCreateLoginUiState(
     val url: String? = null,
     val packageInfoUi: PackageInfoUi? = null,
     val aliasItem: AliasItem? = null,
-    val primaryTotp: String? = null
+    val navTotpUri: String? = null,
+    val navTotpIndex: Int = -1
 )
 
 val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run {
@@ -35,7 +36,7 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
                     packageName to it.packageInfoUi?.packageName,
                     appName to it.packageInfoUi?.appName,
                     aliasItem to it.aliasItem,
-                    primaryTotp to it.primaryTotp,
+                    primaryTotp to it.navTotpUri,
                 )
             } else {
                 emptyMap()
@@ -57,7 +58,7 @@ val InitialCreateLoginUiStateSaver: Saver<InitialCreateLoginUiState?, Any> = run
                     url = values[url] as? String,
                     packageInfoUi = packageInfoUi,
                     aliasItem = values[aliasItem] as? AliasItem,
-                    primaryTotp = values[primaryTotp] as? String
+                    navTotpUri = values[primaryTotp] as? String
                 )
             } else {
                 null

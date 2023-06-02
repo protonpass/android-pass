@@ -50,6 +50,7 @@ import proton.android.pass.featureitemcreate.impl.note.EditNote
 import proton.android.pass.featureitemcreate.impl.note.createNoteGraph
 import proton.android.pass.featureitemcreate.impl.note.updateNoteGraph
 import proton.android.pass.featureitemcreate.impl.totp.CameraTotp
+import proton.android.pass.featureitemcreate.impl.totp.INDEX_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.PhotoPickerTotp
 import proton.android.pass.featureitemcreate.impl.totp.TOTP_NAV_PARAMETER_KEY
 import proton.android.pass.featureitemcreate.impl.totp.createTotpGraph
@@ -339,6 +340,7 @@ fun NavGraphBuilder.appGraph(
                 BaseLoginNavigation.Close -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }
+
                 is BaseLoginNavigation.CreateAlias -> appNavigator.navigate(
                     destination = CreateAliasBottomSheet,
                     route = CreateAliasBottomSheet.createNavRoute(
@@ -377,7 +379,11 @@ fun NavGraphBuilder.appGraph(
                     }
                 }
 
-                BaseLoginNavigation.ScanTotp -> appNavigator.navigate(CameraTotp)
+                is BaseLoginNavigation.ScanTotp -> appNavigator.navigate(
+                    destination = CameraTotp,
+                    route = CameraTotp.createNavRoute(it.index)
+                )
+
                 BaseLoginNavigation.Upgrade -> onNavigate(AppNavigation.Upgrade)
 
                 is BaseLoginNavigation.AliasOptions -> appNavigator.navigate(
@@ -424,6 +430,7 @@ fun NavGraphBuilder.appGraph(
                         backDestination = backDestination
                     )
                 }
+
                 BaseLoginNavigation.RemovedCustomField -> dismissBottomSheet {
                     appNavigator.onBackClick()
                 }
@@ -431,7 +438,11 @@ fun NavGraphBuilder.appGraph(
         }
     )
     createTotpGraph(
-        onUriReceived = { totp -> appNavigator.navigateUpWithResult(TOTP_NAV_PARAMETER_KEY, totp) },
+        onSuccess = { totp, index ->
+            val values = mutableMapOf<String, Any>(TOTP_NAV_PARAMETER_KEY to totp)
+            index?.let { values.put(INDEX_NAV_PARAMETER_KEY, it) }
+            appNavigator.navigateUpWithResult(values)
+        },
         onCloseTotp = { appNavigator.onBackClick() },
         onOpenImagePicker = {
             val backDestination = when {

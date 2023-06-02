@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
+import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.form.SimpleNoteSection
 import proton.android.pass.composecomponents.impl.item.LinkedAppsListSection
@@ -162,7 +163,8 @@ internal fun LoginItemForm(
                         keyboardController?.hide()
                     },
                     onScanCode = {
-                        onNavigate(BaseLoginNavigation.ScanTotp)
+                        val index = (focusedField as? LoginCustomField)?.index
+                        onNavigate(BaseLoginNavigation.ScanTotp(index.toOption()))
                         keyboardController?.hide()
                     }
                 )

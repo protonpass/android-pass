@@ -20,6 +20,7 @@ import proton.android.pass.preferences.HasDismissedTrialBanner
 import proton.android.pass.preferences.TestPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.pass.domain.Plan
+import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 
 class OnBoardingTipsViewModelTest {
@@ -129,9 +130,9 @@ class OnBoardingTipsViewModelTest {
         val plan = Plan(
             planType = planType,
             hideUpgrade = false,
-            vaultLimit = 1,
-            aliasLimit = 1,
-            totpLimit = 1,
+            vaultLimit = PlanLimit.Unlimited,
+            aliasLimit = PlanLimit.Unlimited,
+            totpLimit = PlanLimit.Unlimited,
             updatedAt = 123
         )
         getUserPlan.setResult(Result.success(plan))

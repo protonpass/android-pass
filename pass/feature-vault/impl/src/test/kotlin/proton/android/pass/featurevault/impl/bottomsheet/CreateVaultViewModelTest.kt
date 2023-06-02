@@ -18,6 +18,7 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestShare
 import proton.pass.domain.Plan
+import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 import proton.pass.domain.ShareColor
 import proton.pass.domain.ShareIcon
@@ -150,9 +151,9 @@ class CreateVaultViewModelTest {
                 isUpgradeAvailable = true,
                 plan = Plan(
                     planType = PlanType.Free,
-                    vaultLimit = 2,
-                    aliasLimit = 0,
-                    totpLimit = 0,
+                    vaultLimit = PlanLimit.Limited(2),
+                    aliasLimit = PlanLimit.Limited(0),
+                    totpLimit = PlanLimit.Limited(0),
                     updatedAt = 0,
                     hideUpgrade = false
                 ),
@@ -172,9 +173,9 @@ class CreateVaultViewModelTest {
                 isUpgradeAvailable = false,
                 plan = Plan(
                     planType = PlanType.Free,
-                    vaultLimit = 1,
-                    aliasLimit = 0,
-                    totpLimit = 0,
+                    vaultLimit = PlanLimit.Limited(1),
+                    aliasLimit = PlanLimit.Limited(0),
+                    totpLimit = PlanLimit.Limited(0),
                     updatedAt = 0,
                     hideUpgrade = false
                 ),
@@ -194,9 +195,9 @@ class CreateVaultViewModelTest {
                 isUpgradeAvailable = true,
                 plan = Plan(
                     planType = PlanType.Free,
-                    vaultLimit = 1,
-                    aliasLimit = 0,
-                    totpLimit = 0,
+                    vaultLimit = PlanLimit.Limited(1),
+                    aliasLimit = PlanLimit.Limited(0),
+                    totpLimit = PlanLimit.Limited(0),
                     updatedAt = 0,
                     hideUpgrade = false
                 ),

@@ -13,6 +13,7 @@ import proton.android.pass.data.impl.fakes.TestLocalItemDataSource
 import proton.android.pass.data.impl.local.ItemWithTotp
 import proton.pass.domain.ItemId
 import proton.pass.domain.Plan
+import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 import proton.pass.domain.ShareId
 import kotlin.time.Duration.Companion.days
@@ -94,9 +95,9 @@ class CanDisplayTotpImplTest {
                 Plan(
                     planType = planType,
                     hideUpgrade = false,
-                    vaultLimit = 1,
-                    aliasLimit = 1,
-                    totpLimit = totpLimit,
+                    vaultLimit = PlanLimit.Limited(1),
+                    aliasLimit = PlanLimit.Limited(1),
+                    totpLimit = PlanLimit.Limited(totpLimit),
                     updatedAt = Clock.System.now().epochSeconds
                 )
             )

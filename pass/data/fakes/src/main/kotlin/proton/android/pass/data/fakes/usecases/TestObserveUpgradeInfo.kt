@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.pass.domain.Plan
+import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -26,9 +27,9 @@ class TestObserveUpgradeInfo @Inject constructor() : ObserveUpgradeInfo {
             isUpgradeAvailable = false,
             plan = Plan(
                 planType = PlanType.Free,
-                vaultLimit = 0,
-                aliasLimit = 0,
-                totpLimit = 0,
+                vaultLimit = PlanLimit.Limited(0),
+                aliasLimit = PlanLimit.Limited(0),
+                totpLimit = PlanLimit.Limited(0),
                 updatedAt = 0,
                 hideUpgrade = false,
             ),

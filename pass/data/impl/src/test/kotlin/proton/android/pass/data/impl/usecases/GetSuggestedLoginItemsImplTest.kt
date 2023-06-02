@@ -24,6 +24,7 @@ import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestItem
 import proton.pass.domain.Item
 import proton.pass.domain.Plan
+import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
@@ -178,9 +179,9 @@ class GetSuggestedLoginItemsImplTest {
     private fun createPlan(planType: PlanType) = Plan(
         planType = planType,
         hideUpgrade = false,
-        vaultLimit = 1,
-        aliasLimit = 1,
-        totpLimit = 1,
+        vaultLimit = PlanLimit.Limited(1),
+        aliasLimit = PlanLimit.Limited(1),
+        totpLimit = PlanLimit.Limited(1),
         updatedAt = Clock.System.now().epochSeconds
     )
 }

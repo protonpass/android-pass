@@ -7,6 +7,7 @@ import kotlinx.datetime.Clock
 import me.proton.core.domain.entity.UserId
 import proton.android.pass.data.api.usecases.GetUserPlan
 import proton.pass.domain.Plan
+import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -28,9 +29,9 @@ class TestGetUserPlan @Inject constructor() : GetUserPlan {
         val DEFAULT_PLAN = Plan(
             planType = PlanType.Free,
             hideUpgrade = false,
-            vaultLimit = 10,
-            aliasLimit = 10,
-            totpLimit = 10,
+            vaultLimit = PlanLimit.Limited(10),
+            aliasLimit = PlanLimit.Limited(10),
+            totpLimit = PlanLimit.Limited(10),
             updatedAt = Clock.System.now().epochSeconds
         )
     }

@@ -14,6 +14,7 @@ import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
 import proton.pass.domain.Plan
+import proton.pass.domain.PlanLimit
 import proton.pass.domain.PlanType
 
 class AccountViewModelTest {
@@ -51,9 +52,9 @@ class AccountViewModelTest {
         val planType = PlanType.Paid(internal = "internal", humanReadable = "testplan")
         val plan = Plan(
             planType = planType,
-            vaultLimit = 0,
-            aliasLimit = 0,
-            totpLimit = 0,
+            vaultLimit = PlanLimit.Unlimited,
+            aliasLimit = PlanLimit.Unlimited,
+            totpLimit = PlanLimit.Unlimited,
             updatedAt = 0,
             hideUpgrade = false
         )

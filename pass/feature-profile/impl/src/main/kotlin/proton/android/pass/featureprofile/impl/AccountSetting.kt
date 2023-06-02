@@ -7,17 +7,21 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.defaultWeak
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.composecomponents.impl.R
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
+import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun AccountSetting(
@@ -34,7 +38,7 @@ fun AccountSetting(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         Text(
-            text = stringResource(proton.android.pass.featureprofile.impl.R.string.profile_option_account),
+            text = stringResource(R.string.profile_option_account),
             style = ProtonTheme.typography.defaultWeak,
             color = PassTheme.colors.textNorm
         )
@@ -44,11 +48,31 @@ fun AccountSetting(
         PlanInfoIndicator(planInfo = planInfo)
 
         Icon(
-            painter = painterResource(R.drawable.ic_chevron_tiny_right),
-            contentDescription = stringResource(R.string.setting_option_icon_content_description),
+            painter = painterResource(CompR.drawable.ic_chevron_tiny_right),
+            contentDescription = stringResource(CompR.string.setting_option_icon_content_description),
             tint = PassTheme.colors.textHint
         )
     }
 }
 
+@Preview
+@Composable
+fun AccountSettingPreview(
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
+) {
+    val info = if (input.second) {
+        PlanInfo.Trial
+    } else {
+        PlanInfo.Unlimited(planName = "Example plan")
+    }
+
+    PassTheme(isDark = input.first) {
+        Surface {
+            AccountSetting(
+                planInfo = info,
+                onClick = {}
+            )
+        }
+    }
+}
 

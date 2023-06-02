@@ -21,8 +21,8 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldLabel
 import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolder
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
-import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
+import proton.android.pass.featureitemcreate.impl.login.LoginItemValidationErrors
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
 
@@ -40,6 +40,7 @@ fun TotpCustomFieldEntry(
     val value = when (val state = content.value) {
         is HiddenState.Concealed -> ""
         is HiddenState.Revealed -> state.clearText
+        is HiddenState.Empty -> ""
     }
 
     val (isError, errorMessage) = when (validationError) {

@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableSet
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.AUTOFILL
+import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTipPage.TRIAL
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -42,6 +43,22 @@ fun OnBoardingTipContent(
                     AutofillCard(
                         onClick = { onClick(AUTOFILL) },
                         onDismiss = { onDismiss(AUTOFILL) }
+                    )
+                }
+            }
+            if (tipsSetToShow.contains(TRIAL)) {
+                val dismissState = rememberDismissState(
+                    confirmStateChange = {
+                        if (it != DismissValue.Default) {
+                            onDismiss(TRIAL)
+                        }
+                        true
+                    }
+                )
+                SwipeToDismiss(state = dismissState, background = {}) {
+                    TrialCard(
+                        onClick = { onClick(TRIAL) },
+                        onDismiss = { onDismiss(TRIAL) }
                     )
                 }
             }

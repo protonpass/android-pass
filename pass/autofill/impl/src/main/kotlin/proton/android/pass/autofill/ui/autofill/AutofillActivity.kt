@@ -22,7 +22,7 @@ import kotlinx.coroutines.runBlocking
 import proton.android.pass.autofill.DatasetBuilderOptions
 import proton.android.pass.autofill.DatasetUtils
 import proton.android.pass.autofill.Utils
-import proton.android.pass.autofill.di.UserPreferenceModule
+import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.asAndroid
@@ -114,7 +114,7 @@ class AutofillActivity : FragmentActivity() {
     }
 
     private fun setSecureMode() {
-        val factory = EntryPointAccessors.fromApplication(this, UserPreferenceModule::class.java)
+        val factory = EntryPointAccessors.fromApplication(this, UserPreferenceEntryPoint::class.java)
         val repository = factory.getRepository()
         val setting = runBlocking {
             repository.getAllowScreenshotsPreference()

@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import proton.android.pass.commonui.api.PassTheme
-import proton.android.pass.commonui.api.ThemePreviewProvider
+import proton.android.pass.commonui.api.ThemedBooleanPreviewProvider
 import proton.android.pass.commonui.api.bottomSheet
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemList
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetTitle
@@ -43,7 +43,7 @@ fun SelectVaultBottomsheetContent(
         modifier = modifier.bottomSheet(),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        if (state.canUpgrade) {
+        if (state.showUpgradeMessage) {
             InfoBanner(
                 modifier = Modifier.padding(16.dp, 0.dp),
                 backgroundColor = PassTheme.colors.interactionNormMinor1,
@@ -69,10 +69,10 @@ fun SelectVaultBottomsheetContent(
             items = state.vaults
                 .map {
                     val isSelected = it.vault.shareId == state.selected.vault.shareId
-                    val enabled = if (state.canUpgrade) {
-                        isSelected
-                    } else {
+                    val enabled = if (state.canSelectOtherVaults) {
                         true
+                    } else {
+                        isSelected
                     }
                     BottomSheetVaultRow(
                         vault = it,
@@ -90,7 +90,7 @@ fun SelectVaultBottomsheetContent(
 @Preview
 @Composable
 fun SelectVaultBottomsheetContentPreview(
-    @PreviewParameter(ThemePreviewProvider::class) isDark: Boolean
+    @PreviewParameter(ThemedBooleanPreviewProvider::class) input: Pair<Boolean, Boolean>
 ) {
     val selectedVault = VaultWithItemCount(
         vault = Vault(
@@ -101,7 +101,7 @@ fun SelectVaultBottomsheetContentPreview(
         activeItemCount = 12,
         trashedItemCount = 0,
     )
-    PassTheme(isDark = isDark) {
+    PassTheme(isDark = input.first) {
         Surface {
             SelectVaultBottomsheetContent(
                 state = SelectVaultUiState.Success(
@@ -120,7 +120,8 @@ fun SelectVaultBottomsheetContentPreview(
                         )
                     ),
                     selected = selectedVault,
-                    canUpgrade = false
+                    canSelectOtherVaults = input.second,
+                    showUpgradeMessage = input.second
                 ),
                 onVaultClick = {},
                 onUpgrade = {}

@@ -84,22 +84,32 @@ class SettingsViewModel @Inject constructor(
     private val isLoadingState: MutableStateFlow<IsLoadingState> =
         MutableStateFlow(IsLoadingState.NotLoading)
 
-    private val primaryVaultFlow: Flow<Option<Vault>> = observeVaults()
+    private val primaryVaultFlow: Flow<PrimaryVaultWrapper> = observeVaults()
         .asLoadingResult()
         .map { res ->
             when (res) {
-                LoadingResult.Loading -> None
+                LoadingResult.Loading -> PrimaryVaultWrapper(primaryVault = None, showSelector = false)
                 is LoadingResult.Error -> {
                     PassLogger.e(TAG, res.exception, "Error observing vaults")
-                    None
+                    PrimaryVaultWrapper(primaryVault = None, showSelector = false)
                 }
                 is LoadingResult.Success -> {
                     val primary = res.data.firstOrNull { it.isPrimary }
                         ?: res.data.firstOrNull()
-                    primary.toOption()
+
+                    PrimaryVaultWrapper(
+                        primaryVault = primary.toOption(),
+                        showSelector = res.data.size > 1
+                    )
+
                 }
             }
         }
+
+    private data class PrimaryVaultWrapper(
+        val primaryVault: Option<Vault>,
+        val showSelector: Boolean
+    )
 
     val state: StateFlow<SettingsUiState> = combineN(
         preferencesState,
@@ -113,7 +123,8 @@ class SettingsViewModel @Inject constructor(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
             isLoadingState = loading,
-            primaryVault = primaryVault,
+            primaryVault = primaryVault.primaryVault,
+            showPrimaryVaultSelector = primaryVault.showSelector,
             useFavicons = preferences.useFavicons,
             allowScreenshots = allowScreenshots,
             shareTelemetry = deviceSettings.isTelemetryEnabled,

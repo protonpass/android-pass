@@ -25,6 +25,8 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
     private val clearClipboardPreference = MutableStateFlow(ClearClipboardPreference.Never)
     private val useFaviconsPreference =
         MutableStateFlow<UseFaviconsPreference>(UseFaviconsPreference.Disabled)
+    private val allowScreenshotsPreference =
+        MutableStateFlow<AllowScreenshotsPreference>(AllowScreenshotsPreference.Disabled)
     private val lockAppPreference = MutableStateFlow(AppLockPreference.Never)
     private val passwordGenerationPreference = MutableStateFlow(
         PasswordGenerationPreference(
@@ -122,6 +124,16 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
 
     override fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference> =
         passwordGenerationPreference
+
+    override suspend fun setAllowScreenshotsPreference(
+        preference: AllowScreenshotsPreference
+    ): Result<Unit> {
+        allowScreenshotsPreference.emit(preference)
+        return Result.success(Unit)
+    }
+
+    override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> =
+        allowScreenshotsPreference
 
     override suspend fun clearPreferences(): Result<Unit> = Result.success(Unit)
 

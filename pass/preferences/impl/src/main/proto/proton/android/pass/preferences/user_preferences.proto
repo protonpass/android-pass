@@ -21,4 +21,5 @@ message UserPreferences {
   LockAppPrefProto lock_app = 9;
   PasswordGenerationPrefProto password_generation = 10;
   BooleanPrefProto has_dismissed_trial_banner = 11;
+  BooleanPrefProto allow_screenshots = 12;
 }

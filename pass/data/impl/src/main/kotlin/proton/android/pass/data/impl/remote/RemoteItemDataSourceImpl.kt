@@ -4,6 +4,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
+import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.impl.api.PasswordManagerApi
 import proton.android.pass.data.impl.remote.RemoteDataSourceConstants.PAGE_SIZE
 import proton.android.pass.data.impl.requests.CreateAliasRequest
@@ -22,6 +23,7 @@ import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 const val CODE_CANNOT_CREATE_MORE_ALIASES = 300_007
+const val CODE_USER_EMAIL_NOT_VALIDATED = 300_009
 
 class RemoteItemDataSourceImpl @Inject constructor(
     private val api: ApiProvider
@@ -48,8 +50,10 @@ class RemoteItemDataSourceImpl @Inject constructor(
             is ApiResult.Success -> return res.value.item
             is ApiResult.Error -> {
                 if (res is ApiResult.Error.Http) {
-                    if (res.proton?.code == CODE_CANNOT_CREATE_MORE_ALIASES) {
-                        throw CannotCreateMoreAliasesError()
+                    when (res.proton?.code) {
+                        CODE_CANNOT_CREATE_MORE_ALIASES -> throw CannotCreateMoreAliasesError()
+                        CODE_USER_EMAIL_NOT_VALIDATED -> throw EmailNotValidatedError()
+                        else -> {}
                     }
                 }
                 throw res.cause ?: Exception("Create alias failed")
@@ -68,8 +72,10 @@ class RemoteItemDataSourceImpl @Inject constructor(
             is ApiResult.Success -> return res.value.bundle
             is ApiResult.Error -> {
                 if (res is ApiResult.Error.Http) {
-                    if (res.proton?.code == CODE_CANNOT_CREATE_MORE_ALIASES) {
-                        throw CannotCreateMoreAliasesError()
+                    when (res.proton?.code) {
+                        CODE_CANNOT_CREATE_MORE_ALIASES -> throw CannotCreateMoreAliasesError()
+                        CODE_USER_EMAIL_NOT_VALIDATED -> throw EmailNotValidatedError()
+                        else -> {}
                     }
                 }
                 throw res.cause ?: Exception("Create item and alias failed")

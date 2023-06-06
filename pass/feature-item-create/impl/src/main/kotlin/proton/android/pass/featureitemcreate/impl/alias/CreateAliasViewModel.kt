@@ -30,6 +30,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
+import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
@@ -337,13 +338,16 @@ open class CreateAliasViewModel @Inject constructor(
     }
 
     private suspend fun onCreateAliasError(cause: Throwable?) {
-        if (cause is CannotCreateMoreAliasesError) {
-            snackbarDispatcher(AliasSnackbarMessage.CannotCreateMoreAliasesError)
-        } else {
-            val defaultMessage = "Create alias error"
-            PassLogger.e(TAG, cause ?: Exception(defaultMessage), defaultMessage)
-            snackbarDispatcher(ItemCreationError)
+        val message = when (cause) {
+            is CannotCreateMoreAliasesError -> AliasSnackbarMessage.CannotCreateMoreAliasesError
+            is EmailNotValidatedError -> AliasSnackbarMessage.EmailNotValidatedError
+            else -> {
+                val defaultMessage = "Create alias error"
+                PassLogger.e(TAG, cause ?: Exception(defaultMessage), defaultMessage)
+                ItemCreationError
+            }
         }
+        snackbarDispatcher(message)
     }
 
     fun changeVault(shareId: ShareId) = viewModelScope.launch {

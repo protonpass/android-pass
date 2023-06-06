@@ -28,6 +28,7 @@ import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
+import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
@@ -40,6 +41,7 @@ import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.CannotCreateMoreAliases
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.EmailNotValidated
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
@@ -296,6 +298,10 @@ class CreateLoginViewModel @Inject constructor(
             when (it) {
                 is CannotCreateMoreAliasesError -> {
                     snackbarDispatcher(CannotCreateMoreAliases)
+                }
+
+                is EmailNotValidatedError -> {
+                    snackbarDispatcher(EmailNotValidated)
                 }
 
                 else -> {

@@ -1,6 +1,5 @@
 package proton.android.pass.featurevault.impl.bottomsheet.select
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,6 +11,9 @@ import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.common.api.getOrNull
+import proton.android.pass.commonui.api.SavedStateHandleProvider
+import proton.android.pass.commonui.api.require
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
 import proton.android.pass.featurevault.impl.VaultSnackbarMessage
@@ -25,17 +27,25 @@ class SelectVaultViewModel @Inject constructor(
     observeVaultsWithItemCount: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
     snackbarDispatcher: SnackbarDispatcher,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandleProvider,
+    canPerformPaidAction: CanPerformPaidAction
 ) : ViewModel() {
 
-    private val selected: ShareId =
-        ShareId(requireNotNull(savedStateHandle.get<String>(SelectedVaultArg.key)))
+    private val selected: ShareId = ShareId(savedStateHandle.get().require(SelectedVaultArg.key))
 
     val state: StateFlow<SelectVaultUiState> = combine(
         observeVaultsWithItemCount().asLoadingResult(),
-        observeUpgradeInfo().asLoadingResult()
-    ) { vaultsResult, upgradeResult ->
-        val canUpgrade = upgradeResult.getOrNull()?.isUpgradeAvailable ?: false
+        observeUpgradeInfo().asLoadingResult(),
+        canPerformPaidAction().asLoadingResult()
+    ) { vaultsResult, upgradeResult, selectOtherVaultResult ->
+        val canSelectOtherVault = selectOtherVaultResult.getOrNull() ?: false
+
+        val showUpgradeMessage = if (canSelectOtherVault) {
+            false
+        } else {
+            upgradeResult.getOrNull()?.isUpgradeAvailable ?: false
+        }
+
         when (vaultsResult) {
             LoadingResult.Loading -> SelectVaultUiState.Loading
             is LoadingResult.Success -> {
@@ -44,7 +54,8 @@ class SelectVaultViewModel @Inject constructor(
                     SelectVaultUiState.Success(
                         vaults = vaultsResult.data.toPersistentList(),
                         selected = vaultsResult.data.first { it.vault.shareId == selected },
-                        canUpgrade = canUpgrade
+                        showUpgradeMessage = showUpgradeMessage,
+                        canSelectOtherVaults = canSelectOtherVault
                     )
                 } else {
                     PassLogger.w(TAG, "Error finding current vault")

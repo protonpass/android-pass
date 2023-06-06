@@ -51,6 +51,7 @@ fun SettingsContent(
             )
             PrivacySection(
                 useFavicons = state.useFavicons.value(),
+                allowScreenshots = state.allowScreenshots.value(),
                 onEvent = onEvent
             )
             PrimaryVaultSection(

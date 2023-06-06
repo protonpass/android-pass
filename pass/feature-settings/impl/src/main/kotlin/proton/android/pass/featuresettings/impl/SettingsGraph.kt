@@ -22,6 +22,7 @@ sealed interface SettingsNavigation {
     object DismissBottomSheet : SettingsNavigation
     object ViewLogs : SettingsNavigation
     object PrimaryVault : SettingsNavigation
+    object Restart : SettingsNavigation
 }
 
 @Suppress("LongParameterList")

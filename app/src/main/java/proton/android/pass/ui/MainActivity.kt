@@ -18,8 +18,8 @@ import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import me.proton.core.compose.component.ProtonCenteredProgress
+import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.commonui.api.setSecureMode
-import proton.android.pass.di.UserPreferenceModule
 import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.ui.launcher.LauncherViewModel
 import proton.android.pass.ui.launcher.LauncherViewModel.State.AccountNeeded
@@ -90,7 +90,7 @@ class MainActivity : FragmentActivity() {
     }
 
     private fun setSecureMode() {
-        val factory = EntryPointAccessors.fromApplication(this, UserPreferenceModule::class.java)
+        val factory = EntryPointAccessors.fromApplication(this, UserPreferenceEntryPoint::class.java)
         val repository = factory.getRepository()
         val setting = runBlocking {
             repository.getAllowScreenshotsPreference()

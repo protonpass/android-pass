@@ -7,6 +7,6 @@ import proton.android.pass.preferences.UserPreferencesRepository
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)
-interface UserPreferenceModule {
+interface UserPreferenceEntryPoint {
     fun getRepository(): UserPreferencesRepository
 }

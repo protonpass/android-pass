@@ -232,7 +232,9 @@ internal class CreateLoginViewModelTest {
                             contents = state.baseLoginUiState.contents.copy(
                                 title = initialContents.title!!,
                                 username = initialContents.username!!,
-                                password = HiddenState.Concealed(initialContents.password!!),
+                                password = HiddenState.Concealed(
+                                    TestEncryptionContext.encrypt(initialContents.password!!)
+                                ),
                                 urls = listOf(initialContents.url!!)
                             ),
                             totpUiState = TotpUiState.Success,

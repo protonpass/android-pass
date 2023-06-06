@@ -34,7 +34,7 @@ data class SettingsUiState(
             isLoadingState = IsLoadingState.NotLoading,
             primaryVault = None,
             useFavicons = UseFaviconsPreference.Enabled,
-            allowScreenshots = AllowScreenshotsPreference.Enabled,
+            allowScreenshots = AllowScreenshotsPreference.Disabled,
             shareTelemetry = true,
             shareCrashes = true,
             event = SettingsEvent.Unknown

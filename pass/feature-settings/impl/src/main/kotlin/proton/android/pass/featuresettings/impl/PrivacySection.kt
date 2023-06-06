@@ -23,6 +23,7 @@ import proton.android.pass.composecomponents.impl.setting.SettingToggle
 fun PrivacySection(
     modifier: Modifier = Modifier,
     useFavicons: Boolean,
+    allowScreenshots: Boolean,
     onEvent: (SettingsContentEvent) -> Unit
 ) {
     Column(
@@ -46,6 +47,19 @@ fun PrivacySection(
             text = stringResource(R.string.settings_use_favicons_preference_subtitle),
             style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
         )
+
+        Box(modifier = Modifier.roundedContainerNorm()) {
+            SettingToggle(
+                text = stringResource(R.string.settings_allow_screenshots_preference_title),
+                isChecked = allowScreenshots,
+                onClick = { onEvent(SettingsContentEvent.AllowScreenshotsChange(it)) }
+            )
+        }
+
+        Text(
+            text = stringResource(R.string.settings_allow_screenshots_preference_subtitle),
+            style = ProtonTheme.typography.captionWeak.copy(PassTheme.colors.textWeak)
+        )
     }
 }
 
@@ -58,6 +72,7 @@ fun UseFaviconsSectionPreview(
         Surface {
             PrivacySection(
                 useFavicons = input.second,
+                allowScreenshots = input.second,
                 onEvent = {}
             )
         }

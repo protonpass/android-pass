@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.isDisabled
@@ -59,6 +60,7 @@ import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.log.api.PassLogger
+import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -221,6 +223,13 @@ class LauncherViewModel @Inject constructor(
         getPrimaryUserIdOrNull()?.let {
             userSettingsOrchestrator.startPasswordManagementWorkflow(it)
         }
+    }
+
+    fun getScreenshotsAllowed(): AllowScreenshotsPreference = runBlocking {
+        preferenceRepository
+            .getAllowScreenshotsPreference()
+            .firstOrNull()
+            ?: AllowScreenshotsPreference.Enabled
     }
 
     private suspend fun clearPassUserData(accounts: List<Account>) {

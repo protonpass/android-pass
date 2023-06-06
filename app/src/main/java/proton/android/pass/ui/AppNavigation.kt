@@ -8,4 +8,5 @@ sealed interface AppNavigation {
     object Subscription : AppNavigation
     object Upgrade : AppNavigation
     object Finish : AppNavigation
+    object Restart : AppNavigation
 }

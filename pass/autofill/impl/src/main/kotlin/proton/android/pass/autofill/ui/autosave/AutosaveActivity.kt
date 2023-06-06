@@ -8,9 +8,15 @@ import androidx.activity.viewModels
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.runBlocking
+import proton.android.pass.autofill.di.UserPreferenceModule
 import proton.android.pass.autofill.entities.SaveInformation
 import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.extensions.marshalParcelable
+import proton.android.pass.commonui.api.setSecureMode
+import proton.android.pass.preferences.AllowScreenshotsPreference
 
 @AndroidEntryPoint
 class AutoSaveActivity : FragmentActivity() {
@@ -18,6 +24,7 @@ class AutoSaveActivity : FragmentActivity() {
     private val viewModel: AutosaveActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setSecureMode()
         super.onCreate(savedInstanceState)
         viewModel.register(this)
 
@@ -52,6 +59,17 @@ class AutoSaveActivity : FragmentActivity() {
 
     private fun finishApp() {
         finish()
+    }
+
+    private fun setSecureMode() {
+        val factory = EntryPointAccessors.fromApplication(this, UserPreferenceModule::class.java)
+        val repository = factory.getRepository()
+        val setting = runBlocking {
+            repository.getAllowScreenshotsPreference()
+                .firstOrNull()
+                ?: AllowScreenshotsPreference.Enabled
+        }
+        setSecureMode(setting)
     }
 
     companion object {

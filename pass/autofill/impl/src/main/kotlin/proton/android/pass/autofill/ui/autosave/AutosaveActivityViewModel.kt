@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AutosaveActivityViewModel @Inject constructor(
-    private val accountOrchestrators: AccountOrchestrators,
+    private val accountOrchestrators: AccountOrchestrators
 ) : ViewModel() {
 
     fun register(context: ComponentActivity) {

@@ -1,8 +1,6 @@
 package proton.android.pass.ui
 
-import android.os.Build
 import android.os.Bundle
-import android.view.WindowManager
 import android.view.autofill.AutofillManager
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -16,8 +14,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.runBlocking
 import me.proton.core.compose.component.ProtonCenteredProgress
-import proton.android.pass.BuildConfig
+import proton.android.pass.commonui.api.setSecureMode
+import proton.android.pass.di.UserPreferenceModule
+import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.ui.launcher.LauncherViewModel
 import proton.android.pass.ui.launcher.LauncherViewModel.State.AccountNeeded
 import proton.android.pass.ui.launcher.LauncherViewModel.State.PrimaryExist
@@ -31,7 +34,7 @@ class MainActivity : FragmentActivity() {
 
     @OptIn(ExperimentalLifecycleComposeApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
-        setupSecureMode()
+        setSecureMode()
         val splashScreen = installSplashScreen()
 
         super.onCreate(savedInstanceState)
@@ -67,6 +70,7 @@ class MainActivity : FragmentActivity() {
                                 is AppNavigation.SignOut -> launcherViewModel.remove(it.userId)
                                 AppNavigation.Subscription -> launcherViewModel.subscription()
                                 AppNavigation.Upgrade -> launcherViewModel.upgrade()
+                                AppNavigation.Restart -> restartApp()
                             }
                         }
                     )
@@ -74,21 +78,25 @@ class MainActivity : FragmentActivity() {
         }
     }
 
-    private fun setupSecureMode() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            setRecentsScreenshotEnabled(false)
-        }
-        if (!BuildConfig.ALLOW_SCREENSHOTS) {
-            // Release builds should secure window so that content is protected
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_SECURE,
-                WindowManager.LayoutParams.FLAG_SECURE
-            )
-        }
+    private fun restartApp() {
+        val intent = intent
+        finish()
+        startActivity(intent)
     }
 
     private fun disableAutofill() {
         val autofillManager = getSystemService(AutofillManager::class.java)
         autofillManager.disableAutofillServices()
+    }
+
+    private fun setSecureMode() {
+        val factory = EntryPointAccessors.fromApplication(this, UserPreferenceModule::class.java)
+        val repository = factory.getRepository()
+        val setting = runBlocking {
+            repository.getAllowScreenshotsPreference()
+                .firstOrNull()
+                ?: AllowScreenshotsPreference.Enabled
+        }
+        setSecureMode(setting)
     }
 }

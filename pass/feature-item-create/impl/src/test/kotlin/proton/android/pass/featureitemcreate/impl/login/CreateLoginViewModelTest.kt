@@ -17,6 +17,7 @@ import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
+import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
@@ -289,6 +290,30 @@ internal class CreateLoginViewModelTest {
 
             val message = snackbarDispatcher.snackbarMessage.first().value()!!
             assertThat(message).isInstanceOf(LoginSnackbarMessages.ItemCreationError::class.java)
+        }
+    }
+
+    @Test
+    fun `if email is not validated when creating item with alias a message is emitted`() = runTest {
+        val shareId = ShareId("shareId")
+        setInitialContents()
+        sendInitialVault(shareId)
+        setTestAlias()
+        createItemAndAlias.setResult(Result.failure(EmailNotValidatedError()))
+
+        instance.createLoginUiState.test {
+            skipItems(1) // Initial state
+            instance.createItem()
+
+            skipItems(1) // Loading
+            val item = awaitItem()
+            assertThat(createItemAndAlias.hasBeenInvoked()).isTrue()
+
+            assertThat(item.baseLoginUiState.isLoadingState).isEqualTo(IsLoadingState.NotLoading)
+            assertThat(item.baseLoginUiState.isItemSaved).isEqualTo(ItemSavedState.Unknown)
+
+            val message = snackbarDispatcher.snackbarMessage.first().value()!!
+            assertThat(message).isInstanceOf(LoginSnackbarMessages.EmailNotValidated::class.java)
         }
     }
 

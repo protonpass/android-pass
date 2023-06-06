@@ -37,5 +37,8 @@ interface UserPreferencesRepository {
     suspend fun setPasswordGenerationPreference(preference: PasswordGenerationPreference): Result<Unit>
     fun getPasswordGenerationPreference(): Flow<PasswordGenerationPreference>
 
+    suspend fun setAllowScreenshotsPreference(preference: AllowScreenshotsPreference): Result<Unit>
+    fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference>
+
     suspend fun clearPreferences(): Result<Unit>
 }

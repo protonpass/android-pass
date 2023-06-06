@@ -4,6 +4,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
+import androidx.compose.ui.test.performScrollTo
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.flow.first
@@ -85,21 +86,25 @@ class SettingsScreenTest {
     @Test
     fun onPrimaryVaultClick() {
         val checker = CallChecker<Unit>()
-        composeTestRule.setContent {
-            PassTheme {
-                SettingsScreen(
-                    onNavigate = {
-                        if (it is SettingsNavigation.PrimaryVault) {
-                            checker.call()
+        composeTestRule.apply {
+            setContent {
+                PassTheme {
+                    SettingsScreen(
+                        onNavigate = {
+                            if (it is SettingsNavigation.PrimaryVault) {
+                                checker.call()
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
+
+            val text = activity.getString(R.string.settings_primary_vault_vault_selector_title)
+            onNodeWithText(text).performScrollTo()
+            onNodeWithText(text).performClick()
+
+            waitUntil { checker.isCalled }
         }
-        composeTestRule
-            .onNodeWithText(composeTestRule.activity.getString(R.string.settings_primary_vault_vault_selector_title))
-            .performClick()
-        composeTestRule.waitUntil { checker.isCalled }
     }
 
     @Test

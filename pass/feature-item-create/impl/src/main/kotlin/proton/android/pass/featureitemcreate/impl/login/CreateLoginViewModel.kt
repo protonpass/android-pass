@@ -196,7 +196,11 @@ class CreateLoginViewModel @Inject constructor(
             }
 
             val password = initialContents.password
-                ?.let { encrypted -> HiddenState.Concealed(encrypted) }
+                ?.let { password ->
+                    encryptionContextProvider.withEncryptionContext {
+                        HiddenState.Concealed(encrypt(password))
+                    }
+                }
                 ?: currentValue.password
             val primaryTotp = updatePrimaryTotpIfNeeded(
                 navTotpUri = initialContents.navTotpUri,

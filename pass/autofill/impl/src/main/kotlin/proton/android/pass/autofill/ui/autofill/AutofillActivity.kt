@@ -119,7 +119,7 @@ class AutofillActivity : FragmentActivity() {
         val setting = runBlocking {
             repository.getAllowScreenshotsPreference()
                 .firstOrNull()
-                ?: AllowScreenshotsPreference.Enabled
+                ?: AllowScreenshotsPreference.Disabled
         }
         setSecureMode(setting)
     }

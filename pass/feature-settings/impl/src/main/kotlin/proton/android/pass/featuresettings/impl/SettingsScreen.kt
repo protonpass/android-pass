@@ -1,6 +1,7 @@
 package proton.android.pass.featuresettings.impl
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -17,6 +18,13 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(state.event) {
+        if (state.event == SettingsEvent.RestartApp) {
+            onNavigate(SettingsNavigation.Restart)
+        }
+    }
+
     val context = LocalContext.current
     SettingsContent(
         modifier = modifier,
@@ -24,6 +32,8 @@ fun SettingsScreen(
         onEvent = {
             when (it) {
                 is SettingsContentEvent.UseFaviconsChange -> viewModel.onUseFaviconsChange(it.value)
+                is SettingsContentEvent.AllowScreenshotsChange ->
+                    viewModel.onAllowScreenshotsChange(it.value)
                 is SettingsContentEvent.TelemetryChange -> viewModel.onTelemetryChange(it.value)
                 is SettingsContentEvent.CrashReportChange -> viewModel.onCrashReportChange(it.value)
                 SettingsContentEvent.ViewLogs -> onNavigate(SettingsNavigation.ViewLogs)

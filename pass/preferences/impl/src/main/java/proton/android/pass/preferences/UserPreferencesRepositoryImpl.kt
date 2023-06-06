@@ -233,7 +233,7 @@ class UserPreferencesRepositoryImpl @Inject constructor(
             .catch { exception -> handleExceptions(exception) }
             .map { preferences ->
                 AllowScreenshotsPreference.from(
-                    fromBooleanPrefProto(preferences.allowScreenshots, default = true)
+                    fromBooleanPrefProto(preferences.allowScreenshots)
                 )
             }
 

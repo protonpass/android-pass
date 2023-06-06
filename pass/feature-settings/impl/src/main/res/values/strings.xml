@@ -40,7 +40,7 @@
     <string name="settings_use_favicons_preference_title">Use web icons</string>
     <string name="settings_use_favicons_preference_subtitle">Decide if you want to view the website icons on your items.</string>
     <string name="settings_allow_screenshots_preference_title">Allow screenshots</string>
-    <string name="settings_allow_screenshots_preference_subtitle">Decide if you want to forbid taking screenshots of the app.</string>
+    <string name="settings_allow_screenshots_preference_subtitle">Decide if you want to allow taking screenshots of the app.</string>
     <string name="settings_clear_icon_cache_success">Icon cache cleared</string>
     <string name="settings_clear_icon_cache_error">Could not clear the icon cache</string>
     <string name="settings_share_telemetry">Share anonymous usage</string>

@@ -11,7 +11,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
-import proton.android.pass.autofill.di.UserPreferenceModule
+import proton.android.pass.autofill.di.UserPreferenceEntryPoint
 import proton.android.pass.autofill.entities.SaveInformation
 import proton.android.pass.autofill.extensions.deserializeParcelable
 import proton.android.pass.autofill.extensions.marshalParcelable
@@ -62,7 +62,7 @@ class AutoSaveActivity : FragmentActivity() {
     }
 
     private fun setSecureMode() {
-        val factory = EntryPointAccessors.fromApplication(this, UserPreferenceModule::class.java)
+        val factory = EntryPointAccessors.fromApplication(this, UserPreferenceEntryPoint::class.java)
         val repository = factory.getRepository()
         val setting = runBlocking {
             repository.getAllowScreenshotsPreference()

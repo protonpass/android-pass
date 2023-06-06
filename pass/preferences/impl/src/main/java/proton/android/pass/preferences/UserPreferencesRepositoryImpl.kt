@@ -10,6 +10,7 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@Suppress("TooManyFunctions")
 @Singleton
 class UserPreferencesRepositoryImpl @Inject constructor(
     private val dataStore: DataStore<UserPreferences>
@@ -215,6 +216,25 @@ class UserPreferencesRepositoryImpl @Inject constructor(
             .catch { exception -> handleExceptions(exception) }
             .map { preferences ->
                 HasDismissedTrialBanner.from(fromBooleanPrefProto(preferences.hasDismissedTrialBanner))
+            }
+
+    override suspend fun setAllowScreenshotsPreference(state: AllowScreenshotsPreference): Result<Unit> =
+        runCatching {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setAllowScreenshots(state.value().toBooleanPrefProto())
+                    .build()
+            }
+            return@runCatching
+        }
+
+    override fun getAllowScreenshotsPreference(): Flow<AllowScreenshotsPreference> =
+        dataStore.data
+            .catch { exception -> handleExceptions(exception) }
+            .map { preferences ->
+                AllowScreenshotsPreference.from(
+                    fromBooleanPrefProto(preferences.allowScreenshots, default = true)
+                )
             }
 
     override suspend fun clearPreferences(): Result<Unit> =

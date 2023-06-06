@@ -14,11 +14,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import proton.android.pass.autofill.DatasetBuilderOptions
 import proton.android.pass.autofill.DatasetUtils
 import proton.android.pass.autofill.Utils
+import proton.android.pass.autofill.di.UserPreferenceModule
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.entities.AutofillMappings
 import proton.android.pass.autofill.entities.asAndroid
@@ -28,6 +32,8 @@ import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.toOption
+import proton.android.pass.commonui.api.setSecureMode
+import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.pass.domain.Item
 
 @AndroidEntryPoint
@@ -36,6 +42,7 @@ class AutofillActivity : FragmentActivity() {
     private val viewModel: AutofillActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setSecureMode()
         super.onCreate(savedInstanceState)
         viewModel.register(this)
 
@@ -104,6 +111,17 @@ class AutofillActivity : FragmentActivity() {
         }
 
         return res
+    }
+
+    private fun setSecureMode() {
+        val factory = EntryPointAccessors.fromApplication(this, UserPreferenceModule::class.java)
+        val repository = factory.getRepository()
+        val setting = runBlocking {
+            repository.getAllowScreenshotsPreference()
+                .firstOrNull()
+                ?: AllowScreenshotsPreference.Enabled
+        }
+        setSecureMode(setting)
     }
 
     companion object {

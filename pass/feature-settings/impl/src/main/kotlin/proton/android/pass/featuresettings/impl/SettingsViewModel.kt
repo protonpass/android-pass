@@ -19,6 +19,7 @@ import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.asLoadingResult
+import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -27,6 +28,7 @@ import proton.android.pass.data.api.usecases.RefreshContent
 import proton.android.pass.image.api.ClearIconCache
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.AllowScreenshotsPreference
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
@@ -58,6 +60,14 @@ class SettingsViewModel @Inject constructor(
         preferencesRepository
             .getUseFaviconsPreference()
             .distinctUntilChanged()
+
+    private val allowScreenshotsState: Flow<AllowScreenshotsPreference> =
+        preferencesRepository
+            .getAllowScreenshotsPreference()
+            .distinctUntilChanged()
+
+    private val eventState: MutableStateFlow<SettingsEvent> =
+        MutableStateFlow(SettingsEvent.Unknown)
 
     data class PreferencesState(
         val theme: ThemePreference,
@@ -91,20 +101,24 @@ class SettingsViewModel @Inject constructor(
             }
         }
 
-    val state: StateFlow<SettingsUiState> = combine(
+    val state: StateFlow<SettingsUiState> = combineN(
         preferencesState,
         primaryVaultFlow,
         isLoadingState,
-        deviceSettingsRepository.observeDeviceSettings()
-    ) { preferences, primaryVault, loading, deviceSettings ->
+        deviceSettingsRepository.observeDeviceSettings(),
+        allowScreenshotsState,
+        eventState
+    ) { preferences, primaryVault, loading, deviceSettings, allowScreenshots, event ->
         SettingsUiState(
             themePreference = preferences.theme,
             copyTotpToClipboard = preferences.copyTotpToClipboard,
             isLoadingState = loading,
             primaryVault = primaryVault,
             useFavicons = preferences.useFavicons,
+            allowScreenshots = allowScreenshots,
             shareTelemetry = deviceSettings.isTelemetryEnabled,
             shareCrashes = deviceSettings.isCrashReportEnabled,
+            event = event
         )
     }.stateIn(
         scope = viewModelScope,
@@ -125,6 +139,11 @@ class SettingsViewModel @Inject constructor(
                     snackbarDispatcher(SettingsSnackbarMessage.ClearIconCacheError)
                 }
         }
+    }
+
+    fun onAllowScreenshotsChange(allowScreenshots: Boolean) = viewModelScope.launch {
+        preferencesRepository.setAllowScreenshotsPreference(AllowScreenshotsPreference.from(allowScreenshots))
+        eventState.update { SettingsEvent.RestartApp }
     }
 
     fun onTelemetryChange(value: Boolean) = viewModelScope.launch {

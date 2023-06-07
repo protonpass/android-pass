@@ -121,8 +121,8 @@ class UpdateLoginViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = encryptionContextProvider.withEncryptionContext {
             UpdateLoginUiState.create(
-                HiddenState.Empty(encrypt("")),
-                HiddenState.Revealed(encrypt(""), ""),
+                password = HiddenState.Empty(encrypt("")),
+                primaryTotp = HiddenState.Empty(encrypt("")),
             )
         }
     )

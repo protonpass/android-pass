@@ -125,4 +125,8 @@ class OnBoardingTipsViewModel @Inject constructor(
                 preferencesRepository.setHasDismissedTrialBanner(HasDismissedTrialBanner.Dismissed)
         }
     }
+
+    fun clearEvent() {
+        eventFlow.update { OnBoardingTipsEvent.Unknown }
+    }
 }

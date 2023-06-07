@@ -43,7 +43,7 @@ internal fun LoginPasswordRow(
         is HiddenState.Concealed -> LoginPasswordUIState(
             sectionContent = "•".repeat(CHAR_AMOUNT),
             icon = CoreR.drawable.ic_proton_eye,
-            actionContent = R.string.action_conceal_password
+            actionContent = R.string.action_reveal_password
         )
 
         is HiddenState.Revealed -> LoginPasswordUIState(

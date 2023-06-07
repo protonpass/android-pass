@@ -26,7 +26,10 @@ class TotpManagerImpl @Inject constructor(
 
     override fun generateUri(spec: TotpSpec): String {
         val builder = OtpAuthUriBuilder.forTotp(spec.secret.encodeToByteArray())
-        builder.label(spec.label, issuer = null)
+
+        val labelWithoutTrailingSlashes = spec.label.replace(Regex("/+$"), "")
+
+        builder.label(labelWithoutTrailingSlashes, issuer = null)
         spec.issuer.value()?.let { builder.issuer(it) }
         builder.digits(spec.digits.digits)
         val algorithm = when (spec.algorithm) {

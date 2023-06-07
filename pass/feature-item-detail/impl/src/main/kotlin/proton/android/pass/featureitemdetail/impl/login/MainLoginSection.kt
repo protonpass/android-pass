@@ -1,7 +1,6 @@
 package proton.android.pass.featureitemdetail.impl.login
 
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,6 +9,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePairPreviewProvider
 import proton.android.pass.composecomponents.impl.container.RoundedCornersColumn
+import proton.android.pass.composecomponents.impl.form.PassDivider
 import proton.android.pass.featureitemdetail.impl.login.totp.TotpRow
 import proton.pass.domain.HiddenState
 
@@ -22,19 +22,27 @@ fun MainLoginSection(
     showViewAlias: Boolean,
     onEvent: (LoginDetailEvent) -> Unit
 ) {
+    if (!canShowSection(username, passwordState, totpUiState)) return
+
+    val showPasswordDivider = username.isNotBlank()
+    val showTotpDivider = showPasswordDivider || passwordState !is HiddenState.Empty
     RoundedCornersColumn(modifier = modifier.fillMaxWidth()) {
-        LoginUsernameRow(
-            username = username,
-            showViewAlias = showViewAlias,
-            onUsernameClick = {
-                onEvent(LoginDetailEvent.OnUsernameClick)
-            },
-            onGoToAliasClick = {
-                onEvent(LoginDetailEvent.OnGoToAliasClick)
-            }
-        )
+        if (username.isNotBlank()) {
+            LoginUsernameRow(
+                username = username,
+                showViewAlias = showViewAlias,
+                onUsernameClick = {
+                    onEvent(LoginDetailEvent.OnUsernameClick)
+                },
+                onGoToAliasClick = {
+                    onEvent(LoginDetailEvent.OnGoToAliasClick)
+                }
+            )
+        }
         if (passwordState !is HiddenState.Empty) {
-            Divider(color = PassTheme.colors.inputBorderNorm)
+            if (showPasswordDivider) {
+                PassDivider()
+            }
             LoginPasswordRow(
                 passwordHiddenState = passwordState,
                 onTogglePasswordClick = {
@@ -46,7 +54,9 @@ fun MainLoginSection(
             )
         }
         if (totpUiState != null) {
-            Divider(color = PassTheme.colors.inputBorderNorm)
+            if (showTotpDivider) {
+                PassDivider()
+            }
             TotpRow(
                 state = totpUiState,
                 onCopyTotpClick = {
@@ -58,6 +68,20 @@ fun MainLoginSection(
             )
         }
     }
+}
+
+@Suppress("ComplexCondition")
+private fun canShowSection(
+    username: String,
+    passwordState: HiddenState,
+    totpUiState: TotpUiState?
+): Boolean {
+    if (username.isBlank() &&
+        passwordState is HiddenState.Empty &&
+        (totpUiState == null || totpUiState is TotpUiState.Hidden)
+    ) return false
+
+    return true
 }
 
 

@@ -31,8 +31,8 @@ internal class BaseLoginViewModelTest {
     private lateinit var baseLoginViewModel: BaseLoginViewModel
 
     private val initial = BaseLoginUiState.create(
-        HiddenState.Concealed(TestEncryptionContext.encrypt("")),
-        HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
+        password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+        primaryTotp = HiddenState.Empty(TestEncryptionContext.encrypt(""))
     )
 
     @Before

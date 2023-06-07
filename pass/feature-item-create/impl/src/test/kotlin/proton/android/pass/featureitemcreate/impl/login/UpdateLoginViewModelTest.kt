@@ -9,8 +9,8 @@ import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.clipboard.fakes.TestClipboardManager
-import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.commonui.fakes.TestSavedStateHandleProvider
+import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
@@ -80,10 +80,7 @@ class UpdateLoginViewModelTest {
                 title = "item",
                 note = "note",
                 username = "username",
-                password = HiddenState.Revealed(
-                    TestEncryptionContext.encrypt("password"),
-                    "password"
-                ),
+                password = HiddenState.Empty(TestEncryptionContext.encrypt("password")),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = primaryTotp,
@@ -109,10 +106,7 @@ class UpdateLoginViewModelTest {
                 title = "item",
                 note = "note",
                 username = "username",
-                password = HiddenState.Revealed(
-                    TestEncryptionContext.encrypt("password"),
-                    "password"
-                ),
+                password = HiddenState.Empty(TestEncryptionContext.encrypt("password")),
                 urls = emptyList(),
                 packageInfoSet = emptySet(),
                 primaryTotp = primaryTotp,

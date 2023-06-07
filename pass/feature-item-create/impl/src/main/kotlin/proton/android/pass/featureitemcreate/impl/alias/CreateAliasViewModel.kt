@@ -32,11 +32,11 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.data.api.usecases.UpgradeInfo
 import proton.android.pass.featureitemcreate.impl.ItemCreate
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.AliasCreated
 import proton.android.pass.featureitemcreate.impl.alias.AliasSnackbarMessage.ItemCreationError
@@ -59,10 +59,11 @@ open class CreateAliasViewModel @Inject constructor(
     private val snackbarDispatcher: SnackbarDispatcher,
     private val telemetryManager: TelemetryManager,
     protected val draftRepository: DraftRepository,
-    observeUpgradeInfo: ObserveUpgradeInfo,
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    observeUpgradeInfo: ObserveUpgradeInfo,
+    canPerformPaidAction: CanPerformPaidAction
 ) : BaseAliasViewModel(snackbarDispatcher, savedStateHandle) {
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
@@ -82,29 +83,29 @@ open class CreateAliasViewModel @Inject constructor(
     private val selectedShareIdState: MutableStateFlow<Option<ShareId>> = MutableStateFlow(None)
     private val observeAllVaultsFlow: Flow<List<VaultWithItemCount>> =
         observeVaults().distinctUntilChanged()
-    private val upgradeInfoFlow: Flow<UpgradeInfo> = observeUpgradeInfo().distinctUntilChanged()
 
     private val shareUiState: StateFlow<ShareUiState> = combine(
         navShareIdState,
         selectedShareIdState,
         observeAllVaultsFlow.asLoadingResult(),
-        upgradeInfoFlow.asLoadingResult()
-    ) { navShareId, selectedShareId, allSharesResult, upgradeInfoResult ->
+        canPerformPaidAction().asLoadingResult()
+    ) { navShareId, selectedShareId, allSharesResult, canDoPaidAction ->
         val allShares = when (allSharesResult) {
             is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)
             LoadingResult.Loading -> return@combine ShareUiState.Loading
             is LoadingResult.Success -> allSharesResult.data
         }
-        val upgradeInfo = when (upgradeInfoResult) {
+
+        val canSwitchVaults = when (canDoPaidAction) {
             is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.UpgradeInfoNotAvailable)
             LoadingResult.Loading -> return@combine ShareUiState.Loading
-            is LoadingResult.Success -> upgradeInfoResult.data
+            is LoadingResult.Success -> canDoPaidAction.data
         }
 
         if (allShares.isEmpty()) {
             return@combine ShareUiState.Error(ShareError.EmptyShareList)
         }
-        val selectedVault = if (upgradeInfo.isUpgradeAvailable) {
+        val selectedVault = if (!canSwitchVaults) {
             allShares.firstOrNull { it.vault.isPrimary }
                 ?: return@combine ShareUiState.Error(ShareError.NoPrimaryVault)
         } else {

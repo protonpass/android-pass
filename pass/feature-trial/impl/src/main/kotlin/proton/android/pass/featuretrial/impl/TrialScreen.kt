@@ -1,5 +1,6 @@
 package proton.android.pass.featuretrial.impl
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -18,6 +19,8 @@ fun TrialScreen(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val context = LocalContext.current
+
+    BackHandler { onNavigate(TrialNavigation.Close) }
 
     TrialScreenContent(
         modifier = modifier,

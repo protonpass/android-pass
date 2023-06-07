@@ -30,6 +30,7 @@ import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateItem
 import proton.android.pass.data.api.usecases.CreateItemAndAlias
 import proton.android.pass.data.api.usecases.ObserveCurrentUser
@@ -71,7 +72,8 @@ class CreateLoginViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
     observeVaults: ObserveVaultsWithItemCount,
     savedStateHandle: SavedStateHandleProvider,
-    ffRepo: FeatureFlagsPreferencesRepository
+    ffRepo: FeatureFlagsPreferencesRepository,
+    canPerformPaidAction: CanPerformPaidAction
 ) : BaseLoginViewModel(
     accountManager = accountManager,
     snackbarDispatcher = snackbarDispatcher,
@@ -104,23 +106,23 @@ class CreateLoginViewModel @Inject constructor(
         navShareIdState,
         selectedShareIdState,
         observeAllVaultsFlow.asLoadingResult(),
-        upgradeInfoFlow.asLoadingResult()
-    ) { navShareId, selectedShareId, allSharesResult, upgradeInfoResult ->
+        canPerformPaidAction().asLoadingResult()
+    ) { navShareId, selectedShareId, allSharesResult, canDoPaidAction ->
         val allShares = when (allSharesResult) {
             is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.SharesNotAvailable)
             LoadingResult.Loading -> return@combine ShareUiState.Loading
             is LoadingResult.Success -> allSharesResult.data
         }
-        val upgradeInfo = when (upgradeInfoResult) {
+        val canSwitchVaults = when (canDoPaidAction) {
             is LoadingResult.Error -> return@combine ShareUiState.Error(ShareError.UpgradeInfoNotAvailable)
             LoadingResult.Loading -> return@combine ShareUiState.Loading
-            is LoadingResult.Success -> upgradeInfoResult.data
+            is LoadingResult.Success -> canDoPaidAction.data
         }
 
         if (allShares.isEmpty()) {
             return@combine ShareUiState.Error(ShareError.EmptyShareList)
         }
-        val selectedVault = if (upgradeInfo.isUpgradeAvailable) {
+        val selectedVault = if (!canSwitchVaults) {
             allShares.firstOrNull { it.vault.isPrimary }
                 ?: return@combine ShareUiState.Error(ShareError.NoPrimaryVault)
         } else {

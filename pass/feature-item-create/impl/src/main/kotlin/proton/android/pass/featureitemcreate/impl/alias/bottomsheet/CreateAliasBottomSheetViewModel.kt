@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.repositories.DraftRepository
+import proton.android.pass.data.api.usecases.CanPerformPaidAction
 import proton.android.pass.data.api.usecases.CreateAlias
 import proton.android.pass.data.api.usecases.ObserveAliasOptions
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
@@ -29,19 +30,21 @@ class CreateAliasBottomSheetViewModel @Inject constructor(
     observeAliasOptions: ObserveAliasOptions,
     observeVaults: ObserveVaultsWithItemCount,
     observeUpgradeInfo: ObserveUpgradeInfo,
+    canPerformPaidAction: CanPerformPaidAction,
     savedStateHandle: SavedStateHandle,
     telemetryManager: TelemetryManager,
     draftRepository: DraftRepository
 ) : CreateAliasViewModel(
-    accountManager,
-    createAlias,
-    snackbarDispatcher,
-    telemetryManager,
-    draftRepository,
-    observeUpgradeInfo,
-    observeAliasOptions,
-    observeVaults,
-    savedStateHandle
+    accountManager = accountManager,
+    createAlias = createAlias,
+    snackbarDispatcher = snackbarDispatcher,
+    telemetryManager = telemetryManager,
+    draftRepository = draftRepository,
+    observeUpgradeInfo = observeUpgradeInfo,
+    observeAliasOptions = observeAliasOptions,
+    observeVaults = observeVaults,
+    savedStateHandle = savedStateHandle,
+    canPerformPaidAction = canPerformPaidAction
 ) {
 
     private val isEditMode = savedStateHandle.get<Boolean>(IsEditAliasNavArg.key) ?: false

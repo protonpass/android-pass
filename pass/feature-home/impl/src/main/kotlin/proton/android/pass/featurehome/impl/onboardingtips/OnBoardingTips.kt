@@ -20,6 +20,7 @@ fun OnBoardingTips(
     LaunchedEffect(state.event) {
         if (state.event == OnBoardingTipsEvent.OpenTrialScreen) {
             onTrialInfoClick()
+            viewModel.clearEvent()
         }
     }
 

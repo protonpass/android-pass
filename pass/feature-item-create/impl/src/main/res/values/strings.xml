@@ -17,8 +17,8 @@
 
     <!-- Create Login -->
     <string name="title_create_login">Create login</string>
-    <string name="field_username_title">Username or email</string>
-    <string name="field_username_hint">Add username or email</string>
+    <string name="field_username_title">Username or email address</string>
+    <string name="field_username_hint">Add username or email address</string>
     <string name="field_password_title">Password</string>
     <string name="field_password_hint">Add password</string>
     <string name="field_website_address_title">Website</string>
@@ -28,7 +28,7 @@
     <string name="sticky_button_generate_password">Generate a new password</string>
     <string name="sticky_button_generate_password_key_icon_content_description">Generate password icon</string>
     <string name="sticky_button_create_alias">Hide my email</string>
-    <string name="sticky_button_use_account_email">Use %1$s</string>
+    <string name="sticky_button_use_account_email">Use %s</string>
     <string name="sticky_button_create_alias_icon_content_description">Create alias icon</string>
 
     <string name="create_login_item_creation_error">Could not create Login</string>

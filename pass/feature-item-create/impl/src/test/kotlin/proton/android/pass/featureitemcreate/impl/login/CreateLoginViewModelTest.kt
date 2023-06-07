@@ -19,6 +19,7 @@ import proton.android.pass.crypto.fakes.context.TestEncryptionContext
 import proton.android.pass.crypto.fakes.context.TestEncryptionContextProvider
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
+import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateItem
 import proton.android.pass.data.fakes.usecases.TestCreateItemAndAlias
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
@@ -86,7 +87,8 @@ internal class CreateLoginViewModelTest {
             telemetryManager = telemetryManager,
             draftRepository = TestDraftRepository(),
             observeUpgradeInfo = observeUpgradeInfo,
-            ffRepo = TestFeatureFlagsPreferenceRepository()
+            ffRepo = TestFeatureFlagsPreferenceRepository(),
+            canPerformPaidAction = TestCanPerformPaidAction().apply { setResult(true) }
         )
     }
 

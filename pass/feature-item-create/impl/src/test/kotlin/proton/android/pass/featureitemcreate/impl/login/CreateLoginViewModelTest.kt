@@ -41,7 +41,6 @@ import proton.android.pass.test.TestUtils
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
 import proton.pass.domain.HiddenState
-import proton.pass.domain.ItemContents
 import proton.pass.domain.ShareId
 import proton.pass.domain.Vault
 import proton.pass.domain.VaultWithItemCount
@@ -99,8 +98,8 @@ internal class CreateLoginViewModelTest {
             observeVaults.sendResult(Result.success(listOf(vault)))
 
             val state = CreateLoginUiState.create(
-                HiddenState.Concealed(TestEncryptionContext.encrypt("")),
-                HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
+                password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+                primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
             )
             instance.createItem()
 
@@ -127,8 +126,8 @@ internal class CreateLoginViewModelTest {
         val item = TestObserveItems.createLogin()
         val vault = sendInitialVault(item.shareId)
         val baseState = CreateLoginUiState.create(
-            password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
-            primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
+            password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+            primaryTotp = HiddenState.Empty(TestEncryptionContext.encrypt(""))
         )
         val titleInput = "Title input"
         instance.onTitleChange(titleInput)
@@ -157,17 +156,17 @@ internal class CreateLoginViewModelTest {
             val secondItem = awaitItem()
             val secondExpected = firstExpected.copy(
                 baseLoginUiState = firstExpected.baseLoginUiState.copy(
-                    isLoadingState = IsLoadingState.Loading
+                    isLoadingState = IsLoadingState.Loading,
+                    contents = firstExpected.baseLoginUiState.contents.copy(
+                        password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+                        primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
+                    )
                 )
             )
             assertThat(secondItem).isEqualTo(secondExpected)
             val thirdItem = awaitItem()
             val thirdExpected = secondExpected.copy(
                 baseLoginUiState = secondExpected.baseLoginUiState.copy(
-                    contents = ItemContents.Login.create(
-                        password = HiddenState.Concealed(TestEncryptionContext.encrypt("")),
-                        primaryTotp = HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
-                    ).copy(title = titleInput),
                     isLoadingState = IsLoadingState.NotLoading,
                     isItemSaved = ItemSavedState.Success(
                         item.id,
@@ -196,8 +195,8 @@ internal class CreateLoginViewModelTest {
         val vault = sendInitialVault(ShareId("shareId"))
         val initialContents = setInitialContents()
         val state = CreateLoginUiState.create(
-            HiddenState.Concealed(TestEncryptionContext.encrypt("")),
-            HiddenState.Revealed(TestEncryptionContext.encrypt(""), "")
+            password = HiddenState.Empty(TestEncryptionContext.encrypt("")),
+            primaryTotp = HiddenState.Empty(TestEncryptionContext.encrypt(""))
         )
         instance.createLoginUiState.test {
             assertThat(awaitItem())

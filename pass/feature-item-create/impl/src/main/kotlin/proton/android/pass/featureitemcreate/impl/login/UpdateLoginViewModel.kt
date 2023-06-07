@@ -47,6 +47,8 @@ import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.telemetry.api.EventItemType
 import proton.android.pass.telemetry.api.TelemetryManager
 import proton.android.pass.totp.api.TotpManager
+import proton.pass.domain.CustomField
+import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
 import proton.pass.domain.Item
 import proton.pass.domain.ItemContents
@@ -206,7 +208,7 @@ class UpdateLoginViewModel @Inject constructor(
                 packageInfoSet = item.packageInfoSet,
                 primaryTotp = HiddenState.Revealed(encrypt(decryptedTotp), decryptedTotp),
                 customFields = itemContents.customFields.mapNotNull {
-                    it.toContent(this@withEncryptionContext, isConcealed = false)
+                    convertCustomField(it, this@withEncryptionContext)
                 }.toImmutableList()
             )
         }
@@ -269,6 +271,31 @@ class UpdateLoginViewModel @Inject constructor(
         }
     }
 
+    private fun convertCustomField(
+        customField: CustomField,
+        encryptionContext: EncryptionContext
+    ): CustomFieldContent? {
+        val mapped = customField.toContent(encryptionContext, isConcealed = false)
+        return if (mapped is CustomFieldContent.Totp) {
+            val uri = when (val value = mapped.value) {
+                is HiddenState.Concealed -> encryptionContext.decrypt(value.encrypted)
+                is HiddenState.Empty -> ""
+                is HiddenState.Revealed -> value.clearText
+            }
+
+            val totp = getDisplayTotp(uri)
+            CustomFieldContent.Totp(
+                label = mapped.label,
+                value = HiddenState.Revealed(
+                    encrypted = encryptionContext.encrypt(totp),
+                    clearText = totp
+                )
+            )
+        } else {
+            mapped
+        }
+    }
+
     private fun handleTotp(
         encryptionContext: EncryptionContext,
         primaryTotp: EncryptedString
@@ -277,6 +304,11 @@ class UpdateLoginViewModel @Inject constructor(
         if (totp.isBlank()) return totp
 
         itemHadTotpState.update { true }
+        return getDisplayTotp(totp)
+    }
+
+    private fun getDisplayTotp(totp: String): String {
+        if (totp.isBlank()) return totp
 
         return totpManager.parse(totp)
             .fold(

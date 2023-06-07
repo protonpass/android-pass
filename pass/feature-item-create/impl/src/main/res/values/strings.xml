@@ -31,11 +31,6 @@
     <string name="sticky_button_use_account_email">Use %1$s</string>
     <string name="sticky_button_create_alias_icon_content_description">Create alias icon</string>
 
-    <string name="delete_login_alias_dialog_title">Remove alias?</string>
-    <string name="delete_login_alias_dialog_text">This alias will not be saved.</string>
-    <string name="delete_login_alias_dialog_cancel">Cancel</string>
-    <string name="delete_login_alias_dialog_confirm">@string/action_remove</string>
-
     <string name="create_login_item_creation_error">Could not create Login</string>
     <string name="create_login_item_update_error">Could not update Login</string>
     <string name="create_login_init_error">Could not initialise Login</string>
@@ -59,8 +54,6 @@
     <string name="custom_field_hidden_icon_content_description">Hidden custom field icon</string>
     <string name="custom_field_text_placeholder">Your content</string>
     <string name="custom_field_text_icon_content_description">Text custom field icon</string>
-    <string name="custom_field_totp_placeholder">@string/bottomsheet_custom_field_type_totp</string>
-    <string name="custom_field_totp_icon_content_description">2FA custom field icon</string>
     <string name="custom_field_dialog_title">Custom field name</string>
     <string name="custom_field_dialog_body">Enter a name for your custom field</string>
     <string name="custom_field_dialog_placeholder">Name of the custom field</string>
@@ -99,8 +92,6 @@
     <string name="alias_created">Alias created</string>
     <string name="alias_moved_to_trash">Alias moved to trash</string>
     <string name="cannot_retrieve_alias_options">Cannot retrieve alias options</string>
-    <string name="alias_mailbox_dialog_confirm_button">OK</string>
-    <string name="alias_mailbox_dialog_cancel_button">Cancel</string>
     <string name="alias_mailbox_dialog_title">Forward to</string>
 
     <!-- Create note -->
@@ -110,23 +101,8 @@
 
     <!--  Common create items  -->
     <string name="changes_saved">Changes saved</string>
-    <string name="vault_bottomsheet_title">Vaults</string>
 
     <!--  Totp  -->
-    <string name="totp_top_bar_manual_title">Write data</string>
-    <string name="totp_top_bar_manual_save_action">Save</string>
-
-    <string name="totp_digits_field_title">Digits</string>
-    <string name="totp_label_field_title">Label</string>
-    <string name="totp_secret_field_title">Secret</string>
-    <string name="totp_issuer_field_title">Issuer</string>
-    <string name="totp_algorithm_field_title">Algorithm</string>
-    <string name="totp_valid_time_field_title">Valid time</string>
-
-    <string name="totp_label_field_placeholder">Add label</string>
-    <string name="totp_secret_field_placeholder">Add secret</string>
-    <string name="totp_issuer_field_placeholder">Add issuer</string>
-    <string name="totp_valid_time_field_placeholder">0</string>
     <string name="totp_create_login_field_title">2FA secret (TOTP)</string>
     <string name="totp_create_login_field_invalid">Invalid 2FA secret</string>
     <string name="totp_create_login_field_placeholder">Add 2FA secret</string>

@@ -36,7 +36,45 @@ class MainLoginSectionParamsPreviewProvider : PreviewParameterProvider<MainLogin
                 passwordState = HiddenState.Revealed("encrypted", "clearText"),
                 totpUiState = TotpUiState.Limited,
                 showViewAlias = false
-            )
+            ),
+
+            // Hidden sections
+            MainLoginSectionParams(
+                username = "",
+                passwordState = HiddenState.Concealed("encrypted"),
+                totpUiState = TotpUiState.Visible("123456", 12, 20),
+                showViewAlias = false
+            ),
+            MainLoginSectionParams(
+                username = "MyUsername",
+                passwordState = HiddenState.Empty(""),
+                totpUiState = TotpUiState.Visible("123456", 12, 20),
+                showViewAlias = false
+            ),
+            MainLoginSectionParams(
+                username = "MyUsername",
+                passwordState = HiddenState.Concealed("encrypted"),
+                totpUiState = TotpUiState.Hidden,
+                showViewAlias = false
+            ),
+            MainLoginSectionParams(
+                username = "",
+                passwordState = HiddenState.Empty(""),
+                totpUiState = TotpUiState.Visible("123456", 12, 20),
+                showViewAlias = false
+            ),
+            MainLoginSectionParams(
+                username = "",
+                passwordState = HiddenState.Concealed("encrypted"),
+                totpUiState = TotpUiState.Hidden,
+                showViewAlias = false
+            ),
+            MainLoginSectionParams(
+                username = "MyUsername",
+                passwordState = HiddenState.Empty(""),
+                totpUiState = TotpUiState.Hidden,
+                showViewAlias = false
+            ),
         )
 }
 

@@ -13,6 +13,7 @@ import proton.android.pass.account.fakes.TestAccountManager
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.fakes.repositories.TestDraftRepository
+import proton.android.pass.data.fakes.usecases.TestCanPerformPaidAction
 import proton.android.pass.data.fakes.usecases.TestCreateAlias
 import proton.android.pass.data.fakes.usecases.TestObserveAliasOptions
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
@@ -46,6 +47,7 @@ class CreateAliasViewModelTest {
     private lateinit var snackbarRepository: TestSnackbarDispatcher
     private lateinit var telemetryManager: TestTelemetryManager
     private lateinit var observeUpgradeInfo: TestObserveUpgradeInfo
+    private lateinit var canPerformPaidAction: TestCanPerformPaidAction
     private lateinit var draftRepository: TestDraftRepository
 
     @Before
@@ -60,6 +62,7 @@ class CreateAliasViewModelTest {
         telemetryManager = TestTelemetryManager()
         draftRepository = TestDraftRepository()
         observeUpgradeInfo = TestObserveUpgradeInfo()
+        canPerformPaidAction = TestCanPerformPaidAction()
     }
 
 
@@ -230,6 +233,7 @@ class CreateAliasViewModelTest {
             },
             telemetryManager = telemetryManager,
             observeUpgradeInfo = observeUpgradeInfo,
+            canPerformPaidAction = canPerformPaidAction,
             draftRepository = draftRepository
         ).apply {
             setDraftStatus(isDraft)

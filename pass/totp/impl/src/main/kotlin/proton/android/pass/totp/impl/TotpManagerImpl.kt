@@ -27,7 +27,7 @@ class TotpManagerImpl @Inject constructor(
     override fun generateUri(spec: TotpSpec): String {
         val builder = OtpAuthUriBuilder.forTotp(spec.secret.encodeToByteArray())
 
-        val labelWithoutTrailingSlashes = spec.label.replace(Regex("/+$"), "")
+        val labelWithoutTrailingSlashes = spec.label.replace(TRAILING_SLASH_REGEX, "")
 
         builder.label(labelWithoutTrailingSlashes, issuer = null)
         spec.issuer.value()?.let { builder.issuer(it) }
@@ -94,5 +94,6 @@ class TotpManagerImpl @Inject constructor(
 
     companion object {
         private const val ONE_SECOND_MILLISECONDS = 1000L
+        private val TRAILING_SLASH_REGEX = Regex("/+$")
     }
 }

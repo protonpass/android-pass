@@ -35,7 +35,15 @@ class AppNavigator(
 
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
         // Discard duplicated nav events
-        if (navController.currentBackStackEntry?.lifecycleIsResumed() != true) return
+        if (navController.currentBackStackEntry?.lifecycleIsResumed() != true) {
+            PassLogger.d(
+                TAG,
+                "Navigation event discarded as it was duplicated. " +
+                    "Current: ${navController.currentBackStackEntry?.destination?.route} | " +
+                    "Destination: ${destination.route}"
+            )
+            return
+        }
 
         val destinationRoute = route ?: destination.route
         PassLogger.i(TAG, "Navigating to $destinationRoute")
@@ -66,6 +74,7 @@ class AppNavigator(
     }
 
     fun onBackClick() {
+        PassLogger.i(TAG, "Navigating back to ${navController.previousBackStackEntry?.destination?.route}")
         navController.popBackStack()
     }
 

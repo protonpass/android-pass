@@ -22,7 +22,6 @@
     <string name="profile_error_performing_operation">Error performing operation</string>
     <string name="profile_app_version_copied_to_clipboard">App version copied</string>
     <string name="feedback_option_reddit">Check out Proton on Reddit</string>
-    <string name="feedback_option_twitter">Message us on Twitter</string>
     <string name="feedback_option_mail">Send us a message</string>
 
     <string name="app_lock_never">Never</string>

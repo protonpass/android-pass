@@ -8,7 +8,6 @@
     <string name="home_empty_vault_create_login">Create a login</string>
     <string name="home_empty_vault_create_alias">Create a Hide My Email alias</string>
     <string name="home_empty_vault_create_note">Create a note</string>
-    <string name="home_empty_vault_create_password">Generate a password</string>
 
     <string name="error_observing_items">Error observing items</string>
     <string name="error_observing_share">Error observing share</string>

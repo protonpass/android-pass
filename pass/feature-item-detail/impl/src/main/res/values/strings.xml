@@ -31,7 +31,7 @@
     <string name="login_item_generate_totp_error">Error generating 2FA code</string>
     <string name="login_item_view_alias_button">View alias</string>
 
-    <string name="field_username">Username or email</string>
+    <string name="field_username">Username or email address</string>
     <string name="field_password">Password</string>
     <string name="websites_section_title">Websites</string>
     <string name="totp_section_title">2FA token (TOTP)</string>

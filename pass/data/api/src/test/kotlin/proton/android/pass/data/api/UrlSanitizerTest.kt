@@ -136,4 +136,35 @@ class UrlSanitizerTest {
         assertTrue(res.isSuccess)
         assertEquals(res.getOrThrow(), "https")
     }
+
+    @Test
+    fun `sanitize does not allow urls to start with malicious schemes`() {
+        val cases = listOf(
+            "javascript:some.domain",
+            "javascript:/some.domain",
+            "javascript://some.domain",
+            "javascript:///some.domain",
+            "data:some.domain",
+            "data:/some.domain",
+            "data://some.domain",
+            "data:///some.domain",
+            "file:some.domain",
+            "file:/some.domain",
+            "file://some.domain",
+            "file:///some.domain",
+            "about:some.domain",
+            "about:/some.domain",
+            "about://some.domain",
+            "about:///some.domain",
+            "blob:some.domain",
+            "blob:/some.domain",
+            "blob://some.domain",
+            "blob:///some.domain",
+        )
+
+        cases.forEach { input ->
+            val res = UrlSanitizer.sanitize(input)
+            assertTrue(res.isFailure)
+        }
+    }
 }

@@ -4,7 +4,6 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
-import proton.android.pass.data.api.url.UrlSanitizer
 import proton.pass.domain.Item
 import proton.pass.domain.ItemType
 import javax.inject.Inject
@@ -49,44 +48,36 @@ class SuggestionItemFiltererImpl @Inject constructor(
         item.packageInfoSet.map { it.packageName.value }.contains(packageName)
 
     private fun isUrlMatch(url: String, login: ItemType.Login): Boolean {
-        val urlDomain = UrlSanitizer.getDomain(url).fold(
+        val parsedUrl = hostParser.parse(url).fold(
             onSuccess = { it },
             onFailure = { return false }
         )
-        val loginDomains = login.websites
-            .map { UrlSanitizer.getDomain(it) }
+
+        val parsedWebsites = login.websites
+            .map { hostParser.parse(it) }
             .filter { it.isSuccess }
             .mapNotNull { it.getOrNull() }
 
-        return isDomainMatch(urlDomain, loginDomains)
+        return isMatch(parsedUrl, parsedWebsites)
     }
 
-    private fun isDomainMatch(urlDomain: String, itemDomains: List<String>): Boolean {
-        val parsedItemDomains = parseItemDomains(itemDomains)
-        val parsedDomain = hostParser.parse(urlDomain).fold(
-            onSuccess = { it },
-            onFailure = { return false }
-        )
-
-        return parsedItemDomains.any {
+    private fun isMatch(requestUrl: HostInfo, items: List<HostInfo>): Boolean =
+        items.any {
             when (it) {
-                is HostInfo.Ip -> when (parsedDomain) {
-                    is HostInfo.Ip -> it.ip == parsedDomain.ip
+                is HostInfo.Ip -> when (requestUrl) {
+                    is HostInfo.Ip -> it.ip == requestUrl.ip
                     else -> false
                 }
-                is HostInfo.Host -> when (parsedDomain) {
+
+                is HostInfo.Host -> when (requestUrl) {
                     is HostInfo.Host -> {
-                        parsedDomain.tld == it.tld && parsedDomain.domain == it.domain
+                        requestUrl.protocol == it.protocol &&
+                            requestUrl.tld == it.tld &&
+                            requestUrl.domain == it.domain
                     }
+
                     else -> false
                 }
             }
         }
-    }
-
-    private fun parseItemDomains(itemDomains: List<String>): List<HostInfo> =
-        itemDomains
-            .map { hostParser.parse(it) }
-            .filter { it.isSuccess }
-            .mapNotNull { it.getOrNull() }
 }

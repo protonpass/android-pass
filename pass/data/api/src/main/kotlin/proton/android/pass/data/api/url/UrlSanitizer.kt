@@ -1,5 +1,6 @@
 package proton.android.pass.data.api.url
 
+import proton.android.pass.common.api.flatMap
 import java.net.URI
 import java.net.URISyntaxException
 
@@ -26,15 +27,14 @@ object UrlSanitizer {
         }
     }
 
-    fun getDomain(url: String): Result<String> = sanitize(url).fold(
-        onSuccess = {
-            try {
-                val parsed = URI(it)
-                Result.success(parsed.host)
-            } catch (e: URISyntaxException) {
-                Result.failure(e)
-            }
-        },
-        onFailure = { Result.failure(it) }
-    )
+    fun getProtocol(url: String): Result<String> = sanitizeAndParse(url).map { it.scheme }
+    fun getDomain(url: String): Result<String> = sanitizeAndParse(url).map { it.host }
+
+    private fun sanitizeAndParse(url: String): Result<URI> = sanitize(url).flatMap {
+        try {
+            Result.success(URI(it))
+        } catch (e: URISyntaxException) {
+            Result.failure(e)
+        }
+    }
 }

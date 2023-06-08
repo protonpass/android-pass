@@ -1,6 +1,7 @@
 package proton.android.pass.data.impl.url
 
 import proton.android.pass.common.api.None
+import proton.android.pass.common.api.flatMap
 import proton.android.pass.common.api.some
 import proton.android.pass.data.api.url.HostInfo
 import proton.android.pass.data.api.url.HostParser
@@ -12,26 +13,31 @@ class HostParserImpl @Inject constructor(
     private val getPublicSuffixList: GetPublicSuffixList
 ) : HostParser {
 
-    override fun parse(url: String): Result<HostInfo> = UrlSanitizer.getDomain(url).fold(
-        onSuccess = { getHostInfoFromDomain(it) },
-        onFailure = { Result.failure(it) }
-    )
+    override fun parse(url: String): Result<HostInfo> = UrlSanitizer.getDomain(url)
+        .flatMap { domain ->
+            val protocol = UrlSanitizer.getProtocol(url).getOrDefault("https")
+            getHostInfoFromDomain(protocol, domain)
+        }
 
-    private fun getHostInfoFromDomain(domain: String): Result<HostInfo> =
+    private fun getHostInfoFromDomain(protocol: String, domain: String): Result<HostInfo> =
         if (isIp(domain)) {
             Result.success(HostInfo.Ip(domain))
         } else {
-            parseHostInfo(domain)
+            parseHostInfo(protocol, domain)
         }
 
     @Suppress("ReturnCount")
-    private fun parseHostInfo(domain: String): Result<HostInfo.Host> {
+    private fun parseHostInfo(protocol: String, domain: String): Result<HostInfo.Host> {
         val publicSuffixes = getPublicSuffixList()
         val parts: List<String> = domain.split('.')
         if (parts.isEmpty()) {
             return Result.failure(IllegalArgumentException("host is empty"))
         } else if (parts.size == 1) {
-            return handleDomainWithSinglePart(domain, publicSuffixes)
+            return handleDomainWithSinglePart(
+                protocol = protocol,
+                domain = domain,
+                publicSuffixes = publicSuffixes
+            )
         }
 
         // Has multiple parts, find the widest match that is a TLD
@@ -39,15 +45,26 @@ class HostParserImpl @Inject constructor(
             val portion = stringFromParts(parts, i)
             if (publicSuffixes.contains(portion)) {
                 // We found the TLD
-                return Result.success(hostWithTld(parts, i, portion))
+                val res = hostWithTld(
+                    protocol = protocol,
+                    parts = parts,
+                    tldStartingPart = i,
+                    tld = portion
+                )
+                return Result.success(res)
             }
         }
 
         // We did not find a TLD
-        return Result.success(hostWithoutTld(parts))
+        val res = hostWithoutTld(
+            protocol = protocol,
+            parts = parts
+        )
+        return Result.success(res)
     }
 
     private fun handleDomainWithSinglePart(
+        protocol: String,
         domain: String,
         publicSuffixes: Set<String>
     ): Result<HostInfo.Host> =
@@ -56,6 +73,7 @@ class HostParserImpl @Inject constructor(
         } else {
             Result.success(
                 HostInfo.Host(
+                    protocol = protocol,
                     subdomain = None,
                     domain = domain,
                     tld = None
@@ -63,7 +81,12 @@ class HostParserImpl @Inject constructor(
             )
         }
 
-    private fun hostWithTld(parts: List<String>, tldStartingPart: Int, tld: String): HostInfo.Host {
+    private fun hostWithTld(
+        protocol: String,
+        parts: List<String>,
+        tldStartingPart: Int,
+        tld: String
+    ): HostInfo.Host {
         val domain = parts[tldStartingPart - 1]
         val subdomain = if (tldStartingPart == 1) {
             // It means that we have no subdomain, as the part 0 is the domain
@@ -79,13 +102,14 @@ class HostParserImpl @Inject constructor(
 
 
         return HostInfo.Host(
+            protocol = protocol,
             subdomain = subdomain,
             domain = domain,
             tld = tld.some()
         )
     }
 
-    private fun hostWithoutTld(parts: List<String>): HostInfo.Host {
+    private fun hostWithoutTld(protocol: String, parts: List<String>): HostInfo.Host {
         // We did not find a TLD, so we'll just assume that:
         // - The last portion is the tld
         // - The second to last is the domain
@@ -103,6 +127,7 @@ class HostParserImpl @Inject constructor(
 
 
             HostInfo.Host(
+                protocol = protocol,
                 subdomain = subdomain.some(),
                 domain = parts[parts.size - 2],
                 tld = tld.some()
@@ -110,6 +135,7 @@ class HostParserImpl @Inject constructor(
         } else {
             // It's of the form a.b, so domain=a, tld=b and no subdomain
             HostInfo.Host(
+                protocol = protocol,
                 subdomain = None,
                 domain = parts[0],
                 tld = tld.some()

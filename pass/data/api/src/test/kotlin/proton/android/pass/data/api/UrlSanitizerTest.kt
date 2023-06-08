@@ -96,4 +96,21 @@ class UrlSanitizerTest {
         assertTrue(res.isSuccess)
         assertEquals(res.getOrThrow(), domain)
     }
+
+    @Test
+    fun `getProtocol should be able to extract the correct scheme`() {
+        val scheme = "someprotocol"
+        val domain = "$scheme://a.b.c.d"
+        val res = UrlSanitizer.getProtocol(domain)
+        assertTrue(res.isSuccess)
+        assertEquals(res.getOrThrow(), scheme)
+    }
+
+    @Test
+    fun `getProtocol should return https if there is no scheme`() {
+        val domain = "a.b.c.d"
+        val res = UrlSanitizer.getProtocol(domain)
+        assertTrue(res.isSuccess)
+        assertEquals(res.getOrThrow(), "https")
+    }
 }

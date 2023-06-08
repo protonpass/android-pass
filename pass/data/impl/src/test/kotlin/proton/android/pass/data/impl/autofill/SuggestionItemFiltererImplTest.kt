@@ -162,4 +162,17 @@ class SuggestionItemFiltererImplTest {
         val res = instance.filter(items, None, ip.some())
         assertThat(res).isEqualTo(listOf(item1))
     }
+
+    @Test
+    fun `check items with different protocols are not returned`() {
+        val domain = "some.domain.test"
+        val httpsDomain = "https://$domain"
+
+        val item1 = TestItem.create(TestItemType.login(websites = listOf("ftp://$domain")))
+        val item2 = TestItem.create(TestItemType.login(websites = listOf(httpsDomain)))
+
+        val items = listOf(item1, item2)
+        val res = instance.filter(items, None, url = httpsDomain.some())
+        assertThat(res).isEqualTo(listOf(item2))
+    }
 }

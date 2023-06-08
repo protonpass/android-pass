@@ -5,6 +5,9 @@ import java.net.URI
 import java.net.URISyntaxException
 
 object UrlSanitizer {
+
+    private val TRAILING_DOTS_REGEX = Regex("\\.+$")
+
     fun sanitize(url: String): Result<String> {
         if (url.isBlank()) return Result.failure(IllegalArgumentException("url cannot be empty"))
         if (url.all { !it.isLetterOrDigit() })
@@ -19,8 +22,10 @@ object UrlSanitizer {
 
         return try {
             val parsed = URI(urlWithScheme)
-            if (parsed.host == null) return Result.failure(IllegalArgumentException("url cannot be parsed"))
-            val meaningfulSection = "${parsed.scheme}://${parsed.host}${parsed.path}"
+            if (parsed.host == null) return Result.failure(IllegalArgumentException("url cannot be parsed: [url=$url]"))
+
+            val sanitizedHost = parsed.host.replace(TRAILING_DOTS_REGEX, "")
+            val meaningfulSection = "${parsed.scheme}://${sanitizedHost}${parsed.path}"
             Result.success(meaningfulSection)
         } catch (e: URISyntaxException) {
             Result.failure(e)

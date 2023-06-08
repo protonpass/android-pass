@@ -21,24 +21,17 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import proton.android.pass.biometry.BiometryAuthTimeHolder
+import proton.android.pass.biometry.NeedsAuthChecker
 import proton.android.pass.common.api.LoadingResult
-import proton.android.pass.common.api.None
-import proton.android.pass.common.api.Some
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.AppLockPreference
-import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
 
 @HiltViewModel
 class AppViewModel @Inject constructor(
@@ -123,50 +116,17 @@ class AppViewModel @Inject constructor(
 
     private suspend fun shouldPerformAuth(): Boolean {
         val biometricLockState = preferenceRepository.getBiometricLockState().first()
-        if (biometricLockState == BiometricLockState.Disabled) return false
+        val hasAuthenticated = preferenceRepository.getHasAuthenticated().first()
+        val appLockPreference = preferenceRepository.getAppLockPreference().first()
+        val lastUnlockTime = authTimeHolder.getBiometryAuthTime().first()
 
-        val lastAuthTime = when (val time = authTimeHolder.getBiometryAuthTime().first()) {
-            is Some -> time.value
-            None -> {
-                PassLogger.d(TAG, "Requesting auth because no last auth time was found")
-                return true
-            }
-        }
-
-        return shouldPerformAuthWithLastAuthTime(lastAuthTime)
-    }
-
-    private suspend fun shouldPerformAuthWithLastAuthTime(lastAuthTime: Instant): Boolean {
-        val appLockTimePreference =
-            when (val pref = preferenceRepository.getAppLockPreference().first()) {
-                AppLockPreference.Immediately -> {
-                    PassLogger.d(TAG, "Requesting auth because AppLockPreference.Immediately")
-                    return true
-                }
-
-                AppLockPreference.Never -> return false
-                else -> pref
-            }
-
-        val appLockDuration = appLockTimePreference.toDuration()
-        val timeSinceLastAuth = clock.now() - lastAuthTime
-        val shouldPerform = appLockDuration < timeSinceLastAuth
-        PassLogger.d(
-            TAG,
-            "timeSinceLastAuth: $timeSinceLastAuth |" +
-                " appLockDuration: $appLockDuration | shouldPerformAuth: $shouldPerform"
+        return NeedsAuthChecker.needsAuth(
+            biometricLock = biometricLockState,
+            hasAuthenticated = hasAuthenticated,
+            appLockPreference = appLockPreference,
+            lastUnlockTime = lastUnlockTime,
+            now = clock.now()
         )
-        return shouldPerform
-    }
-
-    private fun AppLockPreference.toDuration(): Duration = when (this) {
-        AppLockPreference.InOneMinute -> 1.minutes
-        AppLockPreference.InTwoMinutes -> 2.minutes
-        AppLockPreference.InFiveMinutes -> 5.minutes
-        AppLockPreference.InTenMinutes -> 10.minutes
-        AppLockPreference.InOneHour -> 1.hours
-        AppLockPreference.InFourHours -> 4.hours
-        else -> Duration.ZERO
     }
 
     companion object {

@@ -1,5 +1,9 @@
 package proton.android.pass.preferences
 
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
+
 private const val IMMEDIATELY = 1
 private const val NEVER = 2
 private const val IN_ONE_MINUTE = 3
@@ -28,6 +32,16 @@ enum class AppLockPreference {
         InTenMinutes -> IN_TEN_MINUTES
         InOneHour -> IN_ONE_HOUR
         InFourHours -> IN_FOUR_HOURS
+    }
+
+    fun toDuration(): Duration = when (this) {
+        InOneMinute -> 1.minutes
+        InTwoMinutes -> 2.minutes
+        InFiveMinutes -> 5.minutes
+        InTenMinutes -> 10.minutes
+        InOneHour -> 1.hours
+        InFourHours -> 4.hours
+        else -> Duration.ZERO
     }
 
     companion object {

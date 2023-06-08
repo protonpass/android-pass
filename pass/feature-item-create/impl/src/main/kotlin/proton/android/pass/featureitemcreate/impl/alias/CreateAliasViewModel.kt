@@ -29,6 +29,7 @@ import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.toOption
 import proton.android.pass.composecomponents.impl.uievents.IsButtonEnabled
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
+import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
@@ -342,6 +343,7 @@ open class CreateAliasViewModel @Inject constructor(
         val message = when (cause) {
             is CannotCreateMoreAliasesError -> AliasSnackbarMessage.CannotCreateMoreAliasesError
             is EmailNotValidatedError -> AliasSnackbarMessage.EmailNotValidatedError
+            is AliasRateLimitError -> AliasSnackbarMessage.AliasRateLimited
             else -> {
                 val defaultMessage = "Create alias error"
                 PassLogger.e(TAG, cause ?: Exception(defaultMessage), defaultMessage)

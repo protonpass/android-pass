@@ -27,6 +27,7 @@ import proton.android.pass.commonui.api.SavedStateHandleProvider
 import proton.android.pass.commonui.api.toUiModel
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.api.repositories.DraftRepository
@@ -41,6 +42,7 @@ import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.android.pass.featureitemcreate.impl.alias.AliasItem
 import proton.android.pass.featureitemcreate.impl.alias.AliasMailboxUiModel
 import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
+import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.AliasRateLimited
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.CannotCreateMoreAliases
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.EmailNotValidated
 import proton.android.pass.featureitemcreate.impl.login.LoginSnackbarMessages.ItemCreationError
@@ -298,17 +300,10 @@ class CreateLoginViewModel @Inject constructor(
             draftRepository.delete<AliasItem>(CreateAliasViewModel.KEY_DRAFT_ALIAS)
         }.onFailure {
             when (it) {
-                is CannotCreateMoreAliasesError -> {
-                    snackbarDispatcher(CannotCreateMoreAliases)
-                }
-
-                is EmailNotValidatedError -> {
-                    snackbarDispatcher(EmailNotValidated)
-                }
-
-                else -> {
-                    snackbarDispatcher(ItemCreationError)
-                }
+                is CannotCreateMoreAliasesError -> snackbarDispatcher(CannotCreateMoreAliases)
+                is EmailNotValidatedError -> snackbarDispatcher(EmailNotValidated)
+                is AliasRateLimitError -> snackbarDispatcher(AliasRateLimited)
+                else -> snackbarDispatcher(ItemCreationError)
             }
             PassLogger.w(TAG, it, "Could not create item")
         }

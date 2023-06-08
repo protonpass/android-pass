@@ -13,6 +13,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import proton.android.pass.commonui.api.PassTheme
+import proton.android.pass.data.fakes.usecases.TestObserveVaults
 import proton.android.pass.image.fakes.TestClearIconCache
 import proton.android.pass.preferences.CopyTotpToClipboard
 import proton.android.pass.preferences.TestPreferenceRepository
@@ -20,6 +21,8 @@ import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UseFaviconsPreference
 import proton.android.pass.test.CallChecker
 import proton.android.pass.test.HiltComponentActivity
+import proton.pass.domain.ShareId
+import proton.pass.domain.Vault
 import javax.inject.Inject
 import kotlin.test.assertTrue
 
@@ -38,9 +41,28 @@ class SettingsScreenTest {
     @Inject
     lateinit var clearIconCache: TestClearIconCache
 
+    @Inject
+    lateinit var observeVaults: TestObserveVaults
+
     @Before
     fun setup() {
         hiltRule.inject()
+        observeVaults.sendResult(
+            Result.success(
+                listOf(
+                    Vault(
+                        shareId = ShareId("1"),
+                        name = "Vault 1",
+                        isPrimary = true
+                    ),
+                    Vault(
+                        shareId = ShareId("2"),
+                        name = "Vault 2",
+                        isPrimary = false
+                    )
+                )
+            )
+        )
     }
 
     @Test

@@ -3,6 +3,7 @@ package proton.android.pass.data.impl.remote
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiResult
+import proton.android.pass.data.api.errors.AliasRateLimitError
 import proton.android.pass.data.api.errors.CannotCreateMoreAliasesError
 import proton.android.pass.data.api.errors.EmailNotValidatedError
 import proton.android.pass.data.impl.api.PasswordManagerApi
@@ -24,6 +25,7 @@ import javax.inject.Inject
 
 const val CODE_CANNOT_CREATE_MORE_ALIASES = 300_007
 const val CODE_USER_EMAIL_NOT_VALIDATED = 300_009
+const val ALIAS_RATE_LIMIT = 2028
 
 class RemoteItemDataSourceImpl @Inject constructor(
     private val api: ApiProvider
@@ -53,6 +55,7 @@ class RemoteItemDataSourceImpl @Inject constructor(
                     when (res.proton?.code) {
                         CODE_CANNOT_CREATE_MORE_ALIASES -> throw CannotCreateMoreAliasesError()
                         CODE_USER_EMAIL_NOT_VALIDATED -> throw EmailNotValidatedError()
+                        ALIAS_RATE_LIMIT -> throw AliasRateLimitError()
                         else -> {}
                     }
                 }

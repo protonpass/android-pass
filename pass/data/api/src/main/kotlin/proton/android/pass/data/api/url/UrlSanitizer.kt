@@ -8,10 +8,24 @@ object UrlSanitizer {
 
     private val TRAILING_DOTS_REGEX = Regex("\\.+$")
 
+    private val FORBIDDEN_SCHEMES = listOf(
+        "javascript:",
+        "data:",
+        "file:",
+        "about:",
+        "blob:"
+    )
+
     fun sanitize(url: String): Result<String> {
         if (url.isBlank()) return Result.failure(IllegalArgumentException("url cannot be empty"))
         if (url.all { !it.isLetterOrDigit() })
             return Result.failure(IllegalArgumentException("url cannot be all symbols"))
+
+        FORBIDDEN_SCHEMES.forEach {
+            if (url.startsWith(it)) {
+                return Result.failure(IllegalArgumentException("url cannot start with $it"))
+            }
+        }
 
         // If it doesn't have a scheme, add https://
         val urlWithScheme = if (!url.contains("://")) {

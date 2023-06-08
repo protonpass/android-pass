@@ -15,6 +15,7 @@ enum class AliasSnackbarMessage(
     ItemCreationError(R.string.create_alias_item_creation_error, SnackbarType.ERROR),
     CannotCreateMoreAliasesError(R.string.create_alias_cannot_create_more_aliases_error, SnackbarType.ERROR),
     EmailNotValidatedError(R.string.create_alias_email_not_validated_error, SnackbarType.ERROR),
+    AliasRateLimited(R.string.alias_rate_limited, SnackbarType.ERROR),
     ItemUpdateError(R.string.create_alias_item_update_error, SnackbarType.ERROR),
     AliasCreated(R.string.alias_created, SnackbarType.SUCCESS),
     AliasUpdated(R.string.changes_saved, SnackbarType.SUCCESS),

@@ -7,10 +7,14 @@ import proton.android.pass.navigation.api.NavItem
 import proton.android.pass.navigation.api.bottomSheet
 import proton.pass.domain.ShareId
 
-object CreateVaultBottomSheet : NavItem(baseRoute = "vault/create/bottomsheet")
+object CreateVaultBottomSheet : NavItem(
+    baseRoute = "vault/create/bottomsheet",
+    isBottomsheet = true
+)
 object EditVaultBottomSheet : NavItem(
     baseRoute = "vault/edit/bottomsheet",
-    navArgIds = listOf(CommonNavArgId.ShareId)
+    navArgIds = listOf(CommonNavArgId.ShareId),
+    isBottomsheet = true
 ) {
     fun createNavRoute(shareId: ShareId) = buildString {
         append("$baseRoute/${shareId.id}")

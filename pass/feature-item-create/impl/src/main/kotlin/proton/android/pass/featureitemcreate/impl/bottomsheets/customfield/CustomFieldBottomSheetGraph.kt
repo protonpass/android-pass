@@ -18,10 +18,14 @@ object CustomFieldTitleNavArgId : NavArgId {
     override val navType = NavType.StringType
 }
 
-object AddCustomFieldBottomSheet : NavItem("item/create/customfield/add/bottomsheet")
+object AddCustomFieldBottomSheet : NavItem(
+    baseRoute = "item/create/customfield/add/bottomsheet",
+    isBottomsheet = true
+)
 object CustomFieldOptionsBottomSheet : NavItem(
     baseRoute = "item/create/customfield/options/bottomsheet",
-    navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId)
+    navArgIds = listOf(CustomFieldIndexNavArgId, CustomFieldTitleNavArgId),
+    isBottomsheet = true
 ) {
     fun buildRoute(index: Int, currentTitle: String) =
         "$baseRoute/$index/${NavParamEncoder.encode(currentTitle)}"

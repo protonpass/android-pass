@@ -32,7 +32,10 @@ import proton.android.pass.ui.internal.InternalDrawerState
 import proton.android.pass.ui.internal.InternalDrawerValue
 import proton.android.pass.ui.internal.rememberInternalDrawerState
 
-@OptIn(ExperimentalMaterialNavigationApi::class, ExperimentalMaterialApi::class)
+@OptIn(
+    ExperimentalMaterialNavigationApi::class,
+    ExperimentalMaterialApi::class
+)
 @Composable
 fun PassAppContent(
     modifier: Modifier = Modifier,
@@ -45,9 +48,9 @@ fun PassAppContent(
         initialValue = ModalBottomSheetValue.Hidden,
         skipHalfExpanded = true
     )
-    val appNavigator = rememberAppNavigator(
-        bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState),
-    )
+
+    val bottomSheetNavigator = rememberBottomSheetNavigator(bottomSheetState)
+    val appNavigator = rememberAppNavigator(bottomSheetNavigator)
     val scaffoldState = rememberScaffoldState()
     val passSnackbarHostState = rememberPassSnackbarHostState(scaffoldState.snackbarHostState)
 

@@ -4,6 +4,7 @@ import proton.android.pass.common.api.Option
 
 sealed interface HostInfo {
     data class Host(
+        val protocol: String,
         val subdomain: Option<String>,
         val domain: String,
         val tld: Option<String>

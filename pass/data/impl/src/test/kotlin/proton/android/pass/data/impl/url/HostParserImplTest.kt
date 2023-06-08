@@ -162,4 +162,22 @@ class HostParserImplTest {
 
         assertFalse(res.isSuccess)
     }
+
+    @Test
+    fun `is able to handle FQDN`() {
+        val tld = "com"
+        val domain = "domain"
+        val subdomain = "subdomain"
+        publicSuffixList.setTlds(setOf(tld))
+        val res = instance.parse("$subdomain.$domain.$tld.") // Has a trailing dot
+
+        assertTrue(res.isSuccess)
+
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
+        assertTrue(hostInfo is HostInfo.Host)
+        assertEquals(subdomain.some(), hostInfo.subdomain)
+        assertEquals(domain, hostInfo.domain)
+        assertEquals(tld.some(), hostInfo.tld)
+    }
 }

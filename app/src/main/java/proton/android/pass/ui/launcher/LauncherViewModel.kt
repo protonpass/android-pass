@@ -53,6 +53,7 @@ import me.proton.core.plan.presentation.onUpgradeResult
 import me.proton.core.report.presentation.ReportOrchestrator
 import me.proton.core.user.domain.UserManager
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
+import proton.android.pass.common.api.flatMap
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ClearUserData
@@ -60,6 +61,7 @@ import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.HasAuthenticated
+import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
 
@@ -74,6 +76,7 @@ class LauncherViewModel @Inject constructor(
     private val reportOrchestrator: ReportOrchestrator,
     private val userSettingsOrchestrator: UserSettingsOrchestrator,
     private val preferenceRepository: UserPreferencesRepository,
+    private val internalSettingsRepository: InternalSettingsRepository,
     private val userPlanWorkerLauncher: UserPlanWorkerLauncher,
     private val itemSyncStatusRepository: ItemSyncStatusRepository,
     private val clearUserData: ClearUserData,
@@ -183,6 +186,7 @@ class LauncherViewModel @Inject constructor(
         val accounts = accountManager.getAccounts().first()
         if (accounts.isEmpty()) {
             preferenceRepository.clearPreferences()
+                .flatMap { internalSettingsRepository.clearSettings() }
                 .onSuccess { PassLogger.d(TAG, "Clearing preferences success") }
                 .onFailure {
                     PassLogger.w(TAG, it, "Error clearing preferences")

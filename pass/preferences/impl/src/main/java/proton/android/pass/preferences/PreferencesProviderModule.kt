@@ -36,4 +36,16 @@ object PreferencesProviderModule {
         ) {
             context.dataStoreFile("feature_flag_preferences.pb")
         }
+
+
+    @Provides
+    @Singleton
+    fun provideInternalSettingsDataStore(
+        @ApplicationContext context: Context
+    ): DataStore<InternalSettings> =
+        DataStoreFactory.create(
+            serializer = InternalSettingsSerializer
+        ) {
+            context.dataStoreFile("internal_settings.pb")
+        }
 }

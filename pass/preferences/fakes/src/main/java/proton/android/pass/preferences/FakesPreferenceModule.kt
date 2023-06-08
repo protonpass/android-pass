@@ -16,4 +16,9 @@ abstract class FakesPreferenceModule {
     abstract fun bindFeatureFlagsPreferencesRepository(
         impl: TestFeatureFlagsPreferenceRepository
     ): FeatureFlagsPreferencesRepository
+
+    @Binds
+    abstract fun bindInternalSettingsRepository(
+        impl: TestInternalSettingsRepository
+    ): InternalSettingsRepository
 }

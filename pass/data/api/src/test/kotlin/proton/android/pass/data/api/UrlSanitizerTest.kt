@@ -41,6 +41,14 @@ class UrlSanitizerTest {
     }
 
     @Test
+    fun `is able to handle IP addresses`() {
+        val domain = "1.2.3.4"
+        val res = UrlSanitizer.getDomain(domain)
+        assertTrue(res.isSuccess)
+        assertEquals(domain, res.getOrThrow())
+    }
+
+    @Test
     fun `url with scheme should return success and not have it edited`() {
         val domain = "ssh://some.domain"
         val res = UrlSanitizer.sanitize(domain)
@@ -95,6 +103,21 @@ class UrlSanitizerTest {
         val res = UrlSanitizer.getDomain(domain)
         assertTrue(res.isSuccess)
         assertEquals(res.getOrThrow(), domain)
+    }
+
+    @Test
+    fun `getDomain should remove the final dot of the host section`() {
+        val cases = mapOf(
+            "a.b.c.d." to "a.b.c.d",
+            "https://domain.test." to "domain.test",
+            "https://domain.test./" to "domain.test",
+            "ftp://domain.test." to "domain.test"
+        )
+
+        cases.forEach { (input, expected) ->
+            val res = UrlSanitizer.getDomain(input)
+            assertEquals(expected, res.getOrThrow())
+        }
     }
 
     @Test

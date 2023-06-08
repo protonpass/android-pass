@@ -15,7 +15,8 @@ object SelectedVaultArg : NavArgId {
 
 object SelectVaultBottomsheet : NavItem(
     baseRoute = "vault/select/bottomsheet",
-    navArgIds = listOf(SelectedVaultArg)
+    navArgIds = listOf(SelectedVaultArg),
+    isBottomsheet = true
 ) {
     fun createNavRoute(selectedVault: ShareId) = "$baseRoute/${selectedVault.id}"
 }

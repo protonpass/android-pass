@@ -14,7 +14,8 @@ sealed interface AutofillItemOptionsNavigation {
 
 object AutofillItemOptionsBottomSheet : NavItem(
     baseRoute = "autofill/itemoptions/bottomsheet",
-    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId)
+    navArgIds = listOf(CommonNavArgId.ShareId, CommonNavArgId.ItemId),
+    isBottomsheet = true
 ) {
     fun createRoute(shareId: ShareId, itemId: ItemId) = "$baseRoute/${shareId.id}/${itemId.id}"
 }

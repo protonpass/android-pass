@@ -45,7 +45,8 @@ enum class MigrateModeValue {
 object MigrateSelectVault : NavItem(
     baseRoute = "migrate/select",
     navArgIds = listOf(CommonNavArgId.ShareId, MigrateModeArg),
-    optionalArgIds = listOf(CommonOptionalNavArgId.ItemId)
+    optionalArgIds = listOf(CommonOptionalNavArgId.ItemId),
+    isBottomsheet = true
 ) {
     fun createNavRouteForMigrateAll(shareId: ShareId) =
         "$baseRoute/${shareId.id}/${MigrateModeValue.AllVaultItems.name}"
@@ -62,7 +63,8 @@ object MigrateSelectVault : NavItem(
 object MigrateConfirmVault : NavItem(
     baseRoute = "migrate/confirm",
     navArgIds = listOf(CommonNavArgId.ShareId, MigrateModeArg, DestinationShareNavArgId),
-    optionalArgIds = listOf(CommonOptionalNavArgId.ItemId)
+    optionalArgIds = listOf(CommonOptionalNavArgId.ItemId),
+    isBottomsheet = true
 ) {
     fun createNavRouteForMigrateAll(shareId: ShareId, destShareId: ShareId) = buildString {
         append("$baseRoute/${shareId.id}/${MigrateModeValue.AllVaultItems.name}/${destShareId.id}")

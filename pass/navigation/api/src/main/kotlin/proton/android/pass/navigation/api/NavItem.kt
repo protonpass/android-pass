@@ -8,6 +8,7 @@ open class NavItem(
     private val navArgIds: List<NavArgId> = emptyList(),
     private val optionalArgIds: List<OptionalNavArgId> = emptyList(),
     val isTopLevel: Boolean = false,
+    val isBottomsheet: Boolean = false,
 ) {
     val route: String = run {
         buildString {

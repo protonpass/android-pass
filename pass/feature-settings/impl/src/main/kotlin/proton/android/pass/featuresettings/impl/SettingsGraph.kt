@@ -9,10 +9,25 @@ import proton.android.pass.navigation.api.composable
 
 object Settings : NavItem(baseRoute = "settings")
 object LogView : NavItem(baseRoute = "log/view")
-object ThemeSelector : NavItem(baseRoute = "theme/bottomsheet")
-object ClipboardSettings : NavItem(baseRoute = "clipboard/settings/bottomsheet")
-object ClearClipboardOptions : NavItem(baseRoute = "clipboard/clearOptions/bottomsheet")
-object SelectPrimaryVault : NavItem(baseRoute = "vault/primary/bottomsheet")
+object ThemeSelector : NavItem(
+    baseRoute = "theme/bottomsheet",
+    isBottomsheet = true
+)
+
+object ClipboardSettings : NavItem(
+    baseRoute = "clipboard/settings/bottomsheet",
+    isBottomsheet = true
+)
+
+object ClearClipboardOptions : NavItem(
+    baseRoute = "clipboard/clearOptions/bottomsheet",
+    isBottomsheet = true
+)
+
+object SelectPrimaryVault : NavItem(
+    baseRoute = "vault/primary/bottomsheet",
+    isBottomsheet = true
+)
 
 sealed interface SettingsNavigation {
     object SelectTheme : SettingsNavigation

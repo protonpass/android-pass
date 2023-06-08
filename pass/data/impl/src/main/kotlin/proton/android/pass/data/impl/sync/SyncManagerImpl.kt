@@ -51,7 +51,8 @@ class SyncManagerImpl @Inject constructor(
                         AppLifecycleProvider.State.Foreground -> EventWorkerManager.REPEAT_INTERVAL_FOREGROUND
                     }
                     when (it.appLifecycle) {
-                        AppLifecycleProvider.State.Foreground ->
+                        AppLifecycleProvider.State.Foreground -> {
+                            workManager.cancelUniqueWork(WORKER_UNIQUE_NAME)
                             while (currentCoroutineContext().isActive) {
                                 runCatching {
                                     applyPendingEvents()
@@ -60,6 +61,7 @@ class SyncManagerImpl @Inject constructor(
                                 }
                                 delay(initialDelay)
                             }
+                        }
 
                         AppLifecycleProvider.State.Background -> enqueueWorker(initialDelay)
                     }

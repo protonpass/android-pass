@@ -52,7 +52,8 @@ object CreateAlias : NavItem(
 object CreateAliasBottomSheet : NavItem(
     baseRoute = "alias/create/bottomsheet",
     navArgIds = listOf(CommonOptionalNavArgId.ShareId, ShowUpgradeNavArgId),
-    optionalArgIds = listOf(AliasOptionalNavArgId.Title, IsEditAliasNavArg)
+    optionalArgIds = listOf(AliasOptionalNavArgId.Title, IsEditAliasNavArg),
+    isBottomsheet = true
 ) {
     fun createNavRoute(
         shareId: ShareId,

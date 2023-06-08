@@ -8,7 +8,8 @@ import proton.android.pass.navigation.api.bottomSheet
 
 object SortingBottomsheet : NavItem(
     baseRoute = "sorting/bottomsheet",
-    navArgIds = listOf(SortingTypeNavArgId)
+    navArgIds = listOf(SortingTypeNavArgId),
+    isBottomsheet = true
 ) {
     fun createNavRoute(sortingType: SearchSortingType): String = buildString {
         append("$baseRoute/${sortingType.name}")

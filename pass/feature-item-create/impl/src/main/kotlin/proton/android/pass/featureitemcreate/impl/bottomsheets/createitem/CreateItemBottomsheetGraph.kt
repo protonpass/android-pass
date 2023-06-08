@@ -12,7 +12,8 @@ import proton.pass.domain.ShareId
 
 object CreateItemBottomsheet : NavItem(
     baseRoute = "item/create/bottomsheet",
-    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId)
+    optionalArgIds = listOf(CommonOptionalNavArgId.ShareId),
+    isBottomsheet = true
 ) {
     fun createNavRoute(
         shareId: Option<ShareId> = None,

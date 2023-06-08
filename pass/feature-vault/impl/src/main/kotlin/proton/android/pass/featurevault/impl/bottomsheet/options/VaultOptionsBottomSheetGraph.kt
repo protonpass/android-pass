@@ -9,7 +9,8 @@ import proton.pass.domain.ShareId
 
 object VaultOptionsBottomSheet : NavItem(
     baseRoute = "vault/options/bottomsheet",
-    navArgIds = listOf(CommonNavArgId.ShareId)
+    navArgIds = listOf(CommonNavArgId.ShareId),
+    isBottomsheet = true
 ) {
     fun createNavRoute(shareId: ShareId) = buildString {
         append("$baseRoute/${shareId.id}")

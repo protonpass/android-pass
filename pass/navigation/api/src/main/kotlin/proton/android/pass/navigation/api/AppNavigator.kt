@@ -4,11 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.navigation.material.rememberBottomSheetNavigator
@@ -27,15 +24,12 @@ class AppNavigator(
     val navController: NavHostController,
     val bottomSheetNavigator: BottomSheetNavigator
 ) {
-    val currentDestination: NavDestination?
-        @Composable get() = navController
-            .currentBackStackEntryAsState()
-            .value
-            ?.destination
 
     fun navigate(destination: NavItem, route: String? = null, backDestination: NavItem? = null) {
+        val destinationRoute = route ?: destination.route
+        val currentRoute = navController.currentBackStackEntry?.destination?.route
         // Discard duplicated nav events
-        if (navController.currentBackStackEntry?.lifecycleIsResumed() != true) {
+        if (!lifecycleIsResumed() && !destination.isBottomsheet && destinationRoute != currentRoute) {
             PassLogger.d(
                 TAG,
                 "Navigation event discarded as it was duplicated. " +
@@ -44,20 +38,25 @@ class AppNavigator(
             )
             return
         }
-
-        val destinationRoute = route ?: destination.route
         PassLogger.i(TAG, "Navigating to $destinationRoute")
 
-        if (destination.isTopLevel) {
-            navController.navigate(destinationRoute) {
+        when {
+            destination.isTopLevel -> navController.navigate(destinationRoute) {
                 popUpTo(navController.graph.findStartDestination().id) {
                     saveState = true
                 }
                 launchSingleTop = true
                 restoreState = true
             }
-        } else {
-            navController.navigate(destinationRoute) {
+
+            destination.isBottomsheet -> navController.navigate(destinationRoute) {
+                launchSingleTop = true
+                if (backDestination != null) {
+                    popUpTo(backDestination.route)
+                }
+            }
+
+            else -> navController.navigate(destinationRoute) {
                 if (backDestination != null) {
                     popUpTo(backDestination.route)
                 }
@@ -74,7 +73,10 @@ class AppNavigator(
     }
 
     fun onBackClick() {
-        PassLogger.i(TAG, "Navigating back to ${navController.previousBackStackEntry?.destination?.route}")
+        PassLogger.i(
+            TAG,
+            "Navigating back to ${navController.previousBackStackEntry?.destination?.route}"
+        )
         navController.popBackStack()
     }
 
@@ -101,8 +103,8 @@ class AppNavigator(
      *
      * This is used to de-duplicate navigation events.
      */
-    private fun NavBackStackEntry.lifecycleIsResumed() =
-        this.lifecycle.currentState == Lifecycle.State.RESUMED
+    private fun lifecycleIsResumed() =
+        navController.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED
 
     companion object {
         private const val TAG = "AppNavigator"

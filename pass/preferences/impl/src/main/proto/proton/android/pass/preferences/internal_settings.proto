@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+option java_package = "proton.android.pass.preferences";
+option java_multiple_files = true;
+
+message InternalSettings {
+  int64 last_unlock_time = 1;
+}

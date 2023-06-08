@@ -15,4 +15,9 @@ abstract class PreferencesBinderModule {
     abstract fun bindFeatureFlagsPreferencesRepository(
         impl: FeatureFlagsPreferencesRepositoryImpl
     ): FeatureFlagsPreferencesRepository
+
+    @Binds
+    abstract fun bindInternalSettingsRepository(
+        impl: InternalSettingsRepositoryImpl
+    ): InternalSettingsRepository
 }

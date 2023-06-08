@@ -13,6 +13,7 @@ const val CLEAR_ALIAS_NAV_PARAMETER_KEY = "clearAlias"
 object AliasOptionsBottomSheet : NavItem(
     baseRoute = "login/alias-options",
     navArgIds = listOf(CommonNavArgId.ShareId, ShowUpgradeNavArgId),
+    isBottomsheet = true
 ) {
     fun createNavRoute(shareId: ShareId, showUpgrade: Boolean) =
         "$baseRoute/${shareId.id}/$showUpgrade"

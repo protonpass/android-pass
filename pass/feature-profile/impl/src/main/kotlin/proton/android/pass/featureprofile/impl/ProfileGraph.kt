@@ -8,8 +8,15 @@ import proton.android.pass.navigation.api.bottomSheet
 import proton.android.pass.navigation.api.composable
 
 object Profile : NavItem(baseRoute = "profile", isTopLevel = true)
-object FeedbackBottomsheet : NavItem(baseRoute = "feedback/bottomsheet")
-object AppLockBottomsheet : NavItem(baseRoute = "applock/bottomsheet")
+object FeedbackBottomsheet : NavItem(
+    baseRoute = "feedback/bottomsheet",
+    isBottomsheet = true
+)
+
+object AppLockBottomsheet : NavItem(
+    baseRoute = "applock/bottomsheet",
+    isBottomsheet = true
+)
 
 sealed interface ProfileNavigation {
     object Account : ProfileNavigation

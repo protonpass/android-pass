@@ -21,7 +21,8 @@ enum class GeneratePasswordBottomsheetModeValue {
 
 object GeneratePasswordBottomsheet : NavItem(
     baseRoute = "password/create/bottomsheet",
-    navArgIds = listOf(GeneratePasswordBottomsheetMode)
+    navArgIds = listOf(GeneratePasswordBottomsheetMode),
+    isBottomsheet = true
 ) {
     fun buildRoute(mode: GeneratePasswordBottomsheetModeValue) =
         "$baseRoute/${mode.name}"

@@ -20,9 +20,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.datetime.Clock
-import proton.android.pass.biometry.BiometryAuthTimeHolder
-import proton.android.pass.biometry.NeedsAuthChecker
+import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.log.api.PassLogger
@@ -38,8 +36,7 @@ class AppViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
     networkMonitor: NetworkMonitor,
     private val snackbarDispatcher: SnackbarDispatcher,
-    private val authTimeHolder: BiometryAuthTimeHolder,
-    private val clock: Clock
+    private val needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
 
     private val themePreference: Flow<ThemePreference> = preferenceRepository
@@ -114,20 +111,7 @@ class AppViewModel @Inject constructor(
             }
         }
 
-    private suspend fun shouldPerformAuth(): Boolean {
-        val biometricLockState = preferenceRepository.getBiometricLockState().first()
-        val hasAuthenticated = preferenceRepository.getHasAuthenticated().first()
-        val appLockPreference = preferenceRepository.getAppLockPreference().first()
-        val lastUnlockTime = authTimeHolder.getBiometryAuthTime().first()
-
-        return NeedsAuthChecker.needsAuth(
-            biometricLock = biometricLockState,
-            hasAuthenticated = hasAuthenticated,
-            appLockPreference = appLockPreference,
-            lastUnlockTime = lastUnlockTime,
-            now = clock.now()
-        )
-    }
+    private suspend fun shouldPerformAuth(): Boolean = needsBiometricAuth().first()
 
     companion object {
         private const val TAG = "AppViewModel"

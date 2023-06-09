@@ -40,8 +40,8 @@ fun AutoSaveApp(
         onSnackBarMessageDelivered = { snackBarViewModel.onSnackbarMessageDelivered() }
     )
 
-    val themePreference by viewModel.state.collectAsStateWithLifecycle()
-    val isDark = isDark(themePreference)
+    val state by viewModel.state.collectAsStateWithLifecycle()
+    val isDark = isDark(state.theme)
 
     SystemUIEffect(isDark = isDark)
 
@@ -57,6 +57,7 @@ fun AutoSaveApp(
                 AutosaveAppContent(
                     modifier = Modifier.padding(padding),
                     arguments = arguments,
+                    needsAuth = state.needsAuth,
                     onNavigate = {
                         if (it == AutosaveNavigation.Success) {
                             viewModel.onItemAutoSaved()

@@ -14,6 +14,7 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import kotlinx.coroutines.launch
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.featureauth.impl.AUTH_SCREEN_ROUTE
+import proton.android.pass.featureitemcreate.impl.login.CreateLogin
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 
@@ -26,6 +27,7 @@ import proton.android.pass.navigation.api.rememberBottomSheetNavigator
 fun AutosaveAppContent(
     modifier: Modifier = Modifier,
     arguments: AutoSaveArguments,
+    needsAuth: Boolean,
     onNavigate: (AutosaveNavigation) -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
@@ -40,7 +42,7 @@ fun AutosaveAppContent(
         AnimatedNavHost(
             modifier = modifier.defaultMinSize(minHeight = 200.dp),
             navController = appNavigator.navController,
-            startDestination = AUTH_SCREEN_ROUTE,
+            startDestination = if (needsAuth) AUTH_SCREEN_ROUTE else CreateLogin.route,
         ) {
             autosaveActivityGraph(
                 appNavigator = appNavigator,

@@ -32,10 +32,10 @@ import proton.android.pass.autofill.ui.autofill.AutofillActivity.Companion.ARG_W
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.NotValidAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.StartAutofillUiState
 import proton.android.pass.autofill.ui.autofill.AutofillUiState.UninitialisedAutofillUiState
+import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
-import proton.android.pass.preferences.BiometricLockState
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -44,6 +44,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AutofillActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
+    needsBiometricAuth: NeedsBiometricAuth,
     preferenceRepository: UserPreferencesRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -93,13 +94,9 @@ class AutofillActivityViewModel @Inject constructor(
         .getThemePreference()
         .distinctUntilChanged()
 
-    private val biometricLockState: Flow<BiometricLockState> = preferenceRepository
-        .getBiometricLockState()
-        .distinctUntilChanged()
-
     val state: StateFlow<AutofillUiState> = combine(
         themePreferenceState,
-        biometricLockState,
+        needsBiometricAuth(),
         autofillAppState,
         selectedAutofillItemState,
         copyTotpToClipboardPreferenceState
@@ -108,7 +105,7 @@ class AutofillActivityViewModel @Inject constructor(
             autofillAppState.isValid() -> NotValidAutofillUiState
             else -> StartAutofillUiState(
                 themePreference = themePreference.value(),
-                isFingerprintRequiredPreference = biometricLock.value(),
+                isFingerprintRequiredPreference = biometricLock,
                 autofillAppState = autofillAppState,
                 copyTotpToClipboardPreference = copyTotpToClipboard.value(),
                 selectedAutofillItem = selectedAutofillItem

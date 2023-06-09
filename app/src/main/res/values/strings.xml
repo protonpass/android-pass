@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Proton Pass</string>
+    <string name="app_name" translatable="false">Proton Pass</string>
 
     <string name="description_no_pass_scope">Proton Pass is currently in early access and only available to invited users of Proton</string>
 

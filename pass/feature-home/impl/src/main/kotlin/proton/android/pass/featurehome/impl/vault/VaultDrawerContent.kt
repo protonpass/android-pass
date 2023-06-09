@@ -17,14 +17,14 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.PassTypography
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.composecomponents.impl.buttons.CircleButton
-import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.featurehome.impl.R
+import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.pass.domain.ShareId
 
 @Composable
 fun VaultDrawerContent(
     modifier: Modifier = Modifier,
-    homeVaultSelection: HomeVaultSelection,
+    homeVaultSelection: VaultSelectionOption,
     list: ImmutableList<ShareUiModelWithItemCount>,
     totalTrashedItems: Long,
     onAllVaultsClick: () -> Unit,

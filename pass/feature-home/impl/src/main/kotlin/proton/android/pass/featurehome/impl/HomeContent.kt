@@ -45,6 +45,7 @@ import proton.android.pass.featurehome.impl.HomeContentTestTag.DrawerIconTestTag
 import proton.android.pass.featurehome.impl.empty.HomeEmptyList
 import proton.android.pass.featurehome.impl.onboardingtips.OnBoardingTips
 import proton.android.pass.featurehome.impl.trash.EmptyTrashContent
+import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.pass.domain.ShareId
 
 @Suppress("LongParameterList", "ComplexMethod")
@@ -71,7 +72,7 @@ internal fun HomeContent(
     onTrashActionsClick: () -> Unit,
     onTrialInfoClick: () -> Unit
 ) {
-    val isTrashMode = uiState.homeListUiState.homeVaultSelection == HomeVaultSelection.Trash
+    val isTrashMode = uiState.homeListUiState.homeVaultSelection == VaultSelectionOption.Trash
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -79,9 +80,9 @@ internal fun HomeContent(
                 searchQuery = uiState.searchUiState.searchQuery,
                 inSearchMode = uiState.searchUiState.inSearchMode,
                 placeholderText = when (uiState.homeListUiState.homeVaultSelection) {
-                    HomeVaultSelection.AllVaults -> stringResource(R.string.search_topbar_placeholder_all_vaults)
-                    HomeVaultSelection.Trash -> stringResource(R.string.search_topbar_placeholder_trash)
-                    is HomeVaultSelection.Vault -> stringResource(
+                    VaultSelectionOption.AllVaults -> stringResource(R.string.search_topbar_placeholder_all_vaults)
+                    VaultSelectionOption.Trash -> stringResource(R.string.search_topbar_placeholder_trash)
+                    is VaultSelectionOption.Vault -> stringResource(
                         R.string.search_topbar_placeholder_vault,
                         uiState.homeListUiState.selectedShare.value()?.name ?: ""
                     )
@@ -245,7 +246,7 @@ private fun HomeDrawerIcon(
         when (val share = uiState.homeListUiState.selectedShare) {
             None -> {
                 when (uiState.homeListUiState.homeVaultSelection) {
-                    HomeVaultSelection.AllVaults -> {
+                    VaultSelectionOption.AllVaults -> {
                         AllVaultsIcon(
                             modifier = modifier,
                             size = 48,
@@ -253,7 +254,7 @@ private fun HomeDrawerIcon(
                         )
                     }
 
-                    HomeVaultSelection.Trash -> {
+                    VaultSelectionOption.Trash -> {
                         TrashVaultIcon(
                             modifier = modifier,
                             size = 48,

@@ -14,4 +14,7 @@ abstract class FakesBiometryModule {
 
     @Binds
     abstract fun bindAuthTimeHolder(impl: TestBiometryAuthTimeHolder): BiometryAuthTimeHolder
+
+    @Binds
+    abstract fun bindNeedsBiometricAuth(impl: TestNeedsBiometricAuth): NeedsBiometricAuth
 }

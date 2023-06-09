@@ -18,14 +18,14 @@ import proton.android.pass.composecomponents.impl.extension.toResource
 import proton.android.pass.composecomponents.impl.icon.AllVaultsIcon
 import proton.android.pass.composecomponents.impl.icon.TrashVaultIcon
 import proton.android.pass.composecomponents.impl.icon.VaultIcon
-import proton.android.pass.featurehome.impl.HomeVaultSelection
 import proton.android.pass.featurehome.impl.R
+import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.pass.domain.ShareId
 
 @Composable
 fun VaultDrawerSection(
     modifier: Modifier = Modifier,
-    homeVaultSelection: HomeVaultSelection,
+    homeVaultSelection: VaultSelectionOption,
     list: ImmutableList<ShareUiModelWithItemCount>,
     totalTrashedItems: Long,
     onVaultOptionsClick: (ShareUiModelWithItemCount) -> Unit,
@@ -52,7 +52,7 @@ fun VaultDrawerSection(
                     itemCount = list.sumOf { it.activeItemCount },
                     icon = { AllVaultsIcon() },
                     isShared = false,
-                    isSelected = homeVaultSelection == HomeVaultSelection.AllVaults,
+                    isSelected = homeVaultSelection == VaultSelectionOption.AllVaults,
                     showMenuIcon = false,
                     onClick = { onAllVaultsClick() }
                 )
@@ -76,7 +76,7 @@ fun VaultDrawerSection(
                     )
                 },
                 isShared = false,
-                isSelected = homeVaultSelection == HomeVaultSelection.Vault(share.id),
+                isSelected = homeVaultSelection == VaultSelectionOption.Vault(share.id),
                 showMenuIcon = true,
                 onOptionsClick = { onVaultOptionsClick(share) },
                 onClick = { onVaultClick(share.id) }
@@ -92,7 +92,7 @@ fun VaultDrawerSection(
                 name = stringResource(R.string.vault_drawer_item_trash),
                 itemCount = totalTrashedItems,
                 icon = { TrashVaultIcon() },
-                isSelected = homeVaultSelection == HomeVaultSelection.Trash,
+                isSelected = homeVaultSelection == VaultSelectionOption.Trash,
                 isShared = false,
                 showMenuIcon = false,
                 onOptionsClick = {},

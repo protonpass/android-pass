@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableList
@@ -15,6 +16,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -22,7 +24,6 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -36,7 +37,6 @@ import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.common.api.combineN
 import proton.android.pass.common.api.getOrNull
 import proton.android.pass.common.api.map
-import proton.android.pass.common.api.onSuccess
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonui.api.GroupedItemList
 import proton.android.pass.commonui.api.GroupingKeys.NoGrouping
@@ -54,6 +54,7 @@ import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsProcessingSearchState
 import proton.android.pass.composecomponents.impl.uievents.IsRefreshingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.data.api.SearchEntry
 import proton.android.pass.data.api.repositories.ItemSyncStatus
 import proton.android.pass.data.api.repositories.ItemSyncStatusRepository
 import proton.android.pass.data.api.usecases.ApplyPendingEvents
@@ -81,6 +82,7 @@ import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RefreshError
 import proton.android.pass.featurehome.impl.HomeSnackbarMessage.RestoreItemsError
 import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SearchSortingType
+import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -92,6 +94,7 @@ import proton.pass.domain.ItemId
 import proton.pass.domain.ItemState
 import proton.pass.domain.ShareId
 import proton.pass.domain.ShareSelection
+import proton.pass.domain.Vault
 import javax.inject.Inject
 
 @Suppress("LongParameterList")
@@ -112,7 +115,7 @@ class HomeViewModel @Inject constructor(
     private val deleteAllSearchEntry: DeleteAllSearchEntry,
     private val observeSearchEntry: ObserveSearchEntry,
     private val telemetryManager: TelemetryManager,
-    searchOptionsRepository: SearchOptionsRepository,
+    private val searchOptionsRepository: SearchOptionsRepository,
     observeVaults: ObserveVaults,
     clock: Clock,
     observeItems: ObserveItems,
@@ -130,51 +133,40 @@ class HomeViewModel @Inject constructor(
     private var hasEnteredSearch = false
 
     private data class FiltersWrapper(
-        val vaultSelection: HomeVaultSelection,
+        val vaultSelection: VaultSelectionOption,
         val sortingSelection: SearchSortingType,
         val itemTypeSelection: HomeItemTypeSelection
     )
 
     private val itemTypeSelectionFlow: MutableStateFlow<HomeItemTypeSelection> =
         MutableStateFlow(HomeItemTypeSelection.AllItems)
-    private val vaultSelectionFlow: MutableStateFlow<HomeVaultSelection> =
-        MutableStateFlow(HomeVaultSelection.AllVaults)
     private val shouldScrollToTopFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    private val sortingSelectionFlow = searchOptionsRepository.observeSortingOption()
-        .distinctUntilChanged()
-        .onEach { shouldScrollToTopFlow.update { true } }
-
     private val searchQueryState: MutableStateFlow<String> = MutableStateFlow("")
     private val isInSearchModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isInSuggestionsModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isProcessingSearchState: MutableStateFlow<IsProcessingSearchState> =
         MutableStateFlow(IsProcessingSearchState.NotLoading)
 
-    private val vaultsFlow = observeVaults()
-        .asLoadingResult()
-        .onEach { res ->
-            res.onSuccess {
-                if (it.size == 1) {
-                    val vault = it.first()
-                    vaultSelectionFlow.update { HomeVaultSelection.Vault(vault.shareId) }
-                }
-            }
-        }
-
-    private val shareListWrapperFlow = combine(
-        vaultSelectionFlow,
-        vaultsFlow
+    private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
+        searchOptionsRepository.observeVaultSelectionOption(),
+        observeVaults().asLoadingResult()
     ) { vaultSelection, vaultsResult ->
-        val vaults = vaultsResult.getOrNull() ?: emptyList()
-        val shares = vaults.associate { it.shareId to ShareUiModel.fromVault(it) }
-            .toPersistentMap()
-        val selectedShare = when (vaultSelection) {
-            HomeVaultSelection.AllVaults -> None
-            HomeVaultSelection.Trash -> None
-            is HomeVaultSelection.Vault -> {
-                val match = vaults.firstOrNull { it.shareId == vaultSelection.shareId }.toOption()
+        val vaults: List<Vault> = vaultsResult.getOrNull() ?: emptyList()
+        if (vaults.size == 1 && vaultSelection is VaultSelectionOption.AllVaults) {
+            searchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.Vault(vaults.first().shareId))
+        }
+        val shares: PersistentMap<ShareId, ShareUiModel> = vaults.associate {
+            it.shareId to ShareUiModel.fromVault(it)
+        }.toPersistentMap()
+        val selectedShare: Option<ShareUiModel> = when (vaultSelection) {
+            VaultSelectionOption.AllVaults -> None
+            VaultSelectionOption.Trash -> None
+            is VaultSelectionOption.Vault -> {
+                val match: Option<Vault> = vaults
+                    .firstOrNull { it.shareId == vaultSelection.shareId }
+                    .toOption()
                 if (match is None) {
-                    vaultSelectionFlow.update { HomeVaultSelection.AllVaults }
+                    searchOptionsRepository.setVaultSelectionOption(VaultSelectionOption.AllVaults)
                 }
                 match.map { ShareUiModel.fromVault(it) }
             }
@@ -194,22 +186,23 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private val searchEntryState = vaultSelectionFlow
-        .flatMapLatest {
-            when (it) {
-                HomeVaultSelection.AllVaults ->
-                    observeSearchEntry(SearchEntrySelection.AllVaults)
+    private val searchEntryState: StateFlow<List<SearchEntry>> =
+        searchOptionsRepository.observeVaultSelectionOption()
+            .flatMapLatest {
+                when (val vaultSelection = it) {
+                    VaultSelectionOption.AllVaults ->
+                        observeSearchEntry(SearchEntrySelection.AllVaults)
 
-                HomeVaultSelection.Trash -> emptyFlow()
-                is HomeVaultSelection.Vault ->
-                    observeSearchEntry(SearchEntrySelection.Vault(it.shareId))
+                    VaultSelectionOption.Trash -> emptyFlow()
+                    is VaultSelectionOption.Vault ->
+                        observeSearchEntry(SearchEntrySelection.Vault(vaultSelection.shareId))
+                }
             }
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Lazily,
-            initialValue = emptyList()
-        )
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.Lazily,
+                initialValue = emptyList()
+            )
 
     private data class ActionRefreshingWrapper(
         val refreshing: IsRefreshingState,
@@ -223,32 +216,33 @@ class HomeViewModel @Inject constructor(
     private val actionStateFlow: MutableStateFlow<ActionState> =
         MutableStateFlow(ActionState.Unknown)
 
-    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> = vaultSelectionFlow
-        .flatMapLatest { vault ->
-            val (shareSelection, itemState) = when (vault) {
-                HomeVaultSelection.AllVaults -> ShareSelection.AllShares to ItemState.Active
-                is HomeVaultSelection.Vault -> ShareSelection.Share(vault.shareId) to ItemState.Active
-                HomeVaultSelection.Trash -> ShareSelection.AllShares to ItemState.Trashed
-            }
+    private val itemUiModelFlow: Flow<LoadingResult<List<ItemUiModel>>> =
+        searchOptionsRepository.observeVaultSelectionOption()
+            .flatMapLatest { vault ->
+                val (shareSelection, itemState) = when (vault) {
+                    VaultSelectionOption.AllVaults -> ShareSelection.AllShares to ItemState.Active
+                    is VaultSelectionOption.Vault -> ShareSelection.Share(vault.shareId) to ItemState.Active
+                    VaultSelectionOption.Trash -> ShareSelection.AllShares to ItemState.Trashed
+                }
 
-            observeItems(
-                selection = shareSelection,
-                itemState = itemState,
+                observeItems(
+                    selection = shareSelection,
+                    itemState = itemState,
 
-                // We observe them all, because otherwise in the All part of the search we would not
-                // know how many ItemTypes are there for the other ItemTypes.
-                // We filter out the results using the filterByType function
-                filter = ItemTypeFilter.All
-            ).asResultWithoutLoading()
-                .map { itemResult ->
-                    itemResult.map { list ->
-                        encryptionContextProvider.withEncryptionContext {
-                            list.map { it.toUiModel(this@withEncryptionContext) }
+                    // We observe them all, because otherwise in the All part of the search we would not
+                    // know how many ItemTypes are there for the other ItemTypes.
+                    // We filter out the results using the filterByType function
+                    filter = ItemTypeFilter.All
+                ).asResultWithoutLoading()
+                    .map { itemResult ->
+                        itemResult.map { list ->
+                            encryptionContextProvider.withEncryptionContext {
+                                list.map { it.toUiModel(this@withEncryptionContext) }
+                            }
                         }
                     }
-                }
-                .distinctUntilChanged()
-        }
+                    .distinctUntilChanged()
+            }
 
     private val filteredSearchEntriesFlow = combine(
         itemUiModelFlow,
@@ -266,9 +260,9 @@ class HomeViewModel @Inject constructor(
 
     private val sortedListItemFlow = combine(
         itemUiModelFlow,
-        sortingSelectionFlow
-    ) { result, sortingType ->
-        when (sortingType.searchSortingType) {
+        searchOptionsRepository.observeSortingOption()
+    ) { result, sortingOption ->
+        when (sortingOption.searchSortingType) {
             SearchSortingType.TitleAsc -> result.map { list -> list.sortByTitleAsc() }
             SearchSortingType.TitleDesc -> result.map { list -> list.sortByTitleDesc() }
             SearchSortingType.CreationAsc -> result.map { list -> list.sortByCreationAsc() }
@@ -351,16 +345,16 @@ class HomeViewModel @Inject constructor(
     )
 
     private val filtersWrapperFlow = combine(
-        vaultSelectionFlow,
-        sortingSelectionFlow,
+        searchOptionsRepository.observeSearchOptions(),
         itemTypeSelectionFlow
-    ) { vault, sortingOption, itemType ->
+    ) { searchOptions, itemType ->
+        shouldScrollToTopFlow.update { true }
         FiltersWrapper(
-            vaultSelection = vault,
-            sortingSelection = sortingOption.searchSortingType,
+            vaultSelection = searchOptions.vaultSelectionOption,
+            sortingSelection = searchOptions.sortingOption.searchSortingType,
             itemTypeSelection = itemType
         )
-    }
+    }.distinctUntilChanged()
 
     val homeUiState = combineN(
         shareListWrapperFlow,
@@ -518,8 +512,8 @@ class HomeViewModel @Inject constructor(
         isInSuggestionsModeState.update { false }
     }
 
-    fun setVaultSelection(homeVaultSelection: HomeVaultSelection) {
-        vaultSelectionFlow.update { homeVaultSelection }
+    fun setVaultSelection(vaultSelection: VaultSelectionOption) {
+        searchOptionsRepository.setVaultSelectionOption(vaultSelection)
     }
 
     fun restoreActionState() {

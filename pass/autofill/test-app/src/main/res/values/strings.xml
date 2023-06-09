@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">Autofill Sample</string>
-    <string name="title_activity_simple_fragment_login">SimpleFragmentLogin</string>
+    <string name="app_name" translatable="false">Autofill Sample</string>
+    <string name="title_activity_simple_fragment_login" translatable="false">SimpleFragmentLogin</string>
 </resources>

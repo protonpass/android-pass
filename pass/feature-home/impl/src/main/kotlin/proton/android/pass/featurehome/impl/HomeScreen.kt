@@ -45,6 +45,7 @@ import proton.android.pass.featurehome.impl.trash.ConfirmClearTrashDialog
 import proton.android.pass.featurehome.impl.trash.ConfirmRestoreAllDialog
 import proton.android.pass.featurehome.impl.vault.VaultDrawerContent
 import proton.android.pass.featurehome.impl.vault.VaultDrawerViewModel
+import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.featuretrash.impl.ConfirmDeleteItemDialog
 import proton.android.pass.featuretrash.impl.TrashItemBottomSheetContents
 import proton.pass.domain.ItemContents
@@ -92,7 +93,7 @@ fun HomeScreen(
     )
     val scope = rememberCoroutineScope()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val isTrashMode = homeUiState.homeListUiState.homeVaultSelection == HomeVaultSelection.Trash
+    val isTrashMode = homeUiState.homeListUiState.homeVaultSelection == VaultSelectionOption.Trash
 
     BackHandler(drawerState.isOpen || bottomSheetState.isVisible) {
         scope.launch {
@@ -246,18 +247,18 @@ fun HomeScreen(
                     totalTrashedItems = drawerUiState.totalTrashedItems,
                     onAllVaultsClick = {
                         scope.launch { drawerState.close() }
-                        vaultDrawerViewModel.setVaultSelection(HomeVaultSelection.AllVaults)
-                        homeViewModel.setVaultSelection(HomeVaultSelection.AllVaults)
+                        vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
+                        homeViewModel.setVaultSelection(VaultSelectionOption.AllVaults)
                     },
                     onVaultClick = {
                         scope.launch { drawerState.close() }
-                        vaultDrawerViewModel.setVaultSelection(HomeVaultSelection.Vault(it))
-                        homeViewModel.setVaultSelection(HomeVaultSelection.Vault(it))
+                        vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
+                        homeViewModel.setVaultSelection(VaultSelectionOption.Vault(it))
                     },
                     onTrashClick = {
                         scope.launch { drawerState.close() }
-                        vaultDrawerViewModel.setVaultSelection(HomeVaultSelection.Trash)
-                        homeViewModel.setVaultSelection(HomeVaultSelection.Trash)
+                        vaultDrawerViewModel.setVaultSelection(VaultSelectionOption.Trash)
+                        homeViewModel.setVaultSelection(VaultSelectionOption.Trash)
                     },
                     onCreateVaultClick = { onNavigateEvent(HomeNavigation.CreateVault) },
                     onVaultOptionsClick = { onNavigateEvent(HomeNavigation.VaultOptions(it.id)) }

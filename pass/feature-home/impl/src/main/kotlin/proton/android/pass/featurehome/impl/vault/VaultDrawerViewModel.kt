@@ -5,32 +5,28 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asLoadingResult
 import proton.android.pass.commonuimodels.api.ShareUiModelWithItemCount
 import proton.android.pass.data.api.usecases.ObserveVaultsWithItemCount
-import proton.android.pass.featurehome.impl.HomeVaultSelection
+import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
+import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import proton.android.pass.log.api.PassLogger
 import javax.inject.Inject
 
 @HiltViewModel
 class VaultDrawerViewModel @Inject constructor(
-    observeVaultsWithItemCount: ObserveVaultsWithItemCount
+    observeVaultsWithItemCount: ObserveVaultsWithItemCount,
+    private val searchOptionsRepository: SearchOptionsRepository
 ) : ViewModel() {
-
-    private val vaultSelectionState: MutableStateFlow<HomeVaultSelection> =
-        MutableStateFlow(HomeVaultSelection.AllVaults)
 
     val drawerUiState: StateFlow<VaultDrawerUiState> = combine(
         observeVaultsWithItemCount().asLoadingResult(),
-        vaultSelectionState
+        searchOptionsRepository.observeVaultSelectionOption()
     ) { shares, selectedVault ->
         when (shares) {
             LoadingResult.Loading -> VaultDrawerUiState(
@@ -49,10 +45,6 @@ class VaultDrawerViewModel @Inject constructor(
             }
 
             is LoadingResult.Success -> {
-                val shareIdList = shares.data.map { it.vault.shareId }
-                if (selectedVault is HomeVaultSelection.Vault && !shareIdList.contains(selectedVault.shareId)) {
-                    vaultSelectionState.update { HomeVaultSelection.AllVaults }
-                }
                 val sharesWithCount = shares.data
                     .map {
                         ShareUiModelWithItemCount(
@@ -78,15 +70,14 @@ class VaultDrawerViewModel @Inject constructor(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = VaultDrawerUiState(
-            HomeVaultSelection.AllVaults,
+            VaultSelectionOption.AllVaults,
             persistentListOf(),
             0
         )
     )
 
-    fun setVaultSelection(homeVaultSelection: HomeVaultSelection) = viewModelScope.launch {
-        vaultSelectionState.update { homeVaultSelection }
-    }
+    fun setVaultSelection(vaultSelection: VaultSelectionOption) =
+        searchOptionsRepository.setVaultSelectionOption(vaultSelection)
 
     companion object {
         private const val TAG = "VaultDrawerViewModel"

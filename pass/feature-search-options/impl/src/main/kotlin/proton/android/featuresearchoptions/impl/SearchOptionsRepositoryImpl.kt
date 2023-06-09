@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.featuresearchoptions.api.SearchOptions
 import proton.android.pass.featuresearchoptions.api.SearchOptionsRepository
 import proton.android.pass.featuresearchoptions.api.SortingOption
+import proton.android.pass.featuresearchoptions.api.VaultSelectionOption
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,9 +24,19 @@ class SearchOptionsRepositoryImpl @Inject constructor() : SearchOptionsRepositor
     override fun observeSortingOption(): Flow<SortingOption> =
         _searchOptionsState.map { it.sortingOption }.filterNotNull()
 
+    override fun observeVaultSelectionOption(): Flow<VaultSelectionOption> =
+        _searchOptionsState.map { it.vaultSelectionOption }.filterNotNull()
+
+
     override fun setSortingOption(sortingOption: SortingOption) {
         _searchOptionsState.update {
             it.copy(sortingOption = sortingOption)
+        }
+    }
+
+    override fun setVaultSelectionOption(vaultSelectionOption: VaultSelectionOption) {
+        _searchOptionsState.update {
+            it.copy(vaultSelectionOption = vaultSelectionOption)
         }
     }
 

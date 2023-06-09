@@ -33,4 +33,8 @@ dependencies {
     api(projects.pass.biometry.api)
     implementation(projects.pass.log.api)
     implementation(projects.pass.preferences.api)
+
+    testImplementation(libs.turbine)
+    testImplementation(libs.truth)
+    testImplementation(libs.junit)
 }

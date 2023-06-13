@@ -21,7 +21,6 @@ import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
-import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.navigation.api.rememberAppNavigator
@@ -82,7 +81,7 @@ fun PassAppContent(
                         PassNavHost(
                             modifier = Modifier.weight(1f),
                             appNavigator = appNavigator,
-                            startingRoute = if (appUiState.needsAuth) Auth.route else Home.route,
+                            startingRoute = Home.route,
                             onNavigate = onNavigate,
                             onAuthPerformed = onAuthPerformed,
                             dismissBottomSheet = { callback ->

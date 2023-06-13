@@ -4,14 +4,12 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.datetime.Clock
-import proton.android.pass.biometry.BiometryAuthTimeHolder
-import proton.android.pass.biometry.NeedsAuthChecker
+import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -23,36 +21,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NavHomeViewModel @Inject constructor(
-    private val clock: Clock,
     preferenceRepository: UserPreferencesRepository,
-    authTimeHolder: BiometryAuthTimeHolder
+    needsBiometricAuth: NeedsBiometricAuth
 ) : ViewModel() {
 
-    private val shouldAuthenticateState: Flow<Boolean> = combine(
-        preferenceRepository.getBiometricLockState(),
-        preferenceRepository.getHasAuthenticated(),
-        preferenceRepository.getAppLockPreference(),
-        authTimeHolder.getBiometryAuthTime()
-    ) { biometricLock, hasAuthenticated, appLock, lastUnlockTime ->
-
-        NeedsAuthChecker.needsAuth(
-            biometricLock = biometricLock,
-            hasAuthenticated = hasAuthenticated,
-            appLockPreference = appLock,
-            lastUnlockTime = lastUnlockTime,
-            now = clock.now()
-        )
-    }
-
     val navHomeUiState: SharedFlow<NavHomeUiState> = combine(
-        shouldAuthenticateState.asResultWithoutLoading(),
+        needsBiometricAuth().distinctUntilChanged(),
         preferenceRepository.getHasCompletedOnBoarding().asResultWithoutLoading()
     ) { shouldAuthenticate, hasCompletedOnBoarding ->
         NavHomeUiState(
-            shouldAuthenticate = when (shouldAuthenticate) {
-                is LoadingResult.Success -> shouldAuthenticate.data.some()
-                else -> None
-            },
+            shouldAuthenticate = shouldAuthenticate.some(),
             hasCompletedOnBoarding = when (hasCompletedOnBoarding) {
                 is LoadingResult.Success -> hasCompletedOnBoarding.data.value().some()
                 else -> None

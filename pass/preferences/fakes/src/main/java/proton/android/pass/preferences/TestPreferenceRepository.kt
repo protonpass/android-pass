@@ -27,7 +27,7 @@ class TestPreferenceRepository @Inject constructor() : UserPreferencesRepository
         MutableStateFlow<UseFaviconsPreference>(UseFaviconsPreference.Disabled)
     private val allowScreenshotsPreference =
         MutableStateFlow<AllowScreenshotsPreference>(AllowScreenshotsPreference.Disabled)
-    private val lockAppPreference = MutableStateFlow(AppLockPreference.Never)
+    private val lockAppPreference = MutableStateFlow(AppLockPreference.InFourHours)
     private val passwordGenerationPreference = MutableStateFlow(
         PasswordGenerationPreference(
             mode = PasswordGenerationMode.Words,

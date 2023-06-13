@@ -39,37 +39,11 @@ class NeedsAuthCheckerTest {
     }
 
     @Test
-    fun `if AppLock is set to Immediately, auth is required`() {
+    fun `if AppLock is set to Immediately but is already authenticated, auth is not required`() {
         val res = NeedsAuthChecker.needsAuth(
             biometricLock = BiometricLockState.Enabled,
             hasAuthenticated = HasAuthenticated.Authenticated,
             appLockPreference = AppLockPreference.Immediately,
-            lastUnlockTime = None,
-            now = Clock.System.now()
-        )
-
-        assertThat(res).isTrue()
-    }
-
-    @Test
-    fun `if AppLock is set to Never, auth is required if the user has not authenticated`() {
-        val res = NeedsAuthChecker.needsAuth(
-            biometricLock = BiometricLockState.Enabled,
-            hasAuthenticated = HasAuthenticated.NotAuthenticated,
-            appLockPreference = AppLockPreference.Never,
-            lastUnlockTime = None,
-            now = Clock.System.now()
-        )
-
-        assertThat(res).isTrue()
-    }
-
-    @Test
-    fun `if AppLock is set to Never, auth is not required if the user has already authenticated`() {
-        val res = NeedsAuthChecker.needsAuth(
-            biometricLock = BiometricLockState.Enabled,
-            hasAuthenticated = HasAuthenticated.Authenticated,
-            appLockPreference = AppLockPreference.Never,
             lastUnlockTime = None,
             now = Clock.System.now()
         )

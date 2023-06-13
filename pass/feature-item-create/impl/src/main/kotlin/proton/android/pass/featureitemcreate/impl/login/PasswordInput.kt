@@ -24,8 +24,6 @@ import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
 import proton.pass.domain.HiddenState
 
-private const val PASSWORD_CONCEALED_LENGTH = 8
-
 @Composable
 internal fun PasswordInput(
     modifier: Modifier = Modifier,

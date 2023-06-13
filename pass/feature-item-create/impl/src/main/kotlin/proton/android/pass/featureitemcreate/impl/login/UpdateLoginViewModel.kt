@@ -275,7 +275,11 @@ class UpdateLoginViewModel @Inject constructor(
         customField: CustomField,
         encryptionContext: EncryptionContext
     ): CustomFieldContent? {
-        val mapped = customField.toContent(encryptionContext, isConcealed = false)
+        val isConcealed = when (customField) {
+            is CustomField.Hidden -> true
+            else -> false
+        }
+        val mapped = customField.toContent(encryptionContext, isConcealed = isConcealed)
         return if (mapped is CustomFieldContent.Totp) {
             val uri = when (val value = mapped.value) {
                 is HiddenState.Concealed -> encryptionContext.decrypt(value.encrypted)

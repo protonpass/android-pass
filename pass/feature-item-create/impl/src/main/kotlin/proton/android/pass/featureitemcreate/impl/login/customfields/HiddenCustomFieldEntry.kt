@@ -7,10 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,6 +25,7 @@ import proton.android.pass.composecomponents.impl.form.ProtonTextFieldPlaceHolde
 import proton.android.pass.composecomponents.impl.form.SmallCrossIconButton
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.login.LoginCustomField
+import proton.android.pass.featureitemcreate.impl.login.PASSWORD_CONCEALED_LENGTH
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
 import me.proton.core.presentation.R as CoreR
@@ -43,21 +40,16 @@ fun HiddenCustomFieldEntry(
     onOptionsClick: () -> Unit,
     index: Int
 ) {
-    val value = when (val state = content.value) {
-        is HiddenState.Concealed -> ""
-        is HiddenState.Revealed -> state.clearText
-        is HiddenState.Empty -> ""
+    val (text, visualTransformation) = when (val value = content.value) {
+        is HiddenState.Concealed -> "x".repeat(PASSWORD_CONCEALED_LENGTH) to PasswordVisualTransformation()
+        is HiddenState.Revealed -> value.clearText to VisualTransformation.None
+        is HiddenState.Empty -> "" to VisualTransformation.None
     }
-    var isFocused by remember { mutableStateOf(false) }
-    val visualTransformation = if (isFocused) {
-        VisualTransformation.None
-    } else {
-        PasswordVisualTransformation()
-    }
+
     Box(modifier = modifier.roundedContainerNorm()) {
         ProtonTextField(
             modifier = modifier.padding(start = 0.dp, top = 16.dp, end = 4.dp, bottom = 16.dp),
-            value = value,
+            value = text,
             editable = canEdit,
             moveToNextOnEnter = true,
             singleLine = false,
@@ -76,7 +68,7 @@ fun HiddenCustomFieldEntry(
             },
             trailingIcon = {
                 Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                    if (value.isNotEmpty()) {
+                    if (text.isNotEmpty()) {
                         SmallCrossIconButton { onChange("") }
                     }
                     CustomFieldOptionsButton(onClick = onOptionsClick)
@@ -84,7 +76,6 @@ fun HiddenCustomFieldEntry(
             },
             visualTransformation = visualTransformation,
             onFocusChange = {
-                isFocused = it
                 onFocusChange(LoginCustomField.CustomFieldHidden(index), it)
             }
         )

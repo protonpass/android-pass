@@ -40,7 +40,6 @@ fun fromBooleanPrefProto(pref: BooleanPrefProto, default: Boolean = false) =
 
 fun AppLockPreference.toProto() = when (this) {
     AppLockPreference.Immediately -> LockAppPrefProto.LOCK_APP_IMMEDIATELY
-    AppLockPreference.Never -> LockAppPrefProto.LOCK_APP_NEVER
     AppLockPreference.InOneMinute -> LockAppPrefProto.LOCK_APP_IN_ONE_MINUTE
     AppLockPreference.InTwoMinutes -> LockAppPrefProto.LOCK_APP_IN_TWO_MINUTES
     AppLockPreference.InFiveMinutes -> LockAppPrefProto.LOCK_APP_IN_FIVE_MINUTES
@@ -51,7 +50,6 @@ fun AppLockPreference.toProto() = when (this) {
 
 fun LockAppPrefProto.toValue(default: AppLockPreference) = when (this) {
     LockAppPrefProto.LOCK_APP_IMMEDIATELY -> AppLockPreference.Immediately
-    LockAppPrefProto.LOCK_APP_NEVER -> AppLockPreference.Never
     LockAppPrefProto.LOCK_APP_IN_ONE_MINUTE -> AppLockPreference.InOneMinute
     LockAppPrefProto.LOCK_APP_IN_TWO_MINUTES -> AppLockPreference.InTwoMinutes
     LockAppPrefProto.LOCK_APP_IN_FIVE_MINUTES -> AppLockPreference.InFiveMinutes

@@ -41,7 +41,6 @@ private fun appLockBottomSheetItem(
             get() = {
                 val title = when (preference) {
                     AppLockPreference.Immediately -> R.string.app_lock_immediately
-                    AppLockPreference.Never -> R.string.app_lock_never
                     AppLockPreference.InOneMinute -> R.string.app_lock_one_minute
                     AppLockPreference.InTwoMinutes -> R.string.app_lock_two_minutes
                     AppLockPreference.InFiveMinutes -> R.string.app_lock_five_minutes

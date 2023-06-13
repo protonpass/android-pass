@@ -5,11 +5,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -31,19 +27,12 @@ fun PassApp(
 
     SystemUIEffect(isDark = isDark)
 
-    val currentConfig = LocalConfiguration.current
-    var orientation by rememberSaveable { mutableStateOf(currentConfig.orientation) }
-
     LifecycleEffect(
-        onResume = {
-            if (currentConfig.orientation != orientation) {
-                appViewModel.onRotate()
-                orientation = currentConfig.orientation
-            }
-
-        },
         onStop = {
             appViewModel.onStop()
+        },
+        onResume = {
+            appViewModel.onResume()
         }
     )
 

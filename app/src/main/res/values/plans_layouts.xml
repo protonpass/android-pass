@@ -82,6 +82,7 @@
         <item>string</item>
         <item>string</item>
         <item>string</item>
+        <item>string</item>
     </string-array>
     <integer-array name="plan_pass_pass2023_icons" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
         <item>@drawable/ic_proton_infinite</item>
@@ -89,6 +90,7 @@
         <item>@drawable/ic_proton_vault</item>
         <item>@drawable/ic_proton_alias</item>
         <item>@drawable/ic_proton_lock</item>
+        <item>@drawable/ic_proton_pen_square</item>
         <item>@drawable/ic_proton_shield</item>
     </integer-array>
     <integer-array name="plan_pass_pass2023">
@@ -98,11 +100,13 @@
         <item>@string/twenty_vaults</item>
         <item>@string/unlimited_email_alias</item>
         <item>@string/integrated_2fa_authenticator</item>
+        <item>@string/custom_fields</item>
         <item>@string/priority_support</item>
     </integer-array>
     <!-- endregion -->
     <!-- region pass 2023 -->
     <string-array name="plan_id_pass2023_order" translatable="false" comment="Ordered. Changing these will break the parsing. Any change in the plans features should be replicated on this array as well.">
+        <item>string</item>
         <item>string</item>
         <item>string</item>
         <item>string</item>
@@ -116,6 +120,7 @@
         <item>@drawable/ic_proton_vault</item>
         <item>@drawable/ic_proton_alias</item>
         <item>@drawable/ic_proton_lock</item>
+        <item>@drawable/ic_proton_pen_square</item>
         <item>@drawable/ic_proton_shield</item>
     </integer-array>
     <integer-array name="plan_id_pass2023">
@@ -125,6 +130,7 @@
         <item>@string/twenty_vaults</item>
         <item>@string/unlimited_email_alias</item>
         <item>@string/integrated_2fa_authenticator</item>
+        <item>@string/custom_fields</item>
         <item>@string/priority_support</item>
     </integer-array>
     <!-- endregion -->

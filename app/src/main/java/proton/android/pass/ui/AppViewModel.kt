@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -17,16 +16,15 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -35,9 +33,10 @@ import javax.inject.Inject
 class AppViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
     networkMonitor: NetworkMonitor,
-    private val snackbarDispatcher: SnackbarDispatcher,
-    private val needsBiometricAuth: NeedsBiometricAuth
+    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
+
+    private var wasAuthenticated = false
 
     private val themePreference: Flow<ThemePreference> = preferenceRepository
         .getThemePreference()
@@ -56,36 +55,27 @@ class AppViewModel @Inject constructor(
         .connectivity
         .distinctUntilChanged()
 
-    private val needsAuthFlow: MutableStateFlow<Boolean> = MutableStateFlow(
-        runBlocking {
-            shouldPerformAuth()
+    init {
+        viewModelScope.launch {
+            preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
         }
-    )
+    }
 
     val appUiState: StateFlow<AppUiState> = combine(
         snackbarDispatcher.snackbarMessage,
         themePreference,
         networkStatus,
-        needsAuthFlow
-    ) { snackbarMessage, theme, network, needsAuth ->
-        AppUiState(
-            snackbarMessage = snackbarMessage,
-            theme = theme,
-            networkStatus = network,
-            needsAuth = needsAuth
-        )
-    }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = run {
-                val (theme, needsAuth) = runBlocking {
-                    preferenceRepository.getThemePreference().first() to
-                        shouldPerformAuth()
-                }
-                AppUiState.Initial(theme, needsAuth)
+        ::AppUiState
+    ).stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = run {
+            val theme = runBlocking {
+                preferenceRepository.getThemePreference().first()
             }
-        )
+            AppUiState.Initial(theme)
+        }
+    )
 
     fun onSnackbarMessageDelivered() {
         viewModelScope.launch {
@@ -93,12 +83,23 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    fun onAppResumed() = viewModelScope.launch {
-        needsAuthFlow.update { shouldPerformAuth() }
+    fun onPause() = viewModelScope.launch {
+
     }
 
-    fun onAuthPerformed() {
-        needsAuthFlow.update { false }
+    fun onStop() = viewModelScope.launch {
+        val authenticated = preferenceRepository.getHasAuthenticated().first()
+        if (authenticated == HasAuthenticated.Authenticated) {
+            wasAuthenticated = true
+        }
+
+        preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+    }
+
+    fun onRotate() = viewModelScope.launch {
+        if (wasAuthenticated) {
+            preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
+        }
     }
 
     private fun getThemePreference(state: LoadingResult<ThemePreference>): ThemePreference =
@@ -110,8 +111,6 @@ class AppViewModel @Inject constructor(
                 ThemePreference.System
             }
         }
-
-    private suspend fun shouldPerformAuth(): Boolean = needsBiometricAuth().first()
 
     companion object {
         private const val TAG = "AppViewModel"

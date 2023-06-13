@@ -32,6 +32,7 @@ import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_KEY
 import proton.android.pass.data.api.repositories.DRAFT_CUSTOM_FIELD_TITLE_KEY
 import proton.android.pass.data.api.repositories.DRAFT_PASSWORD_KEY
@@ -651,34 +652,12 @@ abstract class BaseLoginViewModel(
 
     fun onFocusChange(field: LoginField, isFocused: Boolean) {
         when (field) {
-            LoginField.Password -> {
-                itemContentState.update {
-                    val password = encryptionContextProvider.withEncryptionContext {
-                        decrypt(it.password.encrypted)
-                    }
-                    val passwordHiddenState = when {
-                        isFocused -> HiddenState.Revealed(it.password.encrypted, password)
-                        password.isBlank() -> HiddenState.Empty(it.password.encrypted)
-                        else -> HiddenState.Concealed(it.password.encrypted)
-                    }
-                    it.copy(password = passwordHiddenState)
-                }
-            }
-
-            LoginField.PrimaryTotp -> {
-                itemContentState.update {
-                    val primaryTotp = encryptionContextProvider.withEncryptionContext {
-                        HiddenState.Revealed(
-                            it.primaryTotp.encrypted,
-                            decrypt(it.primaryTotp.encrypted)
-                        )
-                    }
-                    it.copy(primaryTotp = primaryTotp)
-                }
-            }
+            LoginField.Password -> updatePasswordOnFocusChange(isFocused)
+            LoginField.PrimaryTotp -> updatePrimaryTotpOnFocusChange()
+            is LoginCustomField.CustomFieldHidden ->
+                updateCustomFieldHiddenOnFocusChange(field, isFocused)
 
             LoginField.Username,
-            is LoginCustomField.CustomFieldHidden,
             is LoginCustomField.CustomFieldTOTP,
             is LoginCustomField.CustomFieldText,
             LoginField.Title -> {
@@ -688,6 +667,64 @@ abstract class BaseLoginViewModel(
             focusedFieldFlow.update { field.some() }
         } else {
             focusedFieldFlow.update { None }
+        }
+    }
+
+    private fun updateCustomFieldHiddenOnFocusChange(
+        field: LoginCustomField.CustomFieldHidden,
+        isFocused: Boolean
+    ) {
+        itemContentState.update { loginItem ->
+            val customFields = loginItem.customFields.toMutableList()
+            val customFieldContent: CustomFieldContent.Hidden? = customFields[field.index]
+                as? CustomFieldContent.Hidden
+            customFieldContent ?: return@update loginItem
+            val hiddenValueByteArray = encryptionContextProvider.withEncryptionContext {
+                decrypt(customFieldContent.value.encrypted.toEncryptedByteArray())
+            }
+            val hiddenFieldHiddenState = when {
+                isFocused -> HiddenState.Revealed(
+                    encrypted = customFieldContent.value.encrypted,
+                    clearText = hiddenValueByteArray.decodeToString()
+                )
+
+                hiddenValueByteArray.isEmpty() -> HiddenState.Empty(customFieldContent.value.encrypted)
+                else -> HiddenState.Concealed(customFieldContent.value.encrypted)
+            }
+            customFields[field.index] = customFieldContent.copy(
+                value = hiddenFieldHiddenState
+            )
+            loginItem.copy(customFields = customFields.toPersistentList())
+        }
+    }
+
+    private fun updatePrimaryTotpOnFocusChange() {
+        itemContentState.update {
+            val primaryTotp = encryptionContextProvider.withEncryptionContext {
+                HiddenState.Revealed(
+                    it.primaryTotp.encrypted,
+                    decrypt(it.primaryTotp.encrypted)
+                )
+            }
+            it.copy(primaryTotp = primaryTotp)
+        }
+    }
+
+    private fun updatePasswordOnFocusChange(isFocused: Boolean) {
+        itemContentState.update {
+            val passwordByteArray = encryptionContextProvider.withEncryptionContext {
+                decrypt(it.password.encrypted.toEncryptedByteArray())
+            }
+            val passwordHiddenState = when {
+                isFocused -> HiddenState.Revealed(
+                    it.password.encrypted,
+                    passwordByteArray.decodeToString()
+                )
+
+                passwordByteArray.isEmpty() -> HiddenState.Empty(it.password.encrypted)
+                else -> HiddenState.Concealed(it.password.encrypted)
+            }
+            it.copy(password = passwordHiddenState)
         }
     }
 

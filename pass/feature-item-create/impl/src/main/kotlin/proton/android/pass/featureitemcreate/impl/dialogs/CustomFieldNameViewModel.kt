@@ -64,7 +64,7 @@ class CustomFieldNameViewModel @Inject constructor(
                 val value = encryptionContextProvider.withEncryptionContext { encrypt("") }
                 CustomFieldContent.Hidden(
                     label = nameFlow.value.trim(),
-                    value = HiddenState.Concealed(encrypted = value)
+                    value = HiddenState.Empty(encrypted = value)
                 )
             }
 
@@ -72,7 +72,7 @@ class CustomFieldNameViewModel @Inject constructor(
                 val value = encryptionContextProvider.withEncryptionContext { encrypt("") }
                 CustomFieldContent.Totp(
                     label = nameFlow.value,
-                    value = HiddenState.Concealed(encrypted = value)
+                    value = HiddenState.Empty(encrypted = value)
                 )
             }
         }

@@ -39,6 +39,7 @@ val privateProperties = Properties().apply {
 
 val sentryDSN: String? = privateProperties.getProperty("SENTRY_DSN")
 val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
+val testEnvUrl = System.getenv("TEST_ENV_URL") ?: "api.proton.black"
 
 val jobId: Int = System.getenv("CI_JOB_ID")?.take(3)?.toInt() ?: 0
 val appVersionName: String = "1.4.1"
@@ -154,7 +155,7 @@ android {
             dimension = "env"
             applicationIdSuffix = ".black"
             buildConfigField("Boolean", "USE_DEFAULT_PINS", "false")
-            buildConfigField("String", "HOST", "api.proton.black".toBuildConfigValue())
+            buildConfigField("String", "HOST", testEnvUrl.toBuildConfigValue())
             buildConfigField("String", "HV_HOST", "verify.proton.black".toBuildConfigValue())
         }
         create("prod") {

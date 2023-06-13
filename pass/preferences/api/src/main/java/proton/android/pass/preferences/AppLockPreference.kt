@@ -5,7 +5,6 @@ import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
 private const val IMMEDIATELY = 1
-private const val NEVER = 2
 private const val IN_ONE_MINUTE = 3
 private const val IN_TWO_MINUTES = 4
 private const val IN_FIVE_MINUTES = 5
@@ -15,7 +14,6 @@ private const val IN_FOUR_HOURS = 8
 
 enum class AppLockPreference {
     Immediately,
-    Never,
     InOneMinute,
     InTwoMinutes,
     InFiveMinutes,
@@ -25,7 +23,6 @@ enum class AppLockPreference {
 
     fun value(): Int = when (this) {
         Immediately -> IMMEDIATELY
-        Never -> NEVER
         InOneMinute -> IN_ONE_MINUTE
         InTwoMinutes -> IN_TWO_MINUTES
         InFiveMinutes -> IN_FIVE_MINUTES
@@ -47,7 +44,6 @@ enum class AppLockPreference {
     companion object {
         fun from(value: Int): AppLockPreference = when (value) {
             IMMEDIATELY -> Immediately
-            NEVER -> Never
             IN_ONE_MINUTE -> InOneMinute
             IN_TWO_MINUTES -> InTwoMinutes
             IN_FIVE_MINUTES -> InFiveMinutes

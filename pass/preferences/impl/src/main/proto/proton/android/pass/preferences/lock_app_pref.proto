@@ -6,7 +6,7 @@ option java_multiple_files = true;
 enum LockAppPrefProto {
   LOCK_APP_UNSPECIFIED = 0;
   LOCK_APP_IMMEDIATELY = 1;
-  LOCK_APP_NEVER = 2;
+  LOCK_APP_NEVER = 2; // 2023-06-13: Not used any more
   LOCK_APP_IN_ONE_MINUTE = 3;
   LOCK_APP_IN_TWO_MINUTES = 4;
   LOCK_APP_IN_FIVE_MINUTES = 5;

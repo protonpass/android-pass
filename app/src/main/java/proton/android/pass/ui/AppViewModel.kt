@@ -24,6 +24,7 @@ import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarDispatcher
+import proton.android.pass.preferences.AppLockPreference
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -83,10 +84,6 @@ class AppViewModel @Inject constructor(
         }
     }
 
-    fun onPause() = viewModelScope.launch {
-
-    }
-
     fun onStop() = viewModelScope.launch {
         val authenticated = preferenceRepository.getHasAuthenticated().first()
         if (authenticated == HasAuthenticated.Authenticated) {
@@ -96,8 +93,9 @@ class AppViewModel @Inject constructor(
         preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
     }
 
-    fun onRotate() = viewModelScope.launch {
-        if (wasAuthenticated) {
+    fun onResume() = viewModelScope.launch {
+        val appLock = preferenceRepository.getAppLockPreference().first()
+        if (appLock != AppLockPreference.Immediately && wasAuthenticated) {
             preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
         }
     }

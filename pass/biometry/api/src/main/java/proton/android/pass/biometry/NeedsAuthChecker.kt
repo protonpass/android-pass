@@ -31,11 +31,6 @@ object NeedsAuthChecker {
                 PassLogger.d(TAG, "AppLockPreference.Immediately. NeedsAuth=$needsAuth")
                 return needsAuth
             }
-            AppLockPreference.Never -> {
-                val needsAuth = hasAuthenticated is HasAuthenticated.NotAuthenticated
-                PassLogger.d(TAG, "AppLockPreference.Never. NeedsAuth=$needsAuth")
-                return needsAuth
-            }
 
             else -> {}
         }

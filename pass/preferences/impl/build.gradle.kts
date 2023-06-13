@@ -52,6 +52,8 @@ protobuf {
 
 dependencies {
     implementation(libs.androidx.datastore)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.startup.runtime)
     implementation(libs.core.utilKotlin)
     implementation(libs.google.protobuf.kotlin.lite)
     implementation(libs.kotlinx.coroutines.core)
@@ -63,6 +65,7 @@ dependencies {
     kapt(libs.androidx.hilt.compiler)
 
     implementation(projects.pass.log.api)
+    implementation(projects.pass.commonUi.api)
 
     api(projects.pass.preferences.api)
 }

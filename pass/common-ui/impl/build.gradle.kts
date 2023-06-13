@@ -22,6 +22,8 @@ androidComponents.beforeVariants { variant ->
 dependencies {
     implementation(projects.pass.commonUi.api)
 
+    implementation(libs.androidx.lifecycle.process)
+
     implementation(libs.dagger.hilt.android)
     kapt(libs.dagger.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)

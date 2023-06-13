@@ -146,9 +146,24 @@ class HomeViewModel @Inject constructor(
     private val isInSuggestionsModeState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     private val isProcessingSearchState: MutableStateFlow<IsProcessingSearchState> =
         MutableStateFlow(IsProcessingSearchState.NotLoading)
+    private val hasChangedVaultState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
+    private val vaultSelectionFlow: Flow<VaultSelectionOption> = searchOptionsRepository
+        .observeVaultSelectionOption()
+        .distinctUntilChanged()
+
+    init {
+        viewModelScope.launch {
+            vaultSelectionFlow.collect {
+                if (it !is VaultSelectionOption.AllVaults) {
+                    hasChangedVaultState.update { true }
+                }
+            }
+        }
+    }
 
     private val shareListWrapperFlow: Flow<ShareListWrapper> = combine(
-        searchOptionsRepository.observeVaultSelectionOption(),
+        vaultSelectionFlow,
         observeVaults().asLoadingResult()
     ) { vaultSelection, vaultsResult ->
         val vaults: List<Vault> = vaultsResult.getOrNull() ?: emptyList()
@@ -364,9 +379,10 @@ class HomeViewModel @Inject constructor(
         refreshingLoadingFlow,
         shouldScrollToTopFlow,
         preferencesRepository.getUseFaviconsPreference(),
-        getUserPlan().asLoadingResult()
+        getUserPlan().asLoadingResult(),
+        hasChangedVaultState
     ) { shareListWrapper, filtersWrapper, itemsResult, searchUiState, refreshingLoading,
-        shouldScrollToTop, useFavicons, userPlan ->
+        shouldScrollToTop, useFavicons, userPlan, hasChangedVault ->
         val syncLoading = if (refreshingLoading.syncStatus == ItemSyncStatus.Syncing) {
             IsLoadingState.Loading
         } else {
@@ -377,9 +393,17 @@ class HomeViewModel @Inject constructor(
             LoadingResult.Loading -> persistentListOf<GroupedItemList>() to IsLoadingState.Loading
             is LoadingResult.Success -> when (val syncStatus = refreshingLoading.syncStatus) {
                 is ItemSyncStatus.Synced -> {
-                    val loading = if (itemsResult.data.isEmpty() && syncStatus.hasItems) {
-                        // The items are synced, there are items, but the flow has not emitted yet
-                        IsLoadingState.Loading
+
+                    val loading = if (itemsResult.data.isEmpty()) {
+                        // There are no items emitted yet
+                        // Check if SyncStatus says there should be items
+                        // If the user has changed vaults, we don't want to check this flag, because
+                        // even if the Sync says there are items, there may be none for this vault
+                        if (syncStatus.hasItems && !hasChangedVault) {
+                            IsLoadingState.Loading
+                        } else {
+                            syncLoading
+                        }
                     } else {
                         syncLoading
                     }

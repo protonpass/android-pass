@@ -47,7 +47,7 @@ fun EmptyList(
     ) {
         Image(
             painter = painterResource(id = emptyListImage),
-            contentDescription = stringResource(R.string.empty_list_image_content_description)
+            contentDescription = null
         )
         Spacer(modifier = Modifier.height(16.dp))
         Text(

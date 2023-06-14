@@ -60,7 +60,7 @@ private fun editField(onClick: () -> Unit): BottomSheetItem = object : BottomShe
         get() = {
             Icon(
                 painter = painterResource(CoreR.drawable.ic_proton_pencil),
-                contentDescription = stringResource(R.string.bottomsheet_custom_field_option_edit_content_description)
+                contentDescription = null
             )
         }
     override val endIcon: (@Composable () -> Unit)?

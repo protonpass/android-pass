@@ -35,6 +35,11 @@ object NeedsAuthChecker {
             else -> {}
         }
 
+        if (hasAuthenticated is HasAuthenticated.Authenticated) {
+            PassLogger.d(TAG, "HasAuthenticated.Authenticated, no need to auth checking time")
+            return false
+        }
+
         PassLogger.d(TAG, "Checking unlock time")
 
         // User has set an expiration time preference. Check if we need to perform auth again.

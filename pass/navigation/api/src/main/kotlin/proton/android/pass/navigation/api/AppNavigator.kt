@@ -29,7 +29,7 @@ class AppNavigator(
         val destinationRoute = route ?: destination.route
         val currentRoute = navController.currentBackStackEntry?.destination?.route
         // Discard duplicated nav events
-        if (!lifecycleIsResumed() && !destination.isBottomsheet && destinationRoute != currentRoute) {
+        if (!lifecycleIsResumed() && !destination.isBottomsheet && destinationRoute == currentRoute) {
             PassLogger.d(
                 TAG,
                 "Navigation event discarded as it was duplicated. " +

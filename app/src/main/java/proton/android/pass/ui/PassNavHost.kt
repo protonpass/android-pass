@@ -22,8 +22,7 @@ fun PassNavHost(
     appNavigator: AppNavigator,
     startingRoute: String = Home.route,
     onNavigate: (AppNavigation) -> Unit,
-    dismissBottomSheet: (() -> Unit) -> Unit,
-    onAuthPerformed: () -> Unit
+    dismissBottomSheet: (() -> Unit) -> Unit
 ) {
     AnimatedNavHost(
         modifier = modifier,
@@ -33,8 +32,7 @@ fun PassNavHost(
         appGraph(
             appNavigator = appNavigator,
             onNavigate = onNavigate,
-            dismissBottomSheet = dismissBottomSheet,
-            onAuthPerformed = onAuthPerformed
+            dismissBottomSheet = dismissBottomSheet
         )
     }
 }

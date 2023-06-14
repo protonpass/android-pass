@@ -26,10 +26,8 @@
     <string name="field_website_address_hint">https://</string>
     <string name="field_website_add_another">Add</string>
     <string name="sticky_button_generate_password">Generate a new password</string>
-    <string name="sticky_button_generate_password_key_icon_content_description">Generate password icon</string>
     <string name="sticky_button_create_alias">Hide my email</string>
     <string name="sticky_button_use_account_email">Use %s</string>
-    <string name="sticky_button_create_alias_icon_content_description">Create alias icon</string>
 
     <string name="create_login_item_creation_error">Could not create Login</string>
     <string name="create_login_item_update_error">Could not update Login</string>
@@ -40,20 +38,15 @@
     <string name="bottomsheet_custom_field_type_text">Text</string>
     <string name="bottomsheet_custom_field_type_text_content_description">Text custom field</string>
     <string name="bottomsheet_custom_field_type_hidden">Hidden</string>
-    <string name="bottomsheet_custom_field_type_hidden_content_description">Hidden custom field</string>
     <string name="bottomsheet_custom_field_type_totp">2FA secret (TOTP)</string>
-    <string name="bottomsheet_custom_field_type_totp_content_description">2FA custom field</string>
     <string name="bottomsheet_custom_field_option_edit">Edit title</string>
-    <string name="bottomsheet_custom_field_option_edit_content_description">Edit custom field title</string>
     <string name="bottomsheet_custom_field_option_remove">Remove field</string>
     <string name="bottomsheet_custom_field_option_remove_content_description">Remove custom field</string>
 
     <string name="create_login_add_custom_field_button">Add more</string>
-    <string name="create_login_add_custom_field_button_content_description">Add more fields icon</string>
     <string name="custom_field_hidden_placeholder">Your hidden content</string>
     <string name="custom_field_hidden_icon_content_description">Hidden custom field icon</string>
     <string name="custom_field_text_placeholder">Your content</string>
-    <string name="custom_field_text_icon_content_description">Text custom field icon</string>
     <string name="custom_field_dialog_title">Custom field name</string>
     <string name="custom_field_dialog_body">Enter a name for your custom field</string>
     <string name="custom_field_dialog_placeholder">Name of the custom field</string>
@@ -107,10 +100,8 @@
     <string name="totp_create_login_field_title">2FA secret (TOTP)</string>
     <string name="totp_create_login_field_invalid">Invalid 2FA secret</string>
     <string name="totp_create_login_field_placeholder">Add 2FA secret</string>
-    <string name="close_scree_icon_content_description">Close screen icon</string>
+    <string name="close_scree_icon_content_description">Close screen button</string>
 
-    <string name="paste_code_icon_content_description">Paste code icon</string>
-    <string name="scan_code_icon_content_description">Scan code icon</string>
     <string name="totp_paste_code_action">Paste code</string>
     <string name="totp_scan_code_action">Scan code</string>
     <string name="field_cannot_be_empty">This field cannot be empty</string>

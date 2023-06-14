@@ -44,7 +44,7 @@ fun NoteSection(
         ) {
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_note),
-                contentDescription = stringResource(R.string.note_section_icon_content_description),
+                contentDescription = null,
                 tint = accentColor
             )
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {

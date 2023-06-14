@@ -51,14 +51,7 @@
     </plurals>
     <string name="more_info_last_time_modified">Last time, %s</string>
 
-    <string name="top_bar_edit_icon_content_description">Edit icon</string>
-    <string name="alias_address_icon_content_description">Alias address icon</string>
-    <string name="note_section_icon_content_description">Note section icon</string>
-    <string name="password_key_icon_content_description">Password icon</string>
-    <string name="username_icon_content_description">Username icon</string>
-    <string name="totp_icon_content_description">OTP icon</string>
-    <string name="website_icon_content_description">Website icon</string>
-    <string name="open_menu_icon_content_description">Open menu icon</string>
+    <string name="open_menu_icon_content_description">Open menu button</string>
     <string name="mfa_limit_reached">2FA limit reached</string>
     <string name="mfa_icon_content_description">2fa icon</string>
 

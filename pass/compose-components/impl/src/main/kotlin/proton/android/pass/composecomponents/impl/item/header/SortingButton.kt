@@ -30,7 +30,7 @@ fun SortingButton(
         modifier = modifier,
         text = text,
         icon = R.drawable.ic_sorting,
-        iconContentDescription = stringResource(R.string.sorting_icon_content_description),
+        iconContentDescription = null,
         color = PassTheme.colors.interactionNormMajor2,
         onClick = onSortingOptionsClick
     )

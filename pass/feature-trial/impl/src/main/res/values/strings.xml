@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="trial_image_content_description">Trial image</string>
     <string name="trial_title">Enjoy your free trial</string>
     <string name="trial_subtitle">For next-level password management:</string>
     <string name="trial_feature_1">Multiple vaults</string>

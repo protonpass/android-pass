@@ -47,7 +47,7 @@ fun LoginUsernameRow(
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_user),
-            contentDescription = stringResource(R.string.username_icon_content_description),
+            contentDescription = null,
             tint = PassTheme.colors.loginInteractionNorm
         )
         Column {

@@ -27,7 +27,6 @@ fun SimpleNoteSection(
     label: String = stringResource(id = R.string.field_note_title),
     placeholder: String = stringResource(id = R.string.field_note_hint),
     @DrawableRes icon: Int = me.proton.core.presentation.R.drawable.ic_proton_note,
-    iconContentDescription: String = "",
     enabled: Boolean = true,
     onChange: (String) -> Unit
 ) {
@@ -46,7 +45,7 @@ fun SimpleNoteSection(
         leadingIcon = {
             Icon(
                 painter = painterResource(icon),
-                contentDescription = iconContentDescription,
+                contentDescription = null,
                 tint = PassTheme.colors.textWeak
             )
         },

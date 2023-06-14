@@ -32,7 +32,7 @@ fun AutofillCard(
                 modifier = Modifier.size(60.dp),
                 alignment = Alignment.CenterEnd,
                 painter = painterResource(id = R.drawable.spotlight_illustration),
-                contentDescription = stringResource(id = R.string.home_autofill_banner_image_content_description)
+                contentDescription = null
             )
         },
         onClick = onClick,

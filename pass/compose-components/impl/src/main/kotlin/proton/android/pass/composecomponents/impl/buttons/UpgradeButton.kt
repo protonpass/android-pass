@@ -41,7 +41,7 @@ fun UpgradeButton(
         Icon(
             modifier = Modifier.size(16.dp),
             painter = painterResource(me.proton.core.presentation.compose.R.drawable.ic_proton_arrow_out_square),
-            contentDescription = stringResource(R.string.upgrade_icon_content_description),
+            contentDescription = null,
             tint = PassTheme.colors.textInvert
         )
     }

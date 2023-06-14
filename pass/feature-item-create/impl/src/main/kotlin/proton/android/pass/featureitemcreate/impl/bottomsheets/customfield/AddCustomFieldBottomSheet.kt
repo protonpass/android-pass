@@ -64,7 +64,7 @@ private fun hiddenField(onClick: () -> Unit): BottomSheetItem = object : BottomS
         get() = {
             Icon(
                 painter = painterResource(CoreR.drawable.ic_proton_eye_slash),
-                contentDescription = stringResource(R.string.bottomsheet_custom_field_type_hidden_content_description)
+                contentDescription = null
             )
         }
     override val endIcon: (@Composable () -> Unit)?
@@ -83,7 +83,7 @@ private fun totpField(onClick: () -> Unit): BottomSheetItem = object : BottomShe
         get() = {
             Icon(
                 painter = painterResource(CoreR.drawable.ic_proton_lock),
-                contentDescription = stringResource(R.string.bottomsheet_custom_field_type_totp_content_description)
+                contentDescription = null
             )
         }
     override val endIcon: (@Composable () -> Unit)?

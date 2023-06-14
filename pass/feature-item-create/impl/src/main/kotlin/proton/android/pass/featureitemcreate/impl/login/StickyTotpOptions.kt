@@ -43,7 +43,7 @@ fun StickyTotpOptions(
         ) {
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_squares),
-                contentDescription = stringResource(R.string.paste_code_icon_content_description),
+                contentDescription = null,
                 tint = PassTheme.colors.loginInteractionNormMajor2
             )
             Text(
@@ -71,7 +71,7 @@ fun StickyTotpOptions(
         ) {
             Icon(
                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_camera),
-                contentDescription = stringResource(R.string.scan_code_icon_content_description),
+                contentDescription = null,
                 tint = PassTheme.colors.loginInteractionNormMajor2
             )
             Text(

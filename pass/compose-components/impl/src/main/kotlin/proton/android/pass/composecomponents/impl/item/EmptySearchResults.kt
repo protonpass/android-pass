@@ -32,7 +32,7 @@ fun EmptySearchResults(modifier: Modifier = Modifier) {
     ) {
         Image(
             painter = painterResource(id = R.drawable.no_search_results),
-            contentDescription = stringResource(R.string.no_search_results_image_content_description)
+            contentDescription = null
         )
         Text(
             text = stringResource(id = R.string.empty_search_results_title),

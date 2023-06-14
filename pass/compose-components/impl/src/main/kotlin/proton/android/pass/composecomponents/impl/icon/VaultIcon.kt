@@ -15,14 +15,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
 import proton.android.pass.commonui.api.applyIf
-import proton.android.pass.composecomponents.impl.R
 
 @Composable
 fun VaultIcon(
@@ -46,7 +44,7 @@ fun VaultIcon(
         Icon(
             modifier = Modifier.size(iconSize.dp),
             painter = painterResource(id = icon),
-            contentDescription = stringResource(R.string.vault_selector_icon_content_description),
+            contentDescription = null,
             tint = iconColor
         )
     }

@@ -35,7 +35,6 @@ internal fun LoginPasswordRow(
     passwordHiddenState: HiddenState,
     label: String = stringResource(R.string.field_password),
     @DrawableRes iconRes: Int = me.proton.core.presentation.R.drawable.ic_proton_key,
-    iconContentDescription: String = stringResource(R.string.password_key_icon_content_description),
     onTogglePasswordClick: () -> Unit,
     onCopyPasswordClick: () -> Unit
 ) {
@@ -67,7 +66,7 @@ internal fun LoginPasswordRow(
     ) {
         Icon(
             painter = painterResource(iconRes),
-            contentDescription = iconContentDescription,
+            contentDescription = null,
             tint = PassTheme.colors.loginInteractionNorm
         )
         Spacer(modifier = Modifier.width(16.dp))

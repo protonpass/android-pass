@@ -43,7 +43,7 @@ fun TotpRowContent(
     ) {
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_lock),
-            contentDescription = stringResource(R.string.totp_icon_content_description),
+            contentDescription = null,
             tint = PassTheme.colors.loginInteractionNorm
         )
         Column(

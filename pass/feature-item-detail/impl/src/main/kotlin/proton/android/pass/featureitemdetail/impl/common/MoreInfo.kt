@@ -94,7 +94,7 @@ fun MoreInfo(
                 modifier = Modifier
                     .size(16.dp)
                     .rotate(displayRotation),
-                contentDescription = stringResource(R.string.more_info_icon),
+                contentDescription = null,
                 tint = ProtonTheme.colors.iconWeak,
             )
         }

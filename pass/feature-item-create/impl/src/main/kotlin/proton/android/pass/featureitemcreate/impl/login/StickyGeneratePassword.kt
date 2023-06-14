@@ -35,7 +35,7 @@ fun StickyGeneratePassword(
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_key),
-            contentDescription = stringResource(R.string.sticky_button_generate_password_key_icon_content_description),
+            contentDescription = null,
             tint = PassTheme.colors.loginInteractionNormMajor2
         )
         Spacer(modifier = Modifier.width(8.dp))

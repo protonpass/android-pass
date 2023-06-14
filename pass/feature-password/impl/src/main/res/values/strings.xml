@@ -19,7 +19,7 @@
     <string name="bottomsheet_option_word_separator_underscores">Underscores ( _ )</string>
     <string name="bottomsheet_option_word_separator_numbers">Numbers</string>
     <string name="bottomsheet_option_word_separator_numbers_and_symbols">Numbers and symbols</string>
-    <string name="regenerate_password_icon_content_description">Regenerate pass icon</string>
+    <string name="regenerate_password_icon_content_description">Regenerate password button</string>
 
     <string name="password_mode_memorable">Memorable password</string>
     <string name="password_mode_random">Random password</string>

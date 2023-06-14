@@ -53,7 +53,7 @@ fun StickyUsernameOptions(
             ) {
                 Icon(
                     painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
-                    contentDescription = stringResource(R.string.sticky_button_create_alias_icon_content_description),
+                    contentDescription = null,
                     tint = PassTheme.colors.loginInteractionNormMajor2
                 )
                 Text(

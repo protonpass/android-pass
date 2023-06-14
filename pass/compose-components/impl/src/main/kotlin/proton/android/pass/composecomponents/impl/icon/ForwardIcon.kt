@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import proton.android.pass.composecomponents.impl.R
 
 @Composable
@@ -18,7 +17,7 @@ fun ForwardIcon(
     Icon(
         modifier = modifier,
         painter = painterResource(R.drawable.ic_forward),
-        contentDescription = stringResource(R.string.forward_icon_content_description),
+        contentDescription = null,
         tint = tint
     )
 }

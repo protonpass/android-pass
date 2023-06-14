@@ -101,9 +101,7 @@ fun EnabledCustomFieldsContent(
             TransparentTextButton(
                 text = stringResource(R.string.create_login_add_custom_field_button),
                 icon = CoreR.drawable.ic_proton_plus,
-                iconContentDescription = stringResource(
-                    R.string.create_login_add_custom_field_button_content_description
-                ),
+                iconContentDescription = null,
                 color = PassTheme.colors.loginInteractionNormMajor2,
                 onClick = {
                     focusManager.clearFocus(true)

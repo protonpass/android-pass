@@ -74,7 +74,7 @@ internal fun ItemDetailTopBar(
                         leadingIcon = {
                             Icon(
                                 painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_pencil),
-                                contentDescription = stringResource(R.string.top_bar_edit_icon_content_description),
+                                contentDescription = null,
                                 tint = PassTheme.colors.textInvert
                             )
                         },

@@ -8,8 +8,6 @@
     <string name="sort_by_creation_desc">Newest to oldest</string>
     <string name="sort_by_modification_date">Most recent</string>
 
-    <string name="sorting_icon_content_description">Sorting icon</string>
-
     <!-- List header results -->
     <string name="item_list_header_all_search_results">All</string>
     <plurals name="item_list_header_results">
@@ -18,22 +16,19 @@
     </plurals>
 
     <!-- Bottomsheets -->
-    <string name="bottomsheet_content_description_item_icon">BottomSheet item icon</string>
     <string name="bottomsheet_confirm_button">Confirm</string>
     <string name="bottomsheet_cancel_button">Cancel</string>
     <string name="bottomsheet_move_to_trash">Move to trash</string>
 
     <!-- Actions -->
-    <string name="action_content_description_menu">Item action menu</string>
+    <string name="action_content_description_menu">Open item action menu</string>
     <string name="action_upgrade_now">Upgrade now</string>
 
     <!-- Empty list -->
     <string name="empty_list_title">Add your first item</string>
     <string name="empty_search_results_title">No result found</string>
-    <string name="no_search_results_image_content_description">No search results image</string>
     <string name="empty_list_open_extension">Visit web extension</string>
     <string name="empty_list_create_item_button">Create new item</string>
-    <string name="empty_list_image_content_description">Empty list image</string>
 
     <!-- Field -->
     <string name="field_title_title">Title</string>
@@ -56,8 +51,6 @@
     <string name="mfa_title_icon_content_description">2fa icon</string>
     <string name="password_title_icon_content_description">Password icon</string>
     <string name="missing_app_icon_content_description">Missing app icon</string>
-    <string name="forward_icon_content_description">Arrow forward icon</string>
-    <string name="vault_selector_icon_content_description">Vault selector icon</string>
     <string name="add_item_icon_content_description">Add item icon</string>
     <string name="navigate_back_icon_content_description">Navigate back icon</string>
 
@@ -65,9 +58,9 @@
     <string name="vault_selector_title">Vault</string>
 
     <!-- Bottom bar -->
-    <string name="bottom_bar_list_items_icon_content_description">List items icon</string>
-    <string name="bottom_bar_add_item_icon_content_description">Add item icon</string>
-    <string name="bottom_bar_profile_icon_content_description">Profile icon</string>
+    <string name="bottom_bar_list_items_icon_content_description">List items</string>
+    <string name="bottom_bar_add_item_icon_content_description">Add item</string>
+    <string name="bottom_bar_profile_icon_content_description">Profile</string>
 
     <!-- List group by most recents -->
     <string name="most_recent_today">Today</string>
@@ -85,7 +78,6 @@
 
     <!-- Setting option -->
     <string name="setting_option_icon_content_description">Option icon</string>
-    <string name="vault_icon_content_description">Vault icon</string>
 
     <!-- Select Vault BottomSheet -->
     <plurals name="bottomsheet_select_vault_item_count">
@@ -100,7 +92,6 @@
 
     <!-- Upgrade -->
     <string name="upgrade">Upgrade</string>
-    <string name="upgrade_icon_content_description">Upgrade icon</string>
 
     <!-- Advanced options -->
     <string name="show_advanced_options">Advanced options</string>

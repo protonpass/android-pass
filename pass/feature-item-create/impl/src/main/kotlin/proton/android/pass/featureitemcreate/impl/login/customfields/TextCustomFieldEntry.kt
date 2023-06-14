@@ -52,7 +52,7 @@ fun TextCustomFieldEntry(
         leadingIcon = {
             Icon(
                 painter = painterResource(CoreR.drawable.ic_proton_text_align_left),
-                contentDescription = stringResource(R.string.custom_field_text_icon_content_description),
+                contentDescription = null,
                 tint = PassTheme.colors.textWeak
             )
         },

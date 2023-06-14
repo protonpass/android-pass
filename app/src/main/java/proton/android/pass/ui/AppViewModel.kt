@@ -55,12 +55,6 @@ class AppViewModel @Inject constructor(
         .connectivity
         .distinctUntilChanged()
 
-    init {
-        viewModelScope.launch {
-            preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
-        }
-    }
-
     val appUiState: StateFlow<AppUiState> = combine(
         snackbarDispatcher.snackbarMessage,
         themePreference,

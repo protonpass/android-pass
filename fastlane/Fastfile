@@ -90,21 +90,21 @@ platform :android do
   lane :deployToFirebaseDevGroup do
     sh("../scripts/ci/installFirebase.sh")
     sh("../scripts/ci/setupGoogleJson.sh")
-    sh("../scripts/uploadApkToFirebase.sh devBlack")
+    sh("../scripts/ci/uploadApkToFirebase.sh devBlack")
   end
 
   desc "Publish alpha build to firebase group"
   lane :deployToFirebaseAlphaGroup do
     sh("../scripts/ci/installFirebase.sh")
     sh("../scripts/ci/setupGoogleJson.sh")
-    sh("../scripts/uploadApkToFirebase.sh alphaProd")
+    sh("../scripts/ci/uploadApkToFirebase.sh alphaProd")
   end
 
   desc "Publish prod black build to firebase group"
   lane :deployToFirebaseProdGroup do
     sh("../scripts/ci/installFirebase.sh")
     sh("../scripts/ci/setupGoogleJson.sh")
-    sh("../scripts/uploadApkToFirebase.sh playBlack")
+    sh("../scripts/ci/uploadApkToFirebase.sh playBlack")
   end
 
   desc "Publish internal prod bundle"

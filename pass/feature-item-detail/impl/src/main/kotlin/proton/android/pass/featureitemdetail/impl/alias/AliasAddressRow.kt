@@ -46,7 +46,7 @@ fun AliasAddressRow(
     ) {
         Icon(
             painter = painterResource(me.proton.core.presentation.R.drawable.ic_proton_alias),
-            contentDescription = stringResource(R.string.alias_address_icon_content_description),
+            contentDescription = null,
             tint = PassTheme.colors.aliasInteractionNorm
         )
         Column {

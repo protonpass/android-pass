@@ -28,7 +28,6 @@ import proton.android.pass.composecomponents.impl.item.SectionTitle
 import proton.android.pass.featureitemdetail.impl.R
 import proton.android.pass.featureitemdetail.impl.login.CustomFieldUiContent
 import me.proton.core.presentation.compose.R as CoreR
-import proton.android.pass.composecomponents.impl.R as CompR
 
 @Composable
 fun CustomFieldLimited(
@@ -79,7 +78,7 @@ fun CustomFieldLimited(
                     Icon(
                         modifier = Modifier.size(16.dp),
                         painter = painterResource(CoreR.drawable.ic_proton_arrow_out_square),
-                        contentDescription = stringResource(CompR.string.upgrade_icon_content_description),
+                        contentDescription = null,
                         tint = PassTheme.colors.interactionNormMajor2
                     )
                 }

@@ -24,7 +24,6 @@
     <string name="feedback_option_reddit">Check out Proton on Reddit</string>
     <string name="feedback_option_mail">Send us a message</string>
 
-    <string name="app_lock_never">Never</string>
     <string name="app_lock_immediately">Immediately</string>
     <string name="app_lock_one_minute">After 1 minute</string>
     <string name="app_lock_two_minutes">After 2 minutes</string>

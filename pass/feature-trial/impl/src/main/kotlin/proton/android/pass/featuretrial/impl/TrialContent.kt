@@ -46,7 +46,7 @@ fun TrialContent(
     ) {
         Image(
             painter = painterResource(R.drawable.trial),
-            contentDescription = stringResource(R.string.trial_image_content_description)
+            contentDescription = null
         )
         Spacer(modifier = Modifier.height(52.dp))
 

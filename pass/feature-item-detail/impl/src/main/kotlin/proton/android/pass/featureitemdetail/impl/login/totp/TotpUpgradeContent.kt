@@ -64,7 +64,7 @@ fun TotpUpgradeContent(
                 Icon(
                     modifier = Modifier.size(16.dp),
                     painter = painterResource(CoreR.drawable.ic_proton_arrow_out_square),
-                    contentDescription = stringResource(CompR.string.upgrade_icon_content_description),
+                    contentDescription = null,
                     tint = PassTheme.colors.interactionNormMajor2
                 )
             }

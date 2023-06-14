@@ -35,7 +35,6 @@ import proton.android.pass.composecomponents.impl.dialogs.DialogCancelConfirmSec
 import proton.android.pass.featureitemcreate.impl.R
 import proton.android.pass.featureitemcreate.impl.alias.AliasSuffixUiModel
 import me.proton.core.presentation.compose.R as CoreR
-import proton.android.pass.composecomponents.impl.R as ComponentsR
 
 @Composable
 fun SelectSuffixContent(
@@ -84,7 +83,7 @@ fun SelectSuffixContent(
                 Icon(
                     modifier = Modifier.size(16.dp),
                     painter = painterResource(CoreR.drawable.ic_proton_arrow_out_square),
-                    contentDescription = stringResource(ComponentsR.string.upgrade_icon_content_description),
+                    contentDescription = null,
                     tint = PassTheme.colors.interactionNormMajor2
                 )
             }

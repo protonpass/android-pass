@@ -14,19 +14,13 @@ fun NavHomeContent(
     onNavigateEvent: (HomeNavigation) -> Unit
 ) {
     when {
-        state.shouldAuthenticate is Some && state.shouldAuthenticate.value -> {
-            LaunchedEffect(Unit) {
-                onNavigateEvent(HomeNavigation.Auth)
-            }
-        }
-
         state.hasCompletedOnBoarding is Some && !state.hasCompletedOnBoarding.value -> {
             LaunchedEffect(Unit) {
                 onNavigateEvent(HomeNavigation.OnBoarding)
             }
         }
 
-        state.hasCompletedOnBoarding is Some && state.shouldAuthenticate is Some -> {
+        state.hasCompletedOnBoarding is Some -> {
             HomeScreen(
                 modifier = Modifier.testTag(HomeScreenTestTag.screen),
                 onNavigateEvent = onNavigateEvent

@@ -18,13 +18,13 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.asResultWithoutLoading
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.network.api.NetworkMonitor
 import proton.android.pass.network.api.NetworkStatus
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.AppLockPreference
 import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
@@ -33,11 +33,10 @@ import javax.inject.Inject
 @HiltViewModel
 class AppViewModel @Inject constructor(
     private val preferenceRepository: UserPreferencesRepository,
+    private val snackbarDispatcher: SnackbarDispatcher,
+    private val needsBiometricAuth: NeedsBiometricAuth,
     networkMonitor: NetworkMonitor,
-    private val snackbarDispatcher: SnackbarDispatcher
 ) : ViewModel() {
-
-    private var wasAuthenticated = false
 
     private val themePreference: Flow<ThemePreference> = preferenceRepository
         .getThemePreference()
@@ -66,15 +65,16 @@ class AppViewModel @Inject constructor(
         snackbarDispatcher.snackbarMessage,
         themePreference,
         networkStatus,
+        needsBiometricAuth(),
         ::AppUiState
     ).stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
         initialValue = run {
-            val theme = runBlocking {
-                preferenceRepository.getThemePreference().first()
+            val (theme, needsAuth) = runBlocking {
+                preferenceRepository.getThemePreference().first() to needsBiometricAuth().first()
             }
-            AppUiState.Initial(theme)
+            AppUiState.default(theme, needsAuth)
         }
     )
 
@@ -85,17 +85,11 @@ class AppViewModel @Inject constructor(
     }
 
     fun onStop() = viewModelScope.launch {
-        val authenticated = preferenceRepository.getHasAuthenticated().first()
-        if (authenticated == HasAuthenticated.Authenticated) {
-            wasAuthenticated = true
-        }
-
         preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
     }
 
     fun onResume() = viewModelScope.launch {
-        val appLock = preferenceRepository.getAppLockPreference().first()
-        if (appLock != AppLockPreference.Immediately && wasAuthenticated) {
+        if (!needsBiometricAuth().first()) {
             preferenceRepository.setHasAuthenticated(HasAuthenticated.Authenticated)
         }
     }

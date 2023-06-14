@@ -24,7 +24,6 @@ fun PassApp(
 ) {
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
     val isDark = isDark(appUiState.theme)
-
     SystemUIEffect(isDark = isDark)
 
     LifecycleEffect(
@@ -45,8 +44,7 @@ fun PassApp(
                     .imePadding(),
                 appUiState = appUiState,
                 onNavigate = onNavigate,
-                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() },
-                onAuthPerformed = { }
+                onSnackbarMessageDelivered = { appViewModel.onSnackbarMessageDelivered() }
             )
         }
     }

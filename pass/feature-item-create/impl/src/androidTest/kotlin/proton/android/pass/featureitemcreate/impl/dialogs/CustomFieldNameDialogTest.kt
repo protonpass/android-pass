@@ -61,7 +61,7 @@ class CustomFieldNameDialogTest {
             CustomFieldType.Totp,
             CustomFieldContent.Totp(
                 label = LABEL,
-                value = HiddenState.Concealed(TestEncryptionContext.encrypt(""))
+                value = HiddenState.Empty(TestEncryptionContext.encrypt(""))
             )
         )
     }
@@ -72,7 +72,7 @@ class CustomFieldNameDialogTest {
             CustomFieldType.Hidden,
             CustomFieldContent.Hidden(
                 label = LABEL,
-                value = HiddenState.Concealed(TestEncryptionContext.encrypt(""))
+                value = HiddenState.Empty(TestEncryptionContext.encrypt(""))
             )
         )
     }

@@ -4,12 +4,10 @@ import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.LoadingResult
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
@@ -21,22 +19,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NavHomeViewModel @Inject constructor(
-    preferenceRepository: UserPreferencesRepository,
-    needsBiometricAuth: NeedsBiometricAuth
+    preferenceRepository: UserPreferencesRepository
 ) : ViewModel() {
 
-    val navHomeUiState: SharedFlow<NavHomeUiState> = combine(
-        needsBiometricAuth().distinctUntilChanged(),
-        preferenceRepository.getHasCompletedOnBoarding().asResultWithoutLoading()
-    ) { shouldAuthenticate, hasCompletedOnBoarding ->
-        NavHomeUiState(
-            shouldAuthenticate = shouldAuthenticate.some(),
-            hasCompletedOnBoarding = when (hasCompletedOnBoarding) {
-                is LoadingResult.Success -> hasCompletedOnBoarding.data.value().some()
-                else -> None
-            }
-        )
-    }
+    val navHomeUiState: StateFlow<NavHomeUiState> = preferenceRepository.getHasCompletedOnBoarding()
+        .asResultWithoutLoading()
+        .map {
+            NavHomeUiState(
+                hasCompletedOnBoarding = when (it) {
+                    is LoadingResult.Success -> it.data.value().some()
+                    else -> None
+                }
+            )
+        }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
@@ -46,10 +41,9 @@ class NavHomeViewModel @Inject constructor(
 
 @Immutable
 data class NavHomeUiState(
-    val shouldAuthenticate: Option<Boolean>,
     val hasCompletedOnBoarding: Option<Boolean>
 ) {
     companion object {
-        val Initial = NavHomeUiState(None, None)
+        val Initial = NavHomeUiState(None)
     }
 }

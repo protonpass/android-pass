@@ -21,6 +21,7 @@ import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
+import proton.android.pass.featureauth.impl.Auth
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.navigation.api.rememberAppNavigator
@@ -40,8 +41,7 @@ fun PassAppContent(
     modifier: Modifier = Modifier,
     appUiState: AppUiState,
     onNavigate: (AppNavigation) -> Unit,
-    onSnackbarMessageDelivered: () -> Unit,
-    onAuthPerformed: () -> Unit
+    onSnackbarMessageDelivered: () -> Unit
 ) {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
@@ -83,7 +83,6 @@ fun PassAppContent(
                             appNavigator = appNavigator,
                             startingRoute = Home.route,
                             onNavigate = onNavigate,
-                            onAuthPerformed = onAuthPerformed,
                             dismissBottomSheet = { callback ->
                                 coroutineScope.launch {
                                     bottomSheetState.hide()
@@ -91,6 +90,11 @@ fun PassAppContent(
                                 }
                             },
                         )
+                        if (appUiState.needsAuth) {
+                            LaunchedEffect(Unit) {
+                                appNavigator.navigate(Auth)
+                            }
+                        }
                     }
                 }
             }

@@ -80,31 +80,31 @@ platform :android do
 
   desc "Run instrumentation tests"
   lane :instrumentationTests do
-    sh("../scripts/ci/installFirebase.sh")
-    sh("../scripts/ci/setupGoogleJson.sh")
-    sh("../scripts/ci/setupGoogleCloud.sh")
+    sh("../tools/ci/installFirebase.sh")
+    sh("../tools/ci/setupGoogleJson.sh")
+    sh("../tools/ci/setupGoogleCloud.sh")
     gradle(task: "runFlank")
   end
 
   desc "Publish dev build to firebase group"
   lane :deployToFirebaseDevGroup do
-    sh("../scripts/ci/installFirebase.sh")
-    sh("../scripts/ci/setupGoogleJson.sh")
-    sh("../scripts/ci/uploadApkToFirebase.sh devBlack")
+    sh("../tools/ci/installFirebase.sh")
+    sh("../tools/ci/setupGoogleJson.sh")
+    sh("../tools/ci/uploadApkToFirebase.sh devBlack")
   end
 
   desc "Publish alpha build to firebase group"
   lane :deployToFirebaseAlphaGroup do
-    sh("../scripts/ci/installFirebase.sh")
-    sh("../scripts/ci/setupGoogleJson.sh")
-    sh("../scripts/ci/uploadApkToFirebase.sh alphaProd")
+    sh("../tools/ci/installFirebase.sh")
+    sh("../tools/ci/setupGoogleJson.sh")
+    sh("../tools/ci/uploadApkToFirebase.sh alphaProd")
   end
 
   desc "Publish prod black build to firebase group"
   lane :deployToFirebaseProdGroup do
-    sh("../scripts/ci/installFirebase.sh")
-    sh("../scripts/ci/setupGoogleJson.sh")
-    sh("../scripts/ci/uploadApkToFirebase.sh playBlack")
+    sh("../tools/ci/installFirebase.sh")
+    sh("../tools/ci/setupGoogleJson.sh")
+    sh("../tools/ci/uploadApkToFirebase.sh playBlack")
   end
 
   desc "Publish internal prod bundle"

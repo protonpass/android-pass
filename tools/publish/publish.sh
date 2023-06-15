@@ -14,7 +14,7 @@ set -eo pipefail
 set -x
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:scripts/publish::g')
+REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:tools/publish::g')
 
 IGNORE_FILE="$REPO_ROOT/.publishignore"
 FILTER_SCRIPT="$SCRIPT_DIR/filter-repo.sh"

@@ -156,7 +156,7 @@ abstract class AppDatabase :
     UserSettingsDatabase {
 
     companion object {
-        const val VERSION = 16
+        const val VERSION = 17
 
         const val DB_NAME = "db-passkey"
 
@@ -167,6 +167,7 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_8_9,
             AppDatabaseMigrations.MIGRATION_9_10,
             AppDatabaseMigrations.MIGRATION_14_15,
+            AppDatabaseMigrations.MIGRATION_16_17,
         )
 
         fun buildDatabase(context: Context): AppDatabase =

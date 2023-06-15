@@ -70,6 +70,7 @@ object TestUtils {
             services = 123,
             subscribed = 1,
             delinquent = null,
+            recovery = null,
             keys = listOf(
                 UserKey(
                     userId = userId,

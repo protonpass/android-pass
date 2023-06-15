@@ -1,6 +1,9 @@
 package proton.android.pass.featurehome.impl
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.navigation.NavGraphBuilder
 import proton.android.pass.common.api.Option
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
@@ -10,14 +13,15 @@ import proton.android.pass.navigation.api.composable
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
 
-object Home : NavItem(baseRoute = "home", isTopLevel = true)
+object Home : NavItem(baseRoute = "home", isTopLevel = true, noHistory = true)
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialApi::class)
 fun NavGraphBuilder.homeGraph(
     onNavigateEvent: (HomeNavigation) -> Unit,
 ) {
     composable(Home) {
-        NavHome(
+        HomeScreen(
+            modifier = Modifier.testTag(HomeScreenTestTag.screen),
             onNavigateEvent = onNavigateEvent
         )
     }

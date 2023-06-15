@@ -4,7 +4,6 @@ import android.os.Build
 import me.proton.core.network.domain.ApiClient
 import proton.android.pass.appconfig.api.AppConfig
 import proton.android.pass.log.api.PassLogger
-import java.util.Locale
 import javax.inject.Inject
 
 class PassApiClient @Inject constructor(appConfig: AppConfig) : ApiClient {
@@ -13,12 +12,11 @@ class PassApiClient @Inject constructor(appConfig: AppConfig) : ApiClient {
     override val shouldUseDoh: Boolean = false
     override val userAgent: String = StringBuilder()
         .append("ProtonPass/${appConfig.versionName}")
+        .append(" ")
         .append("(")
         .append("Android ${Build.VERSION.RELEASE};")
-        .append("${Build.MODEL};")
-        .append("${Build.BRAND};")
-        .append("${Build.DEVICE};")
-        .append(Locale.getDefault().language)
+        .append(" ")
+        .append("${Build.MODEL} ${Build.BRAND}")
         .append(")")
         .toString()
 

@@ -9,5 +9,10 @@ enum class FeatureFlag(
         "Custom fields",
         "Enable custom fields",
         "PassCustomFields"
+    ),
+    CREDIT_CARDS_ENABLED(
+        "Credit cards",
+        "Enable credit cards",
+        "PassCreditCardsV1"
     )
 }

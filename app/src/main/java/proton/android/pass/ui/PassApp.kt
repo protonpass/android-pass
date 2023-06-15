@@ -10,7 +10,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.insets.ProvideWindowInsets
-import proton.android.pass.commonui.api.LifecycleEffect
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.composecomponents.impl.theme.SystemUIEffect
 import proton.android.pass.composecomponents.impl.theme.isDark
@@ -25,15 +24,6 @@ fun PassApp(
     val appUiState by appViewModel.appUiState.collectAsStateWithLifecycle()
     val isDark = isDark(appUiState.theme)
     SystemUIEffect(isDark = isDark)
-
-    LifecycleEffect(
-        onStop = {
-            appViewModel.onStop()
-        },
-        onResume = {
-            appViewModel.onResume()
-        }
-    )
 
     PassTheme(isDark = isDark) {
         ProvideWindowInsets {

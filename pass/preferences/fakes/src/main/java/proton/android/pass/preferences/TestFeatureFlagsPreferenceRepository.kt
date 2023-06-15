@@ -10,6 +10,7 @@ class TestFeatureFlagsPreferenceRepository @Inject constructor() :
     FeatureFlagsPreferencesRepository {
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> = when (featureFlag) {
         FeatureFlag.CUSTOM_FIELDS_ENABLED -> flowOf(true as T)
+        FeatureFlag.CREDIT_CARDS_ENABLED -> flowOf(true as T)
     }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> =

@@ -44,6 +44,9 @@ class AppNavigator(
             destination.isTopLevel -> navController.navigate(destinationRoute) {
                 popUpTo(navController.graph.findStartDestination().id) {
                     saveState = true
+                    if (destination.noHistory) {
+                        inclusive = true
+                    }
                 }
                 launchSingleTop = true
                 restoreState = true
@@ -52,13 +55,21 @@ class AppNavigator(
             destination.isBottomsheet -> navController.navigate(destinationRoute) {
                 launchSingleTop = true
                 if (backDestination != null) {
-                    popUpTo(backDestination.route)
+                    popUpTo(backDestination.route) {
+                        if (destination.noHistory) {
+                            inclusive = true
+                        }
+                    }
                 }
             }
 
             else -> navController.navigate(destinationRoute) {
                 if (backDestination != null) {
-                    popUpTo(backDestination.route)
+                    popUpTo(backDestination.route) {
+                        if (destination.noHistory) {
+                            inclusive = true
+                        }
+                    }
                 }
             }
         }

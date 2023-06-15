@@ -7,6 +7,7 @@ open class NavItem(
     val baseRoute: String,
     private val navArgIds: List<NavArgId> = emptyList(),
     private val optionalArgIds: List<OptionalNavArgId> = emptyList(),
+    val noHistory: Boolean = false,
     val isTopLevel: Boolean = false,
     val isBottomsheet: Boolean = false,
 ) {

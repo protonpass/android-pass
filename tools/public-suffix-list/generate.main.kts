@@ -4,7 +4,7 @@ import java.nio.file.Paths
 
 val PROJECT_ROOT_DIR: File = __FILE__.absoluteFile // this script
     .parentFile // public-suffix-dir
-    .parentFile // scripts
+    .parentFile // tools
     .parentFile // ProtonPass
 
 val OUTPUT_FILE = Paths.get(PROJECT_ROOT_DIR.absolutePath, "pass", "data", "impl", "src", "main", "res", "raw", "public_suffix_list.txt")

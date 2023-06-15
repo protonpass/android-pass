@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:scripts/publish::g')
+REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:tools/publish::g')
 
 # Install required tools
 apt update && apt install -y git-filter-repo connect-proxy
@@ -30,4 +30,4 @@ cat <<EOF >> ~/.ssh/known_hosts
 EOF
 
 # SSH is set up. Proceed to publish
-$REPO_ROOT/scripts/publish/publish.sh /tmp/app-clone "${GITHUB_PUBLIC_URL}"
+$REPO_ROOT/tools/publish/publish.sh /tmp/app-clone "${GITHUB_PUBLIC_URL}"

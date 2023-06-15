@@ -60,7 +60,6 @@ import proton.android.pass.data.api.usecases.ClearUserData
 import proton.android.pass.data.api.usecases.RefreshPlan
 import proton.android.pass.data.api.usecases.UserPlanWorkerLauncher
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.InternalSettingsRepository
 import proton.android.pass.preferences.UserPreferencesRepository
 import javax.inject.Inject
@@ -82,15 +81,6 @@ class LauncherViewModel @Inject constructor(
     private val clearUserData: ClearUserData,
     private val refreshPlan: RefreshPlan
 ) : ViewModel() {
-
-    init {
-        viewModelScope.launch {
-            preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
-                .onFailure {
-                    PassLogger.e(TAG, it, "Could not save HasAuthenticated preference")
-                }
-        }
-    }
 
     val state: StateFlow<State> = accountManager.getAccounts()
         .map { accounts ->

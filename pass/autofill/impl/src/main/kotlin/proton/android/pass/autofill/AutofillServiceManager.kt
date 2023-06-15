@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import proton.android.pass.autofill.entities.AutofillData
 import proton.android.pass.autofill.service.R
+import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.None
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.Some
@@ -26,7 +27,6 @@ import proton.android.pass.crypto.api.context.EncryptionContext
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
 import proton.android.pass.data.api.usecases.GetSuggestedLoginItems
 import proton.android.pass.log.api.PassLogger
-import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
 import proton.pass.domain.Item
 import javax.inject.Inject
@@ -37,7 +37,7 @@ class AutofillServiceManager @Inject constructor(
     @ApplicationContext private val context: Context,
     private val getSuggestedLoginItems: GetSuggestedLoginItems,
     private val encryptionContextProvider: EncryptionContextProvider,
-    private val preferencesRepository: UserPreferencesRepository
+    private val needsBiometricAuth: NeedsBiometricAuth
 ) {
 
     @RequiresApi(Build.VERSION_CODES.R)
@@ -131,7 +131,7 @@ class AutofillServiceManager @Inject constructor(
         )
         if (availableInlineSpots > 0) {
             val shouldAuthenticate = runBlocking {
-                preferencesRepository.getBiometricLockState().first().value()
+                needsBiometricAuth().first()
             }
             requestOption.inlinePresentationSpecs
                 .take(availableInlineSpots - INLINE_SUGGESTIONS_OFFSET)

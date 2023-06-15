@@ -42,6 +42,7 @@ object TestUser {
         services = 0,
         subscribed = 0,
         delinquent = null,
-        keys = listOf()
+        keys = listOf(),
+        recovery = null
     )
 }

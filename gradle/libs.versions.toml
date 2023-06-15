@@ -39,7 +39,7 @@ coil = "2.2.2"
 # Commons codec
 commons-codec = "1.15"
 # Core
-core = "10.7.1"
+core = "12.0.0"
 # Dagger
 dagger = "2.44.2"
 # Google
@@ -187,6 +187,7 @@ core-account-domain = { module = "me.proton.core:account-domain", version.ref = 
 core-accountManager = { module = "me.proton.core:account-manager", version.ref = "core" }
 core-accountManager-domain = { module = "me.proton.core:account-manager-domain", version.ref = "core" }
 core-accountManager-presentation-compose = { module = "me.proton.core:account-manager-presentation-compose", version.ref = "core" }
+core-accountRecovery = { module = "me.proton.core:account-recovery", version.ref = "core" }
 core-auth = { module = "me.proton.core:auth", version.ref = "core" }
 core-auth-test = { module = "me.proton.core:auth-test", version.ref = "core" }
 core-challenge = { module = "me.proton.core:challenge", version.ref = "core" }

@@ -28,6 +28,7 @@ import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.keytransparency.data.local.KeyTransparencyDatabase
 import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.user.data.db.AddressDatabase
+import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
 import proton.android.pass.data.impl.db.entities.ItemEntity
 import proton.android.pass.data.impl.db.entities.ShareEntity
@@ -123,6 +124,12 @@ object AppDatabaseMigrations {
                     
                 """.trimIndent()
             )
+        }
+    }
+
+    val MIGRATION_16_17 = object : Migration(16, 17) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            UserDatabase.MIGRATION_2.migrate(database)
         }
     }
 }

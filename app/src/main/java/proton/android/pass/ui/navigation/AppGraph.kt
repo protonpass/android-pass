@@ -95,6 +95,8 @@ import proton.android.pass.featurevault.impl.delete.DeleteVaultDialog
 import proton.android.pass.featurevault.impl.vaultGraph
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.AppNavigation
+import proton.android.pass.ui.RootNavigation
+import proton.android.pass.ui.rootGraph
 import proton.pass.domain.ItemContents
 import proton.pass.domain.ItemId
 import proton.pass.domain.ShareId
@@ -108,6 +110,15 @@ fun NavGraphBuilder.appGraph(
     onNavigate: (AppNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {
+    rootGraph(
+        onNavigateEvent = {
+            when (it) {
+                RootNavigation.Auth -> appNavigator.navigate(Auth)
+                RootNavigation.Home -> appNavigator.navigate(Home)
+                RootNavigation.OnBoarding -> appNavigator.navigate(OnBoarding)
+            }
+        }
+    )
     homeGraph(
         onNavigateEvent = {
             when (it) {

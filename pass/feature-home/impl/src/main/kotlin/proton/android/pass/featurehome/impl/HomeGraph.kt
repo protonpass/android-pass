@@ -37,9 +37,7 @@ sealed interface HomeNavigation {
     data class EditNote(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
     data class EditAlias(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
     data class ItemDetail(val shareId: ShareId, val itemId: ItemId) : HomeNavigation
-    object Auth : HomeNavigation
     object Profile : HomeNavigation
-    object OnBoarding : HomeNavigation
     object CreateVault : HomeNavigation
     data class VaultOptions(val shareId: ShareId) : HomeNavigation
     data class SortingBottomsheet(val searchSortingType: SearchSortingType) : HomeNavigation

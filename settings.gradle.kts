@@ -1,15 +1,57 @@
 rootProject.name = "ProtonPass"
 
-fun getProtosUrl(): String {
+val localProperties = java.util.Properties().apply {
+    try {
+        load(rootDir.resolve("local.properties").inputStream())
+    } catch (exception: java.io.FileNotFoundException) {
+        // Provide empty properties to allow the app to be built without secrets
+        java.util.Properties()
+    }
+}
+
+interface BranchOrTag {
+    data class Branch(val name: String) : BranchOrTag
+    data class Tag(val name: String) : BranchOrTag
+}
+
+data class ProtosConfig(
+    val url: String,
+    val branchTag: BranchOrTag
+)
+
+val PROTOBUF_TAG = "1.0.0"
+
+fun getProtosConfig(): ProtosConfig {
     val isCI = System.getenv("CI").toBoolean()
-    if (isCI) {
+    val customProtosUrl = localProperties.getProperty("protos.url", "")
+    return if (isCI) {
         val username = "gitlab-ci-token"
         val token = System.getenv("CI_JOB_TOKEN")
-        return "https://${username}:${token}@gitlab.protontech.ch/proton/clients/pass/contents-proto-definition.git"
+        val server = System.getenv("CI_SERVER_HOST")
+        ProtosConfig(
+            url = "https://${username}:${token}@${server}/proton/clients/pass/contents-proto-definition.git",
+            branchTag = BranchOrTag.Tag(PROTOBUF_TAG)
+        )
+    } else if (customProtosUrl.isNotBlank()) {
+
+        val customProtosBranch = localProperties.getProperty("protos.branch", "")
+        val customProtosTag = localProperties.getProperty("protos.tag", "")
+
+        val branchTag = when {
+            customProtosBranch.isNotBlank() -> BranchOrTag.Branch(customProtosBranch)
+            customProtosTag.isNotBlank() -> BranchOrTag.Tag(customProtosTag)
+            else -> throw RuntimeException("Either protos.branch or protos.tag must be set")
+        }
+
+        ProtosConfig(
+            url = customProtosUrl,
+            branchTag = branchTag
+        )
     } else {
-        val username = "AndroidDeployToken"
-        val token = "glpat-Poxe3LKtUJSqKXKgusac"
-        return "https://${username}:${token}@gitlab.protontech.ch/proton/clients/pass/contents-proto-definition.git"
+        ProtosConfig(
+            url = "https://github.com/protonpass/pass-contents-proto-definition.git",
+            branchTag = BranchOrTag.Tag(PROTOBUF_TAG)
+        )
     }
 }
 
@@ -31,8 +73,14 @@ includeCoreBuild {
     includeBuild("gopenpgp")
 
     includeRepo("contents-proto-definition") {
-        uri.set(getProtosUrl())
-        branch.set("master")
+        val config = getProtosConfig()
+        uri.set(config.url)
+
+        when (val value = config.branchTag) {
+            is BranchOrTag.Branch -> branch.set(value.name)
+            is BranchOrTag.Tag -> tag.set(value.name)
+        }
+
         checkoutDirectory.set(file("./pass/protos/contents-proto-definition"))
     }
 }

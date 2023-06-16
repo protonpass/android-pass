@@ -8,6 +8,8 @@ import androidx.lifecycle.LifecycleEventObserver
 
 @Composable
 fun LifecycleEffect(
+    onCreate: () -> Unit = {},
+    onStart: () -> Unit = {},
     onResume: () -> Unit = {},
     onPause: () -> Unit = {},
     onStop: () -> Unit = {}
@@ -16,8 +18,10 @@ fun LifecycleEffect(
     DisposableEffect(lifecycle) {
         val observer = LifecycleEventObserver { _, event ->
             when (event) {
-                Lifecycle.Event.ON_PAUSE -> onPause()
+                Lifecycle.Event.ON_CREATE -> onCreate()
+                Lifecycle.Event.ON_START -> onStart()
                 Lifecycle.Event.ON_RESUME -> onResume()
+                Lifecycle.Event.ON_PAUSE -> onPause()
                 Lifecycle.Event.ON_STOP -> onStop()
                 else -> {}
             }

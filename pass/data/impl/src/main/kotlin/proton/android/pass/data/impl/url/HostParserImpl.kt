@@ -44,14 +44,20 @@ class HostParserImpl @Inject constructor(
         for (i in parts.indices) {
             val portion = stringFromParts(parts, i)
             if (publicSuffixes.contains(portion)) {
-                // We found the TLD
-                val res = hostWithTld(
-                    protocol = protocol,
-                    parts = parts,
-                    tldStartingPart = i,
-                    tld = portion
-                )
-                return Result.success(res)
+
+                // Check if the widest match is only the TLD
+                return if (i == 0) {
+                    Result.failure(IllegalArgumentException("host is a TLD"))
+                } else {
+                    // We found the TLD
+                    val res = hostWithTld(
+                        protocol = protocol,
+                        parts = parts,
+                        tldStartingPart = i,
+                        tld = portion
+                    )
+                    Result.success(res)
+                }
             }
         }
 

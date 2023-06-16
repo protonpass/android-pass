@@ -180,4 +180,114 @@ class HostParserImplTest {
         assertEquals(domain, hostInfo.domain)
         assertEquals(tld.some(), hostInfo.tld)
     }
+
+    @Test
+    fun `is able to parse domain that has the same subdomain as TLD`() {
+        val tld = "com"
+        val domain = "domain"
+        publicSuffixList.setTlds(setOf(tld))
+        val res = instance.parse("$tld.$domain.$tld")
+
+        assertTrue(res.isSuccess)
+
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
+        assertTrue(hostInfo is HostInfo.Host)
+        assertEquals(tld.some(), hostInfo.subdomain)
+        assertEquals(domain, hostInfo.domain)
+        assertEquals(tld.some(), hostInfo.tld)
+    }
+
+    @Test
+    fun `is able to parse domain that is the same as a TLD`() {
+        val tld = "com"
+        publicSuffixList.setTlds(setOf(tld))
+        val res = instance.parse("$tld.$tld")
+
+        assertTrue(res.isSuccess)
+
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
+        assertTrue(hostInfo is HostInfo.Host)
+        assertEquals(None, hostInfo.subdomain)
+        assertEquals(tld, hostInfo.domain)
+        assertEquals(tld.some(), hostInfo.tld)
+    }
+
+    @Test
+    fun `is able to parse domain that is the same subdomain and domain as a TLD`() {
+        val tld = "com"
+        publicSuffixList.setTlds(setOf(tld))
+        val res = instance.parse("$tld.$tld.$tld")
+
+        assertTrue(res.isSuccess)
+
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
+        assertTrue(hostInfo is HostInfo.Host)
+        assertEquals(tld.some(), hostInfo.subdomain)
+        assertEquals(tld, hostInfo.domain)
+        assertEquals(tld.some(), hostInfo.tld)
+    }
+
+    @Test
+    fun `is able to parse domain that has the TLD repeated in subdomains, domain and TLD`() {
+        val tld = "com"
+        val subdomain = "$tld.$tld.$tld"
+        publicSuffixList.setTlds(setOf(tld))
+        val res = instance.parse("$subdomain.$tld.$tld")
+
+        assertTrue(res.isSuccess)
+
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
+        assertTrue(hostInfo is HostInfo.Host)
+        assertEquals(subdomain.some(), hostInfo.subdomain)
+        assertEquals(tld, hostInfo.domain)
+        assertEquals(tld.some(), hostInfo.tld)
+    }
+
+    @Test
+    fun `is able to parse domain that has the TLD as the start and does not end with known TLD`() {
+        val tld = "com"
+        val domain = "domain"
+        publicSuffixList.setTlds(setOf(tld))
+        val res = instance.parse("$tld.$domain.unknown")
+
+        assertTrue(res.isSuccess)
+
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
+        assertTrue(hostInfo is HostInfo.Host)
+        assertEquals(tld.some(), hostInfo.subdomain)
+        assertEquals(domain, hostInfo.domain)
+        assertEquals("unknown".some(), hostInfo.tld)
+    }
+
+    @Test
+    fun `can parse domain that has the TLD as the start and does not end with known TLD that has multiple parts`() {
+        val tld = "long.tld"
+        val domain = "domain"
+        publicSuffixList.setTlds(setOf(tld))
+        val res = instance.parse("$tld.$domain.unknown")
+
+        assertTrue(res.isSuccess)
+
+        val hostInfo = res.getOrNull()
+        assertNotNull(hostInfo)
+        assertTrue(hostInfo is HostInfo.Host)
+        assertEquals(tld.some(), hostInfo.subdomain)
+        assertEquals(domain, hostInfo.domain)
+        assertEquals("unknown".some(), hostInfo.tld)
+    }
+
+    @Test
+    fun `input that only consists on the TLD is an error`() {
+        val input = "the.tld"
+        publicSuffixList.setTlds(setOf(input))
+
+        val res = instance.parse(input)
+
+        assertTrue(res.isFailure)
+    }
 }

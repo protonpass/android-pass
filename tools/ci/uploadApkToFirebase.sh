@@ -3,7 +3,7 @@
 set -u
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:tools::g')
+REPO_ROOT=$(echo "${SCRIPT_DIR}" | sed 's:tools/ci::g')
 
 if [[ -z "$1" ]]; then
   echo "FLAVOUR not set"

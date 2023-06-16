@@ -139,10 +139,6 @@ fun NavGraphBuilder.appGraph(
                     appNavigator.navigate(destination, route)
                 }
 
-                HomeNavigation.Auth -> {
-                    appNavigator.navigate(Auth)
-                }
-
                 HomeNavigation.CreateVault -> {
                     appNavigator.navigate(CreateVaultBottomSheet)
                 }
@@ -173,10 +169,6 @@ fun NavGraphBuilder.appGraph(
                         ViewItem,
                         ViewItem.createNavRoute(it.shareId, it.itemId)
                     )
-                }
-
-                HomeNavigation.OnBoarding -> {
-                    appNavigator.navigate(OnBoarding)
                 }
 
                 HomeNavigation.Profile -> {

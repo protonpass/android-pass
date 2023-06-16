@@ -40,18 +40,20 @@ androidComponents {
 
 dependencies {
     implementation(projects.pass.autofill.impl)
-    implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.commonUi.api)
+    implementation(projects.pass.composeComponents.impl)
     implementation(projects.pass.featureAccount.impl)
     implementation(projects.pass.featureAuth.impl)
     implementation(projects.pass.featureHome.impl)
     implementation(projects.pass.featureItemCreate.impl)
     implementation(projects.pass.featureItemDetail.impl)
+    implementation(projects.pass.featureMigrate.impl)
     implementation(projects.pass.featureOnboarding.impl)
     implementation(projects.pass.featurePassword.impl)
     implementation(projects.pass.featureProfile.impl)
     implementation(projects.pass.featureSearchOptions.impl)
     implementation(projects.pass.featureSettings.impl)
+    implementation(projects.pass.featureTrash.impl)
     implementation(projects.pass.featureTrial.impl)
     implementation(projects.pass.featureVault.impl)
 

@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import com.google.accompanist.navigation.animation.AnimatedNavHost
-import proton.android.pass.featurehome.impl.Home
 import proton.android.pass.navigation.api.AppNavigator
 import proton.android.pass.ui.navigation.appGraph
 
@@ -20,7 +19,7 @@ import proton.android.pass.ui.navigation.appGraph
 fun PassNavHost(
     modifier: Modifier = Modifier,
     appNavigator: AppNavigator,
-    startingRoute: String = Home.route,
+    startingRoute: String,
     onNavigate: (AppNavigation) -> Unit,
     dismissBottomSheet: (() -> Unit) -> Unit
 ) {

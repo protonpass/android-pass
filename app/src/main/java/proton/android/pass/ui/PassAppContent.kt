@@ -1,5 +1,6 @@
 package proton.android.pass.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -21,6 +22,8 @@ import proton.android.pass.composecomponents.impl.messages.OfflineIndicator
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHost
 import proton.android.pass.composecomponents.impl.messages.PassSnackbarHostState
 import proton.android.pass.composecomponents.impl.messages.rememberPassSnackbarHostState
+import proton.android.pass.featureauth.impl.AuthNavigation
+import proton.android.pass.featureauth.impl.AuthScreen
 import proton.android.pass.featurefeatureflags.impl.FeatureFlagRoute
 import proton.android.pass.navigation.api.rememberAppNavigator
 import proton.android.pass.navigation.api.rememberBottomSheetNavigator
@@ -76,18 +79,32 @@ fun PassAppContent(
                         OfflineIndicator()
                     }
                     PassModalBottomSheetLayout(appNavigator.bottomSheetNavigator) {
-                        PassNavHost(
-                            modifier = Modifier.weight(1f),
-                            appNavigator = appNavigator,
-                            startingRoute = Root.route,
-                            onNavigate = onNavigate,
-                            dismissBottomSheet = { callback ->
-                                coroutineScope.launch {
-                                    bottomSheetState.hide()
-                                    callback()
+                        if (appUiState.needsAuth) {
+                            BackHandler { onNavigate(AppNavigation.Finish) }
+                            AuthScreen(
+                                navigation = {
+                                    when (it) {
+                                        AuthNavigation.Dismissed,
+                                        AuthNavigation.Back -> onNavigate(AppNavigation.Finish)
+                                        AuthNavigation.Success,
+                                        AuthNavigation.Failed -> {}
+                                    }
                                 }
-                            }
-                        )
+                            )
+                        } else {
+                            PassNavHost(
+                                modifier = Modifier.weight(1f),
+                                appNavigator = appNavigator,
+                                startingRoute = Root.route,
+                                onNavigate = onNavigate,
+                                dismissBottomSheet = { callback ->
+                                    coroutineScope.launch {
+                                        bottomSheetState.hide()
+                                        callback()
+                                    }
+                                }
+                            )
+                        }
                     }
                 }
             }

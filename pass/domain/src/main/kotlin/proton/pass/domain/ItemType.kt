@@ -27,6 +27,7 @@ const val ITEM_TYPE_LOGIN = 0
 const val ITEM_TYPE_ALIAS = 1
 const val ITEM_TYPE_NOTE = 2
 const val ITEM_TYPE_PASSWORD = 3
+const val ITEM_TYPE_CREDIT_CARD = 4
 
 @Serializable
 sealed interface CustomField {
@@ -66,6 +67,16 @@ sealed interface ItemType {
     data class Alias(val aliasEmail: String) : ItemType
 
     @Serializable
+    data class CreditCard(
+        val cardHolder: String,
+        val number: EncryptedString,
+        val cvv: EncryptedString,
+        val pin: EncryptedString,
+        val creditCardType: CreditCardType,
+        val expirationDate: String,
+    ) : ItemType
+
+    @Serializable
     object Password : ItemType
 
     @Serializable
@@ -78,6 +89,7 @@ sealed interface ItemType {
         is Note -> ITEM_TYPE_NOTE
         is Password -> ITEM_TYPE_PASSWORD
         is Unknown -> ITEM_TYPE_UNKNOWN
+        is CreditCard -> ITEM_TYPE_CREDIT_CARD
     }
 
     companion object // Needed for being able to define static extension functions

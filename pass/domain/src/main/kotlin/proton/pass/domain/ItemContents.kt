@@ -18,6 +18,7 @@
 
 package proton.pass.domain
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.keystore.EncryptedString
 import proton.pass.domain.entity.PackageInfo
@@ -51,6 +52,14 @@ sealed class HiddenState {
         override val encrypted: EncryptedString,
         val clearText: String
     ) : HiddenState()
+}
+
+@Serializable
+enum class CreditCardType {
+    Other,
+    Visa,
+    MasterCard,
+    AmericanExpress
 }
 
 @Serializable
@@ -97,6 +106,19 @@ sealed class ItemContents {
         override val title: String,
         override val note: String,
         val aliasEmail: String
+    ) : ItemContents()
+
+    @Serializable
+    data class CreditCard(
+        override val title: String,
+        override val note: String,
+        val cardHolder: String,
+        @SerialName("CreditCardType")
+        val type: CreditCardType,
+        val number: String,
+        val cvv: HiddenState,
+        val pin: HiddenState,
+        val expirationDate: String,
     ) : ItemContents()
 
     @Serializable

@@ -49,8 +49,6 @@ import proton.android.pass.featureitemcreate.impl.alias.CreateAliasViewModel
 import proton.android.pass.featureitemcreate.impl.common.CustomFieldIndexTitle
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.notifications.api.SnackbarDispatcher
-import proton.android.pass.preferences.FeatureFlag
-import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.android.pass.totp.api.TotpManager
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.HiddenState
@@ -66,8 +64,7 @@ abstract class BaseLoginViewModel(
     private val draftRepository: DraftRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     observeCurrentUser: ObserveCurrentUser,
-    observeUpgradeInfo: ObserveUpgradeInfo,
-    ffRepo: FeatureFlagsPreferencesRepository,
+    observeUpgradeInfo: ObserveUpgradeInfo
 ) : ViewModel() {
 
     private val hasUserEditedContentFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -171,33 +168,28 @@ abstract class BaseLoginViewModel(
         hasUserEditedContentFlow,
         totpUiStateFlow,
         upgradeInfoFlow.asLoadingResult(),
-        ffRepo.get<Boolean>(FeatureFlag.CUSTOM_FIELDS_ENABLED),
         focusedFieldFlow
     ) { loginItemWrapper, isLoading, events,
         focusLastWebsite, hasUserEditedContent,
-        totpUiState, upgradeInfoResult, customFieldsEnabled, focusedField ->
+        totpUiState, upgradeInfoResult, focusedField ->
 
-        val customFieldsState = if (!customFieldsEnabled) {
-            CustomFieldsState.Disabled
-        } else {
-            val plan = upgradeInfoResult.getOrNull()?.plan
-            when (plan?.planType) {
-                is PlanType.Paid, is PlanType.Trial -> {
+        val plan = upgradeInfoResult.getOrNull()?.plan
+        val customFieldsState = when (plan?.planType) {
+            is PlanType.Paid, is PlanType.Trial -> {
+                CustomFieldsState.Enabled(
+                    customFields = loginItemWrapper.content.customFields,
+                    isLimited = false
+                )
+            }
+
+            else -> {
+                if (loginItemWrapper.content.customFields.isNotEmpty()) {
                     CustomFieldsState.Enabled(
                         customFields = loginItemWrapper.content.customFields,
-                        isLimited = false
+                        isLimited = true
                     )
-                }
-
-                else -> {
-                    if (loginItemWrapper.content.customFields.isNotEmpty()) {
-                        CustomFieldsState.Enabled(
-                            customFields = loginItemWrapper.content.customFields,
-                            isLimited = true
-                        )
-                    } else {
-                        CustomFieldsState.Disabled
-                    }
+                } else {
+                    CustomFieldsState.Disabled
                 }
             }
         }

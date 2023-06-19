@@ -9,7 +9,7 @@ sealed interface AutofillUiState {
     data class StartAutofillUiState(
         val autofillAppState: AutofillAppState,
         val themePreference: Int,
-        val isFingerprintRequiredPreference: Boolean,
+        val needsAuth: Boolean,
         val copyTotpToClipboardPreference: Boolean,
         val selectedAutofillItem: Option<AutofillItem>
     ) : AutofillUiState

@@ -72,6 +72,17 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents =
             note = encryptionContext.decrypt(note)
         )
 
+        is ItemType.CreditCard -> ItemContents.CreditCard(
+            title = encryptionContext.decrypt(title),
+            note = encryptionContext.decrypt(note),
+            type = type.creditCardType,
+            cardHolder = type.cardHolder,
+            number = encryptionContext.decrypt(type.number),
+            cvv = HiddenState.Concealed(type.cvv),
+            pin = HiddenState.Concealed(type.pin),
+            expirationDate = type.expirationDate,
+        )
+
         ItemType.Password,
         ItemType.Unknown -> ItemContents.Unknown(
             title = encryptionContext.decrypt(title),

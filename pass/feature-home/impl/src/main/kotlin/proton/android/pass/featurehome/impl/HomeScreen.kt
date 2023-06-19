@@ -46,15 +46,18 @@ import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonuimodels.api.ItemTypeUiState
 import proton.android.pass.composecomponents.impl.bottomsheet.PassModalBottomSheetLayout
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
+import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.AliasOptions
+import proton.android.pass.featurehome.impl.HomeBottomSheetType.CreditCardOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.LoginOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.NoteOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.TrashItemOptions
 import proton.android.pass.featurehome.impl.HomeBottomSheetType.TrashOptions
 import proton.android.pass.featurehome.impl.HomeNavigation.SortingBottomsheet
 import proton.android.pass.featurehome.impl.bottomsheet.AliasOptionsBottomSheetContents
+import proton.android.pass.featurehome.impl.bottomsheet.CreditCardOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.LoginOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.NoteOptionsBottomSheetContents
 import proton.android.pass.featurehome.impl.bottomsheet.TrashAllBottomSheetContents
@@ -206,6 +209,38 @@ fun HomeScreen(
                         }
                     }
                 )
+                CreditCardOptions -> CreditCardOptionsBottomSheetContents(
+                    itemUiModel = selectedItem!!,
+                    isRecentSearch = homeUiState.searchUiState.isInSuggestionsMode,
+                    onCopyNumber = {
+                        scope.launch { bottomSheetState.hide() }
+                        homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardNumber)
+                    },
+                    onCopyPin = {
+                        scope.launch { bottomSheetState.hide() }
+                        homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardPin)
+                    },
+                    onCopyCvv = {
+                        scope.launch { bottomSheetState.hide() }
+                        homeViewModel.copyToClipboard(it, HomeClipboardType.CreditCardCvv)
+                    },
+                    onEdit = { shareId, itemId ->
+                        scope.launch { bottomSheetState.hide() }
+                        onNavigateEvent(HomeNavigation.EditNote(shareId, itemId))
+                    },
+                    onMoveToTrash = {
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.sendItemToTrash(it)
+                        }
+                    },
+                    onRemoveFromRecentSearch = { shareId, itemId ->
+                        scope.launch {
+                            bottomSheetState.hide()
+                            homeViewModel.onClearRecentSearch(shareId, itemId)
+                        }
+                    }
+                )
 
                 TrashItemOptions -> TrashItemBottomSheetContents(
                     itemUiModel = selectedItem!!,
@@ -231,6 +266,7 @@ fun HomeScreen(
 
                             is ItemContents.Alias -> AliasIcon()
                             is ItemContents.Note -> NoteIcon()
+                            is ItemContents.CreditCard -> CreditCardIcon()
                             is ItemContents.Unknown -> {}
                         }
                     }
@@ -311,6 +347,7 @@ fun HomeScreen(
                                 is ItemContents.Alias -> AliasOptions
                                 is ItemContents.Login -> LoginOptions
                                 is ItemContents.Note -> NoteOptions
+                                is ItemContents.CreditCard -> CreditCardOptions
                                 is ItemContents.Unknown -> LoginOptions
                             }
                         }

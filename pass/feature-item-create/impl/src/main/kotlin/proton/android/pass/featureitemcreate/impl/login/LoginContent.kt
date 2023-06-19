@@ -109,7 +109,7 @@ internal fun LoginContent(
                     selectedShareId ?: return@CreateUpdateTopBar
                     onEvent(LoginContentEvent.Submit(selectedShareId))
                 },
-                onUpgrade = {}
+                onUpgrade = { onNavigate(BaseLoginNavigation.Upgrade) }
             )
         }
     ) { padding ->

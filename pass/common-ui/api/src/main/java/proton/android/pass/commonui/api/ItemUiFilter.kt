@@ -45,6 +45,7 @@ object ItemUiFilter {
             is ItemContents.Alias -> isAliasMatch(contents, query)
             is ItemContents.Login -> isLoginMatch(contents, query)
             is ItemContents.Note -> isNoteMatch(contents, query)
+            is ItemContents.CreditCard -> isCreditCardMatch(contents, query)
             is ItemContents.Unknown -> return false
         }
     }
@@ -63,6 +64,14 @@ object ItemUiFilter {
 
     private fun isNoteMatch(content: ItemContents.Note, query: String): Boolean =
         content.note.lowercase().contains(query)
+
+    private fun isCreditCardMatch(content: ItemContents.CreditCard, query: String): Boolean {
+        if (content.title.lowercase().contains(query)) return true
+        if (content.cardHolder.lowercase().contains(query)) return true
+        if (content.note.lowercase().contains(query)) return true
+
+        return false
+    }
 
     private fun ItemUiModel.matchesQuery(query: String): Boolean =
         isItemMatch(this, query)

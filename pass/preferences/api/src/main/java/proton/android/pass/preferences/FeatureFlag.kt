@@ -5,14 +5,9 @@ enum class FeatureFlag(
     val description: String,
     val key: String? = null
 ) {
-    CUSTOM_FIELDS_ENABLED(
-        "Custom fields",
-        "Enable custom fields",
-        "PassCustomFields"
-    ),
     CREDIT_CARDS_ENABLED(
         "Credit cards",
         "Enable credit cards",
-        "PassCreditCardsV1"
+        // "PassCreditCardsV1" Temporarily deactivated until we allow FF by version or finish the feature
     )
 }

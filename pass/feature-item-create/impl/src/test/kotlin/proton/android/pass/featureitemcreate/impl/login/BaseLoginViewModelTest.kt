@@ -14,7 +14,6 @@ import proton.android.pass.data.fakes.repositories.TestDraftRepository
 import proton.android.pass.data.fakes.usecases.TestObserveCurrentUser
 import proton.android.pass.data.fakes.usecases.TestObserveUpgradeInfo
 import proton.android.pass.notifications.fakes.TestSnackbarDispatcher
-import proton.android.pass.preferences.TestFeatureFlagsPreferenceRepository
 import proton.android.pass.test.MainDispatcherRule
 import proton.android.pass.test.domain.TestUser
 import proton.android.pass.totp.fakes.TestTotpManager
@@ -48,8 +47,7 @@ internal class BaseLoginViewModelTest {
             draftRepository = TestDraftRepository(),
             observeCurrentUser = observeCurrentUser,
             observeUpgradeInfo = TestObserveUpgradeInfo(),
-            encryptionContextProvider = TestEncryptionContextProvider(),
-            ffRepo = TestFeatureFlagsPreferenceRepository()
+            encryptionContextProvider = TestEncryptionContextProvider()
         ) {}
     }
 

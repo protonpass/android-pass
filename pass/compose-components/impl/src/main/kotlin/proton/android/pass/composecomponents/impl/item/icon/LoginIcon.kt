@@ -37,7 +37,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
@@ -46,7 +45,6 @@ import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.ThemePreviewProvider
-import proton.android.pass.composecomponents.impl.R
 import proton.android.pass.composecomponents.impl.container.BoxedIcon
 import proton.android.pass.composecomponents.impl.container.CircleTextIcon
 import proton.pass.domain.ItemContents
@@ -86,7 +84,7 @@ fun LoginIcon(
     ) {
         Icon(
             painter = painterResource(CoreR.drawable.ic_proton_user),
-            contentDescription = stringResource(R.string.login_title_icon_content_description),
+            contentDescription = null,
             tint = PassTheme.colors.loginInteractionNormMajor1
         )
     }

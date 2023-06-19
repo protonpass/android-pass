@@ -61,10 +61,10 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents =
             title = encryptionContext.decrypt(title),
             note = encryptionContext.decrypt(note),
             username = type.username,
-            password = encryptOrEmpty(type.password, encryptionContext),
+            password = concealedOrEmpty(type.password, encryptionContext),
             urls = type.websites,
             packageInfoSet = type.packageInfoSet,
-            primaryTotp = encryptOrEmpty(type.primaryTotp, encryptionContext),
+            primaryTotp = concealedOrEmpty(type.primaryTotp, encryptionContext),
             customFields = type.customFields.mapNotNull { it.toContent(encryptionContext, true) }
         )
 
@@ -79,8 +79,8 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents =
             type = type.creditCardType,
             cardHolder = type.cardHolder,
             number = encryptionContext.decrypt(type.number),
-            cvv = encryptOrEmpty(type.cvv, encryptionContext),
-            pin = encryptOrEmpty(type.pin, encryptionContext),
+            cvv = concealedOrEmpty(type.cvv, encryptionContext),
+            pin = concealedOrEmpty(type.pin, encryptionContext),
             expirationDate = type.expirationDate,
         )
 
@@ -91,7 +91,7 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents =
         )
     }
 
-private fun encryptOrEmpty(value: String, encryptionContext: EncryptionContext): HiddenState {
+private fun concealedOrEmpty(value: String, encryptionContext: EncryptionContext): HiddenState {
     val asByteArray = encryptionContext.decrypt(value.toEncryptedByteArray())
     return if (asByteArray.isEmpty()) {
         HiddenState.Empty(value)

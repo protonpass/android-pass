@@ -45,11 +45,6 @@
     <string name="indicator_no_network">Offline</string>
 
     <!-- Icon content description -->
-    <string name="login_title_icon_content_description">Login icon</string>
-    <string name="alias_title_icon_content_description">Alias icon</string>
-    <string name="note_title_icon_content_description">Note icon</string>
-    <string name="mfa_title_icon_content_description">2fa icon</string>
-    <string name="password_title_icon_content_description">Password icon</string>
     <string name="missing_app_icon_content_description">Missing app icon</string>
     <string name="add_item_icon_content_description">Add item icon</string>
     <string name="navigate_back_icon_content_description">Navigate back icon</string>

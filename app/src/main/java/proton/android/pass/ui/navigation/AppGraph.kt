@@ -257,6 +257,8 @@ fun NavGraphBuilder.appGraph(
                         backDestination = backDestination
                     )
                 }
+
+                is CreateItemBottomsheetNavigation.CreateCreditCard -> {}
             }
         },
     )

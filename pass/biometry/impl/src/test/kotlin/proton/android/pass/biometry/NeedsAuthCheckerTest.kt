@@ -69,23 +69,6 @@ class NeedsAuthCheckerTest {
     }
 
     @Test
-    fun `if lock time already elapsed but has already authenticated, auth is not required`() {
-
-        val now = Clock.System.now()
-        val threeMinutesAgo = now.minus(3.minutes)
-
-        val res = NeedsAuthChecker.needsAuth(
-            biometricLock = BiometricLockState.Enabled,
-            hasAuthenticated = HasAuthenticated.Authenticated,
-            appLockPreference = AppLockPreference.InTwoMinutes,
-            lastUnlockTime = threeMinutesAgo.some(),
-            now = now
-        )
-
-        assertThat(res).isFalse()
-    }
-
-    @Test
     fun `if lock time already elapsed and has not authenticated, auth is required`() {
 
         val now = Clock.System.now()

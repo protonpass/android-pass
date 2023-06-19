@@ -35,11 +35,11 @@ fun AutofillAppContent(
     modifier: Modifier = Modifier,
     autofillAppState: AutofillAppState,
     selectedAutofillItem: AutofillItem?,
-    isFingerprintRequired: Boolean,
+    needsAuth: Boolean,
     onNavigate: (AutofillNavigation) -> Unit
 ) {
     val startDestination = remember {
-        if (isFingerprintRequired) {
+        if (needsAuth) {
             Auth.route
         } else {
             SelectItem.route

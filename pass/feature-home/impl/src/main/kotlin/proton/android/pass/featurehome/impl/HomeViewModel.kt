@@ -417,7 +417,12 @@ class HomeViewModel @Inject constructor(
                         // Check if SyncStatus says there should be items
                         // If the user has changed vaults, we don't want to check this flag, because
                         // even if the Sync says there are items, there may be none for this vault
-                        if (syncStatus.hasItems && !hasChangedVault) {
+                        if (searchUiState.inSearchMode) {
+                            when (searchUiState.isProcessingSearch) {
+                                IsProcessingSearchState.NotLoading -> syncLoading
+                                IsProcessingSearchState.Loading -> IsLoadingState.Loading
+                            }
+                        } else if (syncStatus.hasItems && !hasChangedVault) {
                             IsLoadingState.Loading
                         } else {
                             syncLoading

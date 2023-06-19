@@ -47,6 +47,11 @@ class AutoSaveActivity : FragmentActivity() {
         }
     }
 
+    override fun onStop() {
+        viewModel.onStop()
+        super.onStop()
+    }
+
     private fun getArguments(): AutoSaveArguments? =
         intent?.extras?.let {
             AutoSaveArguments(

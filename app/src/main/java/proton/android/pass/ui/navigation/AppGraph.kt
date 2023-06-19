@@ -152,6 +152,7 @@ fun NavGraphBuilder.appGraph(
                             GeneratePasswordBottomsheet to GeneratePasswordBottomsheet.buildRoute(
                                 mode = GeneratePasswordBottomsheetModeValue.CopyAndClose
                             )
+                        ItemTypeUiState.CreditCard -> throw NotImplementedError()
                     }
 
                     appNavigator.navigate(destination, route)
@@ -567,6 +568,7 @@ fun NavGraphBuilder.appGraph(
                         is ItemContents.Login -> EditLogin
                         is ItemContents.Note -> EditNote
                         is ItemContents.Alias -> EditAlias
+                        is ItemContents.CreditCard -> null
                         is ItemContents.Unknown -> null
                     }
                     val route = when (it.itemUiModel.contents) {
@@ -584,6 +586,8 @@ fun NavGraphBuilder.appGraph(
                             it.itemUiModel.shareId,
                             it.itemUiModel.id
                         )
+
+                        is ItemContents.CreditCard -> null
 
                         is ItemContents.Unknown -> null
                     }

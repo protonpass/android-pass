@@ -25,19 +25,10 @@ object NeedsAuthChecker {
             return false
         }
 
-        when (appLockPreference) {
-            AppLockPreference.Immediately -> {
-                val needsAuth = hasAuthenticated is HasAuthenticated.NotAuthenticated
-                PassLogger.d(TAG, "AppLockPreference.Immediately. NeedsAuth=$needsAuth")
-                return needsAuth
-            }
-
-            else -> {}
-        }
-
-        if (hasAuthenticated is HasAuthenticated.Authenticated) {
-            PassLogger.d(TAG, "HasAuthenticated.Authenticated, no need to auth checking time")
-            return false
+        if (appLockPreference == AppLockPreference.Immediately) {
+            val needsAuth = hasAuthenticated is HasAuthenticated.NotAuthenticated
+            PassLogger.d(TAG, "AppLockPreference.Immediately. NeedsAuth=$needsAuth")
+            return needsAuth
         }
 
         PassLogger.d(TAG, "Checking unlock time")

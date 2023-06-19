@@ -2,58 +2,22 @@
 
 This repository contains the source code for the Proton Pass Android application.
 
+![[Get it on Google Play](https://play.google.com/store/apps/details?id=proton.android.pass)](https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png)
+
 ## How to build
 
-After cloning this repo, make sure that you have the required submodules:
+If you want to build the app locally, please refer to the [BUILD.md](./docs/public/BUILD.md) file.
 
-```
-$ git submodule update --init
-```
+## Develop
 
-Also make sure you have installed [git-lfs](https://git-lfs.github.com/) to be able to run screenshot tests.
+If you want to contribute to the application, please refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
-If you want to build the APK via command line, run the following command:
+## Help us translate
 
-```
-$ ./gradlew :app:assembleDevDebug
-```
+If you want to help us translating the application, you can learn more about it on [our blog post](https://proton.me/blog/translation-community).
 
-The APK will be in `app/build/outputs/apk/dev/debug/`.
+## License
 
-## How to record new screenshots with Paparazzi
+The code and data files in this distribution are licensed under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. See <https://www.gnu.org/licenses/> for a copy of this license.
 
-To be able to record new images for screenshot testing you will need to run the following task:
-
-```
-$ ./gradlew :pass:screenshot-tests:recordPaparazziDevDebug
-```
-
-## How to create modules
-
-To ease modularization we have a task that will create modules for us, we can run it with the following command:
-
-```
-$ ./gradlew genModule --module=:pass:my-new-module --conf=api,impl,fakes
-```
-
-Where as a module we specify the path of the module and as configuration we pass which submodules should contain. `api` for the exposed contract, `impl` for the actual implementation and `fakes` for the exposed fake implementations for tests.
-
-## How to generate compose skippable/restartable reports
-
-Run this command in the project's root:
-
-```
-$ ./gradlew assembleDevRelease -PenableMultiModuleComposeReports=true --rerun-tasks
-```
-
-If you see an error saying `Execution failed for task ':app:uploadSentryProguardMappingsDevRelease'.`, don't worry about it.
-
-The outputs will be written in `build/compose_metrics`. If you want to have a easier time inspecting them, you can make use of a tool like [Mendable](https://github.com/jayasuryat/mendable).
-
-## How to run instrumentation tests
-
-Run this command to run instrumentation tests in a headless emulator
-
-```
-$ ./gradlew pixel2api30DebugAndroidTest
-```
+See [LICENSE](LICENSE) file

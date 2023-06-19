@@ -151,4 +151,16 @@ object PassPalette {
     val CrimsonRed = Color(0xFF7E1013)
     val BubbleGum = Color(0xFFFDB0B2)
     val CottonCandy = Color(0xFFFFD9D9)
+
+    val MidnightBlue = Color(0xFF273035)
+    val DeepJungleGreen = Color(0xFF364843)
+    val MintLeaf = Color(0xFF79B585)
+    val LightPastelGreen = Color(0xFF91DC9C)
+    val PaleGreen = Color(0xFFABE4B4)
+
+    val FrostedMint = Color(0xFFEAF5E1)
+    val PaleLime = Color(0xFFDCF2CA)
+    val ForestGreen = Color(0xFF51940D)
+    val LimeGreen = Color(0xFF66C146)
+    val DarkGreen = Color(0xFF317806)
 }

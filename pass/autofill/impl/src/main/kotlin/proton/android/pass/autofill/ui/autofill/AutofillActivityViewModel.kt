@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import proton.android.pass.account.api.AccountOrchestrators
 import proton.android.pass.account.api.Orchestrator
 import proton.android.pass.autofill.entities.AndroidAutofillFieldId
@@ -36,6 +37,7 @@ import proton.android.pass.biometry.NeedsBiometricAuth
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.PackageInfoUi
+import proton.android.pass.preferences.HasAuthenticated
 import proton.android.pass.preferences.ThemePreference
 import proton.android.pass.preferences.UserPreferencesRepository
 import proton.android.pass.preferences.value
@@ -44,8 +46,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AutofillActivityViewModel @Inject constructor(
     private val accountOrchestrators: AccountOrchestrators,
+    private val preferenceRepository: UserPreferencesRepository,
     needsBiometricAuth: NeedsBiometricAuth,
-    preferenceRepository: UserPreferencesRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -100,12 +102,12 @@ class AutofillActivityViewModel @Inject constructor(
         autofillAppState,
         selectedAutofillItemState,
         copyTotpToClipboardPreferenceState
-    ) { themePreference, biometricLock, autofillAppState, selectedAutofillItem, copyTotpToClipboard ->
+    ) { themePreference, needsAuth, autofillAppState, selectedAutofillItem, copyTotpToClipboard ->
         when {
             autofillAppState.isValid() -> NotValidAutofillUiState
             else -> StartAutofillUiState(
                 themePreference = themePreference.value(),
-                isFingerprintRequiredPreference = biometricLock,
+                needsAuth = needsAuth,
                 autofillAppState = autofillAppState,
                 copyTotpToClipboardPreference = copyTotpToClipboard.value(),
                 selectedAutofillItem = selectedAutofillItem
@@ -122,8 +124,13 @@ class AutofillActivityViewModel @Inject constructor(
         accountOrchestrators.register(context, listOf(Orchestrator.PlansOrchestrator))
     }
 
-
     fun upgrade() = viewModelScope.launch {
         accountOrchestrators.start(Orchestrator.PlansOrchestrator)
+    }
+
+    fun onStop() = viewModelScope.launch {
+        runBlocking {
+            preferenceRepository.setHasAuthenticated(HasAuthenticated.NotAuthenticated)
+        }
     }
 }

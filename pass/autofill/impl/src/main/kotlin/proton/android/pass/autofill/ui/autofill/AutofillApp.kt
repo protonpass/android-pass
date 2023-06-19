@@ -58,7 +58,7 @@ fun AutofillApp(
                     modifier = Modifier.padding(padding),
                     autofillAppState = autofillUiState.autofillAppState,
                     selectedAutofillItem = autofillUiState.selectedAutofillItem.value(),
-                    isFingerprintRequired = autofillUiState.isFingerprintRequiredPreference,
+                    needsAuth = autofillUiState.needsAuth,
                     onNavigate = {
                         snackBarViewModel.onSnackbarMessageDelivered()
                         onNavigate(it)

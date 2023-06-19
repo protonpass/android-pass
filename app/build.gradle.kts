@@ -39,7 +39,7 @@ val privateProperties = Properties().apply {
 
 val sentryDSN: String? = privateProperties.getProperty("SENTRY_DSN")
 val proxyToken: String? = privateProperties.getProperty("PROXY_TOKEN")
-val testEnvUrl = System.getenv("TEST_ENV_URL") ?: "api.proton.black"
+val testEnvUrl = System.getenv("TEST_ENV_URL") ?: "api.galilei.proton.black"
 
 val jobId: Int = System.getenv("CI_JOB_ID")?.take(3)?.toInt() ?: 0
 val appVersionName: String = "1.4.4"

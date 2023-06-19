@@ -60,10 +60,10 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents =
             title = encryptionContext.decrypt(title),
             note = encryptionContext.decrypt(note),
             username = type.username,
-            password = HiddenState.Concealed(type.password),
+            password = encryptOrEmpty(type.password, encryptionContext),
             urls = type.websites,
             packageInfoSet = type.packageInfoSet,
-            primaryTotp = HiddenState.Concealed(type.primaryTotp),
+            primaryTotp = encryptOrEmpty(type.primaryTotp, encryptionContext),
             customFields = type.customFields.mapNotNull { it.toContent(encryptionContext, true) }
         )
 
@@ -78,8 +78,8 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents =
             type = type.creditCardType,
             cardHolder = type.cardHolder,
             number = encryptionContext.decrypt(type.number),
-            cvv = HiddenState.Concealed(type.cvv),
-            pin = HiddenState.Concealed(type.pin),
+            cvv = encryptOrEmpty(type.cvv, encryptionContext),
+            pin = encryptOrEmpty(type.pin, encryptionContext),
             expirationDate = type.expirationDate,
         )
 
@@ -88,4 +88,11 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents =
             title = encryptionContext.decrypt(title),
             note = encryptionContext.decrypt(note)
         )
+    }
+
+private fun encryptOrEmpty(value: String, encryptionContext: EncryptionContext): HiddenState =
+    if (value.isBlank()) {
+        HiddenState.Empty(encryptionContext.encrypt(value))
+    } else {
+        HiddenState.Concealed(encryptionContext.encrypt(value))
     }

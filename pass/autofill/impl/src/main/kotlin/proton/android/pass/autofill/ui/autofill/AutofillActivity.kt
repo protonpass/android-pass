@@ -53,6 +53,11 @@ class AutofillActivity : FragmentActivity() {
         }
     }
 
+    override fun onStop() {
+        viewModel.onStop()
+        super.onStop()
+    }
+
     private fun onStateReceived(autofillUiState: AutofillUiState) {
         when (autofillUiState) {
             AutofillUiState.NotValidAutofillUiState -> onAutofillCancel()

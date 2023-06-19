@@ -50,7 +50,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InlineSuggestionsActivityViewModel @Inject constructor(
-    private val preferenceRepository: UserPreferencesRepository,
+    preferenceRepository: UserPreferencesRepository,
     private val encryptionContextProvider: EncryptionContextProvider,
     private val clipboardManager: ClipboardManager,
     private val getTotpCodeFromUri: GetTotpCodeFromUri,

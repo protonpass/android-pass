@@ -44,6 +44,12 @@ data class PassColors(
     val aliasInteractionNormMinor1: Color,
     val aliasInteractionNormMinor2: Color,
 
+    val cardInteractionNormMajor1: Color,
+    val cardInteractionNormMajor2: Color,
+    val cardInteractionNorm: Color,
+    val cardInteractionNormMinor1: Color,
+    val cardInteractionNormMinor2: Color,
+
     val noteInteractionNormMajor1: Color,
     val noteInteractionNormMajor2: Color,
     val noteInteractionNorm: Color,
@@ -126,6 +132,12 @@ data class PassColors(
             noteInteractionNormMinor1 = PassPalette.MauveWine,
             noteInteractionNormMinor2 = PassPalette.ShadowInk,
 
+            cardInteractionNormMajor1 = PassPalette.LightPastelGreen,
+            cardInteractionNormMajor2 = PassPalette.PaleGreen,
+            cardInteractionNorm = PassPalette.MintLeaf,
+            cardInteractionNormMinor1 = PassPalette.DeepJungleGreen,
+            cardInteractionNormMinor2 = PassPalette.MidnightBlue,
+
             passwordInteractionNormMajor1 = PassPalette.CoralCandy,
             passwordInteractionNormMajor2 = PassPalette.BubbleGum,
             passwordInteractionNorm = PassPalette.BlossomPink,
@@ -200,6 +212,12 @@ data class PassColors(
             noteInteractionNormMinor1 = PassPalette.Flesh,
             noteInteractionNormMinor2 = PassPalette.OldLace,
 
+            cardInteractionNormMajor1 = PassPalette.DarkGreen,
+            cardInteractionNormMajor2 = PassPalette.LimeGreen,
+            cardInteractionNorm = PassPalette.ForestGreen,
+            cardInteractionNormMinor1 = PassPalette.PaleLime,
+            cardInteractionNormMinor2 = PassPalette.FrostedMint,
+
             passwordInteractionNormMajor1 = PassPalette.Tulip,
             passwordInteractionNormMajor2 = PassPalette.CrimsonRed,
             passwordInteractionNorm = PassPalette.LightSalmonPink,
@@ -273,6 +291,11 @@ val LocalPassColors = staticCompositionLocalOf {
         noteInteractionNorm = Color.Unspecified,
         noteInteractionNormMinor1 = Color.Unspecified,
         noteInteractionNormMinor2 = Color.Unspecified,
+        cardInteractionNormMajor1 = Color.Unspecified,
+        cardInteractionNormMajor2 = Color.Unspecified,
+        cardInteractionNorm = Color.Unspecified,
+        cardInteractionNormMinor1 = Color.Unspecified,
+        cardInteractionNormMinor2 = Color.Unspecified,
         passwordInteractionNormMajor1 = Color.Unspecified,
         passwordInteractionNormMajor2 = Color.Unspecified,
         passwordInteractionNorm = Color.Unspecified,

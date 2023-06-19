@@ -45,6 +45,7 @@ import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemLis
 import proton.android.pass.composecomponents.impl.bottomsheet.BottomSheetItemTitle
 import proton.android.pass.composecomponents.impl.bottomsheet.withDividers
 import proton.android.pass.composecomponents.impl.item.icon.AliasIcon
+import proton.android.pass.composecomponents.impl.item.icon.CreditCardIcon
 import proton.android.pass.composecomponents.impl.item.icon.LoginIcon
 import proton.android.pass.composecomponents.impl.item.icon.NoteIcon
 import proton.android.pass.composecomponents.impl.item.icon.PasswordIcon
@@ -70,15 +71,26 @@ fun CreateItemBottomSheetContents(
 ) {
 
     val items = when (mode) {
-        CreateItemBottomSheetMode.Full -> listOf(
-            createLogin(state.shareId) { onNavigate(CreateLogin(it)) },
-            createAlias(
-                state.shareId,
-                state.createItemAliasUIState
-            ) { onNavigate(CreateAlias(it)) },
-            createNote(state.shareId) { onNavigate(CreateNote(it)) },
-            createPassword { onNavigate(CreatePassword) }
-        )
+        CreateItemBottomSheetMode.Full -> {
+            val list = mutableListOf<BottomSheetItem>()
+            list.add(createLogin(state.shareId) { onNavigate(CreateLogin(it)) })
+            list.add(
+                createAlias(
+                    state.shareId,
+                    state.createItemAliasUIState
+                ) { onNavigate(CreateAlias(it)) }
+            )
+            if (state.isCreditCardEnabled) {
+                list.add(
+                    createCreditCard(state.shareId) {
+                        onNavigate(CreateItemBottomsheetNavigation.CreateCreditCard(it))
+                    }
+                )
+            }
+            list.add(createNote(state.shareId) { onNavigate(CreateNote(it)) })
+            list.add(createPassword { onNavigate(CreatePassword) })
+            list
+        }
 
         CreateItemBottomSheetMode.Autofill -> listOf(
             createLogin(state.shareId) { onNavigate(CreateLogin(it)) },
@@ -161,6 +173,30 @@ private fun createAlias(
             get() = null
         override val onClick: () -> Unit
             get() = { onCreateAlias(shareId.toOption()) }
+        override val isDivider = false
+    }
+
+private fun createCreditCard(
+    shareId: ShareId?,
+    onCreateCreditCard: (Option<ShareId>) -> Unit
+): BottomSheetItem =
+    object : BottomSheetItem {
+        override val title: @Composable () -> Unit
+            get() = { BottomSheetItemTitle(text = stringResource(id = R.string.action_credit_card)) }
+        override val subtitle: (@Composable () -> Unit)
+            get() = {
+                Text(
+                    text = stringResource(R.string.item_type_credit_card_description),
+                    style = ProtonTheme.typography.defaultSmallNorm,
+                    color = ProtonTheme.colors.textWeak
+                )
+            }
+        override val leftIcon: (@Composable () -> Unit)
+            get() = { CreditCardIcon() }
+        override val endIcon: (@Composable () -> Unit)?
+            get() = null
+        override val onClick: () -> Unit
+            get() = { onCreateCreditCard(shareId.toOption()) }
         override val isDivider = false
     }
 

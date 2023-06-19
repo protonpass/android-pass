@@ -19,6 +19,7 @@
 package proton.android.pass.datamodels.api
 
 import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.pass.domain.CreditCardType
 import proton.pass.domain.CustomField
 import proton.pass.domain.ItemType
 import proton.pass.domain.entity.AppName
@@ -49,6 +50,17 @@ fun ItemType.Companion.fromParsed(
             requireNotNull(aliasEmail)
             ItemType.Alias(aliasEmail = aliasEmail)
         }
+        ItemV1.Content.ContentCase.CREDIT_CARD -> {
+            val content = parsed.content.creditCard
+            ItemType.CreditCard(
+                cardHolder = content.cardholderName,
+                number = context.encrypt(content.number),
+                cvv = context.encrypt(content.cvv),
+                pin = context.encrypt(content.pin),
+                creditCardType = content.cardType.toDomain(),
+                expirationDate = content.expirationDate
+            )
+        }
         else -> ItemType.Unknown
 
     }
@@ -70,4 +82,14 @@ fun ItemV1.ExtraField.toDomain(context: EncryptionContext): CustomField {
         )
         else -> CustomField.Unknown
     }
+}
+
+fun ItemV1.CardType.toDomain(): CreditCardType = when (this) {
+    ItemV1.CardType.Visa -> CreditCardType.Visa
+    ItemV1.CardType.Mastercard -> CreditCardType.MasterCard
+    ItemV1.CardType.AmericanExpress -> CreditCardType.AmericanExpress
+
+    ItemV1.CardType.Other,
+    ItemV1.CardType.Unspecified,
+    ItemV1.CardType.UNRECOGNIZED -> CreditCardType.Other
 }

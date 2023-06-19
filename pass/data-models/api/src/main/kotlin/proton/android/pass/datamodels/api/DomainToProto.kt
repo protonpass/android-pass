@@ -19,6 +19,7 @@
 package proton.android.pass.datamodels.api
 
 import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.pass.domain.CreditCardType
 import proton.pass.domain.CustomFieldContent
 import proton.pass.domain.ItemContents
 import proton_pass_item_v1.ItemV1
@@ -113,6 +114,22 @@ fun ItemContents.serializeToProto(
         is ItemContents.Alias -> contentBuilder.setAlias(
             ItemV1.ItemAlias.newBuilder().build()
         )
+
+        is ItemContents.CreditCard -> {
+            val itemBuilder = ItemV1.ItemCreditCard.newBuilder()
+            itemBuilder.cardholderName = cardHolder
+            itemBuilder.number = number
+            itemBuilder.cardType = when (type) {
+                CreditCardType.Other -> ItemV1.CardType.Other
+                CreditCardType.Visa -> ItemV1.CardType.Visa
+                CreditCardType.MasterCard -> ItemV1.CardType.Mastercard
+                CreditCardType.AmericanExpress -> ItemV1.CardType.AmericanExpress
+            }
+            itemBuilder.cvv = encryptionContext.decrypt(cvv.encrypted)
+            itemBuilder.pin = encryptionContext.decrypt(pin.encrypted)
+            itemBuilder.expirationDate = expirationDate
+            contentBuilder.setCreditCard(itemBuilder.build())
+        }
 
         is ItemContents.Unknown -> throw IllegalStateException("Cannot be unknown")
     }.build()

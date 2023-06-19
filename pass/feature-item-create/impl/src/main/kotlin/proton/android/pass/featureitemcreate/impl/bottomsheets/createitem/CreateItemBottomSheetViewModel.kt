@@ -24,35 +24,42 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.data.api.usecases.ObserveUpgradeInfo
 import proton.android.pass.navigation.api.CommonOptionalNavArgId
+import proton.android.pass.preferences.FeatureFlag
+import proton.android.pass.preferences.FeatureFlagsPreferencesRepository
 import proton.pass.domain.ShareId
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateItemBottomSheetViewModel @Inject constructor(
     observeUpgradeInfo: ObserveUpgradeInfo,
+    featureFlagsPreferencesRepository: FeatureFlagsPreferencesRepository,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val navShareId: Option<ShareId> = savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)
-        .toOption()
-        .map { ShareId(it) }
+    private val navShareId: Option<ShareId> =
+        savedStateHandle.get<String>(CommonOptionalNavArgId.ShareId.key)
+            .toOption()
+            .map { ShareId(it) }
 
-    val state: StateFlow<CreateItemBottomSheetUIState> = observeUpgradeInfo()
-        .map { upgradeInfo ->
-            CreateItemBottomSheetUIState(
-                shareId = navShareId.value(),
-                createItemAliasUIState = CreateItemAliasUIState(
-                    canUpgrade = upgradeInfo.isUpgradeAvailable,
-                    aliasCount = upgradeInfo.totalAlias,
-                    aliasLimit = upgradeInfo.plan.aliasLimit.limitOrNull() ?: 0
-                )
-            )
-        }
+    val state: StateFlow<CreateItemBottomSheetUIState> = combine(
+        observeUpgradeInfo(),
+        featureFlagsPreferencesRepository.get<Boolean>(FeatureFlag.CREDIT_CARDS_ENABLED)
+    ) { upgradeInfo, isCreditCardEnabled ->
+        CreateItemBottomSheetUIState(
+            shareId = navShareId.value(),
+            createItemAliasUIState = CreateItemAliasUIState(
+                canUpgrade = upgradeInfo.isUpgradeAvailable,
+                aliasCount = upgradeInfo.totalAlias,
+                aliasLimit = upgradeInfo.plan.aliasLimit.limitOrNull() ?: 0
+            ),
+            isCreditCardEnabled = isCreditCardEnabled
+        )
+    }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
@@ -61,15 +68,16 @@ class CreateItemBottomSheetViewModel @Inject constructor(
 
 }
 
-
 data class CreateItemBottomSheetUIState(
     val shareId: ShareId?,
-    val createItemAliasUIState: CreateItemAliasUIState
+    val createItemAliasUIState: CreateItemAliasUIState,
+    val isCreditCardEnabled: Boolean
 ) {
     companion object {
         val DEFAULT = CreateItemBottomSheetUIState(
             shareId = null,
-            createItemAliasUIState = CreateItemAliasUIState.DEFAULT
+            createItemAliasUIState = CreateItemAliasUIState.DEFAULT,
+            isCreditCardEnabled = false
         )
     }
 }

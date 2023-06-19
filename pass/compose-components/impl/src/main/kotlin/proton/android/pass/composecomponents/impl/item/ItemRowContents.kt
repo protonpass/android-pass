@@ -54,6 +54,13 @@ internal fun ItemRowContents(
             vaultIcon = vaultIcon
         )
 
+        is ItemContents.CreditCard -> CreditCardRow(
+            modifier = modifier,
+            item = item,
+            highlight = highlight,
+            vaultIcon = vaultIcon,
+        )
+
         is ItemContents.Unknown -> {
         }
     }

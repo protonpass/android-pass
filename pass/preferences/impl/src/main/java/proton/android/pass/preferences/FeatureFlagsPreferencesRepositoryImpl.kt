@@ -15,7 +15,6 @@ import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureId
 import proton.android.pass.log.api.PassLogger
 import proton.android.pass.preferences.FeatureFlag.CREDIT_CARDS_ENABLED
-import proton.android.pass.preferences.FeatureFlag.CUSTOM_FIELDS_ENABLED
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -30,17 +29,13 @@ class FeatureFlagsPreferencesRepositoryImpl @Inject constructor(
 
     override fun <T> get(featureFlag: FeatureFlag): Flow<T> =
         when (featureFlag) {
-            CUSTOM_FIELDS_ENABLED -> getFeatureFlag(featureFlag.key) { customFieldsEnabled.value }
             CREDIT_CARDS_ENABLED -> getFeatureFlag(featureFlag.key) { creditCardsEnabled.value }
         }
 
     override fun <T> set(featureFlag: FeatureFlag, value: T?): Result<Unit> =
         when (featureFlag) {
-            CUSTOM_FIELDS_ENABLED -> setFeatureFlag {
-                setCustomFieldsEnabled(boolFlagPrefProto(value))
-            }
             CREDIT_CARDS_ENABLED -> setFeatureFlag {
-                setCreditCardsEnabled(boolFlagPrefProto(value))
+                creditCardsEnabled = boolFlagPrefProto(value)
             }
         }
 

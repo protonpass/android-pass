@@ -510,6 +510,7 @@ class HomeViewModel @Inject constructor(
                     is ItemContents.Alias -> snackbarDispatcher(AliasMovedToTrash)
                     is ItemContents.Login -> snackbarDispatcher(LoginMovedToTrash)
                     is ItemContents.Note -> snackbarDispatcher(NoteMovedToTrash)
+                    is ItemContents.CreditCard -> snackbarDispatcher(HomeSnackbarMessage.CreditCardMovedToTrash)
                     is ItemContents.Unknown -> {}
                 }
             }
@@ -544,6 +545,30 @@ class HomeViewModel @Inject constructor(
                 HomeClipboardType.Username -> {
                     clipboardManager.copyToClipboard(text = text)
                     snackbarDispatcher(HomeSnackbarMessage.UsernameCopied)
+                }
+
+                HomeClipboardType.CreditCardNumber -> {
+                    clipboardManager.copyToClipboard(
+                        text = text,
+                        isSecure = true
+                    )
+                    snackbarDispatcher(HomeSnackbarMessage.CreditCardNumberCopied)
+                }
+
+                HomeClipboardType.CreditCardPin -> {
+                    clipboardManager.copyToClipboard(
+                        text = encryptionContextProvider.withEncryptionContext { decrypt(text) },
+                        isSecure = true
+                    )
+                    snackbarDispatcher(HomeSnackbarMessage.CreditCardPinCopied)
+                }
+
+                HomeClipboardType.CreditCardCvv -> {
+                    clipboardManager.copyToClipboard(
+                        text = encryptionContextProvider.withEncryptionContext { decrypt(text) },
+                        isSecure = true
+                    )
+                    snackbarDispatcher(HomeSnackbarMessage.CreditCardCvvCopied)
                 }
             }
         }

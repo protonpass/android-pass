@@ -82,6 +82,7 @@ class ItemDetailViewModel @Inject constructor(
                     is ItemType.Note -> ItemTypeUiState.Note
                     is ItemType.Alias -> ItemTypeUiState.Alias
                     ItemType.Password -> ItemTypeUiState.Password
+                    is ItemType.CreditCard -> ItemTypeUiState.CreditCard
                     ItemType.Unknown -> ItemTypeUiState.Unknown
                 },
                 moreInfoUiState = getMoreInfoUiState(result.data),
@@ -101,6 +102,7 @@ class ItemDetailViewModel @Inject constructor(
             ItemTypeUiState.Note -> EventItemType.Note
             ItemTypeUiState.Alias -> EventItemType.Alias
             ItemTypeUiState.Password -> EventItemType.Password
+            ItemTypeUiState.CreditCard -> EventItemType.CreditCard
             ItemTypeUiState.Unknown -> null
         }
         eventItemType?.let {

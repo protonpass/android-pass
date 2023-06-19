@@ -22,6 +22,7 @@ enum class HomeBottomSheetType {
     LoginOptions,
     AliasOptions,
     NoteOptions,
+    CreditCardOptions,
     TrashItemOptions,
     TrashOptions
 }

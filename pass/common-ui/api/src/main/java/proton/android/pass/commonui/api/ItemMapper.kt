@@ -23,6 +23,7 @@ import proton.android.pass.common.api.Option
 import proton.android.pass.common.api.toOption
 import proton.android.pass.commonuimodels.api.ItemUiModel
 import proton.android.pass.crypto.api.context.EncryptionContext
+import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.datamodels.api.toContent
 import proton.pass.domain.HiddenState
 import proton.pass.domain.Item
@@ -90,9 +91,11 @@ fun Item.toItemContents(encryptionContext: EncryptionContext): ItemContents =
         )
     }
 
-private fun encryptOrEmpty(value: String, encryptionContext: EncryptionContext): HiddenState =
-    if (value.isBlank()) {
-        HiddenState.Empty(encryptionContext.encrypt(value))
+private fun encryptOrEmpty(value: String, encryptionContext: EncryptionContext): HiddenState {
+    val asByteArray = encryptionContext.decrypt(value.toEncryptedByteArray())
+    return if (asByteArray.isEmpty()) {
+        HiddenState.Empty(value)
     } else {
-        HiddenState.Concealed(encryptionContext.encrypt(value))
+        HiddenState.Concealed(value)
     }
+}

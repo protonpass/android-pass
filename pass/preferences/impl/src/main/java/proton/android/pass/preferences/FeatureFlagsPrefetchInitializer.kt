@@ -46,7 +46,8 @@ class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
             )
         val featureFlagManager: FeatureFlagManager = entryPoint.featureFlagManager()
         val accountManager: AccountManager = entryPoint.accountManager()
-        val passAppLifecycleProvider: PassAppLifecycleProvider = entryPoint.passAppLifecycleProvider()
+        val passAppLifecycleProvider: PassAppLifecycleProvider =
+            entryPoint.passAppLifecycleProvider()
 
         accountManager.onAccountState(AccountState.Ready, initialState = true)
             .flowWithLifecycle(passAppLifecycleProvider.lifecycle, Lifecycle.State.CREATED)
@@ -55,7 +56,9 @@ class FeatureFlagsPrefetchInitializer : Initializer<Unit> {
                     .mapNotNull { it.key }
                     .map { FeatureId(it) }
                     .toSet()
-                featureFlagManager.prefetch(account.userId, featureFlags)
+                if (featureFlags.isNotEmpty()) {
+                    featureFlagManager.prefetch(account.userId, featureFlags)
+                }
             }
             .launchIn(passAppLifecycleProvider.lifecycle.coroutineScope)
     }

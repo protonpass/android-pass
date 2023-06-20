@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import me.proton.core.compose.theme.ProtonTheme
 import proton.android.pass.commonui.api.PassTheme
 import proton.android.pass.commonui.api.toPasswordAnnotatedString
@@ -44,19 +45,19 @@ internal fun LoginPasswordRow(
     onCopyPasswordClick: () -> Unit
 ) {
     val (sectionContent, isContentVisible) = when (passwordHiddenState) {
-        is HiddenState.Concealed -> "•".repeat(CHAR_AMOUNT) to false
-        is HiddenState.Revealed -> passwordHiddenState.clearText to true
-        is HiddenState.Empty -> "" to false
+        is HiddenState.Concealed -> AnnotatedString("•".repeat(CHAR_AMOUNT)) to false
+        is HiddenState.Revealed -> passwordHiddenState.clearText.toPasswordAnnotatedString(
+            digitColor = ProtonTheme.colors.notificationError,
+            symbolColor = ProtonTheme.colors.notificationSuccess,
+            letterColor = ProtonTheme.colors.textNorm
+        ) to true
+        is HiddenState.Empty -> AnnotatedString("") to false
     }
 
     HiddenContentRow(
         modifier = modifier,
         isContentVisible = isContentVisible,
-        sectionContent = sectionContent.toPasswordAnnotatedString(
-            digitColor = ProtonTheme.colors.notificationError,
-            symbolColor = ProtonTheme.colors.notificationSuccess,
-            letterColor = ProtonTheme.colors.textNorm
-        ),
+        sectionContent = sectionContent,
         label = label,
         icon = {
             Icon(

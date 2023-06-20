@@ -33,6 +33,13 @@ enum class DetailSnackbarMessages(
     PasswordCopiedToClipboard(R.string.password_copied_to_clipboard, SnackbarType.NORM, true),
     WebsiteCopiedToClipboard(R.string.website_copied_to_clipboard, SnackbarType.NORM, true),
     TotpCopiedToClipboard(R.string.totp_copied_to_clipboard, SnackbarType.NORM, true),
+    CardHolderCopiedToClipboard(R.string.credit_card_cardholder_copied_to_clipboard, SnackbarType.NORM, true),
+    CardNumberCopiedToClipboard(R.string.credit_card_number_copied_to_clipboard, SnackbarType.NORM, true),
+    CardVerificationNumberCopiedToClipboard(
+        id = R.string.credit_card_verifcation_number_copied_to_clipboard,
+        type = SnackbarType.NORM,
+        isClipboard = true
+    ),
     FieldCopiedToClipboard(R.string.field_copied_to_clipboard, SnackbarType.NORM, true),
     ItemMovedToTrash(R.string.move_item_to_trash_message, SnackbarType.NORM),
     ItemNotMovedToTrash(R.string.error_move_item_to_trash_message, SnackbarType.ERROR),

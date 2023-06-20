@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.update
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState
 import proton.android.pass.composecomponents.impl.uievents.IsLoadingState.NotLoading
 import proton.android.pass.crypto.api.context.EncryptionContextProvider
+import proton.android.pass.crypto.api.toEncryptedByteArray
 import proton.android.pass.featureitemcreate.impl.ItemSavedState
 import proton.pass.domain.HiddenState
 import proton.pass.domain.ItemContents
@@ -76,22 +77,29 @@ abstract class BaseCreditCardViewModel(
     }
 
     fun onNumberChanged(value: String) {
+        val sanitisedValue = value.replace(nonDigitRegex, "").take(19)
         onUserEditedContent()
-        itemContentState.update { itemContentState.value.copy(number = value) }
+        itemContentState.update { itemContentState.value.copy(number = sanitisedValue) }
     }
 
     fun onCVVChanged(value: String) {
+        val sanitisedValue = value.replace(nonDigitRegex, "").take(4)
         onUserEditedContent()
         encryptionContextProvider.withEncryptionContext {
             itemContentState.update {
-                it.copy(cvv = HiddenState.Revealed(encrypt(value), value))
+                if (sanitisedValue.isNotBlank()) {
+                    it.copy(cvv = HiddenState.Revealed(encrypt(sanitisedValue), sanitisedValue))
+                } else {
+                    it.copy(cvv = HiddenState.Empty(encrypt(sanitisedValue)))
+                }
             }
         }
     }
 
     fun onExpirationDateChanged(value: String) {
+        val sanitisedValue = value.replace(nonDigitRegex, "").take(6)
         onUserEditedContent()
-        itemContentState.update { itemContentState.value.copy(expirationDate = value) }
+        itemContentState.update { itemContentState.value.copy(expirationDate = sanitisedValue) }
     }
 
     fun onNoteChanged(value: String) {
@@ -111,5 +119,28 @@ abstract class BaseCreditCardViewModel(
     protected fun onUserEditedContent() {
         if (hasUserEditedContentState.value) return
         hasUserEditedContentState.update { true }
+    }
+
+    fun onCVVFocusChanged(isFocused: Boolean) {
+        encryptionContextProvider.withEncryptionContext {
+            itemContentState.update {
+                val decryptedByteArray = decrypt(it.cvv.encrypted.toEncryptedByteArray())
+                when {
+                    decryptedByteArray.isEmpty() -> it.copy(cvv = HiddenState.Empty(it.cvv.encrypted))
+                    isFocused -> it.copy(
+                        cvv = HiddenState.Revealed(
+                            encrypted = it.cvv.encrypted,
+                            clearText = decryptedByteArray.decodeToString()
+                        )
+                    )
+
+                    else -> it.copy(cvv = HiddenState.Concealed(it.cvv.encrypted))
+                }
+            }
+        }
+    }
+
+    companion object {
+        val nonDigitRegex: Regex = "\\D".toRegex()
     }
 }
